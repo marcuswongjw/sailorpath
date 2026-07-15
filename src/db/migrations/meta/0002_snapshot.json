@@ -1,0 +1,827 @@
+{
+  "id": "c75210a2-2c33-422b-9870-cf38f7db3bad",
+  "prevId": "79a36407-47fb-44f2-a99e-53e8ee601876",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.boat_classes": {
+      "name": "boat_classes",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "boat_classes_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "boat_classes_name_unique": {
+          "name": "boat_classes_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.coaching_relationships": {
+      "name": "coaching_relationships",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "coach_id": {
+          "name": "coach_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sailor_id": {
+          "name": "sailor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "coaching_relationships_coach_id_profiles_id_fk": {
+          "name": "coaching_relationships_coach_id_profiles_id_fk",
+          "tableFrom": "coaching_relationships",
+          "tableTo": "profiles",
+          "columnsFrom": [
+            "coach_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "coaching_relationships_sailor_id_sailors_id_fk": {
+          "name": "coaching_relationships_sailor_id_sailors_id_fk",
+          "tableFrom": "coaching_relationships",
+          "tableTo": "sailors",
+          "columnsFrom": [
+            "sailor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "coaching_relationships_coach_id_sailor_id_unique": {
+          "name": "coaching_relationships_coach_id_sailor_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "coach_id",
+            "sailor_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.equipment_logs": {
+      "name": "equipment_logs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sailor_id": {
+          "name": "sailor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hull_brand": {
+          "name": "hull_brand",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sail_make": {
+          "name": "sail_make",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "foil_brand": {
+          "name": "foil_brand",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "equipment_logs_sailor_id_sailors_id_fk": {
+          "name": "equipment_logs_sailor_id_sailors_id_fk",
+          "tableFrom": "equipment_logs",
+          "tableTo": "sailors",
+          "columnsFrom": [
+            "sailor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.profiles": {
+      "name": "profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'sailor'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.regatta_results": {
+      "name": "regatta_results",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sailor_id": {
+          "name": "sailor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "regatta_id": {
+          "name": "regatta_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rank": {
+          "name": "rank",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nett_score": {
+          "name": "nett_score",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "regatta_results_sailor_id_sailors_id_fk": {
+          "name": "regatta_results_sailor_id_sailors_id_fk",
+          "tableFrom": "regatta_results",
+          "tableTo": "sailors",
+          "columnsFrom": [
+            "sailor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "regatta_results_regatta_id_regattas_id_fk": {
+          "name": "regatta_results_regatta_id_regattas_id_fk",
+          "tableFrom": "regatta_results",
+          "tableTo": "regattas",
+          "columnsFrom": [
+            "regatta_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "regatta_results_sailor_id_regatta_id_unique": {
+          "name": "regatta_results_sailor_id_regatta_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "sailor_id",
+            "regatta_id"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.regattas": {
+      "name": "regattas",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_fleet_size": {
+          "name": "total_fleet_size",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "regattas_slug_unique": {
+          "name": "regattas_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sailor_aliases": {
+      "name": "sailor_aliases",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "sailor_id": {
+          "name": "sailor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alias_name": {
+          "name": "alias_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sailor_aliases_sailor_id_sailors_id_fk": {
+          "name": "sailor_aliases_sailor_id_sailors_id_fk",
+          "tableFrom": "sailor_aliases",
+          "tableTo": "sailors",
+          "columnsFrom": [
+            "sailor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sailor_aliases_alias_name_unique": {
+          "name": "sailor_aliases_alias_name_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "alias_name"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sailor_boat_class": {
+      "name": "sailor_boat_class",
+      "schema": "",
+      "columns": {
+        "sailor_id": {
+          "name": "sailor_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "boat_class_id": {
+          "name": "boat_class_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "end_date": {
+          "name": "end_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "crew_role": {
+          "name": "crew_role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sailor_boat_class_sailor_id_sailors_id_fk": {
+          "name": "sailor_boat_class_sailor_id_sailors_id_fk",
+          "tableFrom": "sailor_boat_class",
+          "tableTo": "sailors",
+          "columnsFrom": [
+            "sailor_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "sailor_boat_class_boat_class_id_boat_classes_id_fk": {
+          "name": "sailor_boat_class_boat_class_id_boat_classes_id_fk",
+          "tableFrom": "sailor_boat_class",
+          "tableTo": "boat_classes",
+          "columnsFrom": [
+            "boat_class_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "sailor_boat_class_sailor_id_boat_class_id_start_date_pk": {
+          "name": "sailor_boat_class_sailor_id_boat_class_id_start_date_pk",
+          "columns": [
+            "sailor_id",
+            "boat_class_id",
+            "start_date"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sailors": {
+      "name": "sailors",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "handle": {
+          "name": "handle",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sail_number": {
+          "name": "sail_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "club": {
+          "name": "club",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "bio": {
+          "name": "bio",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gender": {
+          "name": "gender",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "national_squad_status": {
+          "name": "national_squad_status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "instagram": {
+          "name": "instagram",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "facebook": {
+          "name": "facebook",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nat_squad_status_jan_25": {
+          "name": "nat_squad_status_jan_25",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nat_squad_status_jul_25": {
+          "name": "nat_squad_status_jul_25",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nat_squad_status_jan_26": {
+          "name": "nat_squad_status_jan_26",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nat_squad_status_jul_26": {
+          "name": "nat_squad_status_jul_26",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hist_ranking_jun_24": {
+          "name": "hist_ranking_jun_24",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hist_ranking_dec_24": {
+          "name": "hist_ranking_dec_24",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hist_ranking_jun_25": {
+          "name": "hist_ranking_jun_25",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hist_ranking_dec_25": {
+          "name": "hist_ranking_dec_25",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hist_ranking_jun_26": {
+          "name": "hist_ranking_jun_26",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "worlds_represented_year": {
+          "name": "worlds_represented_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "european_represented_year": {
+          "name": "european_represented_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "asian_represented_year": {
+          "name": "asian_represented_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sea_games_represented_year": {
+          "name": "sea_games_represented_year",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "dob": {
+          "name": "dob",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "weight": {
+          "name": "weight",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gold_entry_date": {
+          "name": "gold_entry_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "silver_entry_date": {
+          "name": "silver_entry_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "drop_date": {
+          "name": "drop_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_public_weight": {
+          "name": "is_public_weight",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "is_public_dob": {
+          "name": "is_public_dob",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "is_public_equipment": {
+          "name": "is_public_equipment",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "parent_id": {
+          "name": "parent_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sailors_parent_id_profiles_id_fk": {
+          "name": "sailors_parent_id_profiles_id_fk",
+          "tableFrom": "sailors",
+          "tableTo": "profiles",
+          "columnsFrom": [
+            "parent_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sailors_handle_unique": {
+          "name": "sailors_handle_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "handle"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

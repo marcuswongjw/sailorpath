@@ -1,65 +1,261 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Search, Trophy, Anchor, Zap, Shield, Compass, Sparkles } from "lucide-react";
+import { getSailors } from "@/lib/dbQueries";
+import { DemoBanner } from "@/components/DemoBanner";
 
-export default function Home() {
+export default async function Home() {
+  const { data: sailorsList, isDemo } = await getSailors();
+
+  // Simple handler to match sailors on server component side for standard pre-rendered search tags
+  const featuredSailors = sailorsList.slice(0, 3);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="relative min-h-screen bg-[#090a0f] flex flex-col justify-between">
+      {/* Background glow animations */}
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-orange-600/10 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-[800px] right-1/4 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none -z-10" />
+
+      {/* Demo Banner */}
+      <DemoBanner isDemo={isDemo} />
+
+      {/* Hero Section */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center lg:pt-24">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/5 text-xs text-orange-400 font-bold mb-6 hover:bg-white/10 transition-colors">
+          <Sparkles className="h-3 w.3 text-orange-500 animate-pulse" />
+          <span>Singapore's Premium Sailing Analytics Platform</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        
+        <h1 className="mx-auto max-w-4xl text-5xl font-black tracking-tight text-white sm:text-7xl">
+          Chart your progress. <br />
+          <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 bg-clip-text text-transparent">
+            Command your sailing journey.
+          </span>
+        </h1>
+        
+        <p className="mx-auto mt-6 max-w-3xl text-base md:text-lg text-slate-400 font-semibold leading-relaxed">
+          SailorPath is the digital logbook and performance tracker for Singapore’s youth sailors. Start your pathway in the Optimist fleet and track every regatta, ranking, and equipment change as you grow.
+        </p>
+
+        {/* Claim Sailor Profile Button */}
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/login?action=claim"
+            className="rounded-full bg-orange-600 hover:bg-orange-500 hover:scale-105 transition-all text-xs font-black uppercase tracking-wider text-white px-8 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 flex items-center gap-2"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            <Trophy className="h-4 w-4" />
+            Claim Your Sailor Profile (Free)
+          </Link>
+        </div>
+
+        {/* Claim Profile CTA Search Area */}
+        <div className="mx-auto mt-12 max-w-lg">
+          <form action="/search" className="relative group">
+            <input
+              type="text"
+              name="query"
+              placeholder="Search by name or sail number (e.g. SGP 115)..."
+              className="w-full rounded-full border border-white/10 bg-white/5 px-6 py-4 pr-16 text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 shadow-xl shadow-black/30 text-sm md:text-base transition-all"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <button
+              type="submit"
+              className="absolute right-2 top-2 rounded-full bg-orange-600 p-2.5 text-white hover:bg-orange-500 hover:scale-105 transition-all shadow-md shadow-orange-950/20"
+            >
+              <Search className="h-5 w-5" />
+            </button>
+          </form>
+
+          {/* Quick links to top sailors */}
+          <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs">
+            <span className="text-slate-500 self-center">Try searching:</span>
+            {featuredSailors.map((sailor) => (
+              <Link
+                key={sailor.id}
+                href={`/${sailor.handle}`}
+                className="px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500 hover:text-white transition-all"
+              >
+                {sailor.firstName} ({sailor.sailNumber})
+              </Link>
+            ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Development Pathway Graphic Section */}
+      <section className="border-t border-white/5 bg-[#0b0c13] py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
+              Development Pathway
+            </h2>
+            <p className="mt-4 text-slate-400">
+              Follow the active development milestones of the SailorPath application.
+            </p>
+          </div>
+
+          {/* Timeline Graphic */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+            <div className="hidden md:block absolute top-1/2 left-4 right-4 h-0.5 bg-gradient-to-r from-orange-500/10 via-orange-500/50 to-orange-500/10 -translate-y-1/2 -z-10" />
+
+            {/* Step 1 */}
+            <div className="glass-card rounded-2xl p-6 border border-white/5 hover:border-orange-500/20 transition-all flex flex-col justify-between group">
+              <div>
+                <span className="text-xs font-bold text-orange-500">LIVE TODAY</span>
+                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-orange-500 transition-colors">
+                  The Foundation
+                </h3>
+                <p className="text-xs text-slate-400 mt-2">
+                  The core digital identity for youth sailors to track and share their progress.
+                </p>
+                <ul className="mt-4 space-y-3 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Digital trophy cabinet</strong>: Public profiles consolidating your complete regatta history and individual race scores.</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Equipment log</strong>: Track hull, sail, and foil choices to see what gear drives your best results.</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Achievement timeline</strong>: A visual progression of your journey from the Silver fleet to the Gold fleet.</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-orange-600 text-white text-xs font-bold shadow-md shadow-orange-950/20">
+                ✓
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="glass-card rounded-2xl p-6 border border-white/5 hover:border-orange-500/20 transition-all flex flex-col justify-between group">
+              <div>
+                <span className="text-xs font-bold text-orange-500">UP NEXT</span>
+                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-orange-500 transition-colors">
+                  The Fleet Ecosystem
+                </h3>
+                <p className="text-xs text-slate-400 mt-2">
+                  Expanding the platform to support the coaches and parents who manage the logistics behind the athletes, and connecting the fleet.
+                </p>
+                <ul className="mt-4 space-y-2 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Coach and squad dashboards</strong>: Allow coaches to aggregate data, compare head-to-head nett scores, and analyse fleet-wide performance trends.</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Family management</strong>: Secure parent accounts to manage multiple young sailors, coordinate training plans, and track regional and international regattas from a single dashboard.</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Condition tagging</strong>: Let sailors log wind speed, tide, and wave conditions alongside their results to identify performance patterns.</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Sailor connections</strong>: Find and connect with fellow athletes in the fleet to track each other's progress and build the community.</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 border border-white/5 text-slate-500 text-xs font-bold">
+                02
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="glass-card rounded-2xl p-6 border border-white/5 hover:border-orange-500/20 transition-all flex flex-col justify-between group">
+              <div>
+                <span className="text-xs font-bold text-orange-500">ON THE HORIZON</span>
+                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-orange-500 transition-colors">
+                  Institutional Integration
+                </h3>
+                <p className="text-xs text-slate-400 mt-2 font-semibold">
+                  Exploring tools for sailing associations and regatta organisers to streamline operations, driven by your feedback.
+                </p>
+                <ul className="mt-4 space-y-2 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Shape the fleet</strong>: Have a feature request? Submit your ideas and propose new tools to help us build the ultimate analytics platform for youth sailing.</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Regatta registration sync</strong>: Potential integrations to pull official start lists and publish results directly to the platform.</span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span><strong className="text-white">Campaign logistics planner</strong>: Tools to help parents and coaches organise itineraries and estimate travel budgets for away regattas.</span>
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 border border-white/5 text-slate-500 text-xs font-bold">
+                03
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founding Membership Pricing Section */}
+      <section id="founding-membership" className="py-20 bg-[#090a0f] border-t border-white/5">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-3xl text-center mb-16">
+            <h2 className="text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
+              Back the build. Anchor your legacy.
+            </h2>
+            <p className="mt-4 text-slate-400 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
+              Become a founding supporter of SailorPath. Your one-time contribution helps build the definitive performance tracker for Singapore’s youth sailors, unlocking permanent profile recognition and insider access.
+            </p>
+          </div>
+
+          <div className="mx-auto max-w-md rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] p-8 md:p-10 shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all" />
+            
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h3 className="text-xl font-bold text-white">Founding Supporter</h3>
+                <p className="text-xs text-orange-400 font-semibold mt-1">First 100 Members Only</p>
+              </div>
+              <span className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-400 border border-orange-500/20">
+                Limited
+              </span>
+            </div>
+
+            <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">
+              $49
+              <span className="text-xs font-bold text-slate-500"> (One-time contribution)</span>
+            </p>
+
+            <ul className="mt-8 space-y-4 text-xs font-medium text-slate-300">
+              <li className="flex items-start gap-3">
+                <Trophy className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                <span><strong className="text-white">Exclusive badge</strong>: A permanent 'Founding Supporter' crest on your public profile.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Compass className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                <span><strong className="text-white">Beta access</strong>: First access to upcoming parent dashboards and advanced fleet analytics.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Zap className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                <span><strong className="text-white">Shape the fleet</strong>: Priority voting rights on our feature development roadmap.</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Shield className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                <span><strong className="text-white">Premium themes</strong>: Exclusive colour palettes to customize your digital trophy cabinet.</span>
+              </li>
+            </ul>
+
+            <div className="mt-8">
+              {/* Stripe Checkout Payment Link */}
+              <a
+                href="https://buy.stripe.com/mock_founding_membership" 
+                target="_blank"
+                rel="noreferrer"
+                className="flex w-full justify-center rounded-full bg-orange-600 py-3 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
+              >
+                Back the Build
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
