@@ -39,7 +39,7 @@ export default async function Home() {
         {/* Claim Sailor Profile Button */}
         <div className="mt-8 flex justify-center">
           <Link
-            href="/login?action=claim"
+            href="/register"
             className="rounded-full bg-orange-600 hover:bg-orange-500 hover:scale-105 transition-all text-xs font-black uppercase tracking-wider text-white px-8 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 flex items-center gap-2"
           >
             <Trophy className="h-4 w-4" />

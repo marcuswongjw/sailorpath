@@ -36,6 +36,7 @@ export interface RegattaRecord {
   slug: string;
   date: string; // ISO format
   totalFleetSize: number;
+  division?: string;
 }
 
 export interface RegattaResultRecord {
@@ -129,12 +130,6 @@ export function calculateRankings(
   const pEndStr = period.half === "Jan-Jun" ? `${period.year}-06-30` : `${period.year}-12-31`;
   const pEnd = new Date(pEndStr).getTime();
 
-  // 1. Get the 5 most recent regattas that occurred on or before period end
-  const periodRegattas = regattas
-    .filter((r) => new Date(r.date).getTime() <= pEnd)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5);
-
   // 2. Resolve active sailors for the period and partition them
   const activeSailors: (SailorRecord & { fleet: "Gold" | "Silver" })[] = [];
   for (const s of sailors) {
@@ -146,7 +141,23 @@ export function calculateRankings(
 
   // 3. Compute scores for each sailor
   const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
-    const regattaScores = periodRegattas.map((regatta) => {
+    // 1. Get the 5 most recent regattas that occurred on or before period end and match sailor's fleet
+    const sailorRegattas = regattas
+      .filter((r) => {
+        const occurred = new Date(r.date).getTime() <= pEnd;
+        if (!occurred) return false;
+        
+        const div = r.division || "Gold";
+        if (sailor.fleet === "Gold") {
+          return div === "Gold" || div === "Both";
+        } else {
+          return div === "Silver" || div === "Both";
+        }
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5);
+
+    const regattaScores = sailorRegattas.map((regatta) => {
       const result = results.find(
         (res) => res.sailorId === sailor.id && res.regattaId === regatta.id
       );

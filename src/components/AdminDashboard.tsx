@@ -94,6 +94,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     name: "",
     date: "",
     totalFleetSize: 50,
+    division: "Gold",
   });
 
   const [resultsList, setResultsList] = useState(initialResults || []);
@@ -1189,6 +1190,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                         />
                       </div>
+                      <div>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">Division / Fleet Split</label>
+                        <select
+                          value={regattaForm.division || "Gold"}
+                          onChange={(e) => setRegattaForm({ ...regattaForm, division: e.target.value })}
+                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3.5 py-2 text-white text-xs"
+                        >
+                          <option value="Gold">Gold Fleet Only</option>
+                          <option value="Silver">Silver Fleet Only</option>
+                          <option value="Both">Both (Gold & Silver split)</option>
+                        </select>
+                      </div>
                     </div>
 
                     <div className="flex justify-end gap-2 border-t border-white/5 pt-4">
@@ -1223,6 +1236,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           name: "",
                           date: new Date().toISOString().split("T")[0],
                           totalFleetSize: 50,
+                          division: "Gold",
                         });
                       }}
                       className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
@@ -1238,6 +1252,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <th className="py-4 px-6">Event Name</th>
                         <th className="py-4 px-6">Event Date</th>
                         <th className="py-4 px-6 text-center">Total Fleet Size</th>
+                        <th className="py-4 px-6 text-center">Division</th>
                         <th className="py-4 px-6 text-right">Actions</th>
                       </tr>
                     </thead>
@@ -1247,6 +1262,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <td className="py-4 px-6 font-bold text-white">{r.name}</td>
                           <td className="py-4 px-6 font-mono text-slate-400">{r.date}</td>
                           <td className="py-4 px-6 text-center font-mono">{r.totalFleetSize}</td>
+                          <td className="py-4 px-6 text-center">
+                            <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-white/5 border border-white/5 text-orange-400">
+                              {r.division || "Gold"}
+                            </span>
+                          </td>
                           <td className="py-4 px-6 text-right">
                             <div className="flex justify-end items-center gap-2">
                               <button

@@ -1,0 +1,1 @@
+ALTER TABLE "regattas" ADD COLUMN "division" text DEFAULT 'Gold' NOT NULL;

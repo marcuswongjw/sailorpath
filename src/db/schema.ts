@@ -114,6 +114,7 @@ export const regattas = pgTable("regattas", {
   slug: text("slug").unique().notNull(), // URL slug e.g. "national-championship-2026"
   date: date("date").notNull(),
   totalFleetSize: integer("total_fleet_size").notNull(),
+  division: text("division").default("Gold").notNull(), // 'Gold', 'Silver', or 'Both'
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

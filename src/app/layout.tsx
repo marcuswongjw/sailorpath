@@ -85,7 +85,7 @@ export default function RootLayout({
                   Log In
                 </Link>
                 <Link
-                  href="/login?action=claim"
+                  href="/register"
                   className="hidden sm:inline-flex rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-500 transition-all shadow-md shadow-orange-950/20"
                 >
                   Claim your profile

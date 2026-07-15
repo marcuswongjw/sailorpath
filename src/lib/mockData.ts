@@ -173,6 +173,7 @@ export const mockRegattas: RegattaRecord[] = [
     slug: "sg-national-championship-2026",
     date: "2026-06-15",
     totalFleetSize: 85,
+    division: "Both",
   },
   {
     id: "regatta-2",
@@ -180,6 +181,7 @@ export const mockRegattas: RegattaRecord[] = [
     slug: "csc-optimist-championships-2026",
     date: "2026-05-04",
     totalFleetSize: 60,
+    division: "Gold",
   },
   {
     id: "regatta-3",
@@ -187,6 +189,7 @@ export const mockRegattas: RegattaRecord[] = [
     slug: "safyc-regatta-2026",
     date: "2026-04-12",
     totalFleetSize: 72,
+    division: "Silver",
   },
   {
     id: "regatta-4",
@@ -194,6 +197,7 @@ export const mockRegattas: RegattaRecord[] = [
     slug: "national-ranking-series-1-2026",
     date: "2026-02-28",
     totalFleetSize: 90,
+    division: "Both",
   },
   {
     id: "regatta-5",
@@ -201,6 +205,7 @@ export const mockRegattas: RegattaRecord[] = [
     slug: "nsc-cup-2026",
     date: "2026-01-18",
     totalFleetSize: 55,
+    division: "Gold",
   },
 ];
 
