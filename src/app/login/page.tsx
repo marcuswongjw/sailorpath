@@ -3,19 +3,61 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Mail, Lock, ShieldAlert, Sparkles, Navigation } from "lucide-react";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
+
+const supabase = createSupabaseClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key"
+);
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [useMagicLink, setUseMagicLink] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (useMagicLink) {
-      setMessage(`Magic link sent to ${email}! Check your inbox.`);
-    } else {
-      setMessage("Logged in successfully! Redirecting...");
+    setIsSubmitting(true);
+    setMessage(null);
+    setError(null);
+
+    try {
+      if (useMagicLink) {
+        const { error: authError } = await supabase.auth.signInWithOtp({
+          email,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`
+          }
+        });
+        if (authError) {
+          setError(authError.message);
+        } else {
+          setMessage(`Magic sign-in link sent to ${email}! Check your email inbox.`);
+        }
+      } else {
+        const { error: authError } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+        if (authError) {
+          setError(authError.message);
+        } else {
+          setMessage("Logged in successfully! Redirecting...");
+          setTimeout(() => {
+            router.push("/");
+            router.refresh();
+          }, 1000);
+        }
+      }
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -39,6 +81,12 @@ export default function LoginPage() {
         {message && (
           <div className="rounded-xl bg-orange-600/10 border border-orange-500/20 p-4 text-xs font-bold text-orange-400 text-center">
             {message}
+          </div>
+        )}
+
+        {error && (
+          <div className="rounded-xl bg-rose-500/10 border border-rose-500/20 p-4 text-xs font-bold text-rose-400 text-center">
+            {error}
           </div>
         )}
 

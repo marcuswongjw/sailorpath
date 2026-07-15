@@ -3,6 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Compass, Mail, Lock, Globe, Shield, ArrowRight, UserCheck } from "lucide-react";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
+
+const supabase = createSupabaseClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key"
+);
 
 export default function RegisterPage() {
   const [handle, setHandle] = useState("");
@@ -10,15 +16,52 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API registration
-    setTimeout(() => {
-      setIsSubmitting(false);
+    setError(null);
+
+    try {
+      const { data, error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            handle: handle.trim().toLowerCase(),
+            role: "sailor"
+          },
+          emailRedirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+
+      if (authError) {
+        setError(authError.message);
+        setIsSubmitting(false);
+        return;
+      }
+
       setIsSuccess(true);
-    }, 1500);
+    } catch (err: any) {
+      setError(err.message || "An unexpected error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const { error: oauthError } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      if (oauthError) alert(oauthError.message);
+    } catch (err: any) {
+      alert(err.message);
+    }
   };
 
   if (isSuccess) {
@@ -71,7 +114,7 @@ export default function RegisterPage() {
         {/* Google Sign In */}
         <div>
           <button
-            onClick={() => alert("Google Single Sign-On simulation triggered.")}
+            onClick={handleGoogleSignIn}
             className="flex w-full items-center justify-center gap-3 rounded-full bg-white/5 border border-white/10 hover:border-white/20 py-2.5 px-4 text-xs font-bold text-white transition-all"
           >
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -93,6 +136,12 @@ export default function RegisterPage() {
             Or register with email
           </span>
         </div>
+
+        {error && (
+          <div className="rounded-xl bg-rose-500/10 border border-rose-500/20 p-4 text-xs font-bold text-rose-400 text-center">
+            {error}
+          </div>
+        )}
 
         {/* Main form */}
         <form onSubmit={handleSubmit} className="space-y-4">
