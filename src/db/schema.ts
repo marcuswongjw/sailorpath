@@ -19,8 +19,7 @@ export const profilesRelations = relations(profiles, ({ many }) => ({
 // 2. SAILORS Table (Core Identity)
 export const sailors = pgTable("sailors", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
-  firstName: text("first_name").notNull(),
-  lastName: text("last_name").notNull(),
+  name: text("name").notNull(),
   handle: text("handle").unique().notNull(), // URL friendly e.g. "ashlyn-t"
   sailNumber: text("sail_number").notNull(), // e.g. "SGP 115"
   club: text("club").notNull(), // e.g. "CSC", "SAFYC", "NSC"

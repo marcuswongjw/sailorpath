@@ -120,7 +120,7 @@ export default async function RegattaDetailPage({ params }: PageProps) {
                         <td className="py-4 px-6">
                           <Link href={`/${res.sailorHandle}`} className="group block">
                             <span className="block font-bold text-white group-hover:text-orange-500 transition-colors">
-                              {res.sailorName} {res.sailorLastName}
+                              {res.sailorName}
                             </span>
                             <span className="block text-xs text-slate-500 font-mono mt-0.5">
                               {res.sailNumber}

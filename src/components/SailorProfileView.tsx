@@ -122,7 +122,7 @@ export function SailorProfileView({
           <div className="relative h-32 w-32 md:h-36 md:w-36 rounded-full overflow-hidden border-2 border-orange-500/20 shadow-xl">
             <Image
               src="/avatar-demo.png"
-              alt={`${initialSailor.firstName} ${initialSailor.lastName}`}
+              alt={initialSailor.name}
               fill
               className="object-cover"
               priority
@@ -133,7 +133,7 @@ export function SailorProfileView({
           <div className="text-center md:text-left">
             <div className="flex flex-col md:flex-row md:items-center gap-3">
               <h1 className="text-3xl font-black text-white tracking-tight">
-                {initialSailor.firstName} {initialSailor.lastName}
+                {initialSailor.name}
               </h1>
               <span className="self-center inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-0.5 text-xs font-bold text-emerald-400 border border-emerald-500/20">
                 {initialSailor.goldEntryDate ? "Gold Fleet" : "Silver Fleet"}

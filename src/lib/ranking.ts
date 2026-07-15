@@ -1,7 +1,6 @@
 export interface SailorRecord {
   id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   handle: string;
   sailNumber: string;
   club: string;
@@ -223,8 +222,8 @@ export function calculateRankings(
     }
 
     // Alphabetical fallback
-    const nameA = `${a.firstName} ${a.lastName}`.toLowerCase();
-    const nameB = `${b.firstName} ${b.lastName}`.toLowerCase();
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
     return nameA.localeCompare(nameB);
   });
 

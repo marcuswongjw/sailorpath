@@ -54,14 +54,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Bulk Editor States
   const [selectedSailors, setSelectedSailors] = useState<string[]>([]);
-  const [bulkDates, setBulkDates] = useState({
-    goldEntryDate: "",
-    silverEntryDate: "",
-    dropDate: "",
-    gender: "",
-    nationalSquadStatus: "",
-    club: "",
-  });
+  const [bulkField, setBulkField] = useState<string>("");
+  const [bulkValue, setBulkValue] = useState<string>("");
   const [sailorList, setSailorList] = useState(initialSailors);
   const [bulkStatus, setBulkStatus] = useState<string | null>(null);
 
@@ -70,8 +64,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [editingSailorId, setEditingSailorId] = useState<string | null>(null);
   const [sailorForm, setSailorForm] = useState<any>({
     id: "",
-    firstName: "",
-    lastName: "",
+    name: "",
     handle: "",
     sailNumber: "",
     club: "",
@@ -85,6 +78,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     goldEntryDate: "",
     silverEntryDate: "",
     dropDate: "",
+    natSquadStatusJan25: "",
+    natSquadStatusJul25: "",
+    natSquadStatusJan26: "",
+    natSquadStatusJul26: "",
+    histRankingJun24: "",
+    histRankingDec24: "",
+    histRankingJun25: "",
+    histRankingDec25: "",
+    histRankingJun26: "",
+    worlds: "",
+    european: "",
+    asian: "",
+    seaGames: "",
   });
 
   const [regattaList, setRegattaList] = useState(initialRegattas || []);
@@ -167,8 +173,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     const newHandle = rawName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     const newSailor = {
       id: `new-${Date.now()}`,
-      firstName: rawName.split(" ")[0] || rawName,
-      lastName: rawName.split(" ").slice(1).join(" ") || "Sailor",
+      name: rawName,
       handle: newHandle,
       sailNumber: "SGP 0000",
       club: "N/A",
@@ -206,37 +211,42 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       return;
     }
 
+    if (!bulkField) {
+      alert("Please select a field to update.");
+      return;
+    }
+
     // Apply updates locally
     setSailorList((prev) =>
       prev.map((s) => {
         if (selectedSailors.includes(s.id)) {
+          let typedValue: any = bulkValue;
+          
+          const isNumeric = [
+            "histRankingJun24", "histRankingDec24", "histRankingJun25", "histRankingDec25", "histRankingJun26",
+            "worlds", "european", "asian", "seaGames", "weight"
+          ].includes(bulkField);
+          
+          if (isNumeric) {
+            typedValue = bulkValue === "" ? null : parseInt(bulkValue) || null;
+          } else if (bulkField === "nationalSquadStatus" && bulkValue === "CLEAR") {
+            typedValue = null;
+          } else if (bulkValue === "") {
+            typedValue = null;
+          }
+
           return {
             ...s,
-            goldEntryDate: bulkDates.goldEntryDate || s.goldEntryDate,
-            silverEntryDate: bulkDates.silverEntryDate || s.silverEntryDate,
-            dropDate: bulkDates.dropDate || s.dropDate,
-            gender: bulkDates.gender || s.gender,
-            nationalSquadStatus: 
-              bulkDates.nationalSquadStatus === "CLEAR" 
-                ? null 
-                : (bulkDates.nationalSquadStatus || s.nationalSquadStatus),
-            club: bulkDates.club || s.club,
+            [bulkField]: typedValue,
           };
         }
         return s;
       })
     );
 
-    setBulkStatus(`Successfully updated properties for ${selectedSailors.length} sailors.`);
+    setBulkStatus(`Successfully updated '${bulkField}' for ${selectedSailors.length} sailors.`);
     setSelectedSailors([]);
-    setBulkDates({
-      goldEntryDate: "",
-      silverEntryDate: "",
-      dropDate: "",
-      gender: "",
-      nationalSquadStatus: "",
-      club: "",
-    });
+    setBulkValue("");
     setTimeout(() => setBulkStatus(null), 3000);
   };
 
@@ -246,8 +256,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
     }
-    if (!sailorForm.firstName || !sailorForm.lastName || !sailorForm.sailNumber) {
-      alert("First Name, Last Name, and Sail Number are required.");
+    if (!sailorForm.name || !sailorForm.sailNumber) {
+      alert("Name and Sail Number are required.");
       return;
     }
 
@@ -256,7 +266,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       const newSailor = {
         ...sailorForm,
         id: newId,
-        handle: sailorForm.handle || `${sailorForm.firstName.toLowerCase()}-${sailorForm.lastName.toLowerCase()}`,
+        handle: sailorForm.handle || sailorForm.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
         weight: sailorForm.weight ? parseInt(sailorForm.weight) : null,
       };
       setSailorList((prev) => [...prev, newSailor]);
@@ -699,74 +709,134 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
             {/* Bulk Controls */}
             <div className="glass-card rounded-2xl p-6 border border-white/5 space-y-4">
-              <div className="flex flex-wrap items-center gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase">Gold Entry Date</label>
-                  <input
-                    type="date"
-                    value={bulkDates.goldEntryDate}
-                    onChange={(e) => setBulkDates((prev) => ({ ...prev, goldEntryDate: e.target.value }))}
-                    className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase">Silver Entry Date</label>
-                  <input
-                    type="date"
-                    value={bulkDates.silverEntryDate}
-                    onChange={(e) => setBulkDates((prev) => ({ ...prev, silverEntryDate: e.target.value }))}
-                    className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase">Drop Date</label>
-                  <input
-                    type="date"
-                    value={bulkDates.dropDate}
-                    onChange={(e) => setBulkDates((prev) => ({ ...prev, dropDate: e.target.value }))}
-                    className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase">Gender</label>
+              <div className="flex flex-wrap items-end gap-6">
+                
+                {/* 1. Select Field to Edit */}
+                <div className="flex flex-col gap-1.5 min-w-[200px]">
+                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Property to Update</label>
                   <select
-                    value={bulkDates.gender}
-                    onChange={(e) => setBulkDates((prev) => ({ ...prev, gender: e.target.value }))}
-                    className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:outline-none"
+                    value={bulkField}
+                    onChange={(e) => {
+                      setBulkField(e.target.value);
+                      setBulkValue(""); // clear value on field change
+                    }}
+                    className="rounded-lg bg-slate-900 border border-white/10 text-white px-3.5 py-2 text-xs focus:outline-none"
                   >
-                    <option value="">-- No Change --</option>
-                    <option value="M">Male (M)</option>
-                    <option value="F">Female (F)</option>
+                    <option value="">-- Select Property --</option>
+                    <optgroup label="Fleet Status & Dates">
+                      <option value="goldEntryDate">Gold Fleet Entry Date</option>
+                      <option value="silverEntryDate">Silver Fleet Entry Date</option>
+                      <option value="dropDate">Optimist Drop Date (Retirement)</option>
+                    </optgroup>
+                    <optgroup label="Profile Parameters">
+                      <option value="club">Club Origin</option>
+                      <option value="gender">Gender (M/F)</option>
+                      <option value="nationalSquadStatus">National Squad Status (Current)</option>
+                      <option value="dob">Date of Birth</option>
+                      <option value="weight">Weight (kg)</option>
+                    </optgroup>
+                    <optgroup label="Squad Status History">
+                      <option value="natSquadStatusJan25">Nat Squad Status Jan 25</option>
+                      <option value="natSquadStatusJul25">Nat Squad Status Jul 25</option>
+                      <option value="natSquadStatusJan26">Nat Squad Status Jan 26</option>
+                      <option value="natSquadStatusJul26">Nat Squad Status Jul 26</option>
+                    </optgroup>
+                    <optgroup label="Historical Standings">
+                      <option value="histRankingJun24">Historical Gold Rank Jun 24</option>
+                      <option value="histRankingDec24">Historical Gold Rank Dec 24</option>
+                      <option value="histRankingJun25">Historical Gold Rank Jun 25</option>
+                      <option value="histRankingDec25">Historical Gold Rank Dec 25</option>
+                      <option value="histRankingJun26">Historical Gold Rank Jun 26</option>
+                    </optgroup>
+                    <optgroup label="Representative campaigns (Year)">
+                      <option value="worlds">Worlds Campaign Year</option>
+                      <option value="european">European Campaign Year</option>
+                      <option value="asian">Asian Campaign Year</option>
+                      <option value="seaGames">SEA Games Campaign Year</option>
+                    </optgroup>
                   </select>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase">Squad Status</label>
-                  <select
-                    value={bulkDates.nationalSquadStatus}
-                    onChange={(e) => setBulkDates((prev) => ({ ...prev, nationalSquadStatus: e.target.value }))}
-                    className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:outline-none"
-                  >
-                    <option value="">-- No Change --</option>
-                    <option value="CLEAR">Clear Status (None)</option>
-                    <option value="Nat A">National A (Nat A)</option>
-                    <option value="Nat B">National B (Nat B)</option>
-                    <option value="DS">Development Squad (DS)</option>
-                  </select>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase">Club Origin</label>
-                  <input
-                    type="text"
-                    value={bulkDates.club}
-                    onChange={(e) => setBulkDates((prev) => ({ ...prev, club: e.target.value }))}
-                    placeholder="e.g. NSC Yacht Club"
-                    className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500"
-                  />
                 </div>
 
+                {/* 2. Render appropriate input field depending on selected property */}
+                {bulkField && (
+                  <div className="flex flex-col gap-1.5 min-w-[200px] animate-in fade-in slide-in-from-top-1 duration-200">
+                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">New Value</label>
+                    
+                    {/* Render Date Inputs */}
+                    {["goldEntryDate", "silverEntryDate", "dropDate", "dob"].includes(bulkField) && (
+                      <input
+                        type="date"
+                        value={bulkValue}
+                        onChange={(e) => setBulkValue(e.target.value)}
+                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500 focus:outline-none"
+                      />
+                    )}
+
+                    {/* Render Gender Dropdown */}
+                    {bulkField === "gender" && (
+                      <select
+                        value={bulkValue}
+                        onChange={(e) => setBulkValue(e.target.value)}
+                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs focus:outline-none"
+                      >
+                        <option value="">-- Select Gender --</option>
+                        <option value="M">Male (M)</option>
+                        <option value="F">Female (F)</option>
+                      </select>
+                    )}
+
+                    {/* Render Squad Dropdowns */}
+                    {[
+                      "nationalSquadStatus",
+                      "natSquadStatusJan25",
+                      "natSquadStatusJul25",
+                      "natSquadStatusJan26",
+                      "natSquadStatusJul26",
+                    ].includes(bulkField) && (
+                      <select
+                        value={bulkValue}
+                        onChange={(e) => setBulkValue(e.target.value)}
+                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs focus:outline-none"
+                      >
+                        <option value="">-- Select Status --</option>
+                        <option value="CLEAR">Clear Status (None)</option>
+                        <option value="Nat A">National Squad A (Nat A)</option>
+                        <option value="Nat B">National Squad B (Nat B)</option>
+                        <option value="DS">Development Squad (DS)</option>
+                      </select>
+                    )}
+
+                    {/* Render Numbers (Rankings, Campaign Years) */}
+                    {[
+                      "histRankingJun24", "histRankingDec24", "histRankingJun25", "histRankingDec25", "histRankingJun26",
+                      "worlds", "european", "asian", "seaGames", "weight"
+                    ].includes(bulkField) && (
+                      <input
+                        type="number"
+                        placeholder="e.g. 2026 or 12"
+                        value={bulkValue}
+                        onChange={(e) => setBulkValue(e.target.value)}
+                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500 focus:outline-none"
+                      />
+                    )}
+
+                    {/* Render normal text input for anything else (e.g. Club) */}
+                    {!["goldEntryDate", "silverEntryDate", "dropDate", "dob", "gender", "nationalSquadStatus", "natSquadStatusJan25", "natSquadStatusJul25", "natSquadStatusJan26", "natSquadStatusJul26", "histRankingJun24", "histRankingDec24", "histRankingJun25", "histRankingDec25", "histRankingJun26", "worlds", "european", "asian", "seaGames", "weight"].includes(bulkField) && (
+                      <input
+                        type="text"
+                        placeholder="Enter value"
+                        value={bulkValue}
+                        onChange={(e) => setBulkValue(e.target.value)}
+                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500 focus:outline-none"
+                      />
+                    )}
+                  </div>
+                )}
+
+                {/* 3. Actions Button */}
                 <div className="flex items-end justify-end flex-1 pt-4">
                   <button
-                    disabled={!isSuperadmin || selectedSailors.length === 0}
+                    disabled={!isSuperadmin || selectedSailors.length === 0 || !bulkField}
                     onClick={handleApplyBulk}
                     className="rounded-full bg-orange-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-orange-500 transition-all disabled:opacity-50 flex items-center gap-1.5"
                   >
@@ -774,6 +844,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     Apply Bulk Edits ({selectedSailors.length} selected)
                   </button>
                 </div>
+
               </div>
 
               {bulkStatus && (
@@ -786,68 +857,114 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
             {/* Sailors Grid Checkbox Table */}
             <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden">
-              <table className="w-full text-left border-collapse text-xs">
-                <thead>
-                  <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    <th className="py-4 px-6 text-center w-16">
-                      <input
-                        type="checkbox"
-                        checked={selectedSailors.length === sailorList.length && sailorList.length > 0}
-                        onChange={toggleSelectAll}
-                        className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
-                      />
-                    </th>
-                    <th className="py-4 px-6">Sailor Name</th>
-                    <th className="py-4 px-6">Sail Number</th>
-                    <th className="py-4 px-6">Club</th>
-                    <th className="py-4 px-6 text-center">Gender</th>
-                    <th className="py-4 px-6 text-center">Squad</th>
-                    <th className="py-4 px-6 text-center">Gold Entry</th>
-                    <th className="py-4 px-6 text-center">Silver Entry</th>
-                    <th className="py-4 px-6 text-center">Drop Date</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
-                  {sailorList.map((sailor) => {
-                    const isChecked = selectedSailors.includes(sailor.id);
-                    return (
-                      <tr
-                        key={sailor.id}
-                        className={`transition-colors ${isChecked ? "bg-orange-500/5 hover:bg-orange-500/10" : "hover:bg-white/5"}`}
-                      >
-                        <td className="py-4 px-6 text-center">
-                          <input
-                            type="checkbox"
-                            checked={isChecked}
-                            onChange={() => toggleSelectSailor(sailor.id)}
-                            className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
-                          />
-                        </td>
-                        <td className="py-4 px-6 font-bold text-white">
-                          {sailor.firstName} {sailor.lastName}
-                        </td>
-                        <td className="py-4 px-6 font-mono text-slate-400">{sailor.sailNumber}</td>
-                        <td className="py-4 px-6 text-slate-400">{sailor.club}</td>
-                        <td className="py-4 px-6 text-center">{sailor.gender || "M"}</td>
-                        <td className="py-4 px-6 text-center">
-                          <span className="text-[10px] text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/5">
-                            {sailor.nationalSquadStatus || "None"}
-                          </span>
-                        </td>
-                        <td className="py-4 px-6 text-center font-mono">
-                          {sailor.goldEntryDate || <span className="text-slate-600">-</span>}
-                        </td>
-                        <td className="py-4 px-6 text-center font-mono">
-                          {sailor.silverEntryDate || <span className="text-slate-600">-</span>}
-                        </td>
-                        <td className="py-4 px-6 text-center font-mono">
-                          {sailor.dropDate || <span className="text-slate-600">-</span>}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-[11px] min-w-[1700px]">
+                  <thead>
+                    <tr className="border-b border-white/5 bg-slate-950/60 text-[9px] font-black text-slate-500 uppercase tracking-widest text-center">
+                      <th colSpan={4} className="py-2 px-4 border-r border-white/5 text-left">Competitor</th>
+                      <th colSpan={4} className="py-2 px-4 border-r border-white/5 bg-orange-600/5 text-orange-400">National Squad History</th>
+                      <th colSpan={5} className="py-2 px-4 border-r border-white/5 bg-blue-600/5 text-blue-400">Historical Rankings</th>
+                      <th colSpan={4} className="py-2 px-4 border-r border-white/5 bg-emerald-600/5 text-emerald-400">Representative campaigns (Year)</th>
+                      <th colSpan={3} className="py-2 px-4">Fleet Entry/Drop Dates</th>
+                    </tr>
+                    <tr className="border-b border-white/5 bg-white/5 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
+                      <th className="py-4 px-6 text-center w-16">
+                        <input
+                          type="checkbox"
+                          checked={selectedSailors.length === sailorList.length && sailorList.length > 0}
+                          onChange={toggleSelectAll}
+                          className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
+                        />
+                      </th>
+                      <th className="py-4 px-6 text-left">Sailor Name</th>
+                      <th className="py-4 px-4 text-center">Sail Number</th>
+                      <th className="py-4 px-4 text-left border-r border-white/5">Club / Gender</th>
+
+                      <th className="py-4 px-4 text-center bg-orange-600/5">Jan 25</th>
+                      <th className="py-4 px-4 text-center bg-orange-600/5">Jul 25</th>
+                      <th className="py-4 px-4 text-center bg-orange-600/5">Jan 26</th>
+                      <th className="py-4 px-4 text-center border-r border-white/5 bg-orange-600/5">Jul 26</th>
+
+                      <th className="py-4 px-4 text-center bg-blue-600/5">Jun 24</th>
+                      <th className="py-4 px-4 text-center bg-blue-600/5">Dec 24</th>
+                      <th className="py-4 px-4 text-center bg-blue-600/5">Jun 25</th>
+                      <th className="py-4 px-4 text-center bg-blue-600/5">Dec 25</th>
+                      <th className="py-4 px-4 text-center border-r border-white/5 bg-blue-600/5">Jun 26</th>
+
+                      <th className="py-4 px-4 text-center bg-emerald-600/5">Worlds</th>
+                      <th className="py-4 px-4 text-center bg-emerald-600/5">European</th>
+                      <th className="py-4 px-4 text-center bg-emerald-600/5">Asian</th>
+                      <th className="py-4 px-4 text-center border-r border-white/5 bg-emerald-600/5">SEA Games</th>
+
+                      <th className="py-4 px-4 text-center">Gold Entry</th>
+                      <th className="py-4 px-4 text-center">Silver Entry</th>
+                      <th className="py-4 px-4 text-center">Drop Date</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
+                    {sailorList.map((sailor) => {
+                      const isChecked = selectedSailors.includes(sailor.id);
+                      return (
+                        <tr
+                          key={sailor.id}
+                          className={`transition-colors text-center ${isChecked ? "bg-orange-500/5 hover:bg-orange-500/10" : "hover:bg-white/5"}`}
+                        >
+                          <td className="py-4 px-6 text-center">
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              onChange={() => toggleSelectSailor(sailor.id)}
+                              className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
+                            />
+                          </td>
+                          <td className="py-4 px-6 text-left font-bold text-white">
+                            {sailor.name}
+                          </td>
+                          <td className="py-4 px-4 font-mono text-slate-400">{sailor.sailNumber}</td>
+                          <td className="py-4 px-4 text-left text-slate-400 border-r border-white/5">
+                            {sailor.club} ({sailor.gender || "M"})
+                          </td>
+
+                          {/* Jan 25 */}
+                          <td className="py-4 px-4 bg-orange-600/5 text-slate-400">{sailor.natSquadStatusJan25 || "-"}</td>
+                          {/* Jul 25 */}
+                          <td className="py-4 px-4 bg-orange-600/5 text-slate-400">{sailor.natSquadStatusJul25 || "-"}</td>
+                          {/* Jan 26 */}
+                          <td className="py-4 px-4 bg-orange-600/5 text-slate-400">{sailor.natSquadStatusJan26 || "-"}</td>
+                          {/* Jul 26 */}
+                          <td className="py-4 px-4 border-r border-white/5 bg-orange-600/5">
+                            {sailor.natSquadStatusJul26 ? (
+                              <span className="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[9px] text-orange-400 font-extrabold">
+                                {sailor.natSquadStatusJul26}
+                              </span>
+                            ) : (
+                              "-"
+                            )}
+                          </td>
+
+                          {/* Rankings */}
+                          <td className="py-4 px-4 bg-blue-600/5 text-slate-400 font-mono">{sailor.histRankingJun24 || "-"}</td>
+                          <td className="py-4 px-4 bg-blue-600/5 text-slate-400 font-mono">{sailor.histRankingDec24 || "-"}</td>
+                          <td className="py-4 px-4 bg-blue-600/5 text-slate-400 font-mono">{sailor.histRankingJun25 || "-"}</td>
+                          <td className="py-4 px-4 bg-blue-600/5 text-slate-400 font-mono">{sailor.histRankingDec25 || "-"}</td>
+                          <td className="py-4 px-4 border-r border-white/5 bg-blue-600/5 text-white font-mono font-bold">{sailor.histRankingJun26 || "-"}</td>
+
+                          {/* Representatives */}
+                          <td className="py-4 px-4 bg-emerald-600/5 text-emerald-400 font-mono">{sailor.worlds || "-"}</td>
+                          <td className="py-4 px-4 bg-emerald-600/5 text-emerald-400 font-mono">{sailor.european || "-"}</td>
+                          <td className="py-4 px-4 bg-emerald-600/5 text-emerald-400 font-mono">{sailor.asian || "-"}</td>
+                          <td className="py-4 px-4 border-r border-white/5 bg-emerald-600/5 text-emerald-400 font-mono">{sailor.seaGames || "-"}</td>
+
+                          {/* Fleet Dates */}
+                          <td className="py-4 px-4 text-center font-mono text-slate-400">{sailor.goldEntryDate || "-"}</td>
+                          <td className="py-4 px-4 text-center font-mono text-slate-400">{sailor.silverEntryDate || "-"}</td>
+                          <td className="py-4 px-4 text-center font-mono text-slate-400">{sailor.dropDate || "-"}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}
@@ -887,21 +1004,12 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       {editingSailorId === "new" ? "Add New Sailor Profile" : "Edit Sailor Profile"}
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">First Name</label>
+                      <div className="md:col-span-2">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">Full Name</label>
                         <input
                           type="text"
-                          value={sailorForm.firstName}
-                          onChange={(e) => setSailorForm({ ...sailorForm, firstName: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Last Name</label>
-                        <input
-                          type="text"
-                          value={sailorForm.lastName}
-                          onChange={(e) => setSailorForm({ ...sailorForm, lastName: e.target.value })}
+                          value={sailorForm.name}
+                          onChange={(e) => setSailorForm({ ...sailorForm, name: e.target.value })}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
                         />
                       </div>
@@ -1061,8 +1169,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         setEditingSailorId("new");
                         setSailorForm({
                           id: "",
-                          firstName: "",
-                          lastName: "",
+                          name: "",
                           handle: "",
                           sailNumber: "SGP ",
                           club: "",
@@ -1076,6 +1183,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           goldEntryDate: "",
                           silverEntryDate: new Date().toISOString().split("T")[0],
                           dropDate: "",
+                          natSquadStatusJan25: "",
+                          natSquadStatusJul25: "",
+                          natSquadStatusJan26: "",
+                          natSquadStatusJul26: "",
+                          histRankingJun24: "",
+                          histRankingDec24: "",
+                          histRankingJun25: "",
+                          histRankingDec25: "",
+                          histRankingJun26: "",
+                          worlds: "",
+                          european: "",
+                          asian: "",
+                          seaGames: "",
                         });
                       }}
                       className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
@@ -1102,7 +1222,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       {sailorList.map((s) => (
                         <tr key={s.id} className="hover:bg-white/5 transition-colors">
                           <td className="py-4 px-6 font-bold text-white">
-                            {s.firstName} {s.lastName}
+                            {s.name}
                           </td>
                           <td className="py-4 px-6 font-mono text-slate-400">{s.sailNumber}</td>
                           <td className="py-4 px-6">{s.gender || "M"}</td>
@@ -1337,7 +1457,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <option value="" disabled>-- Select Sailor --</option>
                           {sailorList.map((s) => (
                             <option key={s.id} value={s.id}>
-                              {s.firstName} {s.lastName} ({s.sailNumber})
+                              {s.name} ({s.sailNumber})
                             </option>
                           ))}
                         </select>
@@ -1437,7 +1557,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             return (
                               <tr key={res.id} className="hover:bg-white/5 transition-colors">
                                 <td className="py-4 px-6 font-bold text-white">
-                                  {sailor ? `${sailor.firstName} ${sailor.lastName}` : "Deleted / Unmapped Sailor"}
+                                  {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
                                 </td>
                                 <td className="py-4 px-6 font-mono text-slate-400">
                                   {sailor ? sailor.sailNumber : "-"}

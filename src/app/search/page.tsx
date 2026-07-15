@@ -16,8 +16,7 @@ export default async function SearchPage({
     const q = query.toLowerCase().trim();
     if (!q) return false;
     return (
-      s.firstName.toLowerCase().includes(q) ||
-      s.lastName.toLowerCase().includes(q) ||
+      s.name.toLowerCase().includes(q) ||
       s.sailNumber.toLowerCase().includes(q) ||
       s.club.toLowerCase().includes(q)
     );
@@ -53,7 +52,7 @@ export default async function SearchPage({
                   <div>
                     <div className="flex items-center gap-3">
                       <span className="text-xl font-bold text-white group-hover:text-orange-500 transition-colors">
-                        {sailor.firstName} {sailor.lastName}
+                        {sailor.name}
                       </span>
                       <span className="text-xs font-semibold px-2 py-0.5 rounded bg-orange-500/10 text-orange-400 border border-orange-500/20">
                         {sailor.goldEntryDate ? "Gold Fleet" : "Silver Fleet"}

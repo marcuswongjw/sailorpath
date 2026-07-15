@@ -73,7 +73,7 @@ export default async function Home() {
                 href={`/${sailor.handle}`}
                 className="px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500 hover:text-white transition-all"
               >
-                {sailor.firstName} ({sailor.sailNumber})
+                {sailor.name} ({sailor.sailNumber})
               </Link>
             ))}
           </div>

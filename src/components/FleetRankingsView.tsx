@@ -158,7 +158,7 @@ export function FleetRankingsView({
                       <td className="py-4 px-6">
                         <Link href={`/${sailor.handle}`} className="group block">
                           <span className="block font-bold text-white group-hover:text-orange-500 transition-colors">
-                            {sailor.firstName} {sailor.lastName}
+                            {sailor.name}
                           </span>
                           <span className="block text-xs text-slate-500 font-mono mt-0.5">
                             {sailor.sailNumber}
@@ -235,44 +235,7 @@ export function FleetRankingsView({
         </div>
       </div>
 
-      {/* Squad Criteria details card for Gold Fleet */}
-      {fleet === "Gold" && (
-        <div className="glass-card rounded-2xl p-6 border border-white/5 space-y-4">
-          <h2 className="text-xs font-bold text-slate-400 tracking-wider uppercase flex items-center gap-2">
-            <Trophy className="h-4 w-4 text-orange-500" />
-            National Squad Qualification Criteria
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs leading-relaxed text-slate-400">
-            <div className="bg-white/5 p-4 rounded-xl border border-white/5 space-y-1">
-              <h3 className="font-bold text-white flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-red-500" />
-                National A Squad (Nat A)
-              </h3>
-              <p className="text-[11px] text-slate-400">
-                Typically the top 5 sailors on the final trial leaderboard. Selected to represent Team Singapore at the IODA World Championship and Asian Games.
-              </p>
-            </div>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/5 space-y-1">
-              <h3 className="font-bold text-white flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-blue-500" />
-                National B Squad (Nat B)
-              </h3>
-              <p className="text-[11px] text-slate-400">
-                Typically ranks 6-15 on the ranking board. Represent Singapore at continental championships (Europeans, North Americans).
-              </p>
-            </div>
-            <div className="bg-white/5 p-4 rounded-xl border border-white/5 space-y-1">
-              <h3 className="font-bold text-white flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-amber-500" />
-                Development Squad (DS)
-              </h3>
-              <p className="text-[11px] text-slate-400">
-                Promising younger sailors (U12 top performers or ranks 16-30) selected for specialized training blocks to prepare for the National A/B squad pathway.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
+
     </div>
   );
 }

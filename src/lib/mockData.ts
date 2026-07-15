@@ -11,8 +11,7 @@ export interface MockEquipmentLog {
 export const mockSailors: SailorRecord[] = [
   {
     id: "sailor-1",
-    firstName: "Ashlyn",
-    lastName: "Tan",
+    name: "Ashlyn Tan",
     handle: "ashlyn-t",
     sailNumber: "SGP 115",
     club: "Changi Sailing Club",
@@ -42,8 +41,7 @@ export const mockSailors: SailorRecord[] = [
   },
   {
     id: "sailor-2",
-    firstName: "Bernice",
-    lastName: "Lim",
+    name: "Bernice Lim",
     handle: "bernice-lim",
     sailNumber: "SGP 99",
     club: "SAFYC Yacht Club",
@@ -73,8 +71,7 @@ export const mockSailors: SailorRecord[] = [
   },
   {
     id: "sailor-3",
-    firstName: "Charles",
-    lastName: "Goh",
+    name: "Charles Goh",
     handle: "charles-goh",
     sailNumber: "SGP 12",
     club: "National Sailing Center",
@@ -104,8 +101,7 @@ export const mockSailors: SailorRecord[] = [
   },
   {
     id: "sailor-4",
-    firstName: "Daniel",
-    lastName: "Chia",
+    name: "Daniel Chia",
     handle: "daniel-chia",
     sailNumber: "SGP 2030",
     club: "Changi Sailing Club",
@@ -135,8 +131,7 @@ export const mockSailors: SailorRecord[] = [
   },
   {
     id: "sailor-5",
-    firstName: "Ethan",
-    lastName: "Teo",
+    name: "Ethan Teo",
     handle: "ethan-teo",
     sailNumber: "SGP 88",
     club: "National Sailing Center",

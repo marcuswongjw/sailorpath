@@ -88,7 +88,7 @@ export default async function GoldSailorsPage() {
                       {/* Name */}
                       <td className="py-4 px-6 text-left font-bold text-white">
                         <Link href={`/${sailor.handle}`} className="hover:text-orange-500 transition-colors">
-                          {sailor.firstName} {sailor.lastName}
+                          {sailor.name}
                         </Link>
                       </td>
                       {/* Sail number */}
@@ -169,31 +169,7 @@ export default async function GoldSailorsPage() {
           </div>
         </div>
 
-        {/* Footnotes / Criteria info summary */}
-        <div className="mt-8 bg-[#131520] border border-white/5 rounded-3xl p-6 space-y-4">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-            <Medal className="h-4 w-4 text-yellow-500" />
-            National Squad Intake Selection Criteria Rules (Optimizer)
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs text-slate-400 leading-relaxed">
-            <div className="space-y-2">
-              <h3 className="font-extrabold text-white">Junior Training Squad 'A' & 'B' intake:</h3>
-              <p className="text-[11px] text-slate-400">
-                1. <strong>Junior Training Squad 'A':</strong> Intake selected by ranking order up to 16 members (Top 8 ranked males, Top 8 ranked females). All members must be 15 years old or younger. <br />
-                2. <strong>Junior Training Squad 'B':</strong> Intake selected from remaining sailors by ranking in order of U14 (Top 2 M / Top 2 F aged 13), U13 (Top 3 M / Top 3 F aged 12), and U12 (Top 3 M / Top 3 F aged 11 or younger).
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="font-extrabold text-white">Development Squad intake (U13):</h3>
-              <p className="text-[11px] text-slate-400">
-                Intakes up to 16 sailors. Eligible to sailors aged 12 or younger who are not in the NTS (A or B squads), in ranking order of: <br />
-                1. U13: Top 1 ranked male / Top 1 ranked female aged 12. <br />
-                2. U12: Top 4 ranked males / Top 4 ranked females aged 11. <br />
-                3. U11: Top 3 ranked males / Top 3 ranked females aged 10 or younger.
-              </p>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   );

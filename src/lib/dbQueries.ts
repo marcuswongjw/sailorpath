@@ -114,8 +114,7 @@ export async function getRegattaWithResults(slug: string): Promise<QueryResponse
       .select({
         rank: regattaResults.rank,
         nettScore: regattaResults.nettScore,
-        sailorName: sailors.firstName,
-        sailorLastName: sailors.lastName,
+        sailorName: sailors.name,
         sailorHandle: sailors.handle,
         sailNumber: sailors.sailNumber,
         club: sailors.club,
@@ -141,8 +140,7 @@ export async function getRegattaWithResults(slug: string): Promise<QueryResponse
         return {
           rank: r.rank,
           nettScore: r.nettScore,
-          sailorName: s?.firstName || "Unknown",
-          sailorLastName: s?.lastName || "Sailor",
+          sailorName: s?.name || "Unknown Sailor",
           sailorHandle: s?.handle || "#",
           sailNumber: s?.sailNumber || "SGP 000",
           club: s?.club || "N/A",
