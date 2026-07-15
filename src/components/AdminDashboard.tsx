@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { read, utils } from "xlsx";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import {
   Upload,
   Database,
@@ -31,8 +32,47 @@ interface AdminDashboardProps {
 export function AdminDashboard({ initialSailors, initialRegattas, initialResults, isDemo }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<"import" | "reconciliation" | "bulk" | "edit">("import");
   
-  // Auth simulation for RLS demonstration
-  const [adminRole, setAdminRole] = useState<"superadmin" | "coach" | "sailor">("superadmin");
+  // Auth state integration
+  const [user, setUser] = useState<any>(null);
+  const [loading, setLoading] = useState(!isDemo);
+  const [adminRole, setAdminRole] = useState<"superadmin" | "coach" | "sailor">(isDemo ? "superadmin" : "sailor");
+
+  useEffect(() => {
+    if (isDemo) return;
+
+    const supabase = createSupabaseClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co",
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key"
+    );
+    
+    // Load session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser(session.user);
+        setAdminRole((session.user.user_metadata?.role || "sailor") as any);
+      } else {
+        setUser(null);
+        setAdminRole("sailor");
+      }
+      setLoading(false);
+    });
+
+    // Listen to changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+        setAdminRole((session.user.user_metadata?.role || "sailor") as any);
+      } else {
+        setUser(null);
+        setAdminRole("sailor");
+      }
+      setLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [isDemo]);
 
   // Excel Import States
   const [dragActive, setDragActive] = useState(false);
@@ -400,30 +440,74 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
   };
 
-  return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 flex-1 flex flex-col gap-8">
-      {/* Superadmin RLS check controller */}
-      <div className="glass-panel rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/5">
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
-          <Shield className="h-4 w-4 text-orange-500" />
-          <span>CURRENT SIMULATED USER ROLE:</span>
-        </div>
-        <div className="flex gap-2">
-          {(["superadmin", "coach", "sailor"] as const).map((role) => (
-            <button
-              key={role}
-              onClick={() => setAdminRole(role)}
-              className={`rounded-full px-4 py-1 text-xs font-bold capitalize transition-all border ${
-                adminRole === role
-                  ? "bg-orange-600 text-white border-orange-500"
-                  : "bg-slate-800 text-slate-400 border-white/5 hover:text-white"
-              }`}
-            >
-              {role}
-            </button>
-          ))}
+  if (loading) {
+    return (
+      <div className="flex-1 flex items-center justify-center min-h-[60vh]">
+        <RefreshCw className="h-8 w-8 text-orange-500 animate-spin" />
+      </div>
+    );
+  }
+
+  if (!isDemo && !user) {
+    return (
+      <div className="mx-auto max-w-md w-full px-4 py-20 flex-1 flex flex-col justify-center">
+        <div className="glass-card rounded-3xl p-8 border border-white/5 text-center space-y-6">
+          <div className="h-12 w-12 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center mx-auto text-red-400">
+            <Shield className="h-6 w-6" />
+          </div>
+          <div className="space-y-2">
+            <h1 className="text-xl font-black text-white">Admin Authentication Required</h1>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              To make persistent database updates on the SailorPath platform, you must log in with an authorized administrator account.
+            </p>
+          </div>
+          <a
+            href="/login"
+            className="block w-full rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs font-bold text-white transition-all shadow-lg shadow-orange-600/20 text-center"
+          >
+            Sign In to Admin Portal
+          </a>
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 flex-1 flex flex-col gap-8">
+      {/* Superadmin RLS check controller or User Badge */}
+      {isDemo ? (
+        <div className="glass-panel rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/5">
+          <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
+            <Shield className="h-4 w-4 text-orange-500" />
+            <span>CURRENT SIMULATED USER ROLE:</span>
+          </div>
+          <div className="flex gap-2">
+            {(["superadmin", "coach", "sailor"] as const).map((role) => (
+              <button
+                key={role}
+                onClick={() => setAdminRole(role)}
+                className={`rounded-full px-4 py-1 text-xs font-bold capitalize transition-all border ${
+                  adminRole === role
+                    ? "bg-orange-600 text-white border-orange-500"
+                    : "bg-slate-800 text-slate-400 border-white/5 hover:text-white"
+                }`}
+              >
+                {role}
+              </button>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="glass-panel rounded-2xl p-4 flex items-center justify-between gap-4 border border-white/5 bg-slate-900/40">
+          <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
+            <Shield className="h-4 w-4 text-orange-500" />
+            <span>Logged in as: <span className="text-white">{user?.email}</span></span>
+          </div>
+          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[10px] font-black text-orange-400 capitalize">
+            {adminRole}
+          </span>
+        </div>
+      )}
 
       {/* Tab Navigation */}
       <div className="flex border-b border-white/5 gap-4 overflow-x-auto pb-0.5">
