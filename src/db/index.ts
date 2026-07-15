@@ -13,6 +13,9 @@ const conn =
     max: 10,
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 2000,
+    ssl: process.env.DATABASE_URL && (process.env.DATABASE_URL.includes("supabase") || process.env.DATABASE_URL.includes("pooler.supabase.com"))
+      ? { rejectUnauthorized: false }
+      : false,
   });
 
 if (process.env.NODE_ENV !== "production") globalForDb.conn = conn;

@@ -5,6 +5,7 @@ export default defineConfig({
   out: "./src/db/migrations",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL || "postgres://postgres.xxx:xxx@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres",
+    url: process.env.DATABASE_URL || "",
+    ssl: { rejectUnauthorized: false },
   },
 });
