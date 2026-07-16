@@ -1,6 +1,7 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { getAuthCookieOptions } from "@/lib/supabase/cookie-options";
 
 function getPublicConfig() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -17,8 +18,10 @@ function getPublicConfig() {
 export const createServerSupabaseClient = async () => {
   const { url, anonKey } = getPublicConfig();
   const cookieStore = await cookies();
+  const cookieOptions = getAuthCookieOptions();
 
   return createServerClient(url, anonKey, {
+    ...(cookieOptions ? { cookieOptions } : {}),
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -26,7 +29,10 @@ export const createServerSupabaseClient = async () => {
       setAll(cookiesToSet) {
         try {
           cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
+            cookieStore.set(name, value, {
+              ...options,
+              ...(cookieOptions || {}),
+            })
           );
         } catch {
           /* called from a Server Component */

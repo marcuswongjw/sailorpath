@@ -640,11 +640,16 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             </p>
           </div>
           <a
-            href="/login"
+            href={`https://sailorpath.com/login?next=${encodeURIComponent("https://admin.sailorpath.com/")}`}
             className="block w-full rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs font-bold text-white transition-all shadow-lg shadow-orange-600/20 text-center"
           >
             Sign In to Admin Portal
           </a>
+          <p className="text-[10px] text-slate-500 leading-relaxed">
+            After login you return here. For a live (non-demo) admin, set{" "}
+            <code className="text-slate-400">DATABASE_URL</code> on Vercel and make your{" "}
+            <code className="text-slate-400">profiles.role = superadmin</code>.
+          </p>
         </div>
       </div>
     );

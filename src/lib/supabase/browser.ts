@@ -1,6 +1,7 @@
 "use client";
 
 import { createBrowserClient } from "@supabase/ssr";
+import { getAuthCookieOptions } from "@/lib/supabase/cookie-options";
 
 /**
  * Browser Supabase client (cookie-backed via @supabase/ssr).
@@ -16,5 +17,7 @@ export function createBrowserSupabase() {
     );
   }
 
-  return createBrowserClient(url, key);
+  const cookieOptions = getAuthCookieOptions();
+
+  return createBrowserClient(url, key, cookieOptions ? { cookieOptions } : undefined);
 }

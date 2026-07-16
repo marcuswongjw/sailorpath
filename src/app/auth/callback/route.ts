@@ -1,11 +1,16 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
+import {
+  getAuthCookieOptions,
+  safeAuthNext,
+} from "@/lib/supabase/cookie-options";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = searchParams.get("next") ?? "/";
+  const nextRaw = searchParams.get("next") ?? "/";
+  const next = safeAuthNext(nextRaw, "/");
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -21,7 +26,9 @@ export async function GET(request: Request) {
   }
 
   const cookieStore = await cookies();
+  const cookieOptions = getAuthCookieOptions();
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    ...(cookieOptions ? { cookieOptions } : {}),
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -29,7 +36,10 @@ export async function GET(request: Request) {
       setAll(cookiesToSet) {
         try {
           cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
+            cookieStore.set(name, value, {
+              ...options,
+              ...(cookieOptions || {}),
+            })
           );
         } catch {
           // The `setAll` method was called from a Server Component.
@@ -83,5 +93,9 @@ export async function GET(request: Request) {
     console.warn("Profile bootstrap after OAuth failed (check DATABASE_URL):", e);
   }
 
+  // Absolute next (e.g. https://admin.sailorpath.com/) or relative on origin
+  if (next.startsWith("http://") || next.startsWith("https://")) {
+    return NextResponse.redirect(next);
+  }
   return NextResponse.redirect(`${origin}${next}`);
 }

@@ -3,13 +3,30 @@
 import { useState, Suspense } from "react";
 import Link from "next/link";
 import { Mail, Lock, ShieldAlert, Sparkles } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
+import { safeAuthNext } from "@/lib/supabase/cookie-options";
+
+async function ensureProfileBestEffort() {
+  const ac = new AbortController();
+  const timer = setTimeout(() => ac.abort(), 2500);
+  try {
+    await fetch("/api/auth/ensure-profile", {
+      method: "POST",
+      credentials: "include",
+      signal: ac.signal,
+    });
+  } catch {
+    /* DB may still be offline — auth session is independent */
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 function LoginForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const urlError = searchParams.get("error");
+  const nextTarget = safeAuthNext(searchParams.get("next"), "/");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +50,7 @@ function LoginForm() {
         const { error: authError } = await supabase.auth.signInWithOtp({
           email: cleanEmail,
           options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=/`,
+            emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextTarget)}`,
           },
         });
         if (authError) {
@@ -64,14 +81,12 @@ function LoginForm() {
             setError(msg);
           }
         } else if (data.session) {
-          try {
-            await fetch("/api/auth/ensure-profile", { method: "POST" });
-          } catch {
-            /* profile optional until DB works */
-          }
           setMessage("Logged in successfully! Redirecting…");
-          router.push("/");
-          router.refresh();
+          // Best-effort profile row; do not block redirect if DB is offline
+          await ensureProfileBestEffort();
+          // Full navigation so cookie session + header update reliably
+          window.location.assign(nextTarget);
+          return;
         } else {
           setError("Login succeeded but no session was created. Try again.");
         }

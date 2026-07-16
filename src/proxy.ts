@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { getAuthCookieOptions } from "@/lib/supabase/cookie-options";
 
 /**
  * Next.js 16 proxy (replaces middleware):
@@ -13,14 +14,17 @@ export async function proxy(request: NextRequest) {
   // If visiting the root of admin.sailorpath.com, rewrite to /admin dashboard
   if (host.includes("admin.sailorpath.com") && url.pathname === "/") {
     url.pathname = "/admin";
-    return NextResponse.rewrite(url);
+    // Continue into cookie refresh with rewrite response below
   }
 
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
+  let response =
+    host.includes("admin.sailorpath.com") && request.nextUrl.pathname === "/"
+      ? NextResponse.rewrite(new URL("/admin", request.url))
+      : NextResponse.next({
+          request: {
+            headers: request.headers,
+          },
+        });
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -29,7 +33,10 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
+  const cookieOptions = getAuthCookieOptions();
+
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    ...(cookieOptions ? { cookieOptions } : {}),
     cookies: {
       getAll() {
         return request.cookies.getAll();
@@ -38,13 +45,20 @@ export async function proxy(request: NextRequest) {
         cookiesToSet.forEach(({ name, value }) => {
           request.cookies.set(name, value);
         });
-        response = NextResponse.next({
-          request: {
-            headers: request.headers,
-          },
-        });
+        // Preserve rewrite when refreshing cookies on admin root
+        response =
+          host.includes("admin.sailorpath.com") && request.nextUrl.pathname === "/"
+            ? NextResponse.rewrite(new URL("/admin", request.url))
+            : NextResponse.next({
+                request: {
+                  headers: request.headers,
+                },
+              });
         cookiesToSet.forEach(({ name, value, options }) => {
-          response.cookies.set(name, value, options);
+          response.cookies.set(name, value, {
+            ...options,
+            ...(cookieOptions || {}),
+          });
         });
       },
     },

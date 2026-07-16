@@ -4,18 +4,22 @@ Demo Mode means the **Vercel app cannot open PostgreSQL**. Running SQL in Supaba
 
 ---
 
-## 1. Fix Demo Mode (`DATABASE_URL` on Vercel)
+## 1. Fix Demo Mode (`DATABASE_URL` on Vercel) — **required for live admin**
+
+`admin.sailorpath.com` stays **simulated** until Vercel can open PostgreSQL.
+Auth (register/login) can work without this; rankings + admin writes cannot.
 
 ### A. Get the connection string from Supabase
 
-1. Open [Supabase Dashboard](https://supabase.com/dashboard) → your project  
+1. Open [Supabase Dashboard](https://supabase.com/dashboard) → the **same** project as Auth  
+   (production currently uses host like `fdziuyexczkngvugvsbu.supabase.co`)  
 2. **Project Settings → Database**  
 3. Under **Connection string**, choose:
    - **URI**
    - Mode: **Transaction** (recommended for Vercel) — host looks like  
      `aws-0-….pooler.supabase.com` **port `6543`**
 4. Copy and replace `[YOUR-PASSWORD]` with the **database password**  
-   (reset under Database settings if needed)
+   (reset under Database settings if needed — password is **not** the anon key)
 
 Example shapes:
 
@@ -32,25 +36,38 @@ postgresql://postgres:PASSWORD@db.XXXX.supabase.co:5432/postgres
 
 ### B. Add env vars on Vercel
 
-1. [Vercel Dashboard](https://vercel.com) → project **sailorpath** (or whatever hosts sailorpath.com)  
+1. [Vercel Dashboard](https://vercel.com) → project that hosts **sailorpath.com**  
 2. **Settings → Environment Variables**  
-3. Add for **Production** (and Preview if you want):
+3. Add for **Production** (check Production checkbox):
 
 | Name | Value |
 |------|--------|
-| `DATABASE_URL` | the URI from step A |
+| `DATABASE_URL` | the URI from step A (pooler **6543**) |
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://XXXX.supabase.co` |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Project Settings → API → `anon` `public` |
 | `SUPERADMIN_EMAIL` | your email (e.g. `marcuswongjw@gmail.com`) |
-| `NEXT_PUBLIC_SITE_URL` | `https://www.sailorpath.com` |
+| `NEXT_PUBLIC_SITE_URL` | `https://sailorpath.com` |
+| `NEXT_PUBLIC_COOKIE_DOMAIN` | `.sailorpath.com` (so login works on admin subdomain) |
 
 4. **Deployments → … on latest → Redeploy**  
    (env changes do **not** apply until redeploy)
 
 ### C. Confirm
 
-- Open https://www.sailorpath.com — orange **Demo Mode** banner should **disappear**  
-- If it stays, open Vercel → Deployment → **Functions / Logs** and look for connection errors (wrong password, IPv6, etc.)
+1. Open https://sailorpath.com/api/health  
+   - Expect `"mode":"live"` and `"database.connected": true`  
+   - If `"DATABASE_URL": false` → variable still missing on Production  
+   - If connected false with an error → wrong password / wrong pooler host  
+2. Open https://sailorpath.com — orange **Demo Mode** banner should **disappear**  
+3. Open https://admin.sailorpath.com — should **not** say “simulated”  
+4. Log in, then SQL:
+
+```sql
+UPDATE profiles SET role = 'superadmin'
+WHERE email = 'YOUR_EMAIL';
+```
+
+(or rely on `SUPERADMIN_EMAIL` bootstrap)
 
 ---
 

@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Compass, Mail, Lock, Globe, ArrowRight, UserCheck } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [handle, setHandle] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -73,16 +71,22 @@ export default function RegisterPage() {
       // Session present = email confirmation OFF → user can use the app now
       if (data.session) {
         try {
-          await fetch("/api/auth/ensure-profile", { method: "POST" });
+          const ac = new AbortController();
+          const t = setTimeout(() => ac.abort(), 2500);
+          await fetch("/api/auth/ensure-profile", {
+            method: "POST",
+            credentials: "include",
+            signal: ac.signal,
+          });
+          clearTimeout(t);
         } catch {
-          /* profile can be created later */
+          /* profile can be created later — do not block on missing DATABASE_URL */
         }
         setNeedsEmailConfirm(false);
         setIsSuccess(true);
         setTimeout(() => {
-          router.push("/");
-          router.refresh();
-        }, 1500);
+          window.location.assign("/");
+        }, 800);
       } else {
         // Email confirmation ON — cannot log in until confirmed
         setNeedsEmailConfirm(true);
