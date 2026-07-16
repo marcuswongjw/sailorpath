@@ -44,6 +44,13 @@ export default function RegisterPage() {
         return;
       }
 
+      // Create profiles row when email confirm is disabled / session exists
+      try {
+        await fetch("/api/auth/ensure-profile", { method: "POST" });
+      } catch {
+        /* ignore until DATABASE_URL works */
+      }
+
       setIsSuccess(true);
     } catch (err: any) {
       setError(err.message || "An unexpected error occurred.");

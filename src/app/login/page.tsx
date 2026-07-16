@@ -47,6 +47,12 @@ export default function LoginPage() {
         if (authError) {
           setError(authError.message);
         } else {
+          // Ensure profiles row exists (works even if SQL trigger not installed)
+          try {
+            await fetch("/api/auth/ensure-profile", { method: "POST" });
+          } catch {
+            /* DB may still be offline */
+          }
           setMessage("Logged in successfully! Redirecting...");
           setTimeout(() => {
             router.push("/");
