@@ -25,33 +25,35 @@ interface SailorProfileViewProps {
   initialSailor: any;
   initialResults: any[];
   initialEquipment: any;
+  /** Server-resolved privilege (owner/parent/confirmed coach/superadmin) */
+  canSeePrivate?: boolean;
+  isDemo?: boolean;
 }
 
 export function SailorProfileView({
   initialSailor,
   initialResults,
   initialEquipment,
+  canSeePrivate = false,
+  isDemo = false,
 }: SailorProfileViewProps) {
-  // Demo interactive states
-  const [viewAs, setViewAs] = useState<"public" | "owner" | "parent" | "coach" | "admin">("public");
-  
-  // Privacy states
+  // Demo-only simulator — never overrides server canSeePrivate in production data
+  const [viewAs, setViewAs] = useState<"public" | "owner" | "parent" | "coach" | "admin">(
+    canSeePrivate ? "owner" : "public"
+  );
+
   const [isPublicWeight, setIsPublicWeight] = useState(initialSailor.isPublicWeight || false);
   const [isPublicDob, setIsPublicDob] = useState(initialSailor.isPublicDob || false);
   const [isPublicEquipment, setIsPublicEquipment] = useState(initialSailor.isPublicEquipment || false);
 
-  // Pagination limit
   const [visibleCount, setVisibleCount] = useState(15);
-  
-  // Expanded race detail view
   const [expandedRegattaId, setExpandedRegattaId] = useState<string | null>(null);
 
-  // Check visibility rights
-  const hasPrivateAccess =
-    viewAs === "owner" ||
-    viewAs === "parent" ||
-    viewAs === "coach" ||
-    viewAs === "admin";
+  const simulatedPrivate =
+    isDemo &&
+    (viewAs === "owner" || viewAs === "parent" || viewAs === "coach" || viewAs === "admin");
+
+  const hasPrivateAccess = canSeePrivate || simulatedPrivate;
 
   const showWeight = isPublicWeight || hasPrivateAccess;
   const showDob = isPublicDob || hasPrivateAccess;
@@ -90,28 +92,30 @@ export function SailorProfileView({
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col gap-8">
-      {/* View As Simulator Control Panel */}
-      <div className="glass-panel rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/5">
-        <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
-          <Eye className="h-4 w-4 text-orange-500" />
-          <span>SIMULATE ACCESS LEVEL (RLS):</span>
+      {/* Privacy simulator — demo mode only */}
+      {isDemo && (
+        <div className="glass-panel rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/5">
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
+            <Eye className="h-4 w-4 text-orange-500" />
+            <span>DEMO ONLY — simulate access level:</span>
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {(["public", "owner", "parent", "coach", "admin"] as const).map((role) => (
+              <button
+                key={role}
+                onClick={() => setViewAs(role)}
+                className={`rounded-full px-3 py-1 text-xs font-bold transition-all capitalize border ${
+                  viewAs === role
+                    ? "bg-orange-600 text-white border-orange-500"
+                    : "bg-slate-800 text-slate-400 border-white/5 hover:text-white"
+                }`}
+              >
+                {role === "owner" ? "Sailor (Self)" : role === "admin" ? "Superadmin" : role}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-wrap gap-1.5">
-          {(["public", "owner", "parent", "coach", "admin"] as const).map((role) => (
-            <button
-              key={role}
-              onClick={() => setViewAs(role)}
-              className={`rounded-full px-3 py-1 text-xs font-bold transition-all capitalize border ${
-                viewAs === role
-                  ? "bg-orange-600 text-white border-orange-500"
-                  : "bg-slate-800 text-slate-400 border-white/5 hover:text-white"
-              }`}
-            >
-              {role === "owner" ? "Sailor (Self)" : role === "admin" ? "Superadmin" : role}
-            </button>
-          ))}
-        </div>
-      </div>
+      )}
 
       {/* Main Profile Header Section */}
       <div className="glass-panel rounded-3xl p-6 md:p-8 border border-white/5 relative overflow-hidden flex flex-col md:flex-row items-center md:items-start justify-between gap-6">

@@ -105,13 +105,21 @@ export function resolveSailorFleet(
     return null;
   }
 
-  // 2. If drop date is set and is prior to the start of this period, they do not appear
-  if (dropDate && dropDate < pStart) {
-    return null;
+  // 2. Drop: exclusive from the drop date onward (inclusive of drop day)
+  // If drop is on or before period end and on or before "now in period", exclude when
+  // drop is before period start OR drop falls within the period (left series that half).
+  if (dropDate !== null) {
+    if (dropDate < pStart) return null;
+    // Drop during this half-year → not active for the full period board
+    if (dropDate <= pEnd) return null;
   }
 
-  // 3. Resolve fleet: Gold if they have a gold entry date and that date is <= pEnd
+  // 3. Gold is sticky once gold entry is on or before period end
   const isGold = goldDate !== null && goldDate <= pEnd;
+  // Silver only if not gold and silver entry is on or before period end
+  if (!isGold) {
+    if (silverDate === null || silverDate > pEnd) return null;
+  }
 
   return {
     active: true,

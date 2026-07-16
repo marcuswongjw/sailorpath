@@ -37,11 +37,32 @@ export async function getRegattaResults(): Promise<QueryResponse<any[]>> {
   }
 }
 
-export async function getSailorProfile(handle: string): Promise<QueryResponse<{
+/**
+ * Public profile payload: strip private fields unless flags allow public view.
+ * Owner/parent/coach private access is enforced via canSeePrivate (server-side).
+ */
+function toPublicSailor(sailor: any, canSeePrivate: boolean) {
+  const out = { ...sailor };
+  if (!canSeePrivate && !sailor.isPublicWeight) {
+    out.weight = null;
+  }
+  if (!canSeePrivate && !sailor.isPublicDob) {
+    out.dob = null;
+  }
+  // Never send raw private flags incorrectly — keep toggles so UI can show "Private"
+  return out;
+}
+
+export async function getSailorProfile(
+  handle: string,
+  opts?: { canSeePrivate?: boolean }
+): Promise<QueryResponse<{
   sailor: any;
   results: any[];
   equipment: any | null;
+  canSeePrivate: boolean;
 } | null>> {
+  const canSeePrivate = !!opts?.canSeePrivate;
   try {
     // 1. Fetch Sailor
     const sailorList = await db.select().from(sailors).where(eq(sailors.handle, handle)).limit(1);
@@ -63,17 +84,28 @@ export async function getSailorProfile(handle: string): Promise<QueryResponse<{
       .where(eq(regattaResults.sailorId, sailor.id))
       .orderBy(desc(regattas.date));
 
-    // 3. Fetch Equipment
-    const eqList = await db.select().from(equipmentLogs).where(eq(equipmentLogs.sailorId, sailor.id)).limit(1);
-    const equipment = eqList.length > 0 ? eqList[0] : null;
+    // 3. Fetch Equipment (only if public or privileged)
+    let equipment: any | null = null;
+    if (canSeePrivate || sailor.isPublicEquipment) {
+      const eqList = await db
+        .select()
+        .from(equipmentLogs)
+        .where(eq(equipmentLogs.sailorId, sailor.id))
+        .limit(1);
+      equipment = eqList.length > 0 ? eqList[0] : null;
+    }
 
     return {
-      data: { sailor, results: sailorResults, equipment },
+      data: {
+        sailor: toPublicSailor(sailor, canSeePrivate),
+        results: sailorResults,
+        equipment,
+        canSeePrivate,
+      },
       isDemo: false,
     };
   } catch (error) {
     console.warn("DB error for profile, falling back to mock data.", error);
-    // Find in mock data
     const mData = getMockData();
     const sailor = mData.sailors.find((s) => s.handle === handle);
     if (!sailor) return { data: null, isDemo: true };
@@ -92,10 +124,23 @@ export async function getSailorProfile(handle: string): Promise<QueryResponse<{
         };
       });
 
-    const eqLog = mData.equipmentLogs.find((e) => e.sailorId === sailor.id) || null;
+    const mockSailor = sailor as typeof sailor & {
+      isPublicWeight?: boolean;
+      isPublicDob?: boolean;
+      isPublicEquipment?: boolean;
+    };
+    const eqLog =
+      canSeePrivate || mockSailor.isPublicEquipment
+        ? mData.equipmentLogs.find((e) => e.sailorId === sailor.id) || null
+        : null;
 
     return {
-      data: { sailor, results, equipment: eqLog },
+      data: {
+        sailor: toPublicSailor(mockSailor, canSeePrivate),
+        results,
+        equipment: eqLog,
+        canSeePrivate,
+      },
       isDemo: true,
     };
   }

@@ -32,46 +32,58 @@ interface AdminDashboardProps {
 export function AdminDashboard({ initialSailors, initialRegattas, initialResults, isDemo }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<"import" | "reconciliation" | "bulk" | "edit">("import");
   
-  // Auth state integration
+  // Auth state — role from server /profiles, never user_metadata
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(!isDemo);
-  const [adminRole, setAdminRole] = useState<"superadmin" | "coach" | "sailor">(isDemo ? "superadmin" : "sailor");
+  const [adminRole, setAdminRole] = useState<"superadmin" | "coach" | "sailor" | "parent">(
+    isDemo ? "superadmin" : "sailor"
+  );
+  const [importMeta, setImportMeta] = useState({
+    name: "",
+    date: new Date().toISOString().slice(0, 10),
+    division: "Gold",
+    fleetSize: 50,
+  });
+  const [fullImportRows, setFullImportRows] = useState<
+    { name: string; rank: number | null; nett: number | null }[]
+  >([]);
+  const [importRegattaId, setImportRegattaId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isDemo) return;
+    if (isDemo) {
+      setLoading(false);
+      return;
+    }
 
     const supabase = createSupabaseClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co",
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key"
     );
-    
-    // Load session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setUser(session.user);
-        setAdminRole((session.user.user_metadata?.role || "sailor") as any);
-      } else {
+
+    async function loadRole() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) {
         setUser(null);
+        setAdminRole("sailor");
+        setLoading(false);
+        return;
+      }
+      setUser(session.user);
+      try {
+        const res = await fetch("/api/admin/me");
+        const data = await res.json();
+        setAdminRole((data.role || "sailor") as any);
+      } catch {
         setAdminRole("sailor");
       }
       setLoading(false);
-    });
+    }
 
-    // Listen to changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (session?.user) {
-        setUser(session.user);
-        setAdminRole((session.user.user_metadata?.role || "sailor") as any);
-      } else {
-        setUser(null);
-        setAdminRole("sailor");
-      }
-      setLoading(false);
+    loadRole();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
+      loadRole();
     });
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, [isDemo]);
 
   // Excel Import States
@@ -194,35 +206,157 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       const workbook = read(data, { type: "binary" });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-      const json = utils.sheet_to_json(sheet);
-      setParsedData(json.slice(0, 15)); // Show preview of 15 records
-      setImportStatus(`Successfully parsed ${json.length} rows from Excel file.`);
+      const json = utils.sheet_to_json<Record<string, unknown>>(sheet, { defval: null });
+      const mapped = json
+        .map((r) => {
+          const keys = Object.keys(r);
+          const nameKey = keys.find((k) => /name|sailor/i.test(k)) || keys[0];
+          const rankKey = keys.find((k) => /rank|pos|place/i.test(k));
+          const nettKey = keys.find((k) => /nett|points|pts|score/i.test(k));
+          const name = String(r[nameKey!] ?? "").trim();
+          const rank = rankKey != null && r[rankKey] != null ? Number(r[rankKey]) : null;
+          const nett = nettKey != null && r[nettKey] != null ? Number(r[nettKey]) : null;
+          return {
+            name,
+            rank: Number.isFinite(rank as number) ? rank : null,
+            nett: Number.isFinite(nett as number) ? nett : null,
+          };
+        })
+        .filter((r) => r.name);
+      setFullImportRows(mapped);
+      setParsedData(mapped.slice(0, 15));
+      setImportStatus(`Parsed ${mapped.length} rows. Fill regatta details and click Import to database.`);
+      if (!importMeta.name) {
+        setImportMeta((m) => ({ ...m, name: file.name.replace(/\.[^.]+$/, "") }));
+      }
     };
     reader.readAsBinaryString(file);
   };
 
-  // Reconciliation Handlers
-  const handleMerge = (queueId: string, sailorId: string) => {
-    setReconciliationQueue((prev) => prev.filter((item) => item.id !== queueId));
-    alert("Reconciliation complete: Merged name to existing sailor record.");
+  const handleImportToDb = async () => {
+    if (!isSuperadmin) {
+      alert("Error: 403 Forbidden. Only Superadmins can import.");
+      return;
+    }
+    if (!fullImportRows.length || !importMeta.name || !importMeta.date) {
+      alert("Parse a file and set regatta name + date first.");
+      return;
+    }
+    setImportStatus("Importing…");
+    try {
+      const res = await fetch("/api/admin/import", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          regattaName: importMeta.name,
+          eventDate: importMeta.date,
+          division: importMeta.division,
+          totalFleetSize: importMeta.fleetSize || fullImportRows.length,
+          rows: fullImportRows,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Import failed");
+      setImportRegattaId(data.regatta?.id || null);
+      if (data.regatta) {
+        setRegattaList((prev) => {
+          const exists = prev.some((r) => r.id === data.regatta.id);
+          return exists
+            ? prev.map((r) => (r.id === data.regatta.id ? data.regatta : r))
+            : [...prev, data.regatta];
+        });
+      }
+      const queue = (data.unmatched || []).map(
+        (
+          u: {
+            rawName: string;
+            rank: number | null;
+            nett: number | null;
+            suggestedId: string | null;
+            suggestedName: string | null;
+            similarity: number;
+          },
+          i: number
+        ) => ({
+          id: `unmapped-${Date.now()}-${i}`,
+          rawName: u.rawName,
+          score: u.rank ?? u.nett ?? 0,
+          suggestedId: u.suggestedId,
+          suggestedName: u.suggestedName,
+          similarity: Math.round((u.similarity || 0) * 100),
+          regattaId: data.regatta?.id,
+          rank: u.rank,
+          nett: u.nett,
+        })
+      );
+      setReconciliationQueue(queue);
+      setImportStatus(data.message);
+      if (queue.length) setActiveTab("reconciliation");
+    } catch (e: any) {
+      setImportStatus(null);
+      alert(e.message || "Import failed");
+    }
   };
 
-  const handleCreateNew = (queueId: string, rawName: string) => {
-    setReconciliationQueue((prev) => prev.filter((item) => item.id !== queueId));
-    // Add to local list in bulk view
-    const newHandle = rawName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    const newSailor = {
-      id: `new-${Date.now()}`,
-      name: rawName,
-      handle: newHandle,
-      sailNumber: "SGP 0000",
-      club: "N/A",
-      goldEntryDate: null,
-      silverEntryDate: new Date().toISOString().split("T")[0],
-      dropDate: null,
-    };
-    setSailorList((prev) => [...prev, newSailor]);
-    alert(`Created new sailor record: "${rawName}" with Silver fleet status.`);
+  // Reconciliation Handlers — persist via API
+  const handleMerge = async (queueId: string, sailorId: string) => {
+    if (!isSuperadmin) {
+      alert("Error: 403 Forbidden.");
+      return;
+    }
+    const item = reconciliationQueue.find((q) => q.id === queueId) as any;
+    if (!item) return;
+    try {
+      const res = await fetch("/api/admin/reconcile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "merge",
+          rawName: item.rawName,
+          suggestedId: sailorId,
+          regattaId: item.regattaId || importRegattaId,
+          rank: item.rank ?? item.score,
+          nett: item.nett ?? item.score,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Merge failed");
+      setReconciliationQueue((prev) => prev.filter((q) => q.id !== queueId));
+    } catch (e: any) {
+      alert(e.message);
+    }
+  };
+
+  const handleCreateNew = async (queueId: string, rawName: string) => {
+    if (!isSuperadmin) {
+      alert("Error: 403 Forbidden.");
+      return;
+    }
+    const item = reconciliationQueue.find((q) => q.id === queueId) as any;
+    try {
+      const res = await fetch("/api/admin/reconcile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "create",
+          rawName,
+          regattaId: item?.regattaId || importRegattaId,
+          rank: item?.rank ?? item?.score,
+          nett: item?.nett ?? item?.score,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Create failed");
+      setReconciliationQueue((prev) => prev.filter((q) => q.id !== queueId));
+      // refresh sailor list
+      const sRes = await fetch("/api/admin/sailors");
+      if (sRes.ok) {
+        const sData = await sRes.json();
+        if (sData.sailors) setSailorList(sData.sailors);
+      }
+    } catch (e: any) {
+      alert(e.message);
+    }
   };
 
   // Bulk Edit Handlers
@@ -240,58 +374,57 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
   };
 
-  const handleApplyBulk = () => {
+  const handleApplyBulk = async () => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can update fleet properties.");
       return;
     }
-
     if (selectedSailors.length === 0) {
       alert("Please select at least one sailor to bulk edit.");
       return;
     }
-
     if (!bulkField) {
       alert("Please select a field to update.");
       return;
     }
+    try {
+      const res = await fetch("/api/admin/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sailorIds: selectedSailors,
+          field: bulkField,
+          value: bulkValue,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Bulk update failed");
 
-    // Apply updates locally
-    setSailorList((prev) =>
-      prev.map((s) => {
-        if (selectedSailors.includes(s.id)) {
+      setSailorList((prev) =>
+        prev.map((s) => {
+          if (!selectedSailors.includes(s.id)) return s;
           let typedValue: any = bulkValue;
-          
           const isNumeric = [
             "histRankingJun24", "histRankingDec24", "histRankingJun25", "histRankingDec25", "histRankingJun26",
-            "worlds", "european", "asian", "seaGames", "weight"
+            "worlds", "european", "asian", "seaGames", "weight",
           ].includes(bulkField);
-          
-          if (isNumeric) {
-            typedValue = bulkValue === "" ? null : parseInt(bulkValue) || null;
-          } else if (bulkField === "nationalSquadStatus" && bulkValue === "CLEAR") {
-            typedValue = null;
-          } else if (bulkValue === "") {
-            typedValue = null;
-          }
-
-          return {
-            ...s,
-            [bulkField]: typedValue,
-          };
-        }
-        return s;
-      })
-    );
-
-    setBulkStatus(`Successfully updated '${bulkField}' for ${selectedSailors.length} sailors.`);
-    setSelectedSailors([]);
-    setBulkValue("");
-    setTimeout(() => setBulkStatus(null), 3000);
+          if (isNumeric) typedValue = bulkValue === "" ? null : parseInt(bulkValue) || null;
+          else if (bulkField === "nationalSquadStatus" && bulkValue === "CLEAR") typedValue = null;
+          else if (bulkValue === "") typedValue = null;
+          return { ...s, [bulkField]: typedValue };
+        })
+      );
+      setBulkStatus(data.message || `Updated ${selectedSailors.length} sailors.`);
+      setSelectedSailors([]);
+      setBulkValue("");
+      setTimeout(() => setBulkStatus(null), 3000);
+    } catch (e: any) {
+      alert(e.message);
+    }
   };
 
-  // Sailor CRUD Handlers
-  const handleSaveSailor = () => {
+  // Sailor CRUD Handlers — persist to DB
+  const handleSaveSailor = async () => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
@@ -300,46 +433,55 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Name and Sail Number are required.");
       return;
     }
-
-    if (editingSailorId === "new") {
-      const newId = `sailor-${Date.now()}`;
-      const newSailor = {
-        ...sailorForm,
-        id: newId,
-        handle: sailorForm.handle || sailorForm.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-        weight: sailorForm.weight ? parseInt(sailorForm.weight) : null,
-      };
-      setSailorList((prev) => [...prev, newSailor]);
-      alert("Sailor created successfully!");
-    } else {
-      setSailorList((prev) =>
-        prev.map((s) =>
-          s.id === editingSailorId
-            ? {
-                ...s,
-                ...sailorForm,
-                weight: sailorForm.weight ? parseInt(sailorForm.weight) : null,
-              }
-            : s
-        )
-      );
-      alert("Sailor updated successfully!");
+    try {
+      if (editingSailorId === "new") {
+        const res = await fetch("/api/admin/sailors", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(sailorForm),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Create failed");
+        setSailorList((prev) => [...prev, data.sailor]);
+        alert("Sailor created successfully!");
+      } else {
+        const res = await fetch("/api/admin/sailors", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...sailorForm, id: editingSailorId }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Update failed");
+        setSailorList((prev) =>
+          prev.map((s) => (s.id === editingSailorId ? data.sailor : s))
+        );
+        alert("Sailor updated successfully!");
+      }
+      setEditingSailorId(null);
+    } catch (e: any) {
+      alert(e.message);
     }
-    setEditingSailorId(null);
   };
 
-  const handleDeleteSailor = (id: string) => {
+  const handleDeleteSailor = async (id: string) => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
     }
-    if (confirm("Are you sure you want to delete this sailor?")) {
+    if (!confirm("Are you sure you want to delete this sailor?")) return;
+    try {
+      const res = await fetch(`/api/admin/sailors?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Delete failed");
       setSailorList((prev) => prev.filter((s) => s.id !== id));
+    } catch (e: any) {
+      alert(e.message);
     }
   };
 
-  // Regatta CRUD Handlers
-  const handleSaveRegatta = () => {
+  const handleSaveRegatta = async () => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
@@ -348,51 +490,65 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Regatta Name and Date are required.");
       return;
     }
-
-    if (editingRegattaId === "new") {
-      const newId = `regatta-${Date.now()}`;
-      const newRegatta = {
-        ...regattaForm,
-        id: newId,
-        slug: regattaForm.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-        totalFleetSize: parseInt(regattaForm.totalFleetSize) || 50,
-      };
-      setRegattaList((prev) => [...prev, newRegatta]);
-      // Set default selected regatta for results if empty
-      if (!selectedRegattaIdForResultEdit) {
-        setSelectedRegattaIdForResultEdit(newId);
+    try {
+      if (editingRegattaId === "new") {
+        const res = await fetch("/api/admin/regattas", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(regattaForm),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Create failed");
+        setRegattaList((prev) => [...prev, data.regatta]);
+        if (!selectedRegattaIdForResultEdit) {
+          setSelectedRegattaIdForResultEdit(data.regatta.id);
+        }
+        alert("Regatta created successfully!");
+      } else {
+        const res = await fetch("/api/admin/regattas", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...regattaForm, id: editingRegattaId }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Update failed");
+        setRegattaList((prev) =>
+          prev.map((r) => (r.id === editingRegattaId ? data.regatta : r))
+        );
+        alert("Regatta updated successfully!");
       }
-      alert("Regatta created successfully!");
-    } else {
-      setRegattaList((prev) =>
-        prev.map((r) =>
-          r.id === editingRegattaId
-            ? {
-                ...r,
-                ...regattaForm,
-                totalFleetSize: parseInt(regattaForm.totalFleetSize) || 50,
-              }
-            : r
-        )
-      );
-      alert("Regatta updated successfully!");
+      setEditingRegattaId(null);
+    } catch (e: any) {
+      alert(e.message);
     }
-    setEditingRegattaId(null);
   };
 
-  const handleDeleteRegatta = (id: string) => {
+  const handleDeleteRegatta = async (id: string) => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
     }
-    if (confirm("Are you sure you want to delete this regatta? All results associated with it will also be deleted.")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete this regatta? All results associated with it will also be deleted."
+      )
+    ) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/admin/regattas?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Delete failed");
       setRegattaList((prev) => prev.filter((r) => r.id !== id));
       setResultsList((prev) => prev.filter((res) => res.regattaId !== id));
+    } catch (e: any) {
+      alert(e.message);
     }
   };
 
-  // Result CRUD Handlers
-  const handleSaveResult = () => {
+  const handleSaveResult = async () => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
@@ -401,42 +557,51 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Sailor and Regatta must be selected.");
       return;
     }
-
-    if (editingResultId === "new") {
-      const newId = `result-${Date.now()}`;
-      const newResult = {
-        ...resultForm,
-        id: newId,
-        rank: parseInt(resultForm.rank) || 1,
-        nettScore: parseInt(resultForm.nettScore) || 1,
-      };
-      setResultsList((prev) => [...prev, newResult]);
-      alert("Result added successfully!");
-    } else {
-      setResultsList((prev) =>
-        prev.map((r) =>
-          r.id === editingResultId
-            ? {
-                ...r,
-                ...resultForm,
-                rank: parseInt(resultForm.rank) || 1,
-                nettScore: parseInt(resultForm.nettScore) || 1,
-              }
-            : r
-        )
-      );
-      alert("Result updated successfully!");
+    try {
+      if (editingResultId === "new") {
+        const res = await fetch("/api/admin/results", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(resultForm),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Create failed");
+        setResultsList((prev) => [...prev, data.result]);
+        alert("Result added successfully!");
+      } else {
+        const res = await fetch("/api/admin/results", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...resultForm, id: editingResultId }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Update failed");
+        setResultsList((prev) =>
+          prev.map((r) => (r.id === editingResultId ? data.result : r))
+        );
+        alert("Result updated successfully!");
+      }
+      setEditingResultId(null);
+    } catch (e: any) {
+      alert(e.message);
     }
-    setEditingResultId(null);
   };
 
-  const handleDeleteResult = (id: string) => {
+  const handleDeleteResult = async (id: string) => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
     }
-    if (confirm("Are you sure you want to delete this result?")) {
+    if (!confirm("Are you sure you want to delete this result?")) return;
+    try {
+      const res = await fetch(`/api/admin/results?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Delete failed");
       setResultsList((prev) => prev.filter((r) => r.id !== id));
+    } catch (e: any) {
+      alert(e.message);
     }
   };
 
@@ -605,15 +770,68 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   {importStatus}
                 </div>
               )}
+
+              {fullImportRows.length > 0 && (
+                <div className="mt-6 w-full max-w-xl grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+                  <label className="text-xs text-slate-400">
+                    Regatta name
+                    <input
+                      className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                      value={importMeta.name}
+                      onChange={(e) => setImportMeta((m) => ({ ...m, name: e.target.value }))}
+                    />
+                  </label>
+                  <label className="text-xs text-slate-400">
+                    Event date
+                    <input
+                      type="date"
+                      className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                      value={importMeta.date}
+                      onChange={(e) => setImportMeta((m) => ({ ...m, date: e.target.value }))}
+                    />
+                  </label>
+                  <label className="text-xs text-slate-400">
+                    Division
+                    <select
+                      className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                      value={importMeta.division}
+                      onChange={(e) => setImportMeta((m) => ({ ...m, division: e.target.value }))}
+                    >
+                      <option value="Gold">Gold</option>
+                      <option value="Silver">Silver</option>
+                      <option value="Both">Both</option>
+                    </select>
+                  </label>
+                  <label className="text-xs text-slate-400">
+                    Total fleet size
+                    <input
+                      type="number"
+                      className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                      value={importMeta.fleetSize}
+                      onChange={(e) =>
+                        setImportMeta((m) => ({ ...m, fleetSize: Number(e.target.value) || 50 }))
+                      }
+                    />
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleImportToDb}
+                    disabled={!isSuperadmin}
+                    className="sm:col-span-2 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-xs font-bold text-white"
+                  >
+                    Import {fullImportRows.length} rows to database
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Column Mapping Preview */}
             {parsedData && (
               <div className="glass-card rounded-2xl p-6 border border-white/5 space-y-6">
                 <div>
-                  <h3 className="text-base font-bold text-white">Review Column Mapping</h3>
+                  <h3 className="text-base font-bold text-white">Preview (first 15 rows)</h3>
                   <p className="text-xs text-slate-500 mt-1">
-                    Verify that your Excel headers are mapped correctly to database schema columns.
+                    Headers are auto-detected (Name / Rank / Nett). Unmatched names go to reconciliation.
                   </p>
                 </div>
 

@@ -24,13 +24,15 @@ export default function RegisterPage() {
     setError(null);
 
     try {
+      // Never send role from the client — role is assigned only in profiles via
+      // server/trigger (default sailor/parent). Authorization reads profiles.role.
       const { data, error: authError } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             handle: handle.trim().toLowerCase(),
-            role: "sailor"
+            full_name: handle.trim(),
           },
           emailRedirectTo: `${window.location.origin}/auth/callback`
         }
