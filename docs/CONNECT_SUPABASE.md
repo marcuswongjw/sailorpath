@@ -60,8 +60,10 @@ Google is optional. Email/password works if enabled.
 
 1. Supabase → **Authentication → Providers → Email** → **Enabled**  
 2. For fastest testing: turn **off** “Confirm email” temporarily  
+   - **If “Confirm email” is ON**, Supabase often returns **“Invalid login credentials”** when you try to log in before opening the confirmation link — even with the correct password.
 3. On the site: **/register** with email + password  
 4. After login, a **profiles** row is created (trigger or `/api/auth/ensure-profile`)
+5. Confirm the user appears under Supabase → **Authentication → Users** (if not, `NEXT_PUBLIC_SUPABASE_*` on Vercel is wrong or not redeployed)
 
 ### Promote yourself to superadmin
 

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { read, utils } from "xlsx";
-import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import {
   Upload,
   Database,
@@ -19,6 +18,7 @@ import {
   Shield,
 } from "lucide-react";
 import { getPercentileBadge } from "@/lib/ranking";
+import { createBrowserSupabase } from "@/lib/supabase/browser";
 
 import { Plus, Trash2, Edit3, User, Medal } from "lucide-react";
 
@@ -55,35 +55,48 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       return;
     }
 
-    const supabase = createSupabaseClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder-project.supabase.co",
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key"
-    );
+    let subscription: { unsubscribe: () => void } | undefined;
 
     async function loadRole() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.user) {
+      try {
+        const supabase = createBrowserSupabase();
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        if (!session?.user) {
+          setUser(null);
+          setAdminRole("sailor");
+          setLoading(false);
+          return;
+        }
+        setUser(session.user);
+        try {
+          const res = await fetch("/api/admin/me");
+          const data = await res.json();
+          setAdminRole((data.role || "sailor") as any);
+        } catch {
+          setAdminRole("sailor");
+        }
+      } catch {
         setUser(null);
         setAdminRole("sailor");
+      } finally {
         setLoading(false);
-        return;
       }
-      setUser(session.user);
-      try {
-        const res = await fetch("/api/admin/me");
-        const data = await res.json();
-        setAdminRole((data.role || "sailor") as any);
-      } catch {
-        setAdminRole("sailor");
-      }
+    }
+
+    try {
+      const supabase = createBrowserSupabase();
+      loadRole();
+      const { data } = supabase.auth.onAuthStateChange(() => {
+        loadRole();
+      });
+      subscription = data.subscription;
+    } catch {
       setLoading(false);
     }
 
-    loadRole();
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(() => {
-      loadRole();
-    });
-    return () => subscription.unsubscribe();
+    return () => subscription?.unsubscribe();
   }, [isDemo]);
 
   // Excel Import States
