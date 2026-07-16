@@ -49,14 +49,16 @@ function LoginForm() {
 
         if (authError) {
           const msg = authError.message || "Login failed";
-          // Supabase returns this for wrong password AND for unconfirmed email
+          // Supabase uses the same message for: wrong password, unknown email,
+          // and users who still have email_confirmed_at = null (created before
+          // “Confirm email” was turned off — that toggle does NOT fix old users).
           if (/invalid login credentials/i.test(msg)) {
             setError(
-              "Invalid email or password. If you just registered, confirm your email first (check inbox), or ask an admin to disable “Confirm email” in Supabase → Authentication → Providers → Email."
+              "Invalid email or password. Common fix: in Supabase → Authentication → Users, find your email. If it says “Waiting for verification”, open the user → Confirm email (or delete the user and register again). Turning off “Confirm email” only affects NEW signups, not accounts already created."
             );
           } else if (/email not confirmed/i.test(msg)) {
             setError(
-              "Email not confirmed yet. Open the confirmation link we sent, or disable Confirm email in Supabase for testing."
+              "This account’s email was never confirmed. In Supabase → Authentication → Users open the user and click Confirm, or delete them and register again."
             );
           } else {
             setError(msg);
@@ -179,8 +181,9 @@ function LoginForm() {
         <div className="border-t border-white/5 pt-6 flex gap-3 text-slate-500 text-[10px] font-semibold leading-relaxed">
           <ShieldAlert className="h-5 w-5 text-orange-500/80 flex-shrink-0 mt-0.5" />
           <p>
-            If login fails right after register, confirm your email or disable “Confirm email” in
-            Supabase Authentication → Providers → Email for testing.
+            Still stuck after turning off Confirm email? That setting only applies to new accounts.
+            Delete your user under Supabase → Authentication → Users, then register again with the
+            same email — or open the user and mark the email as confirmed.
           </p>
         </div>
       </div>

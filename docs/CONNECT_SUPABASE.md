@@ -61,9 +61,33 @@ Google is optional. Email/password works if enabled.
 1. Supabase → **Authentication → Providers → Email** → **Enabled**  
 2. For fastest testing: turn **off** “Confirm email” temporarily  
    - **If “Confirm email” is ON**, Supabase often returns **“Invalid login credentials”** when you try to log in before opening the confirmation link — even with the correct password.
+   - **Turning Confirm email OFF does not fix old users.** Accounts created while confirmation was required still have `email_confirmed_at = null` until you confirm or delete them.
 3. On the site: **/register** with email + password  
 4. After login, a **profiles** row is created (trigger or `/api/auth/ensure-profile`)
 5. Confirm the user appears under Supabase → **Authentication → Users** (if not, `NEXT_PUBLIC_SUPABASE_*` on Vercel is wrong or not redeployed)
+
+### Login still fails after turning Confirm email off?
+
+In **SQL Editor** (confirms every unverified user so they can log in):
+
+```sql
+UPDATE auth.users
+SET email_confirmed_at = COALESCE(email_confirmed_at, now()),
+    confirmed_at = COALESCE(confirmed_at, now())
+WHERE email_confirmed_at IS NULL;
+```
+
+Or in the dashboard: **Authentication → Users** → open user → **Confirm email**,  
+or **Delete user** → register again on the site.
+
+Check who exists:
+
+```sql
+SELECT email, email_confirmed_at, created_at, last_sign_in_at
+FROM auth.users
+ORDER BY created_at DESC
+LIMIT 20;
+```
 
 ### Promote yourself to superadmin
 
