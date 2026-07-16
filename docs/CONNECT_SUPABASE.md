@@ -52,22 +52,40 @@ postgresql://postgres:PASSWORD@db.XXXX.supabase.co:5432/postgres
 4. **Deployments → … on latest → Redeploy**  
    (env changes do **not** apply until redeploy)
 
-### C. Confirm
+### C. Confirm with `/api/health`
 
-1. Open https://sailorpath.com/api/health  
-   - Expect `"mode":"live"` and `"database.connected": true`  
-   - If `"DATABASE_URL": false` → variable still missing on Production  
-   - If connected false with an error → wrong password / wrong pooler host  
-2. Open https://sailorpath.com — orange **Demo Mode** banner should **disappear**  
-3. Open https://admin.sailorpath.com — should **not** say “simulated”  
-4. Log in, then SQL:
+Open https://sailorpath.com/api/health after each change + redeploy.
+
+| Health JSON | Meaning | Fix |
+|-------------|---------|-----|
+| `"DATABASE_URL": false` | Env missing on Production | Add var, **Redeploy** |
+| `"isPooler": false` / host is `db.….supabase.co` | Direct host (often IPv6-only) | Switch to **Transaction pooler** `:6543` |
+| error contains `password` / `authentication` | Wrong DB password | Reset DB password in Supabase, update `DATABASE_URL`, URL-encode special chars |
+| `"publicTables": []` or error about `sailors` missing | Connected, **no schema** | Run `src/db/migrations/0007_bootstrap_schema.sql` in Supabase SQL Editor |
+| `"mode":"live"`, `"connected": true` | Success | Demo banner should be gone |
+
+### D. Create tables (if health says connected but no `sailors`)
+
+1. Supabase → **SQL Editor**  
+2. Paste entire file: `src/db/migrations/0007_bootstrap_schema.sql`  
+3. Run  
+4. Refresh `/api/health` — expect `publicTables` to include `sailors`, `regattas`, `profiles`
+
+### E. Superadmin
 
 ```sql
 UPDATE profiles SET role = 'superadmin'
 WHERE email = 'YOUR_EMAIL';
 ```
 
-(or rely on `SUPERADMIN_EMAIL` bootstrap)
+(or rely on `SUPERADMIN_EMAIL` on Vercel)
+
+### F. Live checklist
+
+1. https://sailorpath.com/api/health → `"mode":"live"`  
+2. https://sailorpath.com — no Demo Mode banner  
+3. https://admin.sailorpath.com — not “simulated”  
+4. Log in → admin writes persist
 
 ---
 
