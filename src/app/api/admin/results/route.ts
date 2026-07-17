@@ -24,10 +24,10 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const rank = Number(body.rank) || 999;
+    const rank = Math.round(Number(body.rank)) || 999;
     const nettScore =
       body.nettScore != null && body.nettScore !== ""
-        ? Number(body.nettScore)
+        ? Number(body.nettScore) // allow 14.5
         : rank;
 
     const [row] = await db

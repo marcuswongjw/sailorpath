@@ -47,6 +47,7 @@ export interface RegattaResultRecord {
   sailorId: string;
   regattaId: string;
   rank: number;
+  /** May be fractional (e.g. 14.5) */
   nettScore: number;
 }
 

@@ -530,7 +530,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         }),
       });
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Import failed");
+      if (!res.ok) throw new Error(data.error || data.message || "Import failed");
       setImportRegattaId(data.regatta?.id || null);
       // Refresh sailors after auto-create
       try {
@@ -546,6 +546,20 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             ? prev.map((r) => (r.id === data.regatta.id ? data.regatta : r))
             : [...prev, data.regatta];
         });
+      }
+      // Surface DB/migration hints (e.g. decimal nett scores)
+      if (data.hint || data.errorSamples?.length) {
+        const extra = [
+          data.hint,
+          ...(data.errorSamples || []).slice(0, 3),
+        ]
+          .filter(Boolean)
+          .join("\n");
+        if (extra) {
+          alert(
+            `${data.message || "Import finished with issues"}\n\n${extra}`
+          );
+        }
       }
       const queue = (data.unmatched || []).map(
         (

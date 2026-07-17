@@ -6,6 +6,7 @@ import {
   integer,
   boolean,
   date,
+  real,
   unique,
 } from "drizzle-orm/pg-core";
 
@@ -91,7 +92,8 @@ export const regattaResults = pgTable(
       .references(() => regattas.id, { onDelete: "cascade" })
       .notNull(),
     rank: integer("rank").notNull(),
-    nettScore: integer("nett_score").notNull(),
+    /** Allows half-points e.g. 14.5 from scoring systems */
+    nettScore: real("nett_score").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
