@@ -4,8 +4,7 @@ import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-function parseDns(body: Record<string, unknown>): boolean {
-  const v = body.isDns ?? body.isDNS;
+function parseBool(v: unknown): boolean {
   return (
     v === true ||
     v === "true" ||
@@ -14,6 +13,16 @@ function parseDns(body: Record<string, unknown>): boolean {
     v === "yes" ||
     v === 1 ||
     v === "1"
+  );
+}
+
+function parseDns(body: Record<string, unknown>): boolean {
+  return parseBool(body.isDns ?? body.isDNS);
+}
+
+function parseOverseas(body: Record<string, unknown>): boolean {
+  return parseBool(
+    body.isOverseasCommitment ?? body.overseasCommitment ?? body.overseas
   );
 }
 
@@ -54,6 +63,7 @@ export async function GET() {
       results: rows.map((r) => ({
         ...r,
         isDNS: r.isDns,
+        isOverseasCommitment: r.isOverseasCommitment,
       })),
     });
   } catch (e) {
@@ -136,7 +146,11 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const isDns = parseDns(body);
+    const isOverseasCommitment = parseOverseas(body);
+    // Overseas commitment is not generic DNS (different scoring rule)
+    let isDns = parseDns(body);
+    if (isOverseasCommitment) isDns = false;
+
     let rank = Math.round(Number(body.rank));
     if (!Number.isFinite(rank) || rank <= 0) {
       // Default DNS points from regatta fleet size when marking DNS without rank
@@ -169,6 +183,7 @@ export async function POST(req: Request) {
         nettScore,
         totalScore,
         isDns,
+        isOverseasCommitment,
       })
       .onConflictDoUpdate({
         target: [regattaResults.sailorId, regattaResults.regattaId],
@@ -177,12 +192,19 @@ export async function POST(req: Request) {
           nettScore,
           totalScore,
           isDns,
+          isOverseasCommitment,
           updatedAt: new Date(),
         },
       })
       .returning();
 
-    return NextResponse.json({ result: { ...row, isDNS: row.isDns } });
+    return NextResponse.json({
+      result: {
+        ...row,
+        isDNS: row.isDns,
+        isOverseasCommitment: row.isOverseasCommitment,
+      },
+    });
   } catch (e) {
     console.error("results POST", e);
     return jsonError(e);
@@ -211,6 +233,17 @@ export async function PATCH(req: Request) {
     if (body.isDns !== undefined || body.isDNS !== undefined) {
       patch.isDns = parseDns(body);
     }
+    if (
+      body.isOverseasCommitment !== undefined ||
+      body.overseasCommitment !== undefined ||
+      body.overseas !== undefined
+    ) {
+      patch.isOverseasCommitment = parseOverseas(body);
+      // Mutual exclusivity with generic DNS when overseas is set
+      if (patch.isOverseasCommitment === true) {
+        patch.isDns = false;
+      }
+    }
     if (body.sailorId !== undefined) patch.sailorId = body.sailorId;
     if (body.regattaId !== undefined) patch.regattaId = body.regattaId;
 
@@ -229,7 +262,7 @@ export async function PATCH(req: Request) {
           .limit(1);
         if (reg && (existing.isDns !== true || body.forceDnsScore)) {
           // only auto-set if was not already DNS or explicit force
-          if (!existing.isDns) {
+          if (!existing.isDns && !existing.isOverseasCommitment) {
             const pts = (reg.totalFleetSize || 50) + 1;
             patch.rank = pts;
             if (body.nettScore === undefined) patch.nettScore = pts;
@@ -247,7 +280,13 @@ export async function PATCH(req: Request) {
     if (!row) {
       return NextResponse.json({ error: "Result not found" }, { status: 404 });
     }
-    return NextResponse.json({ result: { ...row, isDNS: row.isDns } });
+    return NextResponse.json({
+      result: {
+        ...row,
+        isDNS: row.isDns,
+        isOverseasCommitment: row.isOverseasCommitment,
+      },
+    });
   } catch (e) {
     console.error("results PATCH", e);
     return jsonError(e);

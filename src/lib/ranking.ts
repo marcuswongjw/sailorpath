@@ -55,6 +55,11 @@ export interface RegattaResultRecord {
   totalScore?: number | null;
   /** Stored DNS / non-start — score still uses rank (editable) */
   isDns?: boolean | null;
+  /**
+   * Missed ranking regatta due to SSF overseas commitment;
+   * points usually = standing before the trip (editable).
+   */
+  isOverseasCommitment?: boolean | null;
 }
 
 export interface Period {
@@ -69,6 +74,7 @@ export interface RankedSailor extends SailorRecord {
     regattaName: string;
     score: number;
     isDNS: boolean;
+    isOverseasCommitment?: boolean;
   }[];
   bestThreeScores: number[];
   overallScore: number;
@@ -209,12 +215,13 @@ export function calculateRankings(
       );
 
       if (result) {
-        // Stored result (including edited DNS) — rank is the scoring points
+        // Stored result (DNS or overseas-adjusted) — rank is the scoring points
         return {
           regattaId: regatta.id,
           regattaName: regatta.name,
           score: result.rank,
-          isDNS: Boolean(result.isDns),
+          isDNS: Boolean(result.isDns) && !result.isOverseasCommitment,
+          isOverseasCommitment: Boolean(result.isOverseasCommitment),
         };
       } else {
         // No row yet: virtual DNS = fleet size + 1 (create a row in admin to edit)
@@ -223,6 +230,7 @@ export function calculateRankings(
           regattaName: regatta.name,
           score: regatta.totalFleetSize + 1,
           isDNS: true,
+          isOverseasCommitment: false,
         };
       }
     });

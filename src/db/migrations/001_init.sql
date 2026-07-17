@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS public.regatta_results (
   nett_score real NOT NULL,
   total_score real,
   is_dns boolean DEFAULT false NOT NULL,
+  is_overseas_commitment boolean DEFAULT false NOT NULL,
   created_at timestamp DEFAULT now() NOT NULL,
   updated_at timestamp DEFAULT now() NOT NULL,
   CONSTRAINT regatta_results_sailor_id_regatta_id_unique UNIQUE (sailor_id, regatta_id)

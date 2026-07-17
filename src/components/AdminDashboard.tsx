@@ -23,8 +23,9 @@ import {
 } from "lucide-react";
 import { getPercentileBadge } from "@/lib/ranking";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
+import { findDuplicateSailorPairs } from "@/lib/nameMatch";
 
-import { Plus, Trash2, Edit3, User, Medal } from "lucide-react";
+import { Plus, Trash2, Edit3, User, Medal, Copy } from "lucide-react";
 
 /** Database Management — sailors table columns (visibility prefs in localStorage) */
 const DB_SAILOR_COLUMNS: {
@@ -241,6 +242,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     initialRegattas?.[0]?.id || ""
   );
   const [editingResultId, setEditingResultId] = useState<string | null>(null);
+  const [showDuplicateFinder, setShowDuplicateFinder] = useState(false);
   const [resultForm, setResultForm] = useState<any>({
     id: "",
     regattaId: "",
@@ -249,6 +251,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     nettScore: 1,
     totalScore: "",
     isDNS: false,
+    isOverseasCommitment: false,
   });
 
   // Check superadmin permissions
@@ -341,6 +344,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             s.silverEntryDate
           ? "Silver"
           : "Guest";
+
+  const duplicatePairs = useMemo(
+    () =>
+      findDuplicateSailorPairs(
+        sailorList.map((s) => ({
+          id: s.id,
+          name: s.name,
+          sailNumber: s.sailNumber,
+        }))
+      ),
+    [sailorList]
+  );
 
   const sortedDbSailors = useMemo(() => {
     const rows = [...filteredDbSailors];
@@ -1483,10 +1498,12 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Sailor and Regatta must be selected.");
       return;
     }
+    const overseas = Boolean(resultForm.isOverseasCommitment);
     const payload = {
       ...resultForm,
-      isDns: Boolean(resultForm.isDNS || resultForm.isDns),
-      isDNS: Boolean(resultForm.isDNS || resultForm.isDns),
+      isDns: overseas ? false : Boolean(resultForm.isDNS || resultForm.isDns),
+      isDNS: overseas ? false : Boolean(resultForm.isDNS || resultForm.isDns),
+      isOverseasCommitment: overseas,
     };
     try {
       if (editingResultId === "new") {
@@ -2325,11 +2342,92 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       Delete selected
                     </button>
                   </div>
-                  <p className="text-[10px] text-slate-500">
-                    <strong className="text-slate-400">Merge duplicates:</strong> tick exactly two
-                    rows → <strong className="text-emerald-400">Merge 2 selected</strong>. The more
-                    complete profile is kept; the other is deleted after results/aliases move over.
-                  </p>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <p className="text-[10px] text-slate-500 flex-1 min-w-[200px]">
+                      <strong className="text-slate-400">Merge duplicates:</strong> tick exactly two
+                      rows → <strong className="text-emerald-400">Merge 2 selected</strong>. The more
+                      complete profile is kept; the other is deleted after results/aliases move over.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setShowDuplicateFinder((v) => !v)}
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white flex items-center gap-1.5"
+                    >
+                      <Copy className="h-3.5 w-3.5 text-orange-400" />
+                      Find similar names
+                      {duplicatePairs.length > 0 && (
+                        <span className="rounded-full bg-orange-600/20 text-orange-300 px-1.5 py-0.5 text-[10px]">
+                          {duplicatePairs.length}
+                        </span>
+                      )}
+                    </button>
+                  </div>
+
+                  {showDuplicateFinder && (
+                    <div className="rounded-xl border border-white/10 bg-slate-950/60 p-4 space-y-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                            Potential identical / jumbled names
+                          </h4>
+                          <p className="text-[11px] text-slate-500 mt-1">
+                            Pairs share the same name tokens, near-matching names, or the same sail
+                            number. Select both in the table and use Merge 2 selected.
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setShowDuplicateFinder(false)}
+                          className="text-[11px] font-bold text-slate-500 hover:text-white"
+                        >
+                          Hide
+                        </button>
+                      </div>
+                      {duplicatePairs.length === 0 ? (
+                        <p className="text-xs text-slate-500 py-4 text-center">
+                          No strong name duplicates found.
+                        </p>
+                      ) : (
+                        <ul className="space-y-2 max-h-64 overflow-y-auto">
+                          {duplicatePairs.slice(0, 40).map((p) => (
+                            <li
+                              key={`${p.a.id}-${p.b.id}`}
+                              className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-xs"
+                            >
+                              <div className="min-w-0">
+                                <p className="text-white font-semibold truncate">
+                                  {p.a.name}
+                                  <span className="text-slate-500 font-mono text-[10px] ml-2">
+                                    {p.a.sailNumber || "—"}
+                                  </span>
+                                </p>
+                                <p className="text-slate-400 font-semibold truncate">
+                                  {p.b.name}
+                                  <span className="text-slate-500 font-mono text-[10px] ml-2">
+                                    {p.b.sailNumber || "—"}
+                                  </span>
+                                </p>
+                                <p className="text-[10px] text-slate-600 mt-0.5">
+                                  {p.how} · match {(p.similarity * 100).toFixed(0)}%
+                                </p>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setSelectedSailors([p.a.id, p.b.id]);
+                                  setDbSearch("");
+                                  setShowDuplicateFinder(true);
+                                }}
+                                className="shrink-0 rounded-full bg-emerald-600/90 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-bold text-white"
+                              >
+                                Select pair
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  )}
                   {bulkStatus && (
                     <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
                       <CheckCircle className="h-4 w-4" />
@@ -3191,6 +3289,27 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           Did Not Start (DNS) — sets rank to fleet+1; you can edit the number
                         </label>
                       </div>
+                      <div className="flex items-center gap-2 h-full pt-2 md:pl-4 md:col-span-2">
+                        <input
+                          type="checkbox"
+                          id="overseasCheckbox"
+                          checked={Boolean(resultForm.isOverseasCommitment)}
+                          onChange={(e) => {
+                            const on = e.target.checked;
+                            setResultForm({
+                              ...resultForm,
+                              isOverseasCommitment: on,
+                              // Overseas is not generic DNS
+                              isDNS: on ? false : resultForm.isDNS,
+                              isDns: on ? false : resultForm.isDns,
+                            });
+                          }}
+                          className="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-sky-500 h-4 w-4"
+                        />
+                        <label htmlFor="overseasCheckbox" className="text-xs font-bold text-sky-300/90 cursor-pointer leading-snug">
+                          Overseas commitment (SSF) — set points to standing before trip (e.g. rank 2 → 2 pts); tag only, does not auto-calc
+                        </label>
+                      </div>
                     </div>
 
                     <div className="flex justify-end gap-2 border-t border-white/5 pt-4">
@@ -3258,10 +3377,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     </div>
 
                     <p className="px-6 pb-2 text-[11px] text-slate-500">
-                      Non-starters: use <strong className="text-slate-400">Fill DNS</strong> to
-                      create editable DNS rows (default rank = fleet size + 1). Tick DNS when
-                      adding/editing a single sailor. Ranking uses the stored rank, so you can
-                      change a DNS score later.
+                      Non-starters: <strong className="text-slate-400">Fill DNS</strong> (fleet size + 1)
+                      or mark <strong className="text-sky-300">Overseas commitment</strong> and set
+                      points to their standing before the trip (e.g. 2nd → 2 pts). Both are editable.
                     </p>
 
                     <table className="w-full text-left border-collapse text-xs">
@@ -3284,11 +3402,16 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           .map((res) => {
                             const sailor = sailorList.find((s) => s.id === res.sailorId);
                             const dns = Boolean(res.isDns || res.isDNS);
+                            const overseas = Boolean(res.isOverseasCommitment);
                             return (
                               <tr
                                 key={res.id}
                                 className={`hover:bg-white/5 transition-colors ${
-                                  dns ? "bg-rose-500/[0.03]" : ""
+                                  overseas
+                                    ? "bg-sky-500/[0.04]"
+                                    : dns
+                                      ? "bg-rose-500/[0.03]"
+                                      : ""
                                 }`}
                               >
                                 <td className="py-4 px-6 font-bold text-white">
@@ -3303,15 +3426,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 <td className="py-4 px-6 text-center font-mono">{res.nettScore}</td>
                                 <td className="py-4 px-6 text-center font-mono">
                                   {res.rank}
-                                  {dns ? "*" : ""}
+                                  {overseas ? "†" : dns ? "*" : ""}
                                 </td>
                                 <td className="py-4 px-6 text-center">
                                   <span className={`inline-block px-2 py-0.5 rounded text-[10px] ${
-                                    dns
-                                      ? "bg-rose-500/10 text-rose-500 border border-rose-500/20"
-                                      : "bg-slate-800 text-slate-400"
+                                    overseas
+                                      ? "bg-sky-500/10 text-sky-300 border border-sky-500/25"
+                                      : dns
+                                        ? "bg-rose-500/10 text-rose-500 border border-rose-500/20"
+                                        : "bg-slate-800 text-slate-400"
                                   }`}>
-                                    {dns ? "DNS" : "Finished"}
+                                    {overseas ? "Overseas" : dns ? "DNS" : "Finished"}
                                   </span>
                                 </td>
                                 <td className="py-4 px-6 text-right">
@@ -3327,8 +3452,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                               ? String(res.totalScore)
                                               : "",
                                           rank: res.rank?.toString?.() ?? res.rank,
-                                          isDNS: dns,
-                                          isDns: dns,
+                                          isDNS: dns && !overseas,
+                                          isDns: dns && !overseas,
+                                          isOverseasCommitment: overseas,
                                         });
                                       }}
                                       className="text-slate-400 hover:text-white"
@@ -3538,6 +3664,26 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         DNS (default rank = fleet size + 1; editable)
                       </label>
                     </div>
+                    <div className="flex items-center gap-2 sm:col-span-2">
+                      <input
+                        type="checkbox"
+                        id="modalOverseas"
+                        checked={Boolean(resultForm.isOverseasCommitment)}
+                        onChange={(e) => {
+                          const on = e.target.checked;
+                          setResultForm({
+                            ...resultForm,
+                            isOverseasCommitment: on,
+                            isDNS: on ? false : resultForm.isDNS,
+                            isDns: on ? false : resultForm.isDns,
+                          });
+                        }}
+                        className="rounded border-slate-700 bg-slate-900 text-sky-500 h-4 w-4"
+                      />
+                      <label htmlFor="modalOverseas" className="text-xs text-sky-300/90 font-bold cursor-pointer leading-snug">
+                        Overseas commitment (SSF) — set rank/pts to standing (e.g. 2nd → 2 pts)
+                      </label>
+                    </div>
                   </div>
                   <div className="flex justify-end gap-2">
                     <button
@@ -3575,6 +3721,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   <tbody className="divide-y divide-white/5 text-slate-300">
                     {sailorResults.map((r) => {
                       const dns = Boolean(r.isDns || r.isDNS);
+                      const overseas = Boolean(r.isOverseasCommitment);
                       return (
                       <tr key={r.id || `${r.sailorId}-${r.regattaId}`} className="hover:bg-white/5">
                         <td className="py-3 px-4 font-bold text-white">
@@ -3589,7 +3736,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           {r.regatta?.division || "—"}
                         </td>
                         <td className="py-3 px-4 text-center font-mono">
-                          {r.rank}{dns ? "*" : ""}
+                          {r.rank}{overseas ? "†" : dns ? "*" : ""}
                         </td>
                         <td className="py-3 px-4 text-center font-mono">
                           {r.totalScore != null ? r.totalScore : "—"}
@@ -3599,11 +3746,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         </td>
                         <td className="py-3 px-4 text-center">
                           <span className={`text-[10px] px-2 py-0.5 rounded ${
-                            dns
-                              ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
-                              : "text-slate-500"
+                            overseas
+                              ? "bg-sky-500/10 text-sky-300 border border-sky-500/25"
+                              : dns
+                                ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                                : "text-slate-500"
                           }`}>
-                            {dns ? "DNS" : "Finished"}
+                            {overseas ? "Overseas" : dns ? "DNS" : "Finished"}
                           </span>
                         </td>
                         <td className="py-3 px-4 text-right">
@@ -3623,8 +3772,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                       ? String(r.totalScore)
                                       : "",
                                   rank: r.rank?.toString?.() ?? r.rank,
-                                  isDNS: dns,
-                                  isDns: dns,
+                                  isDNS: dns && !overseas,
+                                  isDns: dns && !overseas,
+                                  isOverseasCommitment: overseas,
                                 });
                               }}
                               className="text-slate-400 hover:text-white"

@@ -108,6 +108,13 @@ export const regattaResults = pgTable(
      * Stored so admins can edit the points later.
      */
     isDns: boolean("is_dns").default(false).notNull(),
+    /**
+     * Score adjusted for SSF-supported overseas commitment (missed ranking regatta).
+     * Points are typically set to the sailor’s standing before the trip (editable).
+     */
+    isOverseasCommitment: boolean("is_overseas_commitment")
+      .default(false)
+      .notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },

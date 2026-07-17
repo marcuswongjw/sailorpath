@@ -14,8 +14,13 @@ const PERIODS: { period: Period; label: string }[] = [
   { period: { year: 2024, half: "Jan-Jun" }, label: "Jan – Jun 2024" },
 ];
 
-function scoreCell(score: number | undefined, isDNS?: boolean) {
+function scoreCell(
+  score: number | undefined,
+  isDNS?: boolean,
+  isOverseas?: boolean
+) {
   if (score == null || !Number.isFinite(score)) return "—";
+  if (isOverseas) return `${score}†`;
   if (isDNS) return `${score}*`;
   return String(score);
 }
@@ -136,7 +141,8 @@ export function FleetRankingsView({
               {fleet} Fleet Rankings
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Best 3 of 5 · DNS = fleet size + 1 (shown as score*)
+              Best 3 of 5 · * = DNS (fleet size + 1) · † = overseas commitment
+              (points = standing)
             </p>
           </div>
         </div>
@@ -259,7 +265,11 @@ export function FleetRankingsView({
                     </p>
                     <p className="text-xs font-mono font-bold text-white mt-0.5">
                       {Number.isFinite(rs.score)
-                        ? scoreCell(rs.score, rs.isDNS)
+                        ? scoreCell(
+                            rs.score,
+                            rs.isDNS,
+                            rs.isOverseasCommitment
+                          )
                         : "—"}
                     </p>
                   </div>
@@ -355,13 +365,21 @@ export function FleetRankingsView({
                         title={
                           rs.regattaName || eventSlots[idx]?.regattaName
                             ? `${rs.regattaName || eventSlots[idx]?.regattaName}${
-                                rs.isDNS ? " (DNS)" : ""
+                                rs.isOverseasCommitment
+                                  ? " (Overseas commitment)"
+                                  : rs.isDNS
+                                    ? " (DNS)"
+                                    : ""
                               }`
                             : undefined
                         }
                       >
                         {Number.isFinite(rs.score)
-                          ? scoreCell(rs.score, rs.isDNS)
+                          ? scoreCell(
+                              rs.score,
+                              rs.isDNS,
+                              rs.isOverseasCommitment
+                            )
                           : "—"}
                       </td>
                     ))}
@@ -377,7 +395,8 @@ export function FleetRankingsView({
         <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5 bg-[#0c0d14]">
           R1–R5 = last five eligible regattas for this fleet (R1 = oldest, R5 = newest)
           — see sticky legend and column subtitles. Best 3 of 5 = sum of the three best
-          (lowest) scores. * = DNS (fleet size + 1).
+          (lowest) scores. * = DNS (fleet size + 1). † = SSF overseas commitment
+          (points usually = ranking position before the trip).
         </p>
       </div>
     </div>

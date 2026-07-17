@@ -46,6 +46,68 @@ export type SailorMatchRow = {
   name: string;
 };
 
+export type DuplicatePair = {
+  a: SailorMatchRow & { sailNumber?: string | null };
+  b: SailorMatchRow & { sailNumber?: string | null };
+  similarity: number;
+  how: string;
+};
+
+/**
+ * Find pairs of sailors that look like the same person (jumbled names, near-duplicates).
+ */
+export function findDuplicateSailorPairs(
+  sailors: (SailorMatchRow & { sailNumber?: string | null })[],
+  minSimilarity = 0.72
+): DuplicatePair[] {
+  const pairs: DuplicatePair[] = [];
+  for (let i = 0; i < sailors.length; i++) {
+    for (let j = i + 1; j < sailors.length; j++) {
+      const a = sailors[i];
+      const b = sailors[j];
+      if (!a.name?.trim() || !b.name?.trim()) continue;
+
+      if (nameTokenKey(a.name) === nameTokenKey(b.name)) {
+        pairs.push({ a, b, similarity: 1, how: "same-name-tokens" });
+        continue;
+      }
+      if (normalizeName(a.name) === normalizeName(b.name)) {
+        pairs.push({ a, b, similarity: 1, how: "same-normalized-name" });
+        continue;
+      }
+      const sim = nameTokenSimilarity(a.name, b.name);
+      if (sim >= minSimilarity) {
+        pairs.push({
+          a,
+          b,
+          similarity: Math.round(sim * 100) / 100,
+          how: "fuzzy-name",
+        });
+        continue;
+      }
+      // Same sail number (non-placeholder) with moderate name overlap
+      const sa = (a.sailNumber || "").trim();
+      const sb = (b.sailNumber || "").trim();
+      if (
+        sa &&
+        sb &&
+        sa === sb &&
+        !/^SGP\s*0+$/i.test(sa) &&
+        sim >= 0.4
+      ) {
+        pairs.push({
+          a,
+          b,
+          similarity: Math.round(sim * 100) / 100,
+          how: "same-sail-number",
+        });
+      }
+    }
+  }
+  pairs.sort((x, y) => y.similarity - x.similarity);
+  return pairs;
+}
+
 /**
  * Find best sailor for a raw import name.
  * 1) exact  2) case-insensitive  3) token-order key  4) high token overlap
