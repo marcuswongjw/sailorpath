@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServerSupabase } from "@/lib/supabase/server";
 import { db } from "@/db";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -11,13 +11,8 @@ export type AuthContext = {
   role: AppRole;
 };
 
-/**
- * Resolve role from profiles table (source of truth).
- * Never trust user_metadata.role for authorization.
- * SUPERADMIN_EMAIL env is an emergency bootstrap only.
- */
 export async function getAuthContext(): Promise<AuthContext | null> {
-  const supabase = await createServerSupabaseClient();
+  const supabase = await createServerSupabase();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -30,25 +25,18 @@ export async function getAuthContext(): Promise<AuthContext | null> {
       .from(profiles)
       .where(eq(profiles.id, user.id))
       .limit(1);
-    if (rows[0]?.role) {
-      role = rows[0].role as AppRole;
-    }
+    if (rows[0]?.role) role = rows[0].role as AppRole;
   } catch {
-    // DB unavailable — fall through to env bootstrap only
+    /* DB offline — still allow bootstrap */
   }
 
   const bootstrap =
     process.env.SUPERADMIN_EMAIL &&
     user.email &&
     user.email.toLowerCase() === process.env.SUPERADMIN_EMAIL.toLowerCase();
-
   if (bootstrap) role = "superadmin";
 
-  return {
-    userId: user.id,
-    email: user.email ?? null,
-    role,
-  };
+  return { userId: user.id, email: user.email ?? null, role };
 }
 
 export async function requireSuperadmin(): Promise<AuthContext> {
@@ -71,7 +59,11 @@ export function jsonError(error: unknown) {
   const status =
     msg === "UNAUTHORIZED" ? 401 : msg === "FORBIDDEN" ? 403 : 500;
   return Response.json(
-    { error: msg === "UNAUTHORIZED" || msg === "FORBIDDEN" ? msg : "Server error" },
+    {
+      error:
+        msg === "UNAUTHORIZED" || msg === "FORBIDDEN" ? msg : "Server error",
+      detail: process.env.NODE_ENV !== "production" ? msg : undefined,
+    },
     { status }
   );
 }

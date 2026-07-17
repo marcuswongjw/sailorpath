@@ -1,6 +1,6 @@
 {
   "name": "sailorpath",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,24 +11,17 @@
   "dependencies": {
     "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.110.5",
-    "clsx": "^2.1.1",
     "drizzle-orm": "^0.45.2",
-    "framer-motion": "^12.42.2",
     "lucide-react": "^1.24.0",
     "next": "16.2.10",
-    "pg": "^8.22.0",
-    "postgres": "^3.4.9",
-    "posthog-js": "^1.400.1",
+    "postgres": "^3.4.7",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "stripe": "^22.3.1",
-    "tailwind-merge": "^3.6.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/pg": "^8.20.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "drizzle-kit": "^0.31.10",

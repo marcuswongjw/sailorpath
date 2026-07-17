@@ -4,36 +4,32 @@ import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
-  title: "SailorPath | Singapore Optimist Logbook & Rankings",
+  title: "SailorPath | Singapore Optimist Rankings",
   description:
-    "The digital logbook, fleet management, and ranking platform for Singapore Optimist sailors. Track performance, analyze results, and view standings.",
+    "Digital logbook and ranking platform for Singapore Optimist sailors.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="h-full antialiased dark">
-      <body className="min-h-full flex flex-col bg-[#090a0f] text-slate-100 font-sans selection:bg-orange-500/30 selection:text-orange-300">
+      <body className="min-h-full flex flex-col bg-[#090a0f] text-slate-100 font-sans selection:bg-orange-500/30">
         <SiteHeader />
-
         <main className="flex-1 flex flex-col">{children}</main>
-
         <footer className="border-t border-white/5 bg-[#07080c] py-8 text-center text-xs text-slate-500">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p>© {new Date().getFullYear()} SailorPath. All rights reserved.</p>
+          <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p>© {new Date().getFullYear()} SailorPath</p>
             <div className="flex gap-4">
-              <Link href="/terms" className="hover:text-slate-300">
-                Terms
+              <Link href="/api/health" className="hover:text-slate-300">
+                Health
               </Link>
-              <Link href="/privacy" className="hover:text-slate-300">
-                Privacy
-              </Link>
-              <Link href="/support" className="hover:text-slate-300">
-                Support
-              </Link>
+              <a
+                href="https://admin.sailorpath.com/"
+                className="hover:text-slate-300"
+              >
+                Admin
+              </a>
             </div>
           </div>
         </footer>

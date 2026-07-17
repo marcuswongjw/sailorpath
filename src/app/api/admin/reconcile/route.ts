@@ -2,18 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, sailorAliases, sailors } from "@/db/schema";
-import { eq } from "drizzle-orm";
 
-/**
- * body: {
- *   action: 'merge' | 'create',
- *   rawName: string,
- *   suggestedId?: string,
- *   regattaId: string,
- *   rank?: number,
- *   nett?: number
- * }
- */
 export async function POST(req: Request) {
   try {
     await requireSuperadmin();
@@ -28,9 +17,11 @@ export async function POST(req: Request) {
       }
       sailorId = String(suggestedId);
       try {
-        await db.insert(sailorAliases).values({ sailorId: sailorId, aliasName: rawName });
+        await db
+          .insert(sailorAliases)
+          .values({ sailorId, aliasName: rawName });
       } catch {
-        /* alias may already exist */
+        /* exists */
       }
     } else if (action === "create") {
       const handle =
@@ -50,20 +41,21 @@ export async function POST(req: Request) {
         })
         .returning();
       sailorId = created.id;
-      await db.insert(sailorAliases).values({ sailorId: created.id, aliasName: rawName });
+      await db
+        .insert(sailorAliases)
+        .values({ sailorId: created.id, aliasName: rawName });
     } else {
       return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }
 
     if (sailorId && regattaId) {
-      const sid = sailorId;
       const r = Number(rank) || 999;
       const n = Number(nett) || r;
       await db
         .insert(regattaResults)
         .values({
           regattaId,
-          sailorId: sid,
+          sailorId,
           rank: r,
           nettScore: n,
         })

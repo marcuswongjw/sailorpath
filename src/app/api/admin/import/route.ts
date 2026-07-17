@@ -75,22 +75,16 @@ export async function POST(req: Request) {
       const name = String(row.name || "").trim();
       if (!name) continue;
 
-      // Exact name match
       let [sailor] = await db
         .select()
         .from(sailors)
         .where(eq(sailors.name, name))
         .limit(1);
 
-      // Alias match
       if (!sailor) {
         const aliasHit = await db
-          .select({
-            sailorId: sailorAliases.sailorId,
-            name: sailors.name,
-          })
+          .select({ sailorId: sailorAliases.sailorId })
           .from(sailorAliases)
-          .innerJoin(sailors, eq(sailorAliases.sailorId, sailors.id))
           .where(eq(sailorAliases.aliasName, name))
           .limit(1);
         if (aliasHit[0]) {
@@ -103,22 +97,22 @@ export async function POST(req: Request) {
         }
       }
 
-      // Case-insensitive exact via ILIKE
       if (!sailor) {
         const hits = await db.execute(sql`
-          SELECT id, name FROM sailors
-          WHERE lower(name) = ${normalizeName(name)}
-          LIMIT 1
+          SELECT id FROM sailors WHERE lower(name) = ${normalizeName(name)} LIMIT 1
         `);
-        const hit = (hits as unknown as { id: string; name: string }[])[0];
+        const hit = (hits as unknown as { id: string }[])[0];
         if (hit) {
-          const [s] = await db.select().from(sailors).where(eq(sailors.id, hit.id)).limit(1);
+          const [s] = await db
+            .select()
+            .from(sailors)
+            .where(eq(sailors.id, hit.id))
+            .limit(1);
           sailor = s;
         }
       }
 
       if (!sailor) {
-        // pg_trgm suggestion
         let suggestedId: string | null = null;
         let suggestedName: string | null = null;
         let similarity = 0;
@@ -130,14 +124,16 @@ export async function POST(req: Request) {
             ORDER BY sim DESC NULLS LAST
             LIMIT 1
           `);
-          const top = (sug as unknown as { id: string; name: string; sim: number }[])[0];
+          const top = (
+            sug as unknown as { id: string; name: string; sim: number }[]
+          )[0];
           if (top && Number(top.sim) >= 0.25) {
             suggestedId = top.id;
             suggestedName = top.name;
             similarity = Number(top.sim);
           }
         } catch {
-          /* extension may not exist in some envs */
+          /* pg_trgm optional */
         }
         unmatched.push({
           rawName: name,
@@ -168,7 +164,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({
-      message: `Imported into ${reg.name}: ${matched} matched, ${unmatched.length} need reconciliation.`,
+      message: `Imported ${reg.name}: ${matched} matched, ${unmatched.length} unmatched.`,
       regatta: reg,
       matched,
       unmatched,

@@ -2,205 +2,115 @@
 
 import { useState, Suspense } from "react";
 import Link from "next/link";
-import { Mail, Lock, ShieldAlert, Sparkles } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { safeAuthNext } from "@/lib/supabase/cookie-options";
 
-async function ensureProfileBestEffort() {
-  const ac = new AbortController();
-  const timer = setTimeout(() => ac.abort(), 2500);
-  try {
-    await fetch("/api/auth/ensure-profile", {
-      method: "POST",
-      credentials: "include",
-      signal: ac.signal,
-    });
-  } catch {
-    /* DB may still be offline — auth session is independent */
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
 function LoginForm() {
   const searchParams = useSearchParams();
-  const urlError = searchParams.get("error");
   const nextTarget = safeAuthNext(searchParams.get("next"), "/");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [useMagicLink, setUseMagicLink] = useState(false);
+  const [error, setError] = useState<string | null>(searchParams.get("error"));
   const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(urlError);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [busy, setBusy] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setMessage(null);
+    setBusy(true);
     setError(null);
-
-    const cleanEmail = email.trim().toLowerCase();
-
+    setMessage(null);
     try {
       const supabase = createBrowserSupabase();
-
-      if (useMagicLink) {
-        const { error: authError } = await supabase.auth.signInWithOtp({
-          email: cleanEmail,
-          options: {
-            emailRedirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextTarget)}`,
-          },
-        });
-        if (authError) {
-          setError(authError.message);
+      const cleanEmail = email.trim().toLowerCase();
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email: cleanEmail,
+        password,
+      });
+      if (authError) {
+        const msg = authError.message || "Login failed";
+        if (/invalid login credentials/i.test(msg)) {
+          setError(
+            "Invalid email or password. If this account was created before Confirm email was turned off, confirm or delete it in Supabase → Authentication → Users, then register again."
+          );
         } else {
-          setMessage(`Magic sign-in link sent to ${cleanEmail}. Check your inbox (and spam).`);
+          setError(msg);
         }
-      } else {
-        const { data, error: authError } = await supabase.auth.signInWithPassword({
-          email: cleanEmail,
-          password,
-        });
-
-        if (authError) {
-          const msg = authError.message || "Login failed";
-          // Supabase uses the same message for: wrong password, unknown email,
-          // and users who still have email_confirmed_at = null (created before
-          // “Confirm email” was turned off — that toggle does NOT fix old users).
-          if (/invalid login credentials/i.test(msg)) {
-            setError(
-              "Invalid email or password. Common fix: in Supabase → Authentication → Users, find your email. If it says “Waiting for verification”, open the user → Confirm email (or delete the user and register again). Turning off “Confirm email” only affects NEW signups, not accounts already created."
-            );
-          } else if (/email not confirmed/i.test(msg)) {
-            setError(
-              "This account’s email was never confirmed. In Supabase → Authentication → Users open the user and click Confirm, or delete them and register again."
-            );
-          } else {
-            setError(msg);
-          }
-        } else if (data.session) {
-          setMessage("Logged in successfully! Redirecting…");
-          // Best-effort profile row; do not block redirect if DB is offline
-          await ensureProfileBestEffort();
-          // Full navigation so cookie session + header update reliably
-          window.location.assign(nextTarget);
-          return;
-        } else {
-          setError("Login succeeded but no session was created. Try again.");
-        }
+        return;
       }
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "An unexpected error occurred.");
+      if (!data.session) {
+        setError("No session returned. Try again.");
+        return;
+      }
+      setMessage("Logged in — redirecting…");
+      try {
+        const ac = new AbortController();
+        const t = setTimeout(() => ac.abort(), 2500);
+        await fetch("/api/auth/ensure-profile", {
+          method: "POST",
+          credentials: "include",
+          signal: ac.signal,
+        });
+        clearTimeout(t);
+      } catch {
+        /* profile optional until DB live */
+      }
+      window.location.assign(nextTarget);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unexpected error");
     } finally {
-      setIsSubmitting(false);
+      setBusy(false);
     }
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-[#090a0f] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-orange-600/5 rounded-full blur-[100px] pointer-events-none -z-10" />
-
-      <div className="w-full max-w-md space-y-8 glass-card border border-white/5 p-8 md:p-10 rounded-3xl shadow-2xl relative">
+    <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-md glass-card rounded-3xl border border-white/5 p-8 space-y-6">
         <div className="text-center">
-          <span className="inline-flex items-center gap-1 bg-orange-500/10 border border-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-xs font-bold mb-4">
-            <Sparkles className="h-3 w-3 animate-pulse" />
-            Athlete Portal
-          </span>
-          <h2 className="text-3xl font-black text-white tracking-tight">Welcome back</h2>
-          <p className="mt-2 text-xs text-slate-400 font-semibold">
-            Sign in with the same email and password you used to register.
-          </p>
+          <h1 className="text-2xl font-black text-white">Welcome back</h1>
+          <p className="text-xs text-slate-400 mt-2">Email + password login</p>
         </div>
-
         {message && (
-          <div className="rounded-xl bg-orange-600/10 border border-orange-500/20 p-4 text-xs font-bold text-orange-400 text-center">
-            {message}
-          </div>
+          <p className="text-xs font-bold text-orange-400 text-center">{message}</p>
         )}
-
         {error && (
-          <div className="rounded-xl bg-rose-500/10 border border-rose-500/20 p-4 text-xs font-bold text-rose-400 text-center leading-relaxed">
+          <p className="text-xs font-bold text-rose-400 text-center leading-relaxed">
             {error}
-          </div>
+          </p>
         )}
-
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-slate-400 uppercase">Email Address</label>
-              <div className="relative">
-                <Mail className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-500" />
-                <input
-                  type="email"
-                  required
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@club.com"
-                  className="w-full rounded-xl border border-white/10 bg-slate-900/50 py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none"
-                />
-              </div>
-            </div>
-
-            {!useMagicLink && (
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-400 uppercase">Password</label>
-                <div className="relative">
-                  <Lock className="absolute left-3.5 top-3.5 h-4 w-4 text-slate-500" />
-                  <input
-                    type="password"
-                    required
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="••••••••"
-                    className="w-full rounded-xl border border-white/10 bg-slate-900/50 py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none"
-                  />
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="space-y-3">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="flex w-full justify-center rounded-full bg-orange-600 py-3 text-sm font-bold text-white hover:bg-orange-500 transition-all disabled:opacity-50"
-            >
-              {isSubmitting
-                ? "Please wait…"
-                : useMagicLink
-                  ? "Send Magic Link"
-                  : "Log In"}
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setUseMagicLink(!useMagicLink)}
-              className="w-full text-center text-xs font-semibold text-slate-400 hover:text-white transition-colors"
-            >
-              {useMagicLink ? "Sign in with password instead" : "Send me a magic link instead"}
-            </button>
-          </div>
+        <form onSubmit={onSubmit} className="space-y-4">
+          <input
+            type="email"
+            required
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="you@email.com"
+            className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
+          />
+          <input
+            type="password"
+            required
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
+          />
+          <button
+            type="submit"
+            disabled={busy}
+            className="w-full rounded-full bg-orange-600 py-3 text-sm font-bold text-white hover:bg-orange-500 disabled:opacity-50"
+          >
+            {busy ? "Signing in…" : "Log in"}
+          </button>
         </form>
-
-        <div className="text-center text-xs text-slate-400">
+        <p className="text-center text-xs text-slate-400">
           No account?{" "}
-          <Link href="/register" className="font-bold text-orange-500 hover:underline">
+          <Link href="/register" className="text-orange-500 font-bold">
             Register
           </Link>
-        </div>
-
-        <div className="border-t border-white/5 pt-6 flex gap-3 text-slate-500 text-[10px] font-semibold leading-relaxed">
-          <ShieldAlert className="h-5 w-5 text-orange-500/80 flex-shrink-0 mt-0.5" />
-          <p>
-            Still stuck after turning off Confirm email? That setting only applies to new accounts.
-            Delete your user under Supabase → Authentication → Users, then register again with the
-            same email — or open the user and mark the email as confirmed.
-          </p>
-        </div>
+        </p>
       </div>
     </div>
   );
@@ -210,7 +120,7 @@ export default function LoginPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-[80vh] flex items-center justify-center bg-[#090a0f] text-slate-400 text-sm">
+        <div className="min-h-[70vh] flex items-center justify-center text-slate-500 text-sm">
           Loading…
         </div>
       }

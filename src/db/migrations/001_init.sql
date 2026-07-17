@@ -1,10 +1,7 @@
--- SailorPath full public schema bootstrap (safe to re-run where possible).
--- Run in Supabase → SQL Editor if /api/health says sailors table is missing.
--- This matches the current Drizzle schema (name column, division, squad fields).
-
+-- SailorPath v1 schema — run once in Supabase SQL Editor after wipe.
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+CREATE EXTENSION IF NOT EXISTS "pg_trgm";
 
--- Profiles (extends auth.users)
 CREATE TABLE IF NOT EXISTS public.profiles (
   id uuid PRIMARY KEY,
   email text NOT NULL,
@@ -14,7 +11,6 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   updated_at timestamp DEFAULT now() NOT NULL
 );
 
--- Sailors
 CREATE TABLE IF NOT EXISTS public.sailors (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   name text NOT NULL,
@@ -53,26 +49,6 @@ CREATE TABLE IF NOT EXISTS public.sailors (
   CONSTRAINT sailors_handle_unique UNIQUE (handle)
 );
 
--- Boat classes
-CREATE TABLE IF NOT EXISTS public.boat_classes (
-  id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  name text NOT NULL,
-  CONSTRAINT boat_classes_name_unique UNIQUE (name)
-);
-
-INSERT INTO public.boat_classes (name)
-VALUES ('Optimist'), ('ILCA4'), ('29er')
-ON CONFLICT (name) DO NOTHING;
-
-CREATE TABLE IF NOT EXISTS public.sailor_boat_class (
-  sailor_id uuid NOT NULL REFERENCES public.sailors(id) ON DELETE CASCADE,
-  boat_class_id integer NOT NULL REFERENCES public.boat_classes(id) ON DELETE CASCADE,
-  start_date date NOT NULL,
-  end_date date,
-  crew_role text,
-  PRIMARY KEY (sailor_id, boat_class_id, start_date)
-);
-
 CREATE TABLE IF NOT EXISTS public.regattas (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
   name text NOT NULL,
@@ -104,27 +80,6 @@ CREATE TABLE IF NOT EXISTS public.sailor_aliases (
   CONSTRAINT sailor_aliases_alias_name_unique UNIQUE (alias_name)
 );
 
-CREATE TABLE IF NOT EXISTS public.coaching_relationships (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-  coach_id uuid NOT NULL REFERENCES public.profiles(id) ON DELETE CASCADE,
-  sailor_id uuid NOT NULL REFERENCES public.sailors(id) ON DELETE CASCADE,
-  status text DEFAULT 'pending' NOT NULL,
-  created_at timestamp DEFAULT now() NOT NULL,
-  updated_at timestamp DEFAULT now() NOT NULL,
-  CONSTRAINT coaching_relationships_coach_id_sailor_id_unique UNIQUE (coach_id, sailor_id)
-);
-
-CREATE TABLE IF NOT EXISTS public.equipment_logs (
-  id uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-  sailor_id uuid NOT NULL REFERENCES public.sailors(id) ON DELETE CASCADE,
-  hull_brand text NOT NULL,
-  sail_make text NOT NULL,
-  foil_brand text NOT NULL,
-  created_at timestamp DEFAULT now() NOT NULL,
-  updated_at timestamp DEFAULT now() NOT NULL
-);
-
--- Profile bootstrap on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER
 LANGUAGE plpgsql
@@ -135,7 +90,7 @@ BEGIN
   INSERT INTO public.profiles (id, email, full_name, role)
   VALUES (
     NEW.id,
-    NEW.email,
+    COALESCE(NEW.email, ''),
     COALESCE(
       NEW.raw_user_meta_data->>'full_name',
       NEW.raw_user_meta_data->>'handle',
@@ -166,6 +121,3 @@ SELECT
 FROM auth.users u
 WHERE NOT EXISTS (SELECT 1 FROM public.profiles p WHERE p.id = u.id)
 ON CONFLICT (id) DO NOTHING;
-
--- Set your superadmin (change the email):
--- UPDATE public.profiles SET role = 'superadmin' WHERE email = 'you@email.com';
