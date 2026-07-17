@@ -44,6 +44,19 @@ const DB_SAILOR_COLUMNS: {
   { key: "goldEntry", label: "Gold Entry", defaultOn: true },
   { key: "silverEntry", label: "Silver Entry", defaultOn: true },
   { key: "dropDate", label: "Drop Date", defaultOn: true },
+  { key: "squadJan25", label: "Squad Jan 25", defaultOn: false },
+  { key: "squadJul25", label: "Squad Jul 25", defaultOn: false },
+  { key: "squadJan26", label: "Squad Jan 26", defaultOn: false },
+  { key: "squadJul26", label: "Squad Jul 26", defaultOn: false },
+  { key: "histJun24", label: "Hist Jun 24", defaultOn: false },
+  { key: "histDec24", label: "Hist Dec 24", defaultOn: false },
+  { key: "histJun25", label: "Hist Jun 25", defaultOn: false },
+  { key: "histDec25", label: "Hist Dec 25", defaultOn: false },
+  { key: "histJun26", label: "Hist Jun 26", defaultOn: false },
+  { key: "worlds", label: "Worlds", defaultOn: false },
+  { key: "european", label: "European", defaultOn: false },
+  { key: "asian", label: "Asian", defaultOn: false },
+  { key: "seaGames", label: "SEA Games", defaultOn: false },
 ];
 
 const DB_COLS_STORAGE = "sp-admin-db-sailor-cols";
@@ -62,7 +75,7 @@ interface AdminDashboardProps {
 
 export function AdminDashboard({ initialSailors, initialRegattas, initialResults }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<
-    "roster" | "import" | "reconciliation" | "bulk" | "edit"
+    "roster" | "import" | "reconciliation" | "edit"
   >("roster");
   
   // Auth state — role from server /profiles, never user_metadata
@@ -358,6 +371,32 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           return s.silverEntryDate || "";
         case "dropDate":
           return s.dropDate || "";
+        case "squadJan25":
+          return s.natSquadStatusJan25 || "";
+        case "squadJul25":
+          return s.natSquadStatusJul25 || "";
+        case "squadJan26":
+          return s.natSquadStatusJan26 || "";
+        case "squadJul26":
+          return s.natSquadStatusJul26 || "";
+        case "histJun24":
+          return s.histRankingJun24 ?? 99999;
+        case "histDec24":
+          return s.histRankingDec24 ?? 99999;
+        case "histJun25":
+          return s.histRankingJun25 ?? 99999;
+        case "histDec25":
+          return s.histRankingDec25 ?? 99999;
+        case "histJun26":
+          return s.histRankingJun26 ?? 99999;
+        case "worlds":
+          return s.worlds ?? 99999;
+        case "european":
+          return s.european ?? 99999;
+        case "asian":
+          return s.asian ?? 99999;
+        case "seaGames":
+          return s.seaGames ?? 99999;
         default:
           return s.name || "";
       }
@@ -1009,11 +1048,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     );
   };
 
-  const toggleSelectAll = () => {
-    if (selectedSailors.length === sailorList.length) {
-      setSelectedSailors([]);
+  const toggleSelectAllVisible = () => {
+    const ids = sortedDbSailors.map((s) => s.id);
+    const allOn =
+      ids.length > 0 && ids.every((id) => selectedSailors.includes(id));
+    if (allOn) {
+      setSelectedSailors((prev) => prev.filter((id) => !ids.includes(id)));
     } else {
-      setSelectedSailors(sailorList.map((s) => s.id));
+      setSelectedSailors((prev) => Array.from(new Set([...prev, ...ids])));
     }
   };
 
@@ -1475,17 +1517,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           )}
         </button>
         <button
-          onClick={() => setActiveTab("bulk")}
-          className={`pb-4 text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === "bulk"
-              ? "border-orange-500 text-white"
-              : "border-transparent text-slate-400 hover:text-white"
-          }`}
-        >
-          <Grid className="h-4 w-4" />
-          Bulk Date Editor
-        </button>
-        <button
           onClick={() => setActiveTab("edit")}
           className={`pb-4 text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
             activeTab === "edit"
@@ -1494,7 +1525,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           }`}
         >
           <Database className="h-4 w-4" />
-          Database Management
+          Database & bulk edit
         </button>
       </div>
 
@@ -1877,318 +1908,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           </div>
         )}
 
-        {/* Tab 3: Bulk Date Editor */}
-        {activeTab === "bulk" && (
-          <div className="space-y-6">
-            <div className="glass-panel rounded-3xl p-6 border border-white/5">
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <Grid className="h-5 w-5 text-orange-500" />
-                Fleet Entry/Drop Bulk Editor
-              </h2>
-              <p className="text-xs text-slate-500 mt-1">
-                Select multiple sailors below and update their gold/silver fleet entry dates or drop dates simultaneously.
-              </p>
-            </div>
+        {/* Bulk editor merged into Database & bulk edit tab */}
 
-            {/* Bulk Controls */}
-            <div className="glass-card rounded-2xl p-6 border border-white/5 space-y-4">
-              <div className="flex flex-wrap items-end gap-6">
-                
-                {/* 1. Select Field to Edit */}
-                <div className="flex flex-col gap-1.5 min-w-[200px]">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Property to Update</label>
-                  <select
-                    value={bulkField}
-                    onChange={(e) => {
-                      setBulkField(e.target.value);
-                      setBulkValue(""); // clear value on field change
-                    }}
-                    className="rounded-lg bg-slate-900 border border-white/10 text-white px-3.5 py-2 text-xs focus:outline-none"
-                  >
-                    <option value="">-- Select Property --</option>
-                    <optgroup label="Fleet Status & Dates">
-                      <option value="goldEntryDate">Gold Fleet Entry Date</option>
-                      <option value="silverEntryDate">Silver Fleet Entry Date</option>
-                      <option value="dropDate">Optimist Drop Date</option>
-                      <option value="currentFleet">Fleet current (Gold/Silver)</option>
-                      <option value="manuallyDropped">Manually dropped (Y/N)</option>
-                    </optgroup>
-                    <optgroup label="Profile Parameters">
-                      <option value="club">Club Origin</option>
-                      <option value="school">School</option>
-                      <option value="nationality">Nationality</option>
-                      <option value="sailNumber">Sail Number</option>
-                      <option value="gender">Gender (M/F)</option>
-                      <option value="nationalSquadStatus">Squad status (Nat A/B/DS)</option>
-                      <option value="dob">Date of Birth</option>
-                      <option value="weight">Weight (kg)</option>
-                    </optgroup>
-                    <optgroup label="Squad Status History">
-                      <option value="natSquadStatusJan25">Nat Squad Status Jan 25</option>
-                      <option value="natSquadStatusJul25">Nat Squad Status Jul 25</option>
-                      <option value="natSquadStatusJan26">Nat Squad Status Jan 26</option>
-                      <option value="natSquadStatusJul26">Nat Squad Status Jul 26</option>
-                    </optgroup>
-                    <optgroup label="Historical Standings">
-                      <option value="histRankingJun24">Historical Gold Rank Jun 24</option>
-                      <option value="histRankingDec24">Historical Gold Rank Dec 24</option>
-                      <option value="histRankingJun25">Historical Gold Rank Jun 25</option>
-                      <option value="histRankingDec25">Historical Gold Rank Dec 25</option>
-                      <option value="histRankingJun26">Historical Gold Rank Jun 26</option>
-                    </optgroup>
-                    <optgroup label="Overseas Representation (Year)">
-                      <option value="worlds">Worlds Campaign Year</option>
-                      <option value="european">European Campaign Year</option>
-                      <option value="asian">Asian Campaign Year</option>
-                      <option value="seaGames">SEA Games Campaign Year</option>
-                    </optgroup>
-                  </select>
-                </div>
-
-                {/* 2. Render appropriate input field depending on selected property */}
-                {bulkField && (
-                  <div className="flex flex-col gap-1.5 min-w-[200px] animate-in fade-in slide-in-from-top-1 duration-200">
-                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">New Value</label>
-                    
-                    {/* Render Date Inputs */}
-                    {["goldEntryDate", "silverEntryDate", "dropDate", "dob"].includes(bulkField) && (
-                      <input
-                        type="date"
-                        value={bulkValue}
-                        onChange={(e) => setBulkValue(e.target.value)}
-                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500 focus:outline-none"
-                      />
-                    )}
-
-                    {bulkField === "gender" && (
-                      <select
-                        value={bulkValue}
-                        onChange={(e) => setBulkValue(e.target.value)}
-                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs focus:outline-none"
-                      >
-                        <option value="">-- Select Gender --</option>
-                        <option value="M">Male (M)</option>
-                        <option value="F">Female (F)</option>
-                      </select>
-                    )}
-
-                    {bulkField === "currentFleet" && (
-                      <select
-                        value={bulkValue}
-                        onChange={(e) => setBulkValue(e.target.value)}
-                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs focus:outline-none"
-                      >
-                        <option value="">-- Select --</option>
-                        <option value="Gold">Gold</option>
-                        <option value="Silver">Silver</option>
-                        <option value="CLEAR">Clear</option>
-                      </select>
-                    )}
-
-                    {bulkField === "manuallyDropped" && (
-                      <select
-                        value={bulkValue}
-                        onChange={(e) => setBulkValue(e.target.value)}
-                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs focus:outline-none"
-                      >
-                        <option value="N">No (active)</option>
-                        <option value="Y">Yes (manually dropped)</option>
-                      </select>
-                    )}
-
-                    {/* Render Squad Dropdowns */}
-                    {[
-                      "nationalSquadStatus",
-                      "natSquadStatusJan25",
-                      "natSquadStatusJul25",
-                      "natSquadStatusJan26",
-                      "natSquadStatusJul26",
-                    ].includes(bulkField) && (
-                      <select
-                        value={bulkValue}
-                        onChange={(e) => setBulkValue(e.target.value)}
-                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs focus:outline-none"
-                      >
-                        <option value="">-- Select Status --</option>
-                        <option value="CLEAR">Clear Status (None)</option>
-                        <option value="Nat A">National Squad A (Nat A)</option>
-                        <option value="Nat B">National Squad B (Nat B)</option>
-                        <option value="DS">Development Squad (DS)</option>
-                      </select>
-                    )}
-
-                    {/* Render Numbers (Rankings, Campaign Years) */}
-                    {[
-                      "histRankingJun24", "histRankingDec24", "histRankingJun25", "histRankingDec25", "histRankingJun26",
-                      "worlds", "european", "asian", "seaGames", "weight"
-                    ].includes(bulkField) && (
-                      <input
-                        type="number"
-                        placeholder="e.g. 2026 or 12"
-                        value={bulkValue}
-                        onChange={(e) => setBulkValue(e.target.value)}
-                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500 focus:outline-none"
-                      />
-                    )}
-
-                    {/* Render normal text input for anything else (e.g. Club) */}
-                    {!["goldEntryDate", "silverEntryDate", "dropDate", "dob", "gender", "nationalSquadStatus", "natSquadStatusJan25", "natSquadStatusJul25", "natSquadStatusJan26", "natSquadStatusJul26", "histRankingJun24", "histRankingDec24", "histRankingJun25", "histRankingDec25", "histRankingJun26", "worlds", "european", "asian", "seaGames", "weight"].includes(bulkField) && (
-                      <input
-                        type="text"
-                        placeholder="Enter value"
-                        value={bulkValue}
-                        onChange={(e) => setBulkValue(e.target.value)}
-                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-1.5 text-xs focus:border-orange-500 focus:outline-none"
-                      />
-                    )}
-                  </div>
-                )}
-
-                <div className="flex flex-wrap items-end justify-end gap-2 flex-1 pt-4">
-                  <button
-                    disabled={!isSuperadmin || selectedSailors.length === 0 || !bulkField}
-                    onClick={handleApplyBulk}
-                    className="rounded-full bg-orange-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-orange-500 transition-all disabled:opacity-50 flex items-center gap-1.5"
-                  >
-                    <Save className="h-4 w-4" />
-                    Apply Bulk Edits ({selectedSailors.length})
-                  </button>
-                  <button
-                    type="button"
-                    disabled={!isSuperadmin || selectedSailors.length === 0}
-                    onClick={handleBulkDelete}
-                    className="rounded-full bg-rose-600/90 px-5 py-2.5 text-xs font-bold text-white hover:bg-rose-500 transition-all disabled:opacity-50 flex items-center gap-1.5"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                    Bulk delete ({selectedSailors.length})
-                  </button>
-                </div>
-
-              </div>
-
-              {bulkStatus && (
-                <div className="flex items-center gap-2 text-xs font-bold text-emerald-400 border-t border-white/5 pt-3">
-                  <CheckCircle className="h-4 w-4 text-emerald-500" />
-                  {bulkStatus}
-                </div>
-              )}
-            </div>
-
-            {/* Sailors Grid Checkbox Table */}
-            <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-[11px] min-w-[1700px]">
-                  <thead>
-                    <tr className="border-b border-white/5 bg-slate-950/60 text-[9px] font-black text-slate-500 uppercase tracking-widest text-center">
-                      <th colSpan={4} className="py-2 px-4 border-r border-white/5 text-left">Competitor</th>
-                      <th colSpan={4} className="py-2 px-4 border-r border-white/5 bg-orange-600/5 text-orange-400">National Squad History</th>
-                      <th colSpan={5} className="py-2 px-4 border-r border-white/5 bg-blue-600/5 text-blue-400">Historical Rankings</th>
-                      <th colSpan={4} className="py-2 px-4 border-r border-white/5 bg-emerald-600/5 text-emerald-400">Overseas Representation</th>
-                      <th colSpan={3} className="py-2 px-4">Fleet Entry/Drop Dates</th>
-                    </tr>
-                    <tr className="border-b border-white/5 bg-white/5 text-[9px] font-bold text-slate-400 uppercase tracking-wider">
-                      <th className="py-4 px-6 text-center w-16">
-                        <input
-                          type="checkbox"
-                          checked={selectedSailors.length === sailorList.length && sailorList.length > 0}
-                          onChange={toggleSelectAll}
-                          className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
-                        />
-                      </th>
-                      <th className="py-4 px-6 text-left">Sailor Name</th>
-                      <th className="py-4 px-4 text-center">Sail Number</th>
-                      <th className="py-4 px-4 text-left border-r border-white/5">Club / Gender</th>
-
-                      <th className="py-4 px-4 text-center bg-orange-600/5">Jan 25</th>
-                      <th className="py-4 px-4 text-center bg-orange-600/5">Jul 25</th>
-                      <th className="py-4 px-4 text-center bg-orange-600/5">Jan 26</th>
-                      <th className="py-4 px-4 text-center border-r border-white/5 bg-orange-600/5">Jul 26</th>
-
-                      <th className="py-4 px-4 text-center bg-blue-600/5">Jun 24</th>
-                      <th className="py-4 px-4 text-center bg-blue-600/5">Dec 24</th>
-                      <th className="py-4 px-4 text-center bg-blue-600/5">Jun 25</th>
-                      <th className="py-4 px-4 text-center bg-blue-600/5">Dec 25</th>
-                      <th className="py-4 px-4 text-center border-r border-white/5 bg-blue-600/5">Jun 26</th>
-
-                      <th className="py-4 px-4 text-center bg-emerald-600/5">Worlds</th>
-                      <th className="py-4 px-4 text-center bg-emerald-600/5">European</th>
-                      <th className="py-4 px-4 text-center bg-emerald-600/5">Asian</th>
-                      <th className="py-4 px-4 text-center border-r border-white/5 bg-emerald-600/5">SEA Games</th>
-
-                      <th className="py-4 px-4 text-center">Gold Entry</th>
-                      <th className="py-4 px-4 text-center">Silver Entry</th>
-                      <th className="py-4 px-4 text-center">Drop Date</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
-                    {sailorList.map((sailor) => {
-                      const isChecked = selectedSailors.includes(sailor.id);
-                      return (
-                        <tr
-                          key={sailor.id}
-                          className={`transition-colors text-center ${isChecked ? "bg-orange-500/5 hover:bg-orange-500/10" : "hover:bg-white/5"}`}
-                        >
-                          <td className="py-4 px-6 text-center">
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              onChange={() => toggleSelectSailor(sailor.id)}
-                              className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
-                            />
-                          </td>
-                          <td className="py-4 px-6 text-left font-bold text-white">
-                            {sailor.name}
-                          </td>
-                          <td className="py-4 px-4 font-mono text-slate-400">{sailor.sailNumber}</td>
-                          <td className="py-4 px-4 text-left text-slate-400 border-r border-white/5">
-                            {sailor.club} ({sailor.gender || "M"})
-                          </td>
-
-                          {/* Jan 25 */}
-                          <td className="py-4 px-4 bg-orange-600/5 text-slate-400">{sailor.natSquadStatusJan25 || "-"}</td>
-                          {/* Jul 25 */}
-                          <td className="py-4 px-4 bg-orange-600/5 text-slate-400">{sailor.natSquadStatusJul25 || "-"}</td>
-                          {/* Jan 26 */}
-                          <td className="py-4 px-4 bg-orange-600/5 text-slate-400">{sailor.natSquadStatusJan26 || "-"}</td>
-                          {/* Jul 26 */}
-                          <td className="py-4 px-4 border-r border-white/5 bg-orange-600/5">
-                            {sailor.natSquadStatusJul26 ? (
-                              <span className="rounded bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[9px] text-orange-400 font-extrabold">
-                                {sailor.natSquadStatusJul26}
-                              </span>
-                            ) : (
-                              "-"
-                            )}
-                          </td>
-
-                          {/* Rankings */}
-                          <td className="py-4 px-4 bg-blue-600/5 text-slate-400 font-mono">{sailor.histRankingJun24 || "-"}</td>
-                          <td className="py-4 px-4 bg-blue-600/5 text-slate-400 font-mono">{sailor.histRankingDec24 || "-"}</td>
-                          <td className="py-4 px-4 bg-blue-600/5 text-slate-400 font-mono">{sailor.histRankingJun25 || "-"}</td>
-                          <td className="py-4 px-4 bg-blue-600/5 text-slate-400 font-mono">{sailor.histRankingDec25 || "-"}</td>
-                          <td className="py-4 px-4 border-r border-white/5 bg-blue-600/5 text-white font-mono font-bold">{sailor.histRankingJun26 || "-"}</td>
-
-                          {/* Representatives */}
-                          <td className="py-4 px-4 bg-emerald-600/5 text-emerald-400 font-mono">{sailor.worlds || "-"}</td>
-                          <td className="py-4 px-4 bg-emerald-600/5 text-emerald-400 font-mono">{sailor.european || "-"}</td>
-                          <td className="py-4 px-4 bg-emerald-600/5 text-emerald-400 font-mono">{sailor.asian || "-"}</td>
-                          <td className="py-4 px-4 border-r border-white/5 bg-emerald-600/5 text-emerald-400 font-mono">{sailor.seaGames || "-"}</td>
-
-                          {/* Fleet Dates */}
-                          <td className="py-4 px-4 text-center font-mono text-slate-400">{sailor.goldEntryDate || "-"}</td>
-                          <td className="py-4 px-4 text-center font-mono text-slate-400">{sailor.silverEntryDate || "-"}</td>
-                          <td className="py-4 px-4 text-center font-mono text-slate-400">{sailor.dropDate || "-"}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Tab 4: Database Management */}
+        {/* Database & bulk edit */}
         {activeTab === "edit" && (
           <div className="space-y-6">
             {/* Sub Tabs */}
@@ -2269,7 +1991,187 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   <p className="sm:col-span-2 lg:col-span-4 text-[11px] text-slate-500">
                     Showing <strong className="text-white">{filteredDbSailors.length}</strong> of{" "}
                     {sailorList.length} sailors
+                    {selectedSailors.length > 0 && (
+                      <>
+                        {" "}
+                        · <strong className="text-orange-400">{selectedSailors.length}</strong> selected
+                        for bulk edit
+                      </>
+                    )}
                   </p>
+                </div>
+
+                {/* Bulk edit toolbar (merged from former Bulk Date Editor) */}
+                <div className="glass-panel rounded-2xl border border-orange-500/20 bg-orange-500/[0.03] p-4 space-y-3">
+                  <div className="flex items-center gap-2">
+                    <Grid className="h-4 w-4 text-orange-500" />
+                    <h3 className="text-sm font-bold text-white">Bulk edit selected sailors</h3>
+                  </div>
+                  <p className="text-[11px] text-slate-500">
+                    Tick sailors in the table below, choose a property and value, then apply. Use
+                    Columns to show historical / overseas fields in the same overview.
+                  </p>
+                  <div className="flex flex-wrap items-end gap-4">
+                    <div className="flex flex-col gap-1 min-w-[180px]">
+                      <label className="text-[10px] font-bold text-slate-400 uppercase">Property</label>
+                      <select
+                        value={bulkField}
+                        onChange={(e) => {
+                          setBulkField(e.target.value);
+                          setBulkValue("");
+                        }}
+                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                      >
+                        <option value="">-- Select property --</option>
+                        <optgroup label="Fleet Status & Dates">
+                          <option value="goldEntryDate">Gold Fleet Entry Date</option>
+                          <option value="silverEntryDate">Silver Fleet Entry Date</option>
+                          <option value="dropDate">Optimist Drop Date</option>
+                          <option value="currentFleet">Fleet current (Gold/Silver)</option>
+                          <option value="manuallyDropped">Manually dropped (Y/N)</option>
+                        </optgroup>
+                        <optgroup label="Profile">
+                          <option value="club">Club</option>
+                          <option value="school">School</option>
+                          <option value="nationality">Nationality</option>
+                          <option value="sailNumber">Sail Number</option>
+                          <option value="gender">Gender (M/F)</option>
+                          <option value="nationalSquadStatus">Squad (Nat A/B/DS)</option>
+                          <option value="dob">Date of Birth</option>
+                          <option value="weight">Weight (kg)</option>
+                        </optgroup>
+                        <optgroup label="Squad history">
+                          <option value="natSquadStatusJan25">Squad Jan 25</option>
+                          <option value="natSquadStatusJul25">Squad Jul 25</option>
+                          <option value="natSquadStatusJan26">Squad Jan 26</option>
+                          <option value="natSquadStatusJul26">Squad Jul 26</option>
+                        </optgroup>
+                        <optgroup label="Historical rankings">
+                          <option value="histRankingJun24">Hist Jun 24</option>
+                          <option value="histRankingDec24">Hist Dec 24</option>
+                          <option value="histRankingJun25">Hist Jun 25</option>
+                          <option value="histRankingDec25">Hist Dec 25</option>
+                          <option value="histRankingJun26">Hist Jun 26</option>
+                        </optgroup>
+                        <optgroup label="Overseas Representation">
+                          <option value="worlds">Worlds year</option>
+                          <option value="european">European year</option>
+                          <option value="asian">Asian year</option>
+                          <option value="seaGames">SEA Games year</option>
+                        </optgroup>
+                      </select>
+                    </div>
+                    <div className="flex flex-col gap-1 min-w-[140px]">
+                      <label className="text-[10px] font-bold text-slate-400 uppercase">Value</label>
+                      {["goldEntryDate", "silverEntryDate", "dropDate", "dob"].includes(bulkField) ? (
+                        <input
+                          type="date"
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                        />
+                      ) : bulkField === "gender" ? (
+                        <select
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                        >
+                          <option value="">—</option>
+                          <option value="M">M</option>
+                          <option value="F">F</option>
+                        </select>
+                      ) : bulkField === "currentFleet" ? (
+                        <select
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                        >
+                          <option value="">Guest / clear</option>
+                          <option value="Silver">Silver</option>
+                          <option value="Gold">Gold</option>
+                        </select>
+                      ) : bulkField === "manuallyDropped" ? (
+                        <select
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                        >
+                          <option value="N">N (active)</option>
+                          <option value="Y">Y (dropped)</option>
+                        </select>
+                      ) : [
+                          "nationalSquadStatus",
+                          "natSquadStatusJan25",
+                          "natSquadStatusJul25",
+                          "natSquadStatusJan26",
+                          "natSquadStatusJul26",
+                        ].includes(bulkField) ? (
+                        <select
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                        >
+                          <option value="">—</option>
+                          <option value="Nat A">Nat A</option>
+                          <option value="Nat B">Nat B</option>
+                          <option value="DS">DS</option>
+                          <option value="CLEAR">Clear</option>
+                        </select>
+                      ) : [
+                          "histRankingJun24",
+                          "histRankingDec24",
+                          "histRankingJun25",
+                          "histRankingDec25",
+                          "histRankingJun26",
+                          "worlds",
+                          "european",
+                          "asian",
+                          "seaGames",
+                          "weight",
+                        ].includes(bulkField) ? (
+                        <input
+                          type="number"
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs font-mono"
+                          placeholder="Number"
+                        />
+                      ) : (
+                        <input
+                          type="text"
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          disabled={!bulkField}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs disabled:opacity-40"
+                          placeholder={bulkField ? "Value" : "Select property first"}
+                        />
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin || selectedSailors.length === 0 || !bulkField}
+                      onClick={handleApplyBulk}
+                      className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40 flex items-center gap-1.5"
+                    >
+                      <Save className="h-4 w-4" />
+                      Apply to {selectedSailors.length || 0}
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin || selectedSailors.length === 0}
+                      onClick={handleBulkDelete}
+                      className="rounded-full bg-rose-600/90 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500 disabled:opacity-40 flex items-center gap-1.5"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                      Delete selected
+                    </button>
+                  </div>
+                  {bulkStatus && (
+                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
+                      <CheckCircle className="h-4 w-4" />
+                      {bulkStatus}
+                    </div>
+                  )}
                 </div>
 
                 {/* Sailor Form Card */}
@@ -2587,6 +2489,20 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     <table className="w-full text-left border-collapse text-xs min-w-[720px]">
                       <thead>
                         <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                          <th className="py-3 px-3 w-10 text-center">
+                            <input
+                              type="checkbox"
+                              checked={
+                                sortedDbSailors.length > 0 &&
+                                sortedDbSailors.every((s) =>
+                                  selectedSailors.includes(s.id)
+                                )
+                              }
+                              onChange={toggleSelectAllVisible}
+                              className="rounded border-slate-700 bg-slate-900 text-orange-600 h-3.5 w-3.5"
+                              title="Select all visible"
+                            />
+                          </th>
                           {DB_SAILOR_COLUMNS.filter((c) => colOn(c.key)).map((c) => (
                             <th
                               key={c.key}
@@ -2594,7 +2510,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 c.key === "best3" ||
                                 c.key === "goldEntry" ||
                                 c.key === "silverEntry" ||
-                                c.key === "dropDate"
+                                c.key === "dropDate" ||
+                                c.key.startsWith("hist") ||
+                                ["worlds", "european", "asian", "seaGames"].includes(
+                                  c.key
+                                )
                                   ? "text-center"
                                   : ""
                               }`}
@@ -2623,6 +2543,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
                         {sortedDbSailors.map((s) => {
                           const seriesLabel = seriesLabelOf(s);
+                          const isChecked = selectedSailors.includes(s.id);
                           const cells: Record<string, any> = {
                             name: (
                               <span className="font-bold text-white">
@@ -2689,16 +2610,39 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 {s.dropDate ? String(s.dropDate).slice(0, 10) : "-"}
                               </span>
                             ),
+                            squadJan25: s.natSquadStatusJan25 || "—",
+                            squadJul25: s.natSquadStatusJul25 || "—",
+                            squadJan26: s.natSquadStatusJan26 || "—",
+                            squadJul26: s.natSquadStatusJul26 || "—",
+                            histJun24: s.histRankingJun24 ?? "—",
+                            histDec24: s.histRankingDec24 ?? "—",
+                            histJun25: s.histRankingJun25 ?? "—",
+                            histDec25: s.histRankingDec25 ?? "—",
+                            histJun26: s.histRankingJun26 ?? "—",
+                            worlds: s.worlds ?? "—",
+                            european: s.european ?? "—",
+                            asian: s.asian ?? "—",
+                            seaGames: s.seaGames ?? "—",
                           };
                           return (
                             <tr
                               key={s.id}
                               className={`hover:bg-white/5 transition-colors ${
-                                competitionsSailorId === s.id
+                                isChecked
                                   ? "bg-orange-500/5"
-                                  : ""
+                                  : competitionsSailorId === s.id
+                                    ? "bg-orange-500/[0.03]"
+                                    : ""
                               }`}
                             >
+                              <td className="py-3 px-3 text-center">
+                                <input
+                                  type="checkbox"
+                                  checked={isChecked}
+                                  onChange={() => toggleSelectSailor(s.id)}
+                                  className="rounded border-slate-700 bg-slate-900 text-orange-600 h-3.5 w-3.5"
+                                />
+                              </td>
                               {DB_SAILOR_COLUMNS.filter((c) => colOn(c.key)).map(
                                 (c) => (
                                   <td
@@ -2707,8 +2651,15 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                       c.key === "best3" ||
                                       c.key === "goldEntry" ||
                                       c.key === "silverEntry" ||
-                                      c.key === "dropDate"
-                                        ? "text-center"
+                                      c.key === "dropDate" ||
+                                      c.key.startsWith("hist") ||
+                                      [
+                                        "worlds",
+                                        "european",
+                                        "asian",
+                                        "seaGames",
+                                      ].includes(c.key)
+                                        ? "text-center font-mono"
                                         : ""
                                     }`}
                                   >
@@ -2780,8 +2731,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     </table>
                   </div>
                   <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5">
-                    Best 3 of 5 = current Jul–Dec 2026 series score (Gold/Silver
-                    members only). Medal icon = edit competitions.
+                    Tick rows for bulk edit · Best 3 of 5 = Jul–Dec 2026 series score ·
+                    Medal = competitions · Columns for squad history / overseas.
                   </p>
                 </div>
 
