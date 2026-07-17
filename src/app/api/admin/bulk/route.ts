@@ -6,6 +6,7 @@ import { inArray } from "drizzle-orm";
 import {
   hasSilverHistory,
   normalizeNationality,
+  normalizeYearsList,
 } from "@/lib/seriesMembership";
 
 const ALLOWED = new Set([
@@ -44,11 +45,9 @@ const NUMERIC = new Set([
   "histRankingJun25",
   "histRankingDec25",
   "histRankingJun26",
-  "worlds",
-  "european",
-  "asian",
-  "seaGames",
 ]);
+
+const YEARS_LIST = new Set(["worlds", "european", "asian", "seaGames"]);
 
 const BOOLEAN = new Set(["manuallyDropped"]);
 
@@ -84,6 +83,8 @@ export async function POST(req: Request) {
       typed = s === "y" || s === "yes" || s === "true" || s === "1";
     } else if (NUMERIC.has(field)) {
       typed = value === "" ? null : Number(value);
+    } else if (YEARS_LIST.has(field)) {
+      typed = value === "" || value == null ? null : normalizeYearsList(value);
     } else if (field === "currentFleet" && value) {
       const s = String(value).trim().toLowerCase();
       typed = s.startsWith("gold")

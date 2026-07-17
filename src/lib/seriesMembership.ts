@@ -220,6 +220,31 @@ export function validateGoldPromotion(input: {
   return null;
 }
 
+/**
+ * Normalize multi-year overseas representation input.
+ * Accepts "2023", "2023, 2025", "2023/2025", or a single number.
+ * Returns sorted unique years as "2023, 2025" or null.
+ */
+export function normalizeYearsList(v: unknown): string | null {
+  if (v == null || v === "") return null;
+  if (typeof v === "number" && Number.isFinite(v)) {
+    const y = Math.round(v);
+    if (y >= 1990 && y <= 2100) return String(y);
+    return null;
+  }
+  const years = String(v).match(/\b(19|20)\d{2}\b/g);
+  if (!years?.length) return null;
+  const unique = Array.from(new Set(years.map((y) => Number(y))))
+    .filter((y) => y >= 1990 && y <= 2100)
+    .sort((a, b) => a - b);
+  return unique.length ? unique.join(", ") : null;
+}
+
+export function formatYearsDisplay(v: unknown): string {
+  const n = normalizeYearsList(v);
+  return n || "—";
+}
+
 /** Map common Postgres / schema errors to actionable admin messages */
 export function sailorDbErrorHint(err: unknown): string | null {
   const msg = err instanceof Error ? err.message : String(err ?? "");
@@ -234,6 +259,13 @@ export function sailorDbErrorHint(err: unknown): string | null {
   }
   if (/nett_score/i.test(msg) && /integer|type|numeric/i.test(msg)) {
     return "Run migration 003: ALTER TABLE regatta_results ALTER COLUMN nett_score TYPE real;";
+  }
+  if (
+    /(worlds|european|asian|sea_games).*integer|invalid input syntax for type integer/i.test(
+      msg
+    )
+  ) {
+    return "Overseas years need text columns. Run migration 006_overseas_years_text.sql in Supabase.";
   }
   return null;
 }

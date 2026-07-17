@@ -164,7 +164,7 @@ export function FleetRankingsView({
         <div className="sticky top-0 z-30 -mx-1 px-1">
           <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 backdrop-blur-md shadow-lg shadow-black/40 px-4 py-3">
             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-              Scoring events (newest first)
+              Scoring events — R1 oldest · R5 newest of the last five
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
               {eventSlots.map((ev, idx) => (
@@ -375,9 +375,9 @@ export function FleetRankingsView({
           </table>
         </div>
         <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5 bg-[#0c0d14]">
-          R1–R5 = last five eligible regattas for this fleet (newest first) — see sticky
-          legend and column subtitles. Best 3 of 5 = sum of the three best (lowest)
-          scores. * = DNS (fleet size + 1).
+          R1–R5 = last five eligible regattas for this fleet (R1 = oldest, R5 = newest)
+          — see sticky legend and column subtitles. Best 3 of 5 = sum of the three best
+          (lowest) scores. * = DNS (fleet size + 1).
         </p>
       </div>
     </div>

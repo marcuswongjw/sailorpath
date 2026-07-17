@@ -5,6 +5,7 @@ import { sailors } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
 import {
   normalizeNationality,
+  normalizeYearsList,
   sailorDbErrorHint,
   toDateOnly,
   validateGoldPromotion,
@@ -92,7 +93,6 @@ export async function POST(req: Request) {
       dob: toDateOnly(body.dob),
       weight: num(body.weight),
       instagram: body.instagram || null,
-      facebook: body.facebook || null,
       natSquadStatusJan25: body.natSquadStatusJan25 || null,
       natSquadStatusJul25: body.natSquadStatusJul25 || null,
       natSquadStatusJan26: body.natSquadStatusJan26 || null,
@@ -102,10 +102,10 @@ export async function POST(req: Request) {
       histRankingJun25: num(body.histRankingJun25),
       histRankingDec25: num(body.histRankingDec25),
       histRankingJun26: num(body.histRankingJun26),
-      worlds: num(body.worlds),
-      european: num(body.european),
-      asian: num(body.asian),
-      seaGames: num(body.seaGames),
+      worlds: normalizeYearsList(body.worlds),
+      european: normalizeYearsList(body.european),
+      asian: normalizeYearsList(body.asian),
+      seaGames: normalizeYearsList(body.seaGames),
     };
 
     // nationality only if provided (column may be missing until migration 005)
@@ -197,7 +197,6 @@ export async function PATCH(req: Request) {
       "nationalSquadStatus",
       "currentFleet",
       "instagram",
-      "facebook",
       "natSquadStatusJan25",
       "natSquadStatusJul25",
       "natSquadStatusJan26",
@@ -215,6 +214,14 @@ export async function PATCH(req: Request) {
         body.nationality === "" || body.nationality == null
           ? null
           : normalizeNationality(body.nationality);
+    }
+    for (const f of ["worlds", "european", "asian", "seaGames"] as const) {
+      if (body[f] !== undefined) {
+        patch[f] =
+          body[f] === "" || body[f] == null
+            ? null
+            : normalizeYearsList(body[f]);
+      }
     }
     // Auto-fill entry dates when fleet is set without dates
     if (
@@ -250,10 +257,6 @@ export async function PATCH(req: Request) {
       "histRankingJun25",
       "histRankingDec25",
       "histRankingJun26",
-      "worlds",
-      "european",
-      "asian",
-      "seaGames",
     ] as const) {
       if (body[f] !== undefined) {
         patch[f] =

@@ -204,7 +204,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     gender: "M",
     nationalSquadStatus: "",
     instagram: "",
-    facebook: "",
     dob: "",
     weight: "",
     bio: "",
@@ -1104,7 +1103,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           let typedValue: any = bulkValue;
           const isNumeric = [
             "histRankingJun24", "histRankingDec24", "histRankingJun25", "histRankingDec25", "histRankingJun26",
-            "worlds", "european", "asian", "seaGames", "weight",
+            "weight",
           ].includes(bulkField);
           if (isNumeric) typedValue = bulkValue === "" ? null : parseInt(bulkValue) || null;
           else if (bulkField === "manuallyDropped") {
@@ -1215,7 +1214,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       dob: dateOnly(sailorForm.dob),
       weight: sailorForm.weight === "" || sailorForm.weight == null ? null : sailorForm.weight,
       instagram: sailorForm.instagram || null,
-      facebook: sailorForm.facebook || null,
       manuallyDropped: Boolean(sailorForm.manuallyDropped),
       natSquadStatusJan25: sailorForm.natSquadStatusJan25 || null,
       natSquadStatusJul25: sailorForm.natSquadStatusJul25 || null,
@@ -2054,10 +2052,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <option value="histRankingJun26">Hist Jun 26</option>
                         </optgroup>
                         <optgroup label="Overseas Representation">
-                          <option value="worlds">Worlds year</option>
-                          <option value="european">European year</option>
-                          <option value="asian">Asian year</option>
-                          <option value="seaGames">SEA Games year</option>
+                          <option value="worlds">Worlds years (e.g. 2023, 2025)</option>
+                          <option value="european">European years</option>
+                          <option value="asian">Asian years</option>
+                          <option value="seaGames">SEA Games years</option>
                         </optgroup>
                       </select>
                     </div>
@@ -2123,10 +2121,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           "histRankingJun25",
                           "histRankingDec25",
                           "histRankingJun26",
-                          "worlds",
-                          "european",
-                          "asian",
-                          "seaGames",
                           "weight",
                         ].includes(bulkField) ? (
                         <input
@@ -2282,15 +2276,50 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           placeholder="e.g. @username"
                         />
                       </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Facebook Username</label>
-                        <input
-                          type="text"
-                          value={sailorForm.facebook || ""}
-                          onChange={(e) => setSailorForm({ ...sailorForm, facebook: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                          placeholder="e.g. user.name.12"
-                        />
+                      <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-t border-white/5 pt-4">
+                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] font-bold text-emerald-400/90 uppercase tracking-wider">
+                          Overseas Representation — multiple years allowed (e.g. 2023, 2025)
+                        </p>
+                        <div>
+                          <label className="text-[10px] font-bold text-slate-500 uppercase">Worlds years</label>
+                          <input
+                            type="text"
+                            value={sailorForm.worlds || ""}
+                            onChange={(e) => setSailorForm({ ...sailorForm, worlds: e.target.value })}
+                            className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            placeholder="2023, 2025"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-bold text-slate-500 uppercase">European years</label>
+                          <input
+                            type="text"
+                            value={sailorForm.european || ""}
+                            onChange={(e) => setSailorForm({ ...sailorForm, european: e.target.value })}
+                            className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            placeholder="2024"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-bold text-slate-500 uppercase">Asian years</label>
+                          <input
+                            type="text"
+                            value={sailorForm.asian || ""}
+                            onChange={(e) => setSailorForm({ ...sailorForm, asian: e.target.value })}
+                            className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            placeholder="2022, 2024"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] font-bold text-slate-500 uppercase">SEA Games years</label>
+                          <input
+                            type="text"
+                            value={sailorForm.seaGames || ""}
+                            onChange={(e) => setSailorForm({ ...sailorForm, seaGames: e.target.value })}
+                            className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            placeholder="2023"
+                          />
+                        </div>
                       </div>
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Biography</label>
@@ -2455,8 +2484,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             nationalSquadStatus: "",
                             currentFleet: "",
                             instagram: "",
-                            facebook: "",
-                            dob: "",
+                                                    dob: "",
                             weight: "",
                             bio: "",
                             goldEntryDate: "",
@@ -2619,10 +2647,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             histJun25: s.histRankingJun25 ?? "—",
                             histDec25: s.histRankingDec25 ?? "—",
                             histJun26: s.histRankingJun26 ?? "—",
-                            worlds: s.worlds ?? "—",
-                            european: s.european ?? "—",
-                            asian: s.asian ?? "—",
-                            seaGames: s.seaGames ?? "—",
+                            worlds: s.worlds != null && s.worlds !== "" ? String(s.worlds) : "—",
+                            european: s.european != null && s.european !== "" ? String(s.european) : "—",
+                            asian: s.asian != null && s.asian !== "" ? String(s.asian) : "—",
+                            seaGames: s.seaGames != null && s.seaGames !== "" ? String(s.seaGames) : "—",
                           };
                           return (
                             <tr
@@ -2671,15 +2699,16 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 <div className="flex justify-end items-center gap-2">
                                   <button
                                     type="button"
-                                    title="Edit competitions"
+                                    title="View & edit all regatta results for this sailor"
                                     onClick={() => {
                                       setEditingSailorId(null);
                                       setCompetitionsSailorId(s.id);
                                       setEditingResultId(null);
                                     }}
-                                    className="text-slate-400 hover:text-orange-400"
+                                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold text-orange-300 hover:border-orange-500/40 hover:text-orange-200"
                                   >
-                                    <Medal className="h-4 w-4" />
+                                    <Medal className="h-3.5 w-3.5" />
+                                    Results
                                   </button>
                                   <button
                                     type="button"
@@ -2702,12 +2731,15 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                         manuallyDropped:
                                           s.manuallyDropped || false,
                                         instagram: s.instagram || "",
-                                        facebook: s.facebook || "",
                                         dob: d(s.dob),
                                         bio: s.bio || "",
                                         goldEntryDate: d(s.goldEntryDate),
                                         silverEntryDate: d(s.silverEntryDate),
                                         dropDate: d(s.dropDate),
+                                        worlds: s.worlds != null ? String(s.worlds) : "",
+                                        european: s.european != null ? String(s.european) : "",
+                                        asian: s.asian != null ? String(s.asian) : "",
+                                        seaGames: s.seaGames != null ? String(s.seaGames) : "",
                                       });
                                     }}
                                     className="text-slate-400 hover:text-white"
@@ -2762,11 +2794,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             <div>
                               <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
                                 <Medal className="h-4 w-4 text-orange-400" />
-                                Competitions — {sailor?.name || "Sailor"}
+                                All regatta results — {sailor?.name || "Sailor"}
                               </h3>
                               <p className="text-xs text-slate-500 mt-1">
-                                Add, edit, or remove regatta results for this
-                                sailor.
+                                Full logbook for this sailor. Edit rank / total / nett for each
+                                event, add missing regattas, or delete results.
                               </p>
                             </div>
                             <div className="flex gap-2">

@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { sailors } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { nameTokenKey } from "@/lib/nameMatch";
+import { normalizeYearsList } from "@/lib/seriesMembership";
 
 type BulkSailorRow = {
   name: string;
@@ -127,7 +128,6 @@ export async function POST(req: Request) {
         dob: emptyToNull(r.dob),
         weight: num(r.weight),
         instagram: emptyToNull(r.instagram),
-        facebook: emptyToNull(r.facebook),
         natSquadStatusJan25: emptyToNull(r.natSquadStatusJan25),
         natSquadStatusJul25: emptyToNull(r.natSquadStatusJul25),
         natSquadStatusJan26: emptyToNull(r.natSquadStatusJan26),
@@ -137,10 +137,10 @@ export async function POST(req: Request) {
         histRankingJun25: num(r.histRankingJun25),
         histRankingDec25: num(r.histRankingDec25),
         histRankingJun26: num(r.histRankingJun26),
-        worlds: num(r.worlds),
-        european: num(r.european),
-        asian: num(r.asian),
-        seaGames: num(r.seaGames),
+        worlds: normalizeYearsList(r.worlds),
+        european: normalizeYearsList(r.european),
+        asian: normalizeYearsList(r.asian),
+        seaGames: normalizeYearsList(r.seaGames),
         updatedAt: new Date(),
       };
 

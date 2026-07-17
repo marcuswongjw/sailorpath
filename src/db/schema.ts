@@ -43,6 +43,7 @@ export const sailors = pgTable("sailors", {
    */
   manuallyDropped: boolean("manually_dropped").default(false).notNull(),
   instagram: text("instagram"),
+  /** Deprecated in UI — column retained for legacy data */
   facebook: text("facebook"),
   natSquadStatusJan25: text("nat_squad_status_jan_25"),
   natSquadStatusJul25: text("nat_squad_status_jul_25"),
@@ -53,10 +54,14 @@ export const sailors = pgTable("sailors", {
   histRankingJun25: integer("hist_ranking_jun_25"),
   histRankingDec25: integer("hist_ranking_dec_25"),
   histRankingJun26: integer("hist_ranking_jun_26"),
-  worlds: integer("worlds_represented_year"),
-  european: integer("european_represented_year"),
-  asian: integer("asian_represented_year"),
-  seaGames: integer("sea_games_represented_year"),
+  /**
+   * Overseas representation years — text so multiple years are allowed
+   * e.g. "2023, 2025". Migrated from single integer columns.
+   */
+  worlds: text("worlds_represented_year"),
+  european: text("european_represented_year"),
+  asian: text("asian_represented_year"),
+  seaGames: text("sea_games_represented_year"),
   dob: date("dob"),
   weight: integer("weight"),
   goldEntryDate: date("gold_entry_date"),

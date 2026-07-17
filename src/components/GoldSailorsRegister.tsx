@@ -2,7 +2,14 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpDown, ArrowUp, ArrowDown, Trophy } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpDown,
+  ArrowUp,
+  ArrowDown,
+  Trophy,
+} from "lucide-react";
+import { formatYearsDisplay } from "@/lib/seriesMembership";
 
 type GoldSailor = {
   id: string;
@@ -24,10 +31,10 @@ type GoldSailor = {
   histRankingJun25?: number | null;
   histRankingDec25?: number | null;
   histRankingJun26?: number | null;
-  worlds?: number | null;
-  european?: number | null;
-  asian?: number | null;
-  seaGames?: number | null;
+  worlds?: string | number | null;
+  european?: string | number | null;
+  asian?: string | number | null;
+  seaGames?: string | number | null;
 };
 
 type SortKey =
@@ -179,43 +186,49 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
         </div>
 
         <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden shadow-2xl">
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto max-h-[min(80vh,920px)] overflow-y-auto">
             <table className="w-full text-left border-collapse text-xs min-w-[1400px]">
               <thead>
-                <tr className="border-b border-white/5 bg-slate-950/60 text-[9px] font-black text-slate-500 uppercase tracking-widest text-center">
-                  <th colSpan={3} className="py-2 px-4 border-r border-white/5 text-left">
+                <tr className="text-[9px] font-black text-slate-500 uppercase tracking-widest text-center">
+                  <th
+                    colSpan={3}
+                    className="sticky top-0 z-30 py-2 px-4 border-b border-r border-white/10 text-left bg-[#0e1018] shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                  >
                     Competitor
                   </th>
                   <th
                     colSpan={4}
-                    className="py-2 px-4 border-r border-white/5 bg-orange-600/5 text-orange-400"
+                    className="sticky top-0 z-30 py-2 px-4 border-b border-r border-white/10 bg-[#16120e] text-orange-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                   >
                     National Squad History
                   </th>
                   <th
                     colSpan={5}
-                    className="py-2 px-4 border-r border-white/5 bg-blue-600/5 text-blue-400"
+                    className="sticky top-0 z-30 py-2 px-4 border-b border-r border-white/10 bg-[#0e1520] text-blue-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                   >
                     Historical Rankings
                   </th>
                   <th
                     colSpan={4}
-                    className="py-2 px-4 border-r border-white/5 bg-emerald-600/5 text-emerald-400"
+                    className="sticky top-0 z-30 py-2 px-4 border-b border-r border-white/10 bg-[#0e1a14] text-emerald-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                   >
                     Overseas Representation
                   </th>
-                  <th colSpan={1} className="py-2 px-4">
+                  <th
+                    colSpan={1}
+                    className="sticky top-0 z-30 py-2 px-4 border-b border-white/10 bg-[#0e1018] shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                  >
                     Profile
                   </th>
                 </tr>
-                <tr className="border-b border-white/5 bg-white/5 text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">
+                <tr className="text-[9px] font-extrabold text-slate-400 uppercase tracking-wider">
                   <Th
                     label="Sailor Name"
                     sortKey="name"
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-6 text-left"
+                    className="sticky top-8 z-20 py-3 px-6 text-left bg-[#12141c] border-b border-white/10"
                   />
                   <Th
                     label="Sail Number"
@@ -223,7 +236,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#12141c] border-b border-white/10"
                   />
                   <Th
                     label="Age/Gender"
@@ -231,7 +244,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center border-r border-white/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#12141c] border-b"
                   />
 
                   <Th
@@ -240,7 +253,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-orange-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
                   />
                   <Th
                     label="Jul 25"
@@ -248,7 +261,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-orange-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
                   />
                   <Th
                     label="Jan 26"
@@ -256,7 +269,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-orange-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
                   />
                   <Th
                     label="Jul 26 (Current)"
@@ -264,7 +277,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center border-r border-white/5 bg-orange-600/5 text-orange-300"
+                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#1a1610] border-b text-orange-300"
                   />
 
                   <Th
@@ -273,7 +286,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-blue-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101820] border-b border-white/10"
                   />
                   <Th
                     label="Dec 24"
@@ -281,7 +294,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-blue-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101820] border-b border-white/10"
                   />
                   <Th
                     label="Jun 25"
@@ -289,7 +302,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-blue-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101820] border-b border-white/10"
                   />
                   <Th
                     label="Dec 25"
@@ -297,7 +310,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-blue-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101820] border-b border-white/10"
                   />
                   <Th
                     label="Jun 26"
@@ -305,7 +318,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center border-r border-white/5 bg-blue-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#101820] border-b"
                   />
 
                   <Th
@@ -314,7 +327,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-emerald-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101a14] border-b border-white/10"
                   />
                   <Th
                     label="European"
@@ -322,7 +335,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-emerald-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101a14] border-b border-white/10"
                   />
                   <Th
                     label="Asian"
@@ -330,7 +343,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center bg-emerald-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101a14] border-b border-white/10"
                   />
                   <Th
                     label="SEA Games"
@@ -338,10 +351,12 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="py-4 px-4 text-center border-r border-white/5 bg-emerald-600/5"
+                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#101a14] border-b"
                   />
 
-                  <th className="py-4 px-6 text-center">Action</th>
+                  <th className="sticky top-8 z-20 py-3 px-6 text-center bg-[#12141c] border-b border-white/10">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
@@ -413,17 +428,17 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                         {sailor.histRankingJun26 ?? "-"}
                       </td>
 
-                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400">
-                        {sailor.worlds ?? "-"}
+                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
+                        {formatYearsDisplay(sailor.worlds)}
                       </td>
-                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400">
-                        {sailor.european ?? "-"}
+                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
+                        {formatYearsDisplay(sailor.european)}
                       </td>
-                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400">
-                        {sailor.asian ?? "-"}
+                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
+                        {formatYearsDisplay(sailor.asian)}
                       </td>
-                      <td className="py-4 px-4 border-r border-white/5 bg-emerald-600/5 font-mono text-emerald-400">
-                        {sailor.seaGames ?? "-"}
+                      <td className="py-4 px-4 border-r border-white/5 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
+                        {formatYearsDisplay(sailor.seaGames)}
                       </td>
 
                       <td className="py-4 px-6 text-center">

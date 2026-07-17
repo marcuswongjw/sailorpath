@@ -29,10 +29,11 @@ export interface SailorRecord {
   histRankingJun25?: number | null;
   histRankingDec25?: number | null;
   histRankingJun26?: number | null;
-  worlds?: number | null;
-  european?: number | null;
-  asian?: number | null;
-  seaGames?: number | null;
+  /** One or more years, e.g. "2023, 2025" (or legacy single number) */
+  worlds?: string | number | null;
+  european?: string | number | null;
+  asian?: string | number | null;
+  seaGames?: string | number | null;
 }
 
 export interface RegattaRecord {
@@ -196,7 +197,9 @@ export function calculateRankings(
         }
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 5);
+      .slice(0, 5)
+      // R1 = oldest of the five; R5 = newest
+      .reverse();
 
     const regattaScores = sailorRegattas.map((regatta) => {
       const result = results.find(
