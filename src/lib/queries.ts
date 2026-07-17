@@ -134,14 +134,26 @@ export async function getRegattaBySlug(slug: string) {
 export async function listResults() {
   return withDb(async () => {
     const rows = await db.select().from(regattaResults);
-    return rows.map(
-      (r): RegattaResultRecord => ({
-        sailorId: r.sailorId,
-        regattaId: r.regattaId,
-        rank: r.rank,
-        nettScore: r.nettScore,
-      })
-    );
+    // Include id for admin delete/edit (extends ranking type)
+    return rows.map((r) => ({
+      id: r.id,
+      sailorId: r.sailorId,
+      regattaId: r.regattaId,
+      rank: r.rank,
+      nettScore: r.nettScore,
+    }));
+  });
+}
+
+export async function listRegattasFull() {
+  return withDb(async () => {
+    return db.select().from(regattas).orderBy(desc(regattas.date));
+  });
+}
+
+export async function listSailorsFull() {
+  return withDb(async () => {
+    return db.select().from(sailors).orderBy(asc(sailors.name));
   });
 }
 

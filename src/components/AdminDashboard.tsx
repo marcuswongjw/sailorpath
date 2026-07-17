@@ -192,6 +192,23 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     return null;
   };
 
+  const excelDateToIso = (v: unknown): string | null => {
+    if (v == null || v === "") return null;
+    if (typeof v === "number" && Number.isFinite(v)) {
+      // Excel serial date
+      const epoch = new Date(Date.UTC(1899, 11, 30));
+      const d = new Date(epoch.getTime() + v * 86400000);
+      return d.toISOString().slice(0, 10);
+    }
+    const s = String(v).trim();
+    if (!s) return null;
+    // Already ISO-ish
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+    const parsed = Date.parse(s);
+    if (!Number.isNaN(parsed)) return new Date(parsed).toISOString().slice(0, 10);
+    return s; // leave as-is for DB to reject if invalid
+  };
+
   const handleRosterFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -206,39 +223,152 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           pickCol(row, ["name", "sailor", "sailorname", "full name"]) || ""
         ).trim();
         if (!name) return null;
+
+        // Map user's export columns + common aliases
+        const goldEntryDate = excelDateToIso(
+          pickCol(row, [
+            "entered gold",
+            "goldentrydate",
+            "gold entry",
+            "gold entry date",
+            "gold",
+          ])
+        );
+        const silverEntryDate = excelDateToIso(
+          pickCol(row, [
+            "entered silver",
+            "silverentrydate",
+            "silver entry",
+            "silver entry date",
+            "silver",
+          ])
+        );
+        const dropDate = excelDateToIso(
+          pickCol(row, [
+            "optimist drop",
+            "dropdate",
+            "drop date",
+            "drop",
+            "manually dropped",
+          ])
+        );
+        const dob = excelDateToIso(
+          pickCol(row, ["born", "dob", "date of birth", "birthdate", "birth"])
+        );
+
+        // Current squad: prefer "Gold squad", then "Fleet current" if it looks like squad
+        const goldSquad = pickCol(row, ["gold squad", "goldsquad"]);
+        const fleetCurrent = pickCol(row, ["fleet current", "fleetcurrent", "fleet"]);
+        const nationalSquadStatus =
+          goldSquad != null && String(goldSquad).trim() !== ""
+            ? String(goldSquad).trim()
+            : fleetCurrent != null &&
+                /nat|ds|squad|gold|silver/i.test(String(fleetCurrent))
+              ? String(fleetCurrent).trim()
+              : pickCol(row, [
+                  "nationalsquadstatus",
+                  "squad",
+                  "nat squad",
+                  "squad status",
+                ]);
+
+        const school = pickCol(row, ["school"]);
+        const bioParts = [school ? `School: ${school}` : null].filter(Boolean);
+
         return {
           name,
           handle: pickCol(row, ["handle", "slug", "username"]),
-          sailNumber: pickCol(row, ["sailnumber", "sail number", "sail", "sail#", "sail no"]),
+          sailNumber: pickCol(row, [
+            "sailnumber",
+            "sail number",
+            "sail",
+            "sail#",
+            "sail no",
+            "sail no.",
+          ]),
           club: pickCol(row, ["club", "club origin", "team"]),
           gender: pickCol(row, ["gender", "sex"]),
-          goldEntryDate: pickCol(row, ["goldentrydate", "gold entry", "gold entry date", "gold"]),
-          silverEntryDate: pickCol(row, ["silverentrydate", "silver entry", "silver entry date", "silver"]),
-          dropDate: pickCol(row, ["dropdate", "drop date", "drop"]),
-          nationalSquadStatus: pickCol(row, ["nationalsquadstatus", "squad", "nat squad", "squad status"]),
-          dob: pickCol(row, ["dob", "date of birth", "birthdate"]),
+          goldEntryDate,
+          silverEntryDate,
+          dropDate,
+          nationalSquadStatus:
+            nationalSquadStatus != null
+              ? String(nationalSquadStatus).trim()
+              : null,
+          dob,
           weight: pickCol(row, ["weight", "weight kg"]),
-          bio: pickCol(row, ["bio", "biography"]),
+          bio: bioParts.length
+            ? bioParts.join(" · ")
+            : pickCol(row, ["bio", "biography"]),
+          // store school temporarily in bio if no school column in DB
+          _school: school,
           instagram: pickCol(row, ["instagram", "ig"]),
           facebook: pickCol(row, ["facebook", "fb"]),
-          natSquadStatusJan25: pickCol(row, ["natsquadstatusjan25", "nat jan 25", "squad jan 25"]),
-          natSquadStatusJul25: pickCol(row, ["natsquadstatusjul25", "nat jul 25", "squad jul 25"]),
-          natSquadStatusJan26: pickCol(row, ["natsquadstatusjan26", "nat jan 26", "squad jan 26"]),
-          natSquadStatusJul26: pickCol(row, ["natsquadstatusjul26", "nat jul 26", "squad jul 26"]),
-          histRankingJun24: pickCol(row, ["histrankingjun24", "rank jun 24", "hist jun 24"]),
-          histRankingDec24: pickCol(row, ["histrankingdec24", "rank dec 24", "hist dec 24"]),
-          histRankingJun25: pickCol(row, ["histrankingjun25", "rank jun 25", "hist jun 25"]),
-          histRankingDec25: pickCol(row, ["histrankingdec25", "rank dec 25", "hist dec 25"]),
-          histRankingJun26: pickCol(row, ["histrankingjun26", "rank jun 26", "hist jun 26"]),
+          natSquadStatusJan25: pickCol(row, [
+            "squadjan25",
+            "natsquadstatusjan25",
+            "nat jan 25",
+            "squad jan 25",
+          ]),
+          natSquadStatusJul25: pickCol(row, [
+            "squadjul25",
+            "natsquadstatusjul25",
+            "nat jul 25",
+            "squad jul 25",
+          ]),
+          natSquadStatusJan26: pickCol(row, [
+            "squadjan26",
+            "natsquadstatusjan26",
+            "nat jan 26",
+            "squad jan 26",
+          ]),
+          natSquadStatusJul26: pickCol(row, [
+            "squadjul26",
+            "natsquadstatusjul26",
+            "nat jul 26",
+            "squad jul 26",
+          ]),
+          histRankingJun24: pickCol(row, [
+            "histjun24",
+            "histrankingjun24",
+            "rank jun 24",
+            "hist jun 24",
+          ]),
+          histRankingDec24: pickCol(row, [
+            "histdec24",
+            "histrankingdec24",
+            "rank dec 24",
+            "hist dec 24",
+          ]),
+          histRankingJun25: pickCol(row, [
+            "histjun25",
+            "histrankingjun25",
+            "rank jun 25",
+            "hist jun 25",
+          ]),
+          histRankingDec25: pickCol(row, [
+            "histdec25",
+            "histrankingdec25",
+            "rank dec 25",
+            "hist dec 25",
+          ]),
+          histRankingJun26: pickCol(row, [
+            "histjun26",
+            "histrankingjun26",
+            "rank jun 26",
+            "hist jun 26",
+          ]),
           worlds: pickCol(row, ["worlds", "worlds year"]),
-          european: pickCol(row, ["european", "europeans year"]),
-          asian: pickCol(row, ["asian", "asians year"]),
-          seaGames: pickCol(row, ["seagames", "sea games", "sea games year"]),
+          european: pickCol(row, ["euros", "european", "europeans", "europeans year"]),
+          asian: pickCol(row, ["asians", "asian", "asians year"]),
+          seaGames: pickCol(row, ["sea games", "seagames", "sea games year"]),
         };
       })
       .filter(Boolean) as Record<string, any>[];
     setRosterRows(mapped);
-    setRosterStatus(`Parsed ${mapped.length} sailors from ${file.name}`);
+    setRosterStatus(
+      `Parsed ${mapped.length} sailors from ${file.name}. Columns mapped (Born→DOB, Entered Gold/Silver, Optimist Drop, squad/hist fields).`
+    );
   };
 
   const handleRosterImport = async () => {
@@ -561,19 +691,39 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
   };
 
+  const parseApi = async (res: Response) => {
+    const text = await res.text();
+    try {
+      return text ? JSON.parse(text) : {};
+    } catch {
+      throw new Error(
+        res.ok
+          ? "Invalid server response"
+          : `Request failed (${res.status}). ${text.slice(0, 120) || "No details"}`
+      );
+    }
+  };
+
   const handleDeleteSailor = async (id: string) => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
     }
-    if (!confirm("Are you sure you want to delete this sailor?")) return;
+    if (!id) {
+      alert("Missing sailor id — refresh the page and try again.");
+      return;
+    }
+    if (!confirm("Are you sure you want to delete this sailor? Their results will also be deleted."))
+      return;
     try {
       const res = await fetch(`/api/admin/sailors?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
       });
-      const data = await res.json();
+      const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Delete failed");
       setSailorList((prev) => prev.filter((s) => s.id !== id));
+      setResultsList((prev) => prev.filter((r) => r.sailorId !== id));
+      alert("Sailor deleted.");
     } catch (e: any) {
       alert(e.message);
     }
@@ -595,7 +745,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(regattaForm),
         });
-        const data = await res.json();
+        const data = await parseApi(res);
         if (!res.ok) throw new Error(data.error || "Create failed");
         setRegattaList((prev) => [...prev, data.regatta]);
         if (!selectedRegattaIdForResultEdit) {
@@ -608,7 +758,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...regattaForm, id: editingRegattaId }),
         });
-        const data = await res.json();
+        const data = await parseApi(res);
         if (!res.ok) throw new Error(data.error || "Update failed");
         setRegattaList((prev) =>
           prev.map((r) => (r.id === editingRegattaId ? data.regatta : r))
@@ -626,6 +776,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
     }
+    if (!id) {
+      alert("Missing regatta id — refresh the page and try again.");
+      return;
+    }
     if (
       !confirm(
         "Are you sure you want to delete this regatta? All results associated with it will also be deleted."
@@ -637,10 +791,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       const res = await fetch(`/api/admin/regattas?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
       });
-      const data = await res.json();
+      const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Delete failed");
       setRegattaList((prev) => prev.filter((r) => r.id !== id));
-      setResultsList((prev) => prev.filter((res) => res.regattaId !== id));
+      setResultsList((prev) => prev.filter((row) => row.regattaId !== id));
+      if (selectedRegattaIdForResultEdit === id) {
+        setSelectedRegattaIdForResultEdit("");
+      }
+      alert("Regatta deleted.");
     } catch (e: any) {
       alert(e.message);
     }
@@ -662,7 +820,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(resultForm),
         });
-        const data = await res.json();
+        const data = await parseApi(res);
         if (!res.ok) throw new Error(data.error || "Create failed");
         setResultsList((prev) => [...prev, data.result]);
         alert("Result added successfully!");
@@ -672,7 +830,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...resultForm, id: editingResultId }),
         });
-        const data = await res.json();
+        const data = await parseApi(res);
         if (!res.ok) throw new Error(data.error || "Update failed");
         setResultsList((prev) =>
           prev.map((r) => (r.id === editingResultId ? data.result : r))
@@ -690,14 +848,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
       return;
     }
+    if (!id) {
+      alert("Missing result id — refresh the page and try again.");
+      return;
+    }
     if (!confirm("Are you sure you want to delete this result?")) return;
     try {
       const res = await fetch(`/api/admin/results?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
       });
-      const data = await res.json();
+      const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Delete failed");
       setResultsList((prev) => prev.filter((r) => r.id !== id));
+      alert("Result deleted.");
     } catch (e: any) {
       alert(e.message);
     }
@@ -848,11 +1011,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                 </p>
               </div>
 
-              <div className="rounded-xl border border-white/5 bg-slate-950/50 p-4 text-[11px] text-slate-400 font-mono leading-relaxed">
-                Suggested headers (first row):
-                <br />
-                Name | Sail Number | Club | Gender | Gold Entry Date | Silver Entry Date | Drop Date |
-                National Squad Status | DOB | Weight | Handle
+              <div className="rounded-xl border border-white/5 bg-slate-950/50 p-4 text-[11px] text-slate-400 leading-relaxed space-y-2">
+                <p className="font-bold text-slate-300">Your spreadsheet columns are supported:</p>
+                <p className="font-mono text-[10px]">
+                  Name · Gender · Born · Club · School · Fleet current · Gold squad · Entered Gold ·
+                  Entered Silver · Optimist Drop · Manually dropped · squadJan26 · squadJul26 ·
+                  histJun24… · Worlds · Euros · Asians · SEA Games
+                </p>
+                <p className="text-amber-200/90">
+                  Optional but recommended: add a <strong>Sail Number</strong> column (e.g. SGP 115)
+                  for reliable matching later. If missing, a temporary SGP 000 is used.
+                </p>
               </div>
 
               <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">

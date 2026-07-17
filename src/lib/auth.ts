@@ -58,10 +58,18 @@ export function jsonError(error: unknown) {
   const msg = error instanceof Error ? error.message : "Error";
   const status =
     msg === "UNAUTHORIZED" ? 401 : msg === "FORBIDDEN" ? 403 : 500;
+  // Surface useful message for admin UI (still safe — no secrets)
+  const publicMsg =
+    msg === "UNAUTHORIZED"
+      ? "Not signed in"
+      : msg === "FORBIDDEN"
+        ? "Superadmin role required"
+        : msg.length < 200
+          ? msg
+          : "Server error";
   return Response.json(
     {
-      error:
-        msg === "UNAUTHORIZED" || msg === "FORBIDDEN" ? msg : "Server error",
+      error: publicMsg,
       detail: process.env.NODE_ENV !== "production" ? msg : undefined,
     },
     { status }

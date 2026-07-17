@@ -87,16 +87,44 @@ export async function PATCH(req: Request) {
       "goldEntryDate",
       "silverEntryDate",
       "dropDate",
+      "dob",
+      "instagram",
+      "facebook",
+      "natSquadStatusJan25",
+      "natSquadStatusJul25",
+      "natSquadStatusJan26",
+      "natSquadStatusJul26",
     ] as const) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
+    }
+    for (const f of [
+      "weight",
+      "histRankingJun24",
+      "histRankingDec24",
+      "histRankingJun25",
+      "histRankingDec25",
+      "histRankingJun26",
+      "worlds",
+      "european",
+      "asian",
+      "seaGames",
+    ] as const) {
+      if (body[f] !== undefined) {
+        patch[f] =
+          body[f] === "" || body[f] == null ? null : Number(body[f]);
+      }
     }
     const [row] = await db
       .update(sailors)
       .set(patch as typeof sailors.$inferInsert)
       .where(eq(sailors.id, body.id))
       .returning();
+    if (!row) {
+      return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
+    }
     return NextResponse.json({ sailor: row });
   } catch (e) {
+    console.error("sailors PATCH", e);
     return jsonError(e);
   }
 }
@@ -106,9 +134,16 @@ export async function DELETE(req: Request) {
     await requireSuperadmin();
     const id = new URL(req.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
-    await db.delete(sailors).where(eq(sailors.id, id));
-    return NextResponse.json({ ok: true });
+    const deleted = await db
+      .delete(sailors)
+      .where(eq(sailors.id, id))
+      .returning({ id: sailors.id });
+    if (!deleted[0]) {
+      return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
+    }
+    return NextResponse.json({ ok: true, id });
   } catch (e) {
+    console.error("sailors DELETE", e);
     return jsonError(e);
   }
 }
