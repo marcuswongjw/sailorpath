@@ -3,6 +3,10 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
 import { inArray } from "drizzle-orm";
+import {
+  hasSilverHistory,
+  normalizeNationality,
+} from "@/lib/seriesMembership";
 
 const ALLOWED = new Set([
   "goldEntryDate",
@@ -12,6 +16,7 @@ const ALLOWED = new Set([
   "currentFleet",
   "manuallyDropped",
   "school",
+  "nationality",
   "natSquadStatusJan25",
   "natSquadStatusJul25",
   "natSquadStatusJan26",
@@ -86,6 +91,37 @@ export async function POST(req: Request) {
         : s.startsWith("silver")
           ? "Silver"
           : String(value).trim();
+    } else if (field === "nationality" && typed != null) {
+      typed = normalizeNationality(typed);
+    }
+
+    // Gold requires Silver history for each selected sailor
+    const settingGold =
+      (field === "currentFleet" && String(typed).toLowerCase() === "gold") ||
+      (field === "goldEntryDate" && typed != null && typed !== "");
+    if (settingGold) {
+      const rows = await db
+        .select({
+          id: sailors.id,
+          name: sailors.name,
+          silverEntryDate: sailors.silverEntryDate,
+          goldEntryDate: sailors.goldEntryDate,
+          currentFleet: sailors.currentFleet,
+        })
+        .from(sailors)
+        .where(inArray(sailors.id, sailorIds));
+      const blocked = rows.filter((r) => !hasSilverHistory(r));
+      if (blocked.length) {
+        return NextResponse.json(
+          {
+            error: `Gold requires Silver history first. Blocked: ${blocked
+              .slice(0, 5)
+              .map((b) => b.name)
+              .join(", ")}${blocked.length > 5 ? "…" : ""}`,
+          },
+          { status: 400 }
+        );
+      }
     }
 
     const patch = { [field]: typed, updatedAt: new Date() };

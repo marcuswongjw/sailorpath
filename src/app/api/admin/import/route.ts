@@ -7,6 +7,7 @@ import {
   findSailorByName,
   suggestSailorByName,
 } from "@/lib/nameMatch";
+import { normalizeNationality } from "@/lib/seriesMembership";
 
 function slugify(name: string) {
   return name
@@ -138,7 +139,9 @@ export async function POST(req: Request) {
           nett: toNumber(r.nett),
           total: toNumber((r as { total?: number | null }).total),
           club: normalizeOptionalText(r.club),
-          nationality: normalizeOptionalText(r.nationality),
+          nationality:
+            normalizeNationality(r.nationality) ||
+            normalizeOptionalText(r.nationality),
           sailNumber,
           dob,
           dobIsYearOnly,
@@ -221,6 +224,7 @@ export async function POST(req: Request) {
 
         if (!sailorId && createMissing) {
           const handle = makeHandle(row.name);
+          // Guests only: never auto-admit to SG series (no fleet / entry dates)
           const [createdSailor] = await db
             .insert(sailors)
             .values({
@@ -230,6 +234,7 @@ export async function POST(req: Request) {
               club: row.club || "N/A",
               ...(row.nationality ? { nationality: row.nationality } : {}),
               ...(row.dob ? { dob: row.dob } : {}),
+              // currentFleet / goldEntryDate / silverEntryDate intentionally omitted
             })
             .returning({
               id: sailors.id,
@@ -415,7 +420,7 @@ export async function POST(req: Request) {
                 ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
                 : "See errors below."
             }`
-          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} sailors auto-created, ${updatedProfiles} profiles updated from sail # / birth year / club / nationality). ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.`,
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated from sail # / birth year / club / nationality). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.`,
       regatta: reg,
       matched,
       created,

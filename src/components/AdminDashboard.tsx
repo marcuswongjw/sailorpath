@@ -965,6 +965,24 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Name and Sail Number are required.");
       return;
     }
+    // Client-side Gold-from-Silver guard (server also enforces)
+    const existing = sailorList.find((s) => s.id === editingSailorId);
+    const wantsGold =
+      String(sailorForm.currentFleet || "").toLowerCase() === "gold" ||
+      Boolean(sailorForm.goldEntryDate);
+    const hasSilverPath =
+      Boolean(sailorForm.silverEntryDate) ||
+      String(sailorForm.currentFleet || "").toLowerCase() === "silver" ||
+      Boolean(existing?.silverEntryDate) ||
+      String(existing?.currentFleet || "").toLowerCase() === "silver" ||
+      Boolean(existing?.goldEntryDate) ||
+      String(existing?.currentFleet || "").toLowerCase() === "gold";
+    if (wantsGold && !hasSilverPath) {
+      alert(
+        "Gold fleet requires Silver history first. Set Fleet to Silver (or Silver entry date), save, then promote to Gold."
+      );
+      return;
+    }
     try {
       if (editingSailorId === "new") {
         const res = await fetch("/api/admin/sailors", {
@@ -1409,6 +1427,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                 <p className="text-xs text-slate-500 mb-4">
                   Supports .xlsx, .xls, and .csv. Required: Name (+ Rank/Nett if available).
                   Optional: Total Score, Club, Nationality, Sail Number, Birth Year / DOB — when present, sailor profiles are updated.
+                  Unmatched names become <strong className="text-slate-300">guests</strong> (not on Gold/Silver rankings until you admit them as Silver in Database).
                 </p>
                 <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
                   Select File
@@ -2170,6 +2189,43 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         />
                       </div>
                       <div>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">
+                          SG series fleet
+                        </label>
+                        <select
+                          value={sailorForm.currentFleet || ""}
+                          onChange={(e) => {
+                            const v = e.target.value;
+                            const next: any = { ...sailorForm, currentFleet: v };
+                            // Admit Silver: stamp entry date if empty
+                            if (v === "Silver" && !next.silverEntryDate) {
+                              next.silverEntryDate = new Date()
+                                .toISOString()
+                                .slice(0, 10);
+                            }
+                            // Promote Gold: stamp gold date if empty (needs silver first — validated on save)
+                            if (v === "Gold" && !next.goldEntryDate) {
+                              next.goldEntryDate = new Date()
+                                .toISOString()
+                                .slice(0, 10);
+                            }
+                            if (v === "") {
+                              // Guest — leave dates; clear fleet tag only
+                            }
+                            setSailorForm(next);
+                          }}
+                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
+                        >
+                          <option value="">Guest (not in series)</option>
+                          <option value="Silver">Silver Fleet</option>
+                          <option value="Gold">Gold Fleet (from Silver only)</option>
+                        </select>
+                        <p className="mt-1 text-[10px] text-slate-500 leading-snug">
+                          New series members start as Silver. Gold only after Silver history.
+                          Regatta import never changes this.
+                        </p>
+                      </div>
+                      <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Gold Fleet Entry Date</label>
                         <input
                           type="date"
@@ -2234,13 +2290,15 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           nationality: "",
                           gender: "M",
                           nationalSquadStatus: "",
+                          currentFleet: "",
                           instagram: "",
                           facebook: "",
                           dob: "",
                           weight: "",
                           bio: "",
                           goldEntryDate: "",
-                          silverEntryDate: new Date().toISOString().split("T")[0],
+                          // New sailors default to Guest; set Silver when admitting to series
+                          silverEntryDate: "",
                           dropDate: "",
                           natSquadStatusJan25: "",
                           natSquadStatusJul25: "",
@@ -2269,6 +2327,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                         <th className="py-4 px-6">Name</th>
                         <th className="py-4 px-6">Sail Number</th>
+                        <th className="py-4 px-6">Series</th>
                         <th className="py-4 px-6">Gender</th>
                         <th className="py-4 px-6">Squad</th>
                         <th className="py-4 px-6 text-center">Gold Entry</th>
@@ -2278,12 +2337,40 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
-                      {filteredDbSailors.map((s) => (
+                      {filteredDbSailors.map((s) => {
+                        const seriesLabel = s.manuallyDropped
+                          ? "Dropped"
+                          : String(s.currentFleet || "").toLowerCase() === "gold" || s.goldEntryDate
+                            ? "Gold"
+                            : String(s.currentFleet || "").toLowerCase() === "silver" || s.silverEntryDate
+                              ? "Silver"
+                              : "Guest";
+                        return (
                         <tr key={s.id} className="hover:bg-white/5 transition-colors">
                           <td className="py-4 px-6 font-bold text-white">
                             {s.name}
+                            {s.nationality ? (
+                              <span className="block text-[10px] font-semibold text-slate-500 mt-0.5">
+                                {s.nationality}
+                              </span>
+                            ) : null}
                           </td>
                           <td className="py-4 px-6 font-mono text-slate-400">{s.sailNumber}</td>
+                          <td className="py-4 px-6">
+                            <span
+                              className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
+                                seriesLabel === "Gold"
+                                  ? "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
+                                  : seriesLabel === "Silver"
+                                    ? "bg-slate-400/10 text-slate-300 border-slate-400/20"
+                                    : seriesLabel === "Dropped"
+                                      ? "bg-amber-500/10 text-amber-300 border-amber-500/20"
+                                      : "bg-white/5 text-slate-500 border-white/10"
+                              }`}
+                            >
+                              {seriesLabel}
+                            </span>
+                          </td>
                           <td className="py-4 px-6">{s.gender || "M"}</td>
                           <td className="py-4 px-6">
                             <span className="text-[10px] text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/5">
@@ -2302,6 +2389,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                     ...s,
                                     weight: s.weight ? s.weight.toString() : "",
                                     nationalSquadStatus: s.nationalSquadStatus || "",
+                                    nationality: s.nationality || "",
                                     currentFleet: s.currentFleet || "",
                                     school: s.school || "",
                                     manuallyDropped: s.manuallyDropped || false,
@@ -2327,7 +2415,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             </div>
                           </td>
                         </tr>
-                      ))}
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>

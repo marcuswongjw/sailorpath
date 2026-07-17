@@ -3,6 +3,10 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
+import {
+  normalizeNationality,
+  validateGoldPromotion,
+} from "@/lib/seriesMembership";
 
 export async function GET() {
   try {
@@ -28,6 +32,26 @@ export async function POST(req: Request) {
     const num = (v: unknown) =>
       v === "" || v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null;
 
+    const goldErr = validateGoldPromotion({
+      currentFleet: body.currentFleet || null,
+      goldEntryDate: body.goldEntryDate || null,
+      silverEntryDate: body.silverEntryDate || null,
+    });
+    if (goldErr) {
+      return NextResponse.json({ error: goldErr }, { status: 400 });
+    }
+
+    // Admit as Silver: if fleet is Silver and no silver date, default today
+    let silverEntryDate = body.silverEntryDate || null;
+    let goldEntryDate = body.goldEntryDate || null;
+    let currentFleet = body.currentFleet || null;
+    if (String(currentFleet || "").toLowerCase() === "silver" && !silverEntryDate) {
+      silverEntryDate = new Date().toISOString().slice(0, 10);
+    }
+    if (String(currentFleet || "").toLowerCase() === "gold" && !goldEntryDate) {
+      goldEntryDate = new Date().toISOString().slice(0, 10);
+    }
+
     const [row] = await db
       .insert(sailors)
       .values({
@@ -36,13 +60,13 @@ export async function POST(req: Request) {
         sailNumber: body.sailNumber || "SGP 000",
         club: body.club || "N/A",
         school: body.school || null,
-        nationality: body.nationality || null,
+        nationality: normalizeNationality(body.nationality),
         gender: body.gender || null,
         bio: body.bio || null,
-        goldEntryDate: body.goldEntryDate || null,
-        silverEntryDate: body.silverEntryDate || null,
+        goldEntryDate,
+        silverEntryDate,
         dropDate: body.dropDate || null,
-        currentFleet: body.currentFleet || null,
+        currentFleet: currentFleet || null,
         manuallyDropped: Boolean(body.manuallyDropped),
         nationalSquadStatus: body.nationalSquadStatus || null,
         dob: body.dob || null,
@@ -79,6 +103,39 @@ export async function PATCH(req: Request) {
     if (!body.id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
     }
+
+    const [existing] = await db
+      .select({
+        id: sailors.id,
+        currentFleet: sailors.currentFleet,
+        goldEntryDate: sailors.goldEntryDate,
+        silverEntryDate: sailors.silverEntryDate,
+      })
+      .from(sailors)
+      .where(eq(sailors.id, body.id))
+      .limit(1);
+
+    if (!existing) {
+      return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
+    }
+
+    const goldErr = validateGoldPromotion({
+      currentFleet:
+        body.currentFleet !== undefined ? body.currentFleet : existing.currentFleet,
+      goldEntryDate:
+        body.goldEntryDate !== undefined
+          ? body.goldEntryDate
+          : existing.goldEntryDate,
+      silverEntryDate:
+        body.silverEntryDate !== undefined
+          ? body.silverEntryDate
+          : existing.silverEntryDate,
+      existing,
+    });
+    if (goldErr) {
+      return NextResponse.json({ error: goldErr }, { status: 400 });
+    }
+
     const patch: Record<string, unknown> = { updatedAt: new Date() };
     for (const f of [
       "name",
@@ -86,7 +143,6 @@ export async function PATCH(req: Request) {
       "sailNumber",
       "club",
       "school",
-      "nationality",
       "gender",
       "bio",
       "nationalSquadStatus",
@@ -103,6 +159,29 @@ export async function PATCH(req: Request) {
       "natSquadStatusJul26",
     ] as const) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
+    }
+    if (body.nationality !== undefined) {
+      patch.nationality =
+        body.nationality === "" || body.nationality == null
+          ? null
+          : normalizeNationality(body.nationality);
+    }
+    // Auto-fill entry dates when fleet is set without dates
+    if (
+      body.currentFleet !== undefined &&
+      String(body.currentFleet || "").toLowerCase() === "silver" &&
+      !patch.silverEntryDate &&
+      !existing.silverEntryDate
+    ) {
+      patch.silverEntryDate = new Date().toISOString().slice(0, 10);
+    }
+    if (
+      body.currentFleet !== undefined &&
+      String(body.currentFleet || "").toLowerCase() === "gold" &&
+      !patch.goldEntryDate &&
+      !existing.goldEntryDate
+    ) {
+      patch.goldEntryDate = new Date().toISOString().slice(0, 10);
     }
     if (body.manuallyDropped !== undefined) {
       const v = body.manuallyDropped;

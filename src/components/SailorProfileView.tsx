@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { getPercentileBadge } from "@/lib/ranking";
 import {
-  getPercentileBadge,
-  resolveSailorFleet,
-  type Period,
-} from "@/lib/ranking";
+  seriesFleetStatus,
+  seriesStatusBadge,
+} from "@/lib/seriesMembership";
 import {
   Trophy,
   Compass,
@@ -23,63 +23,11 @@ interface SailorProfileViewProps {
   canSeePrivate?: boolean;
 }
 
-/** Profile fleet badge uses current ranking period */
-const PROFILE_FLEET_PERIOD: Period = { year: 2026, half: "Jul-Dec" };
-
 function resolveDisplayFleet(sailor: any): {
   label: string;
   className: string;
 } {
-  if (sailor.manuallyDropped) {
-    return {
-      label: "Manually dropped",
-      className: "bg-amber-500/10 text-amber-300 border border-amber-500/20",
-    };
-  }
-  const cf = String(sailor.currentFleet || "")
-    .trim()
-    .toLowerCase();
-  if (cf === "gold") {
-    return {
-      label: "Gold Fleet",
-      className: "bg-yellow-500/10 text-yellow-400 border border-yellow-500/25",
-    };
-  }
-  if (cf === "silver") {
-    return {
-      label: "Silver Fleet",
-      className: "bg-slate-400/10 text-slate-300 border border-slate-400/20",
-    };
-  }
-  const resolved = resolveSailorFleet(sailor, PROFILE_FLEET_PERIOD);
-  if (resolved?.fleet === "Gold") {
-    return {
-      label: "Gold Fleet",
-      className: "bg-yellow-500/10 text-yellow-400 border border-yellow-500/25",
-    };
-  }
-  if (resolved?.fleet === "Silver") {
-    return {
-      label: "Silver Fleet",
-      className: "bg-slate-400/10 text-slate-300 border border-slate-400/20",
-    };
-  }
-  if (sailor.goldEntryDate) {
-    return {
-      label: "Gold Fleet",
-      className: "bg-yellow-500/10 text-yellow-400 border border-yellow-500/25",
-    };
-  }
-  if (sailor.silverEntryDate) {
-    return {
-      label: "Silver Fleet",
-      className: "bg-slate-400/10 text-slate-300 border border-slate-400/20",
-    };
-  }
-  return {
-    label: "Unassigned",
-    className: "bg-white/5 text-slate-400 border border-white/10",
-  };
+  return seriesStatusBadge(seriesFleetStatus(sailor));
 }
 
 function buildHonorTags(sailor: any): { text: string; className: string }[] {
