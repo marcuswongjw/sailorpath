@@ -22,6 +22,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorRecord {
     sailNumber: row.sailNumber,
     club: row.club,
     school: row.school,
+    nationality: row.nationality,
     goldEntryDate: row.goldEntryDate,
     silverEntryDate: row.silverEntryDate,
     dropDate: row.dropDate,

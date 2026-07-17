@@ -36,6 +36,14 @@ function normalizeSailNumber(v: unknown): string | null {
   return s;
 }
 
+/** Optional text fields (club, nationality). */
+function normalizeOptionalText(v: unknown): string | null {
+  if (v == null || v === "") return null;
+  const s = String(v).trim().replace(/\s+/g, " ");
+  if (!s || /^n\/?a$/i.test(s) || s === "-" || s === "—") return null;
+  return s;
+}
+
 /**
  * Accept full DOB (YYYY-MM-DD / Excel-ish) or birth year only (2013).
  * Year-only becomes YYYY-01-01. Empty → null (column optional).
@@ -96,6 +104,7 @@ export async function POST(req: Request) {
         nett: number | null;
         total?: number | null;
         club?: string | null;
+        nationality?: string | null;
         sailNumber?: string | null;
         dob?: string | number | null;
         birthYear?: string | number | null;
@@ -128,7 +137,8 @@ export async function POST(req: Request) {
           rank: toNumber(r.rank),
           nett: toNumber(r.nett),
           total: toNumber((r as { total?: number | null }).total),
-          club: r.club != null && String(r.club).trim() ? String(r.club).trim() : null,
+          club: normalizeOptionalText(r.club),
+          nationality: normalizeOptionalText(r.nationality),
           sailNumber,
           dob,
           dobIsYearOnly,
@@ -174,6 +184,7 @@ export async function POST(req: Request) {
         sailNumber: sailors.sailNumber,
         dob: sailors.dob,
         club: sailors.club,
+        nationality: sailors.nationality,
       })
       .from(sailors);
     const aliasList = await db
@@ -217,6 +228,7 @@ export async function POST(req: Request) {
               handle,
               sailNumber: row.sailNumber || "SGP 000",
               club: row.club || "N/A",
+              ...(row.nationality ? { nationality: row.nationality } : {}),
               ...(row.dob ? { dob: row.dob } : {}),
             })
             .returning({
@@ -225,6 +237,7 @@ export async function POST(req: Request) {
               sailNumber: sailors.sailNumber,
               dob: sailors.dob,
               club: sailors.club,
+              nationality: sailors.nationality,
             });
           sailorId = createdSailor.id;
           sailorList = [...sailorList, createdSailor];
@@ -263,6 +276,7 @@ export async function POST(req: Request) {
           sailNumber?: string;
           dob?: string;
           club?: string;
+          nationality?: string;
           updatedAt: Date;
         } = { updatedAt: new Date() };
         let profileChanged = false;
@@ -293,10 +307,21 @@ export async function POST(req: Request) {
             }
           }
         }
-        // Fill blank club only (don't overwrite real club with sheet noise)
-        if (row.club && existing && (!existing.club || existing.club === "N/A")) {
-          profilePatch.club = row.club;
-          profileChanged = true;
+        // Club: update when sheet has a value and it differs (incl. fill N/A)
+        if (row.club) {
+          const cur = (existing?.club || "").trim();
+          if (!cur || cur === "N/A" || cur.toLowerCase() !== row.club.toLowerCase()) {
+            profilePatch.club = row.club;
+            profileChanged = true;
+          }
+        }
+        // Nationality: same optional update pattern
+        if (row.nationality) {
+          const cur = (existing?.nationality || "").trim();
+          if (!cur || cur.toLowerCase() !== row.nationality.toLowerCase()) {
+            profilePatch.nationality = row.nationality;
+            profileChanged = true;
+          }
         }
 
         if (profileChanged) {
@@ -313,6 +338,7 @@ export async function POST(req: Request) {
                   sailNumber: profilePatch.sailNumber ?? s.sailNumber,
                   dob: profilePatch.dob ?? s.dob,
                   club: profilePatch.club ?? s.club,
+                  nationality: profilePatch.nationality ?? s.nationality,
                 }
               : s
           );
@@ -389,7 +415,7 @@ export async function POST(req: Request) {
                 ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
                 : "See errors below."
             }`
-          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} sailors auto-created, ${updatedProfiles} profiles updated from sail # / birth year). ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.`,
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} sailors auto-created, ${updatedProfiles} profiles updated from sail # / birth year / club / nationality). ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.`,
       regatta: reg,
       matched,
       created,

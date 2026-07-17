@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS public.sailors (
   handle text NOT NULL,
   sail_number text NOT NULL,
   club text NOT NULL,
+  nationality text,
   bio text,
   gender text,
   national_squad_status text,

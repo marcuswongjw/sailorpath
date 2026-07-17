@@ -203,6 +203,9 @@ export function SailorProfileView({
                 <MapPin className="h-4 w-4 text-orange-500" />
                 {initialSailor.club}
                 {initialSailor.school ? ` · ${initialSailor.school}` : ""}
+                {initialSailor.nationality
+                  ? ` · ${initialSailor.nationality}`
+                  : ""}
               </span>
             </p>
 

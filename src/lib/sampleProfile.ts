@@ -8,6 +8,7 @@ export const SAMPLE_SAILOR = {
   handle: "ashlyn-t",
   sailNumber: "SGP 115",
   club: "Changi Sailing Club",
+  nationality: "Singapore",
   goldEntryDate: "2025-06-15",
   silverEntryDate: "2024-01-10",
   dropDate: null as string | null,

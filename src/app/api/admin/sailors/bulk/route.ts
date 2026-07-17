@@ -11,6 +11,7 @@ type BulkSailorRow = {
   sailNumber?: string | null;
   club?: string | null;
   school?: string | null;
+  nationality?: string | null;
   gender?: string | null;
   bio?: string | null;
   nationalSquadStatus?: string | null;
@@ -114,6 +115,7 @@ export async function POST(req: Request) {
         sailNumber,
         club: emptyToNull(r.club) || "N/A",
         school: emptyToNull(r.school),
+        nationality: emptyToNull(r.nationality),
         gender: emptyToNull(r.gender),
         bio: emptyToNull(r.bio),
         nationalSquadStatus: emptyToNull(r.nationalSquadStatus),

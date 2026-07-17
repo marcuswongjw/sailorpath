@@ -30,6 +30,8 @@ export const sailors = pgTable("sailors", {
   sailNumber: text("sail_number").notNull(),
   club: text("club").notNull(),
   school: text("school"),
+  /** Country / nationality (e.g. Singapore, SGP) — optional */
+  nationality: text("nationality"),
   bio: text("bio"),
   gender: text("gender"),
   nationalSquadStatus: text("national_squad_status"),

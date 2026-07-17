@@ -50,6 +50,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       nett: number | null;
       total: number | null;
       club?: string | null;
+      nationality?: string | null;
       /** Optional — updates sailor profile when present */
       sailNumber?: string | null;
       /** Optional DOB (YYYY-MM-DD) or birth year as YYYY-01-01 */
@@ -142,6 +143,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     handle: "",
     sailNumber: "",
     club: "",
+    nationality: "",
     gender: "M",
     nationalSquadStatus: "",
     instagram: "",
@@ -329,6 +331,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           ]),
           club: pickCol(row, ["club", "club origin", "team"]),
           school,
+          nationality: pickCol(row, [
+            "nationality",
+            "nation",
+            "country",
+            "country of origin",
+            "noc",
+          ]),
           gender: pickCol(row, ["gender", "sex"]),
           goldEntryDate,
           silverEntryDate,
@@ -505,7 +514,22 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             keys.find((k) => /total score|gross/i.test(k));
           const clubKey =
             keys.find((k) => /^club$/i.test(k.trim())) ||
-            keys.find((k) => /club|team/i.test(k));
+            keys.find(
+              (k) =>
+                /^(club|team|yacht club|sailing club)$/i.test(k.trim()) ||
+                (/club|team/i.test(k) && !/squad|national/i.test(k))
+            );
+          const nationalityKey =
+            keys.find((k) =>
+              /^(nationality|nation|country|noc|country of origin)$/i.test(
+                k.trim()
+              )
+            ) ||
+            keys.find(
+              (k) =>
+                /nationality|country of origin|\bnoc\b/i.test(k) &&
+                !/squad|nat\s*[ab]|national squad/i.test(k)
+            );
           // Optional sailor profile columns (not required for import)
           const sailKey =
             keys.find((k) =>
@@ -543,6 +567,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               nett: null,
               total: null,
               club: null,
+              nationality: null,
               sailNumber: null,
               dob: null,
               birthYear: null,
@@ -557,6 +582,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               nett: null,
               total: null,
               club: null,
+              nationality: null,
               sailNumber: null,
               dob: null,
               birthYear: null,
@@ -571,10 +597,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             nettRaw !== "" && nettRaw != null ? Number(nettRaw) : null;
           const total =
             totalRaw !== "" && totalRaw != null ? Number(totalRaw) : null;
-          const club =
+          const clubRaw =
             clubKey != null && r[clubKey] != null
               ? String(r[clubKey]).trim()
-              : null;
+              : "";
+          const club =
+            clubRaw && !/^n\/?a$/i.test(clubRaw) ? clubRaw : null;
+          const natRaw =
+            nationalityKey != null && r[nationalityKey] != null
+              ? String(r[nationalityKey]).trim()
+              : "";
+          const nationality =
+            natRaw && !/^n\/?a$/i.test(natRaw) ? natRaw : null;
           const sailRaw =
             sailKey != null && r[sailKey] != null ? String(r[sailKey]).trim() : "";
           const sailNumber = sailRaw && !/^n\/?a$/i.test(sailRaw) ? sailRaw : null;
@@ -611,7 +645,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             rank: Number.isFinite(rank as number) ? rank : null,
             nett: Number.isFinite(nett as number) ? nett : null,
             total: Number.isFinite(total as number) ? total : null,
-            club: club || null,
+            club,
+            nationality,
             sailNumber,
             // full date when known; birthYear alone when only year known
             dob,
@@ -623,11 +658,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       setParsedData(mapped.slice(0, 20));
       const withSail = mapped.filter((r) => r.sailNumber).length;
       const withDob = mapped.filter((r) => r.dob || r.birthYear).length;
+      const withClub = mapped.filter((r) => r.club).length;
+      const withNat = mapped.filter((r) => r.nationality).length;
+      const profileBits = [
+        withSail && `${withSail} sail #`,
+        withDob && `${withDob} birth year/DOB`,
+        withClub && `${withClub} club`,
+        withNat && `${withNat} nationality`,
+      ].filter(Boolean);
       setImportStatus(
         `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
-          (withSail || withDob
-            ? ` (${withSail} with sail #, ${withDob} with birth year/DOB — will update sailor profiles on import)`
-            : ` (no sail # / birth year columns — optional; results still import fine)`) +
+          (profileBits.length
+            ? ` (${profileBits.join(", ")} — will update sailor profiles on import)`
+            : ` (optional profile columns absent — results still import fine)`) +
           `. Set division + date, then Import.`
       );
       setImportMeta((m) => ({
@@ -1253,8 +1296,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                 </h2>
                 <p className="text-xs text-slate-500 mt-2 leading-relaxed max-w-3xl">
                   Load all sailors into the database <strong className="text-slate-300">before</strong>{" "}
-                  importing regatta results. Include columns such as Name, Sail Number, Club, Gender,
-                  Gold Entry Date, Silver Entry Date, Drop Date, Squad, DOB, Weight, and optional
+                  importing regatta results. Include columns such as Name, Sail Number, Club, Nationality,
+                  Gender, Gold Entry Date, Silver Entry Date, Drop Date, Squad, DOB, Weight, and optional
                   historical fields. Re-importing the same handle/sail number will update existing rows.
                 </p>
               </div>
@@ -1262,13 +1305,15 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               <div className="rounded-xl border border-white/5 bg-slate-950/50 p-4 text-[11px] text-slate-400 leading-relaxed space-y-2">
                 <p className="font-bold text-slate-300">Your spreadsheet columns are supported:</p>
                 <p className="font-mono text-[10px]">
-                  Name · Gender · Born · Club · School · Fleet current · Gold squad · Entered Gold ·
+                  Name · Gender · Born · Club · Nationality · School · Fleet current · Gold squad · Entered Gold ·
                   Entered Silver · Optimist Drop · Manually dropped · squadJan26 · squadJul26 ·
                   histJun24… · Worlds · Euros · Asians · SEA Games
                 </p>
                 <p className="text-amber-200/90">
                   Sail number optional — defaults to SGP 000; edit later in Database Management or bulk edit.
-                  Run SQL migration <code className="text-amber-100">002_sailor_school_fleet.sql</code> once in Supabase if School / Fleet current / Manually dropped columns are missing.
+                  Run SQL migrations if columns are missing:{" "}
+                  <code className="text-amber-100">002_sailor_school_fleet.sql</code>,{" "}
+                  <code className="text-amber-100">005_nationality.sql</code>.
                 </p>
               </div>
 
@@ -1363,7 +1408,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                 <p className="text-sm font-bold text-white mb-2">Drag and drop your Regatta Excel/CSV file here</p>
                 <p className="text-xs text-slate-500 mb-4">
                   Supports .xlsx, .xls, and .csv. Required: Name (+ Rank/Nett if available).
-                  Optional: Total Score, Club, Sail Number, Birth Year / DOB — when present, sailor profiles are updated.
+                  Optional: Total Score, Club, Nationality, Sail Number, Birth Year / DOB — when present, sailor profiles are updated.
                 </p>
                 <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
                   Select File
@@ -1642,6 +1687,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     <optgroup label="Profile Parameters">
                       <option value="club">Club Origin</option>
                       <option value="school">School</option>
+                      <option value="nationality">Nationality</option>
                       <option value="sailNumber">Sail Number</option>
                       <option value="gender">Gender (M/F)</option>
                       <option value="nationalSquadStatus">Squad status (Nat A/B/DS)</option>
@@ -2032,6 +2078,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         />
                       </div>
                       <div>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">Nationality</label>
+                        <input
+                          type="text"
+                          value={sailorForm.nationality || ""}
+                          onChange={(e) =>
+                            setSailorForm({ ...sailorForm, nationality: e.target.value })
+                          }
+                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                          placeholder="e.g. Singapore / SGP"
+                        />
+                      </div>
+                      <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Gender (M/F)</label>
                         <select
                           value={sailorForm.gender || "M"}
@@ -2173,6 +2231,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           handle: "",
                           sailNumber: "SGP ",
                           club: "",
+                          nationality: "",
                           gender: "M",
                           nationalSquadStatus: "",
                           instagram: "",
