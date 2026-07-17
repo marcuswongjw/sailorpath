@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS public.regatta_results (
   regatta_id uuid NOT NULL REFERENCES public.regattas(id) ON DELETE CASCADE,
   rank integer NOT NULL,
   nett_score real NOT NULL,
+  total_score real,
   created_at timestamp DEFAULT now() NOT NULL,
   updated_at timestamp DEFAULT now() NOT NULL,
   CONSTRAINT regatta_results_sailor_id_regatta_id_unique UNIQUE (sailor_id, regatta_id)

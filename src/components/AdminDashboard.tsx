@@ -44,7 +44,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     fleetSize: 50,
   });
   const [fullImportRows, setFullImportRows] = useState<
-    { name: string; rank: number | null; nett: number | null }[]
+    {
+      name: string;
+      rank: number | null;
+      nett: number | null;
+      total: number | null;
+      club?: string | null;
+    }[]
   >([]);
   const [importRegattaId, setImportRegattaId] = useState<string | null>(null);
 
@@ -177,6 +183,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     sailorId: "",
     rank: 1,
     nettScore: 1,
+    totalScore: "",
     isDNS: false,
   });
 
@@ -485,25 +492,33 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             keys.find((k) => /rank|pos|place|position/i.test(k));
           const nettKey =
             keys.find((k) => /^nett$/i.test(k.trim())) ||
-            keys.find((k) => /nett|points|pts|score|total/i.test(k));
+            keys.find((k) => /nett/i.test(k));
+          // Total Score / Total / Gross (not nett)
+          const totalKey =
+            keys.find((k) => /^total score$/i.test(k.trim())) ||
+            keys.find((k) => /^total$/i.test(k.trim())) ||
+            keys.find((k) => /total score|gross/i.test(k));
           const clubKey =
             keys.find((k) => /^club$/i.test(k.trim())) ||
             keys.find((k) => /club|team/i.test(k));
 
           if (!nameKey) {
-            return { name: "", rank: null, nett: null, club: null };
+            return { name: "", rank: null, nett: null, total: null, club: null };
           }
           const name = String(r[nameKey] ?? "").trim();
           // Skip header-like repeats
           if (!name || /^name$/i.test(name)) {
-            return { name: "", rank: null, nett: null, club: null };
+            return { name: "", rank: null, nett: null, total: null, club: null };
           }
           const rankRaw = rankKey != null ? r[rankKey] : null;
           const nettRaw = nettKey != null ? r[nettKey] : null;
+          const totalRaw = totalKey != null ? r[totalKey] : null;
           const rank =
             rankRaw !== "" && rankRaw != null ? Number(rankRaw) : null;
           const nett =
             nettRaw !== "" && nettRaw != null ? Number(nettRaw) : null;
+          const total =
+            totalRaw !== "" && totalRaw != null ? Number(totalRaw) : null;
           const club =
             clubKey != null && r[clubKey] != null
               ? String(r[clubKey]).trim()
@@ -512,6 +527,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             name,
             rank: Number.isFinite(rank as number) ? rank : null,
             nett: Number.isFinite(nett as number) ? nett : null,
+            total: Number.isFinite(total as number) ? total : null,
             club: club || null,
           };
         })
@@ -2337,7 +2353,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     <h3 className="text-sm font-bold text-white uppercase tracking-wider">
                       {editingResultId === "new" ? "Add Sailor Regatta Result" : "Edit Sailor Regatta Result"}
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Sailor Name</label>
                         <select
@@ -2354,9 +2370,21 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         </select>
                       </div>
                       <div>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">Total Score</label>
+                        <input
+                          type="number"
+                          step="any"
+                          value={resultForm.totalScore}
+                          onChange={(e) => setResultForm({ ...resultForm, totalScore: e.target.value })}
+                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          placeholder="Optional"
+                        />
+                      </div>
+                      <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Nett Score (Points)</label>
                         <input
                           type="number"
+                          step="any"
                           value={resultForm.nettScore}
                           onChange={(e) => setResultForm({ ...resultForm, nettScore: e.target.value })}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
@@ -2419,6 +2447,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             sailorId: "",
                             rank: 1,
                             nettScore: 1,
+                            totalScore: "",
                             isDNS: false,
                           });
                         }}
@@ -2434,6 +2463,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                           <th className="py-4 px-6">Competitor</th>
                           <th className="py-4 px-6">Sail Number</th>
+                          <th className="py-4 px-6 text-center">Total Score</th>
                           <th className="py-4 px-6 text-center">Nett Score</th>
                           <th className="py-4 px-6 text-center">Rank</th>
                           <th className="py-4 px-6 text-center">Status</th>
@@ -2453,6 +2483,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 <td className="py-4 px-6 font-mono text-slate-400">
                                   {sailor ? sailor.sailNumber : "-"}
                                 </td>
+                                <td className="py-4 px-6 text-center font-mono">
+                                  {res.totalScore != null ? res.totalScore : "—"}
+                                </td>
                                 <td className="py-4 px-6 text-center font-mono">{res.nettScore}</td>
                                 <td className="py-4 px-6 text-center font-mono">{res.rank}</td>
                                 <td className="py-4 px-6 text-center">
@@ -2471,8 +2504,12 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                         setEditingResultId(res.id);
                                         setResultForm({
                                           ...res,
-                                          nettScore: res.nettScore.toString(),
-                                          rank: res.rank.toString(),
+                                          nettScore: res.nettScore?.toString?.() ?? res.nettScore,
+                                          totalScore:
+                                            res.totalScore != null
+                                              ? String(res.totalScore)
+                                              : "",
+                                          rank: res.rank?.toString?.() ?? res.rank,
                                         });
                                       }}
                                       className="text-slate-400 hover:text-white"
@@ -2492,7 +2529,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           })}
                         {resultsList.filter((res) => res.regattaId === selectedRegattaIdForResultEdit).length === 0 && (
                           <tr>
-                            <td colSpan={6} className="text-center py-12 text-slate-500">
+                            <td colSpan={7} className="text-center py-12 text-slate-500">
                               No sailor results logged for this regatta. Click "Add Score" above.
                             </td>
                           </tr>

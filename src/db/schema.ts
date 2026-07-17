@@ -94,6 +94,8 @@ export const regattaResults = pgTable(
     rank: integer("rank").notNull(),
     /** Allows half-points e.g. 14.5 from scoring systems */
     nettScore: real("nett_score").notNull(),
+    /** Gross / total points before discards (optional; from Excel "Total" / "Total Score") */
+    totalScore: real("total_score"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },

@@ -437,6 +437,14 @@ export function SailorProfileView({
                     </div>
                     <div className="text-left sm:text-right font-semibold text-sm">
                       <span className="block text-xs text-slate-500 uppercase">
+                        Total
+                      </span>
+                      <span className="text-white text-lg font-black">
+                        {res.totalScore != null ? res.totalScore : "—"}
+                      </span>
+                    </div>
+                    <div className="text-left sm:text-right font-semibold text-sm">
+                      <span className="block text-xs text-slate-500 uppercase">
                         Nett
                       </span>
                       <span className="text-white text-lg font-black">

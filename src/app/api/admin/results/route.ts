@@ -29,6 +29,10 @@ export async function POST(req: Request) {
       body.nettScore != null && body.nettScore !== ""
         ? Number(body.nettScore) // allow 14.5
         : rank;
+    const totalScore =
+      body.totalScore != null && body.totalScore !== ""
+        ? Number(body.totalScore)
+        : null;
 
     const [row] = await db
       .insert(regattaResults)
@@ -37,10 +41,16 @@ export async function POST(req: Request) {
         regattaId: body.regattaId,
         rank,
         nettScore,
+        totalScore,
       })
       .onConflictDoUpdate({
         target: [regattaResults.sailorId, regattaResults.regattaId],
-        set: { rank, nettScore, updatedAt: new Date() },
+        set: {
+          rank,
+          nettScore,
+          totalScore,
+          updatedAt: new Date(),
+        },
       })
       .returning();
 
@@ -63,6 +73,12 @@ export async function PATCH(req: Request) {
     if (body.rank !== undefined) patch.rank = Number(body.rank) || 999;
     if (body.nettScore !== undefined) {
       patch.nettScore = Number(body.nettScore) || 0;
+    }
+    if (body.totalScore !== undefined) {
+      patch.totalScore =
+        body.totalScore === "" || body.totalScore == null
+          ? null
+          : Number(body.totalScore);
     }
     if (body.sailorId !== undefined) patch.sailorId = body.sailorId;
     if (body.regattaId !== undefined) patch.regattaId = body.regattaId;

@@ -39,6 +39,7 @@ export default async function RegattaDetailPage({
                 <th className="px-4 py-3">Rank</th>
                 <th className="px-4 py-3">Sailor</th>
                 <th className="px-4 py-3">Sail #</th>
+                <th className="px-4 py-3">Total Score</th>
                 <th className="px-4 py-3">Nett</th>
                 <th className="px-4 py-3">Badge</th>
               </tr>
@@ -63,7 +64,10 @@ export default async function RegattaDetailPage({
                       </Link>
                     </td>
                     <td className="px-4 py-3 text-slate-400">{r.sailNumber}</td>
-                    <td className="px-4 py-3 text-slate-300">{r.nettScore}</td>
+                    <td className="px-4 py-3 text-slate-300 font-mono">
+                      {r.totalScore != null ? r.totalScore : "—"}
+                    </td>
+                    <td className="px-4 py-3 text-slate-300 font-mono">{r.nettScore}</td>
                     <td className="px-4 py-3">
                       <span
                         className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.className}`}

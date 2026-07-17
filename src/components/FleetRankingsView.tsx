@@ -16,9 +16,15 @@ const PERIODS: { period: Period; label: string }[] = [
 ];
 
 function scoreCell(score: number | undefined, isDNS?: boolean) {
-  if (score == null) return "—";
+  if (score == null || !Number.isFinite(score)) return "—";
   if (isDNS) return `${score}*`;
   return String(score);
+}
+
+function birthYear(dob?: string | null) {
+  if (!dob) return "—";
+  const y = new Date(dob).getFullYear();
+  return Number.isFinite(y) ? String(y) : "—";
 }
 
 export function FleetRankingsView({
@@ -78,7 +84,7 @@ export function FleetRankingsView({
               {fleet} Fleet Rankings
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Best 3 of last 5 regattas · DNS = fleet size + 1 (shown as score*)
+              Best 3 of 5 · DNS = fleet size + 1 (shown as score*)
             </p>
           </div>
         </div>
@@ -144,6 +150,9 @@ export function FleetRankingsView({
                   >
                     {s.name}
                   </Link>
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    {s.gender || "—"} · Born {birthYear(s.dob)}
+                  </p>
                   {showSquad && (
                     <p className="text-[11px] text-orange-300/90 mt-1 font-semibold">
                       {s.nationalSquadStatus ||
@@ -153,7 +162,12 @@ export function FleetRankingsView({
                   )}
                 </div>
                 <div className="text-right">
-                  <p className="font-black text-white text-lg">{s.overallScore}</p>
+                  <p className="text-[10px] text-slate-500 uppercase font-bold">
+                    Best 3 of 5
+                  </p>
+                  <p className="font-black text-white text-lg">
+                    {s.overallScore}
+                  </p>
                   <span
                     className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.className}`}
                   >
@@ -168,7 +182,9 @@ export function FleetRankingsView({
                     className="rounded-lg bg-white/5 border border-white/5 px-1 py-1.5 text-center"
                     title={rs.regattaName || undefined}
                   >
-                    <p className="text-[9px] text-slate-500 font-bold">R{idx + 1}</p>
+                    <p className="text-[9px] text-slate-500 font-bold">
+                      R{idx + 1}
+                    </p>
                     <p className="text-xs font-mono font-bold text-white">
                       {Number.isFinite(rs.score)
                         ? scoreCell(rs.score, rs.isDNS)
@@ -177,9 +193,6 @@ export function FleetRankingsView({
                   </div>
                 ))}
               </div>
-              <p className="text-[10px] text-slate-500">
-                Best 3: {s.bestThreeScores.join(" · ")}
-              </p>
             </div>
           );
         })}
@@ -187,21 +200,20 @@ export function FleetRankingsView({
 
       {/* Desktop table */}
       <div className="hidden md:block overflow-x-auto rounded-2xl border border-white/5">
-        <table className="w-full text-left text-sm min-w-[640px]">
+        <table className="w-full text-left text-sm min-w-[720px]">
           <thead className="bg-white/5 text-[10px] text-slate-400 uppercase tracking-wider">
             <tr>
               <th className="px-4 lg:px-5 py-3 w-12">#</th>
               <th className="px-4 lg:px-5 py-3">Sailor</th>
-              {showSquad && (
-                <th className="px-4 lg:px-5 py-3">Squad</th>
-              )}
+              <th className="px-3 py-3 text-center">Gender</th>
+              <th className="px-3 py-3 text-center">Birth year</th>
+              {showSquad && <th className="px-4 lg:px-5 py-3">Squad</th>}
               <th className="px-3 py-3 text-center">R1</th>
               <th className="px-3 py-3 text-center">R2</th>
               <th className="px-3 py-3 text-center">R3</th>
               <th className="px-3 py-3 text-center">R4</th>
               <th className="px-3 py-3 text-center">R5</th>
-              <th className="px-4 lg:px-5 py-3 text-center">Best 3</th>
-              <th className="px-4 lg:px-5 py-3 text-center">Overall</th>
+              <th className="px-4 lg:px-5 py-3 text-center">Best 3 of 5</th>
               <th className="px-4 lg:px-5 py-3">Badge</th>
             </tr>
           </thead>
@@ -233,6 +245,12 @@ export function FleetRankingsView({
                       {s.name}
                     </Link>
                   </td>
+                  <td className="px-3 py-3.5 text-center text-slate-300">
+                    {s.gender || "—"}
+                  </td>
+                  <td className="px-3 py-3.5 text-center font-mono text-slate-300">
+                    {birthYear(s.dob)}
+                  </td>
                   {showSquad && (
                     <td className="px-4 lg:px-5 py-3.5">
                       {s.nationalSquadStatus || s.natSquadStatusJul26 ? (
@@ -259,9 +277,6 @@ export function FleetRankingsView({
                         : "—"}
                     </td>
                   ))}
-                  <td className="px-4 lg:px-5 py-3.5 text-center font-mono text-xs text-slate-400">
-                    {s.bestThreeScores.join(" · ")}
-                  </td>
                   <td className="px-4 lg:px-5 py-3.5 text-center font-black text-white text-base">
                     {s.overallScore}
                   </td>
@@ -278,8 +293,8 @@ export function FleetRankingsView({
           </tbody>
         </table>
         <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5">
-          R1–R5 = last five eligible regattas (newest first). * = DNS score
-          (fleet size + 1). Hover cells for regatta name.
+          R1–R5 = last five eligible regattas (newest first). Best 3 of 5 = sum
+          of the three best (lowest) scores. * = DNS (fleet size + 1).
         </p>
       </div>
     </div>

@@ -47,6 +47,7 @@ export async function POST(req: Request) {
         name: string;
         rank: number | null;
         nett: number | null;
+        total?: number | null;
         club?: string | null;
       }[];
       createMissing?: boolean;
@@ -61,6 +62,7 @@ export async function POST(req: Request) {
         name: String(r.name || "").trim(),
         rank: toNumber(r.rank),
         nett: toNumber(r.nett),
+        total: toNumber((r as { total?: number | null }).total),
         club: r.club != null ? String(r.club).trim() : null,
       }))
       .filter((r) => r.name.length > 0);
@@ -172,9 +174,10 @@ export async function POST(req: Request) {
           continue;
         }
 
-        // Rank is always integer; nett may be fractional (14.5)
+        // Rank is always integer; nett/total may be fractional (14.5)
         const rank = row.rank != null ? Math.round(row.rank) : 999;
         const nett = row.nett != null ? row.nett : rank;
+        const total = row.total != null ? row.total : null;
 
         await db
           .insert(regattaResults)
@@ -183,10 +186,16 @@ export async function POST(req: Request) {
             sailorId,
             rank,
             nettScore: nett,
+            totalScore: total,
           })
           .onConflictDoUpdate({
             target: [regattaResults.sailorId, regattaResults.regattaId],
-            set: { rank, nettScore: nett, updatedAt: new Date() },
+            set: {
+              rank,
+              nettScore: nett,
+              totalScore: total,
+              updatedAt: new Date(),
+            },
           });
         matched++;
 

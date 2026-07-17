@@ -43,6 +43,7 @@ export default async function SailorProfilePage({
           totalFleetSize: r.fleetSize,
           rank: r.rank,
           nettScore: r.nettScore,
+          totalScore: r.totalScore,
         }))}
         initialEquipment={null}
         canSeePrivate={canSeePrivate}

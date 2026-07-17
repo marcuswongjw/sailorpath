@@ -49,6 +49,8 @@ export interface RegattaResultRecord {
   rank: number;
   /** May be fractional (e.g. 14.5) */
   nettScore: number;
+  /** Gross total before discards, if provided */
+  totalScore?: number | null;
 }
 
 export interface Period {

@@ -144,6 +144,7 @@ export async function listResults() {
       regattaId: r.regattaId,
       rank: r.rank,
       nettScore: r.nettScore,
+      totalScore: r.totalScore,
     }));
   });
 }
@@ -168,6 +169,7 @@ export async function getResultsForRegatta(regattaId: string) {
         regattaId: regattaResults.regattaId,
         rank: regattaResults.rank,
         nettScore: regattaResults.nettScore,
+        totalScore: regattaResults.totalScore,
         sailorName: sailors.name,
         sailNumber: sailors.sailNumber,
         handle: sailors.handle,
@@ -186,6 +188,7 @@ export async function getResultsForSailor(sailorId: string) {
       .select({
         rank: regattaResults.rank,
         nettScore: regattaResults.nettScore,
+        totalScore: regattaResults.totalScore,
         regattaName: regattas.name,
         regattaSlug: regattas.slug,
         regattaDate: regattas.date,
