@@ -2,7 +2,7 @@ import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AdminDashboard } from "@/components/AdminDashboard";
 import { DbOffline } from "@/components/DbOffline";
-import { listSailors } from "@/lib/queries";
+import { listSailors, listRegattas, listResults } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 
 export const dynamic = "force-dynamic";
@@ -16,18 +16,17 @@ export default async function AdminPage() {
   if (!allowed) notFound();
 
   try {
-    const sailors = await listSailors();
+    const [sailors, regattas, results] = await Promise.all([
+      listSailors(),
+      listRegattas(),
+      listResults(),
+    ]);
+
     return (
       <AdminDashboard
-        initialSailors={sailors.map((s) => ({
-          id: s.id,
-          name: s.name,
-          handle: s.handle,
-          sailNumber: s.sailNumber,
-          club: s.club,
-          goldEntryDate: s.goldEntryDate,
-          silverEntryDate: s.silverEntryDate,
-        }))}
+        initialSailors={sailors}
+        initialRegattas={regattas}
+        initialResults={results}
       />
     );
   } catch (e) {

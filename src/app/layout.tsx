@@ -33,7 +33,7 @@ export default function RootLayout({
             </p>
             <div className="flex gap-4">
               <Link href="/sample" className="hover:text-slate-300">
-                Sample
+                Sample profile
               </Link>
               <Link href="/api/health" className="hover:text-slate-300">
                 Health
