@@ -3,6 +3,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
 import { eq, inArray } from "drizzle-orm";
+import { nameTokenKey } from "@/lib/nameMatch";
 
 type BulkSailorRow = {
   name: string;
@@ -89,6 +90,11 @@ export async function POST(req: Request) {
     let updated = 0;
     const errors: { row: number; name: string; error: string }[] = [];
 
+    // Preload for jumbled-name duplicate detection
+    let existingAll = await db
+      .select({ id: sailors.id, name: sailors.name, handle: sailors.handle, sailNumber: sailors.sailNumber })
+      .from(sailors);
+
     for (let i = 0; i < rows.length; i++) {
       const r = rows[i];
       const name = String(r.name || "").trim();
@@ -137,28 +143,36 @@ export async function POST(req: Request) {
       };
 
       try {
-        let existing = await db
-          .select({ id: sailors.id })
-          .from(sailors)
-          .where(eq(sailors.handle, handle))
-          .limit(1);
-
-        if (!existing[0] && sailNumber !== "SGP 000") {
-          existing = await db
-            .select({ id: sailors.id })
-            .from(sailors)
-            .where(eq(sailors.sailNumber, sailNumber))
-            .limit(1);
+        let existingId: string | null = null;
+        const byHandle = existingAll.find((s) => s.handle === handle);
+        if (byHandle) existingId = byHandle.id;
+        if (!existingId && sailNumber !== "SGP 000") {
+          const bySail = existingAll.find((s) => s.sailNumber === sailNumber);
+          if (bySail) existingId = bySail.id;
+        }
+        // Same person, jumbled name order
+        if (!existingId) {
+          const key = nameTokenKey(name);
+          const byTokens = existingAll.find((s) => nameTokenKey(s.name) === key);
+          if (byTokens) existingId = byTokens.id;
         }
 
-        if (existing[0]) {
+        if (existingId) {
+          // Keep existing handle; update fields (don't overwrite handle unless empty sail)
+          const { handle: _h, ...rest } = values;
           await db
             .update(sailors)
-            .set(values)
-            .where(eq(sailors.id, existing[0].id));
+            .set(rest)
+            .where(eq(sailors.id, existingId));
           updated++;
         } else {
-          await db.insert(sailors).values(values);
+          const [ins] = await db.insert(sailors).values(values).returning({
+            id: sailors.id,
+            name: sailors.name,
+            handle: sailors.handle,
+            sailNumber: sailors.sailNumber,
+          });
+          existingAll = [...existingAll, ins];
           created++;
         }
       } catch (e) {

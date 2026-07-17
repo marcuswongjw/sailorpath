@@ -2,7 +2,11 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailorAliases, sailors } from "@/db/schema";
-import { eq, sql } from "drizzle-orm";
+import {
+  findSailorByName,
+  suggestSailorByName,
+  nameTokenKey,
+} from "@/lib/nameMatch";
 
 function slugify(name: string) {
   return name
@@ -11,8 +15,11 @@ function slugify(name: string) {
     .replace(/^-|-$/g, "");
 }
 
-function normalizeName(n: string) {
-  return n.trim().toLowerCase().replace(/\s+/g, " ");
+function makeHandle(name: string) {
+  const base = slugify(name) || "sailor";
+  return `${base}-${Date.now().toString(36).slice(-4)}${Math.random()
+    .toString(36)
+    .slice(2, 5)}`;
 }
 
 export async function POST(req: Request) {
@@ -25,20 +32,48 @@ export async function POST(req: Request) {
       division,
       totalFleetSize,
       rows,
+      createMissing = true,
     }: {
       regattaName: string;
       eventDate: string;
       division?: string;
       totalFleetSize?: number;
-      rows: { name: string; rank: number | null; nett: number | null }[];
+      rows: {
+        name: string;
+        rank: number | null;
+        nett: number | null;
+        club?: string | null;
+      }[];
+      /** When true (default), auto-create sailors that do not match the roster */
+      createMissing?: boolean;
     } = body;
 
     if (!regattaName || !eventDate || !Array.isArray(rows)) {
       return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
 
+    // Keep every non-empty name row (do not drop after first)
+    const cleanRows = rows
+      .map((r) => ({
+        name: String(r.name || "").trim(),
+        rank: r.rank != null && Number.isFinite(Number(r.rank)) ? Number(r.rank) : null,
+        nett:
+          r.nett != null && Number.isFinite(Number(r.nett))
+            ? Number(r.nett)
+            : null,
+        club: r.club != null ? String(r.club).trim() : null,
+      }))
+      .filter((r) => r.name.length > 0);
+
+    if (!cleanRows.length) {
+      return NextResponse.json(
+        { error: "No named rows to import (check Name column)" },
+        { status: 400 }
+      );
+    }
+
     const slug = `${slugify(regattaName)}-${eventDate}`;
-    const fleetSize = totalFleetSize || rows.length || 50;
+    const fleetSize = totalFleetSize || cleanRows.length || 50;
 
     const [reg] = await db
       .insert(regattas)
@@ -61,7 +96,19 @@ export async function POST(req: Request) {
       })
       .returning();
 
+    // Load roster once for matching (avoids N queries + broken execute shapes)
+    let sailorList = await db
+      .select({ id: sailors.id, name: sailors.name })
+      .from(sailors);
+    const aliasList = await db
+      .select({
+        sailorId: sailorAliases.sailorId,
+        aliasName: sailorAliases.aliasName,
+      })
+      .from(sailorAliases);
+
     let matched = 0;
+    let created = 0;
     const unmatched: {
       rawName: string;
       rank: number | null;
@@ -70,78 +117,70 @@ export async function POST(req: Request) {
       suggestedName: string | null;
       similarity: number;
     }[] = [];
+    const matchHow: Record<string, number> = {};
 
-    for (const row of rows) {
-      const name = String(row.name || "").trim();
-      if (!name) continue;
+    for (const row of cleanRows) {
+      let hit = findSailorByName(row.name, sailorList, aliasList);
+      let sailorId: string | null = hit?.sailor.id ?? null;
 
-      let [sailor] = await db
-        .select()
-        .from(sailors)
-        .where(eq(sailors.name, name))
-        .limit(1);
-
-      if (!sailor) {
-        const aliasHit = await db
-          .select({ sailorId: sailorAliases.sailorId })
-          .from(sailorAliases)
-          .where(eq(sailorAliases.aliasName, name))
-          .limit(1);
-        if (aliasHit[0]) {
-          const [s] = await db
-            .select()
-            .from(sailors)
-            .where(eq(sailors.id, aliasHit[0].sailorId))
-            .limit(1);
-          sailor = s;
-        }
+      if (hit) {
+        matchHow[hit.how] = (matchHow[hit.how] || 0) + 1;
       }
 
-      if (!sailor) {
-        const hits = await db.execute(sql`
-          SELECT id FROM sailors WHERE lower(name) = ${normalizeName(name)} LIMIT 1
-        `);
-        const hit = (hits as unknown as { id: string }[])[0];
-        if (hit) {
-          const [s] = await db
-            .select()
-            .from(sailors)
-            .where(eq(sailors.id, hit.id))
-            .limit(1);
-          sailor = s;
-        }
-      }
-
-      if (!sailor) {
-        let suggestedId: string | null = null;
-        let suggestedName: string | null = null;
-        let similarity = 0;
+      // Auto-create so every result row is stored (default for silver/gold fleets)
+      if (!sailorId && createMissing) {
+        const handle = makeHandle(row.name);
         try {
-          const sug = await db.execute(sql`
-            SELECT id, name, similarity(name, ${name}) AS sim
-            FROM sailors
-            WHERE name % ${name} OR name ILIKE ${"%" + name.split(" ")[0] + "%"}
-            ORDER BY sim DESC NULLS LAST
-            LIMIT 1
-          `);
-          const top = (
-            sug as unknown as { id: string; name: string; sim: number }[]
-          )[0];
-          if (top && Number(top.sim) >= 0.25) {
-            suggestedId = top.id;
-            suggestedName = top.name;
-            similarity = Number(top.sim);
+          const [createdSailor] = await db
+            .insert(sailors)
+            .values({
+              name: row.name,
+              handle,
+              sailNumber: "SGP 000",
+              club: row.club || "N/A",
+            })
+            .returning({ id: sailors.id, name: sailors.name });
+          sailorId = createdSailor.id;
+          sailorList = [...sailorList, createdSailor];
+          // Store import name as alias for future jumbled-order matches
+          try {
+            await db.insert(sailorAliases).values({
+              sailorId: createdSailor.id,
+              aliasName: row.name,
+            });
+            aliasList.push({
+              sailorId: createdSailor.id,
+              aliasName: row.name,
+            });
+          } catch {
+            /* unique alias race */
           }
-        } catch {
-          /* pg_trgm optional */
+          created++;
+          matchHow["created"] = (matchHow["created"] || 0) + 1;
+        } catch (e) {
+          console.error("auto-create sailor failed", row.name, e);
+          const sug = suggestSailorByName(row.name, sailorList);
+          unmatched.push({
+            rawName: row.name,
+            rank: row.rank,
+            nett: row.nett,
+            suggestedId: sug?.id ?? null,
+            suggestedName: sug?.name ?? null,
+            similarity: sug?.similarity ?? 0,
+          });
+          continue;
         }
+      }
+
+      if (!sailorId) {
+        const sug = suggestSailorByName(row.name, sailorList);
         unmatched.push({
-          rawName: name,
+          rawName: row.name,
           rank: row.rank,
           nett: row.nett,
-          suggestedId,
-          suggestedName,
-          similarity,
+          suggestedId: sug?.id ?? null,
+          suggestedName: sug?.name ?? null,
+          similarity: sug?.similarity ?? 0,
         });
         continue;
       }
@@ -152,7 +191,7 @@ export async function POST(req: Request) {
         .insert(regattaResults)
         .values({
           regattaId: reg.id,
-          sailorId: sailor.id,
+          sailorId,
           rank,
           nettScore: nett,
         })
@@ -161,13 +200,31 @@ export async function POST(req: Request) {
           set: { rank, nettScore: nett, updatedAt: new Date() },
         });
       matched++;
+
+      // Remember this spelling as alias if it differed from stored name
+      if (hit && hit.how !== "exact") {
+        try {
+          await db.insert(sailorAliases).values({
+            sailorId,
+            aliasName: row.name,
+          });
+          aliasList.push({ sailorId, aliasName: row.name });
+        } catch {
+          /* already exists */
+        }
+      }
     }
 
     return NextResponse.json({
-      message: `Imported ${reg.name}: ${matched} matched, ${unmatched.length} unmatched.`,
+      message: `Imported ${reg.name}: ${matched} results saved (${created} new sailors auto-created), ${unmatched.length} still unmatched.`,
       regatta: reg,
       matched,
+      created,
       unmatched,
+      inputRows: cleanRows.length,
+      matchHow,
+      nameKeyNote:
+        "Names match ignoring word order (token sort). Duplicates like 'Tan Wei' vs 'Wei Tan' merge on import when tokens match.",
     });
   } catch (e) {
     console.error(e);

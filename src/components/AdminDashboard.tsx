@@ -430,34 +430,80 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     const reader = new FileReader();
     reader.onload = (e) => {
       const data = e.target?.result;
-      const workbook = read(data, { type: "binary" });
+      // array buffer is more reliable than binary string for xlsx
+      const workbook = read(data, { type: "array" });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-      const json = utils.sheet_to_json<Record<string, unknown>>(sheet, { defval: null });
+      const json = utils.sheet_to_json<Record<string, unknown>>(sheet, {
+        defval: "",
+        raw: false,
+      });
       const mapped = json
         .map((r) => {
           const keys = Object.keys(r);
-          const nameKey = keys.find((k) => /name|sailor/i.test(k)) || keys[0];
-          const rankKey = keys.find((k) => /rank|pos|place/i.test(k));
-          const nettKey = keys.find((k) => /nett|points|pts|score/i.test(k));
-          const name = String(r[nameKey!] ?? "").trim();
-          const rank = rankKey != null && r[rankKey] != null ? Number(r[rankKey]) : null;
-          const nett = nettKey != null && r[nettKey] != null ? Number(r[nettKey]) : null;
+          // Prefer exact "Name" over columns that merely contain "name" (e.g. none)
+          // Never treat Club as Name
+          const nameKey =
+            keys.find((k) => /^name$/i.test(k.trim())) ||
+            keys.find((k) => /^(sailor|sailor name|competitor)$/i.test(k.trim())) ||
+            keys.find(
+              (k) =>
+                /name|sailor/i.test(k) && !/club|team|boat|sail/i.test(k)
+            ) ||
+            keys.find((k) => /sailor/i.test(k));
+          const rankKey =
+            keys.find((k) => /^rank$/i.test(k.trim())) ||
+            keys.find((k) => /rank|pos|place|position/i.test(k));
+          const nettKey =
+            keys.find((k) => /^nett$/i.test(k.trim())) ||
+            keys.find((k) => /nett|points|pts|score|total/i.test(k));
+          const clubKey =
+            keys.find((k) => /^club$/i.test(k.trim())) ||
+            keys.find((k) => /club|team/i.test(k));
+
+          if (!nameKey) {
+            return { name: "", rank: null, nett: null, club: null };
+          }
+          const name = String(r[nameKey] ?? "").trim();
+          // Skip header-like repeats
+          if (!name || /^name$/i.test(name)) {
+            return { name: "", rank: null, nett: null, club: null };
+          }
+          const rankRaw = rankKey != null ? r[rankKey] : null;
+          const nettRaw = nettKey != null ? r[nettKey] : null;
+          const rank =
+            rankRaw !== "" && rankRaw != null ? Number(rankRaw) : null;
+          const nett =
+            nettRaw !== "" && nettRaw != null ? Number(nettRaw) : null;
+          const club =
+            clubKey != null && r[clubKey] != null
+              ? String(r[clubKey]).trim()
+              : null;
           return {
             name,
             rank: Number.isFinite(rank as number) ? rank : null,
             nett: Number.isFinite(nett as number) ? nett : null,
+            club: club || null,
           };
         })
         .filter((r) => r.name);
       setFullImportRows(mapped);
-      setParsedData(mapped.slice(0, 15));
-      setImportStatus(`Parsed ${mapped.length} rows. Fill regatta details and click Import to database.`);
-      if (!importMeta.name) {
-        setImportMeta((m) => ({ ...m, name: file.name.replace(/\.[^.]+$/, "") }));
-      }
+      setParsedData(mapped.slice(0, 20));
+      setImportStatus(
+        `Parsed ${mapped.length} competitor rows from “${sheetName}”. Set division (Silver for SAFYC Silver) + date, then Import. Unmatched names auto-create sailors; jumbled name order still matches.`
+      );
+      setImportMeta((m) => ({
+        ...m,
+        name: m.name || file.name.replace(/\.[^.]+$/, "").replace(/_/g, " "),
+        division: /silver/i.test(file.name)
+          ? "Silver"
+          : /gold/i.test(file.name)
+            ? "Gold"
+            : m.division,
+        fleetSize: mapped.length || m.fleetSize,
+      }));
     };
-    reader.readAsBinaryString(file);
+    reader.readAsArrayBuffer(file);
   };
 
   const handleImportToDb = async () => {
@@ -480,11 +526,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           division: importMeta.division,
           totalFleetSize: importMeta.fleetSize || fullImportRows.length,
           rows: fullImportRows,
+          createMissing: true,
         }),
       });
-      const data = await res.json();
+      const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Import failed");
       setImportRegattaId(data.regatta?.id || null);
+      // Refresh sailors after auto-create
+      try {
+        const list = await fetch("/api/admin/sailors").then((r) => r.json());
+        if (list.sailors) setSailorList(list.sailors);
+      } catch {
+        /* ignore */
+      }
       if (data.regatta) {
         setRegattaList((prev) => {
           const exists = prev.some((r) => r.id === data.regatta.id);
