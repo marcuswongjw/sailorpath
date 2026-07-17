@@ -59,18 +59,22 @@ export function jsonError(error: unknown) {
   const status =
     msg === "UNAUTHORIZED" ? 401 : msg === "FORBIDDEN" ? 403 : 500;
   // Surface useful message for admin UI (still safe — no secrets)
-  const publicMsg =
+  let publicMsg =
     msg === "UNAUTHORIZED"
       ? "Not signed in"
       : msg === "FORBIDDEN"
         ? "Superadmin role required"
-        : msg.length < 200
+        : msg.length < 280
           ? msg
-          : "Server error";
+          : msg.slice(0, 240) + "…";
+  // Common schema drift — never hide as vague "system error"
+  if (/column.*does not exist/i.test(msg)) {
+    publicMsg = msg.slice(0, 240);
+  }
   return Response.json(
     {
       error: publicMsg,
-      detail: process.env.NODE_ENV !== "production" ? msg : undefined,
+      detail: msg.length < 500 ? msg : msg.slice(0, 500),
     },
     { status }
   );

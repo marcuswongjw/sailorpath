@@ -979,37 +979,80 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       String(existing?.currentFleet || "").toLowerCase() === "gold";
     if (wantsGold && !hasSilverPath) {
       alert(
-        "Gold fleet requires Silver history first. Set Fleet to Silver (or Silver entry date), save, then promote to Gold."
+        "Gold fleet requires Silver history first. Admit as Silver first (Silver entry date or Fleet = Silver), save, then set Gold."
       );
       return;
     }
+    // Only send known fields (avoid dumping internal/extra props that break APIs)
+    const dateOnly = (v: unknown) => {
+      if (v == null || v === "") return null;
+      const s = String(v);
+      return /^\d{4}-\d{2}-\d{2}/.test(s) ? s.slice(0, 10) : s;
+    };
+    const payload = {
+      name: sailorForm.name,
+      handle: sailorForm.handle,
+      sailNumber: sailorForm.sailNumber,
+      club: sailorForm.club,
+      school: sailorForm.school ?? null,
+      nationality: sailorForm.nationality || null,
+      gender: sailorForm.gender,
+      bio: sailorForm.bio || null,
+      nationalSquadStatus: sailorForm.nationalSquadStatus || null,
+      currentFleet: sailorForm.currentFleet || null,
+      goldEntryDate: dateOnly(sailorForm.goldEntryDate),
+      silverEntryDate: dateOnly(sailorForm.silverEntryDate),
+      dropDate: dateOnly(sailorForm.dropDate),
+      dob: dateOnly(sailorForm.dob),
+      weight: sailorForm.weight === "" || sailorForm.weight == null ? null : sailorForm.weight,
+      instagram: sailorForm.instagram || null,
+      facebook: sailorForm.facebook || null,
+      manuallyDropped: Boolean(sailorForm.manuallyDropped),
+      natSquadStatusJan25: sailorForm.natSquadStatusJan25 || null,
+      natSquadStatusJul25: sailorForm.natSquadStatusJul25 || null,
+      natSquadStatusJan26: sailorForm.natSquadStatusJan26 || null,
+      natSquadStatusJul26: sailorForm.natSquadStatusJul26 || null,
+      histRankingJun24: sailorForm.histRankingJun24 || null,
+      histRankingDec24: sailorForm.histRankingDec24 || null,
+      histRankingJun25: sailorForm.histRankingJun25 || null,
+      histRankingDec25: sailorForm.histRankingDec25 || null,
+      histRankingJun26: sailorForm.histRankingJun26 || null,
+      worlds: sailorForm.worlds || null,
+      european: sailorForm.european || null,
+      asian: sailorForm.asian || null,
+      seaGames: sailorForm.seaGames || null,
+    };
     try {
       if (editingSailorId === "new") {
         const res = await fetch("/api/admin/sailors", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(sailorForm),
+          body: JSON.stringify(payload),
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Create failed");
+        const data = await parseApi(res);
+        if (!res.ok) throw new Error(data.error || data.detail || "Create failed");
         setSailorList((prev) => [...prev, data.sailor]);
-        alert("Sailor created successfully!");
+        alert(data.warning ? `Sailor created. Note: ${data.warning}` : "Sailor created successfully!");
       } else {
         const res = await fetch("/api/admin/sailors", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...sailorForm, id: editingSailorId }),
+          body: JSON.stringify({ ...payload, id: editingSailorId }),
         });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Update failed");
+        const data = await parseApi(res);
+        if (!res.ok) throw new Error(data.error || data.detail || "Update failed");
         setSailorList((prev) =>
           prev.map((s) => (s.id === editingSailorId ? data.sailor : s))
         );
-        alert("Sailor updated successfully!");
+        alert(
+          data.warning
+            ? `Sailor updated. Note: ${data.warning}`
+            : "Sailor updated successfully!"
+        );
       }
       setEditingSailorId(null);
     } catch (e: any) {
-      alert(e.message);
+      alert(e.message || "Update failed");
     }
   };
 
@@ -2385,6 +2428,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               <button
                                 onClick={() => {
                                   setEditingSailorId(s.id);
+                                  const d = (v: unknown) =>
+                                    v
+                                      ? String(v).slice(0, 10)
+                                      : "";
                                   setSailorForm({
                                     ...s,
                                     weight: s.weight ? s.weight.toString() : "",
@@ -2395,11 +2442,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                     manuallyDropped: s.manuallyDropped || false,
                                     instagram: s.instagram || "",
                                     facebook: s.facebook || "",
-                                    dob: s.dob || "",
+                                    dob: d(s.dob),
                                     bio: s.bio || "",
-                                    goldEntryDate: s.goldEntryDate || "",
-                                    silverEntryDate: s.silverEntryDate || "",
-                                    dropDate: s.dropDate || "",
+                                    goldEntryDate: d(s.goldEntryDate),
+                                    silverEntryDate: d(s.silverEntryDate),
+                                    dropDate: d(s.dropDate),
                                   });
                                 }}
                                 className="text-slate-400 hover:text-white"

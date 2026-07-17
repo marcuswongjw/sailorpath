@@ -5,8 +5,31 @@ import { sailors } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
 import {
   normalizeNationality,
+  sailorDbErrorHint,
+  toDateOnly,
   validateGoldPromotion,
 } from "@/lib/seriesMembership";
+
+const DATE_FIELDS = [
+  "goldEntryDate",
+  "silverEntryDate",
+  "dropDate",
+  "dob",
+] as const;
+
+function num(v: unknown) {
+  if (v === "" || v == null) return null;
+  return Number.isFinite(Number(v)) ? Number(v) : null;
+}
+
+function failDb(e: unknown) {
+  const hint = sailorDbErrorHint(e);
+  if (hint) {
+    console.error("sailors DB", e);
+    return NextResponse.json({ error: hint }, { status: 500 });
+  }
+  return jsonError(e);
+}
 
 export async function GET() {
   try {
@@ -14,7 +37,7 @@ export async function GET() {
     const rows = await db.select().from(sailors).orderBy(asc(sailors.name));
     return NextResponse.json({ sailors: rows });
   } catch (e) {
-    return jsonError(e);
+    return failDb(e);
   }
 }
 
@@ -29,22 +52,22 @@ export async function POST(req: Request) {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "");
 
-    const num = (v: unknown) =>
-      v === "" || v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null;
+    let silverEntryDate = toDateOnly(body.silverEntryDate);
+    let goldEntryDate = toDateOnly(body.goldEntryDate);
+    let currentFleet =
+      body.currentFleet === "" || body.currentFleet == null
+        ? null
+        : String(body.currentFleet).trim();
 
     const goldErr = validateGoldPromotion({
-      currentFleet: body.currentFleet || null,
-      goldEntryDate: body.goldEntryDate || null,
-      silverEntryDate: body.silverEntryDate || null,
+      currentFleet,
+      goldEntryDate,
+      silverEntryDate,
     });
     if (goldErr) {
       return NextResponse.json({ error: goldErr }, { status: 400 });
     }
 
-    // Admit as Silver: if fleet is Silver and no silver date, default today
-    let silverEntryDate = body.silverEntryDate || null;
-    let goldEntryDate = body.goldEntryDate || null;
-    let currentFleet = body.currentFleet || null;
     if (String(currentFleet || "").toLowerCase() === "silver" && !silverEntryDate) {
       silverEntryDate = new Date().toISOString().slice(0, 10);
     }
@@ -52,47 +75,71 @@ export async function POST(req: Request) {
       goldEntryDate = new Date().toISOString().slice(0, 10);
     }
 
-    const [row] = await db
-      .insert(sailors)
-      .values({
-        name: body.name,
-        handle,
-        sailNumber: body.sailNumber || "SGP 000",
-        club: body.club || "N/A",
-        school: body.school || null,
-        nationality: normalizeNationality(body.nationality),
-        gender: body.gender || null,
-        bio: body.bio || null,
-        goldEntryDate,
-        silverEntryDate,
-        dropDate: body.dropDate || null,
-        currentFleet: currentFleet || null,
-        manuallyDropped: Boolean(body.manuallyDropped),
-        nationalSquadStatus: body.nationalSquadStatus || null,
-        dob: body.dob || null,
-        weight: num(body.weight),
-        instagram: body.instagram || null,
-        facebook: body.facebook || null,
-        natSquadStatusJan25: body.natSquadStatusJan25 || null,
-        natSquadStatusJul25: body.natSquadStatusJul25 || null,
-        natSquadStatusJan26: body.natSquadStatusJan26 || null,
-        natSquadStatusJul26: body.natSquadStatusJul26 || null,
-        histRankingJun24: num(body.histRankingJun24),
-        histRankingDec24: num(body.histRankingDec24),
-        histRankingJun25: num(body.histRankingJun25),
-        histRankingDec25: num(body.histRankingDec25),
-        histRankingJun26: num(body.histRankingJun26),
-        worlds: num(body.worlds),
-        european: num(body.european),
-        asian: num(body.asian),
-        seaGames: num(body.seaGames),
-      })
-      .returning();
+    const values: Record<string, unknown> = {
+      name: body.name,
+      handle,
+      sailNumber: body.sailNumber || "SGP 000",
+      club: body.club || "N/A",
+      school: body.school || null,
+      gender: body.gender || null,
+      bio: body.bio || null,
+      goldEntryDate,
+      silverEntryDate,
+      dropDate: toDateOnly(body.dropDate),
+      currentFleet: currentFleet || null,
+      manuallyDropped: Boolean(body.manuallyDropped),
+      nationalSquadStatus: body.nationalSquadStatus || null,
+      dob: toDateOnly(body.dob),
+      weight: num(body.weight),
+      instagram: body.instagram || null,
+      facebook: body.facebook || null,
+      natSquadStatusJan25: body.natSquadStatusJan25 || null,
+      natSquadStatusJul25: body.natSquadStatusJul25 || null,
+      natSquadStatusJan26: body.natSquadStatusJan26 || null,
+      natSquadStatusJul26: body.natSquadStatusJul26 || null,
+      histRankingJun24: num(body.histRankingJun24),
+      histRankingDec24: num(body.histRankingDec24),
+      histRankingJun25: num(body.histRankingJun25),
+      histRankingDec25: num(body.histRankingDec25),
+      histRankingJun26: num(body.histRankingJun26),
+      worlds: num(body.worlds),
+      european: num(body.european),
+      asian: num(body.asian),
+      seaGames: num(body.seaGames),
+    };
 
-    return NextResponse.json({ sailor: row });
+    // nationality only if provided (column may be missing until migration 005)
+    const nat = normalizeNationality(body.nationality);
+    if (nat) values.nationality = nat;
+
+    try {
+      const [row] = await db
+        .insert(sailors)
+        .values(values as typeof sailors.$inferInsert)
+        .returning();
+      return NextResponse.json({ sailor: row });
+    } catch (e) {
+      // Retry without nationality if column not migrated yet
+      if (
+        values.nationality != null &&
+        /nationality/i.test(e instanceof Error ? e.message : String(e))
+      ) {
+        delete values.nationality;
+        const [row] = await db
+          .insert(sailors)
+          .values(values as typeof sailors.$inferInsert)
+          .returning();
+        return NextResponse.json({
+          sailor: row,
+          warning:
+            "Saved without nationality — run 005_nationality.sql in Supabase to enable that field.",
+        });
+      }
+      throw e;
+    }
   } catch (e) {
     console.error(e);
-    return jsonError(e);
+    return failDb(e);
   }
 }
 
@@ -121,7 +168,9 @@ export async function PATCH(req: Request) {
 
     const goldErr = validateGoldPromotion({
       currentFleet:
-        body.currentFleet !== undefined ? body.currentFleet : existing.currentFleet,
+        body.currentFleet !== undefined
+          ? body.currentFleet
+          : existing.currentFleet,
       goldEntryDate:
         body.goldEntryDate !== undefined
           ? body.goldEntryDate
@@ -147,10 +196,6 @@ export async function PATCH(req: Request) {
       "bio",
       "nationalSquadStatus",
       "currentFleet",
-      "goldEntryDate",
-      "silverEntryDate",
-      "dropDate",
-      "dob",
       "instagram",
       "facebook",
       "natSquadStatusJan25",
@@ -159,6 +204,11 @@ export async function PATCH(req: Request) {
       "natSquadStatusJul26",
     ] as const) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
+    }
+    for (const f of DATE_FIELDS) {
+      if (body[f] !== undefined) {
+        patch[f] = body[f] === "" || body[f] == null ? null : toDateOnly(body[f]);
+      }
     }
     if (body.nationality !== undefined) {
       patch.nationality =
@@ -210,18 +260,46 @@ export async function PATCH(req: Request) {
           body[f] === "" || body[f] == null ? null : Number(body[f]);
       }
     }
-    const [row] = await db
-      .update(sailors)
-      .set(patch as typeof sailors.$inferInsert)
-      .where(eq(sailors.id, body.id))
-      .returning();
-    if (!row) {
-      return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
+
+    try {
+      const [row] = await db
+        .update(sailors)
+        .set(patch as typeof sailors.$inferInsert)
+        .where(eq(sailors.id, body.id))
+        .returning();
+      if (!row) {
+        return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
+      }
+      return NextResponse.json({ sailor: row });
+    } catch (e) {
+      // Retry without nationality if column not migrated
+      if (
+        "nationality" in patch &&
+        /nationality/i.test(e instanceof Error ? e.message : String(e))
+      ) {
+        delete patch.nationality;
+        const [row] = await db
+          .update(sailors)
+          .set(patch as typeof sailors.$inferInsert)
+          .where(eq(sailors.id, body.id))
+          .returning();
+        if (!row) {
+          return NextResponse.json(
+            { error: "Sailor not found" },
+            { status: 404 }
+          );
+        }
+        return NextResponse.json({
+          sailor: row,
+          warning:
+            "Saved without nationality — run 005_nationality.sql in Supabase to enable that field.",
+        });
+      }
+      throw e;
     }
-    return NextResponse.json({ sailor: row });
   } catch (e) {
     console.error("sailors PATCH", e);
-    return jsonError(e);
+    return failDb(e);
   }
 }
 
@@ -240,6 +318,6 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ ok: true, id });
   } catch (e) {
     console.error("sailors DELETE", e);
-    return jsonError(e);
+    return failDb(e);
   }
 }

@@ -137,9 +137,33 @@ export function seriesStatusBadge(status: SeriesFleetStatus): {
   }
 }
 
+function hasDateValue(v: unknown): boolean {
+  if (v == null || v === "") return false;
+  // Date objects from drivers, or ISO / YYYY-MM-DD strings
+  if (v instanceof Date) return !Number.isNaN(v.getTime());
+  return String(v).trim().length > 0;
+}
+
+/** Normalize to YYYY-MM-DD for postgres date columns (avoids invalid ISO dump failures). */
+export function toDateOnly(v: unknown): string | null {
+  if (v == null || v === "") return null;
+  if (v instanceof Date && !Number.isNaN(v.getTime())) {
+    return v.toISOString().slice(0, 10);
+  }
+  const s = String(v).trim();
+  if (!s) return null;
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  const t = Date.parse(s);
+  if (!Number.isNaN(t)) return new Date(t).toISOString().slice(0, 10);
+  return null;
+}
+
 /**
  * Validate Gold promotion: sailor must have Silver history (or already be Gold).
  * Returns error message or null if OK.
+ *
+ * Historical Gold sailors (gold entry / fleet already set, often without silver
+ * dates in the roster) may always edit gold dates.
  */
 export function validateGoldPromotion(input: {
   currentFleet?: string | null;
@@ -155,7 +179,7 @@ export function validateGoldPromotion(input: {
   const existing = input.existing || null;
   const nextFleet = String(
     input.currentFleet !== undefined
-      ? input.currentFleet
+      ? input.currentFleet ?? ""
       : existing?.currentFleet || ""
   )
     .trim()
@@ -163,30 +187,53 @@ export function validateGoldPromotion(input: {
   const nextGold =
     input.goldEntryDate !== undefined
       ? input.goldEntryDate
-      : existing?.goldEntryDate || null;
+      : existing?.goldEntryDate ?? null;
   const nextSilver =
     input.silverEntryDate !== undefined
       ? input.silverEntryDate
-      : existing?.silverEntryDate || null;
+      : existing?.silverEntryDate ?? null;
 
   const wantsGold =
-    nextFleet === "gold" || Boolean(nextGold && String(nextGold).trim());
+    nextFleet === "gold" || hasDateValue(nextGold);
 
   if (!wantsGold) return null;
 
-  // Already Gold in DB — allow edits (keep historical Gold)
-  if (existing?.goldEntryDate || String(existing?.currentFleet || "").toLowerCase() === "gold") {
-    return null;
-  }
+  // Already Gold in DB — allow edits (including changing gold entry date)
+  const alreadyGold =
+    hasDateValue(existing?.goldEntryDate) ||
+    String(existing?.currentFleet || "")
+      .trim()
+      .toLowerCase() === "gold";
+  if (alreadyGold) return null;
 
   const silverOk =
-    Boolean(nextSilver && String(nextSilver).trim()) ||
-    nextFleet === "silver" || // odd edge: shouldn't set both
-    Boolean(existing?.silverEntryDate) ||
-    String(existing?.currentFleet || "").toLowerCase() === "silver";
+    hasDateValue(nextSilver) ||
+    nextFleet === "silver" ||
+    hasDateValue(existing?.silverEntryDate) ||
+    String(existing?.currentFleet || "")
+      .trim()
+      .toLowerCase() === "silver";
 
   if (!silverOk) {
     return "Gold fleet requires Silver history first. Admit the sailor as Silver (set Silver entry date or Fleet = Silver), then promote to Gold.";
+  }
+  return null;
+}
+
+/** Map common Postgres / schema errors to actionable admin messages */
+export function sailorDbErrorHint(err: unknown): string | null {
+  const msg = err instanceof Error ? err.message : String(err ?? "");
+  if (/nationality/i.test(msg) && /column|does not exist/i.test(msg)) {
+    return "Database missing nationality column. In Supabase SQL Editor run: ALTER TABLE public.sailors ADD COLUMN IF NOT EXISTS nationality text;";
+  }
+  if (
+    /(school|current_fleet|manually_dropped)/i.test(msg) &&
+    /column|does not exist/i.test(msg)
+  ) {
+    return "Database missing school/fleet columns. Run migration 002_sailor_school_fleet.sql in Supabase.";
+  }
+  if (/nett_score/i.test(msg) && /integer|type|numeric/i.test(msg)) {
+    return "Run migration 003: ALTER TABLE regatta_results ALTER COLUMN nett_score TYPE real;";
   }
   return null;
 }
