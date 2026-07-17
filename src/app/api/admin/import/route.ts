@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { eq } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailorAliases, sailors } from "@/db/schema";
@@ -27,6 +28,52 @@ function toNumber(v: unknown): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+/** Normalize sail number; empty → null (column optional). */
+function normalizeSailNumber(v: unknown): string | null {
+  if (v == null || v === "") return null;
+  const s = String(v).trim().replace(/\s+/g, " ");
+  if (!s || /^n\/?a$/i.test(s) || s === "-" || s === "—") return null;
+  return s;
+}
+
+/**
+ * Accept full DOB (YYYY-MM-DD / Excel-ish) or birth year only (2013).
+ * Year-only becomes YYYY-01-01. Empty → null (column optional).
+ */
+function normalizeDob(v: unknown): string | null {
+  if (v == null || v === "") return null;
+  if (typeof v === "number" && Number.isFinite(v)) {
+    // Excel serial or plain year
+    if (v >= 1990 && v <= 2035 && Number.isInteger(v)) {
+      return `${v}-01-01`;
+    }
+    // Excel serial date
+    const epoch = Date.UTC(1899, 11, 30);
+    const d = new Date(epoch + v * 86400000);
+    if (!Number.isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+    return null;
+  }
+  const s = String(v).trim();
+  if (!s) return null;
+  if (/^\d{4}$/.test(s)) {
+    const y = Number(s);
+    if (y >= 1990 && y <= 2035) return `${y}-01-01`;
+    return null;
+  }
+  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+  const m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);
+  if (m) {
+    const [, a, b, y] = m;
+    // Prefer D/M/Y common in SG; if first > 12 treat as D/M/Y
+    const day = Number(a) > 12 ? a : b;
+    const month = Number(a) > 12 ? b : a;
+    return `${y}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  }
+  const parsed = Date.parse(s);
+  if (!Number.isNaN(parsed)) return new Date(parsed).toISOString().slice(0, 10);
+  return null;
+}
+
 export async function POST(req: Request) {
   try {
     await requireSuperadmin();
@@ -49,6 +96,9 @@ export async function POST(req: Request) {
         nett: number | null;
         total?: number | null;
         club?: string | null;
+        sailNumber?: string | null;
+        dob?: string | number | null;
+        birthYear?: string | number | null;
       }[];
       createMissing?: boolean;
     } = body;
@@ -58,13 +108,32 @@ export async function POST(req: Request) {
     }
 
     const cleanRows = rows
-      .map((r) => ({
-        name: String(r.name || "").trim(),
-        rank: toNumber(r.rank),
-        nett: toNumber(r.nett),
-        total: toNumber((r as { total?: number | null }).total),
-        club: r.club != null ? String(r.club).trim() : null,
-      }))
+      .map((r) => {
+        const sailNumber = normalizeSailNumber(r.sailNumber);
+        // Full DOB preferred; birth year alone is year-only (YYYY-01-01 placeholder)
+        const fullDob = normalizeDob(r.dob);
+        const yearOnlyDob = !fullDob ? normalizeDob(r.birthYear) : null;
+        // If client already put year into dob and also sent birthYear, treat as year-only
+        const birthYearHint =
+          r.birthYear != null && r.birthYear !== ""
+            ? normalizeDob(r.birthYear)
+            : null;
+        const dob = fullDob || yearOnlyDob;
+        const dobIsYearOnly = Boolean(
+          yearOnlyDob ||
+            (birthYearHint && fullDob && fullDob === birthYearHint)
+        );
+        return {
+          name: String(r.name || "").trim(),
+          rank: toNumber(r.rank),
+          nett: toNumber(r.nett),
+          total: toNumber((r as { total?: number | null }).total),
+          club: r.club != null && String(r.club).trim() ? String(r.club).trim() : null,
+          sailNumber,
+          dob,
+          dobIsYearOnly,
+        };
+      })
       .filter((r) => r.name.length > 0);
 
     if (!cleanRows.length) {
@@ -99,7 +168,13 @@ export async function POST(req: Request) {
       .returning();
 
     let sailorList = await db
-      .select({ id: sailors.id, name: sailors.name })
+      .select({
+        id: sailors.id,
+        name: sailors.name,
+        sailNumber: sailors.sailNumber,
+        dob: sailors.dob,
+        club: sailors.club,
+      })
       .from(sailors);
     const aliasList = await db
       .select({
@@ -110,6 +185,7 @@ export async function POST(req: Request) {
 
     let matched = 0;
     let created = 0;
+    let updatedProfiles = 0;
     let rowErrors = 0;
     const unmatched: {
       rawName: string;
@@ -139,10 +215,17 @@ export async function POST(req: Request) {
             .values({
               name: row.name,
               handle,
-              sailNumber: "SGP 000",
+              sailNumber: row.sailNumber || "SGP 000",
               club: row.club || "N/A",
+              ...(row.dob ? { dob: row.dob } : {}),
             })
-            .returning({ id: sailors.id, name: sailors.name });
+            .returning({
+              id: sailors.id,
+              name: sailors.name,
+              sailNumber: sailors.sailNumber,
+              dob: sailors.dob,
+              club: sailors.club,
+            });
           sailorId = createdSailor.id;
           sailorList = [...sailorList, createdSailor];
           try {
@@ -172,6 +255,67 @@ export async function POST(req: Request) {
             similarity: sug?.similarity ?? 0,
           });
           continue;
+        }
+
+        // Optional profile enrichment from sheet (only when columns present)
+        const existing = sailorList.find((s) => s.id === sailorId);
+        const profilePatch: {
+          sailNumber?: string;
+          dob?: string;
+          club?: string;
+          updatedAt: Date;
+        } = { updatedAt: new Date() };
+        let profileChanged = false;
+
+        if (row.sailNumber) {
+          const cur = (existing?.sailNumber || "").trim();
+          const isPlaceholder = !cur || /^SGP\s*0+$/i.test(cur) || cur === "N/A";
+          if (isPlaceholder || cur.toLowerCase() !== row.sailNumber.toLowerCase()) {
+            profilePatch.sailNumber = row.sailNumber;
+            profileChanged = true;
+          }
+        }
+        if (row.dob) {
+          const curDob = existing?.dob ? String(existing.dob).slice(0, 10) : "";
+          if (!curDob) {
+            profilePatch.dob = row.dob;
+            profileChanged = true;
+          } else if (curDob !== row.dob) {
+            // Don't wipe a full DOB (e.g. 2013-05-12) with year-only 2013-01-01
+            if (
+              row.dobIsYearOnly &&
+              curDob.startsWith(row.dob.slice(0, 4))
+            ) {
+              /* keep existing full date for same birth year */
+            } else {
+              profilePatch.dob = row.dob;
+              profileChanged = true;
+            }
+          }
+        }
+        // Fill blank club only (don't overwrite real club with sheet noise)
+        if (row.club && existing && (!existing.club || existing.club === "N/A")) {
+          profilePatch.club = row.club;
+          profileChanged = true;
+        }
+
+        if (profileChanged) {
+          await db
+            .update(sailors)
+            .set(profilePatch)
+            .where(eq(sailors.id, sailorId));
+          updatedProfiles++;
+          // Keep in-memory list in sync for later rows
+          sailorList = sailorList.map((s) =>
+            s.id === sailorId
+              ? {
+                  ...s,
+                  sailNumber: profilePatch.sailNumber ?? s.sailNumber,
+                  dob: profilePatch.dob ?? s.dob,
+                  club: profilePatch.club ?? s.club,
+                }
+              : s
+          );
         }
 
         // Rank is always integer; nett/total may be fractional (14.5)
@@ -245,10 +389,11 @@ export async function POST(req: Request) {
                 ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
                 : "See errors below."
             }`
-          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} sailors auto-created). ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.`,
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} sailors auto-created, ${updatedProfiles} profiles updated from sail # / birth year). ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.`,
       regatta: reg,
       matched,
       created,
+      updatedProfiles,
       unmatched,
       inputRows: cleanRows.length,
       rowErrors,

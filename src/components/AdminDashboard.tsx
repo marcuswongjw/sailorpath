@@ -50,6 +50,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       nett: number | null;
       total: number | null;
       club?: string | null;
+      /** Optional — updates sailor profile when present */
+      sailNumber?: string | null;
+      /** Optional DOB (YYYY-MM-DD) or birth year as YYYY-01-01 */
+      dob?: string | null;
+      birthYear?: number | null;
     }[]
   >([]);
   const [importRegattaId, setImportRegattaId] = useState<string | null>(null);
@@ -501,14 +506,61 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           const clubKey =
             keys.find((k) => /^club$/i.test(k.trim())) ||
             keys.find((k) => /club|team/i.test(k));
+          // Optional sailor profile columns (not required for import)
+          const sailKey =
+            keys.find((k) =>
+              /^(sail\s*(number|no\.?|#|num)?|sailnumber|boat\s*(number|no\.?)?)$/i.test(
+                k.trim()
+              )
+            ) ||
+            keys.find(
+              (k) =>
+                /sail\s*(number|no|#)|sailnumber|boat\s*no/i.test(k) &&
+                !/sailor/i.test(k)
+            );
+          const birthYearKey =
+            keys.find((k) =>
+              /^(birth\s*year|birthyear|year\s*of\s*birth|yob|born\s*year)$/i.test(
+                k.trim()
+              )
+            ) || keys.find((k) => /birth\s*year|yob|year of birth/i.test(k));
+          const dobKey =
+            keys.find((k) =>
+              /^(dob|date\s*of\s*birth|birth\s*date|born|birthday)$/i.test(
+                k.trim()
+              )
+            ) ||
+            keys.find(
+              (k) =>
+                /date of birth|birth\s*date|birthday|\bdob\b/i.test(k) &&
+                !/year/i.test(k)
+            );
 
           if (!nameKey) {
-            return { name: "", rank: null, nett: null, total: null, club: null };
+            return {
+              name: "",
+              rank: null,
+              nett: null,
+              total: null,
+              club: null,
+              sailNumber: null,
+              dob: null,
+              birthYear: null,
+            };
           }
           const name = String(r[nameKey] ?? "").trim();
           // Skip header-like repeats
           if (!name || /^name$/i.test(name)) {
-            return { name: "", rank: null, nett: null, total: null, club: null };
+            return {
+              name: "",
+              rank: null,
+              nett: null,
+              total: null,
+              club: null,
+              sailNumber: null,
+              dob: null,
+              birthYear: null,
+            };
           }
           const rankRaw = rankKey != null ? r[rankKey] : null;
           const nettRaw = nettKey != null ? r[nettKey] : null;
@@ -523,19 +575,60 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             clubKey != null && r[clubKey] != null
               ? String(r[clubKey]).trim()
               : null;
+          const sailRaw =
+            sailKey != null && r[sailKey] != null ? String(r[sailKey]).trim() : "";
+          const sailNumber = sailRaw && !/^n\/?a$/i.test(sailRaw) ? sailRaw : null;
+
+          // Birth year only (2013) or full DOB — both optional; never required
+          let birthYear: number | null = null;
+          let dob: string | null = null;
+          if (birthYearKey != null && r[birthYearKey] != null && r[birthYearKey] !== "") {
+            const by = Number(String(r[birthYearKey]).trim());
+            if (Number.isFinite(by) && by >= 1990 && by <= 2035) {
+              birthYear = Math.round(by);
+            }
+          }
+          if (dobKey != null && r[dobKey] != null && r[dobKey] !== "") {
+            const raw = r[dobKey];
+            // Plain year in DOB column → treat as birth year only
+            if (
+              (typeof raw === "number" &&
+                raw >= 1990 &&
+                raw <= 2035 &&
+                Number.isInteger(raw)) ||
+              (typeof raw === "string" && /^\d{4}$/.test(raw.trim()))
+            ) {
+              if (birthYear == null) birthYear = Math.round(Number(raw));
+            } else {
+              dob = excelDateToIso(raw);
+              // Guard against excel serial mis-read as year
+              if (dob && !/^\d{4}-\d{2}-\d{2}/.test(dob)) dob = null;
+            }
+          }
+
           return {
             name,
             rank: Number.isFinite(rank as number) ? rank : null,
             nett: Number.isFinite(nett as number) ? nett : null,
             total: Number.isFinite(total as number) ? total : null,
             club: club || null,
+            sailNumber,
+            // full date when known; birthYear alone when only year known
+            dob,
+            birthYear,
           };
         })
         .filter((r) => r.name);
       setFullImportRows(mapped);
       setParsedData(mapped.slice(0, 20));
+      const withSail = mapped.filter((r) => r.sailNumber).length;
+      const withDob = mapped.filter((r) => r.dob || r.birthYear).length;
       setImportStatus(
-        `Parsed ${mapped.length} competitor rows from “${sheetName}”. Set division (Silver for SAFYC Silver) + date, then Import. Unmatched names auto-create sailors; jumbled name order still matches.`
+        `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
+          (withSail || withDob
+            ? ` (${withSail} with sail #, ${withDob} with birth year/DOB — will update sailor profiles on import)`
+            : ` (no sail # / birth year columns — optional; results still import fine)`) +
+          `. Set division + date, then Import.`
       );
       setImportMeta((m) => ({
         ...m,
@@ -1268,7 +1361,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               >
                 <Upload className="h-10 w-10 text-orange-500 mb-4" />
                 <p className="text-sm font-bold text-white mb-2">Drag and drop your Regatta Excel/CSV file here</p>
-                <p className="text-xs text-slate-500 mb-4">Supports .xlsx, .xls, and .csv formats</p>
+                <p className="text-xs text-slate-500 mb-4">
+                  Supports .xlsx, .xls, and .csv. Required: Name (+ Rank/Nett if available).
+                  Optional: Total Score, Club, Sail Number, Birth Year / DOB — when present, sailor profiles are updated.
+                </p>
                 <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
                   Select File
                   <input type="file" onChange={handleFileChange} className="hidden" accept=".xlsx,.xls,.csv" />
