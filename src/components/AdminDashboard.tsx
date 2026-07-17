@@ -1125,6 +1125,87 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
   };
 
+  const handleMergeSailors = async () => {
+    if (!isSuperadmin) {
+      alert("Error: 403 Forbidden. Only Superadmins can merge sailors.");
+      return;
+    }
+    if (selectedSailors.length !== 2) {
+      alert("Select exactly two sailors (tick two checkboxes), then Merge.");
+      return;
+    }
+    const [aId, bId] = selectedSailors;
+    const a = sailorList.find((s) => s.id === aId);
+    const b = sailorList.find((s) => s.id === bId);
+    if (!a || !b) {
+      alert("Could not find both sailors — refresh and try again.");
+      return;
+    }
+
+    // Prefer keep = more complete profile / real sail number / gold history
+    const score = (s: any) => {
+      let n = 0;
+      if (s.goldEntryDate) n += 5;
+      if (s.silverEntryDate) n += 2;
+      if (s.sailNumber && !/^SGP\s*0+$/i.test(s.sailNumber)) n += 3;
+      if (s.dob) n += 1;
+      if (s.club && s.club !== "N/A") n += 1;
+      if (s.currentFleet) n += 2;
+      if (s.nationalSquadStatus) n += 1;
+      const resCount = resultsList.filter((r) => r.sailorId === s.id).length;
+      n += resCount;
+      return n;
+    };
+    let keep = a;
+    let merge = b;
+    if (score(b) > score(a)) {
+      keep = b;
+      merge = a;
+    }
+
+    const ok = confirm(
+      `Merge duplicate sailors?\n\n` +
+        `KEEP (profile retained):\n  ${keep.name} · ${keep.sailNumber || "—"}\n\n` +
+        `DELETE after merge (results + aliases moved):\n  ${merge.name} · ${merge.sailNumber || "—"}\n\n` +
+        `Results move to the kept sailor. On the same regatta, the better (lower) rank is kept.\n\nContinue?`
+    );
+    if (!ok) return;
+
+    try {
+      const res = await fetch("/api/admin/sailors/merge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ keepId: keep.id, mergeId: merge.id }),
+      });
+      const data = await parseApi(res);
+      if (!res.ok) throw new Error(data.error || "Merge failed");
+
+      setSailorList((prev) => {
+        const without = prev.filter((s) => s.id !== merge.id);
+        return without.map((s) => (s.id === keep.id && data.keep ? data.keep : s));
+      });
+      setSelectedSailors([]);
+      // Refresh results so moved rows show under keep
+      try {
+        await refreshResultsList();
+      } catch {
+        /* ignore */
+      }
+      setBulkStatus(
+        data.message ||
+          `Merged ${merge.name} → ${keep.name} (${data.resultsMoved ?? 0} results moved).`
+      );
+      setTimeout(() => setBulkStatus(null), 6000);
+      alert(
+        `${data.message}\n\nResults moved: ${data.resultsMoved ?? 0}\n` +
+          `Conflicts resolved: ${data.resultsMergedConflict ?? 0}\n` +
+          `Conflicts kept (kept sailor better): ${data.resultsDroppedConflict ?? 0}`
+      );
+    } catch (e: any) {
+      alert(e.message || "Merge failed");
+    }
+  };
+
   const handleBulkDelete = async () => {
     if (!isSuperadmin) {
       alert("Superadmin only");
@@ -2190,6 +2271,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     </button>
                     <button
                       type="button"
+                      disabled={!isSuperadmin || selectedSailors.length !== 2}
+                      onClick={handleMergeSailors}
+                      title="Select exactly 2 sailors to merge duplicates"
+                      className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500 disabled:opacity-40 flex items-center gap-1.5"
+                    >
+                      <UserCheck className="h-4 w-4" />
+                      Merge 2 selected
+                      {selectedSailors.length === 2 ? "" : ` (${selectedSailors.length}/2)`}
+                    </button>
+                    <button
+                      type="button"
                       disabled={!isSuperadmin || selectedSailors.length === 0}
                       onClick={handleBulkDelete}
                       className="rounded-full bg-rose-600/90 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500 disabled:opacity-40 flex items-center gap-1.5"
@@ -2198,6 +2290,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       Delete selected
                     </button>
                   </div>
+                  <p className="text-[10px] text-slate-500">
+                    <strong className="text-slate-400">Merge duplicates:</strong> tick exactly two
+                    rows → <strong className="text-emerald-400">Merge 2 selected</strong>. The more
+                    complete profile is kept; the other is deleted after results/aliases move over.
+                  </p>
                   {bulkStatus && (
                     <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
                       <CheckCircle className="h-4 w-4" />
