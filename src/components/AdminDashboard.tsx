@@ -193,6 +193,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [competitionsSailorId, setCompetitionsSailorId] = useState<string | null>(
     null
   );
+  const [competitionsLoading, setCompetitionsLoading] = useState(false);
   const [editingSailorId, setEditingSailorId] = useState<string | null>(null);
   const [sailorForm, setSailorForm] = useState<any>({
     id: "",
@@ -1363,6 +1364,35 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
   };
 
+  const refreshResultsList = async () => {
+    try {
+      const res = await fetch("/api/admin/results");
+      const data = await parseApi(res);
+      if (res.ok && Array.isArray(data.results)) {
+        setResultsList(data.results);
+      }
+    } catch {
+      /* keep existing list */
+    }
+  };
+
+  const openSailorResults = async (sailorId: string) => {
+    setEditingSailorId(null);
+    setEditingResultId(null);
+    setCompetitionsSailorId(sailorId);
+    setCompetitionsLoading(true);
+    try {
+      await refreshResultsList();
+    } finally {
+      setCompetitionsLoading(false);
+    }
+  };
+
+  const closeSailorResults = () => {
+    setCompetitionsSailorId(null);
+    setEditingResultId(null);
+  };
+
   const handleSaveResult = async () => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
@@ -1381,7 +1411,15 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         });
         const data = await parseApi(res);
         if (!res.ok) throw new Error(data.error || "Create failed");
-        setResultsList((prev) => [...prev, data.result]);
+        setResultsList((prev) => {
+          // replace if conflict row same sailor+regatta, else append
+          const row = data.result;
+          const without = prev.filter(
+            (r) =>
+              !(r.sailorId === row.sailorId && r.regattaId === row.regattaId)
+          );
+          return [...without, row];
+        });
         alert("Result added successfully!");
       } else {
         const res = await fetch("/api/admin/results", {
@@ -2700,10 +2738,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                   <button
                                     type="button"
                                     title="View & edit all regatta results for this sailor"
-                                    onClick={() => {
-                                      setEditingSailorId(null);
-                                      setCompetitionsSailorId(s.id);
-                                      setEditingResultId(null);
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      void openSailorResults(s.id);
                                     }}
                                     className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold text-orange-300 hover:border-orange-500/40 hover:text-orange-200"
                                   >
@@ -2764,270 +2802,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   </div>
                   <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5">
                     Tick rows for bulk edit · Best 3 of 5 = Jul–Dec 2026 series score ·
-                    Medal = competitions · Columns for squad history / overseas.
+                    Results button = all competitions for that sailor · Columns for squad / overseas.
                   </p>
                 </div>
-
-                {/* Per-sailor competitions editor */}
-                {competitionsSailorId && (
-                  <div className="glass-panel rounded-3xl border border-orange-500/20 p-6 space-y-4">
-                    {(() => {
-                      const sailor = sailorList.find(
-                        (x) => x.id === competitionsSailorId
-                      );
-                      const sailorResults = resultsList
-                        .filter((r) => r.sailorId === competitionsSailorId)
-                        .map((r) => {
-                          const reg = regattaList.find(
-                            (g) => g.id === r.regattaId
-                          );
-                          return { ...r, regatta: reg };
-                        })
-                        .sort((a, b) => {
-                          const da = a.regatta?.date || "";
-                          const db = b.regatta?.date || "";
-                          return String(db).localeCompare(String(da));
-                        });
-                      return (
-                        <>
-                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <div>
-                              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-                                <Medal className="h-4 w-4 text-orange-400" />
-                                All regatta results — {sailor?.name || "Sailor"}
-                              </h3>
-                              <p className="text-xs text-slate-500 mt-1">
-                                Full logbook for this sailor. Edit rank / total / nett for each
-                                event, add missing regattas, or delete results.
-                              </p>
-                            </div>
-                            <div className="flex gap-2">
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setEditingResultId("new");
-                                  setResultForm({
-                                    id: "",
-                                    regattaId: regattaList[0]?.id || "",
-                                    sailorId: competitionsSailorId,
-                                    rank: 1,
-                                    nettScore: 1,
-                                    totalScore: "",
-                                    isDNS: false,
-                                  });
-                                }}
-                                className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
-                              >
-                                <Plus className="h-4 w-4" />
-                                Add result
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setCompetitionsSailorId(null);
-                                  setEditingResultId(null);
-                                }}
-                                className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
-                              >
-                                Close
-                              </button>
-                            </div>
-                          </div>
-
-                          {editingResultId && (
-                            <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4 space-y-3">
-                              <p className="text-[10px] font-bold text-slate-500 uppercase">
-                                {editingResultId === "new"
-                                  ? "New competition result"
-                                  : "Edit result"}
-                              </p>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                                <div className="sm:col-span-2">
-                                  <label className="text-[10px] font-bold text-slate-500 uppercase">
-                                    Regatta
-                                  </label>
-                                  <select
-                                    value={resultForm.regattaId}
-                                    onChange={(e) =>
-                                      setResultForm({
-                                        ...resultForm,
-                                        regattaId: e.target.value,
-                                      })
-                                    }
-                                    className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
-                                  >
-                                    <option value="">— Select —</option>
-                                    {regattaList.map((r) => (
-                                      <option key={r.id} value={r.id}>
-                                        {r.name} ({r.date}) · {r.division}
-                                      </option>
-                                    ))}
-                                  </select>
-                                </div>
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-500 uppercase">
-                                    Rank
-                                  </label>
-                                  <input
-                                    type="number"
-                                    value={resultForm.rank}
-                                    onChange={(e) =>
-                                      setResultForm({
-                                        ...resultForm,
-                                        rank: e.target.value,
-                                      })
-                                    }
-                                    className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                                  />
-                                </div>
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-500 uppercase">
-                                    Total Score
-                                  </label>
-                                  <input
-                                    type="number"
-                                    step="any"
-                                    value={resultForm.totalScore}
-                                    onChange={(e) =>
-                                      setResultForm({
-                                        ...resultForm,
-                                        totalScore: e.target.value,
-                                      })
-                                    }
-                                    className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                                  />
-                                </div>
-                                <div>
-                                  <label className="text-[10px] font-bold text-slate-500 uppercase">
-                                    Nett Score
-                                  </label>
-                                  <input
-                                    type="number"
-                                    step="any"
-                                    value={resultForm.nettScore}
-                                    onChange={(e) =>
-                                      setResultForm({
-                                        ...resultForm,
-                                        nettScore: e.target.value,
-                                      })
-                                    }
-                                    className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                                  />
-                                </div>
-                              </div>
-                              <div className="flex justify-end gap-2">
-                                <button
-                                  type="button"
-                                  onClick={() => setEditingResultId(null)}
-                                  className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400"
-                                >
-                                  Cancel
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={async () => {
-                                    await handleSaveResult();
-                                    // keep panel open; handleSaveResult clears editingResultId
-                                  }}
-                                  className="rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white"
-                                >
-                                  Save result
-                                </button>
-                              </div>
-                            </div>
-                          )}
-
-                          <div className="overflow-x-auto rounded-xl border border-white/5">
-                            <table className="w-full text-left text-xs">
-                              <thead>
-                                <tr className="bg-white/5 text-[10px] font-bold text-slate-400 uppercase">
-                                  <th className="py-3 px-4">Regatta</th>
-                                  <th className="py-3 px-4 text-center">Date</th>
-                                  <th className="py-3 px-4 text-center">Div</th>
-                                  <th className="py-3 px-4 text-center">Rank</th>
-                                  <th className="py-3 px-4 text-center">Total</th>
-                                  <th className="py-3 px-4 text-center">Nett</th>
-                                  <th className="py-3 px-4 text-right">Actions</th>
-                                </tr>
-                              </thead>
-                              <tbody className="divide-y divide-white/5 text-slate-300">
-                                {sailorResults.map((r) => (
-                                  <tr key={r.id} className="hover:bg-white/5">
-                                    <td className="py-3 px-4 font-bold text-white">
-                                      {r.regatta?.name || "Unknown regatta"}
-                                    </td>
-                                    <td className="py-3 px-4 text-center font-mono text-slate-400">
-                                      {r.regatta?.date
-                                        ? String(r.regatta.date).slice(0, 10)
-                                        : "—"}
-                                    </td>
-                                    <td className="py-3 px-4 text-center">
-                                      {r.regatta?.division || "—"}
-                                    </td>
-                                    <td className="py-3 px-4 text-center font-mono">
-                                      {r.rank}
-                                    </td>
-                                    <td className="py-3 px-4 text-center font-mono">
-                                      {r.totalScore != null ? r.totalScore : "—"}
-                                    </td>
-                                    <td className="py-3 px-4 text-center font-mono">
-                                      {r.nettScore}
-                                    </td>
-                                    <td className="py-3 px-4 text-right">
-                                      <div className="flex justify-end gap-2">
-                                        <button
-                                          type="button"
-                                          onClick={() => {
-                                            setEditingResultId(r.id);
-                                            setResultForm({
-                                              ...r,
-                                              sailorId: competitionsSailorId,
-                                              nettScore:
-                                                r.nettScore?.toString?.() ??
-                                                r.nettScore,
-                                              totalScore:
-                                                r.totalScore != null
-                                                  ? String(r.totalScore)
-                                                  : "",
-                                              rank:
-                                                r.rank?.toString?.() ?? r.rank,
-                                            });
-                                          }}
-                                          className="text-slate-400 hover:text-white"
-                                        >
-                                          <Edit3 className="h-4 w-4" />
-                                        </button>
-                                        <button
-                                          type="button"
-                                          onClick={() =>
-                                            handleDeleteResult(r.id)
-                                          }
-                                          className="text-slate-500 hover:text-red-400"
-                                        >
-                                          <Trash2 className="h-4 w-4" />
-                                        </button>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                ))}
-                                {sailorResults.length === 0 && (
-                                  <tr>
-                                    <td
-                                      colSpan={7}
-                                      className="py-10 text-center text-slate-500"
-                                    >
-                                      No competitions logged. Click Add result.
-                                    </td>
-                                  </tr>
-                                )}
-                              </tbody>
-                            </table>
-                          </div>
-                        </>
-                      );
-                    })()}
-                  </div>
-                )}
               </div>
             )}
 
@@ -3395,6 +3172,264 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           </div>
         )}
       </div>
+
+      {/* Fixed modal: per-sailor results (always on top, outside scroll containers) */}
+      {competitionsSailorId && (() => {
+        const sailor = sailorList.find((x) => x.id === competitionsSailorId);
+        const sid = competitionsSailorId;
+        const sailorResults = resultsList
+          .filter((r) => String(r.sailorId) === String(sid))
+          .map((r) => {
+            const reg = regattaList.find((g) => g.id === r.regattaId);
+            return { ...r, regatta: reg };
+          })
+          .sort((a, b) => {
+            const da = a.regatta?.date || "";
+            const db_ = b.regatta?.date || "";
+            return String(db_).localeCompare(String(da));
+          });
+        return (
+          <div
+            className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Sailor regatta results"
+          >
+            <button
+              type="button"
+              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+              aria-label="Close"
+              onClick={closeSailorResults}
+            />
+            <div className="relative z-10 w-full sm:max-w-4xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl border border-orange-500/30 bg-[#0c0d14] shadow-2xl p-5 sm:p-6 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-base font-black text-white flex items-center gap-2">
+                    <Medal className="h-5 w-5 text-orange-400" />
+                    All regatta results — {sailor?.name || "Sailor"}
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Edit rank / total / nett for each event, add a missing regatta, or delete.
+                    {competitionsLoading ? " Refreshing…" : ""}
+                  </p>
+                  <p className="text-[11px] text-slate-600 mt-1">
+                    {sailorResults.length} result
+                    {sailorResults.length === 1 ? "" : "s"} found
+                    {sailor?.sailNumber ? ` · ${sailor.sailNumber}` : ""}
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingResultId("new");
+                      setResultForm({
+                        id: "",
+                        regattaId: regattaList[0]?.id || "",
+                        sailorId: sid,
+                        rank: 1,
+                        nettScore: 1,
+                        totalScore: "",
+                        isDNS: false,
+                      });
+                    }}
+                    className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add result
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeSailorResults}
+                    className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-300 hover:text-white"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+
+              {editingResultId && (
+                <div className="rounded-2xl border border-white/10 bg-slate-950/80 p-4 space-y-3">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase">
+                    {editingResultId === "new" ? "New result" : "Edit result"}
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="sm:col-span-2">
+                      <label className="text-[10px] font-bold text-slate-500 uppercase">
+                        Regatta
+                      </label>
+                      <select
+                        value={resultForm.regattaId}
+                        onChange={(e) =>
+                          setResultForm({
+                            ...resultForm,
+                            regattaId: e.target.value,
+                            sailorId: sid,
+                          })
+                        }
+                        className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                      >
+                        <option value="">— Select —</option>
+                        {regattaList.map((r) => (
+                          <option key={r.id} value={r.id}>
+                            {r.name} ({r.date}) · {r.division}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-500 uppercase">
+                        Rank
+                      </label>
+                      <input
+                        type="number"
+                        value={resultForm.rank}
+                        onChange={(e) =>
+                          setResultForm({ ...resultForm, rank: e.target.value })
+                        }
+                        className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-500 uppercase">
+                        Total Score
+                      </label>
+                      <input
+                        type="number"
+                        step="any"
+                        value={resultForm.totalScore}
+                        onChange={(e) =>
+                          setResultForm({
+                            ...resultForm,
+                            totalScore: e.target.value,
+                          })
+                        }
+                        className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-[10px] font-bold text-slate-500 uppercase">
+                        Nett Score
+                      </label>
+                      <input
+                        type="number"
+                        step="any"
+                        value={resultForm.nettScore}
+                        onChange={(e) =>
+                          setResultForm({
+                            ...resultForm,
+                            nettScore: e.target.value,
+                          })
+                        }
+                        className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-end gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setEditingResultId(null)}
+                      className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void handleSaveResult()}
+                      className="rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white"
+                    >
+                      Save result
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <div className="overflow-x-auto rounded-xl border border-white/5">
+                <table className="w-full text-left text-xs">
+                  <thead>
+                    <tr className="bg-white/5 text-[10px] font-bold text-slate-400 uppercase">
+                      <th className="py-3 px-4">Regatta</th>
+                      <th className="py-3 px-4 text-center">Date</th>
+                      <th className="py-3 px-4 text-center">Div</th>
+                      <th className="py-3 px-4 text-center">Rank</th>
+                      <th className="py-3 px-4 text-center">Total</th>
+                      <th className="py-3 px-4 text-center">Nett</th>
+                      <th className="py-3 px-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-slate-300">
+                    {sailorResults.map((r) => (
+                      <tr key={r.id || `${r.sailorId}-${r.regattaId}`} className="hover:bg-white/5">
+                        <td className="py-3 px-4 font-bold text-white">
+                          {r.regatta?.name || "Unknown regatta"}
+                        </td>
+                        <td className="py-3 px-4 text-center font-mono text-slate-400">
+                          {r.regatta?.date
+                            ? String(r.regatta.date).slice(0, 10)
+                            : "—"}
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          {r.regatta?.division || "—"}
+                        </td>
+                        <td className="py-3 px-4 text-center font-mono">{r.rank}</td>
+                        <td className="py-3 px-4 text-center font-mono">
+                          {r.totalScore != null ? r.totalScore : "—"}
+                        </td>
+                        <td className="py-3 px-4 text-center font-mono">
+                          {r.nettScore}
+                        </td>
+                        <td className="py-3 px-4 text-right">
+                          <div className="flex justify-end gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setEditingResultId(r.id);
+                                setResultForm({
+                                  id: r.id,
+                                  regattaId: r.regattaId,
+                                  sailorId: sid,
+                                  nettScore:
+                                    r.nettScore?.toString?.() ?? r.nettScore,
+                                  totalScore:
+                                    r.totalScore != null
+                                      ? String(r.totalScore)
+                                      : "",
+                                  rank: r.rank?.toString?.() ?? r.rank,
+                                  isDNS: false,
+                                });
+                              }}
+                              className="text-slate-400 hover:text-white"
+                            >
+                              <Edit3 className="h-4 w-4" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => void handleDeleteResult(r.id)}
+                              className="text-slate-500 hover:text-red-400"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                    {!competitionsLoading && sailorResults.length === 0 && (
+                      <tr>
+                        <td
+                          colSpan={7}
+                          className="py-10 text-center text-slate-500"
+                        >
+                          No competitions logged yet. Click Add result.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
