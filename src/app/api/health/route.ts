@@ -108,6 +108,15 @@ export async function GET() {
   return NextResponse.json({
     ok: live,
     mode: live ? "live" : "demo",
+    // If this is missing, Production is an old Vercel deploy (not latest GitHub main)
+    build: {
+      commit:
+        process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
+        process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA?.slice(0, 7) ||
+        null,
+      message: process.env.VERCEL_GIT_COMMIT_MESSAGE?.slice(0, 80) || null,
+      env: process.env.VERCEL_ENV || null,
+    },
     env: {
       DATABASE_URL: hasDatabaseUrl,
       NEXT_PUBLIC_SUPABASE_URL: hasSupabaseUrl,
