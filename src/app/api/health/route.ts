@@ -1,14 +1,26 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const hasDatabaseUrl = Boolean(process.env.DATABASE_URL?.trim());
-  const hasSupabaseUrl = Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL?.trim());
-  const hasAnonKey = Boolean(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim());
-  const supabaseHost = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(
-    /^https?:\/\//,
+  const hasDatabaseUrl = Boolean(
+    process.env.DATABASE_URL?.trim() ||
+      process.env.POSTGRES_URL?.trim() ||
+      process.env.POSTGRES_PRISMA_URL?.trim()
+  );
+  const hasSupabaseUrl = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ||
+      process.env.SUPABASE_URL?.trim()
+  );
+  const hasAnonKey = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() ||
+      process.env.SUPABASE_ANON_KEY?.trim()
+  );
+  const supabaseHost = (
+    process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    process.env.SUPABASE_URL ||
     ""
   )
-    ?.split("/")[0]
+    .replace(/^https?:\/\//, "")
+    .split("/")[0]
     ?.slice(0, 80);
 
   let dbOk = false;

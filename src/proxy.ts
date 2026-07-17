@@ -11,8 +11,12 @@ export async function proxy(request: NextRequest) {
     ? NextResponse.rewrite(new URL("/admin", request.url))
     : NextResponse.next({ request: { headers: request.headers } });
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseUrl =
+    process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "";
+  const supabaseAnonKey =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.SUPABASE_ANON_KEY ||
+    "";
   if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes("placeholder")) {
     return response;
   }
