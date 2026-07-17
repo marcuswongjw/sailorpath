@@ -25,6 +25,9 @@ export async function POST(req: Request) {
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "");
 
+    const num = (v: unknown) =>
+      v === "" || v == null ? null : Number.isFinite(Number(v)) ? Number(v) : null;
+
     const [row] = await db
       .insert(sailors)
       .values({
@@ -33,10 +36,28 @@ export async function POST(req: Request) {
         sailNumber: body.sailNumber || "SGP 000",
         club: body.club || "N/A",
         gender: body.gender || null,
+        bio: body.bio || null,
         goldEntryDate: body.goldEntryDate || null,
         silverEntryDate: body.silverEntryDate || null,
         dropDate: body.dropDate || null,
         nationalSquadStatus: body.nationalSquadStatus || null,
+        dob: body.dob || null,
+        weight: num(body.weight),
+        instagram: body.instagram || null,
+        facebook: body.facebook || null,
+        natSquadStatusJan25: body.natSquadStatusJan25 || null,
+        natSquadStatusJul25: body.natSquadStatusJul25 || null,
+        natSquadStatusJan26: body.natSquadStatusJan26 || null,
+        natSquadStatusJul26: body.natSquadStatusJul26 || null,
+        histRankingJun24: num(body.histRankingJun24),
+        histRankingDec24: num(body.histRankingDec24),
+        histRankingJun25: num(body.histRankingJun25),
+        histRankingDec25: num(body.histRankingDec25),
+        histRankingJun26: num(body.histRankingJun26),
+        worlds: num(body.worlds),
+        european: num(body.european),
+        asian: num(body.asian),
+        seaGames: num(body.seaGames),
       })
       .returning();
 

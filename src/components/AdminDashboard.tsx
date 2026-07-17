@@ -29,7 +29,9 @@ interface AdminDashboardProps {
 }
 
 export function AdminDashboard({ initialSailors, initialRegattas, initialResults }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<"import" | "reconciliation" | "bulk" | "edit">("import");
+  const [activeTab, setActiveTab] = useState<
+    "roster" | "import" | "reconciliation" | "bulk" | "edit"
+  >("roster");
   
   // Auth state — role from server /profiles, never user_metadata
   const [user, setUser] = useState<any>(null);
@@ -45,6 +47,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     { name: string; rank: number | null; nett: number | null }[]
   >([]);
   const [importRegattaId, setImportRegattaId] = useState<string | null>(null);
+
+  // One-time bulk sailor roster (before regatta results)
+  const [rosterRows, setRosterRows] = useState<Record<string, any>[]>([]);
+  const [rosterStatus, setRosterStatus] = useState<string | null>(null);
+  const [rosterBusy, setRosterBusy] = useState(false);
 
   useEffect(() => {
     let subscription: { unsubscribe: () => void } | undefined;
@@ -171,6 +178,97 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Check superadmin permissions
   const isSuperadmin = adminRole === "superadmin";
+
+  const pickCol = (row: Record<string, any>, aliases: string[]) => {
+    const keys = Object.keys(row);
+    for (const a of aliases) {
+      const hit = keys.find((k) => k.toLowerCase().replace(/\s+/g, "") === a.toLowerCase().replace(/\s+/g, ""));
+      if (hit != null && row[hit] !== "" && row[hit] != null) return row[hit];
+    }
+    for (const a of aliases) {
+      const hit = keys.find((k) => k.toLowerCase().includes(a.toLowerCase()));
+      if (hit != null && row[hit] !== "" && row[hit] != null) return row[hit];
+    }
+    return null;
+  };
+
+  const handleRosterFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setRosterStatus(null);
+    const buf = await file.arrayBuffer();
+    const wb = read(buf);
+    const sheet = wb.Sheets[wb.SheetNames[0]];
+    const json = utils.sheet_to_json<Record<string, any>>(sheet, { defval: "" });
+    const mapped = json
+      .map((row) => {
+        const name = String(
+          pickCol(row, ["name", "sailor", "sailorname", "full name"]) || ""
+        ).trim();
+        if (!name) return null;
+        return {
+          name,
+          handle: pickCol(row, ["handle", "slug", "username"]),
+          sailNumber: pickCol(row, ["sailnumber", "sail number", "sail", "sail#", "sail no"]),
+          club: pickCol(row, ["club", "club origin", "team"]),
+          gender: pickCol(row, ["gender", "sex"]),
+          goldEntryDate: pickCol(row, ["goldentrydate", "gold entry", "gold entry date", "gold"]),
+          silverEntryDate: pickCol(row, ["silverentrydate", "silver entry", "silver entry date", "silver"]),
+          dropDate: pickCol(row, ["dropdate", "drop date", "drop"]),
+          nationalSquadStatus: pickCol(row, ["nationalsquadstatus", "squad", "nat squad", "squad status"]),
+          dob: pickCol(row, ["dob", "date of birth", "birthdate"]),
+          weight: pickCol(row, ["weight", "weight kg"]),
+          bio: pickCol(row, ["bio", "biography"]),
+          instagram: pickCol(row, ["instagram", "ig"]),
+          facebook: pickCol(row, ["facebook", "fb"]),
+          natSquadStatusJan25: pickCol(row, ["natsquadstatusjan25", "nat jan 25", "squad jan 25"]),
+          natSquadStatusJul25: pickCol(row, ["natsquadstatusjul25", "nat jul 25", "squad jul 25"]),
+          natSquadStatusJan26: pickCol(row, ["natsquadstatusjan26", "nat jan 26", "squad jan 26"]),
+          natSquadStatusJul26: pickCol(row, ["natsquadstatusjul26", "nat jul 26", "squad jul 26"]),
+          histRankingJun24: pickCol(row, ["histrankingjun24", "rank jun 24", "hist jun 24"]),
+          histRankingDec24: pickCol(row, ["histrankingdec24", "rank dec 24", "hist dec 24"]),
+          histRankingJun25: pickCol(row, ["histrankingjun25", "rank jun 25", "hist jun 25"]),
+          histRankingDec25: pickCol(row, ["histrankingdec25", "rank dec 25", "hist dec 25"]),
+          histRankingJun26: pickCol(row, ["histrankingjun26", "rank jun 26", "hist jun 26"]),
+          worlds: pickCol(row, ["worlds", "worlds year"]),
+          european: pickCol(row, ["european", "europeans year"]),
+          asian: pickCol(row, ["asian", "asians year"]),
+          seaGames: pickCol(row, ["seagames", "sea games", "sea games year"]),
+        };
+      })
+      .filter(Boolean) as Record<string, any>[];
+    setRosterRows(mapped);
+    setRosterStatus(`Parsed ${mapped.length} sailors from ${file.name}`);
+  };
+
+  const handleRosterImport = async () => {
+    if (!isSuperadmin) {
+      alert("Superadmin only");
+      return;
+    }
+    if (!rosterRows.length) {
+      alert("Upload a roster Excel/CSV first");
+      return;
+    }
+    setRosterBusy(true);
+    setRosterStatus("Importing roster…");
+    try {
+      const res = await fetch("/api/admin/sailors/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rows: rosterRows }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Roster import failed");
+      setRosterStatus(data.message);
+      const list = await fetch("/api/admin/sailors").then((r) => r.json());
+      if (list.sailors) setSailorList(list.sailors);
+    } catch (err: any) {
+      setRosterStatus(err.message || "Import failed");
+    } finally {
+      setRosterBusy(false);
+    }
+  };
 
   // XLSX Drag & Drop Handlers
   const handleDrag = (e: any) => {
@@ -657,6 +755,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       {/* Tab Navigation */}
       <div className="flex border-b border-white/5 gap-4 overflow-x-auto pb-0.5">
         <button
+          onClick={() => setActiveTab("roster")}
+          className={`pb-4 text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
+            activeTab === "roster"
+              ? "border-orange-500 text-white"
+              : "border-transparent text-slate-400 hover:text-white"
+          }`}
+        >
+          <UserPlus className="h-4 w-4" />
+          Sailor Roster
+        </button>
+        <button
           onClick={() => setActiveTab("import")}
           className={`pb-4 text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
             activeTab === "import"
@@ -665,7 +774,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           }`}
         >
           <FileSpreadsheet className="h-4 w-4" />
-          Excel Import
+          Regatta Excel
         </button>
         <button
           onClick={() => setActiveTab("reconciliation")}
@@ -722,6 +831,104 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
       {/* Tab Contents */}
       <div className="flex-1 flex flex-col">
+        {/* Tab 0: One-time sailor roster import */}
+        {activeTab === "roster" && (
+          <div className="space-y-6">
+            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 space-y-4">
+              <div>
+                <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                  <UserPlus className="h-5 w-5 text-orange-500" />
+                  Bulk import sailor roster (one-time)
+                </h2>
+                <p className="text-xs text-slate-500 mt-2 leading-relaxed max-w-3xl">
+                  Load all sailors into the database <strong className="text-slate-300">before</strong>{" "}
+                  importing regatta results. Include columns such as Name, Sail Number, Club, Gender,
+                  Gold Entry Date, Silver Entry Date, Drop Date, Squad, DOB, Weight, and optional
+                  historical fields. Re-importing the same handle/sail number will update existing rows.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-white/5 bg-slate-950/50 p-4 text-[11px] text-slate-400 font-mono leading-relaxed">
+                Suggested headers (first row):
+                <br />
+                Name | Sail Number | Club | Gender | Gold Entry Date | Silver Entry Date | Drop Date |
+                National Squad Status | DOB | Weight | Handle
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
+                  Choose Excel / CSV
+                  <input
+                    type="file"
+                    accept=".xlsx,.xls,.csv"
+                    className="hidden"
+                    onChange={handleRosterFile}
+                  />
+                </label>
+                <button
+                  type="button"
+                  disabled={!isSuperadmin || rosterBusy || rosterRows.length === 0}
+                  onClick={handleRosterImport}
+                  className="rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-5 py-2 text-xs font-bold text-white"
+                >
+                  {rosterBusy
+                    ? "Importing…"
+                    : `Import ${rosterRows.length || 0} sailors to database`}
+                </button>
+              </div>
+
+              {rosterStatus && (
+                <p className="text-xs font-bold text-emerald-400 flex items-center gap-2">
+                  <CheckCircle className="h-4 w-4" />
+                  {rosterStatus}
+                </p>
+              )}
+
+              {rosterRows.length > 0 && (
+                <div className="overflow-x-auto rounded-2xl border border-white/5 max-h-80">
+                  <table className="w-full text-left text-[11px] min-w-[700px]">
+                    <thead className="bg-white/5 text-slate-500 sticky top-0">
+                      <tr>
+                        <th className="px-3 py-2">Name</th>
+                        <th className="px-3 py-2">Sail #</th>
+                        <th className="px-3 py-2">Club</th>
+                        <th className="px-3 py-2">Gold</th>
+                        <th className="px-3 py-2">Silver</th>
+                        <th className="px-3 py-2">Squad</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {rosterRows.slice(0, 40).map((r, i) => (
+                        <tr key={i} className="border-t border-white/5">
+                          <td className="px-3 py-2 text-white font-semibold">{r.name}</td>
+                          <td className="px-3 py-2 text-slate-400">{r.sailNumber || "—"}</td>
+                          <td className="px-3 py-2 text-slate-400">{r.club || "—"}</td>
+                          <td className="px-3 py-2 text-slate-400">{r.goldEntryDate || "—"}</td>
+                          <td className="px-3 py-2 text-slate-400">{r.silverEntryDate || "—"}</td>
+                          <td className="px-3 py-2 text-slate-400">
+                            {r.nationalSquadStatus || "—"}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  {rosterRows.length > 40 && (
+                    <p className="text-[10px] text-slate-600 px-3 py-2">
+                      Showing first 40 of {rosterRows.length} rows
+                    </p>
+                  )}
+                </div>
+              )}
+
+              <p className="text-[11px] text-slate-500">
+                Currently in database: <strong className="text-white">{sailorList.length}</strong>{" "}
+                sailors. After roster load, use <strong className="text-slate-300">Regatta Excel</strong>{" "}
+                to import results (names will match).
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Tab 1: Excel Import */}
         {activeTab === "import" && (
           <div className="space-y-6">
