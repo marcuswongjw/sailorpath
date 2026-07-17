@@ -35,11 +35,14 @@ export async function POST(req: Request) {
         handle,
         sailNumber: body.sailNumber || "SGP 000",
         club: body.club || "N/A",
+        school: body.school || null,
         gender: body.gender || null,
         bio: body.bio || null,
         goldEntryDate: body.goldEntryDate || null,
         silverEntryDate: body.silverEntryDate || null,
         dropDate: body.dropDate || null,
+        currentFleet: body.currentFleet || null,
+        manuallyDropped: Boolean(body.manuallyDropped),
         nationalSquadStatus: body.nationalSquadStatus || null,
         dob: body.dob || null,
         weight: num(body.weight),
@@ -81,9 +84,11 @@ export async function PATCH(req: Request) {
       "handle",
       "sailNumber",
       "club",
+      "school",
       "gender",
       "bio",
       "nationalSquadStatus",
+      "currentFleet",
       "goldEntryDate",
       "silverEntryDate",
       "dropDate",
@@ -96,6 +101,16 @@ export async function PATCH(req: Request) {
       "natSquadStatusJul26",
     ] as const) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
+    }
+    if (body.manuallyDropped !== undefined) {
+      const v = body.manuallyDropped;
+      patch.manuallyDropped =
+        v === true ||
+        v === "Y" ||
+        v === "y" ||
+        v === "yes" ||
+        v === "true" ||
+        v === 1;
     }
     for (const f of [
       "weight",

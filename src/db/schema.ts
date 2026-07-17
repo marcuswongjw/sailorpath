@@ -28,9 +28,17 @@ export const sailors = pgTable("sailors", {
   handle: text("handle").unique().notNull(),
   sailNumber: text("sail_number").notNull(),
   club: text("club").notNull(),
+  school: text("school"),
   bio: text("bio"),
   gender: text("gender"),
   nationalSquadStatus: text("national_squad_status"),
+  /** Gold | Silver for the current ranking period (e.g. Jul–Dec 2026) */
+  currentFleet: text("current_fleet"),
+  /**
+   * Y = left Optimist class without normal “ex-gold” drop path.
+   * Excluded from active rankings; still listed on All Gold Fleet Sailors when relevant.
+   */
+  manuallyDropped: boolean("manually_dropped").default(false).notNull(),
   instagram: text("instagram"),
   facebook: text("facebook"),
   natSquadStatusJan25: text("nat_squad_status_jan_25"),

@@ -9,6 +9,9 @@ const ALLOWED = new Set([
   "silverEntryDate",
   "dropDate",
   "nationalSquadStatus",
+  "currentFleet",
+  "manuallyDropped",
+  "school",
   "natSquadStatusJan25",
   "natSquadStatusJul25",
   "natSquadStatusJan26",
@@ -26,6 +29,7 @@ const ALLOWED = new Set([
   "european",
   "asian",
   "seaGames",
+  "sailNumber",
 ]);
 
 const NUMERIC = new Set([
@@ -41,20 +45,48 @@ const NUMERIC = new Set([
   "seaGames",
 ]);
 
+const BOOLEAN = new Set(["manuallyDropped"]);
+
 export async function POST(req: Request) {
   try {
     await requireSuperadmin();
-    const { sailorIds, field, value } = await req.json();
+    const { sailorIds, field, value, action } = await req.json();
+
     if (!Array.isArray(sailorIds) || !sailorIds.length) {
       return NextResponse.json({ error: "No sailors selected" }, { status: 400 });
     }
+
+    // Bulk delete
+    if (action === "delete") {
+      const deleted = await db
+        .delete(sailors)
+        .where(inArray(sailors.id, sailorIds))
+        .returning({ id: sailors.id });
+      return NextResponse.json({
+        message: `Deleted ${deleted.length} sailors (and their results).`,
+        count: deleted.length,
+      });
+    }
+
     if (!ALLOWED.has(field)) {
       return NextResponse.json({ error: "Invalid field" }, { status: 400 });
     }
 
-    let typed: string | number | null = value;
+    let typed: string | number | boolean | null = value;
     if (value === "" || value === "CLEAR") typed = null;
-    else if (NUMERIC.has(field)) typed = value === "" ? null : Number(value);
+    else if (BOOLEAN.has(field)) {
+      const s = String(value).trim().toLowerCase();
+      typed = s === "y" || s === "yes" || s === "true" || s === "1";
+    } else if (NUMERIC.has(field)) {
+      typed = value === "" ? null : Number(value);
+    } else if (field === "currentFleet" && value) {
+      const s = String(value).trim().toLowerCase();
+      typed = s.startsWith("gold")
+        ? "Gold"
+        : s.startsWith("silver")
+          ? "Silver"
+          : String(value).trim();
+    }
 
     const patch = { [field]: typed, updatedAt: new Date() };
     await db.update(sailors).set(patch).where(inArray(sailors.id, sailorIds));

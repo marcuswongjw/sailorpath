@@ -224,14 +224,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         ).trim();
         if (!name) return null;
 
-        // Map user's export columns + common aliases
+        // Map user's export columns
         const goldEntryDate = excelDateToIso(
           pickCol(row, [
             "entered gold",
             "goldentrydate",
             "gold entry",
             "gold entry date",
-            "gold",
           ])
         );
         const silverEntryDate = excelDateToIso(
@@ -240,40 +239,41 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             "silverentrydate",
             "silver entry",
             "silver entry date",
-            "silver",
           ])
         );
+        // Optimist Drop only (not "Manually dropped")
         const dropDate = excelDateToIso(
-          pickCol(row, [
-            "optimist drop",
-            "dropdate",
-            "drop date",
-            "drop",
-            "manually dropped",
-          ])
+          pickCol(row, ["optimist drop", "dropdate", "drop date", "drop"])
         );
         const dob = excelDateToIso(
           pickCol(row, ["born", "dob", "date of birth", "birthdate", "birth"])
         );
 
-        // Current squad: prefer "Gold squad", then "Fleet current" if it looks like squad
-        const goldSquad = pickCol(row, ["gold squad", "goldsquad"]);
-        const fleetCurrent = pickCol(row, ["fleet current", "fleetcurrent", "fleet"]);
-        const nationalSquadStatus =
-          goldSquad != null && String(goldSquad).trim() !== ""
-            ? String(goldSquad).trim()
-            : fleetCurrent != null &&
-                /nat|ds|squad|gold|silver/i.test(String(fleetCurrent))
-              ? String(fleetCurrent).trim()
-              : pickCol(row, [
-                  "nationalsquadstatus",
-                  "squad",
-                  "nat squad",
-                  "squad status",
-                ]);
+        // Gold squad = Nat A / Nat B / DS
+        const nationalSquadStatus = pickCol(row, [
+          "gold squad",
+          "goldsquad",
+          "nationalsquadstatus",
+          "squad status",
+          "nat squad",
+        ]);
+
+        // Fleet current = Gold | Silver for Jul–Dec 2026
+        const currentFleet = pickCol(row, [
+          "fleet current",
+          "fleetcurrent",
+          "current fleet",
+          "fleet",
+        ]);
+
+        // Manually dropped = Y/N (not a date)
+        const manuallyDropped = pickCol(row, [
+          "manually dropped",
+          "manuallydropped",
+          "manual drop",
+        ]);
 
         const school = pickCol(row, ["school"]);
-        const bioParts = [school ? `School: ${school}` : null].filter(Boolean);
 
         return {
           name,
@@ -287,21 +287,20 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             "sail no.",
           ]),
           club: pickCol(row, ["club", "club origin", "team"]),
+          school,
           gender: pickCol(row, ["gender", "sex"]),
           goldEntryDate,
           silverEntryDate,
           dropDate,
+          currentFleet,
+          manuallyDropped,
           nationalSquadStatus:
             nationalSquadStatus != null
               ? String(nationalSquadStatus).trim()
               : null,
           dob,
           weight: pickCol(row, ["weight", "weight kg"]),
-          bio: bioParts.length
-            ? bioParts.join(" · ")
-            : pickCol(row, ["bio", "biography"]),
-          // store school temporarily in bio if no school column in DB
-          _school: school,
+          bio: pickCol(row, ["bio", "biography"]),
           instagram: pickCol(row, ["instagram", "ig"]),
           facebook: pickCol(row, ["facebook", "fb"]),
           natSquadStatusJan25: pickCol(row, [
@@ -367,7 +366,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       .filter(Boolean) as Record<string, any>[];
     setRosterRows(mapped);
     setRosterStatus(
-      `Parsed ${mapped.length} sailors from ${file.name}. Columns mapped (Born→DOB, Entered Gold/Silver, Optimist Drop, squad/hist fields).`
+      `Parsed ${mapped.length} sailors. Mapped: Born→DOB, Gold squad→squad status, Fleet current→Gold/Silver, Entered Gold/Silver, Optimist Drop, Manually dropped (Y/N), School, hist/campaigns.`
     );
   };
 
@@ -602,6 +601,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
   };
 
+  const parseApi = async (res: Response) => {
+    const text = await res.text();
+    try {
+      return text ? JSON.parse(text) : {};
+    } catch {
+      throw new Error(
+        res.ok
+          ? "Invalid server response"
+          : `Request failed (${res.status}). ${text.slice(0, 120) || "No details"}`
+      );
+    }
+  };
+
   const handleApplyBulk = async () => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can update fleet properties.");
@@ -625,7 +637,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           value: bulkValue,
         }),
       });
-      const data = await res.json();
+      const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Bulk update failed");
 
       setSailorList((prev) =>
@@ -637,6 +649,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             "worlds", "european", "asian", "seaGames", "weight",
           ].includes(bulkField);
           if (isNumeric) typedValue = bulkValue === "" ? null : parseInt(bulkValue) || null;
+          else if (bulkField === "manuallyDropped") {
+            const t = String(bulkValue).toLowerCase();
+            typedValue = t === "y" || t === "yes" || t === "true" || t === "1";
+          }
           else if (bulkField === "nationalSquadStatus" && bulkValue === "CLEAR") typedValue = null;
           else if (bulkValue === "") typedValue = null;
           return { ...s, [bulkField]: typedValue };
@@ -646,6 +662,45 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       setSelectedSailors([]);
       setBulkValue("");
       setTimeout(() => setBulkStatus(null), 3000);
+    } catch (e: any) {
+      alert(e.message);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (!isSuperadmin) {
+      alert("Superadmin only");
+      return;
+    }
+    if (selectedSailors.length === 0) {
+      alert("Select at least one sailor to delete.");
+      return;
+    }
+    if (
+      !confirm(
+        `Delete ${selectedSailors.length} sailor(s) and all their regatta results? This cannot be undone.`
+      )
+    ) {
+      return;
+    }
+    try {
+      const res = await fetch("/api/admin/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "delete",
+          sailorIds: selectedSailors,
+        }),
+      });
+      const data = await parseApi(res);
+      if (!res.ok) throw new Error(data.error || "Bulk delete failed");
+      setSailorList((prev) => prev.filter((s) => !selectedSailors.includes(s.id)));
+      setResultsList((prev) =>
+        prev.filter((r) => !selectedSailors.includes(r.sailorId))
+      );
+      setSelectedSailors([]);
+      setBulkStatus(data.message || "Deleted.");
+      setTimeout(() => setBulkStatus(null), 4000);
     } catch (e: any) {
       alert(e.message);
     }
@@ -688,19 +743,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       setEditingSailorId(null);
     } catch (e: any) {
       alert(e.message);
-    }
-  };
-
-  const parseApi = async (res: Response) => {
-    const text = await res.text();
-    try {
-      return text ? JSON.parse(text) : {};
-    } catch {
-      throw new Error(
-        res.ok
-          ? "Invalid server response"
-          : `Request failed (${res.status}). ${text.slice(0, 120) || "No details"}`
-      );
     }
   };
 
@@ -1019,8 +1061,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   histJun24… · Worlds · Euros · Asians · SEA Games
                 </p>
                 <p className="text-amber-200/90">
-                  Optional but recommended: add a <strong>Sail Number</strong> column (e.g. SGP 115)
-                  for reliable matching later. If missing, a temporary SGP 000 is used.
+                  Sail number optional — defaults to SGP 000; edit later in Database Management or bulk edit.
+                  Run SQL migration <code className="text-amber-100">002_sailor_school_fleet.sql</code> once in Supabase if School / Fleet current / Manually dropped columns are missing.
                 </p>
               </div>
 
@@ -1384,12 +1426,16 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     <optgroup label="Fleet Status & Dates">
                       <option value="goldEntryDate">Gold Fleet Entry Date</option>
                       <option value="silverEntryDate">Silver Fleet Entry Date</option>
-                      <option value="dropDate">Optimist Drop Date (Retirement)</option>
+                      <option value="dropDate">Optimist Drop Date</option>
+                      <option value="currentFleet">Fleet current (Gold/Silver)</option>
+                      <option value="manuallyDropped">Manually dropped (Y/N)</option>
                     </optgroup>
                     <optgroup label="Profile Parameters">
                       <option value="club">Club Origin</option>
+                      <option value="school">School</option>
+                      <option value="sailNumber">Sail Number</option>
                       <option value="gender">Gender (M/F)</option>
-                      <option value="nationalSquadStatus">National Squad Status (Current)</option>
+                      <option value="nationalSquadStatus">Squad status (Nat A/B/DS)</option>
                       <option value="dob">Date of Birth</option>
                       <option value="weight">Weight (kg)</option>
                     </optgroup>
@@ -1430,7 +1476,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       />
                     )}
 
-                    {/* Render Gender Dropdown */}
                     {bulkField === "gender" && (
                       <select
                         value={bulkValue}
@@ -1440,6 +1485,30 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <option value="">-- Select Gender --</option>
                         <option value="M">Male (M)</option>
                         <option value="F">Female (F)</option>
+                      </select>
+                    )}
+
+                    {bulkField === "currentFleet" && (
+                      <select
+                        value={bulkValue}
+                        onChange={(e) => setBulkValue(e.target.value)}
+                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs focus:outline-none"
+                      >
+                        <option value="">-- Select --</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Silver">Silver</option>
+                        <option value="CLEAR">Clear</option>
+                      </select>
+                    )}
+
+                    {bulkField === "manuallyDropped" && (
+                      <select
+                        value={bulkValue}
+                        onChange={(e) => setBulkValue(e.target.value)}
+                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs focus:outline-none"
+                      >
+                        <option value="N">No (active)</option>
+                        <option value="Y">Yes (manually dropped)</option>
                       </select>
                     )}
 
@@ -1491,15 +1560,23 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   </div>
                 )}
 
-                {/* 3. Actions Button */}
-                <div className="flex items-end justify-end flex-1 pt-4">
+                <div className="flex flex-wrap items-end justify-end gap-2 flex-1 pt-4">
                   <button
                     disabled={!isSuperadmin || selectedSailors.length === 0 || !bulkField}
                     onClick={handleApplyBulk}
                     className="rounded-full bg-orange-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-orange-500 transition-all disabled:opacity-50 flex items-center gap-1.5"
                   >
                     <Save className="h-4 w-4" />
-                    Apply Bulk Edits ({selectedSailors.length} selected)
+                    Apply Bulk Edits ({selectedSailors.length})
+                  </button>
+                  <button
+                    type="button"
+                    disabled={!isSuperadmin || selectedSailors.length === 0}
+                    onClick={handleBulkDelete}
+                    className="rounded-full bg-rose-600/90 px-5 py-2.5 text-xs font-bold text-white hover:bg-rose-500 transition-all disabled:opacity-50 flex items-center gap-1.5"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Bulk delete ({selectedSailors.length})
                   </button>
                 </div>
 

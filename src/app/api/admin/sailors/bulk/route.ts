@@ -2,16 +2,19 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 
 type BulkSailorRow = {
   name: string;
   handle?: string | null;
   sailNumber?: string | null;
   club?: string | null;
+  school?: string | null;
   gender?: string | null;
   bio?: string | null;
   nationalSquadStatus?: string | null;
+  currentFleet?: string | null;
+  manuallyDropped?: boolean | string | null;
   goldEntryDate?: string | null;
   silverEntryDate?: string | null;
   dropDate?: string | null;
@@ -39,9 +42,7 @@ function slugHandle(name: string, sailNumber?: string | null) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
-  const sn = (sailNumber || "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "");
+  const sn = (sailNumber || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
   return sn ? `${base}-${sn}` : base || `sailor-${Date.now().toString(36)}`;
 }
 
@@ -57,10 +58,24 @@ function emptyToNull(v: unknown): string | null {
   return s === "" ? null : s;
 }
 
-/**
- * One-time / bulk roster import — create sailors without regatta results.
- * Prefer unique handle or sail number for upserts.
- */
+function parseFleet(v: unknown): string | null {
+  const s = emptyToNull(v);
+  if (!s) return null;
+  const lower = s.toLowerCase();
+  if (lower.startsWith("gold")) return "Gold";
+  if (lower.startsWith("silver")) return "Silver";
+  return s;
+}
+
+function parseYes(v: unknown): boolean {
+  if (v === true || v === 1) return true;
+  const s = String(v ?? "")
+    .trim()
+    .toLowerCase();
+  return s === "y" || s === "yes" || s === "true" || s === "1";
+}
+
+/** One-time roster import */
 export async function POST(req: Request) {
   try {
     await requireSuperadmin();
@@ -85,16 +100,19 @@ export async function POST(req: Request) {
       const sailNumber = emptyToNull(r.sailNumber) || "SGP 000";
       const handle =
         emptyToNull(r.handle)?.toLowerCase().replace(/[^a-z0-9_-]/g, "") ||
-        slugHandle(name, sailNumber);
+        slugHandle(name, sailNumber === "SGP 000" ? null : sailNumber);
 
       const values = {
         name,
         handle,
         sailNumber,
         club: emptyToNull(r.club) || "N/A",
+        school: emptyToNull(r.school),
         gender: emptyToNull(r.gender),
         bio: emptyToNull(r.bio),
         nationalSquadStatus: emptyToNull(r.nationalSquadStatus),
+        currentFleet: parseFleet(r.currentFleet),
+        manuallyDropped: parseYes(r.manuallyDropped),
         goldEntryDate: emptyToNull(r.goldEntryDate),
         silverEntryDate: emptyToNull(r.silverEntryDate),
         dropDate: emptyToNull(r.dropDate),
@@ -119,7 +137,6 @@ export async function POST(req: Request) {
       };
 
       try {
-        // Prefer match by handle, then exact name + sail number
         let existing = await db
           .select({ id: sailors.id })
           .from(sailors)
@@ -127,12 +144,11 @@ export async function POST(req: Request) {
           .limit(1);
 
         if (!existing[0] && sailNumber !== "SGP 000") {
-          const bySail = await db
+          existing = await db
             .select({ id: sailors.id })
             .from(sailors)
             .where(eq(sailors.sailNumber, sailNumber))
             .limit(1);
-          existing = bySail;
         }
 
         if (existing[0]) {
@@ -159,6 +175,32 @@ export async function POST(req: Request) {
       created,
       updated,
       errors: errors.slice(0, 50),
+    });
+  } catch (e) {
+    console.error(e);
+    return jsonError(e);
+  }
+}
+
+/** Bulk delete sailors (and cascaded results) */
+export async function DELETE(req: Request) {
+  try {
+    await requireSuperadmin();
+    const body = await req.json();
+    const sailorIds: string[] = Array.isArray(body.sailorIds)
+      ? body.sailorIds
+      : [];
+    if (!sailorIds.length) {
+      return NextResponse.json({ error: "No sailors selected" }, { status: 400 });
+    }
+    const deleted = await db
+      .delete(sailors)
+      .where(inArray(sailors.id, sailorIds))
+      .returning({ id: sailors.id });
+    return NextResponse.json({
+      ok: true,
+      message: `Deleted ${deleted.length} sailors (results cascaded).`,
+      count: deleted.length,
     });
   } catch (e) {
     console.error(e);

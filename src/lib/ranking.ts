@@ -4,9 +4,14 @@ export interface SailorRecord {
   handle: string;
   sailNumber: string;
   club: string;
+  school?: string | null;
   goldEntryDate: string | null;
   silverEntryDate: string | null;
   dropDate: string | null;
+  /** Gold | Silver — explicit fleet for the current half (e.g. Jul–Dec 2026) */
+  currentFleet?: string | null;
+  /** Left Optimist without normal drop; not ranked, may still appear on gold register */
+  manuallyDropped?: boolean | null;
   dob?: string | null;
   weight?: number | null;
   bio?: string | null;
@@ -85,6 +90,11 @@ export function resolveSailorFleet(
   sailor: SailorRecord,
   period: Period
 ): { active: boolean; fleet: "Gold" | "Silver" } | null {
+  // Manually dropped = left Optimist class; keep profile/register, not active rankings
+  if (sailor.manuallyDropped) {
+    return null;
+  }
+
   const pStartStr = period.half === "Jan-Jun" ? `${period.year}-01-01` : `${period.year}-07-01`;
   const pEndStr = period.half === "Jan-Jun" ? `${period.year}-06-30` : `${period.year}-12-31`;
 
@@ -94,6 +104,29 @@ export function resolveSailorFleet(
   const goldDate = sailor.goldEntryDate ? new Date(sailor.goldEntryDate).getTime() : null;
   const silverDate = sailor.silverEntryDate ? new Date(sailor.silverEntryDate).getTime() : null;
   const dropDate = sailor.dropDate ? new Date(sailor.dropDate).getTime() : null;
+
+  // Explicit "Fleet current" override for Jul–Dec 2026 (and any period when set + dates allow)
+  const fleetOverride = (sailor.currentFleet || "").trim().toLowerCase();
+  if (fleetOverride === "gold" || fleetOverride === "silver") {
+    // Still respect optimist drop date if set
+    if (dropDate !== null) {
+      if (dropDate < pStart) return null;
+      if (dropDate <= pEnd) return null;
+    }
+    // Need some presence by period end (entry date or override alone for current period)
+    const earliestEntry = Math.min(
+      goldDate ?? Infinity,
+      silverDate ?? Infinity
+    );
+    const hasEntry = earliestEntry !== Infinity && earliestEntry <= pEnd;
+    const isCurrentHalf =
+      period.year === 2026 && period.half === "Jul-Dec";
+    if (!hasEntry && !isCurrentHalf) return null;
+    return {
+      active: true,
+      fleet: fleetOverride === "gold" ? "Gold" : "Silver",
+    };
+  }
 
   // 1. If period is prior to both entry dates, they do not appear
   const earliestEntry = Math.min(
@@ -106,8 +139,6 @@ export function resolveSailorFleet(
   }
 
   // 2. Drop: exclusive from the drop date onward (inclusive of drop day)
-  // If drop is on or before period end and on or before "now in period", exclude when
-  // drop is before period start OR drop falls within the period (left series that half).
   if (dropDate !== null) {
     if (dropDate < pStart) return null;
     // Drop during this half-year → not active for the full period board
@@ -116,7 +147,6 @@ export function resolveSailorFleet(
 
   // 3. Gold is sticky once gold entry is on or before period end
   const isGold = goldDate !== null && goldDate <= pEnd;
-  // Silver only if not gold and silver entry is on or before period end
   if (!isGold) {
     if (silverDate === null || silverDate > pEnd) return null;
   }
