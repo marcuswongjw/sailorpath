@@ -32,6 +32,8 @@ export const sailors = pgTable("sailors", {
   school: text("school"),
   /** Country / nationality (e.g. Singapore, SGP) — optional */
   nationality: text("nationality"),
+  /** Public profile photo URL (Supabase Storage or external) */
+  avatarUrl: text("avatar_url"),
   bio: text("bio"),
   gender: text("gender"),
   nationalSquadStatus: text("national_squad_status"),
@@ -130,4 +132,23 @@ export const sailorAliases = pgTable("sailor_aliases", {
     .notNull(),
   aliasName: text("alias_name").unique().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+/** Parent/sailor requests to claim a public athlete profile */
+export const sailorClaims = pgTable("sailor_claims", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  sailorId: uuid("sailor_id")
+    .references(() => sailors.id, { onDelete: "cascade" })
+    .notNull(),
+  requesterId: uuid("requester_id")
+    .references(() => profiles.id, { onDelete: "cascade" })
+    .notNull(),
+  status: text("status", {
+    enum: ["pending", "approved", "rejected"],
+  })
+    .default("pending")
+    .notNull(),
+  note: text("note"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

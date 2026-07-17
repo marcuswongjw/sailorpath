@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { getPercentileBadge } from "@/lib/ranking";
 import {
   seriesFleetStatus,
@@ -14,6 +15,8 @@ import {
   MapPin,
   TrendingUp,
   User,
+  Link2,
+  UserPlus,
 } from "lucide-react";
 
 interface SailorProfileViewProps {
@@ -21,6 +24,8 @@ interface SailorProfileViewProps {
   initialResults: any[];
   initialEquipment: any;
   canSeePrivate?: boolean;
+  canClaim?: boolean;
+  isOwner?: boolean;
 }
 
 function resolveDisplayFleet(sailor: any): {
@@ -86,6 +91,8 @@ export function SailorProfileView({
   initialResults,
   initialEquipment,
   canSeePrivate = false,
+  canClaim = false,
+  isOwner = false,
 }: SailorProfileViewProps) {
   const [isPublicWeight, setIsPublicWeight] = useState(
     initialSailor.isPublicWeight || false
@@ -97,6 +104,9 @@ export function SailorProfileView({
     initialSailor.isPublicEquipment ?? true
   );
   const [visibleCount, setVisibleCount] = useState(15);
+  const [claimStatus, setClaimStatus] = useState<string | null>(null);
+  const [claimBusy, setClaimBusy] = useState(false);
+  const [copyMsg, setCopyMsg] = useState<string | null>(null);
 
   const hasPrivateAccess = canSeePrivate;
   const showWeight = isPublicWeight || hasPrivateAccess;
@@ -124,11 +134,20 @@ export function SailorProfileView({
         <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/5 rounded-full blur-3xl -z-10" />
 
         <div className="flex flex-col md:flex-row items-center gap-6 min-w-0">
-          {/* Initials avatar — no default stock photo */}
-          <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-full border-2 border-orange-500/25 shadow-xl bg-gradient-to-br from-orange-600/30 to-slate-900 flex items-center justify-center shrink-0">
-            <span className="text-3xl md:text-4xl font-black text-orange-300 tracking-tight">
-              {initials(initialSailor.name)}
-            </span>
+          {/* Avatar: photo if set, else initials */}
+          <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-full border-2 border-orange-500/25 shadow-xl bg-gradient-to-br from-orange-600/30 to-slate-900 flex items-center justify-center shrink-0 overflow-hidden">
+            {initialSailor.avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={initialSailor.avatarUrl}
+                alt={initialSailor.name}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <span className="text-3xl md:text-4xl font-black text-orange-300 tracking-tight">
+                {initials(initialSailor.name)}
+              </span>
+            )}
             <span className="absolute -bottom-1 -right-1 h-8 w-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center">
               <User className="h-4 w-4 text-slate-400" />
             </span>
@@ -179,6 +198,67 @@ export function SailorProfileView({
                 ))
               )}
             </div>
+
+            <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-2">
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    const url = typeof window !== "undefined" ? window.location.href : "";
+                    await navigator.clipboard.writeText(url);
+                    setCopyMsg("Link copied");
+                    setTimeout(() => setCopyMsg(null), 2000);
+                  } catch {
+                    setCopyMsg("Could not copy");
+                  }
+                }}
+                className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white"
+              >
+                <Link2 className="h-3.5 w-3.5" />
+                {copyMsg || "Copy profile link"}
+              </button>
+              {canClaim && (
+                <button
+                  type="button"
+                  disabled={claimBusy || Boolean(claimStatus)}
+                  onClick={async () => {
+                    setClaimBusy(true);
+                    try {
+                      const res = await fetch("/api/claims", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ sailorId: initialSailor.id }),
+                      });
+                      const data = await res.json();
+                      if (!res.ok) throw new Error(data.error || "Claim failed");
+                      setClaimStatus("pending");
+                    } catch (e: any) {
+                      setClaimStatus(e.message || "Error");
+                    } finally {
+                      setClaimBusy(false);
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-orange-600/90 hover:bg-orange-500 disabled:opacity-50 px-3 py-1.5 text-[11px] font-bold text-white"
+                >
+                  <UserPlus className="h-3.5 w-3.5" />
+                  {claimStatus === "pending"
+                    ? "Claim pending"
+                    : claimBusy
+                      ? "Submitting…"
+                      : "Claim this profile"}
+                </button>
+              )}
+              {isOwner && (
+                <span className="text-[11px] font-bold text-emerald-400/90 self-center">
+                  You manage this profile
+                </span>
+              )}
+            </div>
+            {claimStatus && claimStatus !== "pending" && (
+              <p className="mt-2 text-[11px] text-rose-300 text-center md:text-left">
+                {claimStatus}
+              </p>
+            )}
           </div>
         </div>
 
@@ -359,27 +439,60 @@ export function SailorProfileView({
                 res.rank,
                 fleetSize
               );
+              const overseas = Boolean(res.isOverseasCommitment);
+              const dns = Boolean(res.isDns || res.isDNS) && !overseas;
+              const slug = res.regattaSlug || res.id;
+              const nameNode =
+                slug && String(slug).length > 2 ? (
+                  <Link
+                    href={`/sg/optimist/regattas/${slug}`}
+                    className="text-base font-bold text-white truncate hover:text-orange-400"
+                  >
+                    {res.regattaName}
+                  </Link>
+                ) : (
+                  <h3 className="text-base font-bold text-white truncate">
+                    {res.regattaName}
+                  </h3>
+                );
               return (
                 <div
                   key={rowKey}
-                  className="glass-card rounded-2xl border border-white/5 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
+                  className={`glass-card rounded-2xl border border-white/5 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+                    overseas
+                      ? "border-sky-500/20"
+                      : dns
+                        ? "border-rose-500/15"
+                        : ""
+                  }`}
                 >
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-base font-bold text-white truncate">
-                      {res.regattaName}
-                    </h3>
+                    {nameNode}
                     <p className="text-xs text-slate-500 mt-1 font-semibold">
                       {res.regattaDate}
                       {res.division ? ` · ${res.division}` : ""}
                     </p>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {overseas && (
+                        <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                          Overseas†
+                        </span>
+                      )}
+                      {dns && (
+                        <span className="rounded-full bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 text-[10px] font-bold text-rose-400">
+                          DNS*
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
                     <div className="text-left sm:text-right font-semibold text-sm">
                       <span className="block text-xs text-slate-500 uppercase">
-                        Rank
+                        Points
                       </span>
                       <span className="text-white text-lg font-black">
                         {res.rank}
+                        {overseas ? "†" : dns ? "*" : ""}
                       </span>
                       <span className="text-slate-400 text-xs">
                         {" "}

@@ -35,6 +35,7 @@ export default async function SailorProfilePage({
         }}
         initialResults={results.map((r) => ({
           id: r.regattaSlug,
+          regattaSlug: r.regattaSlug,
           regattaId: r.regattaSlug,
           regattaName: r.regattaName,
           regattaDate: r.regattaDate,
@@ -44,9 +45,21 @@ export default async function SailorProfilePage({
           rank: r.rank,
           nettScore: r.nettScore,
           totalScore: r.totalScore,
+          isDns: r.isDns,
+          isDNS: r.isDns,
+          isOverseasCommitment: r.isOverseasCommitment,
         }))}
         initialEquipment={null}
         canSeePrivate={canSeePrivate}
+        canClaim={
+          Boolean(auth?.userId) &&
+          !sailor.parentId &&
+          auth?.role !== "superadmin"
+        }
+        isOwner={
+          Boolean(auth?.userId && sailor.parentId === auth.userId) ||
+          auth?.role === "superadmin"
+        }
       />
     );
   } catch (e) {

@@ -6,6 +6,8 @@ export interface SailorRecord {
   club: string;
   school?: string | null;
   nationality?: string | null;
+  avatarUrl?: string | null;
+  parentId?: string | null;
   goldEntryDate: string | null;
   silverEntryDate: string | null;
   dropDate: string | null;

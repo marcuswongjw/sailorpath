@@ -93,6 +93,10 @@ export async function POST(req: Request) {
       dob: toDateOnly(body.dob),
       weight: num(body.weight),
       instagram: body.instagram || null,
+      avatarUrl:
+        body.avatarUrl === "" || body.avatarUrl == null
+          ? null
+          : String(body.avatarUrl).trim(),
       natSquadStatusJan25: body.natSquadStatusJan25 || null,
       natSquadStatusJul25: body.natSquadStatusJul25 || null,
       natSquadStatusJan26: body.natSquadStatusJan26 || null,
@@ -197,6 +201,7 @@ export async function PATCH(req: Request) {
       "nationalSquadStatus",
       "currentFleet",
       "instagram",
+      "avatarUrl",
       "natSquadStatusJan25",
       "natSquadStatusJul25",
       "natSquadStatusJan26",

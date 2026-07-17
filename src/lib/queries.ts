@@ -23,6 +23,8 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorRecord {
     club: row.club,
     school: row.school,
     nationality: row.nationality,
+    avatarUrl: row.avatarUrl,
+    parentId: row.parentId,
     goldEntryDate: row.goldEntryDate,
     silverEntryDate: row.silverEntryDate,
     dropDate: row.dropDate,
@@ -66,23 +68,103 @@ export async function listSailors() {
   });
 }
 
-export async function searchSailors(query: string) {
+export type SailorSearchFilters = {
+  query?: string;
+  fleet?: string; // gold | silver | guest | all
+  squad?: string;
+  nationality?: string;
+  club?: string;
+  school?: string;
+  birthYearFrom?: number;
+  birthYearTo?: number;
+};
+
+export async function searchSailors(
+  queryOrFilters: string | SailorSearchFilters
+) {
   return withDb(async () => {
-    const q = `%${query.trim()}%`;
-    const rows = await db
-      .select()
-      .from(sailors)
-      .where(
-        or(
-          ilike(sailors.name, q),
-          ilike(sailors.sailNumber, q),
-          ilike(sailors.club, q),
-          ilike(sailors.handle, q)
-        )
-      )
-      .orderBy(asc(sailors.name))
-      .limit(50);
-    return rows.map(mapSailor);
+    const f: SailorSearchFilters =
+      typeof queryOrFilters === "string"
+        ? { query: queryOrFilters }
+        : queryOrFilters || {};
+
+    let rows = await db.select().from(sailors).orderBy(asc(sailors.name));
+
+    const q = (f.query || "").trim().toLowerCase();
+    if (q) {
+      rows = rows.filter((s) => {
+        const hay = `${s.name} ${s.sailNumber || ""} ${s.club || ""} ${s.handle || ""} ${s.school || ""} ${s.nationality || ""}`.toLowerCase();
+        return hay.includes(q);
+      });
+    }
+
+    const fleet = (f.fleet || "all").toLowerCase();
+    if (fleet === "gold") {
+      rows = rows.filter(
+        (s) =>
+          String(s.currentFleet || "").toLowerCase() === "gold" ||
+          Boolean(s.goldEntryDate)
+      );
+    } else if (fleet === "silver") {
+      rows = rows.filter((s) => {
+        const cf = String(s.currentFleet || "").toLowerCase();
+        return (
+          cf === "silver" ||
+          (Boolean(s.silverEntryDate) &&
+            cf !== "gold" &&
+            !s.goldEntryDate)
+        );
+      });
+    } else if (fleet === "guest") {
+      rows = rows.filter(
+        (s) =>
+          !s.currentFleet &&
+          !s.goldEntryDate &&
+          !s.silverEntryDate
+      );
+    }
+
+    if (f.squad && f.squad !== "all") {
+      rows = rows.filter(
+        (s) => String(s.nationalSquadStatus || "") === f.squad
+      );
+    }
+    if (f.nationality?.trim()) {
+      const n = f.nationality.trim().toLowerCase();
+      rows = rows.filter((s) =>
+        String(s.nationality || "")
+          .toLowerCase()
+          .includes(n)
+      );
+    }
+    if (f.club?.trim()) {
+      const c = f.club.trim().toLowerCase();
+      rows = rows.filter((s) =>
+        String(s.club || "")
+          .toLowerCase()
+          .includes(c)
+      );
+    }
+    if (f.school?.trim()) {
+      const sc = f.school.trim().toLowerCase();
+      rows = rows.filter((s) =>
+        String(s.school || "")
+          .toLowerCase()
+          .includes(sc)
+      );
+    }
+    if (f.birthYearFrom || f.birthYearTo) {
+      rows = rows.filter((s) => {
+        if (!s.dob) return false;
+        const y = new Date(s.dob).getFullYear();
+        if (!Number.isFinite(y)) return false;
+        if (f.birthYearFrom && y < f.birthYearFrom) return false;
+        if (f.birthYearTo && y > f.birthYearTo) return false;
+        return true;
+      });
+    }
+
+    return rows.slice(0, 80).map(mapSailor);
   });
 }
 

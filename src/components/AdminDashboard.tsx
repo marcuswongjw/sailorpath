@@ -24,6 +24,8 @@ import {
 import { getPercentileBadge } from "@/lib/ranking";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { findDuplicateSailorPairs } from "@/lib/nameMatch";
+import { ClaimsAdminPanel } from "@/components/ClaimsAdminPanel";
+import { PromoteAdminPanel } from "@/components/PromoteAdminPanel";
 
 import { Plus, Trash2, Edit3, User, Medal, Copy } from "lucide-react";
 
@@ -177,7 +179,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [bulkStatus, setBulkStatus] = useState<string | null>(null);
 
   // Database Editor Sub-Tabs & Forms
-  const [editSubTab, setEditSubTab] = useState<"sailors" | "regattas" | "results">("sailors");
+  const [editSubTab, setEditSubTab] = useState<"sailors" | "regattas" | "results" | "claims" | "promote">("sailors");
   const [dbSearch, setDbSearch] = useState("");
   const [dbFleetFilter, setDbFleetFilter] = useState<string>("all");
   const [dbSquadFilter, setDbSquadFilter] = useState<string>("all");
@@ -206,6 +208,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     gender: "M",
     nationalSquadStatus: "",
     instagram: "",
+                            avatarUrl: "",
     dob: "",
     weight: "",
     bio: "",
@@ -1311,6 +1314,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       dob: dateOnly(sailorForm.dob),
       weight: sailorForm.weight === "" || sailorForm.weight == null ? null : sailorForm.weight,
       instagram: sailorForm.instagram || null,
+      avatarUrl: sailorForm.avatarUrl || null,
       manuallyDropped: Boolean(sailorForm.manuallyDropped),
       natSquadStatusJan25: sailorForm.natSquadStatusJan25 || null,
       natSquadStatusJul25: sailorForm.natSquadStatusJul25 || null,
@@ -2083,8 +2087,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         {activeTab === "edit" && (
           <div className="space-y-6">
             {/* Sub Tabs */}
-            <div className="flex gap-2 bg-[#131520] border border-white/5 p-1 rounded-full max-w-md">
-              {(["sailors", "regattas", "results"] as const).map((sub) => (
+            <div className="flex flex-wrap gap-2 bg-[#131520] border border-white/5 p-1 rounded-2xl max-w-2xl">
+              {([
+                ["sailors", "Sailors"],
+                ["regattas", "Regattas"],
+                ["results", "Results"],
+                ["claims", "Claims"],
+                ["promote", "Promote"],
+              ] as const).map(([sub, label]) => (
                 <button
                   key={sub}
                   onClick={() => {
@@ -2093,13 +2103,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     setEditingRegattaId(null);
                     setEditingResultId(null);
                   }}
-                  className={`flex-1 rounded-full py-1.5 text-xs font-bold capitalize transition-all ${
+                  className={`flex-1 min-w-[4.5rem] rounded-full py-1.5 text-xs font-bold transition-all ${
                     editSubTab === sub
                       ? "bg-orange-600 text-white"
                       : "text-slate-400 hover:text-white"
                   }`}
                 >
-                  {sub}
+                  {label}
                 </button>
               ))}
             </div>
@@ -2542,6 +2552,16 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           onChange={(e) => setSailorForm({ ...sailorForm, instagram: e.target.value })}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                           placeholder="e.g. @username"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">Avatar URL</label>
+                        <input
+                          type="url"
+                          value={sailorForm.avatarUrl || ""}
+                          onChange={(e) => setSailorForm({ ...sailorForm, avatarUrl: e.target.value })}
+                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          placeholder="https://… (public image URL)"
                         />
                       </div>
                       <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-t border-white/5 pt-4">
@@ -2999,6 +3019,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                         manuallyDropped:
                                           s.manuallyDropped || false,
                                         instagram: s.instagram || "",
+                                        avatarUrl: s.avatarUrl || "",
                                         dob: d(s.dob),
                                         bio: s.bio || "",
                                         goldEntryDate: d(s.goldEntryDate),
@@ -3488,6 +3509,21 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           </div>
         )}
       </div>
+
+
+            {editSubTab === "claims" && (
+              <ClaimsAdminPanel isSuperadmin={isSuperadmin} />
+            )}
+            {editSubTab === "promote" && (
+              <PromoteAdminPanel
+                isSuperadmin={isSuperadmin}
+                onPromoted={(sailor) => {
+                  setSailorList((prev) =>
+                    prev.map((s) => (s.id === sailor.id ? { ...s, ...sailor } : s))
+                  );
+                }}
+              />
+            )}
 
       {/* Fixed modal: per-sailor results (always on top, outside scroll containers) */}
       {competitionsSailorId && (() => {

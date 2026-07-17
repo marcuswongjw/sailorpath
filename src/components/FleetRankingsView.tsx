@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { RankedSailor, Period } from "@/lib/ranking";
-import { Trophy, Calendar } from "lucide-react";
+import { Trophy, Calendar, Printer, GitCompareArrows } from "lucide-react";
 
 const PERIODS: { period: Period; label: string }[] = [
   { period: { year: 2026, half: "Jul-Dec" }, label: "Jul – Dec 2026 (Current)" },
@@ -126,9 +126,16 @@ export function FleetRankingsView({
     return scores.slice(0, 5);
   };
 
+  const isCurrent =
+    period.year === 2026 && period.half === "Jul-Dec";
+  const periodLabel =
+    PERIODS.find(
+      (p) => p.period.year === period.year && p.period.half === period.half
+    )?.label || `${period.half} ${period.year}`;
+
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+    <div className="print-rankings mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 no-print">
         <div className="flex items-start gap-3">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-600/10 text-orange-500 border border-orange-500/20">
             <Trophy className="h-5 w-5" />
@@ -143,10 +150,15 @@ export function FleetRankingsView({
             <p className="text-xs sm:text-sm text-slate-500 mt-1">
               Best 3 of 5 · * = DNS (fleet size + 1) · † = overseas commitment
               (points = standing)
+              {!isCurrent && (
+                <span className="ml-2 text-amber-400/90 font-semibold">
+                  · Archive period
+                </span>
+              )}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Calendar className="h-4 w-4 text-orange-500 shrink-0" />
           <select
             value={`${period.year}|${period.half}`}
@@ -162,17 +174,51 @@ export function FleetRankingsView({
               </option>
             ))}
           </select>
+          <Link
+            href={`/sg/optimist/compare?fleet=${fleet}&year=${period.year}&half=${encodeURIComponent(period.half)}`}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-white/5 border border-white/10 px-3 py-2.5 text-xs font-bold text-slate-300 hover:text-white"
+          >
+            <GitCompareArrows className="h-4 w-4 text-orange-400" />
+            Compare
+          </Link>
+          <button
+            type="button"
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-orange-600/90 hover:bg-orange-500 px-3 py-2.5 text-xs font-bold text-white"
+          >
+            <Printer className="h-4 w-4" />
+            Print / PDF
+          </button>
         </div>
       </div>
 
-      {/* Sticky event legend — always visible while scrolling rankings */}
+      <p className="hidden print:block text-sm font-bold text-black">
+        SG Optimist {fleet} Fleet Rankings — {periodLabel}
+      </p>
+
+      {/* Sticky event legend — mobile + desktop while scrolling */}
       {!loading && ranked.length > 0 && (
-        <div className="sticky top-0 z-30 -mx-1 px-1">
-          <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 backdrop-blur-md shadow-lg shadow-black/40 px-4 py-3">
+        <div className="sticky top-0 z-30 -mx-1 px-1 no-print">
+          <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 backdrop-blur-md shadow-lg shadow-black/40 px-3 sm:px-4 py-2.5 sm:py-3">
             <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-              Scoring events — R1 oldest · R5 newest of the last five
+              Scoring events — R1 oldest · R5 newest
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
+            {/* Mobile: compact horizontal strip */}
+            <div className="flex md:hidden gap-1.5 overflow-x-auto pb-0.5">
+              {eventSlots.map((ev, idx) => (
+                <div
+                  key={ev.regattaId + idx}
+                  className="shrink-0 w-[4.75rem] rounded-lg bg-white/5 border border-white/5 px-1.5 py-1.5 text-center"
+                  title={ev.regattaName || undefined}
+                >
+                  <p className="text-[9px] font-black text-orange-400">R{idx + 1}</p>
+                  <p className="text-[8px] font-semibold text-slate-300 leading-tight line-clamp-2">
+                    {shortRegattaName(ev.regattaName, idx)}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="hidden md:grid grid-cols-5 gap-2">
               {eventSlots.map((ev, idx) => (
                 <div
                   key={ev.regattaId + idx}
@@ -194,7 +240,7 @@ export function FleetRankingsView({
 
       {loading && <p className="text-sm text-slate-500">Loading rankings…</p>}
       {error && (
-        <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs sm:text-sm text-rose-300">
+        <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs sm:text-sm text-rose-300 no-print">
           {error}{" "}
           <Link href="/api/health" className="underline font-bold">
             Check /api/health
@@ -203,13 +249,14 @@ export function FleetRankingsView({
       )}
       {!loading && !error && ranked.length === 0 && (
         <p className="text-sm text-slate-500">
-          No ranked sailors for this period. Import regattas and set fleet entry /
-          current fleet in admin.
+          {isCurrent
+            ? "No ranked sailors for this period. Import regattas and set fleet entry / current fleet in admin."
+            : `No ranked sailors for archive period ${periodLabel}. Try another half-year or check entry dates.`}
         </p>
       )}
 
       {/* Mobile cards */}
-      <div className="md:hidden space-y-3">
+      <div className="md:hidden space-y-3 no-print">
         {ranked.map((s, i) => {
           const scores = padScores(s, i);
           return (
