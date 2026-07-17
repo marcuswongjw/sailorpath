@@ -14,13 +14,10 @@ export async function GET(req: Request) {
       fleet === "Silver" ? "Silver" : "Gold",
       period
     );
-    return NextResponse.json({ period, fleet, ranked, isDemo: false });
+    return NextResponse.json({ period, fleet, ranked });
   } catch (e) {
     if (e instanceof DbUnavailableError) {
-      return NextResponse.json(
-        { error: e.message, isDemo: false },
-        { status: 503 }
-      );
+      return NextResponse.json({ error: e.message }, { status: 503 });
     }
     console.error(e);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

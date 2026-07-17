@@ -19,8 +19,22 @@ export default function RootLayout({
         <main className="flex-1 flex flex-col">{children}</main>
         <footer className="border-t border-white/5 bg-[#07080c] py-8 text-center text-xs text-slate-500">
           <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p>© {new Date().getFullYear()} SailorPath</p>
+            <p>
+              © {new Date().getFullYear()} SailorPath
+              {process.env.VERCEL_GIT_COMMIT_SHA ? (
+                <span className="ml-2 text-slate-600 font-mono">
+                  build {process.env.VERCEL_GIT_COMMIT_SHA.slice(0, 7)}
+                </span>
+              ) : (
+                <span className="ml-2 text-slate-700 font-mono">
+                  build local
+                </span>
+              )}
+            </p>
             <div className="flex gap-4">
+              <Link href="/sample" className="hover:text-slate-300">
+                Sample
+              </Link>
               <Link href="/api/health" className="hover:text-slate-300">
                 Health
               </Link>

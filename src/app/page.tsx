@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { DbOffline } from "@/components/DbOffline";
 import { listSailors } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 
@@ -7,18 +6,14 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
   let sailors: Awaited<ReturnType<typeof listSailors>> = [];
-  let offline = false;
+  let dbLive = true;
   let offlineMsg = "";
 
   try {
     sailors = await listSailors();
   } catch (e) {
-    offline = true;
-    offlineMsg = e instanceof DbUnavailableError ? e.message : "DB error";
-  }
-
-  if (offline) {
-    return <DbOffline message={offlineMsg} />;
+    dbLive = false;
+    offlineMsg = e instanceof DbUnavailableError ? e.message : "Database error";
   }
 
   const featured = sailors.slice(0, 6);
@@ -26,6 +21,21 @@ export default async function HomePage() {
   return (
     <div className="relative flex-1">
       <div className="absolute top-0 left-1/4 w-[400px] h-[400px] bg-orange-600/10 rounded-full blur-[120px] pointer-events-none -z-10" />
+
+      {!dbLive && (
+        <div className="border-b border-rose-500/20 bg-rose-500/10 px-4 py-2.5 text-center text-xs text-rose-200">
+          Database not connected yet — rankings are empty. See{" "}
+          <Link href="/api/health" className="font-bold underline text-white">
+            /api/health
+          </Link>{" "}
+          and{" "}
+          <Link href="/sample" className="font-bold underline text-white">
+            sample preview
+          </Link>
+          . {offlineMsg ? `(${offlineMsg.slice(0, 80)})` : null}
+        </div>
+      )}
+
       <section className="mx-auto max-w-7xl px-4 pt-16 pb-12 text-center">
         <p className="text-xs font-bold text-orange-400 mb-4 tracking-wide uppercase">
           Singapore Optimist
@@ -38,8 +48,7 @@ export default async function HomePage() {
           </span>
         </h1>
         <p className="mt-5 max-w-2xl mx-auto text-slate-400 text-sm sm:text-base">
-          Live fleet rankings, regatta results, and sailor profiles — powered by
-          Supabase.
+          Live fleet rankings, regatta results, and sailor profiles.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link
@@ -47,6 +56,12 @@ export default async function HomePage() {
             className="rounded-full bg-orange-600 px-6 py-3 text-xs font-black uppercase text-white hover:bg-orange-500"
           >
             Gold standings
+          </Link>
+          <Link
+            href="/sample"
+            className="rounded-full border border-amber-500/40 bg-amber-500/10 px-6 py-3 text-xs font-bold text-amber-100 hover:border-amber-400/60"
+          >
+            View sample project
           </Link>
           <Link
             href="/register"
@@ -72,18 +87,41 @@ export default async function HomePage() {
 
       <section className="border-t border-white/5 bg-[#0b0c13] py-12">
         <div className="mx-auto max-w-7xl px-4">
-          <h2 className="text-lg font-black text-white mb-6">
-            Sailors in database ({sailors.length})
-          </h2>
-          {featured.length === 0 ? (
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
+            <h2 className="text-lg font-black text-white">
+              {dbLive
+                ? `Sailors in database (${sailors.length})`
+                : "Live sailors (waiting for database)"}
+            </h2>
+            <Link
+              href="/sample"
+              className="text-xs font-bold text-amber-300/90 hover:text-amber-200"
+            >
+              See sample project →
+            </Link>
+          </div>
+
+          {!dbLive ? (
+            <p className="text-sm text-slate-500 max-w-xl">
+              No live data until PostgreSQL is connected on Vercel. Use{" "}
+              <Link href="/sample" className="text-orange-400 font-bold">
+                sample project
+              </Link>{" "}
+              to preview the UI, then follow docs/GO_LIVE.md.
+            </p>
+          ) : featured.length === 0 ? (
             <p className="text-sm text-slate-500">
-              No sailors yet. Import results from{" "}
+              Database is live but empty. Import sailors from{" "}
               <a
                 href="https://admin.sailorpath.com/"
                 className="text-orange-400 font-bold"
               >
                 admin
               </a>
+              , or{" "}
+              <Link href="/sample" className="text-orange-400 font-bold">
+                view the sample project
+              </Link>
               .
             </p>
           ) : (

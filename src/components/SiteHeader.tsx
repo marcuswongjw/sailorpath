@@ -63,6 +63,9 @@ export function SiteHeader() {
             <Link href="/search" className="hover:text-white">
               Search
             </Link>
+            <Link href="/sample" className="hover:text-amber-200 text-amber-300/80">
+              Sample
+            </Link>
           </nav>
         </div>
         <div className="flex items-center gap-3">
