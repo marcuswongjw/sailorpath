@@ -120,6 +120,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Database Editor Sub-Tabs & Forms
   const [editSubTab, setEditSubTab] = useState<"sailors" | "regattas" | "results">("sailors");
+  const [dbSearch, setDbSearch] = useState("");
+  const [dbFleetFilter, setDbFleetFilter] = useState<string>("all");
+  const [dbSquadFilter, setDbSquadFilter] = useState<string>("all");
+  const [dbDroppedFilter, setDbDroppedFilter] = useState<string>("all");
   const [editingSailorId, setEditingSailorId] = useState<string | null>(null);
   const [sailorForm, setSailorForm] = useState<any>({
     id: "",
@@ -178,6 +182,31 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Check superadmin permissions
   const isSuperadmin = adminRole === "superadmin";
+
+  const filteredDbSailors = sailorList.filter((s) => {
+    const q = dbSearch.trim().toLowerCase();
+    if (q) {
+      const hay = `${s.name} ${s.sailNumber || ""} ${s.club || ""} ${s.school || ""} ${s.handle || ""}`.toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    if (dbFleetFilter !== "all") {
+      const cf = String(s.currentFleet || "").toLowerCase();
+      if (dbFleetFilter === "gold" && cf !== "gold" && !s.goldEntryDate) return false;
+      if (dbFleetFilter === "gold" && cf === "silver") return false;
+      if (dbFleetFilter === "silver" && cf !== "silver" && !(!s.goldEntryDate && s.silverEntryDate)) {
+        if (cf !== "silver") return false;
+      }
+      if (dbFleetFilter === "unassigned") {
+        if (s.currentFleet || s.goldEntryDate || s.silverEntryDate) return false;
+      }
+    }
+    if (dbSquadFilter !== "all") {
+      if (String(s.nationalSquadStatus || "") !== dbSquadFilter) return false;
+    }
+    if (dbDroppedFilter === "yes" && !s.manuallyDropped) return false;
+    if (dbDroppedFilter === "no" && s.manuallyDropped) return false;
+    return true;
+  });
 
   const pickCol = (row: Record<string, any>, aliases: string[]) => {
     const keys = Object.keys(row);
@@ -1800,6 +1829,62 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             {/* Sub-Tab Content: SAILORS */}
             {editSubTab === "sailors" && (
               <div className="space-y-6">
+                {/* Filters */}
+                <div className="glass-panel rounded-2xl border border-white/5 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">Search</label>
+                    <input
+                      type="search"
+                      placeholder="Name, sail #, club, school…"
+                      value={dbSearch}
+                      onChange={(e) => setDbSearch(e.target.value)}
+                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">Fleet</label>
+                    <select
+                      value={dbFleetFilter}
+                      onChange={(e) => setDbFleetFilter(e.target.value)}
+                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                    >
+                      <option value="all">All fleets</option>
+                      <option value="gold">Gold</option>
+                      <option value="silver">Silver</option>
+                      <option value="unassigned">Unassigned</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">Squad</label>
+                    <select
+                      value={dbSquadFilter}
+                      onChange={(e) => setDbSquadFilter(e.target.value)}
+                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                    >
+                      <option value="all">All squads</option>
+                      <option value="Nat A">Nat A</option>
+                      <option value="Nat B">Nat B</option>
+                      <option value="DS">DS</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">Manually dropped</label>
+                    <select
+                      value={dbDroppedFilter}
+                      onChange={(e) => setDbDroppedFilter(e.target.value)}
+                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                    >
+                      <option value="all">All</option>
+                      <option value="no">Active only</option>
+                      <option value="yes">Dropped only</option>
+                    </select>
+                  </div>
+                  <p className="sm:col-span-2 lg:col-span-4 text-[11px] text-slate-500">
+                    Showing <strong className="text-white">{filteredDbSailors.length}</strong> of{" "}
+                    {sailorList.length} sailors
+                  </p>
+                </div>
+
                 {/* Sailor Form Card */}
                 {editingSailorId && (
                   <div className="glass-panel rounded-3xl p-6 border border-white/5 space-y-4">
@@ -2022,7 +2107,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
-                      {sailorList.map((s) => (
+                      {filteredDbSailors.map((s) => (
                         <tr key={s.id} className="hover:bg-white/5 transition-colors">
                           <td className="py-4 px-6 font-bold text-white">
                             {s.name}
@@ -2046,6 +2131,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                     ...s,
                                     weight: s.weight ? s.weight.toString() : "",
                                     nationalSquadStatus: s.nationalSquadStatus || "",
+                                    currentFleet: s.currentFleet || "",
+                                    school: s.school || "",
+                                    manuallyDropped: s.manuallyDropped || false,
                                     instagram: s.instagram || "",
                                     facebook: s.facebook || "",
                                     dob: s.dob || "",
