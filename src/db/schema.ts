@@ -103,6 +103,11 @@ export const regattaResults = pgTable(
     nettScore: real("nett_score").notNull(),
     /** Gross / total points before discards (optional; from Excel "Total" / "Total Score") */
     totalScore: real("total_score"),
+    /**
+     * Did not start / did not compete — default score is usually fleet size + 1.
+     * Stored so admins can edit the points later.
+     */
+    isDns: boolean("is_dns").default(false).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },

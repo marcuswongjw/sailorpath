@@ -362,6 +362,7 @@ export async function POST(req: Request) {
             rank,
             nettScore: nett,
             totalScore: total,
+            isDns: false,
           })
           .onConflictDoUpdate({
             target: [regattaResults.sailorId, regattaResults.regattaId],
@@ -369,6 +370,7 @@ export async function POST(req: Request) {
               rank,
               nettScore: nett,
               totalScore: total,
+              isDns: false,
               updatedAt: new Date(),
             },
           });

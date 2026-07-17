@@ -1483,17 +1483,21 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert("Sailor and Regatta must be selected.");
       return;
     }
+    const payload = {
+      ...resultForm,
+      isDns: Boolean(resultForm.isDNS || resultForm.isDns),
+      isDNS: Boolean(resultForm.isDNS || resultForm.isDns),
+    };
     try {
       if (editingResultId === "new") {
         const res = await fetch("/api/admin/results", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(resultForm),
+          body: JSON.stringify(payload),
         });
         const data = await parseApi(res);
         if (!res.ok) throw new Error(data.error || "Create failed");
         setResultsList((prev) => {
-          // replace if conflict row same sailor+regatta, else append
           const row = data.result;
           const without = prev.filter(
             (r) =>
@@ -1506,7 +1510,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         const res = await fetch("/api/admin/results", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...resultForm, id: editingResultId }),
+          body: JSON.stringify({ ...payload, id: editingResultId }),
         });
         const data = await parseApi(res);
         if (!res.ok) throw new Error(data.error || "Update failed");
@@ -1518,6 +1522,37 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       setEditingResultId(null);
     } catch (e: any) {
       alert(e.message);
+    }
+  };
+
+  const handleFillDnsForRegatta = async (regattaId: string) => {
+    if (!isSuperadmin) {
+      alert("Error: 403 Forbidden.");
+      return;
+    }
+    if (!regattaId) {
+      alert("Select a regatta first.");
+      return;
+    }
+    const reg = regattaList.find((r) => r.id === regattaId);
+    const ok = confirm(
+      `Create DNS scores for all ${reg?.division || ""} series members who do not have a result at “${reg?.name || "this regatta"}”?\n\n` +
+        `Default DNS points = fleet size + 1 = ${(reg?.totalFleetSize || 0) + 1}.\n` +
+        `You can edit any DNS score afterwards.`
+    );
+    if (!ok) return;
+    try {
+      const res = await fetch("/api/admin/results", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "fillDns", regattaId }),
+      });
+      const data = await parseApi(res);
+      if (!res.ok) throw new Error(data.error || "Fill DNS failed");
+      await refreshResultsList();
+      alert(data.message || `Created ${data.created} DNS rows.`);
+    } catch (e: any) {
+      alert(e.message || "Fill DNS failed");
     }
   };
 
@@ -3129,12 +3164,31 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <input
                           type="checkbox"
                           id="dnsCheckbox"
-                          checked={resultForm.isDNS}
-                          onChange={(e) => setResultForm({ ...resultForm, isDNS: e.target.checked })}
+                          checked={Boolean(resultForm.isDNS || resultForm.isDns)}
+                          onChange={(e) => {
+                            const on = e.target.checked;
+                            const reg = regattaList.find(
+                              (r) => r.id === resultForm.regattaId
+                            );
+                            const dnsPts =
+                              (reg?.totalFleetSize || 50) + 1;
+                            setResultForm({
+                              ...resultForm,
+                              isDNS: on,
+                              isDns: on,
+                              // When marking DNS, default points to fleet+1 (editable)
+                              ...(on
+                                ? {
+                                    rank: dnsPts,
+                                    nettScore: dnsPts,
+                                  }
+                                : {}),
+                            });
+                          }}
                           className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
                         />
                         <label htmlFor="dnsCheckbox" className="text-xs font-bold text-slate-400 cursor-pointer">
-                          Did Not Start (DNS)
+                          Did Not Start (DNS) — sets rank to fleet+1; you can edit the number
                         </label>
                       </div>
                     </div>
@@ -3164,25 +3218,51 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <h3 className="text-base font-bold text-white">Regatta Results Table</h3>
                         <p className="text-xs text-slate-500">Edit or delete competitor scores for this specific event.</p>
                       </div>
-                      <button
-                        onClick={() => {
-                          setEditingResultId("new");
-                          setResultForm({
-                            id: "",
-                            regattaId: selectedRegattaIdForResultEdit,
-                            sailorId: "",
-                            rank: 1,
-                            nettScore: 1,
-                            totalScore: "",
-                            isDNS: false,
-                          });
-                        }}
-                        className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
-                      >
-                        <Plus className="h-4 w-4" />
-                        Add Score
-                      </button>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            void handleFillDnsForRegatta(
+                              selectedRegattaIdForResultEdit
+                            )
+                          }
+                          className="rounded-full bg-slate-800 border border-rose-500/30 hover:bg-rose-500/10 px-4 py-2 text-xs font-bold text-rose-300 flex items-center gap-1"
+                          title="Create DNS (fleet size + 1) for series members with no result"
+                        >
+                          Fill DNS for non-starters
+                        </button>
+                        <button
+                          onClick={() => {
+                            const reg = regattaList.find(
+                              (r) => r.id === selectedRegattaIdForResultEdit
+                            );
+                            const dnsPts = (reg?.totalFleetSize || 50) + 1;
+                            setEditingResultId("new");
+                            setResultForm({
+                              id: "",
+                              regattaId: selectedRegattaIdForResultEdit,
+                              sailorId: "",
+                              rank: 1,
+                              nettScore: 1,
+                              totalScore: "",
+                              isDNS: false,
+                              _dnsDefault: dnsPts,
+                            });
+                          }}
+                          className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
+                        >
+                          <Plus className="h-4 w-4" />
+                          Add Score
+                        </button>
+                      </div>
                     </div>
+
+                    <p className="px-6 pb-2 text-[11px] text-slate-500">
+                      Non-starters: use <strong className="text-slate-400">Fill DNS</strong> to
+                      create editable DNS rows (default rank = fleet size + 1). Tick DNS when
+                      adding/editing a single sailor. Ranking uses the stored rank, so you can
+                      change a DNS score later.
+                    </p>
 
                     <table className="w-full text-left border-collapse text-xs">
                       <thead>
@@ -3191,7 +3271,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <th className="py-4 px-6">Sail Number</th>
                           <th className="py-4 px-6 text-center">Total Score</th>
                           <th className="py-4 px-6 text-center">Nett Score</th>
-                          <th className="py-4 px-6 text-center">Rank</th>
+                          <th className="py-4 px-6 text-center">Rank / pts</th>
                           <th className="py-4 px-6 text-center">Status</th>
                           <th className="py-4 px-6 text-right">Actions</th>
                         </tr>
@@ -3199,10 +3279,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
                         {resultsList
                           .filter((res) => res.regattaId === selectedRegattaIdForResultEdit)
+                          .slice()
+                          .sort((a, b) => (a.rank || 999) - (b.rank || 999))
                           .map((res) => {
                             const sailor = sailorList.find((s) => s.id === res.sailorId);
+                            const dns = Boolean(res.isDns || res.isDNS);
                             return (
-                              <tr key={res.id} className="hover:bg-white/5 transition-colors">
+                              <tr
+                                key={res.id}
+                                className={`hover:bg-white/5 transition-colors ${
+                                  dns ? "bg-rose-500/[0.03]" : ""
+                                }`}
+                              >
                                 <td className="py-4 px-6 font-bold text-white">
                                   {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
                                 </td>
@@ -3213,14 +3301,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                   {res.totalScore != null ? res.totalScore : "—"}
                                 </td>
                                 <td className="py-4 px-6 text-center font-mono">{res.nettScore}</td>
-                                <td className="py-4 px-6 text-center font-mono">{res.rank}</td>
+                                <td className="py-4 px-6 text-center font-mono">
+                                  {res.rank}
+                                  {dns ? "*" : ""}
+                                </td>
                                 <td className="py-4 px-6 text-center">
                                   <span className={`inline-block px-2 py-0.5 rounded text-[10px] ${
-                                    res.isDNS 
-                                      ? "bg-rose-500/10 text-rose-500 border border-rose-500/20" 
+                                    dns
+                                      ? "bg-rose-500/10 text-rose-500 border border-rose-500/20"
                                       : "bg-slate-800 text-slate-400"
                                   }`}>
-                                    {res.isDNS ? "DNS" : "Finished"}
+                                    {dns ? "DNS" : "Finished"}
                                   </span>
                                 </td>
                                 <td className="py-4 px-6 text-right">
@@ -3236,6 +3327,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                               ? String(res.totalScore)
                                               : "",
                                           rank: res.rank?.toString?.() ?? res.rank,
+                                          isDNS: dns,
+                                          isDns: dns,
                                         });
                                       }}
                                       className="text-slate-400 hover:text-white"
@@ -3256,7 +3349,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         {resultsList.filter((res) => res.regattaId === selectedRegattaIdForResultEdit).length === 0 && (
                           <tr>
                             <td colSpan={7} className="text-center py-12 text-slate-500">
-                              No sailor results logged for this regatta. Click "Add Score" above.
+                              No sailor results logged. Click Add Score or Fill DNS for non-starters.
                             </td>
                           </tr>
                         )}
@@ -3421,6 +3514,30 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                       />
                     </div>
+                    <div className="flex items-center gap-2 sm:col-span-2">
+                      <input
+                        type="checkbox"
+                        id="modalDns"
+                        checked={Boolean(resultForm.isDNS || resultForm.isDns)}
+                        onChange={(e) => {
+                          const on = e.target.checked;
+                          const reg = regattaList.find(
+                            (r) => r.id === resultForm.regattaId
+                          );
+                          const dnsPts = (reg?.totalFleetSize || 50) + 1;
+                          setResultForm({
+                            ...resultForm,
+                            isDNS: on,
+                            isDns: on,
+                            ...(on ? { rank: dnsPts, nettScore: dnsPts } : {}),
+                          });
+                        }}
+                        className="rounded border-slate-700 bg-slate-900 text-orange-600 h-4 w-4"
+                      />
+                      <label htmlFor="modalDns" className="text-xs text-slate-400 font-bold cursor-pointer">
+                        DNS (default rank = fleet size + 1; editable)
+                      </label>
+                    </div>
                   </div>
                   <div className="flex justify-end gap-2">
                     <button
@@ -3451,11 +3568,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       <th className="py-3 px-4 text-center">Rank</th>
                       <th className="py-3 px-4 text-center">Total</th>
                       <th className="py-3 px-4 text-center">Nett</th>
+                      <th className="py-3 px-4 text-center">Status</th>
                       <th className="py-3 px-4 text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5 text-slate-300">
-                    {sailorResults.map((r) => (
+                    {sailorResults.map((r) => {
+                      const dns = Boolean(r.isDns || r.isDNS);
+                      return (
                       <tr key={r.id || `${r.sailorId}-${r.regattaId}`} className="hover:bg-white/5">
                         <td className="py-3 px-4 font-bold text-white">
                           {r.regatta?.name || "Unknown regatta"}
@@ -3468,12 +3588,23 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <td className="py-3 px-4 text-center">
                           {r.regatta?.division || "—"}
                         </td>
-                        <td className="py-3 px-4 text-center font-mono">{r.rank}</td>
+                        <td className="py-3 px-4 text-center font-mono">
+                          {r.rank}{dns ? "*" : ""}
+                        </td>
                         <td className="py-3 px-4 text-center font-mono">
                           {r.totalScore != null ? r.totalScore : "—"}
                         </td>
                         <td className="py-3 px-4 text-center font-mono">
                           {r.nettScore}
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          <span className={`text-[10px] px-2 py-0.5 rounded ${
+                            dns
+                              ? "bg-rose-500/10 text-rose-400 border border-rose-500/20"
+                              : "text-slate-500"
+                          }`}>
+                            {dns ? "DNS" : "Finished"}
+                          </span>
                         </td>
                         <td className="py-3 px-4 text-right">
                           <div className="flex justify-end gap-2">
@@ -3492,7 +3623,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                       ? String(r.totalScore)
                                       : "",
                                   rank: r.rank?.toString?.() ?? r.rank,
-                                  isDNS: false,
+                                  isDNS: dns,
+                                  isDns: dns,
                                 });
                               }}
                               className="text-slate-400 hover:text-white"
@@ -3509,14 +3641,15 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           </div>
                         </td>
                       </tr>
-                    ))}
+                      );
+                    })}
                     {!competitionsLoading && sailorResults.length === 0 && (
                       <tr>
                         <td
-                          colSpan={7}
+                          colSpan={8}
                           className="py-10 text-center text-slate-500"
                         >
-                          No competitions logged yet. Click Add result.
+                          No competitions logged yet. Click Add result (use DNS for non-starts).
                         </td>
                       </tr>
                     )}

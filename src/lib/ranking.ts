@@ -53,6 +53,8 @@ export interface RegattaResultRecord {
   nettScore: number;
   /** Gross total before discards, if provided */
   totalScore?: number | null;
+  /** Stored DNS / non-start — score still uses rank (editable) */
+  isDns?: boolean | null;
 }
 
 export interface Period {
@@ -207,14 +209,15 @@ export function calculateRankings(
       );
 
       if (result) {
+        // Stored result (including edited DNS) — rank is the scoring points
         return {
           regattaId: regatta.id,
           regattaName: regatta.name,
-          score: result.rank, // using rank as scoring basis
-          isDNS: false,
+          score: result.rank,
+          isDNS: Boolean(result.isDns),
         };
       } else {
-        // DNS Score: total fleet size + 1
+        // No row yet: virtual DNS = fleet size + 1 (create a row in admin to edit)
         return {
           regattaId: regatta.id,
           regattaName: regatta.name,

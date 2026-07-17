@@ -146,6 +146,8 @@ export async function listResults() {
       rank: r.rank,
       nettScore: r.nettScore,
       totalScore: r.totalScore,
+      isDns: r.isDns,
+      isDNS: r.isDns, // alias for admin UI
     }));
   });
 }
@@ -171,6 +173,7 @@ export async function getResultsForRegatta(regattaId: string) {
         rank: regattaResults.rank,
         nettScore: regattaResults.nettScore,
         totalScore: regattaResults.totalScore,
+        isDns: regattaResults.isDns,
         sailorName: sailors.name,
         sailNumber: sailors.sailNumber,
         handle: sailors.handle,
@@ -190,6 +193,7 @@ export async function getResultsForSailor(sailorId: string) {
         rank: regattaResults.rank,
         nettScore: regattaResults.nettScore,
         totalScore: regattaResults.totalScore,
+        isDns: regattaResults.isDns,
         regattaName: regattas.name,
         regattaSlug: regattas.slug,
         regattaDate: regattas.date,
