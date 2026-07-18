@@ -45,6 +45,8 @@ export interface RegattaRecord {
   date: string; // ISO format
   totalFleetSize: number;
   division?: string;
+  /** Number of races in the event (for race-by-race logs) */
+  raceCount?: number | null;
 }
 
 export interface RegattaResultRecord {

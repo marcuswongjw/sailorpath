@@ -193,6 +193,7 @@ export async function listRegattas() {
         date: r.date,
         totalFleetSize: r.totalFleetSize,
         division: r.division,
+        raceCount: r.raceCount,
       })
     );
   });
@@ -213,6 +214,7 @@ export async function getRegattaBySlug(slug: string) {
       date: row.date,
       totalFleetSize: row.totalFleetSize,
       division: row.division,
+      raceCount: row.raceCount,
     } satisfies RegattaRecord;
   });
 }
@@ -261,6 +263,8 @@ export async function getResultsForRegatta(regattaId: string) {
         sailorName: sailors.name,
         sailNumber: sailors.sailNumber,
         handle: sailors.handle,
+        gender: sailors.gender,
+        dob: sailors.dob,
       })
       .from(regattaResults)
       .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))

@@ -238,6 +238,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     date: "",
     totalFleetSize: 50,
     division: "Gold",
+    raceCount: "",
   });
 
   const [resultsList, setResultsList] = useState(initialResults || []);
@@ -3143,6 +3144,22 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         />
                       </div>
                       <div>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">Number of races</label>
+                        <input
+                          type="number"
+                          min={0}
+                          value={regattaForm.raceCount ?? ""}
+                          onChange={(e) =>
+                            setRegattaForm({ ...regattaForm, raceCount: e.target.value })
+                          }
+                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          placeholder="e.g. 6"
+                        />
+                        <p className="mt-1 text-[10px] text-slate-500">
+                          For sailors to log each race later on their dashboard.
+                        </p>
+                      </div>
+                      <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Division / Fleet Split</label>
                         <select
                           value={regattaForm.division || "Gold"}
@@ -3189,6 +3206,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           date: new Date().toISOString().split("T")[0],
                           totalFleetSize: 50,
                           division: "Gold",
+                          raceCount: "",
                         });
                       }}
                       className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
@@ -3454,12 +3472,76 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                 {/* Results List */}
                 {selectedRegattaIdForResultEdit && (
                   <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden">
-                    <div className="p-6 border-b border-white/5 flex items-center justify-between">
+                    <div className="p-6 border-b border-white/5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                       <div>
                         <h3 className="text-base font-bold text-white">Regatta Results Table</h3>
-                        <p className="text-xs text-slate-500">Edit or delete competitor scores for this specific event.</p>
+                        <p className="text-xs text-slate-500">Edit or delete scores for this event.</p>
                       </div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap items-end gap-3">
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">
+                          Number of races
+                          <input
+                            type="number"
+                            min={0}
+                            className="mt-1 block w-28 rounded-lg bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white font-mono"
+                            value={
+                              regattaList.find(
+                                (r) => r.id === selectedRegattaIdForResultEdit
+                              )?.raceCount ?? ""
+                            }
+                            onChange={async (e) => {
+                              const val = e.target.value;
+                              const id = selectedRegattaIdForResultEdit;
+                              setRegattaList((prev) =>
+                                prev.map((r) =>
+                                  r.id === id
+                                    ? {
+                                        ...r,
+                                        raceCount:
+                                          val === "" ? null : Number(val),
+                                      }
+                                    : r
+                                )
+                              );
+                            }}
+                            onBlur={async (e) => {
+                              if (!isSuperadmin) return;
+                              const val = e.target.value;
+                              try {
+                                const res = await fetch("/api/admin/regattas", {
+                                  method: "PATCH",
+                                  headers: {
+                                    "Content-Type": "application/json",
+                                  },
+                                  body: JSON.stringify({
+                                    id: selectedRegattaIdForResultEdit,
+                                    raceCount: val === "" ? null : Number(val),
+                                  }),
+                                });
+                                const data = await parseApi(res);
+                                if (!res.ok)
+                                  throw new Error(
+                                    data.error || "Failed to save race count"
+                                  );
+                                if (data.regatta) {
+                                  setRegattaList((prev) =>
+                                    prev.map((r) =>
+                                      r.id === data.regatta.id
+                                        ? data.regatta
+                                        : r
+                                    )
+                                  );
+                                }
+                              } catch (err: any) {
+                                alert(err.message || "Failed to save race count");
+                              }
+                            }}
+                            placeholder="e.g. 6"
+                          />
+                        </label>
+                        <p className="text-[10px] text-slate-600 max-w-[12rem] leading-snug pb-1">
+                          Saved on blur. Used later for sailor race-by-race logs.
+                        </p>
                         <button
                           type="button"
                           onClick={() =>
@@ -3507,12 +3589,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     <table className="w-full text-left border-collapse text-xs">
                       <thead>
                         <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                          <th className="py-4 px-6">Competitor</th>
-                          <th className="py-4 px-6">Sail Number</th>
-                          <th className="py-4 px-6 text-center">Total Score</th>
-                          <th className="py-4 px-6 text-center">Nett Score</th>
-                          <th className="py-4 px-6 text-center">Rank / pts</th>
-                          <th className="py-4 px-6 text-center">Status</th>
+                          <th className="py-4 px-4 text-center">Rank</th>
+                          <th className="py-4 px-6">Name</th>
+                          <th className="py-4 px-4 text-center">Gender</th>
+                          <th className="py-4 px-4 text-center">Age</th>
+                          <th className="py-4 px-4 text-center">Total Score</th>
+                          <th className="py-4 px-4 text-center">Nett Score</th>
+                          <th className="py-4 px-4 text-center">Status</th>
                           <th className="py-4 px-6 text-right">Actions</th>
                         </tr>
                       </thead>
@@ -3525,6 +3608,12 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             const sailor = sailorList.find((s) => s.id === res.sailorId);
                             const dns = Boolean(res.isDns || res.isDNS);
                             const overseas = Boolean(res.isOverseasCommitment);
+                            const age = (() => {
+                              if (!sailor?.dob) return "—";
+                              const y = new Date(sailor.dob).getFullYear();
+                              if (!Number.isFinite(y)) return "—";
+                              return String(new Date().getFullYear() - y);
+                            })();
                             return (
                               <tr
                                 key={res.id}
@@ -3536,21 +3625,26 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                       : ""
                                 }`}
                               >
-                                <td className="py-4 px-6 font-bold text-white">
-                                  {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
-                                </td>
-                                <td className="py-4 px-6 font-mono text-slate-400">
-                                  {sailor ? sailor.sailNumber : "-"}
-                                </td>
-                                <td className="py-4 px-6 text-center font-mono">
-                                  {res.totalScore != null ? res.totalScore : "—"}
-                                </td>
-                                <td className="py-4 px-6 text-center font-mono">{res.nettScore != null ? res.nettScore : "—"}</td>
-                                <td className="py-4 px-6 text-center font-mono">
+                                <td className="py-4 px-4 text-center font-mono font-bold text-orange-400">
                                   {res.rank}
                                   {overseas ? "†" : dns ? "*" : ""}
                                 </td>
-                                <td className="py-4 px-6 text-center">
+                                <td className="py-4 px-6 font-bold text-white">
+                                  {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
+                                </td>
+                                <td className="py-4 px-4 text-center text-slate-300">
+                                  {sailor?.gender || "—"}
+                                </td>
+                                <td className="py-4 px-4 text-center font-mono text-slate-300">
+                                  {age}
+                                </td>
+                                <td className="py-4 px-4 text-center font-mono">
+                                  {res.totalScore != null ? res.totalScore : "—"}
+                                </td>
+                                <td className="py-4 px-4 text-center font-mono">
+                                  {res.nettScore != null ? res.nettScore : "—"}
+                                </td>
+                                <td className="py-4 px-4 text-center">
                                   <span className={`inline-block px-2 py-0.5 rounded text-[10px] ${
                                     overseas
                                       ? "bg-sky-500/10 text-sky-300 border border-sky-500/25"
@@ -3596,7 +3690,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           })}
                         {resultsList.filter((res) => res.regattaId === selectedRegattaIdForResultEdit).length === 0 && (
                           <tr>
-                            <td colSpan={7} className="text-center py-12 text-slate-500">
+                            <td colSpan={8} className="text-center py-12 text-slate-500">
                               No sailor results logged. Click Add Score or Fill DNS for non-starters.
                             </td>
                           </tr>

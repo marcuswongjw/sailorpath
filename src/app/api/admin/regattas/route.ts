@@ -37,6 +37,10 @@ export async function POST(req: Request) {
       slugify(String(body.name), String(body.date));
     const totalFleetSize = Number(body.totalFleetSize) || 50;
     const division = body.division || "Gold";
+    const raceCount =
+      body.raceCount === "" || body.raceCount == null
+        ? null
+        : Math.max(0, Math.round(Number(body.raceCount))) || null;
 
     const [row] = await db
       .insert(regattas)
@@ -46,6 +50,7 @@ export async function POST(req: Request) {
         date: String(body.date),
         totalFleetSize,
         division,
+        raceCount,
       })
       .onConflictDoUpdate({
         target: regattas.slug,
@@ -54,6 +59,7 @@ export async function POST(req: Request) {
           date: String(body.date),
           totalFleetSize,
           division,
+          raceCount,
           updatedAt: new Date(),
         },
       })
@@ -80,6 +86,12 @@ export async function PATCH(req: Request) {
     if (body.division !== undefined) patch.division = body.division || "Gold";
     if (body.totalFleetSize !== undefined) {
       patch.totalFleetSize = Number(body.totalFleetSize) || 50;
+    }
+    if (body.raceCount !== undefined) {
+      patch.raceCount =
+        body.raceCount === "" || body.raceCount == null
+          ? null
+          : Math.max(0, Math.round(Number(body.raceCount))) || null;
     }
     if (body.slug !== undefined && body.slug) {
       patch.slug = String(body.slug).trim();

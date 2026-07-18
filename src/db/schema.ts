@@ -86,6 +86,11 @@ export const regattas = pgTable("regattas", {
   date: date("date").notNull(),
   totalFleetSize: integer("total_fleet_size").notNull(),
   division: text("division").default("Gold").notNull(),
+  /**
+   * Number of individual races in this regatta (for sailor race-log observations).
+   * Optional until set by admin.
+   */
+  raceCount: integer("race_count"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

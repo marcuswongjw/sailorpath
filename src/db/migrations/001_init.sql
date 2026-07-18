@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS public.regattas (
   date date NOT NULL,
   total_fleet_size integer NOT NULL,
   division text DEFAULT 'Gold' NOT NULL,
+  race_count integer,
   created_at timestamp DEFAULT now() NOT NULL,
   updated_at timestamp DEFAULT now() NOT NULL,
   CONSTRAINT regattas_slug_unique UNIQUE (slug)
