@@ -351,7 +351,8 @@ export async function POST(req: Request) {
 
         // Rank is always integer; nett/total may be fractional (14.5)
         const rank = row.rank != null ? Math.round(row.rank) : 999;
-        const nett = row.nett != null ? row.nett : rank;
+        // Nett optional — only store when sheet has a nett value
+        const nett = row.nett != null ? row.nett : null;
         const total = row.total != null ? row.total : null;
 
         await db

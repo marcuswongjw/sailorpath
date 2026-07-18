@@ -251,7 +251,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     regattaId: "",
     sailorId: "",
     rank: 1,
-    nettScore: 1,
+    nettScore: "",
     totalScore: "",
     isDNS: false,
     isOverseasCommitment: false,
@@ -3261,7 +3261,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Nett Score (Points)</label>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">Nett Score (optional)</label>
                         <input
                           type="number"
                           step="any"
@@ -3299,7 +3299,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               ...(on
                                 ? {
                                     rank: dnsPts,
-                                    nettScore: dnsPts,
+                                    // Nett stays optional (not a race score)
                                   }
                                 : {}),
                             });
@@ -3383,7 +3383,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               regattaId: selectedRegattaIdForResultEdit,
                               sailorId: "",
                               rank: 1,
-                              nettScore: 1,
+                              nettScore: "",
                               totalScore: "",
                               isDNS: false,
                               _dnsDefault: dnsPts,
@@ -3444,7 +3444,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 <td className="py-4 px-6 text-center font-mono">
                                   {res.totalScore != null ? res.totalScore : "—"}
                                 </td>
-                                <td className="py-4 px-6 text-center font-mono">{res.nettScore}</td>
+                                <td className="py-4 px-6 text-center font-mono">{res.nettScore != null ? res.nettScore : "—"}</td>
                                 <td className="py-4 px-6 text-center font-mono">
                                   {res.rank}
                                   {overseas ? "†" : dns ? "*" : ""}
@@ -3580,7 +3580,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         regattaId: regattaList[0]?.id || "",
                         sailorId: sid,
                         rank: 1,
-                        nettScore: 1,
+                        nettScore: "",
                         totalScore: "",
                         isDNS: false,
                       });
@@ -3661,7 +3661,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     </div>
                     <div>
                       <label className="text-[10px] font-bold text-slate-500 uppercase">
-                        Nett Score
+                        Nett Score (optional)
                       </label>
                       <input
                         type="number"
@@ -3691,7 +3691,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             ...resultForm,
                             isDNS: on,
                             isDns: on,
-                            ...(on ? { rank: dnsPts, nettScore: dnsPts } : {}),
+                            ...(on ? { rank: dnsPts } : {}),
                           });
                         }}
                         className="rounded border-slate-700 bg-slate-900 text-orange-600 h-4 w-4"
@@ -3778,7 +3778,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           {r.totalScore != null ? r.totalScore : "—"}
                         </td>
                         <td className="py-3 px-4 text-center font-mono">
-                          {r.nettScore}
+                          {r.nettScore != null ? r.nettScore : "—"}
                         </td>
                         <td className="py-3 px-4 text-center">
                           <span className={`text-[10px] px-2 py-0.5 rounded ${

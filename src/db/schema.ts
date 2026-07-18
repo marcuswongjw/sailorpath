@@ -101,8 +101,11 @@ export const regattaResults = pgTable(
       .references(() => regattas.id, { onDelete: "cascade" })
       .notNull(),
     rank: integer("rank").notNull(),
-    /** Allows half-points e.g. 14.5 from scoring systems */
-    nettScore: real("nett_score").notNull(),
+    /**
+     * Race nett points (optional). May be null when only ranking points apply
+     * (e.g. overseas commitment / DNS with standing-based score).
+     */
+    nettScore: real("nett_score"),
     /** Gross / total points before discards (optional; from Excel "Total" / "Total Score") */
     totalScore: real("total_score"),
     /**

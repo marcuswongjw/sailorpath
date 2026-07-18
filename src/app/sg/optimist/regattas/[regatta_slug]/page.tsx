@@ -67,7 +67,7 @@ export default async function RegattaDetailPage({
                     <td className="px-4 py-3 text-slate-300 font-mono">
                       {r.totalScore != null ? r.totalScore : "—"}
                     </td>
-                    <td className="px-4 py-3 text-slate-300 font-mono">{r.nettScore}</td>
+                    <td className="px-4 py-3 text-slate-300 font-mono">{r.nettScore != null ? r.nettScore : "—"}</td>
                     <td className="px-4 py-3">
                       <span
                         className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.className}`}

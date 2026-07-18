@@ -117,7 +117,8 @@ export async function POST(req: Request) {
             sailorId: s.id,
             regattaId,
             rank: dnsPoints,
-            nettScore: dnsPoints,
+            // Nett optional — series scoring uses rank; leave null unless set later
+            nettScore: null,
             totalScore: null,
             isDns: true,
           })
@@ -165,10 +166,11 @@ export async function POST(req: Request) {
         rank = 999;
       }
     }
+    // Nett is optional (e.g. overseas commitment has ranking points but no race nett)
     const nettScore =
       body.nettScore != null && body.nettScore !== ""
         ? Number(body.nettScore)
-        : rank;
+        : null;
     const totalScore =
       body.totalScore != null && body.totalScore !== ""
         ? Number(body.totalScore)
@@ -222,7 +224,10 @@ export async function PATCH(req: Request) {
     const patch: Record<string, unknown> = { updatedAt: new Date() };
     if (body.rank !== undefined) patch.rank = Number(body.rank) || 999;
     if (body.nettScore !== undefined) {
-      patch.nettScore = Number(body.nettScore) || 0;
+      patch.nettScore =
+        body.nettScore === "" || body.nettScore == null
+          ? null
+          : Number(body.nettScore);
     }
     if (body.totalScore !== undefined) {
       patch.totalScore =
@@ -265,7 +270,7 @@ export async function PATCH(req: Request) {
           if (!existing.isDns && !existing.isOverseasCommitment) {
             const pts = (reg.totalFleetSize || 50) + 1;
             patch.rank = pts;
-            if (body.nettScore === undefined) patch.nettScore = pts;
+            // Leave nett optional — do not invent a race nett for DNS
           }
         }
       }

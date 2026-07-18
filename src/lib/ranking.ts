@@ -51,8 +51,8 @@ export interface RegattaResultRecord {
   sailorId: string;
   regattaId: string;
   rank: number;
-  /** May be fractional (e.g. 14.5) */
-  nettScore: number;
+  /** May be fractional (e.g. 14.5); optional when only rank/points apply */
+  nettScore?: number | null;
   /** Gross total before discards, if provided */
   totalScore?: number | null;
   /** Stored DNS / non-start — score still uses rank (editable) */

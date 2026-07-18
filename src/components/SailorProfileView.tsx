@@ -511,9 +511,7 @@ export function SailorProfileView({
                       <span className="block text-xs text-slate-500 uppercase">
                         Nett
                       </span>
-                      <span className="text-white text-lg font-black">
-                        {res.nettScore}
-                      </span>
+                      <span className="text-white text-lg font-black">{res.nettScore != null ? res.nettScore : "—"}</span>
                     </div>
                     <span
                       className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${className}`}
