@@ -57,7 +57,7 @@ export default async function HomePage() {
             className="rounded-full bg-orange-600 hover:bg-orange-500 hover:scale-105 transition-all text-xs font-black uppercase tracking-wider text-white px-8 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2"
           >
             <Trophy className="h-4 w-4" />
-            Claim Your Sailor Profile (Free)
+            Create free account
           </Link>
           <Link
             href="/sample"

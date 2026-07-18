@@ -21,7 +21,15 @@ export default async function SailorProfilePage({
     if (!sailor) notFound();
 
     const auth = await getAuthContext();
-    const canSeePrivate = auth?.role === "superadmin";
+    const isLinkedOwner = Boolean(
+      auth?.userId && sailor.parentId === auth.userId
+    );
+    const isSuperadmin = auth?.role === "superadmin";
+    const canSeePrivate = isSuperadmin || isLinkedOwner;
+    const isOwner = isLinkedOwner || isSuperadmin;
+    const canClaim = Boolean(
+      auth?.userId && !sailor.parentId && !isSuperadmin
+    );
 
     const results = await getResultsForSailor(sailor.id);
 
@@ -29,9 +37,9 @@ export default async function SailorProfilePage({
       <SailorProfileView
         initialSailor={{
           ...sailor,
-          isPublicWeight: false,
-          isPublicDob: false,
-          isPublicEquipment: true,
+          isPublicWeight: sailor.isPublicWeight ?? false,
+          isPublicDob: sailor.isPublicDob ?? false,
+          isPublicEquipment: sailor.isPublicEquipment ?? true,
         }}
         initialResults={results.map((r) => ({
           id: r.regattaSlug,
@@ -51,15 +59,10 @@ export default async function SailorProfilePage({
         }))}
         initialEquipment={null}
         canSeePrivate={canSeePrivate}
-        canClaim={
-          Boolean(auth?.userId) &&
-          !sailor.parentId &&
-          auth?.role !== "superadmin"
-        }
-        isOwner={
-          Boolean(auth?.userId && sailor.parentId === auth.userId) ||
-          auth?.role === "superadmin"
-        }
+        canClaim={canClaim}
+        isOwner={isOwner}
+        isLoggedIn={Boolean(auth?.userId)}
+        profileClaimed={Boolean(sailor.parentId)}
       />
     );
   } catch (e) {

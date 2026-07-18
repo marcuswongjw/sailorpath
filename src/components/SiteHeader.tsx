@@ -7,11 +7,27 @@ import { createBrowserSupabase } from "@/lib/supabase/browser";
 
 export function SiteHeader() {
   const [email, setEmail] = useState<string | null>(null);
+  const [isSuperadmin, setIsSuperadmin] = useState(false);
   const [ready, setReady] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     let unsub: (() => void) | undefined;
+    let cancelled = false;
+
+    const loadRole = async () => {
+      try {
+        const res = await fetch("/api/admin/me", { credentials: "include" });
+        const data = await res.json();
+        if (!cancelled) {
+          setIsSuperadmin(Boolean(data.isSuperadmin));
+          if (data.user?.email) setEmail(data.user.email);
+        }
+      } catch {
+        if (!cancelled) setIsSuperadmin(false);
+      }
+    };
+
     (async () => {
       try {
         const supabase = createBrowserSupabase();
@@ -20,15 +36,23 @@ export function SiteHeader() {
         } = await supabase.auth.getSession();
         setEmail(session?.user?.email ?? null);
         setReady(true);
+        if (session?.user) await loadRole();
+        else setIsSuperadmin(false);
+
         const { data } = supabase.auth.onAuthStateChange((_e, s) => {
           setEmail(s?.user?.email ?? null);
+          if (s?.user) void loadRole();
+          else setIsSuperadmin(false);
         });
         unsub = () => data.subscription.unsubscribe();
       } catch {
         setReady(true);
       }
     })();
-    return () => unsub?.();
+    return () => {
+      cancelled = true;
+      unsub?.();
+    };
   }, []);
 
   const signOut = async () => {
@@ -50,7 +74,6 @@ export function SiteHeader() {
           SG Optimist
           <ChevronDown className="h-4 w-4 text-slate-500 group-hover:text-slate-300" />
         </button>
-        {/* Desktop hover dropdown */}
         <div className="absolute left-0 top-[52px] hidden group-hover:block w-52 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50">
           <Link
             href="/sg/optimist/gold"
@@ -105,15 +128,24 @@ export function SiteHeader() {
     <span className="text-xs text-slate-600">…</span>
   ) : email ? (
     <>
-      <span className="hidden lg:inline text-xs text-slate-300 max-w-[200px] truncate">
+      <span className="hidden lg:inline text-xs text-slate-300 max-w-[180px] truncate">
         {email}
       </span>
-      <a
-        href="https://admin.sailorpath.com/"
-        className="text-xs font-bold text-slate-400 hover:text-white"
+      <Link
+        href="/account"
+        onClick={() => setMobileOpen(false)}
+        className="text-sm font-semibold text-orange-400 hover:text-orange-300"
       >
-        Admin
-      </a>
+        My account
+      </Link>
+      {isSuperadmin && (
+        <a
+          href="https://admin.sailorpath.com/"
+          className="text-xs font-bold text-slate-400 hover:text-white"
+        >
+          Admin
+        </a>
+      )}
       <button
         type="button"
         onClick={signOut}
@@ -134,7 +166,7 @@ export function SiteHeader() {
         href="/register"
         className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-500"
       >
-        Claim your profile
+        Create account
       </Link>
     </>
   );

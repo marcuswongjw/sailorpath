@@ -5,7 +5,7 @@ import Link from "next/link";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 
 export default function RegisterPage() {
-  const [handle, setHandle] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -24,13 +24,13 @@ export default function RegisterPage() {
     try {
       const supabase = createBrowserSupabase();
       const cleanEmail = email.trim().toLowerCase();
-      const cleanHandle = handle.trim().toLowerCase();
+      const cleanName = displayName.trim() || cleanEmail.split("@")[0];
       const { data, error: authError } = await supabase.auth.signUp({
         email: cleanEmail,
         password,
         options: {
-          data: { handle: cleanHandle, full_name: cleanHandle },
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=/`,
+          data: { full_name: cleanName },
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/account?welcome=1`,
         },
       });
       if (authError) {
@@ -63,7 +63,7 @@ export default function RegisterPage() {
           /* ok */
         }
         setDone("session");
-        setTimeout(() => window.location.assign("/"), 800);
+        setTimeout(() => window.location.assign("/account?welcome=1"), 600);
       } else {
         setDone("confirm");
       }
@@ -79,13 +79,18 @@ export default function RegisterPage() {
       <div className="min-h-[70vh] flex items-center justify-center px-4">
         <div className="max-w-md glass-card rounded-3xl p-8 text-center space-y-3 border border-white/5">
           <h1 className="text-xl font-black text-white">Confirm your email</h1>
-          <p className="text-xs text-slate-400">
-            Account created for {email}. Open the confirmation link, or turn off
-            Confirm email in Supabase (for testing), then{" "}
+          <p className="text-xs text-slate-400 leading-relaxed">
+            We created an account for <strong className="text-white">{email}</strong>.
+            Check your inbox for a confirmation link from Supabase. After
+            confirming,{" "}
             <Link href="/login" className="text-orange-400 font-bold">
               log in
             </Link>
-            .
+            , then claim your sailor profile from Search.
+          </p>
+          <p className="text-[11px] text-slate-600 leading-relaxed">
+            If nothing arrives: site admin can turn off &quot;Confirm email&quot;
+            in Supabase Auth settings for testing.
           </p>
         </div>
       </div>
@@ -95,7 +100,7 @@ export default function RegisterPage() {
   if (done === "session") {
     return (
       <div className="min-h-[70vh] flex items-center justify-center text-orange-400 text-sm font-bold">
-        Account created — redirecting…
+        Account created — opening My account…
       </div>
     );
   }
@@ -105,26 +110,22 @@ export default function RegisterPage() {
       <div className="w-full max-w-md glass-card rounded-3xl border border-white/5 p-8 space-y-6">
         <div className="text-center">
           <h1 className="text-2xl font-black text-white">Create account</h1>
-          <p className="text-xs text-slate-400 mt-2">Email + password (Google later)</p>
+          <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+            Step 1 of 2 — create a login. You claim an existing sailor ranking
+            profile after you sign in.
+          </p>
         </div>
         {error && (
           <p className="text-xs font-bold text-rose-400 text-center">{error}</p>
         )}
         <form onSubmit={onSubmit} className="space-y-4">
-          <div className="flex rounded-xl bg-slate-950 border border-white/10 overflow-hidden">
-            <span className="pl-3 self-center text-xs text-slate-500">
-              sailorpath.com/
-            </span>
-            <input
-              required
-              value={handle}
-              onChange={(e) =>
-                setHandle(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))
-              }
-              placeholder="handle"
-              className="w-full bg-transparent py-3 px-2 text-sm text-white focus:outline-none font-bold"
-            />
-          </div>
+          <input
+            required
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            placeholder="Your name (parent or sailor)"
+            className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
+          />
           <input
             type="email"
             required

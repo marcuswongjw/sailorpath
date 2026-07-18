@@ -14,7 +14,11 @@ import {
 } from "@/lib/ranking";
 import { asc, desc, eq, ilike, or, sql } from "drizzle-orm";
 
-function mapSailor(row: typeof sailors.$inferSelect): SailorRecord {
+function mapSailor(row: typeof sailors.$inferSelect): SailorRecord & {
+  isPublicWeight?: boolean;
+  isPublicDob?: boolean;
+  isPublicEquipment?: boolean;
+} {
   return {
     id: row.id,
     name: row.name,
@@ -50,6 +54,9 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorRecord {
     european: row.european,
     asian: row.asian,
     seaGames: row.seaGames,
+    isPublicWeight: row.isPublicWeight,
+    isPublicDob: row.isPublicDob,
+    isPublicEquipment: row.isPublicEquipment,
   };
 }
 

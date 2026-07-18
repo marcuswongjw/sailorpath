@@ -8,7 +8,7 @@ import { safeAuthNext } from "@/lib/supabase/cookie-options";
 
 function LoginForm() {
   const searchParams = useSearchParams();
-  const nextTarget = safeAuthNext(searchParams.get("next"), "/");
+  const nextTarget = safeAuthNext(searchParams.get("next"), "/account");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(searchParams.get("error"));

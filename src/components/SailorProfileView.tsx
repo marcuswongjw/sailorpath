@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getPercentileBadge } from "@/lib/ranking";
 import {
@@ -17,6 +17,7 @@ import {
   User,
   Link2,
   UserPlus,
+  Pencil,
 } from "lucide-react";
 
 interface SailorProfileViewProps {
@@ -26,6 +27,10 @@ interface SailorProfileViewProps {
   canSeePrivate?: boolean;
   canClaim?: boolean;
   isOwner?: boolean;
+  /** Logged-in visitor (not necessarily owner) */
+  isLoggedIn?: boolean;
+  /** Profile already has an approved parent_id link */
+  profileClaimed?: boolean;
   /** Product-tour mode on /sample — claim does not hit the live API */
   demoMode?: boolean;
   demoRole?: "public" | "sailor" | "parent" | "coach";
@@ -97,6 +102,8 @@ export function SailorProfileView({
   canSeePrivate = false,
   canClaim = false,
   isOwner = false,
+  isLoggedIn = false,
+  profileClaimed = false,
   demoMode = false,
   demoRole,
   onDemoClaim,
@@ -112,15 +119,81 @@ export function SailorProfileView({
   );
   const [visibleCount, setVisibleCount] = useState(15);
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
+  const [claimMsg, setClaimMsg] = useState<string | null>(null);
   const [claimBusy, setClaimBusy] = useState(false);
   const [copyMsg, setCopyMsg] = useState<string | null>(null);
+  const [editing, setEditing] = useState(false);
+  const [saveBusy, setSaveBusy] = useState(false);
+  const [saveMsg, setSaveMsg] = useState<string | null>(null);
+  const [form, setForm] = useState({
+    bio: initialSailor.bio || "",
+    instagram: initialSailor.instagram || "",
+    avatarUrl: initialSailor.avatarUrl || "",
+    school: initialSailor.school || "",
+    weight:
+      initialSailor.weight != null ? String(initialSailor.weight) : "",
+  });
+  const [displaySailor, setDisplaySailor] = useState(initialSailor);
+
+  useEffect(() => {
+    if (!demoMode && isOwner && typeof window !== "undefined") {
+      const sp = new URLSearchParams(window.location.search);
+      if (sp.get("edit") === "1") setEditing(true);
+    }
+  }, [demoMode, isOwner]);
 
   const hasPrivateAccess = canSeePrivate;
   const showWeight = isPublicWeight || hasPrivateAccess;
   const showEquipment = isPublicEquipment || hasPrivateAccess;
 
-  const fleetBadge = resolveDisplayFleet(initialSailor);
-  const honors = buildHonorTags(initialSailor);
+  const saveProfile = async () => {
+    if (demoMode) {
+      setSaveMsg("Demo only — changes are not saved");
+      setTimeout(() => setSaveMsg(null), 2500);
+      return;
+    }
+    setSaveBusy(true);
+    setSaveMsg(null);
+    try {
+      const res = await fetch("/api/account/sailor", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sailorId: initialSailor.id,
+          bio: form.bio,
+          instagram: form.instagram,
+          avatarUrl: form.avatarUrl,
+          school: form.school,
+          weight: form.weight === "" ? null : Number(form.weight),
+          isPublicWeight,
+          isPublicDob,
+          isPublicEquipment,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Save failed");
+      setDisplaySailor((s: any) => ({
+        ...s,
+        ...data.sailor,
+        bio: data.sailor.bio,
+        instagram: data.sailor.instagram,
+        avatarUrl: data.sailor.avatarUrl,
+        school: data.sailor.school,
+        weight: data.sailor.weight,
+      }));
+      setSaveMsg("Saved");
+      setEditing(false);
+      setTimeout(() => setSaveMsg(null), 2500);
+    } catch (e: any) {
+      setSaveMsg(e.message || "Save failed");
+    } finally {
+      setSaveBusy(false);
+    }
+  };
+
+  const fleetBadge = resolveDisplayFleet(displaySailor);
+  const honors = buildHonorTags(displaySailor);
 
   const calculateAge = (dobString: string) => {
     if (!dobString) return "N/A";
@@ -143,16 +216,16 @@ export function SailorProfileView({
         <div className="flex flex-col md:flex-row items-center gap-6 min-w-0">
           {/* Avatar: photo if set, else initials */}
           <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-full border-2 border-orange-500/25 shadow-xl bg-gradient-to-br from-orange-600/30 to-slate-900 flex items-center justify-center shrink-0 overflow-hidden">
-            {initialSailor.avatarUrl ? (
+            {displaySailor.avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={initialSailor.avatarUrl}
-                alt={initialSailor.name}
+                src={displaySailor.avatarUrl}
+                alt={displaySailor.name}
                 className="h-full w-full object-cover"
               />
             ) : (
               <span className="text-3xl md:text-4xl font-black text-orange-300 tracking-tight">
-                {initials(initialSailor.name)}
+                {initials(displaySailor.name)}
               </span>
             )}
             <span className="absolute -bottom-1 -right-1 h-8 w-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center">
@@ -163,7 +236,7 @@ export function SailorProfileView({
           <div className="text-center md:text-left min-w-0">
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
               <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                {initialSailor.name}
+                {displaySailor.name}
               </h1>
               <span
                 className={`self-center inline-flex items-center rounded-full px-3 py-0.5 text-xs font-bold border ${fleetBadge.className}`}
@@ -175,17 +248,17 @@ export function SailorProfileView({
             <p className="mt-2 text-slate-400 flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1.5 text-sm font-medium">
               <span className="flex items-center gap-1">
                 <MapPin className="h-4 w-4 text-orange-500" />
-                {initialSailor.club}
-                {initialSailor.school ? ` · ${initialSailor.school}` : ""}
-                {initialSailor.nationality
-                  ? ` · ${initialSailor.nationality}`
+                {displaySailor.club}
+                {displaySailor.school ? ` · ${displaySailor.school}` : ""}
+                {displaySailor.nationality
+                  ? ` · ${displaySailor.nationality}`
                   : ""}
               </span>
             </p>
 
-            {initialSailor.bio && (
+            {displaySailor.bio && (
               <p className="mt-3 text-xs md:text-sm text-slate-300 italic max-w-md bg-white/5 px-3 py-2 rounded-xl border border-white/5">
-                &ldquo;{initialSailor.bio}&rdquo;
+                &ldquo;{displaySailor.bio}&rdquo;
               </p>
             )}
 
@@ -224,12 +297,21 @@ export function SailorProfileView({
                 <Link2 className="h-3.5 w-3.5" />
                 {copyMsg || "Copy profile link"}
               </button>
+              {!demoMode && !isLoggedIn && !profileClaimed && (
+                <Link
+                  href={`/login?next=${encodeURIComponent(`/${displaySailor.handle || ""}`)}`}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-orange-600/90 hover:bg-orange-500 px-3 py-1.5 text-[11px] font-bold text-white"
+                >
+                  <UserPlus className="h-3.5 w-3.5" />
+                  Log in to claim
+                </Link>
+              )}
               {canClaim && (
                 <button
                   type="button"
                   disabled={
                     claimBusy ||
-                    Boolean(claimStatus) ||
+                    claimStatus === "pending" ||
                     (demoMode && !onDemoClaim)
                   }
                   onClick={async () => {
@@ -238,17 +320,29 @@ export function SailorProfileView({
                       return;
                     }
                     setClaimBusy(true);
+                    setClaimMsg(null);
                     try {
+                      // Ensure profiles row exists (required for claim FK)
+                      await fetch("/api/auth/ensure-profile", {
+                        method: "POST",
+                        credentials: "include",
+                      });
                       const res = await fetch("/api/claims", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
+                        credentials: "include",
                         body: JSON.stringify({ sailorId: initialSailor.id }),
                       });
                       const data = await res.json();
                       if (!res.ok) throw new Error(data.error || "Claim failed");
                       setClaimStatus("pending");
+                      setClaimMsg(
+                        data.message ||
+                          "Claim submitted. Track status under My account."
+                      );
                     } catch (e: any) {
-                      setClaimStatus(e.message || "Error");
+                      setClaimStatus("error");
+                      setClaimMsg(e.message || "Error");
                     } finally {
                       setClaimBusy(false);
                     }
@@ -266,18 +360,42 @@ export function SailorProfileView({
                 </button>
               )}
               {isOwner && (
-                <span className="text-[11px] font-bold text-emerald-400/90 self-center">
-                  {demoMode
-                    ? demoRole === "parent"
-                      ? "Parent view · linked guardian"
-                      : "You manage this profile"
-                    : "You manage this profile"}
-                </span>
+                <>
+                  <span className="text-[11px] font-bold text-emerald-400/90 self-center">
+                    {demoMode
+                      ? demoRole === "parent"
+                        ? "Parent view · linked guardian"
+                        : "You manage this profile"
+                      : "You manage this profile"}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setEditing((e) => !e)}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-3 py-1.5 text-[11px] font-bold text-slate-200 hover:text-white"
+                  >
+                    <Pencil className="h-3.5 w-3.5" />
+                    {editing ? "Close editor" : "Edit profile"}
+                  </button>
+                </>
               )}
             </div>
-            {claimStatus && claimStatus !== "pending" && (
-              <p className="mt-2 text-[11px] text-rose-300 text-center md:text-left">
-                {claimStatus}
+            {claimMsg && (
+              <p
+                className={`mt-2 text-[11px] text-center md:text-left ${
+                  claimStatus === "error" ? "text-rose-300" : "text-emerald-300"
+                }`}
+              >
+                {claimMsg}{" "}
+                {claimStatus === "pending" && !demoMode && (
+                  <Link href="/account" className="underline font-bold">
+                    My account
+                  </Link>
+                )}
+              </p>
+            )}
+            {saveMsg && (
+              <p className="mt-2 text-[11px] text-emerald-300 text-center md:text-left">
+                {saveMsg}
               </p>
             )}
           </div>
@@ -288,10 +406,100 @@ export function SailorProfileView({
             Sail number
           </span>
           <span className="block text-3xl md:text-5xl font-black text-orange-500 tracking-tight mt-1 font-mono">
-            {initialSailor.sailNumber || "—"}
+            {displaySailor.sailNumber || "—"}
           </span>
         </div>
       </div>
+
+      {/* Owner edit panel */}
+      {isOwner && editing && (
+        <div className="glass-panel rounded-2xl border border-orange-500/25 p-5 md:p-6 space-y-4">
+          <div className="flex items-center gap-2">
+            <Pencil className="h-4 w-4 text-orange-400" />
+            <h2 className="text-sm font-black text-white uppercase tracking-wider">
+              Edit your profile
+            </h2>
+          </div>
+          <p className="text-[11px] text-slate-500">
+            Ranking, fleet, and squad fields are managed by SailorPath admins.
+            You can update bio, photo, school, weight, and privacy.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <label className="block sm:col-span-2">
+              <span className="text-[10px] font-bold text-slate-500 uppercase">
+                Bio
+              </span>
+              <textarea
+                value={form.bio}
+                onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
+                rows={3}
+                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[10px] font-bold text-slate-500 uppercase">
+                School
+              </span>
+              <input
+                value={form.school}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, school: e.target.value }))
+                }
+                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[10px] font-bold text-slate-500 uppercase">
+                Weight (kg)
+              </span>
+              <input
+                type="number"
+                min={20}
+                max={120}
+                value={form.weight}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, weight: e.target.value }))
+                }
+                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[10px] font-bold text-slate-500 uppercase">
+                Instagram
+              </span>
+              <input
+                value={form.instagram}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, instagram: e.target.value }))
+                }
+                placeholder="@handle"
+                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[10px] font-bold text-slate-500 uppercase">
+                Photo URL
+              </span>
+              <input
+                value={form.avatarUrl}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, avatarUrl: e.target.value }))
+                }
+                placeholder="https://…"
+                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+              />
+            </label>
+          </div>
+          <button
+            type="button"
+            disabled={saveBusy}
+            onClick={() => void saveProfile()}
+            className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-50"
+          >
+            {saveBusy ? "Saving…" : "Save changes"}
+          </button>
+        </div>
+      )}
 
       {/* Equal-width Athlete Stats + Equipment */}
       <div
@@ -310,8 +518,8 @@ export function SailorProfileView({
                 Age
               </span>
               <span className="block text-2xl font-extrabold text-white mt-1">
-                {calculateAge(initialSailor.dob)}
-                {initialSailor.dob ? " yrs" : ""}
+                {calculateAge(displaySailor.dob)}
+                {displaySailor.dob ? " yrs" : ""}
               </span>
             </div>
             <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
@@ -319,8 +527,8 @@ export function SailorProfileView({
                 Weight
               </span>
               <span className="block text-2xl font-extrabold text-white mt-1 font-mono">
-                {showWeight && initialSailor.weight != null
-                  ? `${initialSailor.weight} kg`
+                {showWeight && displaySailor.weight != null
+                  ? `${displaySailor.weight} kg`
                   : "Private"}
               </span>
               {!showWeight && (
@@ -342,7 +550,7 @@ export function SailorProfileView({
                 Gender
               </span>
               <span className="block text-2xl font-extrabold text-white mt-1">
-                {initialSailor.gender || "—"}
+                {displaySailor.gender || "—"}
               </span>
             </div>
           </div>
@@ -400,8 +608,9 @@ export function SailorProfileView({
                 <input
                   type="checkbox"
                   checked={isPublicWeight}
+                  disabled={!isOwner}
                   onChange={(e) => setIsPublicWeight(e.target.checked)}
-                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
+                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4 disabled:opacity-50"
                 />
               </div>
               <div className="flex items-center justify-between border-t border-white/5 pt-3">
@@ -411,8 +620,9 @@ export function SailorProfileView({
                 <input
                   type="checkbox"
                   checked={isPublicEquipment}
+                  disabled={!isOwner}
                   onChange={(e) => setIsPublicEquipment(e.target.checked)}
-                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
+                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4 disabled:opacity-50"
                 />
               </div>
               <div className="flex items-center justify-between border-t border-white/5 pt-3">
@@ -422,10 +632,21 @@ export function SailorProfileView({
                 <input
                   type="checkbox"
                   checked={isPublicDob}
+                  disabled={!isOwner}
                   onChange={(e) => setIsPublicDob(e.target.checked)}
-                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
+                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4 disabled:opacity-50"
                 />
               </div>
+              {isOwner && (
+                <button
+                  type="button"
+                  disabled={saveBusy}
+                  onClick={() => void saveProfile()}
+                  className="w-full mt-2 rounded-full bg-white/5 border border-white/10 py-2 text-[11px] font-bold text-slate-200 hover:text-white disabled:opacity-50"
+                >
+                  {saveBusy ? "Saving privacy…" : "Save privacy settings"}
+                </button>
+              )}
             </div>
           </div>
         )}
