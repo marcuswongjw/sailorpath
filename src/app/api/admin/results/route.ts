@@ -3,6 +3,12 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import {
+  activeSailorsForFleet,
+  missingDnsPairs,
+  rankingRegattasForFleet,
+} from "@/lib/fillDns";
+import type { Period, RegattaRecord, SailorRecord } from "@/lib/ranking";
 
 function parseBool(v: unknown): boolean {
   return (
@@ -76,7 +82,118 @@ export async function POST(req: Request) {
     await requireSuperadmin();
     const body = await req.json();
 
-    // Bulk: create DNS rows for series members missing a result at this regatta
+    /**
+     * fillDnsPeriod: ensure every active Gold/Silver sailor for a half-year has a
+     * result row for each ranking regatta in that period (missing → DNS = N+1).
+     * Body: { action, fleet: "Gold"|"Silver", year, half: "Jan-Jun"|"Jul-Dec" }
+     */
+    if (
+      body.action === "fillDnsPeriod" ||
+      body.action === "fillDNSPeriod" ||
+      body.action === "ensureFleetDns"
+    ) {
+      const fleet =
+        String(body.fleet || "Gold").toLowerCase() === "silver"
+          ? "Silver"
+          : "Gold";
+      const year = Number(body.year) || new Date().getFullYear();
+      const half = (
+        body.half === "Jan-Jun" ? "Jan-Jun" : "Jul-Dec"
+      ) as Period["half"];
+      const period: Period = { year, half };
+
+      const [sailorRows, regattaRows, resultRows] = await Promise.all([
+        db.select().from(sailors),
+        db.select().from(regattas),
+        db
+          .select({
+            sailorId: regattaResults.sailorId,
+            regattaId: regattaResults.regattaId,
+          })
+          .from(regattaResults),
+      ]);
+
+      const sailorRecords: SailorRecord[] = sailorRows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        handle: row.handle,
+        sailNumber: row.sailNumber,
+        club: row.club,
+        school: row.school,
+        nationality: row.nationality,
+        goldEntryDate: row.goldEntryDate,
+        silverEntryDate: row.silverEntryDate,
+        dropDate: row.dropDate,
+        currentFleet: row.currentFleet,
+        manuallyDropped: row.manuallyDropped,
+        dob: row.dob,
+        gender: row.gender,
+        nationalSquadStatus: row.nationalSquadStatus,
+      }));
+
+      const regattaRecords: RegattaRecord[] = regattaRows.map((r) => ({
+        id: r.id,
+        name: r.name,
+        slug: r.slug,
+        date: r.date,
+        totalFleetSize: r.totalFleetSize,
+        division: r.division,
+      }));
+
+      const existingKeys = new Set(
+        resultRows.map((r) => `${r.sailorId}|${r.regattaId}`)
+      );
+      const pairs = missingDnsPairs({
+        fleet,
+        period,
+        sailors: sailorRecords,
+        regattas: regattaRecords,
+        existingKeys,
+      });
+      const events = rankingRegattasForFleet(fleet, period, regattaRecords);
+      const fleetSailors = activeSailorsForFleet(
+        fleet,
+        period,
+        sailorRecords
+      );
+
+      let created = 0;
+      for (const p of pairs) {
+        const [row] = await db
+          .insert(regattaResults)
+          .values({
+            sailorId: p.sailorId,
+            regattaId: p.regattaId,
+            rank: p.dnsPoints,
+            nettScore: null,
+            totalScore: null,
+            isDns: true,
+            isOverseasCommitment: false,
+          })
+          .onConflictDoNothing()
+          .returning();
+        if (row) created++;
+      }
+
+      return NextResponse.json({
+        ok: true,
+        message: `Ensured DNS for ${fleet} fleet ${half} ${year}: ${created} missing results created (rank = each regatta fleet size + 1). ${fleetSailors.length} active sailors × ${events.length} ranking regattas.`,
+        created,
+        fleet,
+        period,
+        activeSailors: fleetSailors.length,
+        rankingRegattas: events.map((e) => ({
+          id: e.id,
+          name: e.name,
+          date: e.date,
+          totalFleetSize: e.totalFleetSize,
+          dnsPoints: (e.totalFleetSize || 0) + 1,
+        })),
+        missingBefore: pairs.length,
+      });
+    }
+
+    // Bulk: create DNS for fleet members missing a result at ONE regatta
     if (body.action === "fillDns" || body.action === "fillDNS") {
       const regattaId = String(body.regattaId || "").trim();
       if (!regattaId) {
@@ -95,10 +212,47 @@ export async function POST(req: Request) {
       }
 
       const dnsPoints = Math.max(1, (reg.totalFleetSize || 0) + 1);
-      const allSailors = await db.select().from(sailors);
-      const eligible = allSailors.filter((s) =>
-        seriesMatchesDivision(s, reg.division || "Gold")
-      );
+      // Infer period half from regatta date
+      const d = new Date(reg.date);
+      const year = d.getFullYear();
+      const half: Period["half"] =
+        d.getMonth() < 6 ? "Jan-Jun" : "Jul-Dec";
+      const period: Period = { year, half };
+      const div = (reg.division || "Gold").toLowerCase();
+      const fleet: "Gold" | "Silver" =
+        div === "silver" ? "Silver" : "Gold";
+
+      const sailorRows = await db.select().from(sailors);
+      const sailorRecords: SailorRecord[] = sailorRows.map((row) => ({
+        id: row.id,
+        name: row.name,
+        handle: row.handle,
+        sailNumber: row.sailNumber,
+        club: row.club,
+        goldEntryDate: row.goldEntryDate,
+        silverEntryDate: row.silverEntryDate,
+        dropDate: row.dropDate,
+        currentFleet: row.currentFleet,
+        manuallyDropped: row.manuallyDropped,
+      }));
+      // For "Both" division, fill for both fleets
+      const fleets: ("Gold" | "Silver")[] =
+        div === "both" ? ["Gold", "Silver"] : [fleet];
+      const eligibleIds = new Set<string>();
+      for (const f of fleets) {
+        for (const s of activeSailorsForFleet(f, period, sailorRecords)) {
+          eligibleIds.add(s.id);
+        }
+      }
+      // Fallback if no period-active sailors (date outside half): seriesMatchesDivision
+      if (eligibleIds.size === 0) {
+        for (const s of sailorRows) {
+          if (seriesMatchesDivision(s, reg.division || "Gold")) {
+            eligibleIds.add(s.id);
+          }
+        }
+      }
+
       const existing = await db
         .select({
           sailorId: regattaResults.sailorId,
@@ -109,18 +263,18 @@ export async function POST(req: Request) {
 
       let created = 0;
       const createdRows: (typeof regattaResults.$inferSelect)[] = [];
-      for (const s of eligible) {
-        if (have.has(s.id)) continue;
+      for (const sailorId of eligibleIds) {
+        if (have.has(sailorId)) continue;
         const [row] = await db
           .insert(regattaResults)
           .values({
-            sailorId: s.id,
+            sailorId,
             regattaId,
             rank: dnsPoints,
-            // Nett optional — series scoring uses rank; leave null unless set later
             nettScore: null,
             totalScore: null,
             isDns: true,
+            isOverseasCommitment: false,
           })
           .onConflictDoNothing()
           .returning();
@@ -132,10 +286,10 @@ export async function POST(req: Request) {
 
       return NextResponse.json({
         ok: true,
-        message: `Created ${created} DNS results (score ${dnsPoints} = fleet ${reg.totalFleetSize} + 1) for non-starters in ${reg.division} series.`,
+        message: `Created ${created} DNS results (score ${dnsPoints} = fleet ${reg.totalFleetSize} + 1) for active ${reg.division} fleet members missing this regatta.`,
         created,
         dnsPoints,
-        eligible: eligible.length,
+        eligible: eligibleIds.size,
         alreadyHadResults: have.size,
         results: createdRows.map((r) => ({ ...r, isDNS: r.isDns })),
       });

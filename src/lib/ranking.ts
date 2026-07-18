@@ -179,7 +179,10 @@ export function calculateRankings(
   regattas: RegattaRecord[],
   results: RegattaResultRecord[]
 ): RankedSailor[] {
+  const pStartStr =
+    period.half === "Jan-Jun" ? `${period.year}-01-01` : `${period.year}-07-01`;
   const pEndStr = period.half === "Jan-Jun" ? `${period.year}-06-30` : `${period.year}-12-31`;
+  const pStart = new Date(pStartStr).getTime();
   const pEnd = new Date(pEndStr).getTime();
 
   // 2. Resolve active sailors for the period and partition them
@@ -193,12 +196,12 @@ export function calculateRankings(
 
   // 3. Compute scores for each sailor
   const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
-    // 1. Get the 5 most recent regattas that occurred on or before period end and match sailor's fleet
+    // Ranking regattas for this half-year only (up to 5), matching fleet division
     const sailorRegattas = regattas
       .filter((r) => {
-        const occurred = new Date(r.date).getTime() <= pEnd;
-        if (!occurred) return false;
-        
+        const t = new Date(r.date).getTime();
+        if (t < pStart || t > pEnd) return false;
+
         const div = r.division || "Gold";
         if (sailor.fleet === "Gold") {
           return div === "Gold" || div === "Both";
@@ -226,7 +229,8 @@ export function calculateRankings(
           isOverseasCommitment: Boolean(result.isOverseasCommitment),
         };
       } else {
-        // No row yet: virtual DNS = fleet size + 1 (create a row in admin to edit)
+        // No row yet: virtual DNS = fleet size + 1
+        // Prefer admin “Ensure DNS for fleet period” so rows exist and are editable
         return {
           regattaId: regatta.id,
           regattaName: regatta.name,

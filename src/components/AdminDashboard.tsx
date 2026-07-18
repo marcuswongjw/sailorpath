@@ -1557,9 +1557,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
     const reg = regattaList.find((r) => r.id === regattaId);
     const ok = confirm(
-      `Create DNS scores for all ${reg?.division || ""} series members who do not have a result at “${reg?.name || "this regatta"}”?\n\n` +
-        `Default DNS points = fleet size + 1 = ${(reg?.totalFleetSize || 0) + 1}.\n` +
-        `You can edit any DNS score afterwards.`
+      `Create DNS scores for active ${reg?.division || ""} fleet members who do not have a result at “${reg?.name || "this regatta"}”?\n\n` +
+        `DNS points = fleet size + 1 = ${(reg?.totalFleetSize || 0) + 1}.\n` +
+        `You can edit any row afterwards (e.g. overseas commitment).`
     );
     if (!ok) return;
     try {
@@ -1574,6 +1574,51 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       alert(data.message || `Created ${data.created} DNS rows.`);
     } catch (e: any) {
       alert(e.message || "Fill DNS failed");
+    }
+  };
+
+  /** Ensure every active fleet sailor has results for all ranking regattas in a half-year */
+  const handleFillDnsForPeriod = async (
+    fleet: "Gold" | "Silver",
+    year: number,
+    half: "Jan-Jun" | "Jul-Dec"
+  ) => {
+    if (!isSuperadmin) {
+      alert("Error: 403 Forbidden.");
+      return;
+    }
+    const ok = confirm(
+      `Ensure DNS for all active ${fleet} fleet sailors in ${half} ${year}?\n\n` +
+        `Each sailor will get a result for every ranking regatta in that period they are missing.\n` +
+        `Missing → rank = that regatta’s fleet size + 1 (DNS).\n` +
+        `Existing results (including overseas) are left unchanged.`
+    );
+    if (!ok) return;
+    try {
+      const res = await fetch("/api/admin/results", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "fillDnsPeriod",
+          fleet,
+          year,
+          half,
+        }),
+      });
+      const data = await parseApi(res);
+      if (!res.ok) throw new Error(data.error || "Period DNS fill failed");
+      await refreshResultsList();
+      const events = (data.rankingRegattas || [])
+        .map(
+          (e: any) =>
+            `• ${e.name} (${e.date}) → DNS ${e.dnsPoints}`
+        )
+        .join("\n");
+      alert(
+        `${data.message}\n\nRanking regattas:\n${events || "(none found — import regattas with dates in this period)"}`
+      );
+    } catch (e: any) {
+      alert(e.message || "Period DNS fill failed");
     }
   };
 
@@ -3204,6 +3249,62 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             {/* Sub-Tab Content: RESULTS */}
             {editSubTab === "results" && (
               <div className="space-y-6">
+                {/* Period-wide DNS: every fleet sailor gets a result for each ranking regatta */}
+                <div className="glass-panel rounded-3xl p-6 border border-rose-500/20 bg-rose-500/[0.03] space-y-3">
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                    Ensure DNS for fleet period
+                  </h3>
+                  <p className="text-xs text-slate-500 leading-relaxed">
+                    Gold (or Silver) fleet sailors must have a result for{" "}
+                    <strong className="text-slate-400">every ranking regatta</strong> in the
+                    half-year they are in that fleet. Missing events get DNS = fleet size + 1.
+                    Run this after importing period regattas. Edit overseas commitment scores
+                    afterwards.
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin}
+                      onClick={() =>
+                        void handleFillDnsForPeriod("Gold", 2026, "Jul-Dec")
+                      }
+                      className="rounded-full bg-rose-600/90 hover:bg-rose-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                    >
+                      Gold · Jul–Dec 2026
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin}
+                      onClick={() =>
+                        void handleFillDnsForPeriod("Silver", 2026, "Jul-Dec")
+                      }
+                      className="rounded-full bg-slate-700 hover:bg-slate-600 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                    >
+                      Silver · Jul–Dec 2026
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin}
+                      onClick={() =>
+                        void handleFillDnsForPeriod("Gold", 2026, "Jan-Jun")
+                      }
+                      className="rounded-full bg-white/5 border border-white/10 hover:bg-white/10 disabled:opacity-40 px-4 py-2 text-xs font-bold text-slate-300"
+                    >
+                      Gold · Jan–Jun 2026
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin}
+                      onClick={() =>
+                        void handleFillDnsForPeriod("Silver", 2026, "Jan-Jun")
+                      }
+                      className="rounded-full bg-white/5 border border-white/10 hover:bg-white/10 disabled:opacity-40 px-4 py-2 text-xs font-bold text-slate-300"
+                    >
+                      Silver · Jan–Jun 2026
+                    </button>
+                  </div>
+                </div>
+
                 {/* Select Regatta Dropdown */}
                 <div className="glass-panel rounded-3xl p-6 border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <div className="space-y-1">
