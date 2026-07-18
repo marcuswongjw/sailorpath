@@ -6,6 +6,7 @@ import {
   profiles,
   raceObservations,
   equipmentLogs,
+  sailorAliases,
 } from "@/db/schema";
 import {
   calculateRankings,
@@ -204,12 +205,30 @@ export async function searchSailors(
 
 export async function getSailorByHandle(handle: string) {
   return withDb(async () => {
+    const h = String(handle || "").trim().toLowerCase();
+    if (!h) return null;
+
     const [row] = await db
       .select()
       .from(sailors)
-      .where(eq(sailors.handle, handle))
+      .where(eq(sailors.handle, h))
       .limit(1);
-    return row ? mapSailor(row) : null;
+    if (row) return mapSailor(row);
+
+    // Previous handles kept as aliases after a rename
+    const [alias] = await db
+      .select({ sailorId: sailorAliases.sailorId })
+      .from(sailorAliases)
+      .where(eq(sailorAliases.aliasName, h))
+      .limit(1);
+    if (!alias) return null;
+
+    const [viaAlias] = await db
+      .select()
+      .from(sailors)
+      .where(eq(sailors.id, alias.sailorId))
+      .limit(1);
+    return viaAlias ? mapSailor(viaAlias) : null;
   });
 }
 

@@ -26,6 +26,7 @@ import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { findDuplicateSailorPairs } from "@/lib/nameMatch";
 import { ClaimsAdminPanel } from "@/components/ClaimsAdminPanel";
 import { PromoteAdminPanel } from "@/components/PromoteAdminPanel";
+import { SupportInboxPanel } from "@/components/SupportInboxPanel";
 
 import { Plus, Trash2, Edit3, User, Medal, Copy } from "lucide-react";
 
@@ -179,7 +180,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [bulkStatus, setBulkStatus] = useState<string | null>(null);
 
   // Database Editor Sub-Tabs & Forms
-  const [editSubTab, setEditSubTab] = useState<"sailors" | "regattas" | "results" | "claims" | "promote">("sailors");
+  const [editSubTab, setEditSubTab] = useState<
+    "sailors" | "regattas" | "results" | "claims" | "promote" | "support"
+  >("sailors");
   const [dbSearch, setDbSearch] = useState("");
   const [dbFleetFilter, setDbFleetFilter] = useState<string>("all");
   const [dbSquadFilter, setDbSquadFilter] = useState<string>("all");
@@ -2135,13 +2138,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         {activeTab === "edit" && (
           <div className="w-full min-w-0 space-y-6">
             {/* Sub Tabs */}
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-full">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-full">
               {([
                 ["sailors", "Sailors"],
                 ["regattas", "Regattas"],
                 ["results", "Results"],
                 ["claims", "Claims"],
                 ["promote", "Promote"],
+                ["support", "Support"],
               ] as const).map(([sub, label]) => (
                 <button
                   key={sub}
@@ -2529,6 +2533,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           value={sailorForm.club}
                           onChange={(e) => setSailorForm({ ...sailorForm, club: e.target.value })}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">School</label>
+                        <input
+                          type="text"
+                          value={sailorForm.school || ""}
+                          onChange={(e) =>
+                            setSailorForm({ ...sailorForm, school: e.target.value })
+                          }
+                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                          placeholder="e.g. Raffles Institution"
                         />
                       </div>
                       <div>
@@ -3863,6 +3879,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     );
                   }}
                 />
+              </div>
+            )}
+            {editSubTab === "support" && (
+              <div className="w-full min-w-0">
+                <SupportInboxPanel isSuperadmin={isSuperadmin} />
               </div>
             )}
             </div>

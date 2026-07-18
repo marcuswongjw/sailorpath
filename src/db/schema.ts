@@ -213,3 +213,23 @@ export const equipmentLogs = pgTable("equipment_logs", {
   }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+/** User-submitted support / help requests */
+export const supportMessages = pgTable("support_messages", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  userId: uuid("user_id").references(() => profiles.id, {
+    onDelete: "set null",
+  }),
+  email: text("email").notNull(),
+  name: text("name"),
+  topic: text("topic"),
+  body: text("body").notNull(),
+  pageUrl: text("page_url"),
+  status: text("status", {
+    enum: ["new", "read", "resolved"],
+  })
+    .default("new")
+    .notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});

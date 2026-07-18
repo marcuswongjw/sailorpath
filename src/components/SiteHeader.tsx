@@ -5,28 +5,41 @@ import { useEffect, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 
+type Owned = { id: string; name: string; handle: string };
+
 export function SiteHeader() {
   const [email, setEmail] = useState<string | null>(null);
   const [isSuperadmin, setIsSuperadmin] = useState(false);
+  const [owned, setOwned] = useState<Owned[]>([]);
   const [ready, setReady] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const loadAccount = async () => {
+    try {
+      const res = await fetch("/api/admin/me", { credentials: "include" });
+      const data = await res.json();
+      setIsSuperadmin(Boolean(data.isSuperadmin));
+      if (data.user?.email) setEmail(data.user.email);
+    } catch {
+      setIsSuperadmin(false);
+    }
+    try {
+      const res = await fetch("/api/account", { credentials: "include" });
+      if (!res.ok) {
+        setOwned([]);
+        return;
+      }
+      const data = await res.json();
+      setOwned(data.owned || []);
+      if (data.email) setEmail(data.email);
+    } catch {
+      setOwned([]);
+    }
+  };
 
   useEffect(() => {
     let unsub: (() => void) | undefined;
     let cancelled = false;
-
-    const loadRole = async () => {
-      try {
-        const res = await fetch("/api/admin/me", { credentials: "include" });
-        const data = await res.json();
-        if (!cancelled) {
-          setIsSuperadmin(Boolean(data.isSuperadmin));
-          if (data.user?.email) setEmail(data.user.email);
-        }
-      } catch {
-        if (!cancelled) setIsSuperadmin(false);
-      }
-    };
 
     (async () => {
       try {
@@ -36,13 +49,20 @@ export function SiteHeader() {
         } = await supabase.auth.getSession();
         setEmail(session?.user?.email ?? null);
         setReady(true);
-        if (session?.user) await loadRole();
-        else setIsSuperadmin(false);
+        if (session?.user) {
+          if (!cancelled) await loadAccount();
+        } else {
+          setIsSuperadmin(false);
+          setOwned([]);
+        }
 
         const { data } = supabase.auth.onAuthStateChange((_e, s) => {
           setEmail(s?.user?.email ?? null);
-          if (s?.user) void loadRole();
-          else setIsSuperadmin(false);
+          if (s?.user) void loadAccount();
+          else {
+            setIsSuperadmin(false);
+            setOwned([]);
+          }
         });
         unsub = () => data.subscription.unsubscribe();
       } catch {
@@ -63,6 +83,8 @@ export function SiteHeader() {
     }
     window.location.assign("/");
   };
+
+  const primaryProfile = owned[0] || null;
 
   const navLinks = (
     <>
@@ -113,7 +135,7 @@ export function SiteHeader() {
         onClick={() => setMobileOpen(false)}
         className="text-sm font-semibold text-amber-300/90 hover:text-amber-200 py-2 md:py-0"
       >
-        Demo profiles
+        Demo
       </Link>
     </>
   );
@@ -122,9 +144,22 @@ export function SiteHeader() {
     <span className="text-xs text-slate-600">…</span>
   ) : email ? (
     <>
-      <span className="hidden lg:inline text-xs text-slate-300 max-w-[180px] truncate">
+      <span className="hidden xl:inline text-xs text-slate-300 max-w-[140px] truncate">
         {email}
       </span>
+      {primaryProfile && (
+        <Link
+          href={
+            owned.length === 1
+              ? `/${primaryProfile.handle}?edit=1`
+              : "/account#profiles"
+          }
+          onClick={() => setMobileOpen(false)}
+          className="text-sm font-semibold text-white hover:text-orange-300"
+        >
+          My profile
+        </Link>
+      )}
       <Link
         href="/account"
         onClick={() => setMobileOpen(false)}
@@ -168,20 +203,20 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#090a0f]/95 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between gap-4">
-          <div className="flex items-center gap-6 lg:gap-10 min-w-0">
+        <div className="flex h-14 sm:h-16 items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-4 lg:gap-10 min-w-0">
             <Link href="/" className="flex items-center gap-2 group shrink-0">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-600 font-black text-white text-lg group-hover:bg-orange-500">
                 SP
               </span>
-              <span className="font-extrabold text-lg sm:text-xl text-white tracking-tight">
+              <span className="font-extrabold text-base sm:text-xl text-white tracking-tight">
                 Sailor<span className="text-orange-500">Path</span>
               </span>
             </Link>
             <nav className="hidden md:flex items-center gap-6">{navLinks}</nav>
           </div>
 
-          <div className="hidden md:flex items-center gap-3 lg:gap-4">
+          <div className="hidden md:flex items-center gap-2 lg:gap-3 flex-wrap justify-end">
             {authButtons}
           </div>
 
@@ -242,7 +277,14 @@ export function SiteHeader() {
             >
               Demo profiles
             </Link>
-            <div className="mt-3 pt-3 border-t border-white/5 flex flex-wrap items-center gap-3">
+            <Link
+              href="/support"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
+            >
+              Help / Support
+            </Link>
+            <div className="mt-3 pt-3 border-t border-white/5 flex flex-col gap-1">
               {authButtons}
             </div>
           </div>

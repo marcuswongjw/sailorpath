@@ -29,6 +29,10 @@ function AccountInner() {
   const [claims, setClaims] = useState<Claim[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [pw, setPw] = useState("");
+  const [pw2, setPw2] = useState("");
+  const [pwMsg, setPwMsg] = useState<string | null>(null);
+  const [pwBusy, setPwBusy] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -71,99 +75,82 @@ function AccountInner() {
     })();
   }, []);
 
+  const changePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setPwMsg(null);
+    if (pw.length < 6) {
+      setPwMsg("Password must be at least 6 characters");
+      return;
+    }
+    if (pw !== pw2) {
+      setPwMsg("Passwords do not match");
+      return;
+    }
+    setPwBusy(true);
+    try {
+      const supabase = createBrowserSupabase();
+      const { error: err } = await supabase.auth.updateUser({ password: pw });
+      if (err) throw err;
+      setPwMsg("Password updated");
+      setPw("");
+      setPw2("");
+    } catch (err) {
+      setPwMsg(err instanceof Error ? err.message : "Could not update password");
+    } finally {
+      setPwBusy(false);
+    }
+  };
+
   if (loading) {
     return (
-      <div className="min-h-[50vh] flex items-center justify-center text-sm text-slate-500">
+      <div className="min-h-[50vh] flex items-center justify-center text-sm text-slate-500 px-4">
         Loading account…
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10 sm:py-14 space-y-8">
+    <div className="mx-auto max-w-3xl w-full px-4 py-8 sm:py-14 space-y-6 sm:space-y-8">
       <div>
         <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
           My account
         </h1>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-slate-400 break-all">
           Signed in as{" "}
           <span className="font-semibold text-slate-200">{email}</span>
         </p>
       </div>
 
       {welcome && (
-        <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 px-5 py-4">
+        <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 px-4 sm:px-5 py-4">
           <p className="text-sm font-bold text-emerald-200">
             Account created — next, claim your sailor profile
           </p>
           <p className="text-xs text-emerald-100/80 mt-1 leading-relaxed">
-            Creating an account does not link you to a ranking profile yet.
-            Search for your name or sail number, open the profile, then press{" "}
-            <strong>Claim this profile</strong>. A superadmin will approve the
-            request.
+            Creating an account does not link a ranking profile yet. Search for
+            your name, open the profile, and submit a claim.
           </p>
         </div>
       )}
 
-      {error && (
-        <p className="text-sm font-bold text-rose-400">{error}</p>
-      )}
+      {error && <p className="text-sm font-bold text-rose-400">{error}</p>}
 
-      {/* How to claim */}
-      <section className="glass-card rounded-2xl border border-white/5 p-6 space-y-4">
-        <h2 className="text-sm font-black text-white uppercase tracking-wider">
-          How to claim a profile
-        </h2>
-        <ol className="space-y-3 text-xs text-slate-300 font-medium list-decimal list-inside leading-relaxed">
-          <li>
-            Find yourself on the{" "}
-            <Link href="/search" className="text-orange-400 font-bold hover:underline">
-              search page
-            </Link>{" "}
-            or{" "}
-            <Link
-              href="/sg/optimist/goldsailors"
-              className="text-orange-400 font-bold hover:underline"
-            >
-              Gold fleet register
-            </Link>
-            .
-          </li>
-          <li>Open your public sailor page (name / handle).</li>
-          <li>
-            Click <strong className="text-white">Claim this profile</strong>{" "}
-            (you must be logged in).
-          </li>
-          <li>
-            Wait for admin approval. Status shows below. Once approved, use{" "}
-            <strong className="text-white">Edit profile</strong> on that page.
-          </li>
-        </ol>
-        <div className="flex flex-wrap gap-2 pt-1">
-          <Link
-            href="/search"
-            className="rounded-full bg-orange-600 px-4 py-2 text-[11px] font-bold text-white hover:bg-orange-500"
-          >
-            Search for my profile
-          </Link>
-          <Link
-            href="/sg/optimist/gold"
-            className="rounded-full border border-white/15 px-4 py-2 text-[11px] font-bold text-slate-300 hover:text-white"
-          >
-            Gold standings
-          </Link>
-        </div>
-      </section>
-
-      {/* Owned */}
-      <section className="glass-card rounded-2xl border border-white/5 p-6 space-y-3">
+      {/* Managed profiles */}
+      <section
+        id="profiles"
+        className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full"
+      >
         <h2 className="text-sm font-black text-white uppercase tracking-wider">
           Profiles you manage
         </h2>
         {owned.length === 0 ? (
           <p className="text-xs text-slate-500 leading-relaxed">
-            None yet. After a claim is approved, your sailor profile will appear
-            here and you can edit bio, photo, weight privacy, and more.
+            None yet. After a claim is approved, your sailor profile appears
+            here. Use{" "}
+            <Link href="/search" className="text-orange-400 font-bold">
+              Search
+            </Link>{" "}
+            to find yourself and claim.
           </p>
         ) : (
           <ul className="divide-y divide-white/5">
@@ -172,17 +159,17 @@ function AccountInner() {
                 key={s.id}
                 className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
               >
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm font-bold text-white">{s.name}</p>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-slate-500 truncate">
                     {s.sailNumber} · {s.club} · /{s.handle}
                   </p>
                 </div>
                 <Link
                   href={`/${s.handle}?edit=1`}
-                  className="rounded-full bg-orange-600/90 px-4 py-1.5 text-[11px] font-bold text-white text-center hover:bg-orange-500"
+                  className="rounded-full bg-orange-600/90 px-4 py-2 text-[11px] font-bold text-white text-center hover:bg-orange-500 shrink-0"
                 >
-                  Open &amp; edit
+                  Edit profile
                 </Link>
               </li>
             ))}
@@ -190,14 +177,60 @@ function AccountInner() {
         )}
       </section>
 
+      {/* Account settings */}
+      <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-4 w-full">
+        <h2 className="text-sm font-black text-white uppercase tracking-wider">
+          Account settings
+        </h2>
+        <div>
+          <p className="text-[10px] font-bold text-slate-500 uppercase">Email</p>
+          <p className="text-sm text-slate-200 mt-1 break-all">{email}</p>
+        </div>
+        <form onSubmit={changePassword} className="space-y-3 border-t border-white/5 pt-4">
+          <p className="text-[10px] font-bold text-slate-500 uppercase">
+            Change password
+          </p>
+          <input
+            type="password"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
+            placeholder="New password (min 6)"
+            autoComplete="new-password"
+            className="w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-sm text-white"
+          />
+          <input
+            type="password"
+            value={pw2}
+            onChange={(e) => setPw2(e.target.value)}
+            placeholder="Confirm password"
+            autoComplete="new-password"
+            className="w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-sm text-white"
+          />
+          <button
+            type="submit"
+            disabled={pwBusy}
+            className="rounded-full bg-white/5 border border-white/10 px-4 py-2 text-[11px] font-bold text-slate-200 hover:text-white disabled:opacity-50"
+          >
+            {pwBusy ? "Updating…" : "Update password"}
+          </button>
+          {pwMsg && (
+            <p className="text-[11px] text-emerald-300 font-semibold">{pwMsg}</p>
+          )}
+        </form>
+      </section>
+
       {/* Claims */}
-      <section className="glass-card rounded-2xl border border-white/5 p-6 space-y-3">
+      <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full">
         <h2 className="text-sm font-black text-white uppercase tracking-wider">
           Claim requests
         </h2>
         {claims.length === 0 ? (
           <p className="text-xs text-slate-500">
-            No claim requests yet. Submit one from a sailor profile page.
+            No claim requests yet.{" "}
+            <Link href="/search" className="text-orange-400 font-bold">
+              Search for your profile
+            </Link>
+            .
           </p>
         ) : (
           <ul className="divide-y divide-white/5">
@@ -230,6 +263,43 @@ function AccountInner() {
             ))}
           </ul>
         )}
+      </section>
+
+      {/* How to claim — only if no owned */}
+      {owned.length === 0 && (
+        <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full">
+          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+            How to claim a profile
+          </h2>
+          <ol className="space-y-2 text-xs text-slate-300 font-medium list-decimal list-inside leading-relaxed">
+            <li>
+              Find yourself on{" "}
+              <Link href="/search" className="text-orange-400 font-bold">
+                Search
+              </Link>
+              .
+            </li>
+            <li>Open your public sailor page.</li>
+            <li>
+              Click <strong className="text-white">Claim this profile</strong>{" "}
+              and add a verification note.
+            </li>
+            <li>Wait for admin approval — then use Edit profile.</li>
+          </ol>
+        </section>
+      )}
+
+      <section className="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 w-full">
+        <p className="text-sm font-bold text-sky-200">Need help?</p>
+        <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+          Login issues, claim stuck, wrong data — message us anytime.
+        </p>
+        <Link
+          href="/support"
+          className="inline-flex mt-3 rounded-full bg-sky-600/90 px-4 py-2 text-[11px] font-bold text-white"
+        >
+          Contact support
+        </Link>
       </section>
     </div>
   );

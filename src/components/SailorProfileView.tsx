@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getPercentileBadge } from "@/lib/ranking";
 import {
   seriesFleetStatus,
   seriesStatusBadge,
 } from "@/lib/seriesMembership";
+import { createBrowserSupabase } from "@/lib/supabase/browser";
 import {
   Trophy,
   Compass,
@@ -21,6 +22,7 @@ import {
   BookOpen,
   ChevronDown,
   ChevronUp,
+  Camera,
 } from "lucide-react";
 
 interface SailorProfileViewProps {
@@ -178,7 +180,7 @@ export function SailorProfileView({
   const [form, setForm] = useState({
     bio: initialSailor.bio || "",
     instagram: initialSailor.instagram || "",
-    avatarUrl: initialSailor.avatarUrl || "",
+    handle: initialSailor.handle || "",
     school: initialSailor.school || "",
     weight:
       initialSailor.weight != null ? String(initialSailor.weight) : "",
@@ -193,6 +195,9 @@ export function SailorProfileView({
   const [equipHistory, setEquipHistory] = useState(
     initialEquipmentHistory || []
   );
+  const [avatarBusy, setAvatarBusy] = useState(false);
+  const [avatarMsg, setAvatarMsg] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!demoMode && isOwner && typeof window !== "undefined") {
@@ -251,7 +256,7 @@ export function SailorProfileView({
           sailorId: initialSailor.id,
           bio: form.bio,
           instagram: form.instagram,
-          avatarUrl: form.avatarUrl,
+          handle: form.handle,
           school: form.school,
           weight: form.weight === "" ? null : Number(form.weight),
           isPublicWeight,
@@ -280,13 +285,77 @@ export function SailorProfileView({
       setIsPublicWeight(Boolean(data.sailor.isPublicWeight));
       setIsPublicDob(Boolean(data.sailor.isPublicDob));
       setIsPublicEquipment(Boolean(data.sailor.isPublicEquipment));
+      if (form.handle) {
+        setForm((f) => ({ ...f, handle: data.sailor.handle || f.handle }));
+      }
       setSaveMsg("Saved");
       setEditing(false);
+      if (data.handleChanged && data.sailor?.handle) {
+        window.location.assign(`/${data.sailor.handle}?edit=1`);
+        return;
+      }
       setTimeout(() => setSaveMsg(null), 2500);
     } catch (e: any) {
       setSaveMsg(e.message || "Save failed");
     } finally {
       setSaveBusy(false);
+    }
+  };
+
+  const uploadAvatar = async (file: File) => {
+    if (demoMode) {
+      setAvatarMsg("Demo only — photo not uploaded");
+      return;
+    }
+    if (!file.type.startsWith("image/")) {
+      setAvatarMsg("Please choose an image file");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setAvatarMsg("Image must be under 5 MB");
+      return;
+    }
+    setAvatarBusy(true);
+    setAvatarMsg(null);
+    try {
+      const supabase = createBrowserSupabase();
+      const ext =
+        file.type === "image/png"
+          ? "png"
+          : file.type === "image/webp"
+            ? "webp"
+            : "jpg";
+      const path = `${initialSailor.id}/${Date.now()}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("avatars")
+        .upload(path, file, { upsert: true, contentType: file.type });
+      if (upErr) throw upErr;
+      const { data: pub } = supabase.storage.from("avatars").getPublicUrl(path);
+      const publicUrl = pub.publicUrl;
+      const res = await fetch("/api/account/sailor", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sailorId: initialSailor.id,
+          avatarUrl: publicUrl,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not save photo");
+      setDisplaySailor((s: any) => ({
+        ...s,
+        avatarUrl: data.sailor.avatarUrl || publicUrl,
+      }));
+      setAvatarMsg("Photo updated");
+      setTimeout(() => setAvatarMsg(null), 2500);
+    } catch (e: any) {
+      setAvatarMsg(
+        e.message ||
+          "Upload failed — ensure avatars bucket exists (see docs)"
+      );
+    } finally {
+      setAvatarBusy(false);
     }
   };
 
@@ -386,22 +455,58 @@ export function SailorProfileView({
 
         <div className="flex flex-col md:flex-row items-center gap-6 min-w-0">
           {/* Avatar: photo if set, else initials */}
-          <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-full border-2 border-orange-500/25 shadow-xl bg-gradient-to-br from-orange-600/30 to-slate-900 flex items-center justify-center shrink-0 overflow-hidden">
-            {displaySailor.avatarUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={displaySailor.avatarUrl}
-                alt={displaySailor.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <span className="text-3xl md:text-4xl font-black text-orange-300 tracking-tight">
-                {initials(displaySailor.name)}
+          <div className="relative h-28 w-28 md:h-32 md:w-32 shrink-0">
+            <div className="relative h-full w-full rounded-full border-2 border-orange-500/25 shadow-xl bg-gradient-to-br from-orange-600/30 to-slate-900 flex items-center justify-center overflow-hidden">
+              {displaySailor.avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={displaySailor.avatarUrl}
+                  alt={displaySailor.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <span className="text-3xl md:text-4xl font-black text-orange-300 tracking-tight">
+                  {initials(displaySailor.name)}
+                </span>
+              )}
+            </div>
+            {isOwner && !demoMode && (
+              <>
+                <button
+                  type="button"
+                  disabled={avatarBusy}
+                  onClick={() => fileInputRef.current?.click()}
+                  className="absolute inset-0 rounded-full bg-black/45 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1 text-white"
+                  title="Upload photo"
+                >
+                  <Camera className="h-6 w-6" />
+                  <span className="text-[10px] font-bold">
+                    {avatarBusy ? "…" : "Upload"}
+                  </span>
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) void uploadAvatar(f);
+                    e.target.value = "";
+                  }}
+                />
+              </>
+            )}
+            {!isOwner && (
+              <span className="absolute -bottom-1 -right-1 h-8 w-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center">
+                <User className="h-4 w-4 text-slate-400" />
               </span>
             )}
-            <span className="absolute -bottom-1 -right-1 h-8 w-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center">
-              <User className="h-4 w-4 text-slate-400" />
-            </span>
+            {avatarMsg && (
+              <p className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-bold text-emerald-300">
+                {avatarMsg}
+              </p>
+            )}
           </div>
 
           <div className="text-center md:text-left min-w-0">
@@ -671,13 +776,13 @@ export function SailorProfileView({
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-5 gap-2">
+          <div className="flex sm:grid sm:grid-cols-5 gap-2 overflow-x-auto pb-1 -mx-1 px-1">
             {Array.from({ length: 5 }).map((_, i) => {
               const r = initialSeriesStanding.rScores[i];
               return (
                 <div
                   key={r?.regattaId || i}
-                  className={`rounded-xl border px-2 py-2 text-center ${
+                  className={`rounded-xl border px-2 py-2 text-center shrink-0 w-[4.5rem] sm:w-auto ${
                     r?.isCarryForward
                       ? "bg-sky-500/10 border-sky-500/20"
                       : "bg-white/5 border-white/5"
@@ -722,7 +827,8 @@ export function SailorProfileView({
           </div>
           <p className="text-[11px] text-slate-500">
             Ranking, fleet, and squad fields are managed by SailorPath admins.
-            You can update bio, photo, school, weight, equipment, and privacy.
+            Tap your photo above to upload. You can edit bio, school, weight,
+            profile URL, equipment, and privacy.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <label className="block sm:col-span-2">
@@ -735,6 +841,33 @@ export function SailorProfileView({
                 rows={3}
                 className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
               />
+            </label>
+            <label className="block sm:col-span-2">
+              <span className="text-[10px] font-bold text-slate-500 uppercase">
+                Profile URL
+              </span>
+              <div className="mt-1 flex rounded-xl bg-slate-950 border border-white/10 overflow-hidden">
+                <span className="pl-3 self-center text-[11px] text-slate-500 shrink-0">
+                  sailorpath.com/
+                </span>
+                <input
+                  value={form.handle}
+                  onChange={(e) =>
+                    setForm((f) => ({
+                      ...f,
+                      handle: e.target.value
+                        .toLowerCase()
+                        .replace(/[^a-z0-9-]/g, ""),
+                    }))
+                  }
+                  className="w-full bg-transparent py-2 px-2 text-sm text-white font-mono focus:outline-none"
+                  placeholder="your-handle"
+                />
+              </div>
+              <p className="text-[10px] text-slate-600 mt-1">
+                3–30 characters · letters, numbers, hyphens. Old URL stays as a
+                redirect.
+              </p>
             </label>
             <label className="block">
               <span className="text-[10px] font-bold text-slate-500 uppercase">
@@ -763,7 +896,7 @@ export function SailorProfileView({
                 className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
               />
             </label>
-            <label className="block">
+            <label className="block sm:col-span-2">
               <span className="text-[10px] font-bold text-slate-500 uppercase">
                 Instagram
               </span>
@@ -773,19 +906,6 @@ export function SailorProfileView({
                   setForm((f) => ({ ...f, instagram: e.target.value }))
                 }
                 placeholder="@handle"
-                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
-              />
-            </label>
-            <label className="block">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">
-                Photo URL
-              </span>
-              <input
-                value={form.avatarUrl}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, avatarUrl: e.target.value }))
-                }
-                placeholder="https://…"
                 className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
               />
             </label>

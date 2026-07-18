@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, ne } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
-import { equipmentLogs, sailors } from "@/db/schema";
+import { equipmentLogs, sailorAliases, sailors } from "@/db/schema";
+import { validateHandle } from "@/lib/handles";
 
 function strOrNull(v: unknown, max: number) {
   if (v === null || v === undefined || v === "") return null;
@@ -30,6 +31,7 @@ export async function PATCH(req: Request) {
       .select({
         id: sailors.id,
         parentId: sailors.parentId,
+        handle: sailors.handle,
         hullBrand: sailors.hullBrand,
         sailMake: sailors.sailMake,
         foilBrand: sailors.foilBrand,
@@ -54,6 +56,40 @@ export async function PATCH(req: Request) {
     }
 
     const patch: Record<string, unknown> = { updatedAt: new Date() };
+    let previousHandle: string | null = null;
+
+    if (body.handle !== undefined) {
+      const checked = validateHandle(String(body.handle));
+      if (!checked.ok) {
+        return NextResponse.json({ error: checked.error }, { status: 400 });
+      }
+      if (checked.handle !== sailor.handle) {
+        const [taken] = await db
+          .select({ id: sailors.id })
+          .from(sailors)
+          .where(and(eq(sailors.handle, checked.handle), ne(sailors.id, sailorId)))
+          .limit(1);
+        if (taken) {
+          return NextResponse.json(
+            { error: "That profile URL is already taken" },
+            { status: 409 }
+          );
+        }
+        const [aliasTaken] = await db
+          .select({ id: sailorAliases.id })
+          .from(sailorAliases)
+          .where(eq(sailorAliases.aliasName, checked.handle))
+          .limit(1);
+        if (aliasTaken) {
+          return NextResponse.json(
+            { error: "That profile URL is already taken" },
+            { status: 409 }
+          );
+        }
+        previousHandle = sailor.handle;
+        patch.handle = checked.handle;
+      }
+    }
 
     if (body.bio !== undefined) {
       patch.bio = strOrNull(body.bio, 500);
@@ -98,7 +134,6 @@ export async function PATCH(req: Request) {
       patch.isPublicEquipment = body.isPublicEquipment;
     }
 
-    // Equipment (current)
     let equipmentChanged = false;
     for (const [key, max] of [
       ["hullBrand", 80],
@@ -140,7 +175,20 @@ export async function PATCH(req: Request) {
         equipmentNotes: sailors.equipmentNotes,
       });
 
-    // Snapshot equipment history when gear fields change
+    if (previousHandle && updated) {
+      try {
+        await db
+          .insert(sailorAliases)
+          .values({
+            sailorId,
+            aliasName: previousHandle,
+          })
+          .onConflictDoNothing();
+      } catch (e) {
+        console.warn("alias insert skipped", e);
+      }
+    }
+
     if (equipmentChanged && updated) {
       try {
         await db.insert(equipmentLogs).values({
@@ -157,7 +205,12 @@ export async function PATCH(req: Request) {
       }
     }
 
-    return NextResponse.json({ ok: true, sailor: updated });
+    return NextResponse.json({
+      ok: true,
+      sailor: updated,
+      handleChanged: Boolean(previousHandle),
+      previousHandle,
+    });
   } catch (e) {
     console.error("account sailor PATCH", e);
     return jsonError(e);

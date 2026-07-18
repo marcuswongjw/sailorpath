@@ -31,59 +31,64 @@ export default async function HomePage() {
       <div className="absolute top-[800px] right-1/4 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none -z-10 hidden md:block" />
 
       {/* Hero */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center lg:pt-24">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/5 text-xs text-orange-400 font-bold mb-6 hover:bg-white/10 transition-colors">
-          <Sparkles className="h-3 w-3 text-orange-500 animate-pulse" />
-          <span>Singapore&apos;s Premium Sailing Analytics Platform</span>
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-12 sm:pt-16 sm:pb-20 text-center lg:pt-24">
+        <div className="inline-flex max-w-full items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/5 text-[11px] sm:text-xs text-orange-400 font-bold mb-5 sm:mb-6 hover:bg-white/10 transition-colors">
+          <Sparkles className="h-3 w-3 text-orange-500 animate-pulse shrink-0" />
+          <span className="truncate">SG youth sailing analytics</span>
         </div>
 
-        <h1 className="mx-auto max-w-4xl text-4xl sm:text-5xl lg:text-7xl font-black tracking-tight text-white">
-          Chart your progress. <br />
+        <h1 className="mx-auto max-w-4xl text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight text-white leading-tight">
+          Chart your progress.{" "}
+          <br className="hidden sm:block" />
           <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 bg-clip-text text-transparent">
             Command your sailing journey.
           </span>
         </h1>
 
-        <p className="mx-auto mt-6 max-w-3xl text-base md:text-lg text-slate-400 font-semibold leading-relaxed">
+        <p className="mx-auto mt-4 sm:mt-6 max-w-3xl text-sm sm:text-base md:text-lg text-slate-400 font-semibold leading-relaxed px-1">
           SailorPath is the digital logbook and performance tracker for
           Singapore&apos;s youth sailors. Start your pathway in the Optimist
           fleet and track every regatta, ranking, and equipment change as you
           grow.
         </p>
 
-        <div className="mt-8 flex flex-col sm:flex-row justify-center gap-3">
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center gap-2.5 sm:gap-3 w-full sm:w-auto">
           <Link
             href="/register"
-            className="rounded-full bg-orange-600 hover:bg-orange-500 hover:scale-105 transition-all text-xs font-black uppercase tracking-wider text-white px-8 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2"
+            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 sm:px-8 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2"
           >
-            <Trophy className="h-4 w-4" />
+            <Trophy className="h-4 w-4 shrink-0" />
             Create free account
           </Link>
           <Link
             href="/sample"
-            className="rounded-full border border-amber-500/40 bg-amber-500/10 px-8 py-3.5 text-xs font-bold text-amber-100 hover:border-amber-400/60 transition-all"
+            className="w-full sm:w-auto rounded-full border border-amber-500/40 bg-amber-500/10 px-6 sm:px-8 py-3.5 text-xs font-bold text-amber-100 hover:border-amber-400/60 transition-all text-center"
           >
-            Tour demo · Public / Sailor / Parent / Coach
+            <span className="sm:hidden">Tour demo profiles</span>
+            <span className="hidden sm:inline">
+              Tour demo · Public / Sailor / Parent / Coach
+            </span>
           </Link>
           <Link
             href="/sg/optimist/gold"
-            className="rounded-full border border-white/10 px-8 py-3.5 text-xs font-bold text-white hover:border-orange-500/40 transition-all"
+            className="w-full sm:w-auto rounded-full border border-white/10 px-6 sm:px-8 py-3.5 text-xs font-bold text-white hover:border-orange-500/40 transition-all text-center"
           >
             Gold standings
           </Link>
         </div>
 
-        <div className="mx-auto mt-12 max-w-lg">
+        <div className="mx-auto mt-8 sm:mt-12 max-w-lg w-full">
           <form action="/search" className="relative group">
             <input
               type="text"
               name="query"
-              placeholder="Search by name or sail number (e.g. SGP 115)..."
-              className="w-full rounded-full border border-white/10 bg-white/5 px-6 py-4 pr-16 text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 shadow-xl shadow-black/30 text-sm md:text-base transition-all"
+              placeholder="Search name or sail #…"
+              className="w-full rounded-full border border-white/10 bg-white/5 px-4 sm:px-6 py-3 sm:py-4 pr-14 text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 shadow-xl shadow-black/30 text-sm md:text-base transition-all"
             />
             <button
               type="submit"
-              className="absolute right-2 top-2 rounded-full bg-orange-600 p-2.5 text-white hover:bg-orange-500 hover:scale-105 transition-all shadow-md shadow-orange-950/20"
+              className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 rounded-full bg-orange-600 p-2.5 text-white hover:bg-orange-500 transition-all shadow-md shadow-orange-950/20"
+              aria-label="Search"
             >
               <Search className="h-5 w-5" />
             </button>
@@ -126,11 +131,11 @@ export default async function HomePage() {
       {/* Development Pathway — four product phases */}
       <section
         id="development-pathway"
-        className="border-t border-white/5 bg-[#0b0c13] py-16 sm:py-20"
+        className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-20"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
+          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
               Development Pathway
             </h2>
             <p className="mt-4 text-slate-400 text-sm md:text-base leading-relaxed">
@@ -171,9 +176,9 @@ export default async function HomePage() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-5">
             {/* Phase 1 */}
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 hover:border-orange-500/40 transition-all flex flex-col justify-between group relative overflow-hidden">
+            <article className="glass-card rounded-2xl p-4 sm:p-6 border border-orange-500/25 hover:border-orange-500/40 transition-all flex flex-col justify-between group relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-orange-600/10 rounded-full blur-2xl -z-0" />
               <div className="relative">
                 <div className="flex items-center justify-between gap-2">
@@ -418,11 +423,11 @@ export default async function HomePage() {
       {/* Founding Membership */}
       <section
         id="founding-membership"
-        className="py-16 sm:py-20 bg-[#090a0f] border-t border-white/5"
+        className="py-12 sm:py-20 bg-[#090a0f] border-t border-white/5"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
+          <div className="mx-auto max-w-3xl text-center mb-8 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
               Back the build. Anchor your legacy.
             </h2>
             <p className="mt-4 text-slate-400 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
@@ -433,7 +438,7 @@ export default async function HomePage() {
             </p>
           </div>
 
-          <div className="mx-auto max-w-md rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] p-8 md:p-10 shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300">
+          <div className="mx-auto max-w-md w-full rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300">
             <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all" />
 
             <div className="flex justify-between items-center mb-6">
