@@ -44,15 +44,25 @@ function resolveDisplayFleet(sailor: any): {
   return seriesStatusBadge(seriesFleetStatus(sailor));
 }
 
+const SQUAD_HISTORY_SLOTS: {
+  key: string;
+  label: string;
+}[] = [
+  { key: "natSquadStatusJan25", label: "Jan – Jun 2025" },
+  { key: "natSquadStatusJul25", label: "Jul – Dec 2025" },
+  { key: "natSquadStatusJan26", label: "Jan – Jun 2026" },
+  { key: "natSquadStatusJul26", label: "Jul – Dec 2026" },
+];
+
 function buildHonorTags(sailor: any): { text: string; className: string }[] {
   const tags: { text: string; className: string }[] = [];
   const squad =
-    sailor.nationalSquadStatus ||
     sailor.natSquadStatusJul26 ||
+    sailor.nationalSquadStatus ||
     sailor.natSquadStatusJan26;
   if (squad) {
     tags.push({
-      text: `Nat Squad: ${squad}`,
+      text: `Nat Squad (current): ${squad}`,
       className:
         "bg-orange-500/10 text-orange-300 border border-orange-500/25",
     });
@@ -498,6 +508,40 @@ export function SailorProfileView({
           >
             {saveBusy ? "Saving…" : "Save changes"}
           </button>
+        </div>
+      )}
+
+      {/* Nat squad history (period-locked) */}
+      {SQUAD_HISTORY_SLOTS.some((s) => displaySailor[s.key]) && (
+        <div className="glass-panel rounded-2xl border border-white/5 p-5 md:p-6">
+          <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-1">
+            National squad history
+          </h2>
+          <p className="text-[11px] text-slate-600 mb-4">
+            Squad selection is fixed for each half-year (Jan–Jun / Jul–Dec).
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {SQUAD_HISTORY_SLOTS.map((slot) => {
+              const v = displaySailor[slot.key];
+              return (
+                <div
+                  key={slot.key}
+                  className="rounded-xl bg-white/5 border border-white/5 px-3 py-2.5 text-center"
+                >
+                  <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wide">
+                    {slot.label}
+                  </p>
+                  <p
+                    className={`mt-1 text-sm font-black ${
+                      v ? "text-orange-400" : "text-slate-600"
+                    }`}
+                  >
+                    {v || "—"}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       )}
 

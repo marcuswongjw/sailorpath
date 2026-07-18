@@ -6,6 +6,8 @@
 
 import {
   resolveSailorFleet,
+  rankingRegattasInPeriod,
+  periodBounds,
   type Period,
   type SailorRecord,
   type RegattaRecord,
@@ -19,38 +21,18 @@ export type FillDnsPair = {
   dnsPoints: number;
 };
 
-export function periodBounds(period: Period): { start: string; end: string } {
-  if (period.half === "Jan-Jun") {
-    return { start: `${period.year}-01-01`, end: `${period.year}-06-30` };
-  }
-  return { start: `${period.year}-07-01`, end: `${period.year}-12-31` };
-}
+export { periodBounds };
 
-/** Same regatta pool as ranking engine for a fleet in a period (up to 5, oldest→newest as R1–R5). */
+/**
+ * Period-only regatta pool for DNS fill (does not include carry-forward events).
+ * Carry-forward scores use previous-period result rows that already exist.
+ */
 export function rankingRegattasForFleet(
   fleet: "Gold" | "Silver",
   period: Period,
   allRegattas: RegattaRecord[]
 ): RegattaRecord[] {
-  const pEnd = new Date(
-    period.half === "Jan-Jun" ? `${period.year}-06-30` : `${period.year}-12-31`
-  ).getTime();
-
-  return allRegattas
-    .filter((r) => {
-      const occurred = new Date(r.date).getTime() <= pEnd;
-      if (!occurred) return false;
-      // Only events inside the half-year period (not all history up to period end)
-      const { start } = periodBounds(period);
-      if (new Date(r.date).getTime() < new Date(start).getTime()) return false;
-
-      const div = r.division || "Gold";
-      if (fleet === "Gold") return div === "Gold" || div === "Both";
-      return div === "Silver" || div === "Both";
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5)
-    .reverse();
+  return rankingRegattasInPeriod(fleet, period, allRegattas);
 }
 
 /**

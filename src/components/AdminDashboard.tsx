@@ -1307,7 +1307,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       nationality: sailorForm.nationality || null,
       gender: sailorForm.gender,
       bio: sailorForm.bio || null,
-      nationalSquadStatus: sailorForm.nationalSquadStatus || null,
+      // Current squad mirrors Jul–Dec 2026 (period-locked) when set
+      nationalSquadStatus:
+        sailorForm.natSquadStatusJul26 ||
+        sailorForm.nationalSquadStatus ||
+        null,
       currentFleet: sailorForm.currentFleet || null,
       goldEntryDate: dateOnly(sailorForm.goldEntryDate),
       silverEntryDate: dateOnly(sailorForm.silverEntryDate),
@@ -2549,18 +2553,49 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <option value="F">Female (F)</option>
                         </select>
                       </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">National Squad Status</label>
-                        <select
-                          value={sailorForm.nationalSquadStatus || ""}
-                          onChange={(e) => setSailorForm({ ...sailorForm, nationalSquadStatus: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
-                        >
-                          <option value="">None</option>
-                          <option value="Nat A">National A (Nat A)</option>
-                          <option value="Nat B">National B (Nat B)</option>
-                          <option value="DS">Development Squad (DS)</option>
-                        </select>
+                      <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-t border-white/5 pt-4">
+                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] font-bold text-orange-400/90 uppercase tracking-wider">
+                          Nat squad by period (fixed for the whole half-year)
+                        </p>
+                        {(
+                          [
+                            ["natSquadStatusJan25", "Jan – Jun 2025"],
+                            ["natSquadStatusJul25", "Jul – Dec 2025"],
+                            ["natSquadStatusJan26", "Jan – Jun 2026"],
+                            ["natSquadStatusJul26", "Jul – Dec 2026 (current)"],
+                          ] as const
+                        ).map(([key, label]) => (
+                          <div key={key}>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              {label}
+                            </label>
+                            <select
+                              value={(sailorForm as any)[key] || ""}
+                              onChange={(e) => {
+                                const v = e.target.value;
+                                setSailorForm({
+                                  ...sailorForm,
+                                  [key]: v,
+                                  // Keep legacy “current squad” in sync with Jul–Dec 2026
+                                  ...(key === "natSquadStatusJul26"
+                                    ? { nationalSquadStatus: v }
+                                    : {}),
+                                });
+                              }}
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
+                            >
+                              <option value="">None</option>
+                              <option value="Nat A">National A (Nat A)</option>
+                              <option value="Nat B">National B (Nat B)</option>
+                              <option value="DS">Development Squad (DS)</option>
+                            </select>
+                          </div>
+                        ))}
+                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] text-slate-600 leading-relaxed">
+                          Rankings boards show the squad for the period selected.
+                          Jul–Dec 2026 also updates the live “current squad” field.
+                          History is visible on Gold register and each sailor profile.
+                        </p>
                       </div>
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">DOB (YYYY-MM-DD)</label>
@@ -3058,7 +3093,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                           ? s.weight.toString()
                                           : "",
                                         nationalSquadStatus:
-                                          s.nationalSquadStatus || "",
+                                          s.natSquadStatusJul26 ||
+                                          s.nationalSquadStatus ||
+                                          "",
+                                        natSquadStatusJan25:
+                                          s.natSquadStatusJan25 || "",
+                                        natSquadStatusJul25:
+                                          s.natSquadStatusJul25 || "",
+                                        natSquadStatusJan26:
+                                          s.natSquadStatusJan26 || "",
+                                        natSquadStatusJul26:
+                                          s.natSquadStatusJul26 ||
+                                          s.nationalSquadStatus ||
+                                          "",
                                         nationality: s.nationality || "",
                                         currentFleet: s.currentFleet || "",
                                         school: s.school || "",

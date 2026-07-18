@@ -71,17 +71,24 @@ export interface Period {
   half: "Jan-Jun" | "Jul-Dec";
 }
 
+export type RegattaScoreSlot = {
+  regattaId: string;
+  regattaName: string;
+  score: number;
+  isDNS: boolean;
+  isOverseasCommitment?: boolean;
+  /** Score borrowed from previous half-year while current period has &lt; 5 events */
+  isCarryForward?: boolean;
+  periodLabel?: string;
+};
+
 export interface RankedSailor extends SailorRecord {
   fleet: "Gold" | "Silver";
-  regattaScores: {
-    regattaId: string;
-    regattaName: string;
-    score: number;
-    isDNS: boolean;
-    isOverseasCommitment?: boolean;
-  }[];
+  regattaScores: RegattaScoreSlot[];
   bestThreeScores: number[];
   overallScore: number;
+  /** Nat squad for the ranking period being viewed */
+  periodSquadStatus?: string | null;
 }
 
 // Map percentile to badges
@@ -100,6 +107,124 @@ export function getPercentileBadge(rank: number, totalFleetSize: number): {
   } else {
     return { label: "Bottom 25%", className: "bg-rose-500/10 text-rose-500 border border-rose-500/20" };
   }
+}
+
+export function periodLabel(period: Period): string {
+  return period.half === "Jan-Jun"
+    ? `Jan – Jun ${period.year}`
+    : `Jul – Dec ${period.year}`;
+}
+
+export function previousPeriod(period: Period): Period {
+  if (period.half === "Jul-Dec") {
+    return { year: period.year, half: "Jan-Jun" };
+  }
+  return { year: period.year - 1, half: "Jul-Dec" };
+}
+
+/** Nat squad is fixed for a whole half-year (Jan–Jun or Jul–Dec). */
+export function natSquadFieldForPeriod(
+  period: Period
+): keyof SailorRecord | null {
+  if (period.year === 2025 && period.half === "Jan-Jun") return "natSquadStatusJan25";
+  if (period.year === 2025 && period.half === "Jul-Dec") return "natSquadStatusJul25";
+  if (period.year === 2026 && period.half === "Jan-Jun") return "natSquadStatusJan26";
+  if (period.year === 2026 && period.half === "Jul-Dec") return "natSquadStatusJul26";
+  return null;
+}
+
+export function squadStatusForPeriod(
+  sailor: SailorRecord,
+  period: Period
+): string | null {
+  const field = natSquadFieldForPeriod(period);
+  if (field) {
+    const v = sailor[field];
+    if (v != null && String(v).trim()) return String(v).trim();
+  }
+  // Fallback for current / unmapped periods
+  if (sailor.nationalSquadStatus) return String(sailor.nationalSquadStatus);
+  return null;
+}
+
+/** Ordered historical nat squad slots for profile / admin display */
+export const NAT_SQUAD_HISTORY: {
+  key: keyof SailorRecord;
+  period: Period;
+  label: string;
+}[] = [
+  { key: "natSquadStatusJan25", period: { year: 2025, half: "Jan-Jun" }, label: "Jan – Jun 2025" },
+  { key: "natSquadStatusJul25", period: { year: 2025, half: "Jul-Dec" }, label: "Jul – Dec 2025" },
+  { key: "natSquadStatusJan26", period: { year: 2026, half: "Jan-Jun" }, label: "Jan – Jun 2026" },
+  { key: "natSquadStatusJul26", period: { year: 2026, half: "Jul-Dec" }, label: "Jul – Dec 2026" },
+];
+
+export function periodBounds(period: Period): { start: string; end: string } {
+  if (period.half === "Jan-Jun") {
+    return { start: `${period.year}-01-01`, end: `${period.year}-06-30` };
+  }
+  return { start: `${period.year}-07-01`, end: `${period.year}-12-31` };
+}
+
+/** Up to 5 ranking events for a fleet in a half-year (oldest → newest = R1…R5). */
+export function rankingRegattasInPeriod(
+  fleet: "Gold" | "Silver",
+  period: Period,
+  allRegattas: RegattaRecord[]
+): RegattaRecord[] {
+  const { start, end } = periodBounds(period);
+  const pStart = new Date(start).getTime();
+  const pEnd = new Date(end).getTime();
+
+  return allRegattas
+    .filter((r) => {
+      const t = new Date(r.date).getTime();
+      if (t < pStart || t > pEnd) return false;
+      const div = r.division || "Gold";
+      if (fleet === "Gold") return div === "Gold" || div === "Both";
+      return div === "Silver" || div === "Both";
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5)
+    .reverse();
+}
+
+/**
+ * Scoring window for a fleet/period:
+ * - Prefer up to 5 events in the period
+ * - If fewer than 5, pad with the most recent events from the previous period
+ *   (e.g. 1 current + last 4 of prior half = Best 3 of 5 window)
+ */
+export function scoringRegattasForFleet(
+  fleet: "Gold" | "Silver",
+  period: Period,
+  allRegattas: RegattaRecord[]
+): { regatta: RegattaRecord; isCarryForward: boolean; periodLabel: string }[] {
+  const current = rankingRegattasInPeriod(fleet, period, allRegattas);
+  const need = Math.max(0, 5 - current.length);
+  let carry: RegattaRecord[] = [];
+  if (need > 0) {
+    const prev = previousPeriod(period);
+    const prevEvents = rankingRegattasInPeriod(fleet, prev, allRegattas);
+    // Most recent N from previous period
+    carry = prevEvents.slice(-need);
+  }
+
+  const curLabel = periodLabel(period);
+  const prevLabel = periodLabel(previousPeriod(period));
+
+  return [
+    ...carry.map((regatta) => ({
+      regatta,
+      isCarryForward: true as const,
+      periodLabel: prevLabel,
+    })),
+    ...current.map((regatta) => ({
+      regatta,
+      isCarryForward: false as const,
+      periodLabel: curLabel,
+    })),
+  ];
 }
 
 // Check if a sailor is active in a period and resolve their fleet
@@ -174,6 +299,88 @@ export function resolveSailorFleet(
   };
 }
 
+function scoreForResult(
+  sailorId: string,
+  regatta: RegattaRecord,
+  results: RegattaResultRecord[]
+): Pick<
+  RegattaScoreSlot,
+  "score" | "isDNS" | "isOverseasCommitment"
+> {
+  const result = results.find(
+    (res) => res.sailorId === sailorId && res.regattaId === regatta.id
+  );
+  if (result) {
+    return {
+      score: result.rank,
+      isDNS: Boolean(result.isDns) && !result.isOverseasCommitment,
+      isOverseasCommitment: Boolean(result.isOverseasCommitment),
+    };
+  }
+  return {
+    score: regatta.totalFleetSize + 1,
+    isDNS: true,
+    isOverseasCommitment: false,
+  };
+}
+
+/** Best 3 (lowest) of available scores; pad with 9999 if fewer than 3. */
+export function bestThreeOf(scores: number[]): {
+  bestThreeScores: number[];
+  overallScore: number;
+} {
+  const sorted = [...scores]
+    .filter((n) => Number.isFinite(n))
+    .sort((a, b) => a - b);
+  const bestThreeScores = sorted.slice(0, 3);
+  while (bestThreeScores.length < 3) {
+    bestThreeScores.push(9999);
+  }
+  const overallScore = bestThreeScores.reduce((sum, s) => sum + s, 0);
+  return { bestThreeScores, overallScore };
+}
+
+/**
+ * Recompute ranking board after excluding some regatta IDs (client “what-if”).
+ * Order is re-sorted by new overall score + tie-breakers.
+ */
+export function reRankWithExcluded(
+  ranked: RankedSailor[],
+  excludedRegattaIds: Set<string>
+): RankedSailor[] {
+  const next = ranked.map((s) => {
+    const kept = (s.regattaScores || []).filter(
+      (rs) => !excludedRegattaIds.has(rs.regattaId)
+    );
+    const { bestThreeScores, overallScore } = bestThreeOf(
+      kept.map((rs) => rs.score)
+    );
+    return { ...s, bestThreeScores, overallScore };
+  });
+
+  next.sort((a, b) => {
+    if (a.overallScore !== b.overallScore) {
+      return a.overallScore - b.overallScore;
+    }
+    const sortedA = [...a.regattaScores]
+      .filter((rs) => !excludedRegattaIds.has(rs.regattaId))
+      .map((rs) => rs.score)
+      .sort((x, y) => x - y);
+    const sortedB = [...b.regattaScores]
+      .filter((rs) => !excludedRegattaIds.has(rs.regattaId))
+      .map((rs) => rs.score)
+      .sort((x, y) => x - y);
+    for (let i = 0; i < Math.max(sortedA.length, sortedB.length); i++) {
+      const scoreA = sortedA[i] ?? 9999;
+      const scoreB = sortedB[i] ?? 9999;
+      if (scoreA !== scoreB) return scoreA - scoreB;
+    }
+    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+  });
+
+  return next;
+}
+
 // Core Ranking Engine
 export function calculateRankings(
   period: Period,
@@ -181,13 +388,7 @@ export function calculateRankings(
   regattas: RegattaRecord[],
   results: RegattaResultRecord[]
 ): RankedSailor[] {
-  const pStartStr =
-    period.half === "Jan-Jun" ? `${period.year}-01-01` : `${period.year}-07-01`;
-  const pEndStr = period.half === "Jan-Jun" ? `${period.year}-06-30` : `${period.year}-12-31`;
-  const pStart = new Date(pStartStr).getTime();
-  const pEnd = new Date(pEndStr).getTime();
-
-  // 2. Resolve active sailors for the period and partition them
+  // Resolve active sailors for the period and partition them
   const activeSailors: (SailorRecord & { fleet: "Gold" | "Silver" })[] = [];
   for (const s of sailors) {
     const res = resolveSailorFleet(s, period);
@@ -196,84 +397,45 @@ export function calculateRankings(
     }
   }
 
-  // 3. Compute scores for each sailor
+  // Precompute scoring windows per fleet (carry-forward shared within fleet)
+  const goldSlots = scoringRegattasForFleet("Gold", period, regattas);
+  const silverSlots = scoringRegattasForFleet("Silver", period, regattas);
+
   const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
-    // Ranking regattas for this half-year only (up to 5), matching fleet division
-    const sailorRegattas = regattas
-      .filter((r) => {
-        const t = new Date(r.date).getTime();
-        if (t < pStart || t > pEnd) return false;
+    const slots = sailor.fleet === "Gold" ? goldSlots : silverSlots;
 
-        const div = r.division || "Gold";
-        if (sailor.fleet === "Gold") {
-          return div === "Gold" || div === "Both";
-        } else {
-          return div === "Silver" || div === "Both";
-        }
-      })
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-      .slice(0, 5)
-      // R1 = oldest of the five; R5 = newest
-      .reverse();
-
-    const regattaScores = sailorRegattas.map((regatta) => {
-      const result = results.find(
-        (res) => res.sailorId === sailor.id && res.regattaId === regatta.id
-      );
-
-      if (result) {
-        // Stored result (DNS or overseas-adjusted) — rank is the scoring points
-        return {
-          regattaId: regatta.id,
-          regattaName: regatta.name,
-          score: result.rank,
-          isDNS: Boolean(result.isDns) && !result.isOverseasCommitment,
-          isOverseasCommitment: Boolean(result.isOverseasCommitment),
-        };
-      } else {
-        // No row yet: virtual DNS = fleet size + 1
-        // Prefer admin “Ensure DNS for fleet period” so rows exist and are editable
-        return {
-          regattaId: regatta.id,
-          regattaName: regatta.name,
-          score: regatta.totalFleetSize + 1,
-          isDNS: true,
-          isOverseasCommitment: false,
-        };
-      }
+    const regattaScores: RegattaScoreSlot[] = slots.map((slot) => {
+      const scored = scoreForResult(sailor.id, slot.regatta, results);
+      return {
+        regattaId: slot.regatta.id,
+        regattaName: slot.regatta.name,
+        score: scored.score,
+        isDNS: scored.isDNS,
+        isOverseasCommitment: scored.isOverseasCommitment,
+        isCarryForward: slot.isCarryForward,
+        periodLabel: slot.periodLabel,
+      };
     });
 
-    // Best 3 of 5
-    const sortedScores = [...regattaScores]
-      .map((rs) => rs.score)
-      .sort((a, b) => a - b);
-    
-    // Take top 3 (lowest is best)
-    const bestThreeScores = sortedScores.slice(0, 3);
-    
-    // Pad to 3 scores with large penalty if we don't have enough regattas
-    while (bestThreeScores.length < 3) {
-      bestThreeScores.push(9999);
-    }
-
-    const overallScore = bestThreeScores.reduce((sum, score) => sum + score, 0);
+    const { bestThreeScores, overallScore } = bestThreeOf(
+      regattaScores.map((rs) => rs.score)
+    );
 
     return {
       ...sailor,
       regattaScores,
       bestThreeScores,
       overallScore,
+      periodSquadStatus: squadStatusForPeriod(sailor, period),
     };
   });
 
-  // 4. Sort and Tie-Breaking
-  // "Tie-Breaking: If overall scores are tied, break the tie by sorting the sailors' individual regatta scores in ascending order and comparing them head-to-head (lowest rank wins). If still tied, fall back to alphabetical order."
+  // Tie-Breaking: overall, then sorted individual scores, then name
   rankedSailors.sort((a, b) => {
     if (a.overallScore !== b.overallScore) {
       return a.overallScore - b.overallScore;
     }
 
-    // Sort all individual regatta scores in ascending order
     const sortedA = [...a.regattaScores].map((rs) => rs.score).sort((x, y) => x - y);
     const sortedB = [...b.regattaScores].map((rs) => rs.score).sort((x, y) => x - y);
 
@@ -285,10 +447,7 @@ export function calculateRankings(
       }
     }
 
-    // Alphabetical fallback
-    const nameA = a.name.toLowerCase();
-    const nameB = b.name.toLowerCase();
-    return nameA.localeCompare(nameB);
+    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
   });
 
   return rankedSailors;
