@@ -576,7 +576,8 @@ export function FleetRankingsView({
           R1–R5 = scoring window for this fleet (R1 = oldest, R5 = newest). If the
           current half has fewer than 5 events, the most recent events from the
           previous half fill the window (sky “prev” / carry). Best 3 of 5 = sum of
-          the three best (lowest) scores among included regattas. Uncheck events
+          the three best (lowest) scores. Ties: compare all regatta ranks best-first
+          (a 1st beats a 2nd, then next-best, and so on), then name. Uncheck events
           above for a what-if score. * = DNS (fleet size + 1). † = SSF overseas
           commitment. Squad column uses nat squad for the selected period.
         </p>

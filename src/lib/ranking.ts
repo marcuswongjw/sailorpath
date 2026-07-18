@@ -341,8 +341,45 @@ export function bestThreeOf(scores: number[]): {
 }
 
 /**
+ * Sort order for the ranking board:
+ * 1) Lower Best 3 of 5 (overallScore) wins
+ * 2) If tied, compare all regatta ranks ascending (best first):
+ *    e.g. A: 1,3,5,7,18 vs B: 2,2,5,6,9 — both Best3 = 9, A ranks higher
+ *    because 1 beats 2; if still tied continue 3 vs 2, etc.
+ * 3) Alphabetical name
+ */
+export function compareRankedSailors(
+  a: Pick<RankedSailor, "overallScore" | "regattaScores" | "name">,
+  b: Pick<RankedSailor, "overallScore" | "regattaScores" | "name">,
+  scoreFilter?: (rs: RegattaScoreSlot) => boolean
+): number {
+  if (a.overallScore !== b.overallScore) {
+    return a.overallScore - b.overallScore;
+  }
+
+  const ranksOf = (s: typeof a) =>
+    (s.regattaScores || [])
+      .filter((rs) => (scoreFilter ? scoreFilter(rs) : true))
+      .map((rs) => rs.score)
+      .filter((n) => Number.isFinite(n))
+      .sort((x, y) => x - y);
+
+  const sortedA = ranksOf(a);
+  const sortedB = ranksOf(b);
+
+  const n = Math.max(sortedA.length, sortedB.length);
+  for (let i = 0; i < n; i++) {
+    const scoreA = sortedA[i] ?? 9999;
+    const scoreB = sortedB[i] ?? 9999;
+    if (scoreA !== scoreB) return scoreA - scoreB;
+  }
+
+  return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+}
+
+/**
  * Recompute ranking board after excluding some regatta IDs (client “what-if”).
- * Order is re-sorted by new overall score + tie-breakers.
+ * Order is re-sorted by new overall score + regatta-rank tie-breakers.
  */
 export function reRankWithExcluded(
   ranked: RankedSailor[],
@@ -355,30 +392,26 @@ export function reRankWithExcluded(
     const { bestThreeScores, overallScore } = bestThreeOf(
       kept.map((rs) => rs.score)
     );
-    return { ...s, bestThreeScores, overallScore };
+    // Keep full regattaScores for display; only overallScore uses exclusions
+    return { ...s, bestThreeScores, overallScore, _tiebreakScores: kept };
   });
 
-  next.sort((a, b) => {
-    if (a.overallScore !== b.overallScore) {
-      return a.overallScore - b.overallScore;
-    }
-    const sortedA = [...a.regattaScores]
-      .filter((rs) => !excludedRegattaIds.has(rs.regattaId))
-      .map((rs) => rs.score)
-      .sort((x, y) => x - y);
-    const sortedB = [...b.regattaScores]
-      .filter((rs) => !excludedRegattaIds.has(rs.regattaId))
-      .map((rs) => rs.score)
-      .sort((x, y) => x - y);
-    for (let i = 0; i < Math.max(sortedA.length, sortedB.length); i++) {
-      const scoreA = sortedA[i] ?? 9999;
-      const scoreB = sortedB[i] ?? 9999;
-      if (scoreA !== scoreB) return scoreA - scoreB;
-    }
-    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-  });
+  next.sort((a, b) =>
+    compareRankedSailors(
+      {
+        overallScore: a.overallScore,
+        name: a.name,
+        regattaScores: (a as any)._tiebreakScores || a.regattaScores,
+      },
+      {
+        overallScore: b.overallScore,
+        name: b.name,
+        regattaScores: (b as any)._tiebreakScores || b.regattaScores,
+      }
+    )
+  );
 
-  return next;
+  return next.map(({ _tiebreakScores, ...rest }: any) => rest as RankedSailor);
 }
 
 // Core Ranking Engine
@@ -430,25 +463,8 @@ export function calculateRankings(
     };
   });
 
-  // Tie-Breaking: overall, then sorted individual scores, then name
-  rankedSailors.sort((a, b) => {
-    if (a.overallScore !== b.overallScore) {
-      return a.overallScore - b.overallScore;
-    }
-
-    const sortedA = [...a.regattaScores].map((rs) => rs.score).sort((x, y) => x - y);
-    const sortedB = [...b.regattaScores].map((rs) => rs.score).sort((x, y) => x - y);
-
-    for (let i = 0; i < Math.max(sortedA.length, sortedB.length); i++) {
-      const scoreA = sortedA[i] ?? 9999;
-      const scoreB = sortedB[i] ?? 9999;
-      if (scoreA !== scoreB) {
-        return scoreA - scoreB;
-      }
-    }
-
-    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
-  });
+  // Best 3 of 5, then best-to-worst regatta ranks, then name
+  rankedSailors.sort((a, b) => compareRankedSailors(a, b));
 
   return rankedSailors;
 }

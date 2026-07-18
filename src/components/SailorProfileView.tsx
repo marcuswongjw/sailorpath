@@ -167,7 +167,7 @@ export function SailorProfileView({
   const [expandedRegattaId, setExpandedRegattaId] = useState<string | null>(null);
   const [observations, setObservations] = useState(initialObservations || []);
   const [obsForm, setObsForm] = useState({
-    raceNumber: "1",
+    raceNumber: "",
     position: "",
     wind: "",
     note: "",
@@ -295,6 +295,11 @@ export function SailorProfileView({
       setObsMsg("Demo only — not saved");
       return;
     }
+    const raceNum = Number(obsForm.raceNumber);
+    if (!obsForm.raceNumber.trim() || !Number.isFinite(raceNum) || raceNum < 1) {
+      setObsMsg("Enter a race number");
+      return;
+    }
     setObsBusy(true);
     setObsMsg(null);
     try {
@@ -305,7 +310,7 @@ export function SailorProfileView({
         body: JSON.stringify({
           sailorId: initialSailor.id,
           regattaId,
-          raceNumber: Number(obsForm.raceNumber),
+          raceNumber: raceNum,
           position: obsForm.position === "" ? null : Number(obsForm.position),
           wind: obsForm.wind,
           note: obsForm.note,
@@ -341,7 +346,7 @@ export function SailorProfileView({
       setObsMsg("Observation saved");
       setObsForm((f) => ({
         ...f,
-        raceNumber: String(Number(f.raceNumber) + 1),
+        raceNumber: "",
         position: "",
         wind: "",
         note: "",
