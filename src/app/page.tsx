@@ -123,168 +123,294 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Development Pathway */}
-      <section className="border-t border-white/5 bg-[#0b0c13] py-16 sm:py-20">
+      {/* Development Pathway — four product phases */}
+      <section
+        id="development-pathway"
+        className="border-t border-white/5 bg-[#0b0c13] py-16 sm:py-20"
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
             <h2 className="text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
               Development Pathway
             </h2>
-            <p className="mt-4 text-slate-400">
-              Follow the active development milestones of the SailorPath
-              application.
+            <p className="mt-4 text-slate-400 text-sm md:text-base leading-relaxed">
+              SailorPath ships in four phases — from live Optimist rankings
+              today, through athlete logbooks and family/coach tools, to
+              association-grade operations.{" "}
+              <Link
+                href="/sample"
+                className="text-amber-300/90 font-semibold underline-offset-2 hover:underline"
+              >
+                Tour the multi-role demo
+              </Link>{" "}
+              to see where we&apos;re heading.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-            <div className="hidden md:block absolute top-1/2 left-4 right-4 h-0.5 bg-gradient-to-r from-orange-500/10 via-orange-500/50 to-orange-500/10 -translate-y-1/2 -z-10" />
+          {/* Phase rail (desktop) */}
+          <div className="hidden lg:grid grid-cols-4 gap-2 mb-8 px-1">
+            {[
+              { n: "01", label: "Live", tone: "text-orange-400" },
+              { n: "02", label: "Building", tone: "text-amber-300" },
+              { n: "03", label: "Next", tone: "text-slate-400" },
+              { n: "04", label: "Horizon", tone: "text-slate-500" },
+            ].map((p, i) => (
+              <div key={p.n} className="flex items-center gap-2">
+                <span
+                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[10px] font-black ${p.tone}`}
+                >
+                  {p.n}
+                </span>
+                <span className={`text-[11px] font-bold uppercase tracking-wider ${p.tone}`}>
+                  {p.label}
+                </span>
+                {i < 3 && (
+                  <span className="flex-1 h-px bg-gradient-to-r from-white/15 to-transparent" />
+                )}
+              </div>
+            ))}
+          </div>
 
-            <div className="glass-card rounded-2xl p-6 border border-white/5 hover:border-orange-500/20 transition-all flex flex-col justify-between group">
-              <div>
-                <span className="text-xs font-bold text-orange-500">LIVE TODAY</span>
-                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-orange-500 transition-colors">
-                  The Foundation
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+            {/* Phase 1 */}
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 hover:border-orange-500/40 transition-all flex flex-col justify-between group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-orange-600/10 rounded-full blur-2xl -z-0" />
+              <div className="relative">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">
+                    Phase 1 · Live
+                  </span>
+                  <span className="rounded-full bg-orange-600 px-2 py-0.5 text-[10px] font-black text-white">
+                    ✓ Now
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-orange-400 transition-colors">
+                  Rankings &amp; identity
                 </h3>
-                <p className="text-xs text-slate-400 mt-2">
-                  The core digital identity for youth sailors to track and share
-                  their progress.
+                <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                  Official Optimist Gold/Silver boards, sailor profiles, and
+                  admin import — the foundation every later phase builds on.
                 </p>
-                <ul className="mt-4 space-y-3 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
+                <ul className="mt-4 space-y-2.5 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
                   <li className="flex items-start gap-1.5">
                     <span className="text-orange-500 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Digital trophy cabinet</strong>
-                      : Public profiles consolidating your complete regatta
-                      history and individual race scores.
+                      <strong className="text-white">Fleet standings</strong> —
+                      Best 3 of 5, DNS (N+1), overseas commitment scores
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
                     <span className="text-orange-500 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Equipment log</strong>: Track
-                      hull, sail, and foil choices to see what gear drives your
-                      best results.
+                      <strong className="text-white">Public profiles</strong> —
+                      regatta logbook, honours, equipment, claim handle
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
                     <span className="text-orange-500 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Achievement timeline</strong>
-                      : A visual progression of your journey from the Silver
-                      fleet to the Gold fleet.
+                      <strong className="text-white">Admin ops</strong> —
+                      import, merge, promote, bulk edit, results modal
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
                     <span className="text-orange-500 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Fleet rankings</strong>: Best
-                      3 of 5 Gold/Silver standings with DNS handling.
+                      <strong className="text-white">Discovery</strong> —
+                      search, compare,{" "}
+                      <Link href="/sample" className="text-amber-300/90 hover:underline">
+                        multi-role demo tour
+                      </Link>
                     </span>
                   </li>
                 </ul>
               </div>
-              <div className="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-orange-600 text-white text-xs font-bold shadow-md shadow-orange-950/20">
-                ✓
+              <div className="mt-5 flex h-8 w-8 items-center justify-center rounded-full bg-orange-600 text-white text-xs font-bold shadow-md shadow-orange-950/20">
+                01
               </div>
-            </div>
+            </article>
 
-            <div className="glass-card rounded-2xl p-6 border border-white/5 hover:border-orange-500/20 transition-all flex flex-col justify-between group">
+            {/* Phase 2 */}
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-amber-500/20 hover:border-amber-500/35 transition-all flex flex-col justify-between group">
               <div>
-                <span className="text-xs font-bold text-orange-500">UP NEXT</span>
-                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-orange-500 transition-colors">
-                  The Fleet Ecosystem
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-amber-300">
+                    Phase 2 · Building
+                  </span>
+                  <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-black text-amber-200">
+                    Next
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-amber-300 transition-colors">
+                  Athlete logbook
                 </h3>
-                <p className="text-xs text-slate-400 mt-2">
-                  Expanding the platform to support the coaches and parents who
-                  manage the logistics behind the athletes, and connecting the
-                  fleet.{" "}
+                <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                  Make the sailor the owner of their story — deeper notes,
+                  live series context, and privacy that actually sticks.
+                </p>
+                <ul className="mt-4 space-y-2.5 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span>
+                      <strong className="text-white">Live series strip</strong> —
+                      Best 3 of 5 on every claimed profile
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span>
+                      <strong className="text-white">Race observations</strong> —
+                      wind, place, coaching takeaways per race
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span>
+                      <strong className="text-white">Privacy controls</strong> —
+                      weight, DOB, notes visibility saved to account
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span>
+                      <strong className="text-white">Equipment history</strong> —
+                      gear changes tied to regattas over time
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-5 flex h-8 w-8 items-center justify-center rounded-full bg-amber-600/90 text-white text-xs font-bold">
+                02
+              </div>
+            </article>
+
+            {/* Phase 3 */}
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/5 hover:border-emerald-500/25 transition-all flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400/90">
+                    Phase 3 · Next
+                  </span>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-black text-slate-400">
+                    Planned
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-emerald-400 transition-colors">
+                  Family &amp; coach
+                </h3>
+                <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                  Roles beyond the athlete — parents track progress; coaches
+                  run squads.{" "}
                   <Link
                     href="/sample?view=parent"
                     className="text-amber-300/90 underline-offset-2 hover:underline"
                   >
-                    Preview parent &amp; coach views
+                    Preview in demo
                   </Link>
                   .
                 </p>
-                <ul className="mt-4 space-y-2 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
+                <ul className="mt-4 space-y-2.5 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
                   <li className="flex items-start gap-1.5">
-                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span className="text-emerald-400 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Coach and squad dashboards</strong>
-                      : Aggregate data, compare head-to-head nett scores, and
-                      analyse fleet-wide performance trends.
+                      <strong className="text-white">Parent linking</strong> —
+                      approved guardians, multi-sailor family hub
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
-                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span className="text-emerald-400 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Family management</strong>:
-                      Secure parent accounts to manage multiple young sailors
-                      from a single dashboard.
+                      <strong className="text-white">Coach squads</strong> —
+                      roster, pathway checklist, private coach notes
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
-                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span className="text-emerald-400 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Condition tagging</strong>:
-                      Log wind, tide, and wave conditions alongside results.
+                      <strong className="text-white">Role-based access</strong> —
+                      public · sailor · parent · coach RLS
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
-                    <span className="text-orange-500 mt-0.5">•</span>
+                    <span className="text-emerald-400 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Sailor connections</strong>:
-                      Find and connect with fellow athletes in the fleet.
-                    </span>
-                  </li>
-                </ul>
-              </div>
-              <div className="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 border border-white/5 text-slate-500 text-xs font-bold">
-                02
-              </div>
-            </div>
-
-            <div className="glass-card rounded-2xl p-6 border border-white/5 hover:border-orange-500/20 transition-all flex flex-col justify-between group">
-              <div>
-                <span className="text-xs font-bold text-orange-500">
-                  ON THE HORIZON
-                </span>
-                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-orange-500 transition-colors">
-                  Institutional Integration
-                </h3>
-                <p className="text-xs text-slate-400 mt-2 font-semibold">
-                  Exploring tools for sailing associations and regatta
-                  organisers to streamline operations, driven by your feedback.
-                </p>
-                <ul className="mt-4 space-y-2 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-orange-500 mt-0.5">•</span>
-                    <span>
-                      <strong className="text-white">Shape the fleet</strong>:
-                      Feature requests and roadmap input from the community.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-orange-500 mt-0.5">•</span>
-                    <span>
-                      <strong className="text-white">Regatta registration sync</strong>
-                      : Pull official start lists and publish results.
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-1.5">
-                    <span className="text-orange-500 mt-0.5">•</span>
-                    <span>
-                      <strong className="text-white">Campaign logistics planner</strong>
-                      : Itineraries and budget tools for away regattas.
+                      <strong className="text-white">Squad tools</strong> —
+                      compare, export, parent ↔ coach messaging
                     </span>
                   </li>
                 </ul>
               </div>
-              <div className="mt-6 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 border border-white/5 text-slate-500 text-xs font-bold">
+              <div className="mt-5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 border border-emerald-500/30 text-emerald-400/90 text-xs font-bold">
                 03
               </div>
-            </div>
+            </article>
+
+            {/* Phase 4 */}
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/5 hover:border-blue-500/20 transition-all flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-blue-400/80">
+                    Phase 4 · Horizon
+                  </span>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-black text-slate-500">
+                    Later
+                  </span>
+                </div>
+                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-blue-300 transition-colors">
+                  Associations &amp; events
+                </h3>
+                <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                  Tools for organisers and national programmes — less
+                  spreadsheet chaos, more campaign clarity.
+                </p>
+                <ul className="mt-4 space-y-2.5 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>
+                      <strong className="text-white">Regatta sync</strong> —
+                      start lists in, results out, fewer re-keys
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>
+                      <strong className="text-white">Campaign planner</strong> —
+                      overseas itineraries, checklists, budgets
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>
+                      <strong className="text-white">Notifications</strong> —
+                      rank moves, claims, squad selection windows
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-blue-400 mt-0.5">•</span>
+                    <span>
+                      <strong className="text-white">Class expansion</strong> —
+                      beyond Optimist as the fleet asks for it
+                    </span>
+                  </li>
+                </ul>
+              </div>
+              <div className="mt-5 flex h-8 w-8 items-center justify-center rounded-full bg-slate-900 border border-blue-500/25 text-blue-400/80 text-xs font-bold">
+                04
+              </div>
+            </article>
           </div>
+
+          <p className="mt-8 text-center text-[11px] text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Roadmap is community-led. Founding supporters and early users help
+            prioritise what ships in Phase 2 and 3 —{" "}
+            <a
+              href="#founding-membership"
+              className="text-slate-400 hover:text-orange-400 underline-offset-2 hover:underline"
+            >
+              back the build
+            </a>
+            .
+          </p>
         </div>
       </section>
 
