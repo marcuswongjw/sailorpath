@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
-import { sailors } from "@/db/schema";
+import { equipmentLogs, sailors } from "@/db/schema";
+
+function strOrNull(v: unknown, max: number) {
+  if (v === null || v === undefined || v === "") return null;
+  return String(v).slice(0, max);
+}
 
 /**
  * Owner (parent_id) or superadmin can update sailor-facing profile fields.
@@ -22,7 +27,15 @@ export async function PATCH(req: Request) {
     }
 
     const [sailor] = await db
-      .select({ id: sailors.id, parentId: sailors.parentId })
+      .select({
+        id: sailors.id,
+        parentId: sailors.parentId,
+        hullBrand: sailors.hullBrand,
+        sailMake: sailors.sailMake,
+        foilBrand: sailors.foilBrand,
+        mast: sailors.mast,
+        equipmentNotes: sailors.equipmentNotes,
+      })
       .from(sailors)
       .where(eq(sailors.id, sailorId))
       .limit(1);
@@ -43,16 +56,13 @@ export async function PATCH(req: Request) {
     const patch: Record<string, unknown> = { updatedAt: new Date() };
 
     if (body.bio !== undefined) {
-      patch.bio = body.bio === null || body.bio === "" ? null : String(body.bio).slice(0, 500);
+      patch.bio = strOrNull(body.bio, 500);
     }
     if (body.instagram !== undefined) {
-      patch.instagram =
-        body.instagram === null || body.instagram === ""
-          ? null
-          : String(body.instagram).slice(0, 80);
+      patch.instagram = strOrNull(body.instagram, 80);
     }
     if (body.avatarUrl !== undefined) {
-      const url = body.avatarUrl === null || body.avatarUrl === "" ? null : String(body.avatarUrl).trim();
+      const url = strOrNull(body.avatarUrl, 500);
       if (url && !/^https?:\/\//i.test(url)) {
         return NextResponse.json(
           { error: "Avatar URL must start with http:// or https://" },
@@ -62,10 +72,7 @@ export async function PATCH(req: Request) {
       patch.avatarUrl = url;
     }
     if (body.school !== undefined) {
-      patch.school =
-        body.school === null || body.school === ""
-          ? null
-          : String(body.school).slice(0, 120);
+      patch.school = strOrNull(body.school, 120);
     }
     if (body.weight !== undefined) {
       if (body.weight === null || body.weight === "") {
@@ -91,6 +98,22 @@ export async function PATCH(req: Request) {
       patch.isPublicEquipment = body.isPublicEquipment;
     }
 
+    // Equipment (current)
+    let equipmentChanged = false;
+    for (const [key, max] of [
+      ["hullBrand", 80],
+      ["sailMake", 80],
+      ["foilBrand", 80],
+      ["mast", 80],
+      ["equipmentNotes", 400],
+    ] as const) {
+      if (body[key] !== undefined) {
+        const next = strOrNull(body[key], max);
+        patch[key] = next;
+        if (next !== (sailor as any)[key]) equipmentChanged = true;
+      }
+    }
+
     const [updated] = await db
       .update(sailors)
       .set(patch)
@@ -110,7 +133,29 @@ export async function PATCH(req: Request) {
         isPublicWeight: sailors.isPublicWeight,
         isPublicDob: sailors.isPublicDob,
         isPublicEquipment: sailors.isPublicEquipment,
+        hullBrand: sailors.hullBrand,
+        sailMake: sailors.sailMake,
+        foilBrand: sailors.foilBrand,
+        mast: sailors.mast,
+        equipmentNotes: sailors.equipmentNotes,
       });
+
+    // Snapshot equipment history when gear fields change
+    if (equipmentChanged && updated) {
+      try {
+        await db.insert(equipmentLogs).values({
+          sailorId,
+          effectiveDate: new Date().toISOString().slice(0, 10),
+          hullBrand: updated.hullBrand,
+          sailMake: updated.sailMake,
+          foilBrand: updated.foilBrand,
+          mast: updated.mast,
+          notes: updated.equipmentNotes,
+        });
+      } catch (e) {
+        console.warn("equipment log insert skipped", e);
+      }
+    }
 
     return NextResponse.json({ ok: true, sailor: updated });
   } catch (e) {

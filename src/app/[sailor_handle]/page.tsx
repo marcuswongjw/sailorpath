@@ -4,6 +4,9 @@ import { SailorProfileView } from "@/components/SailorProfileView";
 import {
   getSailorByHandle,
   getResultsForSailor,
+  getSailorSeriesStanding,
+  getRaceObservationsForSailor,
+  getEquipmentLogsForSailor,
 } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { getAuthContext } from "@/lib/auth";
@@ -31,7 +34,23 @@ export default async function SailorProfilePage({
       auth?.userId && !sailor.parentId && !isSuperadmin
     );
 
-    const results = await getResultsForSailor(sailor.id);
+    const [results, seriesStanding, observations, equipmentHistory] =
+      await Promise.all([
+        getResultsForSailor(sailor.id),
+        getSailorSeriesStanding(sailor.id).catch(() => null),
+        getRaceObservationsForSailor(sailor.id, {
+          includePrivate: canSeePrivate,
+        }).catch(() => []),
+        getEquipmentLogsForSailor(sailor.id).catch(() => []),
+      ]);
+
+    const equipment = {
+      hullBrand: sailor.hullBrand || null,
+      sailMake: sailor.sailMake || null,
+      foilBrand: sailor.foilBrand || null,
+      mast: sailor.mast || null,
+      notes: sailor.equipmentNotes || null,
+    };
 
     return (
       <SailorProfileView
@@ -39,12 +58,13 @@ export default async function SailorProfilePage({
           ...sailor,
           isPublicWeight: sailor.isPublicWeight ?? false,
           isPublicDob: sailor.isPublicDob ?? false,
-          isPublicEquipment: sailor.isPublicEquipment ?? true,
+          isPublicEquipment: sailor.isPublicEquipment ?? false,
         }}
         initialResults={results.map((r) => ({
-          id: r.regattaSlug,
+          id: r.resultId || r.regattaId,
+          resultId: r.resultId,
           regattaSlug: r.regattaSlug,
-          regattaId: r.regattaSlug,
+          regattaId: r.regattaId,
           regattaName: r.regattaName,
           regattaDate: r.regattaDate,
           division: r.division,
@@ -56,8 +76,12 @@ export default async function SailorProfilePage({
           isDns: r.isDns,
           isDNS: r.isDns,
           isOverseasCommitment: r.isOverseasCommitment,
+          raceCount: r.raceCount,
         }))}
-        initialEquipment={null}
+        initialEquipment={equipment}
+        initialSeriesStanding={seriesStanding}
+        initialObservations={observations}
+        initialEquipmentHistory={equipmentHistory}
         canSeePrivate={canSeePrivate}
         canClaim={canClaim}
         isOwner={isOwner}

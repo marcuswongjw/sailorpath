@@ -1699,57 +1699,35 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         </span>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="flex border-b border-white/5 gap-4 overflow-x-auto pb-0.5">
-        <button
-          onClick={() => setActiveTab("roster")}
-          className={`pb-4 text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === "roster"
-              ? "border-orange-500 text-white"
-              : "border-transparent text-slate-400 hover:text-white"
-          }`}
-        >
-          <UserPlus className="h-4 w-4" />
-          Sailor Roster
-        </button>
-        <button
-          onClick={() => setActiveTab("import")}
-          className={`pb-4 text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === "import"
-              ? "border-orange-500 text-white"
-              : "border-transparent text-slate-400 hover:text-white"
-          }`}
-        >
-          <FileSpreadsheet className="h-4 w-4" />
-          Regatta Excel
-        </button>
-        <button
-          onClick={() => setActiveTab("reconciliation")}
-          className={`pb-4 text-sm font-bold border-b-2 transition-all flex items-center gap-2 relative whitespace-nowrap ${
-            activeTab === "reconciliation"
-              ? "border-orange-500 text-white"
-              : "border-transparent text-slate-400 hover:text-white"
-          }`}
-        >
-          <UserCheck className="h-4 w-4" />
-          Name Reconciliation Queue
-          {reconciliationQueue.length > 0 && (
-            <span className="absolute -top-1 -right-3 flex h-4 w-4 items-center justify-center rounded-full bg-orange-600 text-[10px] font-black text-white">
-              {reconciliationQueue.length}
-            </span>
-          )}
-        </button>
-        <button
-          onClick={() => setActiveTab("edit")}
-          className={`pb-4 text-sm font-bold border-b-2 transition-all flex items-center gap-2 whitespace-nowrap ${
-            activeTab === "edit"
-              ? "border-orange-500 text-white"
-              : "border-transparent text-slate-400 hover:text-white"
-          }`}
-        >
-          <Database className="h-4 w-4" />
-          Database & bulk edit
-        </button>
+      {/* Tab Navigation — equal width for all tabs */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+        {(
+          [
+            ["roster", "Sailor Roster", UserPlus],
+            ["import", "Regatta Excel", FileSpreadsheet],
+            ["reconciliation", "Name Reconciliation", UserCheck],
+            ["edit", "Database & bulk edit", Database],
+          ] as const
+        ).map(([key, label, Icon]) => (
+          <button
+            key={key}
+            type="button"
+            onClick={() => setActiveTab(key)}
+            className={`relative flex items-center justify-center gap-2 rounded-xl px-2 py-3 text-xs sm:text-sm font-bold transition-all min-h-[3rem] ${
+              activeTab === key
+                ? "bg-orange-600 text-white shadow-md shadow-orange-950/30"
+                : "text-slate-400 hover:text-white hover:bg-white/5"
+            }`}
+          >
+            <Icon className="h-4 w-4 shrink-0" />
+            <span className="text-center leading-tight">{label}</span>
+            {key === "reconciliation" && reconciliationQueue.length > 0 && (
+              <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] px-1 items-center justify-center rounded-full bg-orange-500 text-[10px] font-black text-white">
+                {reconciliationQueue.length}
+              </span>
+            )}
+          </button>
+        ))}
       </div>
 
       {/* RLS Policy Indicator Banner for non-superadmins */}
@@ -2137,7 +2115,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         {activeTab === "edit" && (
           <div className="space-y-6">
             {/* Sub Tabs */}
-            <div className="flex flex-wrap gap-2 bg-[#131520] border border-white/5 p-1 rounded-2xl max-w-2xl">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-full">
               {([
                 ["sailors", "Sailors"],
                 ["regattas", "Regattas"],
@@ -2147,16 +2125,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               ] as const).map(([sub, label]) => (
                 <button
                   key={sub}
+                  type="button"
                   onClick={() => {
                     setEditSubTab(sub);
                     setEditingSailorId(null);
                     setEditingRegattaId(null);
                     setEditingResultId(null);
                   }}
-                  className={`flex-1 min-w-[4.5rem] rounded-full py-1.5 text-xs font-bold transition-all ${
+                  className={`rounded-xl py-2.5 text-xs font-bold transition-all text-center ${
                     editSubTab === sub
                       ? "bg-orange-600 text-white"
-                      : "text-slate-400 hover:text-white"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
                   {label}

@@ -72,6 +72,12 @@ export const sailors = pgTable("sailors", {
   isPublicWeight: boolean("is_public_weight").default(false).notNull(),
   isPublicDob: boolean("is_public_dob").default(false).notNull(),
   isPublicEquipment: boolean("is_public_equipment").default(false).notNull(),
+  /** Current equipment (owner-editable) */
+  hullBrand: text("hull_brand"),
+  sailMake: text("sail_make"),
+  foilBrand: text("foil_brand"),
+  mast: text("mast"),
+  equipmentNotes: text("equipment_notes"),
   parentId: uuid("parent_id").references(() => profiles.id, {
     onDelete: "set null",
   }),
@@ -159,4 +165,51 @@ export const sailorClaims = pgTable("sailor_claims", {
   note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+/**
+ * Race-by-race observations (owner / parent).
+ * Private by default — only visible when isPrivate=false or viewer is owner.
+ */
+export const raceObservations = pgTable(
+  "race_observations",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    sailorId: uuid("sailor_id")
+      .references(() => sailors.id, { onDelete: "cascade" })
+      .notNull(),
+    regattaId: uuid("regatta_id")
+      .references(() => regattas.id, { onDelete: "cascade" })
+      .notNull(),
+    raceNumber: integer("race_number").notNull(),
+    position: integer("position"),
+    wind: text("wind"),
+    note: text("note"),
+    isPrivate: boolean("is_private").default(true).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    unq: unique().on(table.sailorId, table.regattaId, table.raceNumber),
+  })
+);
+
+/**
+ * Equipment change log — optional dated snapshots (current gear also on sailors).
+ */
+export const equipmentLogs = pgTable("equipment_logs", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  sailorId: uuid("sailor_id")
+    .references(() => sailors.id, { onDelete: "cascade" })
+    .notNull(),
+  effectiveDate: date("effective_date").notNull(),
+  hullBrand: text("hull_brand"),
+  sailMake: text("sail_make"),
+  foilBrand: text("foil_brand"),
+  mast: text("mast"),
+  notes: text("notes"),
+  regattaId: uuid("regatta_id").references(() => regattas.id, {
+    onDelete: "set null",
+  }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });

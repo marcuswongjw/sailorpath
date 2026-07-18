@@ -4,21 +4,32 @@ import {
   regattas,
   regattaResults,
   profiles,
+  raceObservations,
+  equipmentLogs,
 } from "@/db/schema";
 import {
   calculateRankings,
+  periodLabel,
   type Period,
   type SailorRecord,
   type RegattaRecord,
   type RegattaResultRecord,
+  type RegattaScoreSlot,
 } from "@/lib/ranking";
-import { asc, desc, eq, ilike, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, or, sql } from "drizzle-orm";
 
-function mapSailor(row: typeof sailors.$inferSelect): SailorRecord & {
+export type SailorMapped = SailorRecord & {
   isPublicWeight?: boolean;
   isPublicDob?: boolean;
   isPublicEquipment?: boolean;
-} {
+  hullBrand?: string | null;
+  sailMake?: string | null;
+  foilBrand?: string | null;
+  mast?: string | null;
+  equipmentNotes?: string | null;
+};
+
+function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
   return {
     id: row.id,
     name: row.name,
@@ -57,8 +68,24 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorRecord & {
     isPublicWeight: row.isPublicWeight,
     isPublicDob: row.isPublicDob,
     isPublicEquipment: row.isPublicEquipment,
+    hullBrand: row.hullBrand,
+    sailMake: row.sailMake,
+    foilBrand: row.foilBrand,
+    mast: row.mast,
+    equipmentNotes: row.equipmentNotes,
   };
 }
+
+export type SeriesStanding = {
+  period: Period;
+  periodLabel: string;
+  fleet: "Gold" | "Silver";
+  overallRank: number;
+  fleetSize: number;
+  best3of5: number;
+  rScores: RegattaScoreSlot[];
+  trendNote: string;
+};
 
 async function withDb<T>(fn: () => Promise<T>): Promise<T> {
   try {
@@ -285,21 +312,98 @@ export async function getResultsForSailor(sailorId: string) {
   return withDb(async () => {
     return db
       .select({
+        resultId: regattaResults.id,
         rank: regattaResults.rank,
         nettScore: regattaResults.nettScore,
         totalScore: regattaResults.totalScore,
         isDns: regattaResults.isDns,
         isOverseasCommitment: regattaResults.isOverseasCommitment,
+        regattaId: regattas.id,
         regattaName: regattas.name,
         regattaSlug: regattas.slug,
         regattaDate: regattas.date,
         division: regattas.division,
         fleetSize: regattas.totalFleetSize,
+        raceCount: regattas.raceCount,
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
       .where(eq(regattaResults.sailorId, sailorId))
       .orderBy(desc(regattas.date));
+  });
+}
+
+const CURRENT_PERIOD: Period = { year: 2026, half: "Jul-Dec" };
+
+/** Live Best 3 of 5 strip for a single sailor (current series by default). */
+export async function getSailorSeriesStanding(
+  sailorId: string,
+  period: Period = CURRENT_PERIOD
+): Promise<SeriesStanding | null> {
+  return withDb(async () => {
+    const [s, r, res] = await Promise.all([
+      listSailors(),
+      listRegattas(),
+      listResults(),
+    ]);
+    const all = calculateRankings(period, s, r, res);
+    const me = all.find((x) => x.id === sailorId);
+    if (!me) return null;
+    const fleetPeers = all.filter((x) => x.fleet === me.fleet);
+    const overallRank = fleetPeers.findIndex((x) => x.id === sailorId) + 1;
+    const carry = me.regattaScores.filter((rs) => rs.isCarryForward).length;
+    return {
+      period,
+      periodLabel: periodLabel(period),
+      fleet: me.fleet,
+      overallRank,
+      fleetSize: fleetPeers.length,
+      best3of5: me.overallScore,
+      rScores: me.regattaScores,
+      trendNote:
+        carry > 0
+          ? `Includes ${carry} carry-forward score${carry === 1 ? "" : "s"} from previous half`
+          : `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
+    };
+  });
+}
+
+export async function getRaceObservationsForSailor(
+  sailorId: string,
+  opts?: { includePrivate?: boolean }
+) {
+  return withDb(async () => {
+    const rows = await db
+      .select({
+        id: raceObservations.id,
+        sailorId: raceObservations.sailorId,
+        regattaId: raceObservations.regattaId,
+        raceNumber: raceObservations.raceNumber,
+        position: raceObservations.position,
+        wind: raceObservations.wind,
+        note: raceObservations.note,
+        isPrivate: raceObservations.isPrivate,
+        regattaName: regattas.name,
+        regattaSlug: regattas.slug,
+        regattaDate: regattas.date,
+      })
+      .from(raceObservations)
+      .innerJoin(regattas, eq(raceObservations.regattaId, regattas.id))
+      .where(eq(raceObservations.sailorId, sailorId))
+      .orderBy(desc(regattas.date), asc(raceObservations.raceNumber));
+
+    if (opts?.includePrivate) return rows;
+    return rows.filter((r) => !r.isPrivate);
+  });
+}
+
+export async function getEquipmentLogsForSailor(sailorId: string) {
+  return withDb(async () => {
+    return db
+      .select()
+      .from(equipmentLogs)
+      .where(eq(equipmentLogs.sailorId, sailorId))
+      .orderBy(desc(equipmentLogs.effectiveDate));
   });
 }
 

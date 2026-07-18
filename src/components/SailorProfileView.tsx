@@ -18,12 +18,33 @@ import {
   Link2,
   UserPlus,
   Pencil,
+  BookOpen,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 
 interface SailorProfileViewProps {
   initialSailor: any;
   initialResults: any[];
   initialEquipment: any;
+  initialSeriesStanding?: {
+    periodLabel: string;
+    fleet: string;
+    overallRank: number;
+    fleetSize: number;
+    best3of5: number;
+    rScores: {
+      regattaId: string;
+      regattaName: string;
+      score: number;
+      isDNS?: boolean;
+      isOverseasCommitment?: boolean;
+      isCarryForward?: boolean;
+    }[];
+    trendNote: string;
+  } | null;
+  initialObservations?: any[];
+  initialEquipmentHistory?: any[];
   canSeePrivate?: boolean;
   canClaim?: boolean;
   isOwner?: boolean;
@@ -109,6 +130,9 @@ export function SailorProfileView({
   initialSailor,
   initialResults,
   initialEquipment,
+  initialSeriesStanding = null,
+  initialObservations = [],
+  initialEquipmentHistory = [],
   canSeePrivate = false,
   canClaim = false,
   isOwner = false,
@@ -125,7 +149,7 @@ export function SailorProfileView({
     initialSailor.isPublicDob || false
   );
   const [isPublicEquipment, setIsPublicEquipment] = useState(
-    initialSailor.isPublicEquipment ?? true
+    initialSailor.isPublicEquipment ?? false
   );
   const [visibleCount, setVisibleCount] = useState(15);
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
@@ -135,6 +159,17 @@ export function SailorProfileView({
   const [editing, setEditing] = useState(false);
   const [saveBusy, setSaveBusy] = useState(false);
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
+  const [expandedRegattaId, setExpandedRegattaId] = useState<string | null>(null);
+  const [observations, setObservations] = useState(initialObservations || []);
+  const [obsForm, setObsForm] = useState({
+    raceNumber: "1",
+    position: "",
+    wind: "",
+    note: "",
+    isPrivate: true,
+  });
+  const [obsBusy, setObsBusy] = useState(false);
+  const [obsMsg, setObsMsg] = useState<string | null>(null);
   const [form, setForm] = useState({
     bio: initialSailor.bio || "",
     instagram: initialSailor.instagram || "",
@@ -142,8 +177,17 @@ export function SailorProfileView({
     school: initialSailor.school || "",
     weight:
       initialSailor.weight != null ? String(initialSailor.weight) : "",
+    hullBrand: initialEquipment?.hullBrand || "",
+    sailMake: initialEquipment?.sailMake || "",
+    foilBrand: initialEquipment?.foilBrand || "",
+    mast: initialEquipment?.mast || "",
+    equipmentNotes: initialEquipment?.notes || "",
   });
   const [displaySailor, setDisplaySailor] = useState(initialSailor);
+  const [displayEquipment, setDisplayEquipment] = useState(initialEquipment);
+  const [equipHistory, setEquipHistory] = useState(
+    initialEquipmentHistory || []
+  );
 
   useEffect(() => {
     if (!demoMode && isOwner && typeof window !== "undefined") {
@@ -152,8 +196,37 @@ export function SailorProfileView({
     }
   }, [demoMode, isOwner]);
 
+  // Load existing claim status for this sailor
+  useEffect(() => {
+    if (demoMode || !isLoggedIn || !canClaim) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch("/api/claims", { credentials: "include" });
+        const data = await res.json();
+        if (!res.ok || cancelled) return;
+        const mine = (data.claims || []).find(
+          (c: any) =>
+            c.sailorId === initialSailor.id && c.status === "pending"
+        );
+        if (mine) {
+          setClaimStatus("pending");
+          setClaimMsg(
+            "Claim pending admin approval — track status on My account."
+          );
+        }
+      } catch {
+        /* ignore */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [demoMode, isLoggedIn, canClaim, initialSailor.id]);
+
   const hasPrivateAccess = canSeePrivate;
   const showWeight = isPublicWeight || hasPrivateAccess;
+  const showDob = isPublicDob || hasPrivateAccess;
   const showEquipment = isPublicEquipment || hasPrivateAccess;
 
   const saveProfile = async () => {
@@ -179,6 +252,11 @@ export function SailorProfileView({
           isPublicWeight,
           isPublicDob,
           isPublicEquipment,
+          hullBrand: form.hullBrand,
+          sailMake: form.sailMake,
+          foilBrand: form.foilBrand,
+          mast: form.mast,
+          equipmentNotes: form.equipmentNotes,
         }),
       });
       const data = await res.json();
@@ -186,12 +264,17 @@ export function SailorProfileView({
       setDisplaySailor((s: any) => ({
         ...s,
         ...data.sailor,
-        bio: data.sailor.bio,
-        instagram: data.sailor.instagram,
-        avatarUrl: data.sailor.avatarUrl,
-        school: data.sailor.school,
-        weight: data.sailor.weight,
       }));
+      setDisplayEquipment({
+        hullBrand: data.sailor.hullBrand,
+        sailMake: data.sailor.sailMake,
+        foilBrand: data.sailor.foilBrand,
+        mast: data.sailor.mast,
+        notes: data.sailor.equipmentNotes,
+      });
+      setIsPublicWeight(Boolean(data.sailor.isPublicWeight));
+      setIsPublicDob(Boolean(data.sailor.isPublicDob));
+      setIsPublicEquipment(Boolean(data.sailor.isPublicEquipment));
       setSaveMsg("Saved");
       setEditing(false);
       setTimeout(() => setSaveMsg(null), 2500);
@@ -201,6 +284,74 @@ export function SailorProfileView({
       setSaveBusy(false);
     }
   };
+
+  const saveObservation = async (regattaId: string) => {
+    if (demoMode) {
+      setObsMsg("Demo only — not saved");
+      return;
+    }
+    setObsBusy(true);
+    setObsMsg(null);
+    try {
+      const res = await fetch("/api/account/observations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sailorId: initialSailor.id,
+          regattaId,
+          raceNumber: Number(obsForm.raceNumber),
+          position: obsForm.position === "" ? null : Number(obsForm.position),
+          wind: obsForm.wind,
+          note: obsForm.note,
+          isPrivate: obsForm.isPrivate,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Save failed");
+      const row = data.observation;
+      setObservations((prev: any[]) => {
+        const rest = prev.filter(
+          (o) =>
+            !(
+              o.regattaId === row.regattaId &&
+              o.raceNumber === row.raceNumber
+            )
+        );
+        return [
+          ...rest,
+          {
+            ...row,
+            regattaName:
+              prev.find((p) => p.regattaId === row.regattaId)?.regattaName ||
+              initialResults.find((r: any) => r.regattaId === regattaId)
+                ?.regattaName,
+          },
+        ].sort(
+          (a, b) =>
+            String(b.regattaDate || "").localeCompare(String(a.regattaDate || "")) ||
+            a.raceNumber - b.raceNumber
+        );
+      });
+      setObsMsg("Observation saved");
+      setObsForm((f) => ({
+        ...f,
+        raceNumber: String(Number(f.raceNumber) + 1),
+        position: "",
+        wind: "",
+        note: "",
+      }));
+    } catch (e: any) {
+      setObsMsg(e.message || "Failed");
+    } finally {
+      setObsBusy(false);
+    }
+  };
+
+  const obsForRegatta = (regattaId: string) =>
+    observations
+      .filter((o: any) => o.regattaId === regattaId)
+      .sort((a: any, b: any) => a.raceNumber - b.raceNumber);
 
   const fleetBadge = resolveDisplayFleet(displaySailor);
   const honors = buildHonorTags(displaySailor);
@@ -421,6 +572,77 @@ export function SailorProfileView({
         </div>
       </div>
 
+      {/* Live series standing */}
+      {initialSeriesStanding && (
+        <div className="glass-panel rounded-2xl border border-orange-500/20 p-5 md:p-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <Trophy className="h-5 w-5 text-orange-500" />
+              <div>
+                <h3 className="text-sm font-black text-white uppercase tracking-wider">
+                  Series standing
+                </h3>
+                <p className="text-[11px] text-slate-500">
+                  {initialSeriesStanding.periodLabel} ·{" "}
+                  {initialSeriesStanding.fleet} fleet
+                </p>
+              </div>
+            </div>
+            <div className="text-left md:text-right">
+              <p className="text-[10px] font-bold text-slate-500 uppercase">
+                Best 3 of 5
+              </p>
+              <p className="text-3xl font-black text-white">
+                {initialSeriesStanding.best3of5}
+              </p>
+              <p className="text-sm font-bold text-orange-400">
+                Rank #{initialSeriesStanding.overallRank}
+                <span className="text-slate-500 font-semibold text-xs ml-1">
+                  of {initialSeriesStanding.fleetSize}
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-5 gap-2">
+            {Array.from({ length: 5 }).map((_, i) => {
+              const r = initialSeriesStanding.rScores[i];
+              return (
+                <div
+                  key={r?.regattaId || i}
+                  className={`rounded-xl border px-2 py-2 text-center ${
+                    r?.isCarryForward
+                      ? "bg-sky-500/10 border-sky-500/20"
+                      : "bg-white/5 border-white/5"
+                  }`}
+                  title={r?.regattaName}
+                >
+                  <p className="text-[9px] font-black text-orange-400">
+                    R{i + 1}
+                  </p>
+                  <p className="text-[9px] text-slate-500 line-clamp-1">
+                    {r?.regattaName || "—"}
+                  </p>
+                  <p className="text-sm font-mono font-bold text-white mt-1">
+                    {r
+                      ? `${r.score}${r.isOverseasCommitment ? "†" : r.isDNS ? "*" : ""}`
+                      : "—"}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          <p className="text-[11px] text-emerald-400/90 mt-3 font-semibold">
+            {initialSeriesStanding.trendNote}
+          </p>
+          <Link
+            href={`/sg/optimist/${String(initialSeriesStanding.fleet).toLowerCase()}`}
+            className="inline-block mt-2 text-[11px] font-bold text-orange-400 hover:underline"
+          >
+            View full {initialSeriesStanding.fleet} standings →
+          </Link>
+        </div>
+      )}
+
       {/* Owner edit panel */}
       {isOwner && editing && (
         <div className="glass-panel rounded-2xl border border-orange-500/25 p-5 md:p-6 space-y-4">
@@ -432,7 +654,7 @@ export function SailorProfileView({
           </div>
           <p className="text-[11px] text-slate-500">
             Ranking, fleet, and squad fields are managed by SailorPath admins.
-            You can update bio, photo, school, weight, and privacy.
+            You can update bio, photo, school, weight, equipment, and privacy.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <label className="block sm:col-span-2">
@@ -499,6 +721,43 @@ export function SailorProfileView({
                 className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
               />
             </label>
+            <p className="sm:col-span-2 text-[10px] font-bold text-orange-400/90 uppercase tracking-wider pt-2">
+              Equipment
+            </p>
+            {(
+              [
+                ["hullBrand", "Hull brand"],
+                ["sailMake", "Sail make"],
+                ["foilBrand", "Foil brand"],
+                ["mast", "Mast / spar"],
+              ] as const
+            ).map(([key, label]) => (
+              <label key={key} className="block">
+                <span className="text-[10px] font-bold text-slate-500 uppercase">
+                  {label}
+                </span>
+                <input
+                  value={form[key]}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, [key]: e.target.value }))
+                  }
+                  className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+                />
+              </label>
+            ))}
+            <label className="block sm:col-span-2">
+              <span className="text-[10px] font-bold text-slate-500 uppercase">
+                Equipment notes
+              </span>
+              <input
+                value={form.equipmentNotes}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, equipmentNotes: e.target.value }))
+                }
+                placeholder="Rig settings, cut, etc."
+                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+              />
+            </label>
           </div>
           <button
             type="button"
@@ -562,9 +821,17 @@ export function SailorProfileView({
                 Age
               </span>
               <span className="block text-2xl font-extrabold text-white mt-1">
-                {calculateAge(displaySailor.dob)}
-                {displaySailor.dob ? " yrs" : ""}
+                {showDob && displaySailor.dob
+                  ? `${calculateAge(displaySailor.dob)} yrs`
+                  : showDob
+                    ? "—"
+                    : "Private"}
               </span>
+              {!showDob && (
+                <span className="text-[10px] text-slate-500 mt-1 flex items-center justify-center gap-0.5">
+                  <EyeOff className="h-3 w-3" /> Locked
+                </span>
+              )}
             </div>
             <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
               <span className="block text-xs text-slate-500 font-bold uppercase">
@@ -605,34 +872,62 @@ export function SailorProfileView({
             <Compass className="h-4 w-4 text-orange-500" />
             Equipment &amp; Rig Log
           </h2>
-          {showEquipment && initialEquipment ? (
-            <div className="space-y-4 font-medium text-sm flex-1">
-              <div className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-slate-500">Hull Brand</span>
-                <span className="text-white font-bold">
-                  {initialEquipment.hullBrand}
-                </span>
-              </div>
-              <div className="flex justify-between border-b border-white/5 pb-2">
-                <span className="text-slate-500">Sail Make</span>
-                <span className="text-white font-bold">
-                  {initialEquipment.sailMake}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500">Foil Brand</span>
-                <span className="text-white font-bold">
-                  {initialEquipment.foilBrand}
-                </span>
-              </div>
+          {showEquipment &&
+          displayEquipment &&
+          (displayEquipment.hullBrand ||
+            displayEquipment.sailMake ||
+            displayEquipment.foilBrand ||
+            displayEquipment.mast) ? (
+            <div className="space-y-3 font-medium text-sm flex-1">
+              {[
+                ["Hull", displayEquipment.hullBrand],
+                ["Sail", displayEquipment.sailMake],
+                ["Foils", displayEquipment.foilBrand],
+                ["Mast", displayEquipment.mast],
+              ].map(([label, val]) => (
+                <div
+                  key={label as string}
+                  className="flex justify-between border-b border-white/5 pb-2"
+                >
+                  <span className="text-slate-500">{label}</span>
+                  <span className="text-white font-bold">{val || "—"}</span>
+                </div>
+              ))}
+              {displayEquipment.notes && (
+                <p className="text-[11px] text-slate-400 italic">
+                  {displayEquipment.notes}
+                </p>
+              )}
+              {equipHistory.length > 0 && (
+                <div className="pt-2 border-t border-white/5">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">
+                    History
+                  </p>
+                  <ul className="space-y-1 max-h-24 overflow-y-auto">
+                    {equipHistory.slice(0, 5).map((h: any) => (
+                      <li
+                        key={h.id}
+                        className="text-[10px] text-slate-500 font-mono"
+                      >
+                        {String(h.effectiveDate).slice(0, 10)} ·{" "}
+                        {[h.hullBrand, h.sailMake, h.foilBrand]
+                          .filter(Boolean)
+                          .join(" / ") || "update"}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ) : (
             <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
               <EyeOff className="h-8 w-8 text-slate-600 mb-2" />
               <p className="text-xs text-slate-400">
-                {initialEquipment
+                {!showEquipment
                   ? "Equipment log is private."
-                  : "No equipment logged yet."}
+                  : isOwner
+                    ? "No equipment yet — use Edit profile to add gear."
+                    : "No equipment logged yet."}
               </p>
             </div>
           )}
@@ -705,7 +1000,8 @@ export function SailorProfileView({
               Regatta Logbook
             </h2>
             <p className="text-xs text-slate-400 mt-1">
-              Historical racing records and percentile badges.
+              Results and race-by-race observations
+              {isOwner ? " (expand a regatta to add notes)" : ""}.
             </p>
           </div>
           <span className="text-xs text-slate-500 font-bold uppercase">
@@ -719,8 +1015,8 @@ export function SailorProfileView({
           <div className="space-y-3">
             {initialResults.slice(0, visibleCount).map((res: any, idx: number) => {
               const fleetSize = res.totalFleetSize ?? res.fleetSize ?? 50;
-              const rowKey =
-                res.id || res.regattaId || res.regattaSlug || `r-${idx}`;
+              const regattaId = res.regattaId || res.id;
+              const rowKey = regattaId || res.regattaSlug || `r-${idx}`;
               const { label, className } = getPercentileBadge(
                 res.rank,
                 fleetSize
@@ -728,6 +1024,8 @@ export function SailorProfileView({
               const overseas = Boolean(res.isOverseasCommitment);
               const dns = Boolean(res.isDns || res.isDNS) && !overseas;
               const slug = res.regattaSlug || res.id;
+              const expanded = expandedRegattaId === regattaId;
+              const raceNotes = obsForRegatta(regattaId);
               const nameNode =
                 slug && String(slug).length > 2 ? (
                   <Link
@@ -744,7 +1042,7 @@ export function SailorProfileView({
               return (
                 <div
                   key={rowKey}
-                  className={`glass-card rounded-2xl border border-white/5 p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${
+                  className={`glass-card rounded-2xl border border-white/5 p-5 space-y-3 ${
                     overseas
                       ? "border-sky-500/20"
                       : dns
@@ -752,59 +1050,207 @@ export function SailorProfileView({
                         : ""
                   }`}
                 >
-                  <div className="flex-1 min-w-0">
-                    {nameNode}
-                    <p className="text-xs text-slate-500 mt-1 font-semibold">
-                      {res.regattaDate}
-                      {res.division ? ` · ${res.division}` : ""}
-                    </p>
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {overseas && (
-                        <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
-                          Overseas†
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      {nameNode}
+                      <p className="text-xs text-slate-500 mt-1 font-semibold">
+                        {res.regattaDate}
+                        {res.division ? ` · ${res.division}` : ""}
+                        {res.raceCount ? ` · ${res.raceCount} races` : ""}
+                      </p>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        {overseas && (
+                          <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                            Overseas†
+                          </span>
+                        )}
+                        {dns && (
+                          <span className="rounded-full bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 text-[10px] font-bold text-rose-400">
+                            DNS*
+                          </span>
+                        )}
+                        {raceNotes.length > 0 && (
+                          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-orange-300">
+                            {raceNotes.length} note
+                            {raceNotes.length === 1 ? "" : "s"}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+                      <div className="text-left sm:text-right font-semibold text-sm">
+                        <span className="block text-xs text-slate-500 uppercase">
+                          Points
                         </span>
-                      )}
-                      {dns && (
-                        <span className="rounded-full bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 text-[10px] font-bold text-rose-400">
-                          DNS*
+                        <span className="text-white text-lg font-black">
+                          {res.rank}
+                          {overseas ? "†" : dns ? "*" : ""}
                         </span>
-                      )}
+                        <span className="text-slate-400 text-xs">
+                          {" "}
+                          / {fleetSize}
+                        </span>
+                      </div>
+                      <div className="text-left sm:text-right font-semibold text-sm">
+                        <span className="block text-xs text-slate-500 uppercase">
+                          Total
+                        </span>
+                        <span className="text-white text-lg font-black">
+                          {res.totalScore != null ? res.totalScore : "—"}
+                        </span>
+                      </div>
+                      <div className="text-left sm:text-right font-semibold text-sm">
+                        <span className="block text-xs text-slate-500 uppercase">
+                          Nett
+                        </span>
+                        <span className="text-white text-lg font-black">
+                          {res.nettScore != null ? res.nettScore : "—"}
+                        </span>
+                      </div>
+                      <span
+                        className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${className}`}
+                      >
+                        {label}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpandedRegattaId(expanded ? null : regattaId)
+                        }
+                        className="rounded-full border border-white/10 bg-white/5 p-2 text-slate-400 hover:text-white"
+                        title="Race observations"
+                      >
+                        {expanded ? (
+                          <ChevronUp className="h-4 w-4" />
+                        ) : (
+                          <ChevronDown className="h-4 w-4" />
+                        )}
+                      </button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
-                    <div className="text-left sm:text-right font-semibold text-sm">
-                      <span className="block text-xs text-slate-500 uppercase">
-                        Points
-                      </span>
-                      <span className="text-white text-lg font-black">
-                        {res.rank}
-                        {overseas ? "†" : dns ? "*" : ""}
-                      </span>
-                      <span className="text-slate-400 text-xs">
-                        {" "}
-                        / {fleetSize}
-                      </span>
+
+                  {expanded && (
+                    <div className="border-t border-white/5 pt-3 space-y-3">
+                      <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                        <BookOpen className="h-3.5 w-3.5 text-orange-400" />
+                        Race observations
+                      </div>
+                      {raceNotes.length === 0 ? (
+                        <p className="text-xs text-slate-600">
+                          {isOwner
+                            ? "No notes yet — add wind, place, and takeaways below."
+                            : "No public race notes for this event."}
+                        </p>
+                      ) : (
+                        <ul className="space-y-2">
+                          {raceNotes.map((o: any) => (
+                            <li
+                              key={o.id || `${o.regattaId}-${o.raceNumber}`}
+                              className="rounded-xl bg-white/[0.03] border border-white/5 px-3 py-2"
+                            >
+                              <div className="flex items-center justify-between gap-2">
+                                <span className="text-xs font-black text-orange-400">
+                                  Race {o.raceNumber}
+                                </span>
+                                <span className="text-[11px] font-mono text-slate-400">
+                                  {o.position != null ? `P${o.position}` : "—"}
+                                  {o.wind ? ` · ${o.wind}` : ""}
+                                  {o.isPrivate ? " · private" : ""}
+                                </span>
+                              </div>
+                              {o.note && (
+                                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                                  {o.note}
+                                </p>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {isOwner && !demoMode && (
+                        <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-3 space-y-2">
+                          <p className="text-[10px] font-bold text-orange-300 uppercase">
+                            Add / update observation
+                          </p>
+                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <input
+                              type="number"
+                              min={1}
+                              value={obsForm.raceNumber}
+                              onChange={(e) =>
+                                setObsForm((f) => ({
+                                  ...f,
+                                  raceNumber: e.target.value,
+                                }))
+                              }
+                              placeholder="Race #"
+                              className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                            />
+                            <input
+                              type="number"
+                              min={1}
+                              value={obsForm.position}
+                              onChange={(e) =>
+                                setObsForm((f) => ({
+                                  ...f,
+                                  position: e.target.value,
+                                }))
+                              }
+                              placeholder="Place"
+                              className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                            />
+                            <input
+                              value={obsForm.wind}
+                              onChange={(e) =>
+                                setObsForm((f) => ({
+                                  ...f,
+                                  wind: e.target.value,
+                                }))
+                              }
+                              placeholder="Wind"
+                              className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white sm:col-span-2"
+                            />
+                            <input
+                              value={obsForm.note}
+                              onChange={(e) =>
+                                setObsForm((f) => ({
+                                  ...f,
+                                  note: e.target.value,
+                                }))
+                              }
+                              placeholder="Notes / coaching takeaways"
+                              className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white col-span-2 sm:col-span-3"
+                            />
+                            <label className="flex items-center gap-1.5 text-[10px] text-slate-400">
+                              <input
+                                type="checkbox"
+                                checked={obsForm.isPrivate}
+                                onChange={(e) =>
+                                  setObsForm((f) => ({
+                                    ...f,
+                                    isPrivate: e.target.checked,
+                                  }))
+                                }
+                                className="rounded border-slate-600"
+                              />
+                              Private
+                            </label>
+                          </div>
+                          <button
+                            type="button"
+                            disabled={obsBusy}
+                            onClick={() => void saveObservation(regattaId)}
+                            className="rounded-full bg-orange-600 px-4 py-1.5 text-[11px] font-bold text-white disabled:opacity-50"
+                          >
+                            {obsBusy ? "Saving…" : "Save observation"}
+                          </button>
+                          {obsMsg && (
+                            <p className="text-[11px] text-emerald-300">{obsMsg}</p>
+                          )}
+                        </div>
+                      )}
                     </div>
-                    <div className="text-left sm:text-right font-semibold text-sm">
-                      <span className="block text-xs text-slate-500 uppercase">
-                        Total
-                      </span>
-                      <span className="text-white text-lg font-black">
-                        {res.totalScore != null ? res.totalScore : "—"}
-                      </span>
-                    </div>
-                    <div className="text-left sm:text-right font-semibold text-sm">
-                      <span className="block text-xs text-slate-500 uppercase">
-                        Nett
-                      </span>
-                      <span className="text-white text-lg font-black">{res.nettScore != null ? res.nettScore : "—"}</span>
-                    </div>
-                    <span
-                      className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${className}`}
-                    >
-                      {label}
-                    </span>
-                  </div>
+                  )}
                 </div>
               );
             })}

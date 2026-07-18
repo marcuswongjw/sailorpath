@@ -151,7 +151,7 @@ export default async function HomePage() {
           <div className="hidden lg:grid grid-cols-4 gap-2 mb-8 px-1">
             {[
               { n: "01", label: "Live", tone: "text-orange-400" },
-              { n: "02", label: "Building", tone: "text-amber-300" },
+              { n: "02", label: "Live", tone: "text-orange-400" },
               { n: "03", label: "Next", tone: "text-slate-400" },
               { n: "04", label: "Horizon", tone: "text-slate-500" },
             ].map((p, i) => (
@@ -231,55 +231,56 @@ export default async function HomePage() {
             </article>
 
             {/* Phase 2 */}
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-amber-500/20 hover:border-amber-500/35 transition-all flex flex-col justify-between group">
-              <div>
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 hover:border-orange-500/40 transition-all flex flex-col justify-between group relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-orange-600/10 rounded-full blur-2xl -z-0" />
+              <div className="relative">
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-amber-300">
-                    Phase 2 · Building
+                  <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">
+                    Phase 2 · Live
                   </span>
-                  <span className="rounded-full border border-amber-500/40 bg-amber-500/10 px-2 py-0.5 text-[10px] font-black text-amber-200">
-                    Next
+                  <span className="rounded-full bg-orange-600 px-2 py-0.5 text-[10px] font-black text-white">
+                    ✓ Now
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-amber-300 transition-colors">
+                <h3 className="text-lg font-bold text-white mt-2 group-hover:text-orange-400 transition-colors">
                   Athlete logbook
                 </h3>
                 <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                  Make the sailor the owner of their story — deeper notes,
-                  live series context, and privacy that actually sticks.
+                  Claimed sailors own their story — series standing, race notes,
+                  gear, and privacy that saves.
                 </p>
                 <ul className="mt-4 space-y-2.5 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
                   <li className="flex items-start gap-1.5">
-                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span className="text-orange-500 mt-0.5">•</span>
                     <span>
                       <strong className="text-white">Live series strip</strong> —
-                      Best 3 of 5 on every claimed profile
+                      Best 3 of 5 on real profiles
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
-                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span className="text-orange-500 mt-0.5">•</span>
                     <span>
                       <strong className="text-white">Race observations</strong> —
-                      wind, place, coaching takeaways per race
+                      wind, place, takeaways per race
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
-                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span className="text-orange-500 mt-0.5">•</span>
                     <span>
                       <strong className="text-white">Privacy controls</strong> —
-                      weight, DOB, notes visibility saved to account
+                      weight, DOB, equipment visibility
                     </span>
                   </li>
                   <li className="flex items-start gap-1.5">
-                    <span className="text-amber-400 mt-0.5">•</span>
+                    <span className="text-orange-500 mt-0.5">•</span>
                     <span>
-                      <strong className="text-white">Equipment history</strong> —
-                      gear changes tied to regattas over time
+                      <strong className="text-white">Equipment + history</strong> —
+                      current gear with change log
                     </span>
                   </li>
                 </ul>
               </div>
-              <div className="mt-5 flex h-8 w-8 items-center justify-center rounded-full bg-amber-600/90 text-white text-xs font-bold">
+              <div className="mt-5 flex h-8 w-8 items-center justify-center rounded-full bg-orange-600 text-white text-xs font-bold shadow-md shadow-orange-950/20">
                 02
               </div>
             </article>
