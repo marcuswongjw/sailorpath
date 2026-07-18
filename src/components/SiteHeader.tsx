@@ -96,7 +96,7 @@ export function SiteHeader() {
         onClick={() => setMobileOpen(false)}
         className="text-sm font-semibold text-amber-300/90 hover:text-amber-200 py-2 md:py-0"
       >
-        Sample profile
+        Demo profiles
       </Link>
     </>
   );
@@ -221,7 +221,7 @@ export function SiteHeader() {
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-2.5 text-sm font-semibold text-amber-200 hover:bg-white/5"
             >
-              Sample profile
+              Demo profiles
             </Link>
             <div className="mt-3 pt-3 border-t border-white/5 flex flex-wrap items-center gap-3">
               {authButtons}

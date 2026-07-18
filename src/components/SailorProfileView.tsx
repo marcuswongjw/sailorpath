@@ -26,6 +26,10 @@ interface SailorProfileViewProps {
   canSeePrivate?: boolean;
   canClaim?: boolean;
   isOwner?: boolean;
+  /** Product-tour mode on /sample — claim does not hit the live API */
+  demoMode?: boolean;
+  demoRole?: "public" | "sailor" | "parent" | "coach";
+  onDemoClaim?: () => void;
 }
 
 function resolveDisplayFleet(sailor: any): {
@@ -93,6 +97,9 @@ export function SailorProfileView({
   canSeePrivate = false,
   canClaim = false,
   isOwner = false,
+  demoMode = false,
+  demoRole,
+  onDemoClaim,
 }: SailorProfileViewProps) {
   const [isPublicWeight, setIsPublicWeight] = useState(
     initialSailor.isPublicWeight || false
@@ -220,8 +227,16 @@ export function SailorProfileView({
               {canClaim && (
                 <button
                   type="button"
-                  disabled={claimBusy || Boolean(claimStatus)}
+                  disabled={
+                    claimBusy ||
+                    Boolean(claimStatus) ||
+                    (demoMode && !onDemoClaim)
+                  }
                   onClick={async () => {
+                    if (demoMode) {
+                      onDemoClaim?.();
+                      return;
+                    }
                     setClaimBusy(true);
                     try {
                       const res = await fetch("/api/claims", {
@@ -245,12 +260,18 @@ export function SailorProfileView({
                     ? "Claim pending"
                     : claimBusy
                       ? "Submitting…"
-                      : "Claim this profile"}
+                      : demoMode
+                        ? "Claim this profile (demo)"
+                        : "Claim this profile"}
                 </button>
               )}
               {isOwner && (
                 <span className="text-[11px] font-bold text-emerald-400/90 self-center">
-                  You manage this profile
+                  {demoMode
+                    ? demoRole === "parent"
+                      ? "Parent view · linked guardian"
+                      : "You manage this profile"
+                    : "You manage this profile"}
                 </span>
               )}
             </div>

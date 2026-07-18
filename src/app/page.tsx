@@ -63,7 +63,7 @@ export default async function HomePage() {
             href="/sample"
             className="rounded-full border border-amber-500/40 bg-amber-500/10 px-8 py-3.5 text-xs font-bold text-amber-100 hover:border-amber-400/60 transition-all"
           >
-            View sample profile
+            Tour demo · Public / Sailor / Parent / Coach
           </Link>
           <Link
             href="/sg/optimist/gold"
@@ -110,7 +110,7 @@ export default async function HomePage() {
                   href="/sample"
                   className="px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-100 hover:border-amber-400 transition-all"
                 >
-                  Sample profile — Ashlyn Tan (SGP 115)
+                  Demo tour — Ashlyn Tan (4 roles)
                 </Link>
               </>
             )}
@@ -197,7 +197,14 @@ export default async function HomePage() {
                 <p className="text-xs text-slate-400 mt-2">
                   Expanding the platform to support the coaches and parents who
                   manage the logistics behind the athletes, and connecting the
-                  fleet.
+                  fleet.{" "}
+                  <Link
+                    href="/sample?view=parent"
+                    className="text-amber-300/90 underline-offset-2 hover:underline"
+                  >
+                    Preview parent &amp; coach views
+                  </Link>
+                  .
                 </p>
                 <ul className="mt-4 space-y-2 text-[11px] text-slate-400 font-semibold border-t border-white/5 pt-3">
                   <li className="flex items-start gap-1.5">
