@@ -65,15 +65,7 @@ export default async function SearchPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-        <h1 className="text-2xl font-black text-white">Search sailors</h1>
-        <Link
-          href="/sg/optimist/compare"
-          className="text-xs font-bold text-orange-400 hover:text-orange-300"
-        >
-          Compare two sailors →
-        </Link>
-      </div>
+      <h1 className="text-2xl font-black text-white">Search sailors</h1>
 
       <form className="glass-panel rounded-2xl border border-white/5 p-4 space-y-3">
         <input

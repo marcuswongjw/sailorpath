@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { RankedSailor, Period } from "@/lib/ranking";
 import { reRankWithExcluded } from "@/lib/ranking";
-import { Trophy, Calendar, Printer, GitCompareArrows, RotateCcw } from "lucide-react";
+import { Trophy, Calendar, RotateCcw } from "lucide-react";
 
 const PERIODS: { period: Period; label: string }[] = [
   { period: { year: 2026, half: "Jul-Dec" }, label: "Jul – Dec 2026 (Current)" },
@@ -212,21 +212,6 @@ export function FleetRankingsView({
               </option>
             ))}
           </select>
-          <Link
-            href={`/sg/optimist/compare?fleet=${fleet}&year=${period.year}&half=${encodeURIComponent(period.half)}`}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-white/5 border border-white/10 px-3 py-2.5 text-xs font-bold text-slate-300 hover:text-white"
-          >
-            <GitCompareArrows className="h-4 w-4 text-orange-400" />
-            Compare
-          </Link>
-          <button
-            type="button"
-            onClick={() => window.print()}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-orange-600/90 hover:bg-orange-500 px-3 py-2.5 text-xs font-bold text-white"
-          >
-            <Printer className="h-4 w-4" />
-            Print / PDF
-          </button>
         </div>
       </div>
 

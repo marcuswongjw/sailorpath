@@ -184,6 +184,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [dbFleetFilter, setDbFleetFilter] = useState<string>("all");
   const [dbSquadFilter, setDbSquadFilter] = useState<string>("all");
   const [dbDroppedFilter, setDbDroppedFilter] = useState<string>("all");
+  const [regattaSearch, setRegattaSearch] = useState("");
+  const [regattaDivisionFilter, setRegattaDivisionFilter] =
+    useState<string>("all");
   const [dbColVisible, setDbColVisible] = useState<Record<string, boolean>>(
     defaultDbColVisible
   );
@@ -231,6 +234,23 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   });
 
   const [regattaList, setRegattaList] = useState(initialRegattas || []);
+  const filteredRegattaList = useMemo(() => {
+    const q = regattaSearch.trim().toLowerCase();
+    return [...(regattaList || [])]
+      .filter((r) => {
+        if (
+          regattaDivisionFilter !== "all" &&
+          String(r.division || "Gold") !== regattaDivisionFilter
+        ) {
+          return false;
+        }
+        if (!q) return true;
+        const hay =
+          `${r.name || ""} ${r.date || ""} ${r.division || ""} ${r.slug || ""}`.toLowerCase();
+        return hay.includes(q);
+      })
+      .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+  }, [regattaList, regattaSearch, regattaDivisionFilter]);
   const [editingRegattaId, setEditingRegattaId] = useState<string | null>(null);
   const [regattaForm, setRegattaForm] = useState<any>({
     id: "",
@@ -1743,18 +1763,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         </div>
       )}
 
-      {/* Tab Contents */}
-      <div className="flex-1 flex flex-col">
+      {/* Tab Contents — always full width of admin shell */}
+      <div className="flex-1 flex flex-col w-full min-w-0">
         {/* Tab 0: One-time sailor roster import */}
         {activeTab === "roster" && (
-          <div className="space-y-6">
-            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 space-y-4">
+          <div className="w-full min-w-0 space-y-6">
+            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 space-y-4 w-full">
               <div>
                 <h2 className="text-lg font-bold text-white flex items-center gap-2">
                   <UserPlus className="h-5 w-5 text-orange-500" />
                   Bulk import sailor roster (one-time)
                 </h2>
-                <p className="text-xs text-slate-500 mt-2 leading-relaxed max-w-3xl">
+                <p className="text-xs text-slate-500 mt-2 leading-relaxed w-full">
                   Load all sailors into the database <strong className="text-slate-300">before</strong>{" "}
                   importing regatta results. Include columns such as Name, Sail Number, Club, Nationality,
                   Gender, Gold Entry Date, Silver Entry Date, Drop Date, Squad, DOB, Weight, and optional
@@ -1853,20 +1873,20 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
         {/* Tab 1: Excel Import */}
         {activeTab === "import" && (
-          <div className="space-y-6">
-            <div className="glass-panel rounded-3xl p-8 border border-white/5 text-center flex flex-col items-center">
+          <div className="w-full min-w-0 space-y-6">
+            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 w-full">
               <div
                 onDragEnter={handleDrag}
                 onDragOver={handleDrag}
                 onDragLeave={handleDrag}
                 onDrop={handleDrop}
-                className={`w-full max-w-xl border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all ${
+                className={`w-full border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all text-center ${
                   dragActive ? "border-orange-500 bg-orange-500/5" : "border-white/10 hover:border-white/20"
                 }`}
               >
                 <Upload className="h-10 w-10 text-orange-500 mb-4" />
                 <p className="text-sm font-bold text-white mb-2">Drag and drop your Regatta Excel/CSV file here</p>
-                <p className="text-xs text-slate-500 mb-4">
+                <p className="text-xs text-slate-500 mb-4 max-w-3xl">
                   Supports .xlsx, .xls, and .csv. Required: Name (+ Rank/Nett if available).
                   Optional: Total Score, Club, Nationality, Sail Number, Birth Year / DOB — when present, sailor profiles are updated.
                   Unmatched names become <strong className="text-slate-300">guests</strong> (not on Gold/Silver rankings until you admit them as Silver in Database).
@@ -1878,14 +1898,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               </div>
 
               {importStatus && (
-                <div className="mt-6 flex items-center gap-2 text-xs font-bold text-emerald-400">
+                <div className="mt-6 flex items-center gap-2 text-xs font-bold text-emerald-400 justify-center">
                   <CheckCircle className="h-4 w-4 text-emerald-500" />
                   {importStatus}
                 </div>
               )}
 
               {fullImportRows.length > 0 && (
-                <div className="mt-6 w-full max-w-xl grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+                <div className="mt-6 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
                   <label className="text-xs text-slate-400">
                     Regatta name
                     <input
@@ -2036,7 +2056,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
         {/* Tab 2: Name Reconciliation */}
         {activeTab === "reconciliation" && (
-          <div className="space-y-6">
+          <div className="w-full min-w-0 space-y-6">
             <div className="glass-panel rounded-3xl p-6 border border-white/5">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
                 <UserCheck className="h-5 w-5 text-orange-500" />
@@ -2113,7 +2133,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
         {/* Database & bulk edit */}
         {activeTab === "edit" && (
-          <div className="space-y-6">
+          <div className="w-full min-w-0 space-y-6">
             {/* Sub Tabs */}
             <div className="grid grid-cols-3 sm:grid-cols-5 gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-full">
               {([
@@ -2143,9 +2163,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               ))}
             </div>
 
+            {/* Sub-tab content always full width */}
+            <div className="w-full min-w-0 min-h-[50vh]">
             {/* Sub-Tab Content: SAILORS */}
             {editSubTab === "sailors" && (
-              <div className="space-y-6">
+              <div className="w-full min-w-0 space-y-6">
                 {/* Filters */}
                 <div className="glass-panel rounded-2xl border border-white/5 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   <div>
@@ -3131,168 +3153,264 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               </div>
             )}
 
-            {/* Sub-Tab Content: REGATTAS */}
+            {/* Sub-Tab Content: REGATTAS — split list + detail (not a tall single column) */}
             {editSubTab === "regattas" && (
-              <div className="space-y-6">
-                {/* Regatta Form Card */}
-                {editingRegattaId && (
-                  <div className="glass-panel rounded-3xl p-6 border border-white/5 space-y-4">
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                      {editingRegattaId === "new" ? "Add New Regatta Event" : "Edit Regatta Details"}
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Regatta Name</label>
-                        <input
-                          type="text"
-                          value={regattaForm.name}
-                          onChange={(e) => setRegattaForm({ ...regattaForm, name: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
-                          placeholder="e.g. NSC Cup Series 1"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Date (YYYY-MM-DD)</label>
-                        <input
-                          type="date"
-                          value={regattaForm.date}
-                          onChange={(e) => setRegattaForm({ ...regattaForm, date: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Total Fleet Size</label>
-                        <input
-                          type="number"
-                          value={regattaForm.totalFleetSize}
-                          onChange={(e) => setRegattaForm({ ...regattaForm, totalFleetSize: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Number of races</label>
-                        <input
-                          type="number"
-                          min={0}
-                          value={regattaForm.raceCount ?? ""}
-                          onChange={(e) =>
-                            setRegattaForm({ ...regattaForm, raceCount: e.target.value })
-                          }
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                          placeholder="e.g. 6"
-                        />
-                        <p className="mt-1 text-[10px] text-slate-500">
-                          For sailors to log each race later on their dashboard.
+              <div className="w-full min-w-0 space-y-4">
+                <div className="glass-panel rounded-2xl border border-white/5 p-4 flex flex-col sm:flex-row sm:items-end gap-3 w-full">
+                  <div className="flex-1 min-w-0">
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                      Search events
+                    </label>
+                    <input
+                      type="search"
+                      value={regattaSearch}
+                      onChange={(e) => setRegattaSearch(e.target.value)}
+                      placeholder="Name, date, division…"
+                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                      Division
+                    </label>
+                    <select
+                      value={regattaDivisionFilter}
+                      onChange={(e) => setRegattaDivisionFilter(e.target.value)}
+                      className="mt-1 w-full sm:w-40 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                    >
+                      <option value="all">All</option>
+                      <option value="Gold">Gold</option>
+                      <option value="Silver">Silver</option>
+                      <option value="Both">Both</option>
+                    </select>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingRegattaId("new");
+                      setRegattaForm({
+                        id: "",
+                        name: "",
+                        date: new Date().toISOString().split("T")[0],
+                        totalFleetSize: 50,
+                        division: "Gold",
+                        raceCount: "",
+                      });
+                    }}
+                    className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2.5 text-xs font-bold text-white flex items-center justify-center gap-1 shrink-0"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add regatta
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 w-full min-w-0 items-start">
+                  {/* Compact event list */}
+                  <div className="lg:col-span-5 glass-panel rounded-2xl border border-white/5 overflow-hidden flex flex-col max-h-[min(70vh,720px)]">
+                    <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between shrink-0">
+                      <h3 className="text-sm font-bold text-white">
+                        Events{" "}
+                        <span className="text-slate-500 font-semibold">
+                          ({filteredRegattaList.length})
+                        </span>
+                      </h3>
+                    </div>
+                    <div className="overflow-y-auto flex-1 divide-y divide-white/5">
+                      {filteredRegattaList.length === 0 ? (
+                        <p className="p-6 text-xs text-slate-500 text-center">
+                          No regattas match filters.
+                        </p>
+                      ) : (
+                        filteredRegattaList.map((r) => {
+                          const active = editingRegattaId === r.id;
+                          return (
+                            <button
+                              key={r.id}
+                              type="button"
+                              onClick={() => {
+                                setEditingRegattaId(r.id);
+                                setRegattaForm({
+                                  ...r,
+                                  raceCount:
+                                    r.raceCount != null ? String(r.raceCount) : "",
+                                  totalFleetSize:
+                                    r.totalFleetSize != null
+                                      ? String(r.totalFleetSize)
+                                      : "",
+                                });
+                              }}
+                              className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${
+                                active
+                                  ? "bg-orange-500/10 border-l-2 border-orange-500"
+                                  : "border-l-2 border-transparent"
+                              }`}
+                            >
+                              <p className="text-xs font-bold text-white truncate">
+                                {r.name}
+                              </p>
+                              <p className="text-[10px] text-slate-500 mt-0.5 font-mono">
+                                {r.date} · {r.division || "Gold"} · fleet{" "}
+                                {r.totalFleetSize}
+                                {r.raceCount != null ? ` · ${r.raceCount} races` : ""}
+                              </p>
+                            </button>
+                          );
+                        })
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Detail / edit pane */}
+                  <div className="lg:col-span-7 glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 min-h-[320px]">
+                    {!editingRegattaId ? (
+                      <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
+                        <Calendar className="h-10 w-10 text-slate-600 mb-3" />
+                        <p className="text-sm font-bold text-slate-300">
+                          Select an event to edit
+                        </p>
+                        <p className="text-xs text-slate-500 mt-1 max-w-sm">
+                          Choose a regatta from the list, or add a new one. Details
+                          open here so the list stays compact.
                         </p>
                       </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Division / Fleet Split</label>
-                        <select
-                          value={regattaForm.division || "Gold"}
-                          onChange={(e) => setRegattaForm({ ...regattaForm, division: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3.5 py-2 text-white text-xs"
-                        >
-                          <option value="Gold">Gold Fleet Only</option>
-                          <option value="Silver">Silver Fleet Only</option>
-                          <option value="Both">Both (Gold & Silver split)</option>
-                        </select>
+                    ) : (
+                      <div className="space-y-4">
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <h3 className="text-sm font-black text-white uppercase tracking-wider">
+                              {editingRegattaId === "new"
+                                ? "New regatta"
+                                : "Edit regatta"}
+                            </h3>
+                            <p className="text-[11px] text-slate-500 mt-0.5">
+                              Meta only — results stay under Results tab.
+                            </p>
+                          </div>
+                          {editingRegattaId !== "new" && (
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteRegatta(editingRegattaId)}
+                              className="text-slate-500 hover:text-red-400 p-1"
+                              title="Delete regatta"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          )}
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="sm:col-span-2">
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Event name
+                            </label>
+                            <input
+                              type="text"
+                              value={regattaForm.name}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  name: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              placeholder="e.g. NSC Cup Series 1"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Date
+                            </label>
+                            <input
+                              type="date"
+                              value={regattaForm.date}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  date: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Total fleet size
+                            </label>
+                            <input
+                              type="number"
+                              value={regattaForm.totalFleetSize}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  totalFleetSize: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Number of races
+                            </label>
+                            <input
+                              type="number"
+                              min={0}
+                              value={regattaForm.raceCount ?? ""}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  raceCount: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                              placeholder="e.g. 6"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Division
+                            </label>
+                            <select
+                              value={regattaForm.division || "Gold"}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  division: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                            >
+                              <option value="Gold">Gold only</option>
+                              <option value="Silver">Silver only</option>
+                              <option value="Both">Both</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap justify-end gap-2 border-t border-white/5 pt-4">
+                          <button
+                            type="button"
+                            onClick={() => setEditingRegattaId(null)}
+                            className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
+                          >
+                            Close
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleSaveRegatta}
+                            className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500"
+                          >
+                            Save regatta
+                          </button>
+                        </div>
                       </div>
-                    </div>
-
-                    <div className="flex justify-end gap-2 border-t border-white/5 pt-4">
-                      <button
-                        onClick={() => setEditingRegattaId(null)}
-                        className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleSaveRegatta}
-                        className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500"
-                      >
-                        Save Regatta
-                      </button>
-                    </div>
+                    )}
                   </div>
-                )}
-
-                {/* Regattas List */}
-                <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden">
-                  <div className="p-6 border-b border-white/5 flex items-center justify-between">
-                    <div>
-                      <h3 className="text-base font-bold text-white">Regatta Events</h3>
-                      <p className="text-xs text-slate-500">Edit or delete regatta meta parameters.</p>
-                    </div>
-                    <button
-                      onClick={() => {
-                        setEditingRegattaId("new");
-                        setRegattaForm({
-                          id: "",
-                          name: "",
-                          date: new Date().toISOString().split("T")[0],
-                          totalFleetSize: 50,
-                          division: "Gold",
-                          raceCount: "",
-                        });
-                      }}
-                      className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
-                    >
-                      <Plus className="h-4 w-4" />
-                      Add Regatta
-                    </button>
-                  </div>
-
-                  <table className="w-full text-left border-collapse text-xs">
-                    <thead>
-                      <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                        <th className="py-4 px-6">Event Name</th>
-                        <th className="py-4 px-6">Event Date</th>
-                        <th className="py-4 px-6 text-center">Total Fleet Size</th>
-                        <th className="py-4 px-6 text-center">Division</th>
-                        <th className="py-4 px-6 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
-                      {regattaList.map((r) => (
-                        <tr key={r.id} className="hover:bg-white/5 transition-colors">
-                          <td className="py-4 px-6 font-bold text-white">{r.name}</td>
-                          <td className="py-4 px-6 font-mono text-slate-400">{r.date}</td>
-                          <td className="py-4 px-6 text-center font-mono">{r.totalFleetSize}</td>
-                          <td className="py-4 px-6 text-center">
-                            <span className="text-[10px] font-extrabold px-2 py-0.5 rounded bg-white/5 border border-white/5 text-orange-400">
-                              {r.division || "Gold"}
-                            </span>
-                          </td>
-                          <td className="py-4 px-6 text-right">
-                            <div className="flex justify-end items-center gap-2">
-                              <button
-                                onClick={() => {
-                                  setEditingRegattaId(r.id);
-                                  setRegattaForm(r);
-                                }}
-                                className="text-slate-400 hover:text-white"
-                              >
-                                <Edit3 className="h-4 w-4" />
-                              </button>
-                              <button
-                                onClick={() => handleDeleteRegatta(r.id)}
-                                className="text-slate-500 hover:text-red-400"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
                 </div>
               </div>
             )}
 
             {/* Sub-Tab Content: RESULTS */}
             {editSubTab === "results" && (
-              <div className="space-y-6">
+              <div className="w-full min-w-0 space-y-6">
                 {/* Period-wide DNS: every fleet sailor gets a result for each ranking regatta */}
                 <div className="glass-panel rounded-3xl p-6 border border-rose-500/20 bg-rose-500/[0.03] space-y-3">
                   <h3 className="text-sm font-bold text-white uppercase tracking-wider">
@@ -3727,24 +3845,31 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                 )}
               </div>
             )}
+
+            {editSubTab === "claims" && (
+              <div className="w-full min-w-0">
+                <ClaimsAdminPanel isSuperadmin={isSuperadmin} />
+              </div>
+            )}
+            {editSubTab === "promote" && (
+              <div className="w-full min-w-0">
+                <PromoteAdminPanel
+                  isSuperadmin={isSuperadmin}
+                  onPromoted={(sailor) => {
+                    setSailorList((prev) =>
+                      prev.map((s) =>
+                        s.id === sailor.id ? { ...s, ...sailor } : s
+                      )
+                    );
+                  }}
+                />
+              </div>
+            )}
+            </div>
+            {/* end sub-tab content full-width shell */}
           </div>
         )}
       </div>
-
-
-            {editSubTab === "claims" && (
-              <ClaimsAdminPanel isSuperadmin={isSuperadmin} />
-            )}
-            {editSubTab === "promote" && (
-              <PromoteAdminPanel
-                isSuperadmin={isSuperadmin}
-                onPromoted={(sailor) => {
-                  setSailorList((prev) =>
-                    prev.map((s) => (s.id === sailor.id ? { ...s, ...sailor } : s))
-                  );
-                }}
-              />
-            )}
 
       {/* Fixed modal: per-sailor results (always on top, outside scroll containers) */}
       {competitionsSailorId && (() => {

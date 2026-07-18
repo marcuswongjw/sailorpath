@@ -155,6 +155,11 @@ export function SailorProfileView({
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
   const [claimBusy, setClaimBusy] = useState(false);
+  const [claimPanelOpen, setClaimPanelOpen] = useState(false);
+  const [claimRelation, setClaimRelation] = useState<"sailor" | "parent" | "other">(
+    "parent"
+  );
+  const [claimNote, setClaimNote] = useState("");
   const [copyMsg, setCopyMsg] = useState<string | null>(null);
   const [editing, setEditing] = useState(false);
   const [saveBusy, setSaveBusy] = useState(false);
@@ -467,58 +472,31 @@ export function SailorProfileView({
                   Log in to claim
                 </Link>
               )}
-              {canClaim && (
+              {canClaim && claimStatus !== "pending" && (
                 <button
                   type="button"
-                  disabled={
-                    claimBusy ||
-                    claimStatus === "pending" ||
-                    (demoMode && !onDemoClaim)
-                  }
-                  onClick={async () => {
+                  disabled={demoMode && !onDemoClaim}
+                  onClick={() => {
                     if (demoMode) {
                       onDemoClaim?.();
                       return;
                     }
-                    setClaimBusy(true);
-                    setClaimMsg(null);
-                    try {
-                      // Ensure profiles row exists (required for claim FK)
-                      await fetch("/api/auth/ensure-profile", {
-                        method: "POST",
-                        credentials: "include",
-                      });
-                      const res = await fetch("/api/claims", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        credentials: "include",
-                        body: JSON.stringify({ sailorId: initialSailor.id }),
-                      });
-                      const data = await res.json();
-                      if (!res.ok) throw new Error(data.error || "Claim failed");
-                      setClaimStatus("pending");
-                      setClaimMsg(
-                        data.message ||
-                          "Claim submitted. Track status under My account."
-                      );
-                    } catch (e: any) {
-                      setClaimStatus("error");
-                      setClaimMsg(e.message || "Error");
-                    } finally {
-                      setClaimBusy(false);
-                    }
+                    setClaimPanelOpen((o) => !o);
                   }}
                   className="inline-flex items-center gap-1.5 rounded-full bg-orange-600/90 hover:bg-orange-500 disabled:opacity-50 px-3 py-1.5 text-[11px] font-bold text-white"
                 >
                   <UserPlus className="h-3.5 w-3.5" />
-                  {claimStatus === "pending"
-                    ? "Claim pending"
-                    : claimBusy
-                      ? "Submitting…"
-                      : demoMode
-                        ? "Claim this profile (demo)"
-                        : "Claim this profile"}
+                  {demoMode
+                    ? "Claim this profile (demo)"
+                    : claimPanelOpen
+                      ? "Cancel claim"
+                      : "Claim this profile"}
                 </button>
+              )}
+              {canClaim && claimStatus === "pending" && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 px-3 py-1.5 text-[11px] font-bold text-amber-200">
+                  Claim pending review
+                </span>
               )}
               {isOwner && (
                 <>
@@ -540,6 +518,91 @@ export function SailorProfileView({
                 </>
               )}
             </div>
+            {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
+              <div className="mt-4 rounded-2xl border border-orange-500/25 bg-orange-500/5 p-4 text-left space-y-3 max-w-lg">
+                <p className="text-xs font-bold text-white">
+                  Verify you are linked to this sailor
+                </p>
+                <p className="text-[11px] text-slate-400 leading-relaxed">
+                  Your <strong className="text-slate-300">signup email</strong> is
+                  shown to admins. Tell us your relationship and confirm sail
+                  number / club so they can approve safely.
+                </p>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    I am
+                  </label>
+                  <select
+                    value={claimRelation}
+                    onChange={(e) =>
+                      setClaimRelation(e.target.value as "sailor" | "parent" | "other")
+                    }
+                    className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white"
+                  >
+                    <option value="parent">Parent / guardian</option>
+                    <option value="sailor">The sailor</option>
+                    <option value="other">Coach / other (explain below)</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    Verification note
+                  </label>
+                  <textarea
+                    value={claimNote}
+                    onChange={(e) => setClaimNote(e.target.value)}
+                    rows={3}
+                    placeholder={`e.g. Parent of ${displaySailor.name}. Sail ${displaySailor.sailNumber || "…"}, club ${displaySailor.club || "…"}. Contact via this email.`}
+                    className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white focus:border-orange-500 focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="button"
+                  disabled={claimBusy || claimNote.trim().length < 8}
+                  onClick={async () => {
+                    setClaimBusy(true);
+                    setClaimMsg(null);
+                    try {
+                      await fetch("/api/auth/ensure-profile", {
+                        method: "POST",
+                        credentials: "include",
+                      });
+                      const note = `[${claimRelation}] ${claimNote.trim()}`;
+                      const res = await fetch("/api/claims", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        credentials: "include",
+                        body: JSON.stringify({
+                          sailorId: initialSailor.id,
+                          note,
+                        }),
+                      });
+                      const data = await res.json();
+                      if (!res.ok) throw new Error(data.error || "Claim failed");
+                      setClaimStatus("pending");
+                      setClaimPanelOpen(false);
+                      setClaimMsg(
+                        data.message ||
+                          "Claim submitted with your email for admin review."
+                      );
+                    } catch (e: any) {
+                      setClaimStatus("error");
+                      setClaimMsg(e.message || "Error");
+                    } finally {
+                      setClaimBusy(false);
+                    }
+                  }}
+                  className="rounded-full bg-orange-600 px-4 py-2 text-[11px] font-bold text-white disabled:opacity-50"
+                >
+                  {claimBusy ? "Submitting…" : "Submit claim for review"}
+                </button>
+                {claimNote.trim().length > 0 && claimNote.trim().length < 8 && (
+                  <p className="text-[10px] text-amber-300/90">
+                    Add a bit more detail (sail #, club, relationship).
+                  </p>
+                )}
+              </div>
+            )}
             {claimMsg && (
               <p
                 className={`mt-2 text-[11px] text-center md:text-left ${

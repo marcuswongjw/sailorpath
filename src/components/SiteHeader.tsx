@@ -99,12 +99,6 @@ export function SiteHeader() {
           >
             All Gold Fleet Sailors
           </Link>
-          <Link
-            href="/sg/optimist/compare"
-            className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
-          >
-            Compare sailors
-          </Link>
         </div>
       </div>
       <Link
@@ -233,13 +227,6 @@ export function SiteHeader() {
               className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
             >
               All Gold Fleet Sailors
-            </Link>
-            <Link
-              href="/sg/optimist/compare"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
-            >
-              Compare sailors
             </Link>
             <Link
               href="/search"

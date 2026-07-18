@@ -17,6 +17,8 @@ export async function GET() {
         createdAt: sailorClaims.createdAt,
         sailorName: sailors.name,
         sailorHandle: sailors.handle,
+        sailorSailNumber: sailors.sailNumber,
+        sailorClub: sailors.club,
         requesterEmail: profiles.email,
         requesterName: profiles.fullName,
       })
