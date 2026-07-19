@@ -2537,11 +2537,24 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   )}
                 </div>
 
-                {/* Sailor Form Card */}
+                {/* Sailor Form — fixed modal so Edit is always visible */}
                 {editingSailorId && (
-                  <div className="glass-panel rounded-3xl p-6 border border-white/5 space-y-4">
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                  <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4">
+                    <button
+                      type="button"
+                      aria-label="Close edit form"
+                      className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                      onClick={() => setEditingSailorId(null)}
+                    />
+                    <div
+                      id="sailor-edit-form"
+                      className="relative z-10 w-full sm:max-w-3xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl border border-orange-500/30 bg-[#0c0d14] shadow-2xl p-5 sm:p-6 space-y-4"
+                    >
+                    <h3 className="text-sm font-bold text-white uppercase tracking-wider sticky top-0 bg-[#0c0d14] pb-2 z-10">
                       {editingSailorId === "new" ? "Add New Sailor Profile" : "Edit Sailor Profile"}
+                      <span className="block text-[11px] font-semibold text-slate-500 normal-case tracking-normal mt-0.5">
+                        {editingSailorId !== "new" ? sailorForm.name || "" : "Fill in details and save"}
+                      </span>
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="md:col-span-2">
@@ -2850,19 +2863,22 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-2 border-t border-white/5 pt-4">
+                    <div className="flex justify-end gap-2 border-t border-white/5 pt-4 sticky bottom-0 bg-[#0c0d14] pb-1">
                       <button
+                        type="button"
                         onClick={() => setEditingSailorId(null)}
                         className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
                       >
                         Cancel
                       </button>
                       <button
+                        type="button"
                         onClick={handleSaveSailor}
                         className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500"
                       >
                         Save Sailor
                       </button>
+                    </div>
                     </div>
                   </div>
                 )}
@@ -3168,9 +3184,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                   <button
                                     type="button"
                                     title="Edit profile"
-                                    onClick={() => {
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      e.stopPropagation();
                                       setCompetitionsSailorId(null);
-                                      setEditingSailorId(s.id);
                                       const d = (v: unknown) =>
                                         v ? String(v).slice(0, 10) : "";
                                       setSailorForm({
@@ -3229,10 +3246,12 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                         asian: s.asian != null ? String(s.asian) : "",
                                         seaGames: s.seaGames != null ? String(s.seaGames) : "",
                                       });
+                                      setEditingSailorId(s.id);
                                     }}
-                                    className="text-slate-400 hover:text-white"
+                                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40"
                                   >
-                                    <Edit3 className="h-4 w-4" />
+                                    <Edit3 className="h-3.5 w-3.5" />
+                                    Edit
                                   </button>
                                   <button
                                     type="button"
@@ -3361,7 +3380,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 {r.date} · {r.geography || "SG"} ·{" "}
                                 {r.boatClass || "Optimist"} · {r.division || "Gold"}{" "}
                                 · fleet {r.totalFleetSize}
-                                {r.raceCount != null ? ` · ${r.raceCount} races` : ""}
                               </p>
                             </button>
                           );
@@ -3455,24 +3473,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 })
                               }
                               className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                            />
-                          </div>
-                          <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
-                              Number of races
-                            </label>
-                            <input
-                              type="number"
-                              min={0}
-                              value={regattaForm.raceCount ?? ""}
-                              onChange={(e) =>
-                                setRegattaForm({
-                                  ...regattaForm,
-                                  raceCount: e.target.value,
-                                })
-                              }
-                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                              placeholder="e.g. 6"
                             />
                           </div>
                           <div>
@@ -3786,70 +3786,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <p className="text-xs text-slate-500">Edit or delete scores for this event.</p>
                       </div>
                       <div className="flex flex-wrap items-end gap-3">
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">
-                          Number of races
-                          <input
-                            type="number"
-                            min={0}
-                            className="mt-1 block w-28 rounded-lg bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white font-mono"
-                            value={
-                              regattaList.find(
-                                (r) => r.id === selectedRegattaIdForResultEdit
-                              )?.raceCount ?? ""
-                            }
-                            onChange={async (e) => {
-                              const val = e.target.value;
-                              const id = selectedRegattaIdForResultEdit;
-                              setRegattaList((prev) =>
-                                prev.map((r) =>
-                                  r.id === id
-                                    ? {
-                                        ...r,
-                                        raceCount:
-                                          val === "" ? null : Number(val),
-                                      }
-                                    : r
-                                )
-                              );
-                            }}
-                            onBlur={async (e) => {
-                              if (!isSuperadmin) return;
-                              const val = e.target.value;
-                              try {
-                                const res = await fetch("/api/admin/regattas", {
-                                  method: "PATCH",
-                                  headers: {
-                                    "Content-Type": "application/json",
-                                  },
-                                  body: JSON.stringify({
-                                    id: selectedRegattaIdForResultEdit,
-                                    raceCount: val === "" ? null : Number(val),
-                                  }),
-                                });
-                                const data = await parseApi(res);
-                                if (!res.ok)
-                                  throw new Error(
-                                    data.error || "Failed to save race count"
-                                  );
-                                if (data.regatta) {
-                                  setRegattaList((prev) =>
-                                    prev.map((r) =>
-                                      r.id === data.regatta.id
-                                        ? data.regatta
-                                        : r
-                                    )
-                                  );
-                                }
-                              } catch (err: any) {
-                                alert(err.message || "Failed to save race count");
-                              }
-                            }}
-                            placeholder="e.g. 6"
-                          />
-                        </label>
-                        <p className="text-[10px] text-slate-600 max-w-[12rem] leading-snug pb-1">
-                          Saved on blur. Used later for sailor race-by-race logs.
-                        </p>
                         <button
                           type="button"
                           onClick={() =>

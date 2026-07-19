@@ -250,11 +250,6 @@ export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) 
                         <Anchor className="h-3 w-3 text-slate-500" />
                         Fleet {r.totalFleetSize}
                       </span>
-                      {r.raceCount != null && (
-                        <span className="rounded-lg bg-white/5 px-2 py-1">
-                          {r.raceCount} races
-                        </span>
-                      )}
                       <span className="ml-auto text-orange-400/90 text-[10px] font-bold group-hover:underline">
                         Results →
                       </span>

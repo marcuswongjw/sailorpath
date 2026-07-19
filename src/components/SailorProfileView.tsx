@@ -1244,7 +1244,6 @@ export function SailorProfileView({
                       <p className="text-xs text-slate-500 mt-1 font-semibold">
                         {res.regattaDate}
                         {res.division ? ` · ${res.division}` : ""}
-                        {res.raceCount ? ` · ${res.raceCount} races` : ""}
                       </p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
                         {overseas && (
@@ -1341,7 +1340,9 @@ export function SailorProfileView({
                                   Race {o.raceNumber}
                                 </span>
                                 <span className="text-[11px] font-mono text-slate-400">
-                                  {o.position != null ? `P${o.position}` : "—"}
+                                  {o.position != null
+                                    ? `Score ${o.position}`
+                                    : "—"}
                                   {o.wind ? ` · ${o.wind}` : ""}
                                   {o.isPrivate ? " · private" : ""}
                                 </span>
@@ -1384,7 +1385,7 @@ export function SailorProfileView({
                                   position: e.target.value,
                                 }))
                               }
-                              placeholder="Place"
+                              placeholder="Score"
                               className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
                             />
                             <input
