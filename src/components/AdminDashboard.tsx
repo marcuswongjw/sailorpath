@@ -11,7 +11,6 @@ import {
   Calendar,
   Grid,
   CheckCircle,
-  HelpCircle,
   UserPlus,
   RefreshCw,
   Save,
@@ -78,9 +77,9 @@ interface AdminDashboardProps {
 }
 
 export function AdminDashboard({ initialSailors, initialRegattas, initialResults }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<
-    "roster" | "import" | "reconciliation" | "edit"
-  >("roster");
+  const [activeTab, setActiveTab] = useState<"roster" | "import" | "edit">(
+    "edit"
+  );
   
   // Auth state — role from server /profiles, never user_metadata
   const [user, setUser] = useState<any>(null);
@@ -107,7 +106,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       birthYear?: number | null;
     }[]
   >([]);
-  const [importRegattaId, setImportRegattaId] = useState<string | null>(null);
 
   // One-time bulk sailor roster (before regatta results)
   const [rosterRows, setRosterRows] = useState<Record<string, any>[]>([]);
@@ -161,16 +159,21 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Excel Import States
   const [dragActive, setDragActive] = useState(false);
-  const [parsedData, setParsedData] = useState<any[] | null>(null);
-  const [columnMapping, setColumnMapping] = useState({
-    rank: "Rank",
-    name: "Sailor Name",
-    score: "Nett Score",
-  });
   const [importStatus, setImportStatus] = useState<string | null>(null);
 
-  // Reconciliation Queue States
-  const [reconciliationQueue, setReconciliationQueue] = useState<any[]>([]);
+  // Ignored duplicate pairs (localStorage, pair key idA|idB sorted)
+  const [ignoredDuplicateKeys, setIgnoredDuplicateKeys] = useState<Set<string>>(
+    () => {
+      if (typeof window === "undefined") return new Set();
+      try {
+        const raw = localStorage.getItem("sailorpath_ignored_duplicates");
+        const arr = raw ? (JSON.parse(raw) as string[]) : [];
+        return new Set(arr);
+      } catch {
+        return new Set();
+      }
+    }
+  );
 
   // Bulk Editor States
   const [selectedSailors, setSelectedSailors] = useState<string[]>([]);
@@ -374,18 +377,35 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           ? "Silver"
           : "Guest";
 
-  const duplicatePairs = useMemo(
-    () =>
-      findDuplicateSailorPairs(
-        sailorList.map((s) => ({
-          id: s.id,
-          name: s.name,
-          sailNumber: s.sailNumber,
-        })),
-        0.6
-      ),
-    [sailorList]
-  );
+  const duplicatePairs = useMemo(() => {
+    const pairKey = (a: string, b: string) =>
+      [a, b].sort().join("|");
+    return findDuplicateSailorPairs(
+      sailorList.map((s) => ({
+        id: s.id,
+        name: s.name,
+        sailNumber: s.sailNumber,
+      })),
+      0.6
+    ).filter((p) => !ignoredDuplicateKeys.has(pairKey(p.a.id, p.b.id)));
+  }, [sailorList, ignoredDuplicateKeys]);
+
+  const ignoreDuplicatePair = (aId: string, bId: string) => {
+    const key = [aId, bId].sort().join("|");
+    setIgnoredDuplicateKeys((prev) => {
+      const next = new Set(prev);
+      next.add(key);
+      try {
+        localStorage.setItem(
+          "sailorpath_ignored_duplicates",
+          JSON.stringify([...next])
+        );
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  };
 
   const sortedDbSailors = useMemo(() => {
     const rows = [...filteredDbSailors];
@@ -906,7 +926,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         })
         .filter((r) => r.name);
       setFullImportRows(mapped);
-      setParsedData(mapped.slice(0, 20));
       const withSail = mapped.filter((r) => r.sailNumber).length;
       const withDob = mapped.filter((r) => r.dob || r.birthYear).length;
       const withClub = mapped.filter((r) => r.club).length;
@@ -963,7 +982,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       });
       const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || data.message || "Import failed");
-      setImportRegattaId(data.regatta?.id || null);
       // Refresh sailors after auto-create
       try {
         const list = await fetch("/api/admin/sailors").then((r) => r.json());
@@ -993,96 +1011,26 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           );
         }
       }
-      const queue = (data.unmatched || []).map(
-        (
-          u: {
-            rawName: string;
-            rank: number | null;
-            nett: number | null;
-            suggestedId: string | null;
-            suggestedName: string | null;
-            similarity: number;
-          },
-          i: number
-        ) => ({
-          id: `unmapped-${Date.now()}-${i}`,
-          rawName: u.rawName,
-          score: u.rank ?? u.nett ?? 0,
-          suggestedId: u.suggestedId,
-          suggestedName: u.suggestedName,
-          similarity: Math.round((u.similarity || 0) * 100),
-          regattaId: data.regatta?.id,
-          rank: u.rank,
-          nett: u.nett,
-        })
+      const unmatchedCount = (data.unmatched || []).length;
+      setImportStatus(
+        (data.message || "Import complete") +
+          (unmatchedCount
+            ? ` · ${unmatchedCount} unmatched name(s) skipped — add/fix sailor names and re-import.`
+            : "")
       );
-      setReconciliationQueue(queue);
-      setImportStatus(data.message);
-      if (queue.length) setActiveTab("reconciliation");
+      // Refresh results after import
+      try {
+        const rRes = await fetch("/api/admin/results");
+        if (rRes.ok) {
+          const rData = await rRes.json();
+          if (rData.results) setResultsList(rData.results);
+        }
+      } catch {
+        /* optional */
+      }
     } catch (e: any) {
       setImportStatus(null);
       alert(e.message || "Import failed");
-    }
-  };
-
-  // Reconciliation Handlers — persist via API
-  const handleMerge = async (queueId: string, sailorId: string) => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden.");
-      return;
-    }
-    const item = reconciliationQueue.find((q) => q.id === queueId) as any;
-    if (!item) return;
-    try {
-      const res = await fetch("/api/admin/reconcile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "merge",
-          rawName: item.rawName,
-          suggestedId: sailorId,
-          regattaId: item.regattaId || importRegattaId,
-          rank: item.rank ?? item.score,
-          nett: item.nett ?? item.score,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Merge failed");
-      setReconciliationQueue((prev) => prev.filter((q) => q.id !== queueId));
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
-
-  const handleCreateNew = async (queueId: string, rawName: string) => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden.");
-      return;
-    }
-    const item = reconciliationQueue.find((q) => q.id === queueId) as any;
-    try {
-      const res = await fetch("/api/admin/reconcile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "create",
-          rawName,
-          regattaId: item?.regattaId || importRegattaId,
-          rank: item?.rank ?? item?.score,
-          nett: item?.nett ?? item?.score,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Create failed");
-      setReconciliationQueue((prev) => prev.filter((q) => q.id !== queueId));
-      // refresh sailor list
-      const sRes = await fetch("/api/admin/sailors");
-      if (sRes.ok) {
-        const sData = await sRes.json();
-        if (sData.sailors) setSailorList(sData.sailors);
-      }
-    } catch (e: any) {
-      alert(e.message);
     }
   };
 
@@ -1737,12 +1685,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       </div>
 
       {/* Tab Navigation — equal width for all tabs */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      <div className="grid grid-cols-3 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
             ["roster", "Sailor Roster", UserPlus],
             ["import", "Regatta Excel", FileSpreadsheet],
-            ["reconciliation", "Name Reconciliation", UserCheck],
             ["edit", "Database & bulk edit", Database],
           ] as const
         ).map(([key, label, Icon]) => (
@@ -1758,11 +1705,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           >
             <Icon className="h-4 w-4 shrink-0" />
             <span className="text-center leading-tight">{label}</span>
-            {key === "reconciliation" && reconciliationQueue.length > 0 && (
-              <span className="absolute -top-1 -right-1 flex h-4 min-w-[1rem] px-1 items-center justify-center rounded-full bg-orange-500 text-[10px] font-black text-white">
-                {reconciliationQueue.length}
-              </span>
-            )}
           </button>
         ))}
       </div>
@@ -1974,179 +1916,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                 </div>
               )}
             </div>
-
-            {/* Column Mapping Preview */}
-            {parsedData && (
-              <div className="glass-card rounded-2xl p-6 border border-white/5 space-y-6">
-                <div>
-                  <h3 className="text-base font-bold text-white">Preview (first 15 rows)</h3>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Headers are auto-detected (Name / Rank / Nett). Unmatched names go to reconciliation.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400">Rank Column</label>
-                    <select
-                      value={columnMapping.rank}
-                      onChange={(e) => setColumnMapping((prev) => ({ ...prev, rank: e.target.value }))}
-                      className="w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                    >
-                      {Object.keys(parsedData[0] || {}).map((k) => (
-                        <option key={k} value={k}>
-                          {k}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400">Sailor Name Column</label>
-                    <select
-                      value={columnMapping.name}
-                      onChange={(e) => setColumnMapping((prev) => ({ ...prev, name: e.target.value }))}
-                      className="w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                    >
-                      {Object.keys(parsedData[0] || {}).map((k) => (
-                        <option key={k} value={k}>
-                          {k}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-slate-400">Nett Score Column</label>
-                    <select
-                      value={columnMapping.score}
-                      onChange={(e) => setColumnMapping((prev) => ({ ...prev, score: e.target.value }))}
-                      className="w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                    >
-                      {Object.keys(parsedData[0] || {}).map((k) => (
-                        <option key={k} value={k}>
-                          {k}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {/* Table Preview */}
-                <div className="border border-white/5 rounded-xl overflow-hidden">
-                  <table className="w-full text-left text-xs font-semibold text-slate-300">
-                    <thead className="bg-white/5 text-[10px] text-slate-500 uppercase font-bold border-b border-white/5">
-                      <tr>
-                        <th className="py-3 px-4">Mapped Rank</th>
-                        <th className="py-3 px-4">Mapped Name</th>
-                        <th className="py-3 px-4 text-right">Mapped Nett Score</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5">
-                      {parsedData.map((row, idx) => (
-                        <tr key={idx} className="hover:bg-white/5">
-                          <td className="py-3 px-4 font-mono">{row[columnMapping.rank]}</td>
-                          <td className="py-3 px-4 font-bold text-white">{row[columnMapping.name]}</td>
-                          <td className="py-3 px-4 text-right font-mono">{row[columnMapping.score]}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="flex justify-end">
-                  <button
-                    disabled={!isSuperadmin}
-                    onClick={() => {
-                      alert("Regatta imported successfully! Database updated.");
-                      setParsedData(null);
-                    }}
-                    className={`rounded-full bg-orange-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-orange-500 transition-all ${
-                      !isSuperadmin && "opacity-50 cursor-not-allowed"
-                    }`}
-                  >
-                    Commit Import to Database
-                  </button>
-                </div>
-              </div>
-            )}
           </div>
         )}
-
-        {/* Tab 2: Name Reconciliation */}
-        {activeTab === "reconciliation" && (
-          <div className="w-full min-w-0 space-y-6">
-            <div className="glass-panel rounded-3xl p-6 border border-white/5">
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <UserCheck className="h-5 w-5 text-orange-500" />
-                Unmapped Sailor Names Queue
-              </h2>
-              <p className="text-xs text-slate-500 mt-1">
-                The import process found these names which do not match existing sailors exactly. Reconciliation suggestions are calculated using pg_trgm trigram similarity algorithms.
-              </p>
-            </div>
-
-            {reconciliationQueue.length === 0 ? (
-              <div className="glass-card rounded-2xl p-8 border border-white/5 text-center text-slate-400">
-                All names successfully reconciled! No pending items in queue.
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {reconciliationQueue.map((item) => (
-                  <div
-                    key={item.id}
-                    className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-                  >
-                    <div>
-                      <span className="text-[10px] font-bold text-slate-500 tracking-wider uppercase">Raw Imported Name</span>
-                      <h3 className="text-lg font-bold text-white mt-1">{item.rawName}</h3>
-                      <p className="text-xs text-slate-400 mt-1">Finished with nett score: **{item.score}**</p>
-                    </div>
-
-                    <div className="flex-1 flex flex-col md:flex-row items-stretch md:items-center gap-4 justify-end w-full md:w-auto">
-                      {item.suggestedId ? (
-                        <div className="flex-1 max-w-sm rounded-xl bg-white/5 border border-white/5 p-3 flex justify-between items-center">
-                          <div>
-                            <span className="block text-[9px] font-bold text-orange-400 uppercase">AI Match Suggestion</span>
-                            <span className="block text-xs font-extrabold text-white mt-0.5">{item.suggestedName}</span>
-                          </div>
-                          <span className="text-xs font-black text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
-                            {item.similarity}% match
-                          </span>
-                        </div>
-                      ) : (
-                        <div className="flex-1 max-w-sm rounded-xl bg-white/5 border border-white/5 p-3 flex items-center justify-center text-slate-500 text-xs gap-1.5">
-                          <HelpCircle className="h-4 w-4" />
-                          <span>No match candidate found (Similarity &lt; 60%)</span>
-                        </div>
-                      )}
-
-                      <div className="flex gap-2 justify-end">
-                        {item.suggestedId && (
-                          <button
-                            disabled={!isSuperadmin}
-                            onClick={() => handleMerge(item.id, item.suggestedId!)}
-                            className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500 transition-all disabled:opacity-50"
-                          >
-                            Merge to {item.suggestedName}
-                          </button>
-                        )}
-                        <button
-                          disabled={!isSuperadmin}
-                          onClick={() => handleCreateNew(item.id, item.rawName)}
-                          className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all disabled:opacity-50 flex items-center gap-1"
-                        >
-                          <UserPlus className="h-3.5 w-3.5" />
-                          Create New Sailor
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Bulk editor merged into Database & bulk edit tab */}
 
         {/* Database & bulk edit */}
         {activeTab === "edit" && (
@@ -2511,17 +2282,28 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                     </span>
                                   </p>
                                 </div>
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setSelectedSailors([p.a.id, p.b.id]);
-                                    setDbSearch("");
-                                    setShowDuplicateFinder(true);
-                                  }}
-                                  className="shrink-0 rounded-full bg-emerald-600/90 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-bold text-white"
-                                >
-                                  Select pair
-                                </button>
+                                <div className="flex flex-wrap gap-2 shrink-0">
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedSailors([p.a.id, p.b.id]);
+                                      setDbSearch("");
+                                      setShowDuplicateFinder(true);
+                                    }}
+                                    className="rounded-full bg-emerald-600/90 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-bold text-white"
+                                  >
+                                    Select pair
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      ignoreDuplicatePair(p.a.id, p.b.id)
+                                    }
+                                    className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[10px] font-bold text-slate-400 hover:text-white"
+                                  >
+                                    Ignore
+                                  </button>
+                                </div>
                               </li>
                             );
                           })}

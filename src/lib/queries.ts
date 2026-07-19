@@ -435,6 +435,20 @@ export async function computeFleetRankings(
   period: Period
 ) {
   return withDb(async () => {
+    // Rank better than fleet+1 should not stay marked DNS
+    try {
+      await db.execute(sql`
+        UPDATE regatta_results AS r
+        SET is_dns = false, updated_at = now()
+        FROM regattas AS g
+        WHERE r.regatta_id = g.id
+          AND r.is_dns = true
+          AND COALESCE(r.is_overseas_commitment, false) = false
+          AND r.rank < (COALESCE(g.total_fleet_size, 50) + 1)
+      `);
+    } catch {
+      /* optional if columns missing */
+    }
     const [s, r, res] = await Promise.all([
       listSailors(),
       listRegattas(),

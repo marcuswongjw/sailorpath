@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import {
   activeSailorsForFleet,
   missingDnsPairs,
@@ -61,9 +61,28 @@ function seriesMatchesDivision(
   return isGold || Boolean(s.silverEntryDate) || cf === "silver" || cf === "gold";
 }
 
+/** Clear DNS when rank is better (lower) than fleet size + 1 */
+async function healFalseDnsFlags() {
+  try {
+    await db.execute(sql`
+      UPDATE regatta_results AS r
+      SET is_dns = false, updated_at = now()
+      FROM regattas AS g
+      WHERE r.regatta_id = g.id
+        AND r.is_dns = true
+        AND COALESCE(r.is_overseas_commitment, false) = false
+        AND r.rank < (COALESCE(g.total_fleet_size, 50) + 1)
+    `);
+  } catch (e) {
+    console.warn("healFalseDnsFlags", e);
+  }
+}
+
 export async function GET() {
   try {
     await requireSuperadmin();
+    // Keep DNS flags consistent with ranks across the board
+    await healFalseDnsFlags();
     const rows = await db.select().from(regattaResults);
     return NextResponse.json({
       results: rows.map((r) => ({
@@ -81,6 +100,18 @@ export async function POST(req: Request) {
   try {
     await requireSuperadmin();
     const body = await req.json();
+
+    if (
+      body.action === "healFalseDns" ||
+      body.action === "clearFalseDns"
+    ) {
+      await healFalseDnsFlags();
+      return NextResponse.json({
+        ok: true,
+        message:
+          "Cleared DNS on any result where rank is better than fleet size + 1.",
+      });
+    }
 
     /**
      * fillDnsPeriod: ensure every active Gold/Silver sailor for a half-year has a
