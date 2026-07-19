@@ -262,6 +262,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     totalFleetSize: 50,
     division: "Gold",
     raceCount: "",
+    geography: "SG",
+    boatClass: "Optimist",
   });
 
   const [resultsList, setResultsList] = useState(initialResults || []);
@@ -379,7 +381,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           id: s.id,
           name: s.name,
           sailNumber: s.sailNumber,
-        }))
+        })),
+        0.6
       ),
     [sailorList]
   );
@@ -1531,10 +1534,21 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       return;
     }
     const overseas = Boolean(resultForm.isOverseasCommitment);
+    const reg = regattaList.find((r) => r.id === resultForm.regattaId);
+    const dnsPts = (reg?.totalFleetSize || 50) + 1;
+    const rankNum = Number(resultForm.rank);
+    // Real finish better than DNS points → not DNS
+    let isDns = overseas
+      ? false
+      : Boolean(resultForm.isDNS || resultForm.isDns);
+    if (isDns && Number.isFinite(rankNum) && rankNum < dnsPts) {
+      isDns = false;
+    }
     const payload = {
       ...resultForm,
-      isDns: overseas ? false : Boolean(resultForm.isDNS || resultForm.isDns),
-      isDNS: overseas ? false : Boolean(resultForm.isDNS || resultForm.isDns),
+      rank: rankNum,
+      isDns,
+      isDNS: isDns,
       isOverseasCommitment: overseas,
     };
     try {
@@ -2433,11 +2447,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       <div className="flex items-start justify-between gap-3">
                         <div>
                           <h4 className="text-xs font-bold text-white uppercase tracking-wider">
-                            Potential identical / jumbled names
+                            Possible duplicate sailors
                           </h4>
                           <p className="text-[11px] text-slate-500 mt-1">
-                            Pairs share the same name tokens, near-matching names, or the same sail
-                            number. Select both in the table and use Merge 2 selected.
+                            Shows pairs with ≥60% match (jumbled names, partial names, same sail #).
+                            <span className="text-rose-300/90 font-semibold"> High ≥80%</span>
+                            {" · "}
+                            <span className="text-amber-300/90 font-semibold">Medium 60–79%</span>
+                            . Select both → Merge 2 selected.
                           </p>
                         </div>
                         <button
@@ -2450,45 +2467,64 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       </div>
                       {duplicatePairs.length === 0 ? (
                         <p className="text-xs text-slate-500 py-4 text-center">
-                          No strong name duplicates found.
+                          No pairs at 60%+ similarity.
                         </p>
                       ) : (
-                        <ul className="space-y-2 max-h-64 overflow-y-auto">
-                          {duplicatePairs.slice(0, 40).map((p) => (
-                            <li
-                              key={`${p.a.id}-${p.b.id}`}
-                              className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-xs"
-                            >
-                              <div className="min-w-0">
-                                <p className="text-white font-semibold truncate">
-                                  {p.a.name}
-                                  <span className="text-slate-500 font-mono text-[10px] ml-2">
-                                    {p.a.sailNumber || "—"}
-                                  </span>
-                                </p>
-                                <p className="text-slate-400 font-semibold truncate">
-                                  {p.b.name}
-                                  <span className="text-slate-500 font-mono text-[10px] ml-2">
-                                    {p.b.sailNumber || "—"}
-                                  </span>
-                                </p>
-                                <p className="text-[10px] text-slate-600 mt-0.5">
-                                  {p.how} · match {(p.similarity * 100).toFixed(0)}%
-                                </p>
-                              </div>
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setSelectedSailors([p.a.id, p.b.id]);
-                                  setDbSearch("");
-                                  setShowDuplicateFinder(true);
-                                }}
-                                className="shrink-0 rounded-full bg-emerald-600/90 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-bold text-white"
+                        <ul className="space-y-2 max-h-72 overflow-y-auto">
+                          {duplicatePairs.slice(0, 60).map((p) => {
+                            const pct = Math.round(p.similarity * 100);
+                            const high = p.band === "high" || pct >= 80;
+                            return (
+                              <li
+                                key={`${p.a.id}-${p.b.id}`}
+                                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-lg border px-3 py-2 text-xs ${
+                                  high
+                                    ? "border-rose-500/40 bg-rose-500/10"
+                                    : "border-amber-500/35 bg-amber-500/10"
+                                }`}
                               >
-                                Select pair
-                              </button>
-                            </li>
-                          ))}
+                                <div className="min-w-0">
+                                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                                    <span
+                                      className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
+                                        high
+                                          ? "bg-rose-500/20 text-rose-200 border border-rose-500/30"
+                                          : "bg-amber-500/20 text-amber-100 border border-amber-500/30"
+                                      }`}
+                                    >
+                                      {pct}% · {high ? "High" : "Medium"}
+                                    </span>
+                                    <span className="text-[10px] text-slate-500">
+                                      {p.how}
+                                    </span>
+                                  </div>
+                                  <p className="text-white font-semibold truncate">
+                                    {p.a.name}
+                                    <span className="text-slate-500 font-mono text-[10px] ml-2">
+                                      {p.a.sailNumber || "—"}
+                                    </span>
+                                  </p>
+                                  <p className="text-slate-300 font-semibold truncate">
+                                    {p.b.name}
+                                    <span className="text-slate-500 font-mono text-[10px] ml-2">
+                                      {p.b.sailNumber || "—"}
+                                    </span>
+                                  </p>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    setSelectedSailors([p.a.id, p.b.id]);
+                                    setDbSearch("");
+                                    setShowDuplicateFinder(true);
+                                  }}
+                                  className="shrink-0 rounded-full bg-emerald-600/90 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-bold text-white"
+                                >
+                                  Select pair
+                                </button>
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
                     </div>
@@ -3264,6 +3300,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         totalFleetSize: 50,
                         division: "Gold",
                         raceCount: "",
+                        geography: "SG",
+                        boatClass: "Optimist",
                       });
                     }}
                     className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2.5 text-xs font-bold text-white flex items-center justify-center gap-1 shrink-0"
@@ -3306,6 +3344,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                     r.totalFleetSize != null
                                       ? String(r.totalFleetSize)
                                       : "",
+                                  geography: r.geography || "SG",
+                                  boatClass: r.boatClass || "Optimist",
                                 });
                               }}
                               className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${
@@ -3318,8 +3358,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 {r.name}
                               </p>
                               <p className="text-[10px] text-slate-500 mt-0.5 font-mono">
-                                {r.date} · {r.division || "Gold"} · fleet{" "}
-                                {r.totalFleetSize}
+                                {r.date} · {r.geography || "SG"} ·{" "}
+                                {r.boatClass || "Optimist"} · {r.division || "Gold"}{" "}
+                                · fleet {r.totalFleetSize}
                                 {r.raceCount != null ? ` · ${r.raceCount} races` : ""}
                               </p>
                             </button>
@@ -3452,6 +3493,40 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               <option value="Silver">Silver only</option>
                               <option value="Both">Both</option>
                             </select>
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Geography / country
+                            </label>
+                            <input
+                              type="text"
+                              value={regattaForm.geography || "SG"}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  geography: e.target.value.toUpperCase(),
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                              placeholder="SG"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Class
+                            </label>
+                            <input
+                              type="text"
+                              value={regattaForm.boatClass || "Optimist"}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  boatClass: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              placeholder="Optimist"
+                            />
                           </div>
                         </div>
                         <div className="flex flex-wrap justify-end gap-2 border-t border-white/5 pt-4">
@@ -3607,9 +3682,30 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <input
                           type="number"
                           value={resultForm.rank}
-                          onChange={(e) => setResultForm({ ...resultForm, rank: e.target.value })}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            const reg = regattaList.find(
+                              (r) => r.id === resultForm.regattaId
+                            );
+                            const dnsPts =
+                              (reg?.totalFleetSize || 50) + 1;
+                            const n = Number(val);
+                            // Better than DNS score (fleet+1) → uncheck DNS
+                            const clearDns =
+                              Number.isFinite(n) && n > 0 && n < dnsPts;
+                            setResultForm({
+                              ...resultForm,
+                              rank: val,
+                              ...(clearDns
+                                ? { isDNS: false, isDns: false }
+                                : {}),
+                            });
+                          }}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                         />
+                        <p className="mt-1 text-[10px] text-slate-600">
+                          DNS points = fleet+1. Enter a better rank to clear DNS.
+                        </p>
                       </div>
                       <div className="flex items-center gap-2 h-full pt-5 md:pl-4">
                         <input
@@ -3631,7 +3727,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               ...(on
                                 ? {
                                     rank: dnsPts,
-                                    // Nett stays optional (not a race score)
                                   }
                                 : {}),
                             });
@@ -3639,7 +3734,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
                         />
                         <label htmlFor="dnsCheckbox" className="text-xs font-bold text-slate-400 cursor-pointer">
-                          Did Not Start (DNS) — sets rank to fleet+1; you can edit the number
+                          Did Not Start (DNS) — sets rank to fleet+1; better rank auto-clears this
                         </label>
                       </div>
                       <div className="flex items-center gap-2 h-full pt-2 md:pl-4 md:col-span-2">

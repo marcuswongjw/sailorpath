@@ -41,6 +41,14 @@ export async function POST(req: Request) {
       body.raceCount === "" || body.raceCount == null
         ? null
         : Math.max(0, Math.round(Number(body.raceCount))) || null;
+    const geography =
+      body.geography != null && String(body.geography).trim()
+        ? String(body.geography).trim().toUpperCase().slice(0, 12)
+        : "SG";
+    const boatClass =
+      body.boatClass != null && String(body.boatClass).trim()
+        ? String(body.boatClass).trim().slice(0, 40)
+        : "Optimist";
 
     const [row] = await db
       .insert(regattas)
@@ -51,6 +59,8 @@ export async function POST(req: Request) {
         totalFleetSize,
         division,
         raceCount,
+        geography,
+        boatClass,
       })
       .onConflictDoUpdate({
         target: regattas.slug,
@@ -60,6 +70,8 @@ export async function POST(req: Request) {
           totalFleetSize,
           division,
           raceCount,
+          geography,
+          boatClass,
           updatedAt: new Date(),
         },
       })
@@ -92,6 +104,18 @@ export async function PATCH(req: Request) {
         body.raceCount === "" || body.raceCount == null
           ? null
           : Math.max(0, Math.round(Number(body.raceCount))) || null;
+    }
+    if (body.geography !== undefined) {
+      patch.geography =
+        body.geography === "" || body.geography == null
+          ? "SG"
+          : String(body.geography).trim().toUpperCase().slice(0, 12);
+    }
+    if (body.boatClass !== undefined) {
+      patch.boatClass =
+        body.boatClass === "" || body.boatClass == null
+          ? "Optimist"
+          : String(body.boatClass).trim().slice(0, 40);
     }
     if (body.slug !== undefined && body.slug) {
       patch.slug = String(body.slug).trim();

@@ -18,6 +18,8 @@ export default async function RegattasPage() {
           totalFleetSize: r.totalFleetSize,
           division: r.division,
           raceCount: r.raceCount ?? null,
+          geography: r.geography ?? "SG",
+          boatClass: r.boatClass ?? "Optimist",
         }))}
       />
     );

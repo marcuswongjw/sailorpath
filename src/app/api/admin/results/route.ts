@@ -306,19 +306,25 @@ export async function POST(req: Request) {
     let isDns = parseDns(body);
     if (isOverseasCommitment) isDns = false;
 
+    const [regMeta] = await db
+      .select({ totalFleetSize: regattas.totalFleetSize })
+      .from(regattas)
+      .where(eq(regattas.id, body.regattaId))
+      .limit(1);
+    const dnsPoints = Math.max(1, (regMeta?.totalFleetSize || 50) + 1);
+
     let rank = Math.round(Number(body.rank));
     if (!Number.isFinite(rank) || rank <= 0) {
       // Default DNS points from regatta fleet size when marking DNS without rank
       if (isDns) {
-        const [reg] = await db
-          .select({ totalFleetSize: regattas.totalFleetSize })
-          .from(regattas)
-          .where(eq(regattas.id, body.regattaId))
-          .limit(1);
-        rank = (reg?.totalFleetSize || 50) + 1;
+        rank = dnsPoints;
       } else {
         rank = 999;
       }
+    }
+    // Real finish better than DNS (fleet+1) → not a DNS
+    if (isDns && rank < dnsPoints) {
+      isDns = false;
     }
     // Nett is optional (e.g. overseas commitment has ranking points but no race nett)
     const nettScore =
@@ -406,27 +412,59 @@ export async function PATCH(req: Request) {
     if (body.sailorId !== undefined) patch.sailorId = body.sailorId;
     if (body.regattaId !== undefined) patch.regattaId = body.regattaId;
 
+    const [existing] = await db
+      .select()
+      .from(regattaResults)
+      .where(eq(regattaResults.id, body.id))
+      .limit(1);
+
     // If turning on DNS without changing rank, set default fleet+1
-    if (patch.isDns === true && body.rank === undefined) {
-      const [existing] = await db
-        .select()
-        .from(regattaResults)
-        .where(eq(regattaResults.id, body.id))
+    if (patch.isDns === true && body.rank === undefined && existing) {
+      const [reg] = await db
+        .select({ totalFleetSize: regattas.totalFleetSize })
+        .from(regattas)
+        .where(eq(regattas.id, existing.regattaId))
         .limit(1);
-      if (existing) {
-        const [reg] = await db
-          .select({ totalFleetSize: regattas.totalFleetSize })
-          .from(regattas)
-          .where(eq(regattas.id, existing.regattaId))
-          .limit(1);
-        if (reg && (existing.isDns !== true || body.forceDnsScore)) {
-          // only auto-set if was not already DNS or explicit force
-          if (!existing.isDns && !existing.isOverseasCommitment) {
-            const pts = (reg.totalFleetSize || 50) + 1;
-            patch.rank = pts;
-            // Leave nett optional — do not invent a race nett for DNS
-          }
+      if (reg && (existing.isDns !== true || body.forceDnsScore)) {
+        if (!existing.isDns && !existing.isOverseasCommitment) {
+          const pts = (reg.totalFleetSize || 50) + 1;
+          patch.rank = pts;
         }
+      }
+    }
+
+    // Rank better than DNS (fleet+1) → clear DNS flag
+    if (existing) {
+      const [reg] = await db
+        .select({ totalFleetSize: regattas.totalFleetSize })
+        .from(regattas)
+        .where(
+          eq(
+            regattas.id,
+            (body.regattaId as string) || existing.regattaId
+          )
+        )
+        .limit(1);
+      const dnsPts = Math.max(1, (reg?.totalFleetSize || 50) + 1);
+      const finalRank =
+        patch.rank !== undefined
+          ? Number(patch.rank)
+          : Number(existing.rank);
+      const willBeDns =
+        patch.isDns !== undefined
+          ? Boolean(patch.isDns)
+          : Boolean(existing.isDns);
+      const overseas =
+        patch.isOverseasCommitment !== undefined
+          ? Boolean(patch.isOverseasCommitment)
+          : Boolean(existing.isOverseasCommitment);
+      if (
+        willBeDns &&
+        !overseas &&
+        Number.isFinite(finalRank) &&
+        finalRank < dnsPts
+      ) {
+        patch.isDns = false;
       }
     }
 

@@ -247,6 +247,8 @@ export async function listRegattas() {
         totalFleetSize: r.totalFleetSize,
         division: r.division,
         raceCount: r.raceCount,
+        geography: r.geography ?? "SG",
+        boatClass: r.boatClass ?? "Optimist",
       })
     );
   });
@@ -267,6 +269,8 @@ export async function getRegattaBySlug(slug: string) {
       date: row.date,
       totalFleetSize: row.totalFleetSize,
       division: row.division,
+      geography: row.geography ?? "SG",
+      boatClass: row.boatClass ?? "Optimist",
       raceCount: row.raceCount,
     } satisfies RegattaRecord;
   });

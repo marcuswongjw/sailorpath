@@ -47,6 +47,10 @@ export interface RegattaRecord {
   division?: string;
   /** Number of races in the event (for race-by-race logs) */
   raceCount?: number | null;
+  /** e.g. SG, MY */
+  geography?: string | null;
+  /** e.g. Optimist, ILCA 6 */
+  boatClass?: string | null;
 }
 
 export interface RegattaResultRecord {

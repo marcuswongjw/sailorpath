@@ -97,6 +97,10 @@ export const regattas = pgTable("regattas", {
    * Optional until set by admin.
    */
   raceCount: integer("race_count"),
+  /** Country / region tag (e.g. SG, MY, TH) for multi-geo filtering */
+  geography: text("geography").default("SG").notNull(),
+  /** Boat class tag (e.g. Optimist, ILCA 6) */
+  boatClass: text("boat_class").default("Optimist").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
