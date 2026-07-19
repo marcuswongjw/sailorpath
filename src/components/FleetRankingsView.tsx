@@ -69,6 +69,8 @@ export function FleetRankingsView({
   const [loading, setLoading] = useState(true);
   /** Regatta IDs excluded from Best 3 of 5 (client what-if) */
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
+  const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
+  const [squadFilter, setSquadFilter] = useState<string>("all");
 
   useEffect(() => {
     let cancelled = false;
@@ -76,6 +78,8 @@ export function FleetRankingsView({
       setLoading(true);
       setError(null);
       setExcluded(new Set());
+      setGenderFilter("all");
+      setSquadFilter("all");
       try {
         const res = await fetch(
           `/api/rankings?fleet=${fleet}&year=${period.year}&half=${encodeURIComponent(period.half)}`
@@ -98,6 +102,21 @@ export function FleetRankingsView({
   }, [fleet, period]);
 
   const showSquad = fleet === "Gold";
+
+  const squadForFilter = (s: RankedSailor) =>
+    s.periodSquadStatus ||
+    s.nationalSquadStatus ||
+    s.natSquadStatusJul26 ||
+    "";
+
+  const squadOptions = useMemo(() => {
+    const set = new Set<string>();
+    for (const s of ranked) {
+      const v = String(squadForFilter(s) || "").trim();
+      if (v) set.add(v);
+    }
+    return Array.from(set).sort((a, b) => a.localeCompare(b));
+  }, [ranked]);
 
   /** R1–R5 slots shared across the fleet */
   const eventSlots: Slot[] = useMemo(() => {
@@ -122,10 +141,30 @@ export function FleetRankingsView({
     return slots;
   }, [ranked]);
 
+  // ranks re-numbered after filter (displayRanked order)
+
+  const filteredRanked = useMemo(() => {
+    return ranked.filter((s) => {
+      if (genderFilter !== "all") {
+        const g = String(s.gender || "").toUpperCase();
+        if (g !== genderFilter) return false;
+      }
+      if (showSquad && squadFilter !== "all") {
+        const sq = String(squadForFilter(s) || "").trim();
+        if (squadFilter === "none") {
+          if (sq) return false;
+        } else if (sq !== squadFilter) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [ranked, genderFilter, squadFilter, showSquad]);
+
   const displayRanked = useMemo(() => {
-    if (excluded.size === 0) return ranked;
-    return reRankWithExcluded(ranked, excluded);
-  }, [ranked, excluded]);
+    if (excluded.size === 0) return filteredRanked;
+    return reRankWithExcluded(filteredRanked, excluded);
+  }, [filteredRanked, excluded]);
 
   const carryCount = eventSlots.filter((s) => s.isCarryForward && s.regattaName).length;
   const currentCount = eventSlots.filter((s) => !s.isCarryForward && s.regattaName).length;
@@ -196,24 +235,69 @@ export function FleetRankingsView({
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Calendar className="h-4 w-4 text-orange-500 shrink-0" />
-          <select
-            value={`${period.year}|${period.half}`}
-            onChange={(e) => {
-              const [year, half] = e.target.value.split("|");
-              setPeriod({ year: Number(year), half: half as Period["half"] });
-            }}
-            className="w-full sm:w-auto rounded-xl bg-slate-950 border border-white/10 px-4 py-2.5 text-sm text-white font-semibold"
-          >
-            {PERIODS.map(({ period: p, label }) => (
-              <option key={`${p.year}-${p.half}`} value={`${p.year}|${p.half}`}>
-                {label}
-              </option>
-            ))}
-          </select>
+        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full lg:w-auto">
+          <div className="flex items-center gap-2 min-w-0">
+            <Calendar className="h-4 w-4 text-orange-500 shrink-0" />
+            <select
+              value={`${period.year}|${period.half}`}
+              onChange={(e) => {
+                const [year, half] = e.target.value.split("|");
+                setPeriod({ year: Number(year), half: half as Period["half"] });
+              }}
+              className="flex-1 sm:flex-none min-w-0 rounded-xl bg-slate-950 border border-white/10 px-3 sm:px-4 py-2.5 text-sm text-white font-semibold"
+            >
+              {PERIODS.map(({ period: p, label }) => (
+                <option key={`${p.year}-${p.half}`} value={`${p.year}|${p.half}`}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="grid grid-cols-2 sm:flex gap-2">
+            <select
+              value={genderFilter}
+              onChange={(e) =>
+                setGenderFilter(e.target.value as "all" | "M" | "F")
+              }
+              className="rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
+              aria-label="Filter by gender"
+            >
+              <option value="all">All genders</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+            </select>
+            {showSquad && (
+              <select
+                value={squadFilter}
+                onChange={(e) => setSquadFilter(e.target.value)}
+                className="rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
+                aria-label="Filter by squad"
+              >
+                <option value="all">All squads</option>
+                <option value="none">No squad</option>
+                {squadOptions.map((sq) => (
+                  <option key={sq} value={sq}>
+                    {sq}
+                  </option>
+                ))}
+              </select>
+            )}
+          </div>
         </div>
       </div>
+
+      {(genderFilter !== "all" || squadFilter !== "all") && !loading && (
+        <p className="text-[11px] text-amber-200/90 font-semibold no-print">
+          Showing {displayRanked.length} of {ranked.length} sailors
+          {genderFilter !== "all"
+            ? ` · ${genderFilter === "M" ? "Male" : "Female"}`
+            : ""}
+          {squadFilter !== "all"
+            ? ` · ${squadFilter === "none" ? "No squad" : squadFilter}`
+            : ""}
+          . Rank # restarts within this filter.
+        </p>
+      )}
 
       <p className="hidden print:block text-sm font-bold text-black">
         SG Optimist {fleet} Fleet Rankings — {periodLabelText}

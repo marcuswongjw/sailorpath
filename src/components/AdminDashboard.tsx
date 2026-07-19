@@ -2779,6 +2779,39 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                         />
                       </div>
+                      <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 border-t border-white/5 pt-4">
+                        <p className="col-span-2 sm:col-span-3 lg:col-span-5 text-[10px] font-bold text-blue-400/90 uppercase tracking-wider">
+                          Historical rankings (shown on All Gold Fleet Sailors)
+                        </p>
+                        {(
+                          [
+                            ["histRankingJun24", "Jun 24"],
+                            ["histRankingDec24", "Dec 24"],
+                            ["histRankingJun25", "Jun 25"],
+                            ["histRankingDec25", "Dec 25"],
+                            ["histRankingJun26", "Jun 26"],
+                          ] as const
+                        ).map(([key, label]) => (
+                          <div key={key}>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              {label}
+                            </label>
+                            <input
+                              type="number"
+                              min={1}
+                              value={(sailorForm as any)[key] ?? ""}
+                              onChange={(e) =>
+                                setSailorForm({
+                                  ...sailorForm,
+                                  [key]: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                              placeholder="—"
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
                     <div className="flex justify-end gap-2 border-t border-white/5 pt-4">
@@ -3126,6 +3159,26 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                         nationality: s.nationality || "",
                                         currentFleet: s.currentFleet || "",
                                         school: s.school || "",
+                                        histRankingJun24:
+                                          s.histRankingJun24 != null
+                                            ? String(s.histRankingJun24)
+                                            : "",
+                                        histRankingDec24:
+                                          s.histRankingDec24 != null
+                                            ? String(s.histRankingDec24)
+                                            : "",
+                                        histRankingJun25:
+                                          s.histRankingJun25 != null
+                                            ? String(s.histRankingJun25)
+                                            : "",
+                                        histRankingDec25:
+                                          s.histRankingDec25 != null
+                                            ? String(s.histRankingDec25)
+                                            : "",
+                                        histRankingJun26:
+                                          s.histRankingJun26 != null
+                                            ? String(s.histRankingJun26)
+                                            : "",
                                         manuallyDropped:
                                           s.manuallyDropped || false,
                                         instagram: s.instagram || "",

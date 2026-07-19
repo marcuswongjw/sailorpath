@@ -165,11 +165,13 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
               All Gold Fleet Sailors
             </h1>
             <p className="mt-2 text-sm text-slate-400 max-w-2xl">
-              Singapore Optimist Gold Fleet sailor register. Consolidates historical
-              standings, squad selections, and overseas representation histories.
+              Singapore Optimist Gold Fleet sailor register — live from the
+              database. Historical rankings, squad periods, and overseas years
+              are edited in Admin → Database → Sailors (or bulk import).
             </p>
             <p className="mt-2 text-[11px] text-slate-600">
-              Click any column header to sort.
+              Click any column header to sort. Tap a sailor name to open their
+              profile.
             </p>
           </div>
 

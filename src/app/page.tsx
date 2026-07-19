@@ -26,103 +26,96 @@ export default async function HomePage() {
   const featuredSailors = sailors.slice(0, 3);
 
   return (
-    <div className="relative min-h-screen bg-[#090a0f] flex flex-col justify-between">
-      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-orange-600/10 rounded-full blur-[120px] pointer-events-none -z-10" />
-      <div className="absolute top-[800px] right-1/4 w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none -z-10 hidden md:block" />
+    <div className="relative min-h-screen bg-[#090a0f] flex flex-col justify-between overflow-x-hidden">
+      <div className="absolute top-0 left-0 right-0 h-[420px] sm:left-1/4 sm:right-auto sm:w-[500px] sm:h-[500px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
 
       {/* Hero */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 pb-12 sm:pt-16 sm:pb-20 text-center lg:pt-24">
-        <div className="inline-flex max-w-full items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/5 text-[11px] sm:text-xs text-orange-400 font-bold mb-5 sm:mb-6 hover:bg-white/10 transition-colors">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pt-16 sm:pb-20 text-center lg:pt-24">
+        <div className="inline-flex max-w-[min(100%,20rem)] sm:max-w-full items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/5 text-[11px] sm:text-xs text-orange-400 font-bold mb-4 sm:mb-6">
           <Sparkles className="h-3 w-3 text-orange-500 animate-pulse shrink-0" />
-          <span className="truncate">SG youth sailing analytics</span>
+          <span className="truncate">SG Optimist rankings &amp; logbook</span>
         </div>
 
-        <h1 className="mx-auto max-w-4xl text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight text-white leading-tight">
-          Chart your progress.{" "}
-          <br className="hidden sm:block" />
-          <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 bg-clip-text text-transparent">
-            Command your sailing journey.
+        <h1 className="mx-auto max-w-4xl text-[1.65rem] leading-snug sm:text-5xl lg:text-7xl font-black tracking-tight text-white sm:leading-tight">
+          Chart your progress.
+          <span className="block mt-1 sm:mt-0 sm:inline sm:before:content-[' '] bg-gradient-to-r from-orange-500 via-orange-600 to-red-500 bg-clip-text text-transparent">
+            Command your journey.
           </span>
         </h1>
 
-        <p className="mx-auto mt-4 sm:mt-6 max-w-3xl text-sm sm:text-base md:text-lg text-slate-400 font-semibold leading-relaxed px-1">
-          SailorPath is the digital logbook and performance tracker for
-          Singapore&apos;s youth sailors. Start your pathway in the Optimist
-          fleet and track every regatta, ranking, and equipment change as you
-          grow.
+        <p className="mx-auto mt-3 sm:mt-6 max-w-xl sm:max-w-3xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
+          Digital logbook for Singapore youth sailors — rankings, regattas, and
+          claimed profiles in one place.
         </p>
 
-        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center gap-2.5 sm:gap-3 w-full sm:w-auto">
+        <div className="mt-5 sm:mt-8 flex flex-col gap-2.5 w-full max-w-sm mx-auto sm:max-w-none sm:flex-row sm:justify-center sm:gap-3">
           <Link
             href="/register"
-            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 sm:px-8 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2"
+            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-5 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
           >
             <Trophy className="h-4 w-4 shrink-0" />
-            Create free account
-          </Link>
-          <Link
-            href="/sample"
-            className="w-full sm:w-auto rounded-full border border-amber-500/40 bg-amber-500/10 px-6 sm:px-8 py-3.5 text-xs font-bold text-amber-100 hover:border-amber-400/60 transition-all text-center"
-          >
-            <span className="sm:hidden">Tour demo profiles</span>
-            <span className="hidden sm:inline">
-              Tour demo · Public / Sailor / Parent / Coach
-            </span>
+            Create account
           </Link>
           <Link
             href="/sg/optimist/gold"
-            className="w-full sm:w-auto rounded-full border border-white/10 px-6 sm:px-8 py-3.5 text-xs font-bold text-white hover:border-orange-500/40 transition-all text-center"
+            className="w-full sm:w-auto rounded-full border border-white/15 bg-white/5 px-5 py-3.5 text-xs font-bold text-white hover:border-orange-500/40 transition-all text-center min-h-[44px] inline-flex items-center justify-center"
           >
             Gold standings
           </Link>
+          <Link
+            href="/sample"
+            className="w-full sm:w-auto rounded-full border border-amber-500/35 bg-amber-500/10 px-5 py-3.5 text-xs font-bold text-amber-100 hover:border-amber-400/60 transition-all text-center min-h-[44px] inline-flex items-center justify-center"
+          >
+            Tour demo
+          </Link>
         </div>
 
-        <div className="mx-auto mt-8 sm:mt-12 max-w-lg w-full">
-          <form action="/search" className="relative group">
+        <div className="mx-auto mt-6 sm:mt-12 max-w-md w-full">
+          <form action="/search" className="relative">
             <input
-              type="text"
+              type="search"
               name="query"
-              placeholder="Search name or sail #…"
-              className="w-full rounded-full border border-white/10 bg-white/5 px-4 sm:px-6 py-3 sm:py-4 pr-14 text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 shadow-xl shadow-black/30 text-sm md:text-base transition-all"
+              enterKeyHint="search"
+              placeholder="Search name or sail #"
+              className="w-full rounded-2xl sm:rounded-full border border-white/10 bg-white/5 px-4 py-3 pr-12 text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 text-sm min-h-[48px]"
             />
             <button
               type="submit"
-              className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 rounded-full bg-orange-600 p-2.5 text-white hover:bg-orange-500 transition-all shadow-md shadow-orange-950/20"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-xl sm:rounded-full bg-orange-600 p-2.5 text-white min-h-[40px] min-w-[40px] inline-flex items-center justify-center"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
             </button>
           </form>
 
-          <div className="mt-4 flex flex-wrap justify-center gap-2 text-xs">
+          <div className="mt-3 flex flex-wrap justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs">
             {featuredSailors.length > 0 ? (
               <>
-                <span className="text-slate-500 self-center">Try searching:</span>
+                <span className="text-slate-600 self-center w-full sm:w-auto mb-0.5 sm:mb-0">
+                  Try:
+                </span>
                 {featuredSailors.map((sailor) => (
                   <Link
                     key={sailor.id}
                     href={`/${sailor.handle}`}
-                    className="px-2.5 py-1 rounded-md bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500 hover:text-white transition-all"
+                    className="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500 hover:text-white transition-all max-w-[11rem] truncate"
                   >
-                    {sailor.name} ({sailor.sailNumber})
+                    {sailor.name}
                   </Link>
                 ))}
               </>
             ) : (
-              <>
-                <span className="text-slate-500 self-center">Preview:</span>
-                <Link
-                  href="/sample"
-                  className="px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-100 hover:border-amber-400 transition-all"
-                >
-                  Demo tour — Ashlyn Tan (4 roles)
-                </Link>
-              </>
+              <Link
+                href="/sample"
+                className="px-2.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-100"
+              >
+                Open demo profile
+              </Link>
             )}
           </div>
           {!dbLive && (
-            <p className="mt-3 text-[11px] text-slate-600">
-              Live database offline — sample profile still works.
+            <p className="mt-2 text-[11px] text-slate-600">
+              Live database offline — sample still works.
             </p>
           )}
         </div>
@@ -406,15 +399,23 @@ export default async function HomePage() {
             </article>
           </div>
 
-          <p className="mt-8 text-center text-[11px] text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Roadmap is community-led. Founding supporters and early users help
-            prioritise what ships in Phase 2 and 3 —{" "}
+          <p className="mt-8 text-center text-[11px] sm:text-xs text-slate-500 max-w-xl mx-auto leading-relaxed px-2">
+            Phases 1–2 are live today. What we ship next (family tools, coach
+            squads, and more) is shaped by sailors, parents, and clubs using the
+            product —{" "}
             <a
               href="#founding-membership"
-              className="text-slate-400 hover:text-orange-400 underline-offset-2 hover:underline"
+              className="text-orange-400/90 font-semibold hover:text-orange-300 underline-offset-2 hover:underline"
             >
-              back the build
+              support the build
             </a>
+            {" · "}
+            <Link
+              href="/support"
+              className="text-slate-400 hover:text-white underline-offset-2 hover:underline"
+            >
+              send feedback
+            </Link>
             .
           </p>
         </div>
