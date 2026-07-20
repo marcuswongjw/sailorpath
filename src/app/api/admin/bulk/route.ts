@@ -125,7 +125,14 @@ export async function POST(req: Request) {
       }
     }
 
-    const patch = { [field]: typed, updatedAt: new Date() };
+    const patch: Record<string, unknown> = {
+      [field]: typed,
+      updatedAt: new Date(),
+    };
+    // Legacy “current squad” tracks Jul–Dec 2026 period field
+    if (field === "natSquadStatusJul26") {
+      patch.nationalSquadStatus = typed;
+    }
     await db.update(sailors).set(patch).where(inArray(sailors.id, sailorIds));
 
     return NextResponse.json({

@@ -40,7 +40,6 @@ const DB_SAILOR_COLUMNS: {
   { key: "series", label: "Series", defaultOn: false },
   { key: "best3", label: "Best 3 of 5", defaultOn: true },
   { key: "gender", label: "Gender", defaultOn: true },
-  { key: "squad", label: "Squad", defaultOn: true },
   { key: "club", label: "Club", defaultOn: false },
   { key: "nationality", label: "Nationality", defaultOn: false },
   { key: "school", label: "School", defaultOn: false },
@@ -50,7 +49,7 @@ const DB_SAILOR_COLUMNS: {
   { key: "squadJan25", label: "Squad Jan 25", defaultOn: false },
   { key: "squadJul25", label: "Squad Jul 25", defaultOn: false },
   { key: "squadJan26", label: "Squad Jan 26", defaultOn: false },
-  { key: "squadJul26", label: "Squad Jul 26", defaultOn: false },
+  { key: "squadJul26", label: "Squad Jul 26", defaultOn: true },
   { key: "histJun24", label: "Hist Jun 24", defaultOn: false },
   { key: "histDec24", label: "Hist Dec 24", defaultOn: false },
   { key: "histJun25", label: "Hist Jun 25", defaultOn: false },
@@ -371,7 +370,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       }
     }
     if (dbSquadFilter !== "all") {
-      if (String(s.nationalSquadStatus || "") !== dbSquadFilter) return false;
+      // Current period squad (Jul 26), with legacy nationalSquadStatus fallback
+      const sq =
+        s.natSquadStatusJul26 || s.nationalSquadStatus || "";
+      if (String(sq) !== dbSquadFilter) return false;
     }
     if (dbDroppedFilter === "yes" && !s.manuallyDropped) return false;
     if (dbDroppedFilter === "no" && s.manuallyDropped) return false;
@@ -433,8 +435,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           return best3BySailor[s.id] ?? 99999;
         case "gender":
           return s.gender || "";
-        case "squad":
-          return s.nationalSquadStatus || "";
         case "club":
           return s.club || "";
         case "nationality":
@@ -1122,9 +1122,23 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             const t = String(bulkValue).toLowerCase();
             typedValue = t === "y" || t === "yes" || t === "true" || t === "1";
           }
-          else if (bulkField === "nationalSquadStatus" && bulkValue === "CLEAR") typedValue = null;
-          else if (bulkValue === "") typedValue = null;
-          return { ...s, [bulkField]: typedValue };
+          else if (
+            [
+              "natSquadStatusJan25",
+              "natSquadStatusJul25",
+              "natSquadStatusJan26",
+              "natSquadStatusJul26",
+            ].includes(bulkField) &&
+            bulkValue === "CLEAR"
+          ) {
+            typedValue = null;
+          } else if (bulkValue === "") typedValue = null;
+          const next = { ...s, [bulkField]: typedValue };
+          // Keep legacy current-squad field in sync when setting Jul 26
+          if (bulkField === "natSquadStatusJul26") {
+            next.nationalSquadStatus = typedValue;
+          }
+          return next;
         })
       );
       setBulkStatus(data.message || `Updated ${selectedSailors.length} sailors.`);
@@ -2053,7 +2067,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Squad</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">Squad Jul 26</label>
                     <select
                       value={dbSquadFilter}
                       onChange={(e) => setDbSquadFilter(e.target.value)}
@@ -2125,7 +2139,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <option value="nationality">Nationality</option>
                           <option value="sailNumber">Sail Number</option>
                           <option value="gender">Gender (M/F)</option>
-                          <option value="nationalSquadStatus">Squad (Nat A/B/DS)</option>
                           <option value="dob">Date of Birth</option>
                           <option value="weight">Weight (kg)</option>
                         </optgroup>
@@ -2189,7 +2202,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <option value="Y">Y (dropped)</option>
                         </select>
                       ) : [
-                          "nationalSquadStatus",
                           "natSquadStatusJan25",
                           "natSquadStatusJul25",
                           "natSquadStatusJan26",
@@ -2934,11 +2946,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               </span>
                             ),
                             gender: s.gender || "M",
-                            squad: (
-                              <span className="text-[10px] text-slate-400 bg-white/5 px-2 py-0.5 rounded border border-white/5">
-                                {s.nationalSquadStatus || "None"}
-                              </span>
-                            ),
                             club: s.club || "—",
                             nationality: s.nationality || "—",
                             school: s.school || "—",
