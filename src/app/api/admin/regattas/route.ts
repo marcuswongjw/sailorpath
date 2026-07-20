@@ -3,14 +3,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattas } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
-
-function slugify(name: string, date?: string) {
-  const base = name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-  return date ? `${base}-${date}` : base;
-}
+import { slugifyWithDate } from "@/lib/slug";
 
 export async function GET() {
   try {
@@ -34,7 +27,7 @@ export async function POST(req: Request) {
     }
     const slug =
       (body.slug as string)?.trim() ||
-      slugify(String(body.name), String(body.date));
+      slugifyWithDate(String(body.name), String(body.date));
     const totalFleetSize = Number(body.totalFleetSize) || 50;
     const division = body.division || "Gold";
     const raceCount =

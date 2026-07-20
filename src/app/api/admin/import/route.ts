@@ -8,17 +8,17 @@ import {
   findSailorByName,
   suggestSailorByName,
 } from "@/lib/nameMatch";
+import {
+  normalizeDob,
+  normalizeOptionalText,
+  normalizeSailNumber,
+  toNumber,
+} from "@/lib/normalize";
+import { makeGuestHandle, slugify } from "@/lib/slug";
 import { normalizeNationality } from "@/lib/seriesMembership";
+import type { ImportPossibleDuplicate } from "@/types/import";
 
-export type ImportPossibleDuplicate = {
-  kind: "within-file" | "vs-db";
-  importName: string;
-  otherName: string;
-  otherId?: string | null;
-  similarity: number;
-  band: "high" | "medium";
-  note: string;
-};
+export type { ImportPossibleDuplicate };
 
 /** Pairwise similar names within the import sheet (60%+). */
 function findWithinFileDuplicates(
@@ -48,80 +48,6 @@ function findWithinFileDuplicates(
     }
   }
   return out.sort((x, y) => y.similarity - x.similarity);
-}
-
-function slugify(name: string) {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
-}
-
-function makeHandle(name: string) {
-  const base = slugify(name) || "sailor";
-  return `${base}-${Date.now().toString(36).slice(-4)}${Math.random()
-    .toString(36)
-    .slice(2, 5)}`;
-}
-
-function toNumber(v: unknown): number | null {
-  if (v == null || v === "") return null;
-  const n = typeof v === "number" ? v : Number(String(v).replace(/,/g, ""));
-  return Number.isFinite(n) ? n : null;
-}
-
-/** Normalize sail number; empty → null (column optional). */
-function normalizeSailNumber(v: unknown): string | null {
-  if (v == null || v === "") return null;
-  const s = String(v).trim().replace(/\s+/g, " ");
-  if (!s || /^n\/?a$/i.test(s) || s === "-" || s === "—") return null;
-  return s;
-}
-
-/** Optional text fields (club, nationality). */
-function normalizeOptionalText(v: unknown): string | null {
-  if (v == null || v === "") return null;
-  const s = String(v).trim().replace(/\s+/g, " ");
-  if (!s || /^n\/?a$/i.test(s) || s === "-" || s === "—") return null;
-  return s;
-}
-
-/**
- * Accept full DOB (YYYY-MM-DD / Excel-ish) or birth year only (2013).
- * Year-only becomes YYYY-01-01. Empty → null (column optional).
- */
-function normalizeDob(v: unknown): string | null {
-  if (v == null || v === "") return null;
-  if (typeof v === "number" && Number.isFinite(v)) {
-    // Excel serial or plain year
-    if (v >= 1990 && v <= 2035 && Number.isInteger(v)) {
-      return `${v}-01-01`;
-    }
-    // Excel serial date
-    const epoch = Date.UTC(1899, 11, 30);
-    const d = new Date(epoch + v * 86400000);
-    if (!Number.isNaN(d.getTime())) return d.toISOString().slice(0, 10);
-    return null;
-  }
-  const s = String(v).trim();
-  if (!s) return null;
-  if (/^\d{4}$/.test(s)) {
-    const y = Number(s);
-    if (y >= 1990 && y <= 2035) return `${y}-01-01`;
-    return null;
-  }
-  if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
-  const m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);
-  if (m) {
-    const [, a, b, y] = m;
-    // Prefer D/M/Y common in SG; if first > 12 treat as D/M/Y
-    const day = Number(a) > 12 ? a : b;
-    const month = Number(a) > 12 ? b : a;
-    return `${y}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-  }
-  const parsed = Date.parse(s);
-  if (!Number.isNaN(parsed)) return new Date(parsed).toISOString().slice(0, 10);
-  return null;
 }
 
 export async function POST(req: Request) {
@@ -318,7 +244,7 @@ export async function POST(req: Request) {
         }
 
         if (!sailorId && createMissing) {
-          const handle = makeHandle(row.name);
+          const handle = makeGuestHandle(row.name);
           // Guests only: never auto-admit to SG series (no fleet / entry dates)
           const [createdSailor] = await db
             .insert(sailors)

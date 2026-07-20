@@ -385,11 +385,15 @@ export function compareRankedSailors(
  * Recompute ranking board after excluding some regatta IDs (client “what-if”).
  * Order is re-sorted by new overall score + regatta-rank tie-breakers.
  */
+type RankedWithTiebreak = RankedSailor & {
+  _tiebreakScores?: RegattaScoreSlot[];
+};
+
 export function reRankWithExcluded(
   ranked: RankedSailor[],
   excludedRegattaIds: Set<string>
 ): RankedSailor[] {
-  const next = ranked.map((s) => {
+  const next: RankedWithTiebreak[] = ranked.map((s) => {
     const kept = (s.regattaScores || []).filter(
       (rs) => !excludedRegattaIds.has(rs.regattaId)
     );
@@ -405,17 +409,17 @@ export function reRankWithExcluded(
       {
         overallScore: a.overallScore,
         name: a.name,
-        regattaScores: (a as any)._tiebreakScores || a.regattaScores,
+        regattaScores: a._tiebreakScores || a.regattaScores,
       },
       {
         overallScore: b.overallScore,
         name: b.name,
-        regattaScores: (b as any)._tiebreakScores || b.regattaScores,
+        regattaScores: b._tiebreakScores || b.regattaScores,
       }
     )
   );
 
-  return next.map(({ _tiebreakScores, ...rest }: any) => rest as RankedSailor);
+  return next.map(({ _tiebreakScores: _tb, ...rest }) => rest as RankedSailor);
 }
 
 // Core Ranking Engine
