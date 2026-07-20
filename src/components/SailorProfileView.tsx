@@ -175,6 +175,8 @@ export function SailorProfileView({
     note: "",
     isPrivate: true,
   });
+  /** When set, form is editing an existing observation (id may be missing on legacy rows). */
+  const [editingObsId, setEditingObsId] = useState<string | null>(null);
   const [obsBusy, setObsBusy] = useState(false);
   const [obsMsg, setObsMsg] = useState<string | null>(null);
   const [form, setForm] = useState({
@@ -359,6 +361,30 @@ export function SailorProfileView({
     }
   };
 
+  const resetObsForm = () => {
+    setEditingObsId(null);
+    setObsForm({
+      raceNumber: "",
+      position: "",
+      wind: "",
+      note: "",
+      isPrivate: true,
+    });
+  };
+
+  const startEditObservation = (o: any, regattaId: string) => {
+    setExpandedRegattaId(regattaId);
+    setEditingObsId(o.id || null);
+    setObsForm({
+      raceNumber: o.raceNumber != null ? String(o.raceNumber) : "",
+      position: o.position != null ? String(o.position) : "",
+      wind: o.wind || "",
+      note: o.note || "",
+      isPrivate: o.isPrivate !== false,
+    });
+    setObsMsg(null);
+  };
+
   const saveObservation = async (regattaId: string) => {
     if (demoMode) {
       setObsMsg("Demo only — not saved");
@@ -412,16 +438,34 @@ export function SailorProfileView({
             a.raceNumber - b.raceNumber
         );
       });
-      setObsMsg("Observation saved");
-      setObsForm((f) => ({
-        ...f,
-        raceNumber: "",
-        position: "",
-        wind: "",
-        note: "",
-      }));
+      setObsMsg(editingObsId ? "Observation updated" : "Observation saved");
+      resetObsForm();
     } catch (e: any) {
       setObsMsg(e.message || "Failed");
+    } finally {
+      setObsBusy(false);
+    }
+  };
+
+  const deleteObservation = async (o: any) => {
+    if (demoMode || !o?.id) return;
+    if (!confirm(`Delete observation for race ${o.raceNumber}?`)) return;
+    setObsBusy(true);
+    setObsMsg(null);
+    try {
+      const res = await fetch("/api/account/observations", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ id: o.id }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Delete failed");
+      setObservations((prev: any[]) => prev.filter((x) => x.id !== o.id));
+      if (editingObsId === o.id) resetObsForm();
+      setObsMsg("Observation deleted");
+    } catch (e: any) {
+      setObsMsg(e.message || "Delete failed");
     } finally {
       setObsBusy(false);
     }
@@ -1330,37 +1374,97 @@ export function SailorProfileView({
                         </p>
                       ) : (
                         <ul className="space-y-2">
-                          {raceNotes.map((o: any) => (
-                            <li
-                              key={o.id || `${o.regattaId}-${o.raceNumber}`}
-                              className="rounded-xl bg-white/[0.03] border border-white/5 px-3 py-2"
-                            >
-                              <div className="flex items-center justify-between gap-2">
-                                <span className="text-xs font-black text-orange-400">
-                                  Race {o.raceNumber}
-                                </span>
-                                <span className="text-[11px] font-mono text-slate-400">
-                                  {o.position != null
-                                    ? `Score ${o.position}`
-                                    : "—"}
-                                  {o.wind ? ` · ${o.wind}` : ""}
-                                  {o.isPrivate ? " · private" : ""}
-                                </span>
-                              </div>
-                              {o.note && (
-                                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                                  {o.note}
-                                </p>
-                              )}
-                            </li>
-                          ))}
+                          {raceNotes.map((o: any) => {
+                            const isEditingThis =
+                              isOwner &&
+                              !demoMode &&
+                              ((editingObsId && editingObsId === o.id) ||
+                                (!editingObsId &&
+                                  String(obsForm.raceNumber) ===
+                                    String(o.raceNumber) &&
+                                  obsForm.raceNumber !== ""));
+                            return (
+                              <li
+                                key={o.id || `${o.regattaId}-${o.raceNumber}`}
+                                className={`rounded-xl border px-3 py-2 ${
+                                  isEditingThis
+                                    ? "bg-orange-500/10 border-orange-500/30"
+                                    : "bg-white/[0.03] border-white/5"
+                                }`}
+                              >
+                                <div className="flex items-center justify-between gap-2">
+                                  <span className="text-xs font-black text-orange-400">
+                                    Race {o.raceNumber}
+                                  </span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-[11px] font-mono text-slate-400">
+                                      {o.position != null
+                                        ? `Score ${o.position}`
+                                        : "—"}
+                                      {o.wind ? ` · ${o.wind}` : ""}
+                                      {o.isPrivate ? " · private" : ""}
+                                    </span>
+                                    {isOwner && !demoMode && (
+                                      <span className="flex items-center gap-1">
+                                        <button
+                                          type="button"
+                                          onClick={() =>
+                                            startEditObservation(o, regattaId)
+                                          }
+                                          className="rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 text-[10px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40"
+                                          title="Edit observation"
+                                        >
+                                          Edit
+                                        </button>
+                                        {o.id && (
+                                          <button
+                                            type="button"
+                                            disabled={obsBusy}
+                                            onClick={() =>
+                                              void deleteObservation(o)
+                                            }
+                                            className="rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 text-[10px] font-bold text-rose-300/90 hover:text-rose-200 hover:border-rose-500/40 disabled:opacity-50"
+                                            title="Delete observation"
+                                          >
+                                            Del
+                                          </button>
+                                        )}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                                {o.note && (
+                                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                                    {o.note}
+                                  </p>
+                                )}
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
                       {isOwner && !demoMode && (
                         <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-3 space-y-2">
-                          <p className="text-[10px] font-bold text-orange-300 uppercase">
-                            Add / update observation
-                          </p>
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="text-[10px] font-bold text-orange-300 uppercase">
+                              {editingObsId || obsForm.raceNumber
+                                ? "Edit observation"
+                                : "Add observation"}
+                            </p>
+                            {(editingObsId ||
+                              obsForm.raceNumber ||
+                              obsForm.note ||
+                              obsForm.wind ||
+                              obsForm.position) && (
+                              <button
+                                type="button"
+                                onClick={resetObsForm}
+                                className="text-[10px] font-bold text-slate-400 hover:text-white"
+                              >
+                                Clear
+                              </button>
+                            )}
+                          </div>
                           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                             <input
                               type="number"
@@ -1431,7 +1535,11 @@ export function SailorProfileView({
                             onClick={() => void saveObservation(regattaId)}
                             className="rounded-full bg-orange-600 px-4 py-1.5 text-[11px] font-bold text-white disabled:opacity-50"
                           >
-                            {obsBusy ? "Saving…" : "Save observation"}
+                            {obsBusy
+                              ? "Saving…"
+                              : editingObsId
+                                ? "Update observation"
+                                : "Save observation"}
                           </button>
                           {obsMsg && (
                             <p className="text-[11px] text-emerald-300">{obsMsg}</p>

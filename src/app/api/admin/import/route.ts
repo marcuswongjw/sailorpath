@@ -4,10 +4,51 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailorAliases, sailors } from "@/db/schema";
 import {
+  combinedNameSimilarity,
   findSailorByName,
   suggestSailorByName,
 } from "@/lib/nameMatch";
 import { normalizeNationality } from "@/lib/seriesMembership";
+
+export type ImportPossibleDuplicate = {
+  kind: "within-file" | "vs-db";
+  importName: string;
+  otherName: string;
+  otherId?: string | null;
+  similarity: number;
+  band: "high" | "medium";
+  note: string;
+};
+
+/** Pairwise similar names within the import sheet (60%+). */
+function findWithinFileDuplicates(
+  names: string[],
+  minSimilarity = 0.6
+): ImportPossibleDuplicate[] {
+  const out: ImportPossibleDuplicate[] = [];
+  const seen = new Set<string>();
+  for (let i = 0; i < names.length; i++) {
+    for (let j = i + 1; j < names.length; j++) {
+      const a = names[i];
+      const b = names[j];
+      if (!a || !b || a === b) continue;
+      const sim = combinedNameSimilarity(a, b);
+      if (sim < minSimilarity) continue;
+      const key = [a, b].map((n) => n.toLowerCase()).sort().join("|");
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({
+        kind: "within-file",
+        importName: a,
+        otherName: b,
+        similarity: Math.round(sim * 100) / 100,
+        band: sim >= 0.8 ? "high" : "medium",
+        note: "Two rows in this file look like the same sailor",
+      });
+    }
+  }
+  return out.sort((x, y) => y.similarity - x.similarity);
+}
 
 function slugify(name: string) {
   return name
@@ -212,6 +253,19 @@ export async function POST(req: Request) {
     }[] = [];
     const matchHow: Record<string, number> = {};
     const errorSamples: string[] = [];
+    const possibleDuplicates: ImportPossibleDuplicate[] = [];
+    const vsDbSeen = new Set<string>();
+
+    // Snapshot DB before creates so "vs-db" warnings use pre-import sailors
+    const dbBeforeImport = sailorList.map((s) => ({
+      id: s.id,
+      name: s.name,
+    }));
+
+    // Within-file similar names (before create — pure sheet check)
+    possibleDuplicates.push(
+      ...findWithinFileDuplicates(cleanRows.map((r) => r.name))
+    );
 
     for (const row of cleanRows) {
       try {
@@ -220,6 +274,47 @@ export async function POST(req: Request) {
 
         if (hit) {
           matchHow[hit.how] = (matchHow[hit.how] || 0) + 1;
+          // Soft fuzzy match used — surface for admin review
+          if (hit.how.startsWith("fuzzy")) {
+            const sim = combinedNameSimilarity(row.name, hit.sailor.name);
+            if (sim >= 0.6 && sim < 1) {
+              const key = `${row.name.toLowerCase()}|${hit.sailor.id}`;
+              if (!vsDbSeen.has(key)) {
+                vsDbSeen.add(key);
+                possibleDuplicates.push({
+                  kind: "vs-db",
+                  importName: row.name,
+                  otherName: hit.sailor.name,
+                  otherId: hit.sailor.id,
+                  similarity: Math.round(sim * 100) / 100,
+                  band: sim >= 0.8 ? "high" : "medium",
+                  note: "Matched to existing sailor via fuzzy name — confirm correct",
+                });
+              }
+            }
+          }
+        }
+
+        // Before creating a guest: flag close DB names that did not auto-match
+        if (!sailorId) {
+          const sug = suggestSailorByName(row.name, dbBeforeImport);
+          if (sug && sug.similarity >= 0.6) {
+            const key = `${row.name.toLowerCase()}|${sug.id}`;
+            if (!vsDbSeen.has(key)) {
+              vsDbSeen.add(key);
+              possibleDuplicates.push({
+                kind: "vs-db",
+                importName: row.name,
+                otherName: sug.name,
+                otherId: sug.id,
+                similarity: Math.round(sug.similarity * 100) / 100,
+                band: sug.similarity >= 0.8 ? "high" : "medium",
+                note: createMissing
+                  ? "Created as guest but similar name already in database — consider merge"
+                  : "Similar name already in database",
+              });
+            }
+          }
         }
 
         if (!sailorId && createMissing) {
@@ -415,6 +510,13 @@ export async function POST(req: Request) {
       /integer|real|numeric|type/i.test(e)
     );
 
+    possibleDuplicates.sort((a, b) => b.similarity - a.similarity);
+
+    const dupeNote =
+      possibleDuplicates.length > 0
+        ? ` · ${possibleDuplicates.length} possible duplicate name(s) flagged (60%+ similar) — review below / merge in Database.`
+        : "";
+
     return NextResponse.json({
       message:
         matched === 0 && rowErrors > 0
@@ -423,12 +525,13 @@ export async function POST(req: Request) {
                 ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
                 : "See errors below."
             }`
-          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated from sail # / birth year / club / nationality). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.`,
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated from sail # / birth year / club / nationality). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}`,
       regatta: reg,
       matched,
       created,
       updatedProfiles,
       unmatched,
+      possibleDuplicates,
       inputRows: cleanRows.length,
       rowErrors,
       matchHow,

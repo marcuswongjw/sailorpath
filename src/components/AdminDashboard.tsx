@@ -160,6 +160,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   // Excel Import States
   const [dragActive, setDragActive] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [importPossibleDuplicates, setImportPossibleDuplicates] = useState<
+    {
+      kind: "within-file" | "vs-db";
+      importName: string;
+      otherName: string;
+      otherId?: string | null;
+      similarity: number;
+      band: "high" | "medium";
+      note: string;
+    }[]
+  >([]);
 
   // Ignored duplicate pairs (localStorage, pair key idA|idB sorted)
   const [ignoredDuplicateKeys, setIgnoredDuplicateKeys] = useState<Set<string>>(
@@ -936,6 +947,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         withClub && `${withClub} club`,
         withNat && `${withNat} nationality`,
       ].filter(Boolean);
+      setImportPossibleDuplicates([]);
       setImportStatus(
         `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
           (profileBits.length
@@ -967,6 +979,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       return;
     }
     setImportStatus("Importing…");
+    setImportPossibleDuplicates([]);
     try {
       const res = await fetch("/api/admin/import", {
         method: "POST",
@@ -1012,6 +1025,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         }
       }
       const unmatchedCount = (data.unmatched || []).length;
+      const dupes = Array.isArray(data.possibleDuplicates)
+        ? data.possibleDuplicates
+        : [];
+      setImportPossibleDuplicates(dupes);
       setImportStatus(
         (data.message || "Import complete") +
           (unmatchedCount
@@ -1030,6 +1047,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       }
     } catch (e: any) {
       setImportStatus(null);
+      setImportPossibleDuplicates([]);
       alert(e.message || "Import failed");
     }
   };
@@ -1857,9 +1875,61 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               </div>
 
               {importStatus && (
-                <div className="mt-6 flex items-center gap-2 text-xs font-bold text-emerald-400 justify-center">
-                  <CheckCircle className="h-4 w-4 text-emerald-500" />
+                <div className="mt-6 flex items-center gap-2 text-xs font-bold text-emerald-400 justify-center text-center max-w-3xl mx-auto">
+                  <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0" />
                   {importStatus}
+                </div>
+              )}
+
+              {importPossibleDuplicates.length > 0 && (
+                <div className="mt-4 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 space-y-3">
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs font-bold text-amber-200">
+                        Possible duplicate names ({importPossibleDuplicates.length})
+                      </p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">
+                        Names ≥60% similar within this file or vs existing sailors.
+                        Import still completed — review and merge in Database → Sailors
+                        if they are the same person.
+                      </p>
+                    </div>
+                  </div>
+                  <ul className="space-y-2 max-h-64 overflow-y-auto">
+                    {importPossibleDuplicates.slice(0, 40).map((d, i) => (
+                      <li
+                        key={`${d.importName}-${d.otherName}-${i}`}
+                        className="rounded-xl border border-white/5 bg-slate-950/50 px-3 py-2 text-[11px]"
+                      >
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span
+                            className={`rounded-full px-1.5 py-0.5 text-[9px] font-black uppercase ${
+                              d.band === "high"
+                                ? "bg-rose-500/15 text-rose-300 border border-rose-500/30"
+                                : "bg-amber-500/15 text-amber-200 border border-amber-500/30"
+                            }`}
+                          >
+                            {Math.round(d.similarity * 100)}% · {d.band}
+                          </span>
+                          <span className="rounded-full bg-white/5 px-1.5 py-0.5 text-[9px] font-bold text-slate-400 uppercase">
+                            {d.kind === "within-file" ? "In file" : "vs DB"}
+                          </span>
+                        </div>
+                        <p className="text-slate-200 mt-1 font-semibold">
+                          {d.importName}
+                          <span className="text-slate-500 font-normal"> ↔ </span>
+                          {d.otherName}
+                        </p>
+                        <p className="text-slate-500 mt-0.5">{d.note}</p>
+                      </li>
+                    ))}
+                  </ul>
+                  {importPossibleDuplicates.length > 40 && (
+                    <p className="text-[10px] text-slate-500">
+                      Showing first 40 of {importPossibleDuplicates.length}.
+                    </p>
+                  )}
                 </div>
               )}
 

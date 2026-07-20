@@ -103,16 +103,21 @@ export function FleetRankingsView({
 
   const showSquad = fleet === "Gold";
 
+  /** Header for period squad, e.g. "Squad Jul 26" for Jul–Dec 2026 */
+  const squadColumnLabel = useMemo(() => {
+    const half = period.half === "Jan-Jun" ? "Jan" : "Jul";
+    const yy = String(period.year).slice(-2);
+    return `Squad ${half} ${yy}`;
+  }, [period]);
+
+  /** Period squad only (natSquadStatus* for selected half via API periodSquadStatus) */
   const squadForFilter = (s: RankedSailor) =>
-    s.periodSquadStatus ||
-    s.nationalSquadStatus ||
-    s.natSquadStatusJul26 ||
-    "";
+    String(s.periodSquadStatus || s.nationalSquadStatus || "").trim();
 
   const squadOptions = useMemo(() => {
     const set = new Set<string>();
     for (const s of ranked) {
-      const v = String(squadForFilter(s) || "").trim();
+      const v = squadForFilter(s);
       if (v) set.add(v);
     }
     return Array.from(set).sort((a, b) => a.localeCompare(b));
@@ -200,10 +205,7 @@ export function FleetRankingsView({
     )?.label || `${period.half} ${period.year}`;
 
   const squadFor = (s: RankedSailor) =>
-    s.periodSquadStatus ||
-    s.nationalSquadStatus ||
-    s.natSquadStatusJul26 ||
-    null;
+    s.periodSquadStatus || s.nationalSquadStatus || null;
 
   return (
     <div className="print-rankings mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
@@ -465,7 +467,7 @@ export function FleetRankingsView({
                   </p>
                   {showSquad && (
                     <p className="text-[11px] text-orange-300/90 mt-1 font-semibold">
-                      {squadFor(s) || "—"}
+                      {squadColumnLabel}: {squadFor(s) || "—"}
                     </p>
                   )}
                 </div>
@@ -537,8 +539,11 @@ export function FleetRankingsView({
                   Birth year
                 </th>
                 {showSquad && (
-                  <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
-                    Squad
+                  <th
+                    className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    title={`National squad for ${periodLabelText}`}
+                  >
+                    {squadColumnLabel}
                   </th>
                 )}
                 {eventSlots.map((ev, idx) => {
@@ -663,7 +668,7 @@ export function FleetRankingsView({
           the three best (lowest) scores. Ties: compare all regatta ranks best-first
           (a 1st beats a 2nd, then next-best, and so on), then name. Uncheck events
           above for a what-if score. * = DNS (fleet size + 1). † = SSF overseas
-          commitment. Squad column uses nat squad for the selected period.
+          commitment. {squadColumnLabel} = national squad for the selected period.
         </p>
       </div>
     </div>
