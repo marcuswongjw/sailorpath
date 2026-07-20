@@ -3,6 +3,7 @@ import { and, eq } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailorClaims, sailors } from "@/db/schema";
+import { trackUsage } from "@/lib/usage";
 
 /** Logged-in user requests to claim a sailor profile */
 export async function POST(req: Request) {
@@ -60,6 +61,13 @@ export async function POST(req: Request) {
         note: body.note || null,
       })
       .returning();
+
+    void trackUsage({
+      eventType: "claim_submit",
+      path: "/api/claims",
+      role: auth.role,
+      meta: { status: "pending" },
+    });
 
     return NextResponse.json({
       ok: true,

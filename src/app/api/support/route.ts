@@ -3,6 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { getAuthContext, jsonError, requireSuperadmin } from "@/lib/auth";
 import { db } from "@/db";
 import { supportMessages } from "@/db/schema";
+import { trackUsage } from "@/lib/usage";
 
 const TOPICS = new Set([
   "account",
@@ -60,6 +61,12 @@ export async function POST(req: Request) {
         status: "new",
       })
       .returning({ id: supportMessages.id });
+
+    void trackUsage({
+      eventType: "support_submit",
+      path: "/support",
+      meta: { topic },
+    });
 
     return NextResponse.json({
       ok: true,

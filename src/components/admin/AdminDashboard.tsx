@@ -19,6 +19,7 @@ import {
   ArrowUpDown,
   ArrowUp,
   ArrowDown,
+  BarChart3,
 } from "lucide-react";
 import { getPercentileBadge } from "@/lib/ranking";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
@@ -35,6 +36,7 @@ import {
 import { ClaimsAdminPanel } from "@/components/ClaimsAdminPanel";
 import { PromoteAdminPanel } from "@/components/PromoteAdminPanel";
 import { SupportInboxPanel } from "@/components/SupportInboxPanel";
+import { AdminStatsPanel } from "@/components/admin/AdminStatsPanel";
 import {
   DB_COLS_STORAGE,
   DB_SAILOR_COLUMNS,
@@ -56,9 +58,9 @@ interface AdminDashboardProps {
 }
 
 export function AdminDashboard({ initialSailors, initialRegattas, initialResults }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<"roster" | "import" | "edit">(
-    "edit"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "roster" | "import" | "edit" | "stats"
+  >("edit");
   
   // Auth state — role from server /profiles, never user_metadata
   const [user, setUser] = useState<any>(null);
@@ -1301,12 +1303,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       </div>
 
       {/* Tab Navigation — equal width for all tabs */}
-      <div className="grid grid-cols-3 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
             ["roster", "Sailor Roster", UserPlus],
             ["import", "Regatta Excel", FileSpreadsheet],
             ["edit", "Database & bulk edit", Database],
+            ["stats", "Stats & usage", BarChart3],
           ] as const
         ).map(([key, label, Icon]) => (
           <button
@@ -3415,6 +3418,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             )}
             </div>
             {/* end sub-tab content full-width shell */}
+          </div>
+        )}
+
+        {activeTab === "stats" && (
+          <div className="w-full min-w-0">
+            {isSuperadmin ? (
+              <AdminStatsPanel />
+            ) : (
+              <div className="glass-panel rounded-3xl p-6 border border-white/5 text-sm text-slate-400">
+                Stats & usage require superadmin.
+              </div>
+            )}
           </div>
         )}
       </div>

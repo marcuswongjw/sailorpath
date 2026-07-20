@@ -16,6 +16,7 @@ import {
 } from "@/lib/normalize";
 import { makeGuestHandle, slugify } from "@/lib/slug";
 import { normalizeNationality } from "@/lib/seriesMembership";
+import { trackUsage } from "@/lib/usage";
 import type { ImportPossibleDuplicate } from "@/types/import";
 
 export type { ImportPossibleDuplicate };
@@ -442,6 +443,18 @@ export async function POST(req: Request) {
       possibleDuplicates.length > 0
         ? ` · ${possibleDuplicates.length} possible duplicate name(s) flagged (60%+ similar) — review below / merge in Database.`
         : "";
+
+    void trackUsage({
+      eventType: "import",
+      path: "/admin",
+      role: "superadmin",
+      meta: {
+        matched,
+        created,
+        inputRows: cleanRows.length,
+        rowErrors,
+      },
+    });
 
     return NextResponse.json({
       message:

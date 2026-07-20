@@ -1,0 +1,11 @@
+# SailorPath operational log
+# Format: YYYY-MM-DD HH:MM TZ | LEVEL | message
+
+2026-07-20 18:25 +08 | INFO | Session: run tests + build after refactor A–D
+2026-07-20 18:25 +08 | PASS | npm test — 4 files, 37 tests passed (vitest)
+2026-07-20 18:25 +08 | PASS | npm run build — Next.js 16.2.10 compiled; TypeScript OK; 30 static routes generated
+2026-07-20 18:25 +08 | WARN | Build note: No valid DATABASE_URL at local build time (expected without .env); pooler URI required on Vercel
+2026-07-20 18:30 +08 | NOTE | Added usage_events tracking (migration 016), /api/usage, /api/admin/stats, Admin Stats tab, UsageBeacon
+2026-07-20 18:30 +08 | NOTE | Proposal: docs/USAGE_STATS.md — privacy-light metrics; run 016 in Supabase for live traffic
+2026-07-20 18:29 +08 | PASS | npm test — 37 tests after usage module
+2026-07-20 18:29 +08 | PASS | npm run build — routes include /api/usage and /api/admin/stats

@@ -237,3 +237,22 @@ export const supportMessages = pgTable("support_messages", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+/**
+ * Privacy-light product usage events (page views, key actions).
+ * No free-text PII — path + event type + optional role/session only.
+ */
+export const usageEvents = pgTable("usage_events", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  /** e.g. page_view, ranking_view, profile_view, import, claim, support */
+  eventType: text("event_type").notNull(),
+  /** Pathname only, e.g. /sg/optimist/gold — no query strings with tokens */
+  path: text("path"),
+  /** Optional coarse role if known: public | sailor | parent | coach | superadmin */
+  role: text("role"),
+  /** Anonymous browser session id (client-generated UUID) */
+  sessionId: text("session_id"),
+  /** Optional JSON string for small meta (fleet, period) — no emails/names */
+  meta: text("meta"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
