@@ -5,7 +5,7 @@
 
 import { db } from "@/db";
 import { usageEvents } from "@/db/schema";
-import { desc, gte } from "drizzle-orm";
+import { desc, eq, gte, sql } from "drizzle-orm";
 
 export const USAGE_EVENT_TYPES = [
   "page_view",
@@ -195,6 +195,30 @@ export async function getProductInventory() {
     .from(sailors)
     .where(isNotNull(sailors.parentId));
 
+  const [unclaimed] = await db
+    .select({ n: count() })
+    .from(sailors)
+    .where(sql`${sailors.parentId} is null`);
+
+  // Guests: no series fleet / entry dates
+  const [guests] = await db
+    .select({ n: count() })
+    .from(sailors)
+    .where(
+      sql`${sailors.goldEntryDate} is null and ${sailors.silverEntryDate} is null and (${sailors.currentFleet} is null or ${sailors.currentFleet} = '')`
+    );
+
+  let personalRegattas = 0;
+  try {
+    const [pr] = await db
+      .select({ n: count() })
+      .from(regattas)
+      .where(eq(regattas.countsForRanking, false));
+    personalRegattas = Number(pr?.n || 0);
+  } catch {
+    /* column may not exist until migration 017 */
+  }
+
   return {
     sailors: Number(sailorCount?.n || 0),
     regattas: Number(regattaCount?.n || 0),
@@ -203,6 +227,9 @@ export async function getProductInventory() {
     claimsPending: Number(claimPending?.n || 0),
     supportNew: Number(supportNew?.n || 0),
     sailorsClaimed: Number(claimed?.n || 0),
+    sailorsUnclaimed: Number(unclaimed?.n || 0),
+    guests: Number(guests?.n || 0),
+    personalRegattas,
     fleet,
   };
 }

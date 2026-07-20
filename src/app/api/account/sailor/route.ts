@@ -4,6 +4,7 @@ import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { equipmentLogs, sailorAliases, sailors } from "@/db/schema";
 import { validateHandle } from "@/lib/handles";
+import { normalizeDob } from "@/lib/normalize";
 
 function strOrNull(v: unknown, max: number) {
   if (v === null || v === undefined || v === "") return null;
@@ -110,6 +111,28 @@ export async function PATCH(req: Request) {
     if (body.school !== undefined) {
       patch.school = strOrNull(body.school, 120);
     }
+    if (body.dob !== undefined) {
+      if (body.dob === null || body.dob === "") {
+        patch.dob = null;
+      } else {
+        const d = normalizeDob(body.dob);
+        if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) {
+          return NextResponse.json(
+            { error: "Date of birth must be YYYY-MM-DD or a valid year" },
+            { status: 400 }
+          );
+        }
+        // Reject future DOBs and clearly invalid ages for youth Optimist
+        const y = Number(d.slice(0, 4));
+        if (y < 1995 || y > new Date().getFullYear() - 5) {
+          return NextResponse.json(
+            { error: "Please enter a realistic date of birth" },
+            { status: 400 }
+          );
+        }
+        patch.dob = d;
+      }
+    }
     if (body.weight !== undefined) {
       if (body.weight === null || body.weight === "") {
         patch.weight = null;
@@ -164,6 +187,7 @@ export async function PATCH(req: Request) {
         instagram: sailors.instagram,
         avatarUrl: sailors.avatarUrl,
         school: sailors.school,
+        dob: sailors.dob,
         weight: sailors.weight,
         isPublicWeight: sailors.isPublicWeight,
         isPublicDob: sailors.isPublicDob,

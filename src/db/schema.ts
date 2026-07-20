@@ -101,6 +101,11 @@ export const regattas = pgTable("regattas", {
   geography: text("geography").default("SG").notNull(),
   /** Boat class tag (e.g. Optimist, ILCA 6) */
   boatClass: text("boat_class").default("Optimist").notNull(),
+  /**
+   * When false, event is logbook-only (e.g. overseas / training) and is
+   * excluded from Best 3 of 5 series rankings.
+   */
+  countsForRanking: boolean("counts_for_ranking").default(true).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

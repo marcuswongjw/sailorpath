@@ -13,6 +13,9 @@ type StatsPayload = {
     claimsPending: number;
     supportNew: number;
     sailorsClaimed: number;
+    sailorsUnclaimed?: number;
+    guests?: number;
+    personalRegattas?: number;
     fleet: Record<string, number>;
   };
   usage?: {
@@ -123,8 +126,13 @@ export function AdminStatsPanel() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
             {[
               ["Sailors", inv?.sailors],
-              ["Claimed profiles", inv?.sailorsClaimed],
-              ["Regattas", inv?.regattas],
+              ["Claimed", inv?.sailorsClaimed],
+              ["Unclaimed", inv?.sailorsUnclaimed],
+              ["Guests (no series)", inv?.guests],
+              ["Regattas (series)", inv?.regattas != null && inv?.personalRegattas != null
+                ? Math.max(0, inv.regattas - inv.personalRegattas)
+                : inv?.regattas],
+              ["Personal log events", inv?.personalRegattas],
               ["Results rows", inv?.results],
               ["User accounts", inv?.profiles],
               ["Claims pending", inv?.claimsPending],

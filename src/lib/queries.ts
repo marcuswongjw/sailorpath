@@ -11,13 +11,26 @@ import {
 import {
   calculateRankings,
   periodLabel,
+  resolveSailorFleet,
+  scoringRegattasForFleet,
   type Period,
   type SailorRecord,
   type RegattaRecord,
   type RegattaResultRecord,
   type RegattaScoreSlot,
 } from "@/lib/ranking";
-import { and, asc, desc, eq, ilike, or, sql } from "drizzle-orm";
+import {
+  and,
+  asc,
+  desc,
+  eq,
+  ilike,
+  inArray,
+  isNotNull,
+  ne,
+  or,
+  sql,
+} from "drizzle-orm";
 
 export type SailorMapped = SailorRecord & {
   isPublicWeight?: boolean;
@@ -249,6 +262,7 @@ export async function listRegattas() {
         raceCount: r.raceCount,
         geography: r.geography ?? "SG",
         boatClass: r.boatClass ?? "Optimist",
+        countsForRanking: r.countsForRanking !== false,
       })
     );
   });
@@ -348,6 +362,8 @@ export async function getResultsForSailor(sailorId: string) {
         division: regattas.division,
         fleetSize: regattas.totalFleetSize,
         raceCount: regattas.raceCount,
+        geography: regattas.geography,
+        countsForRanking: regattas.countsForRanking,
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
@@ -358,29 +374,82 @@ export async function getResultsForSailor(sailorId: string) {
 
 const CURRENT_PERIOD: Period = { year: 2026, half: "Jul-Dec" };
 
-/** Live Best 3 of 5 strip for a single sailor (current series by default). */
+/**
+ * Live Best 3 of 5 strip for a single sailor.
+ * Optimised: series members only + results limited to scoring-window regattas.
+ */
 export async function getSailorSeriesStanding(
   sailorId: string,
   period: Period = CURRENT_PERIOD
 ): Promise<SeriesStanding | null> {
   return withDb(async () => {
-    const [s, r, res] = await Promise.all([
-      listSailors(),
-      listRegattas(),
-      listResults(),
-    ]);
-    const all = calculateRankings(period, s, r, res);
+    const sailorRows = await db
+      .select()
+      .from(sailors)
+      .where(
+        and(
+          or(
+            isNotNull(sailors.goldEntryDate),
+            isNotNull(sailors.silverEntryDate),
+            isNotNull(sailors.currentFleet)
+          ),
+          ne(sailors.manuallyDropped, true)
+        )
+      );
+
+    const s = sailorRows.map(mapSailor);
+    const meRow = s.find((x) => x.id === sailorId);
+    if (!meRow) return null;
+
+    const fleetInfo = resolveSailorFleet(meRow, period);
+    if (!fleetInfo?.active) return null;
+
+    const regattaRows = await db.select().from(regattas);
+    const r: RegattaRecord[] = regattaRows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      slug: row.slug,
+      date: row.date,
+      totalFleetSize: row.totalFleetSize,
+      division: row.division,
+      raceCount: row.raceCount,
+      geography: row.geography ?? "SG",
+      boatClass: row.boatClass ?? "Optimist",
+      countsForRanking: row.countsForRanking !== false,
+    }));
+
+    const slots = scoringRegattasForFleet(fleetInfo.fleet, period, r);
+    const scoringIds = slots.map((x) => x.regatta.id);
+    if (!scoringIds.length) return null;
+
+    const resultRows = await db
+      .select()
+      .from(regattaResults)
+      .where(inArray(regattaResults.regattaId, scoringIds));
+
+    const res: RegattaResultRecord[] = resultRows.map((row) => ({
+      sailorId: row.sailorId,
+      regattaId: row.regattaId,
+      rank: row.rank,
+      nettScore: row.nettScore,
+      totalScore: row.totalScore,
+      isDns: row.isDns,
+      isOverseasCommitment: row.isOverseasCommitment,
+    }));
+
+    const all = calculateRankings(period, s, r, res).filter(
+      (x) => x.fleet === fleetInfo.fleet
+    );
     const me = all.find((x) => x.id === sailorId);
     if (!me) return null;
-    const fleetPeers = all.filter((x) => x.fleet === me.fleet);
-    const overallRank = fleetPeers.findIndex((x) => x.id === sailorId) + 1;
+    const overallRank = all.findIndex((x) => x.id === sailorId) + 1;
     const carry = me.regattaScores.filter((rs) => rs.isCarryForward).length;
     return {
       period,
       periodLabel: periodLabel(period),
       fleet: me.fleet,
       overallRank,
-      fleetSize: fleetPeers.length,
+      fleetSize: all.length,
       best3of5: me.overallScore,
       rScores: me.regattaScores,
       trendNote:

@@ -51,6 +51,8 @@ export interface RegattaRecord {
   geography?: string | null;
   /** e.g. Optimist, ILCA 6 */
   boatClass?: string | null;
+  /** false = personal / overseas logbook only — not in Best 3 of 5 */
+  countsForRanking?: boolean | null;
 }
 
 export interface RegattaResultRecord {
@@ -182,6 +184,8 @@ export function rankingRegattasInPeriod(
 
   return allRegattas
     .filter((r) => {
+      // Personal / overseas logbook events never count for series ranking
+      if (r.countsForRanking === false) return false;
       const t = new Date(r.date).getTime();
       if (t < pStart || t > pEnd) return false;
       const div = r.division || "Gold";

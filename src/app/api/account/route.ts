@@ -42,6 +42,7 @@ export async function GET() {
     return NextResponse.json({
       email: auth.email,
       role: auth.role,
+      isSuperadmin: auth.role === "superadmin",
       owned,
       claims,
     });

@@ -67,13 +67,30 @@ Until that runs, inventory stats still work; traffic section shows a migration h
 - Breakdown by event type  
 - Top paths  
 
-## Future ideas (not built yet)
+## Are current stats useful for admin?
 
-- Daily rollup table for cheaper dashboards  
-- Track import / claim / support on the server (server-side `trackUsage` calls)  
-- Optional Vercel Analytics / Plausible for marketing traffic (pageviews only)  
-- Export CSV of usage summary for SSF reports  
-- Alert if support “new” > N or claims backlog grows  
+**Yes — keep them.** They answer day-to-day ops questions:
+
+| Metric | Why it helps |
+|--------|----------------|
+| Sailors / claimed / unclaimed | Claim progress vs roster size |
+| Guests (no series) | Import noise vs series members |
+| Fleet gold/silver badges | Series membership health |
+| Claims pending / Support new | Backlog to clear |
+| Personal log events | Owner engagement (overseas logbook) |
+| Events + sessions + top paths | What pages people actually open |
+
+### Proposed next stats (not all built yet)
+
+1. **Imports last 7 days** — count of `import` usage events (already typed) with matched/created totals in meta  
+2. **Observations logged** — count race_observations (coaching adoption)  
+3. **Rankings engagement** — ranking_view share of traffic  
+4. **New accounts / week** — profiles.created_at buckets  
+5. **Stale claims** — pending &gt; 7 days  
+6. **CSV export** of inventory + usage for SSF reports  
+7. Optional **Plausible / Vercel Analytics** for marketing (pageviews only, no PII)  
+
+Server-side tracking already fires for import, claim, support, and personal results.
 
 ## Files
 

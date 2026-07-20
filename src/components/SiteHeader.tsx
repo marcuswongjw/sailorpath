@@ -15,25 +15,23 @@ export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const loadAccount = async () => {
-    try {
-      const res = await fetch("/api/admin/me", { credentials: "include" });
-      const data = await res.json();
-      setIsSuperadmin(Boolean(data.isSuperadmin));
-      if (data.user?.email) setEmail(data.user.email);
-    } catch {
-      setIsSuperadmin(false);
-    }
+    // Single request: account includes role for superadmin + owned profiles
     try {
       const res = await fetch("/api/account", { credentials: "include" });
       if (!res.ok) {
         setOwned([]);
+        setIsSuperadmin(false);
         return;
       }
       const data = await res.json();
       setOwned(data.owned || []);
       if (data.email) setEmail(data.email);
+      setIsSuperadmin(
+        data.role === "superadmin" || Boolean(data.isSuperadmin)
+      );
     } catch {
       setOwned([]);
+      setIsSuperadmin(false);
     }
   };
 
@@ -130,13 +128,16 @@ export function SiteHeader() {
       >
         Search
       </Link>
-      <Link
-        href="/sample"
-        onClick={() => setMobileOpen(false)}
-        className="text-sm font-semibold text-amber-300/90 hover:text-amber-200 py-2 md:py-0"
-      >
-        Demo
-      </Link>
+      {/* Hide product tour for claimed owners — they already have real profiles */}
+      {owned.length === 0 && (
+        <Link
+          href="/sample"
+          onClick={() => setMobileOpen(false)}
+          className="text-sm font-semibold text-amber-300/90 hover:text-amber-200 py-2 md:py-0"
+        >
+          Demo
+        </Link>
+      )}
     </>
   );
 
@@ -270,13 +271,15 @@ export function SiteHeader() {
             >
               Search
             </Link>
-            <Link
-              href="/sample"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-2.5 text-sm font-semibold text-amber-200 hover:bg-white/5"
-            >
-              Demo profiles
-            </Link>
+            {owned.length === 0 && (
+              <Link
+                href="/sample"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-xl px-3 py-2.5 text-sm font-semibold text-amber-200 hover:bg-white/5"
+              >
+                Demo profiles
+              </Link>
+            )}
             <Link
               href="/support"
               onClick={() => setMobileOpen(false)}

@@ -77,6 +77,8 @@ export default async function SailorProfilePage({
           isDNS: r.isDns,
           isOverseasCommitment: r.isOverseasCommitment,
           raceCount: r.raceCount,
+          geography: r.geography,
+          countsForRanking: r.countsForRanking !== false,
         }))}
         initialEquipment={equipment}
         initialSeriesStanding={seriesStanding}

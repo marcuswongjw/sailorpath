@@ -60,21 +60,47 @@ export function UsageBeacon() {
 
     const sessionId = getSessionId();
     const eventType = eventTypeForPath(pathname);
-
-    void fetch("/api/usage", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        eventType,
-        path: pathname,
-        sessionId,
-        role: "public",
-      }),
-      credentials: "include",
-      keepalive: true,
-    }).catch(() => {
-      /* offline / blocked */
+    const payload = JSON.stringify({
+      eventType,
+      path: pathname,
+      sessionId,
+      role: "public",
     });
+
+    // Defer so it never competes with first paint / hydration
+    const fire = () => {
+      try {
+        if (typeof navigator !== "undefined" && "sendBeacon" in navigator) {
+          const blob = new Blob([payload], { type: "application/json" });
+          if (navigator.sendBeacon("/api/usage", blob)) return;
+        }
+      } catch {
+        /* fall through */
+      }
+      void fetch("/api/usage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+        credentials: "include",
+        keepalive: true,
+      }).catch(() => {
+        /* offline / blocked */
+      });
+    };
+
+    const w = globalThis as typeof globalThis & {
+      requestIdleCallback?: (
+        cb: () => void,
+        opts?: { timeout: number }
+      ) => number;
+      cancelIdleCallback?: (id: number) => void;
+    };
+    if (typeof w.requestIdleCallback === "function") {
+      const id = w.requestIdleCallback(fire, { timeout: 2500 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const t = setTimeout(fire, 400);
+    return () => clearTimeout(t);
   }, [pathname]);
 
   return null;

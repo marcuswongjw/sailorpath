@@ -184,6 +184,9 @@ export function SailorProfileView({
     instagram: initialSailor.instagram || "",
     handle: initialSailor.handle || "",
     school: initialSailor.school || "",
+    dob: initialSailor.dob
+      ? String(initialSailor.dob).slice(0, 10)
+      : "",
     weight:
       initialSailor.weight != null ? String(initialSailor.weight) : "",
     hullBrand: initialEquipment?.hullBrand || "",
@@ -193,6 +196,17 @@ export function SailorProfileView({
     equipmentNotes: initialEquipment?.notes || "",
   });
   const [displaySailor, setDisplaySailor] = useState(initialSailor);
+  const [results, setResults] = useState(initialResults || []);
+  const [personalForm, setPersonalForm] = useState({
+    name: "",
+    date: "",
+    rank: "",
+    fleetSize: "",
+    geography: "",
+    nett: "",
+  });
+  const [personalBusy, setPersonalBusy] = useState(false);
+  const [personalMsg, setPersonalMsg] = useState<string | null>(null);
   const [displayEquipment, setDisplayEquipment] = useState(initialEquipment);
   const [equipHistory, setEquipHistory] = useState(
     initialEquipmentHistory || []
@@ -260,6 +274,7 @@ export function SailorProfileView({
           instagram: form.instagram,
           handle: form.handle,
           school: form.school,
+          dob: form.dob === "" ? null : form.dob,
           weight: form.weight === "" ? null : Number(form.weight),
           isPublicWeight,
           isPublicDob,
@@ -276,6 +291,7 @@ export function SailorProfileView({
       setDisplaySailor((s: any) => ({
         ...s,
         ...data.sailor,
+        dob: data.sailor.dob ?? (form.dob || s.dob),
       }));
       setDisplayEquipment({
         hullBrand: data.sailor.hullBrand,
@@ -444,6 +460,84 @@ export function SailorProfileView({
       setObsMsg(e.message || "Failed");
     } finally {
       setObsBusy(false);
+    }
+  };
+
+  const savePersonalResult = async () => {
+    if (demoMode) {
+      setPersonalMsg("Demo only — not saved");
+      return;
+    }
+    if (!personalForm.name.trim() || !personalForm.date) {
+      setPersonalMsg("Event name and date required");
+      return;
+    }
+    setPersonalBusy(true);
+    setPersonalMsg(null);
+    try {
+      const res = await fetch("/api/account/results", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sailorId: initialSailor.id,
+          name: personalForm.name.trim(),
+          date: personalForm.date,
+          rank: personalForm.rank === "" ? 1 : Number(personalForm.rank),
+          totalFleetSize:
+            personalForm.fleetSize === ""
+              ? null
+              : Number(personalForm.fleetSize),
+          geography: personalForm.geography || "INT",
+          nettScore: personalForm.nett === "" ? null : Number(personalForm.nett),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Save failed");
+      if (data.entry) {
+        setResults((prev: any[]) =>
+          [data.entry, ...prev].sort((a, b) =>
+            String(b.regattaDate || "").localeCompare(String(a.regattaDate || ""))
+          )
+        );
+      }
+      setPersonalForm({
+        name: "",
+        date: "",
+        rank: "",
+        fleetSize: "",
+        geography: "",
+        nett: "",
+      });
+      setPersonalMsg("Added to logbook (non-ranking)");
+    } catch (e: any) {
+      setPersonalMsg(e.message || "Failed");
+    } finally {
+      setPersonalBusy(false);
+    }
+  };
+
+  const deletePersonalResult = async (res: any) => {
+    if (demoMode || !res?.resultId) return;
+    if (!confirm(`Remove “${res.regattaName}” from your logbook?`)) return;
+    setPersonalBusy(true);
+    try {
+      const r = await fetch("/api/account/results", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ resultId: res.resultId }),
+      });
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || "Delete failed");
+      setResults((prev: any[]) =>
+        prev.filter((x) => x.resultId !== res.resultId && x.id !== res.resultId)
+      );
+      setPersonalMsg("Removed");
+    } catch (e: any) {
+      setPersonalMsg(e.message || "Delete failed");
+    } finally {
+      setPersonalBusy(false);
     }
   };
 
@@ -871,8 +965,9 @@ export function SailorProfileView({
           </div>
           <p className="text-[11px] text-slate-500">
             Ranking, fleet, and squad fields are managed by SailorPath admins.
-            Tap your photo above to upload. You can edit bio, school, weight,
-            profile URL, equipment, and privacy.
+            Tap your photo above to upload. You can edit bio, date of birth,
+            school, weight, profile URL, equipment, and privacy. Add overseas /
+            non-series events in the logbook below.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <label className="block sm:col-span-2">
@@ -924,6 +1019,22 @@ export function SailorProfileView({
                 }
                 className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
               />
+            </label>
+            <label className="block">
+              <span className="text-[10px] font-bold text-slate-500 uppercase">
+                Date of birth
+              </span>
+              <input
+                type="date"
+                value={form.dob}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, dob: e.target.value }))
+                }
+                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+              />
+              <p className="text-[10px] text-slate-600 mt-1">
+                Privacy: use “Share DOB” below to control public age display.
+              </p>
             </label>
             <label className="block">
               <span className="text-[10px] font-bold text-slate-500 uppercase">
@@ -1232,23 +1343,109 @@ export function SailorProfileView({
               Regatta Logbook
             </h2>
             <p className="text-xs text-slate-400 mt-1">
-              Results and race-by-race observations
-              {isOwner ? " (expand a regatta to add notes)" : ""}.
+              Series results and race-by-race observations
+              {isOwner
+                ? " · add overseas / non-ranking events below"
+                : ""}
+              .
             </p>
           </div>
           <span className="text-xs text-slate-500 font-bold uppercase">
-            {initialResults.length} Regattas Tracked
+            {results.length} Regattas Tracked
           </span>
         </div>
 
-        {initialResults.length === 0 ? (
+        {isOwner && !demoMode && (
+          <div className="mb-6 rounded-2xl border border-sky-500/25 bg-sky-500/5 p-4 space-y-3">
+            <p className="text-[10px] font-bold text-sky-300 uppercase tracking-wider">
+              Add non-ranking result (overseas / other)
+            </p>
+            <p className="text-[11px] text-slate-500">
+              These appear in your logbook only — they do not affect SG Optimist
+              Best 3 of 5 rankings.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <input
+                value={personalForm.name}
+                onChange={(e) =>
+                  setPersonalForm((f) => ({ ...f, name: e.target.value }))
+                }
+                placeholder="Event name"
+                className="col-span-2 sm:col-span-3 rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <input
+                type="date"
+                value={personalForm.date}
+                onChange={(e) =>
+                  setPersonalForm((f) => ({ ...f, date: e.target.value }))
+                }
+                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <input
+                type="number"
+                min={1}
+                value={personalForm.rank}
+                onChange={(e) =>
+                  setPersonalForm((f) => ({ ...f, rank: e.target.value }))
+                }
+                placeholder="Place / rank"
+                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <input
+                type="number"
+                min={1}
+                value={personalForm.fleetSize}
+                onChange={(e) =>
+                  setPersonalForm((f) => ({ ...f, fleetSize: e.target.value }))
+                }
+                placeholder="Fleet size"
+                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <input
+                value={personalForm.geography}
+                onChange={(e) =>
+                  setPersonalForm((f) => ({
+                    ...f,
+                    geography: e.target.value.toUpperCase(),
+                  }))
+                }
+                placeholder="Country (e.g. ESP)"
+                maxLength={12}
+                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <input
+                type="number"
+                value={personalForm.nett}
+                onChange={(e) =>
+                  setPersonalForm((f) => ({ ...f, nett: e.target.value }))
+                }
+                placeholder="Nett (optional)"
+                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+            </div>
+            <button
+              type="button"
+              disabled={personalBusy}
+              onClick={() => void savePersonalResult()}
+              className="rounded-full bg-sky-600 hover:bg-sky-500 px-4 py-1.5 text-[11px] font-bold text-white disabled:opacity-50"
+            >
+              {personalBusy ? "Saving…" : "Add to logbook"}
+            </button>
+            {personalMsg && (
+              <p className="text-[11px] text-emerald-300">{personalMsg}</p>
+            )}
+          </div>
+        )}
+
+        {results.length === 0 ? (
           <p className="text-sm text-slate-500">No regatta results yet.</p>
         ) : (
           <div className="space-y-3">
-            {initialResults.slice(0, visibleCount).map((res: any, idx: number) => {
+            {results.slice(0, visibleCount).map((res: any, idx: number) => {
               const fleetSize = res.totalFleetSize ?? res.fleetSize ?? 50;
               const regattaId = res.regattaId || res.id;
               const rowKey = regattaId || res.regattaSlug || `r-${idx}`;
+              const nonRanking = res.countsForRanking === false;
               const { label, className } = getPercentileBadge(
                 res.rank,
                 fleetSize
@@ -1259,7 +1456,7 @@ export function SailorProfileView({
               const expanded = expandedRegattaId === regattaId;
               const raceNotes = obsForRegatta(regattaId);
               const nameNode =
-                slug && String(slug).length > 2 ? (
+                !nonRanking && slug && String(slug).length > 2 ? (
                   <Link
                     href={`/sg/optimist/regattas/${slug}`}
                     className="text-base font-bold text-white truncate hover:text-orange-400"
@@ -1275,11 +1472,13 @@ export function SailorProfileView({
                 <div
                   key={rowKey}
                   className={`glass-card rounded-2xl border border-white/5 p-5 space-y-3 ${
-                    overseas
-                      ? "border-sky-500/20"
-                      : dns
-                        ? "border-rose-500/15"
-                        : ""
+                    nonRanking
+                      ? "border-sky-500/25"
+                      : overseas
+                        ? "border-sky-500/20"
+                        : dns
+                          ? "border-rose-500/15"
+                          : ""
                   }`}
                 >
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -1287,9 +1486,17 @@ export function SailorProfileView({
                       {nameNode}
                       <p className="text-xs text-slate-500 mt-1 font-semibold">
                         {res.regattaDate}
-                        {res.division ? ` · ${res.division}` : ""}
+                        {res.geography ? ` · ${res.geography}` : ""}
+                        {res.division && !nonRanking
+                          ? ` · ${res.division}`
+                          : ""}
                       </p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
+                        {nonRanking && (
+                          <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                            Non-ranking
+                          </span>
+                        )}
                         {overseas && (
                           <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
                             Overseas†
@@ -1305,6 +1512,16 @@ export function SailorProfileView({
                             {raceNotes.length} note
                             {raceNotes.length === 1 ? "" : "s"}
                           </span>
+                        )}
+                        {isOwner && !demoMode && nonRanking && res.resultId && (
+                          <button
+                            type="button"
+                            disabled={personalBusy}
+                            onClick={() => void deletePersonalResult(res)}
+                            className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold text-rose-300 hover:border-rose-500/40"
+                          >
+                            Remove
+                          </button>
                         )}
                       </div>
                     </div>
@@ -1554,7 +1771,7 @@ export function SailorProfileView({
           </div>
         )}
 
-        {initialResults.length > visibleCount && (
+        {results.length > visibleCount && (
           <div className="mt-8 text-center">
             <button
               type="button"
