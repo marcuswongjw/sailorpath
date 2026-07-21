@@ -42,6 +42,12 @@ export async function POST(req: Request) {
       body.boatClass != null && String(body.boatClass).trim()
         ? String(body.boatClass).trim().slice(0, 40)
         : "Optimist";
+    let countsForRanking = body.countsForRanking !== false;
+    let finalDivision = division;
+    if (body.countsForRanking === false || division === "NonRanking") {
+      countsForRanking = false;
+      if (finalDivision === "Gold" || !finalDivision) finalDivision = "NonRanking";
+    }
 
     const [row] = await db
       .insert(regattas)
@@ -50,10 +56,11 @@ export async function POST(req: Request) {
         slug,
         date: String(body.date),
         totalFleetSize,
-        division,
+        division: finalDivision,
         raceCount,
         geography,
         boatClass,
+        countsForRanking,
       })
       .onConflictDoUpdate({
         target: regattas.slug,
@@ -61,10 +68,11 @@ export async function POST(req: Request) {
           name: String(body.name).trim(),
           date: String(body.date),
           totalFleetSize,
-          division,
+          division: finalDivision,
           raceCount,
           geography,
           boatClass,
+          countsForRanking,
           updatedAt: new Date(),
         },
       })
@@ -112,6 +120,40 @@ export async function PATCH(req: Request) {
     }
     if (body.slug !== undefined && body.slug) {
       patch.slug = String(body.slug).trim();
+    }
+    if (body.countsForRanking !== undefined) {
+      patch.countsForRanking = Boolean(body.countsForRanking);
+      if (!body.countsForRanking && patch.division == null) {
+        /* keep division unless promoting */
+      }
+    }
+    // Promote / dismiss suggestions
+    if (body.action === "promote") {
+      patch.countsForRanking = true;
+      patch.reviewedAt = new Date();
+      if (body.division) patch.division = body.division;
+      if (body.geography !== undefined) {
+        patch.geography = String(body.geography || "SG")
+          .trim()
+          .toUpperCase()
+          .slice(0, 12);
+      }
+      if (body.totalFleetSize !== undefined) {
+        patch.totalFleetSize = Number(body.totalFleetSize) || 50;
+      }
+      if (body.boatClass !== undefined) {
+        patch.boatClass = String(body.boatClass || "Optimist").slice(0, 40);
+      }
+      if (!body.division || body.division === "NonRanking") {
+        patch.division = "Gold";
+      }
+    }
+    if (body.action === "dismiss") {
+      patch.reviewedAt = new Date();
+      patch.countsForRanking = false;
+    }
+    if (body.reviewedAt === null) {
+      patch.reviewedAt = null;
     }
 
     const [row] = await db

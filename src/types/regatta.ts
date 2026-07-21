@@ -10,6 +10,8 @@ export type RegattaAdmin = {
   raceCount?: number | null;
   geography?: string | null;
   boatClass?: string | null;
+  countsForRanking?: boolean | null;
+  reviewedAt?: string | Date | null;
   createdAt?: string | Date | null;
   updatedAt?: string | Date | null;
 };

@@ -106,6 +106,11 @@ export const regattas = pgTable("regattas", {
    * excluded from Best 3 of 5 series rankings.
    */
   countsForRanking: boolean("counts_for_ranking").default(true).notNull(),
+  /**
+   * When set, admin has dismissed or promoted a non-ranking (owner) suggestion.
+   * NULL + countsForRanking=false → still in admin Suggestions queue.
+   */
+  reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

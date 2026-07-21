@@ -10,3 +10,4 @@
 2026-07-20 18:29 +08 | PASS | npm test — 37 tests after usage module
 2026-07-20 18:29 +08 | PASS | npm run build — routes include /api/usage and /api/admin/stats
 2026-07-20 18:45 +08 | NOTE | Owner DOB edit + personal non-ranking results; hide Demo for claimed; faster series standing + header fetch
+2026-07-21 | NOTE | Age column admin; non-ranking admin create; Suggestions queue promote/dismiss (migration 018)

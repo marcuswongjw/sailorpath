@@ -43,6 +43,8 @@ import {
   defaultDbColVisible,
 } from "@/components/admin/adminConstants";
 import { parseApi } from "@/components/admin/parseApi";
+import { AdminSuggestionsPanel } from "@/components/admin/AdminSuggestionsPanel";
+import { ageYears } from "@/lib/age";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
@@ -154,7 +156,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Database Editor Sub-Tabs & Forms
   const [editSubTab, setEditSubTab] = useState<
-    "sailors" | "regattas" | "results" | "claims" | "promote" | "support"
+    | "sailors"
+    | "regattas"
+    | "results"
+    | "suggestions"
+    | "claims"
+    | "promote"
+    | "support"
   >("sailors");
   const [dbSearch, setDbSearch] = useState("");
   const [dbFleetFilter, setDbFleetFilter] = useState<string>("all");
@@ -162,6 +170,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [dbDroppedFilter, setDbDroppedFilter] = useState<string>("all");
   const [regattaSearch, setRegattaSearch] = useState("");
   const [regattaDivisionFilter, setRegattaDivisionFilter] =
+    useState<string>("all");
+  /** all | series | nonranking */
+  const [regattaRankingFilter, setRegattaRankingFilter] =
     useState<string>("all");
   const [dbColVisible, setDbColVisible] = useState<Record<string, boolean>>(
     defaultDbColVisible
@@ -220,13 +231,28 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         ) {
           return false;
         }
+        const isNon = r.countsForRanking === false;
+        if (regattaRankingFilter === "series" && isNon) return false;
+        if (regattaRankingFilter === "nonranking" && !isNon) return false;
         if (!q) return true;
         const hay =
           `${r.name || ""} ${r.date || ""} ${r.division || ""} ${r.slug || ""}`.toLowerCase();
         return hay.includes(q);
       })
       .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-  }, [regattaList, regattaSearch, regattaDivisionFilter]);
+  }, [
+    regattaList,
+    regattaSearch,
+    regattaDivisionFilter,
+    regattaRankingFilter,
+  ]);
+  const suggestionCount = useMemo(
+    () =>
+      (regattaList || []).filter(
+        (r) => r.countsForRanking === false && !r.reviewedAt
+      ).length,
+    [regattaList]
+  );
   const [editingRegattaId, setEditingRegattaId] = useState<string | null>(null);
   const [regattaForm, setRegattaForm] = useState<any>({
     id: "",
@@ -237,6 +263,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     raceCount: "",
     geography: "SG",
     boatClass: "Optimist",
+    countsForRanking: true,
   });
 
   const [resultsList, setResultsList] = useState(initialResults || []);
@@ -395,6 +422,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           return best3BySailor[s.id] ?? 99999;
         case "gender":
           return s.gender || "";
+        case "age": {
+          const a = ageYears(s.dob as string | null);
+          return a == null ? 99999 : a;
+        }
         case "club":
           return s.club || "";
         case "nationality":
@@ -1594,15 +1625,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         {activeTab === "edit" && (
           <div className="w-full min-w-0 space-y-6">
             {/* Sub Tabs */}
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-full">
-              {([
-                ["sailors", "Sailors"],
-                ["regattas", "Regattas"],
-                ["results", "Results"],
-                ["claims", "Claims"],
-                ["promote", "Promote"],
-                ["support", "Support"],
-              ] as const).map(([sub, label]) => (
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-full">
+              {(
+                [
+                  ["sailors", "Sailors"],
+                  ["regattas", "Regattas"],
+                  ["results", "Results"],
+                  ["suggestions", "Suggestions"],
+                  ["claims", "Claims"],
+                  ["promote", "Promote"],
+                  ["support", "Support"],
+                ] as const
+              ).map(([sub, label]) => (
                 <button
                   key={sub}
                   type="button"
@@ -1612,13 +1646,18 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     setEditingRegattaId(null);
                     setEditingResultId(null);
                   }}
-                  className={`rounded-xl py-2.5 text-xs font-bold transition-all text-center ${
+                  className={`rounded-xl py-2.5 text-xs font-bold transition-all text-center relative ${
                     editSubTab === sub
                       ? "bg-orange-600 text-white"
                       : "text-slate-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
                   {label}
+                  {sub === "suggestions" && suggestionCount > 0 && (
+                    <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[9px] font-black text-white">
+                      {suggestionCount}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -2533,6 +2572,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               </span>
                             ),
                             gender: s.gender || "M",
+                            age: (() => {
+                              const a = ageYears(s.dob as string | null);
+                              return a != null ? (
+                                <span className="font-mono text-white">{a}</span>
+                              ) : (
+                                <span className="text-slate-600">—</span>
+                              );
+                            })(),
                             club: s.club || "—",
                             nationality: s.nationality || "—",
                             school: s.school || "—",
@@ -2752,6 +2799,21 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       <option value="Gold">Gold</option>
                       <option value="Silver">Silver</option>
                       <option value="Both">Both</option>
+                      <option value="NonRanking">NonRanking</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                      Ranking
+                    </label>
+                    <select
+                      value={regattaRankingFilter}
+                      onChange={(e) => setRegattaRankingFilter(e.target.value)}
+                      className="mt-1 w-full sm:w-40 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                    >
+                      <option value="all">All events</option>
+                      <option value="series">Series only</option>
+                      <option value="nonranking">Non-ranking only</option>
                     </select>
                   </div>
                   <button
@@ -2767,6 +2829,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         raceCount: "",
                         geography: "SG",
                         boatClass: "Optimist",
+                        countsForRanking: true,
                       });
                     }}
                     className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2.5 text-xs font-bold text-white flex items-center justify-center gap-1 shrink-0"
@@ -2811,6 +2874,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                       : "",
                                   geography: r.geography || "SG",
                                   boatClass: r.boatClass || "Optimist",
+                                  countsForRanking: r.countsForRanking !== false,
                                 });
                               }}
                               className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${
@@ -2821,6 +2885,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             >
                               <p className="text-xs font-bold text-white truncate">
                                 {r.name}
+                                {r.countsForRanking === false && (
+                                  <span className="ml-1.5 rounded-full bg-sky-500/15 border border-sky-500/30 px-1.5 py-0.5 text-[9px] font-black text-sky-300">
+                                    Non-ranking
+                                  </span>
+                                )}
                               </p>
                               <p className="text-[10px] text-slate-500 mt-0.5 font-mono">
                                 {regattaDateLabel(r.date)} · {r.geography || "SG"} ·{" "}
@@ -2931,6 +3000,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                 setRegattaForm({
                                   ...regattaForm,
                                   division: e.target.value,
+                                  countsForRanking:
+                                    e.target.value === "NonRanking"
+                                      ? false
+                                      : regattaForm.countsForRanking !== false,
                                 })
                               }
                               className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
@@ -2938,7 +3011,39 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               <option value="Gold">Gold only</option>
                               <option value="Silver">Silver only</option>
                               <option value="Both">Both</option>
+                              <option value="NonRanking">Non-ranking</option>
                             </select>
+                          </div>
+                          <div className="sm:col-span-2">
+                            <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={regattaForm.countsForRanking !== false}
+                                onChange={(e) =>
+                                  setRegattaForm({
+                                    ...regattaForm,
+                                    countsForRanking: e.target.checked,
+                                    division: e.target.checked
+                                      ? regattaForm.division === "NonRanking"
+                                        ? "Gold"
+                                        : regattaForm.division
+                                      : "NonRanking",
+                                  })
+                                }
+                                className="rounded border-slate-600"
+                              />
+                              <span>
+                                <strong className="text-white">Counts for ranking</strong>
+                                <span className="block text-[10px] text-slate-500">
+                                  Off = logbook / overseas only — not used in Best 3 of 5
+                                </span>
+                              </span>
+                            </label>
+                            {regattaForm.countsForRanking === false && (
+                              <p className="mt-2 rounded-lg border border-sky-500/30 bg-sky-500/10 px-2 py-1.5 text-[10px] font-bold text-sky-200">
+                                Non-ranking event — clearly excluded from series scoring
+                              </p>
+                            )}
                           </div>
                           <div>
                             <label className="text-[10px] font-bold text-slate-500 uppercase">
@@ -3075,10 +3180,20 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     {regattaList.map((r) => (
                       <option key={r.id} value={r.id}>
                         {r.name} ({regattaDateLabel(r.date)})
+                        {r.countsForRanking === false ? " · non-ranking" : ""}
                       </option>
                     ))}
                   </select>
                 </div>
+
+                {selectedRegattaIdForResultEdit &&
+                  regattaList.find((r) => r.id === selectedRegattaIdForResultEdit)
+                    ?.countsForRanking === false && (
+                    <div className="rounded-xl border border-sky-500/30 bg-sky-500/10 px-4 py-3 text-xs font-bold text-sky-200">
+                      This regatta is <strong>non-ranking</strong> — results here are
+                      for logbook only and are not used in Best 3 of 5 series scoring.
+                    </div>
+                  )}
 
                 {/* Result Form Card */}
                 {editingResultId && (
@@ -3086,6 +3201,12 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     <h3 className="text-sm font-bold text-white uppercase tracking-wider">
                       {editingResultId === "new" ? "Add Sailor Regatta Result" : "Edit Sailor Regatta Result"}
                     </h3>
+                    {regattaList.find((r) => r.id === resultForm.regattaId)
+                      ?.countsForRanking === false && (
+                      <p className="text-[11px] text-sky-300 font-semibold">
+                        Non-ranking event — not used in series rankings.
+                      </p>
+                    )}
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Sailor Name</label>
@@ -3388,6 +3509,29 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       </tbody>
                     </table>
                   </div>
+                )}
+              </div>
+            )}
+
+            {editSubTab === "suggestions" && (
+              <div className="w-full min-w-0">
+                {isSuperadmin ? (
+                  <AdminSuggestionsPanel
+                    onRegattaUpdated={(reg) => {
+                      setRegattaList((prev) => {
+                        const exists = prev.some((r) => r.id === reg.id);
+                        return exists
+                          ? prev.map((r) =>
+                              r.id === reg.id ? { ...r, ...reg } : r
+                            )
+                          : [...prev, reg as RegattaAdmin];
+                      });
+                    }}
+                  />
+                ) : (
+                  <p className="text-sm text-slate-500">
+                    Suggestions require superadmin.
+                  </p>
                 )}
               </div>
             )}

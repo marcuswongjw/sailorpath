@@ -16,6 +16,7 @@ type StatsPayload = {
     sailorsUnclaimed?: number;
     guests?: number;
     personalRegattas?: number;
+    personalUnreviewed?: number;
     fleet: Record<string, number>;
   };
   usage?: {
@@ -133,6 +134,7 @@ export function AdminStatsPanel() {
                 ? Math.max(0, inv.regattas - inv.personalRegattas)
                 : inv?.regattas],
               ["Personal log events", inv?.personalRegattas],
+              ["Suggestions (unreviewed)", inv?.personalUnreviewed],
               ["Results rows", inv?.results],
               ["User accounts", inv?.profiles],
               ["Claims pending", inv?.claimsPending],

@@ -5,7 +5,7 @@
 
 import { db } from "@/db";
 import { usageEvents } from "@/db/schema";
-import { desc, eq, gte, sql } from "drizzle-orm";
+import { and, desc, eq, gte, isNull, sql } from "drizzle-orm";
 
 export const USAGE_EVENT_TYPES = [
   "page_view",
@@ -209,6 +209,7 @@ export async function getProductInventory() {
     );
 
   let personalRegattas = 0;
+  let personalUnreviewed = 0;
   try {
     const [pr] = await db
       .select({ n: count() })
@@ -217,6 +218,17 @@ export async function getProductInventory() {
     personalRegattas = Number(pr?.n || 0);
   } catch {
     /* column may not exist until migration 017 */
+  }
+  try {
+    const [ur] = await db
+      .select({ n: count() })
+      .from(regattas)
+      .where(
+        and(eq(regattas.countsForRanking, false), isNull(regattas.reviewedAt))
+      );
+    personalUnreviewed = Number(ur?.n || 0);
+  } catch {
+    /* migration 018 */
   }
 
   return {
@@ -230,6 +242,7 @@ export async function getProductInventory() {
     sailorsUnclaimed: Number(unclaimed?.n || 0),
     guests: Number(guests?.n || 0),
     personalRegattas,
+    personalUnreviewed,
     fleet,
   };
 }
