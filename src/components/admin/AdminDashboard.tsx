@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { read, utils } from "xlsx";
 import {
-  Upload,
   Database,
   FileSpreadsheet,
   AlertTriangle,
@@ -19,15 +17,16 @@ import {
   ArrowUp,
   ArrowDown,
   BarChart3,
+  Plus,
+  Trash2,
+  Edit3,
+  User,
+  Medal,
+  Copy,
 } from "lucide-react";
 import { getPercentileBadge } from "@/lib/ranking";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { findDuplicateSailorPairs } from "@/lib/nameMatch";
-import {
-  parseRegattaResultRows,
-  summarizeRegattaImport,
-  type RegattaImportRow,
-} from "@/lib/excel/parseRegattaResultsSheet";
 import { ClaimsAdminPanel } from "@/components/ClaimsAdminPanel";
 import { PromoteAdminPanel } from "@/components/PromoteAdminPanel";
 import { SupportInboxPanel } from "@/components/SupportInboxPanel";
@@ -39,6 +38,8 @@ import {
 } from "@/components/admin/adminConstants";
 import { parseApi } from "@/components/admin/parseApi";
 import { AdminSuggestionsPanel } from "@/components/admin/AdminSuggestionsPanel";
+import { AdminRegattaImport } from "@/components/admin/AdminRegattaImport";
+import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { ageYears } from "@/lib/age";
 import {
   halfBoundaryOptions,
@@ -53,9 +54,6 @@ import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
-import type { ImportPossibleDuplicate } from "@/types/import";
-
-import { Plus, Trash2, Edit3, User, Medal, Copy } from "lucide-react";
 
 /** Gold entry / drop: 1 Jan or 1 Jul only (half-year boundaries). */
 const HALF_BOUNDARY_OPTS = halfBoundaryOptions(2018);
@@ -75,14 +73,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [adminRole, setAdminRole] = useState<"superadmin" | "coach" | "sailor" | "parent">("sailor");
-  const [importMeta, setImportMeta] = useState({
-    name: "",
-    date: new Date().toISOString().slice(0, 10),
-    division: "Gold",
-    fleetSize: 50,
-  });
-  const [fullImportRows, setFullImportRows] = useState<RegattaImportRow[]>([]);
-
 
   useEffect(() => {
     let subscription: { unsubscribe: () => void } | undefined;
@@ -129,12 +119,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     return () => subscription?.unsubscribe();
   }, []);
 
-  // Excel Import States
-  const [dragActive, setDragActive] = useState(false);
-  const [importStatus, setImportStatus] = useState<string | null>(null);
-  const [importPossibleDuplicates, setImportPossibleDuplicates] = useState<
-    ImportPossibleDuplicate[]
-  >([]);
 
   // Ignored duplicate pairs (localStorage, pair key idA|idB sorted)
   const [ignoredDuplicateKeys, setIgnoredDuplicateKeys] = useState<Set<string>>(
@@ -488,148 +472,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   };
 
   const colOn = (key: string) => dbColVisible[key] !== false;
-
-  const handleDrag = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e: any) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleFile(e.dataTransfer.files[0]);
-    }
-  };
-
-  const handleFileChange = (e: any) => {
-    if (e.target.files && e.target.files[0]) {
-      handleFile(e.target.files[0]);
-    }
-  };
-
-  const handleFile = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const data = e.target?.result;
-      const workbook = read(data, { type: "array" });
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const json = utils.sheet_to_json<Record<string, unknown>>(sheet, {
-        defval: "",
-        raw: false,
-      });
-      const mapped = parseRegattaResultRows(json);
-      setFullImportRows(mapped);
-      setImportPossibleDuplicates([]);
-      setImportStatus(
-        `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
-          summarizeRegattaImport(mapped) +
-          `. Set division + date, then Import.`
-      );
-      setImportMeta((m) => ({
-        ...m,
-        name: m.name || file.name.replace(/\.[^.]+$/, "").replace(/_/g, " "),
-        division: /silver/i.test(file.name)
-          ? "Silver"
-          : /gold/i.test(file.name)
-            ? "Gold"
-            : m.division,
-        fleetSize: mapped.length || m.fleetSize,
-      }));
-    };
-    reader.readAsArrayBuffer(file);
-  };
-
-  const handleImportToDb = async () => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can import.");
-      return;
-    }
-    if (!fullImportRows.length || !importMeta.name || !importMeta.date) {
-      alert("Parse a file and set regatta name + date first.");
-      return;
-    }
-    setImportStatus("Importing…");
-    setImportPossibleDuplicates([]);
-    try {
-      const res = await fetch("/api/admin/import", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          regattaName: importMeta.name,
-          eventDate: importMeta.date,
-          division: importMeta.division,
-          totalFleetSize: importMeta.fleetSize || fullImportRows.length,
-          rows: fullImportRows,
-          createMissing: true,
-        }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || data.message || "Import failed");
-      // Refresh sailors after auto-create
-      try {
-        const list = await fetch("/api/admin/sailors").then((r) => r.json());
-        if (list.sailors) setSailorList(list.sailors);
-      } catch {
-        /* ignore */
-      }
-      if (data.regatta) {
-        setRegattaList((prev) => {
-          const exists = prev.some((r) => r.id === data.regatta.id);
-          return exists
-            ? prev.map((r) => (r.id === data.regatta.id ? data.regatta : r))
-            : [...prev, data.regatta];
-        });
-      }
-      // Surface DB/migration hints (e.g. decimal nett scores)
-      if (data.hint || data.errorSamples?.length) {
-        const extra = [
-          data.hint,
-          ...(data.errorSamples || []).slice(0, 3),
-        ]
-          .filter(Boolean)
-          .join("\n");
-        if (extra) {
-          alert(
-            `${data.message || "Import finished with issues"}\n\n${extra}`
-          );
-        }
-      }
-      const unmatchedCount = (data.unmatched || []).length;
-      const dupes = Array.isArray(data.possibleDuplicates)
-        ? data.possibleDuplicates
-        : [];
-      setImportPossibleDuplicates(dupes);
-      setImportStatus(
-        (data.message || "Import complete") +
-          (unmatchedCount
-            ? ` · ${unmatchedCount} unmatched name(s) skipped — add/fix sailor names and re-import.`
-            : "")
-      );
-      // Refresh results after import
-      try {
-        const rRes = await fetch("/api/admin/results");
-        if (rRes.ok) {
-          const rData = await rRes.json();
-          if (rData.results) setResultsList(rData.results);
-        }
-      } catch {
-        /* optional */
-      }
-    } catch (e: any) {
-      setImportStatus(null);
-      setImportPossibleDuplicates([]);
-      alert(e.message || "Import failed");
-    }
-  };
 
   // Bulk Edit Handlers
   const toggleSelectSailor = (id: string) => {
@@ -1337,143 +1179,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       <div className="flex-1 flex flex-col w-full min-w-0">
         {/* Tab 1: Excel Import */}
         {activeTab === "import" && (
-          <div className="w-full min-w-0 space-y-6">
-            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 w-full">
-              <div
-                onDragEnter={handleDrag}
-                onDragOver={handleDrag}
-                onDragLeave={handleDrag}
-                onDrop={handleDrop}
-                className={`w-full border-2 border-dashed rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all text-center ${
-                  dragActive ? "border-orange-500 bg-orange-500/5" : "border-white/10 hover:border-white/20"
-                }`}
-              >
-                <Upload className="h-10 w-10 text-orange-500 mb-4" />
-                <p className="text-sm font-bold text-white mb-2">Drag and drop your Regatta Excel/CSV file here</p>
-                <p className="text-xs text-slate-500 mb-4 max-w-3xl">
-                  Supports .xlsx, .xls, and .csv. Required: Name (+ Rank/Nett if available).
-                  Optional: Total Score, Club, Nationality, Sail Number, Birth Year / DOB — when present, sailor profiles are updated.
-                  Unmatched names become <strong className="text-slate-300">guests</strong> (not on Gold/Silver rankings until you admit them as Silver in Database).
-                </p>
-                <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
-                  Select File
-                  <input type="file" onChange={handleFileChange} className="hidden" accept=".xlsx,.xls,.csv" />
-                </label>
-              </div>
-
-              {importStatus && (
-                <div className="mt-6 flex items-center gap-2 text-xs font-bold text-emerald-400 justify-center text-center max-w-3xl mx-auto">
-                  <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0" />
-                  {importStatus}
-                </div>
-              )}
-
-              {importPossibleDuplicates.length > 0 && (
-                <div className="mt-4 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 space-y-3">
-                  <div className="flex items-start gap-2">
-                    <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-xs font-bold text-amber-200">
-                        Possible duplicate names ({importPossibleDuplicates.length})
-                      </p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
-                        Names ≥60% similar within this file or vs existing sailors.
-                        Import still completed — review and merge in Database → Sailors
-                        if they are the same person.
-                      </p>
-                    </div>
-                  </div>
-                  <ul className="space-y-2 max-h-64 overflow-y-auto">
-                    {importPossibleDuplicates.slice(0, 40).map((d, i) => (
-                      <li
-                        key={`${d.importName}-${d.otherName}-${i}`}
-                        className="rounded-xl border border-white/5 bg-slate-950/50 px-3 py-2 text-[11px]"
-                      >
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span
-                            className={`rounded-full px-1.5 py-0.5 text-[9px] font-black uppercase ${
-                              d.band === "high"
-                                ? "bg-rose-500/15 text-rose-300 border border-rose-500/30"
-                                : "bg-amber-500/15 text-amber-200 border border-amber-500/30"
-                            }`}
-                          >
-                            {Math.round(d.similarity * 100)}% · {d.band}
-                          </span>
-                          <span className="rounded-full bg-white/5 px-1.5 py-0.5 text-[9px] font-bold text-slate-400 uppercase">
-                            {d.kind === "within-file" ? "In file" : "vs DB"}
-                          </span>
-                        </div>
-                        <p className="text-slate-200 mt-1 font-semibold">
-                          {d.importName}
-                          <span className="text-slate-500 font-normal"> ↔ </span>
-                          {d.otherName}
-                        </p>
-                        <p className="text-slate-500 mt-0.5">{d.note}</p>
-                      </li>
-                    ))}
-                  </ul>
-                  {importPossibleDuplicates.length > 40 && (
-                    <p className="text-[10px] text-slate-500">
-                      Showing first 40 of {importPossibleDuplicates.length}.
-                    </p>
-                  )}
-                </div>
-              )}
-
-              {fullImportRows.length > 0 && (
-                <div className="mt-6 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
-                  <label className="text-xs text-slate-400">
-                    Regatta name
-                    <input
-                      className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                      value={importMeta.name}
-                      onChange={(e) => setImportMeta((m) => ({ ...m, name: e.target.value }))}
-                    />
-                  </label>
-                  <label className="text-xs text-slate-400">
-                    Event date
-                    <input
-                      type="date"
-                      className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                      value={importMeta.date}
-                      onChange={(e) => setImportMeta((m) => ({ ...m, date: e.target.value }))}
-                    />
-                  </label>
-                  <label className="text-xs text-slate-400">
-                    Division
-                    <select
-                      className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                      value={importMeta.division}
-                      onChange={(e) => setImportMeta((m) => ({ ...m, division: e.target.value }))}
-                    >
-                      <option value="Gold">Gold</option>
-                      <option value="Silver">Silver</option>
-                      <option value="Both">Both</option>
-                    </select>
-                  </label>
-                  <label className="text-xs text-slate-400">
-                    Total fleet size
-                    <input
-                      type="number"
-                      className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                      value={importMeta.fleetSize}
-                      onChange={(e) =>
-                        setImportMeta((m) => ({ ...m, fleetSize: Number(e.target.value) || 50 }))
-                      }
-                    />
-                  </label>
-                  <button
-                    type="button"
-                    onClick={handleImportToDb}
-                    disabled={!isSuperadmin}
-                    className="sm:col-span-2 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-xs font-bold text-white"
-                  >
-                    Import {fullImportRows.length} rows to database
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+          <AdminRegattaImport
+            isSuperadmin={isSuperadmin}
+            onSailorsUpdated={(sailors) => setSailorList(sailors)}
+            onRegattaUpserted={(regatta) => {
+              setRegattaList((prev) => {
+                const exists = prev.some((r) => r.id === regatta.id);
+                return exists
+                  ? prev.map((r) => (r.id === regatta.id ? regatta : r))
+                  : [...prev, regatta];
+              });
+            }}
+            onResultsUpdated={(results) => setResultsList(results)}
+          />
         )}
 
         {/* Database & bulk edit */}
@@ -2998,412 +2716,22 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
             {/* Sub-Tab Content: RESULTS */}
             {editSubTab === "results" && (
-              <div className="w-full min-w-0 space-y-6">
-                {/* Period-wide DNS: every fleet sailor gets a result for each ranking regatta */}
-                <div className="glass-panel rounded-3xl p-6 border border-rose-500/20 bg-rose-500/[0.03] space-y-3">
-                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                    Ensure DNS for fleet period
-                  </h3>
-                  <p className="text-xs text-slate-500 leading-relaxed">
-                    Gold (or Silver) fleet sailors must have a result for{" "}
-                    <strong className="text-slate-400">every ranking regatta</strong> in the
-                    half-year they are in that fleet. Missing events get DNS = fleet size + 1.
-                    Run this after importing period regattas. Edit overseas commitment scores
-                    afterwards.
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin}
-                      onClick={() =>
-                        void handleFillDnsForPeriod("Gold", 2026, "Jul-Dec")
-                      }
-                      className="rounded-full bg-rose-600/90 hover:bg-rose-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
-                    >
-                      Gold · Jul–Dec 2026
-                    </button>
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin}
-                      onClick={() =>
-                        void handleFillDnsForPeriod("Silver", 2026, "Jul-Dec")
-                      }
-                      className="rounded-full bg-slate-700 hover:bg-slate-600 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
-                    >
-                      Silver · Jul–Dec 2026
-                    </button>
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin}
-                      onClick={() =>
-                        void handleFillDnsForPeriod("Gold", 2026, "Jan-Jun")
-                      }
-                      className="rounded-full bg-white/5 border border-white/10 hover:bg-white/10 disabled:opacity-40 px-4 py-2 text-xs font-bold text-slate-300"
-                    >
-                      Gold · Jan–Jun 2026
-                    </button>
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin}
-                      onClick={() =>
-                        void handleFillDnsForPeriod("Silver", 2026, "Jan-Jun")
-                      }
-                      className="rounded-full bg-white/5 border border-white/10 hover:bg-white/10 disabled:opacity-40 px-4 py-2 text-xs font-bold text-slate-300"
-                    >
-                      Silver · Jan–Jun 2026
-                    </button>
-                  </div>
-                </div>
-
-                {/* Select Regatta Dropdown */}
-                <div className="glass-panel rounded-3xl p-6 border border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider">Select Regatta Event</h3>
-                    <p className="text-xs text-slate-500">Choose a regatta to view and edit individual results.</p>
-                  </div>
-                  <select
-                    value={selectedRegattaIdForResultEdit}
-                    onChange={(e) => {
-                      setSelectedRegattaIdForResultEdit(e.target.value);
-                      setEditingResultId(null);
-                    }}
-                    className="rounded-xl border border-white/5 bg-slate-950 px-4 py-2.5 text-white text-xs font-semibold focus:outline-none w-full md:w-72"
-                  >
-                    <option value="" disabled>-- Choose Regatta --</option>
-                    {regattaList.map((r) => (
-                      <option key={r.id} value={r.id}>
-                        {r.name} ({regattaDateLabel(r.date)})
-                        {r.countsForRanking === false ? " · non-ranking" : ""}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {selectedRegattaIdForResultEdit &&
-                  regattaList.find((r) => r.id === selectedRegattaIdForResultEdit)
-                    ?.countsForRanking === false && (
-                    <div className="rounded-xl border border-sky-500/30 bg-sky-500/10 px-4 py-3 text-xs font-bold text-sky-200">
-                      This regatta is <strong>non-ranking</strong> — results here are
-                      for logbook only and are not used in Best 3 of 5 series scoring.
-                    </div>
-                  )}
-
-                {/* Result Form Card */}
-                {editingResultId && (
-                  <div className="glass-panel rounded-3xl p-6 border border-white/5 space-y-4">
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                      {editingResultId === "new" ? "Add Sailor Regatta Result" : "Edit Sailor Regatta Result"}
-                    </h3>
-                    {regattaList.find((r) => r.id === resultForm.regattaId)
-                      ?.countsForRanking === false && (
-                      <p className="text-[11px] text-sky-300 font-semibold">
-                        Non-ranking event — not used in series rankings.
-                      </p>
-                    )}
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Sailor Name</label>
-                        <select
-                          value={resultForm.sailorId}
-                          onChange={(e) => setResultForm({ ...resultForm, sailorId: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
-                        >
-                          <option value="" disabled>-- Select Sailor --</option>
-                          {sailorList.map((s) => (
-                            <option key={s.id} value={s.id}>
-                              {s.name} ({s.sailNumber})
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Total Score</label>
-                        <input
-                          type="number"
-                          step="any"
-                          value={resultForm.totalScore}
-                          onChange={(e) => setResultForm({ ...resultForm, totalScore: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                          placeholder="Optional"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Nett Score (optional)</label>
-                        <input
-                          type="number"
-                          step="any"
-                          value={resultForm.nettScore}
-                          onChange={(e) => setResultForm({ ...resultForm, nettScore: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Rank (Finishing Pos)</label>
-                        <input
-                          type="number"
-                          value={resultForm.rank}
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            const reg = regattaList.find(
-                              (r) => r.id === resultForm.regattaId
-                            );
-                            const dnsPts =
-                              (reg?.totalFleetSize || 50) + 1;
-                            const n = Number(val);
-                            // Better than DNS score (fleet+1) → uncheck DNS
-                            const clearDns =
-                              Number.isFinite(n) && n > 0 && n < dnsPts;
-                            setResultForm({
-                              ...resultForm,
-                              rank: val,
-                              ...(clearDns
-                                ? { isDNS: false, isDns: false }
-                                : {}),
-                            });
-                          }}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                        />
-                        <p className="mt-1 text-[10px] text-slate-600">
-                          DNS points = fleet+1. Enter a better rank to clear DNS.
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2 h-full pt-5 md:pl-4">
-                        <input
-                          type="checkbox"
-                          id="dnsCheckbox"
-                          checked={Boolean(resultForm.isDNS || resultForm.isDns)}
-                          onChange={(e) => {
-                            const on = e.target.checked;
-                            const reg = regattaList.find(
-                              (r) => r.id === resultForm.regattaId
-                            );
-                            const dnsPts =
-                              (reg?.totalFleetSize || 50) + 1;
-                            setResultForm({
-                              ...resultForm,
-                              isDNS: on,
-                              isDns: on,
-                              // When marking DNS, default points to fleet+1 (editable)
-                              ...(on
-                                ? {
-                                    rank: dnsPts,
-                                  }
-                                : {}),
-                            });
-                          }}
-                          className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
-                        />
-                        <label htmlFor="dnsCheckbox" className="text-xs font-bold text-slate-400 cursor-pointer">
-                          Did Not Start (DNS) — sets rank to fleet+1; better rank auto-clears this
-                        </label>
-                      </div>
-                      <div className="flex items-center gap-2 h-full pt-2 md:pl-4 md:col-span-2">
-                        <input
-                          type="checkbox"
-                          id="overseasCheckbox"
-                          checked={Boolean(resultForm.isOverseasCommitment)}
-                          onChange={(e) => {
-                            const on = e.target.checked;
-                            setResultForm({
-                              ...resultForm,
-                              isOverseasCommitment: on,
-                              // Overseas is not generic DNS
-                              isDNS: on ? false : resultForm.isDNS,
-                              isDns: on ? false : resultForm.isDns,
-                            });
-                          }}
-                          className="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-sky-500 h-4 w-4"
-                        />
-                        <label htmlFor="overseasCheckbox" className="text-xs font-bold text-sky-300/90 cursor-pointer leading-snug">
-                          Overseas commitment (SSF) — set points to standing before trip (e.g. rank 2 → 2 pts); tag only, does not auto-calc
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-end gap-2 border-t border-white/5 pt-4">
-                      <button
-                        onClick={() => setEditingResultId(null)}
-                        className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        onClick={handleSaveResult}
-                        className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500"
-                      >
-                        Save Result
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Results List */}
-                {selectedRegattaIdForResultEdit && (
-                  <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden">
-                    <div className="p-6 border-b border-white/5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                      <div>
-                        <h3 className="text-base font-bold text-white">Regatta Results Table</h3>
-                        <p className="text-xs text-slate-500">Edit or delete scores for this event.</p>
-                      </div>
-                      <div className="flex flex-wrap items-end gap-3">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            void handleFillDnsForRegatta(
-                              selectedRegattaIdForResultEdit
-                            )
-                          }
-                          className="rounded-full bg-slate-800 border border-rose-500/30 hover:bg-rose-500/10 px-4 py-2 text-xs font-bold text-rose-300 flex items-center gap-1"
-                          title="Create DNS (fleet size + 1) for series members with no result"
-                        >
-                          Fill DNS for non-starters
-                        </button>
-                        <button
-                          onClick={() => {
-                            const reg = regattaList.find(
-                              (r) => r.id === selectedRegattaIdForResultEdit
-                            );
-                            const dnsPts = (reg?.totalFleetSize || 50) + 1;
-                            setEditingResultId("new");
-                            setResultForm({
-                              id: "",
-                              regattaId: selectedRegattaIdForResultEdit,
-                              sailorId: "",
-                              rank: 1,
-                              nettScore: "",
-                              totalScore: "",
-                              isDNS: false,
-                              _dnsDefault: dnsPts,
-                            });
-                          }}
-                          className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
-                        >
-                          <Plus className="h-4 w-4" />
-                          Add Score
-                        </button>
-                      </div>
-                    </div>
-
-                    <p className="px-6 pb-2 text-[11px] text-slate-500">
-                      Non-starters: <strong className="text-slate-400">Fill DNS</strong> (fleet size + 1)
-                      or mark <strong className="text-sky-300">Overseas commitment</strong> and set
-                      points to their standing before the trip (e.g. 2nd → 2 pts). Both are editable.
-                    </p>
-
-                    <table className="w-full text-left border-collapse text-xs">
-                      <thead>
-                        <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                          <th className="py-4 px-4 text-center">Rank</th>
-                          <th className="py-4 px-6">Name</th>
-                          <th className="py-4 px-4 text-center">Gender</th>
-                          <th className="py-4 px-4 text-center">Age</th>
-                          <th className="py-4 px-4 text-center">Total Score</th>
-                          <th className="py-4 px-4 text-center">Nett Score</th>
-                          <th className="py-4 px-4 text-center">Status</th>
-                          <th className="py-4 px-6 text-right">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
-                        {resultsList
-                          .filter((res) => res.regattaId === selectedRegattaIdForResultEdit)
-                          .slice()
-                          .sort((a, b) => (a.rank || 999) - (b.rank || 999))
-                          .map((res) => {
-                            const sailor = sailorList.find((s) => s.id === res.sailorId);
-                            const dns = Boolean(res.isDns || res.isDNS);
-                            const overseas = Boolean(res.isOverseasCommitment);
-                            const age = (() => {
-                              if (!sailor?.dob) return "—";
-                              const y = new Date(sailor.dob).getFullYear();
-                              if (!Number.isFinite(y)) return "—";
-                              return String(new Date().getFullYear() - y);
-                            })();
-                            return (
-                              <tr
-                                key={res.id}
-                                className={`hover:bg-white/5 transition-colors ${
-                                  overseas
-                                    ? "bg-sky-500/[0.04]"
-                                    : dns
-                                      ? "bg-rose-500/[0.03]"
-                                      : ""
-                                }`}
-                              >
-                                <td className="py-4 px-4 text-center font-mono font-bold text-orange-400">
-                                  {res.rank}
-                                  {overseas ? "†" : dns ? "*" : ""}
-                                </td>
-                                <td className="py-4 px-6 font-bold text-white">
-                                  {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
-                                </td>
-                                <td className="py-4 px-4 text-center text-slate-300">
-                                  {sailor?.gender || "—"}
-                                </td>
-                                <td className="py-4 px-4 text-center font-mono text-slate-300">
-                                  {age}
-                                </td>
-                                <td className="py-4 px-4 text-center font-mono">
-                                  {res.totalScore != null ? res.totalScore : "—"}
-                                </td>
-                                <td className="py-4 px-4 text-center font-mono">
-                                  {res.nettScore != null ? res.nettScore : "—"}
-                                </td>
-                                <td className="py-4 px-4 text-center">
-                                  <span className={`inline-block px-2 py-0.5 rounded text-[10px] ${
-                                    overseas
-                                      ? "bg-sky-500/10 text-sky-300 border border-sky-500/25"
-                                      : dns
-                                        ? "bg-rose-500/10 text-rose-500 border border-rose-500/20"
-                                        : "bg-slate-800 text-slate-400"
-                                  }`}>
-                                    {overseas ? "Overseas" : dns ? "DNS" : "Finished"}
-                                  </span>
-                                </td>
-                                <td className="py-4 px-6 text-right">
-                                  <div className="flex justify-end items-center gap-2">
-                                    <button
-                                      onClick={() => {
-                                        setEditingResultId(res.id);
-                                        setResultForm({
-                                          ...res,
-                                          nettScore: res.nettScore?.toString?.() ?? res.nettScore,
-                                          totalScore:
-                                            res.totalScore != null
-                                              ? String(res.totalScore)
-                                              : "",
-                                          rank: res.rank?.toString?.() ?? res.rank,
-                                          isDNS: dns && !overseas,
-                                          isDns: dns && !overseas,
-                                          isOverseasCommitment: overseas,
-                                        });
-                                      }}
-                                      className="text-slate-400 hover:text-white"
-                                    >
-                                      <Edit3 className="h-4 w-4" />
-                                    </button>
-                                    <button
-                                      onClick={() => handleDeleteResult(res.id)}
-                                      className="text-slate-500 hover:text-red-400"
-                                    >
-                                      <Trash2 className="h-4 w-4" />
-                                    </button>
-                                  </div>
-                                </td>
-                              </tr>
-                            );
-                          })}
-                        {resultsList.filter((res) => res.regattaId === selectedRegattaIdForResultEdit).length === 0 && (
-                          <tr>
-                            <td colSpan={8} className="text-center py-12 text-slate-500">
-                              No sailor results logged. Click Add Score or Fill DNS for non-starters.
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
+              <AdminResultsPanel
+                isSuperadmin={isSuperadmin}
+                sailorList={sailorList}
+                regattaList={regattaList}
+                resultsList={resultsList}
+                selectedRegattaIdForResultEdit={selectedRegattaIdForResultEdit}
+                setSelectedRegattaIdForResultEdit={setSelectedRegattaIdForResultEdit}
+                editingResultId={editingResultId}
+                setEditingResultId={setEditingResultId}
+                resultForm={resultForm}
+                setResultForm={setResultForm}
+                handleSaveResult={handleSaveResult}
+                handleDeleteResult={handleDeleteResult}
+                handleFillDnsForRegatta={handleFillDnsForRegatta}
+                handleFillDnsForPeriod={handleFillDnsForPeriod}
+              />
             )}
 
             {editSubTab === "suggestions" && (

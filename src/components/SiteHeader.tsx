@@ -1,86 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
-import { createBrowserSupabase } from "@/lib/supabase/browser";
-
-type Owned = { id: string; name: string; handle: string };
+import { useAccount } from "@/components/AccountProvider";
 
 export function SiteHeader() {
-  const [email, setEmail] = useState<string | null>(null);
-  const [isSuperadmin, setIsSuperadmin] = useState(false);
-  const [owned, setOwned] = useState<Owned[]>([]);
-  const [ready, setReady] = useState(false);
+  const { email, isSuperadmin, owned, ready, signOut } = useAccount();
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const loadAccount = async () => {
-    // Single request: account includes role for superadmin + owned profiles
-    try {
-      const res = await fetch("/api/account", { credentials: "include" });
-      if (!res.ok) {
-        setOwned([]);
-        setIsSuperadmin(false);
-        return;
-      }
-      const data = await res.json();
-      setOwned(data.owned || []);
-      if (data.email) setEmail(data.email);
-      setIsSuperadmin(
-        data.role === "superadmin" || Boolean(data.isSuperadmin)
-      );
-    } catch {
-      setOwned([]);
-      setIsSuperadmin(false);
-    }
-  };
-
-  useEffect(() => {
-    let unsub: (() => void) | undefined;
-    let cancelled = false;
-
-    (async () => {
-      try {
-        const supabase = createBrowserSupabase();
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        setEmail(session?.user?.email ?? null);
-        setReady(true);
-        if (session?.user) {
-          if (!cancelled) await loadAccount();
-        } else {
-          setIsSuperadmin(false);
-          setOwned([]);
-        }
-
-        const { data } = supabase.auth.onAuthStateChange((_e, s) => {
-          setEmail(s?.user?.email ?? null);
-          if (s?.user) void loadAccount();
-          else {
-            setIsSuperadmin(false);
-            setOwned([]);
-          }
-        });
-        unsub = () => data.subscription.unsubscribe();
-      } catch {
-        setReady(true);
-      }
-    })();
-    return () => {
-      cancelled = true;
-      unsub?.();
-    };
-  }, []);
-
-  const signOut = async () => {
-    try {
-      await createBrowserSupabase().auth.signOut();
-    } catch {
-      /* ignore */
-    }
-    window.location.assign("/");
-  };
 
   const primaryProfile = owned[0] || null;
 
@@ -128,7 +55,6 @@ export function SiteHeader() {
       >
         Search
       </Link>
-      {/* Hide product tour for claimed owners — they already have real profiles */}
       {owned.length === 0 && (
         <Link
           href="/sample"
@@ -178,7 +104,7 @@ export function SiteHeader() {
       )}
       <button
         type="button"
-        onClick={signOut}
+        onClick={() => void signOut()}
         className="text-sm font-semibold text-slate-400 hover:text-white"
       >
         Log out

@@ -4,21 +4,21 @@
 
 | File | Role |
 |------|------|
-| `AdminDashboard.tsx` | Shell: auth, tabs, shared state, Database Management panels |
+| `AdminDashboard.tsx` | Shell: auth, tabs, shared state, Database sailors/regattas |
+| `AdminRegattaImport.tsx` | Regatta Excel import tab (self-contained) |
+| `AdminResultsPanel.tsx` | Results sub-tab + period DNS fill |
+| `AdminStatsPanel.tsx` | Stats & usage |
+| `AdminSuggestionsPanel.tsx` | Personal/non-ranking suggestions queue |
 | `adminConstants.ts` | Sailor table column defs + localStorage keys |
 | `parseApi.ts` | Shared JSON response parser for admin fetch calls |
 | `../AdminDashboard.tsx` | Re-export for existing imports |
 
-Excel parsing lives in `src/lib/excel/` (roster + regatta results).  
+Excel parsing lives in `src/lib/excel/` (regatta results).  
 Shared types: `src/types/{sailor,regatta,result,import}.ts`.
 
 ## Follow-up splits (when next editing admin)
 
-Extract from the shell without changing UX:
-
-1. `AdminRosterImport.tsx` — roster tab UI + handlers  
-2. `AdminRegattaImport.tsx` — regatta excel tab + dupe list  
-3. `AdminSailorsPanel.tsx` + `AdminSailorForm.tsx`  
-4. `AdminRegattasPanel.tsx` / `AdminResultsPanel.tsx`  
+1. `AdminSailorsPanel.tsx` + `AdminSailorForm.tsx`  
+2. `AdminRegattasPanel.tsx`  
 
 Claims / promote / support already use standalone panels.

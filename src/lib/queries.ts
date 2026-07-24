@@ -359,7 +359,12 @@ export async function getResultsForSailor(sailorId: string) {
 
 /**
  * Live Best 3 of 5 strip for a single sailor.
- * Optimised: series members only + results limited to scoring-window regattas.
+ *
+ * Optimised vs full-board compute:
+ * 1) Load subject sailor first — bail if guest / dropped
+ * 2) Rank only same-fleet peers for the period (not guests / other fleet)
+ * 3) Results limited to scoring-window regatta IDs
+ *
  * Default period = current half-year in Asia/Singapore.
  */
 export async function getSailorSeriesStanding(
@@ -367,15 +372,19 @@ export async function getSailorSeriesStanding(
   period: Period = currentPeriodFromSgToday()
 ): Promise<SeriesStanding | null> {
   return withDb(async () => {
-    // Ranking filters Guest / drop via resolveSailorFleet
+    // One roster read; rank only same-fleet peers (skip guests / other fleet)
     const sailorRows = await db.select().from(sailors);
-
-    const s = sailorRows.map(mapSailor);
-    const meRow = s.find((x) => x.id === sailorId);
+    const allMapped = sailorRows.map(mapSailor);
+    const meRow = allMapped.find((x) => x.id === sailorId);
     if (!meRow) return null;
 
     const fleetInfo = resolveSailorFleet(meRow, period);
     if (!fleetInfo?.active) return null;
+
+    const peers = allMapped.filter((s) => {
+      const r = resolveSailorFleet(s, period);
+      return Boolean(r?.active && r.fleet === fleetInfo.fleet);
+    });
 
     const regattaRows = await db.select().from(regattas);
     const r: RegattaRecord[] = regattaRows.map((row) => ({
@@ -410,7 +419,8 @@ export async function getSailorSeriesStanding(
       isOverseasCommitment: row.isOverseasCommitment,
     }));
 
-    const all = calculateRankings(period, s, r, res).filter(
+    // peers already same fleet — calculateRankings still re-checks resolveSailorFleet
+    const all = calculateRankings(period, peers, r, res).filter(
       (x) => x.fleet === fleetInfo.fleet
     );
     const me = all.find((x) => x.id === sailorId);

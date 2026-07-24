@@ -1,32 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useAccount } from "@/components/AccountProvider";
 
 /**
- * Footer links — hides Demo for users who already own a claimed profile.
+ * Footer links — hides Demo when account already owns a claimed profile.
+ * Uses shared AccountProvider (no second /api/account fetch).
  */
 export function SiteFooter() {
-  const [hideDemo, setHideDemo] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const res = await fetch("/api/account", { credentials: "include" });
-        if (!res.ok) return;
-        const data = await res.json();
-        if (!cancelled && (data.owned || []).length > 0) {
-          setHideDemo(true);
-        }
-      } catch {
-        /* guest */
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { owned, ready } = useAccount();
+  const hideDemo = ready && owned.length > 0;
 
   return (
     <footer className="border-t border-white/5 bg-[#07080c] py-6 sm:py-8 text-center text-xs text-slate-500">
