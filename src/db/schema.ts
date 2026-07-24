@@ -265,3 +265,23 @@ export const usageEvents = pgTable("usage_events", {
   meta: text("meta"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+/**
+ * Admin/data audit trail — may include sailor names (superadmin UI only).
+ * Distinct from privacy-light usage_events.
+ */
+export const adminChangeLog = pgTable("admin_change_log", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  actorUserId: uuid("actor_user_id").references(() => profiles.id, {
+    onDelete: "set null",
+  }),
+  actorEmail: text("actor_email"),
+  action: text("action").notNull(),
+  entityType: text("entity_type").notNull(),
+  entityId: uuid("entity_id"),
+  entityLabel: text("entity_label"),
+  summary: text("summary").notNull(),
+  details: text("details"), // JSON string for portability
+  source: text("source"),
+});

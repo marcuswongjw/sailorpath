@@ -24,7 +24,7 @@ import {
   Medal,
   Copy,
 } from "lucide-react";
-import { getPercentileBadge } from "@/lib/ranking";
+import { getPercentileBadge, natSquadFieldForPeriod } from "@/lib/ranking";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { findDuplicateSailorPairs } from "@/lib/nameMatch";
 import { ClaimsAdminPanel } from "@/components/ClaimsAdminPanel";
@@ -45,6 +45,7 @@ import { AdminSailorsPanel } from "@/components/admin/AdminSailorsPanel";
 import { AdminCompetitionsPanel } from "@/components/admin/AdminCompetitionsPanel";
 import { ageYears } from "@/lib/age";
 import {
+  currentPeriodFromSgToday,
   halfBoundaryOptions,
   isHalfBoundaryYmd,
   todayYmdSg,
@@ -296,19 +297,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
   }, [dbColVisible]);
 
-  // Best 3 of 5 for current period (Gold + Silver ranked sailors)
+  // Best 3 of 5 for current SG half (Gold + Silver)
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
+        const cur = currentPeriodFromSgToday();
+        const halfQ = encodeURIComponent(cur.half);
         const [g, s] = await Promise.all([
           fetch(
-            "/api/rankings?fleet=Gold&year=2026&half=" +
-              encodeURIComponent("Jul-Dec")
+            `/api/rankings?fleet=Gold&year=${cur.year}&half=${halfQ}`
           ).then((r) => r.json()),
           fetch(
-            "/api/rankings?fleet=Silver&year=2026&half=" +
-              encodeURIComponent("Jul-Dec")
+            `/api/rankings?fleet=Silver&year=${cur.year}&half=${halfQ}`
           ).then((r) => r.json()),
         ]);
         if (cancelled) return;
@@ -347,9 +348,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       }
     }
     if (dbSquadFilter !== "all") {
-      // Current period squad (Jul 26), with legacy nationalSquadStatus fallback
-      const sq =
-        s.natSquadStatusJul26 || s.nationalSquadStatus || "";
+      // Prefer mapped field for current SG half; fallback legacy nationalSquadStatus
+      const field = natSquadFieldForPeriod(currentPeriodFromSgToday());
+      const periodVal = field ? (s as any)[field] : null;
+      const sq = periodVal || s.natSquadStatusJul26 || s.nationalSquadStatus || "";
       if (String(sq) !== dbSquadFilter) return false;
     }
     return true;

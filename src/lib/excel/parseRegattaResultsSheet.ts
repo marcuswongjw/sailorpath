@@ -7,6 +7,7 @@ export type RegattaImportRow = {
   nett: number | null;
   total: number | null;
   club: string | null;
+  school: string | null;
   nationality: string | null;
   sailNumber: string | null;
   dob: string | null;
@@ -20,6 +21,7 @@ function emptyRow(): RegattaImportRow {
     nett: null,
     total: null,
     club: null,
+    school: null,
     nationality: null,
     sailNumber: null,
     dob: null,
@@ -60,6 +62,9 @@ export function parseRegattaResultRows(
             /^(club|team|yacht club|sailing club)$/i.test(k.trim()) ||
             (/club|team/i.test(k) && !/squad|national/i.test(k))
         );
+      const schoolKey =
+        keys.find((k) => /^school$/i.test(k.trim())) ||
+        keys.find((k) => /school|college|institution/i.test(k));
       const nationalityKey =
         keys.find((k) =>
           /^(nationality|nation|country|noc|country of origin)$/i.test(
@@ -118,6 +123,12 @@ export function parseRegattaResultRows(
           ? String(r[clubKey]).trim()
           : "";
       const club = clubRaw && !/^n\/?a$/i.test(clubRaw) ? clubRaw : null;
+      const schoolRaw =
+        schoolKey != null && r[schoolKey] != null
+          ? String(r[schoolKey]).trim()
+          : "";
+      const school =
+        schoolRaw && !/^n\/?a$/i.test(schoolRaw) ? schoolRaw : null;
       const natRaw =
         nationalityKey != null && r[nationalityKey] != null
           ? String(r[nationalityKey]).trim()
@@ -165,6 +176,7 @@ export function parseRegattaResultRows(
         nett: Number.isFinite(nett as number) ? nett : null,
         total: Number.isFinite(total as number) ? total : null,
         club,
+        school,
         nationality,
         sailNumber,
         dob,

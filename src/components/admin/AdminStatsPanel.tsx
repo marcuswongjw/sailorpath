@@ -27,6 +27,28 @@ type StatsPayload = {
     topPaths: { path: string; count: number }[];
     migrationHint?: string;
   };
+  dataQuality?: {
+    emptySeries?: number;
+    goldBeforeEntryCount?: number;
+    goldBeforeEntry?: {
+      sailorId: string;
+      name: string;
+      goldEntryDate: string;
+      earliestGoldRegattaDate: string;
+      earliestGoldRegattaName: string;
+    }[];
+  };
+  changeLog?: {
+    id: string;
+    createdAt: string;
+    actorEmail: string | null;
+    action: string;
+    entityType: string;
+    entityLabel: string | null;
+    summary: string;
+    details: string | null;
+  }[];
+  changeLogHint?: string | null;
   error?: string;
 };
 
@@ -60,6 +82,8 @@ export function AdminStatsPanel() {
 
   const inv = data?.inventory;
   const usage = data?.usage;
+  const dq = data?.dataQuality;
+  const log = data?.changeLog || [];
 
   return (
     <div className="w-full min-w-0 space-y-6">
@@ -71,10 +95,10 @@ export function AdminStatsPanel() {
               Stats & usage
             </h2>
             <p className="text-xs text-slate-500 mt-1">
-              Product inventory from the database + privacy-light page events
-              (no emails or names). Run migration{" "}
-              <code className="text-slate-400">016_usage_events.sql</code> once
-              for traffic tracking.
+              Inventory, data quality, admin change log (includes names), and
+              privacy-light traffic. Migrations:{" "}
+              <code className="text-slate-400">016_usage_events.sql</code>,{" "}
+              <code className="text-slate-400">023_admin_change_log.sql</code>.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -167,10 +191,98 @@ export function AdminStatsPanel() {
           )}
         </div>
 
+        {/* Data quality */}
+        <div>
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+            Data quality
+          </h3>
+          <div className="grid grid-cols-2 gap-2 mb-3">
+            <div className="rounded-xl border border-amber-500/25 bg-amber-500/5 px-3 py-2.5">
+              <p className="text-[10px] text-amber-200/80 font-bold uppercase">
+                Empty Series (no entry)
+              </p>
+              <p className="text-xl font-black text-amber-300">
+                {dq?.emptySeries ?? "—"}
+              </p>
+            </div>
+            <div className="rounded-xl border border-rose-500/25 bg-rose-500/5 px-3 py-2.5">
+              <p className="text-[10px] text-rose-200/80 font-bold uppercase">
+                Gold result before gold entry
+              </p>
+              <p className="text-xl font-black text-rose-300">
+                {dq?.goldBeforeEntryCount ?? "—"}
+              </p>
+            </div>
+          </div>
+          {(dq?.goldBeforeEntry || []).length > 0 && (
+            <ul className="rounded-xl border border-white/5 divide-y divide-white/5 max-h-48 overflow-y-auto text-xs">
+              {dq!.goldBeforeEntry!.map((g) => (
+                <li key={g.sailorId} className="px-3 py-2">
+                  <p className="font-bold text-white">{g.name}</p>
+                  <p className="text-slate-500">
+                    Gold entry {g.goldEntryDate} but raced Gold at{" "}
+                    <span className="text-slate-300">
+                      {g.earliestGoldRegattaName}
+                    </span>{" "}
+                    on {g.earliestGoldRegattaDate}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+          <p className="text-[10px] text-slate-600 mt-2">
+            Empty Series: Admin → Sailors → stamp silver entry. Gold-before-entry:
+            move gold entry earlier (1 Jan/1 Jul) or fix result division.
+          </p>
+        </div>
+
+        {/* Change log */}
+        <div>
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+            Change log (admin / data)
+          </h3>
+          {data?.changeLogHint && (
+            <p className="text-[11px] text-amber-200/90 mb-2">
+              {data.changeLogHint}
+            </p>
+          )}
+          <div className="rounded-xl border border-white/5 overflow-hidden">
+            <ul className="max-h-72 overflow-y-auto text-xs divide-y divide-white/5">
+              {log.length === 0 ? (
+                <li className="px-3 py-4 text-slate-600">
+                  No change log entries in this window.
+                </li>
+              ) : (
+                log.map((e) => (
+                  <li key={e.id} className="px-3 py-2 space-y-0.5">
+                    <div className="flex flex-wrap items-center gap-2 justify-between">
+                      <span className="font-mono text-[10px] text-slate-500">
+                        {e.createdAt
+                          ? String(e.createdAt).slice(0, 19).replace("T", " ")
+                          : "—"}
+                      </span>
+                      <span className="rounded-full bg-white/5 border border-white/10 px-1.5 py-0.5 text-[9px] font-bold text-slate-400 uppercase">
+                        {e.action}
+                      </span>
+                    </div>
+                    <p className="text-slate-200 font-semibold leading-snug">
+                      {e.summary}
+                    </p>
+                    <p className="text-[10px] text-slate-500">
+                      {e.entityLabel || e.entityType}
+                      {e.actorEmail ? ` · ${e.actorEmail}` : ""}
+                    </p>
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+        </div>
+
         {/* Traffic */}
         <div>
           <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
-            Traffic (last {usage?.sinceDays ?? days} days)
+            Traffic (privacy-light, last {usage?.sinceDays ?? days} days)
           </h3>
           <div className="grid grid-cols-2 gap-2 mb-3">
             <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 px-3 py-2.5">

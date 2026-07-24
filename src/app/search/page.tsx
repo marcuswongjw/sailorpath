@@ -86,7 +86,7 @@ export default async function SearchPage({
               <option value="all">All</option>
               <option value="gold">Gold (active now)</option>
               <option value="silver">Silver (active now)</option>
-              <option value="guest">Guest / not ranked</option>
+              <option value="guest">Not on current board</option>
             </select>
           </label>
           <label className="text-[10px] font-bold text-slate-500 uppercase">

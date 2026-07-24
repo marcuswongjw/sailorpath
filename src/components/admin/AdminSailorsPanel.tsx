@@ -1298,7 +1298,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     </table>
                   </div>
                   <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5">
-                    Tick rows for bulk edit · Best 3 of 5 = Jul–Dec 2026 series score ·
+                    Tick rows for bulk edit · Best 3 of 5 = current SG half series score ·
                     Results button = all competitions for that sailor · Columns for squad / overseas.
                   </p>
                 </div>

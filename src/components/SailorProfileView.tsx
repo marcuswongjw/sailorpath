@@ -696,14 +696,25 @@ export function SailorProfileView({
                   No squad / campaign tags yet
                 </span>
               ) : (
-                honors.map((h, idx) => (
-                  <span
-                    key={idx}
-                    className={`rounded-full px-3 py-0.5 text-xs font-semibold ${h.className}`}
-                  >
-                    {h.text}
-                  </span>
-                ))
+                <>
+                  {honors.slice(0, 2).map((h, idx) => (
+                    <span
+                      key={idx}
+                      className={`rounded-full px-3 py-0.5 text-xs font-semibold ${h.className}`}
+                    >
+                      {h.text}
+                    </span>
+                  ))}
+                  {honors.length > 2 && (
+                    <button
+                      type="button"
+                      onClick={() => setProfileTab("achievements")}
+                      className="rounded-full px-3 py-0.5 text-xs font-semibold bg-white/5 text-slate-400 border border-white/10 hover:text-white"
+                    >
+                      +{honors.length - 2} more
+                    </button>
+                  )}
+                </>
               )}
             </div>
 
@@ -1145,7 +1156,7 @@ export function SailorProfileView({
       )}
 
       {/* Profile section tabs — mobile scrollable */}
-      <div className="sticky top-0 z-20 -mx-0 sm:static sm:z-auto border-b border-white/10 bg-[#090a0f]/95 backdrop-blur-md sm:bg-transparent sm:backdrop-blur-none rounded-none sm:rounded-none">
+      <div className="sticky top-14 sm:top-16 z-20 -mx-0 border-b border-white/10 bg-[#090a0f]/95 backdrop-blur-md">
         <div className="flex gap-0 overflow-x-auto no-scrollbar -mx-1 px-1">
           {(
             [

@@ -62,11 +62,14 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const { todayYmdSg, validateHalfBoundaryDate } = await import(
+    const { validateHalfBoundaryDate, currentPeriodFromSgToday } = await import(
       "@/lib/datesSg"
     );
+    const { periodBounds } = await import("@/lib/ranking");
+    // Default to current half start (1 Jan / 1 Jul) — not calendar today
+    const defaultGold = periodBounds(currentPeriodFromSgToday()).start;
     const goldDate =
-      body.goldEntryDate || s.goldEntryDate || todayYmdSg();
+      body.goldEntryDate || s.goldEntryDate || defaultGold;
     const boundaryErr = validateHalfBoundaryDate(
       goldDate,
       "Gold entry date"

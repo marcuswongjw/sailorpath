@@ -48,8 +48,9 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
+    const { logAdminChange } = await import("@/lib/adminChangeLog");
 
     /**
      * Stamp silver entry (SG today) for In SG Fleet sailors with no gold/silver
@@ -68,7 +69,6 @@ export async function POST(req: Request) {
         const cf = String(s.currentFleet || "")
           .trim()
           .toLowerCase();
-        // Target: series membership but no entry dates
         const isSeriesTag =
           cf === "series" ||
           cf === "gold" ||
@@ -87,6 +87,16 @@ export async function POST(req: Request) {
           .where(eq(sailors.id, s.id));
         updated++;
         if (names.length < 20) names.push(s.name);
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "silver.stamp_empty",
+          entityType: "sailor",
+          entityId: s.id,
+          entityLabel: s.name,
+          summary: `Stamped silver entry ${stamp} (empty Series)`,
+          source: "/api/admin/sailors",
+        });
       }
       return NextResponse.json({
         ok: true,
@@ -94,6 +104,62 @@ export async function POST(req: Request) {
         silverEntryDate: stamp,
         names,
         message: `Stamped silver entry ${stamp} on ${updated} Series sailor(s) with no entry dates.`,
+      });
+    }
+
+    /** Recompute silver_entry_date = earliest Silver ranking regatta date */
+    if (body.action === "recomputeSilverEntryDates") {
+      const { deriveAllSilverEntryDates } = await import(
+        "@/lib/deriveFleetEntryDates"
+      );
+      const { regattaResults, regattas } = await import("@/db/schema");
+      const links = await db
+        .select({
+          sailorId: regattaResults.sailorId,
+          regattaDate: regattas.date,
+          division: regattas.division,
+          countsForRanking: regattas.countsForRanking,
+        })
+        .from(regattaResults)
+        .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id));
+      const derived = deriveAllSilverEntryDates(
+        links.map((l) => ({
+          sailorId: l.sailorId,
+          regattaDate: l.regattaDate,
+          division: l.division,
+          countsForRanking: l.countsForRanking,
+        }))
+      );
+      const rows = await db.select().from(sailors);
+      let updated = 0;
+      for (const s of rows) {
+        const next = derived.get(s.id);
+        if (!next) continue;
+        const prev = s.silverEntryDate
+          ? String(s.silverEntryDate).slice(0, 10)
+          : null;
+        if (prev === next) continue;
+        await db
+          .update(sailors)
+          .set({ silverEntryDate: next, updatedAt: new Date() })
+          .where(eq(sailors.id, s.id));
+        updated++;
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "silver.recompute",
+          entityType: "sailor",
+          entityId: s.id,
+          entityLabel: s.name,
+          summary: `Silver entry ${prev || "—"} → ${next}`,
+          details: { old: prev, new: next },
+          source: "/api/admin/sailors",
+        });
+      }
+      return NextResponse.json({
+        ok: true,
+        updated,
+        message: `Recomputed silver entry for ${updated} sailor(s) from first Silver ranking regatta.`,
       });
     }
 
@@ -221,7 +287,7 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
     if (!body.id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
@@ -357,6 +423,18 @@ export async function PATCH(req: Request) {
       if (!row) {
         return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
       }
+      const { logAdminChange } = await import("@/lib/adminChangeLog");
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "sailor.patch",
+        entityType: "sailor",
+        entityId: row.id,
+        entityLabel: row.name,
+        summary: `Updated sailor ${row.name}`,
+        details: { fields: Object.keys(patch).filter((k) => k !== "updatedAt") },
+        source: "/api/admin/sailors",
+      });
       return NextResponse.json({ sailor: row });
     } catch (e) {
       // Retry without nationality if column not migrated

@@ -73,6 +73,7 @@ export async function POST(req: Request) {
         nett: number | null;
         total?: number | null;
         club?: string | null;
+        school?: string | null;
         nationality?: string | null;
         sailNumber?: string | null;
         dob?: string | number | null;
@@ -107,6 +108,9 @@ export async function POST(req: Request) {
           nett: toNumber(r.nett),
           total: toNumber((r as { total?: number | null }).total),
           club: normalizeOptionalText(r.club),
+          school: normalizeOptionalText(
+            (r as { school?: string | null }).school
+          ),
           nationality:
             normalizeNationality(r.nationality) ||
             normalizeOptionalText(r.nationality),
@@ -155,9 +159,38 @@ export async function POST(req: Request) {
         sailNumber: sailors.sailNumber,
         dob: sailors.dob,
         club: sailors.club,
+        school: sailors.school,
         nationality: sailors.nationality,
+        silverEntryDate: sailors.silverEntryDate,
+        goldEntryDate: sailors.goldEntryDate,
       })
       .from(sailors);
+
+    // Latest ranking result date per sailor (for profile "latest wins")
+    const allResultDates = await db
+      .select({
+        sailorId: regattaResults.sailorId,
+        date: regattas.date,
+        countsForRanking: regattas.countsForRanking,
+      })
+      .from(regattaResults)
+      .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id));
+    const latestDateBySailor = new Map<string, string>();
+    for (const row of allResultDates) {
+      if (row.countsForRanking === false) continue;
+      const d = String(row.date || "").slice(0, 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) continue;
+      const prev = latestDateBySailor.get(row.sailorId);
+      if (!prev || d > prev) latestDateBySailor.set(row.sailorId, d);
+    }
+
+    const { shouldApplyProfileFromRegatta, buildProfilePatchFromRow } =
+      await import("@/lib/profileFromRegatta");
+    const { deriveAllSilverEntryDates } = await import(
+      "@/lib/deriveFleetEntryDates"
+    );
+    const { logAdminChange } = await import("@/lib/adminChangeLog");
+    const affectedSailorIds = new Set<string>();
     const aliasList = await db
       .select({
         sailorId: sailorAliases.sailorId,
@@ -254,6 +287,7 @@ export async function POST(req: Request) {
               handle,
               sailNumber: row.sailNumber || "SGP 000",
               club: row.club || "N/A",
+              ...(row.school ? { school: row.school } : {}),
               ...(row.nationality ? { nationality: row.nationality } : {}),
               ...(row.dob ? { dob: row.dob } : {}),
               // currentFleet / goldEntryDate / silverEntryDate intentionally omitted
@@ -264,7 +298,10 @@ export async function POST(req: Request) {
               sailNumber: sailors.sailNumber,
               dob: sailors.dob,
               club: sailors.club,
+              school: sailors.school,
               nationality: sailors.nationality,
+              silverEntryDate: sailors.silverEntryDate,
+              goldEntryDate: sailors.goldEntryDate,
             });
           sailorId = createdSailor.id;
           sailorList = [...sailorList, createdSailor];
@@ -297,79 +334,97 @@ export async function POST(req: Request) {
           continue;
         }
 
-        // Optional profile enrichment from sheet (only when columns present)
+        // Optional profile enrichment — sail/club/school only if this regatta is latest
         const existing = sailorList.find((s) => s.id === sailorId);
-        const profilePatch: {
-          sailNumber?: string;
-          dob?: string;
-          club?: string;
-          nationality?: string;
-          updatedAt: Date;
-        } = { updatedAt: new Date() };
-        let profileChanged = false;
+        const applyProfile = shouldApplyProfileFromRegatta({
+          regattaDate: eventDate,
+          latestResultDate: latestDateBySailor.get(sailorId) || null,
+        });
+        const { patch: fieldPatch, changed: fieldChanged } =
+          buildProfilePatchFromRow(
+            {
+              sailNumber: row.sailNumber,
+              club: row.club,
+              school: row.school,
+            },
+            {
+              sailNumber: existing?.sailNumber,
+              club: existing?.club,
+              school: existing?.school,
+            },
+            applyProfile
+          );
+        const profilePatch: Record<string, unknown> = {
+          updatedAt: new Date(),
+          ...fieldPatch,
+        };
+        let profileChanged = fieldChanged.length > 0;
 
-        if (row.sailNumber) {
-          const cur = (existing?.sailNumber || "").trim();
-          const isPlaceholder = !cur || /^SGP\s*0+$/i.test(cur) || cur === "N/A";
-          if (isPlaceholder || cur.toLowerCase() !== row.sailNumber.toLowerCase()) {
-            profilePatch.sailNumber = row.sailNumber;
-            profileChanged = true;
-          }
-        }
         if (row.dob) {
           const curDob = existing?.dob ? String(existing.dob).slice(0, 10) : "";
           if (!curDob) {
             profilePatch.dob = row.dob;
             profileChanged = true;
+            fieldChanged.push("dob");
           } else if (curDob !== row.dob) {
-            // Don't wipe a full DOB (e.g. 2013-05-12) with year-only 2013-01-01
             if (
               row.dobIsYearOnly &&
               curDob.startsWith(row.dob.slice(0, 4))
             ) {
-              /* keep existing full date for same birth year */
+              /* keep full DOB for same year */
             } else {
               profilePatch.dob = row.dob;
               profileChanged = true;
+              fieldChanged.push("dob");
             }
           }
         }
-        // Club: update when sheet has a value and it differs (incl. fill N/A)
-        if (row.club) {
-          const cur = (existing?.club || "").trim();
-          if (!cur || cur === "N/A" || cur.toLowerCase() !== row.club.toLowerCase()) {
-            profilePatch.club = row.club;
-            profileChanged = true;
-          }
-        }
-        // Nationality: same optional update pattern
         if (row.nationality) {
           const cur = (existing?.nationality || "").trim();
           if (!cur || cur.toLowerCase() !== row.nationality.toLowerCase()) {
             profilePatch.nationality = row.nationality;
             profileChanged = true;
+            fieldChanged.push("nationality");
           }
         }
 
         if (profileChanged) {
           await db
             .update(sailors)
-            .set(profilePatch)
+            .set(profilePatch as typeof sailors.$inferInsert)
             .where(eq(sailors.id, sailorId));
           updatedProfiles++;
-          // Keep in-memory list in sync for later rows
+          if (fieldChanged.some((f) => f === "sailNumber" || f === "club" || f === "school")) {
+            void logAdminChange({
+              action: "import.profile",
+              entityType: "sailor",
+              entityId: sailorId,
+              entityLabel: existing?.name || row.name,
+              summary: `Profile updated from regatta ${regattaName} (${eventDate}): ${fieldChanged.join(", ")}`,
+              details: { fields: fieldChanged, regatta: regattaName, date: eventDate },
+              source: "/api/admin/import",
+            });
+          }
           sailorList = sailorList.map((s) =>
             s.id === sailorId
               ? {
                   ...s,
-                  sailNumber: profilePatch.sailNumber ?? s.sailNumber,
-                  dob: profilePatch.dob ?? s.dob,
-                  club: profilePatch.club ?? s.club,
-                  nationality: profilePatch.nationality ?? s.nationality,
+                  sailNumber:
+                    (profilePatch.sailNumber as string) ?? s.sailNumber,
+                  dob: (profilePatch.dob as string) ?? s.dob,
+                  club: (profilePatch.club as string) ?? s.club,
+                  school: (profilePatch.school as string) ?? s.school,
+                  nationality:
+                    (profilePatch.nationality as string) ?? s.nationality,
                 }
               : s
           );
+          // This event becomes latest if applied
+          const ed = String(eventDate).slice(0, 10);
+          const prevL = latestDateBySailor.get(sailorId);
+          if (!prevL || ed >= prevL) latestDateBySailor.set(sailorId, ed);
         }
+        affectedSailorIds.add(sailorId);
 
         // Rank is always integer; nett/total may be fractional (14.5)
         const rank = row.rank != null ? Math.round(row.rank) : 999;
@@ -433,6 +488,53 @@ export async function POST(req: Request) {
       }
     }
 
+    // Recompute silver_entry_date from earliest Silver ranking result
+    let silverUpdated = 0;
+    try {
+      const silverLinks = await db
+        .select({
+          sailorId: regattaResults.sailorId,
+          regattaDate: regattas.date,
+          division: regattas.division,
+          countsForRanking: regattas.countsForRanking,
+        })
+        .from(regattaResults)
+        .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id));
+      const derived = deriveAllSilverEntryDates(
+        silverLinks.map((l) => ({
+          sailorId: l.sailorId,
+          regattaDate: l.regattaDate,
+          division: l.division,
+          countsForRanking: l.countsForRanking,
+        }))
+      );
+      for (const sid of affectedSailorIds) {
+        const next = derived.get(sid);
+        if (!next) continue;
+        const cur = sailorList.find((s) => s.id === sid);
+        const prev = cur?.silverEntryDate
+          ? String(cur.silverEntryDate).slice(0, 10)
+          : null;
+        if (prev === next) continue;
+        await db
+          .update(sailors)
+          .set({ silverEntryDate: next, updatedAt: new Date() })
+          .where(eq(sailors.id, sid));
+        silverUpdated++;
+        void logAdminChange({
+          action: "silver.recompute",
+          entityType: "sailor",
+          entityId: sid,
+          entityLabel: cur?.name || sid,
+          summary: `Silver entry ${prev || "—"} → ${next} (first Silver ranking regatta)`,
+          details: { old: prev, new: next },
+          source: "/api/admin/import",
+        });
+      }
+    } catch (e) {
+      console.warn("silver recompute after import", e);
+    }
+
     const needsNettMigration = errorSamples.some((e) =>
       /integer|real|numeric|type/i.test(e)
     );
@@ -464,11 +566,12 @@ export async function POST(req: Request) {
                 ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
                 : "See errors below."
             }`
-          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated from sail # / birth year / club / nationality). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}`,
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${silverUpdated} silver entry dates recomputed). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}`,
       regatta: reg,
       matched,
       created,
       updatedProfiles,
+      silverUpdated,
       unmatched,
       possibleDuplicates,
       inputRows: cleanRows.length,
