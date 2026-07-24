@@ -9,6 +9,7 @@
 | `AdminSailorsPanel.tsx` | Sailors sub-tab (filters, bulk, form, table) |
 | `AdminRegattasPanel.tsx` | Regattas sub-tab (list + detail) |
 | `AdminResultsPanel.tsx` | Results sub-tab + period DNS fill |
+| `AdminCompetitionsPanel.tsx` | Per-sailor results modal from Database |
 | `AdminStatsPanel.tsx` | Stats & usage |
 | `AdminSuggestionsPanel.tsx` | Personal/non-ranking suggestions queue |
 | `adminConstants.ts` | Sailor table column defs + localStorage keys |

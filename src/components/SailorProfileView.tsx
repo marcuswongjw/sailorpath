@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { getPercentileBadge } from "@/lib/ranking";
 import {
   seriesFleetStatus,
   seriesStatusBadge,
@@ -23,7 +22,15 @@ import {
   ChevronDown,
   ChevronUp,
   Camera,
+  Anchor,
+  Clock,
+  Medal,
 } from "lucide-react";
+import {
+  buildCareerTimeline,
+  formatEventWhen,
+  placeBadge,
+} from "@/lib/profileUi";
 
 interface SailorProfileViewProps {
   initialSailor: any;
@@ -214,6 +221,13 @@ export function SailorProfileView({
   const [avatarBusy, setAvatarBusy] = useState(false);
   const [avatarMsg, setAvatarMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  type ProfileTab =
+    | "results"
+    | "achievements"
+    | "timeline"
+    | "boat"
+    | "crew";
+  const [profileTab, setProfileTab] = useState<ProfileTab>("results");
 
   useEffect(() => {
     if (!demoMode && isOwner && typeof window !== "undefined") {
@@ -1130,104 +1144,187 @@ export function SailorProfileView({
         </div>
       )}
 
-      {/* Nat squad history (period-locked) */}
-      {SQUAD_HISTORY_SLOTS.some((s) => displaySailor[s.key]) && (
-        <div className="glass-panel rounded-2xl border border-white/5 p-5 md:p-6">
-          <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-1">
-            National squad history
-          </h2>
-          <p className="text-[11px] text-slate-600 mb-4">
-            Squad selection is fixed for each half-year (Jan–Jun / Jul–Dec).
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {SQUAD_HISTORY_SLOTS.map((slot) => {
-              const v = displaySailor[slot.key];
-              return (
-                <div
-                  key={slot.key}
-                  className="rounded-xl bg-white/5 border border-white/5 px-3 py-2.5 text-center"
-                >
-                  <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wide">
-                    {slot.label}
-                  </p>
-                  <p
-                    className={`mt-1 text-sm font-black ${
-                      v ? "text-orange-400" : "text-slate-600"
-                    }`}
+      {/* Profile section tabs — mobile scrollable */}
+      <div className="sticky top-0 z-20 -mx-0 sm:static sm:z-auto border-b border-white/10 bg-[#090a0f]/95 backdrop-blur-md sm:bg-transparent sm:backdrop-blur-none rounded-none sm:rounded-none">
+        <div className="flex gap-0 overflow-x-auto no-scrollbar -mx-1 px-1">
+          {(
+            [
+              ["results", "Results", Trophy],
+              ["achievements", "Achievements", Medal],
+              ["timeline", "Career timeline", Clock],
+              ["boat", "My boat", Anchor],
+              ["crew", "Profile", User],
+            ] as const
+          ).map(([key, label, Icon]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setProfileTab(key)}
+              className={`shrink-0 inline-flex items-center gap-1.5 px-3.5 py-3 text-[12px] sm:text-sm font-bold border-b-2 transition-colors min-h-[48px] ${
+                profileTab === key
+                  ? "border-orange-500 text-white"
+                  : "border-transparent text-slate-500 hover:text-slate-300"
+              }`}
+            >
+              <Icon className="h-3.5 w-3.5 opacity-80" />
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Achievements tab */}
+      {profileTab === "achievements" && (
+        <div className="space-y-4">
+          <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-5 md:p-6">
+            <h2 className="text-sm font-bold text-white tracking-wider uppercase mb-3">
+              Achievements
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {honors.length === 0 ? (
+                <p className="text-xs text-slate-500">
+                  No championship / squad tags yet.
+                </p>
+              ) : (
+                honors.map((h, idx) => (
+                  <span
+                    key={idx}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold ${h.className}`}
                   >
-                    {v || "—"}
-                  </p>
-                </div>
-              );
-            })}
+                    {h.text}
+                  </span>
+                ))
+              )}
+            </div>
+          </div>
+          {SQUAD_HISTORY_SLOTS.some((s) => displaySailor[s.key]) && (
+            <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-5 md:p-6">
+              <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-1">
+                National squad history
+              </h2>
+              <p className="text-[11px] text-slate-600 mb-4">
+                Squad selection is fixed for each half-year.
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {SQUAD_HISTORY_SLOTS.map((slot) => {
+                  const v = displaySailor[slot.key];
+                  return (
+                    <div
+                      key={slot.key}
+                      className="rounded-xl bg-white/5 border border-white/5 px-3 py-2.5 text-center"
+                    >
+                      <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wide">
+                        {slot.label}
+                      </p>
+                      <p
+                        className={`mt-1 text-sm font-black ${
+                          v ? "text-orange-400" : "text-slate-600"
+                        }`}
+                      >
+                        {v || "—"}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/5">
+            <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-4 flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-orange-500" />
+              Athlete statistics
+            </h2>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
+                <span className="block text-xs text-slate-500 font-bold uppercase">
+                  Age
+                </span>
+                <span className="block text-2xl font-extrabold text-white mt-1">
+                  {showDob && displaySailor.dob
+                    ? `${calculateAge(displaySailor.dob)} yrs`
+                    : showDob
+                      ? "—"
+                      : "Private"}
+                </span>
+              </div>
+              <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
+                <span className="block text-xs text-slate-500 font-bold uppercase">
+                  Weight
+                </span>
+                <span className="block text-2xl font-extrabold text-white mt-1 font-mono">
+                  {showWeight && displaySailor.weight != null
+                    ? `${displaySailor.weight} kg`
+                    : "Private"}
+                </span>
+              </div>
+              <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
+                <span className="block text-xs text-slate-500 font-bold uppercase">
+                  Regattas
+                </span>
+                <span className="block text-2xl font-extrabold text-orange-500 mt-1">
+                  {results.length}
+                </span>
+              </div>
+              <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
+                <span className="block text-xs text-slate-500 font-bold uppercase">
+                  Gender
+                </span>
+                <span className="block text-2xl font-extrabold text-white mt-1">
+                  {displaySailor.gender || "—"}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Equal-width Athlete Stats + Equipment */}
-      <div
-        className={`grid grid-cols-1 gap-6 ${
-          canSeePrivate ? "lg:grid-cols-3" : "lg:grid-cols-2"
-        }`}
-      >
-        <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col h-full min-h-[220px]">
-          <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-6 flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-orange-500" />
-            Athlete Statistics
+      {/* Career timeline tab */}
+      {profileTab === "timeline" && (
+        <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-6">
+          <h2 className="text-base sm:text-lg font-bold text-white mb-5">
+            Career timeline
           </h2>
-          <div className="grid grid-cols-2 gap-4 flex-1">
-            <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
-              <span className="block text-xs text-slate-500 font-bold uppercase">
-                Age
-              </span>
-              <span className="block text-2xl font-extrabold text-white mt-1">
-                {showDob && displaySailor.dob
-                  ? `${calculateAge(displaySailor.dob)} yrs`
-                  : showDob
-                    ? "—"
-                    : "Private"}
-              </span>
-              {!showDob && (
-                <span className="text-[10px] text-slate-500 mt-1 flex items-center justify-center gap-0.5">
-                  <EyeOff className="h-3 w-3" /> Locked
-                </span>
-              )}
-            </div>
-            <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
-              <span className="block text-xs text-slate-500 font-bold uppercase">
-                Weight
-              </span>
-              <span className="block text-2xl font-extrabold text-white mt-1 font-mono">
-                {showWeight && displaySailor.weight != null
-                  ? `${displaySailor.weight} kg`
-                  : "Private"}
-              </span>
-              {!showWeight && (
-                <span className="text-[10px] text-slate-500 mt-1 flex items-center justify-center gap-0.5">
-                  <EyeOff className="h-3 w-3" /> Locked
-                </span>
-              )}
-            </div>
-            <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
-              <span className="block text-xs text-slate-500 font-bold uppercase">
-                Regattas
-              </span>
-              <span className="block text-2xl font-extrabold text-orange-500 mt-1">
-                {initialResults.length}
-              </span>
-            </div>
-            <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
-              <span className="block text-xs text-slate-500 font-bold uppercase">
-                Gender
-              </span>
-              <span className="block text-2xl font-extrabold text-white mt-1">
-                {displaySailor.gender || "—"}
-              </span>
-            </div>
-          </div>
+          {(() => {
+            const items = buildCareerTimeline(displaySailor, results);
+            if (!items.length) {
+              return (
+                <p className="text-sm text-slate-500">
+                  Timeline fills in as squad history, overseas campaigns, and
+                  strong regatta finishes are recorded.
+                </p>
+              );
+            }
+            return (
+              <ol className="relative border-l border-white/10 ml-2 space-y-0">
+                {items.slice(0, 24).map((it, idx) => (
+                  <li key={it.id} className="relative pl-6 pb-6 last:pb-0">
+                    <span
+                      className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#090a0f] ${
+                        idx === 0
+                          ? "bg-orange-500"
+                          : "bg-slate-500"
+                      }`}
+                    />
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">
+                      {it.when}
+                    </p>
+                    <p className="text-sm font-bold text-white mt-0.5 leading-snug">
+                      {it.title}
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+                      {it.detail}
+                    </p>
+                  </li>
+                ))}
+              </ol>
+            );
+          })()}
         </div>
+      )}
 
-        <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col h-full min-h-[220px]">
+      {/* Boat tab — equipment only */}
+      {profileTab === "boat" && (
+        <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/5">
           <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-6 flex items-center gap-2">
             <Compass className="h-4 w-4 text-orange-500" />
             Equipment &amp; Rig Log
@@ -1292,9 +1389,11 @@ export function SailorProfileView({
             </div>
           )}
         </div>
+      )}
 
-        {canSeePrivate && (
-          <div className="glass-card rounded-2xl p-6 border border-white/5 flex flex-col h-full min-h-[220px]">
+      {/* Crew / account tab — privacy + claim lives in hero; extras here */}
+      {profileTab === "crew" && canSeePrivate && (
+          <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/5">
             <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-6 flex items-center gap-2">
               <Settings className="h-4 w-4 text-orange-500" />
               Privacy Toggles
@@ -1348,27 +1447,29 @@ export function SailorProfileView({
               )}
             </div>
           </div>
-        )}
-      </div>
+      )}
 
-      {/* Logbook */}
-      <div className="glass-panel rounded-3xl p-6 md:p-8 border border-white/5">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+      {profileTab === "crew" && !canSeePrivate && (
+        <div className="glass-panel rounded-2xl border border-white/5 p-5 text-sm text-slate-400">
+          Sign in and claim this profile to manage privacy and ownership.
+        </div>
+      )}
+
+      {/* Results tab — logbook */}
+      {profileTab === "results" && (
+      <div className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-white/5">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 sm:mb-6">
           <div>
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-orange-500" />
-              Regatta Logbook
+            <h2 className="text-lg sm:text-xl font-bold text-white">
+              Recent regatta results
             </h2>
             <p className="text-xs text-slate-400 mt-1">
-              Series results and race-by-race observations
-              {isOwner
-                ? " · add overseas / non-ranking events below"
-                : ""}
-              .
+              Rank, place badges, and race notes
+              {isOwner ? " · add overseas events below" : ""}.
             </p>
           </div>
-          <span className="text-xs text-slate-500 font-bold uppercase">
-            {results.length} Regattas Tracked
+          <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wide">
+            {results.length} events
           </span>
         </div>
 
@@ -1463,10 +1564,6 @@ export function SailorProfileView({
               const regattaId = res.regattaId || res.id;
               const rowKey = regattaId || res.regattaSlug || `r-${idx}`;
               const nonRanking = res.countsForRanking === false;
-              const { label, className } = getPercentileBadge(
-                res.rank,
-                fleetSize
-              );
               const overseas = Boolean(res.isOverseasCommitment);
               const dns = Boolean(res.isDns || res.isDNS) && !overseas;
               const slug = res.regattaSlug || res.id;
@@ -1498,101 +1595,97 @@ export function SailorProfileView({
                           : ""
                   }`}
                 >
-                  <div className="flex flex-col gap-3 sm:gap-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        {nameNode}
-                        <p className="text-xs text-slate-500 mt-1 font-semibold">
-                          {res.regattaDate}
-                          {res.geography ? ` · ${res.geography}` : ""}
-                          {res.division && !nonRanking
-                            ? ` · ${res.division}`
-                            : ""}
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setExpandedRegattaId(expanded ? null : regattaId)
-                        }
-                        className="shrink-0 rounded-full border border-white/10 bg-white/5 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-400 hover:text-white sm:min-h-0 sm:min-w-0 sm:p-2"
-                        title="Race observations"
-                      >
-                        {expanded ? (
-                          <ChevronUp className="h-4 w-4" />
-                        ) : (
-                          <ChevronDown className="h-4 w-4" />
-                        )}
-                      </button>
+                  {/* Compact result row (mobile-first, inspired by athlete profile UIs) */}
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <div
+                      className={`shrink-0 w-9 sm:w-10 text-center text-xl sm:text-2xl font-black tabular-nums ${
+                        res.rank === 1
+                          ? "text-amber-400"
+                          : res.rank === 2
+                            ? "text-slate-200"
+                            : res.rank === 3
+                              ? "text-orange-400"
+                              : "text-slate-400"
+                      }`}
+                    >
+                      {res.rank}
+                      {overseas ? "†" : dns ? "*" : ""}
                     </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {nonRanking && (
-                        <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
-                          Non-ranking
-                        </span>
-                      )}
-                      {overseas && (
-                        <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
-                          Overseas†
-                        </span>
-                      )}
-                      {dns && (
-                        <span className="rounded-full bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 text-[10px] font-bold text-rose-400">
-                          DNS*
-                        </span>
-                      )}
-                      {raceNotes.length > 0 && (
-                        <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-orange-300">
-                          {raceNotes.length} note
-                          {raceNotes.length === 1 ? "" : "s"}
-                        </span>
-                      )}
-                      <span
-                        className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold ${className}`}
-                      >
-                        {label}
-                      </span>
-                      {isOwner && !demoMode && nonRanking && res.resultId && (
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          {nameNode}
+                          <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 font-medium truncate">
+                            {[
+                              res.geography,
+                              formatEventWhen(res.regattaDate),
+                            ]
+                              .filter(Boolean)
+                              .join(" · ") || res.regattaDate}
+                          </p>
+                        </div>
                         <button
                           type="button"
-                          disabled={personalBusy}
-                          onClick={() => void deletePersonalResult(res)}
-                          className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold text-rose-300 hover:border-rose-500/40"
+                          onClick={() =>
+                            setExpandedRegattaId(expanded ? null : regattaId)
+                          }
+                          className="shrink-0 rounded-full border border-white/10 bg-white/5 p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-400 hover:text-white"
+                          title="Race observations"
                         >
-                          Remove
+                          {expanded ? (
+                            <ChevronUp className="h-4 w-4" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4" />
+                          )}
                         </button>
-                      )}
-                    </div>
-                    {/* Stats row: full width on mobile for readability */}
-                    <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center sm:justify-end sm:gap-6 border-t border-white/5 pt-3">
-                      <div className="text-center sm:text-right font-semibold text-sm">
-                        <span className="block text-[10px] sm:text-xs text-slate-500 uppercase">
-                          Rank
-                        </span>
-                        <span className="text-white text-lg font-black tabular-nums">
-                          {res.rank}
-                          {overseas ? "†" : dns ? "*" : ""}
-                        </span>
-                        <span className="text-slate-400 text-xs">
-                          {" "}
-                          / {fleetSize}
-                        </span>
                       </div>
-                      <div className="text-center sm:text-right font-semibold text-sm">
-                        <span className="block text-[10px] sm:text-xs text-slate-500 uppercase">
-                          Total
+                      <div className="mt-2 flex flex-wrap items-center gap-1.5 sm:gap-2">
+                        {(() => {
+                          const badge = placeBadge(res.rank, {
+                            isDns: dns,
+                            isOverseas: overseas,
+                          });
+                          return badge ? (
+                            <span
+                              className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${badge.className}`}
+                            >
+                              {badge.label}
+                            </span>
+                          ) : null;
+                        })()}
+                        {nonRanking && (
+                          <span className="rounded-full bg-white/5 border border-white/10 px-2 py-0.5 text-[10px] font-bold text-slate-400">
+                            Personal
+                          </span>
+                        )}
+                        {raceNotes.length > 0 && (
+                          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-orange-300">
+                            {raceNotes.length} note
+                            {raceNotes.length === 1 ? "" : "s"}
+                          </span>
+                        )}
+                        <span className="ml-auto text-[11px] sm:text-xs text-slate-400 font-semibold tabular-nums">
+                          {res.nettScore != null
+                            ? `${res.nettScore} nett`
+                            : res.totalScore != null
+                              ? `${res.totalScore} total`
+                              : `Rank ${res.rank}`}
+                          <span className="text-slate-600 font-normal">
+                            {" "}
+                            · {res.division || "Fleet"}
+                            {fleetSize ? ` / ${fleetSize}` : ""}
+                          </span>
                         </span>
-                        <span className="text-white text-lg font-black tabular-nums">
-                          {res.totalScore != null ? res.totalScore : "—"}
-                        </span>
-                      </div>
-                      <div className="text-center sm:text-right font-semibold text-sm">
-                        <span className="block text-[10px] sm:text-xs text-slate-500 uppercase">
-                          Nett
-                        </span>
-                        <span className="text-white text-lg font-black tabular-nums">
-                          {res.nettScore != null ? res.nettScore : "—"}
-                        </span>
+                        {isOwner && !demoMode && nonRanking && res.resultId && (
+                          <button
+                            type="button"
+                            disabled={personalBusy}
+                            onClick={() => void deletePersonalResult(res)}
+                            className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold text-rose-300"
+                          >
+                            Remove
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -1796,13 +1889,14 @@ export function SailorProfileView({
             <button
               type="button"
               onClick={() => setVisibleCount((prev) => prev + 15)}
-              className="rounded-full bg-slate-800 px-6 py-2.5 text-sm font-semibold text-slate-200 hover:bg-slate-700 hover:text-white transition-all border border-white/5"
+              className="rounded-full bg-slate-800 px-6 py-2.5 min-h-[44px] text-sm font-semibold text-slate-200 hover:bg-slate-700 hover:text-white transition-all border border-white/5"
             >
-              Load More
+              Load more results
             </button>
           </div>
         )}
       </div>
+      )}
     </div>
   );
 }

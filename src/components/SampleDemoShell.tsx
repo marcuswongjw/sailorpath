@@ -32,9 +32,9 @@ const ROLES: DemoRole[] = ["public", "sailor", "parent", "coach"];
 function scoreMark(s: {
   score: number;
   isDNS?: boolean;
-  isOverseas?: boolean;
+  isOverseasCommitment?: boolean;
 }) {
-  if (s.isOverseas) return `${s.score}†`;
+  if (s.isOverseasCommitment) return `${s.score}†`;
   if (s.isDNS) return `${s.score}*`;
   return String(s.score);
 }
@@ -127,17 +127,17 @@ export function SampleDemoShell() {
               </div>
             </div>
             <div className="grid grid-cols-5 gap-2">
-              {standing.rScores.map((r) => (
+              {standing.rScores.map((r, i) => (
                 <div
-                  key={r.label}
+                  key={r.regattaId}
                   className="rounded-xl bg-white/5 border border-white/5 px-2 py-2 text-center"
-                  title={r.regatta}
+                  title={r.regattaName}
                 >
                   <p className="text-[9px] font-black text-orange-400">
-                    {r.label}
+                    R{i + 1}
                   </p>
                   <p className="text-[9px] text-slate-500 line-clamp-1">
-                    {r.regatta}
+                    {r.regattaName}
                   </p>
                   <p className="text-sm font-mono font-bold text-white mt-1">
                     {scoreMark(r)}
@@ -399,34 +399,33 @@ export function SampleDemoShell() {
 
   return (
     <div className="flex-1 flex flex-col">
-      {/* Demo banner + role switcher */}
+      {/* Demo banner + role switcher — mobile-first sticky chrome */}
       <div className="sticky top-0 z-40 border-b border-amber-500/30 bg-[#12100a]/95 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-4 py-3 space-y-3">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2">
-            <p className="text-xs font-semibold text-amber-100/95">
+        <div className="mx-auto max-w-7xl px-3 sm:px-4 py-2.5 sm:py-3 space-y-2.5 sm:space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <p className="text-[11px] sm:text-xs font-semibold text-amber-100/95 leading-snug">
               <span className="font-black text-amber-300">DEMO PROFILE</span>
               {" — "}
-              Fictional data to show Public · Sailor · Parent · Coach experiences.
-              Not live database records.
+              Fictional data (Public · Sailor · Parent · Coach). Not live DB.
             </p>
             <div className="flex flex-wrap gap-2">
               <Link
                 href="/register"
-                className="rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-bold text-white hover:bg-orange-500"
+                className="rounded-full bg-orange-600 px-3 py-2 min-h-[40px] inline-flex items-center text-[11px] font-bold text-white hover:bg-orange-500"
               >
                 Claim your profile
               </Link>
               <Link
                 href="/sg/optimist/gold"
-                className="rounded-full border border-white/15 px-3 py-1.5 text-[11px] font-bold text-slate-300"
+                className="rounded-full border border-white/15 px-3 py-2 min-h-[40px] inline-flex items-center text-[11px] font-bold text-slate-300"
               >
                 Live standings
               </Link>
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-            <div className="flex flex-wrap gap-1 p-1 rounded-full bg-black/40 border border-white/10">
+          <div className="flex flex-col gap-2">
+            <div className="flex gap-1 p-1 rounded-2xl sm:rounded-full bg-black/40 border border-white/10 overflow-x-auto no-scrollbar">
               {ROLES.map((r) => {
                 const active = role === r;
                 const Icon =
@@ -449,7 +448,7 @@ export function SampleDemoShell() {
                         window.history.replaceState({}, "", u.toString());
                       }
                     }}
-                    className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] font-bold transition-all ${
+                    className={`inline-flex items-center gap-1.5 rounded-xl sm:rounded-full px-3 py-2 min-h-[40px] text-[11px] font-bold transition-all shrink-0 ${
                       active
                         ? "bg-orange-600 text-white shadow-lg shadow-orange-950/30"
                         : "text-slate-400 hover:text-white"
@@ -461,12 +460,10 @@ export function SampleDemoShell() {
                 );
               })}
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[11px] text-slate-400">
-                <span className="font-bold text-white">{copy.who}.</span>{" "}
-                {copy.value}
-              </p>
-            </div>
+            <p className="text-[11px] text-slate-400 leading-snug px-0.5">
+              <span className="font-bold text-white">{copy.who}.</span>{" "}
+              {copy.value}
+            </p>
           </div>
         </div>
       </div>
@@ -484,12 +481,16 @@ export function SampleDemoShell() {
         initialSailor={SAMPLE_SAILOR}
         initialResults={SAMPLE_RESULTS}
         initialEquipment={SAMPLE_EQUIPMENT}
+        initialSeriesStanding={SAMPLE_SERIES_STANDING}
         canSeePrivate={canSeePrivate}
         canClaim={role === "public"}
         isOwner={isOwner}
+        isLoggedIn={role !== "public"}
         demoMode
         demoRole={role}
-        onDemoClaim={() => flash("Demo: claim would submit after you register & sign in")}
+        onDemoClaim={() =>
+          flash("Demo: claim would submit after you register & sign in")
+        }
       />
 
       {/* Sailor + public panels below profile */}

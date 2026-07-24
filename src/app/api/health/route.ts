@@ -32,6 +32,8 @@ export async function GET() {
   let manuallyDroppedColumn: boolean | null = null;
   /** Rows still using legacy current_fleet Gold/Silver (run 021) */
   let legacyFleetTagCount: number | null = null;
+  /** Series members with no entry dates (admin stamp / SQL 022) */
+  let emptySeriesNoEntryCount: number | null = null;
   let urlMeta: ReturnType<
     typeof import("@/db").getDatabaseUrlMeta
   > extends infer T
@@ -88,6 +90,18 @@ export async function GET() {
         `;
         legacyFleetTagCount = Number(legacyFleet[0]?.n ?? 0);
 
+        step = "check_empty_series";
+        const emptySeries = await pgSql`
+          select count(*)::int as n
+          from public.sailors
+          where lower(trim(coalesce(current_fleet, ''))) in (
+              'series', 'gold', 'silver', 'in sg fleet', 'member'
+            )
+            and gold_entry_date is null
+            and silver_entry_date is null
+        `;
+        emptySeriesNoEntryCount = Number(emptySeries[0]?.n ?? 0);
+
         dbOk = true;
         step = "ok";
       }
@@ -126,6 +140,8 @@ export async function GET() {
         "Database is live, but migration 020 not applied — run src/db/migrations/020_drop_manually_dropped.sql";
     } else if (migration021Applied === false) {
       liveHint = `Database is live; ${legacyFleetTagCount} sailor(s) still have legacy Gold/Silver fleet tags — run src/db/migrations/021_normalize_series_fleet.sql`;
+    } else if (emptySeriesNoEntryCount && emptySeriesNoEntryCount > 0) {
+      liveHint = `Database is live; ${emptySeriesNoEntryCount} Series sailor(s) have no entry dates — use Admin → Sailors stamp, or SQL 022`;
     }
   }
 
@@ -155,6 +171,7 @@ export async function GET() {
         /** true when no legacy Gold/Silver current_fleet tags remain */
         normalize_series_fleet_021: migration021Applied,
         legacy_gold_silver_fleet_tags: legacyFleetTagCount,
+        empty_series_no_entry: emptySeriesNoEntryCount,
       },
       url: urlMeta
         ? {
