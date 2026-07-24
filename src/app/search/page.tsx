@@ -165,7 +165,15 @@ export default async function SearchPage({
             cf === "gold" ||
             cf === "silver" ||
             (!cf && Boolean(s.goldEntryDate || s.silverEntryDate));
-          const fleetLabel = s.manuallyDropped
+          const dropYmd = s.dropDate
+            ? String(s.dropDate).slice(0, 10)
+            : "";
+          const todaySg = new Date().toLocaleDateString("en-CA", {
+            timeZone: "Asia/Singapore",
+          });
+          const dropped =
+            /^\d{4}-\d{2}-\d{2}$/.test(dropYmd) && dropYmd <= todaySg;
+          const fleetLabel = dropped
             ? "Dropped"
             : !inSeries || cf === "guest"
               ? "Guest"

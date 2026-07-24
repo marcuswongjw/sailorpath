@@ -140,16 +140,12 @@ describe("resolveSailorFleet", () => {
       silverEntryDate: null,
       dropDate: null,
       currentFleet: "Series",
-      manuallyDropped: false,
       ...over,
     }) as SailorRecord;
 
-  it("excludes guests and manually dropped", () => {
+  it("excludes guests", () => {
     expect(
       resolveSailorFleet(base({ currentFleet: "Guest" }), jan26)
-    ).toBeNull();
-    expect(
-      resolveSailorFleet(base({ manuallyDropped: true }), jan26)
     ).toBeNull();
   });
 

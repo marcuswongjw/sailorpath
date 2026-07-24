@@ -22,18 +22,18 @@ describe("hasSilverHistory / isSeriesMember / seriesFleetStatus", () => {
     expect(seriesFleetStatus({})).toBe("guest");
   });
 
-  it("manually dropped overrides fleet", () => {
+  it("drop date marks dropped status", () => {
     expect(
       seriesFleetStatus({
-        currentFleet: "Gold",
+        currentFleet: "Series",
         goldEntryDate: "2024-01-01",
-        manuallyDropped: true,
+        dropDate: "2020-01-01",
       })
     ).toBe("dropped");
     expect(
       isSeriesMember({
         goldEntryDate: "2024-01-01",
-        manuallyDropped: true,
+        dropDate: "2020-01-01",
       })
     ).toBe(false);
   });

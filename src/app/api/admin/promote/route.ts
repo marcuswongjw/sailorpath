@@ -11,9 +11,15 @@ export async function GET() {
     await requireSuperadmin();
     const rows = await db.select().from(sailors);
     const candidates = rows.filter((s) => {
-      if (s.manuallyDropped) return false;
-      const cf = String(s.currentFleet || "").toLowerCase();
-      const alreadyGold = cf === "gold" || Boolean(s.goldEntryDate);
+      // Already left Optimist
+      if (s.dropDate) {
+        const ymd = String(s.dropDate).slice(0, 10);
+        const today = new Date().toLocaleDateString("en-CA", {
+          timeZone: "Asia/Singapore",
+        });
+        if (/^\d{4}-\d{2}-\d{2}$/.test(ymd) && ymd <= today) return false;
+      }
+      const alreadyGold = Boolean(s.goldEntryDate);
       if (alreadyGold) return false;
       return hasSilverHistory(s);
     });

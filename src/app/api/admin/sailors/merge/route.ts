@@ -208,9 +208,6 @@ export async function POST(req: Request) {
         fill[f] = mergeSailor[f];
       }
     }
-    if (!keepSailor.manuallyDropped && mergeSailor.manuallyDropped) {
-      fill.manuallyDropped = true;
-    }
 
     if (Object.keys(fill).length > 1) {
       await db.update(sailors).set(fill).where(eq(sailors.id, keepId));

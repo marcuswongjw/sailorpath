@@ -151,7 +151,7 @@ export async function POST(req: Request) {
         silverEntryDate: row.silverEntryDate,
         dropDate: row.dropDate,
         currentFleet: row.currentFleet,
-        manuallyDropped: row.manuallyDropped,
+
         dob: row.dob,
         gender: row.gender,
         nationalSquadStatus: row.nationalSquadStatus,
@@ -265,7 +265,7 @@ export async function POST(req: Request) {
         silverEntryDate: row.silverEntryDate,
         dropDate: row.dropDate,
         currentFleet: row.currentFleet,
-        manuallyDropped: row.manuallyDropped,
+
       }));
       // For "Both" division, fill for both fleets
       const fleets: ("Gold" | "Silver")[] =

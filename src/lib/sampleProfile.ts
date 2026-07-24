@@ -47,7 +47,7 @@ export const SAMPLE_SAILOR = {
   dropDate: null as string | null,
   currentFleet: "Series",
   school: "Raffles Institution",
-  manuallyDropped: false,
+
   dob: "2013-08-14",
   weight: 42,
   bio: "Optimist Gold fleet racer focused on light-wind speed and clean starts. Training toward Asian championships.",

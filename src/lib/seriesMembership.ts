@@ -133,9 +133,16 @@ export function isSeriesMember(s: {
   silverEntryDate?: string | null;
   goldEntryDate?: string | null;
   currentFleet?: string | null;
-  manuallyDropped?: boolean | null;
+  dropDate?: string | null;
 }): boolean {
-  if (s.manuallyDropped) return false;
+  // Past drop date → no longer an active series member for “now”
+  if (s.dropDate) {
+    const ymd = String(s.dropDate).slice(0, 10);
+    const today = new Date().toLocaleDateString("en-CA", {
+      timeZone: "Asia/Singapore",
+    });
+    if (/^\d{4}-\d{2}-\d{2}$/.test(ymd) && ymd <= today) return false;
+  }
   return isInSgSeries(s);
 }
 
@@ -147,9 +154,15 @@ export function seriesFleetStatus(s: {
   silverEntryDate?: string | null;
   goldEntryDate?: string | null;
   currentFleet?: string | null;
-  manuallyDropped?: boolean | null;
+  dropDate?: string | null;
 }): SeriesFleetStatus {
-  if (s.manuallyDropped) return "dropped";
+  if (s.dropDate) {
+    const ymd = String(s.dropDate).slice(0, 10);
+    const today = new Date().toLocaleDateString("en-CA", {
+      timeZone: "Asia/Singapore",
+    });
+    if (/^\d{4}-\d{2}-\d{2}$/.test(ymd) && ymd <= today) return "dropped";
+  }
   if (!isInSgSeries(s)) return "guest";
   // Ranking tier hint from gold entry date (not from currentFleet Gold/Silver)
   if (s.goldEntryDate) return "gold";
@@ -179,7 +192,7 @@ export function seriesStatusBadge(status: SeriesFleetStatus): {
       };
     case "dropped":
       return {
-        label: "Manually dropped",
+        label: "Dropped (drop date)",
         className: "bg-amber-500/10 text-amber-300 border border-amber-500/20",
       };
     default:
@@ -290,10 +303,13 @@ export function sailorDbErrorHint(err: unknown): string | null {
     return "Database missing nationality column. In Supabase SQL Editor run: ALTER TABLE public.sailors ADD COLUMN IF NOT EXISTS nationality text;";
   }
   if (
-    /(school|current_fleet|manually_dropped)/i.test(msg) &&
+    /(school|current_fleet)/i.test(msg) &&
     /column|does not exist/i.test(msg)
   ) {
     return "Database missing school/fleet columns. Run migration 002_sailor_school_fleet.sql in Supabase.";
+  }
+  if (/manually_dropped/i.test(msg) && /column|does not exist/i.test(msg)) {
+    return "manually_dropped was removed. Run migration 020_drop_manually_dropped.sql in Supabase.";
   }
   if (/nett_score/i.test(msg) && /integer|type|numeric/i.test(msg)) {
     return "Run migration 003: ALTER TABLE regatta_results ALTER COLUMN nett_score TYPE real;";

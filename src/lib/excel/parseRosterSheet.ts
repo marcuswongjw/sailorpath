@@ -14,7 +14,6 @@ export type RosterImportRow = {
   silverEntryDate?: string | null;
   dropDate?: string | null;
   currentFleet?: string | null;
-  manuallyDropped?: string | boolean | null;
   nationalSquadStatus?: string | null;
   dob?: string | null;
   weight?: string | number | null;
@@ -90,11 +89,6 @@ export function parseRosterRows(
         "fleet",
       ]);
 
-      const manuallyDropped = pickCol(row, [
-        "manually dropped",
-        "manuallydropped",
-        "manual drop",
-      ]);
 
       const school = pickCol(row, ["school"]);
 
@@ -127,7 +121,6 @@ export function parseRosterRows(
         silverEntryDate,
         dropDate,
         currentFleet: strOrNull(currentFleet),
-        manuallyDropped: strOrNull(manuallyDropped),
         nationalSquadStatus:
           nationalSquadStatus != null
             ? String(nationalSquadStatus).trim()

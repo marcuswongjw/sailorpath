@@ -13,8 +13,6 @@ export interface SailorRecord {
   dropDate: string | null;
   /** Gold | Silver — explicit fleet for the current half (e.g. Jul–Dec 2026) */
   currentFleet?: string | null;
-  /** Left Optimist without normal drop; not ranked, may still appear on gold register */
-  manuallyDropped?: boolean | null;
   dob?: string | null;
   weight?: number | null;
   bio?: string | null;
@@ -240,11 +238,10 @@ export function scoringRegattasForFleet(
 /**
  * Period ranking membership.
  *
- * 1) Manually dropped (no drop date) → never ranked
- * 2) Guest (not In SG Fleet) → never ranked
- * 3) Drop date: out of Gold/Silver from that day (drop in half → out for that half)
- * 4) In SG Fleet + goldEntryDate ≤ period end → Gold (from that date until drop)
- * 5) Else In SG Fleet → Silver
+ * 1) Guest (not In SG Fleet) → never ranked
+ * 2) Drop date: out of Gold/Silver from that day (drop in half → out for that half)
+ * 3) In SG Fleet + goldEntryDate ≤ period end → Gold (from that date until drop)
+ * 4) Else In SG Fleet → Silver
  *
  * `currentFleet` stores Guest | Series only (legacy Gold/Silver = Series).
  * It does NOT pick Gold vs Silver for a half-year.
@@ -253,10 +250,6 @@ export function resolveSailorFleet(
   sailor: SailorRecord,
   period: Period
 ): { active: boolean; fleet: "Gold" | "Silver" } | null {
-  if (sailor.manuallyDropped) {
-    return null;
-  }
-
   const cf = String(sailor.currentFleet || "")
     .trim()
     .toLowerCase();

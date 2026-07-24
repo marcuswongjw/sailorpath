@@ -15,7 +15,6 @@ const ALLOWED = new Set([
   "dropDate",
   "nationalSquadStatus",
   "currentFleet",
-  "manuallyDropped",
   "school",
   "nationality",
   "natSquadStatusJan25",
@@ -49,7 +48,7 @@ const NUMERIC = new Set([
 
 const YEARS_LIST = new Set(["worlds", "european", "asian", "seaGames"]);
 
-const BOOLEAN = new Set(["manuallyDropped"]);
+const BOOLEAN = new Set<string>();
 
 export async function POST(req: Request) {
   try {
@@ -133,10 +132,6 @@ export async function POST(req: Request) {
     // Legacy “current squad” tracks Jul–Dec 2026 period field
     if (field === "natSquadStatusJul26") {
       patch.nationalSquadStatus = typed;
-    }
-    // Drop date alone ends series ranking — clear manual drop flag
-    if (field === "dropDate" && typed != null && typed !== "") {
-      patch.manuallyDropped = false;
     }
     await db.update(sailors).set(patch).where(inArray(sailors.id, sailorIds));
 

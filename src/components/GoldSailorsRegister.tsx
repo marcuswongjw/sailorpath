@@ -18,7 +18,6 @@ type GoldSailor = {
   sailNumber: string;
   dob?: string | null;
   gender?: string | null;
-  manuallyDropped?: boolean | null;
   dropDate?: string | null;
   goldEntryDate?: string | null;
   currentFleet?: string | null;
@@ -364,8 +363,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
               <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
                 {sorted.map((sailor) => {
                   const age = ageOf(sailor.dob);
-                  const isDropped =
-                    sailor.dropDate != null || Boolean(sailor.manuallyDropped);
+                  const isDropped = sailor.dropDate != null;
 
                   return (
                     <tr

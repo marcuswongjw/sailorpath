@@ -158,7 +158,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [dbSearch, setDbSearch] = useState("");
   const [dbFleetFilter, setDbFleetFilter] = useState<string>("all");
   const [dbSquadFilter, setDbSquadFilter] = useState<string>("all");
-  const [dbDroppedFilter, setDbDroppedFilter] = useState<string>("all");
   const [regattaSearch, setRegattaSearch] = useState("");
   const [regattaDivisionFilter, setRegattaDivisionFilter] =
     useState<string>("all");
@@ -347,10 +346,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       if (dbFleetFilter === "guest" && inSeries) return false;
       // Ranking-style filters (derived for current dates, not Fleet current)
       if (dbFleetFilter === "gold") {
-        if (!inSeries || !s.goldEntryDate || s.manuallyDropped) return false;
+        if (!inSeries || !s.goldEntryDate) return false;
       }
       if (dbFleetFilter === "silver") {
-        if (!inSeries || s.goldEntryDate || s.manuallyDropped) return false;
+        if (!inSeries || s.goldEntryDate) return false;
       }
     }
     if (dbSquadFilter !== "all") {
@@ -359,13 +358,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         s.natSquadStatusJul26 || s.nationalSquadStatus || "";
       if (String(sq) !== dbSquadFilter) return false;
     }
-    if (dbDroppedFilter === "yes" && !s.manuallyDropped) return false;
-    if (dbDroppedFilter === "no" && s.manuallyDropped) return false;
     return true;
   });
 
   const seriesLabelOf = (s: any) => {
-    if (s.manuallyDropped) return "Dropped";
     // Optimist drop date = out of Gold/Silver from that day (SG calendar)
     if (s.dropDate) {
       const ymd = String(s.dropDate).slice(0, 10);
@@ -438,8 +434,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           const a = ageYears(s.dob as string | null);
           return a == null ? 99999 : a;
         }
-        case "manuallyDropped":
-          return s.manuallyDropped ? 1 : 0;
         case "club":
           return s.club || "";
         case "nationality":
@@ -704,10 +698,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
             "weight",
           ].includes(bulkField);
           if (isNumeric) typedValue = bulkValue === "" ? null : parseInt(bulkValue) || null;
-          else if (bulkField === "manuallyDropped") {
-            const t = String(bulkValue).toLowerCase();
-            typedValue = t === "y" || t === "yes" || t === "true" || t === "1";
-          }
           else if (
             [
               "natSquadStatusJan25",
@@ -912,9 +902,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       weight: sailorForm.weight === "" || sailorForm.weight == null ? null : sailorForm.weight,
       instagram: sailorForm.instagram || null,
       avatarUrl: sailorForm.avatarUrl || null,
-      manuallyDropped: sailorForm.dropDate
-        ? false
-        : Boolean(sailorForm.manuallyDropped),
       natSquadStatusJan25: sailorForm.natSquadStatusJan25 || null,
       natSquadStatusJul25: sailorForm.natSquadStatusJul25 || null,
       natSquadStatusJan26: sailorForm.natSquadStatusJan26 || null,
@@ -1570,18 +1557,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       <option value="DS">DS</option>
                     </select>
                   </div>
-                  <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Manually dropped</label>
-                    <select
-                      value={dbDroppedFilter}
-                      onChange={(e) => setDbDroppedFilter(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
-                    >
-                      <option value="all">All</option>
-                      <option value="no">Active only</option>
-                      <option value="yes">Dropped only</option>
-                    </select>
-                  </div>
                   <p className="sm:col-span-2 lg:col-span-4 text-[11px] text-slate-500">
                     Showing <strong className="text-white">{filteredDbSailors.length}</strong> of{" "}
                     {sailorList.length} sailors
@@ -1622,7 +1597,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <option value="goldEntryDate">Gold Fleet Entry Date</option>
                           <option value="silverEntryDate">Silver Fleet Entry Date</option>
                           <option value="dropDate">Optimist Drop Date</option>
-                          <option value="manuallyDropped">Manually dropped (Y/N)</option>
                         </optgroup>
                         <optgroup label="Profile">
                           <option value="club">Club</option>
@@ -1681,15 +1655,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         >
                           <option value="Guest">Guest</option>
                           <option value="Series">In SG Fleet</option>
-                        </select>
-                      ) : bulkField === "manuallyDropped" ? (
-                        <select
-                          value={bulkValue}
-                          onChange={(e) => setBulkValue(e.target.value)}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                        >
-                          <option value="N">N (active)</option>
-                          <option value="Y">Y (dropped)</option>
                         </select>
                       ) : [
                           "natSquadStatusJan25",
@@ -2160,29 +2125,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         </p>
                       </div>
                       <div>
-                        <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer mt-6">
-                          <input
-                            type="checkbox"
-                            checked={Boolean(sailorForm.manuallyDropped)}
-                            onChange={(e) =>
-                              setSailorForm({
-                                ...sailorForm,
-                                manuallyDropped: e.target.checked,
-                              })
-                            }
-                            className="rounded border-slate-600"
-                          />
-                          <span>
-                            <strong className="text-white">Manually dropped</strong>
-                            <span className="block text-[10px] text-slate-500">
-                              Only if they leave without an Optimist drop date.
-                              Prefer setting <strong>Drop date</strong> below —
-                              that ends Gold/Silver ranking from that day.
-                            </span>
-                          </span>
-                        </label>
-                      </div>
-                      <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Gold Fleet Entry Date</label>
                         <input
                           type="date"
@@ -2206,20 +2148,12 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           type="date"
                           value={sailorForm.dropDate || ""}
                           onChange={(e) =>
-                            setSailorForm({
-                              ...sailorForm,
-                              dropDate: e.target.value,
-                              // Drop date replaces the manual flag for fleet exit
-                              manuallyDropped: e.target.value
-                                ? false
-                                : sailorForm.manuallyDropped,
-                            })
+setSailorForm({ ...sailorForm, dropDate: e.target.value })
                           }
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                         />
                         <p className="mt-1 text-[10px] text-slate-500">
-                          Out of Gold (and rankings) from this date inclusive.
-                          Clears “Manually dropped” when set.
+                          Out of Gold/Silver rankings from this date inclusive.
                         </p>
                       </div>
                       <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 border-t border-white/5 pt-4">
@@ -2474,13 +2408,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               </span>
                             ),
                             gender: s.gender || "M",
-                            manuallyDropped: s.manuallyDropped ? (
-                              <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded">
-                                Yes
-                              </span>
-                            ) : (
-                              <span className="text-[10px] text-slate-600">No</span>
-                            ),
                             age: (() => {
                               const a = ageYears(s.dob as string | null);
                               return a != null ? (
@@ -2634,8 +2561,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                                           s.histRankingJun26 != null
                                             ? String(s.histRankingJun26)
                                             : "",
-                                        manuallyDropped:
-                                          s.manuallyDropped || false,
                                         instagram: s.instagram || "",
                                         avatarUrl: s.avatarUrl || "",
                                         dob: d(s.dob),

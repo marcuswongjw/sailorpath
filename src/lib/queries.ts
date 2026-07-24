@@ -58,7 +58,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     silverEntryDate: row.silverEntryDate,
     dropDate: row.dropDate,
     currentFleet: row.currentFleet,
-    manuallyDropped: row.manuallyDropped,
+
     dob: row.dob,
     weight: row.weight,
     bio: row.bio,
@@ -148,7 +148,7 @@ export async function searchSailors(
 
     const fleet = (f.fleet || "all").toLowerCase();
     if (fleet === "gold") {
-      rows = rows.filter((s) => Boolean(s.goldEntryDate) && !s.manuallyDropped);
+      rows = rows.filter((s) => Boolean(s.goldEntryDate));
     } else if (fleet === "silver") {
       rows = rows.filter((s) => {
         const cf = String(s.currentFleet || "").toLowerCase();
@@ -159,7 +159,7 @@ export async function searchSailors(
             cf === "gold" ||
             cf === "silver" ||
             Boolean(s.silverEntryDate || s.goldEntryDate));
-        return inSeries && !s.goldEntryDate && !s.manuallyDropped;
+        return inSeries && !s.goldEntryDate;
       });
     } else if (fleet === "guest") {
       rows = rows.filter((s) => {
@@ -381,11 +381,8 @@ export async function getSailorSeriesStanding(
   period: Period = CURRENT_PERIOD
 ): Promise<SeriesStanding | null> {
   return withDb(async () => {
-    // Series members only (Guest excluded). Ranking logic also filters Guest.
-    const sailorRows = await db
-      .select()
-      .from(sailors)
-      .where(ne(sailors.manuallyDropped, true));
+    // Ranking filters Guest / drop via resolveSailorFleet
+    const sailorRows = await db.select().from(sailors);
 
     const s = sailorRows.map(mapSailor);
     const meRow = s.find((x) => x.id === sailorId);

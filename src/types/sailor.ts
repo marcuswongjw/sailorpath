@@ -15,7 +15,7 @@ export type SailorAdmin = {
   gender?: string | null;
   nationalSquadStatus?: string | null;
   currentFleet?: string | null;
-  manuallyDropped?: boolean | null;
+
   instagram?: string | null;
   facebook?: string | null;
   natSquadStatusJan25?: string | null;

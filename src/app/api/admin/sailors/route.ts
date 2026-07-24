@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
-import { and, asc, eq, isNotNull } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import {
   normalizeNationality,
   normalizeYearsList,
@@ -32,22 +32,9 @@ function failDb(e: unknown) {
   return jsonError(e);
 }
 
-/** Clear manually_dropped when optimist drop_date is set (drop date is fleet exit). */
-async function healManualDropWhenDropDate() {
-  try {
-    await db
-      .update(sailors)
-      .set({ manuallyDropped: false, updatedAt: new Date() })
-      .where(and(isNotNull(sailors.dropDate), eq(sailors.manuallyDropped, true)));
-  } catch (e) {
-    console.warn("healManualDropWhenDropDate", e);
-  }
-}
-
 export async function GET() {
   try {
     await requireSuperadmin();
-    await healManualDropWhenDropDate();
     const rows = await db.select().from(sailors).orderBy(asc(sailors.name));
     return NextResponse.json({ sailors: rows });
   } catch (e) {
@@ -98,10 +85,6 @@ export async function POST(req: Request) {
       silverEntryDate,
       dropDate: toDateOnly(body.dropDate),
       currentFleet: currentFleet || "Guest",
-      // Drop date alone exits fleet rankings — do not also flag manually dropped
-      manuallyDropped: toDateOnly(body.dropDate)
-        ? false
-        : Boolean(body.manuallyDropped),
       nationalSquadStatus: body.nationalSquadStatus || null,
       dob: toDateOnly(body.dob),
       weight: num(body.weight),
@@ -260,26 +243,6 @@ export async function PATCH(req: Request) {
       !existing.goldEntryDate
     ) {
       patch.silverEntryDate = new Date().toISOString().slice(0, 10);
-    }
-    if (body.manuallyDropped !== undefined) {
-      const v = body.manuallyDropped;
-      patch.manuallyDropped =
-        v === true ||
-        v === "Y" ||
-        v === "y" ||
-        v === "yes" ||
-        v === "true" ||
-        v === 1;
-    }
-    // Drop date is the fleet-exit signal; clear manual flag whenever drop date is present
-    const nextDrop =
-      patch.dropDate !== undefined
-        ? patch.dropDate
-        : existing.dropDate
-          ? String(existing.dropDate).slice(0, 10)
-          : null;
-    if (nextDrop) {
-      patch.manuallyDropped = false;
     }
     for (const f of [
       "weight",
