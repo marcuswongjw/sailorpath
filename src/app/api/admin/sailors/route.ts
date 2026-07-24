@@ -93,6 +93,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: goldErr }, { status: 400 });
     }
 
+    // Series without any entry date → stamp silver entry (required to rank)
+    if (
+      String(currentFleet || "").toLowerCase() === "series" &&
+      !silverEntryDate &&
+      !goldEntryDate
+    ) {
+      silverEntryDate = todayYmdSg();
+    }
+
     const values: Record<string, unknown> = {
       name: body.name,
       handle,

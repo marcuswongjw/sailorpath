@@ -84,9 +84,9 @@ export default async function SearchPage({
               className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white"
             >
               <option value="all">All</option>
-              <option value="gold">Gold</option>
-              <option value="silver">Silver</option>
-              <option value="guest">Guest</option>
+              <option value="gold">Gold (active now)</option>
+              <option value="silver">Silver (active now)</option>
+              <option value="guest">Guest / not ranked</option>
             </select>
           </label>
           <label className="text-[10px] font-bold text-slate-500 uppercase">

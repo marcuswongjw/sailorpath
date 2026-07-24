@@ -38,9 +38,11 @@ describe("datesSg", () => {
     });
   });
 
-  it("isHalfBoundaryYmd allows only 1 Jan and 1 Jul", () => {
+  it("isHalfBoundaryYmd allows only 1 Jan and 1 Jul from 2022+", () => {
     expect(isHalfBoundaryYmd("2026-01-01")).toBe(true);
     expect(isHalfBoundaryYmd("2026-07-01")).toBe(true);
+    expect(isHalfBoundaryYmd("2022-01-01")).toBe(true);
+    expect(isHalfBoundaryYmd("2021-01-01")).toBe(false);
     expect(isHalfBoundaryYmd("2026-06-30")).toBe(false);
     expect(isHalfBoundaryYmd("2026-03-15")).toBe(false);
     expect(isHalfBoundaryYmd(null)).toBe(false);

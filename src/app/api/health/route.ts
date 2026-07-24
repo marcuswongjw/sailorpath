@@ -30,6 +30,8 @@ export async function GET() {
   let sailorCount: number | null = null;
   /** null = not checked; true = column still present (migration 020 needed) */
   let manuallyDroppedColumn: boolean | null = null;
+  /** Rows still using legacy current_fleet Gold/Silver (run 021) */
+  let legacyFleetTagCount: number | null = null;
   let urlMeta: ReturnType<
     typeof import("@/db").getDatabaseUrlMeta
   > extends infer T
@@ -78,6 +80,14 @@ export async function GET() {
         `;
         manuallyDroppedColumn = colRows.length > 0;
 
+        step = "check_legacy_fleet_tags";
+        const legacyFleet = await pgSql`
+          select count(*)::int as n
+          from public.sailors
+          where lower(trim(current_fleet)) in ('gold', 'silver')
+        `;
+        legacyFleetTagCount = Number(legacyFleet[0]?.n ?? 0);
+
         dbOk = true;
         step = "ok";
       }
@@ -106,6 +116,18 @@ export async function GET() {
   const live = dbOk && hasSupabaseUrl && hasAnonKey;
   const migration020Applied =
     manuallyDroppedColumn === null ? null : manuallyDroppedColumn === false;
+  const migration021Applied =
+    legacyFleetTagCount === null ? null : legacyFleetTagCount === 0;
+
+  let liveHint = "Database is live.";
+  if (live) {
+    if (migration020Applied === false) {
+      liveHint =
+        "Database is live, but migration 020 not applied — run src/db/migrations/020_drop_manually_dropped.sql";
+    } else if (migration021Applied === false) {
+      liveHint = `Database is live; ${legacyFleetTagCount} sailor(s) still have legacy Gold/Silver fleet tags — run src/db/migrations/021_normalize_series_fleet.sql`;
+    }
+  }
 
   return NextResponse.json({
     ok: live,
@@ -130,6 +152,9 @@ export async function GET() {
         /** true when sailors.manually_dropped is gone (020 applied) */
         drop_manually_dropped_020: migration020Applied,
         manually_dropped_column_present: manuallyDroppedColumn,
+        /** true when no legacy Gold/Silver current_fleet tags remain */
+        normalize_series_fleet_021: migration021Applied,
+        legacy_gold_silver_fleet_tags: legacyFleetTagCount,
       },
       url: urlMeta
         ? {
@@ -144,10 +169,6 @@ export async function GET() {
         : null,
       error: dbError,
     },
-    hint: live
-      ? migration020Applied === false
-        ? "Database is live, but migration 020 not applied — run src/db/migrations/020_drop_manually_dropped.sql"
-        : "Database is live."
-      : hint,
+    hint: live ? liveHint : hint,
   });
 }

@@ -77,6 +77,9 @@ export function periodHalfFromYmd(date: string | null | undefined): {
   };
 }
 
+/** Gold entry / drop dates are only offered from this year onward. */
+export const HALF_BOUNDARY_MIN_YEAR = 2022;
+
 /**
  * Gold entry and optimist drop dates must be half-year boundaries only:
  * 1 Jan or 1 Jul. That keeps period-level fleet resolve correct
@@ -85,7 +88,9 @@ export function periodHalfFromYmd(date: string | null | undefined): {
 export function isHalfBoundaryYmd(date: string | null | undefined): boolean {
   const d = toYmd(date);
   if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return false;
-  return d.endsWith("-01-01") || d.endsWith("-07-01");
+  if (!(d.endsWith("-01-01") || d.endsWith("-07-01"))) return false;
+  const y = Number(d.slice(0, 4));
+  return Number.isFinite(y) && y >= HALF_BOUNDARY_MIN_YEAR;
 }
 
 /**
@@ -99,22 +104,27 @@ export function validateHalfBoundaryDate(
   if (date == null || date === "") return null;
   const d = toYmd(date);
   if (!d) return `${fieldLabel} is invalid.`;
-  if (!isHalfBoundaryYmd(d)) {
+  if (!(d.endsWith("-01-01") || d.endsWith("-07-01"))) {
     return `${fieldLabel} must be 1 Jan or 1 Jul (half-year boundary), e.g. 2026-01-01 or 2026-07-01.`;
+  }
+  const y = Number(d.slice(0, 4));
+  if (!Number.isFinite(y) || y < HALF_BOUNDARY_MIN_YEAR) {
+    return `${fieldLabel} must be ${HALF_BOUNDARY_MIN_YEAR} or later (1 Jan / 1 Jul).`;
   }
   return null;
 }
 
 /** Select options: 1 Jan & 1 Jul for years [fromYear, toYear] inclusive, newest first. */
 export function halfBoundaryOptions(
-  fromYear = 2018,
+  fromYear = HALF_BOUNDARY_MIN_YEAR,
   toYear?: number
 ): { value: string; label: string }[] {
   const end =
     toYear ??
     Number(todayYmdSg().slice(0, 4)) + 2;
+  const start = Math.max(fromYear, HALF_BOUNDARY_MIN_YEAR);
   const out: { value: string; label: string }[] = [];
-  for (let y = end; y >= fromYear; y--) {
+  for (let y = end; y >= start; y--) {
     out.push({
       value: `${y}-07-01`,
       label: `1 Jul ${y} (start Jul–Dec)`,

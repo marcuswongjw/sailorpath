@@ -157,6 +157,19 @@ describe("resolveSailorFleet", () => {
     expect(r).toEqual({ active: true, fleet: "Silver" });
   });
 
+  it("Series with no entry dates is not ranked", () => {
+    expect(
+      resolveSailorFleet(
+        base({
+          currentFleet: "Series",
+          silverEntryDate: null,
+          goldEntryDate: null,
+        }),
+        jan26
+      )
+    ).toBeNull();
+  });
+
   it("Gold from gold entry date until drop", () => {
     const r = resolveSailorFleet(
       base({

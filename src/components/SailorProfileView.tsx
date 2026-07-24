@@ -1528,7 +1528,7 @@ export function SailorProfileView({
                     <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
                       <div className="text-left sm:text-right font-semibold text-sm">
                         <span className="block text-xs text-slate-500 uppercase">
-                          Points
+                          Rank
                         </span>
                         <span className="text-white text-lg font-black">
                           {res.rank}

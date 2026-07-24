@@ -20,7 +20,10 @@ import {
   type RegattaScoreSlot,
 } from "@/lib/ranking";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
-import { isInSgSeries } from "@/lib/seriesMembership";
+import {
+  isInSgSeries,
+  normalizeSgSeriesMembership,
+} from "@/lib/seriesMembership";
 import {
   and,
   asc,
@@ -59,7 +62,13 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     goldEntryDate: row.goldEntryDate,
     silverEntryDate: row.silverEntryDate,
     dropDate: row.dropDate,
-    currentFleet: row.currentFleet,
+    // Normalize legacy Gold/Silver tags to Series for ranking + UI
+    currentFleet: (() => {
+      const n = normalizeSgSeriesMembership(row.currentFleet);
+      if (n) return n;
+      if (row.currentFleet == null || row.currentFleet === "") return row.currentFleet;
+      return row.currentFleet;
+    })(),
 
     dob: row.dob,
     weight: row.weight,
@@ -148,13 +157,23 @@ export async function searchSailors(
       });
     }
 
+    // Fleet filter = active ranking tier for current SG half (not just entry history)
     const fleet = (f.fleet || "all").toLowerCase();
-    if (fleet === "gold") {
-      rows = rows.filter((s) => isInSgSeries(s) && Boolean(s.goldEntryDate));
-    } else if (fleet === "silver") {
-      rows = rows.filter((s) => isInSgSeries(s) && !s.goldEntryDate);
-    } else if (fleet === "guest") {
-      rows = rows.filter((s) => !isInSgSeries(s));
+    if (fleet === "gold" || fleet === "silver" || fleet === "guest") {
+      const period = currentPeriodFromSgToday();
+      const mapped = rows.map(mapSailor);
+      rows = rows.filter((_, i) => {
+        const s = mapped[i];
+        if (fleet === "guest") {
+          return (
+            !isInSgSeries(s) ||
+            resolveSailorFleet(s, period) == null
+          );
+        }
+        const r = resolveSailorFleet(s, period);
+        if (!r?.active) return false;
+        return fleet === "gold" ? r.fleet === "Gold" : r.fleet === "Silver";
+      });
     }
 
     if (f.squad && f.squad !== "all") {

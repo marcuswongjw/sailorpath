@@ -258,6 +258,10 @@ export function resolveSailorFleet(
   if (!isInSgSeries(sailor)) {
     return null;
   }
+  // In SG Fleet must have silver or gold entry before ranking (no empty Series DNS pad)
+  if (!sailor.goldEntryDate && !sailor.silverEntryDate) {
+    return null;
+  }
 
   // Period bounds as YYYY-MM-DD (Singapore calendar; compare as strings)
   const pStartStr =
