@@ -50,6 +50,53 @@ export async function POST(req: Request) {
   try {
     await requireSuperadmin();
     const body = await req.json();
+
+    /**
+     * Stamp silver entry (SG today) for In SG Fleet sailors with no gold/silver
+     * entry dates so they can appear on Silver rankings.
+     */
+    if (
+      body.action === "stampEmptySeriesSilver" ||
+      body.action === "cleanupEmptySeries"
+    ) {
+      const { todayYmdSg } = await import("@/lib/datesSg");
+      const stamp = todayYmdSg();
+      const rows = await db.select().from(sailors);
+      let updated = 0;
+      const names: string[] = [];
+      for (const s of rows) {
+        const cf = String(s.currentFleet || "")
+          .trim()
+          .toLowerCase();
+        // Target: series membership but no entry dates
+        const isSeriesTag =
+          cf === "series" ||
+          cf === "gold" ||
+          cf === "silver" ||
+          cf === "in sg fleet" ||
+          cf === "member";
+        if (!isSeriesTag) continue;
+        if (s.goldEntryDate || s.silverEntryDate) continue;
+        await db
+          .update(sailors)
+          .set({
+            silverEntryDate: stamp,
+            currentFleet: "Series",
+            updatedAt: new Date(),
+          })
+          .where(eq(sailors.id, s.id));
+        updated++;
+        if (names.length < 20) names.push(s.name);
+      }
+      return NextResponse.json({
+        ok: true,
+        updated,
+        silverEntryDate: stamp,
+        names,
+        message: `Stamped silver entry ${stamp} on ${updated} Series sailor(s) with no entry dates.`,
+      });
+    }
+
     const handle =
       (body.handle as string)?.trim() ||
       String(body.name || "")

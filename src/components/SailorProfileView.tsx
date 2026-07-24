@@ -885,42 +885,50 @@ export function SailorProfileView({
 
       {/* Live series standing */}
       {initialSeriesStanding && (
-        <div className="glass-panel rounded-2xl border border-orange-500/20 p-5 md:p-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-            <div className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-orange-500" />
-              <div>
+        <div className="glass-panel rounded-2xl border border-orange-500/20 p-4 sm:p-5 md:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
+            <div className="flex items-start gap-2 min-w-0">
+              <Trophy className="h-5 w-5 text-orange-500 shrink-0 mt-0.5" />
+              <div className="min-w-0">
                 <h3 className="text-sm font-black text-white uppercase tracking-wider">
                   Series standing
                 </h3>
-                <p className="text-[11px] text-slate-500">
-                  {initialSeriesStanding.periodLabel} ·{" "}
-                  {initialSeriesStanding.fleet} fleet
+                <p className="text-[11px] text-slate-500 leading-snug">
+                  {initialSeriesStanding.periodLabel}
+                  <span className="text-slate-600"> · </span>
+                  <span className="text-orange-300/90 font-semibold">
+                    {initialSeriesStanding.fleet} fleet
+                  </span>
                 </p>
               </div>
             </div>
-            <div className="text-left md:text-right">
-              <p className="text-[10px] font-bold text-slate-500 uppercase">
-                Best 3 of 5
-              </p>
-              <p className="text-3xl font-black text-white">
-                {initialSeriesStanding.best3of5}
-              </p>
-              <p className="text-sm font-bold text-orange-400">
-                Rank #{initialSeriesStanding.overallRank}
+            <div className="flex sm:flex-col items-baseline sm:items-end justify-between sm:justify-start gap-3 sm:gap-0 pl-7 sm:pl-0">
+              <div>
+                <p className="text-[10px] font-bold text-slate-500 uppercase">
+                  Best 3 of 5 (sum of ranks)
+                </p>
+                <p className="text-2xl sm:text-3xl font-black text-white tabular-nums">
+                  {initialSeriesStanding.best3of5}
+                </p>
+              </div>
+              <p className="text-sm font-bold text-orange-400 tabular-nums">
+                Series rank #{initialSeriesStanding.overallRank}
                 <span className="text-slate-500 font-semibold text-xs ml-1">
                   of {initialSeriesStanding.fleetSize}
                 </span>
               </p>
             </div>
           </div>
-          <div className="flex sm:grid sm:grid-cols-5 gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
+            Event ranks (lower is better)
+          </p>
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0 sm:mx-0 sm:px-0 sm:snap-none">
             {Array.from({ length: 5 }).map((_, i) => {
               const r = initialSeriesStanding.rScores[i];
               return (
                 <div
                   key={r?.regattaId || i}
-                  className={`rounded-xl border px-2 py-2 text-center shrink-0 w-[4.5rem] sm:w-auto ${
+                  className={`rounded-xl border px-2.5 py-2.5 text-center shrink-0 w-[5.25rem] sm:w-auto snap-start ${
                     r?.isCarryForward
                       ? "bg-sky-500/10 border-sky-500/20"
                       : "bg-white/5 border-white/5"
@@ -929,11 +937,17 @@ export function SailorProfileView({
                 >
                   <p className="text-[9px] font-black text-orange-400">
                     R{i + 1}
+                    {r?.isCarryForward ? (
+                      <span className="text-sky-400 font-bold"> CF</span>
+                    ) : null}
                   </p>
-                  <p className="text-[9px] text-slate-500 line-clamp-1">
+                  <p className="text-[9px] text-slate-500 line-clamp-2 min-h-[1.5rem] leading-tight mt-0.5">
                     {r?.regattaName || "—"}
                   </p>
-                  <p className="text-sm font-mono font-bold text-white mt-1">
+                  <p className="text-[9px] font-bold text-slate-500 uppercase mt-1">
+                    Rank
+                  </p>
+                  <p className="text-base sm:text-sm font-mono font-bold text-white tabular-nums">
                     {r
                       ? `${r.score}${r.isOverseasCommitment ? "†" : r.isDNS ? "*" : ""}`
                       : "—"}
@@ -942,12 +956,15 @@ export function SailorProfileView({
               );
             })}
           </div>
-          <p className="text-[11px] text-emerald-400/90 mt-3 font-semibold">
+          <p className="text-[11px] text-emerald-400/90 mt-3 font-semibold leading-snug">
             {initialSeriesStanding.trendNote}
+          </p>
+          <p className="text-[10px] text-slate-600 mt-1">
+            * DNS · † overseas commitment · CF = carry-forward from prior half
           </p>
           <Link
             href={`/sg/optimist/${String(initialSeriesStanding.fleet).toLowerCase()}`}
-            className="inline-block mt-2 text-[11px] font-bold text-orange-400 hover:underline"
+            className="inline-flex items-center mt-3 text-[11px] font-bold text-orange-400 hover:underline min-h-[44px] sm:min-h-0 py-2 sm:py-0"
           >
             View full {initialSeriesStanding.fleet} standings →
           </Link>
@@ -1481,91 +1498,24 @@ export function SailorProfileView({
                           : ""
                   }`}
                 >
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      {nameNode}
-                      <p className="text-xs text-slate-500 mt-1 font-semibold">
-                        {res.regattaDate}
-                        {res.geography ? ` · ${res.geography}` : ""}
-                        {res.division && !nonRanking
-                          ? ` · ${res.division}`
-                          : ""}
-                      </p>
-                      <div className="mt-2 flex flex-wrap gap-1.5">
-                        {nonRanking && (
-                          <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
-                            Non-ranking
-                          </span>
-                        )}
-                        {overseas && (
-                          <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
-                            Overseas†
-                          </span>
-                        )}
-                        {dns && (
-                          <span className="rounded-full bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 text-[10px] font-bold text-rose-400">
-                            DNS*
-                          </span>
-                        )}
-                        {raceNotes.length > 0 && (
-                          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-orange-300">
-                            {raceNotes.length} note
-                            {raceNotes.length === 1 ? "" : "s"}
-                          </span>
-                        )}
-                        {isOwner && !demoMode && nonRanking && res.resultId && (
-                          <button
-                            type="button"
-                            disabled={personalBusy}
-                            onClick={() => void deletePersonalResult(res)}
-                            className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold text-rose-300 hover:border-rose-500/40"
-                          >
-                            Remove
-                          </button>
-                        )}
+                  <div className="flex flex-col gap-3 sm:gap-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex-1 min-w-0">
+                        {nameNode}
+                        <p className="text-xs text-slate-500 mt-1 font-semibold">
+                          {res.regattaDate}
+                          {res.geography ? ` · ${res.geography}` : ""}
+                          {res.division && !nonRanking
+                            ? ` · ${res.division}`
+                            : ""}
+                        </p>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
-                      <div className="text-left sm:text-right font-semibold text-sm">
-                        <span className="block text-xs text-slate-500 uppercase">
-                          Rank
-                        </span>
-                        <span className="text-white text-lg font-black">
-                          {res.rank}
-                          {overseas ? "†" : dns ? "*" : ""}
-                        </span>
-                        <span className="text-slate-400 text-xs">
-                          {" "}
-                          / {fleetSize}
-                        </span>
-                      </div>
-                      <div className="text-left sm:text-right font-semibold text-sm">
-                        <span className="block text-xs text-slate-500 uppercase">
-                          Total
-                        </span>
-                        <span className="text-white text-lg font-black">
-                          {res.totalScore != null ? res.totalScore : "—"}
-                        </span>
-                      </div>
-                      <div className="text-left sm:text-right font-semibold text-sm">
-                        <span className="block text-xs text-slate-500 uppercase">
-                          Nett
-                        </span>
-                        <span className="text-white text-lg font-black">
-                          {res.nettScore != null ? res.nettScore : "—"}
-                        </span>
-                      </div>
-                      <span
-                        className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${className}`}
-                      >
-                        {label}
-                      </span>
                       <button
                         type="button"
                         onClick={() =>
                           setExpandedRegattaId(expanded ? null : regattaId)
                         }
-                        className="rounded-full border border-white/10 bg-white/5 p-2 text-slate-400 hover:text-white"
+                        className="shrink-0 rounded-full border border-white/10 bg-white/5 p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center text-slate-400 hover:text-white sm:min-h-0 sm:min-w-0 sm:p-2"
                         title="Race observations"
                       >
                         {expanded ? (
@@ -1574,6 +1524,76 @@ export function SailorProfileView({
                           <ChevronDown className="h-4 w-4" />
                         )}
                       </button>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {nonRanking && (
+                        <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                          Non-ranking
+                        </span>
+                      )}
+                      {overseas && (
+                        <span className="rounded-full bg-sky-500/10 border border-sky-500/25 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                          Overseas†
+                        </span>
+                      )}
+                      {dns && (
+                        <span className="rounded-full bg-rose-500/10 border border-rose-500/25 px-2 py-0.5 text-[10px] font-bold text-rose-400">
+                          DNS*
+                        </span>
+                      )}
+                      {raceNotes.length > 0 && (
+                        <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-orange-300">
+                          {raceNotes.length} note
+                          {raceNotes.length === 1 ? "" : "s"}
+                        </span>
+                      )}
+                      <span
+                        className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold ${className}`}
+                      >
+                        {label}
+                      </span>
+                      {isOwner && !demoMode && nonRanking && res.resultId && (
+                        <button
+                          type="button"
+                          disabled={personalBusy}
+                          onClick={() => void deletePersonalResult(res)}
+                          className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold text-rose-300 hover:border-rose-500/40"
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                    {/* Stats row: full width on mobile for readability */}
+                    <div className="grid grid-cols-3 gap-2 sm:flex sm:items-center sm:justify-end sm:gap-6 border-t border-white/5 pt-3">
+                      <div className="text-center sm:text-right font-semibold text-sm">
+                        <span className="block text-[10px] sm:text-xs text-slate-500 uppercase">
+                          Rank
+                        </span>
+                        <span className="text-white text-lg font-black tabular-nums">
+                          {res.rank}
+                          {overseas ? "†" : dns ? "*" : ""}
+                        </span>
+                        <span className="text-slate-400 text-xs">
+                          {" "}
+                          / {fleetSize}
+                        </span>
+                      </div>
+                      <div className="text-center sm:text-right font-semibold text-sm">
+                        <span className="block text-[10px] sm:text-xs text-slate-500 uppercase">
+                          Total
+                        </span>
+                        <span className="text-white text-lg font-black tabular-nums">
+                          {res.totalScore != null ? res.totalScore : "—"}
+                        </span>
+                      </div>
+                      <div className="text-center sm:text-right font-semibold text-sm">
+                        <span className="block text-[10px] sm:text-xs text-slate-500 uppercase">
+                          Nett
+                        </span>
+                        <span className="text-white text-lg font-black tabular-nums">
+                          {res.nettScore != null ? res.nettScore : "—"}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
