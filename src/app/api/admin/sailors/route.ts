@@ -161,6 +161,7 @@ export async function PATCH(req: Request) {
         currentFleet: sailors.currentFleet,
         goldEntryDate: sailors.goldEntryDate,
         silverEntryDate: sailors.silverEntryDate,
+        dropDate: sailors.dropDate,
       })
       .from(sailors)
       .where(eq(sailors.id, body.id))
