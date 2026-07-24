@@ -209,16 +209,39 @@ function hasDateValue(v: unknown): boolean {
   return String(v).trim().length > 0;
 }
 
+/** Date-only for admin writes — prefer SG calendar via datesSg.toYmd. */
 export function toDateOnly(v: unknown): string | null {
+  // Lazy import avoided: keep slice path for pure YYYY-MM-DD (most form values)
   if (v == null || v === "") return null;
   if (v instanceof Date && !Number.isNaN(v.getTime())) {
-    return v.toISOString().slice(0, 10);
+    try {
+      // Asia/Singapore calendar day
+      return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Singapore",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(v);
+    } catch {
+      return v.toISOString().slice(0, 10);
+    }
   }
   const s = String(v).trim();
   if (!s) return null;
   if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
   const t = Date.parse(s);
-  if (!Number.isNaN(t)) return new Date(t).toISOString().slice(0, 10);
+  if (!Number.isNaN(t)) {
+    try {
+      return new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Asia/Singapore",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(new Date(t));
+    } catch {
+      return new Date(t).toISOString().slice(0, 10);
+    }
+  }
   return null;
 }
 

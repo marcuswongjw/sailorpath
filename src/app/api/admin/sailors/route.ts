@@ -10,6 +10,10 @@ import {
   toDateOnly,
   validateGoldPromotion,
 } from "@/lib/seriesMembership";
+import {
+  todayYmdSg,
+  validateHalfBoundaryDate,
+} from "@/lib/datesSg";
 
 const DATE_FIELDS = [
   "goldEntryDate",
@@ -55,6 +59,7 @@ export async function POST(req: Request) {
 
     let silverEntryDate = toDateOnly(body.silverEntryDate);
     let goldEntryDate = toDateOnly(body.goldEntryDate);
+    const dropDate = toDateOnly(body.dropDate);
     // SG Series Fleet: Guest | Series (legacy Gold/Silver → Series)
     const { normalizeSgSeriesMembership } = await import(
       "@/lib/seriesMembership"
@@ -62,6 +67,21 @@ export async function POST(req: Request) {
     let currentFleet = normalizeSgSeriesMembership(body.currentFleet);
     if (body.currentFleet === "" || body.currentFleet == null) {
       currentFleet = "Guest";
+    }
+
+    const goldBoundaryErr = validateHalfBoundaryDate(
+      goldEntryDate,
+      "Gold entry date"
+    );
+    if (goldBoundaryErr) {
+      return NextResponse.json({ error: goldBoundaryErr }, { status: 400 });
+    }
+    const dropBoundaryErr = validateHalfBoundaryDate(
+      dropDate,
+      "Drop date"
+    );
+    if (dropBoundaryErr) {
+      return NextResponse.json({ error: dropBoundaryErr }, { status: 400 });
     }
 
     const goldErr = validateGoldPromotion({
@@ -83,7 +103,7 @@ export async function POST(req: Request) {
       bio: body.bio || null,
       goldEntryDate,
       silverEntryDate,
-      dropDate: toDateOnly(body.dropDate),
+      dropDate,
       currentFleet: currentFleet || "Guest",
       nationalSquadStatus: body.nationalSquadStatus || null,
       dob: toDateOnly(body.dob),
@@ -219,6 +239,20 @@ export async function PATCH(req: Request) {
         patch[f] = body[f] === "" || body[f] == null ? null : toDateOnly(body[f]);
       }
     }
+    if (body.goldEntryDate !== undefined) {
+      const err = validateHalfBoundaryDate(
+        patch.goldEntryDate as string | null,
+        "Gold entry date"
+      );
+      if (err) return NextResponse.json({ error: err }, { status: 400 });
+    }
+    if (body.dropDate !== undefined) {
+      const err = validateHalfBoundaryDate(
+        patch.dropDate as string | null,
+        "Drop date"
+      );
+      if (err) return NextResponse.json({ error: err }, { status: 400 });
+    }
     if (body.nationality !== undefined) {
       patch.nationality =
         body.nationality === "" || body.nationality == null
@@ -242,7 +276,7 @@ export async function PATCH(req: Request) {
       !patch.goldEntryDate &&
       !existing.goldEntryDate
     ) {
-      patch.silverEntryDate = new Date().toISOString().slice(0, 10);
+      patch.silverEntryDate = todayYmdSg();
     }
     for (const f of [
       "weight",

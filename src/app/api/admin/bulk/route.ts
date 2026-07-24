@@ -97,6 +97,21 @@ export async function POST(req: Request) {
       typed = normalizeNationality(typed);
     }
 
+    // Gold entry & drop must be half-year boundaries (1 Jan / 1 Jul)
+    if (
+      (field === "goldEntryDate" || field === "dropDate") &&
+      typed != null &&
+      typed !== ""
+    ) {
+      const { validateHalfBoundaryDate } = await import("@/lib/datesSg");
+      const label =
+        field === "goldEntryDate" ? "Gold entry date" : "Drop date";
+      const boundaryErr = validateHalfBoundaryDate(String(typed), label);
+      if (boundaryErr) {
+        return NextResponse.json({ error: boundaryErr }, { status: 400 });
+      }
+    }
+
     // Gold entry requires Silver history for each selected sailor
     const settingGold =
       field === "goldEntryDate" && typed != null && typed !== "";

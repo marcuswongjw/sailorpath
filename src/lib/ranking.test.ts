@@ -193,26 +193,49 @@ describe("resolveSailorFleet", () => {
     expect(r).toEqual({ active: true, fleet: "Silver" });
   });
 
-  it("drop during half excludes from that half", () => {
+  it("drop on half boundary excludes that half and later", () => {
+    // Product: drop is 1 Jan / 1 Jul only — e.g. 2026-07-01 leaves Jan–Jun intact
     expect(
       resolveSailorFleet(
         base({
           goldEntryDate: "2022-01-01",
-          dropDate: "2026-06-30",
+          dropDate: "2026-07-01",
         }),
         jan26
       )
-    ).toBeNull();
-    // After drop, still out of next half if drop before start
+    ).toEqual({ active: true, fleet: "Gold" });
     expect(
       resolveSailorFleet(
         base({
           goldEntryDate: "2022-01-01",
-          dropDate: "2026-06-30",
+          dropDate: "2026-07-01",
         }),
         jul26
       )
     ).toBeNull();
+  });
+
+  it("drop on 1 Jan of half excludes that half", () => {
+    expect(
+      resolveSailorFleet(
+        base({
+          goldEntryDate: "2022-01-01",
+          dropDate: "2026-01-01",
+        }),
+        jan26
+      )
+    ).toBeNull();
+  });
+
+  it("gold entry 1 Jan of half → Gold whole half", () => {
+    const r = resolveSailorFleet(
+      base({
+        silverEntryDate: "2025-01-01",
+        goldEntryDate: "2026-01-01",
+      }),
+      jan26
+    );
+    expect(r).toEqual({ active: true, fleet: "Gold" });
   });
 });
 

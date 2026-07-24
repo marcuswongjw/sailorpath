@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   compareYmd,
+  halfBoundaryOptions,
+  isHalfBoundaryYmd,
   periodHalfFromYmd,
   toYmd,
+  validateHalfBoundaryDate,
   ymdInRange,
 } from "./datesSg";
 
@@ -31,5 +34,32 @@ describe("datesSg", () => {
       year: 2026,
       half: "Jul-Dec",
     });
+  });
+
+  it("isHalfBoundaryYmd allows only 1 Jan and 1 Jul", () => {
+    expect(isHalfBoundaryYmd("2026-01-01")).toBe(true);
+    expect(isHalfBoundaryYmd("2026-07-01")).toBe(true);
+    expect(isHalfBoundaryYmd("2026-06-30")).toBe(false);
+    expect(isHalfBoundaryYmd("2026-03-15")).toBe(false);
+    expect(isHalfBoundaryYmd(null)).toBe(false);
+  });
+
+  it("validateHalfBoundaryDate", () => {
+    expect(validateHalfBoundaryDate(null)).toBeNull();
+    expect(validateHalfBoundaryDate("")).toBeNull();
+    expect(validateHalfBoundaryDate("2026-01-01")).toBeNull();
+    expect(validateHalfBoundaryDate("2026-07-01")).toBeNull();
+    expect(validateHalfBoundaryDate("2026-06-30", "Drop date")).toMatch(
+      /1 Jan or 1 Jul/
+    );
+  });
+
+  it("halfBoundaryOptions include boundaries", () => {
+    const opts = halfBoundaryOptions(2025, 2026);
+    const values = opts.map((o) => o.value);
+    expect(values).toContain("2026-01-01");
+    expect(values).toContain("2026-07-01");
+    expect(values).toContain("2025-01-01");
+    expect(values.every((v) => isHalfBoundaryYmd(v))).toBe(true);
   });
 });

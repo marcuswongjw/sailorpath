@@ -76,3 +76,64 @@ export function periodHalfFromYmd(date: string | null | undefined): {
     half: month <= 6 ? "Jan-Jun" : "Jul-Dec",
   };
 }
+
+/**
+ * Gold entry and optimist drop dates must be half-year boundaries only:
+ * 1 Jan or 1 Jul. That keeps period-level fleet resolve correct
+ * (no mid-half gold promotion or mid-half drop ambiguity).
+ */
+export function isHalfBoundaryYmd(date: string | null | undefined): boolean {
+  const d = toYmd(date);
+  if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return false;
+  return d.endsWith("-01-01") || d.endsWith("-07-01");
+}
+
+/**
+ * Validate gold entry / drop date. Empty/null is allowed (cleared).
+ * Returns error message or null if OK.
+ */
+export function validateHalfBoundaryDate(
+  date: string | null | undefined,
+  fieldLabel = "Date"
+): string | null {
+  if (date == null || date === "") return null;
+  const d = toYmd(date);
+  if (!d) return `${fieldLabel} is invalid.`;
+  if (!isHalfBoundaryYmd(d)) {
+    return `${fieldLabel} must be 1 Jan or 1 Jul (half-year boundary), e.g. 2026-01-01 or 2026-07-01.`;
+  }
+  return null;
+}
+
+/** Select options: 1 Jan & 1 Jul for years [fromYear, toYear] inclusive, newest first. */
+export function halfBoundaryOptions(
+  fromYear = 2018,
+  toYear?: number
+): { value: string; label: string }[] {
+  const end =
+    toYear ??
+    Number(todayYmdSg().slice(0, 4)) + 2;
+  const out: { value: string; label: string }[] = [];
+  for (let y = end; y >= fromYear; y--) {
+    out.push({
+      value: `${y}-07-01`,
+      label: `1 Jul ${y} (start Jul–Dec)`,
+    });
+    out.push({
+      value: `${y}-01-01`,
+      label: `1 Jan ${y} (start Jan–Jun)`,
+    });
+  }
+  return out;
+}
+
+/** Current ranking half from Singapore today. */
+export function currentPeriodFromSgToday(): {
+  year: number;
+  half: "Jan-Jun" | "Jul-Dec";
+} {
+  const half = periodHalfFromYmd(todayYmdSg());
+  if (half) return half;
+  const y = new Date().getFullYear();
+  return { year: y, half: "Jan-Jun" };
+}

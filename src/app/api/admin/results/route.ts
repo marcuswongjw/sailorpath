@@ -76,8 +76,7 @@ async function healFalseDnsFlags() {
 export async function GET() {
   try {
     await requireSuperadmin();
-    // Keep DNS flags consistent with ranks across the board
-    await healFalseDnsFlags();
+    // Read-only: use POST action healFalseDns / clearFalseDns to fix flags
     const rows = await db.select().from(regattaResults);
     return NextResponse.json({
       results: rows.map((r) => ({
@@ -164,6 +163,8 @@ export async function POST(req: Request) {
         date: r.date,
         totalFleetSize: r.totalFleetSize,
         division: r.division,
+        // Required so personal/non-ranking logbook events are excluded
+        countsForRanking: r.countsForRanking !== false,
       }));
 
       const existingKeys = new Set(
@@ -235,6 +236,15 @@ export async function POST(req: Request) {
         .limit(1);
       if (!reg) {
         return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
+      }
+      if (reg.countsForRanking === false) {
+        return NextResponse.json(
+          {
+            error:
+              "Cannot fill DNS for a non-ranking (personal/logbook) regatta. Mark counts_for_ranking=true first if it should count.",
+          },
+          { status: 400 }
+        );
       }
 
       const dnsPoints = Math.max(1, (reg.totalFleetSize || 0) + 1);

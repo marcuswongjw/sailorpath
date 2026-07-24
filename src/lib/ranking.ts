@@ -11,7 +11,7 @@ export interface SailorRecord {
   goldEntryDate: string | null;
   silverEntryDate: string | null;
   dropDate: string | null;
-  /** Gold | Silver — explicit fleet for the current half (e.g. Jul–Dec 2026) */
+  /** SG Series membership: Guest | Series (legacy Gold/Silver = Series) */
   currentFleet?: string | null;
   dob?: string | null;
   weight?: number | null;
@@ -239,8 +239,10 @@ export function scoringRegattasForFleet(
  * Period ranking membership.
  *
  * 1) Guest (not In SG Fleet) → never ranked
- * 2) Drop date: out of Gold/Silver from that day (drop in half → out for that half)
- * 3) In SG Fleet + goldEntryDate ≤ period end → Gold (from that date until drop)
+ * 2) Drop date: out of Gold/Silver for any half where drop ≤ period end
+ *    (and drop not before period start). Product rule: gold entry & drop are
+ *    half boundaries only (1 Jan / 1 Jul), so period-level exclude is exact.
+ * 3) In SG Fleet + goldEntryDate ≤ period end → Gold for whole half
  * 4) Else In SG Fleet → Silver
  *
  * `currentFleet` stores Guest | Series only (legacy Gold/Silver = Series).

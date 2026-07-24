@@ -40,6 +40,11 @@ import {
 import { parseApi } from "@/components/admin/parseApi";
 import { AdminSuggestionsPanel } from "@/components/admin/AdminSuggestionsPanel";
 import { ageYears } from "@/lib/age";
+import {
+  halfBoundaryOptions,
+  isHalfBoundaryYmd,
+  todayYmdSg,
+} from "@/lib/datesSg";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
@@ -47,6 +52,9 @@ import type { ResultAdmin } from "@/types/result";
 import type { ImportPossibleDuplicate } from "@/types/import";
 
 import { Plus, Trash2, Edit3, User, Medal, Copy } from "lucide-react";
+
+/** Gold entry / drop: 1 Jan or 1 Jul only (half-year boundaries). */
+const HALF_BOUNDARY_OPTS = halfBoundaryOptions(2018);
 
 interface AdminDashboardProps {
   initialSailors: SailorAdmin[];
@@ -869,6 +877,24 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       );
       return;
     }
+    if (
+      sailorForm.goldEntryDate &&
+      !isHalfBoundaryYmd(String(sailorForm.goldEntryDate))
+    ) {
+      alert(
+        "Gold entry date must be 1 Jan or 1 Jul (half-year boundary), e.g. 2026-01-01 or 2026-07-01."
+      );
+      return;
+    }
+    if (
+      sailorForm.dropDate &&
+      !isHalfBoundaryYmd(String(sailorForm.dropDate))
+    ) {
+      alert(
+        "Drop date must be 1 Jan or 1 Jul (half-year boundary), e.g. 2026-07-01."
+      );
+      return;
+    }
     // Only send known fields (avoid dumping internal/extra props that break APIs)
     const dateOnly = (v: unknown) => {
       if (v == null || v === "") return null;
@@ -1630,7 +1656,20 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     </div>
                     <div className="flex flex-col gap-1 min-w-[140px]">
                       <label className="text-[10px] font-bold text-slate-400 uppercase">Value</label>
-                      {["goldEntryDate", "silverEntryDate", "dropDate", "dob"].includes(bulkField) ? (
+                      {bulkField === "goldEntryDate" || bulkField === "dropDate" ? (
+                        <select
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                        >
+                          <option value="">— clear / none —</option>
+                          {HALF_BOUNDARY_OPTS.map((o) => (
+                            <option key={o.value} value={o.value}>
+                              {o.label}
+                            </option>
+                          ))}
+                        </select>
+                      ) : ["silverEntryDate", "dob"].includes(bulkField) ? (
                         <input
                           type="date"
                           value={bulkValue}
@@ -2101,15 +2140,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               ...sailorForm,
                               currentFleet: v === "Series" ? "Series" : "Guest",
                             };
-                            // Admit to series: stamp silver entry if empty
+                            // Admit to series: stamp silver entry if empty (SG calendar)
                             if (
                               v === "Series" &&
                               !next.silverEntryDate &&
                               !next.goldEntryDate
                             ) {
-                              next.silverEntryDate = new Date()
-                                .toISOString()
-                                .slice(0, 10);
+                              next.silverEntryDate = todayYmdSg();
                             }
                             setSailorForm(next);
                           }}
@@ -2121,17 +2158,42 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <p className="mt-1 text-[10px] text-slate-500 leading-snug">
                           Guest = never on Gold/Silver rankings. In SG Fleet =
                           Silver until Gold entry date, then Gold until Drop
-                          date. Do not pick Gold/Silver manually.
+                          date. Gold entry & drop are half boundaries only (1
+                          Jan / 1 Jul).
                         </p>
                       </div>
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Gold Fleet Entry Date</label>
-                        <input
-                          type="date"
+                        <select
                           value={sailorForm.goldEntryDate || ""}
-                          onChange={(e) => setSailorForm({ ...sailorForm, goldEntryDate: e.target.value })}
+                          onChange={(e) =>
+                            setSailorForm({
+                              ...sailorForm,
+                              goldEntryDate: e.target.value,
+                            })
+                          }
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                        />
+                        >
+                          <option value="">— none —</option>
+                          {/* Preserve legacy non-boundary values so admin can fix them */}
+                          {sailorForm.goldEntryDate &&
+                            !HALF_BOUNDARY_OPTS.some(
+                              (o) => o.value === sailorForm.goldEntryDate
+                            ) && (
+                              <option value={sailorForm.goldEntryDate}>
+                                {sailorForm.goldEntryDate} (not 1 Jan/1 Jul —
+                                pick a boundary)
+                              </option>
+                            )}
+                          {HALF_BOUNDARY_OPTS.map((o) => (
+                            <option key={o.value} value={o.value}>
+                              {o.label}
+                            </option>
+                          ))}
+                        </select>
+                        <p className="mt-1 text-[10px] text-slate-500">
+                          Only 1 Jan or 1 Jul — applies for the whole half-year.
+                        </p>
                       </div>
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Silver Fleet Entry Date</label>
@@ -2144,16 +2206,35 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       </div>
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Optimist Drop Date</label>
-                        <input
-                          type="date"
+                        <select
                           value={sailorForm.dropDate || ""}
                           onChange={(e) =>
-setSailorForm({ ...sailorForm, dropDate: e.target.value })
+                            setSailorForm({
+                              ...sailorForm,
+                              dropDate: e.target.value,
+                            })
                           }
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                        />
+                        >
+                          <option value="">— none —</option>
+                          {sailorForm.dropDate &&
+                            !HALF_BOUNDARY_OPTS.some(
+                              (o) => o.value === sailorForm.dropDate
+                            ) && (
+                              <option value={sailorForm.dropDate}>
+                                {sailorForm.dropDate} (not 1 Jan/1 Jul — pick a
+                                boundary)
+                              </option>
+                            )}
+                          {HALF_BOUNDARY_OPTS.map((o) => (
+                            <option key={`d-${o.value}`} value={o.value}>
+                              {o.label}
+                            </option>
+                          ))}
+                        </select>
                         <p className="mt-1 text-[10px] text-slate-500">
-                          Out of Gold/Silver rankings from this date inclusive.
+                          Only 1 Jan or 1 Jul. Drop on that day removes the
+                          sailor from that half and later.
                         </p>
                       </div>
                       <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 border-t border-white/5 pt-4">
