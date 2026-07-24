@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
-import { asc, eq } from "drizzle-orm";
+import { and, asc, eq, isNotNull } from "drizzle-orm";
 import {
   normalizeNationality,
   normalizeYearsList,
@@ -32,9 +32,22 @@ function failDb(e: unknown) {
   return jsonError(e);
 }
 
+/** Clear manually_dropped when optimist drop_date is set (drop date is fleet exit). */
+async function healManualDropWhenDropDate() {
+  try {
+    await db
+      .update(sailors)
+      .set({ manuallyDropped: false, updatedAt: new Date() })
+      .where(and(isNotNull(sailors.dropDate), eq(sailors.manuallyDropped, true)));
+  } catch (e) {
+    console.warn("healManualDropWhenDropDate", e);
+  }
+}
+
 export async function GET() {
   try {
     await requireSuperadmin();
+    await healManualDropWhenDropDate();
     const rows = await db.select().from(sailors).orderBy(asc(sailors.name));
     return NextResponse.json({ sailors: rows });
   } catch (e) {
@@ -237,22 +250,16 @@ export async function PATCH(req: Request) {
             : normalizeYearsList(body[f]);
       }
     }
-    // Auto-fill entry dates when fleet is set without dates
+    // When admitting to Series with no entry dates, stamp silver entry (not Gold)
     if (
       body.currentFleet !== undefined &&
-      String(body.currentFleet || "").toLowerCase() === "silver" &&
+      String(patch.currentFleet || "").toLowerCase() === "series" &&
       !patch.silverEntryDate &&
-      !existing.silverEntryDate
-    ) {
-      patch.silverEntryDate = new Date().toISOString().slice(0, 10);
-    }
-    if (
-      body.currentFleet !== undefined &&
-      String(body.currentFleet || "").toLowerCase() === "gold" &&
+      !existing.silverEntryDate &&
       !patch.goldEntryDate &&
       !existing.goldEntryDate
     ) {
-      patch.goldEntryDate = new Date().toISOString().slice(0, 10);
+      patch.silverEntryDate = new Date().toISOString().slice(0, 10);
     }
     if (body.manuallyDropped !== undefined) {
       const v = body.manuallyDropped;

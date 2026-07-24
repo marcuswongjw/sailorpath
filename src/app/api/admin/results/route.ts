@@ -8,7 +8,13 @@ import {
   missingDnsPairs,
   rankingRegattasForFleet,
 } from "@/lib/fillDns";
-import type { Period, RegattaRecord, SailorRecord } from "@/lib/ranking";
+import {
+  resolveSailorFleet,
+  type Period,
+  type RegattaRecord,
+  type SailorRecord,
+} from "@/lib/ranking";
+import { periodHalfFromYmd } from "@/lib/datesSg";
 
 function parseBool(v: unknown): boolean {
   return (
@@ -32,33 +38,22 @@ function parseOverseas(body: Record<string, unknown>): boolean {
   );
 }
 
-function seriesMatchesDivision(
-  s: {
-    currentFleet?: string | null;
-    goldEntryDate?: string | null;
-    silverEntryDate?: string | null;
-    manuallyDropped?: boolean | null;
-  },
-  division: string
+/**
+ * Eligible for DNS fill on a regatta: same rules as ranking board
+ * (Guest/Series + gold entry/drop via resolveSailorFleet).
+ */
+function sailorEligibleForRegattaDns(
+  s: SailorRecord,
+  division: string,
+  period: Period
 ): boolean {
-  if (s.manuallyDropped) return false;
-  const cf = String(s.currentFleet || "")
-    .trim()
-    .toLowerCase();
-  const isGold = cf === "gold" || Boolean(s.goldEntryDate);
-  const isSilver =
-    cf === "silver" || Boolean(s.silverEntryDate) || isGold;
-  // Silver-only: tagged silver, or silver entry without gold promotion path for display
-  const silverFleet =
-    cf === "silver" ||
-    (Boolean(s.silverEntryDate) && !isGold) ||
-    (cf !== "gold" && Boolean(s.silverEntryDate) && !s.goldEntryDate);
-
+  const res = resolveSailorFleet(s, period);
+  if (!res?.active) return false;
   const div = (division || "Gold").toLowerCase();
-  if (div === "gold") return isGold;
-  if (div === "silver") return silverFleet || (isSilver && !isGold);
-  // Both
-  return isGold || Boolean(s.silverEntryDate) || cf === "silver" || cf === "gold";
+  if (div === "both") return true;
+  if (div === "silver") return res.fleet === "Silver";
+  // Gold (default)
+  return res.fleet === "Gold";
 }
 
 /** Clear DNS when rank is better (lower) than fleet size + 1 */
@@ -243,12 +238,18 @@ export async function POST(req: Request) {
       }
 
       const dnsPoints = Math.max(1, (reg.totalFleetSize || 0) + 1);
-      // Infer period half from regatta date
-      const d = new Date(reg.date);
-      const year = d.getFullYear();
-      const half: Period["half"] =
-        d.getMonth() < 6 ? "Jan-Jun" : "Jul-Dec";
-      const period: Period = { year, half };
+      // Infer period half from regatta date (YYYY-MM-DD / SG calendar)
+      const halfInfo = periodHalfFromYmd(reg.date);
+      if (!halfInfo) {
+        return NextResponse.json(
+          { error: "Regatta date invalid for period DNS fill" },
+          { status: 400 }
+        );
+      }
+      const period: Period = {
+        year: halfInfo.year,
+        half: halfInfo.half,
+      };
       const div = (reg.division || "Gold").toLowerCase();
       const fleet: "Gold" | "Silver" =
         div === "silver" ? "Silver" : "Gold";
@@ -275,10 +276,10 @@ export async function POST(req: Request) {
           eligibleIds.add(s.id);
         }
       }
-      // Fallback if no period-active sailors (date outside half): seriesMatchesDivision
+      // Fallback: same resolveSailorFleet rules (handles division Both / edge cases)
       if (eligibleIds.size === 0) {
-        for (const s of sailorRows) {
-          if (seriesMatchesDivision(s, reg.division || "Gold")) {
+        for (const s of sailorRecords) {
+          if (sailorEligibleForRegattaDns(s, reg.division || "Gold", period)) {
             eligibleIds.add(s.id);
           }
         }

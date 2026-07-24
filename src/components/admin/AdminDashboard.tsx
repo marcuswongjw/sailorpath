@@ -11,7 +11,6 @@ import {
   Calendar,
   Grid,
   CheckCircle,
-  UserPlus,
   RefreshCw,
   Save,
   Shield,
@@ -24,10 +23,6 @@ import {
 import { getPercentileBadge } from "@/lib/ranking";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { findDuplicateSailorPairs } from "@/lib/nameMatch";
-import {
-  parseRosterRows,
-  type RosterImportRow,
-} from "@/lib/excel/parseRosterSheet";
 import {
   parseRegattaResultRows,
   summarizeRegattaImport,
@@ -61,7 +56,7 @@ interface AdminDashboardProps {
 
 export function AdminDashboard({ initialSailors, initialRegattas, initialResults }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<
-    "roster" | "import" | "edit" | "stats"
+    "import" | "edit" | "stats"
   >("edit");
   
   // Auth state — role from server /profiles, never user_metadata
@@ -76,10 +71,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   });
   const [fullImportRows, setFullImportRows] = useState<RegattaImportRow[]>([]);
 
-  // One-time bulk sailor roster (before regatta results)
-  const [rosterRows, setRosterRows] = useState<RosterImportRow[]>([]);
-  const [rosterStatus, setRosterStatus] = useState<string | null>(null);
-  const [rosterBusy, setRosterBusy] = useState(false);
 
   useEffect(() => {
     let subscription: { unsubscribe: () => void } | undefined;
@@ -375,10 +366,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   const seriesLabelOf = (s: any) => {
     if (s.manuallyDropped) return "Dropped";
-    // Optimist drop date = out of Gold/Silver from that day (not the manual flag)
+    // Optimist drop date = out of Gold/Silver from that day (SG calendar)
     if (s.dropDate) {
-      const d = new Date(`${String(s.dropDate).slice(0, 10)}T12:00:00`);
-      if (!Number.isNaN(d.getTime()) && d.getTime() <= Date.now()) {
+      const ymd = String(s.dropDate).slice(0, 10);
+      // Compare as YYYY-MM-DD (UTC+8 calendar fields stored as date-only)
+      const today = new Date().toLocaleDateString("en-CA", {
+        timeZone: "Asia/Singapore",
+      });
+      if (/^\d{4}-\d{2}-\d{2}$/.test(ymd) && ymd <= today) {
         return "Dropped";
       }
     }
@@ -514,51 +509,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   const colOn = (key: string) => dbColVisible[key] !== false;
 
-  const handleRosterFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setRosterStatus(null);
-    const buf = await file.arrayBuffer();
-    const wb = read(buf);
-    const sheet = wb.Sheets[wb.SheetNames[0]];
-    const json = utils.sheet_to_json<Record<string, unknown>>(sheet, { defval: "" });
-    const mapped = parseRosterRows(json);
-    setRosterRows(mapped);
-    setRosterStatus(
-      `Parsed ${mapped.length} sailors. Mapped: Born→DOB, Gold squad→squad status, Fleet current→Gold/Silver, Entered Gold/Silver, Optimist Drop, Manually dropped (Y/N), School, hist/campaigns.`
-    );
-  };
-
-  const handleRosterImport = async () => {
-    if (!isSuperadmin) {
-      alert("Superadmin only");
-      return;
-    }
-    if (!rosterRows.length) {
-      alert("Upload a roster Excel/CSV first");
-      return;
-    }
-    setRosterBusy(true);
-    setRosterStatus("Importing roster…");
-    try {
-      const res = await fetch("/api/admin/sailors/bulk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ rows: rosterRows }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Roster import failed");
-      setRosterStatus(data.message);
-      const list = await fetch("/api/admin/sailors").then((r) => r.json());
-      if (list.sailors) setSailorList(list.sailors);
-    } catch (err: any) {
-      setRosterStatus(err.message || "Import failed");
-    } finally {
-      setRosterBusy(false);
-    }
-  };
-
-  // XLSX Drag & Drop Handlers
   const handleDrag = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
@@ -1355,10 +1305,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       </div>
 
       {/* Tab Navigation — equal width for all tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      <div className="grid grid-cols-3 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
-            ["roster", "Sailor Roster", UserPlus],
             ["import", "Regatta Excel", FileSpreadsheet],
             ["edit", "Database & bulk edit", Database],
             ["stats", "Stats & usage", BarChart3],
@@ -1395,112 +1344,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
       {/* Tab Contents — always full width of admin shell */}
       <div className="flex-1 flex flex-col w-full min-w-0">
-        {/* Tab 0: One-time sailor roster import */}
-        {activeTab === "roster" && (
-          <div className="w-full min-w-0 space-y-6">
-            <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 space-y-4 w-full">
-              <div>
-                <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                  <UserPlus className="h-5 w-5 text-orange-500" />
-                  Bulk import sailor roster (one-time)
-                </h2>
-                <p className="text-xs text-slate-500 mt-2 leading-relaxed w-full">
-                  Load all sailors into the database <strong className="text-slate-300">before</strong>{" "}
-                  importing regatta results. Include columns such as Name, Sail Number, Club, Nationality,
-                  Gender, Gold Entry Date, Silver Entry Date, Drop Date, Squad, DOB, Weight, and optional
-                  historical fields. Re-importing the same handle/sail number will update existing rows.
-                </p>
-              </div>
-
-              <div className="rounded-xl border border-white/5 bg-slate-950/50 p-4 text-[11px] text-slate-400 leading-relaxed space-y-2">
-                <p className="font-bold text-slate-300">Your spreadsheet columns are supported:</p>
-                <p className="font-mono text-[10px]">
-                  Name · Gender · Born · Club · Nationality · School · Fleet current · Gold squad · Entered Gold ·
-                  Entered Silver · Optimist Drop · Manually dropped · squadJan26 · squadJul26 ·
-                  histJun24… · Worlds · Euros · Asians · SEA Games
-                </p>
-                <p className="text-amber-200/90">
-                  Sail number optional — defaults to SGP 000; edit later in Database Management or bulk edit.
-                  Run SQL migrations if columns are missing:{" "}
-                  <code className="text-amber-100">002_sailor_school_fleet.sql</code>,{" "}
-                  <code className="text-amber-100">005_nationality.sql</code>.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
-                  Choose Excel / CSV
-                  <input
-                    type="file"
-                    accept=".xlsx,.xls,.csv"
-                    className="hidden"
-                    onChange={handleRosterFile}
-                  />
-                </label>
-                <button
-                  type="button"
-                  disabled={!isSuperadmin || rosterBusy || rosterRows.length === 0}
-                  onClick={handleRosterImport}
-                  className="rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-5 py-2 text-xs font-bold text-white"
-                >
-                  {rosterBusy
-                    ? "Importing…"
-                    : `Import ${rosterRows.length || 0} sailors to database`}
-                </button>
-              </div>
-
-              {rosterStatus && (
-                <p className="text-xs font-bold text-emerald-400 flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4" />
-                  {rosterStatus}
-                </p>
-              )}
-
-              {rosterRows.length > 0 && (
-                <div className="overflow-x-auto rounded-2xl border border-white/5 max-h-80">
-                  <table className="w-full text-left text-[11px] min-w-[700px]">
-                    <thead className="bg-white/5 text-slate-500 sticky top-0">
-                      <tr>
-                        <th className="px-3 py-2">Name</th>
-                        <th className="px-3 py-2">Sail #</th>
-                        <th className="px-3 py-2">Club</th>
-                        <th className="px-3 py-2">Gold</th>
-                        <th className="px-3 py-2">Silver</th>
-                        <th className="px-3 py-2">Squad</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {rosterRows.slice(0, 40).map((r, i) => (
-                        <tr key={i} className="border-t border-white/5">
-                          <td className="px-3 py-2 text-white font-semibold">{r.name}</td>
-                          <td className="px-3 py-2 text-slate-400">{r.sailNumber || "—"}</td>
-                          <td className="px-3 py-2 text-slate-400">{r.club || "—"}</td>
-                          <td className="px-3 py-2 text-slate-400">{r.goldEntryDate || "—"}</td>
-                          <td className="px-3 py-2 text-slate-400">{r.silverEntryDate || "—"}</td>
-                          <td className="px-3 py-2 text-slate-400">
-                            {r.nationalSquadStatus || "—"}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  {rosterRows.length > 40 && (
-                    <p className="text-[10px] text-slate-600 px-3 py-2">
-                      Showing first 40 of {rosterRows.length} rows
-                    </p>
-                  )}
-                </div>
-              )}
-
-              <p className="text-[11px] text-slate-500">
-                Currently in database: <strong className="text-white">{sailorList.length}</strong>{" "}
-                sailors. After roster load, use <strong className="text-slate-300">Regatta Excel</strong>{" "}
-                to import results (names will match).
-              </p>
-            </div>
-          </div>
-        )}
-
         {/* Tab 1: Excel Import */}
         {activeTab === "import" && (
           <div className="w-full min-w-0 space-y-6">

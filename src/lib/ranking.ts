@@ -179,20 +179,22 @@ export function rankingRegattasInPeriod(
   allRegattas: RegattaRecord[]
 ): RegattaRecord[] {
   const { start, end } = periodBounds(period);
-  const pStart = new Date(start).getTime();
-  const pEnd = new Date(end).getTime();
 
   return allRegattas
     .filter((r) => {
       // Personal / overseas logbook events never count for series ranking
       if (r.countsForRanking === false) return false;
-      const t = new Date(r.date).getTime();
-      if (t < pStart || t > pEnd) return false;
+      // YYYY-MM-DD string compare = calendar date in SG (no TZ shift)
+      const t = String(r.date || "").slice(0, 10);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(t)) return false;
+      if (t < start || t > end) return false;
       const div = r.division || "Gold";
       if (fleet === "Gold") return div === "Gold" || div === "Both";
       return div === "Silver" || div === "Both";
     })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .sort((a, b) =>
+      String(b.date || "").slice(0, 10).localeCompare(String(a.date || "").slice(0, 10))
+    )
     .slice(0, 5)
     .reverse();
 }
@@ -271,6 +273,7 @@ export function resolveSailorFleet(
     return null;
   }
 
+  // Period bounds as YYYY-MM-DD (Singapore calendar; compare as strings)
   const pStartStr =
     period.half === "Jan-Jun"
       ? `${period.year}-01-01`
@@ -280,24 +283,24 @@ export function resolveSailorFleet(
       ? `${period.year}-06-30`
       : `${period.year}-12-31`;
 
-  const pStart = new Date(pStartStr).getTime();
-  const pEnd = new Date(pEndStr).getTime();
-
-  const goldDate = sailor.goldEntryDate
-    ? new Date(sailor.goldEntryDate).getTime()
+  const goldYmd = sailor.goldEntryDate
+    ? String(sailor.goldEntryDate).slice(0, 10)
     : null;
-  const dropDate = sailor.dropDate
-    ? new Date(sailor.dropDate).getTime()
+  const dropYmd = sailor.dropDate
+    ? String(sailor.dropDate).slice(0, 10)
     : null;
 
   // Drop: exclusive from the drop date onward (inclusive of drop day)
-  if (dropDate !== null) {
-    if (dropDate < pStart) return null;
-    if (dropDate <= pEnd) return null;
+  if (dropYmd && /^\d{4}-\d{2}-\d{2}$/.test(dropYmd)) {
+    if (dropYmd < pStartStr) return null;
+    if (dropYmd <= pEndStr) return null;
   }
 
   // Gold from gold entry date until drop; otherwise Silver while In SG Fleet
-  const isGold = goldDate !== null && goldDate <= pEnd;
+  const isGold =
+    Boolean(goldYmd) &&
+    /^\d{4}-\d{2}-\d{2}$/.test(goldYmd!) &&
+    goldYmd! <= pEndStr;
 
   return {
     active: true,
