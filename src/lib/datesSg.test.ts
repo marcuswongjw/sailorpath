@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   compareYmd,
+  currentPeriodFromSgToday,
   halfBoundaryOptions,
   isHalfBoundaryYmd,
   periodHalfFromYmd,
+  rankingPeriodOptions,
   toYmd,
   validateHalfBoundaryDate,
   ymdInRange,
@@ -61,5 +63,27 @@ describe("datesSg", () => {
     expect(values).toContain("2026-07-01");
     expect(values).toContain("2025-01-01");
     expect(values.every((v) => isHalfBoundaryYmd(v))).toBe(true);
+  });
+
+  it("currentPeriodFromSgToday matches periodHalfFromYmd(today)", () => {
+    const cur = currentPeriodFromSgToday();
+    expect(cur.half === "Jan-Jun" || cur.half === "Jul-Dec").toBe(true);
+    expect(cur.year).toBeGreaterThanOrEqual(2024);
+  });
+
+  it("rankingPeriodOptions marks first as current", () => {
+    const opts = rankingPeriodOptions(4);
+    expect(opts).toHaveLength(4);
+    expect(opts[0].isCurrent).toBe(true);
+    expect(opts[0].label).toMatch(/\(Current\)/);
+    expect(opts.slice(1).every((o) => !o.isCurrent)).toBe(true);
+    // chronological: each step is previous half
+    const cur = opts[0].period;
+    const prev = opts[1].period;
+    if (cur.half === "Jul-Dec") {
+      expect(prev).toEqual({ year: cur.year, half: "Jan-Jun" });
+    } else {
+      expect(prev).toEqual({ year: cur.year - 1, half: "Jul-Dec" });
+    }
   });
 });

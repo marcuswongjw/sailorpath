@@ -19,6 +19,8 @@ import {
   type RegattaResultRecord,
   type RegattaScoreSlot,
 } from "@/lib/ranking";
+import { currentPeriodFromSgToday } from "@/lib/datesSg";
+import { isInSgSeries } from "@/lib/seriesMembership";
 import {
   and,
   asc,
@@ -148,26 +150,11 @@ export async function searchSailors(
 
     const fleet = (f.fleet || "all").toLowerCase();
     if (fleet === "gold") {
-      rows = rows.filter((s) => Boolean(s.goldEntryDate));
+      rows = rows.filter((s) => isInSgSeries(s) && Boolean(s.goldEntryDate));
     } else if (fleet === "silver") {
-      rows = rows.filter((s) => {
-        const cf = String(s.currentFleet || "").toLowerCase();
-        const guest = cf === "guest";
-        const inSeries =
-          !guest &&
-          (cf === "series" ||
-            cf === "gold" ||
-            cf === "silver" ||
-            Boolean(s.silverEntryDate || s.goldEntryDate));
-        return inSeries && !s.goldEntryDate;
-      });
+      rows = rows.filter((s) => isInSgSeries(s) && !s.goldEntryDate);
     } else if (fleet === "guest") {
-      rows = rows.filter((s) => {
-        const cf = String(s.currentFleet || "").toLowerCase();
-        if (cf === "guest") return true;
-        if (cf === "series" || cf === "gold" || cf === "silver") return false;
-        return !s.goldEntryDate && !s.silverEntryDate;
-      });
+      rows = rows.filter((s) => !isInSgSeries(s));
     }
 
     if (f.squad && f.squad !== "all") {
@@ -370,15 +357,14 @@ export async function getResultsForSailor(sailorId: string) {
   });
 }
 
-const CURRENT_PERIOD: Period = { year: 2026, half: "Jul-Dec" };
-
 /**
  * Live Best 3 of 5 strip for a single sailor.
  * Optimised: series members only + results limited to scoring-window regattas.
+ * Default period = current half-year in Asia/Singapore.
  */
 export async function getSailorSeriesStanding(
   sailorId: string,
-  period: Period = CURRENT_PERIOD
+  period: Period = currentPeriodFromSgToday()
 ): Promise<SeriesStanding | null> {
   return withDb(async () => {
     // Ranking filters Guest / drop via resolveSailorFleet

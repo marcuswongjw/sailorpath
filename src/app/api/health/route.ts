@@ -28,6 +28,8 @@ export async function GET() {
   let step = "init";
   let tables: string[] = [];
   let sailorCount: number | null = null;
+  /** null = not checked; true = column still present (migration 020 needed) */
+  let manuallyDroppedColumn: boolean | null = null;
   let urlMeta: ReturnType<
     typeof import("@/db").getDatabaseUrlMeta
   > extends infer T
@@ -64,6 +66,18 @@ export async function GET() {
         step = "count_sailors";
         const countRows = await pgSql`select count(*)::int as n from sailors`;
         sailorCount = Number(countRows[0]?.n ?? 0);
+
+        step = "check_migration_020";
+        const colRows = await pgSql`
+          select 1 as ok
+          from information_schema.columns
+          where table_schema = 'public'
+            and table_name = 'sailors'
+            and column_name = 'manually_dropped'
+          limit 1
+        `;
+        manuallyDroppedColumn = colRows.length > 0;
+
         dbOk = true;
         step = "ok";
       }
@@ -90,6 +104,8 @@ export async function GET() {
   }
 
   const live = dbOk && hasSupabaseUrl && hasAnonKey;
+  const migration020Applied =
+    manuallyDroppedColumn === null ? null : manuallyDroppedColumn === false;
 
   return NextResponse.json({
     ok: live,
@@ -110,6 +126,11 @@ export async function GET() {
       step,
       sailorCount,
       publicTables: tables,
+      migrations: {
+        /** true when sailors.manually_dropped is gone (020 applied) */
+        drop_manually_dropped_020: migration020Applied,
+        manually_dropped_column_present: manuallyDroppedColumn,
+      },
       url: urlMeta
         ? {
             host: urlMeta.host,
@@ -123,6 +144,10 @@ export async function GET() {
         : null,
       error: dbError,
     },
-    hint: live ? "Database is live." : hint,
+    hint: live
+      ? migration020Applied === false
+        ? "Database is live, but migration 020 not applied — run src/db/migrations/020_drop_manually_dropped.sql"
+        : "Database is live."
+      : hint,
   });
 }

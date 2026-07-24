@@ -4,16 +4,14 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { RankedSailor, Period } from "@/lib/ranking";
 import { reRankWithExcluded } from "@/lib/ranking";
+import {
+  currentPeriodFromSgToday,
+  rankingPeriodOptions,
+} from "@/lib/datesSg";
 import { Trophy, Calendar, RotateCcw } from "lucide-react";
 
-const PERIODS: { period: Period; label: string }[] = [
-  { period: { year: 2026, half: "Jul-Dec" }, label: "Jul – Dec 2026 (Current)" },
-  { period: { year: 2026, half: "Jan-Jun" }, label: "Jan – Jun 2026" },
-  { period: { year: 2025, half: "Jul-Dec" }, label: "Jul – Dec 2025" },
-  { period: { year: 2025, half: "Jan-Jun" }, label: "Jan – Jun 2025" },
-  { period: { year: 2024, half: "Jul-Dec" }, label: "Jul – Dec 2024" },
-  { period: { year: 2024, half: "Jan-Jun" }, label: "Jan – Jun 2024" },
-];
+const PERIODS = rankingPeriodOptions(6);
+const DEFAULT_PERIOD = currentPeriodFromSgToday();
 
 function scoreCell(
   score: number | undefined,
@@ -62,7 +60,7 @@ export function FleetRankingsView({
   initialPeriod?: Period;
 }) {
   const [period, setPeriod] = useState<Period>(
-    initialPeriod || { year: 2026, half: "Jul-Dec" }
+    initialPeriod || DEFAULT_PERIOD
   );
   const [ranked, setRanked] = useState<RankedSailor[]>([]);
   const [error, setError] = useState<string | null>(null);

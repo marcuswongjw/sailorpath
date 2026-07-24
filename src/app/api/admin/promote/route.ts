@@ -62,15 +62,24 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+    const { todayYmdSg, validateHalfBoundaryDate } = await import(
+      "@/lib/datesSg"
+    );
     const goldDate =
-      body.goldEntryDate ||
-      s.goldEntryDate ||
-      new Date().toISOString().slice(0, 10);
+      body.goldEntryDate || s.goldEntryDate || todayYmdSg();
+    const boundaryErr = validateHalfBoundaryDate(
+      goldDate,
+      "Gold entry date"
+    );
+    if (boundaryErr) {
+      return NextResponse.json({ error: boundaryErr }, { status: 400 });
+    }
 
     const [updated] = await db
       .update(sailors)
       .set({
-        currentFleet: "Gold",
+        // Guest | Series only — Gold vs Silver is from goldEntryDate
+        currentFleet: "Series",
         goldEntryDate: goldDate,
         updatedAt: new Date(),
       })
@@ -80,7 +89,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       ok: true,
       sailor: updated,
-      message: `Promoted ${s.name} to Gold Fleet.`,
+      message: `Promoted ${s.name} to Gold (Series + gold entry ${goldDate}).`,
     });
   } catch (e) {
     console.error("promote", e);

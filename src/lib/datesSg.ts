@@ -137,3 +137,41 @@ export function currentPeriodFromSgToday(): {
   const y = new Date().getFullYear();
   return { year: y, half: "Jan-Jun" };
 }
+
+export type RankingPeriodOption = {
+  period: { year: number; half: "Jan-Jun" | "Jul-Dec" };
+  label: string;
+  isCurrent: boolean;
+};
+
+/**
+ * Recent half-years for period pickers, newest first.
+ * Marks the half that contains Singapore today as "(Current)".
+ */
+export function rankingPeriodOptions(
+  halfCount = 6
+): RankingPeriodOption[] {
+  const current = currentPeriodFromSgToday();
+  const out: RankingPeriodOption[] = [];
+  let year = current.year;
+  let half: "Jan-Jun" | "Jul-Dec" = current.half;
+  for (let i = 0; i < halfCount; i++) {
+    const isCurrent = i === 0;
+    const base =
+      half === "Jan-Jun"
+        ? `Jan – Jun ${year}`
+        : `Jul – Dec ${year}`;
+    out.push({
+      period: { year, half },
+      label: isCurrent ? `${base} (Current)` : base,
+      isCurrent,
+    });
+    if (half === "Jul-Dec") {
+      half = "Jan-Jun";
+    } else {
+      half = "Jul-Dec";
+      year -= 1;
+    }
+  }
+  return out;
+}

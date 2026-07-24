@@ -169,6 +169,28 @@ export function seriesFleetStatus(s: {
   return "series";
 }
 
+/** Short admin / search label for SG Series membership. */
+export function seriesMembershipLabel(s: {
+  silverEntryDate?: string | null;
+  goldEntryDate?: string | null;
+  currentFleet?: string | null;
+  dropDate?: string | null;
+}): string {
+  switch (seriesFleetStatus(s)) {
+    case "dropped":
+      return "Dropped";
+    case "guest":
+      return "Guest";
+    case "gold":
+      return "Series · Gold entry";
+    case "silver":
+      return "Series · Silver";
+    case "series":
+    default:
+      return s.goldEntryDate ? "Series · Gold entry" : "Series · Silver";
+  }
+}
+
 export function seriesStatusBadge(status: SeriesFleetStatus): {
   label: string;
   className: string;

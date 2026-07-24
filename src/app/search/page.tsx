@@ -2,6 +2,7 @@ import Link from "next/link";
 import { DbOffline } from "@/components/DbOffline";
 import { searchSailors } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
+import { seriesMembershipLabel } from "@/lib/seriesMembership";
 
 export const dynamic = "force-dynamic";
 
@@ -159,27 +160,7 @@ export default async function SearchPage({
       )}
       <ul className="space-y-2">
         {results.map((s) => {
-          const cf = String(s.currentFleet || "").toLowerCase();
-          const inSeries =
-            cf === "series" ||
-            cf === "gold" ||
-            cf === "silver" ||
-            (!cf && Boolean(s.goldEntryDate || s.silverEntryDate));
-          const dropYmd = s.dropDate
-            ? String(s.dropDate).slice(0, 10)
-            : "";
-          const todaySg = new Date().toLocaleDateString("en-CA", {
-            timeZone: "Asia/Singapore",
-          });
-          const dropped =
-            /^\d{4}-\d{2}-\d{2}$/.test(dropYmd) && dropYmd <= todaySg;
-          const fleetLabel = dropped
-            ? "Dropped"
-            : !inSeries || cf === "guest"
-              ? "Guest"
-              : s.goldEntryDate
-                ? "SG · Gold entry"
-                : "In SG Fleet";
+          const fleetLabel = seriesMembershipLabel(s);
           return (
             <li key={s.id}>
               <Link

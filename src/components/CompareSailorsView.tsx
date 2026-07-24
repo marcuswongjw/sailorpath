@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Period, RankedSailor } from "@/lib/ranking";
+import {
+  currentPeriodFromSgToday,
+  rankingPeriodOptions,
+} from "@/lib/datesSg";
 import { GitCompareArrows } from "lucide-react";
 
-const PERIODS: { period: Period; label: string }[] = [
-  { period: { year: 2026, half: "Jul-Dec" }, label: "Jul – Dec 2026 (Current)" },
-  { period: { year: 2026, half: "Jan-Jun" }, label: "Jan – Jun 2026" },
-  { period: { year: 2025, half: "Jul-Dec" }, label: "Jul – Dec 2025" },
-  { period: { year: 2025, half: "Jan-Jun" }, label: "Jan – Jun 2025" },
-];
+const PERIODS = rankingPeriodOptions(4);
+const DEFAULT_PERIOD = currentPeriodFromSgToday();
 
 function scoreCell(s?: { score: number; isDNS?: boolean; isOverseasCommitment?: boolean }) {
   if (!s || !Number.isFinite(s.score)) return "—";
@@ -21,8 +21,8 @@ function scoreCell(s?: { score: number; isDNS?: boolean; isOverseasCommitment?: 
 
 export function CompareSailorsView({
   initialFleet = "Gold",
-  initialYear = 2026,
-  initialHalf = "Jul-Dec",
+  initialYear,
+  initialHalf,
   initialA,
   initialB,
 }: {
@@ -33,9 +33,11 @@ export function CompareSailorsView({
   initialB?: string;
 }) {
   const [fleet, setFleet] = useState<"Gold" | "Silver">(initialFleet);
-  const [period, setPeriod] = useState<Period>({
-    year: initialYear,
-    half: initialHalf,
+  const [period, setPeriod] = useState<Period>(() => {
+    if (initialYear != null && initialHalf) {
+      return { year: initialYear, half: initialHalf };
+    }
+    return DEFAULT_PERIOD;
   });
   const [ranked, setRanked] = useState<RankedSailor[]>([]);
   const [aId, setAId] = useState(initialA || "");

@@ -1,3 +1,5 @@
+import { isInSgSeries } from "@/lib/seriesMembership";
+
 export interface SailorRecord {
   id: string;
   name: string;
@@ -252,19 +254,8 @@ export function resolveSailorFleet(
   sailor: SailorRecord,
   period: Period
 ): { active: boolean; fleet: "Gold" | "Silver" } | null {
-  const cf = String(sailor.currentFleet || "")
-    .trim()
-    .toLowerCase();
-  const isGuest = cf === "guest";
-  const isSeries =
-    cf === "series" ||
-    cf === "gold" ||
-    cf === "silver" ||
-    cf === "in sg fleet" ||
-    cf === "member" ||
-    // Legacy rows with entry dates but no flag
-    (!cf && Boolean(sailor.goldEntryDate || sailor.silverEntryDate));
-  if (isGuest || !isSeries) {
+  // Guest / Series membership — shared with admin, search, DNS
+  if (!isInSgSeries(sailor)) {
     return null;
   }
 

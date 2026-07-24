@@ -45,6 +45,10 @@ import {
   isHalfBoundaryYmd,
   todayYmdSg,
 } from "@/lib/datesSg";
+import {
+  isInSgSeries,
+  seriesMembershipLabel,
+} from "@/lib/seriesMembership";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
@@ -344,12 +348,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       if (!hay.includes(q)) return false;
     }
     if (dbFleetFilter !== "all") {
-      const cf = String(s.currentFleet || "").toLowerCase();
-      const inSeries =
-        cf === "series" ||
-        cf === "gold" ||
-        cf === "silver" ||
-        (!cf && Boolean(s.goldEntryDate || s.silverEntryDate));
+      const inSeries = isInSgSeries(s);
       if (dbFleetFilter === "series" && !inSeries) return false;
       if (dbFleetFilter === "guest" && inSeries) return false;
       // Ranking-style filters (derived for current dates, not Fleet current)
@@ -369,29 +368,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     return true;
   });
 
-  const seriesLabelOf = (s: any) => {
-    // Optimist drop date = out of Gold/Silver from that day (SG calendar)
-    if (s.dropDate) {
-      const ymd = String(s.dropDate).slice(0, 10);
-      // Compare as YYYY-MM-DD (UTC+8 calendar fields stored as date-only)
-      const today = new Date().toLocaleDateString("en-CA", {
-        timeZone: "Asia/Singapore",
-      });
-      if (/^\d{4}-\d{2}-\d{2}$/.test(ymd) && ymd <= today) {
-        return "Dropped";
-      }
-    }
-    const cf = String(s.currentFleet || "").toLowerCase();
-    if (cf === "guest") return "Guest";
-    const inSeries =
-      cf === "series" ||
-      cf === "gold" ||
-      cf === "silver" ||
-      (!cf && Boolean(s.goldEntryDate || s.silverEntryDate));
-    if (!inSeries) return "Guest";
-    if (s.goldEntryDate) return "Series · Gold entry";
-    return "Series · Silver";
-  };
+  const seriesLabelOf = (s: Parameters<typeof seriesMembershipLabel>[0]) =>
+    seriesMembershipLabel(s);
 
   const duplicatePairs = useMemo(() => {
     const pairKey = (a: string, b: string) =>

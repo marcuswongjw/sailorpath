@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   hasSilverHistory,
+  isInSgSeries,
   isSeriesMember,
   normalizeNationality,
   normalizeYearsList,
   seriesFleetStatus,
+  seriesMembershipLabel,
   validateGoldPromotion,
 } from "./seriesMembership";
 
@@ -46,6 +48,22 @@ describe("hasSilverHistory / isSeriesMember / seriesFleetStatus", () => {
       seriesFleetStatus({ currentFleet: "Series", goldEntryDate: "2024-01-01" })
     ).toBe("gold");
     expect(seriesFleetStatus({ currentFleet: "Guest" })).toBe("guest");
+    expect(isInSgSeries({ currentFleet: "Series" })).toBe(true);
+    expect(isInSgSeries({ currentFleet: "Guest" })).toBe(false);
+    expect(isInSgSeries({ currentFleet: "Gold" })).toBe(true);
+  });
+
+  it("seriesMembershipLabel is stable for UI", () => {
+    expect(seriesMembershipLabel({ currentFleet: "Guest" })).toBe("Guest");
+    expect(
+      seriesMembershipLabel({
+        currentFleet: "Series",
+        goldEntryDate: "2024-01-01",
+      })
+    ).toBe("Series · Gold entry");
+    expect(seriesMembershipLabel({ currentFleet: "Series" })).toBe(
+      "Series · Silver"
+    );
   });
 });
 
