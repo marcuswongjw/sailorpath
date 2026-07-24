@@ -45,7 +45,7 @@ export const SAMPLE_SAILOR = {
   goldEntryDate: "2025-06-15",
   silverEntryDate: "2024-01-10",
   dropDate: null as string | null,
-  currentFleet: "Gold",
+  currentFleet: "Series",
   school: "Raffles Institution",
   manuallyDropped: false,
   dob: "2013-08-14",

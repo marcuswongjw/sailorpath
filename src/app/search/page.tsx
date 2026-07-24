@@ -159,14 +159,19 @@ export default async function SearchPage({
       )}
       <ul className="space-y-2">
         {results.map((s) => {
-          const fleetLabel =
-            String(s.currentFleet || "").toLowerCase() === "gold" ||
-            s.goldEntryDate
-              ? "Gold"
-              : String(s.currentFleet || "").toLowerCase() === "silver" ||
-                  s.silverEntryDate
-                ? "Silver"
-                : "Guest";
+          const cf = String(s.currentFleet || "").toLowerCase();
+          const inSeries =
+            cf === "series" ||
+            cf === "gold" ||
+            cf === "silver" ||
+            (!cf && Boolean(s.goldEntryDate || s.silverEntryDate));
+          const fleetLabel = s.manuallyDropped
+            ? "Dropped"
+            : !inSeries || cf === "guest"
+              ? "Guest"
+              : s.goldEntryDate
+                ? "SG · Gold entry"
+                : "In SG Fleet";
           return (
             <li key={s.id}>
               <Link

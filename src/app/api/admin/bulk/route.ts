@@ -85,21 +85,22 @@ export async function POST(req: Request) {
       typed = value === "" ? null : Number(value);
     } else if (YEARS_LIST.has(field)) {
       typed = value === "" || value == null ? null : normalizeYearsList(value);
-    } else if (field === "currentFleet" && value) {
-      const s = String(value).trim().toLowerCase();
-      typed = s.startsWith("gold")
-        ? "Gold"
-        : s.startsWith("silver")
-          ? "Silver"
-          : String(value).trim();
+    } else if (field === "currentFleet") {
+      const { normalizeSgSeriesMembership } = await import(
+        "@/lib/seriesMembership"
+      );
+      if (value === "" || value === "CLEAR" || value == null) {
+        typed = "Guest";
+      } else {
+        typed = normalizeSgSeriesMembership(value) || "Guest";
+      }
     } else if (field === "nationality" && typed != null) {
       typed = normalizeNationality(typed);
     }
 
-    // Gold requires Silver history for each selected sailor
+    // Gold entry requires Silver history for each selected sailor
     const settingGold =
-      (field === "currentFleet" && String(typed).toLowerCase() === "gold") ||
-      (field === "goldEntryDate" && typed != null && typed !== "");
+      field === "goldEntryDate" && typed != null && typed !== "";
     if (settingGold) {
       const rows = await db
         .select({

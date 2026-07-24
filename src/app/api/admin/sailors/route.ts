@@ -55,10 +55,14 @@ export async function POST(req: Request) {
 
     let silverEntryDate = toDateOnly(body.silverEntryDate);
     let goldEntryDate = toDateOnly(body.goldEntryDate);
-    let currentFleet =
-      body.currentFleet === "" || body.currentFleet == null
-        ? null
-        : String(body.currentFleet).trim();
+    // SG Series Fleet: Guest | Series (legacy Gold/Silver → Series)
+    const { normalizeSgSeriesMembership } = await import(
+      "@/lib/seriesMembership"
+    );
+    let currentFleet = normalizeSgSeriesMembership(body.currentFleet);
+    if (body.currentFleet === "" || body.currentFleet == null) {
+      currentFleet = "Guest";
+    }
 
     const goldErr = validateGoldPromotion({
       currentFleet,
@@ -67,13 +71,6 @@ export async function POST(req: Request) {
     });
     if (goldErr) {
       return NextResponse.json({ error: goldErr }, { status: 400 });
-    }
-
-    if (String(currentFleet || "").toLowerCase() === "silver" && !silverEntryDate) {
-      silverEntryDate = new Date().toISOString().slice(0, 10);
-    }
-    if (String(currentFleet || "").toLowerCase() === "gold" && !goldEntryDate) {
-      goldEntryDate = new Date().toISOString().slice(0, 10);
     }
 
     const values: Record<string, unknown> = {
@@ -87,7 +84,7 @@ export async function POST(req: Request) {
       goldEntryDate,
       silverEntryDate,
       dropDate: toDateOnly(body.dropDate),
-      currentFleet: currentFleet || null,
+      currentFleet: currentFleet || "Guest",
       manuallyDropped: Boolean(body.manuallyDropped),
       nationalSquadStatus: body.nationalSquadStatus || null,
       dob: toDateOnly(body.dob),
@@ -189,6 +186,9 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: goldErr }, { status: 400 });
     }
 
+    const { normalizeSgSeriesMembership } = await import(
+      "@/lib/seriesMembership"
+    );
     const patch: Record<string, unknown> = { updatedAt: new Date() };
     for (const f of [
       "name",
@@ -199,7 +199,6 @@ export async function PATCH(req: Request) {
       "gender",
       "bio",
       "nationalSquadStatus",
-      "currentFleet",
       "instagram",
       "avatarUrl",
       "natSquadStatusJan25",
@@ -208,6 +207,12 @@ export async function PATCH(req: Request) {
       "natSquadStatusJul26",
     ] as const) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
+    }
+    if (body.currentFleet !== undefined) {
+      patch.currentFleet =
+        body.currentFleet === "" || body.currentFleet == null
+          ? "Guest"
+          : normalizeSgSeriesMembership(body.currentFleet) || "Guest";
     }
     for (const f of DATE_FIELDS) {
       if (body[f] !== undefined) {

@@ -148,28 +148,26 @@ export async function searchSailors(
 
     const fleet = (f.fleet || "all").toLowerCase();
     if (fleet === "gold") {
-      rows = rows.filter(
-        (s) =>
-          String(s.currentFleet || "").toLowerCase() === "gold" ||
-          Boolean(s.goldEntryDate)
-      );
+      rows = rows.filter((s) => Boolean(s.goldEntryDate) && !s.manuallyDropped);
     } else if (fleet === "silver") {
       rows = rows.filter((s) => {
         const cf = String(s.currentFleet || "").toLowerCase();
-        return (
-          cf === "silver" ||
-          (Boolean(s.silverEntryDate) &&
-            cf !== "gold" &&
-            !s.goldEntryDate)
-        );
+        const guest = cf === "guest";
+        const inSeries =
+          !guest &&
+          (cf === "series" ||
+            cf === "gold" ||
+            cf === "silver" ||
+            Boolean(s.silverEntryDate || s.goldEntryDate));
+        return inSeries && !s.goldEntryDate && !s.manuallyDropped;
       });
     } else if (fleet === "guest") {
-      rows = rows.filter(
-        (s) =>
-          !s.currentFleet &&
-          !s.goldEntryDate &&
-          !s.silverEntryDate
-      );
+      rows = rows.filter((s) => {
+        const cf = String(s.currentFleet || "").toLowerCase();
+        if (cf === "guest") return true;
+        if (cf === "series" || cf === "gold" || cf === "silver") return false;
+        return !s.goldEntryDate && !s.silverEntryDate;
+      });
     }
 
     if (f.squad && f.squad !== "all") {
@@ -383,19 +381,11 @@ export async function getSailorSeriesStanding(
   period: Period = CURRENT_PERIOD
 ): Promise<SeriesStanding | null> {
   return withDb(async () => {
+    // Series members only (Guest excluded). Ranking logic also filters Guest.
     const sailorRows = await db
       .select()
       .from(sailors)
-      .where(
-        and(
-          or(
-            isNotNull(sailors.goldEntryDate),
-            isNotNull(sailors.silverEntryDate),
-            isNotNull(sailors.currentFleet)
-          ),
-          ne(sailors.manuallyDropped, true)
-        )
-      );
+      .where(ne(sailors.manuallyDropped, true));
 
     const s = sailorRows.map(mapSailor);
     const meRow = s.find((x) => x.id === sailorId);

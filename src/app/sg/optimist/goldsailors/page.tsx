@@ -9,12 +9,10 @@ export default async function GoldSailorsPage() {
   try {
     const sailors = await listSailors();
 
-    // Gold register: gold entry OR current fleet gold OR manually dropped (kept on register)
+    // Gold register: has gold entry OR manually dropped (kept on register)
+    // Ranking tier is derived from goldEntryDate — not from selecting Gold fleet
     const goldSailors = sailors.filter((s) => {
-      const fleet = (s.currentFleet || "").toLowerCase();
-      return (
-        Boolean(s.goldEntryDate) || fleet === "gold" || Boolean(s.manuallyDropped)
-      );
+      return Boolean(s.goldEntryDate) || Boolean(s.manuallyDropped);
     });
     goldSailors.sort((a, b) => {
       const aDrop = a.manuallyDropped ? 1 : 0;

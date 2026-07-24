@@ -347,13 +347,19 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
     if (dbFleetFilter !== "all") {
       const cf = String(s.currentFleet || "").toLowerCase();
-      if (dbFleetFilter === "gold" && cf !== "gold" && !s.goldEntryDate) return false;
-      if (dbFleetFilter === "gold" && cf === "silver") return false;
-      if (dbFleetFilter === "silver" && cf !== "silver" && !(!s.goldEntryDate && s.silverEntryDate)) {
-        if (cf !== "silver") return false;
+      const inSeries =
+        cf === "series" ||
+        cf === "gold" ||
+        cf === "silver" ||
+        (!cf && Boolean(s.goldEntryDate || s.silverEntryDate));
+      if (dbFleetFilter === "series" && !inSeries) return false;
+      if (dbFleetFilter === "guest" && inSeries) return false;
+      // Ranking-style filters (derived for current dates, not Fleet current)
+      if (dbFleetFilter === "gold") {
+        if (!inSeries || !s.goldEntryDate || s.manuallyDropped) return false;
       }
-      if (dbFleetFilter === "unassigned") {
-        if (s.currentFleet || s.goldEntryDate || s.silverEntryDate) return false;
+      if (dbFleetFilter === "silver") {
+        if (!inSeries || s.goldEntryDate || s.manuallyDropped) return false;
       }
     }
     if (dbSquadFilter !== "all") {
@@ -367,15 +373,20 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     return true;
   });
 
-  const seriesLabelOf = (s: any) =>
-    s.manuallyDropped
-      ? "Dropped"
-      : String(s.currentFleet || "").toLowerCase() === "gold" || s.goldEntryDate
-        ? "Gold"
-        : String(s.currentFleet || "").toLowerCase() === "silver" ||
-            s.silverEntryDate
-          ? "Silver"
-          : "Guest";
+  const seriesLabelOf = (s: any) => {
+    if (s.manuallyDropped) return "Dropped";
+    const cf = String(s.currentFleet || "").toLowerCase();
+    if (cf === "guest") return "Guest";
+    const inSeries =
+      cf === "series" ||
+      cf === "gold" ||
+      cf === "silver" ||
+      (!cf && Boolean(s.goldEntryDate || s.silverEntryDate));
+    if (!inSeries) return "Guest";
+    // In SG Fleet — show ranking tier hint from gold entry
+    if (s.goldEntryDate) return "Series · Gold entry";
+    return "Series · Silver";
+  };
 
   const duplicatePairs = useMemo(() => {
     const pairKey = (a: string, b: string) =>
@@ -426,6 +437,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           const a = ageYears(s.dob as string | null);
           return a == null ? 99999 : a;
         }
+        case "manuallyDropped":
+          return s.manuallyDropped ? 1 : 0;
         case "club":
           return s.club || "";
         case "nationality":
@@ -899,19 +912,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     }
     // Client-side Gold-from-Silver guard (server also enforces)
     const existing = sailorList.find((s) => s.id === editingSailorId);
-    const wantsGold =
-      String(sailorForm.currentFleet || "").toLowerCase() === "gold" ||
-      Boolean(sailorForm.goldEntryDate);
+    const wantsGold = Boolean(sailorForm.goldEntryDate);
     const hasSilverPath =
       Boolean(sailorForm.silverEntryDate) ||
-      String(sailorForm.currentFleet || "").toLowerCase() === "silver" ||
       Boolean(existing?.silverEntryDate) ||
-      String(existing?.currentFleet || "").toLowerCase() === "silver" ||
-      Boolean(existing?.goldEntryDate) ||
-      String(existing?.currentFleet || "").toLowerCase() === "gold";
+      Boolean(existing?.goldEntryDate);
     if (wantsGold && !hasSilverPath) {
       alert(
-        "Gold fleet requires Silver history first. Admit as Silver first (Silver entry date or Fleet = Silver), save, then set Gold."
+        "Gold entry requires Silver history first. Set Silver entry date, save, then set Gold entry."
       );
       return;
     }
@@ -935,7 +943,12 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         sailorForm.natSquadStatusJul26 ||
         sailorForm.nationalSquadStatus ||
         null,
-      currentFleet: sailorForm.currentFleet || null,
+      currentFleet:
+        ["series", "gold", "silver"].includes(
+          String(sailorForm.currentFleet || "").toLowerCase()
+        )
+          ? "Series"
+          : "Guest",
       goldEntryDate: dateOnly(sailorForm.goldEntryDate),
       silverEntryDate: dateOnly(sailorForm.silverEntryDate),
       dropDate: dateOnly(sailorForm.dropDate),
@@ -1680,16 +1693,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Fleet</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">SG Series</label>
                     <select
                       value={dbFleetFilter}
                       onChange={(e) => setDbFleetFilter(e.target.value)}
                       className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
                     >
-                      <option value="all">All fleets</option>
-                      <option value="gold">Gold</option>
-                      <option value="silver">Silver</option>
-                      <option value="unassigned">Unassigned</option>
+                      <option value="all">All</option>
+                      <option value="series">In SG Fleet</option>
+                      <option value="guest">Guest</option>
+                      <option value="gold">Has Gold entry</option>
+                      <option value="silver">Series · no Gold entry</option>
                     </select>
                   </div>
                   <div>
@@ -1752,11 +1766,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
                       >
                         <option value="">-- Select property --</option>
-                        <optgroup label="Fleet Status & Dates">
+                        <optgroup label="SG Series & Dates">
+                          <option value="currentFleet">SG Series (Guest / In SG Fleet)</option>
                           <option value="goldEntryDate">Gold Fleet Entry Date</option>
                           <option value="silverEntryDate">Silver Fleet Entry Date</option>
                           <option value="dropDate">Optimist Drop Date</option>
-                          <option value="currentFleet">Fleet current (Gold/Silver)</option>
                           <option value="manuallyDropped">Manually dropped (Y/N)</option>
                         </optgroup>
                         <optgroup label="Profile">
@@ -1814,9 +1828,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           onChange={(e) => setBulkValue(e.target.value)}
                           className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
                         >
-                          <option value="">Guest / clear</option>
-                          <option value="Silver">Silver</option>
-                          <option value="Gold">Gold</option>
+                          <option value="Guest">Guest</option>
+                          <option value="Series">In SG Fleet</option>
                         </select>
                       ) : bulkField === "manuallyDropped" ? (
                         <select
@@ -2256,40 +2269,65 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                       </div>
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">
-                          SG series fleet
+                          SG Series Fleet
                         </label>
                         <select
-                          value={sailorForm.currentFleet || ""}
+                          value={
+                            ["series", "gold", "silver"].includes(
+                              String(sailorForm.currentFleet || "").toLowerCase()
+                            )
+                              ? "Series"
+                              : "Guest"
+                          }
                           onChange={(e) => {
                             const v = e.target.value;
-                            const next: any = { ...sailorForm, currentFleet: v };
-                            // Admit Silver: stamp entry date if empty
-                            if (v === "Silver" && !next.silverEntryDate) {
+                            const next: any = {
+                              ...sailorForm,
+                              currentFleet: v === "Series" ? "Series" : "Guest",
+                            };
+                            // Admit to series: stamp silver entry if empty
+                            if (
+                              v === "Series" &&
+                              !next.silverEntryDate &&
+                              !next.goldEntryDate
+                            ) {
                               next.silverEntryDate = new Date()
                                 .toISOString()
                                 .slice(0, 10);
-                            }
-                            // Promote Gold: stamp gold date if empty (needs silver first — validated on save)
-                            if (v === "Gold" && !next.goldEntryDate) {
-                              next.goldEntryDate = new Date()
-                                .toISOString()
-                                .slice(0, 10);
-                            }
-                            if (v === "") {
-                              // Guest — leave dates; clear fleet tag only
                             }
                             setSailorForm(next);
                           }}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
                         >
-                          <option value="">Guest (not in series)</option>
-                          <option value="Silver">Silver Fleet</option>
-                          <option value="Gold">Gold Fleet (from Silver only)</option>
+                          <option value="Guest">Guest (not ranked)</option>
+                          <option value="Series">In SG Fleet</option>
                         </select>
                         <p className="mt-1 text-[10px] text-slate-500 leading-snug">
-                          New series members start as Silver. Gold only after Silver history.
-                          Regatta import never changes this.
+                          Guest = never on Gold/Silver rankings. In SG Fleet =
+                          Silver until Gold entry date, then Gold until Drop
+                          date. Do not pick Gold/Silver manually.
                         </p>
+                      </div>
+                      <div>
+                        <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer mt-6">
+                          <input
+                            type="checkbox"
+                            checked={Boolean(sailorForm.manuallyDropped)}
+                            onChange={(e) =>
+                              setSailorForm({
+                                ...sailorForm,
+                                manuallyDropped: e.target.checked,
+                              })
+                            }
+                            className="rounded border-slate-600"
+                          />
+                          <span>
+                            <strong className="text-white">Manually dropped</strong>
+                            <span className="block text-[10px] text-slate-500">
+                              Excludes from all rankings (even if still In SG Fleet)
+                            </span>
+                          </span>
+                        </label>
                       </div>
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Gold Fleet Entry Date</label>
@@ -2552,13 +2590,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                             series: (
                               <span
                                 className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
-                                  seriesLabel === "Gold"
-                                    ? "bg-yellow-500/10 text-yellow-400 border-yellow-500/20"
-                                    : seriesLabel === "Silver"
-                                      ? "bg-slate-400/10 text-slate-300 border-slate-400/20"
-                                      : seriesLabel === "Dropped"
-                                        ? "bg-amber-500/10 text-amber-300 border-amber-500/20"
-                                        : "bg-white/5 text-slate-500 border-white/10"
+                                  seriesLabel.startsWith("Series")
+                                    ? "bg-sky-500/10 text-sky-300 border-sky-500/25"
+                                    : seriesLabel === "Dropped"
+                                      ? "bg-amber-500/10 text-amber-300 border-amber-500/20"
+                                      : "bg-white/5 text-slate-500 border-white/10"
                                 }`}
                               >
                                 {seriesLabel}
@@ -2572,6 +2608,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                               </span>
                             ),
                             gender: s.gender || "M",
+                            manuallyDropped: s.manuallyDropped ? (
+                              <span className="text-[10px] font-bold text-amber-300 bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 rounded">
+                                Yes
+                              </span>
+                            ) : (
+                              <span className="text-[10px] text-slate-600">No</span>
+                            ),
                             age: (() => {
                               const a = ageYears(s.dob as string | null);
                               return a != null ? (

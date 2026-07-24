@@ -6,6 +6,7 @@ import {
   periodBounds,
   previousPeriod,
   reRankWithExcluded,
+  resolveSailorFleet,
   squadStatusForPeriod,
   type RankedSailor,
   type SailorRecord,
@@ -122,6 +123,100 @@ describe("period helpers", () => {
         { year: 2024, half: "Jan-Jun" }
       )
     ).toBe("Nat B");
+  });
+});
+
+describe("resolveSailorFleet", () => {
+  const jan26 = { year: 2026, half: "Jan-Jun" as const };
+  const jul26 = { year: 2026, half: "Jul-Dec" as const };
+  const base = (over: Partial<SailorRecord> = {}): SailorRecord =>
+    ({
+      id: "1",
+      name: "Test",
+      handle: "test",
+      sailNumber: "SGP 1",
+      club: "C",
+      goldEntryDate: null,
+      silverEntryDate: null,
+      dropDate: null,
+      currentFleet: "Series",
+      manuallyDropped: false,
+      ...over,
+    }) as SailorRecord;
+
+  it("excludes guests and manually dropped", () => {
+    expect(
+      resolveSailorFleet(base({ currentFleet: "Guest" }), jan26)
+    ).toBeNull();
+    expect(
+      resolveSailorFleet(base({ manuallyDropped: true }), jan26)
+    ).toBeNull();
+  });
+
+  it("Series without gold entry is Silver", () => {
+    const r = resolveSailorFleet(
+      base({ silverEntryDate: "2025-01-01", goldEntryDate: null }),
+      jan26
+    );
+    expect(r).toEqual({ active: true, fleet: "Silver" });
+  });
+
+  it("Gold from gold entry date until drop", () => {
+    const r = resolveSailorFleet(
+      base({
+        silverEntryDate: "2024-01-01",
+        goldEntryDate: "2025-06-30",
+      }),
+      jan26
+    );
+    expect(r).toEqual({ active: true, fleet: "Gold" });
+  });
+
+  it("gold entry after period end → Silver while still In SG Fleet", () => {
+    const r = resolveSailorFleet(
+      base({
+        currentFleet: "Series",
+        silverEntryDate: "2025-01-01",
+        goldEntryDate: "2026-07-01",
+      }),
+      jan26
+    );
+    expect(r).toEqual({ active: true, fleet: "Silver" });
+  });
+
+  it("does not use currentFleet Gold/Silver override", () => {
+    // Legacy Gold tag without gold entry → still Series membership, Silver ranking
+    const r = resolveSailorFleet(
+      base({
+        currentFleet: "Gold",
+        silverEntryDate: "2025-01-01",
+        goldEntryDate: null,
+      }),
+      jan26
+    );
+    expect(r).toEqual({ active: true, fleet: "Silver" });
+  });
+
+  it("drop during half excludes from that half", () => {
+    expect(
+      resolveSailorFleet(
+        base({
+          goldEntryDate: "2022-01-01",
+          dropDate: "2026-06-30",
+        }),
+        jan26
+      )
+    ).toBeNull();
+    // After drop, still out of next half if drop before start
+    expect(
+      resolveSailorFleet(
+        base({
+          goldEntryDate: "2022-01-01",
+          dropDate: "2026-06-30",
+        }),
+        jul26
+      )
+    ).toBeNull();
   });
 });
 

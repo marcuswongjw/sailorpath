@@ -38,23 +38,29 @@ describe("hasSilverHistory / isSeriesMember / seriesFleetStatus", () => {
     ).toBe(false);
   });
 
-  it("currentFleet gold/silver drives status", () => {
-    expect(seriesFleetStatus({ currentFleet: "Gold" })).toBe("gold");
-    expect(seriesFleetStatus({ currentFleet: "Silver" })).toBe("silver");
+  it("Series / legacy Gold tag is in series", () => {
+    expect(seriesFleetStatus({ currentFleet: "Series" })).toBe("series");
+    // Legacy Gold tag without gold entry → series (not ranking Gold)
+    expect(seriesFleetStatus({ currentFleet: "Gold" })).toBe("series");
+    expect(
+      seriesFleetStatus({ currentFleet: "Series", goldEntryDate: "2024-01-01" })
+    ).toBe("gold");
+    expect(seriesFleetStatus({ currentFleet: "Guest" })).toBe("guest");
   });
 });
 
 describe("validateGoldPromotion", () => {
   it("blocks gold without silver history", () => {
-    const err = validateGoldPromotion({ currentFleet: "Gold" });
+    const err = validateGoldPromotion({ goldEntryDate: "2026-01-01" });
     expect(err).toMatch(/Silver history/i);
   });
 
   it("allows gold when silver entry set", () => {
     expect(
       validateGoldPromotion({
-        currentFleet: "Gold",
+        currentFleet: "Series",
         silverEntryDate: "2024-01-01",
+        goldEntryDate: "2025-01-01",
       })
     ).toBeNull();
   });
@@ -63,7 +69,7 @@ describe("validateGoldPromotion", () => {
     expect(
       validateGoldPromotion({
         goldEntryDate: "2025-01-01",
-        existing: { goldEntryDate: "2024-01-01", currentFleet: "Gold" },
+        existing: { goldEntryDate: "2024-01-01", currentFleet: "Series" },
       })
     ).toBeNull();
   });

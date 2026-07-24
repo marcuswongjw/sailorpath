@@ -37,11 +37,15 @@ export const sailors = pgTable("sailors", {
   bio: text("bio"),
   gender: text("gender"),
   nationalSquadStatus: text("national_squad_status"),
-  /** Gold | Silver for the current ranking period (e.g. Jul–Dec 2026) */
+  /**
+   * SG Series Fleet membership: "Guest" | "Series" (In SG Fleet).
+   * Legacy values "Gold"/"Silver" are treated as Series.
+   * Ranking Gold vs Silver is derived from goldEntryDate / dropDate only.
+   */
   currentFleet: text("current_fleet"),
   /**
-   * Y = left Optimist class without normal “ex-gold” drop path.
-   * Excluded from active rankings; still listed on All Gold Fleet Sailors when relevant.
+   * Left Optimist / removed from rankings.
+   * Excluded from Gold/Silver boards; may still appear on All Gold Fleet Sailors.
    */
   manuallyDropped: boolean("manually_dropped").default(false).notNull(),
   instagram: text("instagram"),

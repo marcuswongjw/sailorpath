@@ -235,71 +235,69 @@ export function scoringRegattasForFleet(
   ];
 }
 
-// Check if a sailor is active in a period and resolve their fleet
+/**
+ * Period ranking membership.
+ *
+ * 1) Manually dropped → never ranked
+ * 2) Guest (not In SG Fleet) → never ranked
+ * 3) Drop date: not ranked from drop day onward (drop in half → out for that half)
+ * 4) In SG Fleet + goldEntryDate ≤ period end → Gold (from that date until drop)
+ * 5) Else In SG Fleet → Silver
+ *
+ * `currentFleet` stores Guest | Series only (legacy Gold/Silver = Series).
+ * It does NOT pick Gold vs Silver for a half-year.
+ */
 export function resolveSailorFleet(
   sailor: SailorRecord,
   period: Period
 ): { active: boolean; fleet: "Gold" | "Silver" } | null {
-  // Manually dropped = left Optimist class; keep profile/register, not active rankings
   if (sailor.manuallyDropped) {
     return null;
   }
 
-  const pStartStr = period.half === "Jan-Jun" ? `${period.year}-01-01` : `${period.year}-07-01`;
-  const pEndStr = period.half === "Jan-Jun" ? `${period.year}-06-30` : `${period.year}-12-31`;
+  const cf = String(sailor.currentFleet || "")
+    .trim()
+    .toLowerCase();
+  const isGuest = cf === "guest";
+  const isSeries =
+    cf === "series" ||
+    cf === "gold" ||
+    cf === "silver" ||
+    cf === "in sg fleet" ||
+    cf === "member" ||
+    // Legacy rows with entry dates but no flag
+    (!cf && Boolean(sailor.goldEntryDate || sailor.silverEntryDate));
+  if (isGuest || !isSeries) {
+    return null;
+  }
+
+  const pStartStr =
+    period.half === "Jan-Jun"
+      ? `${period.year}-01-01`
+      : `${period.year}-07-01`;
+  const pEndStr =
+    period.half === "Jan-Jun"
+      ? `${period.year}-06-30`
+      : `${period.year}-12-31`;
 
   const pStart = new Date(pStartStr).getTime();
   const pEnd = new Date(pEndStr).getTime();
 
-  const goldDate = sailor.goldEntryDate ? new Date(sailor.goldEntryDate).getTime() : null;
-  const silverDate = sailor.silverEntryDate ? new Date(sailor.silverEntryDate).getTime() : null;
-  const dropDate = sailor.dropDate ? new Date(sailor.dropDate).getTime() : null;
+  const goldDate = sailor.goldEntryDate
+    ? new Date(sailor.goldEntryDate).getTime()
+    : null;
+  const dropDate = sailor.dropDate
+    ? new Date(sailor.dropDate).getTime()
+    : null;
 
-  // Explicit "Fleet current" override for Jul–Dec 2026 (and any period when set + dates allow)
-  const fleetOverride = (sailor.currentFleet || "").trim().toLowerCase();
-  if (fleetOverride === "gold" || fleetOverride === "silver") {
-    // Still respect optimist drop date if set
-    if (dropDate !== null) {
-      if (dropDate < pStart) return null;
-      if (dropDate <= pEnd) return null;
-    }
-    // Need some presence by period end (entry date or override alone for current period)
-    const earliestEntry = Math.min(
-      goldDate ?? Infinity,
-      silverDate ?? Infinity
-    );
-    const hasEntry = earliestEntry !== Infinity && earliestEntry <= pEnd;
-    const isCurrentHalf =
-      period.year === 2026 && period.half === "Jul-Dec";
-    if (!hasEntry && !isCurrentHalf) return null;
-    return {
-      active: true,
-      fleet: fleetOverride === "gold" ? "Gold" : "Silver",
-    };
-  }
-
-  // 1. If period is prior to both entry dates, they do not appear
-  const earliestEntry = Math.min(
-    goldDate ?? Infinity,
-    silverDate ?? Infinity
-  );
-
-  if (earliestEntry === Infinity || earliestEntry > pEnd) {
-    return null;
-  }
-
-  // 2. Drop: exclusive from the drop date onward (inclusive of drop day)
+  // Drop: exclusive from the drop date onward (inclusive of drop day)
   if (dropDate !== null) {
     if (dropDate < pStart) return null;
-    // Drop during this half-year → not active for the full period board
     if (dropDate <= pEnd) return null;
   }
 
-  // 3. Gold is sticky once gold entry is on or before period end
+  // Gold from gold entry date until drop; otherwise Silver while In SG Fleet
   const isGold = goldDate !== null && goldDate <= pEnd;
-  if (!isGold) {
-    if (silverDate === null || silverDate > pEnd) return null;
-  }
 
   return {
     active: true,

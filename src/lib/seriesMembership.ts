@@ -1,15 +1,20 @@
 /**
  * SG Optimist series membership helpers.
  *
- * Series membership (near-term) = has Gold/Silver fleet tags (currentFleet and/or entry dates).
- * Guests (import-only / untagged) appear in regatta results but not on rankings.
- * Gold may only be set when the sailor has Silver history (or is already Gold).
+ * SG Series Fleet (stored in current_fleet):
+ *   - "Guest"  — not on Gold/Silver rankings
+ *   - "Series" — In SG Fleet (Gold/Silver derived from entry dates)
+ *
+ * Legacy values "Gold" / "Silver" on current_fleet are treated as Series.
+ * Ranking fleet (Gold vs Silver) comes only from goldEntryDate + dropDate
+ * (see resolveSailorFleet) — not from selecting Gold/Silver manually.
  */
 
 export type SeriesFleetStatus =
   | "gold"
   | "silver"
   | "guest"
+  | "series"
   | "dropped";
 
 /** Common nationality / NOC aliases → short display code */
@@ -58,9 +63,56 @@ export function normalizeNationality(v: unknown): string | null {
   if (!raw || /^n\/?a$/i.test(raw) || raw === "-" || raw === "—") return null;
   const key = raw.toLowerCase();
   if (NOC_MAP[key]) return NOC_MAP[key];
-  // Already a 3-letter code
   if (/^[A-Za-z]{3}$/.test(raw)) return raw.toUpperCase();
   return raw;
+}
+
+/**
+ * Normalize admin/import values to Guest | Series (canonical storage).
+ * Legacy Gold/Silver → Series.
+ */
+export function normalizeSgSeriesMembership(
+  v: unknown
+): "Guest" | "Series" | null {
+  if (v == null || v === "") return null;
+  const s = String(v).trim().toLowerCase();
+  if (!s || s === "guest" || s === "n/a" || s === "none") return "Guest";
+  if (
+    s === "series" ||
+    s === "in sg fleet" ||
+    s === "in_sg_fleet" ||
+    s === "member" ||
+    s === "sg" ||
+    s === "gold" ||
+    s === "silver"
+  ) {
+    return "Series";
+  }
+  return null;
+}
+
+/** True when sailor is marked In SG Fleet (eligible for Gold/Silver ranking by dates). */
+export function isInSgSeries(s: {
+  currentFleet?: string | null;
+  goldEntryDate?: string | null;
+  silverEntryDate?: string | null;
+}): boolean {
+  const cf = String(s.currentFleet || "")
+    .trim()
+    .toLowerCase();
+  if (cf === "guest") return false;
+  if (
+    cf === "series" ||
+    cf === "gold" ||
+    cf === "silver" ||
+    cf === "in sg fleet" ||
+    cf === "member"
+  ) {
+    return true;
+  }
+  // Legacy rows: no flag but has entry dates → treat as series
+  if (!cf && (s.goldEntryDate || s.silverEntryDate)) return true;
+  return false;
 }
 
 export function hasSilverHistory(s: {
@@ -69,12 +121,12 @@ export function hasSilverHistory(s: {
   currentFleet?: string | null;
 }): boolean {
   if (s.silverEntryDate) return true;
-  // Already Gold implies they came through (or were seeded historically)
   if (s.goldEntryDate) return true;
+  // Legacy Gold/Silver fleet tag
   const cf = String(s.currentFleet || "")
     .trim()
     .toLowerCase();
-  return cf === "silver" || cf === "gold";
+  return cf === "silver" || cf === "gold" || cf === "series";
 }
 
 export function isSeriesMember(s: {
@@ -84,13 +136,13 @@ export function isSeriesMember(s: {
   manuallyDropped?: boolean | null;
 }): boolean {
   if (s.manuallyDropped) return false;
-  const cf = String(s.currentFleet || "")
-    .trim()
-    .toLowerCase();
-  if (cf === "gold" || cf === "silver") return true;
-  return Boolean(s.goldEntryDate || s.silverEntryDate);
+  return isInSgSeries(s);
 }
 
+/**
+ * Display status for admin/profile badges.
+ * Ranking fleet still uses resolveSailorFleet (period-aware).
+ */
 export function seriesFleetStatus(s: {
   silverEntryDate?: string | null;
   goldEntryDate?: string | null;
@@ -98,14 +150,10 @@ export function seriesFleetStatus(s: {
   manuallyDropped?: boolean | null;
 }): SeriesFleetStatus {
   if (s.manuallyDropped) return "dropped";
-  const cf = String(s.currentFleet || "")
-    .trim()
-    .toLowerCase();
-  if (cf === "gold") return "gold";
-  if (cf === "silver") return "silver";
+  if (!isInSgSeries(s)) return "guest";
+  // Ranking tier hint from gold entry date (not from currentFleet Gold/Silver)
   if (s.goldEntryDate) return "gold";
-  if (s.silverEntryDate) return "silver";
-  return "guest";
+  return "series";
 }
 
 export function seriesStatusBadge(status: SeriesFleetStatus): {
@@ -115,14 +163,19 @@ export function seriesStatusBadge(status: SeriesFleetStatus): {
   switch (status) {
     case "gold":
       return {
-        label: "Gold Fleet",
+        label: "In SG Fleet (Gold entry)",
         className:
           "bg-yellow-500/10 text-yellow-400 border border-yellow-500/25",
       };
     case "silver":
       return {
-        label: "Silver Fleet",
+        label: "In SG Fleet (Silver)",
         className: "bg-slate-400/10 text-slate-300 border border-slate-400/20",
+      };
+    case "series":
+      return {
+        label: "In SG Fleet",
+        className: "bg-sky-500/10 text-sky-300 border border-sky-500/25",
       };
     case "dropped":
       return {
@@ -131,7 +184,7 @@ export function seriesStatusBadge(status: SeriesFleetStatus): {
       };
     default:
       return {
-        label: "Guest (not in series)",
+        label: "Guest",
         className: "bg-white/5 text-slate-400 border border-white/10",
       };
   }
@@ -139,12 +192,10 @@ export function seriesStatusBadge(status: SeriesFleetStatus): {
 
 function hasDateValue(v: unknown): boolean {
   if (v == null || v === "") return false;
-  // Date objects from drivers, or ISO / YYYY-MM-DD strings
   if (v instanceof Date) return !Number.isNaN(v.getTime());
   return String(v).trim().length > 0;
 }
 
-/** Normalize to YYYY-MM-DD for postgres date columns (avoids invalid ISO dump failures). */
 export function toDateOnly(v: unknown): string | null {
   if (v == null || v === "") return null;
   if (v instanceof Date && !Number.isNaN(v.getTime())) {
@@ -159,17 +210,13 @@ export function toDateOnly(v: unknown): string | null {
 }
 
 /**
- * Validate Gold promotion: sailor must have Silver history (or already be Gold).
- * Returns error message or null if OK.
- *
- * Historical Gold sailors (gold entry / fleet already set, often without silver
- * dates in the roster) may always edit gold dates.
+ * Gold requires Silver history first (or already Gold).
+ * Historical Gold sailors (gold entry / already Gold) may always edit gold dates.
  */
 export function validateGoldPromotion(input: {
   currentFleet?: string | null;
   goldEntryDate?: string | null;
   silverEntryDate?: string | null;
-  /** Existing DB row when patching */
   existing?: {
     currentFleet?: string | null;
     goldEntryDate?: string | null;
@@ -177,13 +224,6 @@ export function validateGoldPromotion(input: {
   } | null;
 }): string | null {
   const existing = input.existing || null;
-  const nextFleet = String(
-    input.currentFleet !== undefined
-      ? input.currentFleet ?? ""
-      : existing?.currentFleet || ""
-  )
-    .trim()
-    .toLowerCase();
   const nextGold =
     input.goldEntryDate !== undefined
       ? input.goldEntryDate
@@ -193,29 +233,27 @@ export function validateGoldPromotion(input: {
       ? input.silverEntryDate
       : existing?.silverEntryDate ?? null;
 
-  const wantsGold =
-    nextFleet === "gold" || hasDateValue(nextGold);
-
+  const wantsGold = hasDateValue(nextGold);
   if (!wantsGold) return null;
 
-  // Already Gold in DB — allow edits (including changing gold entry date)
-  const alreadyGold =
-    hasDateValue(existing?.goldEntryDate) ||
-    String(existing?.currentFleet || "")
-      .trim()
-      .toLowerCase() === "gold";
+  const alreadyGold = hasDateValue(existing?.goldEntryDate);
   if (alreadyGold) return null;
 
   const silverOk =
     hasDateValue(nextSilver) ||
-    nextFleet === "silver" ||
     hasDateValue(existing?.silverEntryDate) ||
-    String(existing?.currentFleet || "")
-      .trim()
-      .toLowerCase() === "silver";
+    isInSgSeries({
+      currentFleet: input.currentFleet ?? existing?.currentFleet,
+      goldEntryDate: existing?.goldEntryDate,
+      silverEntryDate: existing?.silverEntryDate,
+    });
 
+  // Prefer explicit silver date for first gold promotion
+  if (!hasDateValue(nextSilver) && !hasDateValue(existing?.silverEntryDate)) {
+    return "Gold fleet requires Silver history first. Admit the sailor as Silver (set Silver entry date), then set Gold entry.";
+  }
   if (!silverOk) {
-    return "Gold fleet requires Silver history first. Admit the sailor as Silver (set Silver entry date or Fleet = Silver), then promote to Gold.";
+    return "Gold fleet requires Silver history first. Admit the sailor as Silver (set Silver entry date), then set Gold entry.";
   }
   return null;
 }
