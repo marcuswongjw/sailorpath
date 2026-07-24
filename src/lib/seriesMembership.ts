@@ -91,11 +91,14 @@ export function normalizeSgSeriesMembership(
   return null;
 }
 
+/** Date-ish fields from DB/admin may be string or Date. */
+type Dateish = string | Date | null | undefined;
+
 /** True when sailor is marked In SG Fleet (eligible for Gold/Silver ranking by dates). */
 export function isInSgSeries(s: {
   currentFleet?: string | null;
-  goldEntryDate?: string | null;
-  silverEntryDate?: string | null;
+  goldEntryDate?: Dateish;
+  silverEntryDate?: Dateish;
 }): boolean {
   const cf = String(s.currentFleet || "")
     .trim()
@@ -116,8 +119,8 @@ export function isInSgSeries(s: {
 }
 
 export function hasSilverHistory(s: {
-  silverEntryDate?: string | null;
-  goldEntryDate?: string | null;
+  silverEntryDate?: Dateish;
+  goldEntryDate?: Dateish;
   currentFleet?: string | null;
 }): boolean {
   if (s.silverEntryDate) return true;
@@ -130,10 +133,10 @@ export function hasSilverHistory(s: {
 }
 
 export function isSeriesMember(s: {
-  silverEntryDate?: string | null;
-  goldEntryDate?: string | null;
+  silverEntryDate?: Dateish;
+  goldEntryDate?: Dateish;
   currentFleet?: string | null;
-  dropDate?: string | null;
+  dropDate?: Dateish;
 }): boolean {
   // Past drop date → no longer an active series member for “now”
   if (s.dropDate) {
@@ -151,10 +154,10 @@ export function isSeriesMember(s: {
  * Ranking fleet still uses resolveSailorFleet (period-aware).
  */
 export function seriesFleetStatus(s: {
-  silverEntryDate?: string | null;
-  goldEntryDate?: string | null;
+  silverEntryDate?: Dateish;
+  goldEntryDate?: Dateish;
   currentFleet?: string | null;
-  dropDate?: string | null;
+  dropDate?: Dateish;
 }): SeriesFleetStatus {
   if (s.dropDate) {
     const ymd = String(s.dropDate).slice(0, 10);
@@ -171,10 +174,10 @@ export function seriesFleetStatus(s: {
 
 /** Short admin / search label for SG Series membership. */
 export function seriesMembershipLabel(s: {
-  silverEntryDate?: string | null;
-  goldEntryDate?: string | null;
+  silverEntryDate?: Dateish;
+  goldEntryDate?: Dateish;
   currentFleet?: string | null;
-  dropDate?: string | null;
+  dropDate?: Dateish;
 }): string {
   switch (seriesFleetStatus(s)) {
     case "dropped":
