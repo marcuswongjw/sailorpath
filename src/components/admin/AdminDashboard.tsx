@@ -375,6 +375,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   const seriesLabelOf = (s: any) => {
     if (s.manuallyDropped) return "Dropped";
+    // Optimist drop date = out of Gold/Silver from that day (not the manual flag)
+    if (s.dropDate) {
+      const d = new Date(`${String(s.dropDate).slice(0, 10)}T12:00:00`);
+      if (!Number.isNaN(d.getTime()) && d.getTime() <= Date.now()) {
+        return "Dropped";
+      }
+    }
     const cf = String(s.currentFleet || "").toLowerCase();
     if (cf === "guest") return "Guest";
     const inSeries =
@@ -383,7 +390,6 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       cf === "silver" ||
       (!cf && Boolean(s.goldEntryDate || s.silverEntryDate));
     if (!inSeries) return "Guest";
-    // In SG Fleet — show ranking tier hint from gold entry
     if (s.goldEntryDate) return "Series · Gold entry";
     return "Series · Silver";
   };
@@ -956,7 +962,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       weight: sailorForm.weight === "" || sailorForm.weight == null ? null : sailorForm.weight,
       instagram: sailorForm.instagram || null,
       avatarUrl: sailorForm.avatarUrl || null,
-      manuallyDropped: Boolean(sailorForm.manuallyDropped),
+      manuallyDropped: sailorForm.dropDate
+        ? false
+        : Boolean(sailorForm.manuallyDropped),
       natSquadStatusJan25: sailorForm.natSquadStatusJan25 || null,
       natSquadStatusJul25: sailorForm.natSquadStatusJul25 || null,
       natSquadStatusJan26: sailorForm.natSquadStatusJan26 || null,
@@ -2324,7 +2332,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                           <span>
                             <strong className="text-white">Manually dropped</strong>
                             <span className="block text-[10px] text-slate-500">
-                              Excludes from all rankings (even if still In SG Fleet)
+                              Only if they leave without an Optimist drop date.
+                              Prefer setting <strong>Drop date</strong> below —
+                              that ends Gold/Silver ranking from that day.
                             </span>
                           </span>
                         </label>
@@ -2352,9 +2362,22 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                         <input
                           type="date"
                           value={sailorForm.dropDate || ""}
-                          onChange={(e) => setSailorForm({ ...sailorForm, dropDate: e.target.value })}
+                          onChange={(e) =>
+                            setSailorForm({
+                              ...sailorForm,
+                              dropDate: e.target.value,
+                              // Drop date replaces the manual flag for fleet exit
+                              manuallyDropped: e.target.value
+                                ? false
+                                : sailorForm.manuallyDropped,
+                            })
+                          }
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                         />
+                        <p className="mt-1 text-[10px] text-slate-500">
+                          Out of Gold (and rankings) from this date inclusive.
+                          Clears “Manually dropped” when set.
+                        </p>
                       </div>
                       <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 border-t border-white/5 pt-4">
                         <p className="col-span-2 sm:col-span-3 lg:col-span-5 text-[10px] font-bold text-blue-400/90 uppercase tracking-wider">

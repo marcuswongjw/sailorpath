@@ -121,10 +121,13 @@ export async function POST(req: Request) {
         bio: emptyToNull(r.bio),
         nationalSquadStatus: emptyToNull(r.nationalSquadStatus),
         currentFleet: parseFleet(r.currentFleet),
-        manuallyDropped: parseYes(r.manuallyDropped),
         goldEntryDate: emptyToNull(r.goldEntryDate),
         silverEntryDate: emptyToNull(r.silverEntryDate),
         dropDate: emptyToNull(r.dropDate),
+        // Prefer drop date for fleet exit; never keep both manual + drop date
+        manuallyDropped: emptyToNull(r.dropDate)
+          ? false
+          : parseYes(r.manuallyDropped),
         dob: emptyToNull(r.dob),
         weight: num(r.weight),
         instagram: emptyToNull(r.instagram),

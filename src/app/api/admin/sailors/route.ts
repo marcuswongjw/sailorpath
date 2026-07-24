@@ -85,7 +85,10 @@ export async function POST(req: Request) {
       silverEntryDate,
       dropDate: toDateOnly(body.dropDate),
       currentFleet: currentFleet || "Guest",
-      manuallyDropped: Boolean(body.manuallyDropped),
+      // Drop date alone exits fleet rankings — do not also flag manually dropped
+      manuallyDropped: toDateOnly(body.dropDate)
+        ? false
+        : Boolean(body.manuallyDropped),
       nationalSquadStatus: body.nationalSquadStatus || null,
       dob: toDateOnly(body.dob),
       weight: num(body.weight),
@@ -259,6 +262,16 @@ export async function PATCH(req: Request) {
         v === "yes" ||
         v === "true" ||
         v === 1;
+    }
+    // Drop date is the fleet-exit signal; clear manual flag whenever drop date is present
+    const nextDrop =
+      patch.dropDate !== undefined
+        ? patch.dropDate
+        : existing.dropDate
+          ? String(existing.dropDate).slice(0, 10)
+          : null;
+    if (nextDrop) {
+      patch.manuallyDropped = false;
     }
     for (const f of [
       "weight",

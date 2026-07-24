@@ -134,6 +134,10 @@ export async function POST(req: Request) {
     if (field === "natSquadStatusJul26") {
       patch.nationalSquadStatus = typed;
     }
+    // Drop date alone ends series ranking — clear manual drop flag
+    if (field === "dropDate" && typed != null && typed !== "") {
+      patch.manuallyDropped = false;
+    }
     await db.update(sailors).set(patch).where(inArray(sailors.id, sailorIds));
 
     return NextResponse.json({

@@ -238,9 +238,9 @@ export function scoringRegattasForFleet(
 /**
  * Period ranking membership.
  *
- * 1) Manually dropped → never ranked
+ * 1) Manually dropped (no drop date) → never ranked
  * 2) Guest (not In SG Fleet) → never ranked
- * 3) Drop date: not ranked from drop day onward (drop in half → out for that half)
+ * 3) Drop date: out of Gold/Silver from that day (drop in half → out for that half)
  * 4) In SG Fleet + goldEntryDate ≤ period end → Gold (from that date until drop)
  * 5) Else In SG Fleet → Silver
  *

@@ -44,8 +44,9 @@ export const sailors = pgTable("sailors", {
    */
   currentFleet: text("current_fleet"),
   /**
-   * Left Optimist / removed from rankings.
-   * Excluded from Gold/Silver boards; may still appear on All Gold Fleet Sailors.
+   * Left Optimist without a normal drop date. Prefer dropDate for fleet exit.
+   * When dropDate is set, manuallyDropped should be false — dropDate alone
+   * excludes from rankings from that day onward.
    */
   manuallyDropped: boolean("manually_dropped").default(false).notNull(),
   instagram: text("instagram"),
