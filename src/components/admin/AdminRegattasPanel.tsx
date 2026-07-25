@@ -1,11 +1,27 @@
 "use client";
 
-import { Plus, Trash2, Edit3, Calendar } from "lucide-react";
+import { Plus, Trash2, Calendar } from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 
+export interface RegattaFormState {
+  name?: string;
+  slug?: string;
+  startDate?: string;
+  endDate?: string;
+  date?: string | Date;
+  division?: string;
+  geography?: string;
+  boatClass?: string;
+  countsForRanking?: boolean;
+  totalFleetSize?: string | number;
+  raceCount?: string | number;
+  notes?: string;
+  [key: string]: any;
+}
+
 export type AdminRegattasPanelProps = {
-  isSuperadmin: boolean;
+  isSuperadmin?: boolean;
   filteredRegattaList: RegattaAdmin[];
   regattaSearch: string;
   setRegattaSearch: (v: string) => void;
@@ -15,14 +31,13 @@ export type AdminRegattasPanelProps = {
   setRegattaRankingFilter: (v: string) => void;
   editingRegattaId: string | null;
   setEditingRegattaId: (id: string | null) => void;
-  regattaForm: any;
-  setRegattaForm: React.Dispatch<React.SetStateAction<any>>;
+  regattaForm: RegattaFormState;
+  setRegattaForm: React.Dispatch<React.SetStateAction<RegattaFormState>>;
   handleSaveRegatta: () => void | Promise<void>;
   handleDeleteRegatta: (id: string) => void | Promise<void>;
 };
 
 export function AdminRegattasPanel({
-  isSuperadmin,
   filteredRegattaList,
   regattaSearch,
   setRegattaSearch,
@@ -132,6 +147,7 @@ export function AdminRegattasPanel({
                                 setEditingRegattaId(r.id);
                                 setRegattaForm({
                                   ...r,
+                                  division: r.division || "",
                                   raceCount:
                                     r.raceCount != null ? String(r.raceCount) : "",
                                   totalFleetSize:
@@ -230,7 +246,7 @@ export function AdminRegattasPanel({
                             </label>
                             <input
                               type="date"
-                              value={regattaForm.date}
+                              value={String(regattaForm.date || "").slice(0, 10)}
                               onChange={(e) =>
                                 setRegattaForm({
                                   ...regattaForm,

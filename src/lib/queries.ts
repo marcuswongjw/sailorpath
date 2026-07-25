@@ -25,15 +25,10 @@ import {
   normalizeSgSeriesMembership,
 } from "@/lib/seriesMembership";
 import {
-  and,
   asc,
   desc,
   eq,
-  ilike,
   inArray,
-  isNotNull,
-  ne,
-  or,
   sql,
 } from "drizzle-orm";
 

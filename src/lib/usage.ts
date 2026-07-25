@@ -5,7 +5,7 @@
 
 import { db } from "@/db";
 import { usageEvents } from "@/db/schema";
-import { and, desc, eq, gte, isNull, sql } from "drizzle-orm";
+import { and, desc, gte, isNull, sql } from "drizzle-orm";
 
 export const USAGE_EVENT_TYPES = [
   "page_view",

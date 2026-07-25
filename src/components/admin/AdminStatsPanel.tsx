@@ -77,8 +77,31 @@ export function AdminStatsPanel() {
   }, [days]);
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    let ignore = false;
+    async function fetchData() {
+      setBusy(true);
+      setErr(null);
+      try {
+        const res = await fetch(`/api/admin/stats?days=${days}`, {
+          credentials: "include",
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || "Failed to load stats");
+        if (!ignore) setData(json);
+      } catch (e) {
+        if (!ignore) {
+          setErr(e instanceof Error ? e.message : "Failed");
+          setData(null);
+        }
+      } finally {
+        if (!ignore) setBusy(false);
+      }
+    }
+    fetchData();
+    return () => {
+      ignore = true;
+    };
+  }, [days]);
 
   const inv = data?.inventory;
   const usage = data?.usage;

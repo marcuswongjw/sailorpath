@@ -9,6 +9,17 @@ import type { ResultAdmin } from "@/types/result";
 
 const DNS_PERIODS = rankingPeriodOptions(4);
 
+export interface ResultFormState {
+  regattaId?: string;
+  sailorId?: string;
+  rank?: string | number;
+  nettScore?: string | number;
+  totalScore?: string | number;
+  isDns?: boolean;
+  notes?: string;
+  [key: string]: any;
+}
+
 export type AdminResultsPanelProps = {
   isSuperadmin: boolean;
   sailorList: SailorAdmin[];
@@ -18,8 +29,8 @@ export type AdminResultsPanelProps = {
   setSelectedRegattaIdForResultEdit: (id: string) => void;
   editingResultId: string | null;
   setEditingResultId: (id: string | null) => void;
-  resultForm: any;
-  setResultForm: (v: any) => void;
+  resultForm: ResultFormState;
+  setResultForm: (v: ResultFormState) => void;
   handleSaveResult: () => void | Promise<void>;
   handleDeleteResult: (id: string) => void | Promise<void>;
   handleFillDnsForRegatta: (regattaId: string) => void | Promise<void>;
@@ -398,12 +409,12 @@ export function AdminResultsPanel({
                                         setEditingResultId(res.id);
                                         setResultForm({
                                           ...res,
-                                          nettScore: res.nettScore?.toString?.() ?? res.nettScore,
+                                          nettScore: res.nettScore != null ? String(res.nettScore) : "",
                                           totalScore:
                                             res.totalScore != null
                                               ? String(res.totalScore)
                                               : "",
-                                          rank: res.rank?.toString?.() ?? res.rank,
+                                          rank: res.rank != null ? String(res.rank) : "",
                                           isDNS: dns && !overseas,
                                           isDns: dns && !overseas,
                                           isOverseasCommitment: overseas,

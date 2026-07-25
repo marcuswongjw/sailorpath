@@ -419,7 +419,10 @@ export function reRankWithExcluded(
     )
   );
 
-  return next.map(({ _tiebreakScores: _tb, ...rest }) => rest as RankedSailor);
+  return next.map((item) => {
+    delete item._tiebreakScores;
+    return item as RankedSailor;
+  });
 }
 
 // Core Ranking Engine

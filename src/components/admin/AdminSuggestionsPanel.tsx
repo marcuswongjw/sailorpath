@@ -68,8 +68,39 @@ export function AdminSuggestionsPanel({
   }, []);
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    let ignore = false;
+    async function fetchData() {
+      setBusy(true);
+      setErr(null);
+      try {
+        const res = await fetch("/api/admin/regatta-suggestions", {
+          credentials: "include",
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Failed to load");
+        if (!ignore) {
+          setItems(data.suggestions || []);
+          const forms: typeof promoteForm = {};
+          for (const s of data.suggestions || []) {
+            forms[s.id] = {
+              division: "Gold",
+              geography: s.geography || "SG",
+              totalFleetSize: String(s.totalFleetSize || 50),
+            };
+          }
+          setPromoteForm(forms);
+        }
+      } catch (e) {
+        if (!ignore) setErr(e instanceof Error ? e.message : "Failed");
+      } finally {
+        if (!ignore) setBusy(false);
+      }
+    }
+    fetchData();
+    return () => {
+      ignore = true;
+    };
+  }, []);
 
   const patch = async (
     id: string,

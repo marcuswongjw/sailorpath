@@ -35,10 +35,53 @@ import {
   type JourneyHighlight,
 } from "@/lib/sailingJourney";
 
+export interface SailorRecordProps {
+  id: string;
+  name: string;
+  handle: string;
+  sailNumber?: string | null;
+  club?: string | null;
+  school?: string | null;
+  nationality?: string | null;
+  dob?: string | null;
+  goldEntryDate?: string | null;
+  silverEntryDate?: string | null;
+  dropDate?: string | null;
+  bio?: string | null;
+  instagram?: string | null;
+  weight?: string | number | null;
+  boatHull?: string | null;
+  boatSail?: string | null;
+  boatSpars?: string | null;
+  boatFoil?: string | null;
+  avatarUrl?: string | null;
+  [key: string]: unknown;
+}
+
+export interface RegattaResultItem {
+  id: string;
+  regattaId: string;
+  regattaName?: string;
+  rank?: number | null;
+  nettScore?: number | null;
+  isDns?: boolean;
+  notes?: string | null;
+  [key: string]: unknown;
+}
+
+export interface ObservationItem {
+  id: string;
+  regattaId?: string | null;
+  raceNumber?: number | null;
+  note?: string | null;
+  createdAt?: string | null;
+  [key: string]: unknown;
+}
+
 interface SailorProfileViewProps {
-  initialSailor: any;
-  initialResults: any[];
-  initialEquipment: any;
+  initialSailor: SailorRecordProps;
+  initialResults: RegattaResultItem[];
+  initialEquipment: Record<string, any>;
   initialSeriesStanding?: {
     periodLabel: string;
     fleet: string;
@@ -55,8 +98,8 @@ interface SailorProfileViewProps {
     }[];
     trendNote: string;
   } | null;
-  initialObservations?: any[];
-  initialEquipmentHistory?: any[];
+  initialObservations?: ObservationItem[];
+  initialEquipmentHistory?: Record<string, unknown>[];
   canSeePrivate?: boolean;
   canClaim?: boolean;
   isOwner?: boolean;
@@ -154,14 +197,14 @@ export function SailorProfileView({
   demoRole,
   onDemoClaim,
 }: SailorProfileViewProps) {
-  const [isPublicWeight, setIsPublicWeight] = useState(
-    initialSailor.isPublicWeight || false
+  const [isPublicWeight, setIsPublicWeight] = useState<boolean>(
+    Boolean(initialSailor.isPublicWeight)
   );
-  const [isPublicDob, setIsPublicDob] = useState(
-    initialSailor.isPublicDob || false
+  const [isPublicDob, setIsPublicDob] = useState<boolean>(
+    Boolean(initialSailor.isPublicDob)
   );
-  const [isPublicEquipment, setIsPublicEquipment] = useState(
-    initialSailor.isPublicEquipment ?? false
+  const [isPublicEquipment, setIsPublicEquipment] = useState<boolean>(
+    Boolean(initialSailor.isPublicEquipment)
   );
   const [visibleCount, setVisibleCount] = useState(15);
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
@@ -1155,7 +1198,7 @@ export function SailorProfileView({
                 Instagram
               </span>
               <input
-                value={form.instagram}
+                value={form.instagram || ""}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, instagram: e.target.value }))
                 }
@@ -1179,7 +1222,7 @@ export function SailorProfileView({
                   {label}
                 </span>
                 <input
-                  value={form[key]}
+                  value={(form as Record<string, any>)[key] || ""}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, [key]: e.target.value }))
                   }
@@ -1290,7 +1333,7 @@ export function SailorProfileView({
               Gender
             </span>
             <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5">
-              {displaySailor.gender || "—"}
+              {(displaySailor.gender as string) || "—"}
             </span>
             <span className="block text-[9px] text-slate-600">&nbsp;</span>
           </div>
@@ -1345,7 +1388,7 @@ export function SailorProfileView({
                           v ? "text-orange-400" : "text-slate-600"
                         }`}
                       >
-                        {v || "—"}
+                        {(v as React.ReactNode) || "—"}
                       </p>
                     </div>
                   );

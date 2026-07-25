@@ -9,12 +9,10 @@ import {
   Plus,
   Trash2,
   Edit3,
-  User,
   Medal,
   Copy,
   AlertTriangle,
   CheckCircle,
-  RefreshCw,
   Save,
   Grid,
   UserCheck,
@@ -22,7 +20,6 @@ import {
 import { ageYears } from "@/lib/age";
 import {
   halfBoundaryOptions,
-  isHalfBoundaryYmd,
   todayYmdSg,
 } from "@/lib/datesSg";
 import {
@@ -40,6 +37,8 @@ export type DuplicatePair = {
   band?: string;
   how?: string;
 };
+
+export type SailorFormState = Record<string, any>;
 
 export type AdminSailorsPanelProps = {
   isSuperadmin: boolean;
@@ -75,8 +74,8 @@ export type AdminSailorsPanelProps = {
   toggleSelectAllVisible: () => void;
   editingSailorId: string | null;
   setEditingSailorId: (id: string | null) => void;
-  sailorForm: any;
-  setSailorForm: Dispatch<SetStateAction<any>>;
+  sailorForm: SailorFormState;
+  setSailorForm: Dispatch<SetStateAction<SailorFormState>>;
   handleSaveSailor: () => void | Promise<void>;
   handleDeleteSailor: (id: string) => void | Promise<void>;
   showDuplicateFinder: boolean;
@@ -614,7 +613,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                               {label}
                             </label>
                             <select
-                              value={(sailorForm as any)[key] || ""}
+                              value={((sailorForm as Record<string, unknown>)[key] as string) || ""}
                               onChange={(e) => {
                                 const v = e.target.value;
                                 setSailorForm({
@@ -654,7 +653,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Weight (kg)</label>
                         <input
                           type="number"
-                          value={sailorForm.weight || ""}
+                          value={sailorForm.weight ?? ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, weight: e.target.value })}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                         />
@@ -756,7 +755,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           }
                           onChange={(e) => {
                             const v = e.target.value;
-                            const next: any = {
+                            const next: SailorFormState = {
                               ...sailorForm,
                               currentFleet: v === "Series" ? "Series" : "Guest",
                             };
@@ -877,7 +876,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             <input
                               type="number"
                               min={1}
-                              value={(sailorForm as any)[key] ?? ""}
+                              value={((sailorForm as Record<string, unknown>)[key] as string) ?? ""}
                               onChange={(e) =>
                                 setSailorForm({
                                   ...sailorForm,
@@ -1072,7 +1071,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         {sortedDbSailors.map((s) => {
                           const seriesLabel = seriesLabelOf(s);
                           const isChecked = selectedSailors.includes(s.id);
-                          const cells: Record<string, any> = {
+                          const cells: Record<string, React.ReactNode> = {
                             name: (
                               <span className="font-bold text-white">
                                 {s.name}
