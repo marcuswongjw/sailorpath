@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
+import { eq, inArray, max } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailorAliases, sailors } from "@/db/schema";
@@ -21,17 +21,29 @@ import type { ImportPossibleDuplicate } from "@/types/import";
 
 export type { ImportPossibleDuplicate };
 
-/** Pairwise similar names within the import sheet (60%+). */
+/** Allow long Optimist fleet imports on Vercel (default is often 10–15s). */
+export const maxDuration = 60;
+
+const MAX_DUPLICATE_FLAGS = 40;
+
+/** Pairwise similar names within the import sheet (60%+). Cap pairs for speed. */
 function findWithinFileDuplicates(
   names: string[],
-  minSimilarity = 0.6
+  minSimilarity = 0.6,
+  maxPairs = MAX_DUPLICATE_FLAGS
 ): ImportPossibleDuplicate[] {
   const out: ImportPossibleDuplicate[] = [];
   const seen = new Set<string>();
-  for (let i = 0; i < names.length; i++) {
-    for (let j = i + 1; j < names.length; j++) {
-      const a = names[i];
-      const b = names[j];
+  // Cap comparisons for large fleets — O(n²) Levenshtein was blowing past
+  // serverless timeouts so the browser saw "Failed to fetch" after DB writes.
+  const list = names.slice(0, 120);
+  for (let i = 0; i < list.length; i++) {
+    for (let j = i + 1; j < list.length; j++) {
+      if (out.length >= maxPairs) {
+        return out.sort((x, y) => y.similarity - x.similarity);
+      }
+      const a = list[i];
+      const b = list[j];
       if (!a || !b || a === b) continue;
       const sim = combinedNameSimilarity(a, b);
       if (sim < minSimilarity) continue;
@@ -166,22 +178,26 @@ export async function POST(req: Request) {
       })
       .from(sailors);
 
-    // Latest ranking result date per sailor (for profile "latest wins")
-    const allResultDates = await db
-      .select({
-        sailorId: regattaResults.sailorId,
-        date: regattas.date,
-        countsForRanking: regattas.countsForRanking,
-      })
-      .from(regattaResults)
-      .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id));
+    // Latest ranking result date per sailor (aggregated — avoid loading full results table)
     const latestDateBySailor = new Map<string, string>();
-    for (const row of allResultDates) {
-      if (row.countsForRanking === false) continue;
-      const d = String(row.date || "").slice(0, 10);
-      if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) continue;
-      const prev = latestDateBySailor.get(row.sailorId);
-      if (!prev || d > prev) latestDateBySailor.set(row.sailorId, d);
+    try {
+      const latestRows = await db
+        .select({
+          sailorId: regattaResults.sailorId,
+          maxDate: max(regattas.date),
+        })
+        .from(regattaResults)
+        .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+        .where(eq(regattas.countsForRanking, true))
+        .groupBy(regattaResults.sailorId);
+      for (const row of latestRows) {
+        const d = String(row.maxDate || "").slice(0, 10);
+        if (row.sailorId && /^\d{4}-\d{2}-\d{2}$/.test(d)) {
+          latestDateBySailor.set(row.sailorId, d);
+        }
+      }
+    } catch (e) {
+      console.warn("import latest-date aggregate failed, continuing", e);
     }
 
     const { shouldApplyProfileFromRegatta, buildProfilePatchFromRow } =
@@ -191,6 +207,7 @@ export async function POST(req: Request) {
     );
     const { logAdminChange } = await import("@/lib/adminChangeLog");
     const affectedSailorIds = new Set<string>();
+    const profileChangeFields: string[] = [];
     const aliasList = await db
       .select({
         sailorId: sailorAliases.sailorId,
@@ -215,6 +232,15 @@ export async function POST(req: Request) {
     const errorSamples: string[] = [];
     const possibleDuplicates: ImportPossibleDuplicate[] = [];
     const vsDbSeen = new Set<string>();
+    const pendingResults: {
+      regattaId: string;
+      sailorId: string;
+      rank: number;
+      nettScore: number | null;
+      totalScore: number | null;
+      isDns: boolean;
+    }[] = [];
+    const pendingAliases: { sailorId: string; aliasName: string }[] = [];
 
     // Snapshot DB before creates so "vs-db" warnings use pre-import sailors
     const dbBeforeImport = sailorList.map((s) => ({
@@ -394,16 +420,13 @@ export async function POST(req: Request) {
             .set(profilePatch as typeof sailors.$inferInsert)
             .where(eq(sailors.id, sailorId));
           updatedProfiles++;
-          if (fieldChanged.some((f) => f === "sailNumber" || f === "club" || f === "school")) {
-            void logAdminChange({
-              action: "import.profile",
-              entityType: "sailor",
-              entityId: sailorId,
-              entityLabel: existing?.name || row.name,
-              summary: `Profile updated from regatta ${regattaName} (${eventDate}): ${fieldChanged.join(", ")}`,
-              details: { fields: fieldChanged, regatta: regattaName, date: eventDate },
-              source: "/api/admin/import",
-            });
+          for (const f of fieldChanged) {
+            if (
+              (f === "sailNumber" || f === "club" || f === "school") &&
+              !profileChangeFields.includes(f)
+            ) {
+              profileChangeFields.push(f);
+            }
           }
           sailorList = sailorList.map((s) =>
             s.id === sailorId
@@ -432,38 +455,19 @@ export async function POST(req: Request) {
         const nett = row.nett != null ? row.nett : null;
         const total = row.total != null ? row.total : null;
 
-        await db
-          .insert(regattaResults)
-          .values({
-            regattaId: reg.id,
-            sailorId,
-            rank,
-            nettScore: nett,
-            totalScore: total,
-            isDns: false,
-          })
-          .onConflictDoUpdate({
-            target: [regattaResults.sailorId, regattaResults.regattaId],
-            set: {
-              rank,
-              nettScore: nett,
-              totalScore: total,
-              isDns: false,
-              updatedAt: new Date(),
-            },
-          });
+        // Collect for batch upsert (avoids N round-trips that timed out serverless)
+        pendingResults.push({
+          regattaId: reg.id,
+          sailorId,
+          rank,
+          nettScore: nett,
+          totalScore: total,
+          isDns: false,
+        });
         matched++;
 
         if (hit && hit.how !== "exact") {
-          try {
-            await db.insert(sailorAliases).values({
-              sailorId,
-              aliasName: row.name,
-            });
-            aliasList.push({ sailorId, aliasName: row.name });
-          } catch {
-            /* exists */
-          }
+          pendingAliases.push({ sailorId, aliasName: row.name });
         }
       } catch (rowErr) {
         rowErrors++;
@@ -488,51 +492,119 @@ export async function POST(req: Request) {
       }
     }
 
-    // Recompute silver_entry_date from earliest Silver ranking result
-    let silverUpdated = 0;
-    try {
-      const silverLinks = await db
-        .select({
-          sailorId: regattaResults.sailorId,
-          regattaDate: regattas.date,
-          division: regattas.division,
-          countsForRanking: regattas.countsForRanking,
-        })
-        .from(regattaResults)
-        .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id));
-      const derived = deriveAllSilverEntryDates(
-        silverLinks.map((l) => ({
-          sailorId: l.sailorId,
-          regattaDate: l.regattaDate,
-          division: l.division,
-          countsForRanking: l.countsForRanking,
-        }))
-      );
-      for (const sid of affectedSailorIds) {
-        const next = derived.get(sid);
-        if (!next) continue;
-        const cur = sailorList.find((s) => s.id === sid);
-        const prev = cur?.silverEntryDate
-          ? String(cur.silverEntryDate).slice(0, 10)
-          : null;
-        if (prev === next) continue;
-        await db
-          .update(sailors)
-          .set({ silverEntryDate: next, updatedAt: new Date() })
-          .where(eq(sailors.id, sid));
-        silverUpdated++;
-        void logAdminChange({
-          action: "silver.recompute",
-          entityType: "sailor",
-          entityId: sid,
-          entityLabel: cur?.name || sid,
-          summary: `Silver entry ${prev || "—"} → ${next} (first Silver ranking regatta)`,
-          details: { old: prev, new: next },
-          source: "/api/admin/import",
-        });
+    // Parallel upsert results in chunks (sequential N inserts timed out serverless
+    // after DB writes completed — browser saw "Failed to fetch").
+    if (pendingResults.length) {
+      const CHUNK = 15;
+      for (let i = 0; i < pendingResults.length; i += CHUNK) {
+        const chunk = pendingResults.slice(i, i + CHUNK);
+        await Promise.all(
+          chunk.map((r) =>
+            db
+              .insert(regattaResults)
+              .values(r)
+              .onConflictDoUpdate({
+                target: [regattaResults.sailorId, regattaResults.regattaId],
+                set: {
+                  rank: r.rank,
+                  nettScore: r.nettScore,
+                  totalScore: r.totalScore,
+                  isDns: r.isDns,
+                  updatedAt: new Date(),
+                },
+              })
+          )
+        );
       }
-    } catch (e) {
-      console.warn("silver recompute after import", e);
+    }
+
+    // Best-effort alias inserts in parallel chunks
+    if (pendingAliases.length) {
+      const seenAlias = new Set<string>();
+      const unique = pendingAliases.filter((a) => {
+        const k = `${a.sailorId}|${a.aliasName.toLowerCase()}`;
+        if (seenAlias.has(k)) return false;
+        seenAlias.add(k);
+        return true;
+      });
+      const CHUNK = 15;
+      for (let i = 0; i < unique.length; i += CHUNK) {
+        const chunk = unique.slice(i, i + CHUNK);
+        await Promise.all(
+          chunk.map(async (a) => {
+            try {
+              await db.insert(sailorAliases).values({
+                sailorId: a.sailorId,
+                aliasName: a.aliasName,
+              });
+            } catch {
+              /* exists */
+            }
+          })
+        );
+      }
+    }
+
+    // Recompute silver_entry_date — only for sailors touched by this import
+    let silverUpdated = 0;
+    const affectedIds = [...affectedSailorIds];
+    if (affectedIds.length) {
+      try {
+        const silverLinks = await db
+          .select({
+            sailorId: regattaResults.sailorId,
+            regattaDate: regattas.date,
+            division: regattas.division,
+            countsForRanking: regattas.countsForRanking,
+          })
+          .from(regattaResults)
+          .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+          .where(inArray(regattaResults.sailorId, affectedIds));
+        const derived = deriveAllSilverEntryDates(
+          silverLinks.map((l) => ({
+            sailorId: l.sailorId,
+            regattaDate: l.regattaDate,
+            division: l.division,
+            countsForRanking: l.countsForRanking,
+          }))
+        );
+        for (const sid of affectedIds) {
+          const next = derived.get(sid);
+          if (!next) continue;
+          const cur = sailorList.find((s) => s.id === sid);
+          const prev = cur?.silverEntryDate
+            ? String(cur.silverEntryDate).slice(0, 10)
+            : null;
+          if (prev === next) continue;
+          await db
+            .update(sailors)
+            .set({ silverEntryDate: next, updatedAt: new Date() })
+            .where(eq(sailors.id, sid));
+          silverUpdated++;
+        }
+      } catch (e) {
+        console.warn("silver recompute after import", e);
+      }
+    }
+
+    // Single audit summary (not N per-row inserts — was adding latency)
+    if (matched > 0 || created > 0 || updatedProfiles > 0) {
+      void logAdminChange({
+        action: "import.regatta",
+        entityType: "regatta",
+        entityId: reg.id,
+        entityLabel: reg.name,
+        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}); ${created} guests, ${updatedProfiles} profiles, ${silverUpdated} silver dates`,
+        details: {
+          matched,
+          created,
+          updatedProfiles,
+          silverUpdated,
+          rowErrors,
+          profileFields: profileChangeFields,
+        },
+        source: "/api/admin/import",
+      });
     }
 
     const needsNettMigration = errorSamples.some((e) =>
@@ -540,9 +612,10 @@ export async function POST(req: Request) {
     );
 
     possibleDuplicates.sort((a, b) => b.similarity - a.similarity);
+    const dupeFlags = possibleDuplicates.slice(0, MAX_DUPLICATE_FLAGS);
 
     const dupeNote =
-      possibleDuplicates.length > 0
+      dupeFlags.length > 0
         ? ` · ${possibleDuplicates.length} possible duplicate name(s) flagged (60%+ similar) — review below / merge in Database.`
         : "";
 
@@ -572,8 +645,8 @@ export async function POST(req: Request) {
       created,
       updatedProfiles,
       silverUpdated,
-      unmatched,
-      possibleDuplicates,
+      unmatched: unmatched.slice(0, 80),
+      possibleDuplicates: dupeFlags,
       inputRows: cleanRows.length,
       rowErrors,
       matchHow,

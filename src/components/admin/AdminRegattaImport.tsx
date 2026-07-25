@@ -101,6 +101,77 @@ export function AdminRegattaImport({
     if (e.target.files?.[0]) handleFile(e.target.files[0]);
   };
 
+  const refreshListsAfterImport = async (regatta?: RegattaAdmin | null) => {
+    if (regatta) onRegattaUpserted?.(regatta);
+    try {
+      const list = await fetch("/api/admin/sailors").then((r) => r.json());
+      if (list.sailors) onSailorsUpdated?.(list.sailors);
+    } catch {
+      /* ignore */
+    }
+    try {
+      const rRes = await fetch("/api/admin/results");
+      if (rRes.ok) {
+        const rData = await rRes.json();
+        if (rData.results) onResultsUpdated?.(rData.results);
+      }
+    } catch {
+      /* optional */
+    }
+  };
+
+  /**
+   * When the import POST times out / drops, the browser reports "Failed to fetch"
+   * even though rows may already be committed. Check whether the regatta landed.
+   */
+  const recoverAfterNetworkError = async (): Promise<{
+    ok: boolean;
+    message: string;
+    regatta?: RegattaAdmin;
+  }> => {
+    try {
+      const res = await fetch("/api/admin/regattas");
+      if (!res.ok) return { ok: false, message: "" };
+      const data = await res.json();
+      const list: RegattaAdmin[] = data.regattas || [];
+      const name = importMeta.name.trim().toLowerCase();
+      const date = importMeta.date.slice(0, 10);
+      const reg = list.find((r) => {
+        const rn = String(r.name || "")
+          .trim()
+          .toLowerCase();
+        const rd = String(r.date || "").slice(0, 10);
+        return rn === name && rd === date;
+      });
+      if (!reg) return { ok: false, message: "" };
+
+      let resultCount = 0;
+      try {
+        const rRes = await fetch("/api/admin/results");
+        if (rRes.ok) {
+          const rData = await rRes.json();
+          const results: ResultAdmin[] = rData.results || [];
+          resultCount = results.filter((r) => r.regattaId === reg.id).length;
+          if (rData.results) onResultsUpdated?.(rData.results);
+        }
+      } catch {
+        /* ignore count */
+      }
+
+      await refreshListsAfterImport(reg);
+      return {
+        ok: true,
+        regatta: reg,
+        message:
+          resultCount > 0
+            ? `Import likely succeeded (network dropped after save). Found “${reg.name}” with ${resultCount} result(s). Refresh admin if lists look stale.`
+            : `Regatta “${reg.name}” exists but no results found yet — re-import if the fleet is empty.`,
+      };
+    } catch {
+      return { ok: false, message: "" };
+    }
+  };
+
   const handleImportToDb = async () => {
     if (!isSuperadmin) {
       alert("Error: 403 Forbidden. Only Superadmins can import.");
@@ -116,6 +187,7 @@ export function AdminRegattaImport({
       const res = await fetch("/api/admin/import", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           regattaName: importMeta.name,
           eventDate: importMeta.date,
@@ -128,14 +200,7 @@ export function AdminRegattaImport({
       const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || data.message || "Import failed");
 
-      try {
-        const list = await fetch("/api/admin/sailors").then((r) => r.json());
-        if (list.sailors) onSailorsUpdated?.(list.sailors);
-      } catch {
-        /* ignore */
-      }
-
-      if (data.regatta) onRegattaUpserted?.(data.regatta);
+      await refreshListsAfterImport(data.regatta || null);
 
       if (data.hint || data.errorSamples?.length) {
         const extra = [data.hint, ...(data.errorSamples || []).slice(0, 3)]
@@ -158,19 +223,33 @@ export function AdminRegattaImport({
             ? ` · ${unmatchedCount} unmatched name(s) skipped — add/fix sailor names and re-import.`
             : "")
       );
-      try {
-        const rRes = await fetch("/api/admin/results");
-        if (rRes.ok) {
-          const rData = await rRes.json();
-          if (rData.results) onResultsUpdated?.(rData.results);
-        }
-      } catch {
-        /* optional */
-      }
     } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : "Import failed";
+      const isNetworkDrop =
+        /failed to fetch|networkerror|load failed|network request failed|aborted|timeout/i.test(
+          msg
+        );
+
+      if (isNetworkDrop) {
+        setImportStatus("Connection dropped — checking if import saved…");
+        const recovered = await recoverAfterNetworkError();
+        if (recovered.ok) {
+          setImportStatus(recovered.message);
+          alert(recovered.message);
+          return;
+        }
+        setImportStatus(null);
+        setImportPossibleDuplicates([]);
+        alert(
+          "Failed to fetch — the server may have timed out after saving. " +
+            "Check Database → Regattas / Results before re-importing (re-import is safe and upserts)."
+        );
+        return;
+      }
+
       setImportStatus(null);
       setImportPossibleDuplicates([]);
-      alert(e instanceof Error ? e.message : "Import failed");
+      alert(msg);
     }
   };
 
