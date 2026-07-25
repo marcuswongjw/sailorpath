@@ -13,6 +13,7 @@ import {
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
 import { parseApi } from "@/components/admin/parseApi";
+import { isNetworkFetchError } from "@/lib/importRegatta";
 import type { ImportPossibleDuplicate } from "@/types/import";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
@@ -225,12 +226,8 @@ export function AdminRegattaImport({
       );
     } catch (e: unknown) {
       const msg = e instanceof Error ? e.message : "Import failed";
-      const isNetworkDrop =
-        /failed to fetch|networkerror|load failed|network request failed|aborted|timeout/i.test(
-          msg
-        );
 
-      if (isNetworkDrop) {
+      if (isNetworkFetchError(msg)) {
         setImportStatus("Connection dropped — checking if import saved…");
         const recovered = await recoverAfterNetworkError();
         if (recovered.ok) {

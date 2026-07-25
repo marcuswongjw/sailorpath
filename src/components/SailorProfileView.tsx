@@ -2,10 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import {
-  seriesFleetStatus,
-  seriesStatusBadge,
-} from "@/lib/seriesMembership";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import {
   Trophy,
@@ -13,7 +9,6 @@ import {
   EyeOff,
   Settings,
   MapPin,
-  TrendingUp,
   User,
   Link2,
   UserPlus,
@@ -32,6 +27,14 @@ import {
   parseSailingJourney,
   type JourneyHighlight,
 } from "@/lib/sailingJourney";
+import {
+  buildHonorTags,
+  initials,
+  resolveDisplayFleet,
+  SQUAD_HISTORY_SLOTS,
+} from "@/components/profile/profileDisplay";
+import { AthleteStatsBar } from "@/components/profile/AthleteStatsBar";
+import { SailingJourneyPanel } from "@/components/profile/SailingJourneyPanel";
 
 interface SailorProfileViewProps {
   initialSailor: any;
@@ -66,74 +69,6 @@ interface SailorProfileViewProps {
   demoMode?: boolean;
   demoRole?: "public" | "sailor" | "parent" | "coach";
   onDemoClaim?: () => void;
-}
-
-function resolveDisplayFleet(sailor: any): {
-  label: string;
-  className: string;
-} {
-  return seriesStatusBadge(seriesFleetStatus(sailor));
-}
-
-const SQUAD_HISTORY_SLOTS: {
-  key: string;
-  label: string;
-}[] = [
-  { key: "natSquadStatusJan25", label: "Jan – Jun 2025" },
-  { key: "natSquadStatusJul25", label: "Jul – Dec 2025" },
-  { key: "natSquadStatusJan26", label: "Jan – Jun 2026" },
-  { key: "natSquadStatusJul26", label: "Jul – Dec 2026" },
-];
-
-function buildHonorTags(sailor: any): { text: string; className: string }[] {
-  const tags: { text: string; className: string }[] = [];
-  const squad =
-    sailor.natSquadStatusJul26 ||
-    sailor.nationalSquadStatus ||
-    sailor.natSquadStatusJan26;
-  if (squad) {
-    tags.push({
-      text: `Nat Squad (current): ${squad}`,
-      className:
-        "bg-orange-500/10 text-orange-300 border border-orange-500/25",
-    });
-  }
-  if (sailor.worlds) {
-    tags.push({
-      text: `World Optimist Championships ${sailor.worlds}`,
-      className: "bg-red-500/10 text-red-400 border border-red-500/20",
-    });
-  }
-  if (sailor.european) {
-    tags.push({
-      text: `European Optimist Championships ${sailor.european}`,
-      className: "bg-blue-500/10 text-blue-300 border border-blue-500/20",
-    });
-  }
-  if (sailor.asian) {
-    tags.push({
-      text: `Asian Optimist Championships ${sailor.asian}`,
-      className:
-        "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
-    });
-  }
-  if (sailor.seaGames) {
-    tags.push({
-      text: `SEA Games ${sailor.seaGames}`,
-      className: "bg-violet-500/10 text-violet-300 border border-violet-500/20",
-    });
-  }
-  return tags;
-}
-
-function initials(name: string) {
-  const parts = String(name || "")
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-  if (!parts.length) return "?";
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
 export function SailorProfileView({
@@ -1247,61 +1182,24 @@ export function SailorProfileView({
         </div>
       </div>
 
-      {/* Athlete stats — always visible, 1×4 */}
-      <div className="glass-card rounded-2xl p-3 sm:p-4 border border-white/5">
-        <h2 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2 flex items-center gap-1.5 px-0.5">
-          <TrendingUp className="h-3.5 w-3.5 text-orange-500" />
-          Athlete statistics
-        </h2>
-        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
-          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
-            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
-              Age
-            </span>
-            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5 tabular-nums">
-              {showDob && displaySailor.dob
-                ? `${calculateAge(displaySailor.dob)}`
-                : showDob
-                  ? "—"
-                  : "·"}
-            </span>
-            <span className="block text-[9px] text-slate-600">
-              {showDob ? "yrs" : "private"}
-            </span>
-          </div>
-          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
-            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
-              Weight
-            </span>
-            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5 font-mono tabular-nums">
-              {showWeight && displaySailor.weight != null
-                ? displaySailor.weight
-                : "·"}
-            </span>
-            <span className="block text-[9px] text-slate-600">
-              {showWeight ? "kg" : "private"}
-            </span>
-          </div>
-          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
-            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
-              Events
-            </span>
-            <span className="block text-base sm:text-xl font-extrabold text-orange-500 mt-0.5 tabular-nums">
-              {results.length}
-            </span>
-            <span className="block text-[9px] text-slate-600">logged</span>
-          </div>
-          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
-            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
-              Gender
-            </span>
-            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5">
-              {displaySailor.gender || "—"}
-            </span>
-            <span className="block text-[9px] text-slate-600">&nbsp;</span>
-          </div>
-        </div>
-      </div>
+      <AthleteStatsBar
+        ageDisplay={
+          showDob && displaySailor.dob
+            ? `${calculateAge(displaySailor.dob)}`
+            : showDob
+              ? "—"
+              : "·"
+        }
+        ageHint={showDob ? "yrs" : "private"}
+        weightDisplay={
+          showWeight && displaySailor.weight != null
+            ? displaySailor.weight
+            : "·"
+        }
+        weightHint={showWeight ? "kg" : "private"}
+        eventsCount={results.length}
+        gender={displaySailor.gender}
+      />
 
       {/* Achievements tab */}
       {profileTab === "achievements" && (
@@ -1362,106 +1260,18 @@ export function SailorProfileView({
         </div>
       )}
 
-      {/* Sailing Journey — owner-edited highlights only */}
       {profileTab === "journey" && (
-        <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-6 space-y-4">
-          <div>
-            <h2 className="text-base sm:text-lg font-bold text-white">
-              Sailing Journey
-            </h2>
-            <p className="text-xs text-slate-500 mt-1 leading-snug">
-              Key moments you want to remember — representing Singapore, a first
-              win, a special event — not every race result.
-            </p>
-          </div>
-          {journey.length === 0 ? (
-            <p className="text-sm text-slate-500">
-              {isOwner
-                ? "No highlights yet. Add your first memory below."
-                : "No journey highlights shared yet."}
-            </p>
-          ) : (
-            <ol className="relative border-l border-white/10 ml-2 space-y-0">
-              {journey.map((it, idx) => (
-                <li key={it.id} className="relative pl-6 pb-5 last:pb-0">
-                  <span
-                    className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#090a0f] ${
-                      idx === 0 ? "bg-orange-500" : "bg-slate-500"
-                    }`}
-                  />
-                  {it.when && (
-                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">
-                      {it.when}
-                    </p>
-                  )}
-                  <p className="text-sm font-bold text-white mt-0.5 leading-snug">
-                    {it.title}
-                  </p>
-                  {it.detail && (
-                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                      {it.detail}
-                    </p>
-                  )}
-                  {isOwner && (
-                    <button
-                      type="button"
-                      disabled={journeyBusy}
-                      onClick={() => void removeJourneyItem(it.id)}
-                      className="mt-1.5 text-[10px] font-bold text-rose-400/90 hover:text-rose-300"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ol>
-          )}
-          {isOwner && (
-            <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-3 space-y-2">
-              <p className="text-[10px] font-bold text-orange-300 uppercase">
-                {demoMode ? "Add highlight (demo)" : "Add highlight"}
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                <input
-                  value={journeyDraft.when}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, when: e.target.value }))
-                  }
-                  placeholder="When (e.g. Jun 2026)"
-                  className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
-                />
-                <input
-                  value={journeyDraft.title}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, title: e.target.value }))
-                  }
-                  placeholder="Title (e.g. First Nationals win)"
-                  className="sm:col-span-2 rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
-                />
-                <textarea
-                  value={journeyDraft.detail}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
-                  }
-                  placeholder="What made it special…"
-                  rows={2}
-                  className="sm:col-span-3 rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
-                />
-              </div>
-              <button
-                type="button"
-                disabled={journeyBusy || !journeyDraft.title.trim()}
-                onClick={() => void addJourneyItem()}
-                className="rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-1.5 text-[11px] font-bold text-white"
-              >
-                {journeyBusy ? "Saving…" : "Add to journey"}
-              </button>
-              {journeyMsg && (
-                <p className="text-[11px] text-emerald-300">{journeyMsg}</p>
-              )}
-            </div>
-          )}
-        </div>
+        <SailingJourneyPanel
+          journey={journey}
+          isOwner={isOwner}
+          demoMode={demoMode}
+          journeyBusy={journeyBusy}
+          journeyMsg={journeyMsg}
+          journeyDraft={journeyDraft}
+          onDraftChange={setJourneyDraft}
+          onAdd={() => void addJourneyItem()}
+          onRemove={(id) => void removeJourneyItem(id)}
+        />
       )}
 
       {/* Boat tab — equipment only */}

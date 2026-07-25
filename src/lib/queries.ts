@@ -94,7 +94,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     isPublicWeight: row.isPublicWeight,
     isPublicDob: row.isPublicDob,
     isPublicEquipment: row.isPublicEquipment,
-    sailingJourney: (row as { sailingJourney?: string | null }).sailingJourney,
+    sailingJourney: row.sailingJourney,
     hullBrand: row.hullBrand,
     sailMake: row.sailMake,
     foilBrand: row.foilBrand,
