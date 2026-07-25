@@ -250,6 +250,26 @@ describe("resolveSailorFleet", () => {
     );
     expect(r).toEqual({ active: true, fleet: "Gold" });
   });
+
+  it("silver/gold entry in future half → excluded", () => {
+    const r1 = resolveSailorFleet(
+      base({
+        silverEntryDate: "2026-07-01",
+        goldEntryDate: null,
+      }),
+      jan26
+    );
+    expect(r1).toBeNull();
+
+    const r2 = resolveSailorFleet(
+      base({
+        silverEntryDate: null,
+        goldEntryDate: "2026-07-01",
+      }),
+      jan26
+    );
+    expect(r2).toBeNull();
+  });
 });
 
 describe("reRankWithExcluded", () => {

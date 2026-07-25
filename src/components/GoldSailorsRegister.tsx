@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ageYears } from "@/lib/age";
+
 import Link from "next/link";
 import {
   ArrowRight,
@@ -55,10 +57,7 @@ type SortKey =
   | "seaGames";
 
 function ageOf(dob?: string | null) {
-  if (!dob) return null;
-  const birthYear = new Date(dob).getFullYear();
-  if (!Number.isFinite(birthYear)) return null;
-  return new Date().getFullYear() - birthYear;
+  return ageYears(dob);
 }
 
 function SortIcon({

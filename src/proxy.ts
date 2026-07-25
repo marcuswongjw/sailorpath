@@ -32,9 +32,23 @@ export async function proxy(request: NextRequest) {
         cookiesToSet.forEach(({ name, value }) => {
           request.cookies.set(name, value);
         });
+        const cookieStr = request.cookies
+          .getAll()
+          .map(({ name, value }) => `${name}=${value}`)
+          .join("; ");
+        request.headers.set("cookie", cookieStr);
+
         response = isAdminRoot
-          ? NextResponse.rewrite(new URL("/admin", request.url))
-          : NextResponse.next({ request: { headers: request.headers } });
+          ? NextResponse.rewrite(new URL("/admin", request.url), {
+              request: {
+                headers: request.headers,
+              },
+            })
+          : NextResponse.next({
+              request: {
+                headers: request.headers,
+              },
+            });
         cookiesToSet.forEach(({ name, value, options }) => {
           response.cookies.set(name, value, {
             ...options,

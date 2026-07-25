@@ -1,4 +1,6 @@
 import { isInSgSeries } from "@/lib/seriesMembership";
+import { toYmd } from "@/lib/datesSg";
+
 
 export interface SailorRecord {
   id: string;
@@ -273,24 +275,27 @@ export function resolveSailorFleet(
       ? `${period.year}-06-30`
       : `${period.year}-12-31`;
 
-  const goldYmd = sailor.goldEntryDate
-    ? String(sailor.goldEntryDate).slice(0, 10)
-    : null;
-  const dropYmd = sailor.dropDate
-    ? String(sailor.dropDate).slice(0, 10)
-    : null;
+  const goldYmd = toYmd(sailor.goldEntryDate);
+  const silverYmd = toYmd(sailor.silverEntryDate);
+  const dropYmd = toYmd(sailor.dropDate);
+
+  // Ensure the sailor entered the fleet by the end of this period
+  const entries = [goldYmd, silverYmd].filter((d): d is string => Boolean(d));
+  if (entries.length > 0) {
+    const earliestEntry = entries.sort()[0];
+    if (earliestEntry > pEndStr) {
+      return null;
+    }
+  }
 
   // Drop: exclusive from the drop date onward (inclusive of drop day)
-  if (dropYmd && /^\d{4}-\d{2}-\d{2}$/.test(dropYmd)) {
+  if (dropYmd) {
     if (dropYmd < pStartStr) return null;
     if (dropYmd <= pEndStr) return null;
   }
 
   // Gold from gold entry date until drop; otherwise Silver while In SG Fleet
-  const isGold =
-    Boolean(goldYmd) &&
-    /^\d{4}-\d{2}-\d{2}$/.test(goldYmd!) &&
-    goldYmd! <= pEndStr;
+  const isGold = Boolean(goldYmd) && goldYmd! <= pEndStr;
 
   return {
     active: true,

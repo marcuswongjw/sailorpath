@@ -1,3 +1,5 @@
+import { toYmd } from "./datesSg";
+
 /** Parse numeric cells that may use comma separators. */
 export function toNumber(v: unknown): number | null {
   if (v == null || v === "") return null;
@@ -33,7 +35,7 @@ export function normalizeDob(v: unknown): string | null {
     }
     const epoch = Date.UTC(1899, 11, 30);
     const d = new Date(epoch + v * 86400000);
-    if (!Number.isNaN(d.getTime())) return d.toISOString().slice(0, 10);
+    if (!Number.isNaN(d.getTime())) return toYmd(d);
     return null;
   }
   const s = String(v).trim();
@@ -46,14 +48,10 @@ export function normalizeDob(v: unknown): string | null {
   if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
   const m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);
   if (m) {
-    const [, a, b, y] = m;
-    const day = Number(a) > 12 ? a : b;
-    const month = Number(a) > 12 ? b : a;
-    return `${y}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+    const [, day, month, year] = m;
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
   }
-  const parsed = Date.parse(s);
-  if (!Number.isNaN(parsed)) return new Date(parsed).toISOString().slice(0, 10);
-  return null;
+  return toYmd(s);
 }
 
 /**
@@ -65,12 +63,15 @@ export function excelDateToIso(v: unknown): string | null {
   if (typeof v === "number" && Number.isFinite(v)) {
     const epoch = new Date(Date.UTC(1899, 11, 30));
     const d = new Date(epoch.getTime() + v * 86400000);
-    return d.toISOString().slice(0, 10);
+    return toYmd(d);
   }
   const s = String(v).trim();
   if (!s) return null;
   if (/^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
-  const parsed = Date.parse(s);
-  if (!Number.isNaN(parsed)) return new Date(parsed).toISOString().slice(0, 10);
-  return s;
+  const m = s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/);
+  if (m) {
+    const [, day, month, year] = m;
+    return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+  }
+  return toYmd(s) || s;
 }

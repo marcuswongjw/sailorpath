@@ -28,7 +28,14 @@ describe("normalize helpers", () => {
     expect(normalizeDob("2013-05-12")).toBe("2013-05-12");
   });
 
-  it("excelDateToIso", () => {
+  it("normalizeDob parses DD/MM/YYYY consistently", () => {
+    expect(normalizeDob("02/03/2013")).toBe("2013-03-02");
+    expect(normalizeDob("15/03/2013")).toBe("2013-03-15");
+    expect(normalizeDob("2/3/2013")).toBe("2013-03-02");
+  });
+
+  it("excelDateToIso parses DD/MM/YYYY and ISO", () => {
     expect(excelDateToIso("2026-07-01")).toBe("2026-07-01");
+    expect(excelDateToIso("02/03/2013")).toBe("2013-03-02");
   });
 });
