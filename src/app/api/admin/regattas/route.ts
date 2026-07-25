@@ -42,11 +42,15 @@ export async function POST(req: Request) {
       body.boatClass != null && String(body.boatClass).trim()
         ? String(body.boatClass).trim().slice(0, 40)
         : "Optimist";
+    // Default: counts for Best 3 of 5. Off = non-ranking (trial / training / etc.)
+    // Keep Gold/Silver/Both division for context even when non-ranking.
     let countsForRanking = body.countsForRanking !== false;
-    let finalDivision = division;
-    if (body.countsForRanking === false || division === "NonRanking") {
+    let finalDivision = division || "Gold";
+    if (division === "NonRanking") {
       countsForRanking = false;
-      if (finalDivision === "Gold" || !finalDivision) finalDivision = "NonRanking";
+      finalDivision = "NonRanking";
+    } else if (body.countsForRanking === false) {
+      countsForRanking = false;
     }
 
     const [row] = await db

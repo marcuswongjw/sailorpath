@@ -77,6 +77,11 @@ export const sailors = pgTable("sailors", {
   foilBrand: text("foil_brand"),
   mast: text("mast"),
   equipmentNotes: text("equipment_notes"),
+  /**
+   * Owner-edited sailing journey highlights (JSON array).
+   * [{ id, when, title, detail }] — key memories, not full results log.
+   */
+  sailingJourney: text("sailing_journey"),
   parentId: uuid("parent_id").references(() => profiles.id, {
     onDelete: "set null",
   }),

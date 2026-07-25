@@ -289,25 +289,27 @@ export function AdminRegattasPanel({
                                   setRegattaForm({
                                     ...regattaForm,
                                     countsForRanking: e.target.checked,
-                                    division: e.target.checked
-                                      ? regattaForm.division === "NonRanking"
-                                        ? "Gold"
-                                        : regattaForm.division
-                                      : "NonRanking",
+                                    // Keep Gold/Silver/Both division even when non-ranking
+                                    // (e.g. SG selection trial in Gold fleet that does not score Best 3 of 5)
                                   })
                                 }
                                 className="rounded border-slate-600"
                               />
                               <span>
-                                <strong className="text-white">Counts for ranking</strong>
-                                <span className="block text-[10px] text-slate-500">
-                                  Off = logbook / overseas only — not used in Best 3 of 5
+                                <strong className="text-white">
+                                  Counts for Gold / Silver Best 3 of 5
+                                </strong>
+                                <span className="block text-[10px] text-slate-500 leading-snug">
+                                  On by default. Turn off for selection trials, training
+                                  events, or other SG regattas that should not score series
+                                  ranking (division Gold/Silver can still be set for context).
                                 </span>
                               </span>
                             </label>
                             {regattaForm.countsForRanking === false && (
                               <p className="mt-2 rounded-lg border border-sky-500/30 bg-sky-500/10 px-2 py-1.5 text-[10px] font-bold text-sky-200">
-                                Non-ranking event — clearly excluded from series scoring
+                                Non-ranking — excluded from Best 3 of 5 (still on profiles /
+                                logbook)
                               </p>
                             )}
                           </div>

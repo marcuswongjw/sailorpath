@@ -26,11 +26,12 @@ import {
   Clock,
   Medal,
 } from "lucide-react";
+import { formatEventWhen, placeBadge } from "@/lib/profileUi";
 import {
-  buildCareerTimeline,
-  formatEventWhen,
-  placeBadge,
-} from "@/lib/profileUi";
+  newJourneyId,
+  parseSailingJourney,
+  type JourneyHighlight,
+} from "@/lib/sailingJourney";
 
 interface SailorProfileViewProps {
   initialSailor: any;
@@ -224,10 +225,20 @@ export function SailorProfileView({
   type ProfileTab =
     | "results"
     | "achievements"
-    | "timeline"
+    | "journey"
     | "boat"
     | "crew";
   const [profileTab, setProfileTab] = useState<ProfileTab>("results");
+  const [journey, setJourney] = useState<JourneyHighlight[]>(() =>
+    parseSailingJourney(initialSailor.sailingJourney)
+  );
+  const [journeyDraft, setJourneyDraft] = useState({
+    when: "",
+    title: "",
+    detail: "",
+  });
+  const [journeyBusy, setJourneyBusy] = useState(false);
+  const [journeyMsg, setJourneyMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (!demoMode && isOwner && typeof window !== "undefined") {
@@ -475,6 +486,58 @@ export function SailorProfileView({
     } finally {
       setObsBusy(false);
     }
+  };
+
+  const persistJourney = async (next: JourneyHighlight[]) => {
+    if (demoMode) {
+      setJourney(next);
+      setJourneyMsg("Demo only — not saved to server");
+      return;
+    }
+    setJourneyBusy(true);
+    setJourneyMsg(null);
+    try {
+      const res = await fetch("/api/account/sailor", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          sailorId: initialSailor.id,
+          sailingJourney: next,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Save failed");
+      setJourney(next);
+      if (data.sailor?.sailingJourney != null) {
+        setJourney(parseSailingJourney(data.sailor.sailingJourney));
+      }
+      setJourneyMsg("Journey saved");
+      setTimeout(() => setJourneyMsg(null), 2000);
+    } catch (e: unknown) {
+      setJourneyMsg(e instanceof Error ? e.message : "Failed");
+    } finally {
+      setJourneyBusy(false);
+    }
+  };
+
+  const addJourneyItem = async () => {
+    const title = journeyDraft.title.trim();
+    if (!title) return;
+    const item: JourneyHighlight = {
+      id: newJourneyId(),
+      when: journeyDraft.when.trim(),
+      title,
+      detail: journeyDraft.detail.trim(),
+    };
+    const next = [item, ...journey];
+    setJourneyDraft({ when: "", title: "", detail: "" });
+    await persistJourney(next);
+  };
+
+  const removeJourneyItem = async (id: string) => {
+    if (!confirm("Remove this highlight from your journey?")) return;
+    await persistJourney(journey.filter((j) => j.id !== id));
   };
 
   const savePersonalResult = async () => {
@@ -1162,7 +1225,7 @@ export function SailorProfileView({
             [
               ["results", "Results", Trophy],
               ["achievements", "Achievements", Medal],
-              ["timeline", "Career timeline", Clock],
+              ["journey", "Sailing Journey", Clock],
               ["boat", "My boat", Anchor],
               ["crew", "Profile", User],
             ] as const
@@ -1181,6 +1244,62 @@ export function SailorProfileView({
               {label}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Athlete stats — always visible, 1×4 */}
+      <div className="glass-card rounded-2xl p-3 sm:p-4 border border-white/5">
+        <h2 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2 flex items-center gap-1.5 px-0.5">
+          <TrendingUp className="h-3.5 w-3.5 text-orange-500" />
+          Athlete statistics
+        </h2>
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
+          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
+            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
+              Age
+            </span>
+            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5 tabular-nums">
+              {showDob && displaySailor.dob
+                ? `${calculateAge(displaySailor.dob)}`
+                : showDob
+                  ? "—"
+                  : "·"}
+            </span>
+            <span className="block text-[9px] text-slate-600">
+              {showDob ? "yrs" : "private"}
+            </span>
+          </div>
+          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
+            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
+              Weight
+            </span>
+            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5 font-mono tabular-nums">
+              {showWeight && displaySailor.weight != null
+                ? displaySailor.weight
+                : "·"}
+            </span>
+            <span className="block text-[9px] text-slate-600">
+              {showWeight ? "kg" : "private"}
+            </span>
+          </div>
+          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
+            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
+              Events
+            </span>
+            <span className="block text-base sm:text-xl font-extrabold text-orange-500 mt-0.5 tabular-nums">
+              {results.length}
+            </span>
+            <span className="block text-[9px] text-slate-600">logged</span>
+          </div>
+          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
+            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
+              Gender
+            </span>
+            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5">
+              {displaySailor.gender || "—"}
+            </span>
+            <span className="block text-[9px] text-slate-600">&nbsp;</span>
+          </div>
         </div>
       </div>
 
@@ -1240,96 +1359,108 @@ export function SailorProfileView({
               </div>
             </div>
           )}
-          <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/5">
-            <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-4 flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-orange-500" />
-              Athlete statistics
-            </h2>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
-                <span className="block text-xs text-slate-500 font-bold uppercase">
-                  Age
-                </span>
-                <span className="block text-2xl font-extrabold text-white mt-1">
-                  {showDob && displaySailor.dob
-                    ? `${calculateAge(displaySailor.dob)} yrs`
-                    : showDob
-                      ? "—"
-                      : "Private"}
-                </span>
-              </div>
-              <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
-                <span className="block text-xs text-slate-500 font-bold uppercase">
-                  Weight
-                </span>
-                <span className="block text-2xl font-extrabold text-white mt-1 font-mono">
-                  {showWeight && displaySailor.weight != null
-                    ? `${displaySailor.weight} kg`
-                    : "Private"}
-                </span>
-              </div>
-              <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
-                <span className="block text-xs text-slate-500 font-bold uppercase">
-                  Regattas
-                </span>
-                <span className="block text-2xl font-extrabold text-orange-500 mt-1">
-                  {results.length}
-                </span>
-              </div>
-              <div className="bg-white/5 border border-white/5 rounded-xl p-4 text-center">
-                <span className="block text-xs text-slate-500 font-bold uppercase">
-                  Gender
-                </span>
-                <span className="block text-2xl font-extrabold text-white mt-1">
-                  {displaySailor.gender || "—"}
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
       )}
 
-      {/* Career timeline tab */}
-      {profileTab === "timeline" && (
-        <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-6">
-          <h2 className="text-base sm:text-lg font-bold text-white mb-5">
-            Career timeline
-          </h2>
-          {(() => {
-            const items = buildCareerTimeline(displaySailor, results);
-            if (!items.length) {
-              return (
-                <p className="text-sm text-slate-500">
-                  Timeline fills in as squad history, overseas campaigns, and
-                  strong regatta finishes are recorded.
-                </p>
-              );
-            }
-            return (
-              <ol className="relative border-l border-white/10 ml-2 space-y-0">
-                {items.slice(0, 24).map((it, idx) => (
-                  <li key={it.id} className="relative pl-6 pb-6 last:pb-0">
-                    <span
-                      className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#090a0f] ${
-                        idx === 0
-                          ? "bg-orange-500"
-                          : "bg-slate-500"
-                      }`}
-                    />
+      {/* Sailing Journey — owner-edited highlights only */}
+      {profileTab === "journey" && (
+        <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-6 space-y-4">
+          <div>
+            <h2 className="text-base sm:text-lg font-bold text-white">
+              Sailing Journey
+            </h2>
+            <p className="text-xs text-slate-500 mt-1 leading-snug">
+              Key moments you want to remember — representing Singapore, a first
+              win, a special event — not every race result.
+            </p>
+          </div>
+          {journey.length === 0 ? (
+            <p className="text-sm text-slate-500">
+              {isOwner
+                ? "No highlights yet. Add your first memory below."
+                : "No journey highlights shared yet."}
+            </p>
+          ) : (
+            <ol className="relative border-l border-white/10 ml-2 space-y-0">
+              {journey.map((it, idx) => (
+                <li key={it.id} className="relative pl-6 pb-5 last:pb-0">
+                  <span
+                    className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#090a0f] ${
+                      idx === 0 ? "bg-orange-500" : "bg-slate-500"
+                    }`}
+                  />
+                  {it.when && (
                     <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">
                       {it.when}
                     </p>
-                    <p className="text-sm font-bold text-white mt-0.5 leading-snug">
-                      {it.title}
-                    </p>
+                  )}
+                  <p className="text-sm font-bold text-white mt-0.5 leading-snug">
+                    {it.title}
+                  </p>
+                  {it.detail && (
                     <p className="text-xs text-slate-400 mt-1 leading-relaxed">
                       {it.detail}
                     </p>
-                  </li>
-                ))}
-              </ol>
-            );
-          })()}
+                  )}
+                  {isOwner && (
+                    <button
+                      type="button"
+                      disabled={journeyBusy}
+                      onClick={() => void removeJourneyItem(it.id)}
+                      className="mt-1.5 text-[10px] font-bold text-rose-400/90 hover:text-rose-300"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+          {isOwner && (
+            <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-3 space-y-2">
+              <p className="text-[10px] font-bold text-orange-300 uppercase">
+                {demoMode ? "Add highlight (demo)" : "Add highlight"}
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <input
+                  value={journeyDraft.when}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, when: e.target.value }))
+                  }
+                  placeholder="When (e.g. Jun 2026)"
+                  className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                />
+                <input
+                  value={journeyDraft.title}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, title: e.target.value }))
+                  }
+                  placeholder="Title (e.g. First Nationals win)"
+                  className="sm:col-span-2 rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                />
+                <textarea
+                  value={journeyDraft.detail}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
+                  }
+                  placeholder="What made it special…"
+                  rows={2}
+                  className="sm:col-span-3 rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
+                />
+              </div>
+              <button
+                type="button"
+                disabled={journeyBusy || !journeyDraft.title.trim()}
+                onClick={() => void addJourneyItem()}
+                className="rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-1.5 text-[11px] font-bold text-white"
+              >
+                {journeyBusy ? "Saving…" : "Add to journey"}
+              </button>
+              {journeyMsg && (
+                <p className="text-[11px] text-emerald-300">{journeyMsg}</p>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -1469,17 +1600,16 @@ export function SailorProfileView({
       {/* Results tab — logbook */}
       {profileTab === "results" && (
       <div className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-white/5">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-5 sm:mb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
           <div>
-            <h2 className="text-lg sm:text-xl font-bold text-white">
+            <h2 className="text-base sm:text-lg font-bold text-white">
               Recent regatta results
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Rank, place badges, and race notes
-              {isOwner ? " · add overseas events below" : ""}.
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              {isOwner ? "Tap a row for race notes · add personal events below" : "Tap a row for race notes"}
             </p>
           </div>
-          <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wide">
+          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">
             {results.length} events
           </span>
         </div>
@@ -1569,7 +1699,7 @@ export function SailorProfileView({
         {results.length === 0 ? (
           <p className="text-sm text-slate-500">No regatta results yet.</p>
         ) : (
-          <div className="space-y-3">
+          <div className="rounded-xl border border-white/5 divide-y divide-white/5 overflow-hidden bg-white/[0.02]">
             {results.slice(0, visibleCount).map((res: any, idx: number) => {
               const fleetSize = res.totalFleetSize ?? res.fleetSize ?? 50;
               const regattaId = res.regattaId || res.id;
@@ -1580,126 +1710,113 @@ export function SailorProfileView({
               const slug = res.regattaSlug || res.id;
               const expanded = expandedRegattaId === regattaId;
               const raceNotes = obsForRegatta(regattaId);
-              const nameNode =
-                !nonRanking && slug && String(slug).length > 2 ? (
-                  <Link
-                    href={`/sg/optimist/regattas/${slug}`}
-                    className="text-base font-bold text-white truncate hover:text-orange-400"
-                  >
-                    {res.regattaName}
-                  </Link>
-                ) : (
-                  <h3 className="text-base font-bold text-white truncate">
-                    {res.regattaName}
-                  </h3>
-                );
+              const badge = placeBadge(res.rank, {
+                isDns: dns,
+                isOverseas: overseas,
+              });
+              const canLink =
+                !nonRanking && slug && String(slug).length > 2;
               return (
                 <div
                   key={rowKey}
-                  className={`glass-card rounded-2xl border border-white/5 p-5 space-y-3 ${
-                    nonRanking
-                      ? "border-sky-500/25"
-                      : overseas
-                        ? "border-sky-500/20"
-                        : dns
-                          ? "border-rose-500/15"
-                          : ""
+                  className={`px-3 py-2.5 sm:px-3.5 sm:py-2.5 ${
+                    expanded ? "bg-white/[0.03]" : ""
                   }`}
                 >
-                  {/* Compact result row (mobile-first, inspired by athlete profile UIs) */}
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <div
-                      className={`shrink-0 w-9 sm:w-10 text-center text-xl sm:text-2xl font-black tabular-nums ${
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() =>
+                      setExpandedRegattaId(expanded ? null : regattaId)
+                    }
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setExpandedRegattaId(expanded ? null : regattaId);
+                      }
+                    }}
+                    className="w-full flex items-center gap-2.5 sm:gap-3 text-left cursor-pointer"
+                  >
+                    <span
+                      className={`shrink-0 w-7 text-center text-lg font-black tabular-nums ${
                         res.rank === 1
                           ? "text-amber-400"
                           : res.rank === 2
                             ? "text-slate-200"
                             : res.rank === 3
                               ? "text-orange-400"
-                              : "text-slate-400"
+                              : "text-slate-500"
                       }`}
                     >
                       {res.rank}
                       {overseas ? "†" : dns ? "*" : ""}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="min-w-0">
-                          {nameNode}
-                          <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 font-medium truncate">
-                            {[
-                              res.geography,
-                              formatEventWhen(res.regattaDate),
-                            ]
-                              .filter(Boolean)
-                              .join(" · ") || res.regattaDate}
-                          </p>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setExpandedRegattaId(expanded ? null : regattaId)
-                          }
-                          className="shrink-0 rounded-full border border-white/10 bg-white/5 p-2 min-h-[40px] min-w-[40px] flex items-center justify-center text-slate-400 hover:text-white"
-                          title="Race observations"
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      {canLink ? (
+                        <Link
+                          href={`/sg/optimist/regattas/${slug}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-sm font-bold text-white truncate hover:text-orange-400 block"
                         >
-                          {expanded ? (
-                            <ChevronUp className="h-4 w-4" />
-                          ) : (
-                            <ChevronDown className="h-4 w-4" />
-                          )}
-                        </button>
-                      </div>
-                      <div className="mt-2 flex flex-wrap items-center gap-1.5 sm:gap-2">
-                        {(() => {
-                          const badge = placeBadge(res.rank, {
-                            isDns: dns,
-                            isOverseas: overseas,
-                          });
-                          return badge ? (
-                            <span
-                              className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${badge.className}`}
-                            >
-                              {badge.label}
-                            </span>
-                          ) : null;
-                        })()}
+                          {res.regattaName}
+                        </Link>
+                      ) : (
+                        <p className="text-sm font-bold text-white truncate">
+                          {res.regattaName}
+                        </p>
+                      )}
+                      <span className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 mt-0.5">
+                        <span className="text-[10px] text-slate-500 truncate">
+                          {[res.geography, formatEventWhen(res.regattaDate)]
+                            .filter(Boolean)
+                            .join(" · ") || res.regattaDate}
+                        </span>
+                        {badge && (
+                          <span
+                            className={`rounded px-1.5 py-px text-[9px] font-bold ${badge.className}`}
+                          >
+                            {badge.label}
+                          </span>
+                        )}
                         {nonRanking && (
-                          <span className="rounded-full bg-white/5 border border-white/10 px-2 py-0.5 text-[10px] font-bold text-slate-400">
-                            Personal
+                          <span className="text-[9px] font-bold text-sky-400/90">
+                            non-ranking
                           </span>
                         )}
                         {raceNotes.length > 0 && (
-                          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-orange-300">
+                          <span className="text-[9px] font-bold text-orange-400/80">
                             {raceNotes.length} note
                             {raceNotes.length === 1 ? "" : "s"}
                           </span>
                         )}
-                        <span className="ml-auto text-[11px] sm:text-xs text-slate-400 font-semibold tabular-nums">
-                          {res.nettScore != null
-                            ? `${res.nettScore} nett`
-                            : res.totalScore != null
-                              ? `${res.totalScore} total`
-                              : `Rank ${res.rank}`}
-                          <span className="text-slate-600 font-normal">
-                            {" "}
-                            · {res.division || "Fleet"}
-                            {fleetSize ? ` / ${fleetSize}` : ""}
-                          </span>
-                        </span>
-                        {isOwner && !demoMode && nonRanking && res.resultId && (
-                          <button
-                            type="button"
-                            disabled={personalBusy}
-                            onClick={() => void deletePersonalResult(res)}
-                            className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-bold text-rose-300"
-                          >
-                            Remove
-                          </button>
-                        )}
-                      </div>
-                    </div>
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-right">
+                      <span className="block text-[11px] font-semibold text-slate-300 tabular-nums">
+                        {res.division || "Fleet"}
+                      </span>
+                      <span className="block text-[10px] text-slate-600 tabular-nums">
+                        /{fleetSize}
+                      </span>
+                    </span>
+                    <span className="shrink-0 text-slate-500">
+                      {expanded ? (
+                        <ChevronUp className="h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4" />
+                      )}
+                    </span>
                   </div>
+                  {isOwner && !demoMode && nonRanking && res.resultId && (
+                    <button
+                      type="button"
+                      disabled={personalBusy}
+                      onClick={() => void deletePersonalResult(res)}
+                      className="mt-1 ml-9 text-[10px] font-bold text-rose-400/90"
+                    >
+                      Remove
+                    </button>
+                  )}
 
                   {expanded && (
                     <div className="border-t border-white/5 pt-3 space-y-3">

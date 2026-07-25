@@ -72,6 +72,27 @@ export const SAMPLE_SAILOR = {
   european: null as string | null,
   asian: "2024, 2025",
   seaGames: null as string | null,
+  sailingJourney: JSON.stringify([
+    {
+      id: "demo-j1",
+      when: "Jun 2026",
+      title: "First National Championship win",
+      detail:
+        "Won Singapore Nationals in Gold fleet — a memory that still fuels training.",
+    },
+    {
+      id: "demo-j2",
+      when: "2025",
+      title: "Represented Singapore at Asian Championships",
+      detail: "Proud to race for SGP among the best Optimist sailors in Asia.",
+    },
+    {
+      id: "demo-j3",
+      when: "Jan 2025",
+      title: "Selected for Nat A squad",
+      detail: "Moved up from Nat B after a strong Jul–Dec 2024 series.",
+    },
+  ]),
 };
 
 /** Best 3 of 5 snapshot for Jul–Dec 2026 demo (matches SailorProfileView shape) */

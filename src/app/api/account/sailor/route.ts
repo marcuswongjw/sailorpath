@@ -95,6 +95,17 @@ export async function PATCH(req: Request) {
     if (body.bio !== undefined) {
       patch.bio = strOrNull(body.bio, 500);
     }
+    if (body.sailingJourney !== undefined) {
+      const { parseSailingJourney, serializeSailingJourney } = await import(
+        "@/lib/sailingJourney"
+      );
+      if (body.sailingJourney === null || body.sailingJourney === "") {
+        patch.sailingJourney = null;
+      } else {
+        const items = parseSailingJourney(body.sailingJourney);
+        patch.sailingJourney = serializeSailingJourney(items);
+      }
+    }
     if (body.instagram !== undefined) {
       patch.instagram = strOrNull(body.instagram, 80);
     }
@@ -192,6 +203,7 @@ export async function PATCH(req: Request) {
         isPublicWeight: sailors.isPublicWeight,
         isPublicDob: sailors.isPublicDob,
         isPublicEquipment: sailors.isPublicEquipment,
+        sailingJourney: sailors.sailingJourney,
         hullBrand: sailors.hullBrand,
         sailMake: sailors.sailMake,
         foilBrand: sailors.foilBrand,

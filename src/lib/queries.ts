@@ -41,6 +41,7 @@ export type SailorMapped = SailorRecord & {
   isPublicWeight?: boolean;
   isPublicDob?: boolean;
   isPublicEquipment?: boolean;
+  sailingJourney?: string | null;
   hullBrand?: string | null;
   sailMake?: string | null;
   foilBrand?: string | null;
@@ -93,6 +94,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     isPublicWeight: row.isPublicWeight,
     isPublicDob: row.isPublicDob,
     isPublicEquipment: row.isPublicEquipment,
+    sailingJourney: (row as { sailingJourney?: string | null }).sailingJourney,
     hullBrand: row.hullBrand,
     sailMake: row.sailMake,
     foilBrand: row.foilBrand,
