@@ -8,17 +8,15 @@ import {
   findSailorByName,
   suggestSailorByName,
 } from "@/lib/nameMatch";
-import { makeGuestHandle, slugify } from "@/lib/slug";
-import { trackUsage } from "@/lib/usage";
 import {
-  buildImportMessage,
-  cleanImportRows,
-  findWithinFileDuplicates,
-  IMPORT_MAX_DUPLICATE_FLAGS,
-  IMPORT_RESULT_CHUNK,
-  type RawImportRow,
-} from "@/lib/importRegatta";
-import { runInChunks } from "@/lib/runInChunks";
+  normalizeDob,
+  normalizeOptionalText,
+  normalizeSailNumber,
+  toNumber,
+} from "@/lib/normalize";
+import { makeGuestHandle, slugify } from "@/lib/slug";
+import { normalizeNationality } from "@/lib/seriesMembership";
+import { trackUsage } from "@/lib/usage";
 import type { ImportPossibleDuplicate } from "@/types/import";
 
 export type { ImportPossibleDuplicate };
@@ -26,17 +24,44 @@ export type { ImportPossibleDuplicate };
 /** Allow long Optimist fleet imports on Vercel (default is often 10–15s). */
 export const maxDuration = 60;
 
-type SailorMatchRow = {
-  id: string;
-  name: string;
-  sailNumber: string | null;
-  dob: string | null;
-  club: string | null;
-  school: string | null;
-  nationality: string | null;
-  silverEntryDate: string | null;
-  goldEntryDate: string | null;
-};
+const MAX_DUPLICATE_FLAGS = 40;
+
+/** Pairwise similar names within the import sheet (60%+). Cap pairs for speed. */
+function findWithinFileDuplicates(
+  names: string[],
+  minSimilarity = 0.6,
+  maxPairs = MAX_DUPLICATE_FLAGS
+): ImportPossibleDuplicate[] {
+  const out: ImportPossibleDuplicate[] = [];
+  const seen = new Set<string>();
+  // Cap comparisons for large fleets — O(n²) Levenshtein was blowing past
+  // serverless timeouts so the browser saw "Failed to fetch" after DB writes.
+  const list = names.slice(0, 120);
+  for (let i = 0; i < list.length; i++) {
+    for (let j = i + 1; j < list.length; j++) {
+      if (out.length >= maxPairs) {
+        return out.sort((x, y) => y.similarity - x.similarity);
+      }
+      const a = list[i];
+      const b = list[j];
+      if (!a || !b || a === b) continue;
+      const sim = combinedNameSimilarity(a, b);
+      if (sim < minSimilarity) continue;
+      const key = [a, b].map((n) => n.toLowerCase()).sort().join("|");
+      if (seen.has(key)) continue;
+      seen.add(key);
+      out.push({
+        kind: "within-file",
+        importName: a,
+        otherName: b,
+        similarity: Math.round(sim * 100) / 100,
+        band: sim >= 0.8 ? "high" : "medium",
+        note: "Two rows in this file look like the same sailor",
+      });
+    }
+  }
+  return out.sort((x, y) => y.similarity - x.similarity);
+}
 
 export async function POST(req: Request) {
   try {
@@ -54,7 +79,18 @@ export async function POST(req: Request) {
       eventDate: string;
       division?: string;
       totalFleetSize?: number;
-      rows: RawImportRow[];
+      rows: {
+        name: string;
+        rank: number | null;
+        nett: number | null;
+        total?: number | null;
+        club?: string | null;
+        school?: string | null;
+        nationality?: string | null;
+        sailNumber?: string | null;
+        dob?: string | number | null;
+        birthYear?: string | number | null;
+      }[];
       createMissing?: boolean;
     } = body;
 
@@ -62,7 +98,41 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
     }
 
-    const cleanRows = cleanImportRows(rows);
+    const cleanRows = rows
+      .map((r) => {
+        const sailNumber = normalizeSailNumber(r.sailNumber);
+        // Full DOB preferred; birth year alone is year-only (YYYY-01-01 placeholder)
+        const fullDob = normalizeDob(r.dob);
+        const yearOnlyDob = !fullDob ? normalizeDob(r.birthYear) : null;
+        // If client already put year into dob and also sent birthYear, treat as year-only
+        const birthYearHint =
+          r.birthYear != null && r.birthYear !== ""
+            ? normalizeDob(r.birthYear)
+            : null;
+        const dob = fullDob || yearOnlyDob;
+        const dobIsYearOnly = Boolean(
+          yearOnlyDob ||
+            (birthYearHint && fullDob && fullDob === birthYearHint)
+        );
+        return {
+          name: String(r.name || "").trim(),
+          rank: toNumber(r.rank),
+          nett: toNumber(r.nett),
+          total: toNumber((r as { total?: number | null }).total),
+          club: normalizeOptionalText(r.club),
+          school: normalizeOptionalText(
+            (r as { school?: string | null }).school
+          ),
+          nationality:
+            normalizeNationality(r.nationality) ||
+            normalizeOptionalText(r.nationality),
+          sailNumber,
+          dob,
+          dobIsYearOnly,
+        };
+      })
+      .filter((r) => r.name.length > 0);
+
     if (!cleanRows.length) {
       return NextResponse.json(
         { error: "No named rows to import (check Name column)" },
@@ -94,7 +164,7 @@ export async function POST(req: Request) {
       })
       .returning();
 
-    let sailorList: SailorMatchRow[] = await db
+    let sailorList = await db
       .select({
         id: sailors.id,
         name: sailors.name,
@@ -108,7 +178,7 @@ export async function POST(req: Request) {
       })
       .from(sailors);
 
-    // Latest ranking result date per sailor (aggregated)
+    // Latest ranking result date per sailor (aggregated — avoid loading full results table)
     const latestDateBySailor = new Map<string, string>();
     try {
       const latestRows = await db
@@ -136,7 +206,6 @@ export async function POST(req: Request) {
       "@/lib/deriveFleetEntryDates"
     );
     const { logAdminChange } = await import("@/lib/adminChangeLog");
-
     const affectedSailorIds = new Set<string>();
     const profileChangeFields: string[] = [];
     const aliasList = await db
@@ -173,22 +242,25 @@ export async function POST(req: Request) {
     }[] = [];
     const pendingAliases: { sailorId: string; aliasName: string }[] = [];
 
+    // Snapshot DB before creates so "vs-db" warnings use pre-import sailors
     const dbBeforeImport = sailorList.map((s) => ({
       id: s.id,
       name: s.name,
     }));
 
+    // Within-file similar names (before create — pure sheet check)
     possibleDuplicates.push(
       ...findWithinFileDuplicates(cleanRows.map((r) => r.name))
     );
 
     for (const row of cleanRows) {
       try {
-        const hit = findSailorByName(row.name, sailorList, aliasList);
+        let hit = findSailorByName(row.name, sailorList, aliasList);
         let sailorId: string | null = hit?.sailor.id ?? null;
 
         if (hit) {
           matchHow[hit.how] = (matchHow[hit.how] || 0) + 1;
+          // Soft fuzzy match used — surface for admin review
           if (hit.how.startsWith("fuzzy")) {
             const sim = combinedNameSimilarity(row.name, hit.sailor.name);
             if (sim >= 0.6 && sim < 1) {
@@ -209,6 +281,7 @@ export async function POST(req: Request) {
           }
         }
 
+        // Before creating a guest: flag close DB names that did not auto-match
         if (!sailorId) {
           const sug = suggestSailorByName(row.name, dbBeforeImport);
           if (sug && sug.similarity >= 0.6) {
@@ -232,6 +305,7 @@ export async function POST(req: Request) {
 
         if (!sailorId && createMissing) {
           const handle = makeGuestHandle(row.name);
+          // Guests only: never auto-admit to SG series (no fleet / entry dates)
           const [createdSailor] = await db
             .insert(sailors)
             .values({
@@ -242,6 +316,7 @@ export async function POST(req: Request) {
               ...(row.school ? { school: row.school } : {}),
               ...(row.nationality ? { nationality: row.nationality } : {}),
               ...(row.dob ? { dob: row.dob } : {}),
+              // currentFleet / goldEntryDate / silverEntryDate intentionally omitted
             })
             .returning({
               id: sailors.id,
@@ -285,6 +360,7 @@ export async function POST(req: Request) {
           continue;
         }
 
+        // Optional profile enrichment — sail/club/school only if this regatta is latest
         const existing = sailorList.find((s) => s.id === sailorId);
         const applyProfile = shouldApplyProfileFromRegatta({
           regattaDate: eventDate,
@@ -317,7 +393,10 @@ export async function POST(req: Request) {
             profileChanged = true;
             fieldChanged.push("dob");
           } else if (curDob !== row.dob) {
-            if (row.dobIsYearOnly && curDob.startsWith(row.dob.slice(0, 4))) {
+            if (
+              row.dobIsYearOnly &&
+              curDob.startsWith(row.dob.slice(0, 4))
+            ) {
               /* keep full DOB for same year */
             } else {
               profilePatch.dob = row.dob;
@@ -363,16 +442,20 @@ export async function POST(req: Request) {
                 }
               : s
           );
+          // This event becomes latest if applied
           const ed = String(eventDate).slice(0, 10);
           const prevL = latestDateBySailor.get(sailorId);
           if (!prevL || ed >= prevL) latestDateBySailor.set(sailorId, ed);
         }
         affectedSailorIds.add(sailorId);
 
+        // Rank is always integer; nett/total may be fractional (14.5)
         const rank = row.rank != null ? Math.round(row.rank) : 999;
+        // Nett optional — only store when sheet has a nett value
         const nett = row.nett != null ? row.nett : null;
         const total = row.total != null ? row.total : null;
 
+        // Collect for batch upsert (avoids N round-trips that timed out serverless)
         pendingResults.push({
           regattaId: reg.id,
           sailorId,
@@ -393,6 +476,7 @@ export async function POST(req: Request) {
         if (errorSamples.length < 5) {
           errorSamples.push(`${row.name}: ${msg.slice(0, 160)}`);
         }
+        // Common: integer column vs decimal nett before migration 003
         const hint = /integer|numeric|invalid input|nett/i.test(msg)
           ? " (run SQL migration 003_nett_score_real.sql — nett must allow decimals like 14.5)"
           : "";
@@ -408,25 +492,33 @@ export async function POST(req: Request) {
       }
     }
 
-    // Parallel chunked upserts — sequential N inserts timed out serverless
+    // Parallel upsert results in chunks (sequential N inserts timed out serverless
+    // after DB writes completed — browser saw "Failed to fetch").
     if (pendingResults.length) {
-      await runInChunks(pendingResults, IMPORT_RESULT_CHUNK, async (r) => {
-        await db
-          .insert(regattaResults)
-          .values(r)
-          .onConflictDoUpdate({
-            target: [regattaResults.sailorId, regattaResults.regattaId],
-            set: {
-              rank: r.rank,
-              nettScore: r.nettScore,
-              totalScore: r.totalScore,
-              isDns: r.isDns,
-              updatedAt: new Date(),
-            },
-          });
-      });
+      const CHUNK = 15;
+      for (let i = 0; i < pendingResults.length; i += CHUNK) {
+        const chunk = pendingResults.slice(i, i + CHUNK);
+        await Promise.all(
+          chunk.map((r) =>
+            db
+              .insert(regattaResults)
+              .values(r)
+              .onConflictDoUpdate({
+                target: [regattaResults.sailorId, regattaResults.regattaId],
+                set: {
+                  rank: r.rank,
+                  nettScore: r.nettScore,
+                  totalScore: r.totalScore,
+                  isDns: r.isDns,
+                  updatedAt: new Date(),
+                },
+              })
+          )
+        );
+      }
     }
 
+    // Best-effort alias inserts in parallel chunks
     if (pendingAliases.length) {
       const seenAlias = new Set<string>();
       const unique = pendingAliases.filter((a) => {
@@ -435,19 +527,25 @@ export async function POST(req: Request) {
         seenAlias.add(k);
         return true;
       });
-      await runInChunks(unique, IMPORT_RESULT_CHUNK, async (a) => {
-        try {
-          await db.insert(sailorAliases).values({
-            sailorId: a.sailorId,
-            aliasName: a.aliasName,
-          });
-        } catch {
-          /* exists */
-        }
-      });
+      const CHUNK = 15;
+      for (let i = 0; i < unique.length; i += CHUNK) {
+        const chunk = unique.slice(i, i + CHUNK);
+        await Promise.all(
+          chunk.map(async (a) => {
+            try {
+              await db.insert(sailorAliases).values({
+                sailorId: a.sailorId,
+                aliasName: a.aliasName,
+              });
+            } catch {
+              /* exists */
+            }
+          })
+        );
+      }
     }
 
-    // Silver entry dates — only sailors touched by this import
+    // Recompute silver_entry_date — only for sailors touched by this import
     let silverUpdated = 0;
     const affectedIds = [...affectedSailorIds];
     if (affectedIds.length) {
@@ -489,6 +587,7 @@ export async function POST(req: Request) {
       }
     }
 
+    // Single audit summary (not N per-row inserts — was adding latency)
     if (matched > 0 || created > 0 || updatedProfiles > 0) {
       void logAdminChange({
         action: "import.regatta",
@@ -511,9 +610,14 @@ export async function POST(req: Request) {
     const needsNettMigration = errorSamples.some((e) =>
       /integer|real|numeric|type/i.test(e)
     );
+
     possibleDuplicates.sort((a, b) => b.similarity - a.similarity);
-    const dupeFlags = possibleDuplicates.slice(0, IMPORT_MAX_DUPLICATE_FLAGS);
-    const unmatchedNoError = unmatched.filter((u) => !u.error).length;
+    const dupeFlags = possibleDuplicates.slice(0, MAX_DUPLICATE_FLAGS);
+
+    const dupeNote =
+      dupeFlags.length > 0
+        ? ` · ${possibleDuplicates.length} possible duplicate name(s) flagged (60%+ similar) — review below / merge in Database.`
+        : "";
 
     void trackUsage({
       eventType: "import",
@@ -528,18 +632,14 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({
-      message: buildImportMessage({
-        regattaName: reg.name,
-        matched,
-        inputRows: cleanRows.length,
-        created,
-        updatedProfiles,
-        silverUpdated,
-        rowErrors,
-        unmatchedCount: unmatchedNoError,
-        duplicateCount: possibleDuplicates.length,
-        needsNettMigration,
-      }),
+      message:
+        matched === 0 && rowErrors > 0
+          ? `Import failed for all rows. ${
+              needsNettMigration
+                ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
+                : "See errors below."
+            }`
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${silverUpdated} silver entry dates recomputed). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}`,
       regatta: reg,
       matched,
       created,
