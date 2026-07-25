@@ -20,6 +20,7 @@ export default async function RegattasPage() {
           raceCount: r.raceCount ?? null,
           geography: r.geography ?? "SG",
           boatClass: r.boatClass ?? "Optimist",
+          countsForRanking: r.countsForRanking !== false,
         }))}
       />
     );

@@ -1008,6 +1008,75 @@ export function SailorProfileView({
         </div>
       </div>
 
+      {/* Athlete Statistics — Prominently Positioned Above Series Standing */}
+      <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-white/5 bg-slate-900/60 backdrop-blur-xl space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xs font-black text-white tracking-wider uppercase flex items-center gap-1.5">
+            <TrendingUp className="h-4 w-4 text-orange-500" />
+            Athlete Performance Metrics
+          </h2>
+          <span className="text-[10px] font-bold text-slate-500 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/5">
+            Verified Sailor
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+          <div className="bg-slate-950/80 border border-white/10 rounded-xl p-3 text-center min-w-0 flex flex-col justify-center relative overflow-hidden group">
+            <span className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
+              Age
+            </span>
+            <span className="block text-xl sm:text-2xl font-black text-white mt-0.5 tabular-nums">
+              {showDob && displaySailor.dob
+                ? `${calculateAge(displaySailor.dob)}`
+                : showDob
+                  ? "—"
+                  : "·"}
+            </span>
+            <span className="block text-[9px] font-semibold text-slate-500 mt-0.5">
+              {showDob ? "years old" : "private"}
+            </span>
+          </div>
+
+          <div className="bg-slate-950/80 border border-white/10 rounded-xl p-3 text-center min-w-0 flex flex-col justify-center relative overflow-hidden group">
+            <span className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
+              Weight
+            </span>
+            <span className="block text-xl sm:text-2xl font-black text-white mt-0.5 font-mono tabular-nums">
+              {showWeight && displaySailor.weight != null
+                ? displaySailor.weight
+                : "·"}
+            </span>
+            <span className="block text-[9px] font-semibold text-slate-500 mt-0.5">
+              {showWeight ? "kg" : "private"}
+            </span>
+          </div>
+
+          <div className="bg-slate-950/80 border border-orange-500/20 rounded-xl p-3 text-center min-w-0 flex flex-col justify-center relative overflow-hidden group">
+            <span className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
+              Events Logged
+            </span>
+            <span className="block text-xl sm:text-2xl font-black text-orange-400 mt-0.5 tabular-nums">
+              {results.length}
+            </span>
+            <span className="block text-[9px] font-semibold text-orange-400/80 mt-0.5">
+              regattas
+            </span>
+          </div>
+
+          <div className="bg-slate-950/80 border border-white/10 rounded-xl p-3 text-center min-w-0 flex flex-col justify-center relative overflow-hidden group">
+            <span className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
+              Gender
+            </span>
+            <span className="block text-xl sm:text-2xl font-black text-white mt-0.5">
+              {(displaySailor.gender as string) || "—"}
+            </span>
+            <span className="block text-[9px] font-semibold text-slate-500 mt-0.5">
+              division
+            </span>
+          </div>
+        </div>
+      </div>
+
       {/* Live series standing */}
       {initialSeriesStanding && (
         <div className="glass-panel rounded-2xl border border-orange-500/20 p-4 sm:p-5 md:p-6">
@@ -1284,61 +1353,7 @@ export function SailorProfileView({
         </div>
       </div>
 
-      {/* Athlete stats — always visible, 1×4 */}
-      <div className="glass-card rounded-2xl p-3 sm:p-4 border border-white/5">
-        <h2 className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2 flex items-center gap-1.5 px-0.5">
-          <TrendingUp className="h-3.5 w-3.5 text-orange-500" />
-          Athlete statistics
-        </h2>
-        <div className="grid grid-cols-4 gap-1.5 sm:gap-2">
-          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
-            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
-              Age
-            </span>
-            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5 tabular-nums">
-              {showDob && displaySailor.dob
-                ? `${calculateAge(displaySailor.dob)}`
-                : showDob
-                  ? "—"
-                  : "·"}
-            </span>
-            <span className="block text-[9px] text-slate-600">
-              {showDob ? "yrs" : "private"}
-            </span>
-          </div>
-          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
-            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
-              Weight
-            </span>
-            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5 font-mono tabular-nums">
-              {showWeight && displaySailor.weight != null
-                ? displaySailor.weight
-                : "·"}
-            </span>
-            <span className="block text-[9px] text-slate-600">
-              {showWeight ? "kg" : "private"}
-            </span>
-          </div>
-          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
-            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
-              Events
-            </span>
-            <span className="block text-base sm:text-xl font-extrabold text-orange-500 mt-0.5 tabular-nums">
-              {results.length}
-            </span>
-            <span className="block text-[9px] text-slate-600">logged</span>
-          </div>
-          <div className="bg-white/5 border border-white/5 rounded-xl px-1.5 py-2.5 sm:p-3 text-center min-w-0">
-            <span className="block text-[9px] sm:text-[10px] text-slate-500 font-bold uppercase truncate">
-              Gender
-            </span>
-            <span className="block text-base sm:text-xl font-extrabold text-white mt-0.5">
-              {(displaySailor.gender as string) || "—"}
-            </span>
-            <span className="block text-[9px] text-slate-600">&nbsp;</span>
-          </div>
-        </div>
-      </div>
+
 
       {/* Achievements tab */}
       {profileTab === "achievements" && (
