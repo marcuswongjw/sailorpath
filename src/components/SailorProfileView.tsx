@@ -11,12 +11,9 @@ import {
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import {
   Trophy,
-  Compass,
   EyeOff,
   Settings,
   MapPin,
-  TrendingUp,
-  User,
   Link2,
   UserPlus,
   Pencil,
@@ -267,13 +264,6 @@ export function SailorProfileView({
   const [avatarBusy, setAvatarBusy] = useState(false);
   const [avatarMsg, setAvatarMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  type ProfileTab =
-    | "results"
-    | "achievements"
-    | "journey"
-    | "boat"
-    | "crew";
-  const [profileTab, setProfileTab] = useState<ProfileTab>("results");
   const [journey, setJourney] = useState<JourneyHighlight[]>(() =>
     parseSailingJourney(initialSailor.sailingJourney)
   );
@@ -699,126 +689,116 @@ export function SailorProfileView({
     return ageYears(dobString) ?? "N/A";
   };
 
-  return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex-1 flex flex-col gap-8">
-      {/* Header */}
-      <div className="glass-panel rounded-3xl p-6 md:p-8 border border-white/5 relative overflow-hidden flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-600/5 rounded-full blur-3xl -z-10" />
+  const hasEquipment =
+    showEquipment &&
+    displayEquipment &&
+    (displayEquipment.hullBrand ||
+      displayEquipment.sailMake ||
+      displayEquipment.foilBrand ||
+      displayEquipment.mast ||
+      displayEquipment.notes);
+  const hasSquadHistory = SQUAD_HISTORY_SLOTS.some((s) => displaySailor[s.key]);
 
-        <div className="flex flex-col md:flex-row items-center gap-6 min-w-0">
-          {/* Avatar: photo if set, else initials */}
-          <div className="relative h-28 w-28 md:h-32 md:w-32 shrink-0">
-            <div className="relative h-full w-full rounded-full border-2 border-orange-500/25 shadow-xl bg-gradient-to-br from-orange-600/30 to-slate-900 flex items-center justify-center overflow-hidden">
-              {displaySailor.avatarUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={displaySailor.avatarUrl}
-                  alt={displaySailor.name}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span className="text-3xl md:text-4xl font-black text-orange-300 tracking-tight">
-                  {initials(displaySailor.name)}
-                </span>
+  return (
+    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10 flex-1 flex flex-col gap-6 sm:gap-8">
+      {/* ── Hero ─────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-gradient-to-b from-slate-900/80 to-slate-950/90 p-6 sm:p-8">
+        <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-orange-500/[0.07] blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-sky-500/[0.04] blur-3xl" />
+
+        <div className="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-start min-w-0">
+            {/* Avatar */}
+            <div className="relative h-24 w-24 sm:h-28 sm:w-28 shrink-0">
+              <div className="h-full w-full overflow-hidden rounded-2xl border border-orange-500/20 bg-gradient-to-br from-orange-600/25 to-slate-900 shadow-lg shadow-orange-950/30 flex items-center justify-center">
+                {displaySailor.avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={displaySailor.avatarUrl}
+                    alt={displaySailor.name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="text-3xl font-black tracking-tight text-orange-300">
+                    {initials(displaySailor.name)}
+                  </span>
+                )}
+              </div>
+              {isOwner && !demoMode && (
+                <>
+                  <button
+                    type="button"
+                    disabled={avatarBusy}
+                    onClick={() => fileInputRef.current?.click()}
+                    className="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-2xl bg-black/50 text-white opacity-0 transition-opacity hover:opacity-100 focus:opacity-100"
+                    title="Upload photo"
+                  >
+                    <Camera className="h-5 w-5" />
+                    <span className="text-[10px] font-bold">
+                      {avatarBusy ? "…" : "Upload"}
+                    </span>
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp,image/gif"
+                    className="hidden"
+                    onChange={(e) => {
+                      const f = e.target.files?.[0];
+                      if (f) void uploadAvatar(f);
+                      e.target.value = "";
+                    }}
+                  />
+                </>
+              )}
+              {avatarMsg && (
+                <p className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-bold text-emerald-300">
+                  {avatarMsg}
+                </p>
               )}
             </div>
-            {isOwner && !demoMode && (
-              <>
-                <button
-                  type="button"
-                  disabled={avatarBusy}
-                  onClick={() => fileInputRef.current?.click()}
-                  className="absolute inset-0 rounded-full bg-black/45 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex flex-col items-center justify-center gap-1 text-white"
-                  title="Upload photo"
+
+            <div className="min-w-0 text-center sm:text-left">
+              <div className="flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                  {displaySailor.name}
+                </h1>
+                <span
+                  className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-bold ${fleetBadge.className}`}
                 >
-                  <Camera className="h-6 w-6" />
-                  <span className="text-[10px] font-bold">
-                    {avatarBusy ? "…" : "Upload"}
-                  </span>
-                </button>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp,image/gif"
-                  className="hidden"
-                  onChange={(e) => {
-                    const f = e.target.files?.[0];
-                    if (f) void uploadAvatar(f);
-                    e.target.value = "";
-                  }}
-                />
-              </>
-            )}
-            {!isOwner && (
-              <span className="absolute -bottom-1 -right-1 h-8 w-8 rounded-full bg-slate-900 border border-white/10 flex items-center justify-center">
-                <User className="h-4 w-4 text-slate-400" />
-              </span>
-            )}
-            {avatarMsg && (
-              <p className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-bold text-emerald-300">
-                {avatarMsg}
-              </p>
-            )}
-          </div>
-
-          <div className="text-center md:text-left min-w-0">
-            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3">
-              <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-                {displaySailor.name}
-              </h1>
-              <span
-                className={`self-center inline-flex items-center rounded-full px-3 py-0.5 text-xs font-bold border ${fleetBadge.className}`}
-              >
-                {fleetBadge.label}
-              </span>
-            </div>
-
-            <p className="mt-2 text-slate-400 flex flex-wrap items-center justify-center md:justify-start gap-x-3 gap-y-1.5 text-sm font-medium">
-              <span className="flex items-center gap-1">
-                <MapPin className="h-4 w-4 text-orange-500" />
-                {displaySailor.club}
-                {displaySailor.school ? ` · ${displaySailor.school}` : ""}
-                {displaySailor.nationality
-                  ? ` · ${displaySailor.nationality}`
-                  : ""}
-              </span>
-            </p>
-
-            {displaySailor.bio && (
-              <p className="mt-3 text-xs md:text-sm text-slate-300 italic max-w-md bg-white/5 px-3 py-2 rounded-xl border border-white/5">
-                &ldquo;{displaySailor.bio}&rdquo;
-              </p>
-            )}
-
-            <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-2">
-              {honors.length === 0 ? (
-                <span className="text-[11px] text-slate-600">
-                  No squad / campaign tags yet
+                  {fleetBadge.label}
                 </span>
-              ) : (
-                <>
-                  {honors.slice(0, 2).map((h, idx) => (
+              </div>
+
+              <p className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-slate-400 sm:justify-start">
+                <MapPin className="h-3.5 w-3.5 shrink-0 text-orange-500/80" />
+                <span>
+                  {[displaySailor.club, displaySailor.school, displaySailor.nationality]
+                    .filter(Boolean)
+                    .join(" · ") || "—"}
+                </span>
+              </p>
+
+              {displaySailor.bio && (
+                <p className="mt-3 max-w-lg text-sm leading-relaxed text-slate-300">
+                  {displaySailor.bio}
+                </p>
+              )}
+
+              {honors.length > 0 && (
+                <div className="mt-3.5 flex flex-wrap justify-center gap-1.5 sm:justify-start">
+                  {honors.map((h, idx) => (
                     <span
                       key={idx}
-                      className={`rounded-full px-3 py-0.5 text-xs font-semibold ${h.className}`}
+                      className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${h.className}`}
                     >
                       {h.text}
                     </span>
                   ))}
-                  {honors.length > 2 && (
-                    <button
-                      type="button"
-                      onClick={() => setProfileTab("achievements")}
-                      className="rounded-full px-3 py-0.5 text-xs font-semibold bg-white/5 text-slate-400 border border-white/10 hover:text-white"
-                    >
-                      +{honors.length - 2} more
-                    </button>
-                  )}
-                </>
+                </div>
               )}
-            </div>
 
-            <div className="mt-4 flex flex-wrap justify-center md:justify-start gap-2">
+              <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
               <button
                 type="button"
                 onClick={async () => {
@@ -831,15 +811,15 @@ export function SailorProfileView({
                     setCopyMsg("Could not copy");
                   }
                 }}
-                className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold text-slate-300 transition hover:border-white/20 hover:text-white"
               >
                 <Link2 className="h-3.5 w-3.5" />
-                {copyMsg || "Copy profile link"}
+                {copyMsg || "Copy link"}
               </button>
               {!demoMode && !isLoggedIn && !profileClaimed && (
                 <Link
                   href={`/login?next=${encodeURIComponent(`/${displaySailor.handle || ""}`)}`}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-orange-600/90 hover:bg-orange-500 px-3 py-1.5 text-[11px] font-bold text-white"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-bold text-white transition hover:bg-orange-500"
                 >
                   <UserPlus className="h-3.5 w-3.5" />
                   Log in to claim
@@ -856,7 +836,7 @@ export function SailorProfileView({
                     }
                     setClaimPanelOpen((o) => !o);
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-orange-600/90 hover:bg-orange-500 disabled:opacity-50 px-3 py-1.5 text-[11px] font-bold text-white"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-bold text-white transition hover:bg-orange-500 disabled:opacity-50"
                 >
                   <UserPlus className="h-3.5 w-3.5" />
                   {demoMode
@@ -867,13 +847,13 @@ export function SailorProfileView({
                 </button>
               )}
               {canClaim && claimStatus === "pending" && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 px-3 py-1.5 text-[11px] font-bold text-amber-200">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/15 px-3 py-1.5 text-[11px] font-bold text-amber-200">
                   Claim pending review
                 </span>
               )}
               {isOwner && (
                 <>
-                  <span className="text-[11px] font-bold text-emerald-400/90 self-center">
+                  <span className="self-center text-[11px] font-semibold text-emerald-400/90">
                     {demoMode
                       ? demoRole === "parent"
                         ? "Parent view · linked guardian"
@@ -883,7 +863,7 @@ export function SailorProfileView({
                   <button
                     type="button"
                     onClick={() => setEditing((e) => !e)}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-3 py-1.5 text-[11px] font-bold text-slate-200 hover:text-white"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold text-slate-200 transition hover:text-white"
                   >
                     <Pencil className="h-3.5 w-3.5" />
                     {editing ? "Close editor" : "Edit profile"}
@@ -991,157 +971,142 @@ export function SailorProfileView({
               </p>
             )}
             {saveMsg && (
-              <p className="mt-2 text-[11px] text-emerald-300 text-center md:text-left">
+              <p className="mt-2 text-[11px] text-emerald-300 text-center sm:text-left">
                 {saveMsg}
               </p>
             )}
+            </div>
+          </div>
+
+          {/* Sail number */}
+          <div className="flex shrink-0 flex-col items-center border-t border-white/[0.06] pt-4 md:items-end md:border-t-0 md:pt-0">
+            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+              Sail number
+            </span>
+            <span className="mt-1 font-mono text-4xl font-black tracking-tight text-orange-500 sm:text-5xl">
+              {displaySailor.sailNumber || "—"}
+            </span>
           </div>
         </div>
+      </section>
 
-        <div className="text-center md:text-right border-t md:border-t-0 border-white/5 pt-4 md:pt-0 w-full md:w-auto shrink-0">
-          <span className="block text-xs font-bold text-slate-500 tracking-widest uppercase">
-            Sail number
-          </span>
-          <span className="block text-3xl md:text-5xl font-black text-orange-500 tracking-tight mt-1 font-mono">
-            {displaySailor.sailNumber || "—"}
-          </span>
-        </div>
-      </div>
-
-      {/* Athlete Statistics — Prominently Positioned Above Series Standing */}
-      <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-white/5 bg-slate-900/60 backdrop-blur-xl space-y-3">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs font-black text-white tracking-wider uppercase flex items-center gap-1.5">
-            <TrendingUp className="h-4 w-4 text-orange-500" />
-            Athlete Performance Metrics
-          </h2>
-          <span className="text-[10px] font-bold text-slate-500 bg-white/5 px-2.5 py-0.5 rounded-full border border-white/5">
-            Verified Sailor
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
-          <div className="bg-slate-950/80 border border-white/10 rounded-xl p-3 text-center min-w-0 flex flex-col justify-center relative overflow-hidden group">
-            <span className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
-              Age
-            </span>
-            <span className="block text-xl sm:text-2xl font-black text-white mt-0.5 tabular-nums">
-              {showDob && displaySailor.dob
-                ? `${calculateAge(displaySailor.dob)}`
+      {/* ── Quick stats ──────────────────────────────────────── */}
+      <section className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
+        {[
+          {
+            label: "Age",
+            value:
+              showDob && displaySailor.dob
+                ? String(calculateAge(displaySailor.dob))
                 : showDob
                   ? "—"
-                  : "·"}
+                  : "·",
+            hint: showDob ? "years" : "private",
+          },
+          {
+            label: "Weight",
+            value:
+              showWeight && displaySailor.weight != null
+                ? String(displaySailor.weight)
+                : "·",
+            hint: showWeight ? "kg" : "private",
+          },
+          {
+            label: "Events",
+            value: String(results.length),
+            hint: "regattas",
+            accent: true,
+          },
+          {
+            label: "Division",
+            value: (displaySailor.gender as string) || "—",
+            hint: "fleet",
+          },
+        ].map((stat) => (
+          <div
+            key={stat.label}
+            className={`rounded-2xl border px-3 py-3.5 text-center sm:px-4 ${
+              stat.accent
+                ? "border-orange-500/20 bg-orange-500/[0.06]"
+                : "border-white/[0.06] bg-white/[0.02]"
+            }`}
+          >
+            <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+              {stat.label}
             </span>
-            <span className="block text-[9px] font-semibold text-slate-500 mt-0.5">
-              {showDob ? "years old" : "private"}
+            <span
+              className={`mt-1 block text-xl font-bold tabular-nums sm:text-2xl ${
+                stat.accent ? "text-orange-400" : "text-white"
+              }`}
+            >
+              {stat.value}
+            </span>
+            <span className="mt-0.5 block text-[10px] text-slate-500">
+              {stat.hint}
             </span>
           </div>
+        ))}
+      </section>
 
-          <div className="bg-slate-950/80 border border-white/10 rounded-xl p-3 text-center min-w-0 flex flex-col justify-center relative overflow-hidden group">
-            <span className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
-              Weight
-            </span>
-            <span className="block text-xl sm:text-2xl font-black text-white mt-0.5 font-mono tabular-nums">
-              {showWeight && displaySailor.weight != null
-                ? displaySailor.weight
-                : "·"}
-            </span>
-            <span className="block text-[9px] font-semibold text-slate-500 mt-0.5">
-              {showWeight ? "kg" : "private"}
-            </span>
-          </div>
-
-          <div className="bg-slate-950/80 border border-orange-500/20 rounded-xl p-3 text-center min-w-0 flex flex-col justify-center relative overflow-hidden group">
-            <span className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
-              Events Logged
-            </span>
-            <span className="block text-xl sm:text-2xl font-black text-orange-400 mt-0.5 tabular-nums">
-              {results.length}
-            </span>
-            <span className="block text-[9px] font-semibold text-orange-400/80 mt-0.5">
-              regattas
-            </span>
-          </div>
-
-          <div className="bg-slate-950/80 border border-white/10 rounded-xl p-3 text-center min-w-0 flex flex-col justify-center relative overflow-hidden group">
-            <span className="block text-[10px] font-extrabold text-slate-400 uppercase tracking-wider truncate">
-              Gender
-            </span>
-            <span className="block text-xl sm:text-2xl font-black text-white mt-0.5">
-              {(displaySailor.gender as string) || "—"}
-            </span>
-            <span className="block text-[9px] font-semibold text-slate-500 mt-0.5">
-              division
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Live series standing */}
+      {/* ── Series standing ──────────────────────────────────── */}
       {initialSeriesStanding && (
-        <div className="glass-panel rounded-2xl border border-orange-500/20 p-4 sm:p-5 md:p-6">
-          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
-            <div className="flex items-start gap-2 min-w-0">
-              <Trophy className="h-5 w-5 text-orange-500 shrink-0 mt-0.5" />
+        <section className="rounded-2xl border border-orange-500/15 bg-gradient-to-br from-orange-500/[0.06] to-transparent p-5 sm:p-6">
+          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex items-start gap-2.5 min-w-0">
+              <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15">
+                <Trophy className="h-4 w-4 text-orange-400" />
+              </div>
               <div className="min-w-0">
-                <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                  Series standing
-                </h3>
-                <p className="text-[11px] text-slate-500 leading-snug">
+                <h2 className="text-sm font-bold text-white">Series standing</h2>
+                <p className="text-[12px] text-slate-400">
                   {initialSeriesStanding.periodLabel}
                   <span className="text-slate-600"> · </span>
-                  <span className="text-orange-300/90 font-semibold">
+                  <span className="font-medium text-orange-300/90">
                     {initialSeriesStanding.fleet} fleet
                   </span>
                 </p>
               </div>
             </div>
-            <div className="flex sm:flex-col items-baseline sm:items-end justify-between sm:justify-start gap-3 sm:gap-0 pl-7 sm:pl-0">
-              <div>
-                <p className="text-[10px] font-bold text-slate-500 uppercase">
-                  Best 3 of 5 (sum of ranks)
+            <div className="flex items-baseline justify-between gap-4 pl-10 sm:flex-col sm:items-end sm:pl-0">
+              <div className="text-left sm:text-right">
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                  Best 3 of 5
                 </p>
-                <p className="text-2xl sm:text-3xl font-black text-white tabular-nums">
+                <p className="text-2xl font-bold tabular-nums text-white sm:text-3xl">
                   {initialSeriesStanding.best3of5}
                 </p>
               </div>
-              <p className="text-sm font-bold text-orange-400 tabular-nums">
-                Series rank #{initialSeriesStanding.overallRank}
-                <span className="text-slate-500 font-semibold text-xs ml-1">
+              <p className="text-sm font-bold tabular-nums text-orange-400">
+                #{initialSeriesStanding.overallRank}
+                <span className="ml-1 text-xs font-medium text-slate-500">
                   of {initialSeriesStanding.fleetSize}
                 </span>
               </p>
             </div>
           </div>
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">
-            Event ranks (lower is better)
-          </p>
-          <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0 sm:mx-0 sm:px-0 sm:snap-none">
+          <div className="flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0 sm:snap-none">
             {Array.from({ length: 5 }).map((_, i) => {
               const r = initialSeriesStanding.rScores[i];
               return (
                 <div
                   key={r?.regattaId || i}
-                  className={`rounded-xl border px-2.5 py-2.5 text-center shrink-0 w-[5.25rem] sm:w-auto snap-start ${
+                  className={`w-[5.25rem] shrink-0 snap-start rounded-xl border px-2.5 py-2.5 text-center sm:w-auto ${
                     r?.isCarryForward
-                      ? "bg-sky-500/10 border-sky-500/20"
-                      : "bg-white/5 border-white/5"
+                      ? "border-sky-500/20 bg-sky-500/10"
+                      : "border-white/[0.06] bg-black/20"
                   }`}
                   title={r?.regattaName}
                 >
-                  <p className="text-[9px] font-black text-orange-400">
+                  <p className="text-[9px] font-bold text-orange-400">
                     R{i + 1}
                     {r?.isCarryForward ? (
-                      <span className="text-sky-400 font-bold"> CF</span>
+                      <span className="font-bold text-sky-400"> CF</span>
                     ) : null}
                   </p>
-                  <p className="text-[9px] text-slate-500 line-clamp-2 min-h-[1.5rem] leading-tight mt-0.5">
+                  <p className="mt-0.5 line-clamp-2 min-h-[1.5rem] text-[9px] leading-tight text-slate-500">
                     {r?.regattaName || "—"}
                   </p>
-                  <p className="text-[9px] font-bold text-slate-500 uppercase mt-1">
-                    Rank
-                  </p>
-                  <p className="text-base sm:text-sm font-mono font-bold text-white tabular-nums">
+                  <p className="mt-1.5 font-mono text-base font-bold tabular-nums text-white sm:text-sm">
                     {r
                       ? `${r.score}${r.isOverseasCommitment ? "†" : r.isDNS ? "*" : ""}`
                       : "—"}
@@ -1150,19 +1115,19 @@ export function SailorProfileView({
               );
             })}
           </div>
-          <p className="text-[11px] text-emerald-400/90 mt-3 font-semibold leading-snug">
+          <p className="mt-3 text-[12px] font-medium leading-snug text-emerald-400/90">
             {initialSeriesStanding.trendNote}
           </p>
-          <p className="text-[10px] text-slate-600 mt-1">
-            * DNS · † overseas commitment · CF = carry-forward from prior half
+          <p className="mt-1 text-[10px] text-slate-600">
+            * DNS · † overseas · CF = carry-forward
           </p>
           <Link
             href={`/sg/optimist/${String(initialSeriesStanding.fleet).toLowerCase()}`}
-            className="inline-flex items-center mt-3 text-[11px] font-bold text-orange-400 hover:underline min-h-[44px] sm:min-h-0 py-2 sm:py-0"
+            className="mt-3 inline-flex min-h-[44px] items-center py-2 text-[12px] font-semibold text-orange-400 transition hover:text-orange-300 sm:min-h-0 sm:py-0"
           >
             View full {initialSeriesStanding.fleet} standings →
           </Link>
-        </div>
+        </section>
       )}
 
       {/* Owner edit panel */}
@@ -1324,342 +1289,61 @@ export function SailorProfileView({
         </div>
       )}
 
-      {/* Profile section tabs — mobile scrollable */}
-      <div className="sticky top-14 sm:top-16 z-20 -mx-0 border-b border-white/10 bg-[#090a0f]/95 backdrop-blur-md">
-        <div className="flex gap-0 overflow-x-auto no-scrollbar -mx-1 px-1">
-          {(
-            [
-              ["results", "Results", Trophy],
-              ["achievements", "Achievements", Medal],
-              ["journey", "Sailing Journey", Clock],
-              ["boat", "My boat", Anchor],
-              ["crew", "Profile", User],
-            ] as const
-          ).map(([key, label, Icon]) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => setProfileTab(key)}
-              className={`shrink-0 inline-flex items-center gap-1.5 px-3.5 py-3 text-[12px] sm:text-sm font-bold border-b-2 transition-colors min-h-[48px] ${
-                profileTab === key
-                  ? "border-orange-500 text-white"
-                  : "border-transparent text-slate-500 hover:text-slate-300"
-              }`}
-            >
-              <Icon className="h-3.5 w-3.5 opacity-80" />
-              {label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-
-
-      {/* Achievements tab */}
-      {profileTab === "achievements" && (
-        <div className="space-y-4">
-          <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-5 md:p-6">
-            <h2 className="text-sm font-bold text-white tracking-wider uppercase mb-3">
-              Achievements
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {honors.length === 0 ? (
-                <p className="text-xs text-slate-500">
-                  No championship / squad tags yet.
-                </p>
-              ) : (
-                honors.map((h, idx) => (
-                  <span
-                    key={idx}
-                    className={`rounded-full px-3 py-1 text-xs font-semibold ${h.className}`}
-                  >
-                    {h.text}
-                  </span>
-                ))
-              )}
+      {/* ── Squad history ───────────────────────────────────── */}
+      {hasSquadHistory && (
+        <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6">
+          <div className="mb-4 flex items-center gap-2">
+            <Medal className="h-4 w-4 text-orange-400" />
+            <div>
+              <h2 className="text-sm font-bold text-white">National squad</h2>
+              <p className="text-[11px] text-slate-500">
+                Selection status by half-year period
+              </p>
             </div>
           </div>
-          {SQUAD_HISTORY_SLOTS.some((s) => displaySailor[s.key]) && (
-            <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-5 md:p-6">
-              <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-1">
-                National squad history
-              </h2>
-              <p className="text-[11px] text-slate-600 mb-4">
-                Squad selection is fixed for each half-year.
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {SQUAD_HISTORY_SLOTS.map((slot) => {
-                  const v = displaySailor[slot.key];
-                  return (
-                    <div
-                      key={slot.key}
-                      className="rounded-xl bg-white/5 border border-white/5 px-3 py-2.5 text-center"
-                    >
-                      <p className="text-[9px] font-bold text-slate-500 uppercase tracking-wide">
-                        {slot.label}
-                      </p>
-                      <p
-                        className={`mt-1 text-sm font-black ${
-                          v ? "text-orange-400" : "text-slate-600"
-                        }`}
-                      >
-                        {(v as React.ReactNode) || "—"}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Sailing Journey — owner-edited highlights only */}
-      {profileTab === "journey" && (
-        <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-6 space-y-4">
-          <div>
-            <h2 className="text-base sm:text-lg font-bold text-white">
-              Sailing Journey
-            </h2>
-            <p className="text-xs text-slate-500 mt-1 leading-snug">
-              Key moments you want to remember — representing Singapore, a first
-              win, a special event — not every race result.
-            </p>
-          </div>
-          {journey.length === 0 ? (
-            <p className="text-sm text-slate-500">
-              {isOwner
-                ? "No highlights yet. Add your first memory below."
-                : "No journey highlights shared yet."}
-            </p>
-          ) : (
-            <ol className="relative border-l border-white/10 ml-2 space-y-0">
-              {journey.map((it, idx) => (
-                <li key={it.id} className="relative pl-6 pb-5 last:pb-0">
-                  <span
-                    className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#090a0f] ${
-                      idx === 0 ? "bg-orange-500" : "bg-slate-500"
-                    }`}
-                  />
-                  {it.when && (
-                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wide">
-                      {it.when}
-                    </p>
-                  )}
-                  <p className="text-sm font-bold text-white mt-0.5 leading-snug">
-                    {it.title}
-                  </p>
-                  {it.detail && (
-                    <p className="text-xs text-slate-400 mt-1 leading-relaxed">
-                      {it.detail}
-                    </p>
-                  )}
-                  {isOwner && (
-                    <button
-                      type="button"
-                      disabled={journeyBusy}
-                      onClick={() => void removeJourneyItem(it.id)}
-                      className="mt-1.5 text-[10px] font-bold text-rose-400/90 hover:text-rose-300"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ol>
-          )}
-          {isOwner && (
-            <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-3 space-y-2">
-              <p className="text-[10px] font-bold text-orange-300 uppercase">
-                {demoMode ? "Add highlight (demo)" : "Add highlight"}
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                <input
-                  value={journeyDraft.when}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, when: e.target.value }))
-                  }
-                  placeholder="When (e.g. Jun 2026)"
-                  className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
-                />
-                <input
-                  value={journeyDraft.title}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, title: e.target.value }))
-                  }
-                  placeholder="Title (e.g. First Nationals win)"
-                  className="sm:col-span-2 rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
-                />
-                <textarea
-                  value={journeyDraft.detail}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
-                  }
-                  placeholder="What made it special…"
-                  rows={2}
-                  className="sm:col-span-3 rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
-                />
-              </div>
-              <button
-                type="button"
-                disabled={journeyBusy || !journeyDraft.title.trim()}
-                onClick={() => void addJourneyItem()}
-                className="rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-1.5 text-[11px] font-bold text-white"
-              >
-                {journeyBusy ? "Saving…" : "Add to journey"}
-              </button>
-              {journeyMsg && (
-                <p className="text-[11px] text-emerald-300">{journeyMsg}</p>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Boat tab — equipment only */}
-      {profileTab === "boat" && (
-        <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/5">
-          <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-6 flex items-center gap-2">
-            <Compass className="h-4 w-4 text-orange-500" />
-            Equipment &amp; Rig Log
-          </h2>
-          {showEquipment &&
-          displayEquipment &&
-          (displayEquipment.hullBrand ||
-            displayEquipment.sailMake ||
-            displayEquipment.foilBrand ||
-            displayEquipment.mast) ? (
-            <div className="space-y-3 font-medium text-sm flex-1">
-              {[
-                ["Hull", displayEquipment.hullBrand],
-                ["Sail", displayEquipment.sailMake],
-                ["Foils", displayEquipment.foilBrand],
-                ["Mast", displayEquipment.mast],
-              ].map(([label, val]) => (
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {SQUAD_HISTORY_SLOTS.map((slot) => {
+              const v = displaySailor[slot.key];
+              return (
                 <div
-                  key={label as string}
-                  className="flex justify-between border-b border-white/5 pb-2"
+                  key={slot.key}
+                  className="rounded-xl border border-white/[0.05] bg-black/20 px-3 py-3 text-center"
                 >
-                  <span className="text-slate-500">{label}</span>
-                  <span className="text-white font-bold">{val || "—"}</span>
-                </div>
-              ))}
-              {displayEquipment.notes && (
-                <p className="text-[11px] text-slate-400 italic">
-                  {displayEquipment.notes}
-                </p>
-              )}
-              {equipHistory.length > 0 && (
-                <div className="pt-2 border-t border-white/5">
-                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">
-                    History
+                  <p className="text-[9px] font-semibold uppercase tracking-wide text-slate-500">
+                    {slot.label}
                   </p>
-                  <ul className="space-y-1 max-h-24 overflow-y-auto">
-                    {equipHistory.slice(0, 5).map((h: any) => (
-                      <li
-                        key={h.id}
-                        className="text-[10px] text-slate-500 font-mono"
-                      >
-                        {String(h.effectiveDate).slice(0, 10)} ·{" "}
-                        {[h.hullBrand, h.sailMake, h.foilBrand]
-                          .filter(Boolean)
-                          .join(" / ") || "update"}
-                      </li>
-                    ))}
-                  </ul>
+                  <p
+                    className={`mt-1.5 text-sm font-bold ${
+                      v ? "text-orange-400" : "text-slate-600"
+                    }`}
+                  >
+                    {(v as React.ReactNode) || "—"}
+                  </p>
                 </div>
-              )}
-            </div>
-          ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center p-4">
-              <EyeOff className="h-8 w-8 text-slate-600 mb-2" />
-              <p className="text-xs text-slate-400">
-                {!showEquipment
-                  ? "Equipment log is private."
-                  : isOwner
-                    ? "No equipment yet — use Edit profile to add gear."
-                    : "No equipment logged yet."}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Crew / account tab — privacy + claim lives in hero; extras here */}
-      {profileTab === "crew" && canSeePrivate && (
-          <div className="glass-card rounded-2xl p-5 sm:p-6 border border-white/5">
-            <h2 className="text-sm font-bold text-slate-400 tracking-wider uppercase mb-6 flex items-center gap-2">
-              <Settings className="h-4 w-4 text-orange-500" />
-              Privacy Toggles
-            </h2>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-semibold text-slate-300">
-                  Share Weight
-                </label>
-                <input
-                  type="checkbox"
-                  checked={isPublicWeight}
-                  disabled={!isOwner}
-                  onChange={(e) => setIsPublicWeight(e.target.checked)}
-                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4 disabled:opacity-50"
-                />
-              </div>
-              <div className="flex items-center justify-between border-t border-white/5 pt-3">
-                <label className="text-xs font-semibold text-slate-300">
-                  Share Equipment Log
-                </label>
-                <input
-                  type="checkbox"
-                  checked={isPublicEquipment}
-                  disabled={!isOwner}
-                  onChange={(e) => setIsPublicEquipment(e.target.checked)}
-                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4 disabled:opacity-50"
-                />
-              </div>
-              <div className="flex items-center justify-between border-t border-white/5 pt-3">
-                <label className="text-xs font-semibold text-slate-300">
-                  Share DOB
-                </label>
-                <input
-                  type="checkbox"
-                  checked={isPublicDob}
-                  disabled={!isOwner}
-                  onChange={(e) => setIsPublicDob(e.target.checked)}
-                  className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4 disabled:opacity-50"
-                />
-              </div>
-              {isOwner && (
-                <button
-                  type="button"
-                  disabled={saveBusy}
-                  onClick={() => void saveProfile()}
-                  className="w-full mt-2 rounded-full bg-white/5 border border-white/10 py-2 text-[11px] font-bold text-slate-200 hover:text-white disabled:opacity-50"
-                >
-                  {saveBusy ? "Saving privacy…" : "Save privacy settings"}
-                </button>
-              )}
-            </div>
+              );
+            })}
           </div>
+        </section>
       )}
 
-      {profileTab === "crew" && !canSeePrivate && (
-        <div className="glass-panel rounded-2xl border border-white/5 p-5 text-sm text-slate-400">
-          Sign in and claim this profile to manage privacy and ownership.
-        </div>
-      )}
-
-      {/* Results tab — logbook */}
-      {profileTab === "results" && (
-      <div className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 border border-white/5">
+      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-6 md:p-7">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-white">
-              Recent regatta results
-            </h2>
-            <p className="text-[11px] text-slate-500 mt-0.5">
-              {isOwner ? "Tap a row for race notes · add personal events below" : "Tap a row for race notes"}
-            </p>
+            <div className="flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-500/15">
+                <Trophy className="h-4 w-4 text-orange-400" />
+              </div>
+              <div>
+                <h2 className="text-base font-bold text-white sm:text-lg">
+                  Regatta results
+                </h2>
+                <p className="text-[11px] text-slate-500">
+                  {isOwner
+                    ? "Tap a row for race notes · add personal events below"
+                    : "Tap a row for race notes"}
+                </p>
+              </div>
+            </div>
           </div>
           <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">
             {results.length} events
@@ -2076,6 +1760,227 @@ export function SailorProfileView({
           </div>
         )}
       </div>
+
+      {/* ── Journey + Equipment ──────────────────────────────── */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-5">
+        {/* Sailing Journey */}
+        <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6 space-y-4">
+          <div className="flex items-start gap-2.5">
+            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15">
+              <Clock className="h-4 w-4 text-orange-400" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-white">Sailing journey</h2>
+              <p className="text-[11px] leading-snug text-slate-500">
+                Key moments — campaigns, firsts, and milestones.
+              </p>
+            </div>
+          </div>
+          {journey.length === 0 ? (
+            <p className="text-sm text-slate-500">
+              {isOwner
+                ? "No highlights yet. Add your first memory below."
+                : "No journey highlights shared yet."}
+            </p>
+          ) : (
+            <ol className="relative ml-2 space-y-0 border-l border-white/10">
+              {journey.map((it, idx) => (
+                <li key={it.id} className="relative pb-5 pl-6 last:pb-0">
+                  <span
+                    className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#090a0f] ${
+                      idx === 0 ? "bg-orange-500" : "bg-slate-500"
+                    }`}
+                  />
+                  {it.when && (
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                      {it.when}
+                    </p>
+                  )}
+                  <p className="mt-0.5 text-sm font-semibold leading-snug text-white">
+                    {it.title}
+                  </p>
+                  {it.detail && (
+                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                      {it.detail}
+                    </p>
+                  )}
+                  {isOwner && (
+                    <button
+                      type="button"
+                      disabled={journeyBusy}
+                      onClick={() => void removeJourneyItem(it.id)}
+                      className="mt-1.5 text-[10px] font-bold text-rose-400/90 hover:text-rose-300"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+          {isOwner && (
+            <div className="space-y-2 rounded-xl border border-orange-500/20 bg-orange-500/5 p-3">
+              <p className="text-[10px] font-bold uppercase text-orange-300">
+                {demoMode ? "Add highlight (demo)" : "Add highlight"}
+              </p>
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                <input
+                  value={journeyDraft.when}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, when: e.target.value }))
+                  }
+                  placeholder="When (e.g. Jun 2026)"
+                  className="rounded-lg border border-white/10 bg-slate-950 px-2 py-1.5 text-xs text-white"
+                />
+                <input
+                  value={journeyDraft.title}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, title: e.target.value }))
+                  }
+                  placeholder="Title (e.g. First Nationals win)"
+                  className="rounded-lg border border-white/10 bg-slate-950 px-2 py-1.5 text-xs text-white sm:col-span-2"
+                />
+                <textarea
+                  value={journeyDraft.detail}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
+                  }
+                  placeholder="What made it special…"
+                  rows={2}
+                  className="resize-none rounded-lg border border-white/10 bg-slate-950 px-2 py-1.5 text-xs text-white sm:col-span-3"
+                />
+              </div>
+              <button
+                type="button"
+                disabled={journeyBusy || !journeyDraft.title.trim()}
+                onClick={() => void addJourneyItem()}
+                className="rounded-full bg-orange-600 px-4 py-1.5 text-[11px] font-bold text-white hover:bg-orange-500 disabled:opacity-40"
+              >
+                {journeyBusy ? "Saving…" : "Add to journey"}
+              </button>
+              {journeyMsg && (
+                <p className="text-[11px] text-emerald-300">{journeyMsg}</p>
+              )}
+            </div>
+          )}
+        </section>
+
+        {/* Equipment */}
+        <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6">
+          <div className="mb-5 flex items-start gap-2.5">
+            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15">
+              <Anchor className="h-4 w-4 text-orange-400" />
+            </div>
+            <div>
+              <h2 className="text-sm font-bold text-white">Equipment</h2>
+              <p className="text-[11px] text-slate-500">Hull, sail, foils &amp; mast</p>
+            </div>
+          </div>
+          {hasEquipment ? (
+            <div className="space-y-0">
+              {[
+                ["Hull", displayEquipment.hullBrand],
+                ["Sail", displayEquipment.sailMake],
+                ["Foils", displayEquipment.foilBrand],
+                ["Mast", displayEquipment.mast],
+              ].map(([label, val]) => (
+                <div
+                  key={label as string}
+                  className="flex items-center justify-between border-b border-white/[0.05] py-2.5 last:border-0"
+                >
+                  <span className="text-sm text-slate-500">{label}</span>
+                  <span className="text-sm font-semibold text-white">
+                    {(val as React.ReactNode) || "—"}
+                  </span>
+                </div>
+              ))}
+              {displayEquipment.notes && (
+                <p className="mt-3 text-[12px] italic leading-relaxed text-slate-400">
+                  {displayEquipment.notes}
+                </p>
+              )}
+              {equipHistory.length > 0 && (
+                <div className="mt-4 border-t border-white/[0.05] pt-3">
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
+                    History
+                  </p>
+                  <ul className="max-h-28 space-y-1 overflow-y-auto">
+                    {equipHistory.slice(0, 5).map((h: any) => (
+                      <li
+                        key={h.id}
+                        className="font-mono text-[10px] text-slate-500"
+                      >
+                        {String(h.effectiveDate).slice(0, 10)} ·{" "}
+                        {[h.hullBrand, h.sailMake, h.foilBrand]
+                          .filter(Boolean)
+                          .join(" / ") || "update"}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-8 text-center">
+              <EyeOff className="mb-2 h-7 w-7 text-slate-600" />
+              <p className="text-xs text-slate-400">
+                {!showEquipment
+                  ? "Equipment log is private."
+                  : isOwner
+                    ? "No equipment yet — use Edit profile to add gear."
+                    : "No equipment logged yet."}
+              </p>
+            </div>
+          )}
+        </section>
+      </div>
+
+      {/* ── Privacy (owner / private access) ─────────────────── */}
+      {canSeePrivate && (
+        <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6">
+          <div className="mb-4 flex items-center gap-2">
+            <Settings className="h-4 w-4 text-orange-400" />
+            <div>
+              <h2 className="text-sm font-bold text-white">Privacy</h2>
+              <p className="text-[11px] text-slate-500">
+                Control what visitors can see on this profile
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {(
+              [
+                ["Share weight", isPublicWeight, setIsPublicWeight],
+                ["Share equipment", isPublicEquipment, setIsPublicEquipment],
+                ["Share date of birth", isPublicDob, setIsPublicDob],
+              ] as const
+            ).map(([label, checked, setter]) => (
+              <label
+                key={label}
+                className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.05] bg-black/20 px-3.5 py-3"
+              >
+                <span className="text-xs font-medium text-slate-300">{label}</span>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  disabled={!isOwner}
+                  onChange={(e) => setter(e.target.checked)}
+                  className="h-4 w-4 rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 disabled:opacity-50"
+                />
+              </label>
+            ))}
+          </div>
+          {isOwner && (
+            <button
+              type="button"
+              disabled={saveBusy}
+              onClick={() => void saveProfile()}
+              className="mt-4 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2 text-[11px] font-bold text-slate-200 transition hover:text-white disabled:opacity-50"
+            >
+              {saveBusy ? "Saving privacy…" : "Save privacy settings"}
+            </button>
+          )}
+        </section>
       )}
     </div>
   );
