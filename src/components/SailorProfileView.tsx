@@ -1,19 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ageYears } from "@/lib/age";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import Link from "next/link";
 import {
   seriesFleetStatus,
-  seriesStatusBadge,
+  normalizeNationality,
 } from "@/lib/seriesMembership";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import {
-  Trophy,
-  EyeOff,
-  Settings,
-  MapPin,
   Link2,
   UserPlus,
   Pencil,
@@ -21,16 +16,25 @@ import {
   ChevronDown,
   ChevronUp,
   Camera,
+  Settings,
+  EyeOff,
   Anchor,
   Clock,
-  Medal,
+  Trophy,
 } from "lucide-react";
-import { formatEventWhen, placeBadge } from "@/lib/profileUi";
+import { formatEventWhen } from "@/lib/profileUi";
 import {
   newJourneyId,
   parseSailingJourney,
   type JourneyHighlight,
 } from "@/lib/sailingJourney";
+import {
+  buildProfileAnalytics,
+  buildResultTags,
+  placeColorClass,
+  fleetLabelForResult,
+  ordinal,
+} from "@/lib/profileAnalytics";
 
 export interface SailorRecordProps {
   id: string;
@@ -110,62 +114,56 @@ interface SailorProfileViewProps {
   onDemoClaim?: () => void;
 }
 
-function resolveDisplayFleet(sailor: any): {
+
+function resolveDisplayFleet(sailor: Record<string, unknown>): {
   label: string;
   className: string;
 } {
-  return seriesStatusBadge(seriesFleetStatus(sailor));
+  const status = seriesFleetStatus(sailor as never);
+  if (status === "gold") {
+    return {
+      label: "Gold fleet",
+      className:
+        "bg-amber-500/15 text-amber-400 border border-amber-500/30",
+    };
+  }
+  if (status === "silver" || status === "series") {
+    return {
+      label: "Silver fleet",
+      className:
+        "bg-neutral-500/15 text-neutral-300 border border-neutral-500/25",
+    };
+  }
+  if (status === "dropped") {
+    return {
+      label: "Dropped",
+      className: "bg-rose-500/10 text-rose-300 border border-rose-500/25",
+    };
+  }
+  return {
+    label: "Guest",
+    className: "bg-white/5 text-neutral-400 border border-white/10",
+  };
 }
 
-const SQUAD_HISTORY_SLOTS: {
-  key: string;
-  label: string;
-}[] = [
-  { key: "natSquadStatusJan25", label: "Jan – Jun 2025" },
-  { key: "natSquadStatusJul25", label: "Jul – Dec 2025" },
-  { key: "natSquadStatusJan26", label: "Jan – Jun 2026" },
-  { key: "natSquadStatusJul26", label: "Jul – Dec 2026" },
-];
+function nationalityFlag(raw: unknown): string {
+  const code = normalizeNationality(raw);
+  if (code === "SGP") return "🇸🇬";
+  if (code === "MAS") return "🇲🇾";
+  if (code === "INA") return "🇮🇩";
+  if (code === "THA") return "🇹🇭";
+  if (code === "PHI") return "🇵🇭";
+  if (code === "CHN") return "🇨🇳";
+  if (code === "HKG") return "🇭🇰";
+  if (code === "AUS") return "🇦🇺";
+  return "🏳️";
+}
 
-function buildHonorTags(sailor: any): { text: string; className: string }[] {
-  const tags: { text: string; className: string }[] = [];
-  const squad =
-    sailor.natSquadStatusJul26 ||
-    sailor.nationalSquadStatus ||
-    sailor.natSquadStatusJan26;
-  if (squad) {
-    tags.push({
-      text: `Nat Squad (current): ${squad}`,
-      className:
-        "bg-orange-500/10 text-orange-300 border border-orange-500/25",
-    });
-  }
-  if (sailor.worlds) {
-    tags.push({
-      text: `World Optimist Championships ${sailor.worlds}`,
-      className: "bg-red-500/10 text-red-400 border border-red-500/20",
-    });
-  }
-  if (sailor.european) {
-    tags.push({
-      text: `European Optimist Championships ${sailor.european}`,
-      className: "bg-blue-500/10 text-blue-300 border border-blue-500/20",
-    });
-  }
-  if (sailor.asian) {
-    tags.push({
-      text: `Asian Optimist Championships ${sailor.asian}`,
-      className:
-        "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
-    });
-  }
-  if (sailor.seaGames) {
-    tags.push({
-      text: `SEA Games ${sailor.seaGames}`,
-      className: "bg-violet-500/10 text-violet-300 border border-violet-500/20",
-    });
-  }
-  return tags;
+function nationalityLabel(raw: unknown): string {
+  const code = normalizeNationality(raw);
+  if (!code) return "—";
+  if (code === "SGP") return "Singapore";
+  return code;
 }
 
 function initials(name: string) {
@@ -203,7 +201,6 @@ export function SailorProfileView({
   const [isPublicEquipment, setIsPublicEquipment] = useState<boolean>(
     Boolean(initialSailor.isPublicEquipment)
   );
-  const [visibleCount, setVisibleCount] = useState(15);
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
   const [claimBusy, setClaimBusy] = useState(false);
@@ -682,12 +679,31 @@ export function SailorProfileView({
       .filter((o: any) => o.regattaId === regattaId)
       .sort((a: any, b: any) => a.raceNumber - b.raceNumber);
 
-  const fleetBadge = resolveDisplayFleet(displaySailor);
-  const honors = buildHonorTags(displaySailor);
 
-  const calculateAge = (dobString: string) => {
-    return ageYears(dobString) ?? "N/A";
-  };
+  const fleetBadge = resolveDisplayFleet(
+    displaySailor as Record<string, unknown>
+  );
+  const analytics = useMemo(
+    () =>
+      buildProfileAnalytics(
+        displaySailor as never,
+        results as never,
+        observations as never,
+        initialSeriesStanding
+          ? {
+              overallRank: initialSeriesStanding.overallRank,
+              fleetSize: initialSeriesStanding.fleetSize,
+              fleet: initialSeriesStanding.fleet,
+            }
+          : null
+      ),
+    [displaySailor, results, observations, initialSeriesStanding]
+  );
+
+  const bornYear =
+    showDob && displaySailor.dob
+      ? String(displaySailor.dob).slice(0, 4)
+      : null;
 
   const hasEquipment =
     showEquipment &&
@@ -697,472 +713,416 @@ export function SailorProfileView({
       displayEquipment.foilBrand ||
       displayEquipment.mast ||
       displayEquipment.notes);
-  const hasSquadHistory = SQUAD_HISTORY_SLOTS.some((s) => displaySailor[s.key]);
+
+  // Position trend SVG (last 10, mode-filtered)
+  const trendSvg = useMemo(() => {
+    const pts = analytics.trend;
+    if (pts.length < 2) return null;
+    const w = 640;
+    const h = 200;
+    const padL = 48;
+    const padR = 16;
+    const padT = 22;
+    const padB = 30;
+    const ranks = pts.map((p) => p.rank);
+    const minR = Math.min(...ranks, 1);
+    const maxR = Math.max(...ranks, 10);
+    const span = Math.max(maxR - minR, 8);
+    const yFor = (rank: number) =>
+      padT + ((rank - minR) / span) * (h - padT - padB);
+    const xFor = (i: number) =>
+      padL + (i / Math.max(pts.length - 1, 1)) * (w - padL - padR);
+    const path = pts
+      .map(
+        (p, i) =>
+          `${i === 0 ? "M" : "L"} ${xFor(i).toFixed(1)} ${yFor(p.rank).toFixed(1)}`
+      )
+      .join(" ");
+    let promoX: number | null = null;
+    if (
+      analytics.mode === "new_gold" ||
+      analytics.mode === "other"
+    ) {
+      // segregation line at first gold point after silver, or gold entry date
+      if (analytics.goldEntryDate) {
+        const gi = pts.findIndex(
+          (p) => p.fleet === "Gold" || p.date >= analytics.goldEntryDate!
+        );
+        if (gi > 0) promoX = xFor(gi);
+        else if (gi === 0) promoX = null;
+      } else {
+        const gi = pts.findIndex((p) => p.fleet === "Gold");
+        if (gi > 0) promoX = xFor(gi);
+      }
+    }
+    const gridRanks = [10, 20, 30, 40].filter(
+      (r) => r >= minR - 2 && r <= maxR + 5
+    );
+    return {
+      w,
+      h,
+      padL,
+      padR,
+      padT,
+      padB,
+      path,
+      pts,
+      xFor,
+      yFor,
+      promoX,
+      gridRanks,
+      showSegregation: analytics.mode !== "established_gold",
+    };
+  }, [analytics.trend, analytics.goldEntryDate, analytics.mode]);
+
+  const sailDisplay = String(displaySailor.sailNumber || "—");
+  const noc =
+    normalizeNationality(displaySailor.nationality) ||
+    (String(displaySailor.nationality || "").trim() ? "SGP" : "SGP");
+
+  // Stats cells by mode
+  const statCells =
+    analytics.mode === "established_gold"
+      ? [
+          {
+            value: String(analytics.regattaCount),
+            label: "Regattas",
+            color: "text-white",
+          },
+          {
+            value: String(analytics.top10Count),
+            label: "Top 10",
+            color: "text-emerald-400",
+          },
+          {
+            value: analytics.avgFinishLabel,
+            label: "Avg. finish",
+            color: "text-blue-400",
+          },
+          {
+            value: analytics.bestGoldLabel,
+            label: "Best finish",
+            color: "text-white",
+          },
+        ]
+      : [
+          {
+            value: String(analytics.regattaCount),
+            label: "Regattas",
+            color: "text-white",
+          },
+          {
+            value: analytics.bestSilverLabel,
+            label: "Best silver",
+            color: "text-emerald-400",
+          },
+          {
+            value: analytics.bestGoldLabel,
+            label: "Best gold",
+            color: "text-amber-400",
+          },
+          {
+            value: analytics.timeInGoldLabel || "—",
+            label: "In gold fleet",
+            color: "text-white",
+          },
+        ];
+
+  // For established, also show months in gold as subtle note under stats if useful
+  // Medal tally only for established with podium/top10
+  const showMedals =
+    analytics.mode === "established_gold" && analytics.medals.show;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6 sm:py-10 flex-1 flex flex-col gap-6 sm:gap-8">
-      {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-gradient-to-b from-slate-900/80 to-slate-950/90 p-6 sm:p-8">
-        <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-orange-500/[0.07] blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-16 -left-10 h-40 w-40 rounded-full bg-sky-500/[0.04] blur-3xl" />
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full">
+      {/* ── Header ───────────────────────────────────────────── */}
+      <header className="flex items-start gap-3 sm:gap-4">
+        <div className="relative shrink-0">
+          <div className="h-16 w-16 sm:h-[4.25rem] sm:w-[4.25rem] rounded-full bg-neutral-200 text-neutral-900 flex items-center justify-center overflow-hidden text-xl sm:text-2xl font-semibold tracking-tight">
+            {displaySailor.avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={displaySailor.avatarUrl}
+                alt={displaySailor.name}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              initials(displaySailor.name)
+            )}
+          </div>
+          {isOwner && !demoMode && (
+            <>
+              <button
+                type="button"
+                disabled={avatarBusy}
+                onClick={() => fileInputRef.current?.click()}
+                className="absolute inset-0 rounded-full bg-black/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex items-center justify-center text-white"
+                title="Upload photo"
+              >
+                <Camera className="h-5 w-5" />
+              </button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) void uploadAvatar(f);
+                  e.target.value = "";
+                }}
+              />
+            </>
+          )}
+        </div>
 
-        <div className="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-          <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-start min-w-0">
-            {/* Avatar */}
-            <div className="relative h-24 w-24 sm:h-28 sm:w-28 shrink-0">
-              <div className="h-full w-full overflow-hidden rounded-2xl border border-orange-500/20 bg-gradient-to-br from-orange-600/25 to-slate-900 shadow-lg shadow-orange-950/30 flex items-center justify-center">
-                {displaySailor.avatarUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={displaySailor.avatarUrl}
-                    alt={displaySailor.name}
-                    className="h-full w-full object-cover"
-                  />
-                ) : (
-                  <span className="text-3xl font-black tracking-tight text-orange-300">
-                    {initials(displaySailor.name)}
-                  </span>
-                )}
-              </div>
-              {isOwner && !demoMode && (
-                <>
-                  <button
-                    type="button"
-                    disabled={avatarBusy}
-                    onClick={() => fileInputRef.current?.click()}
-                    className="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-2xl bg-black/50 text-white opacity-0 transition-opacity hover:opacity-100 focus:opacity-100"
-                    title="Upload photo"
-                  >
-                    <Camera className="h-5 w-5" />
-                    <span className="text-[10px] font-bold">
-                      {avatarBusy ? "…" : "Upload"}
-                    </span>
-                  </button>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp,image/gif"
-                    className="hidden"
-                    onChange={(e) => {
-                      const f = e.target.files?.[0];
-                      if (f) void uploadAvatar(f);
-                      e.target.value = "";
-                    }}
-                  />
-                </>
-              )}
-              {avatarMsg && (
-                <p className="absolute -bottom-5 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-bold text-emerald-300">
-                  {avatarMsg}
-                </p>
-              )}
-            </div>
-
-            <div className="min-w-0 text-center sm:text-left">
-              <div className="flex flex-col items-center gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+        <div className="min-w-0 flex-1">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-[1.35rem] sm:text-2xl font-semibold text-white tracking-tight">
                   {displaySailor.name}
                 </h1>
                 <span
-                  className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[11px] font-bold ${fleetBadge.className}`}
+                  className={`inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-medium border ${fleetBadge.className}`}
                 >
                   {fleetBadge.label}
                 </span>
               </div>
-
-              <p className="mt-2 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-slate-400 sm:justify-start">
-                <MapPin className="h-3.5 w-3.5 shrink-0 text-orange-500/80" />
-                <span>
-                  {[displaySailor.club, displaySailor.school, displaySailor.nationality]
-                    .filter(Boolean)
-                    .join(" · ") || "—"}
-                </span>
+              <p className="mt-0.5 text-[13px] text-neutral-400">
+                Optimist class
+                {displaySailor.club ? ` · ${displaySailor.club}` : ""}
               </p>
+            </div>
+            {/* Sail number badge */}
+            <div className="shrink-0 rounded-lg bg-[#0d1b3a] border border-blue-900/50 px-3 py-2 text-right min-w-[4.5rem]">
+              <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-blue-300/70">
+                Sail number
+              </p>
+              <p className="text-lg sm:text-xl font-bold tabular-nums leading-none mt-0.5">
+                <span className="text-orange-500">{noc}</span>{" "}
+                <span className="text-orange-500">{sailDisplay}</span>
+              </p>
+            </div>
+          </div>
 
-              {displaySailor.bio && (
-                <p className="mt-3 max-w-lg text-sm leading-relaxed text-slate-300">
-                  {displaySailor.bio}
-                </p>
+          {displaySailor.bio && (
+            <p className="mt-2.5 text-[12px] sm:text-[13px] leading-relaxed text-neutral-300 bg-[#0a1628]/80 border border-white/[0.04] rounded-lg px-3 py-2 max-w-xl">
+              {displaySailor.bio}
+            </p>
+          )}
+
+          <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-neutral-500">
+            <span className="inline-flex items-center gap-1.5">
+              <span aria-hidden>{nationalityFlag(displaySailor.nationality)}</span>
+              {nationalityLabel(displaySailor.nationality)}
+            </span>
+            {bornYear && (
+              <span>
+                Born{" "}
+                <span className="text-neutral-300 font-medium">{bornYear}</span>
+              </span>
+            )}
+            {showWeight && displaySailor.weight != null && (
+              <span>
+                Weight{" "}
+                <span className="text-neutral-300 font-medium">
+                  {displaySailor.weight} kg
+                </span>
+              </span>
+            )}
+            {analytics.mode === "established_gold" &&
+              analytics.timeInGoldLabel && (
+                <span>
+                  Gold fleet{" "}
+                  <span className="text-amber-400/90 font-medium">
+                    {analytics.timeInGoldLabel}
+                  </span>
+                </span>
               )}
+          </div>
 
-              {honors.length > 0 && (
-                <div className="mt-3.5 flex flex-wrap justify-center gap-1.5 sm:justify-start">
-                  {honors.map((h, idx) => (
-                    <span
-                      key={idx}
-                      className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${h.className}`}
-                    >
-                      {h.text}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
+          {/* Public actions — compact */}
+          <div className="mt-3 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={async () => {
+                try {
+                  const url =
+                    typeof window !== "undefined" ? window.location.href : "";
+                  await navigator.clipboard.writeText(url);
+                  setCopyMsg("Copied");
+                  setTimeout(() => setCopyMsg(null), 2000);
+                } catch {
+                  setCopyMsg("Failed");
+                }
+              }}
+              className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-neutral-400 hover:text-white"
+            >
+              <Link2 className="h-3 w-3" />
+              {copyMsg || "Copy link"}
+            </button>
+            {!demoMode && !isLoggedIn && !profileClaimed && (
+              <Link
+                href={`/login?next=${encodeURIComponent(`/${displaySailor.handle || ""}`)}`}
+                className="inline-flex items-center gap-1.5 rounded-md bg-white text-neutral-900 px-2.5 py-1 text-[11px] font-semibold"
+              >
+                <UserPlus className="h-3 w-3" />
+                Log in to claim
+              </Link>
+            )}
+            {canClaim && claimStatus !== "pending" && (
               <button
                 type="button"
-                onClick={async () => {
-                  try {
-                    const url = typeof window !== "undefined" ? window.location.href : "";
-                    await navigator.clipboard.writeText(url);
-                    setCopyMsg("Link copied");
-                    setTimeout(() => setCopyMsg(null), 2000);
-                  } catch {
-                    setCopyMsg("Could not copy");
+                disabled={demoMode && !onDemoClaim}
+                onClick={() => {
+                  if (demoMode) {
+                    onDemoClaim?.();
+                    return;
                   }
+                  setClaimPanelOpen((o) => !o);
                 }}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold text-slate-300 transition hover:border-white/20 hover:text-white"
+                className="inline-flex items-center gap-1.5 rounded-md bg-white text-neutral-900 px-2.5 py-1 text-[11px] font-semibold disabled:opacity-50"
               >
-                <Link2 className="h-3.5 w-3.5" />
-                {copyMsg || "Copy link"}
+                <UserPlus className="h-3 w-3" />
+                {demoMode
+                  ? "Claim (demo)"
+                  : claimPanelOpen
+                    ? "Cancel"
+                    : "Claim profile"}
               </button>
-              {!demoMode && !isLoggedIn && !profileClaimed && (
-                <Link
-                  href={`/login?next=${encodeURIComponent(`/${displaySailor.handle || ""}`)}`}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-bold text-white transition hover:bg-orange-500"
-                >
-                  <UserPlus className="h-3.5 w-3.5" />
-                  Log in to claim
-                </Link>
-              )}
-              {canClaim && claimStatus !== "pending" && (
-                <button
-                  type="button"
-                  disabled={demoMode && !onDemoClaim}
-                  onClick={() => {
-                    if (demoMode) {
-                      onDemoClaim?.();
-                      return;
-                    }
-                    setClaimPanelOpen((o) => !o);
-                  }}
-                  className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 px-3 py-1.5 text-[11px] font-bold text-white transition hover:bg-orange-500 disabled:opacity-50"
-                >
-                  <UserPlus className="h-3.5 w-3.5" />
-                  {demoMode
-                    ? "Claim this profile (demo)"
-                    : claimPanelOpen
-                      ? "Cancel claim"
-                      : "Claim this profile"}
-                </button>
-              )}
-              {canClaim && claimStatus === "pending" && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/15 px-3 py-1.5 text-[11px] font-bold text-amber-200">
-                  Claim pending review
-                </span>
-              )}
-              {isOwner && (
-                <>
-                  <span className="self-center text-[11px] font-semibold text-emerald-400/90">
-                    {demoMode
-                      ? demoRole === "parent"
-                        ? "Parent view · linked guardian"
-                        : "You manage this profile"
-                      : "You manage this profile"}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setEditing((e) => !e)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-semibold text-slate-200 transition hover:text-white"
-                  >
-                    <Pencil className="h-3.5 w-3.5" />
-                    {editing ? "Close editor" : "Edit profile"}
-                  </button>
-                </>
-              )}
-            </div>
-            {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
-              <div className="mt-4 rounded-2xl border border-orange-500/25 bg-orange-500/5 p-4 text-left space-y-3 max-w-lg">
-                <p className="text-xs font-bold text-white">
-                  Verify you are linked to this sailor
-                </p>
-                <p className="text-[11px] text-slate-400 leading-relaxed">
-                  Your <strong className="text-slate-300">signup email</strong> is
-                  shown to admins. Tell us your relationship and confirm sail
-                  number / club so they can approve safely.
-                </p>
-                <div>
-                  <label className="text-[10px] font-bold text-slate-500 uppercase">
-                    I am
-                  </label>
-                  <select
-                    value={claimRelation}
-                    onChange={(e) =>
-                      setClaimRelation(e.target.value as "sailor" | "parent" | "other")
-                    }
-                    className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white"
-                  >
-                    <option value="parent">Parent / guardian</option>
-                    <option value="sailor">The sailor</option>
-                    <option value="other">Coach / other (explain below)</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="text-[10px] font-bold text-slate-500 uppercase">
-                    Verification note
-                  </label>
-                  <textarea
-                    value={claimNote}
-                    onChange={(e) => setClaimNote(e.target.value)}
-                    rows={3}
-                    placeholder={`e.g. Parent of ${displaySailor.name}. Sail ${displaySailor.sailNumber || "…"}, club ${displaySailor.club || "…"}. Contact via this email.`}
-                    className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white focus:border-orange-500 focus:outline-none"
-                  />
-                </div>
-                <button
-                  type="button"
-                  disabled={claimBusy || claimNote.trim().length < 8}
-                  onClick={async () => {
-                    setClaimBusy(true);
-                    setClaimMsg(null);
-                    try {
-                      await fetch("/api/auth/ensure-profile", {
-                        method: "POST",
-                        credentials: "include",
-                      });
-                      const note = `[${claimRelation}] ${claimNote.trim()}`;
-                      const res = await fetch("/api/claims", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        credentials: "include",
-                        body: JSON.stringify({
-                          sailorId: initialSailor.id,
-                          note,
-                        }),
-                      });
-                      const data = await res.json();
-                      if (!res.ok) throw new Error(data.error || "Claim failed");
-                      setClaimStatus("pending");
-                      setClaimPanelOpen(false);
-                      setClaimMsg(
-                        data.message ||
-                          "Claim submitted with your email for admin review."
-                      );
-                    } catch (e: any) {
-                      setClaimStatus("error");
-                      setClaimMsg(e.message || "Error");
-                    } finally {
-                      setClaimBusy(false);
-                    }
-                  }}
-                  className="rounded-full bg-orange-600 px-4 py-2 text-[11px] font-bold text-white disabled:opacity-50"
-                >
-                  {claimBusy ? "Submitting…" : "Submit claim for review"}
-                </button>
-                {claimNote.trim().length > 0 && claimNote.trim().length < 8 && (
-                  <p className="text-[10px] text-amber-300/90">
-                    Add a bit more detail (sail #, club, relationship).
-                  </p>
-                )}
-              </div>
             )}
-            {claimMsg && (
-              <p
-                className={`mt-2 text-[11px] text-center md:text-left ${
-                  claimStatus === "error" ? "text-rose-300" : "text-emerald-300"
-                }`}
+            {canClaim && claimStatus === "pending" && (
+              <span className="text-[11px] font-medium text-amber-300/90">
+                Claim pending
+              </span>
+            )}
+            {isOwner && (
+              <button
+                type="button"
+                onClick={() => setEditing((e) => !e)}
+                className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-neutral-300 hover:text-white"
               >
-                {claimMsg}{" "}
-                {claimStatus === "pending" && !demoMode && (
-                  <Link href="/account" className="underline font-bold">
-                    My account
-                  </Link>
-                )}
-              </p>
+                <Pencil className="h-3 w-3" />
+                {editing ? "Close editor" : "Edit"}
+              </button>
             )}
-            {saveMsg && (
-              <p className="mt-2 text-[11px] text-emerald-300 text-center sm:text-left">
-                {saveMsg}
-              </p>
-            )}
-            </div>
           </div>
-
-          {/* Sail number */}
-          <div className="flex shrink-0 flex-col items-center border-t border-white/[0.06] pt-4 md:items-end md:border-t-0 md:pt-0">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-              Sail number
-            </span>
-            <span className="mt-1 font-mono text-4xl font-black tracking-tight text-orange-500 sm:text-5xl">
-              {displaySailor.sailNumber || "—"}
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Quick stats ──────────────────────────────────────── */}
-      <section className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 sm:gap-3">
-        {[
-          {
-            label: "Age",
-            value:
-              showDob && displaySailor.dob
-                ? String(calculateAge(displaySailor.dob))
-                : showDob
-                  ? "—"
-                  : "·",
-            hint: showDob ? "years" : "private",
-          },
-          {
-            label: "Weight",
-            value:
-              showWeight && displaySailor.weight != null
-                ? String(displaySailor.weight)
-                : "·",
-            hint: showWeight ? "kg" : "private",
-          },
-          {
-            label: "Events",
-            value: String(results.length),
-            hint: "regattas",
-            accent: true,
-          },
-          {
-            label: "Division",
-            value: (displaySailor.gender as string) || "—",
-            hint: "fleet",
-          },
-        ].map((stat) => (
-          <div
-            key={stat.label}
-            className={`rounded-2xl border px-3 py-3.5 text-center sm:px-4 ${
-              stat.accent
-                ? "border-orange-500/20 bg-orange-500/[0.06]"
-                : "border-white/[0.06] bg-white/[0.02]"
-            }`}
-          >
-            <span className="block text-[10px] font-semibold uppercase tracking-wider text-slate-500">
-              {stat.label}
-            </span>
-            <span
-              className={`mt-1 block text-xl font-bold tabular-nums sm:text-2xl ${
-                stat.accent ? "text-orange-400" : "text-white"
+          {avatarMsg && (
+            <p className="mt-1 text-[11px] text-emerald-400">{avatarMsg}</p>
+          )}
+          {claimMsg && (
+            <p
+              className={`mt-1 text-[11px] ${
+                claimStatus === "error" ? "text-rose-300" : "text-emerald-300"
               }`}
             >
-              {stat.value}
-            </span>
-            <span className="mt-0.5 block text-[10px] text-slate-500">
-              {stat.hint}
-            </span>
-          </div>
-        ))}
-      </section>
+              {claimMsg}{" "}
+              {claimStatus === "pending" && !demoMode && (
+                <Link href="/account" className="underline font-semibold">
+                  My account
+                </Link>
+              )}
+            </p>
+          )}
+        </div>
+      </header>
 
-      {/* ── Series standing ──────────────────────────────────── */}
-      {initialSeriesStanding && (
-        <section className="rounded-2xl border border-orange-500/15 bg-gradient-to-br from-orange-500/[0.06] to-transparent p-5 sm:p-6">
-          <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-            <div className="flex items-start gap-2.5 min-w-0">
-              <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15">
-                <Trophy className="h-4 w-4 text-orange-400" />
-              </div>
-              <div className="min-w-0">
-                <h2 className="text-sm font-bold text-white">Series standing</h2>
-                <p className="text-[12px] text-slate-400">
-                  {initialSeriesStanding.periodLabel}
-                  <span className="text-slate-600"> · </span>
-                  <span className="font-medium text-orange-300/90">
-                    {initialSeriesStanding.fleet} fleet
-                  </span>
-                </p>
-              </div>
-            </div>
-            <div className="flex items-baseline justify-between gap-4 pl-10 sm:flex-col sm:items-end sm:pl-0">
-              <div className="text-left sm:text-right">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">
-                  Best 3 of 5
-                </p>
-                <p className="text-2xl font-bold tabular-nums text-white sm:text-3xl">
-                  {initialSeriesStanding.best3of5}
-                </p>
-              </div>
-              <p className="text-sm font-bold tabular-nums text-orange-400">
-                #{initialSeriesStanding.overallRank}
-                <span className="ml-1 text-xs font-medium text-slate-500">
-                  of {initialSeriesStanding.fleetSize}
-                </span>
-              </p>
-            </div>
-          </div>
-          <div className="flex gap-2 overflow-x-auto pb-1 snap-x snap-mandatory sm:grid sm:grid-cols-5 sm:overflow-visible sm:pb-0 sm:snap-none">
-            {Array.from({ length: 5 }).map((_, i) => {
-              const r = initialSeriesStanding.rScores[i];
-              return (
-                <div
-                  key={r?.regattaId || i}
-                  className={`w-[5.25rem] shrink-0 snap-start rounded-xl border px-2.5 py-2.5 text-center sm:w-auto ${
-                    r?.isCarryForward
-                      ? "border-sky-500/20 bg-sky-500/10"
-                      : "border-white/[0.06] bg-black/20"
-                  }`}
-                  title={r?.regattaName}
-                >
-                  <p className="text-[9px] font-bold text-orange-400">
-                    R{i + 1}
-                    {r?.isCarryForward ? (
-                      <span className="font-bold text-sky-400"> CF</span>
-                    ) : null}
-                  </p>
-                  <p className="mt-0.5 line-clamp-2 min-h-[1.5rem] text-[9px] leading-tight text-slate-500">
-                    {r?.regattaName || "—"}
-                  </p>
-                  <p className="mt-1.5 font-mono text-base font-bold tabular-nums text-white sm:text-sm">
-                    {r
-                      ? `${r.score}${r.isOverseasCommitment ? "†" : r.isDNS ? "*" : ""}`
-                      : "—"}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-          <p className="mt-3 text-[12px] font-medium leading-snug text-emerald-400/90">
-            {initialSeriesStanding.trendNote}
+      {/* Claim panel */}
+      {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
+        <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-3">
+          <p className="text-sm font-medium text-white">
+            Verify link to this sailor
           </p>
-          <p className="mt-1 text-[10px] text-slate-600">
-            * DNS · † overseas · CF = carry-forward
+          <p className="text-[12px] text-neutral-500 leading-relaxed">
+            Your signup email is shown to admins. Confirm sail number / club.
           </p>
-          <Link
-            href={`/sg/optimist/${String(initialSeriesStanding.fleet).toLowerCase()}`}
-            className="mt-3 inline-flex min-h-[44px] items-center py-2 text-[12px] font-semibold text-orange-400 transition hover:text-orange-300 sm:min-h-0 sm:py-0"
+          <select
+            value={claimRelation}
+            onChange={(e) =>
+              setClaimRelation(e.target.value as "sailor" | "parent" | "other")
+            }
+            className="w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-xs text-white"
           >
-            View full {initialSeriesStanding.fleet} standings →
-          </Link>
-        </section>
+            <option value="parent">Parent / guardian</option>
+            <option value="sailor">The sailor</option>
+            <option value="other">Coach / other</option>
+          </select>
+          <textarea
+            value={claimNote}
+            onChange={(e) => setClaimNote(e.target.value)}
+            rows={3}
+            placeholder={`e.g. Parent of ${displaySailor.name}. Sail ${displaySailor.sailNumber || "…"}`}
+            className="w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-xs text-white"
+          />
+          <button
+            type="button"
+            disabled={claimBusy || claimNote.trim().length < 8}
+            onClick={async () => {
+              setClaimBusy(true);
+              setClaimMsg(null);
+              try {
+                await fetch("/api/auth/ensure-profile", {
+                  method: "POST",
+                  credentials: "include",
+                });
+                const note = `[${claimRelation}] ${claimNote.trim()}`;
+                const res = await fetch("/api/claims", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  credentials: "include",
+                  body: JSON.stringify({
+                    sailorId: initialSailor.id,
+                    note,
+                  }),
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || "Claim failed");
+                setClaimStatus("pending");
+                setClaimPanelOpen(false);
+                setClaimMsg(
+                  data.message ||
+                    "Claim submitted with your email for admin review."
+                );
+              } catch (e: unknown) {
+                setClaimStatus("error");
+                setClaimMsg(e instanceof Error ? e.message : "Error");
+              } finally {
+                setClaimBusy(false);
+              }
+            }}
+            className="rounded-lg bg-white text-neutral-900 px-4 py-2 text-[11px] font-semibold disabled:opacity-50"
+          >
+            {claimBusy ? "Submitting…" : "Submit claim"}
+          </button>
+        </div>
       )}
 
-      {/* Owner edit panel */}
+      {/* Owner editor */}
       {isOwner && editing && (
-        <div className="glass-panel rounded-2xl border border-orange-500/25 p-5 md:p-6 space-y-4">
-          <div className="flex items-center gap-2">
-            <Pencil className="h-4 w-4 text-orange-400" />
-            <h2 className="text-sm font-black text-white uppercase tracking-wider">
-              Edit your profile
-            </h2>
-          </div>
-          <p className="text-[11px] text-slate-500">
-            Ranking, fleet, and squad fields are managed by SailorPath admins.
-            Tap your photo above to upload. You can edit bio, date of birth,
-            school, weight, profile URL, equipment, and privacy. Add overseas /
-            non-series events in the logbook below.
-          </p>
+        <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5 space-y-3">
+          <h2 className="text-sm font-semibold text-white flex items-center gap-2">
+            <Pencil className="h-3.5 w-3.5 text-neutral-400" />
+            Edit profile
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <label className="block sm:col-span-2">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                 Bio
               </span>
               <textarea
                 value={form.bio}
                 onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
                 rows={3}
-                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
             <label className="block sm:col-span-2">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                 Profile URL
               </span>
-              <div className="mt-1 flex rounded-xl bg-slate-950 border border-white/10 overflow-hidden">
-                <span className="pl-3 self-center text-[11px] text-slate-500 shrink-0">
+              <div className="mt-1 flex rounded-lg bg-neutral-950 border border-white/10 overflow-hidden">
+                <span className="pl-3 self-center text-[11px] text-neutral-600 shrink-0">
                   sailorpath.com/
                 </span>
                 <input
@@ -1176,16 +1136,11 @@ export function SailorProfileView({
                     }))
                   }
                   className="w-full bg-transparent py-2 px-2 text-sm text-white font-mono focus:outline-none"
-                  placeholder="your-handle"
                 />
               </div>
-              <p className="text-[10px] text-slate-600 mt-1">
-                3–30 characters · letters, numbers, hyphens. Old URL stays as a
-                redirect.
-              </p>
             </label>
             <label className="block">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                 School
               </span>
               <input
@@ -1193,11 +1148,11 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, school: e.target.value }))
                 }
-                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
             <label className="block">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                 Date of birth
               </span>
               <input
@@ -1206,14 +1161,11 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, dob: e.target.value }))
                 }
-                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
               />
-              <p className="text-[10px] text-slate-600 mt-1">
-                Privacy: use “Share DOB” below to control public age display.
-              </p>
             </label>
             <label className="block">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                 Weight (kg)
               </span>
               <input
@@ -1224,11 +1176,11 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, weight: e.target.value }))
                 }
-                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
-            <label className="block sm:col-span-2">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">
+            <label className="block">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                 Instagram
               </span>
               <input
@@ -1236,13 +1188,9 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, instagram: e.target.value }))
                 }
-                placeholder="@handle"
-                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
-            <p className="sm:col-span-2 text-[10px] font-bold text-orange-400/90 uppercase tracking-wider pt-2">
-              Equipment
-            </p>
             {(
               [
                 ["hullBrand", "Hull brand"],
@@ -1252,20 +1200,20 @@ export function SailorProfileView({
               ] as const
             ).map(([key, label]) => (
               <label key={key} className="block">
-                <span className="text-[10px] font-bold text-slate-500 uppercase">
+                <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                   {label}
                 </span>
                 <input
-                  value={(form as Record<string, any>)[key] || ""}
+                  value={(form as Record<string, string>)[key] || ""}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, [key]: e.target.value }))
                   }
-                  className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+                  className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
                 />
               </label>
             ))}
             <label className="block sm:col-span-2">
-              <span className="text-[10px] font-bold text-slate-500 uppercase">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                 Equipment notes
               </span>
               <input
@@ -1273,8 +1221,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, equipmentNotes: e.target.value }))
                 }
-                placeholder="Rig settings, cut, etc."
-                className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2 text-sm text-white focus:border-orange-500 focus:outline-none"
+                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
           </div>
@@ -1282,82 +1229,320 @@ export function SailorProfileView({
             type="button"
             disabled={saveBusy}
             onClick={() => void saveProfile()}
-            className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-50"
+            className="rounded-lg bg-white text-neutral-900 px-4 py-2 text-xs font-semibold disabled:opacity-50"
           >
             {saveBusy ? "Saving…" : "Save changes"}
           </button>
+          {saveMsg && (
+            <p className="text-[11px] text-emerald-400">{saveMsg}</p>
+          )}
         </div>
       )}
 
-      {/* ── Squad history ───────────────────────────────────── */}
-      {hasSquadHistory && (
-        <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6">
-          <div className="mb-4 flex items-center gap-2">
-            <Medal className="h-4 w-4 text-orange-400" />
-            <div>
-              <h2 className="text-sm font-bold text-white">National squad</h2>
-              <p className="text-[11px] text-slate-500">
-                Selection status by half-year period
+      {/* ── Series standing (public, top) ─────────────────────── */}
+      {initialSeriesStanding && (
+        <section className="mt-8 rounded-xl border border-white/[0.08] bg-gradient-to-b from-white/[0.03] to-transparent p-4 sm:p-5">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div className="flex items-start gap-2.5 min-w-0">
+              <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-500/15">
+                <Trophy className="h-3.5 w-3.5 text-orange-400" />
+              </div>
+              <div>
+                <p className="text-[13px] font-semibold text-white">
+                  Series standing
+                </p>
+                <p className="text-[11px] text-neutral-500">
+                  {initialSeriesStanding.periodLabel}
+                  <span className="text-neutral-600"> · </span>
+                  <span className="text-amber-400/90 font-medium">
+                    {initialSeriesStanding.fleet} fleet
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div className="text-right">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
+                Best 3 of 5
+              </p>
+              <p className="text-2xl font-semibold text-white tabular-nums leading-none">
+                {initialSeriesStanding.best3of5}
+              </p>
+              <p className="text-[12px] text-neutral-400 mt-0.5 tabular-nums">
+                #{initialSeriesStanding.overallRank}
+                <span className="text-neutral-600">
+                  {" "}
+                  of {initialSeriesStanding.fleetSize}
+                </span>
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {SQUAD_HISTORY_SLOTS.map((slot) => {
-              const v = displaySailor[slot.key];
+          <div className="mt-4 grid grid-cols-5 gap-1.5 sm:gap-2">
+            {Array.from({ length: 5 }).map((_, i) => {
+              const r = initialSeriesStanding.rScores[i];
               return (
                 <div
-                  key={slot.key}
-                  className="rounded-xl border border-white/[0.05] bg-black/20 px-3 py-3 text-center"
+                  key={i}
+                  className="rounded-lg border border-white/[0.06] bg-black/30 px-1 py-2.5 text-center"
+                  title={r?.regattaName}
                 >
-                  <p className="text-[9px] font-semibold uppercase tracking-wide text-slate-500">
-                    {slot.label}
+                  <p className="text-[9px] font-semibold text-orange-400/90">
+                    R{i + 1}
                   </p>
-                  <p
-                    className={`mt-1.5 text-sm font-bold ${
-                      v ? "text-orange-400" : "text-slate-600"
-                    }`}
-                  >
-                    {(v as React.ReactNode) || "—"}
+                  <p className="text-[9px] text-neutral-600 line-clamp-1 mt-0.5 px-0.5">
+                    {r?.regattaName
+                      ? r.regattaName.replace(/National Regatta/i, "NR").slice(0, 14)
+                      : "—"}
+                  </p>
+                  <p className="text-base font-semibold text-white tabular-nums mt-1">
+                    {r
+                      ? `${r.score}${r.isOverseasCommitment ? "†" : r.isDNS ? "*" : ""}${r.isCarryForward ? " CF" : ""}`
+                      : "—"}
                   </p>
                 </div>
               );
             })}
           </div>
+          {initialSeriesStanding.trendNote && (
+            <p className="mt-3 text-[11px] text-emerald-400/90 font-medium">
+              {initialSeriesStanding.trendNote}
+            </p>
+          )}
+          <p className="mt-1 text-[10px] text-neutral-600">
+            * DNS · † overseas / CF = carry-forward
+          </p>
+          <Link
+            href={`/sg/optimist/${String(initialSeriesStanding.fleet).toLowerCase()}`}
+            className="inline-block mt-2 text-[12px] font-medium text-orange-400 hover:text-orange-300"
+          >
+            View full {initialSeriesStanding.fleet} standings →
+          </Link>
         </section>
       )}
 
-      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-6 md:p-7">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3">
-          <div>
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-500/15">
-                <Trophy className="h-4 w-4 text-orange-400" />
-              </div>
-              <div>
-                <h2 className="text-base font-bold text-white sm:text-lg">
-                  Regatta results
-                </h2>
-                <p className="text-[11px] text-slate-500">
-                  {isOwner
-                    ? "Tap a row for race notes · add personal events below"
-                    : "Tap a row for race notes"}
-                </p>
-              </div>
+      {/* ── Key stats ────────────────────────────────────────── */}
+      <div className="mt-8 border-t border-white/10 pt-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px rounded-xl overflow-hidden bg-white/[0.06] border border-white/[0.06]">
+          {statCells.map((s) => (
+            <div key={s.label} className="bg-[#0c0c0c] px-3 py-5 text-center">
+              <p
+                className={`text-2xl sm:text-3xl font-semibold tabular-nums tracking-tight ${s.color}`}
+              >
+                {s.value}
+              </p>
+              <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.12em] text-neutral-500">
+                {s.label}
+              </p>
             </div>
+          ))}
+        </div>
+        {analytics.mode === "established_gold" && analytics.timeInGoldLabel && (
+          <p className="mt-2 text-center text-[11px] text-neutral-500">
+            Best gold finish{" "}
+            <span className="text-amber-400 font-semibold">
+              {analytics.bestGoldLabel}
+            </span>
+            <span className="text-neutral-600"> · </span>
+            <span className="text-neutral-300 font-medium">
+              {analytics.timeInGoldLabel}
+            </span>{" "}
+            in gold fleet
+          </p>
+        )}
+      </div>
+
+      {/* ── Medal tally (established gold only, if any medals) ─ */}
+      {showMedals && (
+        <section className="mt-8">
+          <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 mb-3">
+            Medal tally
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            {(
+              [
+                {
+                  label: "Gold",
+                  value: analytics.medals.gold,
+                  icon: "🥇",
+                },
+                {
+                  label: "Silver",
+                  value: analytics.medals.silver,
+                  icon: "🥈",
+                },
+                {
+                  label: "Bronze",
+                  value: analytics.medals.bronze,
+                  icon: "🥉",
+                },
+                {
+                  label: "Top 10",
+                  value: analytics.medals.top10,
+                  icon: "🏆",
+                },
+              ] as const
+            ).map((m) => (
+              <div
+                key={m.label}
+                className="rounded-xl border border-white/[0.08] bg-white/[0.015] px-3 py-4 text-center"
+              >
+                <p className="text-lg" aria-hidden>
+                  {m.icon}
+                </p>
+                <p className="mt-1 text-2xl font-semibold text-white tabular-nums">
+                  {m.value}
+                </p>
+                <p className="mt-0.5 text-[11px] text-neutral-500">{m.label}</p>
+              </div>
+            ))}
           </div>
-          <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide">
-            {results.length} events
+        </section>
+      )}
+
+      {/* ── Position trend ───────────────────────────────────── */}
+      <section className="mt-10">
+        <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 mb-3">
+          Position trend
+          <span className="ml-2 normal-case tracking-normal text-neutral-600 font-normal">
+            {analytics.mode === "established_gold"
+              ? "· last 10 gold fleet"
+              : "· last 10 regattas"}
+          </span>
+        </h2>
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-4 sm:p-5">
+          <p className="text-[12px] text-neutral-400 mb-3">
+            Finishing position by regatta (lower is better)
+          </p>
+          {!trendSvg ? (
+            <p className="text-sm text-neutral-600 py-8 text-center">
+              Need at least two ranked finishes to chart progress.
+            </p>
+          ) : (
+            <div className="relative w-full overflow-hidden">
+              <svg
+                viewBox={`0 0 ${trendSvg.w} ${trendSvg.h}`}
+                className="w-full h-auto"
+                role="img"
+                aria-label="Position trend chart"
+              >
+                {trendSvg.gridRanks.map((r) => (
+                  <g key={r}>
+                    <line
+                      x1={trendSvg.padL}
+                      x2={trendSvg.w - trendSvg.padR}
+                      y1={trendSvg.yFor(r)}
+                      y2={trendSvg.yFor(r)}
+                      stroke="rgba(255,255,255,0.06)"
+                      strokeDasharray="4 4"
+                    />
+                    <text
+                      x={trendSvg.padL - 8}
+                      y={trendSvg.yFor(r) + 3}
+                      textAnchor="end"
+                      fill="#737373"
+                      fontSize="10"
+                    >
+                      {r === 10 ? "Top 10" : `${r}th`}
+                    </text>
+                  </g>
+                ))}
+                {trendSvg.showSegregation && trendSvg.promoX != null && (
+                  <>
+                    <line
+                      x1={trendSvg.promoX}
+                      x2={trendSvg.promoX}
+                      y1={trendSvg.padT}
+                      y2={trendSvg.h - trendSvg.padB}
+                      stroke="rgba(255,255,255,0.28)"
+                      strokeDasharray="3 3"
+                    />
+                    <text
+                      x={trendSvg.promoX}
+                      y={trendSvg.h - 8}
+                      textAnchor="middle"
+                      fill="#737373"
+                      fontSize="9"
+                    >
+                      Promotion
+                    </text>
+                    <text
+                      x={trendSvg.promoX - 10}
+                      y={trendSvg.padT + 2}
+                      textAnchor="end"
+                      fill="#a3a3a3"
+                      fontSize="9"
+                    >
+                      Silver fleet
+                    </text>
+                    <text
+                      x={trendSvg.promoX + 10}
+                      y={trendSvg.padT + 2}
+                      textAnchor="start"
+                      fill="#fbbf24"
+                      fontSize="9"
+                    >
+                      Gold fleet
+                    </text>
+                  </>
+                )}
+                {!trendSvg.showSegregation && (
+                  <text
+                    x={trendSvg.w / 2}
+                    y={trendSvg.padT + 2}
+                    textAnchor="middle"
+                    fill="#fbbf24"
+                    fontSize="9"
+                  >
+                    Gold fleet
+                  </text>
+                )}
+                <path
+                  d={trendSvg.path}
+                  fill="none"
+                  stroke="rgba(255,255,255,0.5)"
+                  strokeWidth="1.75"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+                {trendSvg.pts.map((p, i) => (
+                  <circle
+                    key={i}
+                    cx={trendSvg.xFor(i)}
+                    cy={trendSvg.yFor(p.rank)}
+                    r={4.5}
+                    fill={p.fleet === "Gold" ? "#f59e0b" : "#e5e5e5"}
+                    stroke="#0c0c0c"
+                    strokeWidth="1.5"
+                  >
+                    <title>
+                      {p.name}: {ordinal(p.rank)} ({p.date}) · {p.fleet}
+                    </title>
+                  </circle>
+                ))}
+              </svg>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── Regatta results (last 8) ─────────────────────────── */}
+      <section className="mt-10">
+        <div className="flex items-end justify-between gap-3 mb-3">
+          <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+            Regatta results
+            <span className="ml-2 normal-case tracking-normal text-neutral-600 font-normal">
+              · last 8
+              {analytics.mode === "established_gold" ? " (gold fleet)" : ""}
+            </span>
+          </h2>
+          <span className="text-[11px] text-neutral-600">
+            {analytics.regattaCount} total
           </span>
         </div>
 
         {isOwner && !demoMode && (
-          <div className="mb-6 rounded-2xl border border-sky-500/25 bg-sky-500/5 p-4 space-y-3">
-            <p className="text-[10px] font-bold text-sky-300 uppercase tracking-wider">
-              Add non-ranking result (overseas / other)
-            </p>
-            <p className="text-[11px] text-slate-500">
-              These appear in your logbook only — they do not affect SG Optimist
-              Best 3 of 5 rankings.
+          <div className="mb-4 rounded-xl border border-white/[0.08] bg-white/[0.015] p-4 space-y-2">
+            <p className="text-[10px] font-medium uppercase tracking-wide text-neutral-500">
+              Add non-ranking result
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               <input
@@ -1366,7 +1551,7 @@ export function SailorProfileView({
                   setPersonalForm((f) => ({ ...f, name: e.target.value }))
                 }
                 placeholder="Event name"
-                className="col-span-2 sm:col-span-3 rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="col-span-2 sm:col-span-3 rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
               <input
                 type="date"
@@ -1374,7 +1559,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setPersonalForm((f) => ({ ...f, date: e.target.value }))
                 }
-                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
               <input
                 type="number"
@@ -1383,8 +1568,8 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setPersonalForm((f) => ({ ...f, rank: e.target.value }))
                 }
-                placeholder="Place / rank"
-                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                placeholder="Place"
+                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
               <input
                 type="number"
@@ -1394,413 +1579,362 @@ export function SailorProfileView({
                   setPersonalForm((f) => ({ ...f, fleetSize: e.target.value }))
                 }
                 placeholder="Fleet size"
-                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
-              />
-              <input
-                value={personalForm.geography}
-                onChange={(e) =>
-                  setPersonalForm((f) => ({
-                    ...f,
-                    geography: e.target.value.toUpperCase(),
-                  }))
-                }
-                placeholder="Country (e.g. ESP)"
-                maxLength={12}
-                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
-              />
-              <input
-                type="number"
-                value={personalForm.nett}
-                onChange={(e) =>
-                  setPersonalForm((f) => ({ ...f, nett: e.target.value }))
-                }
-                placeholder="Nett (optional)"
-                className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
             </div>
             <button
               type="button"
               disabled={personalBusy}
               onClick={() => void savePersonalResult()}
-              className="rounded-full bg-sky-600 hover:bg-sky-500 px-4 py-1.5 text-[11px] font-bold text-white disabled:opacity-50"
+              className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-50"
             >
               {personalBusy ? "Saving…" : "Add to logbook"}
             </button>
             {personalMsg && (
-              <p className="text-[11px] text-emerald-300">{personalMsg}</p>
+              <p className="text-[11px] text-emerald-400">{personalMsg}</p>
             )}
           </div>
         )}
 
-        {results.length === 0 ? (
-          <p className="text-sm text-slate-500">No regatta results yet.</p>
+        {analytics.displayResults.length === 0 ? (
+          <p className="text-sm text-neutral-600 py-6">No regatta results yet.</p>
         ) : (
-          <div className="rounded-xl border border-white/5 divide-y divide-white/5 overflow-hidden bg-white/[0.02]">
-            {results.slice(0, visibleCount).map((res: any, idx: number) => {
-              const fleetSize = res.totalFleetSize ?? res.fleetSize ?? 50;
-              const regattaId = res.regattaId || res.id;
-              const rowKey = regattaId || res.regattaSlug || `r-${idx}`;
-              const nonRanking = res.countsForRanking === false;
-              const overseas = Boolean(res.isOverseasCommitment);
-              const dns = Boolean(res.isDns || res.isDNS) && !overseas;
-              const slug = res.regattaSlug || res.id;
-              const expanded = expandedRegattaId === regattaId;
-              const raceNotes = obsForRegatta(regattaId);
-              const badge = placeBadge(res.rank, {
-                isDns: dns,
-                isOverseas: overseas,
-              });
-              const canLink =
-                !nonRanking && slug && String(slug).length > 2;
-              return (
-                <div
-                  key={rowKey}
-                  className={`px-3 py-2.5 sm:px-3.5 sm:py-2.5 ${
-                    expanded ? "bg-white/[0.03]" : ""
-                  }`}
-                >
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    onClick={() =>
-                      setExpandedRegattaId(expanded ? null : regattaId)
-                    }
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setExpandedRegattaId(expanded ? null : regattaId);
-                      }
-                    }}
-                    className="w-full flex items-center gap-2.5 sm:gap-3 text-left cursor-pointer"
-                  >
-                    <span
-                      className={`shrink-0 w-7 text-center text-lg font-black tabular-nums ${
-                        res.rank === 1
-                          ? "text-amber-400"
-                          : res.rank === 2
-                            ? "text-slate-200"
-                            : res.rank === 3
-                              ? "text-orange-400"
-                              : "text-slate-500"
-                      }`}
-                    >
-                      {res.rank}
-                      {overseas ? "†" : dns ? "*" : ""}
-                    </span>
-                    <span className="flex-1 min-w-0">
-                      {canLink ? (
-                        <Link
-                          href={`/sg/optimist/regattas/${slug}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-sm font-bold text-white truncate hover:text-orange-400 block"
-                        >
-                          {res.regattaName}
-                        </Link>
-                      ) : (
-                        <p className="text-sm font-bold text-white truncate">
-                          {res.regattaName}
-                        </p>
-                      )}
-                      <span className="flex flex-wrap items-center gap-x-1.5 gap-y-0.5 mt-0.5">
-                        <span className="text-[10px] text-slate-500 truncate">
-                          {[res.geography, formatEventWhen(res.regattaDate)]
-                            .filter(Boolean)
-                            .join(" · ") || res.regattaDate}
-                        </span>
-                        {badge && (
-                          <span
-                            className={`rounded px-1.5 py-px text-[9px] font-bold ${badge.className}`}
-                          >
-                            {badge.label}
-                          </span>
-                        )}
-                        {nonRanking && (
-                          <span className="text-[9px] font-bold text-sky-400/90">
-                            non-ranking
-                          </span>
-                        )}
-                        {raceNotes.length > 0 && (
-                          <span className="text-[9px] font-bold text-orange-400/80">
-                            {raceNotes.length} note
-                            {raceNotes.length === 1 ? "" : "s"}
-                          </span>
-                        )}
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-right">
-                      <span className="block text-[11px] font-semibold text-slate-300 tabular-nums">
-                        {res.division || "Fleet"}
-                      </span>
-                      <span className="block text-[10px] text-slate-600 tabular-nums">
-                        /{fleetSize}
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-slate-500">
-                      {expanded ? (
-                        <ChevronUp className="h-4 w-4" />
-                      ) : (
-                        <ChevronDown className="h-4 w-4" />
-                      )}
-                    </span>
-                  </div>
-                  {isOwner && !demoMode && nonRanking && res.resultId && (
-                    <button
-                      type="button"
-                      disabled={personalBusy}
-                      onClick={() => void deletePersonalResult(res)}
-                      className="mt-1 ml-9 text-[10px] font-bold text-rose-400/90"
-                    >
-                      Remove
-                    </button>
-                  )}
+          <div className="rounded-xl border border-white/[0.08] overflow-hidden">
+            <div className="hidden sm:grid grid-cols-[2.75rem_1fr_3rem_auto] gap-2 px-4 py-2 border-b border-white/[0.06] text-[10px] font-medium uppercase tracking-wide text-neutral-600">
+              <span>Pos</span>
+              <span>Event</span>
+              <span className="text-right">Pts</span>
+              <span className="text-right">Fleet</span>
+            </div>
+            <div className="divide-y divide-white/[0.05]">
+              {analytics.displayResults.map((res, idx) => {
+                const regattaId = String(res.regattaId || res.id || idx);
+                const rank = res.rank != null ? Number(res.rank) : null;
+                const dns = Boolean(res.isDns || res.isDNS);
+                const fleet = fleetLabelForResult(res, analytics.goldEntryDate);
+                const slug = res.regattaSlug || res.id;
+                const expanded = expandedRegattaId === regattaId;
+                const raceNotes = obsForRegatta(regattaId);
+                const fleetSize = res.totalFleetSize ?? res.fleetSize;
+                const nonRanking = res.countsForRanking === false;
+                const canLink =
+                  !nonRanking && slug && String(slug).length > 2;
+                const pts =
+                  res.nettScore != null &&
+                  Number.isFinite(Number(res.nettScore))
+                    ? Number(res.nettScore)
+                    : null;
+                const tags = buildResultTags(res, analytics.goldEntryDate);
 
-                  {expanded && (
-                    <div className="border-t border-white/5 pt-3 space-y-3">
-                      <div className="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                        <BookOpen className="h-3.5 w-3.5 text-orange-400" />
-                        Race observations
-                      </div>
-                      {raceNotes.length === 0 ? (
-                        <p className="text-xs text-slate-600">
-                          {isOwner
-                            ? "No notes yet — add wind, place, and takeaways below."
-                            : "No public race notes for this event."}
+                return (
+                  <div key={regattaId + String(idx)}>
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      onClick={() =>
+                        setExpandedRegattaId(expanded ? null : regattaId)
+                      }
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setExpandedRegattaId(expanded ? null : regattaId);
+                        }
+                      }}
+                      className="grid grid-cols-[2.75rem_1fr_auto] sm:grid-cols-[2.75rem_1fr_3rem_auto] gap-2 items-start px-4 py-3 cursor-pointer hover:bg-white/[0.02]"
+                    >
+                      <span
+                        className={`text-[15px] font-semibold tabular-nums pt-0.5 ${
+                          dns ? "text-rose-400" : placeColorClass(rank)
+                        }`}
+                      >
+                        {dns ? "DNS" : rank != null ? rank : "—"}
+                      </span>
+                      <div className="min-w-0">
+                        {canLink ? (
+                          <Link
+                            href={`/sg/optimist/regattas/${slug}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="text-[13px] font-medium text-white truncate block hover:text-neutral-300"
+                          >
+                            {res.regattaName}
+                          </Link>
+                        ) : (
+                          <p className="text-[13px] font-medium text-white truncate">
+                            {res.regattaName}
+                          </p>
+                        )}
+                        <p className="text-[11px] text-neutral-500 truncate mt-0.5">
+                          {[
+                            res.geography,
+                            formatEventWhen(res.regattaDate as string),
+                            fleetSize ? `${fleetSize} boats` : null,
+                          ]
+                            .filter(Boolean)
+                            .join(" · ")}
                         </p>
-                      ) : (
-                        <ul className="space-y-2">
-                          {raceNotes.map((o: any) => {
-                            const isEditingThis =
-                              isOwner &&
-                              !demoMode &&
-                              ((editingObsId && editingObsId === o.id) ||
-                                (!editingObsId &&
-                                  String(obsForm.raceNumber) ===
-                                    String(o.raceNumber) &&
-                                  obsForm.raceNumber !== ""));
-                            return (
+                        {tags.length > 0 && (
+                          <div className="mt-1.5 flex flex-wrap gap-1">
+                            {tags.map((t) => (
+                              <span
+                                key={t.label}
+                                className={`rounded px-1.5 py-px text-[9px] font-semibold border ${t.className}`}
+                              >
+                                {t.label}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <span className="hidden sm:block text-right text-[13px] tabular-nums text-neutral-400 pt-0.5">
+                        {pts != null ? pts : "—"}
+                      </span>
+                      <span className="flex items-center justify-end gap-1.5 pt-0.5">
+                        <span
+                          className={`rounded-md px-1.5 py-0.5 text-[10px] font-medium ${
+                            fleet === "Gold"
+                              ? "bg-amber-500/15 text-amber-400 border border-amber-500/25"
+                              : fleet === "Silver"
+                                ? "bg-white/5 text-neutral-400 border border-white/10"
+                                : "text-neutral-600"
+                          }`}
+                        >
+                          {fleet}
+                        </span>
+                        <span className="text-neutral-600">
+                          {expanded ? (
+                            <ChevronUp className="h-3.5 w-3.5" />
+                          ) : (
+                            <ChevronDown className="h-3.5 w-3.5" />
+                          )}
+                        </span>
+                      </span>
+                    </div>
+
+                    {isOwner &&
+                      !demoMode &&
+                      nonRanking &&
+                      res.resultId && (
+                        <button
+                          type="button"
+                          disabled={personalBusy}
+                          onClick={() => void deletePersonalResult(res)}
+                          className="ml-14 mb-2 text-[10px] font-medium text-rose-400/90"
+                        >
+                          Remove
+                        </button>
+                      )}
+
+                    {expanded && (
+                      <div className="px-4 pb-4 space-y-3 border-t border-white/[0.04]">
+                        <div className="flex items-center gap-2 pt-3 text-[11px] font-medium text-neutral-500 uppercase tracking-wide">
+                          <BookOpen className="h-3.5 w-3.5" />
+                          Race observations
+                        </div>
+                        {raceNotes.length === 0 ? (
+                          <p className="text-xs text-neutral-600">
+                            {isOwner
+                              ? "No notes yet — add wind, place, and takeaways below."
+                              : "No public race notes for this event."}
+                          </p>
+                        ) : (
+                          <ul className="space-y-2">
+                            {raceNotes.map((o: Record<string, unknown>) => (
                               <li
-                                key={o.id || `${o.regattaId}-${o.raceNumber}`}
-                                className={`rounded-xl border px-3 py-2 ${
-                                  isEditingThis
-                                    ? "bg-orange-500/10 border-orange-500/30"
-                                    : "bg-white/[0.03] border-white/5"
-                                }`}
+                                key={String(
+                                  o.id || `${o.regattaId}-${o.raceNumber}`
+                                )}
+                                className="rounded-lg border border-white/[0.06] bg-black/20 px-3 py-2"
                               >
                                 <div className="flex items-center justify-between gap-2">
-                                  <span className="text-xs font-black text-orange-400">
-                                    Race {o.raceNumber}
+                                  <span className="text-xs font-semibold text-neutral-200">
+                                    Race {String(o.raceNumber)}
                                   </span>
-                                  <div className="flex items-center gap-2">
-                                    <span className="text-[11px] font-mono text-slate-400">
-                                      {o.position != null
-                                        ? `Score ${o.position}`
-                                        : "—"}
-                                      {o.wind ? ` · ${o.wind}` : ""}
-                                      {o.isPrivate ? " · private" : ""}
-                                    </span>
-                                    {isOwner && !demoMode && (
-                                      <span className="flex items-center gap-1">
-                                        <button
-                                          type="button"
-                                          onClick={() =>
-                                            startEditObservation(o, regattaId)
-                                          }
-                                          className="rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 text-[10px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40"
-                                          title="Edit observation"
-                                        >
-                                          Edit
-                                        </button>
-                                        {o.id && (
-                                          <button
-                                            type="button"
-                                            disabled={obsBusy}
-                                            onClick={() =>
-                                              void deleteObservation(o)
-                                            }
-                                            className="rounded-md border border-white/10 bg-white/5 px-1.5 py-0.5 text-[10px] font-bold text-rose-300/90 hover:text-rose-200 hover:border-rose-500/40 disabled:opacity-50"
-                                            title="Delete observation"
-                                          >
-                                            Del
-                                          </button>
-                                        )}
-                                      </span>
-                                    )}
-                                  </div>
+                                  <span className="text-[11px] font-mono text-neutral-500">
+                                    {o.position != null
+                                      ? `Score ${o.position}`
+                                      : "—"}
+                                    {o.wind ? ` · ${o.wind}` : ""}
+                                    {o.isPrivate ? " · private" : ""}
+                                  </span>
                                 </div>
-                                {o.note && (
-                                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                                    {o.note}
+                                {o.note ? (
+                                  <p className="text-xs text-neutral-400 mt-1">
+                                    {String(o.note)}
                                   </p>
+                                ) : null}
+                                {isOwner && !demoMode && (
+                                  <div className="mt-1.5 flex gap-2">
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        startEditObservation(o, regattaId)
+                                      }
+                                      className="text-[10px] font-medium text-neutral-400 hover:text-white"
+                                    >
+                                      Edit
+                                    </button>
+                                    {o.id ? (
+                                      <button
+                                        type="button"
+                                        disabled={obsBusy}
+                                        onClick={() =>
+                                          void deleteObservation(o)
+                                        }
+                                        className="text-[10px] font-medium text-rose-400/90"
+                                      >
+                                        Delete
+                                      </button>
+                                    ) : null}
+                                  </div>
                                 )}
                               </li>
-                            );
-                          })}
-                        </ul>
-                      )}
-                      {isOwner && !demoMode && (
-                        <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 p-3 space-y-2">
-                          <div className="flex items-center justify-between gap-2">
-                            <p className="text-[10px] font-bold text-orange-300 uppercase">
-                              {editingObsId || obsForm.raceNumber
+                            ))}
+                          </ul>
+                        )}
+                        {isOwner && !demoMode && (
+                          <div className="rounded-lg border border-white/10 bg-white/[0.02] p-3 space-y-2">
+                            <p className="text-[10px] font-medium uppercase text-neutral-500">
+                              {editingObsId
                                 ? "Edit observation"
                                 : "Add observation"}
                             </p>
-                            {(editingObsId ||
-                              obsForm.raceNumber ||
-                              obsForm.note ||
-                              obsForm.wind ||
-                              obsForm.position) && (
-                              <button
-                                type="button"
-                                onClick={resetObsForm}
-                                className="text-[10px] font-bold text-slate-400 hover:text-white"
-                              >
-                                Clear
-                              </button>
-                            )}
-                          </div>
-                          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            <input
-                              type="number"
-                              min={1}
-                              value={obsForm.raceNumber}
-                              onChange={(e) =>
-                                setObsForm((f) => ({
-                                  ...f,
-                                  raceNumber: e.target.value,
-                                }))
-                              }
-                              placeholder="Race #"
-                              className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
-                            />
-                            <input
-                              type="number"
-                              min={1}
-                              value={obsForm.position}
-                              onChange={(e) =>
-                                setObsForm((f) => ({
-                                  ...f,
-                                  position: e.target.value,
-                                }))
-                              }
-                              placeholder="Score"
-                              className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white"
-                            />
-                            <input
-                              value={obsForm.wind}
-                              onChange={(e) =>
-                                setObsForm((f) => ({
-                                  ...f,
-                                  wind: e.target.value,
-                                }))
-                              }
-                              placeholder="Wind"
-                              className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white sm:col-span-2"
-                            />
-                            <input
-                              value={obsForm.note}
-                              onChange={(e) =>
-                                setObsForm((f) => ({
-                                  ...f,
-                                  note: e.target.value,
-                                }))
-                              }
-                              placeholder="Notes / coaching takeaways"
-                              className="rounded-lg bg-slate-950 border border-white/10 px-2 py-1.5 text-xs text-white col-span-2 sm:col-span-3"
-                            />
-                            <label className="flex items-center gap-1.5 text-[10px] text-slate-400">
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                               <input
-                                type="checkbox"
-                                checked={obsForm.isPrivate}
+                                type="number"
+                                min={1}
+                                value={obsForm.raceNumber}
                                 onChange={(e) =>
                                   setObsForm((f) => ({
                                     ...f,
-                                    isPrivate: e.target.checked,
+                                    raceNumber: e.target.value,
                                   }))
                                 }
-                                className="rounded border-slate-600"
+                                placeholder="Race #"
+                                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
                               />
-                              Private
-                            </label>
+                              <input
+                                type="number"
+                                min={1}
+                                value={obsForm.position}
+                                onChange={(e) =>
+                                  setObsForm((f) => ({
+                                    ...f,
+                                    position: e.target.value,
+                                  }))
+                                }
+                                placeholder="Score"
+                                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                              />
+                              <input
+                                value={obsForm.wind}
+                                onChange={(e) =>
+                                  setObsForm((f) => ({
+                                    ...f,
+                                    wind: e.target.value,
+                                  }))
+                                }
+                                placeholder="Wind"
+                                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white sm:col-span-2"
+                              />
+                              <input
+                                value={obsForm.note}
+                                onChange={(e) =>
+                                  setObsForm((f) => ({
+                                    ...f,
+                                    note: e.target.value,
+                                  }))
+                                }
+                                placeholder="Notes"
+                                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white col-span-2 sm:col-span-3"
+                              />
+                              <label className="flex items-center gap-1.5 text-[10px] text-neutral-500">
+                                <input
+                                  type="checkbox"
+                                  checked={obsForm.isPrivate}
+                                  onChange={(e) =>
+                                    setObsForm((f) => ({
+                                      ...f,
+                                      isPrivate: e.target.checked,
+                                    }))
+                                  }
+                                  className="rounded border-neutral-600"
+                                />
+                                Private
+                              </label>
+                            </div>
+                            <div className="flex gap-2">
+                              <button
+                                type="button"
+                                disabled={obsBusy}
+                                onClick={() => void saveObservation(regattaId)}
+                                className="rounded-lg bg-white text-neutral-900 px-3 py-1.5 text-[11px] font-semibold disabled:opacity-50"
+                              >
+                                {obsBusy
+                                  ? "Saving…"
+                                  : editingObsId
+                                    ? "Update"
+                                    : "Save"}
+                              </button>
+                              <button
+                                type="button"
+                                onClick={resetObsForm}
+                                className="text-[11px] text-neutral-500 hover:text-white"
+                              >
+                                Clear
+                              </button>
+                            </div>
+                            {obsMsg && (
+                              <p className="text-[11px] text-emerald-400">
+                                {obsMsg}
+                              </p>
+                            )}
                           </div>
-                          <button
-                            type="button"
-                            disabled={obsBusy}
-                            onClick={() => void saveObservation(regattaId)}
-                            className="rounded-full bg-orange-600 px-4 py-1.5 text-[11px] font-bold text-white disabled:opacity-50"
-                          >
-                            {obsBusy
-                              ? "Saving…"
-                              : editingObsId
-                                ? "Update observation"
-                                : "Save observation"}
-                          </button>
-                          {obsMsg && (
-                            <p className="text-[11px] text-emerald-300">{obsMsg}</p>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
-
-        {results.length > visibleCount && (
-          <div className="mt-8 text-center">
-            <button
-              type="button"
-              onClick={() => setVisibleCount((prev) => prev + 15)}
-              className="rounded-full bg-slate-800 px-6 py-2.5 min-h-[44px] text-sm font-semibold text-slate-200 hover:bg-slate-700 hover:text-white transition-all border border-white/5"
-            >
-              Load more results
-            </button>
-          </div>
-        )}
-      </div>
+      </section>
 
       {/* ── Journey + Equipment ──────────────────────────────── */}
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-5">
-        {/* Sailing Journey */}
-        <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6 space-y-4">
-          <div className="flex items-start gap-2.5">
-            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15">
-              <Clock className="h-4 w-4 text-orange-400" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold text-white">Sailing journey</h2>
-              <p className="text-[11px] leading-snug text-slate-500">
-                Key moments — campaigns, firsts, and milestones.
-              </p>
-            </div>
+      <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <section className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <Clock className="h-3.5 w-3.5 text-orange-400/80" />
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              Sailing journey
+            </h2>
           </div>
+          <p className="text-[11px] text-neutral-600 mb-3">
+            Key moments — campaigns, firsts, and milestones.
+          </p>
           {journey.length === 0 ? (
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-neutral-600">
               {isOwner
-                ? "No highlights yet. Add your first memory below."
+                ? "No highlights yet. Add one below."
                 : "No journey highlights shared yet."}
             </p>
           ) : (
-            <ol className="relative ml-2 space-y-0 border-l border-white/10">
+            <ol className="relative ml-1 space-y-0 border-l border-white/10">
               {journey.map((it, idx) => (
-                <li key={it.id} className="relative pb-5 pl-6 last:pb-0">
+                <li key={it.id} className="relative pl-5 pb-4 last:pb-0">
                   <span
-                    className={`absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-[#090a0f] ${
-                      idx === 0 ? "bg-orange-500" : "bg-slate-500"
+                    className={`absolute -left-[4px] top-1.5 h-2 w-2 rounded-full ${
+                      idx === 0 ? "bg-orange-500" : "bg-neutral-600"
                     }`}
                   />
                   {it.when && (
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                    <p className="text-[10px] uppercase tracking-wide text-neutral-500">
                       {it.when}
                     </p>
                   )}
-                  <p className="mt-0.5 text-sm font-semibold leading-snug text-white">
-                    {it.title}
-                  </p>
+                  <p className="text-sm font-medium text-white">{it.title}</p>
                   {it.detail && (
-                    <p className="mt-1 text-xs leading-relaxed text-slate-400">
+                    <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
                       {it.detail}
                     </p>
                   )}
@@ -1809,7 +1943,7 @@ export function SailorProfileView({
                       type="button"
                       disabled={journeyBusy}
                       onClick={() => void removeJourneyItem(it.id)}
-                      className="mt-1.5 text-[10px] font-bold text-rose-400/90 hover:text-rose-300"
+                      className="mt-1 text-[10px] text-rose-400/90"
                     >
                       Remove
                     </button>
@@ -1819,63 +1953,57 @@ export function SailorProfileView({
             </ol>
           )}
           {isOwner && (
-            <div className="space-y-2 rounded-xl border border-orange-500/20 bg-orange-500/5 p-3">
-              <p className="text-[10px] font-bold uppercase text-orange-300">
-                {demoMode ? "Add highlight (demo)" : "Add highlight"}
-              </p>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
-                <input
-                  value={journeyDraft.when}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, when: e.target.value }))
-                  }
-                  placeholder="When (e.g. Jun 2026)"
-                  className="rounded-lg border border-white/10 bg-slate-950 px-2 py-1.5 text-xs text-white"
-                />
-                <input
-                  value={journeyDraft.title}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, title: e.target.value }))
-                  }
-                  placeholder="Title (e.g. First Nationals win)"
-                  className="rounded-lg border border-white/10 bg-slate-950 px-2 py-1.5 text-xs text-white sm:col-span-2"
-                />
-                <textarea
-                  value={journeyDraft.detail}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
-                  }
-                  placeholder="What made it special…"
-                  rows={2}
-                  className="resize-none rounded-lg border border-white/10 bg-slate-950 px-2 py-1.5 text-xs text-white sm:col-span-3"
-                />
-              </div>
+            <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-3">
+              <input
+                value={journeyDraft.when}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, when: e.target.value }))
+                }
+                placeholder="When"
+                className="w-full rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <input
+                value={journeyDraft.title}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, title: e.target.value }))
+                }
+                placeholder="Title"
+                className="w-full rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <textarea
+                value={journeyDraft.detail}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
+                }
+                placeholder="Detail"
+                rows={2}
+                className="w-full rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
+              />
               <button
                 type="button"
                 disabled={journeyBusy || !journeyDraft.title.trim()}
                 onClick={() => void addJourneyItem()}
-                className="rounded-full bg-orange-600 px-4 py-1.5 text-[11px] font-bold text-white hover:bg-orange-500 disabled:opacity-40"
+                className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-40"
               >
-                {journeyBusy ? "Saving…" : "Add to journey"}
+                {journeyBusy ? "Saving…" : "Add highlight"}
               </button>
               {journeyMsg && (
-                <p className="text-[11px] text-emerald-300">{journeyMsg}</p>
+                <p className="text-[11px] text-emerald-400">{journeyMsg}</p>
               )}
             </div>
           )}
         </section>
 
-        {/* Equipment */}
-        <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6">
-          <div className="mb-5 flex items-start gap-2.5">
-            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15">
-              <Anchor className="h-4 w-4 text-orange-400" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold text-white">Equipment</h2>
-              <p className="text-[11px] text-slate-500">Hull, sail, foils &amp; mast</p>
-            </div>
+        <section className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-5">
+          <div className="flex items-center gap-2 mb-1">
+            <Anchor className="h-3.5 w-3.5 text-orange-400/80" />
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              Equipment
+            </h2>
           </div>
+          <p className="text-[11px] text-neutral-600 mb-3">
+            Hull, sail, foils &amp; mast
+          </p>
           {hasEquipment ? (
             <div className="space-y-0">
               {[
@@ -1886,48 +2014,28 @@ export function SailorProfileView({
               ].map(([label, val]) => (
                 <div
                   key={label as string}
-                  className="flex items-center justify-between border-b border-white/[0.05] py-2.5 last:border-0"
+                  className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
                 >
-                  <span className="text-sm text-slate-500">{label}</span>
-                  <span className="text-sm font-semibold text-white">
-                    {(val as React.ReactNode) || "—"}
+                  <span className="text-neutral-500">{label}</span>
+                  <span className="text-white font-medium">
+                    {(val as string) || "—"}
                   </span>
                 </div>
               ))}
               {displayEquipment.notes && (
-                <p className="mt-3 text-[12px] italic leading-relaxed text-slate-400">
+                <p className="mt-2 text-xs text-neutral-500 italic">
                   {displayEquipment.notes}
                 </p>
               )}
-              {equipHistory.length > 0 && (
-                <div className="mt-4 border-t border-white/[0.05] pt-3">
-                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wide text-slate-500">
-                    History
-                  </p>
-                  <ul className="max-h-28 space-y-1 overflow-y-auto">
-                    {equipHistory.slice(0, 5).map((h: any) => (
-                      <li
-                        key={h.id}
-                        className="font-mono text-[10px] text-slate-500"
-                      >
-                        {String(h.effectiveDate).slice(0, 10)} ·{" "}
-                        {[h.hullBrand, h.sailMake, h.foilBrand]
-                          .filter(Boolean)
-                          .join(" / ") || "update"}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center py-8 text-center">
-              <EyeOff className="mb-2 h-7 w-7 text-slate-600" />
-              <p className="text-xs text-slate-400">
+            <div className="flex flex-col items-center py-6 text-center">
+              <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
+              <p className="text-xs text-neutral-500">
                 {!showEquipment
                   ? "Equipment log is private."
                   : isOwner
-                    ? "No equipment yet — use Edit profile to add gear."
+                    ? "No equipment yet — use Edit to add gear."
                     : "No equipment logged yet."}
               </p>
             </div>
@@ -1935,19 +2043,16 @@ export function SailorProfileView({
         </section>
       </div>
 
-      {/* ── Privacy (owner / private access) ─────────────────── */}
+      {/* ── Privacy (owner) ──────────────────────────────────── */}
       {canSeePrivate && (
-        <section className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 sm:p-6">
-          <div className="mb-4 flex items-center gap-2">
-            <Settings className="h-4 w-4 text-orange-400" />
-            <div>
-              <h2 className="text-sm font-bold text-white">Privacy</h2>
-              <p className="text-[11px] text-slate-500">
-                Control what visitors can see on this profile
-              </p>
-            </div>
+        <section className="mt-10 rounded-xl border border-white/[0.08] bg-white/[0.015] p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <Settings className="h-3.5 w-3.5 text-neutral-500" />
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              Privacy
+            </h2>
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             {(
               [
                 ["Share weight", isPublicWeight, setIsPublicWeight],
@@ -1957,15 +2062,15 @@ export function SailorProfileView({
             ).map(([label, checked, setter]) => (
               <label
                 key={label}
-                className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.05] bg-black/20 px-3.5 py-3"
+                className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.06] px-3 py-2.5"
               >
-                <span className="text-xs font-medium text-slate-300">{label}</span>
+                <span className="text-xs text-neutral-300">{label}</span>
                 <input
                   type="checkbox"
                   checked={checked}
                   disabled={!isOwner}
                   onChange={(e) => setter(e.target.checked)}
-                  className="h-4 w-4 rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 disabled:opacity-50"
+                  className="rounded border-neutral-600"
                 />
               </label>
             ))}
@@ -1975,9 +2080,9 @@ export function SailorProfileView({
               type="button"
               disabled={saveBusy}
               onClick={() => void saveProfile()}
-              className="mt-4 rounded-full border border-white/10 bg-white/[0.04] px-5 py-2 text-[11px] font-bold text-slate-200 transition hover:text-white disabled:opacity-50"
+              className="mt-3 rounded-lg border border-white/10 px-4 py-2 text-[11px] font-semibold text-neutral-300 disabled:opacity-50"
             >
-              {saveBusy ? "Saving privacy…" : "Save privacy settings"}
+              {saveBusy ? "Saving…" : "Save privacy"}
             </button>
           )}
         </section>
