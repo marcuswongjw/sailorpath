@@ -114,9 +114,9 @@ interface SailorProfileViewProps {
 }
 
 
-/** Shared card shell matching the refined profile mockup */
+/** Cards match main page background (#090a0f); separation via border only */
 const cardClass =
-  "rounded-2xl border border-white/[0.06] bg-[#151b2b] shadow-[0_0_0_1px_rgba(255,255,255,0.02)]";
+  "rounded-2xl border border-white/[0.07] bg-[#090a0f]";
 
 function resolveDisplayFleet(sailor: Record<string, unknown>): {
   label: string;
@@ -878,8 +878,8 @@ export function SailorProfileView({
             color: "text-blue-400",
           },
           {
-            value: analytics.bestGoldLabel,
-            label: "Best finish",
+            value: analytics.timeInGoldLabel || "—",
+            label: "In gold fleet",
             color: "text-white",
           },
         ]
@@ -891,12 +891,12 @@ export function SailorProfileView({
           },
           {
             value: analytics.bestSilverLabel,
-            label: "Best silver",
+            label: "Best silver rank",
             color: "text-emerald-400",
           },
           {
             value: analytics.bestGoldLabel,
-            label: "Best gold",
+            label: "Best gold rank",
             color: "text-amber-400",
           },
           {
@@ -906,18 +906,20 @@ export function SailorProfileView({
           },
         ];
 
-  // For established, also show months in gold as subtle note under stats if useful
   // Medal tally only for established with podium/top10
   const showMedals =
     analytics.mode === "established_gold" && analytics.medals.show;
 
+  /** Public viewers only see equipment when the sailor made it public */
+  const showEquipmentSection = showEquipment || isOwner;
+
   return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full space-y-4">
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 flex-1 w-full space-y-5 bg-[#090a0f]">
       {/* ── Header card ──────────────────────────────────────── */}
       <header className={`${cardClass} p-5 sm:p-6`}>
         <div className="flex items-start gap-3 sm:gap-4">
           <div className="relative shrink-0">
-            <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-[#2a3144] text-neutral-200 flex items-center justify-center overflow-hidden text-lg sm:text-xl font-semibold tracking-tight">
+            <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-white/[0.06] border border-white/[0.08] text-neutral-200 flex items-center justify-center overflow-hidden text-lg sm:text-xl font-semibold tracking-tight">
               {displaySailor.avatarUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -974,11 +976,11 @@ export function SailorProfileView({
                 </p>
               </div>
               <div className="shrink-0 text-right">
-                <p className="text-[8px] font-semibold uppercase tracking-[0.16em] text-neutral-500 mb-1">
+                <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">
                   Sail number
                 </p>
-                <div className="inline-flex items-center rounded-lg bg-orange-500/15 border border-orange-500/25 px-2.5 py-1.5">
-                  <span className="text-sm sm:text-base font-bold tabular-nums text-orange-400 tracking-tight">
+                <div className="inline-flex items-center rounded-lg bg-orange-500 px-2.5 py-1.5 shadow-md shadow-orange-950/40">
+                  <span className="text-sm sm:text-[15px] font-bold tabular-nums text-white tracking-tight">
                     {noc} {sailDisplay}
                   </span>
                 </div>
@@ -986,7 +988,7 @@ export function SailorProfileView({
             </div>
 
             {displaySailor.bio && (
-              <p className="mt-2.5 text-[13px] leading-relaxed text-neutral-200 max-w-xl rounded-lg bg-orange-500/15 border border-orange-500/25 px-3 py-2">
+              <p className="mt-2.5 text-[13px] sm:text-sm leading-relaxed text-neutral-300 max-w-xl">
                 {displaySailor.bio}
               </p>
             )}
@@ -1010,14 +1012,6 @@ export function SailorProfileView({
                   <span className="text-neutral-300 font-medium">
                     {displaySailor.weight} kg
                   </span>
-                </span>
-              )}
-              {analytics.timeInGoldLabel && analytics.isGoldFleet && (
-                <span>
-                  <span className="text-yellow-400/90 font-medium">
-                    {analytics.timeInGoldLabel}
-                  </span>{" "}
-                  in gold
                 </span>
               )}
             </div>
@@ -1402,31 +1396,18 @@ export function SailorProfileView({
       <div className={`${cardClass} overflow-hidden`}>
         <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-white/[0.06]">
           {statCells.map((s) => (
-            <div key={s.label} className="px-3 py-5 text-center">
+            <div key={s.label} className="px-2.5 sm:px-3 py-4 sm:py-5 text-center">
               <p
-                className={`text-2xl sm:text-3xl font-semibold tabular-nums tracking-tight ${s.color}`}
+                className={`text-[1.65rem] sm:text-3xl font-semibold tabular-nums tracking-tight leading-none ${s.color}`}
               >
                 {s.value}
               </p>
-              <p className="mt-1 text-[10px] font-medium uppercase tracking-[0.12em] text-neutral-500">
+              <p className="mt-1.5 text-[9px] sm:text-[10px] font-medium uppercase tracking-[0.1em] text-neutral-500 leading-tight">
                 {s.label}
               </p>
             </div>
           ))}
         </div>
-        {analytics.mode === "established_gold" && analytics.timeInGoldLabel && (
-          <p className="border-t border-white/[0.06] px-4 py-2.5 text-center text-[11px] text-neutral-500">
-            Best gold{" "}
-            <span className="text-yellow-400 font-semibold">
-              {analytics.bestGoldLabel}
-            </span>
-            <span className="text-neutral-600"> · </span>
-            <span className="text-neutral-300 font-medium">
-              {analytics.timeInGoldLabel}
-            </span>{" "}
-            in gold fleet
-          </p>
-        )}
       </div>
 
       {/* ── Medal tally ──────────────────────────────────────── */}
@@ -1461,20 +1442,324 @@ export function SailorProfileView({
         </section>
       )}
 
-      {/* ── Regatta results (last 8) ─────────────────────────── */}
+      {/* ── Position trend ───────────────────────────────────── */}
+      <section className={`${cardClass} p-4 sm:p-5`}>
+        <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+          Position trend
+        </h2>
+        <p className="text-[12px] text-neutral-400 mt-0.5 mb-4">
+          Finishing position by regatta (lower is better)
+          {analytics.mode === "established_gold"
+            ? " · last 10 gold fleet"
+            : " · last 10 regattas"}
+        </p>
+        {!trendSvg ? (
+          <p className="text-sm text-neutral-600 py-8 text-center">
+            Need at least two ranked finishes to chart progress.
+          </p>
+        ) : (
+          <div className="relative w-full overflow-hidden">
+            <svg
+              viewBox={`0 0 ${trendSvg.w} ${trendSvg.h}`}
+              className="w-full h-auto"
+              role="img"
+              aria-label="Position trend chart"
+            >
+              {trendSvg.gridRanks.map((r) => (
+                <g key={r}>
+                  <line
+                    x1={trendSvg.padL}
+                    x2={trendSvg.w - trendSvg.padR}
+                    y1={trendSvg.yFor(r)}
+                    y2={trendSvg.yFor(r)}
+                    stroke="rgba(255,255,255,0.05)"
+                    strokeDasharray="4 4"
+                  />
+                  <text
+                    x={trendSvg.padL - 8}
+                    y={trendSvg.yFor(r) + 3}
+                    textAnchor="end"
+                    fill="#6b7280"
+                    fontSize="10"
+                  >
+                    {r}
+                  </text>
+                </g>
+              ))}
+              {trendSvg.showSegregation && trendSvg.promoX != null && (
+                <>
+                  <line
+                    x1={trendSvg.promoX}
+                    x2={trendSvg.promoX}
+                    y1={trendSvg.padT - 4}
+                    y2={trendSvg.h - trendSvg.padB}
+                    stroke="rgba(255,255,255,0.22)"
+                    strokeDasharray="3 4"
+                  />
+                  <text
+                    x={trendSvg.promoX}
+                    y={trendSvg.h - 10}
+                    textAnchor="middle"
+                    fill="#6b7280"
+                    fontSize="9"
+                  >
+                    Promotion
+                  </text>
+                  <text
+                    x={trendSvg.promoX - 12}
+                    y={16}
+                    textAnchor="end"
+                    fill="#9ca3af"
+                    fontSize="10"
+                  >
+                    Silver fleet
+                  </text>
+                  <text
+                    x={trendSvg.promoX + 12}
+                    y={16}
+                    textAnchor="start"
+                    fill="#fbbf24"
+                    fontSize="10"
+                  >
+                    Gold fleet
+                  </text>
+                </>
+              )}
+              {!trendSvg.showSegregation && (
+                <text
+                  x={trendSvg.w / 2}
+                  y={16}
+                  textAnchor="middle"
+                  fill="#fbbf24"
+                  fontSize="10"
+                >
+                  Gold fleet
+                </text>
+              )}
+              {trendSvg.silverPath && (
+                <path
+                  d={trendSvg.silverPath}
+                  fill="none"
+                  stroke="rgba(229,231,235,0.85)"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              )}
+              {trendSvg.goldPath && (
+                <path
+                  d={trendSvg.goldPath}
+                  fill="none"
+                  stroke="#f59e0b"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              )}
+              {trendSvg.pts.map((p, i) => {
+                const cx = trendSvg.xFor(i);
+                const cy = trendSvg.yFor(p.rank);
+                // Place label above the point when space allows, else below
+                const labelAbove = cy > trendSvg.padT + 18;
+                const labelY = labelAbove ? cy - 12 : cy + 16;
+                return (
+                  <g key={i}>
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={5}
+                      fill={p.fleet === "Gold" ? "#f59e0b" : "#e5e7eb"}
+                      stroke="#090a0f"
+                      strokeWidth="2"
+                    >
+                      <title>
+                        {p.name}: {ordinal(p.rank)} ({p.date}) · {p.fleet}
+                      </title>
+                    </circle>
+                    <text
+                      x={cx}
+                      y={labelY}
+                      textAnchor="middle"
+                      fill={p.fleet === "Gold" ? "#fbbf24" : "#e5e7eb"}
+                      fontSize="11"
+                      fontWeight="600"
+                    >
+                      {p.rank}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+        )}
+      </section>
+
+      {/* ── Journey + Equipment ──────────────────────────────── */}
+      <div
+        className={`grid grid-cols-1 gap-4 ${
+          showEquipmentSection ? "lg:grid-cols-2" : ""
+        }`}
+      >
+        <section className={`${cardClass} p-5`}>
+          <div className="flex items-center gap-2 mb-1">
+            <Anchor className="h-4 w-4 text-sky-400/90" />
+            <h2 className="text-sm font-semibold text-white tracking-tight">
+              Sailing journey
+            </h2>
+          </div>
+          <p className="text-[11px] text-neutral-500 mb-4">
+            Key moments — campaigns, firsts, and milestones.
+          </p>
+          {journey.length === 0 ? (
+            <p className="text-sm text-neutral-600">
+              {isOwner
+                ? "No highlights yet. Add one below."
+                : "No journey highlights shared yet."}
+            </p>
+          ) : (
+            <ol className="relative ml-0.5 space-y-0 border-l border-white/10">
+              {journey.map((it) => (
+                <li key={it.id} className="relative pl-4 pb-4 last:pb-0">
+                  <span className="absolute -left-[3px] top-1.5 h-1.5 w-1.5 rounded-full bg-neutral-500" />
+                  {it.when && (
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-orange-400">
+                      {it.when}
+                    </p>
+                  )}
+                  <p className="text-sm font-semibold text-white mt-0.5">
+                    {it.title}
+                  </p>
+                  {it.detail && (
+                    <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
+                      {it.detail}
+                    </p>
+                  )}
+                  {isOwner && (
+                    <button
+                      type="button"
+                      disabled={journeyBusy}
+                      onClick={() => void removeJourneyItem(it.id)}
+                      className="mt-1 text-[10px] text-rose-400/90"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+          {isOwner && (
+            <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-3">
+              <input
+                value={journeyDraft.when}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, when: e.target.value }))
+                }
+                placeholder="When"
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <input
+                value={journeyDraft.title}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, title: e.target.value }))
+                }
+                placeholder="Title"
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <textarea
+                value={journeyDraft.detail}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
+                }
+                placeholder="Detail"
+                rows={2}
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
+              />
+              <button
+                type="button"
+                disabled={journeyBusy || !journeyDraft.title.trim()}
+                onClick={() => void addJourneyItem()}
+                className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-40"
+              >
+                {journeyBusy ? "Saving…" : "Add highlight"}
+              </button>
+              {journeyMsg && (
+                <p className="text-[11px] text-emerald-400">{journeyMsg}</p>
+              )}
+            </div>
+          )}
+        </section>
+
+        {showEquipmentSection && (
+        <section className={`${cardClass} p-5`}>
+          <div className="flex items-center gap-2 mb-1">
+            <Settings className="h-4 w-4 text-orange-400/90" />
+            <h2 className="text-sm font-semibold text-white tracking-tight">
+              Equipment
+            </h2>
+          </div>
+          <p className="text-[11px] text-neutral-500 mb-4">
+            Hull, sail, foils &amp; mast
+          </p>
+          {hasEquipment ? (
+            <div className="space-y-0">
+              {[
+                ["Hull", displayEquipment.hullBrand],
+                ["Sail", displayEquipment.sailMake],
+                ["Foils", displayEquipment.foilBrand],
+                ["Mast", displayEquipment.mast],
+              ].map(([label, val]) => (
+                <div
+                  key={label as string}
+                  className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
+                >
+                  <span className="text-neutral-500">{label}</span>
+                  <span className="text-white font-medium">
+                    {(val as string) || "—"}
+                  </span>
+                </div>
+              ))}
+              {displayEquipment.notes && (
+                <p className="mt-3 text-xs text-neutral-500">
+                  {displayEquipment.notes}
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center py-6 text-center">
+              <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
+              <p className="text-xs text-neutral-500">
+                {!showEquipment
+                  ? "Equipment is private."
+                  : isOwner
+                    ? "No equipment yet — use Edit to add gear."
+                    : "No equipment logged yet."}
+              </p>
+            </div>
+          )}
+        </section>
+        )}
+      </div>
+
+      {/* ── Regatta results (last section) ──────────────────── */}
       <section className={`${cardClass} overflow-hidden`}>
-        <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex items-end justify-between gap-3">
-          <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-            Regatta results
-          </h2>
-          <span className="text-[11px] text-neutral-600">
-            {showAllResults
-              ? `Showing all ${analytics.listResults.length}`
-              : `Last ${Math.min(8, analytics.listResults.length)}`}
-            {analytics.mode === "established_gold" ? " · gold fleet" : ""}
-            {" · "}
-            {analytics.regattaCount} total
-          </span>
+        <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              Regatta results
+            </h2>
+            <p className="text-[11px] text-neutral-600 mt-0.5">
+              {showAllResults
+                ? `All ${analytics.listResults.length} listed`
+                : `Showing ${Math.min(8, analytics.listResults.length)} of ${analytics.listResults.length}`}
+              {analytics.mode === "established_gold" ? " · gold fleet" : ""}
+            </p>
+          </div>
+          {isOwner && (
+            <p className="text-[11px] text-neutral-500">
+              Tap a row to add race notes
+            </p>
+          )}
         </div>
 
         {isOwner && !demoMode && (
@@ -1851,297 +2136,6 @@ export function SailorProfileView({
         )}
       </section>
 
-      {/* ── Position trend ───────────────────────────────────── */}
-      <section className={`${cardClass} p-4 sm:p-5`}>
-        <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-          Position trend
-        </h2>
-        <p className="text-[12px] text-neutral-400 mt-0.5 mb-4">
-          Finishing position by regatta (lower is better)
-          {analytics.mode === "established_gold"
-            ? " · last 10 gold fleet"
-            : " · last 10 regattas"}
-        </p>
-        {!trendSvg ? (
-          <p className="text-sm text-neutral-600 py-8 text-center">
-            Need at least two ranked finishes to chart progress.
-          </p>
-        ) : (
-          <div className="relative w-full overflow-hidden">
-            <svg
-              viewBox={`0 0 ${trendSvg.w} ${trendSvg.h}`}
-              className="w-full h-auto"
-              role="img"
-              aria-label="Position trend chart"
-            >
-              {trendSvg.gridRanks.map((r) => (
-                <g key={r}>
-                  <line
-                    x1={trendSvg.padL}
-                    x2={trendSvg.w - trendSvg.padR}
-                    y1={trendSvg.yFor(r)}
-                    y2={trendSvg.yFor(r)}
-                    stroke="rgba(255,255,255,0.05)"
-                    strokeDasharray="4 4"
-                  />
-                  <text
-                    x={trendSvg.padL - 8}
-                    y={trendSvg.yFor(r) + 3}
-                    textAnchor="end"
-                    fill="#6b7280"
-                    fontSize="10"
-                  >
-                    {r}
-                  </text>
-                </g>
-              ))}
-              {trendSvg.showSegregation && trendSvg.promoX != null && (
-                <>
-                  <line
-                    x1={trendSvg.promoX}
-                    x2={trendSvg.promoX}
-                    y1={trendSvg.padT - 4}
-                    y2={trendSvg.h - trendSvg.padB}
-                    stroke="rgba(255,255,255,0.22)"
-                    strokeDasharray="3 4"
-                  />
-                  <text
-                    x={trendSvg.promoX}
-                    y={trendSvg.h - 10}
-                    textAnchor="middle"
-                    fill="#6b7280"
-                    fontSize="9"
-                  >
-                    Promotion
-                  </text>
-                  <text
-                    x={trendSvg.promoX - 12}
-                    y={16}
-                    textAnchor="end"
-                    fill="#9ca3af"
-                    fontSize="10"
-                  >
-                    Silver fleet
-                  </text>
-                  <text
-                    x={trendSvg.promoX + 12}
-                    y={16}
-                    textAnchor="start"
-                    fill="#fbbf24"
-                    fontSize="10"
-                  >
-                    Gold fleet
-                  </text>
-                </>
-              )}
-              {!trendSvg.showSegregation && (
-                <text
-                  x={trendSvg.w / 2}
-                  y={16}
-                  textAnchor="middle"
-                  fill="#fbbf24"
-                  fontSize="10"
-                >
-                  Gold fleet
-                </text>
-              )}
-              {trendSvg.silverPath && (
-                <path
-                  d={trendSvg.silverPath}
-                  fill="none"
-                  stroke="rgba(229,231,235,0.85)"
-                  strokeWidth="2"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                />
-              )}
-              {trendSvg.goldPath && (
-                <path
-                  d={trendSvg.goldPath}
-                  fill="none"
-                  stroke="#f59e0b"
-                  strokeWidth="2"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                />
-              )}
-              {trendSvg.pts.map((p, i) => {
-                const cx = trendSvg.xFor(i);
-                const cy = trendSvg.yFor(p.rank);
-                // Place label above the point when space allows, else below
-                const labelAbove = cy > trendSvg.padT + 18;
-                const labelY = labelAbove ? cy - 12 : cy + 16;
-                return (
-                  <g key={i}>
-                    <circle
-                      cx={cx}
-                      cy={cy}
-                      r={5}
-                      fill={p.fleet === "Gold" ? "#f59e0b" : "#e5e7eb"}
-                      stroke="#151b2b"
-                      strokeWidth="2"
-                    >
-                      <title>
-                        {p.name}: {ordinal(p.rank)} ({p.date}) · {p.fleet}
-                      </title>
-                    </circle>
-                    <text
-                      x={cx}
-                      y={labelY}
-                      textAnchor="middle"
-                      fill={p.fleet === "Gold" ? "#fbbf24" : "#e5e7eb"}
-                      fontSize="11"
-                      fontWeight="600"
-                    >
-                      {p.rank}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
-        )}
-      </section>
-
-      {/* ── Journey + Equipment ──────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <section className={`${cardClass} p-5`}>
-          <div className="flex items-center gap-2 mb-1">
-            <Anchor className="h-4 w-4 text-sky-400/90" />
-            <h2 className="text-[14px] font-semibold text-white">
-              Sailing Journey
-            </h2>
-          </div>
-          <p className="text-[11px] text-neutral-500 mb-4">
-            Key moments — campaigns, firsts, and milestones.
-          </p>
-          {journey.length === 0 ? (
-            <p className="text-sm text-neutral-600">
-              {isOwner
-                ? "No highlights yet. Add one below."
-                : "No journey highlights shared yet."}
-            </p>
-          ) : (
-            <ol className="relative ml-0.5 space-y-0 border-l border-white/10">
-              {journey.map((it) => (
-                <li key={it.id} className="relative pl-4 pb-4 last:pb-0">
-                  <span className="absolute -left-[3px] top-1.5 h-1.5 w-1.5 rounded-full bg-neutral-500" />
-                  {it.when && (
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-orange-400">
-                      {it.when}
-                    </p>
-                  )}
-                  <p className="text-sm font-semibold text-white mt-0.5">
-                    {it.title}
-                  </p>
-                  {it.detail && (
-                    <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
-                      {it.detail}
-                    </p>
-                  )}
-                  {isOwner && (
-                    <button
-                      type="button"
-                      disabled={journeyBusy}
-                      onClick={() => void removeJourneyItem(it.id)}
-                      className="mt-1 text-[10px] text-rose-400/90"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ol>
-          )}
-          {isOwner && (
-            <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-3">
-              <input
-                value={journeyDraft.when}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, when: e.target.value }))
-                }
-                placeholder="When"
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-              />
-              <input
-                value={journeyDraft.title}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, title: e.target.value }))
-                }
-                placeholder="Title"
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-              />
-              <textarea
-                value={journeyDraft.detail}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
-                }
-                placeholder="Detail"
-                rows={2}
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
-              />
-              <button
-                type="button"
-                disabled={journeyBusy || !journeyDraft.title.trim()}
-                onClick={() => void addJourneyItem()}
-                className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-40"
-              >
-                {journeyBusy ? "Saving…" : "Add highlight"}
-              </button>
-              {journeyMsg && (
-                <p className="text-[11px] text-emerald-400">{journeyMsg}</p>
-              )}
-            </div>
-          )}
-        </section>
-
-        <section className={`${cardClass} p-5`}>
-          <div className="flex items-center gap-2 mb-1">
-            <Settings className="h-4 w-4 text-orange-400/90" />
-            <h2 className="text-[14px] font-semibold text-white">Equipment</h2>
-          </div>
-          <p className="text-[11px] text-neutral-500 mb-4">
-            Hull, sail, foils &amp; mast
-          </p>
-          {hasEquipment ? (
-            <div className="space-y-0">
-              {[
-                ["Hull", displayEquipment.hullBrand],
-                ["Sail", displayEquipment.sailMake],
-                ["Foils", displayEquipment.foilBrand],
-                ["Mast", displayEquipment.mast],
-              ].map(([label, val]) => (
-                <div
-                  key={label as string}
-                  className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
-                >
-                  <span className="text-neutral-500">{label}</span>
-                  <span className="text-white font-medium">
-                    {(val as string) || "—"}
-                  </span>
-                </div>
-              ))}
-              {displayEquipment.notes && (
-                <p className="mt-3 text-xs text-neutral-500">
-                  {displayEquipment.notes}
-                </p>
-              )}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center py-6 text-center">
-              <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
-              <p className="text-xs text-neutral-500">
-                {!showEquipment
-                  ? "Equipment log is private."
-                  : isOwner
-                    ? "No equipment yet — use Edit to add gear."
-                    : "No equipment logged yet."}
-              </p>
-            </div>
-          )}
-        </section>
-      </div>
-
       {/* ── Privacy (owner) ──────────────────────────────────── */}
       {canSeePrivate && (
         <section className={`${cardClass} p-5`}>
@@ -2152,16 +2146,20 @@ export function SailorProfileView({
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <p className="text-[11px] text-neutral-500 mb-3 sm:col-span-3">
+              Born year is always public when set. Weight and equipment stay
+              private unless you share them.
+            </p>
             {(
               [
                 ["Share weight", isPublicWeight, setIsPublicWeight],
-                ["Share equipment", isPublicEquipment, setIsPublicEquipment],
-                ["Share date of birth", isPublicDob, setIsPublicDob],
+                ["Share equipment (public)", isPublicEquipment, setIsPublicEquipment],
+                ["Share full date of birth", isPublicDob, setIsPublicDob],
               ] as const
             ).map(([label, checked, setter]) => (
               <label
                 key={label}
-                className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-black/20 px-3 py-2.5"
+                className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.07] px-3 py-2.5"
               >
                 <span className="text-xs text-neutral-300">{label}</span>
                 <input
