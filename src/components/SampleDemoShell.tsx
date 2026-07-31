@@ -9,35 +9,21 @@ import {
   SAMPLE_COACH_PANEL,
   SAMPLE_EQUIPMENT,
   SAMPLE_PARENT_PANEL,
-  SAMPLE_RACE_LOG,
   SAMPLE_RESULTS,
   SAMPLE_SAILOR,
   SAMPLE_SERIES_STANDING,
   type DemoRole,
-  type RaceObservation,
 } from "@/lib/sampleProfile";
 import {
   Users,
   User,
   Heart,
   ClipboardList,
-  Trophy,
   MessageSquare,
-  BookOpen,
   Sparkles,
 } from "lucide-react";
 
 const ROLES: DemoRole[] = ["public", "sailor", "parent", "coach"];
-
-function scoreMark(s: {
-  score: number;
-  isDNS?: boolean;
-  isOverseasCommitment?: boolean;
-}) {
-  if (s.isOverseasCommitment) return `${s.score}†`;
-  if (s.isDNS) return `${s.score}*`;
-  return String(s.score);
-}
 
 export function SampleDemoShell() {
   const searchParams = useSearchParams();
@@ -48,9 +34,6 @@ export function SampleDemoShell() {
 
   const [role, setRole] = useState<DemoRole>(startRole);
   const [toast, setToast] = useState<string | null>(null);
-  const [raceNotes, setRaceNotes] = useState<RaceObservation[]>(
-    SAMPLE_RACE_LOG.observations
-  );
   const [coachNotes, setCoachNotes] = useState(SAMPLE_COACH_PANEL.coachNotes);
 
   const copy = DEMO_ROLE_COPY[role];
@@ -99,107 +82,14 @@ export function SampleDemoShell() {
 
     if (role === "sailor") {
       return (
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6 pb-10">
-          {/* Series standing */}
-          <div className="glass-panel rounded-2xl border border-orange-500/20 p-5 md:p-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-              <div className="flex items-center gap-2">
-                <Trophy className="h-5 w-5 text-orange-500" />
-                <div>
-                  <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                    My series standing
-                  </h3>
-                  <p className="text-[11px] text-slate-500">
-                    {standing.periodLabel} · {standing.fleet} fleet
-                  </p>
-                </div>
-              </div>
-              <div className="text-right">
-                <p className="text-[10px] font-bold text-slate-500 uppercase">
-                  Best 3 of 5
-                </p>
-                <p className="text-3xl font-black text-white">
-                  {standing.best3of5}
-                </p>
-                <p className="text-sm font-bold text-orange-400">
-                  Rank #{standing.overallRank}
-                </p>
-              </div>
-            </div>
-            <div className="grid grid-cols-5 gap-2">
-              {standing.rScores.map((r, i) => (
-                <div
-                  key={r.regattaId}
-                  className="rounded-xl bg-white/5 border border-white/5 px-2 py-2 text-center"
-                  title={r.regattaName}
-                >
-                  <p className="text-[9px] font-black text-orange-400">
-                    R{i + 1}
-                  </p>
-                  <p className="text-[9px] text-slate-500 line-clamp-1">
-                    {r.regattaName}
-                  </p>
-                  <p className="text-sm font-mono font-bold text-white mt-1">
-                    {scoreMark(r)}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <p className="text-[11px] text-emerald-400/90 mt-3 font-semibold">
-              {standing.trendNote}
-            </p>
-          </div>
-
-          {/* Race log */}
-          <div className="glass-panel rounded-2xl border border-white/5 p-5 md:p-6">
-            <div className="flex items-center gap-2 mb-1">
-              <BookOpen className="h-5 w-5 text-orange-500" />
-              <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                Race-by-race log
-              </h3>
-            </div>
-            <p className="text-[11px] text-slate-500 mb-4">
-              {SAMPLE_RACE_LOG.regattaName} · {SAMPLE_RACE_LOG.raceCount} races
-              (demo — your notes stay private until you share them)
-            </p>
-            <div className="space-y-2 max-h-80 overflow-y-auto">
-              {raceNotes.map((o) => (
-                <div
-                  key={o.raceNumber}
-                  className="rounded-xl border border-white/5 bg-white/[0.02] px-3 py-2.5"
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-xs font-black text-orange-400">
-                      Race {o.raceNumber}
-                    </span>
-                    <span className="text-[11px] font-mono text-slate-400">
-                      P{o.position ?? "—"} · {o.wind}
-                    </span>
-                  </div>
-                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">
-                    {o.note}
-                  </p>
-                </div>
-              ))}
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setRaceNotes((prev) => [
-                  ...prev,
-                  {
-                    raceNumber: prev.length + 1,
-                    position: null,
-                    wind: "—",
-                    note: "(Demo) New observation — in the live app you type your own notes after each race.",
-                  },
-                ]);
-                flash("Demo note added — live app saves to your account");
-              }}
-              className="mt-4 rounded-full bg-white/5 border border-white/10 px-4 py-2 text-[11px] font-bold text-slate-300 hover:text-white"
-            >
-              + Add observation (demo)
-            </button>
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 pb-10 -mt-2">
+          <div className="rounded-2xl border border-orange-500/20 bg-orange-500/[0.06] px-4 py-3 text-[12px] text-neutral-300 leading-relaxed">
+            <span className="font-semibold text-orange-300">Sailor tip: </span>
+            Expand any regatta in{" "}
+            <span className="font-medium text-white">Regatta results</span> above
+            to type race observations (place, wind, notes). Use{" "}
+            <span className="font-medium text-white">View all</span> to open your
+            full logbook.
           </div>
         </div>
       );
@@ -395,7 +285,7 @@ export function SampleDemoShell() {
         </div>
       </div>
     );
-  }, [role, raceNotes, coachNotes, standing]);
+  }, [role, coachNotes, standing]);
 
   return (
     <div className="flex-1 flex flex-col">

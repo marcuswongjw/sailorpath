@@ -31,7 +31,6 @@ import {
 import {
   buildProfileAnalytics,
   buildResultTags,
-  placeColorClass,
   fleetLabelForResult,
   ordinal,
 } from "@/lib/profileAnalytics";
@@ -115,6 +114,10 @@ interface SailorProfileViewProps {
 }
 
 
+/** Shared card shell matching the refined profile mockup */
+const cardClass =
+  "rounded-2xl border border-white/[0.06] bg-[#151b2b] shadow-[0_0_0_1px_rgba(255,255,255,0.02)]";
+
 function resolveDisplayFleet(sailor: Record<string, unknown>): {
   label: string;
   className: string;
@@ -123,27 +126,35 @@ function resolveDisplayFleet(sailor: Record<string, unknown>): {
   if (status === "gold") {
     return {
       label: "Gold fleet",
-      className:
-        "bg-amber-500/15 text-amber-400 border border-amber-500/30",
+      className: "bg-yellow-400 text-yellow-950 border border-yellow-300/30",
     };
   }
   if (status === "silver" || status === "series") {
     return {
       label: "Silver fleet",
-      className:
-        "bg-neutral-500/15 text-neutral-300 border border-neutral-500/25",
+      className: "bg-neutral-600/80 text-neutral-100 border border-neutral-500/30",
     };
   }
   if (status === "dropped") {
     return {
       label: "Dropped",
-      className: "bg-rose-500/10 text-rose-300 border border-rose-500/25",
+      className: "bg-rose-500/15 text-rose-300 border border-rose-500/25",
     };
   }
   return {
     label: "Guest",
-    className: "bg-white/5 text-neutral-400 border border-white/10",
+    className: "bg-white/10 text-neutral-300 border border-white/10",
   };
+}
+
+function fleetPillClass(fleet: "Gold" | "Silver" | "—"): string {
+  if (fleet === "Gold") {
+    return "bg-yellow-400 text-yellow-950 border border-yellow-300/20";
+  }
+  if (fleet === "Silver") {
+    return "bg-neutral-600 text-neutral-100 border border-neutral-500/30";
+  }
+  return "bg-white/5 text-neutral-500 border border-white/10";
 }
 
 function nationalityFlag(raw: unknown): string {
@@ -271,6 +282,8 @@ export function SailorProfileView({
   });
   const [journeyBusy, setJourneyBusy] = useState(false);
   const [journeyMsg, setJourneyMsg] = useState<string | null>(null);
+  /** Public list shows 8 by default; owner/public can expand to full log */
+  const [showAllResults, setShowAllResults] = useState(false);
 
   useEffect(() => {
     if (!demoMode && isOwner && typeof window !== "undefined") {
@@ -309,7 +322,6 @@ export function SailorProfileView({
 
   const hasPrivateAccess = canSeePrivate;
   const showWeight = isPublicWeight || hasPrivateAccess;
-  const showDob = isPublicDob || hasPrivateAccess;
   const showEquipment = isPublicEquipment || hasPrivateAccess;
 
   const saveProfile = async () => {
@@ -459,13 +471,40 @@ export function SailorProfileView({
   };
 
   const saveObservation = async (regattaId: string) => {
-    if (demoMode) {
-      setObsMsg("Demo only — not saved");
-      return;
-    }
     const raceNum = Number(obsForm.raceNumber);
     if (!obsForm.raceNumber.trim() || !Number.isFinite(raceNum) || raceNum < 1) {
       setObsMsg("Enter a race number");
+      return;
+    }
+    // Demo: keep notes in local state only
+    if (demoMode) {
+      const row = {
+        id: editingObsId || `demo-${regattaId}-${raceNum}`,
+        regattaId,
+        raceNumber: raceNum,
+        position: obsForm.position === "" ? null : Number(obsForm.position),
+        wind: obsForm.wind,
+        note: obsForm.note,
+        isPrivate: obsForm.isPrivate,
+        regattaName: initialResults.find(
+          (r: { regattaId?: string }) => r.regattaId === regattaId
+        )?.regattaName,
+      };
+      setObservations((prev: ObservationItem[]) => {
+        const rest = prev.filter(
+          (o) =>
+            !(
+              o.regattaId === regattaId &&
+              Number(o.raceNumber) === raceNum
+            )
+        );
+        return [...rest, row as ObservationItem].sort(
+          (a, b) => Number(a.raceNumber || 0) - Number(b.raceNumber || 0)
+        );
+      });
+      setObsMsg(editingObsId ? "Observation updated (demo)" : "Observation saved (demo)");
+      resetObsForm();
+      setTimeout(() => setObsMsg(null), 2000);
       return;
     }
     setObsBusy(true);
@@ -700,10 +739,10 @@ export function SailorProfileView({
     [displaySailor, results, observations, initialSeriesStanding]
   );
 
-  const bornYear =
-    showDob && displaySailor.dob
-      ? String(displaySailor.dob).slice(0, 4)
-      : null;
+  /** Born year is public whenever DOB is known */
+  const bornYear = displaySailor.dob
+    ? String(displaySailor.dob).slice(0, 4)
+    : null;
 
   const hasEquipment =
     showEquipment &&
@@ -714,50 +753,81 @@ export function SailorProfileView({
       displayEquipment.mast ||
       displayEquipment.notes);
 
-  // Position trend SVG (last 10, mode-filtered)
+  // Position trend SVG — silver (white) + gold (amber), rank labels, tight axis
   const trendSvg = useMemo(() => {
     const pts = analytics.trend;
     if (pts.length < 2) return null;
-    const w = 640;
-    const h = 200;
-    const padL = 48;
-    const padR = 16;
-    const padT = 22;
-    const padB = 30;
+    const w = 680;
+    const h = 240;
+    const padL = 44;
+    const padR = 24;
+    const padT = 36;
+    const padB = 36;
     const ranks = pts.map((p) => p.rank);
-    const minR = Math.min(...ranks, 1);
-    const maxR = Math.max(...ranks, 10);
-    const span = Math.max(maxR - minR, 8);
+    const dataMin = Math.min(...ranks);
+    const dataMax = Math.max(...ranks);
+    // Axis: pad by ~10% of span, snap to clean integers, always show ≥ range of 5
+    const rawSpan = Math.max(dataMax - dataMin, 1);
+    const pad = Math.max(1, Math.ceil(rawSpan * 0.15));
+    let minR = Math.max(1, dataMin - pad);
+    let maxR = dataMax + pad;
+    if (maxR - minR < 5) {
+      maxR = minR + 5;
+    }
+    // Build ~4–6 nice tick ranks inclusive of min/max
+    const span = maxR - minR;
+    const step =
+      span <= 6 ? 1 : span <= 12 ? 2 : span <= 25 ? 5 : span <= 50 ? 10 : 15;
+    const gridRanks: number[] = [];
+    const tickStart = Math.ceil(minR / step) * step;
+    for (let r = tickStart; r <= maxR; r += step) {
+      gridRanks.push(r);
+    }
+    if (!gridRanks.includes(minR)) gridRanks.unshift(minR);
+    if (!gridRanks.includes(maxR)) gridRanks.push(maxR);
+    // de-dupe + sort
+    const uniqueTicks = [...new Set(gridRanks)].sort((a, b) => a - b);
+
     const yFor = (rank: number) =>
-      padT + ((rank - minR) / span) * (h - padT - padB);
+      padT + ((rank - minR) / (maxR - minR)) * (h - padT - padB);
     const xFor = (i: number) =>
       padL + (i / Math.max(pts.length - 1, 1)) * (w - padL - padR);
-    const path = pts
-      .map(
-        (p, i) =>
-          `${i === 0 ? "M" : "L"} ${xFor(i).toFixed(1)} ${yFor(p.rank).toFixed(1)}`
-      )
-      .join(" ");
-    let promoX: number | null = null;
-    if (
-      analytics.mode === "new_gold" ||
-      analytics.mode === "other"
-    ) {
-      // segregation line at first gold point after silver, or gold entry date
+
+    let splitAt = -1;
+    if (analytics.mode !== "established_gold") {
       if (analytics.goldEntryDate) {
-        const gi = pts.findIndex(
+        splitAt = pts.findIndex(
           (p) => p.fleet === "Gold" || p.date >= analytics.goldEntryDate!
         );
-        if (gi > 0) promoX = xFor(gi);
-        else if (gi === 0) promoX = null;
       } else {
-        const gi = pts.findIndex((p) => p.fleet === "Gold");
-        if (gi > 0) promoX = xFor(gi);
+        splitAt = pts.findIndex((p) => p.fleet === "Gold");
       }
     }
-    const gridRanks = [10, 20, 30, 40].filter(
-      (r) => r >= minR - 2 && r <= maxR + 5
-    );
+
+    const pathThrough = (from: number, to: number) => {
+      const slice = pts.slice(from, to + 1);
+      if (!slice.length) return "";
+      return slice
+        .map((p, j) => {
+          const i = from + j;
+          return `${j === 0 ? "M" : "L"} ${xFor(i).toFixed(1)} ${yFor(p.rank).toFixed(1)}`;
+        })
+        .join(" ");
+    };
+
+    let silverPath = "";
+    let goldPath = "";
+    let promoX: number | null = null;
+    if (splitAt > 0) {
+      silverPath = pathThrough(0, splitAt);
+      goldPath = pathThrough(splitAt, pts.length - 1);
+      promoX = xFor(splitAt);
+    } else if (splitAt === 0 || analytics.mode === "established_gold") {
+      goldPath = pathThrough(0, pts.length - 1);
+    } else {
+      silverPath = pathThrough(0, pts.length - 1);
+    }
+
     return {
       w,
       h,
@@ -765,15 +835,23 @@ export function SailorProfileView({
       padR,
       padT,
       padB,
-      path,
+      silverPath,
+      goldPath,
       pts,
       xFor,
       yFor,
       promoX,
-      gridRanks,
-      showSegregation: analytics.mode !== "established_gold",
+      gridRanks: uniqueTicks,
+      minR,
+      maxR,
+      showSegregation: splitAt > 0,
     };
   }, [analytics.trend, analytics.goldEntryDate, analytics.mode]);
+
+  const visibleResults = showAllResults
+    ? analytics.listResults
+    : analytics.listResults.slice(0, 8);
+  const hasMoreResults = analytics.listResults.length > 8;
 
   const sailDisplay = String(displaySailor.sailNumber || "—");
   const noc =
@@ -834,203 +912,205 @@ export function SailorProfileView({
     analytics.mode === "established_gold" && analytics.medals.show;
 
   return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full">
-      {/* ── Header ───────────────────────────────────────────── */}
-      <header className="flex items-start gap-3 sm:gap-4">
-        <div className="relative shrink-0">
-          <div className="h-16 w-16 sm:h-[4.25rem] sm:w-[4.25rem] rounded-full bg-neutral-200 text-neutral-900 flex items-center justify-center overflow-hidden text-xl sm:text-2xl font-semibold tracking-tight">
-            {displaySailor.avatarUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={displaySailor.avatarUrl}
-                alt={displaySailor.name}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              initials(displaySailor.name)
-            )}
-          </div>
-          {isOwner && !demoMode && (
-            <>
-              <button
-                type="button"
-                disabled={avatarBusy}
-                onClick={() => fileInputRef.current?.click()}
-                className="absolute inset-0 rounded-full bg-black/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex items-center justify-center text-white"
-                title="Upload photo"
-              >
-                <Camera className="h-5 w-5" />
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/webp,image/gif"
-                className="hidden"
-                onChange={(e) => {
-                  const f = e.target.files?.[0];
-                  if (f) void uploadAvatar(f);
-                  e.target.value = "";
-                }}
-              />
-            </>
-          )}
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-[1.35rem] sm:text-2xl font-semibold text-white tracking-tight">
-                  {displaySailor.name}
-                </h1>
-                <span
-                  className={`inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-medium border ${fleetBadge.className}`}
+    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-12 flex-1 w-full space-y-4">
+      {/* ── Header card ──────────────────────────────────────── */}
+      <header className={`${cardClass} p-5 sm:p-6`}>
+        <div className="flex items-start gap-3 sm:gap-4">
+          <div className="relative shrink-0">
+            <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-2xl bg-[#2a3144] text-neutral-200 flex items-center justify-center overflow-hidden text-lg sm:text-xl font-semibold tracking-tight">
+              {displaySailor.avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={displaySailor.avatarUrl}
+                  alt={displaySailor.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                initials(displaySailor.name)
+              )}
+            </div>
+            {isOwner && !demoMode && (
+              <>
+                <button
+                  type="button"
+                  disabled={avatarBusy}
+                  onClick={() => fileInputRef.current?.click()}
+                  className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex items-center justify-center text-white"
+                  title="Upload photo"
                 >
-                  {fleetBadge.label}
-                </span>
-              </div>
-              <p className="mt-0.5 text-[13px] text-neutral-400">
-                Optimist class
-                {displaySailor.club ? ` · ${displaySailor.club}` : ""}
-              </p>
-            </div>
-            {/* Sail number badge */}
-            <div className="shrink-0 rounded-lg bg-[#0d1b3a] border border-blue-900/50 px-3 py-2 text-right min-w-[4.5rem]">
-              <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-blue-300/70">
-                Sail number
-              </p>
-              <p className="text-lg sm:text-xl font-bold tabular-nums leading-none mt-0.5">
-                <span className="text-orange-500">{noc}</span>{" "}
-                <span className="text-orange-500">{sailDisplay}</span>
-              </p>
-            </div>
+                  <Camera className="h-5 w-5" />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/gif"
+                  className="hidden"
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) void uploadAvatar(f);
+                    e.target.value = "";
+                  }}
+                />
+              </>
+            )}
           </div>
 
-          {displaySailor.bio && (
-            <p className="mt-2.5 text-[12px] sm:text-[13px] leading-relaxed text-neutral-300 bg-[#0a1628]/80 border border-white/[0.04] rounded-lg px-3 py-2 max-w-xl">
-              {displaySailor.bio}
-            </p>
-          )}
+          <div className="min-w-0 flex-1">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <h1 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                    {displaySailor.name}
+                  </h1>
+                  <span
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${fleetBadge.className}`}
+                  >
+                    {fleetBadge.label}
+                  </span>
+                </div>
+                <p className="mt-0.5 text-[13px] text-neutral-400">
+                  Optimist class
+                  {displaySailor.club ? ` · ${displaySailor.club}` : ""}
+                </p>
+              </div>
+              <div className="shrink-0 text-right">
+                <p className="text-[8px] font-semibold uppercase tracking-[0.16em] text-neutral-500 mb-1">
+                  Sail number
+                </p>
+                <div className="inline-flex items-center rounded-lg bg-orange-500/15 border border-orange-500/25 px-2.5 py-1.5">
+                  <span className="text-sm sm:text-base font-bold tabular-nums text-orange-400 tracking-tight">
+                    {noc} {sailDisplay}
+                  </span>
+                </div>
+              </div>
+            </div>
 
-          <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-neutral-500">
-            <span className="inline-flex items-center gap-1.5">
-              <span aria-hidden>{nationalityFlag(displaySailor.nationality)}</span>
-              {nationalityLabel(displaySailor.nationality)}
-            </span>
-            {bornYear && (
-              <span>
-                Born{" "}
-                <span className="text-neutral-300 font-medium">{bornYear}</span>
-              </span>
+            {displaySailor.bio && (
+              <p className="mt-2.5 text-[13px] leading-relaxed text-neutral-200 max-w-xl rounded-lg bg-orange-500/15 border border-orange-500/25 px-3 py-2">
+                {displaySailor.bio}
+              </p>
             )}
-            {showWeight && displaySailor.weight != null && (
-              <span>
-                Weight{" "}
-                <span className="text-neutral-300 font-medium">
-                  {displaySailor.weight} kg
+
+            <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-neutral-500">
+              <span className="inline-flex items-center gap-1.5">
+                <span aria-hidden>
+                  {nationalityFlag(displaySailor.nationality)}
                 </span>
+                {nationalityLabel(displaySailor.nationality)}
               </span>
-            )}
-            {analytics.mode === "established_gold" &&
-              analytics.timeInGoldLabel && (
+              {bornYear && (
                 <span>
-                  Gold fleet{" "}
-                  <span className="text-amber-400/90 font-medium">
-                    {analytics.timeInGoldLabel}
+                  Born{" "}
+                  <span className="text-neutral-300 font-medium">{bornYear}</span>
+                </span>
+              )}
+              {showWeight && displaySailor.weight != null && (
+                <span>
+                  Weight{" "}
+                  <span className="text-neutral-300 font-medium">
+                    {displaySailor.weight} kg
                   </span>
                 </span>
               )}
-          </div>
+              {analytics.timeInGoldLabel && analytics.isGoldFleet && (
+                <span>
+                  <span className="text-yellow-400/90 font-medium">
+                    {analytics.timeInGoldLabel}
+                  </span>{" "}
+                  in gold
+                </span>
+              )}
+            </div>
 
-          {/* Public actions — compact */}
-          <div className="mt-3 flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={async () => {
-                try {
-                  const url =
-                    typeof window !== "undefined" ? window.location.href : "";
-                  await navigator.clipboard.writeText(url);
-                  setCopyMsg("Copied");
-                  setTimeout(() => setCopyMsg(null), 2000);
-                } catch {
-                  setCopyMsg("Failed");
-                }
-              }}
-              className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-neutral-400 hover:text-white"
-            >
-              <Link2 className="h-3 w-3" />
-              {copyMsg || "Copy link"}
-            </button>
-            {!demoMode && !isLoggedIn && !profileClaimed && (
-              <Link
-                href={`/login?next=${encodeURIComponent(`/${displaySailor.handle || ""}`)}`}
-                className="inline-flex items-center gap-1.5 rounded-md bg-white text-neutral-900 px-2.5 py-1 text-[11px] font-semibold"
-              >
-                <UserPlus className="h-3 w-3" />
-                Log in to claim
-              </Link>
-            )}
-            {canClaim && claimStatus !== "pending" && (
+            <div className="mt-3 flex flex-wrap gap-2">
               <button
                 type="button"
-                disabled={demoMode && !onDemoClaim}
-                onClick={() => {
-                  if (demoMode) {
-                    onDemoClaim?.();
-                    return;
+                onClick={async () => {
+                  try {
+                    const url =
+                      typeof window !== "undefined" ? window.location.href : "";
+                    await navigator.clipboard.writeText(url);
+                    setCopyMsg("Copied");
+                    setTimeout(() => setCopyMsg(null), 2000);
+                  } catch {
+                    setCopyMsg("Failed");
                   }
-                  setClaimPanelOpen((o) => !o);
                 }}
-                className="inline-flex items-center gap-1.5 rounded-md bg-white text-neutral-900 px-2.5 py-1 text-[11px] font-semibold disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-neutral-400 hover:text-white"
               >
-                <UserPlus className="h-3 w-3" />
-                {demoMode
-                  ? "Claim (demo)"
-                  : claimPanelOpen
-                    ? "Cancel"
-                    : "Claim profile"}
+                <Link2 className="h-3 w-3" />
+                {copyMsg || "Copy link"}
               </button>
-            )}
-            {canClaim && claimStatus === "pending" && (
-              <span className="text-[11px] font-medium text-amber-300/90">
-                Claim pending
-              </span>
-            )}
-            {isOwner && (
-              <button
-                type="button"
-                onClick={() => setEditing((e) => !e)}
-                className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-neutral-300 hover:text-white"
-              >
-                <Pencil className="h-3 w-3" />
-                {editing ? "Close editor" : "Edit"}
-              </button>
-            )}
-          </div>
-          {avatarMsg && (
-            <p className="mt-1 text-[11px] text-emerald-400">{avatarMsg}</p>
-          )}
-          {claimMsg && (
-            <p
-              className={`mt-1 text-[11px] ${
-                claimStatus === "error" ? "text-rose-300" : "text-emerald-300"
-              }`}
-            >
-              {claimMsg}{" "}
-              {claimStatus === "pending" && !demoMode && (
-                <Link href="/account" className="underline font-semibold">
-                  My account
+              {!demoMode && !isLoggedIn && !profileClaimed && (
+                <Link
+                  href={`/login?next=${encodeURIComponent(`/${displaySailor.handle || ""}`)}`}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-white text-neutral-900 px-2.5 py-1 text-[11px] font-semibold"
+                >
+                  <UserPlus className="h-3 w-3" />
+                  Log in to claim
                 </Link>
               )}
-            </p>
-          )}
+              {canClaim && claimStatus !== "pending" && (
+                <button
+                  type="button"
+                  disabled={demoMode && !onDemoClaim}
+                  onClick={() => {
+                    if (demoMode) {
+                      onDemoClaim?.();
+                      return;
+                    }
+                    setClaimPanelOpen((o) => !o);
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-white text-neutral-900 px-2.5 py-1 text-[11px] font-semibold disabled:opacity-50"
+                >
+                  <UserPlus className="h-3 w-3" />
+                  {demoMode
+                    ? "Claim (demo)"
+                    : claimPanelOpen
+                      ? "Cancel"
+                      : "Claim profile"}
+                </button>
+              )}
+              {canClaim && claimStatus === "pending" && (
+                <span className="text-[11px] font-medium text-amber-300/90">
+                  Claim pending
+                </span>
+              )}
+              {isOwner && (
+                <button
+                  type="button"
+                  onClick={() => setEditing((e) => !e)}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-neutral-300 hover:text-white"
+                >
+                  <Pencil className="h-3 w-3" />
+                  {editing ? "Close editor" : "Edit"}
+                </button>
+              )}
+            </div>
+            {avatarMsg && (
+              <p className="mt-1 text-[11px] text-emerald-400">{avatarMsg}</p>
+            )}
+            {claimMsg && (
+              <p
+                className={`mt-1 text-[11px] ${
+                  claimStatus === "error" ? "text-rose-300" : "text-emerald-300"
+                }`}
+              >
+                {claimMsg}{" "}
+                {claimStatus === "pending" && !demoMode && (
+                  <Link href="/account" className="underline font-semibold">
+                    My account
+                  </Link>
+                )}
+              </p>
+            )}
+          </div>
         </div>
       </header>
 
       {/* Claim panel */}
       {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
-        <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-4 space-y-3">
+        <div className={`${cardClass} p-4 space-y-3`}>
           <p className="text-sm font-medium text-white">
             Verify link to this sailor
           </p>
@@ -1042,7 +1122,7 @@ export function SailorProfileView({
             onChange={(e) =>
               setClaimRelation(e.target.value as "sailor" | "parent" | "other")
             }
-            className="w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-xs text-white"
+            className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
           >
             <option value="parent">Parent / guardian</option>
             <option value="sailor">The sailor</option>
@@ -1053,7 +1133,7 @@ export function SailorProfileView({
             onChange={(e) => setClaimNote(e.target.value)}
             rows={3}
             placeholder={`e.g. Parent of ${displaySailor.name}. Sail ${displaySailor.sailNumber || "…"}`}
-            className="w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-xs text-white"
+            className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
           />
           <button
             type="button"
@@ -1091,7 +1171,7 @@ export function SailorProfileView({
                 setClaimBusy(false);
               }
             }}
-            className="rounded-lg bg-white text-neutral-900 px-4 py-2 text-[11px] font-semibold disabled:opacity-50"
+            className="rounded-lg bg-orange-500 text-white px-4 py-2 text-[11px] font-semibold disabled:opacity-50"
           >
             {claimBusy ? "Submitting…" : "Submit claim"}
           </button>
@@ -1100,7 +1180,7 @@ export function SailorProfileView({
 
       {/* Owner editor */}
       {isOwner && editing && (
-        <div className="mt-6 rounded-xl border border-white/10 bg-white/[0.02] p-5 space-y-3">
+        <div className={`${cardClass} p-5 space-y-3`}>
           <h2 className="text-sm font-semibold text-white flex items-center gap-2">
             <Pencil className="h-3.5 w-3.5 text-neutral-400" />
             Edit profile
@@ -1114,14 +1194,14 @@ export function SailorProfileView({
                 value={form.bio}
                 onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
                 rows={3}
-                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
             <label className="block sm:col-span-2">
               <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
                 Profile URL
               </span>
-              <div className="mt-1 flex rounded-lg bg-neutral-950 border border-white/10 overflow-hidden">
+              <div className="mt-1 flex rounded-lg bg-black/40 border border-white/10 overflow-hidden">
                 <span className="pl-3 self-center text-[11px] text-neutral-600 shrink-0">
                   sailorpath.com/
                 </span>
@@ -1148,7 +1228,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, school: e.target.value }))
                 }
-                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
             <label className="block">
@@ -1161,7 +1241,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, dob: e.target.value }))
                 }
-                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
             <label className="block">
@@ -1176,7 +1256,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, weight: e.target.value }))
                 }
-                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
             <label className="block">
@@ -1188,7 +1268,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, instagram: e.target.value }))
                 }
-                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
             {(
@@ -1208,7 +1288,7 @@ export function SailorProfileView({
                   onChange={(e) =>
                     setForm((f) => ({ ...f, [key]: e.target.value }))
                   }
-                  className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
+                  className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
                 />
               </label>
             ))}
@@ -1221,7 +1301,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setForm((f) => ({ ...f, equipmentNotes: e.target.value }))
                 }
-                className="mt-1 w-full rounded-lg bg-neutral-950 border border-white/10 px-3 py-2 text-sm text-white"
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
           </div>
@@ -1229,7 +1309,7 @@ export function SailorProfileView({
             type="button"
             disabled={saveBusy}
             onClick={() => void saveProfile()}
-            className="rounded-lg bg-white text-neutral-900 px-4 py-2 text-xs font-semibold disabled:opacity-50"
+            className="rounded-lg bg-orange-500 text-white px-4 py-2 text-xs font-semibold disabled:opacity-50"
           >
             {saveBusy ? "Saving…" : "Save changes"}
           </button>
@@ -1239,9 +1319,9 @@ export function SailorProfileView({
         </div>
       )}
 
-      {/* ── Series standing (public, top) ─────────────────────── */}
+      {/* ── Series standing ──────────────────────────────────── */}
       {initialSeriesStanding && (
-        <section className="mt-8 rounded-xl border border-white/[0.08] bg-gradient-to-b from-white/[0.03] to-transparent p-4 sm:p-5">
+        <section className={`${cardClass} p-4 sm:p-5`}>
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-start gap-2.5 min-w-0">
               <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-500/15">
@@ -1254,7 +1334,7 @@ export function SailorProfileView({
                 <p className="text-[11px] text-neutral-500">
                   {initialSeriesStanding.periodLabel}
                   <span className="text-neutral-600"> · </span>
-                  <span className="text-amber-400/90 font-medium">
+                  <span className="text-yellow-400/90 font-medium">
                     {initialSeriesStanding.fleet} fleet
                   </span>
                 </p>
@@ -1282,7 +1362,7 @@ export function SailorProfileView({
               return (
                 <div
                   key={i}
-                  className="rounded-lg border border-white/[0.06] bg-black/30 px-1 py-2.5 text-center"
+                  className="rounded-xl border border-white/[0.05] bg-black/25 px-1 py-2.5 text-center"
                   title={r?.regattaName}
                 >
                   <p className="text-[9px] font-semibold text-orange-400/90">
@@ -1290,7 +1370,9 @@ export function SailorProfileView({
                   </p>
                   <p className="text-[9px] text-neutral-600 line-clamp-1 mt-0.5 px-0.5">
                     {r?.regattaName
-                      ? r.regattaName.replace(/National Regatta/i, "NR").slice(0, 14)
+                      ? r.regattaName
+                          .replace(/National Regatta/i, "NR")
+                          .slice(0, 14)
                       : "—"}
                   </p>
                   <p className="text-base font-semibold text-white tabular-nums mt-1">
@@ -1307,9 +1389,6 @@ export function SailorProfileView({
               {initialSeriesStanding.trendNote}
             </p>
           )}
-          <p className="mt-1 text-[10px] text-neutral-600">
-            * DNS · † overseas / CF = carry-forward
-          </p>
           <Link
             href={`/sg/optimist/${String(initialSeriesStanding.fleet).toLowerCase()}`}
             className="inline-block mt-2 text-[12px] font-medium text-orange-400 hover:text-orange-300"
@@ -1320,10 +1399,10 @@ export function SailorProfileView({
       )}
 
       {/* ── Key stats ────────────────────────────────────────── */}
-      <div className="mt-8 border-t border-white/10 pt-6">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-px rounded-xl overflow-hidden bg-white/[0.06] border border-white/[0.06]">
+      <div className={`${cardClass} overflow-hidden`}>
+        <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-white/[0.06]">
           {statCells.map((s) => (
-            <div key={s.label} className="bg-[#0c0c0c] px-3 py-5 text-center">
+            <div key={s.label} className="px-3 py-5 text-center">
               <p
                 className={`text-2xl sm:text-3xl font-semibold tabular-nums tracking-tight ${s.color}`}
               >
@@ -1336,9 +1415,9 @@ export function SailorProfileView({
           ))}
         </div>
         {analytics.mode === "established_gold" && analytics.timeInGoldLabel && (
-          <p className="mt-2 text-center text-[11px] text-neutral-500">
-            Best gold finish{" "}
-            <span className="text-amber-400 font-semibold">
+          <p className="border-t border-white/[0.06] px-4 py-2.5 text-center text-[11px] text-neutral-500">
+            Best gold{" "}
+            <span className="text-yellow-400 font-semibold">
               {analytics.bestGoldLabel}
             </span>
             <span className="text-neutral-600"> · </span>
@@ -1350,40 +1429,24 @@ export function SailorProfileView({
         )}
       </div>
 
-      {/* ── Medal tally (established gold only, if any medals) ─ */}
+      {/* ── Medal tally ──────────────────────────────────────── */}
       {showMedals && (
-        <section className="mt-8">
+        <section className={`${cardClass} p-4 sm:p-5`}>
           <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 mb-3">
             Medal tally
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {(
               [
-                {
-                  label: "Gold",
-                  value: analytics.medals.gold,
-                  icon: "🥇",
-                },
-                {
-                  label: "Silver",
-                  value: analytics.medals.silver,
-                  icon: "🥈",
-                },
-                {
-                  label: "Bronze",
-                  value: analytics.medals.bronze,
-                  icon: "🥉",
-                },
-                {
-                  label: "Top 10",
-                  value: analytics.medals.top10,
-                  icon: "🏆",
-                },
+                { label: "Gold", value: analytics.medals.gold, icon: "🥇" },
+                { label: "Silver", value: analytics.medals.silver, icon: "🥈" },
+                { label: "Bronze", value: analytics.medals.bronze, icon: "🥉" },
+                { label: "Top 10", value: analytics.medals.top10, icon: "🏆" },
               ] as const
             ).map((m) => (
               <div
                 key={m.label}
-                className="rounded-xl border border-white/[0.08] bg-white/[0.015] px-3 py-4 text-center"
+                className="rounded-xl border border-white/[0.05] bg-black/20 px-3 py-4 text-center"
               >
                 <p className="text-lg" aria-hidden>
                   {m.icon}
@@ -1398,149 +1461,24 @@ export function SailorProfileView({
         </section>
       )}
 
-      {/* ── Position trend ───────────────────────────────────── */}
-      <section className="mt-10">
-        <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 mb-3">
-          Position trend
-          <span className="ml-2 normal-case tracking-normal text-neutral-600 font-normal">
-            {analytics.mode === "established_gold"
-              ? "· last 10 gold fleet"
-              : "· last 10 regattas"}
-          </span>
-        </h2>
-        <div className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-4 sm:p-5">
-          <p className="text-[12px] text-neutral-400 mb-3">
-            Finishing position by regatta (lower is better)
-          </p>
-          {!trendSvg ? (
-            <p className="text-sm text-neutral-600 py-8 text-center">
-              Need at least two ranked finishes to chart progress.
-            </p>
-          ) : (
-            <div className="relative w-full overflow-hidden">
-              <svg
-                viewBox={`0 0 ${trendSvg.w} ${trendSvg.h}`}
-                className="w-full h-auto"
-                role="img"
-                aria-label="Position trend chart"
-              >
-                {trendSvg.gridRanks.map((r) => (
-                  <g key={r}>
-                    <line
-                      x1={trendSvg.padL}
-                      x2={trendSvg.w - trendSvg.padR}
-                      y1={trendSvg.yFor(r)}
-                      y2={trendSvg.yFor(r)}
-                      stroke="rgba(255,255,255,0.06)"
-                      strokeDasharray="4 4"
-                    />
-                    <text
-                      x={trendSvg.padL - 8}
-                      y={trendSvg.yFor(r) + 3}
-                      textAnchor="end"
-                      fill="#737373"
-                      fontSize="10"
-                    >
-                      {r === 10 ? "Top 10" : `${r}th`}
-                    </text>
-                  </g>
-                ))}
-                {trendSvg.showSegregation && trendSvg.promoX != null && (
-                  <>
-                    <line
-                      x1={trendSvg.promoX}
-                      x2={trendSvg.promoX}
-                      y1={trendSvg.padT}
-                      y2={trendSvg.h - trendSvg.padB}
-                      stroke="rgba(255,255,255,0.28)"
-                      strokeDasharray="3 3"
-                    />
-                    <text
-                      x={trendSvg.promoX}
-                      y={trendSvg.h - 8}
-                      textAnchor="middle"
-                      fill="#737373"
-                      fontSize="9"
-                    >
-                      Promotion
-                    </text>
-                    <text
-                      x={trendSvg.promoX - 10}
-                      y={trendSvg.padT + 2}
-                      textAnchor="end"
-                      fill="#a3a3a3"
-                      fontSize="9"
-                    >
-                      Silver fleet
-                    </text>
-                    <text
-                      x={trendSvg.promoX + 10}
-                      y={trendSvg.padT + 2}
-                      textAnchor="start"
-                      fill="#fbbf24"
-                      fontSize="9"
-                    >
-                      Gold fleet
-                    </text>
-                  </>
-                )}
-                {!trendSvg.showSegregation && (
-                  <text
-                    x={trendSvg.w / 2}
-                    y={trendSvg.padT + 2}
-                    textAnchor="middle"
-                    fill="#fbbf24"
-                    fontSize="9"
-                  >
-                    Gold fleet
-                  </text>
-                )}
-                <path
-                  d={trendSvg.path}
-                  fill="none"
-                  stroke="rgba(255,255,255,0.5)"
-                  strokeWidth="1.75"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                />
-                {trendSvg.pts.map((p, i) => (
-                  <circle
-                    key={i}
-                    cx={trendSvg.xFor(i)}
-                    cy={trendSvg.yFor(p.rank)}
-                    r={4.5}
-                    fill={p.fleet === "Gold" ? "#f59e0b" : "#e5e5e5"}
-                    stroke="#0c0c0c"
-                    strokeWidth="1.5"
-                  >
-                    <title>
-                      {p.name}: {ordinal(p.rank)} ({p.date}) · {p.fleet}
-                    </title>
-                  </circle>
-                ))}
-              </svg>
-            </div>
-          )}
-        </div>
-      </section>
-
       {/* ── Regatta results (last 8) ─────────────────────────── */}
-      <section className="mt-10">
-        <div className="flex items-end justify-between gap-3 mb-3">
+      <section className={`${cardClass} overflow-hidden`}>
+        <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex items-end justify-between gap-3">
           <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
             Regatta results
-            <span className="ml-2 normal-case tracking-normal text-neutral-600 font-normal">
-              · last 8
-              {analytics.mode === "established_gold" ? " (gold fleet)" : ""}
-            </span>
           </h2>
           <span className="text-[11px] text-neutral-600">
+            {showAllResults
+              ? `Showing all ${analytics.listResults.length}`
+              : `Last ${Math.min(8, analytics.listResults.length)}`}
+            {analytics.mode === "established_gold" ? " · gold fleet" : ""}
+            {" · "}
             {analytics.regattaCount} total
           </span>
         </div>
 
         {isOwner && !demoMode && (
-          <div className="mb-4 rounded-xl border border-white/[0.08] bg-white/[0.015] p-4 space-y-2">
+          <div className="mx-4 sm:mx-5 mb-3 rounded-xl border border-white/[0.06] bg-black/20 p-3 space-y-2">
             <p className="text-[10px] font-medium uppercase tracking-wide text-neutral-500">
               Add non-ranking result
             </p>
@@ -1551,7 +1489,7 @@ export function SailorProfileView({
                   setPersonalForm((f) => ({ ...f, name: e.target.value }))
                 }
                 placeholder="Event name"
-                className="col-span-2 sm:col-span-3 rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="col-span-2 sm:col-span-3 rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
               <input
                 type="date"
@@ -1559,7 +1497,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setPersonalForm((f) => ({ ...f, date: e.target.value }))
                 }
-                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
               <input
                 type="number"
@@ -1569,7 +1507,7 @@ export function SailorProfileView({
                   setPersonalForm((f) => ({ ...f, rank: e.target.value }))
                 }
                 placeholder="Place"
-                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
               <input
                 type="number"
@@ -1579,7 +1517,7 @@ export function SailorProfileView({
                   setPersonalForm((f) => ({ ...f, fleetSize: e.target.value }))
                 }
                 placeholder="Fleet size"
-                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
             </div>
             <button
@@ -1596,18 +1534,20 @@ export function SailorProfileView({
           </div>
         )}
 
-        {analytics.displayResults.length === 0 ? (
-          <p className="text-sm text-neutral-600 py-6">No regatta results yet.</p>
+        {visibleResults.length === 0 ? (
+          <p className="px-5 pb-5 text-sm text-neutral-600">
+            No regatta results yet.
+          </p>
         ) : (
-          <div className="rounded-xl border border-white/[0.08] overflow-hidden">
-            <div className="hidden sm:grid grid-cols-[2.75rem_1fr_3rem_auto] gap-2 px-4 py-2 border-b border-white/[0.06] text-[10px] font-medium uppercase tracking-wide text-neutral-600">
+          <>
+            <div className="hidden sm:grid grid-cols-[2.75rem_1fr_3rem_4.25rem] gap-2 px-4 sm:px-5 py-2 border-t border-white/[0.05] text-[10px] font-medium uppercase tracking-wide text-neutral-600">
               <span>Pos</span>
               <span>Event</span>
               <span className="text-right">Pts</span>
               <span className="text-right">Fleet</span>
             </div>
-            <div className="divide-y divide-white/[0.05]">
-              {analytics.displayResults.map((res, idx) => {
+            <div className="divide-y divide-white/[0.04]">
+              {visibleResults.map((res, idx) => {
                 const regattaId = String(res.regattaId || res.id || idx);
                 const rank = res.rank != null ? Number(res.rank) : null;
                 const dns = Boolean(res.isDns || res.isDNS);
@@ -1640,11 +1580,11 @@ export function SailorProfileView({
                           setExpandedRegattaId(expanded ? null : regattaId);
                         }
                       }}
-                      className="grid grid-cols-[2.75rem_1fr_auto] sm:grid-cols-[2.75rem_1fr_3rem_auto] gap-2 items-start px-4 py-3 cursor-pointer hover:bg-white/[0.02]"
+                      className="grid grid-cols-[2.75rem_1fr_auto] sm:grid-cols-[2.75rem_1fr_3rem_4.25rem] gap-2 items-start px-4 sm:px-5 py-3.5 cursor-pointer hover:bg-white/[0.02]"
                     >
                       <span
                         className={`text-[15px] font-semibold tabular-nums pt-0.5 ${
-                          dns ? "text-rose-400" : placeColorClass(rank)
+                          dns ? "text-rose-400" : "text-neutral-200"
                         }`}
                       >
                         {dns ? "DNS" : rank != null ? rank : "—"}
@@ -1677,7 +1617,7 @@ export function SailorProfileView({
                             {tags.map((t) => (
                               <span
                                 key={t.label}
-                                className={`rounded px-1.5 py-px text-[9px] font-semibold border ${t.className}`}
+                                className={`rounded-md px-1.5 py-px text-[9px] font-semibold border ${t.className}`}
                               >
                                 {t.label}
                               </span>
@@ -1688,32 +1628,16 @@ export function SailorProfileView({
                       <span className="hidden sm:block text-right text-[13px] tabular-nums text-neutral-400 pt-0.5">
                         {pts != null ? pts : "—"}
                       </span>
-                      <span className="flex items-center justify-end gap-1.5 pt-0.5">
+                      <span className="flex items-center justify-end pt-0.5">
                         <span
-                          className={`rounded-md px-1.5 py-0.5 text-[10px] font-medium ${
-                            fleet === "Gold"
-                              ? "bg-amber-500/15 text-amber-400 border border-amber-500/25"
-                              : fleet === "Silver"
-                                ? "bg-white/5 text-neutral-400 border border-white/10"
-                                : "text-neutral-600"
-                          }`}
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${fleetPillClass(fleet)}`}
                         >
-                          {fleet}
-                        </span>
-                        <span className="text-neutral-600">
-                          {expanded ? (
-                            <ChevronUp className="h-3.5 w-3.5" />
-                          ) : (
-                            <ChevronDown className="h-3.5 w-3.5" />
-                          )}
+                          {fleet === "—" ? "—" : fleet}
                         </span>
                       </span>
                     </div>
 
-                    {isOwner &&
-                      !demoMode &&
-                      nonRanking &&
-                      res.resultId && (
+                    {isOwner && !demoMode && nonRanking && res.resultId && (
                         <button
                           type="button"
                           disabled={personalBusy}
@@ -1725,9 +1649,9 @@ export function SailorProfileView({
                       )}
 
                     {expanded && (
-                      <div className="px-4 pb-4 space-y-3 border-t border-white/[0.04]">
+                      <div className="px-4 sm:px-5 pb-4 space-y-3 border-t border-white/[0.04] bg-black/15">
                         <div className="flex items-center gap-2 pt-3 text-[11px] font-medium text-neutral-500 uppercase tracking-wide">
-                          <BookOpen className="h-3.5 w-3.5" />
+                          <BookOpen className="h-3.5 w-3.5 text-orange-400" />
                           Race observations
                         </div>
                         {raceNotes.length === 0 ? (
@@ -1762,7 +1686,7 @@ export function SailorProfileView({
                                     {String(o.note)}
                                   </p>
                                 ) : null}
-                                {isOwner && !demoMode && (
+                                {isOwner && (
                                   <div className="mt-1.5 flex gap-2">
                                     <button
                                       type="button"
@@ -1773,13 +1697,26 @@ export function SailorProfileView({
                                     >
                                       Edit
                                     </button>
-                                    {o.id ? (
+                                    {(o.id || demoMode) ? (
                                       <button
                                         type="button"
                                         disabled={obsBusy}
-                                        onClick={() =>
-                                          void deleteObservation(o)
-                                        }
+                                        onClick={() => {
+                                          if (demoMode) {
+                                            setObservations((prev) =>
+                                              prev.filter(
+                                                (x) =>
+                                                  !(
+                                                    x.regattaId === regattaId &&
+                                                    Number(x.raceNumber) ===
+                                                      Number(o.raceNumber)
+                                                  )
+                                              )
+                                            );
+                                            return;
+                                          }
+                                          void deleteObservation(o);
+                                        }}
                                         className="text-[10px] font-medium text-rose-400/90"
                                       >
                                         Delete
@@ -1791,12 +1728,13 @@ export function SailorProfileView({
                             ))}
                           </ul>
                         )}
-                        {isOwner && !demoMode && (
-                          <div className="rounded-lg border border-white/10 bg-white/[0.02] p-3 space-y-2">
-                            <p className="text-[10px] font-medium uppercase text-neutral-500">
+                        {isOwner && (
+                          <div className="rounded-lg border border-orange-500/20 bg-orange-500/[0.06] p-3 space-y-2">
+                            <p className="text-[10px] font-medium uppercase text-orange-300/90">
                               {editingObsId
                                 ? "Edit observation"
                                 : "Add observation"}
+                              {demoMode ? " (demo)" : ""}
                             </p>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                               <input
@@ -1810,7 +1748,7 @@ export function SailorProfileView({
                                   }))
                                 }
                                 placeholder="Race #"
-                                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
                               />
                               <input
                                 type="number"
@@ -1823,7 +1761,7 @@ export function SailorProfileView({
                                   }))
                                 }
                                 placeholder="Score"
-                                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
                               />
                               <input
                                 value={obsForm.wind}
@@ -1834,7 +1772,7 @@ export function SailorProfileView({
                                   }))
                                 }
                                 placeholder="Wind"
-                                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white sm:col-span-2"
+                                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white sm:col-span-2"
                               />
                               <input
                                 value={obsForm.note}
@@ -1845,7 +1783,7 @@ export function SailorProfileView({
                                   }))
                                 }
                                 placeholder="Notes"
-                                className="rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white col-span-2 sm:col-span-3"
+                                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white col-span-2 sm:col-span-3"
                               />
                               <label className="flex items-center gap-1.5 text-[10px] text-neutral-500">
                                 <input
@@ -1867,7 +1805,7 @@ export function SailorProfileView({
                                 type="button"
                                 disabled={obsBusy}
                                 onClick={() => void saveObservation(regattaId)}
-                                className="rounded-lg bg-white text-neutral-900 px-3 py-1.5 text-[11px] font-semibold disabled:opacity-50"
+                                className="rounded-lg bg-orange-500 text-white px-3 py-1.5 text-[11px] font-semibold disabled:opacity-50"
                               >
                                 {obsBusy
                                   ? "Saving…"
@@ -1896,20 +1834,185 @@ export function SailorProfileView({
                 );
               })}
             </div>
+            {hasMoreResults && (
+              <div className="border-t border-white/[0.05] px-4 sm:px-5 py-3 text-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAllResults((v) => !v)}
+                  className="text-[12px] font-semibold text-orange-400 hover:text-orange-300"
+                >
+                  {showAllResults
+                    ? "Show fewer"
+                    : `View all ${analytics.listResults.length} results`}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </section>
+
+      {/* ── Position trend ───────────────────────────────────── */}
+      <section className={`${cardClass} p-4 sm:p-5`}>
+        <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+          Position trend
+        </h2>
+        <p className="text-[12px] text-neutral-400 mt-0.5 mb-4">
+          Finishing position by regatta (lower is better)
+          {analytics.mode === "established_gold"
+            ? " · last 10 gold fleet"
+            : " · last 10 regattas"}
+        </p>
+        {!trendSvg ? (
+          <p className="text-sm text-neutral-600 py-8 text-center">
+            Need at least two ranked finishes to chart progress.
+          </p>
+        ) : (
+          <div className="relative w-full overflow-hidden">
+            <svg
+              viewBox={`0 0 ${trendSvg.w} ${trendSvg.h}`}
+              className="w-full h-auto"
+              role="img"
+              aria-label="Position trend chart"
+            >
+              {trendSvg.gridRanks.map((r) => (
+                <g key={r}>
+                  <line
+                    x1={trendSvg.padL}
+                    x2={trendSvg.w - trendSvg.padR}
+                    y1={trendSvg.yFor(r)}
+                    y2={trendSvg.yFor(r)}
+                    stroke="rgba(255,255,255,0.05)"
+                    strokeDasharray="4 4"
+                  />
+                  <text
+                    x={trendSvg.padL - 8}
+                    y={trendSvg.yFor(r) + 3}
+                    textAnchor="end"
+                    fill="#6b7280"
+                    fontSize="10"
+                  >
+                    {r}
+                  </text>
+                </g>
+              ))}
+              {trendSvg.showSegregation && trendSvg.promoX != null && (
+                <>
+                  <line
+                    x1={trendSvg.promoX}
+                    x2={trendSvg.promoX}
+                    y1={trendSvg.padT - 4}
+                    y2={trendSvg.h - trendSvg.padB}
+                    stroke="rgba(255,255,255,0.22)"
+                    strokeDasharray="3 4"
+                  />
+                  <text
+                    x={trendSvg.promoX}
+                    y={trendSvg.h - 10}
+                    textAnchor="middle"
+                    fill="#6b7280"
+                    fontSize="9"
+                  >
+                    Promotion
+                  </text>
+                  <text
+                    x={trendSvg.promoX - 12}
+                    y={16}
+                    textAnchor="end"
+                    fill="#9ca3af"
+                    fontSize="10"
+                  >
+                    Silver fleet
+                  </text>
+                  <text
+                    x={trendSvg.promoX + 12}
+                    y={16}
+                    textAnchor="start"
+                    fill="#fbbf24"
+                    fontSize="10"
+                  >
+                    Gold fleet
+                  </text>
+                </>
+              )}
+              {!trendSvg.showSegregation && (
+                <text
+                  x={trendSvg.w / 2}
+                  y={16}
+                  textAnchor="middle"
+                  fill="#fbbf24"
+                  fontSize="10"
+                >
+                  Gold fleet
+                </text>
+              )}
+              {trendSvg.silverPath && (
+                <path
+                  d={trendSvg.silverPath}
+                  fill="none"
+                  stroke="rgba(229,231,235,0.85)"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              )}
+              {trendSvg.goldPath && (
+                <path
+                  d={trendSvg.goldPath}
+                  fill="none"
+                  stroke="#f59e0b"
+                  strokeWidth="2"
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                />
+              )}
+              {trendSvg.pts.map((p, i) => {
+                const cx = trendSvg.xFor(i);
+                const cy = trendSvg.yFor(p.rank);
+                // Place label above the point when space allows, else below
+                const labelAbove = cy > trendSvg.padT + 18;
+                const labelY = labelAbove ? cy - 12 : cy + 16;
+                return (
+                  <g key={i}>
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={5}
+                      fill={p.fleet === "Gold" ? "#f59e0b" : "#e5e7eb"}
+                      stroke="#151b2b"
+                      strokeWidth="2"
+                    >
+                      <title>
+                        {p.name}: {ordinal(p.rank)} ({p.date}) · {p.fleet}
+                      </title>
+                    </circle>
+                    <text
+                      x={cx}
+                      y={labelY}
+                      textAnchor="middle"
+                      fill={p.fleet === "Gold" ? "#fbbf24" : "#e5e7eb"}
+                      fontSize="11"
+                      fontWeight="600"
+                    >
+                      {p.rank}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
           </div>
         )}
       </section>
 
       {/* ── Journey + Equipment ──────────────────────────────── */}
-      <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <section className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-5">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <section className={`${cardClass} p-5`}>
           <div className="flex items-center gap-2 mb-1">
-            <Clock className="h-3.5 w-3.5 text-orange-400/80" />
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-              Sailing journey
+            <Anchor className="h-4 w-4 text-sky-400/90" />
+            <h2 className="text-[14px] font-semibold text-white">
+              Sailing Journey
             </h2>
           </div>
-          <p className="text-[11px] text-neutral-600 mb-3">
+          <p className="text-[11px] text-neutral-500 mb-4">
             Key moments — campaigns, firsts, and milestones.
           </p>
           {journey.length === 0 ? (
@@ -1919,20 +2022,18 @@ export function SailorProfileView({
                 : "No journey highlights shared yet."}
             </p>
           ) : (
-            <ol className="relative ml-1 space-y-0 border-l border-white/10">
-              {journey.map((it, idx) => (
-                <li key={it.id} className="relative pl-5 pb-4 last:pb-0">
-                  <span
-                    className={`absolute -left-[4px] top-1.5 h-2 w-2 rounded-full ${
-                      idx === 0 ? "bg-orange-500" : "bg-neutral-600"
-                    }`}
-                  />
+            <ol className="relative ml-0.5 space-y-0 border-l border-white/10">
+              {journey.map((it) => (
+                <li key={it.id} className="relative pl-4 pb-4 last:pb-0">
+                  <span className="absolute -left-[3px] top-1.5 h-1.5 w-1.5 rounded-full bg-neutral-500" />
                   {it.when && (
-                    <p className="text-[10px] uppercase tracking-wide text-neutral-500">
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-orange-400">
                       {it.when}
                     </p>
                   )}
-                  <p className="text-sm font-medium text-white">{it.title}</p>
+                  <p className="text-sm font-semibold text-white mt-0.5">
+                    {it.title}
+                  </p>
                   {it.detail && (
                     <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
                       {it.detail}
@@ -1960,7 +2061,7 @@ export function SailorProfileView({
                   setJourneyDraft((d) => ({ ...d, when: e.target.value }))
                 }
                 placeholder="When"
-                className="w-full rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
               <input
                 value={journeyDraft.title}
@@ -1968,7 +2069,7 @@ export function SailorProfileView({
                   setJourneyDraft((d) => ({ ...d, title: e.target.value }))
                 }
                 placeholder="Title"
-                className="w-full rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
               />
               <textarea
                 value={journeyDraft.detail}
@@ -1977,7 +2078,7 @@ export function SailorProfileView({
                 }
                 placeholder="Detail"
                 rows={2}
-                className="w-full rounded-lg bg-neutral-950 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
               />
               <button
                 type="button"
@@ -1994,14 +2095,12 @@ export function SailorProfileView({
           )}
         </section>
 
-        <section className="rounded-xl border border-white/[0.08] bg-white/[0.015] p-5">
+        <section className={`${cardClass} p-5`}>
           <div className="flex items-center gap-2 mb-1">
-            <Anchor className="h-3.5 w-3.5 text-orange-400/80" />
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-              Equipment
-            </h2>
+            <Settings className="h-4 w-4 text-orange-400/90" />
+            <h2 className="text-[14px] font-semibold text-white">Equipment</h2>
           </div>
-          <p className="text-[11px] text-neutral-600 mb-3">
+          <p className="text-[11px] text-neutral-500 mb-4">
             Hull, sail, foils &amp; mast
           </p>
           {hasEquipment ? (
@@ -2023,7 +2122,7 @@ export function SailorProfileView({
                 </div>
               ))}
               {displayEquipment.notes && (
-                <p className="mt-2 text-xs text-neutral-500 italic">
+                <p className="mt-3 text-xs text-neutral-500">
                   {displayEquipment.notes}
                 </p>
               )}
@@ -2045,7 +2144,7 @@ export function SailorProfileView({
 
       {/* ── Privacy (owner) ──────────────────────────────────── */}
       {canSeePrivate && (
-        <section className="mt-10 rounded-xl border border-white/[0.08] bg-white/[0.015] p-5">
+        <section className={`${cardClass} p-5`}>
           <div className="flex items-center gap-2 mb-4">
             <Settings className="h-3.5 w-3.5 text-neutral-500" />
             <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
@@ -2062,7 +2161,7 @@ export function SailorProfileView({
             ).map(([label, checked, setter]) => (
               <label
                 key={label}
-                className="flex items-center justify-between gap-3 rounded-lg border border-white/[0.06] px-3 py-2.5"
+                className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-black/20 px-3 py-2.5"
               >
                 <span className="text-xs text-neutral-300">{label}</span>
                 <input

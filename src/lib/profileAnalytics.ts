@@ -140,9 +140,14 @@ export type ProfileAnalytics = {
   medals: MedalTally;
   /** Last 10 points for the chart (mode-filtered) */
   trend: TrendPoint[];
-  /** Last 8 results for the list (mode-filtered) */
+  /**
+   * Mode-filtered results newest first (silver excluded for established gold).
+   * UI shows first 8 by default; “View all” reveals the full list.
+   */
+  listResults: ProfileResult[];
+  /** @deprecated alias — first 8 of listResults */
   displayResults: ProfileResult[];
-  /** All results newest first (owner tools) */
+  /** All results newest first (unfiltered) */
   sortedResults: ProfileResult[];
 };
 
@@ -307,7 +312,8 @@ export function buildProfileAnalytics(
       (r) => fleetLabelForResult(r, goldOk) === "Gold"
     );
   }
-  const displayResults = listSource.slice(0, 8);
+  const listResults = listSource;
+  const displayResults = listResults.slice(0, 8);
 
   const bestForMode =
     mode === "established_gold" ? bestGold : bestAll;
@@ -335,6 +341,7 @@ export function buildProfileAnalytics(
     podiumCount,
     medals,
     trend,
+    listResults,
     displayResults,
     sortedResults: byDateDesc,
   };
