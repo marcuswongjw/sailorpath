@@ -3,18 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import Link from "next/link";
-import {
-  seriesFleetStatus,
-  normalizeNationality,
-} from "@/lib/seriesMembership";
+import { normalizeNationality } from "@/lib/seriesMembership";
+import { ageYears } from "@/lib/age";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import {
   Link2,
   UserPlus,
   Pencil,
   BookOpen,
-  ChevronDown,
-  ChevronUp,
   Camera,
   Settings,
   EyeOff,
@@ -32,160 +28,28 @@ import {
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
-  ordinal,
 } from "@/lib/profileAnalytics";
+import {
+  PROFILE_CARD_CLASS as cardClass,
+  resolveDisplayFleet,
+  fleetPillClass,
+  nationalityFlag,
+  nationalityLabel,
+  initials,
+  formatFullDob,
+  PositionTrendChart,
+  type SailorRecordProps,
+  type RegattaResultItem,
+  type ObservationItem,
+  type SailorProfileViewProps,
+} from "@/components/sailor-profile";
 
-export interface SailorRecordProps {
-  id: string;
-  name: string;
-  handle: string;
-  sailNumber?: string | null;
-  club?: string | null;
-  school?: string | null;
-  nationality?: string | null;
-  dob?: string | null;
-  goldEntryDate?: string | null;
-  silverEntryDate?: string | null;
-  dropDate?: string | null;
-  bio?: string | null;
-  instagram?: string | null;
-  weight?: string | number | null;
-  boatHull?: string | null;
-  boatSail?: string | null;
-  boatSpars?: string | null;
-  boatFoil?: string | null;
-  avatarUrl?: string | null;
-  [key: string]: unknown;
-}
-
-export interface RegattaResultItem {
-  id: string;
-  regattaId: string;
-  regattaName?: string;
-  rank?: number | null;
-  nettScore?: number | null;
-  isDns?: boolean;
-  notes?: string | null;
-  [key: string]: unknown;
-}
-
-export interface ObservationItem {
-  id: string;
-  regattaId?: string | null;
-  raceNumber?: number | null;
-  note?: string | null;
-  createdAt?: string | null;
-  [key: string]: unknown;
-}
-
-interface SailorProfileViewProps {
-  initialSailor: SailorRecordProps;
-  initialResults: RegattaResultItem[];
-  initialEquipment: Record<string, any>;
-  initialSeriesStanding?: {
-    periodLabel: string;
-    fleet: string;
-    overallRank: number;
-    fleetSize: number;
-    best3of5: number;
-    rScores: {
-      regattaId: string;
-      regattaName: string;
-      score: number;
-      isDNS?: boolean;
-      isOverseasCommitment?: boolean;
-      isCarryForward?: boolean;
-    }[];
-    trendNote: string;
-  } | null;
-  initialObservations?: ObservationItem[];
-  initialEquipmentHistory?: Record<string, unknown>[];
-  canSeePrivate?: boolean;
-  canClaim?: boolean;
-  isOwner?: boolean;
-  /** Logged-in visitor (not necessarily owner) */
-  isLoggedIn?: boolean;
-  /** Profile already has an approved parent_id link */
-  profileClaimed?: boolean;
-  /** Product-tour mode on /sample — claim does not hit the live API */
-  demoMode?: boolean;
-  demoRole?: "public" | "sailor" | "parent" | "coach";
-  onDemoClaim?: () => void;
-}
-
-
-/** Cards match main page background (#090a0f); separation via border only */
-const cardClass =
-  "rounded-2xl border border-white/[0.07] bg-[#090a0f]";
-
-function resolveDisplayFleet(sailor: Record<string, unknown>): {
-  label: string;
-  className: string;
-} {
-  const status = seriesFleetStatus(sailor as never);
-  if (status === "gold") {
-    return {
-      label: "Gold fleet",
-      className: "bg-yellow-400 text-yellow-950 border border-yellow-300/30",
-    };
-  }
-  if (status === "silver" || status === "series") {
-    return {
-      label: "Silver fleet",
-      className: "bg-neutral-600/80 text-neutral-100 border border-neutral-500/30",
-    };
-  }
-  if (status === "dropped") {
-    return {
-      label: "Dropped",
-      className: "bg-rose-500/15 text-rose-300 border border-rose-500/25",
-    };
-  }
-  return {
-    label: "Guest",
-    className: "bg-white/10 text-neutral-300 border border-white/10",
-  };
-}
-
-function fleetPillClass(fleet: "Gold" | "Silver" | "—"): string {
-  if (fleet === "Gold") {
-    return "bg-yellow-400 text-yellow-950 border border-yellow-300/20";
-  }
-  if (fleet === "Silver") {
-    return "bg-neutral-600 text-neutral-100 border border-neutral-500/30";
-  }
-  return "bg-white/5 text-neutral-500 border border-white/10";
-}
-
-function nationalityFlag(raw: unknown): string {
-  const code = normalizeNationality(raw);
-  if (code === "SGP") return "🇸🇬";
-  if (code === "MAS") return "🇲🇾";
-  if (code === "INA") return "🇮🇩";
-  if (code === "THA") return "🇹🇭";
-  if (code === "PHI") return "🇵🇭";
-  if (code === "CHN") return "🇨🇳";
-  if (code === "HKG") return "🇭🇰";
-  if (code === "AUS") return "🇦🇺";
-  return "🏳️";
-}
-
-function nationalityLabel(raw: unknown): string {
-  const code = normalizeNationality(raw);
-  if (!code) return "—";
-  if (code === "SGP") return "Singapore";
-  return code;
-}
-
-function initials(name: string) {
-  const parts = String(name || "")
-    .trim()
-    .split(/\s+/)
-    .filter(Boolean);
-  if (!parts.length) return "?";
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
-}
+export type {
+  SailorRecordProps,
+  RegattaResultItem,
+  ObservationItem,
+  SailorProfileViewProps,
+};
 
 export function SailorProfileView({
   initialSailor,
@@ -739,10 +603,22 @@ export function SailorProfileView({
     [displaySailor, results, observations, initialSeriesStanding]
   );
 
-  /** Born year is public whenever DOB is known */
-  const bornYear = displaySailor.dob
-    ? String(displaySailor.dob).slice(0, 4)
-    : null;
+  /**
+   * DOB privacy:
+   * - Born year is always public when DOB is set
+   * - Full date (+ age) only when owner shared it or viewer has private access
+   */
+  const dobYmd = displaySailor.dob
+    ? String(displaySailor.dob).slice(0, 10)
+    : "";
+  const bornYear =
+    /^\d{4}-\d{2}-\d{2}$/.test(dobYmd) ? dobYmd.slice(0, 4) : null;
+  const showFullDob =
+    Boolean(bornYear) && (isPublicDob || hasPrivateAccess);
+  const fullDobLabel =
+    showFullDob && dobYmd ? formatFullDob(dobYmd) : null;
+  const ageLabel =
+    showFullDob && dobYmd ? ageYears(dobYmd) : null;
 
   const hasEquipment =
     showEquipment &&
@@ -752,101 +628,6 @@ export function SailorProfileView({
       displayEquipment.foilBrand ||
       displayEquipment.mast ||
       displayEquipment.notes);
-
-  // Position trend SVG — silver (white) + gold (amber), rank labels, tight axis
-  const trendSvg = useMemo(() => {
-    const pts = analytics.trend;
-    if (pts.length < 2) return null;
-    const w = 680;
-    const h = 240;
-    const padL = 44;
-    const padR = 24;
-    const padT = 36;
-    const padB = 36;
-    const ranks = pts.map((p) => p.rank);
-    const dataMin = Math.min(...ranks);
-    const dataMax = Math.max(...ranks);
-    // Axis: pad by ~10% of span, snap to clean integers, always show ≥ range of 5
-    const rawSpan = Math.max(dataMax - dataMin, 1);
-    const pad = Math.max(1, Math.ceil(rawSpan * 0.15));
-    let minR = Math.max(1, dataMin - pad);
-    let maxR = dataMax + pad;
-    if (maxR - minR < 5) {
-      maxR = minR + 5;
-    }
-    // Build ~4–6 nice tick ranks inclusive of min/max
-    const span = maxR - minR;
-    const step =
-      span <= 6 ? 1 : span <= 12 ? 2 : span <= 25 ? 5 : span <= 50 ? 10 : 15;
-    const gridRanks: number[] = [];
-    const tickStart = Math.ceil(minR / step) * step;
-    for (let r = tickStart; r <= maxR; r += step) {
-      gridRanks.push(r);
-    }
-    if (!gridRanks.includes(minR)) gridRanks.unshift(minR);
-    if (!gridRanks.includes(maxR)) gridRanks.push(maxR);
-    // de-dupe + sort
-    const uniqueTicks = [...new Set(gridRanks)].sort((a, b) => a - b);
-
-    const yFor = (rank: number) =>
-      padT + ((rank - minR) / (maxR - minR)) * (h - padT - padB);
-    const xFor = (i: number) =>
-      padL + (i / Math.max(pts.length - 1, 1)) * (w - padL - padR);
-
-    let splitAt = -1;
-    if (analytics.mode !== "established_gold") {
-      if (analytics.goldEntryDate) {
-        splitAt = pts.findIndex(
-          (p) => p.fleet === "Gold" || p.date >= analytics.goldEntryDate!
-        );
-      } else {
-        splitAt = pts.findIndex((p) => p.fleet === "Gold");
-      }
-    }
-
-    const pathThrough = (from: number, to: number) => {
-      const slice = pts.slice(from, to + 1);
-      if (!slice.length) return "";
-      return slice
-        .map((p, j) => {
-          const i = from + j;
-          return `${j === 0 ? "M" : "L"} ${xFor(i).toFixed(1)} ${yFor(p.rank).toFixed(1)}`;
-        })
-        .join(" ");
-    };
-
-    let silverPath = "";
-    let goldPath = "";
-    let promoX: number | null = null;
-    if (splitAt > 0) {
-      silverPath = pathThrough(0, splitAt);
-      goldPath = pathThrough(splitAt, pts.length - 1);
-      promoX = xFor(splitAt);
-    } else if (splitAt === 0 || analytics.mode === "established_gold") {
-      goldPath = pathThrough(0, pts.length - 1);
-    } else {
-      silverPath = pathThrough(0, pts.length - 1);
-    }
-
-    return {
-      w,
-      h,
-      padL,
-      padR,
-      padT,
-      padB,
-      silverPath,
-      goldPath,
-      pts,
-      xFor,
-      yFor,
-      promoX,
-      gridRanks: uniqueTicks,
-      minR,
-      maxR,
-      showSegregation: splitAt > 0,
-    };
-  }, [analytics.trend, analytics.goldEntryDate, analytics.mode]);
 
   const visibleResults = showAllResults
     ? analytics.listResults
@@ -1003,7 +784,17 @@ export function SailorProfileView({
               {bornYear && (
                 <span>
                   Born{" "}
-                  <span className="text-neutral-300 font-medium">{bornYear}</span>
+                  <span className="text-neutral-300 font-medium">
+                    {showFullDob && fullDobLabel
+                      ? fullDobLabel
+                      : bornYear}
+                  </span>
+                  {showFullDob && ageLabel != null && (
+                    <span className="text-neutral-500">
+                      {" "}
+                      · age {ageLabel}
+                    </span>
+                  )}
                 </span>
               )}
               {showWeight && displaySailor.weight != null && (
@@ -1237,6 +1028,10 @@ export function SailorProfileView({
                 }
                 className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
+              <p className="mt-1 text-[10px] text-neutral-600 leading-snug">
+                Year is always public. Full date and age show only if you enable
+                “Share full date of birth” under Privacy.
+              </p>
             </label>
             <label className="block">
               <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
@@ -1278,7 +1073,7 @@ export function SailorProfileView({
                   {label}
                 </span>
                 <input
-                  value={(form as Record<string, string>)[key] || ""}
+                  value={String(form[key] ?? "")}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, [key]: e.target.value }))
                   }
@@ -1291,7 +1086,7 @@ export function SailorProfileView({
                 Equipment notes
               </span>
               <input
-                value={form.equipmentNotes}
+                value={form.equipmentNotes || ""}
                 onChange={(e) =>
                   setForm((f) => ({ ...f, equipmentNotes: e.target.value }))
                 }
@@ -1453,145 +1248,11 @@ export function SailorProfileView({
             ? " · last 10 gold fleet"
             : " · last 10 regattas"}
         </p>
-        {!trendSvg ? (
-          <p className="text-sm text-neutral-600 py-8 text-center">
-            Need at least two ranked finishes to chart progress.
-          </p>
-        ) : (
-          <div className="relative w-full overflow-hidden">
-            <svg
-              viewBox={`0 0 ${trendSvg.w} ${trendSvg.h}`}
-              className="w-full h-auto"
-              role="img"
-              aria-label="Position trend chart"
-            >
-              {trendSvg.gridRanks.map((r) => (
-                <g key={r}>
-                  <line
-                    x1={trendSvg.padL}
-                    x2={trendSvg.w - trendSvg.padR}
-                    y1={trendSvg.yFor(r)}
-                    y2={trendSvg.yFor(r)}
-                    stroke="rgba(255,255,255,0.05)"
-                    strokeDasharray="4 4"
-                  />
-                  <text
-                    x={trendSvg.padL - 8}
-                    y={trendSvg.yFor(r) + 3}
-                    textAnchor="end"
-                    fill="#6b7280"
-                    fontSize="10"
-                  >
-                    {r}
-                  </text>
-                </g>
-              ))}
-              {trendSvg.showSegregation && trendSvg.promoX != null && (
-                <>
-                  <line
-                    x1={trendSvg.promoX}
-                    x2={trendSvg.promoX}
-                    y1={trendSvg.padT - 4}
-                    y2={trendSvg.h - trendSvg.padB}
-                    stroke="rgba(255,255,255,0.22)"
-                    strokeDasharray="3 4"
-                  />
-                  <text
-                    x={trendSvg.promoX}
-                    y={trendSvg.h - 10}
-                    textAnchor="middle"
-                    fill="#6b7280"
-                    fontSize="9"
-                  >
-                    Promotion
-                  </text>
-                  <text
-                    x={trendSvg.promoX - 12}
-                    y={16}
-                    textAnchor="end"
-                    fill="#9ca3af"
-                    fontSize="10"
-                  >
-                    Silver fleet
-                  </text>
-                  <text
-                    x={trendSvg.promoX + 12}
-                    y={16}
-                    textAnchor="start"
-                    fill="#fbbf24"
-                    fontSize="10"
-                  >
-                    Gold fleet
-                  </text>
-                </>
-              )}
-              {!trendSvg.showSegregation && (
-                <text
-                  x={trendSvg.w / 2}
-                  y={16}
-                  textAnchor="middle"
-                  fill="#fbbf24"
-                  fontSize="10"
-                >
-                  Gold fleet
-                </text>
-              )}
-              {trendSvg.silverPath && (
-                <path
-                  d={trendSvg.silverPath}
-                  fill="none"
-                  stroke="rgba(229,231,235,0.85)"
-                  strokeWidth="2"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                />
-              )}
-              {trendSvg.goldPath && (
-                <path
-                  d={trendSvg.goldPath}
-                  fill="none"
-                  stroke="#f59e0b"
-                  strokeWidth="2"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                />
-              )}
-              {trendSvg.pts.map((p, i) => {
-                const cx = trendSvg.xFor(i);
-                const cy = trendSvg.yFor(p.rank);
-                // Place label above the point when space allows, else below
-                const labelAbove = cy > trendSvg.padT + 18;
-                const labelY = labelAbove ? cy - 12 : cy + 16;
-                return (
-                  <g key={i}>
-                    <circle
-                      cx={cx}
-                      cy={cy}
-                      r={5}
-                      fill={p.fleet === "Gold" ? "#f59e0b" : "#e5e7eb"}
-                      stroke="#090a0f"
-                      strokeWidth="2"
-                    >
-                      <title>
-                        {p.name}: {ordinal(p.rank)} ({p.date}) · {p.fleet}
-                      </title>
-                    </circle>
-                    <text
-                      x={cx}
-                      y={labelY}
-                      textAnchor="middle"
-                      fill={p.fleet === "Gold" ? "#fbbf24" : "#e5e7eb"}
-                      fontSize="11"
-                      fontWeight="600"
-                    >
-                      {p.rank}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
-        )}
+        <PositionTrendChart
+          points={analytics.trend}
+          mode={analytics.mode}
+          goldEntryDate={analytics.goldEntryDate}
+        />
       </section>
 
       {/* ── Journey + Equipment ──────────────────────────────── */}
@@ -1703,27 +1364,29 @@ export function SailorProfileView({
           </p>
           {hasEquipment ? (
             <div className="space-y-0">
-              {[
-                ["Hull", displayEquipment.hullBrand],
-                ["Sail", displayEquipment.sailMake],
-                ["Foils", displayEquipment.foilBrand],
-                ["Mast", displayEquipment.mast],
-              ].map(([label, val]) => (
+              {(
+                [
+                  ["Hull", displayEquipment.hullBrand],
+                  ["Sail", displayEquipment.sailMake],
+                  ["Foils", displayEquipment.foilBrand],
+                  ["Mast", displayEquipment.mast],
+                ] as const
+              ).map(([label, val]) => (
                 <div
-                  key={label as string}
+                  key={label}
                   className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
                 >
                   <span className="text-neutral-500">{label}</span>
                   <span className="text-white font-medium">
-                    {(val as string) || "—"}
+                    {val || "—"}
                   </span>
                 </div>
               ))}
-              {displayEquipment.notes && (
+              {displayEquipment.notes ? (
                 <p className="mt-3 text-xs text-neutral-500">
-                  {displayEquipment.notes}
+                  {String(displayEquipment.notes)}
                 </p>
-              )}
+              ) : null}
             </div>
           ) : (
             <div className="flex flex-col items-center py-6 text-center">
@@ -2145,32 +1808,57 @@ export function SailorProfileView({
               Privacy
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <p className="text-[11px] text-neutral-500 mb-3 sm:col-span-3">
-              Born year is always public when set. Weight and equipment stay
-              private unless you share them.
+          <div className="space-y-3">
+            <p className="text-[11px] text-neutral-500 leading-relaxed">
+              <span className="text-neutral-400 font-medium">Born year</span> is
+              always public when set. Full date of birth and age stay private
+              unless shared. Weight and equipment stay private unless shared.
             </p>
-            {(
-              [
-                ["Share weight", isPublicWeight, setIsPublicWeight],
-                ["Share equipment (public)", isPublicEquipment, setIsPublicEquipment],
-                ["Share full date of birth", isPublicDob, setIsPublicDob],
-              ] as const
-            ).map(([label, checked, setter]) => (
-              <label
-                key={label}
-                className="flex items-center justify-between gap-3 rounded-xl border border-white/[0.07] px-3 py-2.5"
-              >
-                <span className="text-xs text-neutral-300">{label}</span>
-                <input
-                  type="checkbox"
-                  checked={checked}
-                  disabled={!isOwner}
-                  onChange={(e) => setter(e.target.checked)}
-                  className="rounded border-neutral-600"
-                />
-              </label>
-            ))}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {(
+                [
+                  {
+                    label: "Share weight",
+                    hint: "Show kg on public profile",
+                    checked: isPublicWeight,
+                    set: setIsPublicWeight,
+                  },
+                  {
+                    label: "Share equipment",
+                    hint: "Show hull / sail / gear publicly",
+                    checked: isPublicEquipment,
+                    set: setIsPublicEquipment,
+                  },
+                  {
+                    label: "Share full date of birth",
+                    hint: "Year is always public; this also shows day/month + age",
+                    checked: isPublicDob,
+                    set: setIsPublicDob,
+                  },
+                ] as const
+              ).map((row) => (
+                <label
+                  key={row.label}
+                  className="flex flex-col gap-2 rounded-xl border border-white/[0.07] px-3 py-2.5 cursor-pointer"
+                >
+                  <span className="flex items-center justify-between gap-3">
+                    <span className="text-xs font-medium text-neutral-200">
+                      {row.label}
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={row.checked}
+                      disabled={!isOwner}
+                      onChange={(e) => row.set(e.target.checked)}
+                      className="rounded border-neutral-600 shrink-0"
+                    />
+                  </span>
+                  <span className="text-[10px] text-neutral-500 leading-snug">
+                    {row.hint}
+                  </span>
+                </label>
+              ))}
+            </div>
           </div>
           {isOwner && (
             <button
