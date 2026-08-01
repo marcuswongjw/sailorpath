@@ -34,8 +34,13 @@ function genderLabel(g: string | null | undefined) {
   return g || "—";
 }
 
+function fmtScore(n: number | null | undefined) {
+  if (n == null || !Number.isFinite(n)) return "—";
+  return String(n);
+}
+
 /**
- * Admin: compare Optimist Gold sailors on a post-promotion timeline.
+ * Admin: compare Optimist Gold sailors by series half after promotion.
  */
 export function AdminGoldAnalysisPanel({
   sailors,
@@ -43,7 +48,6 @@ export function AdminGoldAnalysisPanel({
   results,
 }: Props) {
   const [gender, setGender] = useState<"all" | "F" | "M">("F");
-  const [windowN, setWindowN] = useState(3);
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [search, setSearch] = useState("");
 
@@ -70,55 +74,77 @@ export function AdminGoldAnalysisPanel({
   );
 
   const series = useMemo(
-    () =>
-      seriesForSailors(selectedSailors, regattas, results, {
-        boatClass: "Optimist",
-        window: windowN,
-      }),
-    [selectedSailors, regattas, results, windowN]
+    () => seriesForSailors(selectedSailors, sailors, regattas, results),
+    [selectedSailors, sailors, regattas, results]
   );
 
-  const maxSeq = useMemo(
-    () => Math.max(0, ...series.map((s) => s.postPromo.length)),
-    [series]
-  );
-
+  /** Chart points: H1 best3, H2 best3, Current best3 */
   const chart = useMemo(() => {
-    if (series.length === 0 || maxSeq < 1) return null;
-    const w = 720;
-    const h = 280;
-    const padL = 40;
-    const padR = 16;
-    const padT = 20;
-    const padB = 36;
-    const allRanks = series.flatMap((s) => s.postPromo.map((p) => p.rank));
-    if (!allRanks.length) return null;
-    let minR = Math.max(1, Math.min(...allRanks) - 2);
-    let maxR = Math.max(...allRanks) + 2;
-    if (maxR - minR < 8) maxR = minR + 8;
-    const yFor = (rank: number) =>
-      padT + ((rank - minR) / (maxR - minR)) * (h - padT - padB);
-    const xFor = (seq: number) =>
-      padL + ((seq - 1) / Math.max(maxSeq - 1, 1)) * (w - padL - padR);
+    if (series.length === 0) return null;
+    const cols = ["H1", "H2", "Now"] as const;
+    const scores = series.flatMap((s) =>
+      [s.half1?.best3of5, s.half2?.best3of5, s.currentHalf?.best3of5].filter(
+        (n): n is number => n != null && Number.isFinite(n) && n < 9000
+      )
+    );
+    if (!scores.length) return null;
+
+    const w = 640;
+    const h = 260;
+    const padL = 44;
+    const padR = 20;
+    const padT = 24;
+    const padB = 40;
+    let minS = Math.min(...scores);
+    let maxS = Math.max(...scores);
+    if (maxS - minS < 6) {
+      minS = Math.max(0, minS - 3);
+      maxS = minS + 6;
+    } else {
+      minS = Math.max(0, minS - 2);
+      maxS = maxS + 2;
+    }
+    const yFor = (score: number) =>
+      padT + ((score - minS) / (maxS - minS)) * (h - padT - padB);
+    const xFor = (i: number) =>
+      padL + (i / Math.max(cols.length - 1, 1)) * (w - padL - padR);
+
     const ticks: number[] = [];
-    const step = maxR - minR <= 12 ? 2 : 5;
-    for (let r = Math.ceil(minR / step) * step; r <= maxR; r += step)
-      ticks.push(r);
+    const step = maxS - minS <= 15 ? 2 : 5;
+    for (let t = Math.ceil(minS / step) * step; t <= maxS; t += step)
+      ticks.push(t);
 
     const paths = series.map((s, si) => {
-      if (s.postPromo.length < 1) return { s, d: "", color: COLORS[si % COLORS.length]! };
-      const d = s.postPromo
-        .map((p, i) => {
-          const x = xFor(p.seq);
-          const y = yFor(p.rank);
-          return `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
-        })
-        .join(" ");
-      return { s, d, color: COLORS[si % COLORS.length]! };
+      const pts = [
+        s.half1?.best3of5,
+        s.half2?.best3of5,
+        s.currentHalf?.best3of5,
+      ].map((v) =>
+        v != null && Number.isFinite(v) && v < 9000 ? v : null
+      );
+      const segments: string[] = [];
+      let started = false;
+      pts.forEach((v, i) => {
+        if (v == null) {
+          started = false;
+          return;
+        }
+        const cmd = started ? "L" : "M";
+        segments.push(
+          `${cmd} ${xFor(i).toFixed(1)} ${yFor(v).toFixed(1)}`
+        );
+        started = true;
+      });
+      return {
+        s,
+        d: segments.join(" "),
+        pts,
+        color: COLORS[si % COLORS.length]!,
+      };
     });
 
-    return { w, h, padL, padR, padT, padB, minR, maxR, xFor, yFor, ticks, paths, maxSeq };
-  }, [series, maxSeq]);
+    return { w, h, padL, padR, padT, padB, minS, maxS, xFor, yFor, ticks, paths, cols };
+  }, [series]);
 
   const toggle = (id: string) => {
     setSelectedIds((prev) =>
@@ -142,16 +168,24 @@ export function AdminGoldAnalysisPanel({
               Gold fleet performance analysis
             </h2>
             <p className="text-[12px] text-slate-400 mt-1 max-w-3xl leading-relaxed">
-              Compare Optimist Gold sailors on a{" "}
-              <strong className="text-slate-300">post-promotion timeline</strong>
-              : event 1 = first ranking result on/after gold entry, event 2 =
-              second, and so on. This lines up sailors who promoted on different
-              dates.{" "}
-              <span className="text-slate-500">
-                Immediate form = avg rank of first {windowN} post-promo events;
-                current form = avg of last {windowN}.
-              </span>
+              Compare Optimist Gold sailors using{" "}
+              <strong className="text-slate-300">series half-years</strong> so
+              different promotion dates line up fairly.
             </p>
+            <ul className="mt-2 text-[11px] text-slate-500 space-y-0.5 list-disc pl-4">
+              <li>
+                <strong className="text-slate-400">Immediate form</strong> —
+                1st series half of gold entry + 2nd series half (Best 3 of 5)
+              </li>
+              <li>
+                <strong className="text-slate-400">Current form</strong> —
+                current series half (Best 3 of 5)
+              </li>
+              <li>
+                <strong className="text-slate-400">Ranking only</strong> —
+                non-ranking regattas excluded
+              </li>
+            </ul>
           </div>
         </div>
 
@@ -171,24 +205,13 @@ export function AdminGoldAnalysisPanel({
               <option value="M">Male</option>
             </select>
           </label>
-          <label className="text-xs text-slate-400">
-            Immediate / current window
-            <select
-              className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-              value={windowN}
-              onChange={(e) => setWindowN(Number(e.target.value) || 3)}
-            >
-              <option value={2}>First / last 2 events</option>
-              <option value={3}>First / last 3 events</option>
-              <option value={5}>First / last 5 events</option>
-            </select>
-          </label>
-          <div className="text-xs text-slate-400 flex flex-col justify-end gap-1.5">
+          <div className="text-xs text-slate-400 flex flex-col justify-end gap-1.5 sm:col-span-2">
             <span>
               Pool:{" "}
               <strong className="text-white">{goldPool.length}</strong> gold
               sailors
-              {gender !== "all" ? ` (${genderLabel(gender)})` : ""}
+              {gender !== "all" ? ` (${genderLabel(gender)})` : ""} · selected{" "}
+              <strong className="text-white">{selectedIds.length}</strong>
             </span>
             <div className="flex flex-wrap gap-1.5">
               <button
@@ -211,7 +234,6 @@ export function AdminGoldAnalysisPanel({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Sailor picker */}
         <div className="glass-panel rounded-2xl border border-white/5 p-4 space-y-3 lg:col-span-1">
           <div className="flex items-center gap-2">
             <Users className="h-4 w-4 text-orange-400" />
@@ -258,23 +280,23 @@ export function AdminGoldAnalysisPanel({
           </ul>
         </div>
 
-        {/* Chart + table */}
         <div className="lg:col-span-2 space-y-4">
           <div className="glass-panel rounded-2xl border border-white/5 p-4 sm:p-5">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-1">
-              Rank by post-promotion event
+              Best 3 of 5 by series half
             </h3>
             <p className="text-[11px] text-slate-500 mb-4">
-              Lower is better. X-axis = 1st, 2nd, 3rd… ranking result after gold
-              entry (not calendar date).
+              Lower is better. H1 = promotion half, H2 = next half, Now =
+              current half.
             </p>
             {series.length === 0 ? (
               <p className="text-sm text-slate-500 py-10 text-center">
-                Select two or more gold sailors to compare.
+                Select gold sailors to compare.
               </p>
             ) : !chart ? (
               <p className="text-sm text-slate-500 py-10 text-center">
-                Selected sailors have no ranking results after gold entry yet.
+                No ranking scores available for the selected sailors in these
+                halves.
               </p>
             ) : (
               <>
@@ -282,44 +304,43 @@ export function AdminGoldAnalysisPanel({
                   viewBox={`0 0 ${chart.w} ${chart.h}`}
                   className="w-full h-auto"
                   role="img"
-                  aria-label="Post-promotion rank comparison"
+                  aria-label="Half-year Best 3 of 5 comparison"
                 >
-                  {chart.ticks.map((r) => (
-                    <g key={r}>
+                  {chart.ticks.map((t) => (
+                    <g key={t}>
                       <line
                         x1={chart.padL}
                         x2={chart.w - chart.padR}
-                        y1={chart.yFor(r)}
-                        y2={chart.yFor(r)}
+                        y1={chart.yFor(t)}
+                        y2={chart.yFor(t)}
                         stroke="rgba(255,255,255,0.06)"
                         strokeDasharray="3 3"
                       />
                       <text
                         x={chart.padL - 6}
-                        y={chart.yFor(r) + 3}
+                        y={chart.yFor(t) + 3}
                         textAnchor="end"
                         fill="#64748b"
                         fontSize="10"
                       >
-                        {r}
+                        {t}
                       </text>
                     </g>
                   ))}
-                  {Array.from({ length: chart.maxSeq }, (_, i) => i + 1).map(
-                    (seq) => (
-                      <text
-                        key={seq}
-                        x={chart.xFor(seq)}
-                        y={chart.h - 12}
-                        textAnchor="middle"
-                        fill="#64748b"
-                        fontSize="10"
-                      >
-                        E{seq}
-                      </text>
-                    )
-                  )}
-                  {chart.paths.map(({ s, d, color }) => (
+                  {chart.cols.map((c, i) => (
+                    <text
+                      key={c}
+                      x={chart.xFor(i)}
+                      y={chart.h - 14}
+                      textAnchor="middle"
+                      fill="#94a3b8"
+                      fontSize="11"
+                      fontWeight="600"
+                    >
+                      {c}
+                    </text>
+                  ))}
+                  {chart.paths.map(({ s, d, pts, color }) => (
                     <g key={s.sailorId}>
                       {d ? (
                         <path
@@ -331,21 +352,30 @@ export function AdminGoldAnalysisPanel({
                           strokeLinecap="round"
                         />
                       ) : null}
-                      {s.postPromo.map((p) => (
-                        <circle
-                          key={`${s.sailorId}-${p.seq}`}
-                          cx={chart.xFor(p.seq)}
-                          cy={chart.yFor(p.rank)}
-                          r={4}
-                          fill={color}
-                          stroke="#090a0f"
-                          strokeWidth="1.5"
-                        >
-                          <title>
-                            {s.name}: E{p.seq} · {p.regattaName} · #{p.rank}
-                          </title>
-                        </circle>
-                      ))}
+                      {pts.map((v, i) =>
+                        v == null ? null : (
+                          <g key={`${s.sailorId}-${i}`}>
+                            <circle
+                              cx={chart.xFor(i)}
+                              cy={chart.yFor(v)}
+                              r={5}
+                              fill={color}
+                              stroke="#090a0f"
+                              strokeWidth="1.5"
+                            />
+                            <text
+                              x={chart.xFor(i)}
+                              y={chart.yFor(v) - 10}
+                              textAnchor="middle"
+                              fill={color}
+                              fontSize="10"
+                              fontWeight="600"
+                            >
+                              {v}
+                            </text>
+                          </g>
+                        )
+                      )}
                     </g>
                   ))}
                 </svg>
@@ -371,7 +401,7 @@ export function AdminGoldAnalysisPanel({
             <div className="glass-panel rounded-2xl border border-white/5 overflow-hidden">
               <div className="px-4 py-3 border-b border-white/5">
                 <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-                  Summary
+                  Summary (Best 3 of 5 · lower is better)
                 </h3>
               </div>
               <div className="overflow-x-auto">
@@ -380,15 +410,11 @@ export function AdminGoldAnalysisPanel({
                     <tr className="text-[10px] uppercase tracking-wide text-slate-500 border-b border-white/5">
                       <th className="px-3 py-2 font-bold">Sailor</th>
                       <th className="px-3 py-2 font-bold">Gold entry</th>
-                      <th className="px-3 py-2 font-bold">Events</th>
-                      <th className="px-3 py-2 font-bold">
-                        Immediate (avg first {windowN})
-                      </th>
-                      <th className="px-3 py-2 font-bold">
-                        Current (avg last {windowN})
-                      </th>
-                      <th className="px-3 py-2 font-bold">Best</th>
-                      <th className="px-3 py-2 font-bold">Last</th>
+                      <th className="px-3 py-2 font-bold">H1 (promo)</th>
+                      <th className="px-3 py-2 font-bold">H2</th>
+                      <th className="px-3 py-2 font-bold">Immediate avg</th>
+                      <th className="px-3 py-2 font-bold">Current half</th>
+                      <th className="px-3 py-2 font-bold">Series # now</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5">
@@ -417,19 +443,61 @@ export function AdminGoldAnalysisPanel({
                           </span>
                         </td>
                         <td className="px-3 py-2.5 tabular-nums">
-                          {s.eventCount}
+                          <span className="font-semibold text-white">
+                            {fmtScore(s.half1?.best3of5)}
+                          </span>
+                          {s.half1?.seriesRank != null && (
+                            <span className="block text-[10px] text-slate-500">
+                              #{s.half1.seriesRank}
+                              {s.half1.fleetSize
+                                ? ` / ${s.half1.fleetSize}`
+                                : ""}
+                            </span>
+                          )}
+                          <span className="block text-[9px] text-slate-600">
+                            {s.half1?.periodLabel}
+                          </span>
+                        </td>
+                        <td className="px-3 py-2.5 tabular-nums">
+                          <span className="font-semibold text-white">
+                            {fmtScore(s.half2?.best3of5)}
+                          </span>
+                          {s.half2?.seriesRank != null && (
+                            <span className="block text-[10px] text-slate-500">
+                              #{s.half2.seriesRank}
+                              {s.half2.fleetSize
+                                ? ` / ${s.half2.fleetSize}`
+                                : ""}
+                            </span>
+                          )}
+                          <span className="block text-[9px] text-slate-600">
+                            {s.half2?.periodLabel}
+                          </span>
                         </td>
                         <td className="px-3 py-2.5 tabular-nums font-semibold text-emerald-400">
-                          {s.immediateAvgRank ?? "—"}
+                          {fmtScore(s.immediateBest3Avg)}
+                          {s.immediateRankAvg != null && (
+                            <span className="block text-[10px] font-normal text-slate-500">
+                              avg rank #{s.immediateRankAvg}
+                            </span>
+                          )}
                         </td>
                         <td className="px-3 py-2.5 tabular-nums font-semibold text-sky-400">
-                          {s.currentAvgRank ?? "—"}
+                          {fmtScore(s.currentBest3)}
+                          <span className="block text-[9px] font-normal text-slate-600">
+                            {s.currentHalf?.periodLabel}
+                          </span>
                         </td>
                         <td className="px-3 py-2.5 tabular-nums">
-                          {s.bestPostRank ?? "—"}
-                        </td>
-                        <td className="px-3 py-2.5 tabular-nums">
-                          {s.lastRank ?? "—"}
+                          {s.currentSeriesRank != null
+                            ? `#${s.currentSeriesRank}`
+                            : "—"}
+                          {s.currentHalf?.fleetSize != null && (
+                            <span className="text-slate-500">
+                              {" "}
+                              / {s.currentHalf.fleetSize}
+                            </span>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -442,11 +510,10 @@ export function AdminGoldAnalysisPanel({
       </div>
 
       <p className="text-[10px] text-slate-600 leading-relaxed max-w-3xl">
-        Scope: Optimist ranking regattas only (non-ranking excluded). Pre-gold
-        results are ignored so promotion dates can differ. Sailors may also race
-        ILCA 4 while in Optimist; this board is Optimist Gold ranking only.
-        Optimist eligibility ends when age is over 15 — dual-class ILCA 4 is
-        allowed before that.
+        Ranking Optimist Gold events only (DNS = fleet size + 1; overseas
+        commitment scores included as stored). Non-ranking regattas are never
+        used. ILCA 4 analysis can be added later as a separate single-fleet
+        board.
       </p>
     </div>
   );
