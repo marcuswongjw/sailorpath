@@ -1,12 +1,14 @@
 /**
- * Official ILCA 4 national ranking list (Singapore series).
- * Only these sailors appear on the ILCA 4 national ranking board.
+ * ILCA 4 national ranking list helpers.
+ *
+ * Membership is stored on sailors.ilca4_national_list (admin-managed).
+ * SEED_NAMES is the official authority list used to bootstrap flags by name match.
  * Squad selection additionally requires SGP nationality.
  */
 
 import { nameTokenKey } from "@/lib/nameMatch";
 
-/** Display names as provided by the authority (Last, First …). */
+/** Display names as provided by the authority (Last, First …) — used for seed only. */
 export const ILCA4_NATIONAL_RANKING_NAMES: readonly string[] = [
   "Goh, Ian",
   "Chia, Ethan Han Wei",
@@ -87,10 +89,32 @@ const NATIONAL_KEYS = new Set(
   ILCA4_NATIONAL_RANKING_NAMES.map((n) => nameTokenKey(n))
 );
 
-/** True when the sailor name matches the official ILCA 4 national list. */
-export function isOnIlca4NationalList(name: string | null | undefined): boolean {
+/** True when the display name matches a seed list entry (order-insensitive). */
+export function isOnIlca4NationalListByName(
+  name: string | null | undefined
+): boolean {
   if (!name || !String(name).trim()) return false;
   return NATIONAL_KEYS.has(nameTokenKey(name));
+}
+
+/** @deprecated use isOnIlca4NationalListByName or isSailorOnIlca4NationalList */
+export function isOnIlca4NationalList(
+  name: string | null | undefined
+): boolean {
+  return isOnIlca4NationalListByName(name);
+}
+
+/**
+ * Ranking membership: prefer DB flag; fall back to seed name list when flag
+ * is unset (column not migrated / not yet seeded).
+ */
+export function isSailorOnIlca4NationalList(s: {
+  name?: string | null;
+  ilca4NationalList?: boolean | null;
+}): boolean {
+  if (s.ilca4NationalList === true) return true;
+  if (s.ilca4NationalList === false) return false;
+  return isOnIlca4NationalListByName(s.name);
 }
 
 export function isSingaporeNationality(

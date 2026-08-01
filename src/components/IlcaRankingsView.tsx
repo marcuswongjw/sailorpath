@@ -9,7 +9,6 @@ import {
   ILCA_POLICY_NOTES,
   type IlcaIntakeKind,
 } from "@/lib/ilcaRanking";
-import { ILCA4_NATIONAL_RANKING_NAMES } from "@/lib/ilca4NationalList";
 import { Trophy, Users } from "lucide-react";
 
 export type IlcaPublicSailor = {
@@ -21,6 +20,7 @@ export type IlcaPublicSailor = {
   nationality?: string | null;
   sailNumber?: string | null;
   sailNumberIlca4?: string | null;
+  ilca4NationalList?: boolean | null;
   club?: string | null;
 };
 
@@ -76,6 +76,7 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
           nationality: s.nationality,
           sailNumber: s.sailNumber,
           sailNumberIlca4: s.sailNumberIlca4,
+          ilca4NationalList: s.ilca4NationalList,
           club: s.club,
           handle: s.handle,
         })),
@@ -170,8 +171,8 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
               National ranking list
             </h2>
             <p className="text-[10px] text-slate-500 mt-0.5">
-              {ILCA4_NATIONAL_RANKING_NAMES.length} authorised names · scores
-              only for sailors with ranking results
+              Admin-managed list · scores only for sailors with ranking results
+              in the window
             </p>
           </div>
           {filtered.length === 0 ? (

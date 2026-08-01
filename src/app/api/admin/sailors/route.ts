@@ -53,6 +53,95 @@ export async function POST(req: Request) {
     const { logAdminChange } = await import("@/lib/adminChangeLog");
 
     /**
+     * Seed ILCA 4 national list flags from the official authority name list
+     * (name-token match). Only turns flags ON — never clears existing true.
+     */
+    if (body.action === "seedIlca4NationalList") {
+      const { isOnIlca4NationalListByName, ILCA4_NATIONAL_RANKING_NAMES } =
+        await import("@/lib/ilca4NationalList");
+      const { logAdminChange } = await import("@/lib/adminChangeLog");
+      const rows = await db.select().from(sailors);
+      let updated = 0;
+      const matched: string[] = [];
+      for (const s of rows) {
+        if (s.ilca4NationalList) continue;
+        if (!isOnIlca4NationalListByName(s.name)) continue;
+        await db
+          .update(sailors)
+          .set({ ilca4NationalList: true, updatedAt: new Date() })
+          .where(eq(sailors.id, s.id));
+        updated++;
+        if (matched.length < 40) matched.push(s.name);
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "ilca4.national_list.seed",
+          entityType: "sailor",
+          entityId: s.id,
+          entityLabel: s.name,
+          summary: `Seeded ILCA 4 national list from name match`,
+          source: "/api/admin/sailors",
+        });
+      }
+      return NextResponse.json({
+        ok: true,
+        updated,
+        seedListSize: ILCA4_NATIONAL_RANKING_NAMES.length,
+        matchedSample: matched,
+        message: `Set ILCA 4 national list on ${updated} sailor(s) matching the ${ILCA4_NATIONAL_RANKING_NAMES.length}-name seed list.`,
+      });
+    }
+
+    /** Bulk set/clear ILCA 4 national list flag */
+    if (body.action === "setIlca4NationalList") {
+      const { logAdminChange } = await import("@/lib/adminChangeLog");
+      const ids = Array.isArray(body.sailorIds)
+        ? (body.sailorIds as unknown[]).map((x) => String(x)).filter(Boolean)
+        : body.sailorId
+          ? [String(body.sailorId)]
+          : [];
+      const value = Boolean(body.value);
+      if (!ids.length) {
+        return NextResponse.json(
+          { error: "sailorIds required" },
+          { status: 400 }
+        );
+      }
+      let updated = 0;
+      for (const id of ids) {
+        const [row] = await db
+          .update(sailors)
+          .set({ ilca4NationalList: value, updatedAt: new Date() })
+          .where(eq(sailors.id, id))
+          .returning({ id: sailors.id, name: sailors.name });
+        if (!row) continue;
+        updated++;
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: value
+            ? "ilca4.national_list.add"
+            : "ilca4.national_list.remove",
+          entityType: "sailor",
+          entityId: row.id,
+          entityLabel: row.name,
+          summary: value
+            ? `Added ${row.name} to ILCA 4 national list`
+            : `Removed ${row.name} from ILCA 4 national list`,
+          source: "/api/admin/sailors",
+        });
+      }
+      return NextResponse.json({
+        ok: true,
+        updated,
+        value,
+        message: value
+          ? `Added ${updated} sailor(s) to ILCA 4 national list`
+          : `Removed ${updated} sailor(s) from ILCA 4 national list`,
+      });
+    }
+
+    /**
      * Stamp silver entry (SG today) for In SG Fleet sailors with no gold/silver
      * entry dates so they can appear on Silver rankings.
      */
@@ -338,6 +427,7 @@ export async function PATCH(req: Request) {
       "name",
       "handle",
       "sailNumber",
+      "sailNumberIlca4",
       "club",
       "school",
       "gender",
@@ -351,6 +441,9 @@ export async function PATCH(req: Request) {
       "natSquadStatusJul26",
     ] as const) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
+    }
+    if (body.ilca4NationalList !== undefined) {
+      patch.ilca4NationalList = Boolean(body.ilca4NationalList);
     }
     if (body.currentFleet !== undefined) {
       patch.currentFleet =

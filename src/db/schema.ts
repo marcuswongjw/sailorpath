@@ -34,6 +34,11 @@ export const sailors = pgTable("sailors", {
    * Optimist and ILCA 4 numbers; each class tracks latest by regatta date.
    */
   sailNumberIlca4: text("sail_number_ilca4"),
+  /**
+   * On the official ILCA 4 national ranking list (admin-managed).
+   * Public standings only include sailors with this flag.
+   */
+  ilca4NationalList: boolean("ilca4_national_list").default(false).notNull(),
   club: text("club").notNull(),
   school: text("school"),
   /** Country / nationality (e.g. Singapore, SGP) — optional */

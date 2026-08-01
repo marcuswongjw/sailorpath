@@ -24,6 +24,7 @@ export default async function Ilca4StandingsPage() {
           nationality: s.nationality,
           sailNumber: s.sailNumber,
           sailNumberIlca4: s.sailNumberIlca4,
+          ilca4NationalList: s.ilca4NationalList,
           club: s.club,
         }))}
         regattas={regattas.map((r) => ({

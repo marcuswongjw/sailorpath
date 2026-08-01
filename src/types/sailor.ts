@@ -9,6 +9,8 @@ export type SailorAdmin = {
   sailNumber: string;
   /** Optional ILCA 4 sail number (dual numbers for under-15s) */
   sailNumberIlca4?: string | null;
+  /** On ILCA 4 national ranking list (admin-managed) */
+  ilca4NationalList?: boolean | null;
   club: string;
   school?: string | null;
   nationality?: string | null;

@@ -106,21 +106,32 @@ export type SailorMatchRow = {
   name: string;
 };
 
+export type SailorDupRow = SailorMatchRow & {
+  sailNumber?: string | null;
+  /** ILCA 4 sail number — same number also flags duplicates */
+  sailNumberIlca4?: string | null;
+};
+
 export type DuplicatePair = {
-  a: SailorMatchRow & { sailNumber?: string | null };
-  b: SailorMatchRow & { sailNumber?: string | null };
+  a: SailorDupRow;
+  b: SailorDupRow;
   similarity: number;
   how: string;
   /** Confidence band for UI: high >= 0.8, medium >= 0.6 */
   band: "high" | "medium";
 };
 
+function isPlaceholderSail(s: string): boolean {
+  return !s || /^SGP\s*0+$/i.test(s);
+}
+
 /**
  * Find pairs of sailors that look like the same person.
  * Default threshold 0.60 — UI should highlight 60%+ matches.
+ * Also boosts / surfaces same Optimist or ILCA 4 sail numbers.
  */
 export function findDuplicateSailorPairs(
-  sailors: (SailorMatchRow & { sailNumber?: string | null })[],
+  sailors: SailorDupRow[],
   minSimilarity = 0.6
 ): DuplicatePair[] {
   const pairs: DuplicatePair[] = [];
@@ -141,20 +152,31 @@ export function findDuplicateSailorPairs(
         how = "same-normalized-name";
       }
 
-      // Same sail number (non-placeholder) boosts score
+      // Same Optimist sail number (non-placeholder) boosts score
       const sa = (a.sailNumber || "").trim();
       const sb = (b.sailNumber || "").trim();
-      if (
-        sa &&
-        sb &&
-        sa === sb &&
-        !/^SGP\s*0+$/i.test(sa)
-      ) {
+      if (sa && sb && sa === sb && !isPlaceholderSail(sa)) {
         sim = Math.max(sim, Math.min(1, sim + 0.25));
         how = sim >= 0.6 ? "same-sail-number+name" : "same-sail-number";
         if (sim < minSimilarity && sim >= 0.5) {
-          // Still surface same sail with moderate name overlap
           sim = Math.max(sim, 0.6);
+        }
+      }
+
+      // Same ILCA 4 sail number
+      const ia = (a.sailNumberIlca4 || "").trim();
+      const ib = (b.sailNumberIlca4 || "").trim();
+      if (ia && ib && ia === ib && !isPlaceholderSail(ia)) {
+        sim = Math.max(sim, Math.min(1, sim + 0.3));
+        how =
+          sim >= 0.6
+            ? how.includes("name")
+              ? "same-ilca4-sail+name"
+              : "same-ilca4-sail+name"
+            : "same-ilca4-sail";
+        if (sim < minSimilarity) {
+          sim = Math.max(sim, 0.65);
+          how = "same-ilca4-sail";
         }
       }
 

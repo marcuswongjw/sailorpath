@@ -29,7 +29,13 @@ Optimist Gold/Silver continues to use **place as score** (lower is better) and i
 
 ## ILCA 4 national ranking list
 
-Only sailors on the **official national list** (see `src/lib/ilca4NationalList.ts`) appear on the public ILCA 4 board. Name matching is order-insensitive (token sort).
+Membership is **admin-managed** (`sailors.ilca4_national_list`, migration `026_ilca4_national_list.sql`).
+
+- **Admin → ILCA ranking**: shows **all** sailors with ILCA 4 results or an ILCA 4 sail number; toggle **Add to list / remove**.
+- **Seed from official 73 names**: matches DB names to the authority list (token-order, e.g. `Goh, Ian` ≈ `Ian Goh`).
+- **Public board** (`/sg/ilca4`): only flagged sailors **with ranking results** in the Best-3-of-5 window.
+- Until at least one DB flag is set, the seed name list is used as a fallback.
+- **ILCA 4 duplicate finder** in the same admin tab (name / Optimist sail / ILCA 4 sail).
 
 ## ILCA 4 national squad (up to 16)
 

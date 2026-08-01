@@ -17,7 +17,7 @@ import { ageYears, birthYear } from "@/lib/age";
 import { toYmd } from "@/lib/datesSg";
 import { isSingleFleetClass } from "@/lib/countries";
 import {
-  isOnIlca4NationalList,
+  isSailorOnIlca4NationalList,
   isSingaporeNationality,
 } from "@/lib/ilca4NationalList";
 
@@ -49,6 +49,8 @@ export type IlcaSailor = {
   nationality?: string | null;
   sailNumber?: string | null;
   sailNumberIlca4?: string | null;
+  /** Admin-managed national ranking membership */
+  ilca4NationalList?: boolean | null;
   club?: string | null;
   handle?: string | null;
 };
@@ -223,9 +225,20 @@ export function computeIlcaRankings(
   const useNationalList =
     boatClass === "ILCA 4" && opts?.restrictToNationalList !== false;
 
+  /** Once any sailor is flagged in DB, only flags count; otherwise seed names. */
+  const anyDbFlagged =
+    useNationalList &&
+    sailors.some((s) => s.ilca4NationalList === true);
+
   const candidates = sailors.filter((s) => {
     if (!sailorIdsWithResults.has(s.id)) return false;
-    if (useNationalList && !isOnIlca4NationalList(s.name)) return false;
+    if (useNationalList) {
+      if (anyDbFlagged) {
+        if (s.ilca4NationalList !== true) return false;
+      } else if (!isSailorOnIlca4NationalList(s)) {
+        return false;
+      }
+    }
     return true;
   });
 
@@ -383,7 +396,7 @@ export const ILCA_POLICY_NOTES = {
   highPoints:
     "ILCA 4 and ILCA 6 use High Ranking Points: in a fleet of N, 1st earns N points, 2nd earns N−1, and so on. Best 3 of the last 5 ranking regattas (higher total is better).",
   nationalList:
-    "Only sailors on the official ILCA 4 national ranking list appear on the public board.",
+    "Only sailors marked on the ILCA 4 national ranking list (admin-managed) appear on the public board.",
   squad:
     "ILCA 4 national squad (≤16, SGP nationality only, birth year implies ≤17 in intake year): ranking as of 30 Jun (July intake) or 20 Dec (January intake). From top 25: top 2 M/F overall, then top 2 M/F in the intake-year-16 bucket, then top 4 M/F in ≤15 bucket; fill remaining with next highest same gender.",
 } as const;

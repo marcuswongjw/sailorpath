@@ -1456,6 +1456,50 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               sailors={sailorList}
               regattas={regattaList}
               results={resultsList}
+              onSailorsChange={setSailorList}
+              onMergePair={async (keepId, mergeId) => {
+                const keep = sailorList.find((s) => s.id === keepId);
+                const merge = sailorList.find((s) => s.id === mergeId);
+                if (!keep || !merge) {
+                  alert("Sailors not found");
+                  return;
+                }
+                // Reuse mergeSailors flow via ids
+                setSelectedSailors([keepId, mergeId]);
+                // Direct merge call (mirrors mergeSelectedSailors)
+                if (
+                  !confirm(
+                    `Merge ILCA 4 duplicates?\n\nKEEP: ${keep.name}\nDELETE: ${merge.name}\n\nResults and aliases move to keep.`
+                  )
+                ) {
+                  return;
+                }
+                try {
+                  const res = await fetch("/api/admin/sailors/merge", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ keepId, mergeId }),
+                  });
+                  const data = await res.json();
+                  if (!res.ok) throw new Error(data.error || "Merge failed");
+                  setSailorList((prev) =>
+                    prev.filter((s) => s.id !== mergeId)
+                  );
+                  setResultsList((prev) =>
+                    prev.map((r) =>
+                      r.sailorId === mergeId
+                        ? { ...r, sailorId: keepId }
+                        : r
+                    )
+                  );
+                  alert(
+                    data.message ||
+                      `Merged ${merge.name} → ${keep.name}`
+                  );
+                } catch (e) {
+                  alert(e instanceof Error ? e.message : "Merge failed");
+                }
+              }}
             />
           </div>
         )}

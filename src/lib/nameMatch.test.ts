@@ -87,6 +87,23 @@ describe("findDuplicateSailorPairs", () => {
     );
     expect(pairs.every((p) => p.similarity >= 0.99)).toBe(true);
   });
+
+  it("flags same ILCA 4 sail numbers", () => {
+    const pairs = findDuplicateSailorPairs([
+      {
+        id: "a",
+        name: "Alice Wong",
+        sailNumberIlca4: "SGP 1234",
+      },
+      {
+        id: "b",
+        name: "Different Name",
+        sailNumberIlca4: "SGP 1234",
+      },
+    ]);
+    expect(pairs.length).toBeGreaterThanOrEqual(1);
+    expect(pairs[0].how).toMatch(/ilca4/i);
+  });
 });
 
 describe("suggestSailorByName", () => {
