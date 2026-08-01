@@ -366,6 +366,7 @@ export async function getResultsForSailor(sailorId: string) {
         raceCount: regattas.raceCount,
         geography: regattas.geography,
         countsForRanking: regattas.countsForRanking,
+        boatClass: regattas.boatClass,
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))

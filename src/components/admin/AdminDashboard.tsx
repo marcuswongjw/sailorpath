@@ -46,7 +46,7 @@ import { AdminSailorsPanel } from "@/components/admin/AdminSailorsPanel";
 import { AdminCompetitionsPanel } from "@/components/admin/AdminCompetitionsPanel";
 import { AdminGoldAnalysisPanel } from "@/components/admin/AdminGoldAnalysisPanel";
 import { AdminIlcaRankingPanel } from "@/components/admin/AdminIlcaRankingPanel";
-import { ageYears } from "@/lib/age";
+import { birthYear } from "@/lib/age";
 import {
   currentPeriodFromSgToday,
   halfBoundaryOptions,
@@ -455,9 +455,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           return best3BySailor[s.id] ?? 99999;
         case "gender":
           return s.gender || "";
+        case "birthYear":
         case "age": {
-          const a = ageYears(s.dob as string | null);
-          return a == null ? 99999 : a;
+          // legacy "age" key maps to birth year for sort
+          const y = birthYear(s.dob as string | null);
+          return y == null ? 99999 : y;
         }
         case "club":
           return s.club || "";

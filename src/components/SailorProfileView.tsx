@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import Link from "next/link";
 import { normalizeNationality } from "@/lib/seriesMembership";
-import { ageYears } from "@/lib/age";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import {
   Link2,
@@ -28,6 +27,9 @@ import {
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
+  profileBoatClassGroup,
+  tenureFromFirstDate,
+  type ProfileResult,
 } from "@/lib/profileAnalytics";
 import {
   PROFILE_CARD_CLASS as cardClass,
@@ -586,11 +588,33 @@ export function SailorProfileView({
   const fleetBadge = resolveDisplayFleet(
     displaySailor as Record<string, unknown>
   );
+
+  /** Split raw results by boat class (before gold filtering) */
+  const classBuckets = useMemo(() => {
+    const all = results as ProfileResult[];
+    const optimist: ProfileResult[] = [];
+    const ilca4: ProfileResult[] = [];
+    const ilca6: ProfileResult[] = [];
+    for (const r of all) {
+      const g = profileBoatClassGroup(r.boatClass);
+      if (g === "ilca4") ilca4.push(r);
+      else if (g === "ilca6") ilca6.push(r);
+      else optimist.push(r);
+    }
+    const byDate = (a: ProfileResult, b: ProfileResult) =>
+      String(b.regattaDate || "").localeCompare(String(a.regattaDate || ""));
+    optimist.sort(byDate);
+    ilca4.sort(byDate);
+    ilca6.sort(byDate);
+    return { optimist, ilca4, ilca6 };
+  }, [results]);
+
+  // Optimist-only analytics (gold tenure, medals, trend) — ILCA never mixes in
   const analytics = useMemo(
     () =>
       buildProfileAnalytics(
         displaySailor as never,
-        results as never,
+        classBuckets.optimist as never,
         observations as never,
         initialSeriesStanding
           ? {
@@ -600,13 +624,14 @@ export function SailorProfileView({
             }
           : null
       ),
-    [displaySailor, results, observations, initialSeriesStanding]
+    [displaySailor, classBuckets.optimist, observations, initialSeriesStanding]
   );
 
   /**
    * DOB privacy:
-   * - Born year is always public when DOB is set
-   * - Full date (+ age) only when owner shared it or viewer has private access
+   * - Birth year is always public when DOB is set
+   * - Full date only when owner shared it or viewer has private access
+   * - Age is never shown
    */
   const dobYmd = displaySailor.dob
     ? String(displaySailor.dob).slice(0, 10)
@@ -617,8 +642,6 @@ export function SailorProfileView({
     Boolean(bornYear) && (isPublicDob || hasPrivateAccess);
   const fullDobLabel =
     showFullDob && dobYmd ? formatFullDob(dobYmd) : null;
-  const ageLabel =
-    showFullDob && dobYmd ? ageYears(dobYmd) : null;
 
   const hasEquipment =
     showEquipment &&
@@ -629,10 +652,38 @@ export function SailorProfileView({
       displayEquipment.mast ||
       displayEquipment.notes);
 
+  const optimistResults = analytics.listResults;
+  const ilca4Results = classBuckets.ilca4;
+  const ilca6Results = classBuckets.ilca6;
+  const hasIlcaResults = ilca4Results.length > 0 || ilca6Results.length > 0;
+  const hasOptimistResults =
+    optimistResults.length > 0 || classBuckets.optimist.length > 0;
+  const dualClass = hasIlcaResults && classBuckets.optimist.length > 0;
+
+  const ilca4Tenure = useMemo(() => {
+    if (!ilca4Results.length) return null;
+    const first = [...ilca4Results]
+      .map((r) => String(r.regattaDate || "").slice(0, 10))
+      .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
+      .sort()[0];
+    return tenureFromFirstDate(first);
+  }, [ilca4Results]);
+
+  // Dual class: Optimist section + separate ILCA section. Single class: one list.
+  const resultsForPrimarySection = dualClass
+    ? optimistResults
+    : hasIlcaResults && classBuckets.optimist.length === 0
+      ? (ilca4Results.length ? ilca4Results : ilca6Results)
+      : optimistResults;
+
   const visibleResults = showAllResults
-    ? analytics.listResults
-    : analytics.listResults.slice(0, 8);
-  const hasMoreResults = analytics.listResults.length > 8;
+    ? resultsForPrimarySection
+    : resultsForPrimarySection.slice(0, 8);
+  const hasMoreResults = resultsForPrimarySection.length > 8;
+  const visibleIlca4 = showAllResults
+    ? ilca4Results
+    : ilca4Results.slice(0, 8);
+  const hasMoreIlca4 = ilca4Results.length > 8;
 
   const sailDisplay = String(displaySailor.sailNumber || "—");
   const sailIlca4 = displaySailor.sailNumberIlca4
@@ -690,7 +741,7 @@ export function SailorProfileView({
           },
         ];
 
-  // Medal tally only for established with podium/top10
+  // Medal tally only for established Optimist gold with podium medals
   const showMedals =
     analytics.mode === "established_gold" && analytics.medals.show;
 
@@ -755,8 +806,16 @@ export function SailorProfileView({
                   </span>
                 </div>
                 <p className="mt-0.5 text-[13px] text-neutral-400">
-                  Optimist class
+                  {[
+                    hasOptimistResults || !hasIlcaResults ? "Optimist" : null,
+                    hasIlcaResults ? "ILCA 4" : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
                   {displaySailor.club ? ` · ${displaySailor.club}` : ""}
+                  {ilca4Tenure
+                    ? ` · ILCA 4 ${ilca4Tenure.label}`
+                    : ""}
                 </p>
               </div>
               <div className="shrink-0 text-right space-y-1.5">
@@ -802,18 +861,12 @@ export function SailorProfileView({
               </span>
               {bornYear && (
                 <span>
-                  Born{" "}
+                  Birth year{" "}
                   <span className="text-neutral-300 font-medium">
                     {showFullDob && fullDobLabel
                       ? fullDobLabel
                       : bornYear}
                   </span>
-                  {showFullDob && ageLabel != null && (
-                    <span className="text-neutral-500">
-                      {" "}
-                      · age {ageLabel}
-                    </span>
-                  )}
                 </span>
               )}
               {showWeight && displaySailor.weight != null && (
@@ -1428,13 +1481,22 @@ export function SailorProfileView({
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex flex-wrap items-end justify-between gap-2">
           <div>
             <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-              Regatta results
+              {dualClass
+                ? "Optimist regatta results"
+                : hasIlcaResults && !hasOptimistResults
+                  ? "ILCA regatta results"
+                  : "Regatta results"}
             </h2>
             <p className="text-[11px] text-neutral-600 mt-0.5">
               {showAllResults
-                ? `All ${analytics.listResults.length} listed`
-                : `Showing ${Math.min(8, analytics.listResults.length)} of ${analytics.listResults.length}`}
-              {analytics.mode === "established_gold" ? " · gold fleet" : ""}
+                ? `All ${resultsForPrimarySection.length} listed`
+                : `Showing ${Math.min(8, resultsForPrimarySection.length)} of ${resultsForPrimarySection.length}`}
+              {analytics.mode === "established_gold" && !dualClass
+                ? " · gold fleet"
+                : ""}
+              {hasIlcaResults && !hasOptimistResults && ilca4Tenure
+                ? ` · in ILCA 4 ${ilca4Tenure.label} (from first race)`
+                : ""}
             </p>
           </div>
           {isOwner && (
@@ -1810,13 +1872,94 @@ export function SailorProfileView({
                 >
                   {showAllResults
                     ? "Show fewer"
-                    : `View all ${analytics.listResults.length} results`}
+                    : `View all ${resultsForPrimarySection.length} results`}
                 </button>
               </div>
             )}
           </>
         )}
       </section>
+
+      {/* ── ILCA 4 results (dual-class sailors) ──────────────── */}
+      {dualClass && ilca4Results.length > 0 && (
+        <section className={`${cardClass} overflow-hidden`}>
+          <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2">
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-sky-400/90">
+              ILCA 4 regatta results
+            </h2>
+            <p className="text-[11px] text-neutral-600 mt-0.5">
+              {showAllResults
+                ? `All ${ilca4Results.length} listed`
+                : `Showing ${Math.min(8, ilca4Results.length)} of ${ilca4Results.length}`}
+              {ilca4Tenure
+                ? ` · in class ${ilca4Tenure.label} (from first ILCA 4 race ${ilca4Tenure.firstDate.slice(0, 4)})`
+                : ""}
+            </p>
+          </div>
+          <div className="divide-y divide-white/[0.04]">
+            {visibleIlca4.map((res, idx) => {
+              const regattaId = String(res.regattaId || res.id || `ilca-${idx}`);
+              const rank = res.rank != null ? Number(res.rank) : null;
+              const dns = Boolean(res.isDns || res.isDNS);
+              const fleetSize = res.totalFleetSize ?? res.fleetSize;
+              const pts =
+                res.nettScore != null && Number.isFinite(Number(res.nettScore))
+                  ? Number(res.nettScore)
+                  : null;
+              return (
+                <div
+                  key={regattaId + String(idx)}
+                  className="grid grid-cols-[2.75rem_1fr_auto] sm:grid-cols-[2.75rem_1fr_3rem_4.25rem] gap-2 items-start px-4 sm:px-5 py-3.5"
+                >
+                  <span
+                    className={`text-[15px] font-semibold tabular-nums pt-0.5 ${
+                      dns ? "text-rose-400" : "text-neutral-200"
+                    }`}
+                  >
+                    {dns ? "DNS" : rank != null ? rank : "—"}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[13px] font-medium text-white truncate">
+                      {res.regattaName}
+                    </p>
+                    <p className="text-[11px] text-neutral-500 truncate mt-0.5">
+                      {[
+                        res.geography,
+                        formatEventWhen(res.regattaDate as string),
+                        fleetSize ? `${fleetSize} boats` : null,
+                        "ILCA 4",
+                      ]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </p>
+                  </div>
+                  <span className="hidden sm:block text-right text-[13px] tabular-nums text-neutral-400 pt-0.5">
+                    {pts != null ? pts : "—"}
+                  </span>
+                  <span className="flex items-center justify-end pt-0.5">
+                    <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold bg-sky-500/15 text-sky-300">
+                      ILCA 4
+                    </span>
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          {hasMoreIlca4 && (
+            <div className="border-t border-white/[0.05] px-4 sm:px-5 py-3 text-center">
+              <button
+                type="button"
+                onClick={() => setShowAllResults((v) => !v)}
+                className="text-[12px] font-semibold text-sky-400 hover:text-sky-300"
+              >
+                {showAllResults
+                  ? "Show fewer"
+                  : `View all ${ilca4Results.length} ILCA 4 results`}
+              </button>
+            </div>
+          )}
+        </section>
+      )}
 
       {/* ── Privacy (owner) ──────────────────────────────────── */}
       {canSeePrivate && (
@@ -1829,9 +1972,10 @@ export function SailorProfileView({
           </div>
           <div className="space-y-3">
             <p className="text-[11px] text-neutral-500 leading-relaxed">
-              <span className="text-neutral-400 font-medium">Born year</span> is
-              always public when set. Full date of birth and age stay private
-              unless shared. Weight and equipment stay private unless shared.
+              <span className="text-neutral-400 font-medium">Birth year</span> is
+              always public when set. Full date of birth stays private unless
+              shared. Weight and equipment stay private unless shared. Age is
+              never shown on profiles.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {(
@@ -1850,7 +1994,7 @@ export function SailorProfileView({
                   },
                   {
                     label: "Share full date of birth",
-                    hint: "Year is always public; this also shows day/month + age",
+                    hint: "Birth year is always public; this also shows day/month",
                     checked: isPublicDob,
                     set: setIsPublicDob,
                   },

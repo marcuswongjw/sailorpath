@@ -339,7 +339,7 @@ export function AdminResultsPanel({
                           <th className="py-4 px-4 text-center">Rank</th>
                           <th className="py-4 px-6">Name</th>
                           <th className="py-4 px-4 text-center">Gender</th>
-                          <th className="py-4 px-4 text-center">Age</th>
+                          <th className="py-4 px-4 text-center">Birth year</th>
                           <th className="py-4 px-4 text-center">Total Score</th>
                           <th className="py-4 px-4 text-center">Nett Score</th>
                           <th className="py-4 px-4 text-center">Status</th>
@@ -355,11 +355,11 @@ export function AdminResultsPanel({
                             const sailor = sailorList.find((s) => s.id === res.sailorId);
                             const dns = Boolean(res.isDns || res.isDNS);
                             const overseas = Boolean(res.isOverseasCommitment);
-                            const age = (() => {
+                            const birthY = (() => {
                               if (!sailor?.dob) return "—";
                               const y = new Date(sailor.dob).getFullYear();
                               if (!Number.isFinite(y)) return "—";
-                              return String(new Date().getFullYear() - y);
+                              return String(y);
                             })();
                             return (
                               <tr
@@ -383,7 +383,7 @@ export function AdminResultsPanel({
                                   {sailor?.gender || "—"}
                                 </td>
                                 <td className="py-4 px-4 text-center font-mono text-slate-300">
-                                  {age}
+                                  {birthY}
                                 </td>
                                 <td className="py-4 px-4 text-center font-mono">
                                   {res.totalScore != null ? res.totalScore : "—"}

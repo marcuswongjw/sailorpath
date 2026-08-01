@@ -17,7 +17,7 @@ import {
   Grid,
   UserCheck,
 } from "lucide-react";
-import { ageYears } from "@/lib/age";
+import { birthYear } from "@/lib/age";
 import {
   halfBoundaryOptions,
   todayYmdSg,
@@ -1108,10 +1108,19 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                               </span>
                             ),
                             gender: s.gender || "M",
+                            birthYear: (() => {
+                              const y = birthYear(s.dob as string | null);
+                              return y != null ? (
+                                <span className="font-mono text-white">{y}</span>
+                              ) : (
+                                <span className="text-slate-600">—</span>
+                              );
+                            })(),
+                            // legacy localStorage column key
                             age: (() => {
-                              const a = ageYears(s.dob as string | null);
-                              return a != null ? (
-                                <span className="font-mono text-white">{a}</span>
+                              const y = birthYear(s.dob as string | null);
+                              return y != null ? (
+                                <span className="font-mono text-white">{y}</span>
                               ) : (
                                 <span className="text-slate-600">—</span>
                               );

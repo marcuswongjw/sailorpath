@@ -84,18 +84,21 @@ describe("computeIlcaRankings + squad", () => {
       name: "Male1",
       gender: "M",
       dob: "2012-01-01", // 14 in 2026
+      nationality: "SGP",
     },
     {
       id: "f1",
       name: "Female1",
       gender: "F",
       dob: "2012-01-01",
+      nationality: "SGP",
     },
     {
       id: "m2",
       name: "Male2",
       gender: "M",
       dob: "2010-01-01", // 16 in 2026
+      nationality: "SGP",
     },
   ];
 
@@ -118,7 +121,7 @@ describe("computeIlcaRankings + squad", () => {
       sailors,
       regattas,
       results,
-      { intakeYear: 2026 }
+      { intakeYear: 2026, restrictToNationalList: false }
     );
     expect(ranked[0]?.sailorId).toBe("m1");
     // 1st in fleet of 10 → 10 pts × 3 = 30
@@ -126,18 +129,36 @@ describe("computeIlcaRankings + squad", () => {
     expect(ranked[1]?.totalPoints).toBe(27); // 9×3
   });
 
-  it("selects squad with gender and age buckets", () => {
+  it("selects squad with gender and birth-year buckets (SGP only)", () => {
     const ranked = computeIlcaRankings(
       "ILCA 4",
       "2026-06-30",
       sailors,
       regattas,
       results,
-      { intakeYear: 2026 }
+      { intakeYear: 2026, restrictToNationalList: false }
     );
     const squad = selectIlca4NationalSquad(ranked);
     expect(squad.some((s) => s.sailorId === "m1")).toBe(true);
     expect(squad.some((s) => s.sailorId === "f1")).toBe(true);
     expect(squad.length).toBeLessThanOrEqual(16);
+  });
+
+  it("excludes non-SGP from squad", () => {
+    const withNat = sailors.map((s) =>
+      s.id === "m1"
+        ? { ...s, nationality: "THA" }
+        : { ...s, nationality: "SGP" }
+    );
+    const ranked = computeIlcaRankings(
+      "ILCA 4",
+      "2026-06-30",
+      withNat,
+      regattas,
+      results,
+      { intakeYear: 2026, restrictToNationalList: false }
+    );
+    const squad = selectIlca4NationalSquad(ranked);
+    expect(squad.some((s) => s.sailorId === "m1")).toBe(false);
   });
 });

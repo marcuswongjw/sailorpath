@@ -6,7 +6,7 @@
  * Ranking regattas only (countsForRanking !== false).
  */
 
-import { ageYears } from "@/lib/age";
+import { birthYear } from "@/lib/age";
 import {
   currentPeriodFromSgToday,
   periodHalfFromYmd,
@@ -88,7 +88,8 @@ export type SailorGoldSeries = {
   gender: string | null;
   goldEntryDate: string;
   monthsInGold: number;
-  age: number | null;
+  /** Calendar birth year (not age) */
+  birthYear: number | null;
   club: string | null;
   sailNumber: string | null;
   handle: string | null;
@@ -316,7 +317,7 @@ export function buildSailorGoldSeries(
     gender: genderNorm(sailor.gender) || null,
     goldEntryDate: gold,
     monthsInGold: monthsBetween(gold, asOf),
-    age: ageYears(sailor.dob ?? null),
+    birthYear: birthYear(sailor.dob ?? null),
     club: sailor.club ?? null,
     sailNumber: sailor.sailNumber ?? null,
     handle: sailor.handle ?? null,

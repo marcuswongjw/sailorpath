@@ -88,6 +88,27 @@ describe("buildProfileAnalytics", () => {
     );
     expect(a.trend.every((t) => t.fleet === "Gold")).toBe(true);
     expect(a.top10Count).toBeGreaterThanOrEqual(1);
+    // Sample has 5th & 12th — top 10 but no podium → hide medal tally
+    expect(a.medals.show).toBe(false);
+  });
+
+  it("shows medal tally only with podium (1st–3rd)", () => {
+    const a = buildProfileAnalytics(
+      { goldEntryDate: monthsAgo(18) },
+      [
+        ...sampleResults,
+        {
+          id: "5",
+          regattaId: "r5",
+          regattaName: "Win",
+          regattaDate: "2026-05-01",
+          rank: 1,
+          division: "Gold",
+          geography: "SG",
+        },
+      ]
+    );
+    expect(a.medals.gold).toBe(1);
     expect(a.medals.show).toBe(true);
   });
 

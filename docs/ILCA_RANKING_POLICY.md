@@ -27,25 +27,31 @@ In a ranking regatta with **N** starters:
 
 Optimist Gold/Silver continues to use **place as score** (lower is better) and is **never mixed** with ILCA events.
 
+## ILCA 4 national ranking list
+
+Only sailors on the **official national list** (see `src/lib/ilca4NationalList.ts`) appear on the public ILCA 4 board. Name matching is order-insensitive (token sort).
+
 ## ILCA 4 national squad (up to 16)
 
-**Eligibility:** ranked **top 25**; age **≤ 17** in the intake year (age as of 31 Dec of intake year).
+**Eligibility:** on the national list; ranked **top 25**; **SGP nationality only**; birth year implies **≤ 17** in the intake year (as of 31 Dec of intake year).
 
 | Intake | Ranking as of |
 |--------|----------------|
 | **July** | **30 June** (same calendar year) |
 | **January** | **20 December** (previous calendar year) |
 
-**Selection order** (from the ranking list, top 25 only):
+**Selection order** (from the ranking list, top 25 only, SGP):
 
 1. Top **2 males** and top **2 females** (overall)
 2. Top **2 males** and top **2 females** who are **16** in the intake year
 3. Top **4 males** and top **4 females** who are **15 or younger** in the intake year
 
-If any bucket is short, invite the **next highest ranked sailor of the same gender** until the gender/age slots are filled (cap 16).
+If any bucket is short, invite the **next highest ranked sailor of the same gender** until the gender slots are filled (cap 16).
 
-## Admin
+## Admin / public
 
+- **Public:** `/sg/ilca4` national standings (menu: SG ILCA 4).
 - **Regatta Excel**: set Class = ILCA 4 → Open fleet (no Gold/Silver).
 - **Gold analysis**: Optimist Gold only.
 - **ILCA ranking** (admin tab): High-points series + squad shortlist preview.
+

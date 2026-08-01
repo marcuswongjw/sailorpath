@@ -9,7 +9,7 @@ export const DB_SAILOR_COLUMNS: {
   { key: "series", label: "SG Series", defaultOn: true },
   { key: "best3", label: "Best 3 of 5", defaultOn: true },
   { key: "gender", label: "Gender", defaultOn: true },
-  { key: "age", label: "Age", defaultOn: true },
+  { key: "birthYear", label: "Birth year", defaultOn: true },
   { key: "club", label: "Club", defaultOn: false },
   { key: "nationality", label: "Nationality", defaultOn: false },
   { key: "school", label: "School", defaultOn: false },

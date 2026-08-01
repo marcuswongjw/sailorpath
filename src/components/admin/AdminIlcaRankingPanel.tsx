@@ -22,8 +22,8 @@ type Props = {
 
 const REASON_LABEL: Record<string, string> = {
   top2_overall: "Top 2 overall",
-  age16: "Age 16",
-  age15_or_under: "Age ≤15",
+  age16: "Intake bucket 16",
+  age15_or_under: "Intake bucket ≤15",
   fill_same_gender: "Fill (same gender)",
 };
 
@@ -57,6 +57,7 @@ export function AdminIlcaRankingPanel({
           name: s.name,
           gender: s.gender,
           dob: s.dob,
+          nationality: s.nationality,
           sailNumber: s.sailNumber,
           sailNumberIlca4: (s as { sailNumberIlca4?: string | null })
             .sailNumberIlca4,
@@ -65,7 +66,7 @@ export function AdminIlcaRankingPanel({
         })),
         regattas,
         results,
-        { intakeYear: cutoff.intakeYear }
+        { intakeYear: cutoff.intakeYear, restrictToNationalList: true }
       ),
     [boatClass, cutoff, sailors, regattas, results]
   );
@@ -163,7 +164,7 @@ export function AdminIlcaRankingPanel({
                     <th className="px-3 py-2 font-bold">#</th>
                     <th className="px-3 py-2 font-bold">Sailor</th>
                     <th className="px-3 py-2 font-bold">Gender</th>
-                    <th className="px-3 py-2 font-bold">Age*</th>
+                    <th className="px-3 py-2 font-bold">Birth year</th>
                     <th className="px-3 py-2 font-bold">Best 3 pts</th>
                     <th className="px-3 py-2 font-bold">Total</th>
                     <th className="px-3 py-2 font-bold">Events</th>
@@ -187,7 +188,7 @@ export function AdminIlcaRankingPanel({
                       </td>
                       <td className="px-3 py-2">{r.gender || "—"}</td>
                       <td className="px-3 py-2 tabular-nums">
-                        {r.ageInIntakeYear ?? "—"}
+                        {r.birthYear ?? "—"}
                       </td>
                       <td className="px-3 py-2 tabular-nums text-slate-400">
                         {r.bestThreePoints.join(" + ")}
@@ -208,8 +209,8 @@ export function AdminIlcaRankingPanel({
             </div>
           )}
           <p className="px-4 py-2 text-[9px] text-slate-600 border-t border-white/5">
-            * Age in intake year (as of 31 Dec {cutoff.intakeYear}). Top 25
-            highlighted for squad eligibility.
+            Birth year from DOB. National list only. Top 25 (SGP) for squad
+            eligibility · intake year {cutoff.intakeYear}.
           </p>
         </div>
 
@@ -229,7 +230,8 @@ export function AdminIlcaRankingPanel({
             </p>
           ) : squad.length === 0 ? (
             <p className="p-4 text-xs text-slate-500">
-              No eligible sailors (need top-25 ranking + gender + age ≤ 17).
+              No eligible sailors (need top-25 ranking + SGP nationality +
+              gender + intake-year ≤ 17).
             </p>
           ) : (
             <ol className="divide-y divide-white/5 max-h-[32rem] overflow-y-auto">
@@ -244,8 +246,8 @@ export function AdminIlcaRankingPanel({
                     </span>
                     <span className="font-semibold text-white">{s.name}</span>
                     <span className="block text-[10px] text-slate-500 mt-0.5">
-                      Series #{s.rankingPosition} · {s.gender} · age{" "}
-                      {s.ageInIntakeYear ?? "?"} · {s.totalPoints} pts
+                      Series #{s.rankingPosition} · {s.gender} ·{" "}
+                      {s.totalPoints} pts
                     </span>
                   </span>
                   <span className="shrink-0 rounded-full bg-white/5 border border-white/10 px-2 py-0.5 text-[9px] font-bold text-slate-400">

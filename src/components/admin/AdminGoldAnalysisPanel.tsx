@@ -430,9 +430,9 @@ export function AdminGoldAnalysisPanel({
                           <span className="font-semibold text-white">
                             {s.name}
                           </span>
-                          {s.age != null && (
+                          {s.birthYear != null && (
                             <span className="text-slate-500 ml-1">
-                              · {s.age}y
+                              · b.{s.birthYear}
                             </span>
                           )}
                         </td>

@@ -21,6 +21,7 @@ export type ProfileResult = {
   geography?: string | null;
   raceCount?: number | null;
   countsForRanking?: boolean;
+  boatClass?: string | null;
 };
 
 export type ProfileObservation = {
@@ -283,12 +284,16 @@ export function buildProfileAnalytics(
       ? statsPool.reduce((s, x) => s + x.rank, 0) / statsPool.length
       : null;
 
+  const medalGold = statsPool.filter((x) => x.rank === 1).length;
+  const medalSilver = statsPool.filter((x) => x.rank === 2).length;
+  const medalBronze = statsPool.filter((x) => x.rank === 3).length;
   const medals: MedalTally = {
-    gold: statsPool.filter((x) => x.rank === 1).length,
-    silver: statsPool.filter((x) => x.rank === 2).length,
-    bronze: statsPool.filter((x) => x.rank === 3).length,
+    gold: medalGold,
+    silver: medalSilver,
+    bronze: medalBronze,
     top10: top10Count,
-    show: statsPool.some((x) => x.rank <= 10),
+    // Only show when the sailor has a podium (1st–3rd) medal achievement
+    show: medalGold + medalSilver + medalBronze > 0,
   };
 
   // Trend: last 10 (chrono order for chart = oldest→newest among those 10)
@@ -353,6 +358,48 @@ export function placeColorClass(rank: number | null | undefined): string {
   if (rank <= 10) return "text-emerald-400/90";
   if (rank <= 20) return "text-neutral-200";
   return "text-neutral-400";
+}
+
+/** Normalise boat class for profile result grouping. */
+export function profileBoatClassGroup(
+  boatClass: string | null | undefined
+): "optimist" | "ilca4" | "ilca6" | "other" {
+  const s = String(boatClass || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+  if (!s || s === "optimist" || s === "opti") return "optimist";
+  if (s === "ilca 4" || s === "ilca4" || s === "laser 4.7" || s === "laser4.7")
+    return "ilca4";
+  if (
+    s === "ilca 6" ||
+    s === "ilca6" ||
+    s === "laser radial" ||
+    s === "radial"
+  )
+    return "ilca6";
+  return "other";
+}
+
+/**
+ * Months from first appearance (YYYY-MM-DD) to today (SG), as a short label.
+ */
+export function tenureFromFirstDate(
+  firstYmd: string | null | undefined,
+  asOfYmd?: string
+): { months: number; label: string; firstDate: string } | null {
+  const first = ymd(firstYmd);
+  if (!isValidYmd(first)) return null;
+  const today =
+    asOfYmd && isValidYmd(asOfYmd)
+      ? asOfYmd
+      : new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Singapore" });
+  const months = monthsBetween(first, today);
+  return {
+    months,
+    label: formatMonthsInGold(months),
+    firstDate: first,
+  };
 }
 
 export { monthYearLabel };

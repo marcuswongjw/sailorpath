@@ -13,9 +13,13 @@
  * Unfilled slots → next highest ranked same gender (still top 25).
  */
 
-import { ageYears } from "@/lib/age";
+import { ageYears, birthYear } from "@/lib/age";
 import { toYmd } from "@/lib/datesSg";
 import { isSingleFleetClass } from "@/lib/countries";
+import {
+  isOnIlca4NationalList,
+  isSingaporeNationality,
+} from "@/lib/ilca4NationalList";
 
 export type IlcaBoatClass = "ILCA 4" | "ILCA 6";
 
@@ -42,6 +46,7 @@ export type IlcaSailor = {
   name: string;
   gender?: string | null;
   dob?: string | Date | null;
+  nationality?: string | null;
   sailNumber?: string | null;
   sailNumberIlca4?: string | null;
   club?: string | null;
@@ -62,7 +67,11 @@ export type IlcaRankedSailor = {
   sailorId: string;
   name: string;
   gender: "M" | "F" | null;
+  /** Calendar birth year (public-facing; not age) */
+  birthYear: number | null;
+  /** Internal: whole years old as of 31 Dec intake year (squad buckets) */
   ageInIntakeYear: number | null;
+  nationality: string | null;
   eventScores: IlcaEventScore[];
   /** Best 3 of up to 5 (highest points) */
   bestThreePoints: number[];
@@ -188,7 +197,14 @@ export function computeIlcaRankings(
   sailors: IlcaSailor[],
   regattas: IlcaRegatta[],
   results: IlcaResult[],
-  opts?: { intakeYear?: number }
+  opts?: {
+    intakeYear?: number;
+    /**
+     * ILCA 4 only: restrict to official national list (default true).
+     * Pass false for unit tests / unrestricted admin preview.
+     */
+    restrictToNationalList?: boolean;
+  }
 ): IlcaRankedSailor[] {
   const window = ilcaRankingRegattas(regattas, boatClass, asOfYmd);
   if (!window.length) return [];
@@ -204,7 +220,14 @@ export function computeIlcaRankings(
       .map((r) => r.sailorId)
   );
 
-  const candidates = sailors.filter((s) => sailorIdsWithResults.has(s.id));
+  const useNationalList =
+    boatClass === "ILCA 4" && opts?.restrictToNationalList !== false;
+
+  const candidates = sailors.filter((s) => {
+    if (!sailorIdsWithResults.has(s.id)) return false;
+    if (useNationalList && !isOnIlca4NationalList(s.name)) return false;
+    return true;
+  });
 
   const ranked: Omit<IlcaRankedSailor, "rank">[] = candidates.map((s) => {
     const eventScores: IlcaEventScore[] = window.map((reg) => {
@@ -232,7 +255,9 @@ export function computeIlcaRankings(
       sailorId: s.id,
       name: s.name,
       gender: normalizeGender(s.gender),
+      birthYear: birthYear(s.dob),
       ageInIntakeYear: ageInIntakeYear(s.dob, intakeYear),
+      nationality: s.nationality ?? null,
       eventScores,
       bestThreePoints: bestThree,
       totalPoints: total,
@@ -279,13 +304,14 @@ export function ilcaSquadCutoff(
 
 /**
  * ILCA 4 national squad selection (max 16), from high-points ranking.
- * Only top 25 eligible. Age = age in intake year (as of 31 Dec).
+ * Only SGP nationals; top 25; birth-year-derived age ≤ 17 in intake year (31 Dec).
  */
 export function selectIlca4NationalSquad(
   ranked: IlcaRankedSailor[]
 ): SquadSelection[] {
   const eligible = ranked
     .filter((r) => r.rank <= 25)
+    .filter((r) => isSingaporeNationality(r.nationality))
     .filter((r) => r.gender === "M" || r.gender === "F")
     .filter((r) => r.ageInIntakeYear == null || r.ageInIntakeYear <= 17);
 
@@ -356,8 +382,10 @@ export const ILCA_POLICY_NOTES = {
     "Sailors younger than 15 may hold two sail numbers: one Optimist and one ILCA 4. Each is updated from the latest regatta of that class.",
   highPoints:
     "ILCA 4 and ILCA 6 use High Ranking Points: in a fleet of N, 1st earns N points, 2nd earns N−1, and so on. Best 3 of the last 5 ranking regattas (higher total is better).",
+  nationalList:
+    "Only sailors on the official ILCA 4 national ranking list appear on the public board.",
   squad:
-    "ILCA 4 national squad (≤16, age ≤17 in intake year): ranking as of 30 Jun (July intake) or 20 Dec (January intake). From top 25: top 2 M/F overall, then top 2 M/F aged 16, then top 4 M/F aged ≤15; fill remaining with next highest same gender.",
+    "ILCA 4 national squad (≤16, SGP nationality only, birth year implies ≤17 in intake year): ranking as of 30 Jun (July intake) or 20 Dec (January intake). From top 25: top 2 M/F overall, then top 2 M/F in the intake-year-16 bucket, then top 4 M/F in ≤15 bucket; fill remaining with next highest same gender.",
 } as const;
 
 // Re-export helper used by import notes

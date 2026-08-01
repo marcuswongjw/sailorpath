@@ -1,5 +1,6 @@
 /**
  * Whole-year age from DOB (YYYY-MM-DD or Date), or null if unknown.
+ * Prefer {@link birthYear} in UI — profiles show birth year, not age.
  */
 export function ageYears(
   dob: string | Date | null | undefined,
@@ -15,4 +16,18 @@ export function ageYears(
   if (m < 0 || (m === 0 && asOf.getDate() < birth.getDate())) age--;
   if (age < 0 || age > 120) return null;
   return age;
+}
+
+/** Calendar birth year from DOB, or null if unknown. */
+export function birthYear(
+  dob: string | Date | null | undefined
+): number | null {
+  if (dob == null || dob === "") return null;
+  const s = typeof dob === "string" ? dob.slice(0, 10) : dob.toISOString().slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+    const y = Number(String(dob).slice(0, 4));
+    return Number.isFinite(y) && y >= 1900 && y <= 2100 ? y : null;
+  }
+  const y = Number(s.slice(0, 4));
+  return Number.isFinite(y) && y >= 1900 && y <= 2100 ? y : null;
 }

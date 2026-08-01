@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ageYears } from "@/lib/age";
+import { birthYear } from "@/lib/age";
 
 import Link from "next/link";
 import {
@@ -41,7 +41,7 @@ type GoldSailor = {
 type SortKey =
   | "name"
   | "sailNumber"
-  | "age"
+  | "birthYear"
   | "natSquadStatusJan25"
   | "natSquadStatusJul25"
   | "natSquadStatusJan26"
@@ -56,8 +56,8 @@ type SortKey =
   | "asian"
   | "seaGames";
 
-function ageOf(dob?: string | null) {
-  return ageYears(dob);
+function birthYearOf(dob?: string | null) {
+  return birthYear(dob);
 }
 
 function SortIcon({
@@ -124,7 +124,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
       const av = (() => {
         if (sortKey === "name") return a.name || "";
         if (sortKey === "sailNumber") return a.sailNumber || "";
-        if (sortKey === "age") return ageOf(a.dob) ?? 999;
+        if (sortKey === "birthYear") return birthYearOf(a.dob) ?? 9999;
         const raw = (a as any)[sortKey];
         if (raw == null || raw === "") return sortDir === "asc" ? 99999 : -1;
         if (typeof raw === "number") return raw;
@@ -133,7 +133,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
       const bv = (() => {
         if (sortKey === "name") return b.name || "";
         if (sortKey === "sailNumber") return b.sailNumber || "";
-        if (sortKey === "age") return ageOf(b.dob) ?? 999;
+        if (sortKey === "birthYear") return birthYearOf(b.dob) ?? 9999;
         const raw = (b as any)[sortKey];
         if (raw == null || raw === "") return sortDir === "asc" ? 99999 : -1;
         if (typeof raw === "number") return raw;
@@ -239,8 +239,8 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     className="sticky top-8 z-20 py-3 px-4 text-center bg-[#12141c] border-b border-white/10"
                   />
                   <Th
-                    label="Age/Gender"
-                    sortKey="age"
+                    label="Birth year/Gender"
+                    sortKey="birthYear"
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
@@ -361,7 +361,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
               </thead>
               <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
                 {sorted.map((sailor) => {
-                  const age = ageOf(sailor.dob);
+                  const by = birthYearOf(sailor.dob);
                   const isDropped = sailor.dropDate != null;
 
                   return (
@@ -383,7 +383,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                         {sailor.sailNumber}
                       </td>
                       <td className="py-4 px-4 text-slate-400 border-r border-white/5">
-                        {age ?? "N/A"} / {sailor.gender || "M"}
+                        {by ?? "N/A"} / {sailor.gender || "M"}
                       </td>
 
                       <td className="py-4 px-4 bg-orange-600/5">

@@ -48,6 +48,23 @@ export function SiteHeader() {
           </Link>
         </div>
       </div>
+      <div className="relative group">
+        <button
+          type="button"
+          className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none"
+        >
+          SG ILCA 4
+          <ChevronDown className="h-4 w-4 text-slate-500 group-hover:text-slate-300" />
+        </button>
+        <div className="absolute left-0 top-[52px] hidden group-hover:block w-52 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50">
+          <Link
+            href="/sg/ilca4"
+            className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+          >
+            National standings
+          </Link>
+        </div>
+      </div>
       <Link
         href="/search"
         onClick={() => setMobileOpen(false)}
@@ -189,6 +206,16 @@ export function SiteHeader() {
               className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
             >
               All Gold Fleet Sailors
+            </Link>
+            <p className="px-1 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              SG ILCA 4
+            </p>
+            <Link
+              href="/sg/ilca4"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
+            >
+              National standings
             </Link>
             <Link
               href="/search"

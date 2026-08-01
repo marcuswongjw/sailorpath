@@ -79,6 +79,7 @@ export default async function SailorProfilePage({
           raceCount: r.raceCount,
           geography: r.geography,
           countsForRanking: r.countsForRanking !== false,
+          boatClass: r.boatClass ?? "Optimist",
         }))}
         initialEquipment={equipment}
         initialSeriesStanding={seriesStanding}
