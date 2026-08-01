@@ -15,12 +15,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full antialiased dark">
-      <body className="min-h-full flex flex-col bg-[#090a0f] text-slate-100 font-sans selection:bg-orange-500/30">
+    <html lang="en" className="h-full antialiased dark overflow-x-clip">
+      <body className="min-h-full flex flex-col bg-[#090a0f] text-slate-100 font-sans selection:bg-orange-500/30 overflow-x-clip w-full max-w-[100vw]">
         <AccountProvider>
           <UsageBeacon />
           <SiteHeader />
-          <main className="flex-1 flex flex-col min-w-0">{children}</main>
+          <main className="flex-1 flex flex-col min-w-0 w-full max-w-[100vw] overflow-x-clip">
+            {children}
+          </main>
           <SiteFooter />
         </AccountProvider>
       </body>

@@ -206,37 +206,36 @@ export function FleetRankingsView({
     s.periodSquadStatus || s.nationalSquadStatus || null;
 
   return (
-    <div className="print-rankings mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 no-print">
-        <div className="flex items-start gap-3">
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-600/10 text-orange-500 border border-orange-500/20">
-            <Trophy className="h-5 w-5" />
+    <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 py-6 sm:py-12 space-y-4 sm:space-y-6 overflow-x-clip">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 no-print min-w-0">
+        <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
+          <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-600/10 text-orange-500 border border-orange-500/20">
+            <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
-          <div>
-            <p className="text-xs font-bold text-orange-400 uppercase tracking-wide">
+          <div className="min-w-0 flex-1">
+            <p className="text-[10px] sm:text-xs font-bold text-orange-400 uppercase tracking-wide">
               SG Optimist
             </p>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight break-words">
               {fleet} Fleet Rankings
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
-              Best 3 of 5 · * = DNS (fleet size + 1) · † = overseas commitment
-              (points = standing)
+            <p className="text-[11px] sm:text-sm text-slate-500 mt-1 leading-snug">
+              Best 3 of 5 · * DNS · † overseas
               {carryCount > 0 && (
-                <span className="ml-2 text-sky-400/90 font-semibold">
-                  · {carryCount} carry-forward from previous period
+                <span className="ml-1.5 text-sky-400/90 font-semibold">
+                  · {carryCount} carry-forward
                 </span>
               )}
               {!isCurrent && (
-                <span className="ml-2 text-amber-400/90 font-semibold">
-                  · Archive period
+                <span className="ml-1.5 text-amber-400/90 font-semibold">
+                  · Archive
                 </span>
               )}
             </p>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full lg:w-auto">
-          <div className="flex items-center gap-2 min-w-0">
+        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full lg:w-auto min-w-0">
+          <div className="flex items-center gap-2 min-w-0 w-full sm:w-auto">
             <Calendar className="h-4 w-4 text-orange-500 shrink-0" />
             <select
               value={`${period.year}|${period.half}`}
@@ -244,7 +243,7 @@ export function FleetRankingsView({
                 const [year, half] = e.target.value.split("|");
                 setPeriod({ year: Number(year), half: half as Period["half"] });
               }}
-              className="flex-1 sm:flex-none min-w-0 rounded-xl bg-slate-950 border border-white/10 px-3 sm:px-4 py-2.5 text-sm text-white font-semibold"
+              className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-slate-950 border border-white/10 px-3 sm:px-4 py-2.5 text-sm text-white font-semibold"
             >
               {PERIODS.map(({ period: p, label }) => (
                 <option key={`${p.year}-${p.half}`} value={`${p.year}|${p.half}`}>
@@ -253,13 +252,13 @@ export function FleetRankingsView({
               ))}
             </select>
           </div>
-          <div className="grid grid-cols-2 sm:flex gap-2">
+          <div className="grid grid-cols-2 sm:flex gap-2 w-full sm:w-auto min-w-0">
             <select
               value={genderFilter}
               onChange={(e) =>
                 setGenderFilter(e.target.value as "all" | "M" | "F")
               }
-              className="rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
+              className="min-w-0 w-full rounded-xl bg-slate-950 border border-white/10 px-2.5 sm:px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
               aria-label="Filter by gender"
             >
               <option value="all">All genders</option>
@@ -270,7 +269,7 @@ export function FleetRankingsView({
               <select
                 value={squadFilter}
                 onChange={(e) => setSquadFilter(e.target.value)}
-                className="rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
+                className="min-w-0 w-full rounded-xl bg-slate-950 border border-white/10 px-2.5 sm:px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
                 aria-label="Filter by squad"
               >
                 <option value="all">All squads</option>
@@ -303,37 +302,40 @@ export function FleetRankingsView({
         SG Optimist {fleet} Fleet Rankings — {periodLabelText}
       </p>
 
-      {/* Sticky event legend + exclude toggles */}
+      {/* Sticky event legend + exclude toggles (below site header on mobile) */}
       {!loading && ranked.length > 0 && (
-        <div className="sticky top-0 z-30 -mx-1 px-1 no-print">
-          <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 backdrop-blur-md shadow-lg shadow-black/40 px-3 sm:px-4 py-2.5 sm:py-3 space-y-2">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div className="sticky top-14 sm:top-16 z-30 w-full max-w-full min-w-0 no-print">
+          <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 backdrop-blur-md shadow-lg shadow-black/40 px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 min-w-0">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                 Scoring events — R1 oldest · R5 newest
                 {carryCount > 0 && (
                   <span className="normal-case tracking-normal text-sky-400/90 font-semibold ml-1">
-                    ({currentCount} this period + {carryCount} previous)
+                    ({currentCount} this + {carryCount} prev)
                   </span>
                 )}
               </p>
-              <div className="flex items-center gap-2">
-                <p className="text-[10px] text-slate-500 font-semibold">
+              <div className="flex items-center gap-2 min-w-0 flex-wrap">
+                <p className="text-[10px] text-slate-500 font-semibold hidden sm:block">
                   Uncheck a regatta to exclude it from Best 3 of 5
+                </p>
+                <p className="text-[10px] text-slate-500 font-semibold sm:hidden">
+                  Tap R# to exclude from Best 3 of 5
                 </p>
                 {excluded.size > 0 && (
                   <button
                     type="button"
                     onClick={() => setExcluded(new Set())}
-                    className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-200"
+                    className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-200 shrink-0"
                   >
                     <RotateCcw className="h-3 w-3" />
-                    Reset ({excluded.size} off)
+                    Reset ({excluded.size})
                   </button>
                 )}
               </div>
             </div>
-            {/* Mobile strip */}
-            <div className="flex md:hidden gap-1.5 overflow-x-auto pb-0.5">
+            {/* Mobile: equal-width row that fits viewport (no page-wide overflow) */}
+            <div className="grid md:hidden grid-cols-5 gap-1 w-full min-w-0">
               {eventSlots.map((ev, idx) => {
                 const off = excluded.has(ev.regattaId);
                 const canToggle = Boolean(ev.regattaName) && !ev.regattaId.startsWith("slot-");
@@ -343,7 +345,7 @@ export function FleetRankingsView({
                     type="button"
                     disabled={!canToggle}
                     onClick={() => toggleExclude(ev.regattaId)}
-                    className={`shrink-0 w-[4.75rem] rounded-lg border px-1.5 py-1.5 text-center transition-all ${
+                    className={`min-w-0 w-full rounded-lg border px-0.5 py-1.5 text-center transition-all ${
                       off
                         ? "bg-slate-900/80 border-rose-500/40 opacity-50"
                         : ev.isCarryForward
@@ -357,7 +359,7 @@ export function FleetRankingsView({
                     }
                   >
                     <p className="text-[9px] font-black text-orange-400">R{idx + 1}</p>
-                    <p className="text-[8px] font-semibold text-slate-300 leading-tight line-clamp-2">
+                    <p className="text-[7px] sm:text-[8px] font-semibold text-slate-300 leading-tight line-clamp-2 break-words">
                       {shortRegattaName(ev.regattaName, idx)}
                     </p>
                     {ev.isCarryForward && (
@@ -442,47 +444,55 @@ export function FleetRankingsView({
         </p>
       )}
 
-      {/* Mobile cards */}
-      <div className="md:hidden space-y-3 no-print">
+      {/* Mobile cards — constrained to viewport width (aligned with header) */}
+      <div className="md:hidden space-y-2.5 no-print w-full max-w-full min-w-0">
         {displayRanked.map((s, i) => {
           const scores = padScores(s, i);
           return (
             <div
               key={s.id}
-              className="glass-card rounded-2xl p-4 border border-white/5 space-y-3"
+              className="w-full max-w-full min-w-0 rounded-2xl p-3 border border-white/5 bg-[#131520]/80 space-y-2.5"
             >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <p className="text-orange-400 font-black text-sm">#{i + 1}</p>
-                  <Link
-                    href={`/${s.handle}`}
-                    className="font-bold text-white hover:text-orange-400"
-                  >
-                    {s.name}
-                  </Link>
+              <div className="flex items-start justify-between gap-2 min-w-0">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline gap-2 min-w-0">
+                    <p className="text-orange-400 font-black text-sm shrink-0 tabular-nums">
+                      #{i + 1}
+                    </p>
+                    <Link
+                      href={`/${s.handle}`}
+                      className="font-bold text-white hover:text-orange-400 text-[15px] leading-snug break-words min-w-0"
+                    >
+                      {s.name}
+                    </Link>
+                  </div>
                   <p className="text-[11px] text-slate-500 mt-1">
                     {s.gender || "—"} · Born {birthYear(s.dob)}
+                    {showSquad ? (
+                      <span className="text-orange-300/90 font-semibold">
+                        {" "}
+                        · {squadFor(s) || "—"}
+                      </span>
+                    ) : null}
                   </p>
-                  {showSquad && (
-                    <p className="text-[11px] text-orange-300/90 mt-1 font-semibold">
-                      {squadColumnLabel}: {squadFor(s) || "—"}
-                    </p>
-                  )}
                 </div>
-                <div className="text-right">
-                  <p className="text-[10px] text-slate-500 uppercase font-bold">
-                    Best 3 of 5
+                <div className="text-right shrink-0 pl-1">
+                  <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wide">
+                    Best 3
                   </p>
-                  <p className="font-black text-white text-lg">{s.overallScore}</p>
+                  <p className="font-black text-white text-lg tabular-nums leading-none mt-0.5">
+                    {s.overallScore}
+                  </p>
                 </div>
               </div>
-              <div className="grid grid-cols-5 gap-1.5">
+              {/* Equal 5-col score grid — never expands past card width */}
+              <div className="grid grid-cols-5 gap-1 w-full min-w-0">
                 {scores.map((rs, idx) => {
                   const off = excluded.has(rs.regattaId);
                   return (
                     <div
                       key={rs.regattaId + idx}
-                      className={`rounded-lg border px-1 py-1.5 text-center ${
+                      className={`min-w-0 rounded-lg border px-0.5 py-1.5 text-center ${
                         off
                           ? "bg-slate-900/60 border-rose-500/30 opacity-50"
                           : rs.isCarryForward
@@ -494,13 +504,13 @@ export function FleetRankingsView({
                       <p className="text-[9px] text-orange-400/90 font-black">
                         R{idx + 1}
                       </p>
-                      <p className="text-[8px] text-slate-500 leading-tight line-clamp-2 min-h-[1.5rem]">
+                      <p className="text-[7px] text-slate-500 leading-tight line-clamp-2 min-h-[1.4rem] break-words">
                         {shortRegattaName(
                           rs.regattaName || eventSlots[idx]?.regattaName,
                           idx
                         )}
                       </p>
-                      <p className="text-xs font-mono font-bold text-white mt-0.5">
+                      <p className="text-[11px] font-mono font-bold text-white mt-0.5 tabular-nums">
                         {Number.isFinite(rs.score)
                           ? scoreCell(
                               rs.score,
@@ -518,9 +528,9 @@ export function FleetRankingsView({
         })}
       </div>
 
-      {/* Desktop table */}
-      <div className="hidden md:block rounded-2xl border border-white/5 overflow-hidden">
-        <div className="overflow-x-auto max-h-[min(75vh,900px)] overflow-y-auto">
+      {/* Desktop table — horizontal scroll isolated inside container */}
+      <div className="hidden md:block rounded-2xl border border-white/5 overflow-hidden w-full max-w-full min-w-0">
+        <div className="overflow-x-auto max-h-[min(75vh,900px)] overflow-y-auto max-w-full">
           <table className="w-full text-left text-sm min-w-[720px] border-collapse">
             <thead className="text-[10px] text-slate-400 uppercase tracking-wider">
               <tr>

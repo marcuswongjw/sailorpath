@@ -145,15 +145,15 @@ export function SiteHeader() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#090a0f]/95 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-14 sm:h-16 items-center justify-between gap-3 sm:gap-4">
-          <div className="flex items-center gap-4 lg:gap-10 min-w-0">
-            <Link href="/" className="flex items-center gap-2 group shrink-0">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-600 font-black text-white text-lg group-hover:bg-orange-500">
+    <header className="sticky top-0 z-50 w-full max-w-[100vw] border-b border-white/5 bg-[#090a0f]/95 backdrop-blur-md overflow-x-clip">
+      <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
+        <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
+          <div className="flex items-center gap-3 lg:gap-10 min-w-0 flex-1">
+            <Link href="/" className="flex items-center gap-2 group shrink-0 min-w-0">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-600 font-black text-white text-lg group-hover:bg-orange-500">
                 SP
               </span>
-              <span className="font-extrabold text-base sm:text-xl text-white tracking-tight">
+              <span className="font-extrabold text-base sm:text-xl text-white tracking-tight truncate">
                 Sailor<span className="text-orange-500">Path</span>
               </span>
             </Link>
