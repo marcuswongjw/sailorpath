@@ -7,6 +7,8 @@ export interface SailorRecordProps {
   name: string;
   handle: string;
   sailNumber?: string | null;
+  /** ILCA 4 sail number (optional dual number under 15) */
+  sailNumberIlca4?: string | null;
   club?: string | null;
   school?: string | null;
   nationality?: string | null;

@@ -314,7 +314,10 @@ export function classImportNote(boatClass: string): string | null {
     return "This class has a single open fleet — no Gold/Silver division.";
   }
   if (boatClass === "Optimist") {
-    return "Sailors may race Optimist and ILCA 4 in the same period. Optimist eligibility ends when the sailor is over 15 years old.";
+    return "Sailors under 15 may hold two sail numbers (Optimist + ILCA 4) and race both classes. Optimist eligibility ends when the sailor is over 15. ILCA results never affect Optimist Gold/Silver rankings.";
+  }
+  if (boatClass === "ILCA 4" || boatClass === "ILCA 6") {
+    return "High Ranking Points (1st = fleet size pts). Best 3 of last 5 ranking regattas. Sail number for ILCA 4 is stored separately from Optimist.";
   }
   return null;
 }

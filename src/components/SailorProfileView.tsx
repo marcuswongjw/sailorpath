@@ -635,6 +635,9 @@ export function SailorProfileView({
   const hasMoreResults = analytics.listResults.length > 8;
 
   const sailDisplay = String(displaySailor.sailNumber || "—");
+  const sailIlca4 = displaySailor.sailNumberIlca4
+    ? String(displaySailor.sailNumberIlca4)
+    : null;
   const noc =
     normalizeNationality(displaySailor.nationality) ||
     (String(displaySailor.nationality || "").trim() ? "SGP" : "SGP");
@@ -756,15 +759,31 @@ export function SailorProfileView({
                   {displaySailor.club ? ` · ${displaySailor.club}` : ""}
                 </p>
               </div>
-              <div className="shrink-0 text-right">
-                <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">
-                  Sail number
-                </p>
-                <div className="inline-flex items-center rounded-lg bg-orange-500 px-2.5 py-1.5 shadow-md shadow-orange-950/40">
-                  <span className="text-sm sm:text-[15px] font-bold tabular-nums text-white tracking-tight">
-                    {noc} {sailDisplay}
-                  </span>
+              <div className="shrink-0 text-right space-y-1.5">
+                <div>
+                  <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">
+                    Optimist sail
+                  </p>
+                  <div className="inline-flex items-center rounded-lg bg-orange-500 px-2.5 py-1.5 shadow-md shadow-orange-950/40">
+                    <span className="text-sm sm:text-[15px] font-bold tabular-nums text-white tracking-tight">
+                      {sailDisplay.includes(" ") ? sailDisplay : `${noc} ${sailDisplay}`}
+                    </span>
+                  </div>
                 </div>
+                {sailIlca4 && (
+                  <div>
+                    <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">
+                      ILCA 4 sail
+                    </p>
+                    <div className="inline-flex items-center rounded-lg bg-sky-600 px-2.5 py-1.5 shadow-md shadow-sky-950/40">
+                      <span className="text-sm sm:text-[15px] font-bold tabular-nums text-white tracking-tight">
+                        {sailIlca4.includes(" ")
+                          ? sailIlca4
+                          : `${noc} ${sailIlca4}`}
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

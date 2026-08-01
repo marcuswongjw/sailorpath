@@ -45,6 +45,7 @@ import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
 import { AdminSailorsPanel } from "@/components/admin/AdminSailorsPanel";
 import { AdminCompetitionsPanel } from "@/components/admin/AdminCompetitionsPanel";
 import { AdminGoldAnalysisPanel } from "@/components/admin/AdminGoldAnalysisPanel";
+import { AdminIlcaRankingPanel } from "@/components/admin/AdminIlcaRankingPanel";
 import { ageYears } from "@/lib/age";
 import {
   currentPeriodFromSgToday,
@@ -72,7 +73,7 @@ interface AdminDashboardProps {
 
 export function AdminDashboard({ initialSailors, initialRegattas, initialResults }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<
-    "import" | "edit" | "analysis" | "stats"
+    "import" | "edit" | "analysis" | "ilca" | "stats"
   >("edit");
   
   // Auth state — role from server /profiles, never user_metadata
@@ -1192,12 +1193,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       </div>
 
       {/* Tab Navigation — equal width for all tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
             ["import", "Regatta Excel", FileSpreadsheet],
             ["edit", "Database & bulk edit", Database],
             ["analysis", "Gold analysis", GitCompareArrows],
+            ["ilca", "ILCA ranking", Medal],
             ["stats", "Stats & usage", BarChart3],
           ] as const
         ).map(([key, label, Icon]) => (
@@ -1439,6 +1441,16 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         {activeTab === "analysis" && (
           <div className="w-full min-w-0">
             <AdminGoldAnalysisPanel
+              sailors={sailorList}
+              regattas={regattaList}
+              results={resultsList}
+            />
+          </div>
+        )}
+
+        {activeTab === "ilca" && (
+          <div className="w-full min-w-0">
+            <AdminIlcaRankingPanel
               sailors={sailorList}
               regattas={regattaList}
               results={resultsList}

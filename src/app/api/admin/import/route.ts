@@ -196,6 +196,7 @@ export async function POST(req: Request) {
         id: sailors.id,
         name: sailors.name,
         sailNumber: sailors.sailNumber,
+        sailNumberIlca4: sailors.sailNumberIlca4,
         dob: sailors.dob,
         club: sailors.club,
         school: sailors.school,
@@ -205,30 +206,50 @@ export async function POST(req: Request) {
       })
       .from(sailors);
 
-    // Latest result date per sailor across ALL regattas (ranking or not, any class).
-    // Club / school / sail # always follow the newest event date.
+    // Latest result dates: any event for club/school; class-specific for sail numbers.
     const latestDateBySailor = new Map<string, string>();
+    const latestOptimistDateBySailor = new Map<string, string>();
+    const latestIlca4DateBySailor = new Map<string, string>();
     try {
       const latestRows = await db
         .select({
           sailorId: regattaResults.sailorId,
           maxDate: max(regattas.date),
+          boatClass: regattas.boatClass,
         })
         .from(regattaResults)
         .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-        .groupBy(regattaResults.sailorId);
+        .groupBy(regattaResults.sailorId, regattas.boatClass);
       for (const row of latestRows) {
         const d = String(row.maxDate || "").slice(0, 10);
-        if (row.sailorId && /^\d{4}-\d{2}-\d{2}$/.test(d)) {
-          latestDateBySailor.set(row.sailorId, d);
+        if (!row.sailorId || !/^\d{4}-\d{2}-\d{2}$/.test(d)) continue;
+        const prev = latestDateBySailor.get(row.sailorId);
+        if (!prev || d > prev) latestDateBySailor.set(row.sailorId, d);
+        const bc = String(row.boatClass || "Optimist")
+          .trim()
+          .toLowerCase();
+        const isIlca4 =
+          bc === "ilca 4" ||
+          bc === "ilca4" ||
+          bc === "laser 4.7" ||
+          bc === "laser4.7";
+        if (isIlca4) {
+          const p = latestIlca4DateBySailor.get(row.sailorId);
+          if (!p || d > p) latestIlca4DateBySailor.set(row.sailorId, d);
+        } else {
+          const p = latestOptimistDateBySailor.get(row.sailorId);
+          if (!p || d > p) latestOptimistDateBySailor.set(row.sailorId, d);
         }
       }
     } catch (e) {
       console.warn("import latest-date aggregate failed, continuing", e);
     }
 
-    const { shouldApplyProfileFromRegatta, buildProfilePatchFromRow } =
-      await import("@/lib/profileFromRegatta");
+    const {
+      shouldApplyProfileFromRegatta,
+      shouldApplySailNumberFromRegatta,
+      buildProfilePatchFromRow,
+    } = await import("@/lib/profileFromRegatta");
     const { deriveAllSilverEntryDates } = await import(
       "@/lib/deriveFleetEntryDates"
     );
@@ -387,11 +408,18 @@ export async function POST(req: Request) {
           continue;
         }
 
-        // Optional profile enrichment — sail/club/school only if this regatta is latest
+        // Profile enrichment: club/school by any-class latest date;
+        // sail # is class-specific (Optimist vs ILCA 4) for dual numbers under 15.
         const existing = sailorList.find((s) => s.id === sailorId);
-        const applyProfile = shouldApplyProfileFromRegatta({
+        const applyClubSchool = shouldApplyProfileFromRegatta({
           regattaDate: eventDate,
           latestResultDate: latestDateBySailor.get(sailorId) || null,
+        });
+        const applySail = shouldApplySailNumberFromRegatta({
+          regattaDate: eventDate,
+          boatClass: boat,
+          latestOptimistDate: latestOptimistDateBySailor.get(sailorId) || null,
+          latestIlca4Date: latestIlca4DateBySailor.get(sailorId) || null,
         });
         const { patch: fieldPatch, changed: fieldChanged } =
           buildProfilePatchFromRow(
@@ -399,13 +427,16 @@ export async function POST(req: Request) {
               sailNumber: row.sailNumber,
               club: row.club,
               school: row.school,
+              boatClass: boat,
             },
             {
               sailNumber: existing?.sailNumber,
+              sailNumberIlca4: existing?.sailNumberIlca4,
               club: existing?.club,
               school: existing?.school,
             },
-            applyProfile
+            applyClubSchool,
+            applySail
           );
         const profilePatch: Record<string, unknown> = {
           updatedAt: new Date(),
@@ -449,7 +480,10 @@ export async function POST(req: Request) {
           updatedProfiles++;
           for (const f of fieldChanged) {
             if (
-              (f === "sailNumber" || f === "club" || f === "school") &&
+              (f === "sailNumber" ||
+                f === "sailNumberIlca4" ||
+                f === "club" ||
+                f === "school") &&
               !profileChangeFields.includes(f)
             ) {
               profileChangeFields.push(f);
@@ -461,6 +495,9 @@ export async function POST(req: Request) {
                   ...s,
                   sailNumber:
                     (profilePatch.sailNumber as string) ?? s.sailNumber,
+                  sailNumberIlca4:
+                    (profilePatch.sailNumberIlca4 as string) ??
+                    s.sailNumberIlca4,
                   dob: (profilePatch.dob as string) ?? s.dob,
                   club: (profilePatch.club as string) ?? s.club,
                   school: (profilePatch.school as string) ?? s.school,
@@ -469,10 +506,22 @@ export async function POST(req: Request) {
                 }
               : s
           );
-          // This event becomes latest if applied
           const ed = String(eventDate).slice(0, 10);
           const prevL = latestDateBySailor.get(sailorId);
           if (!prevL || ed >= prevL) latestDateBySailor.set(sailorId, ed);
+          const bc = boat.trim().toLowerCase();
+          const isIlca4 =
+            bc === "ilca 4" ||
+            bc === "ilca4" ||
+            bc === "laser 4.7" ||
+            bc === "laser4.7";
+          if (isIlca4) {
+            const p = latestIlca4DateBySailor.get(sailorId);
+            if (!p || ed >= p) latestIlca4DateBySailor.set(sailorId, ed);
+          } else {
+            const p = latestOptimistDateBySailor.get(sailorId);
+            if (!p || ed >= p) latestOptimistDateBySailor.set(sailorId, ed);
+          }
         }
         affectedSailorIds.add(sailorId);
 

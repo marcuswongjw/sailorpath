@@ -27,7 +27,13 @@ export const sailors = pgTable("sailors", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),
   handle: text("handle").unique().notNull(),
+  /** Primary / Optimist sail number */
   sailNumber: text("sail_number").notNull(),
+  /**
+   * ILCA 4 sail number (optional). Sailors under 15 may hold both
+   * Optimist and ILCA 4 numbers; each class tracks latest by regatta date.
+   */
+  sailNumberIlca4: text("sail_number_ilca4"),
   club: text("club").notNull(),
   school: text("school"),
   /** Country / nationality (e.g. Singapore, SGP) — optional */
