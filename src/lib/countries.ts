@@ -285,3 +285,36 @@ export const BOAT_CLASSES = [
 
 export const DEFAULT_GEOGRAPHY = "SG";
 export const DEFAULT_BOAT_CLASS = "Optimist";
+
+/** Classes with a single open fleet (no Gold/Silver split). */
+export const SINGLE_FLEET_CLASSES = new Set([
+  "ILCA 4",
+  "ILCA4",
+  "Laser 4.7",
+]);
+
+export function isSingleFleetClass(boatClass: string | null | undefined): boolean {
+  if (!boatClass) return false;
+  const n = boatClass.trim().toLowerCase().replace(/\s+/g, " ");
+  if (SINGLE_FLEET_CLASSES.has(boatClass.trim())) return true;
+  if (n === "ilca 4" || n === "ilca4") return true;
+  if (n === "laser 4.7" || n === "laser4.7") return true;
+  return false;
+}
+
+/**
+ * Optimist: sailors may also race ILCA 4.
+ * Must leave Optimist only when age > 15 (calendar year rules may vary by authority —
+ * we flag DOB year + 15 as a soft advisory, not hard enforcement).
+ */
+export const OPTIMIST_MAX_AGE = 15;
+
+export function classImportNote(boatClass: string): string | null {
+  if (isSingleFleetClass(boatClass)) {
+    return "This class has a single open fleet — no Gold/Silver division.";
+  }
+  if (boatClass === "Optimist") {
+    return "Sailors may race Optimist and ILCA 4 in the same period. Optimist eligibility ends when the sailor is over 15 years old.";
+  }
+  return null;
+}

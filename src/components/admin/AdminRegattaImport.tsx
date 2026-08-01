@@ -22,6 +22,8 @@ import {
   COUNTRIES,
   DEFAULT_BOAT_CLASS,
   DEFAULT_GEOGRAPHY,
+  classImportNote,
+  isSingleFleetClass,
 } from "@/lib/countries";
 
 type Props = {
@@ -404,9 +406,19 @@ export function AdminRegattaImport({
               <select
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
                 value={importMeta.boatClass}
-                onChange={(e) =>
-                  setImportMeta((m) => ({ ...m, boatClass: e.target.value }))
-                }
+                onChange={(e) => {
+                  const boatClass = e.target.value;
+                  setImportMeta((m) => ({
+                    ...m,
+                    boatClass,
+                    // ILCA 4 etc.: single open fleet — no Gold/Silver
+                    division: isSingleFleetClass(boatClass)
+                      ? "Open"
+                      : m.division === "Open"
+                        ? "Gold"
+                        : m.division,
+                  }));
+                }}
               >
                 {BOAT_CLASSES.map((c) => (
                   <option key={c} value={c}>
@@ -459,23 +471,41 @@ export function AdminRegattaImport({
             <label className="text-xs text-slate-400">
               Division
               <select
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                value={importMeta.division}
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs disabled:opacity-60"
+                value={
+                  isSingleFleetClass(importMeta.boatClass)
+                    ? "Open"
+                    : importMeta.division
+                }
+                disabled={isSingleFleetClass(importMeta.boatClass)}
                 onChange={(e) =>
                   setImportMeta((m) => ({ ...m, division: e.target.value }))
                 }
               >
-                <option value="Gold">Gold</option>
-                <option value="Silver">Silver</option>
-                <option value="Both">Both</option>
-                <option value="NonRanking">Non-ranking</option>
+                {isSingleFleetClass(importMeta.boatClass) ? (
+                  <option value="Open">Open (single fleet)</option>
+                ) : (
+                  <>
+                    <option value="Gold">Gold</option>
+                    <option value="Silver">Silver</option>
+                    <option value="Both">Both</option>
+                    <option value="NonRanking">Non-ranking</option>
+                  </>
+                )}
               </select>
             </label>
-            <p className="sm:col-span-2 lg:col-span-4 text-[10px] text-slate-500">
-              Defaults: <strong className="text-slate-400">Optimist</strong>,{" "}
-              <strong className="text-slate-400">SG</strong>,{" "}
-              <strong className="text-slate-400">Ranking</strong>. Non-ranking
-              events do not affect Best 3 of 5 series scores.
+            <p className="sm:col-span-2 lg:col-span-4 text-[10px] text-slate-500 space-y-1">
+              <span className="block">
+                Defaults: <strong className="text-slate-400">Optimist</strong>,{" "}
+                <strong className="text-slate-400">SG</strong>,{" "}
+                <strong className="text-slate-400">Ranking</strong>. Non-ranking
+                events do not affect Best 3 of 5 series scores.
+              </span>
+              {classImportNote(importMeta.boatClass) && (
+                <span className="block text-amber-200/90">
+                  {classImportNote(importMeta.boatClass)}
+                </span>
+              )}
             </p>
             <button
               type="button"
