@@ -57,6 +57,17 @@ export type AnalysisResult = {
   isOverseasCommitment?: boolean | null;
 };
 
+/** One ranking event in a half-year scoring window */
+export type HalfEvent = {
+  regattaId: string;
+  regattaName: string;
+  score: number;
+  isDNS: boolean;
+  isOverseasCommitment?: boolean;
+  isCarryForward?: boolean;
+  periodLabel?: string;
+};
+
 export type HalfForm = {
   period: Period;
   periodLabel: string;
@@ -67,6 +78,8 @@ export type HalfForm = {
   fleetSize: number | null;
   /** How many ranking slots in the scoring window had a real result */
   eventsSailed: number;
+  /** Individual R1–R5 (and CF) scores for this half */
+  events: HalfEvent[];
 };
 
 export type SailorGoldSeries = {
@@ -197,6 +210,7 @@ export function goldHalfForm(
     seriesRank: null,
     fleetSize: null,
     eventsSailed: 0,
+    events: [],
   };
 
   const sailorRecs = toSailorRecords(allSailors);
@@ -224,7 +238,16 @@ export function goldHalfForm(
   if (!me) return empty;
 
   const seriesRank = ranked.findIndex((x) => x.id === sailorId) + 1;
-  const eventsSailed = (me.regattaScores || []).filter(
+  const events: HalfEvent[] = (me.regattaScores || []).map((rs) => ({
+    regattaId: rs.regattaId,
+    regattaName: rs.regattaName,
+    score: rs.score,
+    isDNS: Boolean(rs.isDNS),
+    isOverseasCommitment: Boolean(rs.isOverseasCommitment),
+    isCarryForward: Boolean(rs.isCarryForward),
+    periodLabel: rs.periodLabel,
+  }));
+  const eventsSailed = events.filter(
     (rs) => !rs.isDNS || rs.isOverseasCommitment
   ).length;
 
@@ -235,6 +258,7 @@ export function goldHalfForm(
     seriesRank: seriesRank > 0 ? seriesRank : null,
     fleetSize: ranked.length,
     eventsSailed,
+    events,
   };
 }
 

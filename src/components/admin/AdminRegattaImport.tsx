@@ -44,6 +44,9 @@ export function AdminRegattaImport({
 }: Props) {
   const [dragActive, setDragActive] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
+  /** 0–100; shown while reading / importing */
+  const [importProgress, setImportProgress] = useState(0);
+  const [importBusy, setImportBusy] = useState(false);
   const [importPossibleDuplicates, setImportPossibleDuplicates] = useState<
     ImportPossibleDuplicate[]
   >([]);
@@ -70,34 +73,65 @@ export function AdminRegattaImport({
   };
 
   const handleFile = (file: File) => {
+    setImportBusy(true);
+    setImportProgress(5);
+    setImportStatus(`Reading “${file.name}”…`);
+    setImportPossibleDuplicates([]);
     const reader = new FileReader();
+    reader.onprogress = (ev) => {
+      if (ev.lengthComputable && ev.total > 0) {
+        setImportProgress(Math.min(40, Math.round((ev.loaded / ev.total) * 40)));
+      }
+    };
     reader.onload = (ev) => {
-      const data = ev.target?.result;
-      const workbook = read(data, { type: "array" });
-      const sheetName = workbook.SheetNames[0];
-      const sheet = workbook.Sheets[sheetName];
-      const json = utils.sheet_to_json<Record<string, unknown>>(sheet, {
-        defval: "",
-        raw: false,
-      });
-      const mapped = parseRegattaResultRows(json);
-      setFullImportRows(mapped);
-      setImportPossibleDuplicates([]);
-      setImportStatus(
-        `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
-          summarizeRegattaImport(mapped) +
-          `. Confirm class, country, ranking, division + date, then Import.`
-      );
-      setImportMeta((m) => ({
-        ...m,
-        name: m.name || file.name.replace(/\.[^.]+$/, "").replace(/_/g, " "),
-        division: /silver/i.test(file.name)
-          ? "Silver"
-          : /gold/i.test(file.name)
-            ? "Gold"
-            : m.division,
-        fleetSize: mapped.length || m.fleetSize,
-      }));
+      try {
+        setImportProgress(45);
+        setImportStatus("Parsing spreadsheet…");
+        const data = ev.target?.result;
+        const workbook = read(data, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        setImportProgress(60);
+        const json = utils.sheet_to_json<Record<string, unknown>>(sheet, {
+          defval: "",
+          raw: false,
+        });
+        setImportProgress(80);
+        const mapped = parseRegattaResultRows(json);
+        setFullImportRows(mapped);
+        setImportPossibleDuplicates([]);
+        setImportProgress(100);
+        setImportStatus(
+          `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
+            summarizeRegattaImport(mapped) +
+            `. Confirm class, country, ranking, division + date, then Import.`
+        );
+        setImportMeta((m) => ({
+          ...m,
+          name: m.name || file.name.replace(/\.[^.]+$/, "").replace(/_/g, " "),
+          division: /silver/i.test(file.name)
+            ? "Silver"
+            : /gold/i.test(file.name)
+              ? "Gold"
+              : m.division,
+          fleetSize: mapped.length || m.fleetSize,
+        }));
+      } catch (err) {
+        setImportProgress(0);
+        setImportStatus(null);
+        alert(
+          err instanceof Error ? err.message : "Failed to parse spreadsheet"
+        );
+      } finally {
+        setImportBusy(false);
+        setTimeout(() => setImportProgress(0), 800);
+      }
+    };
+    reader.onerror = () => {
+      setImportBusy(false);
+      setImportProgress(0);
+      setImportStatus(null);
+      alert("Failed to read file");
     };
     reader.readAsArrayBuffer(file);
   };
@@ -193,9 +227,20 @@ export function AdminRegattaImport({
       alert("Parse a file and set regatta name + date first.");
       return;
     }
-    setImportStatus("Importing…");
+    setImportBusy(true);
+    setImportProgress(8);
+    setImportStatus(
+      `Importing ${fullImportRows.length} rows to database…`
+    );
     setImportPossibleDuplicates([]);
+    // Slow crawl while waiting on server (no real stream from API)
+    let tick = 8;
+    const pulse = window.setInterval(() => {
+      tick = Math.min(72, tick + 2);
+      setImportProgress(tick);
+    }, 400);
     try {
+      setImportProgress(15);
       const res = await fetch("/api/admin/import", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -212,10 +257,15 @@ export function AdminRegattaImport({
           createMissing: true,
         }),
       });
+      setImportProgress(78);
+      setImportStatus("Processing server response…");
       const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || data.message || "Import failed");
 
+      setImportProgress(88);
+      setImportStatus("Refreshing sailors & results…");
       await refreshListsAfterImport(data.regatta || null);
+      setImportProgress(100);
 
       if (data.hint || data.errorSamples?.length) {
         const extra = [data.hint, ...(data.errorSamples || []).slice(0, 3)]
@@ -246,13 +296,16 @@ export function AdminRegattaImport({
         );
 
       if (isNetworkDrop) {
+        setImportProgress(85);
         setImportStatus("Connection dropped — checking if import saved…");
         const recovered = await recoverAfterNetworkError();
         if (recovered.ok) {
+          setImportProgress(100);
           setImportStatus(recovered.message);
           alert(recovered.message);
           return;
         }
+        setImportProgress(0);
         setImportStatus(null);
         setImportPossibleDuplicates([]);
         alert(
@@ -262,9 +315,14 @@ export function AdminRegattaImport({
         return;
       }
 
+      setImportProgress(0);
       setImportStatus(null);
       setImportPossibleDuplicates([]);
       alert(msg);
+    } finally {
+      window.clearInterval(pulse);
+      setImportBusy(false);
+      setTimeout(() => setImportProgress(0), 1200);
     }
   };
 
@@ -305,10 +363,42 @@ export function AdminRegattaImport({
           </label>
         </div>
 
-        {importStatus && (
-          <div className="mt-6 flex items-center gap-2 text-xs font-bold text-emerald-400 justify-center text-center max-w-3xl mx-auto">
-            <CheckCircle className="h-4 w-4 text-emerald-500 shrink-0" />
-            {importStatus}
+        {(importBusy || importProgress > 0 || importStatus) && (
+          <div className="mt-6 max-w-xl mx-auto space-y-2">
+            {(importBusy || importProgress > 0) && (
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                  <span>{importBusy ? "In progress" : "Done"}</span>
+                  <span className="tabular-nums text-orange-400">
+                    {Math.round(importProgress)}%
+                  </span>
+                </div>
+                <div className="h-2.5 w-full rounded-full bg-slate-900 border border-white/10 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full transition-all duration-300 ease-out ${
+                      importBusy
+                        ? "bg-gradient-to-r from-orange-600 to-orange-400"
+                        : "bg-emerald-500"
+                    }`}
+                    style={{ width: `${Math.min(100, Math.max(0, importProgress))}%` }}
+                  />
+                </div>
+              </div>
+            )}
+            {importStatus && (
+              <div
+                className={`flex items-start gap-2 text-xs font-bold justify-center text-center ${
+                  importBusy ? "text-orange-300" : "text-emerald-400"
+                }`}
+              >
+                <CheckCircle
+                  className={`h-4 w-4 shrink-0 mt-0.5 ${
+                    importBusy ? "text-orange-400 animate-pulse" : "text-emerald-500"
+                  }`}
+                />
+                <span>{importStatus}</span>
+              </div>
+            )}
           </div>
         )}
 
@@ -510,10 +600,12 @@ export function AdminRegattaImport({
             <button
               type="button"
               onClick={() => void handleImportToDb()}
-              disabled={!isSuperadmin}
+              disabled={!isSuperadmin || importBusy}
               className="sm:col-span-2 lg:col-span-4 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-xs font-bold text-white"
             >
-              Import {fullImportRows.length} rows to database
+              {importBusy
+                ? `Importing… ${Math.round(importProgress)}%`
+                : `Import ${fullImportRows.length} rows to database`}
             </button>
           </div>
         )}

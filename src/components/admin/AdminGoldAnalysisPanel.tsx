@@ -506,6 +506,114 @@ export function AdminGoldAnalysisPanel({
               </div>
             </div>
           )}
+
+          {/* Individual ranking regatta results per half */}
+          {series.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-xs font-bold text-white uppercase tracking-wider px-1">
+                Individual ranking results
+              </h3>
+              {series.map((s, si) => {
+                const halves = [
+                  { key: "H1", label: "H1 · promotion half", half: s.half1 },
+                  { key: "H2", label: "H2 · second half", half: s.half2 },
+                  {
+                    key: "Now",
+                    label: "Current half",
+                    half: s.currentHalf,
+                  },
+                ] as const;
+                return (
+                  <div
+                    key={s.sailorId}
+                    className="glass-panel rounded-2xl border border-white/5 overflow-hidden"
+                  >
+                    <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
+                      <span
+                        className="h-2.5 w-2.5 rounded-full shrink-0"
+                        style={{ background: COLORS[si % COLORS.length] }}
+                      />
+                      <h4 className="text-sm font-bold text-white">
+                        {s.name}
+                      </h4>
+                      <span className="text-[10px] text-slate-500">
+                        Gold {s.goldEntryDate}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/5">
+                      {halves.map(({ key, label, half }) => (
+                        <div key={key} className="p-3 sm:p-4 min-w-0">
+                          <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                            {label}
+                          </p>
+                          <p className="text-[11px] text-slate-400 mt-0.5">
+                            {half?.periodLabel || "—"}
+                            {half?.best3of5 != null && (
+                              <span className="text-white font-semibold ml-1">
+                                · Best 3 = {half.best3of5}
+                              </span>
+                            )}
+                          </p>
+                          {!half?.events?.length ? (
+                            <p className="text-[11px] text-slate-600 mt-3">
+                              No ranking events in window
+                            </p>
+                          ) : (
+                            <ul className="mt-2 space-y-1.5">
+                              {half.events.map((ev, ei) => (
+                                <li
+                                  key={`${s.sailorId}-${key}-${ev.regattaId}-${ei}`}
+                                  className="flex items-start justify-between gap-2 text-[11px] rounded-lg bg-black/25 border border-white/[0.04] px-2 py-1.5"
+                                >
+                                  <span className="min-w-0">
+                                    <span className="text-[9px] font-bold text-orange-400/90">
+                                      R{ei + 1}
+                                      {ev.isCarryForward ? " CF" : ""}
+                                    </span>
+                                    <span className="block text-slate-200 font-medium truncate">
+                                      {ev.regattaName}
+                                    </span>
+                                    {ev.periodLabel && (
+                                      <span className="block text-[9px] text-slate-600">
+                                        {ev.periodLabel}
+                                      </span>
+                                    )}
+                                  </span>
+                                  <span className="shrink-0 text-right tabular-nums">
+                                    <span
+                                      className={`font-bold ${
+                                        ev.isDNS && !ev.isOverseasCommitment
+                                          ? "text-rose-400"
+                                          : "text-white"
+                                      }`}
+                                    >
+                                      {ev.score}
+                                      {ev.isOverseasCommitment
+                                        ? "†"
+                                        : ev.isDNS
+                                          ? "*"
+                                          : ""}
+                                    </span>
+                                    <span className="block text-[9px] text-slate-500">
+                                      rank
+                                    </span>
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <p className="px-4 py-2 text-[9px] text-slate-600 border-t border-white/5">
+                      * DNS · † overseas commitment · CF = carry-forward from
+                      prior half
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 
