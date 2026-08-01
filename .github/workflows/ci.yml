@@ -19,7 +19,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
+          # Match local tooling; npm 10 (Node 22) rejects npm 11-style nested esbuild lock entries
+          node-version: "24"
           cache: npm
 
       - name: Install dependencies
