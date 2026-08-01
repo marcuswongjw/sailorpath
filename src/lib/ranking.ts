@@ -57,6 +57,37 @@ export interface RegattaRecord {
   countsForRanking?: boolean | null;
 }
 
+/** Default series class for SG Gold/Silver boards */
+export const DEFAULT_SERIES_BOAT_CLASS = "Optimist";
+
+/**
+ * Normalize boat class for comparison.
+ * Empty / null → Optimist (legacy rows).
+ */
+export function normalizeSeriesBoatClass(
+  boatClass: string | null | undefined
+): string {
+  const s = String(boatClass || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+  if (!s || s === "optimist") return "optimist";
+  return s;
+}
+
+/**
+ * Whether a regatta belongs to a series boat class (default Optimist).
+ * ILCA 4 / other classes never count on Optimist Gold/Silver boards.
+ */
+export function regattaMatchesSeriesClass(
+  regatta: Pick<RegattaRecord, "boatClass">,
+  seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
+): boolean {
+  const want = normalizeSeriesBoatClass(seriesBoatClass);
+  const got = normalizeSeriesBoatClass(regatta.boatClass);
+  return want === got;
+}
+
 export interface RegattaResultRecord {
   sailorId: string;
   regattaId: string;
@@ -178,7 +209,9 @@ export function periodBounds(period: Period): { start: string; end: string } {
 export function rankingRegattasInPeriod(
   fleet: "Gold" | "Silver",
   period: Period,
-  allRegattas: RegattaRecord[]
+  allRegattas: RegattaRecord[],
+  /** Series class — default Optimist so ILCA 4 etc. never pollute Optimist boards */
+  seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
 ): RegattaRecord[] {
   const { start, end } = periodBounds(period);
 
@@ -186,11 +219,15 @@ export function rankingRegattasInPeriod(
     .filter((r) => {
       // Personal / overseas logbook events never count for series ranking
       if (r.countsForRanking === false) return false;
+      // Separate series by boat class (Optimist vs ILCA 4, etc.)
+      if (!regattaMatchesSeriesClass(r, seriesBoatClass)) return false;
       // YYYY-MM-DD string compare = calendar date in SG (no TZ shift)
       const t = String(r.date || "").slice(0, 10);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(t)) return false;
       if (t < start || t > end) return false;
       const div = r.division || "Gold";
+      // Single-fleet classes use Open — not part of Optimist Gold/Silver
+      if (div === "Open" || div === "Fleet") return false;
       if (fleet === "Gold") return div === "Gold" || div === "Both";
       return div === "Silver" || div === "Both";
     })
@@ -210,14 +247,25 @@ export function rankingRegattasInPeriod(
 export function scoringRegattasForFleet(
   fleet: "Gold" | "Silver",
   period: Period,
-  allRegattas: RegattaRecord[]
+  allRegattas: RegattaRecord[],
+  seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
 ): { regatta: RegattaRecord; isCarryForward: boolean; periodLabel: string }[] {
-  const current = rankingRegattasInPeriod(fleet, period, allRegattas);
+  const current = rankingRegattasInPeriod(
+    fleet,
+    period,
+    allRegattas,
+    seriesBoatClass
+  );
   const need = Math.max(0, 5 - current.length);
   let carry: RegattaRecord[] = [];
   if (need > 0) {
     const prev = previousPeriod(period);
-    const prevEvents = rankingRegattasInPeriod(fleet, prev, allRegattas);
+    const prevEvents = rankingRegattasInPeriod(
+      fleet,
+      prev,
+      allRegattas,
+      seriesBoatClass
+    );
     // Most recent N from previous period
     carry = prevEvents.slice(-need);
   }
@@ -430,7 +478,9 @@ export function calculateRankings(
   period: Period,
   sailors: SailorRecord[],
   regattas: RegattaRecord[],
-  results: RegattaResultRecord[]
+  results: RegattaResultRecord[],
+  /** Default Optimist — ILCA 4 results never enter Optimist series scores */
+  seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
 ): RankedSailor[] {
   // Resolve active sailors for the period and partition them
   const activeSailors: (SailorRecord & { fleet: "Gold" | "Silver" })[] = [];
@@ -442,8 +492,18 @@ export function calculateRankings(
   }
 
   // Precompute scoring windows per fleet (carry-forward shared within fleet)
-  const goldSlots = scoringRegattasForFleet("Gold", period, regattas);
-  const silverSlots = scoringRegattasForFleet("Silver", period, regattas);
+  const goldSlots = scoringRegattasForFleet(
+    "Gold",
+    period,
+    regattas,
+    seriesBoatClass
+  );
+  const silverSlots = scoringRegattasForFleet(
+    "Silver",
+    period,
+    regattas,
+    seriesBoatClass
+  );
 
   const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
     const slots = sailor.fleet === "Gold" ? goldSlots : silverSlots;

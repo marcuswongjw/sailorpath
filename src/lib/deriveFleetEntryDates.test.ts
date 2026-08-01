@@ -38,6 +38,29 @@ describe("deriveSilverEntryYmd", () => {
     },
   ];
 
+  it("ignores non-Optimist classes for silver entry", () => {
+    const y = deriveSilverEntryYmd(
+      [
+        {
+          sailorId: "a",
+          regattaDate: "2025-02-01",
+          division: "Silver",
+          countsForRanking: true,
+          boatClass: "ILCA 4",
+        },
+        {
+          sailorId: "a",
+          regattaDate: "2025-03-01",
+          division: "Silver",
+          countsForRanking: true,
+          boatClass: "Optimist",
+        },
+      ],
+      "a"
+    );
+    expect(y).toBe("2025-03-01");
+  });
+
   it("uses earliest Silver ranking date (not half boundary)", () => {
     expect(deriveSilverEntryYmd(links, "a")).toBe("2026-01-20");
   });

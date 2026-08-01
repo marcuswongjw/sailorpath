@@ -119,6 +119,7 @@ export async function POST(req: Request) {
           regattaDate: regattas.date,
           division: regattas.division,
           countsForRanking: regattas.countsForRanking,
+          boatClass: regattas.boatClass,
         })
         .from(regattaResults)
         .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id));
@@ -128,6 +129,7 @@ export async function POST(req: Request) {
           regattaDate: l.regattaDate,
           division: l.division,
           countsForRanking: l.countsForRanking,
+          boatClass: l.boatClass,
         }))
       );
       const rows = await db.select().from(sailors);

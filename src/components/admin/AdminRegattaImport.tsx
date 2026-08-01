@@ -347,10 +347,13 @@ export function AdminRegattaImport({
           <p className="text-xs text-slate-500 mb-4 max-w-3xl">
             Supports .xlsx, .xls, and .csv. Required: Name (+ Rank/Nett if
             available). Optional: Total Score, Club, Nationality, Sail Number,
-            Birth Year / DOB — when present, sailor profiles are updated.
-            Unmatched names become{" "}
-            <strong className="text-slate-300">guests</strong> (not on
-            Gold/Silver rankings until you admit them as Silver in Database).
+            Birth Year / DOB. When club / school / sail # differ from the
+            profile, the{" "}
+            <strong className="text-slate-300">latest regatta date wins</strong>{" "}
+            (any class). Optimist series rankings ignore ILCA 4 and other
+            classes. Unmatched names become{" "}
+            <strong className="text-slate-300">guests</strong> (not on SG series
+            until you admit them in Database).
           </p>
           <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
             Select File

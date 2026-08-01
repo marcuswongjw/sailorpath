@@ -5,10 +5,13 @@ import {
   natSquadFieldForPeriod,
   periodBounds,
   previousPeriod,
+  rankingRegattasInPeriod,
   reRankWithExcluded,
+  regattaMatchesSeriesClass,
   resolveSailorFleet,
   squadStatusForPeriod,
   type RankedSailor,
+  type RegattaRecord,
   type SailorRecord,
 } from "./ranking";
 
@@ -73,6 +76,61 @@ describe("compareRankedSailors", () => {
       regattaScores: [slot(1), slot(2), slot(3)],
     };
     expect(compareRankedSailors(a, b)).toBeGreaterThan(0);
+  });
+});
+
+describe("boat class isolation", () => {
+  it("matches Optimist vs ILCA 4 separately", () => {
+    expect(
+      regattaMatchesSeriesClass({ boatClass: "Optimist" }, "Optimist")
+    ).toBe(true);
+    expect(regattaMatchesSeriesClass({ boatClass: null }, "Optimist")).toBe(
+      true
+    );
+    expect(
+      regattaMatchesSeriesClass({ boatClass: "ILCA 4" }, "Optimist")
+    ).toBe(false);
+    expect(
+      regattaMatchesSeriesClass({ boatClass: "ILCA 4" }, "ILCA 4")
+    ).toBe(true);
+  });
+
+  it("rankingRegattasInPeriod excludes other boat classes", () => {
+    const period = { year: 2026, half: "Jan-Jun" as const };
+    const regs: RegattaRecord[] = [
+      {
+        id: "opt",
+        name: "Opt Gold",
+        slug: "opt",
+        date: "2026-03-01",
+        totalFleetSize: 50,
+        division: "Gold",
+        boatClass: "Optimist",
+        countsForRanking: true,
+      },
+      {
+        id: "ilca",
+        name: "ILCA Open",
+        slug: "ilca",
+        date: "2026-03-15",
+        totalFleetSize: 30,
+        division: "Open",
+        boatClass: "ILCA 4",
+        countsForRanking: true,
+      },
+      {
+        id: "ilca-gold-mislabel",
+        name: "ILCA mislabel",
+        slug: "ilca2",
+        date: "2026-04-01",
+        totalFleetSize: 30,
+        division: "Gold",
+        boatClass: "ILCA 4",
+        countsForRanking: true,
+      },
+    ];
+    const gold = rankingRegattasInPeriod("Gold", period, regs, "Optimist");
+    expect(gold.map((r) => r.id)).toEqual(["opt"]);
   });
 });
 

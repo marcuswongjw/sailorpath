@@ -1,5 +1,9 @@
 /**
- * Profile fields (sail #, club, school) prefer the latest regatta data.
+ * Profile fields (sail #, club, school) always follow the latest regatta.
+ *
+ * “Latest” = most recent by regatta date across all classes and ranking flags
+ * (Optimist, ILCA 4, ranking, non-ranking). When details differ, the newest
+ * event wins.
  */
 
 import { toYmd } from "@/lib/datesSg";
@@ -12,13 +16,14 @@ export type ProfileFieldSource = {
 
 export function shouldApplyProfileFromRegatta(args: {
   regattaDate: string | null | undefined;
-  /** Latest known ranking regatta date for this sailor (YYYY-MM-DD), or null */
+  /** Latest known result date for this sailor (YYYY-MM-DD), or null */
   latestResultDate: string | null | undefined;
 }): boolean {
   const d = toYmd(args.regattaDate);
   if (!d) return false;
   const latest = toYmd(args.latestResultDate);
   if (!latest) return true; // no history — apply
+  // Equal date allowed (same day re-import / multi-fleet same day)
   return d >= latest;
 }
 

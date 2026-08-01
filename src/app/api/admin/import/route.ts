@@ -205,7 +205,8 @@ export async function POST(req: Request) {
       })
       .from(sailors);
 
-    // Latest ranking result date per sailor (aggregated — avoid loading full results table)
+    // Latest result date per sailor across ALL regattas (ranking or not, any class).
+    // Club / school / sail # always follow the newest event date.
     const latestDateBySailor = new Map<string, string>();
     try {
       const latestRows = await db
@@ -215,7 +216,6 @@ export async function POST(req: Request) {
         })
         .from(regattaResults)
         .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-        .where(eq(regattas.countsForRanking, true))
         .groupBy(regattaResults.sailorId);
       for (const row of latestRows) {
         const d = String(row.maxDate || "").slice(0, 10);
@@ -583,6 +583,7 @@ export async function POST(req: Request) {
             regattaDate: regattas.date,
             division: regattas.division,
             countsForRanking: regattas.countsForRanking,
+            boatClass: regattas.boatClass,
           })
           .from(regattaResults)
           .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
@@ -593,6 +594,7 @@ export async function POST(req: Request) {
             regattaDate: l.regattaDate,
             division: l.division,
             countsForRanking: l.countsForRanking,
+            boatClass: l.boatClass,
           }))
         );
         for (const sid of affectedIds) {
