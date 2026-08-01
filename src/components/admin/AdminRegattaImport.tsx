@@ -17,6 +17,12 @@ import type { ImportPossibleDuplicate } from "@/types/import";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import type { SailorAdmin } from "@/types/sailor";
+import {
+  BOAT_CLASSES,
+  COUNTRIES,
+  DEFAULT_BOAT_CLASS,
+  DEFAULT_GEOGRAPHY,
+} from "@/lib/countries";
 
 type Props = {
   isSuperadmin: boolean;
@@ -45,6 +51,10 @@ export function AdminRegattaImport({
     date: new Date().toISOString().slice(0, 10),
     division: "Gold",
     fleetSize: 50,
+    boatClass: DEFAULT_BOAT_CLASS,
+    geography: DEFAULT_GEOGRAPHY,
+    /** true = counts toward Best 3 of 5 series rankings */
+    countsForRanking: true,
   });
 
   const handleDrag = (e: React.DragEvent) => {
@@ -74,7 +84,7 @@ export function AdminRegattaImport({
       setImportStatus(
         `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
           summarizeRegattaImport(mapped) +
-          `. Set division + date, then Import.`
+          `. Confirm class, country, ranking, division + date, then Import.`
       );
       setImportMeta((m) => ({
         ...m,
@@ -193,6 +203,9 @@ export function AdminRegattaImport({
           eventDate: importMeta.date,
           division: importMeta.division,
           totalFleetSize: importMeta.fleetSize || fullImportRows.length,
+          boatClass: importMeta.boatClass,
+          geography: importMeta.geography,
+          countsForRanking: importMeta.countsForRanking,
           rows: fullImportRows,
           createMissing: true,
         }),
@@ -351,7 +364,7 @@ export function AdminRegattaImport({
 
         {fullImportRows.length > 0 && (
           <div className="mt-6 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
-            <label className="text-xs text-slate-400">
+            <label className="text-xs text-slate-400 sm:col-span-2">
               Regatta name
               <input
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
@@ -373,20 +386,6 @@ export function AdminRegattaImport({
               />
             </label>
             <label className="text-xs text-slate-400">
-              Division
-              <select
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-                value={importMeta.division}
-                onChange={(e) =>
-                  setImportMeta((m) => ({ ...m, division: e.target.value }))
-                }
-              >
-                <option value="Gold">Gold</option>
-                <option value="Silver">Silver</option>
-                <option value="Both">Both</option>
-              </select>
-            </label>
-            <label className="text-xs text-slate-400">
               Total fleet size
               <input
                 type="number"
@@ -400,11 +399,89 @@ export function AdminRegattaImport({
                 }
               />
             </label>
+            <label className="text-xs text-slate-400">
+              Class
+              <select
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                value={importMeta.boatClass}
+                onChange={(e) =>
+                  setImportMeta((m) => ({ ...m, boatClass: e.target.value }))
+                }
+              >
+                {BOAT_CLASSES.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="text-xs text-slate-400">
+              Country
+              <select
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                value={importMeta.geography}
+                onChange={(e) =>
+                  setImportMeta((m) => ({ ...m, geography: e.target.value }))
+                }
+              >
+                {COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code}>
+                    {c.code} — {c.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="text-xs text-slate-400">
+              Ranking
+              <select
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                value={importMeta.countsForRanking ? "ranking" : "non-ranking"}
+                onChange={(e) =>
+                  setImportMeta((m) => ({
+                    ...m,
+                    countsForRanking: e.target.value === "ranking",
+                    // Keep division sensible when toggling non-ranking
+                    division:
+                      e.target.value === "non-ranking" &&
+                      m.division === "Gold"
+                        ? "NonRanking"
+                        : e.target.value === "ranking" &&
+                            m.division === "NonRanking"
+                          ? "Gold"
+                          : m.division,
+                  }))
+                }
+              >
+                <option value="ranking">Ranking (series / Best 3 of 5)</option>
+                <option value="non-ranking">Non-ranking (logbook only)</option>
+              </select>
+            </label>
+            <label className="text-xs text-slate-400">
+              Division
+              <select
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                value={importMeta.division}
+                onChange={(e) =>
+                  setImportMeta((m) => ({ ...m, division: e.target.value }))
+                }
+              >
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+                <option value="Both">Both</option>
+                <option value="NonRanking">Non-ranking</option>
+              </select>
+            </label>
+            <p className="sm:col-span-2 lg:col-span-4 text-[10px] text-slate-500">
+              Defaults: <strong className="text-slate-400">Optimist</strong>,{" "}
+              <strong className="text-slate-400">SG</strong>,{" "}
+              <strong className="text-slate-400">Ranking</strong>. Non-ranking
+              events do not affect Best 3 of 5 series scores.
+            </p>
             <button
               type="button"
               onClick={() => void handleImportToDb()}
               disabled={!isSuperadmin}
-              className="sm:col-span-2 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-xs font-bold text-white"
+              className="sm:col-span-2 lg:col-span-4 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-xs font-bold text-white"
             >
               Import {fullImportRows.length} rows to database
             </button>

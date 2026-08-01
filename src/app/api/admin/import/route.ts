@@ -72,6 +72,9 @@ export async function POST(req: Request) {
       eventDate,
       division,
       totalFleetSize,
+      geography,
+      boatClass,
+      countsForRanking,
       rows,
       createMissing = true,
     }: {
@@ -79,6 +82,11 @@ export async function POST(req: Request) {
       eventDate: string;
       division?: string;
       totalFleetSize?: number;
+      /** ISO 3166-1 alpha-2 event country (default SG) */
+      geography?: string;
+      boatClass?: string;
+      /** false = non-ranking (logbook / overseas / other) */
+      countsForRanking?: boolean;
       rows: {
         name: string;
         rank: number | null;
@@ -142,6 +150,19 @@ export async function POST(req: Request) {
 
     const slug = `${slugify(regattaName)}-${eventDate}`;
     const fleetSize = totalFleetSize || cleanRows.length || 50;
+    const geo = String(geography || "SG")
+      .trim()
+      .toUpperCase()
+      .slice(0, 8) || "SG";
+    const boat = String(boatClass || "Optimist").trim() || "Optimist";
+    const ranking =
+      countsForRanking === false || countsForRanking === true
+        ? countsForRanking
+        : true;
+    // Non-ranking events use NonRanking division tag for admin filters when not set
+    const div =
+      division ||
+      (ranking === false ? "NonRanking" : "Gold");
 
     const [reg] = await db
       .insert(regattas)
@@ -150,15 +171,21 @@ export async function POST(req: Request) {
         slug,
         date: eventDate,
         totalFleetSize: fleetSize,
-        division: division || "Gold",
+        division: div,
+        geography: geo,
+        boatClass: boat,
+        countsForRanking: ranking,
       })
       .onConflictDoUpdate({
         target: regattas.slug,
         set: {
           name: regattaName,
           totalFleetSize: fleetSize,
-          division: division || "Gold",
+          division: div,
           date: eventDate,
+          geography: geo,
+          boatClass: boat,
+          countsForRanking: ranking,
           updatedAt: new Date(),
         },
       })
@@ -594,7 +621,7 @@ export async function POST(req: Request) {
         entityType: "regatta",
         entityId: reg.id,
         entityLabel: reg.name,
-        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}); ${created} guests, ${updatedProfiles} profiles, ${silverUpdated} silver dates`,
+        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}, ${boat}, ${geo}, ${ranking ? "ranking" : "non-ranking"}); ${created} guests, ${updatedProfiles} profiles, ${silverUpdated} silver dates`,
         details: {
           matched,
           created,
