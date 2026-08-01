@@ -49,14 +49,23 @@ function parseRank(r: ProfileResult): number | null {
   return Number(r.rank);
 }
 
-/** Gold vs Silver for a result (division first, then gold entry date). */
+/**
+ * Fleet / class label for a result row.
+ * ILCA is single open fleet — never Gold/Silver (even if division is empty).
+ * Optimist: division first, then gold entry date.
+ */
 export function fleetLabelForResult(
   r: ProfileResult,
   goldEntryDate?: string | null
-): "Gold" | "Silver" | "—" {
+): "Gold" | "Silver" | "Open" | "—" {
+  const boat = profileBoatClassGroup(r.boatClass);
+  if (boat === "ilca4" || boat === "ilca6") return "Open";
+
   const div = String(r.division || "").toLowerCase();
   if (div.includes("gold")) return "Gold";
   if (div.includes("silver")) return "Silver";
+  // Open / single-fleet division labels
+  if (div.includes("open") || div.includes("ilca")) return "Open";
   const d = ymd(r.regattaDate);
   const gold = ymd(goldEntryDate);
   if (isValidYmd(gold) && isValidYmd(d) && d >= gold) return "Gold";
@@ -100,7 +109,7 @@ export type TrendPoint = {
   date: string;
   rank: number;
   name: string;
-  fleet: "Gold" | "Silver" | "—";
+  fleet: "Gold" | "Silver" | "Open" | "—";
 };
 
 export type ResultTag = {
@@ -171,6 +180,9 @@ export function buildResultTags(
       geo !== "SIN" &&
       geo !== "SINGAPORE");
 
+  const boat = profileBoatClassGroup(r.boatClass);
+  const isIlca = boat === "ilca4" || boat === "ilca6";
+
   if (dns) {
     tags.push({
       label: "DNS",
@@ -183,16 +195,19 @@ export function buildResultTags(
     });
   }
 
-  if (fleet === "Gold") {
-    tags.push({
-      label: "Gold fleet",
-      className: "bg-amber-500/15 text-amber-400 border border-amber-500/25",
-    });
-  } else if (fleet === "Silver") {
-    tags.push({
-      label: "Silver fleet",
-      className: "bg-neutral-500/15 text-neutral-300 border border-neutral-500/25",
-    });
+  // Gold/Silver tags are Optimist-only (ILCA is open fleet)
+  if (!isIlca) {
+    if (fleet === "Gold") {
+      tags.push({
+        label: "Gold fleet",
+        className: "bg-amber-500/15 text-amber-400 border border-amber-500/25",
+      });
+    } else if (fleet === "Silver") {
+      tags.push({
+        label: "Silver fleet",
+        className: "bg-neutral-500/15 text-neutral-300 border border-neutral-500/25",
+      });
+    }
   }
 
   if (nonRanking) {
@@ -256,7 +271,7 @@ export function buildProfileAnalytics(
     r: ProfileResult;
     rank: number;
     date: string;
-    fleet: "Gold" | "Silver" | "—";
+    fleet: "Gold" | "Silver" | "Open" | "—";
   }[];
 
   const chronoAll = [...rankedAll].sort((a, b) => a.date.localeCompare(b.date));
@@ -358,6 +373,22 @@ export function placeColorClass(rank: number | null | undefined): string {
   if (rank <= 10) return "text-emerald-400/90";
   if (rank <= 20) return "text-neutral-200";
   return "text-neutral-400";
+}
+
+/**
+ * ILCA High Ranking Points for a single result (1st = fleet size, …, DNS = 0).
+ */
+export function ilcaHighPointsForResult(r: ProfileResult): number | null {
+  const dns = Boolean(r.isDns || r.isDNS);
+  const fleetSize = Math.max(
+    0,
+    Math.floor(Number(r.totalFleetSize ?? r.fleetSize) || 0)
+  );
+  if (dns) return 0;
+  const rank = r.rank != null ? Number(r.rank) : NaN;
+  if (!Number.isFinite(rank) || rank < 1 || fleetSize < 1) return null;
+  if (rank > fleetSize) return 0;
+  return fleetSize - Math.floor(rank) + 1;
 }
 
 /** Normalise boat class for profile result grouping. */

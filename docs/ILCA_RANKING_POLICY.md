@@ -33,7 +33,7 @@ Membership is **admin-managed** (`sailors.ilca4_national_list`, migration `026_i
 
 - **Admin → ILCA ranking**: shows **all** sailors with ILCA 4 results or an ILCA 4 sail number; toggle **Add to list / remove**.
 - **Seed from official 73 names**: matches DB names to the authority list (token-order, e.g. `Goh, Ian` ≈ `Ian Goh`).
-- **Public board** (`/sg/ilca4`): only flagged sailors **with ranking results** in the Best-3-of-5 window.
+- **Public board** (`/sg/ilca4`): Optimist-style table (R1–R5 high points + Best 3 of 5). Only flagged sailors **with ranking results**. **No public squad shortlist** (admin-only).
 - Until at least one DB flag is set, the seed name list is used as a fallback.
 - **ILCA 4 duplicate finder** in the same admin tab (name / Optimist sail / ILCA 4 sail).
 

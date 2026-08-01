@@ -3,6 +3,7 @@ import {
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
+  ilcaHighPointsForResult,
 } from "./profileAnalytics";
 
 function monthsAgo(m: number): string {
@@ -140,5 +141,50 @@ describe("buildResultTags", () => {
     expect(labels).toContain("Gold fleet");
     expect(labels).toContain("Overseas");
     expect(labels).toContain("Non-ranking");
+  });
+
+  it("does not tag ILCA results as Gold/Silver fleet", () => {
+    const tags = buildResultTags(
+      {
+        rank: 3,
+        boatClass: "ILCA 4",
+        division: "Open",
+        geography: "SG",
+      },
+      "2025-01-01"
+    );
+    const labels = tags.map((t) => t.label);
+    expect(labels).not.toContain("Gold fleet");
+    expect(labels).not.toContain("Silver fleet");
+  });
+});
+
+describe("fleetLabelForResult", () => {
+  it("marks ILCA as Open never Silver", () => {
+    expect(
+      fleetLabelForResult(
+        { boatClass: "ILCA 4", regattaDate: "2026-03-01", rank: 5 },
+        "2025-01-01"
+      )
+    ).toBe("Open");
+  });
+});
+
+describe("ilcaHighPointsForResult", () => {
+  it("awards N for 1st in fleet of N", () => {
+    expect(
+      ilcaHighPointsForResult({
+        rank: 1,
+        totalFleetSize: 40,
+        boatClass: "ILCA 4",
+      })
+    ).toBe(40);
+    expect(
+      ilcaHighPointsForResult({
+        rank: 2,
+        totalFleetSize: 40,
+        isDns: true,
+      })
+    ).toBe(0);
   });
 });

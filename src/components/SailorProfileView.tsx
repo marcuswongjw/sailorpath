@@ -29,6 +29,7 @@ import {
   fleetLabelForResult,
   profileBoatClassGroup,
   tenureFromFirstDate,
+  ilcaHighPointsForResult,
   type ProfileResult,
 } from "@/lib/profileAnalytics";
 import {
@@ -684,6 +685,11 @@ export function SailorProfileView({
     ? ilca4Results
     : ilca4Results.slice(0, 8);
   const hasMoreIlca4 = ilca4Results.length > 8;
+  /** Primary section is ILCA-only (no Optimist results) */
+  const primaryIsIlca =
+    !dualClass &&
+    hasIlcaResults &&
+    classBuckets.optimist.length === 0;
 
   const sailDisplay = String(displaySailor.sailNumber || "—");
   const sailIlca4 = displaySailor.sailNumberIlca4
@@ -1569,30 +1575,77 @@ export function SailorProfileView({
           </p>
         ) : (
           <>
-            <div className="hidden sm:grid grid-cols-[2.75rem_1fr_3rem_4.25rem] gap-2 px-4 sm:px-5 py-2 border-t border-white/[0.05] text-[10px] font-medium uppercase tracking-wide text-neutral-600">
-              <span>Pos</span>
+            <div
+              className={`hidden sm:grid gap-2 px-4 sm:px-5 py-2 border-t border-white/[0.05] text-[10px] font-medium uppercase tracking-wide text-neutral-600 ${
+                primaryIsIlca
+                  ? "grid-cols-[2.75rem_1fr_2.5rem_4.25rem]"
+                  : "grid-cols-[2.75rem_1fr_4.5rem_4.25rem]"
+              }`}
+            >
+              <span>{primaryIsIlca ? "Points" : "Pos"}</span>
               <span>Event</span>
-              <span className="text-right">Pts</span>
-              <span className="text-right">Fleet</span>
+              <span className="text-right">
+                {primaryIsIlca ? "Rank" : "Nett Score"}
+              </span>
+              <span className="text-right">
+                {primaryIsIlca ? "Class" : "Fleet"}
+              </span>
             </div>
             <div className="divide-y divide-white/[0.04]">
               {visibleResults.map((res, idx) => {
                 const regattaId = String(res.regattaId || res.id || idx);
                 const rank = res.rank != null ? Number(res.rank) : null;
                 const dns = Boolean(res.isDns || res.isDNS);
-                const fleet = fleetLabelForResult(res, analytics.goldEntryDate);
+                const boatGroup = profileBoatClassGroup(
+                  (res as ProfileResult).boatClass
+                );
+                const isIlcaRow =
+                  primaryIsIlca ||
+                  boatGroup === "ilca4" ||
+                  boatGroup === "ilca6";
+                const fleet = isIlcaRow
+                  ? boatGroup === "ilca6"
+                    ? "ILCA 6"
+                    : "ILCA 4"
+                  : fleetLabelForResult(res, analytics.goldEntryDate);
                 const slug = res.regattaSlug || res.id;
                 const expanded = expandedRegattaId === regattaId;
                 const raceNotes = obsForRegatta(regattaId);
                 const fleetSize = res.totalFleetSize ?? res.fleetSize;
                 const nonRanking = res.countsForRanking === false;
                 const canLink =
-                  !nonRanking && slug && String(slug).length > 2;
-                const pts =
+                  !nonRanking &&
+                  !isIlcaRow &&
+                  slug &&
+                  String(slug).length > 2;
+                const nett =
                   res.nettScore != null &&
                   Number.isFinite(Number(res.nettScore))
                     ? Number(res.nettScore)
                     : null;
+                const ilcaPts = isIlcaRow
+                  ? ilcaHighPointsForResult(res as ProfileResult)
+                  : null;
+                const leftValue = isIlcaRow
+                  ? dns
+                    ? "0"
+                    : ilcaPts != null
+                      ? String(ilcaPts)
+                      : "—"
+                  : dns
+                    ? "DNS"
+                    : rank != null
+                      ? String(rank)
+                      : "—";
+                const midValue = isIlcaRow
+                  ? dns
+                    ? "DNS"
+                    : rank != null
+                      ? String(rank)
+                      : "—"
+                  : nett != null
+                    ? String(nett)
+                    : "—";
                 const tags = buildResultTags(res, analytics.goldEntryDate);
 
                 return (
@@ -1609,14 +1662,27 @@ export function SailorProfileView({
                           setExpandedRegattaId(expanded ? null : regattaId);
                         }
                       }}
-                      className="grid grid-cols-[2.75rem_1fr_auto] sm:grid-cols-[2.75rem_1fr_3rem_4.25rem] gap-2 items-start px-4 sm:px-5 py-3.5 cursor-pointer hover:bg-white/[0.02]"
+                      className={`grid gap-2 items-start px-4 sm:px-5 py-3.5 cursor-pointer hover:bg-white/[0.02] grid-cols-[2.75rem_1fr_auto] ${
+                        isIlcaRow
+                          ? "sm:grid-cols-[2.75rem_1fr_2.5rem_4.25rem]"
+                          : "sm:grid-cols-[2.75rem_1fr_4.5rem_4.25rem]"
+                      }`}
                     >
                       <span
                         className={`text-[15px] font-semibold tabular-nums pt-0.5 ${
-                          dns ? "text-rose-400" : "text-neutral-200"
+                          dns && !isIlcaRow
+                            ? "text-rose-400"
+                            : isIlcaRow
+                              ? "text-sky-300"
+                              : "text-neutral-200"
                         }`}
+                        title={
+                          isIlcaRow
+                            ? "High Ranking Points (1st = fleet size)"
+                            : "Finishing place"
+                        }
                       >
-                        {dns ? "DNS" : rank != null ? rank : "—"}
+                        {leftValue}
                       </span>
                       <div className="min-w-0">
                         {canLink ? (
@@ -1641,6 +1707,12 @@ export function SailorProfileView({
                             .filter(Boolean)
                             .join(" · ")}
                         </p>
+                        {/* Mobile: show rank / nett under event */}
+                        <p className="sm:hidden text-[11px] text-neutral-400 mt-1 tabular-nums">
+                          {isIlcaRow
+                            ? `Rank ${midValue}`
+                            : `Nett ${midValue}`}
+                        </p>
                         {tags.length > 0 && (
                           <div className="mt-1.5 flex flex-wrap gap-1">
                             {tags.map((t) => (
@@ -1654,8 +1726,12 @@ export function SailorProfileView({
                           </div>
                         )}
                       </div>
-                      <span className="hidden sm:block text-right text-[13px] tabular-nums text-neutral-400 pt-0.5">
-                        {pts != null ? pts : "—"}
+                      <span
+                        className={`hidden sm:block text-right text-[13px] tabular-nums pt-0.5 ${
+                          isIlcaRow ? "text-neutral-200" : "text-neutral-400"
+                        }`}
+                      >
+                        {midValue}
                       </span>
                       <span className="flex items-center justify-end pt-0.5">
                         <span
@@ -1896,27 +1972,29 @@ export function SailorProfileView({
                 : ""}
             </p>
           </div>
+          <div className="hidden sm:grid grid-cols-[2.75rem_1fr_2.5rem_4.25rem] gap-2 px-4 sm:px-5 py-2 border-t border-white/[0.05] text-[10px] font-medium uppercase tracking-wide text-neutral-600">
+            <span>Points</span>
+            <span>Event</span>
+            <span className="text-right">Rank</span>
+            <span className="text-right">Class</span>
+          </div>
           <div className="divide-y divide-white/[0.04]">
             {visibleIlca4.map((res, idx) => {
               const regattaId = String(res.regattaId || res.id || `ilca-${idx}`);
               const rank = res.rank != null ? Number(res.rank) : null;
               const dns = Boolean(res.isDns || res.isDNS);
               const fleetSize = res.totalFleetSize ?? res.fleetSize;
-              const pts =
-                res.nettScore != null && Number.isFinite(Number(res.nettScore))
-                  ? Number(res.nettScore)
-                  : null;
+              const ilcaPts = ilcaHighPointsForResult(res as ProfileResult);
               return (
                 <div
                   key={regattaId + String(idx)}
-                  className="grid grid-cols-[2.75rem_1fr_auto] sm:grid-cols-[2.75rem_1fr_3rem_4.25rem] gap-2 items-start px-4 sm:px-5 py-3.5"
+                  className="grid grid-cols-[2.75rem_1fr_auto] sm:grid-cols-[2.75rem_1fr_2.5rem_4.25rem] gap-2 items-start px-4 sm:px-5 py-3.5"
                 >
                   <span
-                    className={`text-[15px] font-semibold tabular-nums pt-0.5 ${
-                      dns ? "text-rose-400" : "text-neutral-200"
-                    }`}
+                    className="text-[15px] font-semibold tabular-nums pt-0.5 text-sky-300"
+                    title="High Ranking Points (1st = fleet size)"
                   >
-                    {dns ? "DNS" : rank != null ? rank : "—"}
+                    {dns ? "0" : ilcaPts != null ? ilcaPts : "—"}
                   </span>
                   <div className="min-w-0">
                     <p className="text-[13px] font-medium text-white truncate">
@@ -1927,17 +2005,19 @@ export function SailorProfileView({
                         res.geography,
                         formatEventWhen(res.regattaDate as string),
                         fleetSize ? `${fleetSize} boats` : null,
-                        "ILCA 4",
                       ]
                         .filter(Boolean)
                         .join(" · ")}
                     </p>
+                    <p className="sm:hidden text-[11px] text-neutral-400 mt-1 tabular-nums">
+                      Rank {dns ? "DNS" : rank != null ? rank : "—"}
+                    </p>
                   </div>
-                  <span className="hidden sm:block text-right text-[13px] tabular-nums text-neutral-400 pt-0.5">
-                    {pts != null ? pts : "—"}
+                  <span className="hidden sm:block text-right text-[13px] tabular-nums text-neutral-200 pt-0.5">
+                    {dns ? "DNS" : rank != null ? rank : "—"}
                   </span>
                   <span className="flex items-center justify-end pt-0.5">
-                    <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold bg-sky-500/15 text-sky-300">
+                    <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold bg-sky-500/15 text-sky-300 border border-sky-500/25">
                       ILCA 4
                     </span>
                   </span>

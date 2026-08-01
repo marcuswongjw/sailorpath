@@ -40,12 +40,17 @@ export function resolveDisplayFleet(sailor: Record<string, unknown>): {
   };
 }
 
-export function fleetPillClass(fleet: "Gold" | "Silver" | "—"): string {
+export function fleetPillClass(
+  fleet: "Gold" | "Silver" | "Open" | "—" | string
+): string {
   if (fleet === "Gold") {
     return "bg-yellow-400 text-yellow-950 border border-yellow-300/20";
   }
   if (fleet === "Silver") {
     return "bg-neutral-600 text-neutral-100 border border-neutral-500/30";
+  }
+  if (fleet === "Open" || fleet === "ILCA 4" || fleet === "ILCA 6") {
+    return "bg-sky-500/15 text-sky-300 border border-sky-500/25";
   }
   return "bg-white/5 text-neutral-500 border border-white/10";
 }
