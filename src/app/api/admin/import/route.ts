@@ -353,13 +353,25 @@ export async function POST(req: Request) {
 
         if (!sailorId && createMissing) {
           const handle = makeGuestHandle(row.name);
+          const bcLower = boat.trim().toLowerCase();
+          const createIsIlca4 =
+            bcLower === "ilca 4" ||
+            bcLower === "ilca4" ||
+            bcLower === "laser 4.7" ||
+            bcLower === "laser4.7";
           // Guests only: never auto-admit to SG series (no fleet / entry dates)
           const [createdSailor] = await db
             .insert(sailors)
             .values({
               name: row.name,
               handle,
-              sailNumber: row.sailNumber || "SGP 000",
+              // Optimist primary number; ILCA 4 uses dedicated column when class is ILCA 4
+              sailNumber: createIsIlca4
+                ? "SGP 000"
+                : row.sailNumber || "SGP 000",
+              ...(createIsIlca4 && row.sailNumber
+                ? { sailNumberIlca4: row.sailNumber }
+                : {}),
               club: row.club || "N/A",
               ...(row.school ? { school: row.school } : {}),
               ...(row.nationality ? { nationality: row.nationality } : {}),
@@ -370,6 +382,7 @@ export async function POST(req: Request) {
               id: sailors.id,
               name: sailors.name,
               sailNumber: sailors.sailNumber,
+              sailNumberIlca4: sailors.sailNumberIlca4,
               dob: sailors.dob,
               club: sailors.club,
               school: sailors.school,

@@ -7,6 +7,8 @@ export interface SailorRecord {
   name: string;
   handle: string;
   sailNumber: string;
+  /** Class-specific ILCA 4 sail number (Optimist keeps sailNumber) */
+  sailNumberIlca4?: string | null;
   club: string;
   school?: string | null;
   nationality?: string | null;
