@@ -5,7 +5,9 @@ import {
   buildResultTags,
   fleetLabelForResult,
   ilcaHighPointsForResult,
+  optimistLeftYear,
   prefersIlcaFirstProfile,
+  profileBoatClassGroup,
 } from "./profileAnalytics";
 
 function monthsAgo(m: number): string {
@@ -174,6 +176,17 @@ describe("buildIlcaKeyStats / prefersIlcaFirstProfile", () => {
     expect(
       prefersIlcaFirstProfile({ dropDate: null, dob: "2018-01-01" })
     ).toBe(false);
+  });
+
+  it("reports optimist left year from drop or age-out", () => {
+    expect(optimistLeftYear({ dropDate: "2024-07-01", dob: null })).toBe(2024);
+    expect(optimistLeftYear({ dropDate: null, dob: "2008-05-01" })).toBe(2024);
+    expect(optimistLeftYear({ dropDate: null, dob: "2018-01-01" })).toBe(null);
+  });
+
+  it("folds ILCA 6 into ILCA 4", () => {
+    expect(profileBoatClassGroup("ILCA 6")).toBe("ilca4");
+    expect(profileBoatClassGroup("Laser Radial")).toBe("ilca4");
   });
 });
 

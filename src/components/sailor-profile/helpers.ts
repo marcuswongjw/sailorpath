@@ -83,7 +83,7 @@ export function fleetPillClass(
   if (fleet === "Silver") {
     return "bg-neutral-600 text-neutral-100 border border-neutral-500/30";
   }
-  if (fleet === "Open" || fleet === "ILCA 4" || fleet === "ILCA 6") {
+  if (fleet === "Open" || fleet === "ILCA 4") {
     return "bg-sky-500/15 text-sky-300 border border-sky-500/25";
   }
   return "bg-white/5 text-neutral-500 border border-white/10";

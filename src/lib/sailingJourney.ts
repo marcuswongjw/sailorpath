@@ -95,14 +95,17 @@ export type JourneyResultHint = {
 };
 
 /**
- * System milestones: first Optimist silver regatta (if any) + gold fleet entry.
+ * System milestones: first Optimist silver, gold entry, left Optimist year.
  */
 export function buildSystemJourneyMilestones(
   sailor: {
     goldEntryDate?: string | null;
     silverEntryDate?: string | null;
+    dropDate?: string | null;
+    dob?: string | null;
   },
-  results: JourneyResultHint[] = []
+  results: JourneyResultHint[] = [],
+  opts?: { optimistLeftYear?: number | null }
 ): JourneyHighlight[] {
   const out: JourneyHighlight[] = [];
 
@@ -146,6 +149,21 @@ export function buildSystemJourneyMilestones(
       when: formatJourneyWhen(gold),
       title: "Broke into gold fleet",
       detail: `Promoted to Optimist gold fleet (${gold.slice(0, 4)}).`,
+      system: true,
+    });
+  }
+
+  const leftYear = opts?.optimistLeftYear;
+  if (leftYear != null && Number.isFinite(leftYear)) {
+    const drop = ymd(sailor.dropDate);
+    const detail = isValidYmd(drop)
+      ? `Left Optimist series (${drop}).`
+      : `Aged out of Optimist class (under-16 year ended).`;
+    out.push({
+      id: "sys-left-optimist",
+      when: String(leftYear),
+      title: "Left Optimist",
+      detail,
       system: true,
     });
   }

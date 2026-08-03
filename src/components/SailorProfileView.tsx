@@ -32,6 +32,7 @@ import {
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
+  optimistLeftYear,
   prefersIlcaFirstProfile,
   profileBoatClassGroup,
   tenureFromFirstDate,
@@ -605,26 +606,28 @@ export function SailorProfileView({
       .sort((a: any, b: any) => a.raceNumber - b.raceNumber);
 
 
-  /** Split raw results by boat class (before gold filtering) */
+  /** Split raw results by boat class (before gold filtering). ILCA 6 folds into ILCA 4. */
   const classBuckets = useMemo(() => {
     const all = results as ProfileResult[];
     const optimist: ProfileResult[] = [];
     const ilca4: ProfileResult[] = [];
-    const ilca6: ProfileResult[] = [];
     for (const r of all) {
       const g = profileBoatClassGroup(r.boatClass);
       if (g === "ilca4") ilca4.push(r);
-      else if (g === "ilca6") ilca6.push(r);
-      else optimist.push(r);
+      else if (g === "optimist") optimist.push(r);
+      // "other" ignored for class tabs
     }
     const byDate = (a: ProfileResult, b: ProfileResult) =>
       String(b.regattaDate || "").localeCompare(String(a.regattaDate || ""));
     optimist.sort(byDate);
     ilca4.sort(byDate);
-    ilca6.sort(byDate);
-    return { optimist, ilca4, ilca6 };
+    return { optimist, ilca4 };
   }, [results]);
 
+  const leftOptimistYear = optimistLeftYear({
+    dropDate: displaySailor.dropDate as string | null | undefined,
+    dob: displaySailor.dob as string | null | undefined,
+  });
   const preferIlcaFirst = prefersIlcaFirstProfile({
     dropDate: displaySailor.dropDate as string | null | undefined,
     dob: displaySailor.dob as string | null | undefined,
@@ -688,8 +691,7 @@ export function SailorProfileView({
 
   const optimistResults = analytics.listResults;
   const ilca4Results = classBuckets.ilca4;
-  const ilca6Results = classBuckets.ilca6;
-  const hasIlcaResults = ilca4Results.length > 0 || ilca6Results.length > 0;
+  const hasIlcaResults = ilca4Results.length > 0;
   const hasOptimistResults =
     optimistResults.length > 0 || classBuckets.optimist.length > 0;
   const dualClass = hasIlcaResults && classBuckets.optimist.length > 0;
@@ -710,14 +712,10 @@ export function SailorProfileView({
   // Dual class: default to Optimist unless left Optimist → ILCA first.
   const resultsForPrimarySection = dualClass
     ? preferIlcaFirst
-      ? ilca4Results.length
-        ? ilca4Results
-        : ilca6Results
+      ? ilca4Results
       : optimistResults
     : hasIlcaResults && classBuckets.optimist.length === 0
-      ? ilca4Results.length
-        ? ilca4Results
-        : ilca6Results
+      ? ilca4Results
       : optimistResults;
 
   /** Active class list for the results panel (tabs when dual-class) */
@@ -768,29 +766,55 @@ export function SailorProfileView({
     (preferIlcaFirst && hasIlcaResults && dualClass && resultsTab === "ilca4") ||
     (preferIlcaFirst && hasIlcaResults && !hasOptimistResults);
 
+  const ilcaStatCells =
+    leftOptimistYear != null
+      ? [
+          {
+            value: String(ilcaKeyStats.regattaCount),
+            label: "Regattas",
+            color: "text-white",
+          },
+          {
+            value: ilcaKeyStats.bestFinishLabel,
+            label: "Best finish",
+            color: "text-emerald-400",
+          },
+          {
+            value: ilcaKeyStats.avgFinishLabel,
+            label: "Avg. finish",
+            color: "text-sky-400",
+          },
+          {
+            value: String(leftOptimistYear),
+            label: "Left Optimist",
+            color: "text-white",
+          },
+        ]
+      : [
+          {
+            value: String(ilcaKeyStats.regattaCount),
+            label: "Regattas",
+            color: "text-white",
+          },
+          {
+            value: String(ilcaKeyStats.top10Count),
+            label: "Top 10",
+            color: "text-emerald-400",
+          },
+          {
+            value: ilcaKeyStats.avgFinishLabel,
+            label: "Avg. finish",
+            color: "text-sky-400",
+          },
+          {
+            value: ilcaKeyStats.bestFinishLabel,
+            label: "Best finish",
+            color: "text-white",
+          },
+        ];
+
   const statCells = useIlcaStats
-    ? [
-        {
-          value: String(ilcaKeyStats.regattaCount),
-          label: "ILCA 4 regattas",
-          color: "text-white",
-        },
-        {
-          value: String(ilcaKeyStats.top10Count),
-          label: "Top 10",
-          color: "text-emerald-400",
-        },
-        {
-          value: ilcaKeyStats.avgFinishLabel,
-          label: "Avg. finish",
-          color: "text-sky-400",
-        },
-        {
-          value: ilcaKeyStats.bestFinishLabel,
-          label: "Best finish",
-          color: "text-white",
-        },
-      ]
+    ? ilcaStatCells
     : analytics.mode === "established_gold"
       ? [
           {
@@ -837,6 +861,11 @@ export function SailorProfileView({
           },
         ];
 
+  const keyStatsTitle = useIlcaStats
+    ? "Key stats (ILCA 4)"
+    : "Key stats (Optimist)";
+  const medalTallyTitle = "Medal tally (Optimist)";
+
   // Medal tally only for established Optimist gold with podium medals
   const showMedals =
     analytics.mode === "established_gold" && analytics.medals.show;
@@ -869,11 +898,14 @@ export function SailorProfileView({
           | string
           | null
           | undefined,
+        dropDate: displaySailor.dropDate as string | null | undefined,
+        dob: displaySailor.dob as string | null | undefined,
       },
-      classBuckets.optimist as ProfileResult[]
+      classBuckets.optimist as ProfileResult[],
+      { optimistLeftYear: leftOptimistYear }
     );
     return mergeJourneyDisplay(journey, system);
-  }, [displaySailor, classBuckets.optimist, journey]);
+  }, [displaySailor, classBuckets.optimist, journey, leftOptimistYear]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 flex-1 w-full space-y-5 bg-[#090a0f]">
@@ -1390,7 +1422,7 @@ export function SailorProfileView({
       <section className={`${cardClass} overflow-hidden`}>
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-1">
           <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-            Key stats
+            {keyStatsTitle}
           </h2>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-white/[0.06]">
@@ -1416,7 +1448,7 @@ export function SailorProfileView({
       {showMedals && (
         <section className={`${cardClass} p-4 sm:p-5`}>
           <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 mb-3">
-            Medal tally
+            {medalTallyTitle}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {(
@@ -1642,13 +1674,9 @@ export function SailorProfileView({
                   (res as ProfileResult).boatClass
                 );
                 const isIlcaRow =
-                  primaryIsIlca ||
-                  boatGroup === "ilca4" ||
-                  boatGroup === "ilca6";
+                  primaryIsIlca || boatGroup === "ilca4";
                 const fleet = isIlcaRow
-                  ? boatGroup === "ilca6"
-                    ? "ILCA 6"
-                    : "ILCA 4"
+                  ? "ILCA 4"
                   : fleetLabelForResult(res, analytics.goldEntryDate);
                 const slug = res.regattaSlug || res.id;
                 const expanded = expandedRegattaId === regattaId;

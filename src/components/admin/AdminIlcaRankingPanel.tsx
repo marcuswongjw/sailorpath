@@ -62,7 +62,8 @@ export function AdminIlcaRankingPanel({
 }: Props) {
   const now = new Date();
   const y = now.getFullYear();
-  const [boatClass, setBoatClass] = useState<IlcaBoatClass>("ILCA 4");
+  /** ILCA 6 not active — rankings are ILCA 4 only for now */
+  const boatClass: IlcaBoatClass = "ILCA 4";
   const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(
     now.getMonth() < 6 ? "january" : "july"
   );
@@ -432,16 +433,12 @@ export function AdminIlcaRankingPanel({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <label className="text-xs text-slate-400">
             Class
-            <select
-              className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-              value={boatClass}
-              onChange={(e) =>
-                setBoatClass(e.target.value as IlcaBoatClass)
-              }
-            >
-              <option value="ILCA 4">ILCA 4</option>
-              <option value="ILCA 6">ILCA 6</option>
-            </select>
+            <div className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs">
+              ILCA 4
+              <span className="ml-2 text-[10px] text-slate-500">
+                (ILCA 6 not active)
+              </span>
+            </div>
           </label>
           <label className="text-xs text-slate-400">
             Intake

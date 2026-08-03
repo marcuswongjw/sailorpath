@@ -59,7 +59,7 @@ export function fleetLabelForResult(
   goldEntryDate?: string | null
 ): "Gold" | "Silver" | "Open" | "—" {
   const boat = profileBoatClassGroup(r.boatClass);
-  if (boat === "ilca4" || boat === "ilca6") return "Open";
+  if (boat === "ilca4") return "Open";
 
   const div = String(r.division || "").toLowerCase();
   if (div.includes("gold")) return "Gold";
@@ -186,7 +186,7 @@ export function buildResultTags(
       geo !== "SINGAPORE");
 
   const boat = profileBoatClassGroup(r.boatClass);
-  const isIlca = boat === "ilca4" || boat === "ilca6";
+  const isIlca = boat === "ilca4";
 
   if (dns) {
     tags.push({
@@ -468,20 +468,35 @@ export function prefersIlcaFirstProfile(sailor: {
   goldEntryDate?: string | null;
   silverEntryDate?: string | null;
 }): boolean {
+  return optimistLeftYear(sailor) != null;
+}
+
+/**
+ * Calendar year the sailor left Optimist (for profile display).
+ * Prefer official drop date year; else age-out year (birth year + 16)
+ * once that year has been reached (SG calendar).
+ */
+export function optimistLeftYear(sailor: {
+  dropDate?: string | null;
+  dob?: string | null;
+}): number | null {
   const today = new Date().toLocaleDateString("en-CA", {
     timeZone: "Asia/Singapore",
   });
   const drop = ymd(sailor.dropDate);
-  if (isValidYmd(drop) && drop <= today) return true;
-
-  // Aged out of Optimist: birth year such that age in calendar year ≥ 16
+  if (isValidYmd(drop) && drop <= today) {
+    return Number(drop.slice(0, 4));
+  }
+  // Aged out: turn 16 in calendar year = birthYear + 16
   const dob = ymd(sailor.dob);
   if (isValidYmd(dob)) {
     const by = Number(dob.slice(0, 4));
+    if (!Number.isFinite(by)) return null;
+    const leaveYear = by + 16;
     const cy = Number(today.slice(0, 4));
-    if (Number.isFinite(by) && cy - by >= 16) return true;
+    if (cy >= leaveYear) return leaveYear;
   }
-  return false;
+  return null;
 }
 
 export function placeColorClass(rank: number | null | undefined): string {
@@ -508,24 +523,30 @@ export function ilcaHighPointsForResult(r: ProfileResult): number | null {
   return fleetSize - Math.floor(rank) + 1;
 }
 
-/** Normalise boat class for profile result grouping. */
+/**
+ * Normalise boat class for profile result grouping.
+ * ILCA 6 is folded into ILCA 4 for now (no active ILCA 6 programme).
+ */
 export function profileBoatClassGroup(
   boatClass: string | null | undefined
-): "optimist" | "ilca4" | "ilca6" | "other" {
+): "optimist" | "ilca4" | "other" {
   const s = String(boatClass || "")
     .trim()
     .toLowerCase()
     .replace(/\s+/g, " ");
   if (!s || s === "optimist" || s === "opti") return "optimist";
-  if (s === "ilca 4" || s === "ilca4" || s === "laser 4.7" || s === "laser4.7")
-    return "ilca4";
   if (
+    s === "ilca 4" ||
+    s === "ilca4" ||
+    s === "laser 4.7" ||
+    s === "laser4.7" ||
+    // No active ILCA 6 — treat as ILCA 4 for display/rankings grouping
     s === "ilca 6" ||
     s === "ilca6" ||
     s === "laser radial" ||
     s === "radial"
   )
-    return "ilca6";
+    return "ilca4";
   return "other";
 }
 
