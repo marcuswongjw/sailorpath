@@ -4,11 +4,12 @@ import { DbOffline } from "@/components/DbOffline";
 import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { getPercentileBadge } from "@/lib/ranking";
+import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import { birthYear } from "@/lib/age";
 
 export const dynamic = "force-dynamic";
 
-export default async function RegattaDetailPage({
+export default async function Ilca4RegattaDetailPage({
   params,
 }: {
   params: Promise<{ regatta_slug: string }>;
@@ -17,29 +18,32 @@ export default async function RegattaDetailPage({
   try {
     const regatta = await getRegattaBySlug(regatta_slug);
     if (!regatta) notFound();
+    if (!isIlcaSeriesClass(regatta.boatClass, "ILCA 4")) {
+      // Wrong class — send to optimist detail if it exists
+      notFound();
+    }
     const results = await getResultsForRegatta(regatta.id);
 
     return (
       <div className="mx-auto max-w-4xl px-4 py-10 space-y-6">
         <Link
-          href="/sg/optimist/regattas"
-          className="text-xs font-bold text-orange-400"
+          href="/sg/ilca4/regattas"
+          className="text-xs font-bold text-sky-400"
         >
-          ← Regattas
+          ← ILCA 4 regattas
         </Link>
         <div>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-sky-400/90 mb-1">
+            ILCA 4
+          </p>
           <h1 className="text-2xl font-black text-white">{regatta.name}</h1>
           <p className="text-xs text-slate-400 mt-1">
-            {regatta.date} · {regatta.division} · fleet {regatta.totalFleetSize}
+            {regatta.date} · {regatta.division || "Open"} · fleet{" "}
+            {regatta.totalFleetSize}
             {regatta.raceCount != null
               ? ` · ${regatta.raceCount} race${regatta.raceCount === 1 ? "" : "s"}`
               : ""}
           </p>
-          {regatta.raceCount != null && (
-            <p className="text-[11px] text-slate-600 mt-2">
-              Race count is set for future sailor race-by-race observation logs.
-            </p>
-          )}
         </div>
         <div className="overflow-x-auto rounded-2xl border border-white/5">
           <table className="w-full text-sm text-left min-w-[640px]">
@@ -67,14 +71,14 @@ export default async function RegattaDetailPage({
                     key={`${r.sailorId}-${r.regattaId}`}
                     className="border-t border-white/5"
                   >
-                    <td className="px-4 py-3 text-center font-bold text-orange-400 font-mono">
+                    <td className="px-4 py-3 text-center font-bold text-sky-400 font-mono">
                       {r.rank}
                       {overseas ? "†" : dns ? "*" : ""}
                     </td>
                     <td className="px-4 py-3">
                       <Link
                         href={`/${r.handle}`}
-                        className="font-bold text-white hover:text-orange-400"
+                        className="font-bold text-white hover:text-sky-300"
                       >
                         {r.sailorName}
                       </Link>

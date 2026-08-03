@@ -11,6 +11,58 @@ export function SiteHeader() {
 
   const primaryProfile = owned[0] || null;
 
+  const optimistLinks = (
+    <>
+      <Link
+        href="/sg/optimist/gold"
+        onClick={() => setMobileOpen(false)}
+        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+      >
+        SG Gold Fleet
+      </Link>
+      <Link
+        href="/sg/optimist/silver"
+        onClick={() => setMobileOpen(false)}
+        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+      >
+        SG Silver Fleet
+      </Link>
+      <Link
+        href="/sg/optimist/regattas"
+        onClick={() => setMobileOpen(false)}
+        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+      >
+        SG Regattas
+      </Link>
+      <Link
+        href="/sg/optimist/goldsailors"
+        onClick={() => setMobileOpen(false)}
+        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+      >
+        SG All Gold Fleet Sailors
+      </Link>
+    </>
+  );
+
+  const ilcaLinks = (
+    <>
+      <Link
+        href="/sg/ilca4"
+        onClick={() => setMobileOpen(false)}
+        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+      >
+        SG Ranking
+      </Link>
+      <Link
+        href="/sg/ilca4/regattas"
+        onClick={() => setMobileOpen(false)}
+        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+      >
+        SG Regattas
+      </Link>
+    </>
+  );
+
   const navLinks = (
     <>
       <div className="relative group">
@@ -18,34 +70,11 @@ export function SiteHeader() {
           type="button"
           className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none"
         >
-          SG Optimist
+          Optimist
           <ChevronDown className="h-4 w-4 text-slate-500 group-hover:text-slate-300" />
         </button>
-        <div className="absolute left-0 top-[52px] hidden group-hover:block w-52 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50">
-          <Link
-            href="/sg/optimist/gold"
-            className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
-          >
-            Gold Fleet Standings
-          </Link>
-          <Link
-            href="/sg/optimist/silver"
-            className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
-          >
-            Silver Fleet Standings
-          </Link>
-          <Link
-            href="/sg/optimist/regattas"
-            className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
-          >
-            Regattas List
-          </Link>
-          <Link
-            href="/sg/optimist/goldsailors"
-            className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
-          >
-            All Gold Fleet Sailors
-          </Link>
+        <div className="absolute left-0 top-[52px] hidden group-hover:block w-56 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50">
+          {optimistLinks}
         </div>
       </div>
       <div className="relative group">
@@ -53,16 +82,11 @@ export function SiteHeader() {
           type="button"
           className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none"
         >
-          SG ILCA 4
+          ILCA 4
           <ChevronDown className="h-4 w-4 text-slate-500 group-hover:text-slate-300" />
         </button>
         <div className="absolute left-0 top-[52px] hidden group-hover:block w-52 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50">
-          <Link
-            href="/sg/ilca4"
-            className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
-          >
-            National standings
-          </Link>
+          {ilcaLinks}
         </div>
       </div>
       <Link
@@ -149,7 +173,10 @@ export function SiteHeader() {
       <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
         <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
           <div className="flex items-center gap-3 lg:gap-10 min-w-0 flex-1">
-            <Link href="/" className="flex items-center gap-2 group shrink-0 min-w-0">
+            <Link
+              href="/"
+              className="flex items-center gap-2 group shrink-0 min-w-0"
+            >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-600 font-black text-white text-lg group-hover:bg-orange-500">
                 SP
               </span>
@@ -170,52 +197,63 @@ export function SiteHeader() {
             aria-label="Toggle menu"
             onClick={() => setMobileOpen((o) => !o)}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
         </div>
 
         {mobileOpen && (
           <div className="md:hidden border-t border-white/5 py-4 flex flex-col gap-1">
             <p className="px-1 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-              SG Optimist
+              Optimist
             </p>
             <Link
               href="/sg/optimist/gold"
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
             >
-              Gold Fleet Standings
+              SG Gold Fleet
             </Link>
             <Link
               href="/sg/optimist/silver"
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
             >
-              Silver Fleet Standings
+              SG Silver Fleet
             </Link>
             <Link
               href="/sg/optimist/regattas"
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
             >
-              Regattas List
+              SG Regattas
             </Link>
             <Link
               href="/sg/optimist/goldsailors"
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
             >
-              All Gold Fleet Sailors
+              SG All Gold Fleet Sailors
             </Link>
             <p className="px-1 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-              SG ILCA 4
+              ILCA 4
             </p>
             <Link
               href="/sg/ilca4"
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
             >
-              National standings
+              SG Ranking
+            </Link>
+            <Link
+              href="/sg/ilca4/regattas"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-300 hover:bg-white/5"
+            >
+              SG Regattas
             </Link>
             <Link
               href="/search"

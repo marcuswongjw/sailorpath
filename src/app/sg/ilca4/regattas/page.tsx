@@ -6,29 +6,18 @@ import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 
 export const dynamic = "force-dynamic";
 
-function isOptimistClass(boatClass: string | null | undefined): boolean {
-  const s = String(boatClass || "Optimist")
-    .trim()
-    .toLowerCase();
-  if (!s || s === "optimist" || s === "opti") return true;
-  // Explicitly exclude ILCA
-  if (isIlcaSeriesClass(boatClass, "ILCA 4") || isIlcaSeriesClass(boatClass, "ILCA 6"))
-    return false;
-  return true;
-}
-
-export default async function OptimistRegattasPage() {
+export default async function Ilca4RegattasPage() {
   try {
     const all = await listRegattas();
-    const regattas = all.filter((r) => isOptimistClass(r.boatClass));
+    const regattas = all.filter((r) => isIlcaSeriesClass(r.boatClass, "ILCA 4"));
     return (
       <RegattasListClient
-        title="Optimist regattas"
-        badgeLabel="SG Optimist"
-        description="Singapore Optimist ranking series and local events. ILCA 4 events are listed separately under ILCA 4 → SG Regattas."
-        detailBasePath="/sg/optimist/regattas"
+        title="ILCA 4 regattas"
+        badgeLabel="SG ILCA 4"
+        description="Singapore ILCA 4 ranking and local events. Optimist events are listed under Optimist → SG Regattas."
+        detailBasePath="/sg/ilca4/regattas"
         hideBoatClassFilter
-        accent="orange"
+        accent="sky"
         regattas={regattas.map((r) => ({
           id: r.id,
           name: r.name,
@@ -38,7 +27,7 @@ export default async function OptimistRegattasPage() {
           division: r.division,
           raceCount: r.raceCount ?? null,
           geography: r.geography ?? "SG",
-          boatClass: r.boatClass ?? "Optimist",
+          boatClass: r.boatClass ?? "ILCA 4",
           countsForRanking: r.countsForRanking !== false,
         }))}
       />

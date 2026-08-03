@@ -49,7 +49,34 @@ function formatNiceDate(dateStr: string) {
   });
 }
 
-export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) {
+type RegattasListProps = {
+  regattas: PublicRegatta[];
+  /** Page title */
+  title?: string;
+  /** Subtitle under the title */
+  description?: string;
+  /** Badge label e.g. "Optimist" / "ILCA 4" */
+  badgeLabel?: string;
+  /**
+   * Base path for event detail links (no trailing slash).
+   * Default: /sg/optimist/regattas
+   */
+  detailBasePath?: string;
+  /** Hide boat-class filter (list is already class-filtered) */
+  hideBoatClassFilter?: boolean;
+  /** Accent: orange (Optimist) or sky (ILCA) */
+  accent?: "orange" | "sky";
+};
+
+export function RegattasListClient({
+  regattas,
+  title = "Regattas & Competitions",
+  description = "Explore official Singapore Optimist ranking series regattas and local practice events.",
+  badgeLabel = "Regatta Directory",
+  detailBasePath = "/sg/optimist/regattas",
+  hideBoatClassFilter = false,
+  accent = "orange",
+}: RegattasListProps) {
   const [query, setQuery] = useState("");
   const [rankingFilter, setRankingFilter] = useState<"all" | "ranking" | "non-ranking">("all");
   const [division, setDivision] = useState<string>("all");
@@ -57,6 +84,21 @@ export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) 
   const [geography, setGeography] = useState<string>("all");
   const [boatClass, setBoatClass] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "compact">("grid");
+
+  const accentBadge =
+    accent === "sky"
+      ? "bg-sky-500/10 border-sky-500/20 text-sky-400"
+      : "bg-orange-500/10 border-orange-500/20 text-orange-400";
+  const accentBtn =
+    accent === "sky"
+      ? "bg-sky-600 text-white shadow-lg shadow-sky-950/30"
+      : "bg-orange-500 text-white shadow-lg shadow-orange-500/20";
+  const accentIconBg =
+    accent === "sky"
+      ? "bg-sky-500/10 border-sky-500/20"
+      : "bg-orange-500/10 border-orange-500/20";
+  const accentIcon =
+    accent === "sky" ? "text-sky-400" : "text-orange-400";
 
   // Metric counts
   const metrics = useMemo(() => {
@@ -158,16 +200,16 @@ export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) 
       {/* Header Banner */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-bold mb-3">
+          <div
+            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-bold mb-3 ${accentBadge}`}
+          >
             <Sparkles className="h-3.5 w-3.5" />
-            Regatta Directory
+            {badgeLabel}
           </div>
           <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight">
-            Regattas & Competitions
+            {title}
           </h1>
-          <p className="text-sm text-slate-400 mt-1 max-w-xl">
-            Explore official Singapore Optimist ranking series regattas and local practice events.
-          </p>
+          <p className="text-sm text-slate-400 mt-1 max-w-xl">{description}</p>
         </div>
 
         {/* View mode toggle */}
@@ -179,7 +221,7 @@ export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) 
               onClick={() => setViewMode("grid")}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors inline-flex items-center gap-1.5 ${
                 viewMode === "grid"
-                  ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20"
+                  ? accentBtn
                   : "text-slate-400 hover:text-white"
               }`}
             >
@@ -191,7 +233,7 @@ export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) 
               onClick={() => setViewMode("compact")}
               className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors inline-flex items-center gap-1.5 ${
                 viewMode === "compact"
-                  ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20"
+                  ? accentBtn
                   : "text-slate-400 hover:text-white"
               }`}
             >
@@ -205,8 +247,10 @@ export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) 
       {/* Summary KPI Bar */}
       <div className="grid grid-cols-3 gap-3">
         <div className="glass-panel rounded-2xl p-4 border border-white/5 text-center sm:text-left flex flex-col sm:flex-row items-center gap-3">
-          <div className="h-10 w-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
-            <Trophy className="h-5 w-5 text-orange-400" />
+          <div
+            className={`h-10 w-10 rounded-xl border flex items-center justify-center shrink-0 ${accentIconBg}`}
+          >
+            <Trophy className={`h-5 w-5 ${accentIcon}`} />
           </div>
           <div>
             <span className="block text-[10px] font-bold uppercase text-slate-500 tracking-wider">
@@ -394,7 +438,7 @@ export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) 
                     return (
                       <Link
                         key={r.id}
-                        href={`/sg/optimist/regattas/${r.slug}`}
+                        href={`${detailBasePath}/${r.slug}`}
                         className="glass-card rounded-2xl border border-white/5 p-5 hover:border-orange-500/40 transition-all group flex flex-col justify-between gap-4 relative overflow-hidden"
                       >
                         <div className="space-y-2">
@@ -453,7 +497,7 @@ export function RegattasListClient({ regattas }: { regattas: PublicRegatta[] }) 
                     return (
                       <Link
                         key={r.id}
-                        href={`/sg/optimist/regattas/${r.slug}`}
+                        href={`${detailBasePath}/${r.slug}`}
                         className="p-4 hover:bg-white/5 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3 group"
                       >
                         <div className="min-w-0 space-y-1">
