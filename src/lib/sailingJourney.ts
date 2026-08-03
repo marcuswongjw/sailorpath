@@ -39,7 +39,7 @@ export function parseSailingJourney(raw: unknown): JourneyHighlight[] {
 export function serializeSailingJourney(
   items: JourneyHighlight[]
 ): string | null {
-  // Never persist system-derived milestones on the sailor row
+  // Never persist live system milestones; keep owner notes + dismissals
   const owner = items.filter((it) => !it.system);
   if (!owner.length) return null;
   return JSON.stringify(
@@ -153,21 +153,63 @@ export function buildSystemJourneyMilestones(
   return out;
 }
 
+/** Owner record that hides a system milestone permanently. */
+export const DISMISSED_SYSTEM_TITLE = "__dismissed_system__";
+
+export function isDismissedSystemRecord(it: JourneyHighlight): boolean {
+  return it.title === DISMISSED_SYSTEM_TITLE;
+}
+
+/** System milestone ids the sailor has removed. */
+export function dismissedSystemIds(owner: JourneyHighlight[]): Set<string> {
+  const out = new Set<string>();
+  for (const o of owner) {
+    if (!isDismissedSystemRecord(o)) continue;
+    const id = String(o.detail || "").trim();
+    if (id) out.add(id);
+  }
+  return out;
+}
+
+/** Persist a dismissal so the system milestone stays hidden. */
+export function dismissSystemMilestone(
+  owner: JourneyHighlight[],
+  systemId: string
+): JourneyHighlight[] {
+  const id = String(systemId || "").trim();
+  if (!id) return owner;
+  if (dismissedSystemIds(owner).has(id)) return owner;
+  return [
+    {
+      id: `dismissed-${id}`.slice(0, 64),
+      when: "",
+      title: DISMISSED_SYSTEM_TITLE,
+      detail: id.slice(0, 500),
+    },
+    ...owner,
+  ];
+}
+
 /**
  * Merge system milestones with owner highlights.
  * Dedupes owner items that match system titles; sorts by `when` (year/month text).
+ * Honours dismissed system milestones.
  */
 export function mergeJourneyDisplay(
   owner: JourneyHighlight[],
   system: JourneyHighlight[]
 ): JourneyHighlight[] {
+  const dismissed = dismissedSystemIds(owner);
+  const systemVisible = system.filter((s) => !dismissed.has(s.id));
   const systemTitles = new Set(
-    system.map((s) => s.title.trim().toLowerCase())
+    systemVisible.map((s) => s.title.trim().toLowerCase())
   );
   const ownerFiltered = owner.filter(
-    (o) => !systemTitles.has(o.title.trim().toLowerCase())
+    (o) =>
+      !isDismissedSystemRecord(o) &&
+      !systemTitles.has(o.title.trim().toLowerCase())
   );
-  const all = [...system, ...ownerFiltered];
+  const all = [...systemVisible, ...ownerFiltered];
   // Sort by when string when it looks like "Mon YYYY" or "YYYY-MM-DD" or year
   const sortKey = (w: string): string => {
     const t = w.trim();

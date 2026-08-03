@@ -57,6 +57,7 @@ export function rankingGoldRegattasInPeriod(
 
 /**
  * Completed halves that have fully ended before `asOfYmd` (SG calendar).
+ * Never includes the half that contains `asOfYmd` (current half still in progress).
  * E.g. asOf 2026-08-03 includes Jan–Jun 2026 but not Jul–Dec 2026.
  */
 export function completedPeriodsUpTo(asOfYmd: string): Period[] {
@@ -67,6 +68,7 @@ export function completedPeriodsUpTo(asOfYmd: string): Period[] {
   const out: Period[] = [];
   // Start from a reasonable year
   for (let year = 2022; year <= y; year++) {
+    // Half ends strictly before asOf → fully complete
     if (`${year}-06-30` < asOf) {
       out.push({ year, half: "Jan-Jun" });
     }
@@ -74,11 +76,14 @@ export function completedPeriodsUpTo(asOfYmd: string): Period[] {
       out.push({ year, half: "Jul-Dec" });
     }
   }
-  // If we're past June 30, Jan-Jun of this year is complete
-  // If past Dec 31, Jul-Dec is complete — handled above with end-of-year
-  // Edge: on Jul 1, Jan-Jun is complete (end 06-30 < 07-01)
-  void m;
-  return out;
+  // Explicitly never include the half that contains asOf (in-progress)
+  const currentHalf: Period =
+    m <= 6
+      ? { year: y, half: "Jan-Jun" }
+      : { year: y, half: "Jul-Dec" };
+  return out.filter(
+    (p) => !(p.year === currentHalf.year && p.half === currentHalf.half)
+  );
 }
 
 function sailedRankingCount(

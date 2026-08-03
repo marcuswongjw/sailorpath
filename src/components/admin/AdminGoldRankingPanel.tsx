@@ -126,6 +126,10 @@ export function AdminGoldRankingPanel({
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [dropBusy, setDropBusy] = useState(false);
   const [dropMsg, setDropMsg] = useState<string | null>(null);
+  const [dropReviewOpen, setDropReviewOpen] = useState(false);
+  const [selectedDropIds, setSelectedDropIds] = useState<Set<string>>(
+    new Set()
+  );
 
   const cutoff = useMemo(
     () => optimistSquadCutoff(intakeKind, intakeYear),
@@ -155,23 +159,31 @@ export function AdminGoldRankingPanel({
     [sailorRecs, regattaRecs, resultRecs, asOfYmd]
   );
 
-  const applyParticipationDrops = async () => {
-    if (participationDrops.length === 0) {
-      setDropMsg("No participation drops needed.");
+  const openDropReview = () => {
+    setSelectedDropIds(new Set(participationDrops.map((d) => d.sailorId)));
+    setDropReviewOpen(true);
+    setDropMsg(null);
+  };
+
+  const applyParticipationDrops = async (ids?: string[]) => {
+    const targetIds =
+      ids && ids.length > 0
+        ? ids
+        : [...selectedDropIds];
+    if (targetIds.length === 0) {
+      setDropMsg("Select at least one sailor to drop.");
       return;
     }
-    const preview = participationDrops
-      .slice(0, 12)
-      .map(
-        (d) =>
-          `• ${d.name}: drop ${d.dropDate} (${d.participationCount} ranking gold in ${d.failedPeriod.half} ${d.failedPeriod.year})`
-      )
-      .join("\n");
+    const selected = participationDrops.filter((d) =>
+      targetIds.includes(d.sailorId)
+    );
+    if (selected.length === 0) {
+      setDropMsg("No matching drop candidates selected.");
+      return;
+    }
     if (
       !confirm(
-        `Auto-drop ${participationDrops.length} gold sailor(s) with fewer than ${GOLD_MIN_RANKING_REGATTAS_PER_HALF} ranking gold regattas in a completed half?\n\n${preview}${
-          participationDrops.length > 12 ? "\n…" : ""
-        }\n\nThis sets their gold drop date.`
+        `Set gold drop date for ${selected.length} sailor(s)?\n\nOnly completed halves are evaluated (current half is excluded).\nThis cannot be undone from this panel.`
       )
     ) {
       return;
@@ -185,12 +197,14 @@ export function AdminGoldRankingPanel({
         body: JSON.stringify({
           action: "applyGoldParticipationDrops",
           asOf: asOfYmd,
+          sailorIds: selected.map((d) => d.sailorId),
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Drop failed");
       setDropMsg(data.message || `Updated ${data.updated}`);
-      // Refresh sailor list if parent provided callback
+      setDropReviewOpen(false);
+      setSelectedDropIds(new Set());
       if (onSailorsChange) {
         const listRes = await fetch("/api/admin/sailors");
         const listData = await listRes.json();
@@ -290,34 +304,125 @@ export function AdminGoldRankingPanel({
         </div>
 
         {participationDrops.length > 0 && (
-          <div className="rounded-xl border border-rose-500/25 bg-rose-500/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-            <div className="min-w-0">
-              <p className="text-xs font-semibold text-rose-200">
-                {participationDrops.length} gold sailor
-                {participationDrops.length === 1 ? "" : "s"} below participation
-                threshold
-              </p>
-              <p className="text-[11px] text-rose-200/70 mt-0.5">
-                {participationDrops
-                  .slice(0, 4)
-                  .map((d) => d.name)
-                  .join(", ")}
-                {participationDrops.length > 4
-                  ? ` +${participationDrops.length - 4} more`
-                  : ""}
-              </p>
+          <div className="rounded-xl border border-rose-500/25 bg-rose-500/10 px-4 py-3 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-rose-200">
+                  {participationDrops.length} gold sailor
+                  {participationDrops.length === 1 ? "" : "s"} flagged for
+                  participation drop
+                </p>
+                <p className="text-[11px] text-rose-200/70 mt-0.5">
+                  Only completed halves are checked — the current half is
+                  excluded until all ranking regattas have finished. Review
+                  before applying.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => openDropReview()}
+                className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/40 bg-rose-500/20 px-3 py-1.5 text-[10px] font-bold text-rose-100 hover:bg-rose-500/30"
+              >
+                Review {participationDrops.length} sailor
+                {participationDrops.length === 1 ? "" : "s"}
+              </button>
             </div>
-            <button
-              type="button"
-              disabled={dropBusy}
-              onClick={() => void applyParticipationDrops()}
-              className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/40 bg-rose-500/20 px-3 py-1.5 text-[10px] font-bold text-rose-100 hover:bg-rose-500/30 disabled:opacity-50"
-            >
-              {dropBusy ? (
-                <Loader2 className="h-3 w-3 animate-spin" />
-              ) : null}
-              Apply auto-drops
-            </button>
+            {dropReviewOpen && (
+              <div className="rounded-lg border border-white/10 bg-black/30 overflow-hidden">
+                <div className="px-3 py-2 border-b border-white/10 flex flex-wrap items-center justify-between gap-2">
+                  <label className="text-[11px] text-slate-300 flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={
+                        participationDrops.length > 0 &&
+                        selectedDropIds.size === participationDrops.length
+                      }
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedDropIds(
+                            new Set(participationDrops.map((d) => d.sailorId))
+                          );
+                        } else {
+                          setSelectedDropIds(new Set());
+                        }
+                      }}
+                    />
+                    Select all ({selectedDropIds.size}/
+                    {participationDrops.length})
+                  </label>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setDropReviewOpen(false)}
+                      className="text-[10px] font-bold text-slate-400 hover:text-white"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      disabled={dropBusy || selectedDropIds.size === 0}
+                      onClick={() => void applyParticipationDrops()}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/40 bg-rose-500/25 px-3 py-1.5 text-[10px] font-bold text-rose-100 hover:bg-rose-500/40 disabled:opacity-50"
+                    >
+                      {dropBusy ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : null}
+                      Drop selected ({selectedDropIds.size})
+                    </button>
+                  </div>
+                </div>
+                <div className="max-h-64 overflow-y-auto">
+                  <table className="w-full text-left text-[11px]">
+                    <thead className="sticky top-0 bg-[#1a1520] text-slate-500 uppercase tracking-wide text-[9px]">
+                      <tr>
+                        <th className="px-3 py-2 w-8" />
+                        <th className="px-3 py-2">Sailor</th>
+                        <th className="px-3 py-2">Gold since</th>
+                        <th className="px-3 py-2">Failed half</th>
+                        <th className="px-3 py-2">Raced</th>
+                        <th className="px-3 py-2">Drop date</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {participationDrops.map((d) => (
+                        <tr key={d.sailorId} className="text-slate-200">
+                          <td className="px-3 py-2">
+                            <input
+                              type="checkbox"
+                              checked={selectedDropIds.has(d.sailorId)}
+                              onChange={(e) => {
+                                setSelectedDropIds((prev) => {
+                                  const next = new Set(prev);
+                                  if (e.target.checked) next.add(d.sailorId);
+                                  else next.delete(d.sailorId);
+                                  return next;
+                                });
+                              }}
+                            />
+                          </td>
+                          <td className="px-3 py-2 font-semibold text-white">
+                            {d.name}
+                          </td>
+                          <td className="px-3 py-2 tabular-nums">
+                            {d.goldEntryDate}
+                          </td>
+                          <td className="px-3 py-2">
+                            {d.failedPeriod.half} {d.failedPeriod.year}
+                          </td>
+                          <td className="px-3 py-2 tabular-nums">
+                            {d.participationCount} /{" "}
+                            {GOLD_MIN_RANKING_REGATTAS_PER_HALF}
+                          </td>
+                          <td className="px-3 py-2 tabular-nums text-rose-200 font-semibold">
+                            {d.dropDate}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
         )}
         {dropMsg && (

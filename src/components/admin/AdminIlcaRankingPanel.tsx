@@ -76,6 +76,21 @@ export function AdminIlcaRankingPanel({
   const [busyId, setBusyId] = useState<string | null>(null);
   const [seedBusy, setSeedBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkField, setBulkField] = useState("sailNumberIlca4");
+  const [bulkValue, setBulkValue] = useState("");
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [editId, setEditId] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState({
+    name: "",
+    sailNumberIlca4: "",
+    sailNumber: "",
+    nationality: "",
+    gender: "",
+    club: "",
+    dob: "",
+  });
+  const [editBusy, setEditBusy] = useState(false);
   const [showDupes, setShowDupes] = useState(true);
   const [ignoredDupes, setIgnoredDupes] = useState<Set<string>>(() => {
     try {
@@ -241,7 +256,95 @@ export function AdminIlcaRankingPanel({
     }
   }, [onSailorsChange]);
 
-  const setOnList = async (sailorId: string, value: boolean) => {
+  const toggleSelect = (id: string) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const clearSelection = () => setSelectedIds(new Set());
+
+  const applyBulk = async () => {
+    if (selectedIds.size === 0) {
+      setMsg("Select sailors for bulk edit");
+      return;
+    }
+    if (!bulkField) {
+      setMsg("Choose a field to bulk-edit");
+      return;
+    }
+    setBulkBusy(true);
+    setMsg(null);
+    try {
+      const res = await fetch("/api/admin/bulk", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sailorIds: [...selectedIds],
+          field: bulkField,
+          value: bulkValue,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Bulk edit failed");
+      await refreshSailors();
+      setMsg(data.message || `Updated ${selectedIds.size} sailor(s)`);
+      setBulkValue("");
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Bulk edit failed");
+    } finally {
+      setBulkBusy(false);
+    }
+  };
+
+  const openEdit = (s: SailorAdmin) => {
+    setEditId(s.id);
+    setEditForm({
+      name: s.name || "",
+      sailNumberIlca4: String(s.sailNumberIlca4 || ""),
+      sailNumber: String(s.sailNumber || ""),
+      nationality: String(s.nationality || ""),
+      gender: String(s.gender || ""),
+      club: String(s.club || ""),
+      dob: s.dob ? String(s.dob).slice(0, 10) : "",
+    });
+  };
+
+  const saveEdit = async () => {
+    if (!editId) return;
+    setEditBusy(true);
+    setMsg(null);
+    try {
+      const res = await fetch("/api/admin/sailors", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: editId,
+          name: editForm.name.trim(),
+          sailNumberIlca4: editForm.sailNumberIlca4.trim() || null,
+          sailNumber: editForm.sailNumber.trim() || null,
+          nationality: editForm.nationality.trim() || null,
+          gender: editForm.gender.trim() || null,
+          club: editForm.club.trim() || null,
+          dob: editForm.dob.trim() || null,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Save failed");
+      await refreshSailors();
+      setMsg(`Saved ${editForm.name}`);
+      setEditId(null);
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Save failed");
+    } finally {
+      setEditBusy(false);
+    }
+  };
+
+    const setOnList = async (sailorId: string, value: boolean) => {
     setBusyId(sailorId);
     setMsg(null);
     try {
@@ -305,59 +408,6 @@ export function AdminIlcaRankingPanel({
     }
   };
 
-  const applyNameCorrections = async () => {
-    if (
-      !confirm(
-        "Apply ILCA name corrections?\n\n• Travis Yeo → Travis Jia Le Yeo\n• Tan Reyes Jit Eng → Reyes Jit Eng Tan\n• Regis Wong Xuan Kai → Wong Kai Lun\n\nOld names stay as aliases for import matching."
-      )
-    ) {
-      return;
-    }
-    setSeedBusy(true);
-    setMsg(null);
-    try {
-      const res = await fetch("/api/admin/sailors", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "applyIlcaNameCorrections" }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Rename failed");
-      await refreshSailors();
-      setMsg(data.message || `Updated ${data.updated}`);
-    } catch (e) {
-      setMsg(e instanceof Error ? e.message : "Rename failed");
-    } finally {
-      setSeedBusy(false);
-    }
-  };
-
-  const applySailorFixes = async () => {
-    if (
-      !confirm(
-        "Apply ILCA sailor fixes?\n\n• Merge “Jonas Tan Yi Jun” → “Jonas Tan Kia Jeng”\n• Set ILCA 4 sail 197840 on Jonas Tan Kia Jeng\n\nSafe to re-run (idempotent)."
-      )
-    ) {
-      return;
-    }
-    setSeedBusy(true);
-    setMsg(null);
-    try {
-      const res = await fetch("/api/admin/sailors", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "applyIlcaSailorFixes" }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Fix failed");
-      await refreshSailors();
-      setMsg(data.message || "ILCA sailor fixes applied");
-    } catch (e) {
-      setMsg(e instanceof Error ? e.message : "Fix failed");
-    } finally {
-      setSeedBusy(false);
-    }
-  };
 
   return (
     <div className="w-full min-w-0 space-y-6">
@@ -453,32 +503,6 @@ export function AdminIlcaRankingPanel({
               <button
                 type="button"
                 disabled={seedBusy}
-                onClick={() => void applyNameCorrections()}
-                className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-[10px] font-bold text-amber-200 hover:bg-amber-500/20 disabled:opacity-50"
-              >
-                {seedBusy ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
-                ) : (
-                  <UserPlus className="h-3 w-3" />
-                )}
-                Apply name corrections
-              </button>
-              <button
-                type="button"
-                disabled={seedBusy}
-                onClick={() => void applySailorFixes()}
-                className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 bg-violet-500/10 px-3 py-1.5 text-[10px] font-bold text-violet-200 hover:bg-violet-500/20 disabled:opacity-50"
-              >
-                {seedBusy ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
-                ) : (
-                  <UserPlus className="h-3 w-3" />
-                )}
-                Merge Jonas + sail 197840
-              </button>
-              <button
-                type="button"
-                disabled={seedBusy}
                 onClick={() => void seedFromNames()}
                 className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/40 bg-sky-500/10 px-3 py-1.5 text-[10px] font-bold text-sky-200 hover:bg-sky-500/20 disabled:opacity-50"
               >
@@ -519,6 +543,105 @@ export function AdminIlcaRankingPanel({
             </span>
           </div>
 
+          <div className="px-4 py-2 border-b border-white/5 flex flex-wrap gap-2 items-center bg-black/20">
+            <button
+              type="button"
+              onClick={() =>
+                setSelectedIds(new Set(filteredRoster.map((r) => r.sailor.id)))
+              }
+              className="text-[10px] font-bold text-sky-300 hover:text-sky-200"
+            >
+              Select shown
+            </button>
+            <button
+              type="button"
+              onClick={() => clearSelection()}
+              className="text-[10px] font-bold text-slate-500 hover:text-white"
+            >
+              Clear
+            </button>
+            <span className="text-[10px] text-slate-500">
+              {selectedIds.size} selected
+            </span>
+            <select
+              className="rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs"
+              value={bulkField}
+              onChange={(e) => setBulkField(e.target.value)}
+            >
+              <option value="sailNumberIlca4">ILCA 4 sail #</option>
+              <option value="sailNumber">Optimist sail #</option>
+              <option value="nationality">Nationality</option>
+              <option value="gender">Gender</option>
+              <option value="club">Club</option>
+              <option value="dob">DOB</option>
+              <option value="ilca4NationalList">National list (true/false)</option>
+            </select>
+            <input
+              value={bulkValue}
+              onChange={(e) => setBulkValue(e.target.value)}
+              placeholder="Value (empty = clear)"
+              className="rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs min-w-[8rem]"
+            />
+            <button
+              type="button"
+              disabled={bulkBusy || selectedIds.size === 0}
+              onClick={() => void applyBulk()}
+              className="rounded-full border border-sky-500/40 bg-sky-500/15 px-3 py-1.5 text-[10px] font-bold text-sky-200 hover:bg-sky-500/25 disabled:opacity-50"
+            >
+              {bulkBusy ? "…" : "Bulk apply"}
+            </button>
+          </div>
+
+          {editId && (
+            <div className="px-4 py-3 border-b border-white/5 bg-sky-500/5 space-y-2">
+              <p className="text-[11px] font-bold text-sky-200 uppercase tracking-wide">
+                Edit sailor
+              </p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {(
+                  [
+                    ["name", "Name"],
+                    ["sailNumberIlca4", "ILCA 4 #"],
+                    ["sailNumber", "Opti #"],
+                    ["nationality", "Nationality"],
+                    ["gender", "Gender"],
+                    ["club", "Club"],
+                    ["dob", "DOB"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <label key={key} className="text-[10px] text-slate-400">
+                    {label}
+                    <input
+                      value={editForm[key]}
+                      onChange={(e) =>
+                        setEditForm((f) => ({ ...f, [key]: e.target.value }))
+                      }
+                      type={key === "dob" ? "date" : "text"}
+                      className="mt-0.5 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs"
+                    />
+                  </label>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  disabled={editBusy}
+                  onClick={() => void saveEdit()}
+                  className="rounded-full bg-sky-600 px-3 py-1.5 text-[10px] font-bold text-white disabled:opacity-50"
+                >
+                  {editBusy ? "Saving…" : "Save"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditId(null)}
+                  className="rounded-full border border-white/15 px-3 py-1.5 text-[10px] font-bold text-slate-400"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
           {filteredRoster.length === 0 ? (
             <p className="p-6 text-sm text-slate-500 text-center">
               No ILCA 4 sailors match. Import ILCA 4 regattas or set sail numbers.
@@ -528,6 +651,7 @@ export function AdminIlcaRankingPanel({
               <table className="w-full text-left text-xs">
                 <thead className="sticky top-0 bg-[#131520] z-10">
                   <tr className="text-[10px] uppercase tracking-wide text-slate-500 border-b border-white/5">
+                    <th className="px-2 py-2 font-bold w-8" />
                     <th className="px-3 py-2 font-bold">Sailor</th>
                     <th className="px-3 py-2 font-bold">ILCA #</th>
                     <th className="px-3 py-2 font-bold">Opti #</th>
@@ -536,6 +660,7 @@ export function AdminIlcaRankingPanel({
                     <th className="px-3 py-2 font-bold">Events</th>
                     <th className="px-3 py-2 font-bold">Score</th>
                     <th className="px-3 py-2 font-bold">National list</th>
+                    <th className="px-3 py-2 font-bold">Edit</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
@@ -549,6 +674,13 @@ export function AdminIlcaRankingPanel({
                           onList ? "text-slate-200" : "text-slate-500"
                         }
                       >
+                        <td className="px-2 py-2">
+                          <input
+                            type="checkbox"
+                            checked={selectedIds.has(sailor.id)}
+                            onChange={() => toggleSelect(sailor.id)}
+                          />
+                        </td>
                         <td className="px-3 py-2">
                           {sailor.handle ? (
                             <Link
@@ -613,6 +745,15 @@ export function AdminIlcaRankingPanel({
                               : onList
                                 ? "On list · remove"
                                 : "Add to list"}
+                          </button>
+                        </td>
+                        <td className="px-3 py-2">
+                          <button
+                            type="button"
+                            onClick={() => openEdit(sailor)}
+                            className="text-[10px] font-bold text-sky-400 hover:text-sky-300"
+                          >
+                            Edit
                           </button>
                         </td>
                       </tr>

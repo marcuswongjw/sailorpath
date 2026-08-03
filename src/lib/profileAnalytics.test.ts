@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildIlcaKeyStats,
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
   ilcaHighPointsForResult,
+  prefersIlcaFirstProfile,
 } from "./profileAnalytics";
 
 function monthsAgo(m: number): string {
@@ -137,6 +139,41 @@ describe("buildProfileAnalytics", () => {
     // Jan 2024 → Jul 2025 = 18 months
     expect(a.monthsInGold).toBe(18);
     expect(a.timeInGoldLabel).toMatch(/1y|18/);
+  });
+});
+
+describe("buildIlcaKeyStats / prefersIlcaFirstProfile", () => {
+  it("summarises ILCA finishes", () => {
+    const s = buildIlcaKeyStats([
+      {
+        regattaDate: "2026-01-01",
+        rank: 5,
+        boatClass: "ILCA 4",
+        regattaName: "A",
+      },
+      {
+        regattaDate: "2026-03-01",
+        rank: 12,
+        boatClass: "ILCA 4",
+        regattaName: "B",
+      },
+    ]);
+    expect(s.regattaCount).toBe(2);
+    expect(s.bestFinish).toBe(5);
+    expect(s.top10Count).toBe(1);
+    expect(s.avgFinishLabel).toBe("8.5");
+  });
+
+  it("flags age-out and drop for ILCA-first", () => {
+    expect(
+      prefersIlcaFirstProfile({ dropDate: "2020-01-01", dob: "2015-01-01" })
+    ).toBe(true);
+    expect(
+      prefersIlcaFirstProfile({ dropDate: null, dob: "2008-01-01" })
+    ).toBe(true);
+    expect(
+      prefersIlcaFirstProfile({ dropDate: null, dob: "2018-01-01" })
+    ).toBe(false);
   });
 });
 

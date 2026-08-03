@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildSystemJourneyMilestones,
+  dismissSystemMilestone,
   mergeJourneyDisplay,
   parseSailingJourney,
   serializeSailingJourney,
@@ -87,5 +88,19 @@ describe("sailingJourney", () => {
     );
     expect(merged[0].id).toBe("sys-gold-entry");
     expect(merged[1].title).toBe("Camp");
+  });
+
+  it("allows dismissing system milestones", () => {
+    const owner = dismissSystemMilestone([], "sys-gold-entry");
+    const merged = mergeJourneyDisplay(owner, [
+      {
+        id: "sys-gold-entry",
+        when: "Jul 2025",
+        title: "Broke into gold fleet",
+        detail: "",
+        system: true,
+      },
+    ]);
+    expect(merged.some((m) => m.id === "sys-gold-entry")).toBe(false);
   });
 });

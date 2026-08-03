@@ -11,11 +11,45 @@ import {
 export const PROFILE_CARD_CLASS =
   "rounded-2xl border border-white/[0.07] bg-[#090a0f]";
 
-export function resolveDisplayFleet(sailor: Record<string, unknown>): {
+/**
+ * Profile fleet badge from Optimist series status.
+ * Optional flags let ILCA-focused / aged-out sailors show ILCA 4 instead of
+ * a stale Optimist “Silver fleet” label.
+ */
+export function resolveDisplayFleet(
+  sailor: Record<string, unknown>,
+  opts?: {
+    /** Has ILCA 4 results or sail number */
+    hasIlca4?: boolean;
+    /** Prefer ILCA (dropped, aged out of Optimist) */
+    preferIlca?: boolean;
+    /** No Optimist results at all */
+    optimistOnlyAbsent?: boolean;
+  }
+): {
   label: string;
   className: string;
 } {
   const status = seriesFleetStatus(sailor as never);
+  // Primary class is ILCA — don't show Optimist Silver/Gold for aged-out / ILCA-only
+  if (
+    opts?.hasIlca4 &&
+    (opts.preferIlca || opts.optimistOnlyAbsent || status === "dropped" || status === "guest")
+  ) {
+    // Still show gold/dropped if actively in Optimist gold and not preferring ILCA
+    if (status === "gold" && !opts.preferIlca && !opts.optimistOnlyAbsent) {
+      return {
+        label: "Gold fleet",
+        className: "bg-yellow-400 text-yellow-950 border border-yellow-300/30",
+      };
+    }
+    if (opts.preferIlca || opts.optimistOnlyAbsent || status === "dropped" || status === "guest") {
+      return {
+        label: "ILCA 4",
+        className: "bg-sky-500/20 text-sky-200 border border-sky-500/30",
+      };
+    }
+  }
   if (status === "gold") {
     return {
       label: "Gold fleet",

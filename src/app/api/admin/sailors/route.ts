@@ -393,12 +393,23 @@ export async function POST(req: Request) {
       }));
 
       const dryRun = Boolean(body.dryRun);
-      const candidates = findGoldParticipationDrops(
+      let candidates = findGoldParticipationDrops(
         sailorRecs,
         regattaRecs,
         resultRecs,
         asOf
       );
+      // Optional subset — admin review selects who to drop
+      const onlyIds = Array.isArray(body.sailorIds)
+        ? new Set(
+            (body.sailorIds as unknown[])
+              .map((x) => String(x).trim())
+              .filter(Boolean)
+          )
+        : null;
+      if (onlyIds && onlyIds.size > 0) {
+        candidates = candidates.filter((c) => onlyIds.has(c.sailorId));
+      }
 
       if (dryRun) {
         return NextResponse.json({

@@ -418,6 +418,72 @@ export function buildIlcaPositionTrend(
   }));
 }
 
+/** ILCA 4 key-stats for profiles that are ILCA-only (no Optimist focus). */
+export type IlcaKeyStats = {
+  regattaCount: number;
+  top10Count: number;
+  bestFinish: number | null;
+  bestFinishLabel: string;
+  avgFinish: number | null;
+  avgFinishLabel: string;
+  tenureLabel: string | null;
+};
+
+export function buildIlcaKeyStats(
+  results: ProfileResult[]
+): IlcaKeyStats {
+  const ranked = results
+    .map((r) => parseRank(r))
+    .filter((r): r is number => r != null);
+  const best =
+    ranked.length > 0 ? ranked.reduce((a, b) => Math.min(a, b)) : null;
+  const avg =
+    ranked.length > 0
+      ? ranked.reduce((s, r) => s + r, 0) / ranked.length
+      : null;
+  const first = [...results]
+    .map((r) => ymd(r.regattaDate))
+    .filter((d) => isValidYmd(d))
+    .sort()[0];
+  const tenure = first ? tenureFromFirstDate(first) : null;
+  return {
+    regattaCount: results.length,
+    top10Count: ranked.filter((r) => r <= 10).length,
+    bestFinish: best,
+    bestFinishLabel: best != null ? ordinal(best) : "—",
+    avgFinish: avg,
+    avgFinishLabel:
+      avg != null ? (Math.round(avg * 10) / 10).toFixed(1) : "—",
+    tenureLabel: tenure?.label ?? null,
+  };
+}
+
+/**
+ * Prefer ILCA-first profile when sailor has left Optimist (drop or age-out)
+ * and has ILCA results. Optimist max age is under 16 (calendar year).
+ */
+export function prefersIlcaFirstProfile(sailor: {
+  dropDate?: string | null;
+  dob?: string | null;
+  goldEntryDate?: string | null;
+  silverEntryDate?: string | null;
+}): boolean {
+  const today = new Date().toLocaleDateString("en-CA", {
+    timeZone: "Asia/Singapore",
+  });
+  const drop = ymd(sailor.dropDate);
+  if (isValidYmd(drop) && drop <= today) return true;
+
+  // Aged out of Optimist: birth year such that age in calendar year ≥ 16
+  const dob = ymd(sailor.dob);
+  if (isValidYmd(dob)) {
+    const by = Number(dob.slice(0, 4));
+    const cy = Number(today.slice(0, 4));
+    if (Number.isFinite(by) && cy - by >= 16) return true;
+  }
+  return false;
+}
+
 export function placeColorClass(rank: number | null | undefined): string {
   if (rank == null) return "text-neutral-500";
   if (rank <= 3) return "text-emerald-400";

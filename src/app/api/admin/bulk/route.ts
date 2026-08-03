@@ -35,6 +35,9 @@ const ALLOWED = new Set([
   "asian",
   "seaGames",
   "sailNumber",
+  "sailNumberIlca4",
+  "name",
+  "ilca4NationalList",
 ]);
 
 const NUMERIC = new Set([
@@ -48,7 +51,7 @@ const NUMERIC = new Set([
 
 const YEARS_LIST = new Set(["worlds", "european", "asian", "seaGames"]);
 
-const BOOLEAN = new Set<string>();
+const BOOLEAN = new Set<string>(["ilca4NationalList"]);
 
 export async function POST(req: Request) {
   try {

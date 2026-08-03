@@ -20,16 +20,19 @@ import {
 import { formatEventWhen } from "@/lib/profileUi";
 import {
   buildSystemJourneyMilestones,
+  dismissSystemMilestone,
   mergeJourneyDisplay,
   newJourneyId,
   parseSailingJourney,
   type JourneyHighlight,
 } from "@/lib/sailingJourney";
 import {
+  buildIlcaKeyStats,
   buildIlcaPositionTrend,
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
+  prefersIlcaFirstProfile,
   profileBoatClassGroup,
   tenureFromFirstDate,
   ilcaHighPointsForResult,
@@ -155,9 +158,14 @@ export function SailorProfileView({
   /** Public list shows 8 by default; owner/public can expand to full log */
   const [showAllResults, setShowAllResults] = useState(false);
   /** Dual-class profiles: tab between Optimist and ILCA 4 results */
-  const [resultsTab, setResultsTab] = useState<"optimist" | "ilca4">(
-    "optimist"
-  );
+  const [resultsTab, setResultsTab] = useState<"optimist" | "ilca4">(() => {
+    // Prefer ILCA tab when sailor has left Optimist (drop / age-out) and has ILCA data
+    const prefer = prefersIlcaFirstProfile({
+      dropDate: initialSailor.dropDate as string | null | undefined,
+      dob: initialSailor.dob as string | null | undefined,
+    });
+    return prefer ? "ilca4" : "optimist";
+  });
 
   useEffect(() => {
     if (!demoMode && isOwner && typeof window !== "undefined") {
@@ -480,8 +488,12 @@ export function SailorProfileView({
     await persistJourney(next);
   };
 
-  const removeJourneyItem = async (id: string) => {
+  const removeJourneyItem = async (id: string, isSystem?: boolean) => {
     if (!confirm("Remove this highlight from your journey?")) return;
+    if (isSystem) {
+      await persistJourney(dismissSystemMilestone(journey, id));
+      return;
+    }
     await persistJourney(journey.filter((j) => j.id !== id));
   };
 
@@ -593,10 +605,6 @@ export function SailorProfileView({
       .sort((a: any, b: any) => a.raceNumber - b.raceNumber);
 
 
-  const fleetBadge = resolveDisplayFleet(
-    displaySailor as Record<string, unknown>
-  );
-
   /** Split raw results by boat class (before gold filtering) */
   const classBuckets = useMemo(() => {
     const all = results as ProfileResult[];
@@ -616,6 +624,24 @@ export function SailorProfileView({
     ilca6.sort(byDate);
     return { optimist, ilca4, ilca6 };
   }, [results]);
+
+  const preferIlcaFirst = prefersIlcaFirstProfile({
+    dropDate: displaySailor.dropDate as string | null | undefined,
+    dob: displaySailor.dob as string | null | undefined,
+  });
+  const hasIlca4Data =
+    classBuckets.ilca4.length > 0 ||
+    Boolean(String(displaySailor.sailNumberIlca4 || "").trim());
+  const optimistOnlyAbsent = classBuckets.optimist.length === 0;
+
+  const fleetBadge = resolveDisplayFleet(
+    displaySailor as Record<string, unknown>,
+    {
+      hasIlca4: hasIlca4Data,
+      preferIlca: preferIlcaFirst && hasIlca4Data,
+      optimistOnlyAbsent: optimistOnlyAbsent && hasIlca4Data,
+    }
+  );
 
   // Optimist-only analytics (gold tenure, medals, trend) — ILCA never mixes in
   const analytics = useMemo(
@@ -667,7 +693,6 @@ export function SailorProfileView({
   const hasOptimistResults =
     optimistResults.length > 0 || classBuckets.optimist.length > 0;
   const dualClass = hasIlcaResults && classBuckets.optimist.length > 0;
-
   const ilca4Tenure = useMemo(() => {
     if (!ilca4Results.length) return null;
     const first = [...ilca4Results]
@@ -677,11 +702,22 @@ export function SailorProfileView({
     return tenureFromFirstDate(first);
   }, [ilca4Results]);
 
-  // Dual class: Optimist section + separate ILCA section. Single class: one list.
+  const ilcaKeyStats = useMemo(
+    () => buildIlcaKeyStats(ilca4Results as ProfileResult[]),
+    [ilca4Results]
+  );
+
+  // Dual class: default to Optimist unless left Optimist → ILCA first.
   const resultsForPrimarySection = dualClass
-    ? optimistResults
+    ? preferIlcaFirst
+      ? ilca4Results.length
+        ? ilca4Results
+        : ilca6Results
+      : optimistResults
     : hasIlcaResults && classBuckets.optimist.length === 0
-      ? (ilca4Results.length ? ilca4Results : ilca6Results)
+      ? ilca4Results.length
+        ? ilca4Results
+        : ilca6Results
       : optimistResults;
 
   /** Active class list for the results panel (tabs when dual-class) */
@@ -698,7 +734,8 @@ export function SailorProfileView({
   /** Showing ILCA columns (points + rank) vs Optimist (place + nett) */
   const primaryIsIlca =
     (dualClass && resultsTab === "ilca4") ||
-    (!dualClass && hasIlcaResults && classBuckets.optimist.length === 0);
+    (!dualClass && hasIlcaResults && classBuckets.optimist.length === 0) ||
+    (dualClass && preferIlcaFirst && resultsTab === "ilca4");
 
   const sailDisplay = String(displaySailor.sailNumber || "—");
   const sailIlca4 = displaySailor.sailNumberIlca4
@@ -725,8 +762,36 @@ export function SailorProfileView({
         ? "Dropped from gold"
         : "In gold fleet";
 
-  const statCells =
-    analytics.mode === "established_gold"
+  /** ILCA-only (or dual-class on ILCA tab after leaving Optimist): ILCA-focused stats */
+  const useIlcaStats =
+    (hasIlcaResults && classBuckets.optimist.length === 0) ||
+    (preferIlcaFirst && hasIlcaResults && dualClass && resultsTab === "ilca4") ||
+    (preferIlcaFirst && hasIlcaResults && !hasOptimistResults);
+
+  const statCells = useIlcaStats
+    ? [
+        {
+          value: String(ilcaKeyStats.regattaCount),
+          label: "ILCA 4 regattas",
+          color: "text-white",
+        },
+        {
+          value: String(ilcaKeyStats.top10Count),
+          label: "Top 10",
+          color: "text-emerald-400",
+        },
+        {
+          value: ilcaKeyStats.avgFinishLabel,
+          label: "Avg. finish",
+          color: "text-sky-400",
+        },
+        {
+          value: ilcaKeyStats.bestFinishLabel,
+          label: "Best finish",
+          color: "text-white",
+        },
+      ]
+    : analytics.mode === "established_gold"
       ? [
           {
             value: String(analytics.regattaCount),
@@ -1322,10 +1387,18 @@ export function SailorProfileView({
       )}
 
       {/* ── Key stats ────────────────────────────────────────── */}
-      <div className={`${cardClass} overflow-hidden`}>
+      <section className={`${cardClass} overflow-hidden`}>
+        <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-1">
+          <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+            Key stats
+          </h2>
+        </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-white/[0.06]">
           {statCells.map((s) => (
-            <div key={s.label} className="px-2.5 sm:px-3 py-4 sm:py-5 text-center">
+            <div
+              key={s.label}
+              className="px-2.5 sm:px-3 py-4 sm:py-5 text-center"
+            >
               <p
                 className={`text-[1.65rem] sm:text-3xl font-semibold tabular-nums tracking-tight leading-none ${s.color}`}
               >
@@ -1337,7 +1410,7 @@ export function SailorProfileView({
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
       {/* ── Medal tally ──────────────────────────────────────── */}
       {showMedals && (
@@ -1400,56 +1473,49 @@ export function SailorProfileView({
                 role="tablist"
                 aria-label="Boat class results"
               >
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={resultsTab === "optimist"}
-                  onClick={() => {
-                    setResultsTab("optimist");
-                    setShowAllResults(false);
-                  }}
-                  className={`flex-1 rounded-lg px-3 py-2 text-[12px] font-semibold transition-colors ${
-                    resultsTab === "optimist"
-                      ? "bg-orange-500 text-white shadow-sm"
-                      : "text-neutral-400 hover:text-white"
-                  }`}
-                >
-                  Optimist
-                  <span
-                    className={`ml-1.5 tabular-nums text-[10px] ${
-                      resultsTab === "optimist"
-                        ? "text-orange-100/90"
-                        : "text-neutral-600"
-                    }`}
-                  >
-                    ({optimistResults.length})
-                  </span>
-                </button>
-                <button
-                  type="button"
-                  role="tab"
-                  aria-selected={resultsTab === "ilca4"}
-                  onClick={() => {
-                    setResultsTab("ilca4");
-                    setShowAllResults(false);
-                  }}
-                  className={`flex-1 rounded-lg px-3 py-2 text-[12px] font-semibold transition-colors ${
-                    resultsTab === "ilca4"
-                      ? "bg-sky-600 text-white shadow-sm"
-                      : "text-neutral-400 hover:text-white"
-                  }`}
-                >
-                  ILCA 4
-                  <span
-                    className={`ml-1.5 tabular-nums text-[10px] ${
-                      resultsTab === "ilca4"
-                        ? "text-sky-100/90"
-                        : "text-neutral-600"
-                    }`}
-                  >
-                    ({ilca4Results.length})
-                  </span>
-                </button>
+                {(
+                  preferIlcaFirst
+                    ? (["ilca4", "optimist"] as const)
+                    : (["optimist", "ilca4"] as const)
+                ).map((tab) => {
+                  const isIlca = tab === "ilca4";
+                  const count = isIlca
+                    ? ilca4Results.length
+                    : optimistResults.length;
+                  const selected = resultsTab === tab;
+                  return (
+                    <button
+                      key={tab}
+                      type="button"
+                      role="tab"
+                      aria-selected={selected}
+                      onClick={() => {
+                        setResultsTab(tab);
+                        setShowAllResults(false);
+                      }}
+                      className={`flex-1 rounded-lg px-3 py-2 text-[12px] font-semibold transition-colors ${
+                        selected
+                          ? isIlca
+                            ? "bg-sky-600 text-white shadow-sm"
+                            : "bg-orange-500 text-white shadow-sm"
+                          : "text-neutral-400 hover:text-white"
+                      }`}
+                    >
+                      {isIlca ? "ILCA 4" : "Optimist"}
+                      <span
+                        className={`ml-1.5 tabular-nums text-[10px] ${
+                          selected
+                            ? isIlca
+                              ? "text-sky-100/90"
+                              : "text-orange-100/90"
+                            : "text-neutral-600"
+                        }`}
+                      >
+                        ({count})
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             ) : null}
             <p className="text-[11px] text-neutral-600 mt-2">
@@ -1944,8 +2010,8 @@ export function SailorProfileView({
       >
         <section className={`${cardClass} p-5`}>
           <div className="flex items-center gap-2 mb-1">
-            <Anchor className="h-4 w-4 text-sky-400/90" />
-            <h2 className="text-sm font-semibold text-white tracking-tight">
+            <Anchor className="h-3.5 w-3.5 text-sky-400/90" />
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
               Sailing journey
             </h2>
           </div>
@@ -1988,11 +2054,11 @@ export function SailorProfileView({
                       {it.detail}
                     </p>
                   )}
-                  {isOwner && !it.system && (
+                  {isOwner && (
                     <button
                       type="button"
                       disabled={journeyBusy}
-                      onClick={() => void removeJourneyItem(it.id)}
+                      onClick={() => void removeJourneyItem(it.id, it.system)}
                       className="mt-1 text-[10px] text-rose-400/90"
                     >
                       Remove
@@ -2047,8 +2113,8 @@ export function SailorProfileView({
         {showEquipmentSection && (
         <section className={`${cardClass} p-5`}>
           <div className="flex items-center gap-2 mb-1">
-            <Settings className="h-4 w-4 text-orange-400/90" />
-            <h2 className="text-sm font-semibold text-white tracking-tight">
+            <Settings className="h-3.5 w-3.5 text-orange-400/90" />
+            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
               Equipment
             </h2>
           </div>
