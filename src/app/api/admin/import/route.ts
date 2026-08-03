@@ -163,7 +163,8 @@ export async function POST(req: Request) {
       .slice(0, 8) || "SG";
     const boat = String(boatClass || "Optimist").trim() || "Optimist";
     const raceCount =
-      raceCountRaw === "" || raceCountRaw == null
+      raceCountRaw == null ||
+      (typeof raceCountRaw === "number" && !Number.isFinite(raceCountRaw))
         ? null
         : Math.max(0, Math.round(Number(raceCountRaw))) || null;
     let ranking =
