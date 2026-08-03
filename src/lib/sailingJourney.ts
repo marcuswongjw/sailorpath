@@ -1,5 +1,6 @@
 /**
  * Parse / serialize owner sailing journey highlights.
+ * System milestones (gold entry, first silver) are derived and merged for display.
  */
 
 export type JourneyHighlight = {
@@ -7,6 +8,8 @@ export type JourneyHighlight = {
   when: string;
   title: string;
   detail: string;
+  /** System-derived milestones cannot be removed by the owner */
+  system?: boolean;
 };
 
 export function parseSailingJourney(raw: unknown): JourneyHighlight[] {
@@ -36,9 +39,11 @@ export function parseSailingJourney(raw: unknown): JourneyHighlight[] {
 export function serializeSailingJourney(
   items: JourneyHighlight[]
 ): string | null {
-  if (!items.length) return null;
+  // Never persist system-derived milestones on the sailor row
+  const owner = items.filter((it) => !it.system);
+  if (!owner.length) return null;
   return JSON.stringify(
-    items.slice(0, 40).map((it) => ({
+    owner.slice(0, 40).map((it) => ({
       id: it.id.slice(0, 64),
       when: it.when.slice(0, 40),
       title: it.title.slice(0, 120),
@@ -49,4 +54,147 @@ export function serializeSailingJourney(
 
 export function newJourneyId(): string {
   return `j-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function ymd(v: unknown): string {
+  return String(v || "").slice(0, 10);
+}
+
+function isValidYmd(d: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(d);
+}
+
+function formatJourneyWhen(d: string): string {
+  if (!isValidYmd(d)) return d;
+  const [y, m] = d.split("-");
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const mi = Number(m) - 1;
+  if (mi >= 0 && mi < 12) return `${months[mi]} ${y}`;
+  return y;
+}
+
+export type JourneyResultHint = {
+  regattaDate?: string | null;
+  division?: string | null;
+  boatClass?: string | null;
+  regattaName?: string | null;
+  countsForRanking?: boolean | null;
+};
+
+/**
+ * System milestones: first Optimist silver regatta (if any) + gold fleet entry.
+ */
+export function buildSystemJourneyMilestones(
+  sailor: {
+    goldEntryDate?: string | null;
+    silverEntryDate?: string | null;
+  },
+  results: JourneyResultHint[] = []
+): JourneyHighlight[] {
+  const out: JourneyHighlight[] = [];
+
+  // First silver: prefer earliest silver ranking result; fall back to silverEntryDate
+  let firstSilverDate: string | null = null;
+  let firstSilverName: string | null = null;
+  for (const r of results) {
+    const bc = String(r.boatClass || "Optimist")
+      .trim()
+      .toLowerCase();
+    if (bc && bc.includes("ilca")) continue;
+    const div = String(r.division || "").toLowerCase();
+    if (!div.includes("silver")) continue;
+    const d = ymd(r.regattaDate);
+    if (!isValidYmd(d)) continue;
+    if (!firstSilverDate || d < firstSilverDate) {
+      firstSilverDate = d;
+      firstSilverName = String(r.regattaName || "").trim() || null;
+    }
+  }
+  const silverFallback = ymd(sailor.silverEntryDate);
+  if (!firstSilverDate && isValidYmd(silverFallback)) {
+    firstSilverDate = silverFallback;
+  }
+  if (firstSilverDate) {
+    out.push({
+      id: "sys-first-silver",
+      when: formatJourneyWhen(firstSilverDate),
+      title: "First silver fleet regatta",
+      detail: firstSilverName
+        ? `Debuted in silver at ${firstSilverName}.`
+        : "Entered Optimist silver fleet.",
+      system: true,
+    });
+  }
+
+  const gold = ymd(sailor.goldEntryDate);
+  if (isValidYmd(gold)) {
+    out.push({
+      id: "sys-gold-entry",
+      when: formatJourneyWhen(gold),
+      title: "Broke into gold fleet",
+      detail: `Promoted to Optimist gold fleet (${gold.slice(0, 4)}).`,
+      system: true,
+    });
+  }
+
+  return out;
+}
+
+/**
+ * Merge system milestones with owner highlights.
+ * Dedupes owner items that match system titles; sorts by `when` (year/month text).
+ */
+export function mergeJourneyDisplay(
+  owner: JourneyHighlight[],
+  system: JourneyHighlight[]
+): JourneyHighlight[] {
+  const systemTitles = new Set(
+    system.map((s) => s.title.trim().toLowerCase())
+  );
+  const ownerFiltered = owner.filter(
+    (o) => !systemTitles.has(o.title.trim().toLowerCase())
+  );
+  const all = [...system, ...ownerFiltered];
+  // Sort by when string when it looks like "Mon YYYY" or "YYYY-MM-DD" or year
+  const sortKey = (w: string): string => {
+    const t = w.trim();
+    if (/^\d{4}-\d{2}-\d{2}$/.test(t)) return t;
+    const mon = t.match(
+      /^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{4})$/i
+    );
+    if (mon) {
+      const map: Record<string, string> = {
+        jan: "01",
+        feb: "02",
+        mar: "03",
+        apr: "04",
+        may: "05",
+        jun: "06",
+        jul: "07",
+        aug: "08",
+        sep: "09",
+        oct: "10",
+        nov: "11",
+        dec: "12",
+      };
+      const m = map[mon[1].toLowerCase()] || "01";
+      return `${mon[2]}-${m}-01`;
+    }
+    if (/^\d{4}$/.test(t)) return `${t}-01-01`;
+    return t || "9999-99-99";
+  };
+  return all.sort((a, b) => sortKey(a.when).localeCompare(sortKey(b.when)));
 }

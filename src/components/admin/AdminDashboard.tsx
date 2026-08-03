@@ -1459,6 +1459,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               sailors={sailorList}
               regattas={regattaList}
               results={resultsList}
+              onSailorsChange={setSailorList}
             />
           </div>
         )}

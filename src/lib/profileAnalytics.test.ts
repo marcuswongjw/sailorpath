@@ -122,6 +122,22 @@ describe("buildProfileAnalytics", () => {
     expect(a.top10Count).toBe(1);
     expect(a.avgFinishLabel).toBe("8.5");
   });
+
+  it("caps gold tenure at drop date and sets entry year", () => {
+    const a = buildProfileAnalytics(
+      {
+        goldEntryDate: "2024-01-01",
+        dropDate: "2025-07-01",
+      },
+      sampleResults
+    );
+    expect(a.goldEntryYear).toBe("2024");
+    expect(a.isDroppedFromGold).toBe(true);
+    expect(a.isGoldFleet).toBe(false);
+    // Jan 2024 → Jul 2025 = 18 months
+    expect(a.monthsInGold).toBe(18);
+    expect(a.timeInGoldLabel).toMatch(/1y|18/);
+  });
 });
 
 describe("buildResultTags", () => {

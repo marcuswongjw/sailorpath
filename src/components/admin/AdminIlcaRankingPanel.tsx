@@ -332,6 +332,33 @@ export function AdminIlcaRankingPanel({
     }
   };
 
+  const applySailorFixes = async () => {
+    if (
+      !confirm(
+        "Apply ILCA sailor fixes?\n\n• Merge “Jonas Tan Yi Jun” → “Jonas Tan Kia Jeng”\n• Set ILCA 4 sail 197840 on Jonas Tan Kia Jeng\n\nSafe to re-run (idempotent)."
+      )
+    ) {
+      return;
+    }
+    setSeedBusy(true);
+    setMsg(null);
+    try {
+      const res = await fetch("/api/admin/sailors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "applyIlcaSailorFixes" }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Fix failed");
+      await refreshSailors();
+      setMsg(data.message || "ILCA sailor fixes applied");
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Fix failed");
+    } finally {
+      setSeedBusy(false);
+    }
+  };
+
   return (
     <div className="w-full min-w-0 space-y-6">
       <div className="glass-panel rounded-3xl border border-white/5 p-5 sm:p-6 space-y-3">
@@ -435,6 +462,19 @@ export function AdminIlcaRankingPanel({
                   <UserPlus className="h-3 w-3" />
                 )}
                 Apply name corrections
+              </button>
+              <button
+                type="button"
+                disabled={seedBusy}
+                onClick={() => void applySailorFixes()}
+                className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/40 bg-violet-500/10 px-3 py-1.5 text-[10px] font-bold text-violet-200 hover:bg-violet-500/20 disabled:opacity-50"
+              >
+                {seedBusy ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <UserPlus className="h-3 w-3" />
+                )}
+                Merge Jonas + sail 197840
               </button>
               <button
                 type="button"

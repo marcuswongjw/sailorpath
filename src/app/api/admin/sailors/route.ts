@@ -109,6 +109,340 @@ export async function POST(req: Request) {
     }
 
     /**
+     * Named ILCA merges + sail fixes (e.g. Jonas Tan Kia Jeng / Yi Jun, sail 197840).
+     * Calls the merge route logic inline by name.
+     */
+    if (body.action === "applyIlcaSailorFixes") {
+      const {
+        ILCA_NAMED_MERGES,
+        JONAS_TAN_KEEP_NAME,
+        JONAS_TAN_ILCA4_SAIL,
+      } = await import("@/lib/ilcaSailorFixes");
+      const { logAdminChange } = await import("@/lib/adminChangeLog");
+      const { sailorAliases, regattaResults } = await import("@/db/schema");
+      const { and } = await import("drizzle-orm");
+      const details: string[] = [];
+      let merges = 0;
+      let sailUpdates = 0;
+
+      for (const fix of ILCA_NAMED_MERGES) {
+        const keepRows = await db
+          .select()
+          .from(sailors)
+          .where(eq(sailors.name, fix.keepName));
+        const mergeRows = await db
+          .select()
+          .from(sailors)
+          .where(eq(sailors.name, fix.mergeName));
+
+        let keepId = keepRows[0]?.id as string | undefined;
+        const mergeId = mergeRows[0]?.id as string | undefined;
+
+        // If only merge name exists, rename it to keep name
+        if (!keepId && mergeId) {
+          await db
+            .update(sailors)
+            .set({ name: fix.keepName, updatedAt: new Date() })
+            .where(eq(sailors.id, mergeId));
+          try {
+            await db.insert(sailorAliases).values({
+              sailorId: mergeId,
+              aliasName: fix.mergeName,
+            });
+          } catch {
+            /* exists */
+          }
+          keepId = mergeId;
+          details.push(`Renamed “${fix.mergeName}” → “${fix.keepName}”`);
+          merges++;
+        } else if (keepId && mergeId && keepId !== mergeId) {
+          // Move results from merge → keep
+          const mergeResults = await db
+            .select()
+            .from(regattaResults)
+            .where(eq(regattaResults.sailorId, mergeId));
+          for (const row of mergeResults) {
+            const existing = await db
+              .select()
+              .from(regattaResults)
+              .where(
+                and(
+                  eq(regattaResults.sailorId, keepId),
+                  eq(regattaResults.regattaId, row.regattaId)
+                )
+              )
+              .limit(1);
+            if (!existing[0]) {
+              await db
+                .update(regattaResults)
+                .set({ sailorId: keepId, updatedAt: new Date() })
+                .where(eq(regattaResults.id, row.id));
+            } else {
+              await db
+                .delete(regattaResults)
+                .where(eq(regattaResults.id, row.id));
+            }
+          }
+          // Aliases
+          const mergeAliases = await db
+            .select()
+            .from(sailorAliases)
+            .where(eq(sailorAliases.sailorId, mergeId));
+          for (const a of mergeAliases) {
+            try {
+              await db
+                .update(sailorAliases)
+                .set({ sailorId: keepId })
+                .where(eq(sailorAliases.id, a.id));
+            } catch {
+              await db
+                .delete(sailorAliases)
+                .where(eq(sailorAliases.id, a.id));
+            }
+          }
+          try {
+            await db.insert(sailorAliases).values({
+              sailorId: keepId,
+              aliasName: fix.mergeName,
+            });
+          } catch {
+            /* exists */
+          }
+          // Fill blank fields from merge before delete
+          const keepSailor = keepRows[0];
+          const mergeSailor = mergeRows[0];
+          const fill: Record<string, unknown> = { updatedAt: new Date() };
+          if (
+            !String(keepSailor.sailNumberIlca4 || "").trim() &&
+            String(mergeSailor.sailNumberIlca4 || "").trim()
+          ) {
+            fill.sailNumberIlca4 = mergeSailor.sailNumberIlca4;
+          }
+          for (const f of [
+            "goldEntryDate",
+            "silverEntryDate",
+            "dropDate",
+            "dob",
+            "club",
+            "school",
+            "gender",
+          ] as const) {
+            if (!keepSailor[f] && mergeSailor[f]) fill[f] = mergeSailor[f];
+          }
+          if (Object.keys(fill).length > 1) {
+            await db.update(sailors).set(fill).where(eq(sailors.id, keepId));
+          }
+          await db.delete(sailors).where(eq(sailors.id, mergeId));
+          details.push(
+            `Merged “${fix.mergeName}” into “${fix.keepName}”`
+          );
+          merges++;
+          void logAdminChange({
+            actorUserId: auth.userId,
+            actorEmail: auth.email,
+            action: "sailor.merge",
+            entityType: "sailor",
+            entityId: keepId,
+            entityLabel: fix.keepName,
+            summary: `Merged “${fix.mergeName}” → “${fix.keepName}”`,
+            source: "/api/admin/sailors",
+          });
+        }
+
+        // Ensure sail number on keep
+        if (fix.sailNumberIlca4 && keepId) {
+          const [row] = await db
+            .select({
+              id: sailors.id,
+              sail: sailors.sailNumberIlca4,
+            })
+            .from(sailors)
+            .where(eq(sailors.id, keepId))
+            .limit(1);
+          if (
+            row &&
+            String(row.sail || "").trim() !== fix.sailNumberIlca4
+          ) {
+            await db
+              .update(sailors)
+              .set({
+                sailNumberIlca4: fix.sailNumberIlca4,
+                updatedAt: new Date(),
+              })
+              .where(eq(sailors.id, keepId));
+            sailUpdates++;
+            details.push(
+              `Set ILCA 4 sail ${fix.sailNumberIlca4} on “${fix.keepName}”`
+            );
+          }
+        } else if (fix.sailNumberIlca4 && !keepId) {
+          // Try set by keep name only (no merge needed)
+          const byName = await db
+            .select({ id: sailors.id, sail: sailors.sailNumberIlca4 })
+            .from(sailors)
+            .where(eq(sailors.name, fix.keepName));
+          for (const row of byName) {
+            if (String(row.sail || "").trim() === fix.sailNumberIlca4)
+              continue;
+            await db
+              .update(sailors)
+              .set({
+                sailNumberIlca4: fix.sailNumberIlca4,
+                updatedAt: new Date(),
+              })
+              .where(eq(sailors.id, row.id));
+            sailUpdates++;
+            details.push(
+              `Set ILCA 4 sail ${fix.sailNumberIlca4} on “${fix.keepName}”`
+            );
+          }
+        }
+      }
+
+      // Always ensure Jonas sail even if already merged under keep name
+      const jonas = await db
+        .select({ id: sailors.id, sail: sailors.sailNumberIlca4 })
+        .from(sailors)
+        .where(eq(sailors.name, JONAS_TAN_KEEP_NAME));
+      for (const row of jonas) {
+        if (String(row.sail || "").trim() === JONAS_TAN_ILCA4_SAIL) continue;
+        await db
+          .update(sailors)
+          .set({
+            sailNumberIlca4: JONAS_TAN_ILCA4_SAIL,
+            updatedAt: new Date(),
+          })
+          .where(eq(sailors.id, row.id));
+        sailUpdates++;
+        details.push(
+          `Set ILCA 4 sail ${JONAS_TAN_ILCA4_SAIL} on “${JONAS_TAN_KEEP_NAME}”`
+        );
+      }
+
+      return NextResponse.json({
+        ok: true,
+        merges,
+        sailUpdates,
+        details,
+        message:
+          details.length > 0
+            ? details.join("; ")
+            : "No ILCA sailor fixes needed (already applied).",
+      });
+    }
+
+    /**
+     * Auto-drop gold sailors who sailed &lt;2 ranking gold regattas in a
+     * completed half-year. Sets drop_date to the next half boundary.
+     */
+    if (body.action === "applyGoldParticipationDrops") {
+      const { findGoldParticipationDrops } = await import(
+        "@/lib/goldFleetDrop"
+      );
+      const { logAdminChange } = await import("@/lib/adminChangeLog");
+      const { regattas, regattaResults } = await import("@/db/schema");
+      const { todayYmdSg } = await import("@/lib/datesSg");
+      const asOf = String(body.asOf || todayYmdSg()).slice(0, 10);
+
+      const sailorRows = await db.select().from(sailors);
+      const regattaRows = await db.select().from(regattas);
+      const resultRows = await db.select().from(regattaResults);
+
+      const sailorRecs = sailorRows.map((s) => ({
+        id: s.id,
+        name: s.name,
+        handle: s.handle,
+        sailNumber: s.sailNumber,
+        sailNumberIlca4: s.sailNumberIlca4,
+        club: s.club,
+        school: s.school,
+        nationality: s.nationality,
+        avatarUrl: s.avatarUrl,
+        goldEntryDate: s.goldEntryDate
+          ? String(s.goldEntryDate).slice(0, 10)
+          : null,
+        silverEntryDate: s.silverEntryDate
+          ? String(s.silverEntryDate).slice(0, 10)
+          : null,
+        dropDate: s.dropDate ? String(s.dropDate).slice(0, 10) : null,
+        currentFleet: s.currentFleet,
+        dob: s.dob ? String(s.dob).slice(0, 10) : null,
+        gender: s.gender,
+        nationalSquadStatus: s.nationalSquadStatus,
+      }));
+      const regattaRecs = regattaRows.map((r) => ({
+        id: r.id,
+        name: r.name,
+        slug: r.slug,
+        date: String(r.date).slice(0, 10),
+        totalFleetSize: r.totalFleetSize,
+        division: r.division ?? undefined,
+        raceCount: r.raceCount ?? undefined,
+        geography: r.geography ?? "SG",
+        boatClass: r.boatClass ?? "Optimist",
+        countsForRanking: r.countsForRanking !== false,
+      }));
+      const resultRecs = resultRows.map((r) => ({
+        sailorId: r.sailorId,
+        regattaId: r.regattaId,
+        rank: r.rank,
+        nettScore: r.nettScore,
+        totalScore: r.totalScore,
+        isDns: Boolean(r.isDns),
+        isOverseasCommitment: Boolean(r.isOverseasCommitment),
+      }));
+
+      const dryRun = Boolean(body.dryRun);
+      const candidates = findGoldParticipationDrops(
+        sailorRecs,
+        regattaRecs,
+        resultRecs,
+        asOf
+      );
+
+      if (dryRun) {
+        return NextResponse.json({
+          ok: true,
+          dryRun: true,
+          asOf,
+          candidates,
+          message: `Found ${candidates.length} gold participation drop candidate(s).`,
+        });
+      }
+
+      let updated = 0;
+      for (const c of candidates) {
+        await db
+          .update(sailors)
+          .set({ dropDate: c.dropDate, updatedAt: new Date() })
+          .where(eq(sailors.id, c.sailorId));
+        updated++;
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "sailor.gold_participation_drop",
+          entityType: "sailor",
+          entityId: c.sailorId,
+          entityLabel: c.name,
+          summary: `Gold drop ${c.dropDate} (<2 ranking gold regattas in ${c.failedPeriod.half} ${c.failedPeriod.year}; sailed ${c.participationCount})`,
+          details: c,
+          source: "/api/admin/sailors",
+        });
+      }
+
+      return NextResponse.json({
+        ok: true,
+        asOf,
+        updated,
+        candidates,
+        message:
+          updated > 0
+            ? `Set drop date on ${updated} gold sailor(s) for low participation.`
+            : "No gold participation drops needed.",
+      });
+    }
+
+    /**
      * Seed ILCA 4 national list flags from the official authority name list
      * (name-token match). Only turns flags ON — never clears existing true.
      */

@@ -25,15 +25,21 @@ import {
   selectAsianOceaniaTeam,
   selectPerthCamp,
 } from "@/lib/optimistEventSelection";
+import {
+  findGoldParticipationDrops,
+  GOLD_MIN_RANKING_REGATTAS_PER_HALF,
+  type GoldDropCandidate,
+} from "@/lib/goldFleetDrop";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
-import { Trophy, Users, Medal, Plane, Tent } from "lucide-react";
+import { Trophy, Users, Medal, Plane, Tent, Loader2 } from "lucide-react";
 
 type Props = {
   sailors: SailorAdmin[];
   regattas: RegattaAdmin[];
   results: ResultAdmin[];
+  onSailorsChange?: (sailors: SailorAdmin[]) => void;
 };
 
 const REASON_LABEL: Record<string, string> = {
@@ -105,6 +111,7 @@ export function AdminGoldRankingPanel({
   sailors,
   regattas,
   results,
+  onSailorsChange,
 }: Props) {
   const now = new Date();
   const y = now.getFullYear();
@@ -117,6 +124,8 @@ export function AdminGoldRankingPanel({
     useState<OptimistIntakeKind>(defaultKind);
   const [intakeYear, setIntakeYear] = useState(defaultYear);
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
+  const [dropBusy, setDropBusy] = useState(false);
+  const [dropMsg, setDropMsg] = useState<string | null>(null);
 
   const cutoff = useMemo(
     () => optimistSquadCutoff(intakeKind, intakeYear),
@@ -128,6 +137,73 @@ export function AdminGoldRankingPanel({
   const sailorRecs = useMemo(() => toSailorRecords(sailors), [sailors]);
   const regattaRecs = useMemo(() => toRegattaRecords(regattas), [regattas]);
   const resultRecs = useMemo(() => toResultRecords(results), [results]);
+
+  const asOfYmd = useMemo(
+    () =>
+      new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Singapore" }),
+    []
+  );
+
+  const participationDrops = useMemo(
+    (): GoldDropCandidate[] =>
+      findGoldParticipationDrops(
+        sailorRecs,
+        regattaRecs,
+        resultRecs,
+        asOfYmd
+      ),
+    [sailorRecs, regattaRecs, resultRecs, asOfYmd]
+  );
+
+  const applyParticipationDrops = async () => {
+    if (participationDrops.length === 0) {
+      setDropMsg("No participation drops needed.");
+      return;
+    }
+    const preview = participationDrops
+      .slice(0, 12)
+      .map(
+        (d) =>
+          `• ${d.name}: drop ${d.dropDate} (${d.participationCount} ranking gold in ${d.failedPeriod.half} ${d.failedPeriod.year})`
+      )
+      .join("\n");
+    if (
+      !confirm(
+        `Auto-drop ${participationDrops.length} gold sailor(s) with fewer than ${GOLD_MIN_RANKING_REGATTAS_PER_HALF} ranking gold regattas in a completed half?\n\n${preview}${
+          participationDrops.length > 12 ? "\n…" : ""
+        }\n\nThis sets their gold drop date.`
+      )
+    ) {
+      return;
+    }
+    setDropBusy(true);
+    setDropMsg(null);
+    try {
+      const res = await fetch("/api/admin/sailors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "applyGoldParticipationDrops",
+          asOf: asOfYmd,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Drop failed");
+      setDropMsg(data.message || `Updated ${data.updated}`);
+      // Refresh sailor list if parent provided callback
+      if (onSailorsChange) {
+        const listRes = await fetch("/api/admin/sailors");
+        const listData = await listRes.json();
+        if (listRes.ok && listData.sailors) {
+          onSailorsChange(listData.sailors);
+        }
+      }
+    } catch (e) {
+      setDropMsg(e instanceof Error ? e.message : "Drop failed");
+    } finally {
+      setDropBusy(false);
+    }
+  };
 
   const goldRanked = useMemo(() => {
     // Only count ranking regattas on/before official cutoff date
@@ -204,8 +280,49 @@ export function AdminGoldRankingPanel({
             <p className="text-[12px] text-slate-400 mt-1 max-w-3xl leading-relaxed">
               {OPTIMIST_SQUAD_POLICY.notes}
             </p>
+            <p className="text-[11px] text-slate-500 mt-1 max-w-3xl">
+              Participation rule: gold sailors need ≥
+              {GOLD_MIN_RANKING_REGATTAS_PER_HALF} ranking gold regattas in each
+              completed half (Jan–Jun / Jul–Dec) or they are dropped at the next
+              half boundary.
+            </p>
           </div>
         </div>
+
+        {participationDrops.length > 0 && (
+          <div className="rounded-xl border border-rose-500/25 bg-rose-500/10 px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-xs font-semibold text-rose-200">
+                {participationDrops.length} gold sailor
+                {participationDrops.length === 1 ? "" : "s"} below participation
+                threshold
+              </p>
+              <p className="text-[11px] text-rose-200/70 mt-0.5">
+                {participationDrops
+                  .slice(0, 4)
+                  .map((d) => d.name)
+                  .join(", ")}
+                {participationDrops.length > 4
+                  ? ` +${participationDrops.length - 4} more`
+                  : ""}
+              </p>
+            </div>
+            <button
+              type="button"
+              disabled={dropBusy}
+              onClick={() => void applyParticipationDrops()}
+              className="inline-flex items-center gap-1.5 rounded-full border border-rose-400/40 bg-rose-500/20 px-3 py-1.5 text-[10px] font-bold text-rose-100 hover:bg-rose-500/30 disabled:opacity-50"
+            >
+              {dropBusy ? (
+                <Loader2 className="h-3 w-3 animate-spin" />
+              ) : null}
+              Apply auto-drops
+            </button>
+          </div>
+        )}
+        {dropMsg && (
+          <p className="text-[11px] text-emerald-400 font-medium">{dropMsg}</p>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <label className="text-xs text-slate-400">

@@ -186,6 +186,13 @@ export async function POST(req: Request) {
     ) {
       fill.sailNumber = mergeSailor.sailNumber;
     }
+    // ILCA 4 sail: fill if keep is blank
+    if (
+      !String(keepSailor.sailNumberIlca4 || "").trim() &&
+      String(mergeSailor.sailNumberIlca4 || "").trim()
+    ) {
+      fill.sailNumberIlca4 = mergeSailor.sailNumberIlca4;
+    }
     const dateFields = [
       "dob",
       "goldEntryDate",

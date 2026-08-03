@@ -19,11 +19,14 @@ import {
 } from "lucide-react";
 import { formatEventWhen } from "@/lib/profileUi";
 import {
+  buildSystemJourneyMilestones,
+  mergeJourneyDisplay,
   newJourneyId,
   parseSailingJourney,
   type JourneyHighlight,
 } from "@/lib/sailingJourney";
 import {
+  buildIlcaPositionTrend,
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
@@ -705,7 +708,23 @@ export function SailorProfileView({
     normalizeNationality(displaySailor.nationality) ||
     (String(displaySailor.nationality || "").trim() ? "SGP" : "SGP");
 
-  // Stats cells by mode
+  // Stats cells by mode — include gold entry year when known
+  const goldTenureLabel = analytics.timeInGoldLabel
+    ? analytics.goldEntryYear
+      ? `${analytics.timeInGoldLabel}${
+          analytics.isDroppedFromGold ? " (ended)" : ""
+        }`
+      : analytics.timeInGoldLabel
+    : "—";
+  const goldTenureSub =
+    analytics.goldEntryYear != null
+      ? analytics.isDroppedFromGold
+        ? `Gold since ${analytics.goldEntryYear} · dropped`
+        : `Gold since ${analytics.goldEntryYear}`
+      : analytics.isDroppedFromGold
+        ? "Dropped from gold"
+        : "In gold fleet";
+
   const statCells =
     analytics.mode === "established_gold"
       ? [
@@ -725,8 +744,8 @@ export function SailorProfileView({
             color: "text-blue-400",
           },
           {
-            value: analytics.timeInGoldLabel || "—",
-            label: "In gold fleet",
+            value: goldTenureLabel,
+            label: goldTenureSub,
             color: "text-white",
           },
         ]
@@ -747,8 +766,8 @@ export function SailorProfileView({
             color: "text-amber-400",
           },
           {
-            value: analytics.timeInGoldLabel || "—",
-            label: "In gold fleet",
+            value: goldTenureLabel,
+            label: goldTenureSub,
             color: "text-white",
           },
         ];
@@ -759,6 +778,37 @@ export function SailorProfileView({
 
   /** Public viewers only see equipment when the sailor made it public */
   const showEquipmentSection = showEquipment || isOwner;
+
+  // ILCA position trend (Open fleet) — shown for ILCA-only or dual-class ILCA tab
+  const ilcaTrendPoints = useMemo(
+    () => buildIlcaPositionTrend(ilca4Results as ProfileResult[]),
+    [ilca4Results]
+  );
+  const showIlcaTrend =
+    primaryIsIlca || (dualClass && resultsTab === "ilca4");
+  const trendPoints = showIlcaTrend ? ilcaTrendPoints : analytics.trend;
+  const trendMode = showIlcaTrend ? ("other" as const) : analytics.mode;
+  const trendGoldEntry = showIlcaTrend ? null : analytics.goldEntryDate;
+  const trendCaption = showIlcaTrend
+    ? " · last 10 ILCA 4 regattas"
+    : analytics.mode === "established_gold"
+      ? " · last 10 gold events"
+      : " · last 10 regattas";
+
+  // System + owner journey milestones
+  const displayJourney = useMemo(() => {
+    const system = buildSystemJourneyMilestones(
+      {
+        goldEntryDate: displaySailor.goldEntryDate as string | null | undefined,
+        silverEntryDate: displaySailor.silverEntryDate as
+          | string
+          | null
+          | undefined,
+      },
+      classBuckets.optimist as ProfileResult[]
+    );
+    return mergeJourneyDisplay(journey, system);
+  }, [displaySailor, classBuckets.optimist, journey]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 flex-1 w-full space-y-5 bg-[#090a0f]">
@@ -1328,167 +1378,16 @@ export function SailorProfileView({
         </h2>
         <p className="text-[12px] text-neutral-400 mt-0.5 mb-4">
           Finishing position by regatta (lower is better)
-          {analytics.mode === "established_gold"
-            ? " · last 10 gold fleet"
-            : " · last 10 regattas"}
+          {trendCaption}
         </p>
         <PositionTrendChart
-          points={analytics.trend}
-          mode={analytics.mode}
-          goldEntryDate={analytics.goldEntryDate}
+          points={trendPoints}
+          mode={trendMode}
+          goldEntryDate={trendGoldEntry}
         />
       </section>
 
-      {/* ── Journey + Equipment ──────────────────────────────── */}
-      <div
-        className={`grid grid-cols-1 gap-4 ${
-          showEquipmentSection ? "lg:grid-cols-2" : ""
-        }`}
-      >
-        <section className={`${cardClass} p-5`}>
-          <div className="flex items-center gap-2 mb-1">
-            <Anchor className="h-4 w-4 text-sky-400/90" />
-            <h2 className="text-sm font-semibold text-white tracking-tight">
-              Sailing journey
-            </h2>
-          </div>
-          <p className="text-[11px] text-neutral-500 mb-4">
-            Key moments — campaigns, firsts, and milestones.
-          </p>
-          {journey.length === 0 ? (
-            <p className="text-sm text-neutral-600">
-              {isOwner
-                ? "No highlights yet. Add one below."
-                : "No journey highlights shared yet."}
-            </p>
-          ) : (
-            <ol className="relative ml-0.5 space-y-0 border-l border-white/10">
-              {journey.map((it) => (
-                <li key={it.id} className="relative pl-4 pb-4 last:pb-0">
-                  <span className="absolute -left-[3px] top-1.5 h-1.5 w-1.5 rounded-full bg-neutral-500" />
-                  {it.when && (
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-orange-400">
-                      {it.when}
-                    </p>
-                  )}
-                  <p className="text-sm font-semibold text-white mt-0.5">
-                    {it.title}
-                  </p>
-                  {it.detail && (
-                    <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
-                      {it.detail}
-                    </p>
-                  )}
-                  {isOwner && (
-                    <button
-                      type="button"
-                      disabled={journeyBusy}
-                      onClick={() => void removeJourneyItem(it.id)}
-                      className="mt-1 text-[10px] text-rose-400/90"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ol>
-          )}
-          {isOwner && (
-            <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-3">
-              <input
-                value={journeyDraft.when}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, when: e.target.value }))
-                }
-                placeholder="When"
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-              />
-              <input
-                value={journeyDraft.title}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, title: e.target.value }))
-                }
-                placeholder="Title"
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-              />
-              <textarea
-                value={journeyDraft.detail}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
-                }
-                placeholder="Detail"
-                rows={2}
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
-              />
-              <button
-                type="button"
-                disabled={journeyBusy || !journeyDraft.title.trim()}
-                onClick={() => void addJourneyItem()}
-                className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-40"
-              >
-                {journeyBusy ? "Saving…" : "Add highlight"}
-              </button>
-              {journeyMsg && (
-                <p className="text-[11px] text-emerald-400">{journeyMsg}</p>
-              )}
-            </div>
-          )}
-        </section>
-
-        {showEquipmentSection && (
-        <section className={`${cardClass} p-5`}>
-          <div className="flex items-center gap-2 mb-1">
-            <Settings className="h-4 w-4 text-orange-400/90" />
-            <h2 className="text-sm font-semibold text-white tracking-tight">
-              Equipment
-            </h2>
-          </div>
-          <p className="text-[11px] text-neutral-500 mb-4">
-            Hull, sail, foils &amp; mast
-          </p>
-          {hasEquipment ? (
-            <div className="space-y-0">
-              {(
-                [
-                  ["Hull", displayEquipment.hullBrand],
-                  ["Sail", displayEquipment.sailMake],
-                  ["Foils", displayEquipment.foilBrand],
-                  ["Mast", displayEquipment.mast],
-                ] as const
-              ).map(([label, val]) => (
-                <div
-                  key={label}
-                  className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
-                >
-                  <span className="text-neutral-500">{label}</span>
-                  <span className="text-white font-medium">
-                    {val || "—"}
-                  </span>
-                </div>
-              ))}
-              {displayEquipment.notes ? (
-                <p className="mt-3 text-xs text-neutral-500">
-                  {String(displayEquipment.notes)}
-                </p>
-              ) : null}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center py-6 text-center">
-              <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
-              <p className="text-xs text-neutral-500">
-                {!showEquipment
-                  ? "Equipment is private."
-                  : isOwner
-                    ? "No equipment yet — use Edit to add gear."
-                    : "No equipment logged yet."}
-              </p>
-            </div>
-          )}
-        </section>
-        )}
-      </div>
-
-      {/* ── Regatta results (last section) ──────────────────── */}
+      {/* ── Regatta results ────────────────────────────────── */}
       <section className={`${cardClass} overflow-hidden`}>
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex flex-wrap items-end justify-between gap-2">
           <div className="min-w-0 flex-1">
@@ -2036,6 +1935,167 @@ export function SailorProfileView({
           </>
         )}
       </section>
+
+      {/* ── Journey + Equipment ──────────────────────────────── */}
+      <div
+        className={`grid grid-cols-1 gap-4 ${
+          showEquipmentSection ? "lg:grid-cols-2" : ""
+        }`}
+      >
+        <section className={`${cardClass} p-5`}>
+          <div className="flex items-center gap-2 mb-1">
+            <Anchor className="h-4 w-4 text-sky-400/90" />
+            <h2 className="text-sm font-semibold text-white tracking-tight">
+              Sailing journey
+            </h2>
+          </div>
+          <p className="text-[11px] text-neutral-500 mb-4">
+            Key moments — campaigns, firsts, and milestones.
+            {displayJourney.some((j) => j.system)
+              ? " Fleet milestones are filled in automatically."
+              : ""}
+          </p>
+          {displayJourney.length === 0 ? (
+            <p className="text-sm text-neutral-600">
+              {isOwner
+                ? "No highlights yet. Add one below."
+                : "No journey highlights shared yet."}
+            </p>
+          ) : (
+            <ol className="relative ml-0.5 space-y-0 border-l border-white/10">
+              {displayJourney.map((it) => (
+                <li key={it.id} className="relative pl-4 pb-4 last:pb-0">
+                  <span
+                    className={`absolute -left-[3px] top-1.5 h-1.5 w-1.5 rounded-full ${
+                      it.system ? "bg-amber-400" : "bg-neutral-500"
+                    }`}
+                  />
+                  {it.when && (
+                    <p className="text-[11px] font-semibold uppercase tracking-wide text-orange-400">
+                      {it.when}
+                    </p>
+                  )}
+                  <p className="text-sm font-semibold text-white mt-0.5">
+                    {it.title}
+                    {it.system ? (
+                      <span className="ml-1.5 text-[9px] font-medium uppercase tracking-wide text-amber-500/80">
+                        milestone
+                      </span>
+                    ) : null}
+                  </p>
+                  {it.detail && (
+                    <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
+                      {it.detail}
+                    </p>
+                  )}
+                  {isOwner && !it.system && (
+                    <button
+                      type="button"
+                      disabled={journeyBusy}
+                      onClick={() => void removeJourneyItem(it.id)}
+                      className="mt-1 text-[10px] text-rose-400/90"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ol>
+          )}
+          {isOwner && (
+            <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-3">
+              <input
+                value={journeyDraft.when}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, when: e.target.value }))
+                }
+                placeholder="When"
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <input
+                value={journeyDraft.title}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, title: e.target.value }))
+                }
+                placeholder="Title"
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+              />
+              <textarea
+                value={journeyDraft.detail}
+                onChange={(e) =>
+                  setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
+                }
+                placeholder="Detail"
+                rows={2}
+                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
+              />
+              <button
+                type="button"
+                disabled={journeyBusy || !journeyDraft.title.trim()}
+                onClick={() => void addJourneyItem()}
+                className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-40"
+              >
+                {journeyBusy ? "Saving…" : "Add highlight"}
+              </button>
+              {journeyMsg && (
+                <p className="text-[11px] text-emerald-400">{journeyMsg}</p>
+              )}
+            </div>
+          )}
+        </section>
+
+        {showEquipmentSection && (
+        <section className={`${cardClass} p-5`}>
+          <div className="flex items-center gap-2 mb-1">
+            <Settings className="h-4 w-4 text-orange-400/90" />
+            <h2 className="text-sm font-semibold text-white tracking-tight">
+              Equipment
+            </h2>
+          </div>
+          <p className="text-[11px] text-neutral-500 mb-4">
+            Hull, sail, foils &amp; mast
+          </p>
+          {hasEquipment ? (
+            <div className="space-y-0">
+              {(
+                [
+                  ["Hull", displayEquipment.hullBrand],
+                  ["Sail", displayEquipment.sailMake],
+                  ["Foils", displayEquipment.foilBrand],
+                  ["Mast", displayEquipment.mast],
+                ] as const
+              ).map(([label, val]) => (
+                <div
+                  key={label}
+                  className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
+                >
+                  <span className="text-neutral-500">{label}</span>
+                  <span className="text-white font-medium">
+                    {val || "—"}
+                  </span>
+                </div>
+              ))}
+              {displayEquipment.notes ? (
+                <p className="mt-3 text-xs text-neutral-500">
+                  {String(displayEquipment.notes)}
+                </p>
+              ) : null}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center py-6 text-center">
+              <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
+              <p className="text-xs text-neutral-500">
+                {!showEquipment
+                  ? "Equipment is private."
+                  : isOwner
+                    ? "No equipment yet — use Edit to add gear."
+                    : "No equipment logged yet."}
+              </p>
+            </div>
+          )}
+        </section>
+        )}
+      </div>
 
       {/* ── Privacy (owner) ──────────────────────────────────── */}
       {canSeePrivate && (

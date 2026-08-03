@@ -183,17 +183,31 @@ export function PositionTrendChart({
             x={trendSvg.w / 2}
             y={16}
             textAnchor="middle"
-            fill="#fbbf24"
+            fill={
+              trendSvg.pts.every((p) => p.fleet === "Open")
+                ? "#38bdf8"
+                : trendSvg.pts.every((p) => p.fleet !== "Gold")
+                  ? "#9ca3af"
+                  : "#fbbf24"
+            }
             fontSize="10"
           >
-            Gold fleet
+            {trendSvg.pts.every((p) => p.fleet === "Open")
+              ? "ILCA 4"
+              : trendSvg.pts.every((p) => p.fleet !== "Gold")
+                ? "Silver fleet"
+                : "Gold fleet"}
           </text>
         )}
         {trendSvg.silverPath ? (
           <path
             d={trendSvg.silverPath}
             fill="none"
-            stroke="rgba(229,231,235,0.85)"
+            stroke={
+              trendSvg.pts.every((p) => p.fleet === "Open")
+                ? "rgba(56,189,248,0.9)"
+                : "rgba(229,231,235,0.85)"
+            }
             strokeWidth="2"
             strokeLinejoin="round"
             strokeLinecap="round"
@@ -214,13 +228,19 @@ export function PositionTrendChart({
           const cy = trendSvg.yFor(p.rank);
           const labelAbove = cy > trendSvg.padT + 18;
           const labelY = labelAbove ? cy - 12 : cy + 16;
+          const fill =
+            p.fleet === "Gold"
+              ? "#f59e0b"
+              : p.fleet === "Open"
+                ? "#38bdf8"
+                : "#e5e7eb";
           return (
             <g key={i}>
               <circle
                 cx={cx}
                 cy={cy}
                 r={5}
-                fill={p.fleet === "Gold" ? "#f59e0b" : "#e5e7eb"}
+                fill={fill}
                 stroke="#090a0f"
                 strokeWidth="2"
               >
@@ -232,7 +252,7 @@ export function PositionTrendChart({
                 x={cx}
                 y={labelY}
                 textAnchor="middle"
-                fill={p.fleet === "Gold" ? "#fbbf24" : "#e5e7eb"}
+                fill={fill}
                 fontSize="11"
                 fontWeight="600"
               >

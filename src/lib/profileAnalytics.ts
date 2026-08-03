@@ -135,7 +135,12 @@ export type ProfileAnalytics = {
   monthsInGold: number | null;
   timeInGoldLabel: string | null;
   goldEntryDate: string | null;
+  /** Calendar year of gold entry when known (e.g. "2025") */
+  goldEntryYear: string | null;
+  /** Currently in gold (entry set, drop not yet reached) */
   isGoldFleet: boolean;
+  /** Had gold entry but drop date is on/before today */
+  isDroppedFromGold: boolean;
   /** Best finish overall among ranked results in scope */
   bestFinish: number | null;
   bestFinishLabel: string;
@@ -246,9 +251,28 @@ export function buildProfileAnalytics(
   });
   const goldEntry = ymd(sailor.goldEntryDate) || null;
   const goldOk = goldEntry && isValidYmd(goldEntry) ? goldEntry : null;
-  const monthsInGold = goldOk ? monthsBetween(goldOk, today) : null;
-  const isGoldFleet = Boolean(goldOk);
-  /** Established = in gold ≥ 12 months */
+  const dropYmdRaw = ymd(sailor.dropDate) || null;
+  const dropOk =
+    dropYmdRaw && isValidYmd(dropYmdRaw) ? dropYmdRaw : null;
+  const isDroppedFromGold = Boolean(
+    goldOk && dropOk && dropOk <= today
+  );
+  // Tenure ends at drop date (if any); still active → through today
+  const tenureEnd =
+    dropOk && isValidYmd(dropOk)
+      ? dropOk < today
+        ? dropOk
+        : today
+      : today;
+  const monthsInGold = goldOk ? monthsBetween(goldOk, tenureEnd) : null;
+  const isGoldFleet = Boolean(goldOk) && !isDroppedFromGold;
+  const goldEntryYear =
+    goldOk && isValidYmd(goldOk) ? goldOk.slice(0, 4) : null;
+  /**
+   * Profile mode for stats/trend filtering.
+   * Uses tenure length (capped at drop) so former gold sailors keep historical
+   * gold-mode presentation; isGoldFleet reflects whether they are still gold.
+   */
   const mode: ProfileMode =
     goldOk && monthsInGold != null && monthsInGold >= 12
       ? "established_gold"
@@ -345,7 +369,9 @@ export function buildProfileAnalytics(
     timeInGoldLabel:
       monthsInGold != null ? formatMonthsInGold(monthsInGold) : null,
     goldEntryDate: goldOk,
+    goldEntryYear,
     isGoldFleet,
+    isDroppedFromGold,
     bestFinish: bestForMode?.rank ?? null,
     bestFinishLabel: bestForMode ? ordinal(bestForMode.rank) : "—",
     bestGoldFinish: bestGold?.rank ?? null,
@@ -365,6 +391,31 @@ export function buildProfileAnalytics(
     displayResults,
     sortedResults: byDateDesc,
   };
+}
+
+/**
+ * Position trend for ILCA (or any open-fleet) results — last 10 ranked finishes.
+ */
+export function buildIlcaPositionTrend(
+  results: ProfileResult[]
+): TrendPoint[] {
+  const ranked = results
+    .map((r) => ({
+      r,
+      rank: parseRank(r),
+      date: ymd(r.regattaDate),
+    }))
+    .filter(
+      (x): x is { r: ProfileResult; rank: number; date: string } =>
+        x.rank != null && isValidYmd(x.date)
+    )
+    .sort((a, b) => a.date.localeCompare(b.date));
+  return ranked.slice(-10).map((c) => ({
+    date: c.date,
+    rank: c.rank,
+    name: c.r.regattaName || "Regatta",
+    fleet: "Open" as const,
+  }));
 }
 
 export function placeColorClass(rank: number | null | undefined): string {
