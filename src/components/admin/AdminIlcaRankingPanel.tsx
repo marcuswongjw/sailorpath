@@ -305,6 +305,33 @@ export function AdminIlcaRankingPanel({
     }
   };
 
+  const applyNameCorrections = async () => {
+    if (
+      !confirm(
+        "Apply ILCA name corrections?\n\n• Travis Yeo → Travis Jia Le Yeo\n• Tan Reyes Jit Eng → Reyes Jit Eng Tan\n• Regis Wong Xuan Kai → Wong Kai Lun\n\nOld names stay as aliases for import matching."
+      )
+    ) {
+      return;
+    }
+    setSeedBusy(true);
+    setMsg(null);
+    try {
+      const res = await fetch("/api/admin/sailors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "applyIlcaNameCorrections" }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Rename failed");
+      await refreshSailors();
+      setMsg(data.message || `Updated ${data.updated}`);
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : "Rename failed");
+    } finally {
+      setSeedBusy(false);
+    }
+  };
+
   return (
     <div className="w-full min-w-0 space-y-6">
       <div className="glass-panel rounded-3xl border border-white/5 p-5 sm:p-6 space-y-3">
@@ -396,6 +423,19 @@ export function AdminIlcaRankingPanel({
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                disabled={seedBusy}
+                onClick={() => void applyNameCorrections()}
+                className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1.5 text-[10px] font-bold text-amber-200 hover:bg-amber-500/20 disabled:opacity-50"
+              >
+                {seedBusy ? (
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                ) : (
+                  <UserPlus className="h-3 w-3" />
+                )}
+                Apply name corrections
+              </button>
               <button
                 type="button"
                 disabled={seedBusy}

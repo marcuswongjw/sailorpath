@@ -53,6 +53,62 @@ export async function POST(req: Request) {
     const { logAdminChange } = await import("@/lib/adminChangeLog");
 
     /**
+     * Apply ILCA display-name corrections (idempotent).
+     * Renames known profiles and keeps old names as aliases.
+     */
+    if (body.action === "applyIlcaNameCorrections") {
+      const { ILCA_NAME_CORRECTIONS } = await import(
+        "@/lib/ilcaNameCorrections"
+      );
+      const { logAdminChange } = await import("@/lib/adminChangeLog");
+      const { sailorAliases } = await import("@/db/schema");
+      let updated = 0;
+      const details: string[] = [];
+      for (const { from, to } of ILCA_NAME_CORRECTIONS) {
+        const matches = await db
+          .select({ id: sailors.id, name: sailors.name })
+          .from(sailors)
+          .where(eq(sailors.name, from));
+        for (const row of matches) {
+          await db
+            .update(sailors)
+            .set({ name: to, updatedAt: new Date() })
+            .where(eq(sailors.id, row.id));
+          try {
+            await db.insert(sailorAliases).values({
+              sailorId: row.id,
+              aliasName: from,
+            });
+          } catch {
+            /* alias may already exist */
+          }
+          updated++;
+          details.push(`${from} → ${to}`);
+          void logAdminChange({
+            actorUserId: auth.userId,
+            actorEmail: auth.email,
+            action: "sailor.rename",
+            entityType: "sailor",
+            entityId: row.id,
+            entityLabel: to,
+            summary: `Renamed “${from}” → “${to}”`,
+            details: { from, to },
+            source: "/api/admin/sailors",
+          });
+        }
+      }
+      return NextResponse.json({
+        ok: true,
+        updated,
+        details,
+        message:
+          updated > 0
+            ? `Renamed ${updated} sailor(s): ${details.join("; ")}`
+            : "No matching sailors to rename (already applied or names differ).",
+      });
+    }
+
+    /**
      * Seed ILCA 4 national list flags from the official authority name list
      * (name-token match). Only turns flags ON — never clears existing true.
      */
