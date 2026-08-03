@@ -151,6 +151,10 @@ export function SailorProfileView({
   const [journeyMsg, setJourneyMsg] = useState<string | null>(null);
   /** Public list shows 8 by default; owner/public can expand to full log */
   const [showAllResults, setShowAllResults] = useState(false);
+  /** Dual-class profiles: tab between Optimist and ILCA 4 results */
+  const [resultsTab, setResultsTab] = useState<"optimist" | "ilca4">(
+    "optimist"
+  );
 
   useEffect(() => {
     if (!demoMode && isOwner && typeof window !== "undefined") {
@@ -677,19 +681,21 @@ export function SailorProfileView({
       ? (ilca4Results.length ? ilca4Results : ilca6Results)
       : optimistResults;
 
+  /** Active class list for the results panel (tabs when dual-class) */
+  const activeResultsList =
+    dualClass && resultsTab === "ilca4"
+      ? ilca4Results
+      : dualClass
+        ? optimistResults
+        : resultsForPrimarySection;
   const visibleResults = showAllResults
-    ? resultsForPrimarySection
-    : resultsForPrimarySection.slice(0, 8);
-  const hasMoreResults = resultsForPrimarySection.length > 8;
-  const visibleIlca4 = showAllResults
-    ? ilca4Results
-    : ilca4Results.slice(0, 8);
-  const hasMoreIlca4 = ilca4Results.length > 8;
-  /** Primary section is ILCA-only (no Optimist results) */
+    ? activeResultsList
+    : activeResultsList.slice(0, 8);
+  const hasMoreResults = activeResultsList.length > 8;
+  /** Showing ILCA columns (points + rank) vs Optimist (place + nett) */
   const primaryIsIlca =
-    !dualClass &&
-    hasIlcaResults &&
-    classBuckets.optimist.length === 0;
+    (dualClass && resultsTab === "ilca4") ||
+    (!dualClass && hasIlcaResults && classBuckets.optimist.length === 0);
 
   const sailDisplay = String(displaySailor.sailNumber || "—");
   const sailIlca4 = displaySailor.sailNumberIlca4
@@ -1485,22 +1491,93 @@ export function SailorProfileView({
       {/* ── Regatta results (last section) ──────────────────── */}
       <section className={`${cardClass} overflow-hidden`}>
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex flex-wrap items-end justify-between gap-2">
-          <div>
+          <div className="min-w-0 flex-1">
             <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-              {dualClass
-                ? "Optimist regatta results"
-                : hasIlcaResults && !hasOptimistResults
-                  ? "ILCA regatta results"
-                  : "Regatta results"}
+              Regatta results
             </h2>
-            <p className="text-[11px] text-neutral-600 mt-0.5">
-              {showAllResults
-                ? `All ${resultsForPrimarySection.length} listed`
-                : `Showing ${Math.min(8, resultsForPrimarySection.length)} of ${resultsForPrimarySection.length}`}
-              {analytics.mode === "established_gold" && !dualClass
+            {dualClass ? (
+              <div
+                className="mt-3 flex gap-1 rounded-xl bg-black/30 border border-white/[0.06] p-1 max-w-md"
+                role="tablist"
+                aria-label="Boat class results"
+              >
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={resultsTab === "optimist"}
+                  onClick={() => {
+                    setResultsTab("optimist");
+                    setShowAllResults(false);
+                  }}
+                  className={`flex-1 rounded-lg px-3 py-2 text-[12px] font-semibold transition-colors ${
+                    resultsTab === "optimist"
+                      ? "bg-orange-500 text-white shadow-sm"
+                      : "text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  Optimist
+                  <span
+                    className={`ml-1.5 tabular-nums text-[10px] ${
+                      resultsTab === "optimist"
+                        ? "text-orange-100/90"
+                        : "text-neutral-600"
+                    }`}
+                  >
+                    ({optimistResults.length})
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={resultsTab === "ilca4"}
+                  onClick={() => {
+                    setResultsTab("ilca4");
+                    setShowAllResults(false);
+                  }}
+                  className={`flex-1 rounded-lg px-3 py-2 text-[12px] font-semibold transition-colors ${
+                    resultsTab === "ilca4"
+                      ? "bg-sky-600 text-white shadow-sm"
+                      : "text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  ILCA 4
+                  <span
+                    className={`ml-1.5 tabular-nums text-[10px] ${
+                      resultsTab === "ilca4"
+                        ? "text-sky-100/90"
+                        : "text-neutral-600"
+                    }`}
+                  >
+                    ({ilca4Results.length})
+                  </span>
+                </button>
+              </div>
+            ) : null}
+            <p className="text-[11px] text-neutral-600 mt-2">
+              {(() => {
+                const list =
+                  dualClass && resultsTab === "ilca4"
+                    ? ilca4Results
+                    : dualClass
+                      ? optimistResults
+                      : resultsForPrimarySection;
+                const n = list.length;
+                return showAllResults
+                  ? `All ${n} listed`
+                  : `Showing ${Math.min(8, n)} of ${n}`;
+              })()}
+              {dualClass && resultsTab === "optimist" && analytics.mode === "established_gold"
                 ? " · gold fleet"
                 : ""}
-              {hasIlcaResults && !hasOptimistResults && ilca4Tenure
+              {dualClass && resultsTab === "ilca4" && ilca4Tenure
+                ? ` · in ILCA 4 ${ilca4Tenure.label} (from first race)`
+                : ""}
+              {!dualClass &&
+              analytics.mode === "established_gold" &&
+              !primaryIsIlca
+                ? " · gold fleet"
+                : ""}
+              {!dualClass && primaryIsIlca && ilca4Tenure
                 ? ` · in ILCA 4 ${ilca4Tenure.label} (from first race)`
                 : ""}
             </p>
@@ -1944,102 +2021,21 @@ export function SailorProfileView({
                 <button
                   type="button"
                   onClick={() => setShowAllResults((v) => !v)}
-                  className="text-[12px] font-semibold text-orange-400 hover:text-orange-300"
+                  className={`text-[12px] font-semibold ${
+                    primaryIsIlca
+                      ? "text-sky-400 hover:text-sky-300"
+                      : "text-orange-400 hover:text-orange-300"
+                  }`}
                 >
                   {showAllResults
                     ? "Show fewer"
-                    : `View all ${resultsForPrimarySection.length} results`}
+                    : `View all ${activeResultsList.length} results`}
                 </button>
               </div>
             )}
           </>
         )}
       </section>
-
-      {/* ── ILCA 4 results (dual-class sailors) ──────────────── */}
-      {dualClass && ilca4Results.length > 0 && (
-        <section className={`${cardClass} overflow-hidden`}>
-          <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2">
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-sky-400/90">
-              ILCA 4 regatta results
-            </h2>
-            <p className="text-[11px] text-neutral-600 mt-0.5">
-              {showAllResults
-                ? `All ${ilca4Results.length} listed`
-                : `Showing ${Math.min(8, ilca4Results.length)} of ${ilca4Results.length}`}
-              {ilca4Tenure
-                ? ` · in class ${ilca4Tenure.label} (from first ILCA 4 race ${ilca4Tenure.firstDate.slice(0, 4)})`
-                : ""}
-            </p>
-          </div>
-          <div className="hidden sm:grid grid-cols-[2.75rem_1fr_2.5rem_4.25rem] gap-2 px-4 sm:px-5 py-2 border-t border-white/[0.05] text-[10px] font-medium uppercase tracking-wide text-neutral-600">
-            <span>Points</span>
-            <span>Event</span>
-            <span className="text-right">Rank</span>
-            <span className="text-right">Class</span>
-          </div>
-          <div className="divide-y divide-white/[0.04]">
-            {visibleIlca4.map((res, idx) => {
-              const regattaId = String(res.regattaId || res.id || `ilca-${idx}`);
-              const rank = res.rank != null ? Number(res.rank) : null;
-              const dns = Boolean(res.isDns || res.isDNS);
-              const fleetSize = res.totalFleetSize ?? res.fleetSize;
-              const ilcaPts = ilcaHighPointsForResult(res as ProfileResult);
-              return (
-                <div
-                  key={regattaId + String(idx)}
-                  className="grid grid-cols-[2.75rem_1fr_auto] sm:grid-cols-[2.75rem_1fr_2.5rem_4.25rem] gap-2 items-start px-4 sm:px-5 py-3.5"
-                >
-                  <span
-                    className="text-[15px] font-semibold tabular-nums pt-0.5 text-sky-300"
-                    title="High Ranking Points (1st = fleet size)"
-                  >
-                    {dns ? "0" : ilcaPts != null ? ilcaPts : "—"}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-[13px] font-medium text-white truncate">
-                      {res.regattaName}
-                    </p>
-                    <p className="text-[11px] text-neutral-500 truncate mt-0.5">
-                      {[
-                        res.geography,
-                        formatEventWhen(res.regattaDate as string),
-                        fleetSize ? `${fleetSize} boats` : null,
-                      ]
-                        .filter(Boolean)
-                        .join(" · ")}
-                    </p>
-                    <p className="sm:hidden text-[11px] text-neutral-400 mt-1 tabular-nums">
-                      Rank {dns ? "DNS" : rank != null ? rank : "—"}
-                    </p>
-                  </div>
-                  <span className="hidden sm:block text-right text-[13px] tabular-nums text-neutral-200 pt-0.5">
-                    {dns ? "DNS" : rank != null ? rank : "—"}
-                  </span>
-                  <span className="flex items-center justify-end pt-0.5">
-                    <span className="rounded-full px-2 py-0.5 text-[10px] font-semibold bg-sky-500/15 text-sky-300 border border-sky-500/25">
-                      ILCA 4
-                    </span>
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-          {hasMoreIlca4 && (
-            <div className="border-t border-white/[0.05] px-4 sm:px-5 py-3 text-center">
-              <button
-                type="button"
-                onClick={() => setShowAllResults((v) => !v)}
-                className="text-[12px] font-semibold text-sky-400 hover:text-sky-300"
-              >
-                {showAllResults
-                  ? "Show fewer"
-                  : `View all ${ilca4Results.length} ILCA 4 results`}
-              </button>
-            </div>
-          )}
-        </section>
-      )}
 
       {/* ── Privacy (owner) ──────────────────────────────────── */}
       {canSeePrivate && (
