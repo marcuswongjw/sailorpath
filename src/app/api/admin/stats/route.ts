@@ -4,8 +4,9 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { getProductInventory, getUsageSummary } from "@/lib/usage";
 import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
-import { findGoldBeforeEntryIssues } from "@/lib/dataQuality";
+import { buildDataQualityReport } from "@/lib/dataQuality";
 import { listAdminChanges } from "@/lib/adminChangeLog";
+import { todayYmdSg } from "@/lib/datesSg";
 
 /**
  * GET /api/admin/stats?days=7
@@ -26,23 +27,9 @@ export async function GET(req: Request) {
     ]);
 
     // Data quality
-    let emptySeries = 0;
-    let goldBeforeEntry: ReturnType<typeof findGoldBeforeEntryIssues> = [];
+    let dataQuality: ReturnType<typeof buildDataQualityReport> | null = null;
     try {
       const sailorRows = await db.select().from(sailors);
-      emptySeries = sailorRows.filter((s) => {
-        const cf = String(s.currentFleet || "")
-          .trim()
-          .toLowerCase();
-        const isSeriesTag =
-          cf === "series" ||
-          cf === "gold" ||
-          cf === "silver" ||
-          cf === "in sg fleet" ||
-          cf === "member";
-        return isSeriesTag && !s.goldEntryDate && !s.silverEntryDate;
-      }).length;
-
       const links = await db
         .select({
           sailorId: regattaResults.sailorId,
@@ -50,12 +37,22 @@ export async function GET(req: Request) {
           regattaName: regattas.name,
           division: regattas.division,
           countsForRanking: regattas.countsForRanking,
+          boatClass: regattas.boatClass,
         })
         .from(regattaResults)
         .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id));
 
       const byId = new Map(sailorRows.map((s) => [s.id, s]));
-      goldBeforeEntry = findGoldBeforeEntryIssues(
+      dataQuality = buildDataQualityReport(
+        sailorRows.map((s) => ({
+          id: s.id,
+          name: s.name,
+          dob: s.dob,
+          dropDate: s.dropDate,
+          silverEntryDate: s.silverEntryDate,
+          goldEntryDate: s.goldEntryDate,
+          currentFleet: s.currentFleet,
+        })),
         links.map((l) => {
           const s = byId.get(l.sailorId);
           return {
@@ -66,8 +63,10 @@ export async function GET(req: Request) {
             regattaName: l.regattaName,
             division: l.division,
             countsForRanking: l.countsForRanking,
+            boatClass: l.boatClass,
           };
-        })
+        }),
+        todayYmdSg()
       );
     } catch (e) {
       console.warn("stats dataQuality", e);
@@ -80,11 +79,25 @@ export async function GET(req: Request) {
       generatedAt: new Date().toISOString(),
       inventory,
       usage,
-      dataQuality: {
-        emptySeries,
-        goldBeforeEntryCount: goldBeforeEntry.length,
-        goldBeforeEntry: goldBeforeEntry.slice(0, 50),
-      },
+      dataQuality: dataQuality
+        ? {
+            emptySeries: dataQuality.emptySeries,
+            goldBeforeEntryCount: dataQuality.goldBeforeEntry.length,
+            goldBeforeEntry: dataQuality.goldBeforeEntry.slice(0, 50),
+            goldWithoutEntryCount: dataQuality.goldWithoutEntry.length,
+            goldWithoutEntry: dataQuality.goldWithoutEntry.slice(0, 50),
+            overAgeOptimistCount: dataQuality.overAgeOptimist.length,
+            overAgeOptimist: dataQuality.overAgeOptimist.slice(0, 50),
+          }
+        : {
+            emptySeries: 0,
+            goldBeforeEntryCount: 0,
+            goldBeforeEntry: [],
+            goldWithoutEntryCount: 0,
+            goldWithoutEntry: [],
+            overAgeOptimistCount: 0,
+            overAgeOptimist: [],
+          },
       changeLog,
       changeLogHint:
         changeLog.length === 0

@@ -94,16 +94,39 @@ export function normalizeSgSeriesMembership(
 /** Date-ish fields from DB/admin may be string or Date. */
 type Dateish = string | Date | null | undefined;
 
-/** True when sailor is marked In SG Fleet (eligible for Gold/Silver ranking by dates). */
-export function isInSgSeries(s: {
+/** Explicit Guest opt-out of SG Optimist series rankings. */
+export function isExplicitGuest(s: {
   currentFleet?: string | null;
-  goldEntryDate?: Dateish;
-  silverEntryDate?: Dateish;
 }): boolean {
   const cf = String(s.currentFleet || "")
     .trim()
     .toLowerCase();
-  if (cf === "guest") return false;
+  return cf === "guest";
+}
+
+/** Singapore nationality (SGP / SIN aliases). */
+export function isSgpNationality(
+  nationality: string | null | undefined
+): boolean {
+  const n = normalizeNationality(nationality);
+  return n === "SGP";
+}
+
+/**
+ * True when sailor is marked In SG Fleet (eligible for Gold/Silver ranking by dates).
+ * SGP Optimist sailors are auto Series unless explicitly Guest — see ranking
+ * `resolveSailorFleet` + optimist history for full auto-include rules.
+ */
+export function isInSgSeries(s: {
+  currentFleet?: string | null;
+  goldEntryDate?: Dateish;
+  silverEntryDate?: Dateish;
+  nationality?: string | null;
+}): boolean {
+  if (isExplicitGuest(s)) return false;
+  const cf = String(s.currentFleet || "")
+    .trim()
+    .toLowerCase();
   if (
     cf === "series" ||
     cf === "gold" ||
@@ -115,6 +138,13 @@ export function isInSgSeries(s: {
   }
   // Legacy rows: no flag but has entry dates → treat as series
   if (!cf && (s.goldEntryDate || s.silverEntryDate)) return true;
+  // SGP sailors with entry dates (optimist path) are series without fleet tag
+  if (
+    isSgpNationality(s.nationality) &&
+    (s.goldEntryDate || s.silverEntryDate)
+  ) {
+    return true;
+  }
   return false;
 }
 

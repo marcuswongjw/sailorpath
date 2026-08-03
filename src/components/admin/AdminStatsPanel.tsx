@@ -37,6 +37,22 @@ type StatsPayload = {
       earliestGoldRegattaDate: string;
       earliestGoldRegattaName: string;
     }[];
+    goldWithoutEntryCount?: number;
+    goldWithoutEntry?: {
+      sailorId: string;
+      name: string;
+      silverEntryDate: string | null;
+      earliestGoldRegattaDate: string;
+      earliestGoldRegattaName: string;
+    }[];
+    overAgeOptimistCount?: number;
+    overAgeOptimist?: {
+      sailorId: string;
+      name: string;
+      birthYear: number;
+      ageYearsApprox: number;
+      dropDate: string | null;
+    }[];
   };
   changeLog?: {
     id: string;
@@ -216,13 +232,14 @@ export function AdminStatsPanel() {
 
         {/* Data quality */}
         <div>
-          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
-            Data quality
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+            <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
+            Data quality flags
           </h3>
-          <div className="grid grid-cols-2 gap-2 mb-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-3">
             <div className="rounded-xl border border-amber-500/25 bg-amber-500/5 px-3 py-2.5">
               <p className="text-[10px] text-amber-200/80 font-bold uppercase">
-                Empty Series (no entry)
+                Empty Series
               </p>
               <p className="text-xl font-black text-amber-300">
                 {dq?.emptySeries ?? "—"}
@@ -230,32 +247,99 @@ export function AdminStatsPanel() {
             </div>
             <div className="rounded-xl border border-rose-500/25 bg-rose-500/5 px-3 py-2.5">
               <p className="text-[10px] text-rose-200/80 font-bold uppercase">
-                Gold result before gold entry
+                Gold before entry
               </p>
               <p className="text-xl font-black text-rose-300">
                 {dq?.goldBeforeEntryCount ?? "—"}
               </p>
             </div>
+            <div className="rounded-xl border border-orange-500/25 bg-orange-500/5 px-3 py-2.5">
+              <p className="text-[10px] text-orange-200/80 font-bold uppercase">
+                Gold race, no gold entry
+              </p>
+              <p className="text-xl font-black text-orange-300">
+                {dq?.goldWithoutEntryCount ?? "—"}
+              </p>
+            </div>
+            <div className="rounded-xl border border-violet-500/25 bg-violet-500/5 px-3 py-2.5">
+              <p className="text-[10px] text-violet-200/80 font-bold uppercase">
+                Over-age in Optimist
+              </p>
+              <p className="text-xl font-black text-violet-300">
+                {dq?.overAgeOptimistCount ?? "—"}
+              </p>
+            </div>
           </div>
+
           {(dq?.goldBeforeEntry || []).length > 0 && (
-            <ul className="rounded-xl border border-white/5 divide-y divide-white/5 max-h-48 overflow-y-auto text-xs">
-              {dq!.goldBeforeEntry!.map((g) => (
-                <li key={g.sailorId} className="px-3 py-2">
-                  <p className="font-bold text-white">{g.name}</p>
-                  <p className="text-slate-500">
-                    Gold entry {g.goldEntryDate} but raced Gold at{" "}
-                    <span className="text-slate-300">
-                      {g.earliestGoldRegattaName}
-                    </span>{" "}
-                    on {g.earliestGoldRegattaDate}
-                  </p>
-                </li>
-              ))}
-            </ul>
+            <div className="mb-3">
+              <p className="text-[10px] font-bold uppercase text-rose-300/90 mb-1">
+                Gold result before gold entry date
+              </p>
+              <ul className="rounded-xl border border-white/5 divide-y divide-white/5 max-h-40 overflow-y-auto text-xs">
+                {dq!.goldBeforeEntry!.map((g) => (
+                  <li key={g.sailorId} className="px-3 py-2">
+                    <p className="font-bold text-white">{g.name}</p>
+                    <p className="text-slate-500">
+                      Entry {g.goldEntryDate} but raced Gold at{" "}
+                      <span className="text-slate-300">
+                        {g.earliestGoldRegattaName}
+                      </span>{" "}
+                      on {g.earliestGoldRegattaDate} — move entry earlier (1
+                      Jan / 1 Jul) or fix division.
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
+
+          {(dq?.goldWithoutEntry || []).length > 0 && (
+            <div className="mb-3">
+              <p className="text-[10px] font-bold uppercase text-orange-300/90 mb-1">
+                Raced Gold without gold entry (silver-only stamp)
+              </p>
+              <ul className="rounded-xl border border-white/5 divide-y divide-white/5 max-h-40 overflow-y-auto text-xs">
+                {dq!.goldWithoutEntry!.map((g) => (
+                  <li key={g.sailorId} className="px-3 py-2">
+                    <p className="font-bold text-white">{g.name}</p>
+                    <p className="text-slate-500">
+                      Silver entry {g.silverEntryDate || "—"} · first Gold race{" "}
+                      <span className="text-slate-300">
+                        {g.earliestGoldRegattaName}
+                      </span>{" "}
+                      on {g.earliestGoldRegattaDate} — set gold entry (half
+                      boundary) or reclassify results.
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {(dq?.overAgeOptimist || []).length > 0 && (
+            <div className="mb-3">
+              <p className="text-[10px] font-bold uppercase text-violet-300/90 mb-1">
+                Still in Optimist series past under-16 age
+              </p>
+              <ul className="rounded-xl border border-white/5 divide-y divide-white/5 max-h-40 overflow-y-auto text-xs">
+                {dq!.overAgeOptimist!.map((g) => (
+                  <li key={g.sailorId} className="px-3 py-2">
+                    <p className="font-bold text-white">{g.name}</p>
+                    <p className="text-slate-500">
+                      Born {g.birthYear} (~{g.ageYearsApprox}y) · set drop date
+                      (1 Jan / 1 Jul) if they have left Optimist.
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <p className="text-[10px] text-slate-600 mt-2">
-            Empty Series: Admin → Sailors → stamp silver entry. Gold-before-entry:
-            move gold entry earlier (1 Jan/1 Jul) or fix result division.
+            SGP Optimist sailors with ranking results are auto-included in series
+            (unless Guest). Empty Series tags still benefit from a silver stamp
+            for cleaner profiles.
           </p>
         </div>
 

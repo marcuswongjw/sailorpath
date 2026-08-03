@@ -228,6 +228,33 @@ describe("resolveSailorFleet", () => {
     ).toBeNull();
   });
 
+  it("SGP optimist with history is auto-ranked Silver without stamp", () => {
+    const r = resolveSailorFleet(
+      base({
+        currentFleet: null,
+        nationality: "SGP",
+        silverEntryDate: null,
+        goldEntryDate: null,
+      }),
+      jan26,
+      { hasOptimistHistoryByPeriodEnd: true }
+    );
+    expect(r).toEqual({ active: true, fleet: "Silver" });
+  });
+
+  it("SGP Guest is never auto-ranked", () => {
+    expect(
+      resolveSailorFleet(
+        base({
+          currentFleet: "Guest",
+          nationality: "SGP",
+        }),
+        jan26,
+        { hasOptimistHistoryByPeriodEnd: true }
+      )
+    ).toBeNull();
+  });
+
   it("Gold from gold entry date until drop", () => {
     const r = resolveSailorFleet(
       base({

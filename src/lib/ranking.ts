@@ -1,4 +1,8 @@
-import { isInSgSeries } from "@/lib/seriesMembership";
+import {
+  isExplicitGuest,
+  isInSgSeries,
+  isSgpNationality,
+} from "@/lib/seriesMembership";
 import { toYmd } from "@/lib/datesSg";
 
 
@@ -292,26 +296,41 @@ export function scoringRegattasForFleet(
 /**
  * Period ranking membership.
  *
- * 1) Guest (not In SG Fleet) → never ranked
+ * 1) Explicit Guest → never ranked
  * 2) Drop date: out of Gold/Silver for any half where drop ≤ period end
- *    (and drop not before period start). Product rule: gold entry & drop are
- *    half boundaries only (1 Jan / 1 Jul), so period-level exclude is exact.
- * 3) In SG Fleet + goldEntryDate ≤ period end → Gold for whole half
- * 4) Else In SG Fleet → Silver
+ * 3) In SG Fleet (or auto SGP Optimist) + goldEntryDate ≤ period end → Gold
+ * 4) Else series-eligible → Silver
+ *
+ * SGP Optimist auto-include: Singapore nationals with Optimist ranking history
+ * are series members even without a Series fleet tag / entry stamp, unless
+ * marked Guest. Empty entry dates → Silver once they have optimist history by
+ * period end (`hasOptimistHistoryByPeriodEnd`).
  *
  * `currentFleet` stores Guest | Series only (legacy Gold/Silver = Series).
- * It does NOT pick Gold vs Silver for a half-year.
  */
 export function resolveSailorFleet(
   sailor: SailorRecord,
-  period: Period
+  period: Period,
+  opts?: {
+    /** True if sailor has Optimist ranking results on/before period end */
+    hasOptimistHistoryByPeriodEnd?: boolean;
+  }
 ): { active: boolean; fleet: "Gold" | "Silver" } | null {
-  // Guest / Series membership — shared with admin, search, DNS
-  if (!isInSgSeries(sailor)) {
+  if (isExplicitGuest(sailor)) {
     return null;
   }
-  // In SG Fleet must have silver or gold entry before ranking (no empty Series DNS pad)
-  if (!sailor.goldEntryDate && !sailor.silverEntryDate) {
+
+  const sgpAuto =
+    isSgpNationality(sailor.nationality) &&
+    Boolean(opts?.hasOptimistHistoryByPeriodEnd);
+
+  // Guest / Series membership — shared with admin, search, DNS
+  if (!isInSgSeries(sailor) && !sgpAuto) {
+    return null;
+  }
+
+  // Need entry dates OR SGP auto optimist history (Silver without stamp)
+  if (!sailor.goldEntryDate && !sailor.silverEntryDate && !sgpAuto) {
     return null;
   }
 
@@ -336,6 +355,8 @@ export function resolveSailorFleet(
     if (earliestEntry > pEndStr) {
       return null;
     }
+  } else if (sgpAuto) {
+    // No stamp: history flag already means they raced by period end
   }
 
   // Drop: exclusive from the drop date onward (inclusive of drop day)
@@ -351,6 +372,31 @@ export function resolveSailorFleet(
     active: true,
     fleet: isGold ? "Gold" : "Silver",
   };
+}
+
+/** Sailor ids with Optimist ranking results on/before period end. */
+export function optimistHistoryByPeriodEnd(
+  period: Period,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[],
+  seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
+): Set<string> {
+  const pEndStr =
+    period.half === "Jan-Jun"
+      ? `${period.year}-06-30`
+      : `${period.year}-12-31`;
+  const ids = new Set<string>();
+  const regById = new Map(regattas.map((r) => [r.id, r]));
+  for (const res of results) {
+    const r = regById.get(res.regattaId);
+    if (!r) continue;
+    if (r.countsForRanking === false) continue;
+    if (!regattaMatchesSeriesClass(r, seriesBoatClass)) continue;
+    const d = toYmd(r.date);
+    if (!d || d > pEndStr) continue;
+    ids.add(res.sailorId);
+  }
+  return ids;
 }
 
 function scoreForResult(
@@ -484,10 +530,20 @@ export function calculateRankings(
   /** Default Optimist — ILCA 4 results never enter Optimist series scores */
   seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
 ): RankedSailor[] {
+  // SGP Optimist auto-include: history by period end (no Series stamp required)
+  const optimistHist = optimistHistoryByPeriodEnd(
+    period,
+    regattas,
+    results,
+    seriesBoatClass
+  );
+
   // Resolve active sailors for the period and partition them
   const activeSailors: (SailorRecord & { fleet: "Gold" | "Silver" })[] = [];
   for (const s of sailors) {
-    const res = resolveSailorFleet(s, period);
+    const res = resolveSailorFleet(s, period, {
+      hasOptimistHistoryByPeriodEnd: optimistHist.has(s.id),
+    });
     if (res && res.active) {
       activeSailors.push({ ...s, fleet: res.fleet });
     }
