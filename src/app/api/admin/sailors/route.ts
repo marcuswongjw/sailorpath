@@ -332,6 +332,110 @@ export async function POST(req: Request) {
     }
 
     /**
+     * Goh Siak Yiak Ian is ILCA 4 only — clear bad Optimist silver entry
+     * and delete Optimist silver regatta results.
+     */
+    if (body.action === "fixGohSiakYiakIanIlcaOnly") {
+      const { isGohSiakYiakIanName, GOH_SIAK_YIAK_IAN_NAME } = await import(
+        "@/lib/ilcaSailorFixes"
+      );
+      const { logAdminChange } = await import("@/lib/adminChangeLog");
+      const { regattaResults, regattas } = await import("@/db/schema");
+      const { eq, inArray } = await import("drizzle-orm");
+
+      const all = await db
+        .select({
+          id: sailors.id,
+          name: sailors.name,
+          silverEntryDate: sailors.silverEntryDate,
+          goldEntryDate: sailors.goldEntryDate,
+          dropDate: sailors.dropDate,
+          currentFleet: sailors.currentFleet,
+        })
+        .from(sailors);
+      const targets = all.filter((s) => isGohSiakYiakIanName(s.name));
+      if (!targets.length) {
+        return NextResponse.json({
+          ok: true,
+          updated: 0,
+          deletedResults: 0,
+          message: `No sailor matching “${GOH_SIAK_YIAK_IAN_NAME}” found.`,
+        });
+      }
+
+      const targetIds = targets.map((t) => t.id);
+      let deletedResults = 0;
+
+      // Optimist silver results only
+      const linked = await db
+        .select({
+          resultId: regattaResults.id,
+          boatClass: regattas.boatClass,
+          division: regattas.division,
+        })
+        .from(regattaResults)
+        .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+        .where(inArray(regattaResults.sailorId, targetIds));
+
+      const toDelete = linked.filter((row) => {
+        const bc = String(row.boatClass || "Optimist")
+          .trim()
+          .toLowerCase();
+        const isOpti = !bc || bc === "optimist" || bc === "opti";
+        const div = String(row.division || "")
+          .trim()
+          .toLowerCase();
+        return isOpti && div.includes("silver");
+      });
+
+      for (const row of toDelete) {
+        await db
+          .delete(regattaResults)
+          .where(eq(regattaResults.id, row.resultId));
+        deletedResults++;
+      }
+
+      let updated = 0;
+      for (const t of targets) {
+        await db
+          .update(sailors)
+          .set({
+            silverEntryDate: null,
+            goldEntryDate: null,
+            dropDate: null,
+            currentFleet: "Guest",
+            updatedAt: new Date(),
+          })
+          .where(eq(sailors.id, t.id));
+        updated++;
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "sailor.fix_ilca_only",
+          entityType: "sailor",
+          entityId: t.id,
+          entityLabel: t.name,
+          summary: `Cleared Optimist silver entry/results for ILCA-only sailor “${t.name}”`,
+          details: {
+            previousSilver: t.silverEntryDate,
+            previousGold: t.goldEntryDate,
+            previousFleet: t.currentFleet,
+            deletedResults,
+          },
+          source: "/api/admin/sailors",
+        });
+      }
+
+      return NextResponse.json({
+        ok: true,
+        updated,
+        deletedResults,
+        sailors: targets.map((t) => ({ id: t.id, name: t.name })),
+        message: `Fixed ${updated} profile(s) for “${GOH_SIAK_YIAK_IAN_NAME}”: cleared silver/gold entry, set Guest, deleted ${deletedResults} Optimist silver result(s).`,
+      });
+    }
+
+    /**
      * Auto-drop gold sailors who sailed &lt;2 ranking gold regattas in a
      * completed half-year. Sets drop_date to the next half boundary.
      */
