@@ -34,6 +34,7 @@ export default async function Ilca4StandingsPage() {
           totalFleetSize: r.totalFleetSize,
           boatClass: r.boatClass,
           countsForRanking: r.countsForRanking,
+          raceCount: r.raceCount,
         }))}
         results={results.map((r) => ({
           sailorId: r.sailorId,

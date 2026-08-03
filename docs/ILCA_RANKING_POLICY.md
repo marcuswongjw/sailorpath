@@ -25,6 +25,17 @@ In a ranking regatta with **N** starters:
 
 **Series score** = sum of the **best 3** point totals from the **last 5** ranking regattas (higher is better).
 
+### Ranking vs non-ranking ILCA events
+
+ILCA 4 (and ILCA 6) events can be **ranking** or **non-ranking**:
+
+| Status | Counts toward national Best 3 of 5? |
+|--------|-------------------------------------|
+| Ranking | Yes (when `counts_for_ranking` is true) |
+| Non-ranking | No — still on sailor logbook / profiles |
+
+**Insufficient races:** if **completed races &lt; 3**, the event is treated as **non-ranking** for the series (abandoned / incomplete regatta). Set **Races completed** on import or in Database → Regattas. Admin can also mark non-ranking manually for trials/training.
+
 Optimist Gold/Silver continues to use **place as score** (lower is better) and is **never mixed** with ILCA events.
 
 ## ILCA 4 national ranking list

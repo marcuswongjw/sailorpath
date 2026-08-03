@@ -30,6 +30,8 @@ export type IlcaRegatta = {
   totalFleetSize: number;
   boatClass?: string | null;
   countsForRanking?: boolean | null;
+  /** Completed races; ILCA series needs ≥ ILCA_MIN_RACES_FOR_RANKING */
+  raceCount?: number | null;
   division?: string | null;
 };
 
@@ -170,8 +172,45 @@ export function isIlcaSeriesClass(
   return false;
 }
 
+export function isAnyIlcaClass(boatClass: string | null | undefined): boolean {
+  return (
+    isIlcaSeriesClass(boatClass, "ILCA 4") ||
+    isIlcaSeriesClass(boatClass, "ILCA 6")
+  );
+}
+
+/**
+ * Minimum completed races for an ILCA regatta to count toward series ranking.
+ * Fewer races (e.g. abandoned event) → treat as non-ranking even if flagged.
+ */
+export const ILCA_MIN_RACES_FOR_RANKING = 3;
+
+/**
+ * Whether a regatta counts toward ILCA high-points series.
+ * - Explicit non-ranking flag → no
+ * - ILCA with raceCount set below {@link ILCA_MIN_RACES_FOR_RANKING} → no
+ * - raceCount null/unknown → trust countsForRanking flag
+ */
+export function ilcaRegattaCountsForRanking(r: {
+  countsForRanking?: boolean | null;
+  raceCount?: number | null;
+  boatClass?: string | null;
+}): boolean {
+  if (r.countsForRanking === false) return false;
+  if (!isAnyIlcaClass(r.boatClass)) {
+    // Non-ILCA: use flag only (Optimist uses same flag independently)
+    return r.countsForRanking !== false;
+  }
+  const n = r.raceCount;
+  if (n != null && Number.isFinite(Number(n)) && Number(n) < ILCA_MIN_RACES_FOR_RANKING) {
+    return false;
+  }
+  return true;
+}
+
 /**
  * Last 5 ranking regattas for an ILCA class with date ≤ asOf, oldest → newest.
+ * Excludes non-ranking events and ILCA events with too few races.
  */
 export function ilcaRankingRegattas(
   allRegattas: IlcaRegatta[],
@@ -181,7 +220,7 @@ export function ilcaRankingRegattas(
   const asOf = toYmd(asOfYmd) || asOfYmd;
   return allRegattas
     .filter((r) => {
-      if (r.countsForRanking === false) return false;
+      if (!ilcaRegattaCountsForRanking(r)) return false;
       if (!isIlcaSeriesClass(r.boatClass, boatClass)) return false;
       const d = ymd(r.date);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return false;

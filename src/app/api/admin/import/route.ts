@@ -18,6 +18,10 @@ import { makeGuestHandle, slugify } from "@/lib/slug";
 import { normalizeNationality } from "@/lib/seriesMembership";
 import { trackUsage } from "@/lib/usage";
 import type { ImportPossibleDuplicate } from "@/types/import";
+import {
+  isAnyIlcaClass,
+  ILCA_MIN_RACES_FOR_RANKING,
+} from "@/lib/ilcaRanking";
 
 export type { ImportPossibleDuplicate };
 
@@ -75,6 +79,7 @@ export async function POST(req: Request) {
       geography,
       boatClass,
       countsForRanking,
+      raceCount: raceCountRaw,
       rows,
       createMissing = true,
     }: {
@@ -87,6 +92,8 @@ export async function POST(req: Request) {
       boatClass?: string;
       /** false = non-ranking (logbook / overseas / other) */
       countsForRanking?: boolean;
+      /** Completed races; ILCA &lt; 3 → force non-ranking */
+      raceCount?: number | null;
       rows: {
         name: string;
         rank: number | null;
@@ -155,14 +162,32 @@ export async function POST(req: Request) {
       .toUpperCase()
       .slice(0, 8) || "SG";
     const boat = String(boatClass || "Optimist").trim() || "Optimist";
-    const ranking =
+    const raceCount =
+      raceCountRaw === "" || raceCountRaw == null
+        ? null
+        : Math.max(0, Math.round(Number(raceCountRaw))) || null;
+    let ranking =
       countsForRanking === false || countsForRanking === true
         ? countsForRanking
         : true;
+    // ILCA: insufficient races → non-ranking for national series
+    if (
+      isAnyIlcaClass(boat) &&
+      raceCount != null &&
+      raceCount < ILCA_MIN_RACES_FOR_RANKING
+    ) {
+      ranking = false;
+    }
     // Non-ranking events use NonRanking division tag for admin filters when not set
     const div =
       division ||
-      (ranking === false ? "NonRanking" : "Gold");
+      (ranking === false
+        ? isAnyIlcaClass(boat)
+          ? "Open"
+          : "NonRanking"
+        : isAnyIlcaClass(boat)
+          ? "Open"
+          : "Gold");
 
     const [reg] = await db
       .insert(regattas)
@@ -175,6 +200,7 @@ export async function POST(req: Request) {
         geography: geo,
         boatClass: boat,
         countsForRanking: ranking,
+        raceCount,
       })
       .onConflictDoUpdate({
         target: regattas.slug,
@@ -186,6 +212,7 @@ export async function POST(req: Request) {
           geography: geo,
           boatClass: boat,
           countsForRanking: ranking,
+          raceCount,
           updatedAt: new Date(),
         },
       })

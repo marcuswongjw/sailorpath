@@ -4,8 +4,11 @@ import {
   bestThreeHighPoints,
   computeIlcaRankings,
   highRankingPoints,
+  ilcaRegattaCountsForRanking,
+  ilcaRankingRegattas,
   ilcaSquadCutoff,
   selectIlca4NationalSquad,
+  ILCA_MIN_RACES_FOR_RANKING,
 } from "./ilcaRanking";
 
 describe("highRankingPoints", () => {
@@ -47,6 +50,76 @@ describe("ageInIntakeYear", () => {
   it("uses age as of 31 Dec intake year", () => {
     // Born mid-2010 → 16 at end of 2026
     expect(ageInIntakeYear("2010-06-15", 2026)).toBe(16);
+  });
+});
+
+describe("ilcaRegattaCountsForRanking", () => {
+  it("excludes explicit non-ranking", () => {
+    expect(
+      ilcaRegattaCountsForRanking({
+        boatClass: "ILCA 4",
+        countsForRanking: false,
+        raceCount: 6,
+      })
+    ).toBe(false);
+  });
+
+  it("excludes ILCA with fewer than min races", () => {
+    expect(ILCA_MIN_RACES_FOR_RANKING).toBe(3);
+    expect(
+      ilcaRegattaCountsForRanking({
+        boatClass: "ILCA 4",
+        countsForRanking: true,
+        raceCount: 2,
+      })
+    ).toBe(false);
+    expect(
+      ilcaRegattaCountsForRanking({
+        boatClass: "ILCA 4",
+        countsForRanking: true,
+        raceCount: 3,
+      })
+    ).toBe(true);
+  });
+
+  it("allows ranking when raceCount unknown", () => {
+    expect(
+      ilcaRegattaCountsForRanking({
+        boatClass: "ILCA 4",
+        countsForRanking: true,
+        raceCount: null,
+      })
+    ).toBe(true);
+  });
+});
+
+describe("ilcaRankingRegattas", () => {
+  it("skips low race-count events", () => {
+    const window = ilcaRankingRegattas(
+      [
+        {
+          id: "a",
+          name: "Short",
+          date: "2026-05-01",
+          totalFleetSize: 20,
+          boatClass: "ILCA 4",
+          countsForRanking: true,
+          raceCount: 1,
+        },
+        {
+          id: "b",
+          name: "Full",
+          date: "2026-06-01",
+          totalFleetSize: 20,
+          boatClass: "ILCA 4",
+          countsForRanking: true,
+          raceCount: 5,
+        },
+      ],
+      "ILCA 4",
+      "2026-06-30"
+    );
+    expect(window.map((r) => r.id)).toEqual(["b"]);
   });
 });
 

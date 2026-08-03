@@ -58,8 +58,10 @@ export function AdminRegattaImport({
     fleetSize: 50,
     boatClass: DEFAULT_BOAT_CLASS,
     geography: DEFAULT_GEOGRAPHY,
-    /** true = counts toward Best 3 of 5 series rankings */
+    /** true = counts toward series rankings */
     countsForRanking: true,
+    /** Completed races — ILCA needs ≥3 for ranking */
+    raceCount: "" as string | number,
   });
 
   const handleDrag = (e: React.DragEvent) => {
@@ -253,6 +255,10 @@ export function AdminRegattaImport({
           boatClass: importMeta.boatClass,
           geography: importMeta.geography,
           countsForRanking: importMeta.countsForRanking,
+          raceCount:
+            importMeta.raceCount === "" || importMeta.raceCount == null
+              ? null
+              : Number(importMeta.raceCount),
           rows: fullImportRows,
           createMissing: true,
         }),
@@ -537,6 +543,37 @@ export function AdminRegattaImport({
               </select>
             </label>
             <label className="text-xs text-slate-400">
+              Races completed
+              <input
+                type="number"
+                min={0}
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                value={importMeta.raceCount}
+                onChange={(e) => {
+                  const raceCount = e.target.value;
+                  const n = Number(raceCount);
+                  const isIlca = isSingleFleetClass(importMeta.boatClass);
+                  setImportMeta((m) => ({
+                    ...m,
+                    raceCount,
+                    ...(isIlca &&
+                    raceCount !== "" &&
+                    Number.isFinite(n) &&
+                    n < 3
+                      ? {
+                          countsForRanking: false,
+                          division:
+                            m.division === "Gold" || m.division === "Open"
+                              ? "Open"
+                              : m.division,
+                        }
+                      : {}),
+                  }));
+                }}
+                placeholder="e.g. 6 (ILCA: &lt;3 = non-ranking)"
+              />
+            </label>
+            <label className="text-xs text-slate-400">
               Ranking
               <select
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
@@ -548,8 +585,10 @@ export function AdminRegattaImport({
                     // Keep division sensible when toggling non-ranking
                     division:
                       e.target.value === "non-ranking" &&
-                      m.division === "Gold"
-                        ? "NonRanking"
+                      (m.division === "Gold" || m.division === "Open")
+                        ? isSingleFleetClass(m.boatClass)
+                          ? "Open"
+                          : "NonRanking"
                         : e.target.value === "ranking" &&
                             m.division === "NonRanking"
                           ? "Gold"
@@ -557,8 +596,12 @@ export function AdminRegattaImport({
                   }))
                 }
               >
-                <option value="ranking">Ranking (series / Best 3 of 5)</option>
-                <option value="non-ranking">Non-ranking (logbook only)</option>
+                <option value="ranking">
+                  Ranking (series / Best 3 of 5)
+                </option>
+                <option value="non-ranking">
+                  Non-ranking (logbook only / too few races)
+                </option>
               </select>
             </label>
             <label className="text-xs text-slate-400">

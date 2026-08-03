@@ -177,6 +177,9 @@ export function AdminRegattasPanel({
                                 {regattaDateLabel(r.date)} · {r.geography || "SG"} ·{" "}
                                 {r.boatClass || "Optimist"} · {r.division || "Gold"}{" "}
                                 · fleet {r.totalFleetSize}
+                                {r.raceCount != null
+                                  ? ` · ${r.raceCount} races`
+                                  : ""}
                               </p>
                             </button>
                           );
@@ -274,6 +277,40 @@ export function AdminRegattasPanel({
                           </div>
                           <div>
                             <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Races completed
+                            </label>
+                            <input
+                              type="number"
+                              min={0}
+                              value={regattaForm.raceCount ?? ""}
+                              onChange={(e) => {
+                                const raceCount = e.target.value;
+                                const n = Number(raceCount);
+                                const isIlca = /ilca|laser/i.test(
+                                  String(regattaForm.boatClass || "")
+                                );
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  raceCount,
+                                  // ILCA: fewer than 3 races → non-ranking (insufficient races)
+                                  ...(isIlca &&
+                                  raceCount !== "" &&
+                                  Number.isFinite(n) &&
+                                  n < 3
+                                    ? { countsForRanking: false }
+                                    : {}),
+                                });
+                              }}
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                              placeholder="e.g. 6"
+                            />
+                            <p className="mt-1 text-[10px] text-slate-500 leading-snug">
+                              ILCA 4/6: if fewer than <strong>3</strong> races are
+                              completed, the event is non-ranking for series.
+                            </p>
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
                               Division
                             </label>
                             <select
@@ -313,21 +350,32 @@ export function AdminRegattasPanel({
                               />
                               <span>
                                 <strong className="text-white">
-                                  Counts for Gold / Silver Best 3 of 5
+                                  Counts for series ranking
                                 </strong>
                                 <span className="block text-[10px] text-slate-500 leading-snug">
-                                  On by default. Turn off for selection trials, training
-                                  events, or other SG regattas that should not score series
-                                  ranking (division Gold/Silver can still be set for context).
+                                  Optimist: Gold/Silver Best 3 of 5. ILCA 4/6: high-points
+                                  Best 3 of last 5. Turn off for trials, training, or when
+                                  too few races were completed.
                                 </span>
                               </span>
                             </label>
                             {regattaForm.countsForRanking === false && (
                               <p className="mt-2 rounded-lg border border-sky-500/30 bg-sky-500/10 px-2 py-1.5 text-[10px] font-bold text-sky-200">
-                                Non-ranking — excluded from Best 3 of 5 (still on profiles /
+                                Non-ranking — excluded from series (still on profiles /
                                 logbook)
                               </p>
                             )}
+                            {/ilca|laser/i.test(
+                              String(regattaForm.boatClass || "")
+                            ) &&
+                              regattaForm.raceCount !== "" &&
+                              Number(regattaForm.raceCount) < 3 && (
+                                <p className="mt-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2 py-1.5 text-[10px] font-bold text-amber-200">
+                                  Insufficient races ({String(regattaForm.raceCount)}{" "}
+                                  &lt; 3) — this ILCA event is treated as non-ranking for
+                                  national series.
+                                </p>
+                              )}
                           </div>
                           <div>
                             <label className="text-[10px] font-bold text-slate-500 uppercase">

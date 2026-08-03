@@ -32,6 +32,7 @@ export type IlcaPublicRegatta = {
   totalFleetSize: number;
   boatClass?: string | null;
   countsForRanking?: boolean | null;
+  raceCount?: number | null;
 };
 
 export type IlcaPublicResult = {

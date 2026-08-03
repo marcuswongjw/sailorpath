@@ -4,6 +4,10 @@ import { db } from "@/db";
 import { regattas } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
 import { slugifyWithDate } from "@/lib/slug";
+import {
+  isAnyIlcaClass,
+  ILCA_MIN_RACES_FOR_RANKING,
+} from "@/lib/ilcaRanking";
 
 export async function GET() {
   try {
@@ -42,8 +46,8 @@ export async function POST(req: Request) {
       body.boatClass != null && String(body.boatClass).trim()
         ? String(body.boatClass).trim().slice(0, 40)
         : "Optimist";
-    // Default: counts for Best 3 of 5. Off = non-ranking (trial / training / etc.)
-    // Keep Gold/Silver/Both division for context even when non-ranking.
+    // Default: counts for series ranking. Off = non-ranking (trial / training / etc.)
+    // ILCA: insufficient completed races → force non-ranking.
     let countsForRanking = body.countsForRanking !== false;
     let finalDivision = division || "Gold";
     if (division === "NonRanking") {
@@ -51,6 +55,15 @@ export async function POST(req: Request) {
       finalDivision = "NonRanking";
     } else if (body.countsForRanking === false) {
       countsForRanking = false;
+    }
+    let rankingNote: string | null = null;
+    if (
+      isAnyIlcaClass(boatClass) &&
+      raceCount != null &&
+      raceCount < ILCA_MIN_RACES_FOR_RANKING
+    ) {
+      countsForRanking = false;
+      rankingNote = `ILCA event with ${raceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races for series).`;
     }
 
     const [row] = await db
@@ -82,7 +95,7 @@ export async function POST(req: Request) {
       })
       .returning();
 
-    return NextResponse.json({ regatta: row });
+    return NextResponse.json({ regatta: row, rankingNote });
   } catch (e) {
     console.error("regattas POST", e);
     return jsonError(e);
@@ -160,6 +173,34 @@ export async function PATCH(req: Request) {
       patch.reviewedAt = null;
     }
 
+    // Resolve effective boat class + race count for ILCA min-races rule
+    const [existing] = await db
+      .select({
+        boatClass: regattas.boatClass,
+        raceCount: regattas.raceCount,
+        countsForRanking: regattas.countsForRanking,
+      })
+      .from(regattas)
+      .where(eq(regattas.id, body.id))
+      .limit(1);
+
+    const effectiveBoatClass =
+      (patch.boatClass as string | undefined) ?? existing?.boatClass ?? "Optimist";
+    const effectiveRaceCount =
+      patch.raceCount !== undefined
+        ? (patch.raceCount as number | null)
+        : existing?.raceCount ?? null;
+    let rankingNote: string | null = null;
+    if (
+      isAnyIlcaClass(effectiveBoatClass) &&
+      effectiveRaceCount != null &&
+      Number(effectiveRaceCount) < ILCA_MIN_RACES_FOR_RANKING &&
+      body.action !== "promote"
+    ) {
+      patch.countsForRanking = false;
+      rankingNote = `ILCA event with ${effectiveRaceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races for series).`;
+    }
+
     const [row] = await db
       .update(regattas)
       .set(patch as typeof regattas.$inferInsert)
@@ -169,7 +210,7 @@ export async function PATCH(req: Request) {
     if (!row) {
       return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
     }
-    return NextResponse.json({ regatta: row });
+    return NextResponse.json({ regatta: row, rankingNote });
   } catch (e) {
     console.error("regattas PATCH", e);
     return jsonError(e);
