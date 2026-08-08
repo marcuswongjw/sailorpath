@@ -53,6 +53,12 @@ type StatsPayload = {
       ageYearsApprox: number;
       dropDate: string | null;
     }[];
+    unrecognizedNationalityCount?: number;
+    unrecognizedNationality?: {
+      sailorId: string;
+      name: string;
+      nationality: string;
+    }[];
   };
   changeLog?: {
     id: string;
@@ -336,10 +342,30 @@ export function AdminStatsPanel() {
             </div>
           )}
 
+          {(dq?.unrecognizedNationality || []).length > 0 && (
+            <div className="mb-3">
+              <p className="text-[10px] font-bold uppercase text-sky-300/90 mb-1">
+                Unrecognized nationality ({dq?.unrecognizedNationalityCount ?? 0})
+              </p>
+              <ul className="rounded-xl border border-white/5 divide-y divide-white/5 max-h-40 overflow-y-auto text-xs">
+                {dq!.unrecognizedNationality!.map((g) => (
+                  <li key={g.sailorId} className="px-3 py-2">
+                    <p className="font-bold text-white">{g.name}</p>
+                    <p className="text-slate-500">
+                      Stored as “{g.nationality}” — pick a country from the list
+                      on Database → Sailors.
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <p className="text-[10px] text-slate-600 mt-2">
             SGP Optimist sailors with ranking results are auto-included in series
             (unless Guest). Empty Series tags still benefit from a silver stamp
-            for cleaner profiles.
+            for cleaner profiles. Nationality on import uses the latest regatta
+            and flags mismatches for review.
           </p>
         </div>
 

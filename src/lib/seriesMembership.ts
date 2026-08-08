@@ -10,6 +10,8 @@
  * (see resolveSailorFleet) — not from selecting Gold/Silver manually.
  */
 
+import { normalizeNationalityCode } from "@/lib/countries";
+
 export type SeriesFleetStatus =
   | "gold"
   | "silver"
@@ -17,54 +19,9 @@ export type SeriesFleetStatus =
   | "series"
   | "dropped";
 
-/** Common nationality / NOC aliases → short display code */
-const NOC_MAP: Record<string, string> = {
-  singapore: "SGP",
-  sgp: "SGP",
-  sin: "SGP",
-  "singapore (sgp)": "SGP",
-  malaysia: "MAS",
-  mas: "MAS",
-  mal: "MAS",
-  indonesia: "INA",
-  ina: "INA",
-  idn: "INA",
-  thailand: "THA",
-  tha: "THA",
-  philippines: "PHI",
-  phi: "PHI",
-  phl: "PHI",
-  vietnam: "VIE",
-  vie: "VIE",
-  vnm: "VIE",
-  china: "CHN",
-  chn: "CHN",
-  "hong kong": "HKG",
-  hkg: "HKG",
-  japan: "JPN",
-  jpn: "JPN",
-  korea: "KOR",
-  "south korea": "KOR",
-  kor: "KOR",
-  australia: "AUS",
-  aus: "AUS",
-  "new zealand": "NZL",
-  nzl: "NZL",
-  "united states": "USA",
-  usa: "USA",
-  "great britain": "GBR",
-  gbr: "GBR",
-  uk: "GBR",
-};
-
+/** Canonical nationality / NOC code (SGP, MAS, …). */
 export function normalizeNationality(v: unknown): string | null {
-  if (v == null || v === "") return null;
-  const raw = String(v).trim().replace(/\s+/g, " ");
-  if (!raw || /^n\/?a$/i.test(raw) || raw === "-" || raw === "—") return null;
-  const key = raw.toLowerCase();
-  if (NOC_MAP[key]) return NOC_MAP[key];
-  if (/^[A-Za-z]{3}$/.test(raw)) return raw.toUpperCase();
-  return raw;
+  return normalizeNationalityCode(v);
 }
 
 /**

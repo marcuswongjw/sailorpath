@@ -6,6 +6,7 @@ import {
   seriesFleetStatus,
   normalizeNationality,
 } from "@/lib/seriesMembership";
+import { nationalityLabelForCode } from "@/lib/countries";
 
 /** Cards match main page background (#090a0f); separation via border only */
 export const PROFILE_CARD_CLASS =
@@ -91,21 +92,30 @@ export function fleetPillClass(
 
 export function nationalityFlag(raw: unknown): string {
   const code = normalizeNationality(raw);
-  if (code === "SGP") return "🇸🇬";
-  if (code === "MAS") return "🇲🇾";
-  if (code === "INA") return "🇮🇩";
-  if (code === "THA") return "🇹🇭";
-  if (code === "PHI") return "🇵🇭";
-  if (code === "CHN") return "🇨🇳";
-  if (code === "HKG") return "🇭🇰";
-  if (code === "AUS") return "🇦🇺";
+  if (code === "SGP" || code === "SG") return "🇸🇬";
+  if (code === "MAS" || code === "MY") return "🇲🇾";
+  if (code === "INA" || code === "ID") return "🇮🇩";
+  if (code === "THA" || code === "TH") return "🇹🇭";
+  if (code === "PHI" || code === "PH") return "🇵🇭";
+  if (code === "CHN" || code === "CN") return "🇨🇳";
+  if (code === "HKG" || code === "HK") return "🇭🇰";
+  if (code === "AUS" || code === "AU") return "🇦🇺";
+  if (code === "JPN" || code === "JP") return "🇯🇵";
+  if (code === "KOR" || code === "KR") return "🇰🇷";
+  if (code === "NZL" || code === "NZ") return "🇳🇿";
+  if (code === "USA" || code === "US") return "🇺🇸";
+  if (code === "GBR" || code === "GB") return "🇬🇧";
   return "🏳️";
 }
 
 export function nationalityLabel(raw: unknown): string {
   const code = normalizeNationality(raw);
   if (!code) return "—";
-  if (code === "SGP") return "Singapore";
+  if (code === "SGP" || code === "SG") return "Singapore";
+  const label = nationalityLabelForCode(code);
+  if (label && label !== "—" && label.includes("—")) {
+    return label.split("—")[1]!.trim();
+  }
   return code;
 }
 

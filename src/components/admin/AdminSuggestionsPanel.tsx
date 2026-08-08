@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AlertTriangle, CheckCircle, RefreshCw, Sparkles } from "lucide-react";
 import { regattaDateLabel } from "@/types/regatta";
 import type { RegattaAdmin } from "@/types/regatta";
+import { GeographySelect } from "@/components/CountrySelect";
 
 type Suggestion = {
   id: string;
@@ -244,18 +245,18 @@ export function AdminSuggestionsPanel({
                     </label>
                     <label className="text-[10px] font-bold text-slate-500 uppercase">
                       Geography
-                      <input
+                      <GeographySelect
                         value={form.geography}
-                        onChange={(e) =>
+                        onChange={(v) =>
                           setPromoteForm((f) => ({
                             ...f,
                             [s.id]: {
                               ...form,
-                              geography: e.target.value.toUpperCase(),
+                              geography: v || "SG",
                             },
                           }))
                         }
-                        className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 text-white text-xs px-2 py-1.5 font-mono"
+                        className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 text-white text-xs px-2 py-1.5"
                       />
                     </label>
                     <label className="text-[10px] font-bold text-slate-500 uppercase">

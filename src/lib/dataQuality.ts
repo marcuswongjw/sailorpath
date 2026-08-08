@@ -6,6 +6,10 @@
 import { toYmd } from "@/lib/datesSg";
 import { birthYear } from "@/lib/age";
 import { isSeriesMember } from "@/lib/seriesMembership";
+import {
+  isUnrecognizedCountry,
+  normalizeNationalityCode,
+} from "@/lib/countries";
 
 export type GoldBeforeEntryIssue = {
   sailorId: string;
@@ -189,11 +193,48 @@ export function findOverAgeOptimistIssues(
   return out;
 }
 
+export type UnrecognizedNationalityIssue = {
+  sailorId: string;
+  name: string;
+  nationality: string;
+};
+
+/** Free-text / unmapped nationality values that need admin cleanup. */
+export function findUnrecognizedNationalityIssues(
+  sailors: { id: string; name: string; nationality?: string | Date | null }[]
+): UnrecognizedNationalityIssue[] {
+  const out: UnrecognizedNationalityIssue[] = [];
+  for (const s of sailors) {
+    const raw = s.nationality != null ? String(s.nationality).trim() : "";
+    if (!raw) continue;
+    if (isUnrecognizedCountry(raw)) {
+      out.push({
+        sailorId: s.id,
+        name: s.name,
+        nationality: raw,
+      });
+      continue;
+    }
+    const norm = normalizeNationalityCode(raw);
+    // Legacy free text that didn't map cleanly (long string left as-is)
+    if (norm && norm.length > 3 && /[a-z ]/i.test(raw) && raw === norm) {
+      out.push({
+        sailorId: s.id,
+        name: s.name,
+        nationality: raw,
+      });
+    }
+  }
+  out.sort((a, b) => a.name.localeCompare(b.name));
+  return out;
+}
+
 export type DataQualityReport = {
   emptySeries: number;
   goldBeforeEntry: GoldBeforeEntryIssue[];
   goldWithoutEntry: GoldWithoutEntryIssue[];
   overAgeOptimist: OverAgeOptimistIssue[];
+  unrecognizedNationality: UnrecognizedNationalityIssue[];
 };
 
 function isOptimistRankingLink(l: {
@@ -219,6 +260,7 @@ export function buildDataQualityReport(
     silverEntryDate?: string | Date | null;
     goldEntryDate?: string | Date | null;
     currentFleet?: string | null;
+    nationality?: string | null;
   }[],
   links: GoldResultLink[],
   asOfYmd?: string
@@ -257,6 +299,7 @@ export function buildDataQualityReport(
     goldBeforeEntry: findGoldBeforeEntryIssues(linksWithGold),
     goldWithoutEntry: findGoldResultsWithoutGoldEntry(linksWithGold, sailors),
     overAgeOptimist: findOverAgeOptimistIssues(sailors, asOfYmd),
+    unrecognizedNationality: findUnrecognizedNationalityIssues(sailors),
   };
 }
 

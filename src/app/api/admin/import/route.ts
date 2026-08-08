@@ -16,6 +16,11 @@ import {
 } from "@/lib/normalize";
 import { makeGuestHandle, slugify } from "@/lib/slug";
 import { normalizeNationality } from "@/lib/seriesMembership";
+import {
+  isUnrecognizedCountry,
+  normalizeGeography,
+  normalizeNationalityCode,
+} from "@/lib/countries";
 import { trackUsage } from "@/lib/usage";
 import type { ImportPossibleDuplicate } from "@/types/import";
 import {
@@ -138,9 +143,8 @@ export async function POST(req: Request) {
           school: normalizeOptionalText(
             (r as { school?: string | null }).school
           ),
-          nationality:
-            normalizeNationality(r.nationality) ||
-            normalizeOptionalText(r.nationality),
+          nationalityRaw: normalizeOptionalText(r.nationality),
+          nationality: normalizeNationalityCode(r.nationality),
           sailNumber,
           dob,
           dobIsYearOnly,
@@ -157,10 +161,13 @@ export async function POST(req: Request) {
 
     const slug = `${slugify(regattaName)}-${eventDate}`;
     const fleetSize = totalFleetSize || cleanRows.length || 50;
-    const geo = String(geography || "SG")
-      .trim()
-      .toUpperCase()
-      .slice(0, 8) || "SG";
+    const geo =
+      normalizeGeography(geography) ||
+      String(geography || "SG")
+        .trim()
+        .toUpperCase()
+        .slice(0, 8) ||
+      "SG";
     const boat = String(boatClass || "Optimist").trim() || "Optimist";
     const raceCount =
       raceCountRaw == null ||
@@ -294,6 +301,17 @@ export async function POST(req: Request) {
     let matched = 0;
     let created = 0;
     let updatedProfiles = 0;
+    /** Nationality changes / mismatches for admin review */
+    const nationalityFlags: {
+      sailorId: string;
+      name: string;
+      previous: string | null;
+      imported: string | null;
+      raw: string | null;
+      action: "updated" | "mismatch_older" | "unrecognized" | "unchanged";
+      detail: string;
+    }[] = [];
+    let nationalityUpdated = 0;
     let rowErrors = 0;
     const unmatched: {
       rawName: string;
@@ -402,7 +420,11 @@ export async function POST(req: Request) {
                 : {}),
               club: row.club || "N/A",
               ...(row.school ? { school: row.school } : {}),
-              ...(row.nationality ? { nationality: row.nationality } : {}),
+              ...(row.nationality
+                ? { nationality: row.nationality }
+                : row.nationalityRaw
+                  ? { nationality: normalizeNationalityCode(row.nationalityRaw) }
+                  : {}),
               ...(row.dob ? { dob: row.dob } : {}),
               // currentFleet / goldEntryDate / silverEntryDate intentionally omitted
             })
@@ -504,12 +526,64 @@ export async function POST(req: Request) {
             }
           }
         }
-        if (row.nationality) {
-          const cur = (existing?.nationality || "").trim();
-          if (!cur || cur.toLowerCase() !== row.nationality.toLowerCase()) {
-            profilePatch.nationality = row.nationality;
-            profileChanged = true;
-            fieldChanged.push("nationality");
+        // Nationality: latest regatta wins (same date rule as club/school).
+        // Flag mismatches so admin can correct wrong tags.
+        if (row.nationalityRaw || row.nationality) {
+          const curNorm =
+            normalizeNationalityCode(existing?.nationality) ||
+            (existing?.nationality
+              ? String(existing.nationality).trim().toUpperCase()
+              : null);
+          const nextNat = row.nationality;
+          const unrecognized =
+            Boolean(row.nationalityRaw) &&
+            (isUnrecognizedCountry(row.nationalityRaw) || !nextNat);
+
+          if (unrecognized) {
+            nationalityFlags.push({
+              sailorId,
+              name: row.name,
+              previous: curNorm,
+              imported: nextNat,
+              raw: row.nationalityRaw,
+              action: "unrecognized",
+              detail: `Could not map “${row.nationalityRaw}” to a country list code — set nationality manually if needed.`,
+            });
+          } else if (nextNat) {
+            const same =
+              curNorm &&
+              curNorm.toLowerCase() === nextNat.toLowerCase();
+            if (!same) {
+              if (applyClubSchool) {
+                // Latest (or only) event — update profile
+                profilePatch.nationality = nextNat;
+                profileChanged = true;
+                fieldChanged.push("nationality");
+                nationalityUpdated++;
+                nationalityFlags.push({
+                  sailorId,
+                  name: existing?.name || row.name,
+                  previous: curNorm,
+                  imported: nextNat,
+                  raw: row.nationalityRaw,
+                  action: "updated",
+                  detail: curNorm
+                    ? `Updated nationality ${curNorm} → ${nextNat} (latest regatta ${String(eventDate).slice(0, 10)}).`
+                    : `Set nationality ${nextNat} from regatta results.`,
+                });
+              } else {
+                // Older regatta than current profile latest — do not overwrite
+                nationalityFlags.push({
+                  sailorId,
+                  name: existing?.name || row.name,
+                  previous: curNorm,
+                  imported: nextNat,
+                  raw: row.nationalityRaw,
+                  action: "mismatch_older",
+                  detail: `Import has ${nextNat} but profile keeps ${curNorm || "—"} (this event is older than latest result).`,
+                });
+              }
+            }
           }
         }
 
@@ -524,7 +598,8 @@ export async function POST(req: Request) {
               (f === "sailNumber" ||
                 f === "sailNumberIlca4" ||
                 f === "club" ||
-                f === "school") &&
+                f === "school" ||
+                f === "nationality") &&
               !profileChangeFields.includes(f)
             ) {
               profileChangeFields.push(f);
@@ -713,14 +788,16 @@ export async function POST(req: Request) {
         entityType: "regatta",
         entityId: reg.id,
         entityLabel: reg.name,
-        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}, ${boat}, ${geo}, ${ranking ? "ranking" : "non-ranking"}); ${created} guests, ${updatedProfiles} profiles, ${silverUpdated} silver dates`,
+        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}, ${boat}, ${geo}, ${ranking ? "ranking" : "non-ranking"}); ${created} guests, ${updatedProfiles} profiles, ${nationalityUpdated} nationality, ${silverUpdated} silver dates`,
         details: {
           matched,
           created,
           updatedProfiles,
+          nationalityUpdated,
           silverUpdated,
           rowErrors,
           profileFields: profileChangeFields,
+          nationalityFlagCount: nationalityFlags.length,
         },
         source: "/api/admin/import",
       });
@@ -738,6 +815,11 @@ export async function POST(req: Request) {
         ? ` · ${possibleDuplicates.length} possible duplicate name(s) flagged (60%+ similar) — review below / merge in Database.`
         : "";
 
+    const natNote =
+      nationalityFlags.length > 0
+        ? ` · ${nationalityUpdated} nationality update(s), ${nationalityFlags.length} nationality flag(s) to review.`
+        : "";
+
     void trackUsage({
       eventType: "import",
       path: "/admin",
@@ -747,6 +829,7 @@ export async function POST(req: Request) {
         created,
         inputRows: cleanRows.length,
         rowErrors,
+        nationalityUpdated,
       },
     });
 
@@ -758,11 +841,13 @@ export async function POST(req: Request) {
                 ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
                 : "See errors below."
             }`
-          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${silverUpdated} silver entry dates recomputed). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}`,
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, ${silverUpdated} silver entry dates recomputed). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}${natNote}`,
       regatta: reg,
       matched,
       created,
       updatedProfiles,
+      nationalityUpdated,
+      nationalityFlags: nationalityFlags.slice(0, 80),
       silverUpdated,
       unmatched: unmatched.slice(0, 80),
       possibleDuplicates: dupeFlags,

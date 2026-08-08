@@ -52,6 +52,7 @@ export async function GET(req: Request) {
           silverEntryDate: s.silverEntryDate,
           goldEntryDate: s.goldEntryDate,
           currentFleet: s.currentFleet,
+          nationality: s.nationality,
         })),
         links.map((l) => {
           const s = byId.get(l.sailorId);
@@ -88,6 +89,10 @@ export async function GET(req: Request) {
             goldWithoutEntry: dataQuality.goldWithoutEntry.slice(0, 50),
             overAgeOptimistCount: dataQuality.overAgeOptimist.length,
             overAgeOptimist: dataQuality.overAgeOptimist.slice(0, 50),
+            unrecognizedNationalityCount:
+              dataQuality.unrecognizedNationality.length,
+            unrecognizedNationality:
+              dataQuality.unrecognizedNationality.slice(0, 50),
           }
         : {
             emptySeries: 0,
@@ -97,6 +102,8 @@ export async function GET(req: Request) {
             goldWithoutEntry: [],
             overAgeOptimistCount: 0,
             overAgeOptimist: [],
+            unrecognizedNationalityCount: 0,
+            unrecognizedNationality: [],
           },
       changeLog,
       changeLogHint:

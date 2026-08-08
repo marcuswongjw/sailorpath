@@ -50,6 +50,17 @@ export function AdminRegattaImport({
   const [importPossibleDuplicates, setImportPossibleDuplicates] = useState<
     ImportPossibleDuplicate[]
   >([]);
+  const [nationalityFlags, setNationalityFlags] = useState<
+    {
+      sailorId: string;
+      name: string;
+      previous: string | null;
+      imported: string | null;
+      raw: string | null;
+      action: string;
+      detail: string;
+    }[]
+  >([]);
   const [fullImportRows, setFullImportRows] = useState<RegattaImportRow[]>([]);
   const [importMeta, setImportMeta] = useState({
     name: "",
@@ -79,6 +90,7 @@ export function AdminRegattaImport({
     setImportProgress(5);
     setImportStatus(`Reading “${file.name}”…`);
     setImportPossibleDuplicates([]);
+    setNationalityFlags([]);
     const reader = new FileReader();
     reader.onprogress = (ev) => {
       if (ev.lengthComputable && ev.total > 0) {
@@ -288,10 +300,17 @@ export function AdminRegattaImport({
         ? data.possibleDuplicates
         : [];
       setImportPossibleDuplicates(dupes);
+      const natFlags = Array.isArray(data.nationalityFlags)
+        ? data.nationalityFlags
+        : [];
+      setNationalityFlags(natFlags);
       setImportStatus(
         (data.message || "Import complete") +
           (unmatchedCount
             ? ` · ${unmatchedCount} unmatched name(s) skipped — add/fix sailor names and re-import.`
+            : "") +
+          (natFlags.length
+            ? ` · ${natFlags.length} nationality flag(s) — review below.`
             : "")
       );
     } catch (e: unknown) {
@@ -314,6 +333,7 @@ export function AdminRegattaImport({
         setImportProgress(0);
         setImportStatus(null);
         setImportPossibleDuplicates([]);
+        setNationalityFlags([]);
         alert(
           "Failed to fetch — the server may have timed out after saving. " +
             "Check Database → Regattas / Results before re-importing (re-import is safe and upserts)."
@@ -324,6 +344,7 @@ export function AdminRegattaImport({
       setImportProgress(0);
       setImportStatus(null);
       setImportPossibleDuplicates([]);
+      setNationalityFlags([]);
       alert(msg);
     } finally {
       window.clearInterval(pulse);
@@ -408,6 +429,53 @@ export function AdminRegattaImport({
                 <span>{importStatus}</span>
               </div>
             )}
+          </div>
+        )}
+
+        {nationalityFlags.length > 0 && (
+          <div className="mt-4 rounded-2xl border border-sky-500/30 bg-sky-500/5 p-4 space-y-3">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-xs font-bold text-sky-200">
+                  Nationality flags ({nationalityFlags.length})
+                </p>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  Latest regatta updates nationality when present on the sheet.
+                  Review mismatches or unrecognized values and correct in
+                  Database → Sailors if needed.
+                </p>
+              </div>
+            </div>
+            <ul className="space-y-2 max-h-64 overflow-y-auto">
+              {nationalityFlags.slice(0, 50).map((f, i) => (
+                <li
+                  key={`${f.sailorId}-${f.action}-${i}`}
+                  className="rounded-xl border border-white/5 bg-slate-950/50 px-3 py-2 text-[11px]"
+                >
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span
+                      className={`rounded-full px-1.5 py-0.5 text-[9px] font-black uppercase ${
+                        f.action === "updated"
+                          ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
+                          : f.action === "unrecognized"
+                            ? "bg-rose-500/15 text-rose-300 border border-rose-500/30"
+                            : "bg-amber-500/15 text-amber-200 border border-amber-500/30"
+                      }`}
+                    >
+                      {f.action}
+                    </span>
+                    <span className="font-semibold text-white">{f.name}</span>
+                  </div>
+                  <p className="text-slate-400 mt-1">{f.detail}</p>
+                  {(f.previous || f.imported || f.raw) && (
+                    <p className="text-slate-500 mt-0.5 font-mono text-[10px]">
+                      was {f.previous || "—"} · sheet {f.imported || f.raw || "—"}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         )}
 

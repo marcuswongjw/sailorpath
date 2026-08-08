@@ -95,8 +95,10 @@ describe("validateGoldPromotion", () => {
 
 describe("normalizeNationality / normalizeYearsList", () => {
   it("maps common SG codes", () => {
-    const n = normalizeNationality("Singapore");
-    expect(n === "SGP" || n === "Singapore").toBe(true);
+    expect(normalizeNationality("Singapore")).toBe("SGP");
+    expect(normalizeNationality("SG")).toBe("SGP");
+    expect(normalizeNationality("MAS")).toBe("MAS");
+    expect(normalizeNationality("Malaysia")).toBe("MAS");
   });
 
   it("normalizes multi-year lists", () => {

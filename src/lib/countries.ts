@@ -285,6 +285,323 @@ export const BOAT_CLASSES = [
 
 export const DEFAULT_GEOGRAPHY = "SG";
 export const DEFAULT_BOAT_CLASS = "Optimist";
+/** Default sailor nationality (IOC / NOC style). */
+export const DEFAULT_NATIONALITY = "SGP";
+
+/**
+ * ISO 3166-1 alpha-2 → Olympic/NOC-style 3-letter code used for sailor nationality.
+ * Covers sailing nations + common Asia-Pacific NOCs.
+ */
+export const ISO2_TO_NOC: Record<string, string> = {
+  SG: "SGP",
+  MY: "MAS",
+  ID: "INA",
+  TH: "THA",
+  PH: "PHI",
+  VN: "VIE",
+  CN: "CHN",
+  HK: "HKG",
+  MO: "MAC",
+  TW: "TPE",
+  JP: "JPN",
+  KR: "KOR",
+  KP: "PRK",
+  AU: "AUS",
+  NZ: "NZL",
+  US: "USA",
+  GB: "GBR",
+  IE: "IRL",
+  FR: "FRA",
+  DE: "GER",
+  IT: "ITA",
+  ES: "ESP",
+  PT: "POR",
+  NL: "NED",
+  BE: "BEL",
+  CH: "SUI",
+  AT: "AUT",
+  SE: "SWE",
+  NO: "NOR",
+  DK: "DEN",
+  FI: "FIN",
+  PL: "POL",
+  CZ: "CZE",
+  HU: "HUN",
+  GR: "GRE",
+  TR: "TUR",
+  RU: "RUS",
+  UA: "UKR",
+  BR: "BRA",
+  AR: "ARG",
+  CL: "CHI",
+  MX: "MEX",
+  CA: "CAN",
+  ZA: "RSA",
+  IN: "IND",
+  AE: "UAE",
+  QA: "QAT",
+  SA: "KSA",
+  BH: "BRN",
+  KW: "KUW",
+  OM: "OMA",
+  IL: "ISR",
+  EG: "EGY",
+  HR: "CRO",
+  SI: "SLO",
+  SK: "SVK",
+  RO: "ROU",
+  BG: "BUL",
+  LT: "LTU",
+  LV: "LAT",
+  EE: "EST",
+  IS: "ISL",
+  LU: "LUX",
+  MT: "MLT",
+  CY: "CYP",
+  BY: "BLR",
+  KZ: "KAZ",
+  UZ: "UZB",
+  PE: "PER",
+  CO: "COL",
+  UY: "URU",
+  EC: "ECU",
+  VE: "VEN",
+  CU: "CUB",
+  PR: "PUR",
+  TT: "TTO",
+  JM: "JAM",
+  BS: "BAH",
+  BB: "BAR",
+  FJ: "FIJ",
+  PG: "PNG",
+  GU: "GUM",
+  AS: "ASA",
+  CK: "COK",
+  WS: "SAM",
+  TO: "TGA",
+  VU: "VAN",
+  NC: "NCL",
+  PF: "PYF",
+  LK: "SRI",
+  BD: "BAN",
+  PK: "PAK",
+  MM: "MYA",
+  KH: "CAM",
+  LA: "LAO",
+  BN: "BRU",
+  MN: "MGL",
+  NP: "NEP",
+};
+
+const NOC_TO_ISO2: Record<string, string> = Object.fromEntries(
+  Object.entries(ISO2_TO_NOC).map(([iso, noc]) => [noc, iso])
+);
+
+const NAME_TO_ISO2: Map<string, string> = (() => {
+  const m = new Map<string, string>();
+  for (const c of COUNTRIES) {
+    m.set(c.name.toLowerCase(), c.code);
+    m.set(c.code.toLowerCase(), c.code);
+  }
+  // Common aliases
+  m.set("singapore", "SG");
+  m.set("republic of singapore", "SG");
+  m.set("malaysia", "MY");
+  m.set("indonesia", "ID");
+  m.set("thailand", "TH");
+  m.set("philippines", "PH");
+  m.set("viet nam", "VN");
+  m.set("vietnam", "VN");
+  m.set("hong kong", "HK");
+  m.set("hong kong, china", "HK");
+  m.set("chinese taipei", "TW");
+  m.set("taiwan", "TW");
+  m.set("korea", "KR");
+  m.set("south korea", "KR");
+  m.set("great britain", "GB");
+  m.set("united kingdom", "GB");
+  m.set("uk", "GB");
+  m.set("united states", "US");
+  m.set("usa", "US");
+  m.set("u.s.a.", "US");
+  m.set("u.s.", "US");
+  return m;
+})();
+
+function cleanCountryRaw(v: unknown): string | null {
+  if (v == null || v === "") return null;
+  const raw = String(v).trim().replace(/\s+/g, " ");
+  if (!raw || /^n\/?a$/i.test(raw) || raw === "-" || raw === "—") return null;
+  return raw;
+}
+
+/** ISO 3166-1 alpha-2 for regatta geography (e.g. SG). */
+export function normalizeGeography(v: unknown): string | null {
+  const raw = cleanCountryRaw(v);
+  if (!raw) return null;
+  const key = raw.toLowerCase();
+  if (NAME_TO_ISO2.has(key)) return NAME_TO_ISO2.get(key)!;
+  if (/^[A-Za-z]{2}$/.test(raw)) {
+    const iso = raw.toUpperCase();
+    if (COUNTRIES.some((c) => c.code === iso)) return iso;
+    return iso;
+  }
+  // IOC → ISO2
+  if (/^[A-Za-z]{3}$/.test(raw)) {
+    const noc = raw.toUpperCase();
+    if (NOC_TO_ISO2[noc]) return NOC_TO_ISO2[noc];
+    // SGP already handled via map
+  }
+  return null;
+}
+
+/**
+ * Sailor nationality as IOC/NOC-style code when known (SGP, MAS, …),
+ * otherwise ISO2 or original uppercased token.
+ */
+export function normalizeNationalityCode(v: unknown): string | null {
+  const raw = cleanCountryRaw(v);
+  if (!raw) return null;
+  const key = raw.toLowerCase();
+
+  // Explicit NOC aliases
+  const aliasNoc: Record<string, string> = {
+    singapore: "SGP",
+    sgp: "SGP",
+    sin: "SGP",
+    sg: "SGP",
+    "singapore (sgp)": "SGP",
+    "republic of singapore": "SGP",
+    malaysia: "MAS",
+    mas: "MAS",
+    mal: "MAS",
+    my: "MAS",
+    indonesia: "INA",
+    ina: "INA",
+    idn: "INA",
+    id: "INA",
+    thailand: "THA",
+    tha: "THA",
+    th: "THA",
+    philippines: "PHI",
+    phi: "PHI",
+    phl: "PHI",
+    ph: "PHI",
+    vietnam: "VIE",
+    "viet nam": "VIE",
+    vie: "VIE",
+    vnm: "VIE",
+    vn: "VIE",
+    china: "CHN",
+    chn: "CHN",
+    cn: "CHN",
+    "hong kong": "HKG",
+    hkg: "HKG",
+    hk: "HKG",
+    japan: "JPN",
+    jpn: "JPN",
+    jp: "JPN",
+    korea: "KOR",
+    "south korea": "KOR",
+    kor: "KOR",
+    kr: "KOR",
+    australia: "AUS",
+    aus: "AUS",
+    au: "AUS",
+    "new zealand": "NZL",
+    nzl: "NZL",
+    nz: "NZL",
+    "united states": "USA",
+    usa: "USA",
+    us: "USA",
+    "great britain": "GBR",
+    "united kingdom": "GBR",
+    gbr: "GBR",
+    uk: "GBR",
+    gb: "GBR",
+  };
+  if (aliasNoc[key]) return aliasNoc[key];
+
+  if (/^[A-Za-z]{3}$/.test(raw)) {
+    const noc = raw.toUpperCase();
+    // Known NOC or treat as code
+    return noc;
+  }
+
+  if (/^[A-Za-z]{2}$/.test(raw)) {
+    const iso = raw.toUpperCase();
+    return ISO2_TO_NOC[iso] || iso;
+  }
+
+  const isoFromName = NAME_TO_ISO2.get(key);
+  if (isoFromName) return ISO2_TO_NOC[isoFromName] || isoFromName;
+
+  return raw.length <= 12 ? raw.toUpperCase() : raw.slice(0, 40);
+}
+
+/** True when raw could not be mapped to a known country/NOC list entry. */
+export function isUnrecognizedCountry(v: unknown): boolean {
+  const raw = cleanCountryRaw(v);
+  if (!raw) return false;
+  if (normalizeGeography(raw)) return false;
+  const nat = normalizeNationalityCode(raw);
+  if (!nat) return false;
+  // Recognized if 3-letter NOC in map or ISO2 in COUNTRIES
+  if (NOC_TO_ISO2[nat]) return false;
+  if (nat.length === 2 && COUNTRIES.some((c) => c.code === nat)) return false;
+  // Common NOCs not all in ISO2 map reverse — check alias values
+  const knownNocs = new Set(Object.values(ISO2_TO_NOC));
+  if (knownNocs.has(nat)) return false;
+  return true;
+}
+
+export function countryLabelForIso2(code: string | null | undefined): string {
+  if (!code) return "—";
+  const c = COUNTRIES.find((x) => x.code === code.toUpperCase());
+  return c ? `${c.code} — ${c.name}` : code;
+}
+
+export function nationalityLabelForCode(code: string | null | undefined): string {
+  if (!code) return "—";
+  const noc = code.toUpperCase();
+  const iso = NOC_TO_ISO2[noc];
+  if (iso) {
+    const c = COUNTRIES.find((x) => x.code === iso);
+    if (c) return `${noc} — ${c.name}`;
+  }
+  if (noc.length === 2) {
+    const c = COUNTRIES.find((x) => x.code === noc);
+    if (c) return `${ISO2_TO_NOC[noc] || noc} — ${c.name}`;
+  }
+  return noc;
+}
+
+/** Options for regatta geography select (ISO2 value). */
+export function geographySelectOptions(): CountryOption[] {
+  return COUNTRIES;
+}
+
+/**
+ * Options for sailor nationality select.
+ * Value is NOC 3-letter when mapped, else ISO2.
+ * Prefers Singapore first, then name order of remaining countries.
+ */
+export function nationalitySelectOptions(): { code: string; name: string }[] {
+  const seen = new Set<string>();
+  const out: { code: string; name: string }[] = [];
+  const push = (code: string, name: string) => {
+    if (seen.has(code)) return;
+    seen.add(code);
+    out.push({ code, name });
+  };
+  push("SGP", "Singapore");
+  for (const c of COUNTRIES) {
+    if (c.code === "SG") continue;
+    const noc = ISO2_TO_NOC[c.code] || c.code;
+    push(noc, c.name);
+  }
+  return out;
+}
 
 /** Classes with a single open fleet (no Gold/Silver split). */
 export const SINGLE_FLEET_CLASSES = new Set([

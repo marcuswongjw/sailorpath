@@ -21,6 +21,7 @@ import {
   type DuplicatePair,
 } from "@/lib/nameMatch";
 import type { SailorAdmin } from "@/types/sailor";
+import { NationalitySelect } from "@/components/CountrySelect";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import {
@@ -573,12 +574,21 @@ export function AdminIlcaRankingPanel({
               <option value="dob">DOB</option>
               <option value="ilca4NationalList">National list (true/false)</option>
             </select>
-            <input
-              value={bulkValue}
-              onChange={(e) => setBulkValue(e.target.value)}
-              placeholder="Value (empty = clear)"
-              className="rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs min-w-[8rem]"
-            />
+            {bulkField === "nationality" ? (
+              <NationalitySelect
+                value={bulkValue}
+                onChange={setBulkValue}
+                className="rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs min-w-[10rem]"
+                emptyLabel="— Clear / select —"
+              />
+            ) : (
+              <input
+                value={bulkValue}
+                onChange={(e) => setBulkValue(e.target.value)}
+                placeholder="Value (empty = clear)"
+                className="rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs min-w-[8rem]"
+              />
+            )}
             <button
               type="button"
               disabled={bulkBusy || selectedIds.size === 0}
@@ -608,14 +618,24 @@ export function AdminIlcaRankingPanel({
                 ).map(([key, label]) => (
                   <label key={key} className="text-[10px] text-slate-400">
                     {label}
-                    <input
-                      value={editForm[key]}
-                      onChange={(e) =>
-                        setEditForm((f) => ({ ...f, [key]: e.target.value }))
-                      }
-                      type={key === "dob" ? "date" : "text"}
-                      className="mt-0.5 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs"
-                    />
+                    {key === "nationality" ? (
+                      <NationalitySelect
+                        value={editForm.nationality}
+                        onChange={(v) =>
+                          setEditForm((f) => ({ ...f, nationality: v }))
+                        }
+                        className="mt-0.5 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs"
+                      />
+                    ) : (
+                      <input
+                        value={editForm[key]}
+                        onChange={(e) =>
+                          setEditForm((f) => ({ ...f, [key]: e.target.value }))
+                        }
+                        type={key === "dob" ? "date" : "text"}
+                        className="mt-0.5 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-2 py-1.5 text-xs"
+                      />
+                    )}
                   </label>
                 ))}
               </div>

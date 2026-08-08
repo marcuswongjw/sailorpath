@@ -26,6 +26,7 @@ import {
   DB_SAILOR_COLUMNS,
   defaultDbColVisible,
 } from "@/components/admin/adminConstants";
+import { NationalitySelect } from "@/components/CountrySelect";
 import type { SailorAdmin } from "@/types/sailor";
 
 const HALF_BOUNDARY_OPTS = halfBoundaryOptions();
@@ -346,6 +347,13 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs font-mono"
                           placeholder="Number"
                         />
+                      ) : bulkField === "nationality" ? (
+                        <NationalitySelect
+                          value={bulkValue}
+                          onChange={setBulkValue}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                          emptyLabel="— Clear / select —"
+                        />
                       ) : (
                         <input
                           type="text"
@@ -575,14 +583,11 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       </div>
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Nationality</label>
-                        <input
-                          type="text"
+                        <NationalitySelect
                           value={sailorForm.nationality || ""}
-                          onChange={(e) =>
-                            setSailorForm({ ...sailorForm, nationality: e.target.value })
+                          onChange={(v) =>
+                            setSailorForm({ ...sailorForm, nationality: v })
                           }
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
-                          placeholder="e.g. Singapore / SGP"
                         />
                       </div>
                       <div>

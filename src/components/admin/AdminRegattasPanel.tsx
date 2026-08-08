@@ -3,6 +3,7 @@
 import { Plus, Trash2, Calendar } from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
+import { GeographySelect } from "@/components/CountrySelect";
 
 export interface RegattaFormState {
   name?: string;
@@ -381,17 +382,14 @@ export function AdminRegattasPanel({
                             <label className="text-[10px] font-bold text-slate-500 uppercase">
                               Geography / country
                             </label>
-                            <input
-                              type="text"
+                            <GeographySelect
                               value={regattaForm.geography || "SG"}
-                              onChange={(e) =>
+                              onChange={(v) =>
                                 setRegattaForm({
                                   ...regattaForm,
-                                  geography: e.target.value.toUpperCase(),
+                                  geography: v || "SG",
                                 })
                               }
-                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
-                              placeholder="SG"
                             />
                           </div>
                           <div>
