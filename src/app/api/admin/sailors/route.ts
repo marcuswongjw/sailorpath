@@ -1024,8 +1024,12 @@ export async function PATCH(req: Request) {
         return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
       }
 
-      // Stamp gender + birth year onto all of this sailor's regatta results
-      if (body.gender !== undefined || body.dob !== undefined) {
+      // Stamp gender, birth year, nationality onto all of this sailor's results
+      if (
+        body.gender !== undefined ||
+        body.dob !== undefined ||
+        body.nationality !== undefined
+      ) {
         try {
           const { regattaResults } = await import("@/db/schema");
           const { birthYear } = await import("@/lib/age");
@@ -1035,11 +1039,17 @@ export async function PATCH(req: Request) {
             .slice(0, 1);
           const g = gRaw === "M" || gRaw === "F" ? gRaw : null;
           const by = birthYear(row.dob);
+          const nat = row.nationality
+            ? normalizeNationality(row.nationality)
+            : null;
           await db
             .update(regattaResults)
             .set({
               ...(body.gender !== undefined ? { gender: g } : {}),
               ...(body.dob !== undefined ? { birthYear: by } : {}),
+              ...(body.nationality !== undefined
+                ? { nationality: nat }
+                : {}),
               updatedAt: new Date(),
             })
             .where(eq(regattaResults.sailorId, body.id));

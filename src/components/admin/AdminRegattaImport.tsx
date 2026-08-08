@@ -224,8 +224,8 @@ export function AdminRegattaImport({
         regatta: reg,
         message:
           resultCount > 0
-            ? `Import likely succeeded (network dropped after save). Found “${reg.name}” with ${resultCount} result(s). Refresh admin if lists look stale.`
-            : `Regatta “${reg.name}” exists but no results found yet — re-import if the fleet is empty.`,
+            ? `Import likely succeeded (network dropped after save). Found “${reg.name}” with ${resultCount} result row(s) linked to this regatta. Refresh admin if lists look stale.`
+            : `Regatta “${reg.name}” was saved, but this check found 0 result rows for it (no finishers stored yet). That usually means the request dropped mid-import before results were written — re-import the same file (safe; upserts).`,
       };
     } catch {
       return { ok: false, message: "" };

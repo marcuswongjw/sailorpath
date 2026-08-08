@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   bestThreeOf,
   compareRankedSailors,
+  getPercentileBadge,
   natSquadFieldForPeriod,
   periodBounds,
   previousPeriod,
@@ -14,6 +15,17 @@ import {
   type RegattaRecord,
   type SailorRecord,
 } from "./ranking";
+
+describe("getPercentileBadge", () => {
+  it("uses 20% bands", () => {
+    expect(getPercentileBadge(1, 100).label).toBe("Top 20%");
+    expect(getPercentileBadge(20, 100).label).toBe("Top 20%");
+    expect(getPercentileBadge(21, 100).label).toBe("Top 40%");
+    expect(getPercentileBadge(50, 100).label).toBe("Top 60%");
+    expect(getPercentileBadge(80, 100).label).toBe("Top 80%");
+    expect(getPercentileBadge(81, 100).label).toBe("Bottom 20%");
+  });
+});
 
 describe("bestThreeOf", () => {
   it("sums the three lowest scores", () => {

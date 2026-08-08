@@ -170,6 +170,11 @@ export const regattaResults = pgTable(
      * Source of truth remains sailors.dob.
      */
     birthYear: integer("birth_year"),
+    /**
+     * Denormalized NOC nationality from sailor profile (e.g. SGP).
+     * Source of truth remains sailors.nationality.
+     */
+    nationality: text("nationality"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },

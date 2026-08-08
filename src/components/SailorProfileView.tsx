@@ -978,6 +978,11 @@ export function SailorProfileView({
                 </p>
               </div>
               <div className="shrink-0 text-right space-y-1.5">
+                {/* Hide Optimist sail once aged out / left Optimist (ILCA-first) */}
+                {!leftOptimistYear &&
+                  sailDisplay &&
+                  sailDisplay !== "—" &&
+                  !/^SGP\s*0+$/i.test(sailDisplay) && (
                 <div>
                   <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">
                     Optimist sail
@@ -988,6 +993,7 @@ export function SailorProfileView({
                     </span>
                   </div>
                 </div>
+                )}
                 {sailIlca4 && (
                   <div>
                     <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">

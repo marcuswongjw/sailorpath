@@ -343,6 +343,7 @@ export async function POST(req: Request) {
       isDns: boolean;
       gender: string | null;
       birthYear: number | null;
+      nationality: string | null;
     }[] = [];
     const pendingAliases: { sailorId: string; aliasName: string }[] = [];
 
@@ -679,7 +680,7 @@ export async function POST(req: Request) {
         const nett = row.nett != null ? row.nett : null;
         const total = row.total != null ? row.total : null;
 
-        // Denormalize gender + birth year onto this result from sailor profile
+        // Denormalize gender, birth year, nationality onto this result
         // (after any profile updates from this row)
         const sailorNow = sailorList.find((s) => s.id === sailorId);
         const resultGender =
@@ -696,6 +697,10 @@ export async function POST(req: Request) {
           by != null && Number.isFinite(by) && by >= 1990 && by <= 2035
             ? Math.round(by)
             : null;
+        const resultNat =
+          row.nationality ||
+          normalizeNationalityCode(sailorNow?.nationality) ||
+          null;
 
         // Collect for batch upsert (avoids N round-trips that timed out serverless)
         pendingResults.push({
@@ -707,6 +712,7 @@ export async function POST(req: Request) {
           isDns: false,
           gender: gNorm,
           birthYear,
+          nationality: resultNat,
         });
         matched++;
 
@@ -756,6 +762,7 @@ export async function POST(req: Request) {
                   isDns: r.isDns,
                   gender: r.gender,
                   birthYear: r.birthYear,
+                  nationality: r.nationality,
                   updatedAt: new Date(),
                 },
               })
@@ -791,7 +798,7 @@ export async function POST(req: Request) {
       }
     }
 
-    // Stamp gender + birth year onto ALL results for sailors who have them
+    // Stamp gender, birth year, nationality onto ALL results for sailors who have them
     // (source of truth: sailor profile after this import's updates)
     let resultsDemographicsUpdated = 0;
     const affectedIds = [...affectedSailorIds];
@@ -806,14 +813,17 @@ export async function POST(req: Request) {
             .slice(0, 1);
           const gender = g === "M" || g === "F" ? g : null;
           const by = birthYearFromDob(s.dob);
-          if (!gender && by == null) continue;
+          const nat = normalizeNationalityCode(s.nationality);
+          if (!gender && by == null && !nat) continue;
           const patch: {
             gender?: string | null;
             birthYear?: number | null;
+            nationality?: string | null;
             updatedAt: Date;
           } = { updatedAt: new Date() };
           if (gender) patch.gender = gender;
           if (by != null) patch.birthYear = by;
+          if (nat) patch.nationality = nat;
           const updated = await db
             .update(regattaResults)
             .set(patch)

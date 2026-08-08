@@ -136,22 +136,46 @@ export interface RankedSailor extends SailorRecord {
   periodSquadStatus?: string | null;
 }
 
-// Map percentile to badges
+/**
+ * Finish percentile band (quintiles / 20% splits).
+ * Rank 1 in a fleet of 40 → 2.5% → Top 20%.
+ */
 export function getPercentileBadge(rank: number, totalFleetSize: number): {
   label: string;
   className: string;
 } {
-  if (totalFleetSize <= 0) return { label: "N/A", className: "bg-gray-500 text-white" };
+  if (totalFleetSize <= 0)
+    return { label: "N/A", className: "bg-gray-500 text-white" };
   const pct = (rank / totalFleetSize) * 100;
-  if (pct <= 25) {
-    return { label: "Top 25%", className: "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20" };
-  } else if (pct <= 50) {
-    return { label: "Top 50%", className: "bg-blue-500/10 text-blue-500 border border-blue-500/20" };
-  } else if (pct <= 75) {
-    return { label: "Top 75%", className: "bg-amber-500/10 text-amber-500 border border-amber-500/20" };
-  } else {
-    return { label: "Bottom 25%", className: "bg-rose-500/10 text-rose-500 border border-rose-500/20" };
+  if (pct <= 20) {
+    return {
+      label: "Top 20%",
+      className:
+        "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20",
+    };
   }
+  if (pct <= 40) {
+    return {
+      label: "Top 40%",
+      className: "bg-sky-500/10 text-sky-400 border border-sky-500/20",
+    };
+  }
+  if (pct <= 60) {
+    return {
+      label: "Top 60%",
+      className: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+    };
+  }
+  if (pct <= 80) {
+    return {
+      label: "Top 80%",
+      className: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+    };
+  }
+  return {
+    label: "Bottom 20%",
+    className: "bg-rose-500/10 text-rose-500 border border-rose-500/20",
+  };
 }
 
 export function periodLabel(period: Period): string {

@@ -47,11 +47,12 @@ export default async function RegattaDetailPage({
               <tr>
                 <th className="px-4 py-3 text-center">Rank</th>
                 <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3 text-center">NOC</th>
                 <th className="px-4 py-3 text-center">Gender</th>
                 <th className="px-4 py-3 text-center">Birth year</th>
                 <th className="px-4 py-3 text-center">Total Score</th>
                 <th className="px-4 py-3 text-center">Nett Score</th>
-                <th className="px-4 py-3">Badge</th>
+                <th className="px-4 py-3">Percentile</th>
               </tr>
             </thead>
             <tbody>
@@ -79,11 +80,14 @@ export default async function RegattaDetailPage({
                         {r.sailorName}
                       </Link>
                     </td>
+                    <td className="px-4 py-3 text-center font-mono text-slate-300">
+                      {r.nationality || "—"}
+                    </td>
                     <td className="px-4 py-3 text-center text-slate-300">
                       {r.gender || "—"}
                     </td>
                     <td className="px-4 py-3 text-center font-mono text-slate-300">
-                      {birthYear(r.dob) ?? "—"}
+                      {r.birthYear ?? birthYear(r.dob) ?? "—"}
                     </td>
                     <td className="px-4 py-3 text-center text-slate-300 font-mono">
                       {r.totalScore != null ? r.totalScore : "—"}

@@ -336,14 +336,22 @@ export async function getResultsForRegatta(regattaId: string) {
         sailorName: sailors.name,
         sailNumber: sailors.sailNumber,
         handle: sailors.handle,
-        gender: sailors.gender,
+        gender: regattaResults.gender,
+        sailorGender: sailors.gender,
+        birthYear: regattaResults.birthYear,
         dob: sailors.dob,
+        nationality: regattaResults.nationality,
+        sailorNationality: sailors.nationality,
       })
       .from(regattaResults)
       .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
       .where(eq(regattaResults.regattaId, regattaId))
       .orderBy(asc(regattaResults.rank));
-    return rows;
+    return rows.map((r) => ({
+      ...r,
+      gender: r.gender || r.sailorGender || null,
+      nationality: r.nationality || r.sailorNationality || null,
+    }));
   });
 }
 
