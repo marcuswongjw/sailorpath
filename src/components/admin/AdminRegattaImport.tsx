@@ -12,6 +12,7 @@ import {
   summarizeRegattaImport,
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
+import { parseRegattaTitle } from "@/lib/excel/parseRegattaTitle";
 import { parseApi } from "@/components/admin/parseApi";
 import type { ImportPossibleDuplicate } from "@/types/import";
 import type { RegattaAdmin } from "@/types/regatta";
@@ -115,21 +116,42 @@ export function AdminRegattaImport({
         setFullImportRows(mapped);
         setImportPossibleDuplicates([]);
         setImportProgress(100);
+
+        // Prefer filename; fall back to first sheet name for date/title
+        const fromFile = parseRegattaTitle(file.name);
+        const fromSheet = parseRegattaTitle(sheetName);
+        const title = {
+          date: fromFile.date || fromSheet.date,
+          name: fromFile.name || fromSheet.name,
+          division: fromFile.division || fromSheet.division,
+          boatClass: fromFile.boatClass || fromSheet.boatClass,
+        };
+
+        setImportMeta((m) => ({
+          ...m,
+          name: title.name || m.name || fromFile.stem || sheetName,
+          date: title.date || m.date,
+          division: title.division
+            ? title.division
+            : /silver/i.test(file.name + sheetName)
+              ? "Silver"
+              : /gold/i.test(file.name + sheetName)
+                ? "Gold"
+                : m.division,
+          boatClass: title.boatClass || m.boatClass,
+          fleetSize: mapped.length || m.fleetSize,
+        }));
+
+        const titleNote = title.date
+          ? ` Title → ${title.name || "—"} · ${title.date}${
+              title.division ? ` · ${title.division}` : ""
+            }.`
+          : "";
         setImportStatus(
           `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
             summarizeRegattaImport(mapped) +
-            `. Confirm class, country, ranking, division + date, then Import.`
+            `.${titleNote} Confirm geography, ranking, division + date, then Import.`
         );
-        setImportMeta((m) => ({
-          ...m,
-          name: m.name || file.name.replace(/\.[^.]+$/, "").replace(/_/g, " "),
-          division: /silver/i.test(file.name)
-            ? "Silver"
-            : /gold/i.test(file.name)
-              ? "Gold"
-              : m.division,
-          fleetSize: mapped.length || m.fleetSize,
-        }));
       } catch (err) {
         setImportProgress(0);
         setImportStatus(null);
