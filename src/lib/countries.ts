@@ -283,7 +283,8 @@ export const BOAT_CLASSES = [
   "Other",
 ] as const;
 
-export const DEFAULT_GEOGRAPHY = "SG";
+/** Default regatta geography — NOC-style (same family as nationality). */
+export const DEFAULT_GEOGRAPHY = "SGP";
 export const DEFAULT_BOAT_CLASS = "Optimist";
 /** Default sailor nationality (IOC / NOC style). */
 export const DEFAULT_NATIONALITY = "SGP";
@@ -435,24 +436,12 @@ function cleanCountryRaw(v: unknown): string | null {
   return raw;
 }
 
-/** ISO 3166-1 alpha-2 for regatta geography (e.g. SG). */
+/**
+ * Regatta geography — stored as NOC-style codes (SGP, MAS, …), same as nationality.
+ * Accepts ISO2, NOC, or country names.
+ */
 export function normalizeGeography(v: unknown): string | null {
-  const raw = cleanCountryRaw(v);
-  if (!raw) return null;
-  const key = raw.toLowerCase();
-  if (NAME_TO_ISO2.has(key)) return NAME_TO_ISO2.get(key)!;
-  if (/^[A-Za-z]{2}$/.test(raw)) {
-    const iso = raw.toUpperCase();
-    if (COUNTRIES.some((c) => c.code === iso)) return iso;
-    return iso;
-  }
-  // IOC → ISO2
-  if (/^[A-Za-z]{3}$/.test(raw)) {
-    const noc = raw.toUpperCase();
-    if (NOC_TO_ISO2[noc]) return NOC_TO_ISO2[noc];
-    // SGP already handled via map
-  }
-  return null;
+  return normalizeNationalityCode(v);
 }
 
 /**
@@ -543,15 +532,19 @@ export function normalizeNationalityCode(v: unknown): string | null {
 export function isUnrecognizedCountry(v: unknown): boolean {
   const raw = cleanCountryRaw(v);
   if (!raw) return false;
-  if (normalizeGeography(raw)) return false;
+  const key = raw.toLowerCase();
+  // Known country name → recognized
+  if (NAME_TO_ISO2.has(key)) return false;
   const nat = normalizeNationalityCode(raw);
-  if (!nat) return false;
-  // Recognized if 3-letter NOC in map or ISO2 in COUNTRIES
+  if (!nat) return true;
   if (NOC_TO_ISO2[nat]) return false;
   if (nat.length === 2 && COUNTRIES.some((c) => c.code === nat)) return false;
-  // Common NOCs not all in ISO2 map reverse — check alias values
   const knownNocs = new Set(Object.values(ISO2_TO_NOC));
   if (knownNocs.has(nat)) return false;
+  // Multi-word free text that didn't map is unrecognized
+  if (/\s/.test(raw) || raw.length > 3) return true;
+  // Bare 2–3 letter token: treat as a code (possibly valid NOC we don't list)
+  if (/^[A-Za-z]{2,3}$/.test(raw)) return false;
   return true;
 }
 
@@ -576,15 +569,9 @@ export function nationalityLabelForCode(code: string | null | undefined): string
   return noc;
 }
 
-/** Options for regatta geography select (ISO2 value). */
-export function geographySelectOptions(): CountryOption[] {
-  return COUNTRIES;
-}
-
 /**
- * Options for sailor nationality select.
- * Value is NOC 3-letter when mapped, else ISO2.
- * Prefers Singapore first, then name order of remaining countries.
+ * Options for geography + nationality selects (NOC values).
+ * Singapore first, then remaining countries by name.
  */
 export function nationalitySelectOptions(): { code: string; name: string }[] {
   const seen = new Set<string>();
@@ -601,6 +588,11 @@ export function nationalitySelectOptions(): { code: string; name: string }[] {
     push(noc, c.name);
   }
   return out;
+}
+
+/** Alias — geography uses the same NOC option list as nationality. */
+export function geographySelectOptions(): { code: string; name: string }[] {
+  return nationalitySelectOptions();
 }
 
 /** Classes with a single open fleet (no Gold/Silver split). */

@@ -19,10 +19,10 @@ import type { ResultAdmin } from "@/types/result";
 import type { SailorAdmin } from "@/types/sailor";
 import {
   BOAT_CLASSES,
-  COUNTRIES,
   DEFAULT_BOAT_CLASS,
   DEFAULT_GEOGRAPHY,
   classImportNote,
+  geographySelectOptions,
   isSingleFleetClass,
 } from "@/lib/countries";
 
@@ -595,7 +595,7 @@ export function AdminRegattaImport({
               </select>
             </label>
             <label className="text-xs text-slate-400">
-              Country
+              Geography
               <select
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
                 value={importMeta.geography}
@@ -603,7 +603,7 @@ export function AdminRegattaImport({
                   setImportMeta((m) => ({ ...m, geography: e.target.value }))
                 }
               >
-                {COUNTRIES.map((c) => (
+                {geographySelectOptions().map((c) => (
                   <option key={c.code} value={c.code}>
                     {c.code} — {c.name}
                   </option>

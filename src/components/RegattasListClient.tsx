@@ -132,7 +132,7 @@ export function RegattasListClient({
   const geographies = useMemo(() => {
     const set = new Set<string>();
     for (const r of regattas) {
-      const g = String(r.geography || "SG").trim();
+      const g = String(r.geography || "SGP").trim();
       if (g) set.add(g);
     }
     return Array.from(set).sort();
@@ -160,7 +160,7 @@ export function RegattasListClient({
       if (period !== "all" && periodKey(r.date) !== period) return false;
       if (
         geography !== "all" &&
-        String(r.geography || "SG").toUpperCase() !== geography.toUpperCase()
+        String(r.geography || "SGP").toUpperCase() !== geography.toUpperCase()
       ) {
         return false;
       }
@@ -355,7 +355,7 @@ export function RegattasListClient({
             value={geography}
             onChange={(e) => setGeography(e.target.value)}
             className="rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-xs sm:text-sm text-white font-semibold focus:border-orange-500 focus:outline-none"
-            aria-label="Country / geography"
+            aria-label="Geography"
           >
             <option value="all">All countries</option>
             {geographies.map((g) => (
@@ -466,7 +466,7 @@ export function RegattasListClient({
                         <div className="flex flex-wrap items-center gap-2 text-xs text-slate-300 font-semibold border-t border-white/5 pt-3">
                           <span className="inline-flex items-center gap-1 rounded-lg bg-white/5 px-2.5 py-1 text-[11px]">
                             <Globe className="h-3 w-3 text-slate-400" />
-                            {r.geography || "SG"}
+                            {r.geography || "SGP"}
                           </span>
                           <span className="inline-flex items-center gap-1 rounded-lg bg-white/5 px-2.5 py-1 text-[11px]">
                             <Sailboat className="h-3 w-3 text-slate-400" />
@@ -516,7 +516,7 @@ export function RegattasListClient({
                             )}
                           </div>
                           <p className="text-xs text-slate-400">
-                            {formatNiceDate(r.date)} • {r.geography || "SG"} • Fleet {r.totalFleetSize}
+                            {formatNiceDate(r.date)} • {r.geography || "SGP"} • Fleet {r.totalFleetSize}
                           </p>
                         </div>
 

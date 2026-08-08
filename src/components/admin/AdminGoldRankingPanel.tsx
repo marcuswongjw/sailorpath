@@ -89,7 +89,7 @@ function toRegattaRecords(rows: RegattaAdmin[]): RegattaRecord[] {
     totalFleetSize: r.totalFleetSize,
     division: r.division ?? undefined,
     raceCount: r.raceCount ?? undefined,
-    geography: r.geography ?? "SG",
+    geography: r.geography ?? "SGP",
     boatClass: r.boatClass ?? "Optimist",
     countsForRanking: r.countsForRanking !== false,
   }));

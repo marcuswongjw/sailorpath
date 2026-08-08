@@ -9,6 +9,7 @@ export type RegattaImportRow = {
   club: string | null;
   school: string | null;
   nationality: string | null;
+  gender: string | null;
   sailNumber: string | null;
   dob: string | null;
   birthYear: number | null;
@@ -23,10 +24,23 @@ function emptyRow(): RegattaImportRow {
     club: null,
     school: null,
     nationality: null,
+    gender: null,
     sailNumber: null,
     dob: null,
     birthYear: null,
   };
+}
+
+/** Normalize gender from sheet to M | F | null. */
+export function normalizeImportGender(v: unknown): string | null {
+  if (v == null || v === "") return null;
+  const s = String(v).trim().toLowerCase();
+  if (!s || /^n\/?a$/i.test(s)) return null;
+  if (s === "m" || s === "male" || s === "boy" || s === "man") return "M";
+  if (s === "f" || s === "female" || s === "girl" || s === "woman") return "F";
+  if (s.startsWith("m")) return "M";
+  if (s.startsWith("f")) return "F";
+  return null;
 }
 
 /** Map raw sheet objects to regatta result import rows. */
@@ -76,6 +90,9 @@ export function parseRegattaResultRows(
             /nationality|country of origin|\bnoc\b/i.test(k) &&
             !/squad|nat\s*[ab]|national squad/i.test(k)
         );
+      const genderKey =
+        keys.find((k) => /^(gender|sex|gendre)$/i.test(k.trim())) ||
+        keys.find((k) => /^gender|^\s*sex\s*$/i.test(k));
       const sailKey =
         keys.find((k) =>
           /^(sail\s*(number|no\.?|#|num)?|sailnumber|boat\s*(number|no\.?)?)$/i.test(
@@ -135,6 +152,10 @@ export function parseRegattaResultRows(
           : "";
       const nationality =
         natRaw && !/^n\/?a$/i.test(natRaw) ? natRaw : null;
+      const gender =
+        genderKey != null && r[genderKey] != null
+          ? normalizeImportGender(r[genderKey])
+          : null;
       const sailRaw =
         sailKey != null && r[sailKey] != null
           ? String(r[sailKey]).trim()
@@ -178,6 +199,7 @@ export function parseRegattaResultRows(
         club,
         school,
         nationality,
+        gender,
         sailNumber,
         dob,
         birthYear,
@@ -191,11 +213,13 @@ export function summarizeRegattaImport(rows: RegattaImportRow[]): string {
   const withDob = rows.filter((r) => r.dob || r.birthYear).length;
   const withClub = rows.filter((r) => r.club).length;
   const withNat = rows.filter((r) => r.nationality).length;
+  const withGender = rows.filter((r) => r.gender).length;
   const profileBits = [
     withSail && `${withSail} sail #`,
     withDob && `${withDob} birth year/DOB`,
     withClub && `${withClub} club`,
     withNat && `${withNat} nationality`,
+    withGender && `${withGender} gender`,
   ].filter(Boolean);
   return profileBits.length
     ? ` (${profileBits.join(", ")} — will update sailor profiles on import)`

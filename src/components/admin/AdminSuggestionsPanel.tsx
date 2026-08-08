@@ -56,7 +56,7 @@ export function AdminSuggestionsPanel({
       for (const s of data.suggestions || []) {
         forms[s.id] = {
           division: "Gold",
-          geography: s.geography || "SG",
+          geography: s.geography || "SGP",
           totalFleetSize: String(s.totalFleetSize || 50),
         };
       }
@@ -85,7 +85,7 @@ export function AdminSuggestionsPanel({
           for (const s of data.suggestions || []) {
             forms[s.id] = {
               division: "Gold",
-              geography: s.geography || "SG",
+              geography: s.geography || "SGP",
               totalFleetSize: String(s.totalFleetSize || 50),
             };
           }
@@ -178,7 +178,7 @@ export function AdminSuggestionsPanel({
             {items.map((s) => {
               const form = promoteForm[s.id] || {
                 division: "Gold",
-                geography: "SG",
+                geography: "SGP",
                 totalFleetSize: "50",
               };
               return (
@@ -252,7 +252,7 @@ export function AdminSuggestionsPanel({
                             ...f,
                             [s.id]: {
                               ...form,
-                              geography: v || "SG",
+                              geography: v || "SGP",
                             },
                           }))
                         }

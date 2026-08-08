@@ -7,10 +7,11 @@ import {
 } from "./countries";
 
 describe("normalizeGeography", () => {
-  it("maps names and codes to ISO2", () => {
-    expect(normalizeGeography("Singapore")).toBe("SG");
-    expect(normalizeGeography("sg")).toBe("SG");
-    expect(normalizeGeography("SGP")).toBe("SG");
+  it("maps names and codes to NOC-style", () => {
+    expect(normalizeGeography("Singapore")).toBe("SGP");
+    expect(normalizeGeography("sg")).toBe("SGP");
+    expect(normalizeGeography("SGP")).toBe("SGP");
+    expect(normalizeGeography("Malaysia")).toBe("MAS");
   });
 });
 

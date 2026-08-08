@@ -1023,6 +1023,31 @@ export async function PATCH(req: Request) {
       if (!row) {
         return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
       }
+
+      // Stamp gender + birth year onto all of this sailor's regatta results
+      if (body.gender !== undefined || body.dob !== undefined) {
+        try {
+          const { regattaResults } = await import("@/db/schema");
+          const { birthYear } = await import("@/lib/age");
+          const gRaw = String(row.gender || "")
+            .trim()
+            .toUpperCase()
+            .slice(0, 1);
+          const g = gRaw === "M" || gRaw === "F" ? gRaw : null;
+          const by = birthYear(row.dob);
+          await db
+            .update(regattaResults)
+            .set({
+              ...(body.gender !== undefined ? { gender: g } : {}),
+              ...(body.dob !== undefined ? { birthYear: by } : {}),
+              updatedAt: new Date(),
+            })
+            .where(eq(regattaResults.sailorId, body.id));
+        } catch (stampErr) {
+          console.warn("result demographics stamp after sailor PATCH", stampErr);
+        }
+      }
+
       const { logAdminChange } = await import("@/lib/adminChangeLog");
       void logAdminChange({
         actorUserId: auth.userId,

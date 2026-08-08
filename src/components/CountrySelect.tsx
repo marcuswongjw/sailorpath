@@ -3,6 +3,7 @@
 import {
   geographySelectOptions,
   nationalitySelectOptions,
+  normalizeGeography,
 } from "@/lib/countries";
 
 type CommonProps = {
@@ -17,7 +18,7 @@ type CommonProps = {
 };
 
 /**
- * Country list for regatta geography (ISO alpha-2 values, e.g. SG).
+ * Geography list for regattas (NOC-style values, e.g. SGP).
  */
 export function GeographySelect({
   value,
@@ -26,10 +27,17 @@ export function GeographySelect({
   id,
   disabled,
   allowEmpty,
-  emptyLabel = "— Select country —",
+  emptyLabel = "— Select geography —",
 }: CommonProps) {
   const opts = geographySelectOptions();
-  const v = String(value || "").toUpperCase() || "";
+  const raw = String(value || "").toUpperCase() || "";
+  const normalized = raw ? normalizeGeography(raw) || raw : "";
+  const v = opts.some((o) => o.code === normalized)
+    ? normalized
+    : opts.some((o) => o.code === raw)
+      ? raw
+      : raw;
+
   return (
     <select
       id={id}
@@ -42,6 +50,9 @@ export function GeographySelect({
       }
     >
       {allowEmpty && <option value="">{emptyLabel}</option>}
+      {v && !opts.some((o) => o.code === v) && (
+        <option value={v}>{v} (current)</option>
+      )}
       {opts.map((c) => (
         <option key={c.code} value={c.code}>
           {c.code} — {c.name}
@@ -65,7 +76,6 @@ export function NationalitySelect({
 }: CommonProps) {
   const opts = nationalitySelectOptions();
   const v = String(value || "").toUpperCase() || "";
-  // If current value is not in list (legacy free text), keep a synthetic option
   const known = opts.some((o) => o.code === v);
   return (
     <select

@@ -109,7 +109,7 @@ export function AdminRegattasPanel({
                         totalFleetSize: 50,
                         division: "Gold",
                         raceCount: "",
-                        geography: "SG",
+                        geography: "SGP",
                         boatClass: "Optimist",
                         countsForRanking: true,
                       });
@@ -155,7 +155,7 @@ export function AdminRegattasPanel({
                                     r.totalFleetSize != null
                                       ? String(r.totalFleetSize)
                                       : "",
-                                  geography: r.geography || "SG",
+                                  geography: r.geography || "SGP",
                                   boatClass: r.boatClass || "Optimist",
                                   countsForRanking: r.countsForRanking !== false,
                                 });
@@ -175,7 +175,7 @@ export function AdminRegattasPanel({
                                 )}
                               </p>
                               <p className="text-[10px] text-slate-500 mt-0.5 font-mono">
-                                {regattaDateLabel(r.date)} · {r.geography || "SG"} ·{" "}
+                                {regattaDateLabel(r.date)} · {r.geography || "SGP"} ·{" "}
                                 {r.boatClass || "Optimist"} · {r.division || "Gold"}{" "}
                                 · fleet {r.totalFleetSize}
                                 {r.raceCount != null
@@ -380,14 +380,14 @@ export function AdminRegattasPanel({
                           </div>
                           <div>
                             <label className="text-[10px] font-bold text-slate-500 uppercase">
-                              Geography / country
+                              Geography
                             </label>
                             <GeographySelect
-                              value={regattaForm.geography || "SG"}
+                              value={regattaForm.geography || "SGP"}
                               onChange={(v) =>
                                 setRegattaForm({
                                   ...regattaForm,
-                                  geography: v || "SG",
+                                  geography: v || "SGP",
                                 })
                               }
                             />

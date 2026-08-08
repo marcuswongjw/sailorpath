@@ -27,6 +27,8 @@ import {
   isAnyIlcaClass,
   ILCA_MIN_RACES_FOR_RANKING,
 } from "@/lib/ilcaRanking";
+import { normalizeImportGender } from "@/lib/excel/parseRegattaResultsSheet";
+import { birthYear as birthYearFromDob } from "@/lib/age";
 
 export type { ImportPossibleDuplicate };
 
@@ -107,6 +109,7 @@ export async function POST(req: Request) {
         club?: string | null;
         school?: string | null;
         nationality?: string | null;
+        gender?: string | null;
         sailNumber?: string | null;
         dob?: string | number | null;
         birthYear?: string | number | null;
@@ -134,6 +137,9 @@ export async function POST(req: Request) {
           yearOnlyDob ||
             (birthYearHint && fullDob && fullDob === birthYearHint)
         );
+        const gender = normalizeImportGender(
+          (r as { gender?: string | null }).gender
+        );
         return {
           name: String(r.name || "").trim(),
           rank: toNumber(r.rank),
@@ -145,6 +151,7 @@ export async function POST(req: Request) {
           ),
           nationalityRaw: normalizeOptionalText(r.nationality),
           nationality: normalizeNationalityCode(r.nationality),
+          gender,
           sailNumber,
           dob,
           dobIsYearOnly,
@@ -233,6 +240,7 @@ export async function POST(req: Request) {
         sailNumber: sailors.sailNumber,
         sailNumberIlca4: sailors.sailNumberIlca4,
         dob: sailors.dob,
+        gender: sailors.gender,
         club: sailors.club,
         school: sailors.school,
         nationality: sailors.nationality,
@@ -333,6 +341,8 @@ export async function POST(req: Request) {
       nettScore: number | null;
       totalScore: number | null;
       isDns: boolean;
+      gender: string | null;
+      birthYear: number | null;
     }[] = [];
     const pendingAliases: { sailorId: string; aliasName: string }[] = [];
 
@@ -426,6 +436,7 @@ export async function POST(req: Request) {
                   ? { nationality: normalizeNationalityCode(row.nationalityRaw) }
                   : {}),
               ...(row.dob ? { dob: row.dob } : {}),
+              ...(row.gender ? { gender: row.gender } : {}),
               // currentFleet / goldEntryDate / silverEntryDate intentionally omitted
             })
             .returning({
@@ -434,6 +445,7 @@ export async function POST(req: Request) {
               sailNumber: sailors.sailNumber,
               sailNumberIlca4: sailors.sailNumberIlca4,
               dob: sailors.dob,
+              gender: sailors.gender,
               club: sailors.club,
               school: sailors.school,
               nationality: sailors.nationality,
@@ -507,13 +519,30 @@ export async function POST(req: Request) {
         };
         let profileChanged = fieldChanged.length > 0;
 
+        // Gender + birth year/DOB: latest regatta wins (same rule as club/school)
+        if (row.gender) {
+          const curG = String(existing?.gender || "")
+            .trim()
+            .toUpperCase()
+            .slice(0, 1);
+          if (!curG) {
+            // Always fill empty gender when sheet has it
+            profilePatch.gender = row.gender;
+            profileChanged = true;
+            fieldChanged.push("gender");
+          } else if (curG !== row.gender && applyClubSchool) {
+            profilePatch.gender = row.gender;
+            profileChanged = true;
+            fieldChanged.push("gender");
+          }
+        }
         if (row.dob) {
           const curDob = existing?.dob ? String(existing.dob).slice(0, 10) : "";
           if (!curDob) {
             profilePatch.dob = row.dob;
             profileChanged = true;
             fieldChanged.push("dob");
-          } else if (curDob !== row.dob) {
+          } else if (curDob !== row.dob && applyClubSchool) {
             if (
               row.dobIsYearOnly &&
               curDob.startsWith(row.dob.slice(0, 4))
@@ -524,6 +553,8 @@ export async function POST(req: Request) {
               profileChanged = true;
               fieldChanged.push("dob");
             }
+          } else if (!applyClubSchool && curDob !== row.dob) {
+            // Older event with different BY — leave profile; no flag unless needed
           }
         }
         // Nationality: latest regatta wins (same date rule as club/school).
@@ -619,6 +650,7 @@ export async function POST(req: Request) {
                   school: (profilePatch.school as string) ?? s.school,
                   nationality:
                     (profilePatch.nationality as string) ?? s.nationality,
+                  gender: (profilePatch.gender as string) ?? s.gender,
                 }
               : s
           );
@@ -647,6 +679,24 @@ export async function POST(req: Request) {
         const nett = row.nett != null ? row.nett : null;
         const total = row.total != null ? row.total : null;
 
+        // Denormalize gender + birth year onto this result from sailor profile
+        // (after any profile updates from this row)
+        const sailorNow = sailorList.find((s) => s.id === sailorId);
+        const resultGender =
+          row.gender ||
+          (sailorNow?.gender
+            ? String(sailorNow.gender).trim().toUpperCase().slice(0, 1)
+            : null);
+        const gNorm =
+          resultGender === "M" || resultGender === "F" ? resultGender : null;
+        const by =
+          birthYearFromDob(sailorNow?.dob) ??
+          (row.dob ? Number(String(row.dob).slice(0, 4)) : null);
+        const birthYear =
+          by != null && Number.isFinite(by) && by >= 1990 && by <= 2035
+            ? Math.round(by)
+            : null;
+
         // Collect for batch upsert (avoids N round-trips that timed out serverless)
         pendingResults.push({
           regattaId: reg.id,
@@ -655,6 +705,8 @@ export async function POST(req: Request) {
           nettScore: nett,
           totalScore: total,
           isDns: false,
+          gender: gNorm,
+          birthYear,
         });
         matched++;
 
@@ -702,6 +754,8 @@ export async function POST(req: Request) {
                   nettScore: r.nettScore,
                   totalScore: r.totalScore,
                   isDns: r.isDns,
+                  gender: r.gender,
+                  birthYear: r.birthYear,
                   updatedAt: new Date(),
                 },
               })
@@ -737,9 +791,43 @@ export async function POST(req: Request) {
       }
     }
 
+    // Stamp gender + birth year onto ALL results for sailors who have them
+    // (source of truth: sailor profile after this import's updates)
+    let resultsDemographicsUpdated = 0;
+    const affectedIds = [...affectedSailorIds];
+    if (affectedIds.length) {
+      try {
+        for (const sid of affectedIds) {
+          const s = sailorList.find((x) => x.id === sid);
+          if (!s) continue;
+          const g = String(s.gender || "")
+            .trim()
+            .toUpperCase()
+            .slice(0, 1);
+          const gender = g === "M" || g === "F" ? g : null;
+          const by = birthYearFromDob(s.dob);
+          if (!gender && by == null) continue;
+          const patch: {
+            gender?: string | null;
+            birthYear?: number | null;
+            updatedAt: Date;
+          } = { updatedAt: new Date() };
+          if (gender) patch.gender = gender;
+          if (by != null) patch.birthYear = by;
+          const updated = await db
+            .update(regattaResults)
+            .set(patch)
+            .where(eq(regattaResults.sailorId, sid))
+            .returning({ id: regattaResults.id });
+          resultsDemographicsUpdated += updated.length;
+        }
+      } catch (e) {
+        console.warn("result demographics stamp after import", e);
+      }
+    }
+
     // Recompute silver_entry_date — only for sailors touched by this import
     let silverUpdated = 0;
-    const affectedIds = [...affectedSailorIds];
     if (affectedIds.length) {
       try {
         const silverLinks = await db
@@ -788,12 +876,13 @@ export async function POST(req: Request) {
         entityType: "regatta",
         entityId: reg.id,
         entityLabel: reg.name,
-        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}, ${boat}, ${geo}, ${ranking ? "ranking" : "non-ranking"}); ${created} guests, ${updatedProfiles} profiles, ${nationalityUpdated} nationality, ${silverUpdated} silver dates`,
+        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}, ${boat}, ${geo}, ${ranking ? "ranking" : "non-ranking"}); ${created} guests, ${updatedProfiles} profiles, ${nationalityUpdated} nationality, ${resultsDemographicsUpdated} result gender/BY stamps, ${silverUpdated} silver dates`,
         details: {
           matched,
           created,
           updatedProfiles,
           nationalityUpdated,
+          resultsDemographicsUpdated,
           silverUpdated,
           rowErrors,
           profileFields: profileChangeFields,
@@ -841,13 +930,14 @@ export async function POST(req: Request) {
                 ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
                 : "See errors below."
             }`
-          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, ${silverUpdated} silver entry dates recomputed). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}${natNote}`,
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, gender/birth year stamped on ${resultsDemographicsUpdated} result row(s), ${silverUpdated} silver entry dates recomputed). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}${natNote}`,
       regatta: reg,
       matched,
       created,
       updatedProfiles,
       nationalityUpdated,
       nationalityFlags: nationalityFlags.slice(0, 80),
+      resultsDemographicsUpdated,
       silverUpdated,
       unmatched: unmatched.slice(0, 80),
       possibleDuplicates: dupeFlags,

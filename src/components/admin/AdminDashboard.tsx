@@ -256,7 +256,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     totalFleetSize: 50,
     division: "Gold",
     raceCount: "",
-    geography: "SG",
+    geography: "SGP",
     boatClass: "Optimist",
     countsForRanking: true,
   });

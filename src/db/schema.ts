@@ -112,8 +112,8 @@ export const regattas = pgTable("regattas", {
    * Optional until set by admin.
    */
   raceCount: integer("race_count"),
-  /** Country / region tag (e.g. SG, MY, TH) for multi-geo filtering */
-  geography: text("geography").default("SG").notNull(),
+  /** Geography NOC-style code (e.g. SGP, MAS, THA) for multi-geo filtering */
+  geography: text("geography").default("SGP").notNull(),
   /** Boat class tag (e.g. Optimist, ILCA 6) */
   boatClass: text("boat_class").default("Optimist").notNull(),
   /**
@@ -160,6 +160,16 @@ export const regattaResults = pgTable(
     isOverseasCommitment: boolean("is_overseas_commitment")
       .default(false)
       .notNull(),
+    /**
+     * Denormalized from sailor at import/sync time for result-level filters
+     * (M / F). Source of truth remains sailors.gender.
+     */
+    gender: text("gender"),
+    /**
+     * Birth year denormalized from sailor DOB for result-level age buckets.
+     * Source of truth remains sailors.dob.
+     */
+    birthYear: integer("birth_year"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
