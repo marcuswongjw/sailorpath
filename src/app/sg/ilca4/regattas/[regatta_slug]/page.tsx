@@ -51,7 +51,7 @@ export default async function Ilca4RegattaDetailPage({
               <tr>
                 <th className="px-4 py-3 text-center">Rank</th>
                 <th className="px-4 py-3">Name</th>
-                <th className="px-4 py-3 text-center">NOC</th>
+                <th className="px-4 py-3 text-center">Nationality</th>
                 <th className="px-4 py-3 text-center">Gender</th>
                 <th className="px-4 py-3 text-center">Birth year</th>
                 <th className="px-4 py-3 text-center">Total Score</th>

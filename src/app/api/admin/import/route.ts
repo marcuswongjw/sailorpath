@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { eq, inArray, max } from "drizzle-orm";
+import { and, eq, inArray, max } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailorAliases, sailors } from "@/db/schema";
@@ -204,34 +204,97 @@ export async function POST(req: Request) {
           ? "Open"
           : "Gold");
 
-    const [reg] = await db
-      .insert(regattas)
-      .values({
-        name: regattaName,
-        slug,
-        date: eventDate,
-        totalFleetSize: fleetSize,
-        division: div,
-        geography: geo,
-        boatClass: boat,
-        countsForRanking: ranking,
-        raceCount,
-      })
-      .onConflictDoUpdate({
-        target: regattas.slug,
-        set: {
+    /**
+     * Prefer matching an existing regatta by date + boat class + division so
+     * re-import / title renames (e.g. "20230311 SYSC Gold" → "SYSC Gold (Mar 23)")
+     * update the same row instead of creating a duplicate via a new slug.
+     * Fall back to slug conflict upsert.
+     */
+    const sameDay = await db
+      .select()
+      .from(regattas)
+      .where(
+        and(
+          eq(regattas.date, eventDate),
+          eq(regattas.boatClass, boat),
+          eq(regattas.division, div)
+        )
+      )
+      .limit(5);
+
+    let reg: (typeof regattas.$inferSelect) | undefined;
+
+    if (sameDay.length >= 1) {
+      // Prefer exact slug match among same-day fleet; else sole match; else first
+      const target =
+        sameDay.find((r) => r.slug === slug) ||
+        (sameDay.length === 1 ? sameDay[0] : sameDay[0]);
+
+      // Refresh slug to new title only if free (or already ours)
+      let nextSlug = target.slug;
+      if (target.name !== regattaName && slug !== target.slug) {
+        const [slugTaken] = await db
+          .select({ id: regattas.id })
+          .from(regattas)
+          .where(eq(regattas.slug, slug))
+          .limit(1);
+        if (!slugTaken || slugTaken.id === target.id) {
+          nextSlug = slug;
+        }
+      }
+
+      const [updated] = await db
+        .update(regattas)
+        .set({
           name: regattaName,
+          slug: nextSlug,
+          totalFleetSize: fleetSize,
+          geography: geo,
+          countsForRanking: ranking,
+          raceCount,
+          updatedAt: new Date(),
+        })
+        .where(eq(regattas.id, target.id))
+        .returning();
+      reg = updated;
+    } else {
+      const [upserted] = await db
+        .insert(regattas)
+        .values({
+          name: regattaName,
+          slug,
+          date: eventDate,
           totalFleetSize: fleetSize,
           division: div,
-          date: eventDate,
           geography: geo,
           boatClass: boat,
           countsForRanking: ranking,
           raceCount,
-          updatedAt: new Date(),
-        },
-      })
-      .returning();
+        })
+        .onConflictDoUpdate({
+          target: regattas.slug,
+          set: {
+            name: regattaName,
+            totalFleetSize: fleetSize,
+            division: div,
+            date: eventDate,
+            geography: geo,
+            boatClass: boat,
+            countsForRanking: ranking,
+            raceCount,
+            updatedAt: new Date(),
+          },
+        })
+        .returning();
+      reg = upserted;
+    }
+
+    if (!reg) {
+      return NextResponse.json(
+        { error: "Failed to create or update regatta" },
+        { status: 500 }
+      );
+    }
 
     let sailorList = await db
       .select({
