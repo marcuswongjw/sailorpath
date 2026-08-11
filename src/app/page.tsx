@@ -34,54 +34,38 @@ export default async function HomePage() {
 
       {/* Hero */}
       <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pt-16 sm:pb-20 text-center lg:pt-24">
-        <div className="inline-flex max-w-[min(100%,22rem)] sm:max-w-full items-center gap-2 px-3 py-1 rounded-full border border-white/5 bg-white/5 text-[11px] sm:text-xs text-orange-400 font-bold mb-4 sm:mb-6">
-          <Sparkles className="h-3 w-3 text-orange-500 animate-pulse shrink-0" />
-          <span className="truncate">
-            SG Optimist · ILCA 4 · sailor logbook
-          </span>
-        </div>
-
-        <h1 className="mx-auto max-w-4xl text-[1.65rem] leading-snug sm:text-5xl lg:text-7xl font-black tracking-tight text-white sm:leading-tight">
-          Rankings that match
-          <span className="block mt-1 sm:mt-0 sm:inline sm:before:content-[' '] bg-gradient-to-r from-orange-500 via-orange-600 to-sky-500 bg-clip-text text-transparent">
-            how Singapore sails.
+        <h1 className="mx-auto max-w-4xl text-[1.65rem] leading-snug sm:text-5xl lg:text-6xl font-black tracking-tight text-white sm:leading-tight">
+          The performance tracker for{" "}
+          <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-sky-500 bg-clip-text text-transparent">
+            Singapore&apos;s youth sailors
           </span>
         </h1>
 
-        <p className="mx-auto mt-3 sm:mt-6 max-w-xl sm:max-w-3xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
-          Official Optimist Gold/Silver series, ILCA 4 national ranking, and
-          dual-class profiles — SGP Optimist sailors are auto-included in the
-          series when they race.
+        <p className="mx-auto mt-4 sm:mt-6 max-w-xl sm:max-w-2xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
+          See your national ranking, track your sailing journey from Optimist to
+          ILCA, and claim your athlete profile — all in one place.
         </p>
 
-        <div className="mt-5 sm:mt-8 flex flex-col gap-2.5 w-full max-w-sm mx-auto sm:max-w-none sm:flex-row sm:justify-center sm:gap-3 sm:flex-wrap">
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-2.5 w-full max-w-md mx-auto sm:max-w-none sm:justify-center sm:gap-3">
           <Link
-            href="/sg/optimist/gold"
-            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-5 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
+            href="/rankings"
+            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
           >
             <Trophy className="h-4 w-4 shrink-0" />
-            Optimist Gold
+            View Live Rankings
           </Link>
           <Link
-            href="/sg/ilca4"
-            className="w-full sm:w-auto rounded-full border border-sky-500/40 bg-sky-500/10 px-5 py-3.5 text-xs font-bold text-sky-100 hover:border-sky-400/60 transition-all text-center min-h-[44px] inline-flex items-center justify-center gap-2"
+            href="/claim-profile"
+            className="w-full sm:w-auto rounded-full border border-white/15 bg-white/5 px-6 py-3.5 text-xs font-bold text-white hover:border-orange-500/40 hover:bg-white/10 transition-all text-center min-h-[44px] inline-flex items-center justify-center"
           >
-            <Anchor className="h-4 w-4 shrink-0" />
-            ILCA 4 ranking
-          </Link>
-          <Link
-            href="/register"
-            className="w-full sm:w-auto rounded-full border border-white/15 bg-white/5 px-5 py-3.5 text-xs font-bold text-white hover:border-orange-500/40 transition-all text-center min-h-[44px] inline-flex items-center justify-center"
-          >
-            Create account
-          </Link>
-          <Link
-            href="/sample"
-            className="w-full sm:w-auto rounded-full border border-amber-500/35 bg-amber-500/10 px-5 py-3.5 text-xs font-bold text-amber-100 hover:border-amber-400/60 transition-all text-center min-h-[44px] inline-flex items-center justify-center"
-          >
-            Tour demo
+            Claim My Profile
           </Link>
         </div>
+
+        <p className="mx-auto mt-4 max-w-2xl text-[11px] sm:text-[12px] text-slate-500 leading-relaxed">
+          Official ranking data for Singapore Sailing&apos;s Optimist Gold/Silver
+          Series and ILCA 4 National Ranking
+        </p>
 
         <div className="mx-auto mt-6 sm:mt-12 max-w-md w-full">
           <form action="/search" className="relative">
