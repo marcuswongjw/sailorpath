@@ -442,7 +442,7 @@ export default async function HomePage() {
             </div>
 
             <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">
-              $49
+              $99
               <span className="text-xs font-bold text-slate-500">
                 {" "}
                 (One-time contribution)
@@ -485,7 +485,7 @@ export default async function HomePage() {
 
             <div className="mt-8">
               <a
-                href="https://buy.stripe.com/mock_founding_membership"
+                href="https://buy.stripe.com/00weVd3jFf8h9ZvelL4Rq00"
                 target="_blank"
                 rel="noreferrer"
                 className="flex w-full justify-center rounded-full bg-orange-600 py-3 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
@@ -493,7 +493,7 @@ export default async function HomePage() {
                 Back the Build
               </a>
               <p className="mt-3 text-center text-[10px] text-slate-600">
-                Payment link is a placeholder until Stripe is connected.
+                Secure checkout powered by Stripe.
               </p>
             </div>
           </div>
