@@ -5,7 +5,6 @@ import {
   Zap,
   Shield,
   Compass,
-  Sparkles,
   Anchor,
   Medal,
   BookOpen,
