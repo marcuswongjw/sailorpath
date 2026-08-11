@@ -117,6 +117,84 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* How it works */}
+      <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-8 sm:mb-12">
+            How SailorPath Works
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+            {(
+              [
+                {
+                  step: "1",
+                  title: "We collect results",
+                  body: "Every ranking regatta in Singapore feeds into SailorPath automatically.",
+                },
+                {
+                  step: "2",
+                  title: "Your profile builds itself",
+                  body: "Results, ranking points, and fleet positions populate your athlete logbook.",
+                },
+                {
+                  step: "3",
+                  title: "You take ownership",
+                  body: "Claim your profile to add milestones, equipment notes, and race reflections.",
+                },
+              ] as const
+            ).map((item) => (
+              <div
+                key={item.step}
+                className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6 text-center md:text-left"
+              >
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-orange-500/15 text-orange-400 text-sm font-black border border-orange-500/25 mb-3">
+                  {item.step}
+                </span>
+                <h3 className="text-base sm:text-lg font-bold text-white">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  {item.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Live preview */}
+      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-8 sm:mb-10">
+            See what your profile looks like
+          </h2>
+          <div className="mx-auto max-w-3xl">
+            <div
+              className="rounded-2xl border border-dashed border-white/15 bg-[#0b0c13] min-h-[220px] sm:min-h-[320px] flex items-center justify-center px-6 py-12 text-center"
+              role="img"
+              aria-label="Sample profile screenshot placeholder"
+            >
+              <p className="text-[12px] sm:text-sm text-slate-500 max-w-md leading-relaxed font-medium">
+                [Sample profile screenshot to be inserted here — showing ranking,
+                results timeline, and equipment log]
+              </p>
+            </div>
+            <p className="mt-4 text-center text-[12px] sm:text-sm text-slate-400">
+              Sample Profile: Optimist Gold #12 · 3 regattas this season · ILCA 4
+              transition tracked
+            </p>
+            <p className="mt-3 text-center">
+              <Link
+                href="/demo-profile"
+                className="text-[13px] font-semibold text-orange-400 hover:text-orange-300"
+              >
+                View full demo profile →
+              </Link>
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Live product */}
       <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
