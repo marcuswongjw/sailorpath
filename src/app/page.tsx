@@ -8,8 +8,11 @@ import {
   Anchor,
   Medal,
   BookOpen,
+  Users,
+  UserRound,
 } from "lucide-react";
 import { listSailors } from "@/lib/queries";
+import { WaitlistForm } from "@/components/WaitlistForm";
 
 export const dynamic = "force-dynamic";
 
@@ -195,16 +198,77 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Live product */}
+      {/* Audience features */}
       <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 flex flex-col">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 mb-3">
+                <UserRound className="h-5 w-5 text-orange-400" />
+              </div>
+              <h2 className="text-lg font-bold text-white">For Sailors</h2>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                See exactly where you rank nationally. Track every regatta
+                result, equipment change, and milestone from your first Optimist
+                race through your ILCA transition.
+              </p>
+              <Link
+                href="/rankings"
+                className="mt-4 text-[12px] font-bold text-orange-400 hover:text-orange-300"
+              >
+                Check your ranking →
+              </Link>
+            </article>
+
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 mb-3">
+                <Users className="h-5 w-5 text-slate-200" />
+              </div>
+              <h2 className="text-lg font-bold text-white">For Parents</h2>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Follow your child&apos;s complete sailing journey in one place.
+                No more digging through WhatsApp groups, PDF results, and
+                scattered club websites.
+              </p>
+              <Link
+                href="/claim-profile"
+                className="mt-4 text-[12px] font-bold text-slate-300 hover:text-white"
+              >
+                Claim a profile →
+              </Link>
+            </article>
+
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-sky-500/25 flex flex-col">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
+                <Trophy className="h-5 w-5 text-sky-400" />
+              </div>
+              <h2 className="text-lg font-bold text-white">For Coaches</h2>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Manage your entire squad. Compare athletes, spot progression
+                trends, and prepare selection reports in minutes instead of
+                hours.
+              </p>
+              <Link
+                href="/coach-tools"
+                className="mt-4 text-[12px] font-bold text-sky-400 hover:text-sky-300"
+              >
+                Explore coach tools →
+              </Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* Ranking features */}
+      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Live on SailorPath
+              Rankings &amp; logbook
             </h2>
-            <p className="mt-3 text-slate-400 text-sm md:text-base leading-relaxed">
-              What you can use today — rankings, profiles, and admin tools for
-              Optimist and ILCA 4.
+            <p className="mt-3 text-slate-400 text-sm leading-relaxed">
+              Built for Singapore Sailing series rules — Optimist, ILCA 4, and
+              your personal journey.
             </p>
           </div>
 
@@ -213,170 +277,132 @@ export default async function HomePage() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 mb-3">
                 <Medal className="h-5 w-5 text-orange-400" />
               </div>
-              <h3 className="text-lg font-bold text-white">Optimist series</h3>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed flex-1">
-                Gold &amp; Silver boards with Best 3 of 5, DNS padding, overseas
-                commitment, Nat A/B previews, and gold participation auto-drop
-                (minimum ranking regattas per half).
+              <h3 className="text-lg font-bold text-white">
+                Optimist Gold/Silver Series Rankings
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Automatically calculated using Singapore Sailing&apos;s official
+                scoring rules. Best 3 of 5 results, with fair handling of DNS,
+                overseas commitments, and fleet movements.
               </p>
               <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
-                <li>
-                  <strong className="text-white">SGP auto-include</strong> —
-                  Singapore Optimist sailors with ranking results join the series
-                  (unless marked Guest)
-                </li>
-                <li>
-                  <strong className="text-white">Half-year fleets</strong> —
-                  gold entry &amp; drop on 1 Jan / 1 Jul
-                </li>
+                <li>SGP sailors auto-included when they race</li>
+                <li>Gold fleet entry and drop on 1 Jan / 1 Jul</li>
+                <li>Smart data checks for accuracy</li>
               </ul>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Link
-                  href="/sg/optimist/gold"
-                  className="text-[11px] font-bold text-orange-400 hover:text-orange-300"
-                >
-                  Gold →
-                </Link>
-                <Link
-                  href="/sg/optimist/silver"
-                  className="text-[11px] font-bold text-slate-400 hover:text-white"
-                >
-                  Silver →
-                </Link>
-              </div>
             </article>
 
             <article className="glass-card rounded-2xl p-5 sm:p-6 border border-sky-500/25 flex flex-col">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
                 <Anchor className="h-5 w-5 text-sky-400" />
               </div>
-              <h3 className="text-lg font-bold text-white">ILCA 4 ranking</h3>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed flex-1">
-                High Ranking Points (1st = fleet size), Best 3 of last 5, national
-                list roster, dual Optimist + ILCA sail numbers, and ILCA-first
-                profiles when sailors leave Optimist.
+              <h3 className="text-lg font-bold text-white">
+                ILCA 4 National Ranking
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Track your position as you transition from Optimist. High Ranking
+                Points system with position trend charts and journey timelines.
               </p>
               <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
-                <li>
-                  <strong className="text-white">Position trend</strong> — ILCA
-                  finish chart on sailor profiles
-                </li>
-                <li>
-                  <strong className="text-white">Left Optimist year</strong> —
-                  drop or age-out on the journey timeline
-                </li>
+                <li>Dual Optimist + ILCA sail numbers on one profile</li>
+                <li>Best 3 of last 5 results</li>
+                <li>Visual timeline showing your class transition</li>
               </ul>
-              <div className="mt-4">
-                <Link
-                  href="/sg/ilca4"
-                  className="text-[11px] font-bold text-sky-400 hover:text-sky-300"
-                >
-                  ILCA 4 standings →
-                </Link>
-              </div>
             </article>
 
             <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 mb-3">
                 <BookOpen className="h-5 w-5 text-amber-300" />
               </div>
-              <h3 className="text-lg font-bold text-white">Athlete logbook</h3>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed flex-1">
-                Claimed profiles with class-labeled key stats, medal tally, sailing
-                journey milestones, race notes, equipment, and privacy controls.
+              <h3 className="text-lg font-bold text-white">Athlete Logbook</h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Your complete sailing history, claimed and controlled by you. Add
+                notes, equipment, and milestones with full privacy controls.
               </p>
               <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
-                <li>
-                  <strong className="text-white">Dual-class tabs</strong> —
-                  Optimist and ILCA 4 results on one profile
-                </li>
-                <li>
-                  <strong className="text-white">Admin quality flags</strong> —
-                  gold entry mismatches, over-age Optimist, empty Series
-                </li>
+                <li>Dual-class tabs: Optimist and ILCA results together</li>
+                <li>Medal tally and key stats</li>
+                <li>Privacy controls for sensitive data</li>
               </ul>
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Link
-                  href="/sample"
-                  className="text-[11px] font-bold text-amber-300 hover:text-amber-200"
-                >
-                  Demo profile →
-                </Link>
-                <Link
-                  href="/register"
-                  className="text-[11px] font-bold text-slate-400 hover:text-white"
-                >
-                  Claim yours →
-                </Link>
-              </div>
             </article>
           </div>
+
+          <p className="mt-8 text-center">
+            <Link
+              href="/how-rankings-work"
+              className="text-[13px] font-semibold text-orange-400 hover:text-orange-300"
+            >
+              Read our full ranking methodology →
+            </Link>
+          </p>
         </div>
       </section>
 
-      {/* Pathway — shorter, next horizon */}
+      {/* Roadmap */}
       <section
-        id="development-pathway"
-        className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-16"
+        id="roadmap"
+        className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-16"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8">
+          <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              What&apos;s next
+              Roadmap
             </h2>
             <p className="mt-3 text-slate-400 text-sm leading-relaxed">
-              Rankings and logbooks are live. Family, coach, and association tools
-              are on the roadmap.
+              Rankings and logbooks are live. Here&apos;s what we&apos;re building
+              next.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-            <article className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5">
-              <span className="text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                Next
-              </span>
-              <h3 className="text-base font-bold text-white mt-1">
-                Family &amp; coach
-              </h3>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                Parent linking, coach squads, and role-based access beyond the
-                athlete.{" "}
-                <Link
-                  href="/sample?view=parent"
-                  className="text-amber-300/90 underline-offset-2 hover:underline"
-                >
-                  Preview in demo
-                </Link>
-                .
-              </p>
-            </article>
-            <article className="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-5">
-              <span className="text-[10px] font-black uppercase tracking-widest text-blue-400">
-                Horizon
-              </span>
-              <h3 className="text-base font-bold text-white mt-1">
-                Associations &amp; events
-              </h3>
-              <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-                Start-list sync, campaign planning, and notifications for rank
-                moves and selection windows.
-              </p>
-            </article>
+
+          <ol className="mx-auto max-w-2xl space-y-0 relative">
+            {(
+              [
+                {
+                  date: "Q3 2026",
+                  title: "Parent Dashboards",
+                  body: "Link your account to your child's profile for full visibility into their progress and upcoming events.",
+                },
+                {
+                  date: "Q4 2026",
+                  title: "Coach Squads",
+                  body: "Manage multiple sailors from one account. Role-based access and squad-level analytics.",
+                },
+                {
+                  date: "2027",
+                  title: "Club & Event Tools",
+                  body: "Start-list sync, campaign planning, and automated notifications for rank moves and selection windows.",
+                },
+              ] as const
+            ).map((item, i, arr) => (
+              <li key={item.date} className="relative flex gap-4 pb-10 last:pb-0">
+                {i < arr.length - 1 && (
+                  <span
+                    className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10"
+                    aria-hidden
+                  />
+                )}
+                <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-orange-500/40 bg-orange-500/15" />
+                <div>
+                  <p className="text-[11px] font-black uppercase tracking-widest text-orange-400">
+                    {item.date}
+                  </p>
+                  <h3 className="text-base font-bold text-white mt-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
+                    {item.body}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div className="mt-12 mx-auto max-w-lg rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 text-center">
+            <h3 className="text-lg font-bold text-white">
+              Want early access? Join the waitlist.
+            </h3>
+            <WaitlistForm />
           </div>
-          <p className="mt-8 text-center text-[11px] text-slate-500">
-            <Link
-              href="/support"
-              className="text-slate-400 hover:text-white underline-offset-2 hover:underline"
-            >
-              Send feedback
-            </Link>
-            {" · "}
-            <a
-              href="#founding-membership"
-              className="text-orange-400/90 font-semibold hover:text-orange-300"
-            >
-              Support the build
-            </a>
-          </p>
         </div>
       </section>
 

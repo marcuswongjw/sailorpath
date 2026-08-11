@@ -11,6 +11,7 @@ const TOPICS = new Set([
   "ranking",
   "profile",
   "bug",
+  "waitlist",
   "other",
 ]);
 
