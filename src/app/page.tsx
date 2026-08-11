@@ -433,7 +433,7 @@ export default async function HomePage() {
                   Founding Supporter
                 </h3>
                 <p className="text-xs text-orange-400 font-semibold mt-1">
-                  First 100 Members Only
+                  10 Members Only
                 </p>
               </div>
               <span className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-400 border border-orange-500/20">
