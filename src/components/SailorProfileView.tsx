@@ -72,6 +72,7 @@ export function SailorProfileView({
   initialResults,
   initialEquipment,
   initialSeriesStanding = null,
+  initialIlcaStanding = null,
   initialObservations = [],
   initialEquipmentHistory = [],
   canSeePrivate = false,
@@ -783,10 +784,15 @@ export function SailorProfileView({
         ? "Dropped from gold"
         : "In gold fleet";
 
-  /** ILCA-only (or dual-class on ILCA tab after leaving Optimist): ILCA-focused stats */
+  /**
+   * ILCA-focused stats whenever:
+   * - ILCA-only profile, or
+   * - dual-class user is on the ILCA 4 tab, or
+   * - ILCA-first after leaving Optimist
+   */
   const useIlcaStats =
     (hasIlcaResults && classBuckets.optimist.length === 0) ||
-    (preferIlcaFirst && hasIlcaResults && dualClass && resultsTab === "ilca4") ||
+    (hasIlcaResults && dualClass && resultsTab === "ilca4") ||
     (preferIlcaFirst && hasIlcaResults && !hasOptimistResults);
 
   const ilcaStatCells =
@@ -889,9 +895,24 @@ export function SailorProfileView({
     : "Key stats (Optimist)";
   const medalTallyTitle = "Medal tally (Optimist)";
 
-  // Medal tally only for established Optimist gold with podium medals
+  // Medal tally only for established Optimist gold (never on ILCA tab)
   const showMedals =
-    analytics.mode === "established_gold" && analytics.medals.show;
+    !useIlcaStats &&
+    analytics.mode === "established_gold" &&
+    analytics.medals.show;
+
+  /** Which ranking strip to show: Optimist series vs ILCA national */
+  const activeStanding =
+    useIlcaStats && initialIlcaStanding
+      ? initialIlcaStanding
+      : !useIlcaStats
+        ? initialSeriesStanding
+        : initialIlcaStanding || null;
+  const standingIsIlca =
+    useIlcaStats ||
+    String(activeStanding?.boatClass || "")
+      .toLowerCase()
+      .includes("ilca");
 
   /** Public viewers only see equipment when the sailor made it public */
   const showEquipmentSection = showEquipment || isOwner;
@@ -1461,110 +1482,156 @@ export function SailorProfileView({
         </div>
       )}
 
-      {/* ── Series standing ──────────────────────────────────── */}
-      {initialSeriesStanding && (
+      {/* ── Series / ILCA national standing ─────────────────── */}
+      {activeStanding && resultsTab !== "journey" && (
         <section className={`${cardClass} p-4 sm:p-5`}>
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-start gap-2.5 min-w-0">
-              <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-500/15">
-                <Trophy className="h-3.5 w-3.5 text-orange-400" />
+              <div
+                className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
+                  standingIsIlca ? "bg-sky-500/15" : "bg-orange-500/15"
+                }`}
+              >
+                <Trophy
+                  className={`h-3.5 w-3.5 ${
+                    standingIsIlca ? "text-sky-400" : "text-orange-400"
+                  }`}
+                />
               </div>
               <div>
                 <p className="text-[13px] font-semibold text-white">
-                  Series standing
+                  {standingIsIlca
+                    ? "ILCA 4 national ranking"
+                    : "Series standing"}
                 </p>
                 <p className="text-[11px] text-neutral-500">
-                  {initialSeriesStanding.periodLabel}
+                  {activeStanding.periodLabel}
                   <span className="text-neutral-600"> · </span>
-                  <span className="text-yellow-400/90 font-medium">
-                    {initialSeriesStanding.fleet} fleet
+                  <span
+                    className={`font-medium ${
+                      standingIsIlca
+                        ? "text-sky-300/90"
+                        : "text-yellow-400/90"
+                    }`}
+                  >
+                    {standingIsIlca
+                      ? "Open fleet"
+                      : `${activeStanding.fleet} fleet`}
                   </span>
                 </p>
               </div>
             </div>
             <div className="text-right">
               <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
-                Best 3 of 5
+                {standingIsIlca ? "Best 3 of 5 pts" : "Best 3 of 5"}
               </p>
               <p className="text-2xl font-semibold text-white tabular-nums leading-none">
-                {initialSeriesStanding.best3of5}
+                {activeStanding.best3of5}
               </p>
               <p className="text-[12px] text-neutral-400 mt-0.5 tabular-nums">
-                #{initialSeriesStanding.overallRank}
+                #{activeStanding.overallRank}
                 <span className="text-neutral-600">
                   {" "}
-                  of {initialSeriesStanding.fleetSize}
+                  of {activeStanding.fleetSize}
                 </span>
               </p>
             </div>
           </div>
-          {/* Desktop / tablet: 5 score tiles with readable names */}
           <div className="mt-4 hidden sm:grid grid-cols-5 gap-2">
             {Array.from({ length: 5 }).map((_, i) => {
-              const r = initialSeriesStanding.rScores[i];
+              const r = activeStanding.rScores[i];
               const shortName = r?.regattaName
                 ? r.regattaName
                     .replace(/National Ranking Series/i, "NRS")
                     .replace(/National Regatta/i, "NR")
                     .replace(/Championships?/i, "Champs")
                 : null;
+              const empty =
+                !r ||
+                r.regattaName === "—" ||
+                (r.isDNS && r.score === 0 && !r.isOverseasCommitment);
               return (
                 <div
                   key={i}
                   className="rounded-xl border border-white/[0.07] bg-black/30 px-2 py-3 text-center min-h-[5.5rem] flex flex-col"
                   title={r?.regattaName}
                 >
-                  <p className="text-[11px] font-bold text-orange-400 tracking-wide">
+                  <p
+                    className={`text-[11px] font-bold tracking-wide ${
+                      standingIsIlca ? "text-sky-400" : "text-orange-400"
+                    }`}
+                  >
                     R{i + 1}
                   </p>
                   <p className="text-[12px] sm:text-[13px] font-medium text-neutral-300 leading-snug mt-1.5 line-clamp-2 flex-1 px-0.5">
-                    {shortName || "—"}
+                    {empty ? "—" : shortName || "—"}
                   </p>
                   <p className="text-xl font-bold text-white tabular-nums mt-2">
-                    {r
-                      ? `${r.score}${r.isOverseasCommitment ? "†" : r.isDNS ? "*" : ""}${r.isCarryForward ? " CF" : ""}`
-                      : "—"}
+                    {empty
+                      ? "—"
+                      : `${r!.score}${r!.isOverseasCommitment ? "†" : r!.isDNS ? "*" : ""}${r!.isCarryForward ? " CF" : ""}`}
                   </p>
                 </div>
               );
             })}
           </div>
-          {/* Mobile: stacked rows — easier to scan than 5 cramped columns */}
           <ul className="mt-4 sm:hidden divide-y divide-white/[0.06] rounded-xl border border-white/[0.07] bg-black/25 overflow-hidden">
             {Array.from({ length: 5 }).map((_, i) => {
-              const r = initialSeriesStanding.rScores[i];
+              const r = activeStanding.rScores[i];
+              const empty =
+                !r ||
+                r.regattaName === "—" ||
+                (r.isDNS && r.score === 0 && !r.isOverseasCommitment);
               return (
                 <li
                   key={i}
                   className="flex items-center justify-between gap-3 px-3.5 py-3"
                 >
                   <div className="min-w-0 flex items-center gap-2.5">
-                    <span className="shrink-0 text-[11px] font-bold text-orange-400 w-6">
+                    <span
+                      className={`shrink-0 text-[11px] font-bold w-6 ${
+                        standingIsIlca ? "text-sky-400" : "text-orange-400"
+                      }`}
+                    >
                       R{i + 1}
                     </span>
                     <span className="text-[13px] font-medium text-neutral-200 truncate">
-                      {r?.regattaName || "—"}
+                      {empty ? "—" : r?.regattaName || "—"}
                     </span>
                   </div>
                   <span className="shrink-0 text-lg font-bold text-white tabular-nums">
-                    {r
-                      ? `${r.score}${r.isOverseasCommitment ? "†" : r.isDNS ? "*" : ""}${r.isCarryForward ? " CF" : ""}`
-                      : "—"}
+                    {empty
+                      ? "—"
+                      : `${r!.score}${r!.isOverseasCommitment ? "†" : r!.isDNS ? "*" : ""}`}
                   </span>
                 </li>
               );
             })}
           </ul>
-          {initialSeriesStanding.trendNote && (
-            <p className="mt-3 text-[11px] text-emerald-400/90 font-medium">
-              {initialSeriesStanding.trendNote}
+          {activeStanding.trendNote && (
+            <p
+              className={`mt-3 text-[11px] font-medium ${
+                standingIsIlca ? "text-sky-300/90" : "text-emerald-400/90"
+              }`}
+            >
+              {activeStanding.trendNote}
             </p>
           )}
           <Link
-            href={`/sg/optimist/${String(initialSeriesStanding.fleet).toLowerCase()}`}
-            className="inline-block mt-2 text-[12px] font-medium text-orange-400 hover:text-orange-300"
+            href={
+              standingIsIlca
+                ? "/sg/ilca4"
+                : `/sg/optimist/${String(activeStanding.fleet).toLowerCase()}`
+            }
+            className={`inline-block mt-2 text-[12px] font-medium ${
+              standingIsIlca
+                ? "text-sky-400 hover:text-sky-300"
+                : "text-orange-400 hover:text-orange-300"
+            }`}
           >
-            View full {initialSeriesStanding.fleet} standings →
+            {standingIsIlca
+              ? "View full ILCA 4 standings →"
+              : `View full ${activeStanding.fleet} standings →`}
           </Link>
         </section>
       )}

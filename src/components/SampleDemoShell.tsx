@@ -8,6 +8,7 @@ import {
   DEMO_ROLE_COPY,
   SAMPLE_COACH_PANEL,
   SAMPLE_EQUIPMENT,
+  SAMPLE_ILCA_STANDING,
   SAMPLE_OBSERVATIONS,
   SAMPLE_PARENT_PANEL,
   SAMPLE_RESULTS,
@@ -30,7 +31,18 @@ import {
   CheckCircle2,
   Wrench,
   GraduationCap,
+  UserPlus,
+  ChevronRight,
 } from "lucide-react";
+
+type CoachRosterSailor = {
+  name: string;
+  handle: string;
+  rank: number;
+  highlight: string;
+  avgFinish?: string;
+  selection?: string;
+};
 
 const ROLES: DemoRole[] = ["public", "sailor", "parent", "coach"];
 
@@ -120,6 +132,25 @@ export function SampleDemoShell() {
   const [compareTo, setCompareTo] = useState(
     SAMPLE_COACH_PANEL.compareOptions[0]?.name || ""
   );
+  const [coachRoster, setCoachRoster] = useState<CoachRosterSailor[]>(
+    SAMPLE_COACH_PANEL.squadTeaser.map((s) => ({
+      ...s,
+      avgFinish:
+        s.name === "Ashlyn Tan"
+          ? "3.6"
+          : s.name === "Ethan Koh"
+            ? "7.1"
+            : "9.4",
+      selection:
+        s.name === "Ashlyn Tan"
+          ? "On track"
+          : s.name === "Ethan Koh"
+            ? "Watch"
+            : "Developing",
+    }))
+  );
+  const [selectedCoachSailor, setSelectedCoachSailor] =
+    useState<CoachRosterSailor | null>(null);
 
   const copy = DEMO_ROLE_COPY[role];
   const age = sampleAgeYears(SAMPLE_SAILOR.dob) ?? 12;
@@ -145,6 +176,7 @@ export function SampleDemoShell() {
   const setRoleAndUrl = (r: DemoRole) => {
     setRole(r);
     setSettingsOpen(false);
+    setSelectedCoachSailor(null);
     if (typeof window !== "undefined") {
       const u = new URL(window.location.href);
       u.searchParams.set("view", r);
@@ -504,28 +536,130 @@ export function SampleDemoShell() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Users className="h-4 w-4 text-orange-400" />
-            <h3 className="text-xs font-black text-white uppercase tracking-wider">
-              Squad roster
-            </h3>
+        <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 space-y-3">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-orange-400" />
+              <h3 className="text-xs font-black text-white uppercase tracking-wider">
+                Squad roster
+              </h3>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const n = coachRoster.length + 1;
+                const newbie: CoachRosterSailor = {
+                  name: `Demo Sailor ${n}`,
+                  handle: "#",
+                  rank: 12 + n,
+                  highlight: "Newly added (demo)",
+                  avgFinish: "—",
+                  selection: "New",
+                };
+                setCoachRoster((prev) => [...prev, newbie]);
+                flash(`Demo: added ${newbie.name} to squad`);
+              }}
+              className="inline-flex items-center gap-1 rounded-full bg-blue-600/90 px-3 py-1.5 text-[11px] font-bold text-white"
+            >
+              <UserPlus className="h-3.5 w-3.5" />
+              Add sailor
+            </button>
           </div>
+          <p className="text-[11px] text-slate-500">
+            Tap a sailor for coach detail — no full public profile under this
+            dashboard.
+          </p>
           <ul className="divide-y divide-white/5">
-            {c.squadTeaser.map((s) => (
-              <li
-                key={s.name}
-                className="py-2.5 flex items-center justify-between gap-3 text-xs"
-              >
-                <div>
-                  <p className="font-bold text-white">{s.name}</p>
-                  <p className="text-[11px] text-slate-500">{s.highlight}</p>
-                </div>
-                <span className="font-mono font-black text-orange-400">
-                  #{s.rank}
-                </span>
-              </li>
-            ))}
+            {coachRoster.map((s) => {
+              const active = selectedCoachSailor?.name === s.name;
+              return (
+                <li key={s.name}>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setSelectedCoachSailor((cur) =>
+                        cur?.name === s.name ? null : s
+                      )
+                    }
+                    className={`w-full py-2.5 flex items-center justify-between gap-3 text-xs text-left rounded-lg px-2 -mx-1 transition-colors ${
+                      active
+                        ? "bg-blue-500/15 border border-blue-500/25"
+                        : "hover:bg-white/5"
+                    }`}
+                  >
+                    <div className="min-w-0">
+                      <p className="font-bold text-white">{s.name}</p>
+                      <p className="text-[11px] text-slate-500 truncate">
+                        {s.highlight}
+                        {s.selection ? ` · ${s.selection}` : ""}
+                      </p>
+                    </div>
+                    <span className="flex items-center gap-2 shrink-0">
+                      <span className="font-mono font-black text-orange-400">
+                        #{s.rank}
+                      </span>
+                      <ChevronRight
+                        className={`h-4 w-4 text-slate-500 transition-transform ${
+                          active ? "rotate-90 text-blue-300" : ""
+                        }`}
+                      />
+                    </span>
+                  </button>
+                  {active && (
+                    <div className="mb-3 mt-1 rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-3 py-3 space-y-2">
+                      <p className="text-[11px] font-bold text-blue-200 uppercase tracking-wide">
+                        Coach detail · {s.name}
+                      </p>
+                      <div className="grid grid-cols-2 gap-2 text-[12px]">
+                        <div className="rounded-lg bg-black/25 px-2.5 py-2">
+                          <p className="text-[10px] text-slate-500 uppercase">
+                            Rank
+                          </p>
+                          <p className="font-bold text-white">#{s.rank}</p>
+                        </div>
+                        <div className="rounded-lg bg-black/25 px-2.5 py-2">
+                          <p className="text-[10px] text-slate-500 uppercase">
+                            Avg finish
+                          </p>
+                          <p className="font-bold text-white">
+                            {s.avgFinish || "—"}
+                          </p>
+                        </div>
+                        <div className="rounded-lg bg-black/25 px-2.5 py-2 col-span-2">
+                          <p className="text-[10px] text-slate-500 uppercase">
+                            Selection
+                          </p>
+                          <p className="font-bold text-white">
+                            {s.selection || "—"}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-slate-400 leading-relaxed">
+                        {s.name === "Ashlyn Tan"
+                          ? "Strong mid-line starts · light-air height is focus. Coach notes stay private."
+                          : "Demo athlete summary — live product opens a coach-only detail drawer without the full public profile chrome."}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCoachNotes((prev) => [
+                            {
+                              date: new Date().toISOString().slice(0, 10),
+                              text: `(Demo) Note on ${s.name}: review starts video before next NRS.`,
+                            },
+                            ...prev,
+                          ]);
+                          flash(`Demo coach note for ${s.name}`);
+                        }}
+                        className="rounded-full border border-blue-500/30 px-3 py-1.5 text-[11px] font-bold text-blue-200"
+                      >
+                        + Note on {s.name.split(" ")[0]}
+                      </button>
+                    </div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -535,8 +669,9 @@ export function SampleDemoShell() {
     coachNotes,
     parentNotes,
     standing,
-    canManagePrivacy,
     compareTo,
+    coachRoster,
+    selectedCoachSailor,
   ]);
 
   return (
@@ -553,34 +688,20 @@ export function SampleDemoShell() {
                 Ashlyn Tan · SGP 115 · SailorPath Profile
               </h1>
               <p className="text-[11px] text-slate-500 mt-0.5">
-                Age {age} · dual-class Optimist + ILCA 4 · fictional data
+                Age {age} · dual-class Optimist + ILCA 4 · switch views below
               </p>
             </div>
-            <div className="flex flex-wrap gap-2">
-              {canManagePrivacy && (
-                <button
-                  type="button"
-                  onClick={() => setSettingsOpen(true)}
-                  className="rounded-full border border-white/15 px-3 py-2 min-h-[40px] inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-300 hover:bg-white/5"
-                  title="Privacy settings"
-                >
-                  <Settings className="h-3.5 w-3.5" />
-                  Settings
-                </button>
-              )}
-              <Link
-                href="/register"
-                className="rounded-full bg-orange-600 px-3 py-2 min-h-[40px] inline-flex items-center text-[11px] font-bold text-white hover:bg-orange-500"
+            {canManagePrivacy && (
+              <button
+                type="button"
+                onClick={() => setSettingsOpen(true)}
+                className="rounded-full border border-white/15 px-3 py-2 min-h-[40px] inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-300 hover:bg-white/5 self-start sm:self-center"
+                title="Privacy settings"
               >
-                Claim your profile
-              </Link>
-              <Link
-                href="/sg/optimist/gold"
-                className="rounded-full border border-white/15 px-3 py-2 min-h-[40px] inline-flex items-center text-[11px] font-bold text-slate-300"
-              >
-                Live standings
-              </Link>
-            </div>
+                <Settings className="h-3.5 w-3.5" />
+                Settings
+              </button>
+            )}
           </div>
 
           {/* Prominent view tabs */}
@@ -666,16 +787,19 @@ export function SampleDemoShell() {
         </div>
       )}
 
-      {/* Parent / coach panels first */}
-      {(role === "parent" || role === "coach") && rolePanels}
+      {/* Coach: dashboard only (no full profile underneath) */}
+      {role === "coach" && rolePanels}
 
-      {/* Parent view: lighter profile (read-only results, no owner logbook) */}
-      {role === "parent" ? (
+      {/* Parent: dashboard + light profile */}
+      {role === "parent" && rolePanels}
+
+      {role === "parent" && (
         <SailorProfileView
           initialSailor={SAMPLE_SAILOR}
           initialResults={SAMPLE_RESULTS}
           initialEquipment={SAMPLE_EQUIPMENT}
           initialSeriesStanding={SAMPLE_SERIES_STANDING}
+          initialIlcaStanding={SAMPLE_ILCA_STANDING}
           initialObservations={SAMPLE_OBSERVATIONS}
           canSeePrivate
           canClaim={false}
@@ -686,28 +810,16 @@ export function SampleDemoShell() {
           hidePrivacySection
           profileVerified
         />
-      ) : role === "coach" ? (
+      )}
+
+      {/* Public + Sailor profile views */}
+      {(role === "public" || role === "sailor") && (
         <SailorProfileView
           initialSailor={SAMPLE_SAILOR}
           initialResults={SAMPLE_RESULTS}
           initialEquipment={SAMPLE_EQUIPMENT}
           initialSeriesStanding={SAMPLE_SERIES_STANDING}
-          initialObservations={[]}
-          canSeePrivate={false}
-          canClaim={false}
-          isOwner={false}
-          isLoggedIn
-          demoMode
-          demoRole="coach"
-          hidePrivacySection
-          profileVerified
-        />
-      ) : (
-        <SailorProfileView
-          initialSailor={SAMPLE_SAILOR}
-          initialResults={SAMPLE_RESULTS}
-          initialEquipment={SAMPLE_EQUIPMENT}
-          initialSeriesStanding={SAMPLE_SERIES_STANDING}
+          initialIlcaStanding={SAMPLE_ILCA_STANDING}
           initialObservations={
             role === "sailor" ? SAMPLE_OBSERVATIONS : []
           }

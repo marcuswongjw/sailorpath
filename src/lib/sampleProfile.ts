@@ -119,6 +119,54 @@ export const SAMPLE_SAILOR = {
   ]),
 };
 
+/** ILCA 4 national ranking snapshot (demo dual-class) */
+export const SAMPLE_ILCA_STANDING = {
+  periodLabel: "ILCA 4 · 2026 national series",
+  fleet: "Open" as const,
+  overallRank: 8,
+  fleetSize: 42,
+  best3of5: 78,
+  rScores: [
+    {
+      regattaId: "sample-ilca1",
+      regattaName: "CSC ILCA Open",
+      score: 25,
+      isDNS: false,
+      isOverseasCommitment: false,
+    },
+    {
+      regattaId: "sample-ilca2",
+      regattaName: "SAFYC ILCA",
+      score: 27,
+      isDNS: false,
+      isOverseasCommitment: false,
+    },
+    {
+      regattaId: "sample-ilca3",
+      regattaName: "NSC ILCA Cup",
+      score: 16,
+      isDNS: false,
+      isOverseasCommitment: false,
+    },
+    {
+      regattaId: "sample-ilca4",
+      regattaName: "Changi series",
+      score: 14,
+      isDNS: false,
+      isOverseasCommitment: false,
+    },
+    {
+      regattaId: "sr-ilca5",
+      regattaName: "—",
+      score: 0,
+      isDNS: true,
+      isOverseasCommitment: false,
+    },
+  ],
+  trendNote: "Best 3 of 5 high points · #8 nationally",
+  boatClass: "ILCA 4" as const,
+};
+
 /** Best 3 of 5 snapshot for Jul–Dec 2026 demo (matches SailorProfileView shape) */
 export const SAMPLE_SERIES_STANDING = {
   periodLabel: "Jul – Dec 2026 (Current)",

@@ -65,6 +65,8 @@ export interface SeriesStandingProps {
     isCarryForward?: boolean;
   }[];
   trendNote: string;
+  /** When set, standing card is styled for ILCA vs Optimist */
+  boatClass?: string | null;
 }
 
 export type EquipmentProps = {
@@ -80,6 +82,8 @@ export interface SailorProfileViewProps {
   initialResults: RegattaResultItem[];
   initialEquipment: EquipmentProps;
   initialSeriesStanding?: SeriesStandingProps | null;
+  /** ILCA 4 national ranking strip (shown when viewing ILCA tab / ILCA-only) */
+  initialIlcaStanding?: SeriesStandingProps | null;
   initialObservations?: ObservationItem[];
   initialEquipmentHistory?: Record<string, unknown>[];
   canSeePrivate?: boolean;

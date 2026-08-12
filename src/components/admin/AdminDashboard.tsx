@@ -249,6 +249,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       ).length,
     [regattaList]
   );
+
+  /** Pending claims + new support messages (notification badges) */
+  const [claimsPendingCount, setClaimsPendingCount] = useState(0);
+  const [supportNewCount, setSupportNewCount] = useState(0);
   const [editingRegattaId, setEditingRegattaId] = useState<string | null>(null);
   const [regattaForm, setRegattaForm] = useState<any>({
     id: "",
@@ -281,6 +285,42 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Check superadmin permissions
   const isSuperadmin = adminRole === "superadmin";
+
+  useEffect(() => {
+    if (!isSuperadmin) return;
+    let cancelled = false;
+    const loadNotifs = async () => {
+      try {
+        const [cRes, sRes] = await Promise.all([
+          fetch("/api/admin/claims"),
+          fetch("/api/support?status=new"),
+        ]);
+        const cData = await cRes.json().catch(() => ({}));
+        const sData = await sRes.json().catch(() => ({}));
+        if (cancelled) return;
+        if (cRes.ok && Array.isArray(cData.claims)) {
+          setClaimsPendingCount(
+            cData.claims.filter(
+              (c: { status?: string }) => c.status === "pending"
+            ).length
+          );
+        }
+        if (sRes.ok && Array.isArray(sData.messages)) {
+          setSupportNewCount(sData.messages.length);
+        }
+      } catch {
+        /* ignore */
+      }
+    };
+    void loadNotifs();
+    const t = setInterval(loadNotifs, 60_000);
+    return () => {
+      cancelled = true;
+      clearInterval(t);
+    };
+  }, [isSuperadmin]);
+
+  const inboxNotifCount = claimsPendingCount + supportNewCount;
 
   // Column prefs
   useEffect(() => {
@@ -1246,9 +1286,34 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           <Shield className="h-4 w-4 text-orange-500" />
           <span>Logged in as: <span className="text-white">{user?.email}</span></span>
         </div>
-        <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[10px] font-black text-orange-400 capitalize">
-          {adminRole}
-        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          {inboxNotifCount > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                setActiveTab("edit");
+                setEditSubTab(
+                  claimsPendingCount > 0 ? "claims" : "support"
+                );
+              }}
+              className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 px-3 py-1.5 text-[11px] font-bold text-rose-200 hover:bg-rose-500/25"
+            >
+              <UserCheck className="h-3.5 w-3.5" />
+              {claimsPendingCount > 0 && (
+                <span>{claimsPendingCount} claim{claimsPendingCount === 1 ? "" : "s"}</span>
+              )}
+              {claimsPendingCount > 0 && supportNewCount > 0 && (
+                <span className="text-rose-400/60">·</span>
+              )}
+              {supportNewCount > 0 && (
+                <span>{supportNewCount} support</span>
+              )}
+            </button>
+          )}
+          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[10px] font-black text-orange-400 capitalize">
+            {adminRole}
+          </span>
+        </div>
       </div>
 
       {/* Tab Navigation — equal width for all tabs */}
@@ -1275,6 +1340,11 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
           >
             <Icon className="h-4 w-4 shrink-0" />
             <span className="text-center leading-tight">{label}</span>
+            {key === "edit" && inboxNotifCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center">
+                {inboxNotifCount > 9 ? "9+" : inboxNotifCount}
+              </span>
+            )}
           </button>
         ))}
       </div>
@@ -1346,6 +1416,16 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   {sub === "suggestions" && suggestionCount > 0 && (
                     <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[9px] font-black text-white">
                       {suggestionCount}
+                    </span>
+                  )}
+                  {sub === "claims" && claimsPendingCount > 0 && (
+                    <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white">
+                      {claimsPendingCount}
+                    </span>
+                  )}
+                  {sub === "support" && supportNewCount > 0 && (
+                    <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[9px] font-black text-white">
+                      {supportNewCount}
                     </span>
                   )}
                 </button>
