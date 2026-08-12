@@ -37,7 +37,7 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pt-16 sm:pb-20 text-center lg:pt-24">
         <h1 className="mx-auto max-w-4xl text-[1.65rem] leading-snug sm:text-5xl lg:text-6xl font-black tracking-tight text-white sm:leading-tight">
-          The performance tracker for{" "}
+          {"The performance tracker for "}
           <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-sky-500 bg-clip-text text-transparent">
             Singapore&apos;s youth sailors
           </span>
@@ -212,12 +212,20 @@ export default async function HomePage() {
                 result, equipment change, and milestone from your first Optimist
                 race through your ILCA transition.
               </p>
-              <Link
-                href="/rankings"
-                className="mt-4 text-[12px] font-bold text-orange-400 hover:text-orange-300"
-              >
-                Check your ranking →
-              </Link>
+              <div className="mt-4 flex flex-col gap-1.5">
+                <Link
+                  href="/rankings"
+                  className="text-[12px] font-bold text-orange-400 hover:text-orange-300"
+                >
+                  Check your ranking →
+                </Link>
+                <Link
+                  href="/claim-profile"
+                  className="text-[12px] font-bold text-orange-300/90 hover:text-orange-200"
+                >
+                  Claim my profile →
+                </Link>
+              </div>
             </article>
 
             <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col">
@@ -234,7 +242,7 @@ export default async function HomePage() {
                 href="/claim-profile"
                 className="mt-4 text-[12px] font-bold text-slate-300 hover:text-white"
               >
-                Claim a profile →
+                Link to your child&apos;s profile →
               </Link>
             </article>
 
@@ -442,7 +450,7 @@ export default async function HomePage() {
             </div>
 
             <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">
-              $99
+              S$99
               <span className="text-xs font-bold text-slate-500">
                 {" "}
                 (One-time contribution)
@@ -488,9 +496,9 @@ export default async function HomePage() {
                 href="https://buy.stripe.com/00weVd3jFf8h9ZvelL4Rq00"
                 target="_blank"
                 rel="noreferrer"
-                className="flex w-full justify-center rounded-full bg-orange-600 py-3 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
+                className="flex w-full justify-center rounded-full bg-orange-600 py-3.5 px-4 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
               >
-                Back the Build
+                Become a Founding Supporter — S$99
               </a>
               <p className="mt-3 text-center text-[10px] text-slate-600">
                 Secure checkout powered by Stripe.

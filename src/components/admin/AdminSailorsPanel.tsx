@@ -177,17 +177,21 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">SG Series</label>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                      Class / Series
+                    </label>
                     <select
                       value={dbFleetFilter}
                       onChange={(e) => setDbFleetFilter(e.target.value)}
                       className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
                     >
-                      <option value="all">All</option>
-                      <option value="series">In SG Fleet</option>
-                      <option value="guest">Guest</option>
-                      <option value="gold">Has Gold entry</option>
-                      <option value="silver">Series · no Gold entry</option>
+                      <option value="all">All sailors</option>
+                      <option value="series">Optimist · In SG Fleet</option>
+                      <option value="guest">Optimist · Guest</option>
+                      <option value="gold">Optimist · Has Gold entry</option>
+                      <option value="silver">Optimist · Series · no Gold</option>
+                      <option value="ilca4">ILCA 4 (sail # or national list)</option>
+                      <option value="dual">Dual-class (Opti + ILCA 4)</option>
                     </select>
                   </div>
                   <div>
@@ -248,10 +252,16 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           <option value="club">Club</option>
                           <option value="school">School</option>
                           <option value="nationality">Nationality</option>
-                          <option value="sailNumber">Sail Number</option>
+                          <option value="sailNumber">Optimist sail #</option>
                           <option value="gender">Gender (M/F)</option>
                           <option value="dob">Date of Birth</option>
                           <option value="weight">Weight (kg)</option>
+                        </optgroup>
+                        <optgroup label="ILCA 4">
+                          <option value="sailNumberIlca4">ILCA 4 sail #</option>
+                          <option value="ilca4NationalList">
+                            ILCA 4 national list (true/false)
+                          </option>
                         </optgroup>
                         <optgroup label="Squad history">
                           <option value="natSquadStatusJan25">Squad Jan 25</option>
@@ -314,6 +324,15 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         >
                           <option value="Guest">Guest</option>
                           <option value="Series">In SG Fleet</option>
+                        </select>
+                      ) : bulkField === "ilca4NationalList" ? (
+                        <select
+                          value={bulkValue}
+                          onChange={(e) => setBulkValue(e.target.value)}
+                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                        >
+                          <option value="true">On list (true)</option>
+                          <option value="false">Off list (false)</option>
                         </select>
                       ) : [
                           "natSquadStatusJan25",
@@ -552,12 +571,31 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Sail Number</label>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">
+                          Optimist sail #
+                        </label>
                         <input
                           type="text"
                           value={sailorForm.sailNumber}
                           onChange={(e) => setSailorForm({ ...sailorForm, sailNumber: e.target.value })}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs text-slate-300 font-mono"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-bold text-slate-500 uppercase">
+                          ILCA 4 sail #
+                        </label>
+                        <input
+                          type="text"
+                          value={sailorForm.sailNumberIlca4 || ""}
+                          onChange={(e) =>
+                            setSailorForm({
+                              ...sailorForm,
+                              sailNumberIlca4: e.target.value,
+                            })
+                          }
+                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs text-sky-200/90 font-mono"
+                          placeholder="e.g. SGP 2115"
                         />
                       </div>
                       <div>
@@ -1092,6 +1130,22 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                 {s.sailNumber}
                               </span>
                             ),
+                            sailNumberIlca4: (
+                              <span className="font-mono text-sky-300/90">
+                                {s.sailNumberIlca4 || "—"}
+                              </span>
+                            ),
+                            ilca4List: (
+                              <span
+                                className={`text-[10px] font-bold ${
+                                  s.ilca4NationalList
+                                    ? "text-sky-300"
+                                    : "text-slate-600"
+                                }`}
+                              >
+                                {s.ilca4NationalList ? "On list" : "—"}
+                              </span>
+                            ),
                             series: (
                               <span
                                 className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
@@ -1311,8 +1365,9 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     </table>
                   </div>
                   <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5">
-                    Tick rows for bulk edit · Best 3 of 5 = current SG half series score ·
-                    Results button = all competitions for that sailor · Columns for squad / overseas.
+                    Tick rows for bulk edit · Filter by ILCA 4 or dual-class · Best 3 of 5 =
+                    Optimist SG half score · ILCA sail # / national list via bulk or Columns ·
+                    Ranking tools also under the ILCA 4 admin tab.
                   </p>
                 </div>
               </div>

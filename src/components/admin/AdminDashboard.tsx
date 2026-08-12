@@ -188,12 +188,13 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     name: "",
     handle: "",
     sailNumber: "",
+    sailNumberIlca4: "",
     club: "",
     nationality: "",
     gender: "M",
     nationalSquadStatus: "",
     instagram: "",
-                            avatarUrl: "",
+    avatarUrl: "",
     dob: "",
     weight: "",
     bio: "",
@@ -337,11 +338,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const filteredDbSailors = sailorList.filter((s) => {
     const q = dbSearch.trim().toLowerCase();
     if (q) {
-      const hay = `${s.name} ${s.sailNumber || ""} ${s.club || ""} ${s.school || ""} ${s.handle || ""}`.toLowerCase();
+      const hay = `${s.name} ${s.sailNumber || ""} ${s.sailNumberIlca4 || ""} ${s.club || ""} ${s.school || ""} ${s.handle || ""}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     if (dbFleetFilter !== "all") {
       const inSeries = isInSgSeries(s);
+      const hasIlca =
+        Boolean(String(s.sailNumberIlca4 || "").trim()) ||
+        Boolean((s as { ilca4NationalList?: boolean }).ilca4NationalList);
       if (dbFleetFilter === "series" && !inSeries) return false;
       if (dbFleetFilter === "guest" && inSeries) return false;
       // Ranking-style filters (derived for current dates, not Fleet current)
@@ -350,6 +354,16 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       }
       if (dbFleetFilter === "silver") {
         if (!inSeries || s.goldEntryDate) return false;
+      }
+      if (dbFleetFilter === "ilca4" && !hasIlca) return false;
+      if (dbFleetFilter === "dual") {
+        const hasOpti =
+          inSeries ||
+          Boolean(s.goldEntryDate) ||
+          Boolean(s.silverEntryDate) ||
+          (Boolean(String(s.sailNumber || "").trim()) &&
+            !/^SGP\s*0+$/i.test(String(s.sailNumber)));
+        if (!hasIlca || !hasOpti) return false;
       }
     }
     if (dbSquadFilter !== "all") {
@@ -784,6 +798,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       name: sailorForm.name,
       handle: sailorForm.handle,
       sailNumber: sailorForm.sailNumber,
+      sailNumberIlca4: sailorForm.sailNumberIlca4
+        ? String(sailorForm.sailNumberIlca4).trim() || null
+        : null,
       club: sailorForm.club,
       school: sailorForm.school ?? null,
       nationality: sailorForm.nationality || null,

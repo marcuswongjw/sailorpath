@@ -13,33 +13,49 @@ export const DEMO_ROLE_COPY: Record<
     title: "Public",
     who: "Anyone browsing SailorPath",
     value:
-      "See fleet badge, honors, and regatta results — without private weight or full training notes.",
+      "Fleet badge, age band, and regatta results — without private weight, notes, or gear unless shared.",
   },
   sailor: {
     title: "Sailor",
     who: "The athlete who owns this profile",
     value:
-      "Full logbook, privacy controls, equipment, series standing, and race-by-race observations.",
+      "Full logbook, race notes, dual-class results, and privacy settings (via Settings).",
   },
   parent: {
     title: "Parent",
     who: "Guardian linked to this sailor",
     value:
-      "Track progress, upcoming events, claim status, and support decisions with clear ranking context.",
+      "Squad schedule, upcoming deadlines, equipment alerts, parent notes, and series context.",
   },
   coach: {
     title: "Coach",
     who: "Squad coach reviewing athletes",
     value:
-      "Squad overview, technical notes, pathway checklist, and performance trends for training plans.",
+      "Squad context, selection readiness, private coach notes, and comparison — never privacy controls.",
   },
 };
+
+/** Approx age for demo (full DOB when set). */
+export function sampleAgeYears(
+  dob: string | null | undefined,
+  asOf: Date = new Date()
+): number | null {
+  const ymd = String(dob || "").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return null;
+  const [y, m, d] = ymd.split("-").map(Number);
+  let age = asOf.getFullYear() - y!;
+  const month = asOf.getMonth() + 1;
+  const day = asOf.getDate();
+  if (month < m! || (month === m && day < d!)) age -= 1;
+  return age >= 0 ? age : null;
+}
 
 export const SAMPLE_SAILOR = {
   id: "sample-ashlyn",
   name: "Ashlyn Tan",
   handle: "ashlyn-t",
   sailNumber: "SGP 115",
+  sailNumberIlca4: "SGP 2115",
   club: "Changi Sailing Club",
   nationality: "SGP",
   goldEntryDate: "2025-06-15",
@@ -50,15 +66,17 @@ export const SAMPLE_SAILOR = {
 
   dob: "2013-08-14",
   weight: 42,
-  bio: "Optimist Gold fleet racer focused on light-wind speed and clean starts. Training toward Asian championships.",
+  bio: "Dual-class Optimist Gold & ILCA 4 racer focused on light-wind speed and clean starts. Training toward Asian championships.",
   gender: "F",
   nationalSquadStatus: "Nat A",
   instagram: "@ashlyn.t_sails",
   facebook: null as string | null,
+  /** Demo uses styled initials avatar (no photo URL) */
   avatarUrl: null as string | null,
   isPublicWeight: false,
   isPublicDob: false,
-  isPublicEquipment: true,
+  /** Public view respects this — gear stays private until shared */
+  isPublicEquipment: false,
   natSquadStatusJan25: "DS",
   natSquadStatusJul25: "Nat B",
   natSquadStatusJan26: "Nat A",
@@ -91,6 +109,12 @@ export const SAMPLE_SAILOR = {
       when: "Jan 2025",
       title: "Selected for Nat A squad",
       detail: "Moved up from Nat B after a strong Jul–Dec 2024 series.",
+    },
+    {
+      id: "demo-j4",
+      when: "Mar 2026",
+      title: "First ILCA 4 regatta",
+      detail: "Started dual-class path while remaining Optimist Gold eligible.",
     },
   ]),
 };
@@ -142,6 +166,7 @@ export const SAMPLE_SERIES_STANDING = {
   trendNote: "↑ 1 place vs Jun 2026 · Best 3 of 5 = 5+4+5",
 };
 
+/** Optimist + ILCA 4 results (dual-class demo). boatClass drives class tabs. */
 export const SAMPLE_RESULTS = [
   {
     id: "sample-r1",
@@ -151,6 +176,7 @@ export const SAMPLE_RESULTS = [
     regattaDate: "2026-06-15",
     geography: "SG",
     division: "Gold",
+    boatClass: "Optimist",
     totalFleetSize: 85,
     fleetSize: 85,
     rank: 1,
@@ -168,6 +194,7 @@ export const SAMPLE_RESULTS = [
     regattaDate: "2026-05-10",
     geography: "EE",
     division: "Gold",
+    boatClass: "Optimist",
     totalFleetSize: 120,
     fleetSize: 120,
     rank: 2,
@@ -186,6 +213,7 @@ export const SAMPLE_RESULTS = [
     regattaDate: "2026-05-04",
     geography: "SG",
     division: "Gold",
+    boatClass: "Optimist",
     totalFleetSize: 60,
     fleetSize: 60,
     rank: 8,
@@ -203,6 +231,7 @@ export const SAMPLE_RESULTS = [
     regattaDate: "2026-04-20",
     geography: "DE",
     division: "Gold",
+    boatClass: "Optimist",
     totalFleetSize: 200,
     fleetSize: 200,
     rank: 3,
@@ -221,6 +250,7 @@ export const SAMPLE_RESULTS = [
     regattaDate: "2026-04-12",
     geography: "SG",
     division: "Gold",
+    boatClass: "Optimist",
     totalFleetSize: 72,
     fleetSize: 72,
     rank: 2,
@@ -238,6 +268,7 @@ export const SAMPLE_RESULTS = [
     regattaDate: "2026-03-15",
     geography: "IT",
     division: "Gold",
+    boatClass: "Optimist",
     totalFleetSize: 180,
     fleetSize: 180,
     rank: 7,
@@ -256,6 +287,7 @@ export const SAMPLE_RESULTS = [
     regattaDate: "2026-02-28",
     geography: "SG",
     division: "Gold",
+    boatClass: "Optimist",
     totalFleetSize: 90,
     fleetSize: 90,
     rank: 2,
@@ -273,6 +305,7 @@ export const SAMPLE_RESULTS = [
     regattaDate: "2026-01-18",
     geography: "SG",
     division: "Gold",
+    boatClass: "Optimist",
     totalFleetSize: 55,
     fleetSize: 55,
     rank: 56,
@@ -282,6 +315,80 @@ export const SAMPLE_RESULTS = [
     isOverseasCommitment: false,
     raceCount: 5,
   },
+  // ILCA 4 dual-class results (Open fleet)
+  {
+    id: "sample-ilca1",
+    regattaId: "sample-ilca1",
+    regattaName: "CSC ILCA Open 2026",
+    regattaSlug: "sample-csc-ilca-2026",
+    regattaDate: "2026-07-05",
+    geography: "SG",
+    division: "Open",
+    boatClass: "ILCA 4",
+    totalFleetSize: 28,
+    fleetSize: 28,
+    rank: 4,
+    totalScore: 42,
+    nettScore: 34,
+    isDns: false,
+    isOverseasCommitment: false,
+    raceCount: 6,
+  },
+  {
+    id: "sample-ilca2",
+    regattaId: "sample-ilca2",
+    regattaName: "SAFYC ILCA Regatta 2026",
+    regattaSlug: "sample-safyc-ilca-2026",
+    regattaDate: "2026-05-24",
+    geography: "SG",
+    division: "Open",
+    boatClass: "ILCA 4",
+    totalFleetSize: 32,
+    fleetSize: 32,
+    rank: 6,
+    totalScore: 58,
+    nettScore: 46,
+    isDns: false,
+    isOverseasCommitment: false,
+    raceCount: 7,
+  },
+  {
+    id: "sample-ilca3",
+    regattaId: "sample-ilca3",
+    regattaName: "NSC ILCA Cup 2026",
+    regattaSlug: "sample-nsc-ilca-2026",
+    regattaDate: "2026-04-05",
+    geography: "SG",
+    division: "Open",
+    boatClass: "ILCA 4",
+    totalFleetSize: 24,
+    fleetSize: 24,
+    rank: 9,
+    totalScore: 71,
+    nettScore: 59,
+    isDns: false,
+    isOverseasCommitment: false,
+    raceCount: 5,
+  },
+  {
+    id: "sample-ilca4",
+    regattaId: "sample-ilca4",
+    regattaName: "Changi ILCA Training Series 2026",
+    regattaSlug: "sample-changi-ilca-2026",
+    regattaDate: "2026-03-08",
+    geography: "SG",
+    division: "Open",
+    boatClass: "ILCA 4",
+    totalFleetSize: 18,
+    fleetSize: 18,
+    rank: 5,
+    totalScore: 38,
+    nettScore: 30,
+    isDns: false,
+    isOverseasCommitment: false,
+    raceCount: 6,
+    countsForRanking: false,
+  },
 ];
 
 export const SAMPLE_EQUIPMENT = {
@@ -289,7 +396,10 @@ export const SAMPLE_EQUIPMENT = {
   sailMake: "J-Sails",
   foilBrand: "DSK",
   mast: "SuperSpar",
-  notes: "Medium rig · 2° more rake for medium breeze",
+  notes: "Medium rig · 2° more rake for medium breeze · sail acquired Feb 2025",
+  /** Demo metadata for parent equipment alerts */
+  sailAcquired: "2025-02-01",
+  mastLastChanged: "2026-06-20",
 };
 
 export type RaceObservation = {
@@ -350,28 +460,104 @@ export const SAMPLE_RACE_LOG = {
       raceNumber: 8,
       position: 2,
       wind: "8 kn dying",
-      note: "Protected from right. Overall 3rd — target top-2 next event.",
+      note: "Protected from right. Overall 1st — keep this focus.",
     },
   ] as RaceObservation[],
 };
 
+/** Pre-seeded observations for demo sailor logbook */
+export const SAMPLE_OBSERVATIONS = SAMPLE_RACE_LOG.observations.map((o, i) => ({
+  id: `sample-obs-${i + 1}`,
+  regattaId: "sample-r1",
+  raceNumber: o.raceNumber,
+  position: o.position,
+  wind: o.wind,
+  note: o.note,
+  isPrivate: true,
+}));
+
 export const SAMPLE_PARENT_PANEL = {
   claimStatus: "Approved · linked as parent",
+  childName: "Ashlyn",
+  coachName: "Coach Lim",
+  coachContact: "Coach Lim (CSC Optimist Gold)",
+  club: "Changi Sailing Club",
+  trainingSchedule: [
+    { day: "Tue", time: "4:30–6:30pm", focus: "Starts & boat speed" },
+    { day: "Thu", time: "4:30–6:30pm", focus: "Tactics / video" },
+    { day: "Sat", time: "9:00am–1:00pm", focus: "Fleet racing" },
+  ],
+  squadMates: [
+    { name: "Ethan Koh", sail: "SGP 88", note: "Same weight band" },
+    { name: "Mia Wong", sail: "SGP 42", note: "Travel partner (AOC)" },
+    { name: "Jayden Lee", sail: "SGP 201", note: "School teammate" },
+  ],
   nextEvents: [
-    { name: "Gold Ranking Series · R3", date: "2026-08-16", venue: "SAFYC" },
-    { name: "CSC Gold Fleet Open", date: "2026-09-05", venue: "Changi SC" },
-    { name: "Asian Optimist Championships", date: "2026-10-12", venue: "Overseas" },
+    {
+      name: "Gold Ranking Series · R3",
+      date: "2026-08-16",
+      venue: "SAFYC",
+      deadline: "Register by 9 Aug",
+    },
+    {
+      name: "CSC Gold Fleet Open",
+      date: "2026-09-05",
+      venue: "Changi SC",
+      deadline: "Entries open",
+    },
+    {
+      name: "Asian Optimist Championships",
+      date: "2026-10-12",
+      venue: "Overseas",
+      deadline: "Selection window closes 20 Sep",
+    },
+  ],
+  equipmentAlerts: [
+    {
+      level: "warn" as const,
+      text: "Sail is ~18 months old — consider replacement before AOC",
+    },
+    {
+      level: "info" as const,
+      text: "Mast rig setting changed 20 Jun — confirm with coach",
+    },
+  ],
+  parentNotes: [
+    {
+      date: "2026-06-18",
+      text: "Spoke to coach about starts — agreed extra mid-line practice Tue.",
+    },
+    {
+      date: "2026-05-12",
+      text: "School exams week of 22 Sep — lighter mid-week training.",
+    },
   ],
   highlights: [
     "Standing: #3 Gold (Best 3 of 5 = 14)",
     "Overseas commitment score applied for NRS 1 (standing-based 2 pts)",
-    "School exams week of 22 Sep — lighter mid-week training",
+    "Dual-class: 4 ILCA 4 events logged this year",
   ],
-  coachContact: "Coach Lim (CSC Optimist Gold)",
 };
 
 export const SAMPLE_COACH_PANEL = {
   squadName: "CSC Optimist Gold (demo)",
+  squadSize: 12,
+  squadAvgFinish: 5.2,
+  sailorAvgFinish: 3.6,
+  nationalRank: 3,
+  nationalFleet: 100,
+  squadRank: 1,
+  selectionReadiness: {
+    score: 82,
+    label: "On track",
+    detail: "NRS commitment met · light-air block done · AOC boat prep pending",
+  },
+  attendance: [
+    { session: "Sat 2 Aug", status: "attended" as const },
+    { session: "Thu 31 Jul", status: "attended" as const },
+    { session: "Tue 29 Jul", status: "missed" as const },
+    { session: "Sat 26 Jul", status: "attended" as const },
+  ],
   pathway: [
     { item: "National Ranking Series commitment", done: true },
     { item: "Light-air speed block (Jun–Jul)", done: true },
@@ -381,12 +567,17 @@ export const SAMPLE_COACH_PANEL = {
   coachNotes: [
     {
       date: "2026-06-16",
-      text: "Nationals: strong mental reset after race 6. Keep mid-line starts in big fleets.",
+      text: "Nationals: strong mental reset after race 6. Keep mid-line starts in big fleets. (Coach-only — not visible to sailor/parent)",
     },
     {
       date: "2026-05-10",
       text: "CSC: downwind mode excellent. Focus next block on light-air height.",
     },
+  ],
+  compareOptions: [
+    { name: "Ethan Koh", rank: 7 },
+    { name: "Mia Wong", rank: 11 },
+    { name: "Jayden Lee", rank: 14 },
   ],
   squadTeaser: [
     { name: "Ashlyn Tan", handle: "sample", rank: 3, highlight: "This profile" },

@@ -5,7 +5,9 @@ export const DB_SAILOR_COLUMNS: {
   defaultOn: boolean;
 }[] = [
   { key: "name", label: "Name", defaultOn: true },
-  { key: "sailNumber", label: "Sail #", defaultOn: false },
+  { key: "sailNumber", label: "Opti sail #", defaultOn: false },
+  { key: "sailNumberIlca4", label: "ILCA 4 sail #", defaultOn: true },
+  { key: "ilca4List", label: "ILCA national list", defaultOn: false },
   { key: "series", label: "SG Series", defaultOn: true },
   { key: "best3", label: "Best 3 of 5", defaultOn: true },
   { key: "gender", label: "Gender", defaultOn: true },

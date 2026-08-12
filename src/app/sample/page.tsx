@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { SampleDemoShell } from "@/components/SampleDemoShell";
 
 export const metadata: Metadata = {
-  title: "Demo profiles · Public, Sailor, Parent, Coach",
+  title: "Ashlyn Tan · SGP 115 · SailorPath Profile",
   description:
-    "Product tour of SailorPath: switch between Public, Sailor, Parent, and Coach views on a fictional sample profile.",
+    "Sample SailorPath profile — switch Public, Sailor, Parent, and Coach views for Ashlyn Tan (SGP 115).",
 };
 
 function SampleFallback() {
