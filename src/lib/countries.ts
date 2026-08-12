@@ -548,6 +548,39 @@ export function isUnrecognizedCountry(v: unknown): boolean {
   return true;
 }
 
+/**
+ * Extract nationality (NOC) from a sail number that starts with a country code,
+ * e.g. "SGP 115", "SGP115", "MAS-42", "AUS 2001".
+ * Requires a digit after the prefix so bare words are ignored.
+ */
+export function nationalityFromSailNumber(
+  sail: string | null | undefined
+): string | null {
+  const raw = String(sail || "")
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, " ");
+  if (!raw) return null;
+  const m = raw.match(/^([A-Z]{2,3})[\s\-_#.]*(\d)/);
+  if (!m) return null;
+  const noc = normalizeNationalityCode(m[1]);
+  if (!noc) return null;
+  const knownNocs = new Set(Object.values(ISO2_TO_NOC));
+  if (!knownNocs.has(noc) && !NOC_TO_ISO2[noc]) return null;
+  return noc;
+}
+
+/** First known nationality from optimist / ILCA sail numbers. */
+export function nationalityFromAnySailNumber(
+  ...sails: (string | null | undefined)[]
+): string | null {
+  for (const s of sails) {
+    const n = nationalityFromSailNumber(s);
+    if (n) return n;
+  }
+  return null;
+}
+
 export function countryLabelForIso2(code: string | null | undefined): string {
   if (!code) return "—";
   const c = COUNTRIES.find((x) => x.code === code.toUpperCase());

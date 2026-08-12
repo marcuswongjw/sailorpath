@@ -18,6 +18,7 @@ import { makeGuestHandle, slugify } from "@/lib/slug";
 import { normalizeNationality } from "@/lib/seriesMembership";
 import {
   isUnrecognizedCountry,
+  nationalityFromAnySailNumber,
   normalizeGeography,
   normalizeNationalityCode,
 } from "@/lib/countries";
@@ -623,6 +624,7 @@ export async function POST(req: Request) {
         }
         // Nationality: latest regatta wins (same date rule as club/school).
         // Flag mismatches so admin can correct wrong tags.
+        // If still empty, derive from sail number country prefix (SGP 115 → SGP).
         if (row.nationalityRaw || row.nationality) {
           const curNorm =
             normalizeNationalityCode(existing?.nationality) ||
@@ -678,6 +680,39 @@ export async function POST(req: Request) {
                   detail: `Import has ${nextNat} but profile keeps ${curNorm || "—"} (this event is older than latest result).`,
                 });
               }
+            }
+          }
+        }
+
+        // If nationality still empty, tag from sail # country code (Opti or ILCA).
+        {
+          const curAfter =
+            normalizeNationalityCode(
+              (profilePatch.nationality as string) || existing?.nationality
+            ) || null;
+          if (!curAfter) {
+            const fromSail = nationalityFromAnySailNumber(
+              (profilePatch.sailNumber as string) || row.sailNumber,
+              (profilePatch.sailNumberIlca4 as string) ||
+                existing?.sailNumberIlca4,
+              existing?.sailNumber
+            );
+            if (fromSail) {
+              profilePatch.nationality = fromSail;
+              profileChanged = true;
+              if (!fieldChanged.includes("nationality")) {
+                fieldChanged.push("nationality");
+              }
+              nationalityUpdated++;
+              nationalityFlags.push({
+                sailorId,
+                name: existing?.name || row.name,
+                previous: null,
+                imported: fromSail,
+                raw: row.sailNumber || existing?.sailNumber || null,
+                action: "updated",
+                detail: `Set nationality ${fromSail} from sail number country code.`,
+              });
             }
           }
         }

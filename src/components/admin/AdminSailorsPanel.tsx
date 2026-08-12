@@ -89,6 +89,7 @@ export type AdminSailorsPanelProps = {
   /** Fix Series members with no gold/silver entry */
   onCleanupEmptySeries?: () => void | Promise<void>;
   emptySeriesCount?: number;
+  onBackfillNationalityFromSail?: () => void | Promise<void>;
 };
 
 export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
@@ -139,6 +140,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     setCompetitionsSailorId,
     onCleanupEmptySeries,
     emptySeriesCount = 0,
+    onBackfillNationalityFromSail,
   } = p;
 
   return (
@@ -161,6 +163,26 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       className="shrink-0 rounded-full bg-amber-600/90 hover:bg-amber-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
                     >
                       Stamp silver entry for empty Series
+                    </button>
+                  </div>
+                )}
+                {onBackfillNationalityFromSail && (
+                  <div className="rounded-2xl border border-sky-500/25 bg-sky-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-start gap-2">
+                      <AlertTriangle className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
+                      <p className="text-xs text-sky-100/90">
+                        Sailors with a country code on their sail # (e.g.{" "}
+                        <span className="font-mono text-sky-200">SGP 115</span>) but no
+                        nationality can be tagged automatically.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin}
+                      onClick={() => void onBackfillNationalityFromSail()}
+                      className="shrink-0 rounded-full bg-sky-600/90 hover:bg-sky-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                    >
+                      Fill nationality from sail #
                     </button>
                   </div>
                 )}

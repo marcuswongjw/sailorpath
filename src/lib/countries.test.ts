@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   isUnrecognizedCountry,
+  nationalityFromSailNumber,
   normalizeGeography,
   normalizeNationalityCode,
   nationalitySelectOptions,
@@ -37,5 +38,21 @@ describe("nationalitySelectOptions", () => {
     const opts = nationalitySelectOptions();
     expect(opts[0]?.code).toBe("SGP");
     expect(opts.length).toBeGreaterThan(100);
+  });
+});
+
+describe("nationalityFromSailNumber", () => {
+  it("parses leading NOC from sail numbers", () => {
+    expect(nationalityFromSailNumber("SGP 115")).toBe("SGP");
+    expect(nationalityFromSailNumber("SGP115")).toBe("SGP");
+    expect(nationalityFromSailNumber("MAS-42")).toBe("MAS");
+    expect(nationalityFromSailNumber("AUS 2001")).toBe("AUS");
+    expect(nationalityFromSailNumber("SIN 1")).toBe("SGP");
+  });
+
+  it("returns null without a country prefix", () => {
+    expect(nationalityFromSailNumber("115")).toBe(null);
+    expect(nationalityFromSailNumber("")).toBe(null);
+    expect(nationalityFromSailNumber(null)).toBe(null);
   });
 });

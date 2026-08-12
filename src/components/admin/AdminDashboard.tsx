@@ -398,6 +398,30 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     [sailorList]
   );
 
+  const handleBackfillNationalityFromSail = async () => {
+    if (
+      !confirm(
+        "Set nationality from sail number country codes (e.g. SGP 115 → SGP) for sailors who have no nationality yet?"
+      )
+    ) {
+      return;
+    }
+    try {
+      const res = await fetch("/api/admin/sailors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "backfillNationalityFromSail" }),
+      });
+      const data = await parseApi(res);
+      if (!res.ok) throw new Error(data.error || "Backfill failed");
+      const list = await fetch("/api/admin/sailors").then((r) => r.json());
+      if (list.sailors) setSailorList(list.sailors);
+      alert(data.message || `Updated ${data.updated} sailors`);
+    } catch (e: unknown) {
+      alert(e instanceof Error ? e.message : "Backfill failed");
+    }
+  };
+
   const handleCleanupEmptySeries = async () => {
     if (!isSuperadmin) {
       alert("Only Superadmins can run this.");
@@ -990,7 +1014,21 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     setCompetitionsSailorId(sailorId);
     setCompetitionsLoading(true);
     try {
-      await refreshResultsList();
+      // Refresh results + regattas so ILCA 4 events appear alongside Optimist
+      await Promise.all([
+        refreshResultsList(),
+        (async () => {
+          try {
+            const res = await fetch("/api/admin/regattas");
+            const data = await parseApi(res);
+            if (res.ok && Array.isArray(data.regattas)) {
+              setRegattaList(data.regattas);
+            }
+          } catch {
+            /* keep existing list */
+          }
+        })(),
+      ]);
     } finally {
       setCompetitionsLoading(false);
     }
@@ -1365,6 +1403,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                 setCompetitionsSailorId={setCompetitionsSailorId}
                 emptySeriesCount={emptySeriesCount}
                 onCleanupEmptySeries={handleCleanupEmptySeries}
+                onBackfillNationalityFromSail={handleBackfillNationalityFromSail}
               />
             )}
 

@@ -701,6 +701,61 @@ export async function POST(req: Request) {
       });
     }
 
+    /**
+     * Fill missing nationality from sail number country prefixes
+     * (e.g. "SGP 115" → SGP) on Optimist and ILCA 4 sail fields.
+     */
+    if (body.action === "backfillNationalityFromSail") {
+      const { nationalityFromAnySailNumber } = await import("@/lib/countries");
+      const { normalizeNationality } = await import("@/lib/seriesMembership");
+      const rows = await db.select().from(sailors);
+      let updated = 0;
+      const samples: string[] = [];
+      for (const s of rows) {
+        const cur = normalizeNationality(s.nationality);
+        if (cur) continue;
+        const fromSail = nationalityFromAnySailNumber(
+          s.sailNumber,
+          s.sailNumberIlca4
+        );
+        if (!fromSail) continue;
+        await db
+          .update(sailors)
+          .set({ nationality: fromSail, updatedAt: new Date() })
+          .where(eq(sailors.id, s.id));
+        updated++;
+        if (samples.length < 25) {
+          samples.push(
+            `${s.name}: ${s.sailNumber || s.sailNumberIlca4 || "—"} → ${fromSail}`
+          );
+        }
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "sailor.nationality_from_sail",
+          entityType: "sailor",
+          entityId: s.id,
+          entityLabel: s.name,
+          summary: `Set nationality ${fromSail} from sail number`,
+          details: {
+            sailNumber: s.sailNumber,
+            sailNumberIlca4: s.sailNumberIlca4,
+            nationality: fromSail,
+          },
+          source: "/api/admin/sailors",
+        });
+      }
+      return NextResponse.json({
+        ok: true,
+        updated,
+        samples,
+        message:
+          updated > 0
+            ? `Set nationality from sail number on ${updated} sailor(s).`
+            : "No sailors needed nationality from sail number (already set or no country prefix).",
+      });
+    }
+
     /** Recompute silver_entry_date = earliest Silver ranking regatta date */
     if (body.action === "recomputeSilverEntryDates") {
       const { deriveAllSilverEntryDates } = await import(

@@ -165,35 +165,23 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Live preview */}
+      {/* Live demo profile */}
       <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-8 sm:mb-10">
-            See what your profile looks like
-          </h2>
-          <div className="mx-auto max-w-3xl">
-            <div
-              className="rounded-2xl border border-dashed border-white/15 bg-[#0b0c13] min-h-[220px] sm:min-h-[320px] flex items-center justify-center px-6 py-12 text-center"
-              role="img"
-              aria-label="Sample profile screenshot placeholder"
+          <div className="mx-auto max-w-2xl text-center rounded-2xl border border-orange-500/20 bg-gradient-to-b from-orange-500/[0.08] to-transparent px-6 py-10 sm:py-12">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              See what your profile looks like
+            </h2>
+            <p className="mt-3 text-sm text-slate-400 leading-relaxed max-w-md mx-auto">
+              Explore a full dual-class sample — Optimist Gold ranking, ILCA 4
+              results, and Public / Sailor / Parent / Coach views.
+            </p>
+            <Link
+              href="/sample"
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-orange-950/20 border border-orange-500/30 min-h-[44px]"
             >
-              <p className="text-[12px] sm:text-sm text-slate-500 max-w-md leading-relaxed font-medium">
-                [Sample profile screenshot to be inserted here — showing ranking,
-                results timeline, and equipment log]
-              </p>
-            </div>
-            <p className="mt-4 text-center text-[12px] sm:text-sm text-slate-400">
-              Sample Profile: Optimist Gold #12 · 3 regattas this season · ILCA 4
-              transition tracked
-            </p>
-            <p className="mt-3 text-center">
-              <Link
-                href="/demo-profile"
-                className="text-[13px] font-semibold text-orange-400 hover:text-orange-300"
-              >
-                View full demo profile →
-              </Link>
-            </p>
+              Open demo profile →
+            </Link>
           </div>
         </div>
       </section>

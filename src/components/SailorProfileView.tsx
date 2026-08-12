@@ -1078,13 +1078,10 @@ export function SailorProfileView({
                   {[
                     hasOptimistResults || !hasIlcaResults ? "Optimist" : null,
                     hasIlcaResults ? "ILCA 4" : null,
+                    displaySailor.club ? String(displaySailor.club) : null,
                   ]
                     .filter(Boolean)
                     .join(" · ")}
-                  {displaySailor.club ? ` · ${displaySailor.club}` : ""}
-                  {ilca4Tenure
-                    ? ` · ILCA 4 ${ilca4Tenure.label}`
-                    : ""}
                 </p>
               </div>
               <div className="shrink-0 text-right space-y-1.5">
