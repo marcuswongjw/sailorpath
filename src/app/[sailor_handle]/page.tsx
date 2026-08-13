@@ -5,6 +5,7 @@ import {
   getSailorByHandle,
   getResultsForSailor,
   getSailorSeriesStanding,
+  getSailorIlcaStanding,
   getRaceObservationsForSailor,
   getEquipmentLogsForSailor,
 } from "@/lib/queries";
@@ -34,10 +35,11 @@ export default async function SailorProfilePage({
       auth?.userId && !sailor.parentId && !isSuperadmin
     );
 
-    const [results, seriesStanding, observations, equipmentHistory] =
+    const [results, seriesStanding, ilcaStanding, observations, equipmentHistory] =
       await Promise.all([
         getResultsForSailor(sailor.id),
         getSailorSeriesStanding(sailor.id).catch(() => null),
+        getSailorIlcaStanding(sailor.id, "ILCA 4").catch(() => null),
         getRaceObservationsForSailor(sailor.id, {
           includePrivate: canSeePrivate,
         }).catch(() => []),
@@ -83,6 +85,7 @@ export default async function SailorProfilePage({
         }))}
         initialEquipment={equipment}
         initialSeriesStanding={seriesStanding}
+        initialIlcaStanding={ilcaStanding}
         initialObservations={observations}
         initialEquipmentHistory={equipmentHistory}
         canSeePrivate={canSeePrivate}
@@ -90,6 +93,7 @@ export default async function SailorProfilePage({
         isOwner={isOwner}
         isLoggedIn={Boolean(auth?.userId)}
         profileClaimed={Boolean(sailor.parentId)}
+        profileVerified={Boolean(sailor.parentId)}
       />
     );
   } catch (e) {

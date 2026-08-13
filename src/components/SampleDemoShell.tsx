@@ -14,7 +14,6 @@ import {
   SAMPLE_RESULTS,
   SAMPLE_SAILOR,
   SAMPLE_SERIES_STANDING,
-  sampleAgeYears,
   type DemoRole,
 } from "@/lib/sampleProfile";
 import {
@@ -153,7 +152,6 @@ export function SampleDemoShell() {
     useState<CoachRosterSailor | null>(null);
 
   const copy = DEMO_ROLE_COPY[role];
-  const age = sampleAgeYears(SAMPLE_SAILOR.dob) ?? 12;
 
   // Access matrix:
   // public — public only, can claim
@@ -688,7 +686,8 @@ export function SampleDemoShell() {
                 Ashlyn Tan · SGP 115 · SailorPath Profile
               </h1>
               <p className="text-[11px] text-slate-500 mt-0.5">
-                Age {age} · dual-class Optimist + ILCA 4 · switch views below
+                b. {SAMPLE_SAILOR.dob.slice(0, 4)} · dual-class Optimist + ILCA 4 ·
+                switch views below
               </p>
             </div>
             {canManagePrivacy && (

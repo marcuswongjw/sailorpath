@@ -680,7 +680,7 @@ export function SailorProfileView({
    * DOB privacy:
    * - Birth year is always public when DOB is set
    * - Full date only when owner shared it or viewer has private access
-   * - Age is shown from birth year / DOB (fleet eligibility)
+   * - Age is never shown on public profiles (birth year only)
    */
   const dobYmd = displaySailor.dob
     ? String(displaySailor.dob).slice(0, 10)
@@ -691,16 +691,6 @@ export function SailorProfileView({
     Boolean(bornYear) && (isPublicDob || hasPrivateAccess);
   const fullDobLabel =
     showFullDob && dobYmd ? formatFullDob(dobYmd) : null;
-  const ageYears = useMemo(() => {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(dobYmd)) return null;
-    const [y, m, d] = dobYmd.split("-").map(Number);
-    const now = new Date();
-    let age = now.getFullYear() - (y as number);
-    const month = now.getMonth() + 1;
-    const day = now.getDate();
-    if (month < (m as number) || (month === m && day < (d as number))) age -= 1;
-    return age >= 0 ? age : null;
-  }, [dobYmd]);
 
   const hasEquipment =
     showEquipment &&
@@ -901,18 +891,23 @@ export function SailorProfileView({
     analytics.mode === "established_gold" &&
     analytics.medals.show;
 
-  /** Which ranking strip to show: Optimist series vs ILCA national */
-  const activeStanding =
-    useIlcaStats && initialIlcaStanding
-      ? initialIlcaStanding
-      : !useIlcaStats
-        ? initialSeriesStanding
-        : initialIlcaStanding || null;
-  const standingIsIlca =
-    useIlcaStats ||
-    String(activeStanding?.boatClass || "")
-      .toLowerCase()
-      .includes("ilca");
+  /**
+   * Ranking strip: on ILCA context prefer ILCA national standing;
+   * fall back to Optimist series if ILCA standing is missing (live safety net).
+   */
+  const activeStanding = useIlcaStats
+    ? initialIlcaStanding ?? initialSeriesStanding ?? null
+    : initialSeriesStanding ?? null;
+  const standingIsIlca = Boolean(
+    useIlcaStats &&
+      initialIlcaStanding &&
+      (String(initialIlcaStanding.boatClass || "")
+        .toLowerCase()
+        .includes("ilca") ||
+        String(initialIlcaStanding.fleet || "")
+          .toLowerCase()
+          .includes("open"))
+  );
 
   /** Public viewers only see equipment when the sailor made it public */
   const showEquipmentSection = showEquipment || isOwner;
@@ -1073,9 +1068,9 @@ export function SailorProfileView({
                   <h1 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                     {displaySailor.name}
                   </h1>
-                  {ageYears != null && (
+                  {bornYear && (
                     <span className="inline-flex items-center rounded-full bg-white/10 border border-white/10 px-2.5 py-0.5 text-[12px] font-bold text-white tabular-nums">
-                      Age {ageYears}
+                      b. {bornYear}
                     </span>
                   )}
                   <span
@@ -1515,7 +1510,7 @@ export function SailorProfileView({
                     }`}
                   >
                     {standingIsIlca
-                      ? "Open fleet"
+                      ? activeStanding.fleet || "Open fleet"
                       : `${activeStanding.fleet} fleet`}
                   </span>
                 </p>

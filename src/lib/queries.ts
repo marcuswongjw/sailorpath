@@ -19,11 +19,16 @@ import {
   type RegattaResultRecord,
   type RegattaScoreSlot,
 } from "@/lib/ranking";
-import { currentPeriodFromSgToday } from "@/lib/datesSg";
+import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
 import {
   isInSgSeries,
   normalizeSgSeriesMembership,
 } from "@/lib/seriesMembership";
+import {
+  computeIlcaRankings,
+  ilcaRankingRegattas,
+  type IlcaBoatClass,
+} from "@/lib/ilcaRanking";
 import {
   asc,
   desc,
@@ -108,6 +113,20 @@ export type SeriesStanding = {
   best3of5: number;
   rScores: RegattaScoreSlot[];
   trendNote: string;
+};
+
+/** ILCA 4 (or 6) Best 3 of 5 high-points strip for a profile */
+export type IlcaSeriesStanding = {
+  periodLabel: string;
+  fleet: "Open";
+  overallRank: number;
+  fleetSize: number;
+  best3of5: number;
+  rScores: RegattaScoreSlot[];
+  trendNote: string;
+  boatClass: IlcaBoatClass;
+  /** True when ranking used unrestricted board (not national list only) */
+  unrestricted?: boolean;
 };
 
 async function withDb<T>(fn: () => Promise<T>): Promise<T> {
@@ -465,6 +484,120 @@ export async function getSailorSeriesStanding(
         carry > 0
           ? `Includes ${carry} carry-forward score${carry === 1 ? "" : "s"} from previous half`
           : `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
+    };
+  });
+}
+
+/**
+ * Live ILCA Best 3 of last 5 high-points standing for one sailor.
+ * Prefers national-list board; falls back to all ILCA racers if the sailor
+ * has results but is not on the official list.
+ */
+export async function getSailorIlcaStanding(
+  sailorId: string,
+  boatClass: IlcaBoatClass = "ILCA 4"
+): Promise<IlcaSeriesStanding | null> {
+  return withDb(async () => {
+    const asOf = todayYmdSg();
+    const [sailorRows, regattaRows] = await Promise.all([
+      db.select().from(sailors),
+      db.select().from(regattas),
+    ]);
+
+    const ilcaSailors = sailorRows.map((s) => ({
+      id: s.id,
+      name: s.name,
+      gender: s.gender,
+      dob: s.dob,
+      nationality: s.nationality,
+      sailNumber: s.sailNumber,
+      sailNumberIlca4: s.sailNumberIlca4,
+      ilca4NationalList: s.ilca4NationalList,
+      club: s.club,
+      handle: s.handle,
+    }));
+
+    const ilcaRegattas = regattaRows.map((r) => ({
+      id: r.id,
+      name: r.name,
+      date: r.date,
+      totalFleetSize: r.totalFleetSize ?? 50,
+      boatClass: r.boatClass,
+      countsForRanking: r.countsForRanking,
+      raceCount: r.raceCount,
+      division: r.division,
+    }));
+
+    const window = ilcaRankingRegattas(ilcaRegattas, boatClass, asOf);
+    if (!window.length) return null;
+
+    const scoringIds = window.map((r) => r.id);
+    const resultRows = await db
+      .select()
+      .from(regattaResults)
+      .where(inArray(regattaResults.regattaId, scoringIds));
+
+    const hasAnyResult = resultRows.some((r) => r.sailorId === sailorId);
+    if (!hasAnyResult) return null;
+
+    const ilcaResults = resultRows.map((row) => ({
+      sailorId: row.sailorId,
+      regattaId: row.regattaId,
+      rank: row.rank,
+      isDns: row.isDns,
+      isOverseasCommitment: row.isOverseasCommitment,
+    }));
+
+    const build = (restrictToNationalList: boolean) =>
+      computeIlcaRankings(
+        boatClass,
+        asOf,
+        ilcaSailors,
+        ilcaRegattas,
+        ilcaResults,
+        { restrictToNationalList }
+      );
+
+    let ranked = build(true);
+    let unrestricted = false;
+    let me = ranked.find((x) => x.sailorId === sailorId);
+    if (!me) {
+      ranked = build(false);
+      unrestricted = true;
+      me = ranked.find((x) => x.sailorId === sailorId);
+    }
+    if (!me) return null;
+
+    const rScores: RegattaScoreSlot[] = me.eventScores.map((e) => ({
+      regattaId: e.regattaId,
+      regattaName: e.regattaName,
+      score: e.points,
+      isDNS: e.isDns,
+      isOverseasCommitment: false,
+    }));
+
+    // Pad to 5 slots for the profile strip
+    while (rScores.length < 5) {
+      rScores.push({
+        regattaId: `empty-${rScores.length}`,
+        regattaName: "—",
+        score: 0,
+        isDNS: true,
+      });
+    }
+
+    return {
+      periodLabel: `${boatClass} · ranking as of ${asOf}`,
+      fleet: "Open",
+      overallRank: me.rank,
+      fleetSize: ranked.length,
+      best3of5: me.totalPoints,
+      rScores,
+      trendNote: unrestricted
+        ? `Best 3 of 5 high points · not on national list (open board #${me.rank})`
+        : `Best 3 of 5 high points · #${me.rank} of ${ranked.length} nationally`,
+      boatClass,
+      unrestricted,
     };
   });
 }
