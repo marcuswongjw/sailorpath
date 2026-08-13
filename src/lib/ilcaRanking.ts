@@ -288,11 +288,15 @@ export function computeIlcaRankings(
     return sailorIdsWithResults.has(s.id);
   });
 
+  // Pre-index results by "sailorId:regattaId" for O(1) score lookup
+  const resultsMap = new Map<string, IlcaResult>();
+  for (const r of results) {
+    resultsMap.set(`${r.sailorId}:${r.regattaId}`, r);
+  }
+
   const ranked: Omit<IlcaRankedSailor, "rank">[] = candidates.map((s) => {
     const eventScores: IlcaEventScore[] = window.map((reg) => {
-      const res = results.find(
-        (x) => x.sailorId === s.id && x.regattaId === reg.id
-      );
+      const res = resultsMap.get(`${s.id}:${reg.id}`);
       const fleetSize = Math.max(1, Number(reg.totalFleetSize) || 1);
       const noResult = !res;
       const isDns =

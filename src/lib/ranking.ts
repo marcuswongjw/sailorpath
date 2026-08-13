@@ -428,14 +428,17 @@ export function optimistHistoryByPeriodEnd(
 function scoreForResult(
   sailorId: string,
   regatta: RegattaRecord,
-  results: RegattaResultRecord[]
+  results: RegattaResultRecord[] | Map<string, RegattaResultRecord>
 ): Pick<
   RegattaScoreSlot,
   "score" | "isDNS" | "isOverseasCommitment"
 > {
-  const result = results.find(
-    (res) => res.sailorId === sailorId && res.regattaId === regatta.id
-  );
+  const result =
+    results instanceof Map
+      ? results.get(`${sailorId}:${regatta.id}`)
+      : results.find(
+          (res) => res.sailorId === sailorId && res.regattaId === regatta.id
+        );
   if (result) {
     return {
       score: result.rank,
@@ -589,11 +592,17 @@ export function calculateRankings(
     seriesBoatClass
   );
 
+  // Pre-index results by "sailorId:regattaId" for O(1) score lookup
+  const resultsMap = new Map<string, RegattaResultRecord>();
+  for (const res of results) {
+    resultsMap.set(`${res.sailorId}:${res.regattaId}`, res);
+  }
+
   const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
     const slots = sailor.fleet === "Gold" ? goldSlots : silverSlots;
 
     const regattaScores: RegattaScoreSlot[] = slots.map((slot) => {
-      const scored = scoreForResult(sailor.id, slot.regatta, results);
+      const scored = scoreForResult(sailor.id, slot.regatta, resultsMap);
       return {
         regattaId: slot.regatta.id,
         regattaName: slot.regatta.name,
