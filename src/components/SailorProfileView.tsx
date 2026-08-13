@@ -1477,6 +1477,69 @@ export function SailorProfileView({
         </div>
       )}
 
+      {/* ── Class tabs (dual-class) — above ranking so they control the whole profile ── */}
+      {dualClass && (
+        <div
+          className={`${cardClass} p-2 sm:p-2.5`}
+          role="tablist"
+          aria-label="Boat class"
+        >
+          <div className="flex gap-1 rounded-xl bg-black/30 border border-white/[0.06] p-1">
+            {(
+              preferIlcaFirst
+                ? (["ilca4", "optimist", "journey"] as const)
+                : (["optimist", "ilca4", "journey"] as const)
+            ).map((tab) => {
+              const isIlca = tab === "ilca4";
+              const isJourney = tab === "journey";
+              const count = isJourney
+                ? displayJourney.length
+                : isIlca
+                  ? ilca4Results.length
+                  : optimistResults.length;
+              const selected = resultsTab === tab;
+              return (
+                <button
+                  key={tab}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => {
+                    setResultsTab(tab);
+                    setShowAllResults(false);
+                  }}
+                  className={`flex-1 rounded-lg px-2.5 sm:px-3 py-2.5 text-[12px] sm:text-[13px] font-semibold transition-colors min-h-[44px] ${
+                    selected
+                      ? isIlca
+                        ? "bg-sky-600 text-white shadow-sm"
+                        : isJourney
+                          ? "bg-violet-600 text-white shadow-sm"
+                          : "bg-orange-500 text-white shadow-sm"
+                      : "text-neutral-400 hover:text-white"
+                  }`}
+                >
+                  {isIlca ? "ILCA 4" : isJourney ? "Journey" : "Optimist"}
+                  <span
+                    className={`ml-1.5 tabular-nums text-[10px] sm:text-[11px] ${
+                      selected ? "text-white/80" : "text-neutral-600"
+                    }`}
+                  >
+                    ({count})
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <p className="text-[11px] text-neutral-500 mt-2 px-1">
+            {resultsTab === "ilca4"
+              ? "ILCA 4 ranking, stats, and results"
+              : resultsTab === "journey"
+                ? "Career milestones and highlights"
+                : "Optimist series ranking, stats, and results"}
+          </p>
+        </div>
+      )}
+
       {/* ── Series / ILCA national standing ─────────────────── */}
       {activeStanding && resultsTab !== "journey" && (
         <section className={`${cardClass} p-4 sm:p-5`}>
@@ -1632,6 +1695,7 @@ export function SailorProfileView({
       )}
 
       {/* ── Key stats ────────────────────────────────────────── */}
+      {resultsTab !== "journey" && (
       <section className={`${cardClass} overflow-hidden`}>
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-1">
           <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
@@ -1656,6 +1720,7 @@ export function SailorProfileView({
           ))}
         </div>
       </section>
+      )}
 
       {/* ── Medal tally ──────────────────────────────────────── */}
       {showMedals && (
@@ -1713,63 +1778,14 @@ export function SailorProfileView({
           <div className="min-w-0 flex-1">
             <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
               Regatta results
+              {dualClass && resultsTab === "ilca4"
+                ? " · ILCA 4"
+                : dualClass && resultsTab === "optimist"
+                  ? " · Optimist"
+                  : ""}
             </h2>
-            {dualClass ? (
-              <div
-                className="mt-3 flex gap-1 rounded-xl bg-black/30 border border-white/[0.06] p-1 max-w-lg"
-                role="tablist"
-                aria-label="Boat class results"
-              >
-                {(
-                  preferIlcaFirst
-                    ? (["ilca4", "optimist", "journey"] as const)
-                    : (["optimist", "ilca4", "journey"] as const)
-                ).map((tab) => {
-                  const isIlca = tab === "ilca4";
-                  const isJourney = tab === "journey";
-                  const count = isJourney
-                    ? displayJourney.length
-                    : isIlca
-                      ? ilca4Results.length
-                      : optimistResults.length;
-                  const selected = resultsTab === tab;
-                  return (
-                    <button
-                      key={tab}
-                      type="button"
-                      role="tab"
-                      aria-selected={selected}
-                      onClick={() => {
-                        setResultsTab(tab);
-                        setShowAllResults(false);
-                      }}
-                      className={`flex-1 rounded-lg px-2.5 sm:px-3 py-2 text-[11px] sm:text-[12px] font-semibold transition-colors ${
-                        selected
-                          ? isIlca
-                            ? "bg-sky-600 text-white shadow-sm"
-                            : isJourney
-                              ? "bg-violet-600 text-white shadow-sm"
-                              : "bg-orange-500 text-white shadow-sm"
-                          : "text-neutral-400 hover:text-white"
-                      }`}
-                    >
-                      {isIlca ? "ILCA 4" : isJourney ? "Journey" : "Optimist"}
-                      <span
-                        className={`ml-1 tabular-nums text-[10px] ${
-                          selected
-                            ? "text-white/80"
-                            : "text-neutral-600"
-                        }`}
-                      >
-                        ({count})
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-            ) : null}
             {resultsTab !== "journey" && (
-            <p className="text-[11px] text-neutral-600 mt-2">
+            <p className="text-[11px] text-neutral-600 mt-1.5">
               {(() => {
                 const list =
                   dualClass && resultsTab === "ilca4"
