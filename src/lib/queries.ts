@@ -47,6 +47,12 @@ export type SailorMapped = SailorRecord & {
   foilBrand?: string | null;
   mast?: string | null;
   equipmentNotes?: string | null;
+  hullBrandIlca4?: string | null;
+  sailMakeIlca4?: string | null;
+  foilBrandIlca4?: string | null;
+  mastIlca4?: string | null;
+  equipmentNotesIlca4?: string | null;
+  nationalityFromSail?: boolean | null;
 };
 
 function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
@@ -59,6 +65,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     club: row.club,
     school: row.school,
     nationality: row.nationality,
+    nationalityFromSail: row.nationalityFromSail,
     avatarUrl: row.avatarUrl,
     parentId: row.parentId,
     goldEntryDate: row.goldEntryDate,
@@ -101,6 +108,11 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     foilBrand: row.foilBrand,
     mast: row.mast,
     equipmentNotes: row.equipmentNotes,
+    hullBrandIlca4: row.hullBrandIlca4,
+    sailMakeIlca4: row.sailMakeIlca4,
+    foilBrandIlca4: row.foilBrandIlca4,
+    mastIlca4: row.mastIlca4,
+    equipmentNotesIlca4: row.equipmentNotesIlca4,
   };
 }
 

@@ -83,13 +83,11 @@ export default async function SailorProfilePage({
     foilBrand: sailor.foilBrand || null,
     mast: sailor.mast || null,
     notes: sailor.equipmentNotes || null,
-    hullBrandIlca4: (sailor as { hullBrandIlca4?: string | null }).hullBrandIlca4 || null,
-    sailMakeIlca4: (sailor as { sailMakeIlca4?: string | null }).sailMakeIlca4 || null,
-    foilBrandIlca4: (sailor as { foilBrandIlca4?: string | null }).foilBrandIlca4 || null,
-    mastIlca4: (sailor as { mastIlca4?: string | null }).mastIlca4 || null,
-    notesIlca4:
-      (sailor as { equipmentNotesIlca4?: string | null }).equipmentNotesIlca4 ||
-      null,
+    hullBrandIlca4: sailor.hullBrandIlca4 || null,
+    sailMakeIlca4: sailor.sailMakeIlca4 || null,
+    foilBrandIlca4: sailor.foilBrandIlca4 || null,
+    mastIlca4: sailor.mastIlca4 || null,
+    notesIlca4: sailor.equipmentNotesIlca4 || null,
   };
 
   return (
