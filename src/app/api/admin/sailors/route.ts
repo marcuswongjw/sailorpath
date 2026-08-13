@@ -822,7 +822,7 @@ export async function POST(req: Request) {
         .replace(/^-|-$/g, "");
 
     let silverEntryDate = toDateOnly(body.silverEntryDate);
-    let goldEntryDate = toDateOnly(body.goldEntryDate);
+    const goldEntryDate = toDateOnly(body.goldEntryDate);
     const dropDate = toDateOnly(body.dropDate);
     // SG Series Fleet: Guest | Series (legacy Gold/Silver → Series)
     const { normalizeSgSeriesMembership } = await import(

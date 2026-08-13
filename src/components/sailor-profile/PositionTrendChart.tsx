@@ -31,7 +31,7 @@ export function PositionTrendChart({
     const dataMax = Math.max(...ranks);
     const rawSpan = Math.max(dataMax - dataMin, 1);
     const pad = Math.max(1, Math.ceil(rawSpan * 0.15));
-    let minR = Math.max(1, dataMin - pad);
+    const minR = Math.max(1, dataMin - pad);
     let maxR = dataMax + pad;
     if (maxR - minR < 5) maxR = minR + 5;
     const span = maxR - minR;

@@ -19,29 +19,36 @@ export default async function AdminPage() {
     host.includes("127.0.0.1");
   if (!allowed) notFound();
 
+  let sailors;
+  let regattas;
+  let results;
+  let errorMsg: string | null = null;
+
   try {
-    const [sailors, regattas, results] = await Promise.all([
+    const [s, r, res] = await Promise.all([
       listSailorsFull(),
       listRegattasFull(),
       listResults(),
     ]);
-
-    return (
-      <AdminDashboard
-        initialSailors={sailors}
-        initialRegattas={regattas}
-        initialResults={results}
-      />
-    );
+    sailors = s;
+    regattas = r;
+    results = res;
   } catch (e) {
-    return (
-      <DbOffline
-        message={
-          e instanceof DbUnavailableError
-            ? e.message
-            : "Cannot load admin without database"
-        }
-      />
-    );
+    errorMsg =
+      e instanceof DbUnavailableError
+        ? e.message
+        : "Cannot load admin without database";
   }
+
+  if (errorMsg || !sailors || !regattas || !results) {
+    return <DbOffline message={errorMsg || "Database load error"} />;
+  }
+
+  return (
+    <AdminDashboard
+      initialSailors={sailors}
+      initialRegattas={regattas}
+      initialResults={results}
+    />
+  );
 }

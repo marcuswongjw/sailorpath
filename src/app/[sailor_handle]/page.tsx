@@ -20,23 +20,26 @@ export default async function SailorProfilePage({
   params: Promise<{ sailor_handle: string }>;
 }) {
   const { sailor_handle } = await params;
+  let sailor;
+  let auth;
+  let results;
+  let seriesStanding;
+  let ilcaStanding;
+  let observations;
+  let equipmentHistory;
+  let errorMsg: string | null = null;
+
   try {
-    const sailor = await getSailorByHandle(sailor_handle);
-    if (!sailor) notFound();
+    sailor = await getSailorByHandle(sailor_handle);
+    if (sailor) {
+      auth = await getAuthContext();
+      const isLinkedOwner = Boolean(
+        auth?.userId && sailor.parentId === auth.userId
+      );
+      const isSuperadmin = auth?.role === "superadmin";
+      const canSeePrivate = isSuperadmin || isLinkedOwner;
 
-    const auth = await getAuthContext();
-    const isLinkedOwner = Boolean(
-      auth?.userId && sailor.parentId === auth.userId
-    );
-    const isSuperadmin = auth?.role === "superadmin";
-    const canSeePrivate = isSuperadmin || isLinkedOwner;
-    const isOwner = isLinkedOwner || isSuperadmin;
-    const canClaim = Boolean(
-      auth?.userId && !sailor.parentId && !isSuperadmin
-    );
-
-    const [results, seriesStanding, ilcaStanding, observations, equipmentHistory] =
-      await Promise.all([
+      const [res, sStand, iStand, obs, equipHist] = await Promise.all([
         getResultsForSailor(sailor.id),
         getSailorSeriesStanding(sailor.id).catch(() => null),
         getSailorIlcaStanding(sailor.id, "ILCA 4").catch(() => null),
@@ -46,61 +49,82 @@ export default async function SailorProfilePage({
         getEquipmentLogsForSailor(sailor.id).catch(() => []),
       ]);
 
-    const equipment = {
-      hullBrand: sailor.hullBrand || null,
-      sailMake: sailor.sailMake || null,
-      foilBrand: sailor.foilBrand || null,
-      mast: sailor.mast || null,
-      notes: sailor.equipmentNotes || null,
-    };
-
-    return (
-      <SailorProfileView
-        initialSailor={{
-          ...sailor,
-          isPublicWeight: sailor.isPublicWeight ?? false,
-          isPublicDob: sailor.isPublicDob ?? false,
-          isPublicEquipment: sailor.isPublicEquipment ?? false,
-        }}
-        initialResults={results.map((r) => ({
-          id: r.resultId || r.regattaId,
-          resultId: r.resultId,
-          regattaSlug: r.regattaSlug,
-          regattaId: r.regattaId,
-          regattaName: r.regattaName,
-          regattaDate: r.regattaDate,
-          division: r.division,
-          fleetSize: r.fleetSize,
-          totalFleetSize: r.fleetSize,
-          rank: r.rank,
-          nettScore: r.nettScore,
-          totalScore: r.totalScore,
-          isDns: r.isDns,
-          isDNS: r.isDns,
-          isOverseasCommitment: r.isOverseasCommitment,
-          raceCount: r.raceCount,
-          geography: r.geography,
-          countsForRanking: r.countsForRanking !== false,
-          boatClass: r.boatClass ?? "Optimist",
-        }))}
-        initialEquipment={equipment}
-        initialSeriesStanding={seriesStanding}
-        initialIlcaStanding={ilcaStanding}
-        initialObservations={observations}
-        initialEquipmentHistory={equipmentHistory}
-        canSeePrivate={canSeePrivate}
-        canClaim={canClaim}
-        isOwner={isOwner}
-        isLoggedIn={Boolean(auth?.userId)}
-        profileClaimed={Boolean(sailor.parentId)}
-        profileVerified={Boolean(sailor.parentId)}
-      />
-    );
+      results = res;
+      seriesStanding = sStand;
+      ilcaStanding = iStand;
+      observations = obs;
+      equipmentHistory = equipHist;
+    }
   } catch (e) {
-    return (
-      <DbOffline
-        message={e instanceof DbUnavailableError ? e.message : "DB error"}
-      />
-    );
+    errorMsg = e instanceof DbUnavailableError ? e.message : "DB error";
   }
+
+  if (errorMsg) {
+    return <DbOffline message={errorMsg} />;
+  }
+
+  if (!sailor) {
+    notFound();
+  }
+
+  const isLinkedOwner = Boolean(
+    auth?.userId && sailor.parentId === auth.userId
+  );
+  const isSuperadmin = auth?.role === "superadmin";
+  const canSeePrivate = isSuperadmin || isLinkedOwner;
+  const isOwner = isLinkedOwner || isSuperadmin;
+  const canClaim = Boolean(
+    auth?.userId && !sailor.parentId && !isSuperadmin
+  );
+
+  const equipment = {
+    hullBrand: sailor.hullBrand || null,
+    sailMake: sailor.sailMake || null,
+    foilBrand: sailor.foilBrand || null,
+    mast: sailor.mast || null,
+    notes: sailor.equipmentNotes || null,
+  };
+
+  return (
+    <SailorProfileView
+      initialSailor={{
+        ...sailor,
+        isPublicWeight: sailor.isPublicWeight ?? false,
+        isPublicDob: sailor.isPublicDob ?? false,
+        isPublicEquipment: sailor.isPublicEquipment ?? false,
+      }}
+      initialResults={(results || []).map((r) => ({
+        id: r.resultId || r.regattaId,
+        resultId: r.resultId,
+        regattaSlug: r.regattaSlug,
+        regattaId: r.regattaId,
+        regattaName: r.regattaName,
+        regattaDate: r.regattaDate,
+        division: r.division,
+        fleetSize: r.fleetSize,
+        totalFleetSize: r.fleetSize,
+        rank: r.rank,
+        nettScore: r.nettScore,
+        totalScore: r.totalScore,
+        isDns: r.isDns,
+        isDNS: r.isDns,
+        isOverseasCommitment: r.isOverseasCommitment,
+        raceCount: r.raceCount,
+        geography: r.geography,
+        countsForRanking: r.countsForRanking !== false,
+        boatClass: r.boatClass ?? "Optimist",
+      }))}
+      initialEquipment={equipment}
+      initialSeriesStanding={seriesStanding}
+      initialIlcaStanding={ilcaStanding}
+      initialObservations={observations || []}
+      initialEquipmentHistory={equipmentHistory || []}
+      canSeePrivate={canSeePrivate}
+      canClaim={canClaim}
+      isOwner={isOwner}
+      isLoggedIn={Boolean(auth?.userId)}
+      profileClaimed={Boolean(sailor.parentId)}
+      profileVerified={Boolean(sailor.parentId)}
+    />
+  );
 }

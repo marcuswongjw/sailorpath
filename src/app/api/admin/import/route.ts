@@ -15,7 +15,6 @@ import {
   toNumber,
 } from "@/lib/normalize";
 import { makeGuestHandle, slugify } from "@/lib/slug";
-import { normalizeNationality } from "@/lib/seriesMembership";
 import {
   isUnrecognizedCountry,
   nationalityFromAnySailNumber,
@@ -424,7 +423,7 @@ export async function POST(req: Request) {
 
     for (const row of cleanRows) {
       try {
-        let hit = findSailorByName(row.name, sailorList, aliasList);
+        const hit = findSailorByName(row.name, sailorList, aliasList);
         let sailorId: string | null = hit?.sailor.id ?? null;
 
         if (hit) {
