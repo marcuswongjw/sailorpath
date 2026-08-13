@@ -125,6 +125,8 @@ export type RegattaScoreSlot = {
   /** Score borrowed from previous half-year while current period has &lt; 5 events */
   isCarryForward?: boolean;
   periodLabel?: string;
+  /** Finishing place (ILCA profile strip: show rank + points) */
+  finishPlace?: number | null;
 };
 
 export interface RankedSailor extends SailorRecord {

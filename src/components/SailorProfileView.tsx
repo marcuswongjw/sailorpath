@@ -928,8 +928,12 @@ export function SailorProfileView({
       ? " · last 10 gold events"
       : " · last 10 regattas";
 
-  // System + owner journey milestones
+  // System + owner journey milestones (Optimist + ILCA results for first ILCA 4)
   const displayJourney = useMemo(() => {
+    const allResults = [
+      ...(classBuckets.optimist as ProfileResult[]),
+      ...(classBuckets.ilca4 as ProfileResult[]),
+    ];
     const system = buildSystemJourneyMilestones(
       {
         goldEntryDate: displaySailor.goldEntryDate as string | null | undefined,
@@ -940,11 +944,17 @@ export function SailorProfileView({
         dropDate: displaySailor.dropDate as string | null | undefined,
         dob: displaySailor.dob as string | null | undefined,
       },
-      classBuckets.optimist as ProfileResult[],
+      allResults,
       { optimistLeftYear: leftOptimistYear }
     );
     return mergeJourneyDisplay(journey, system);
-  }, [displaySailor, classBuckets.optimist, journey, leftOptimistYear]);
+  }, [
+    displaySailor,
+    classBuckets.optimist,
+    classBuckets.ilca4,
+    journey,
+    leftOptimistYear,
+  ]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 flex-1 w-full space-y-5 bg-[#090a0f]">
@@ -1068,11 +1078,6 @@ export function SailorProfileView({
                   <h1 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
                     {displaySailor.name}
                   </h1>
-                  {bornYear && (
-                    <span className="inline-flex items-center rounded-full bg-white/10 border border-white/10 px-2.5 py-0.5 text-[12px] font-bold text-white tabular-nums">
-                      b. {bornYear}
-                    </span>
-                  )}
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${fleetBadge.className}`}
                   >
@@ -1604,10 +1609,19 @@ export function SailorProfileView({
                     .replace(/National Regatta/i, "NR")
                     .replace(/Championships?/i, "Champs")
                 : null;
-              const empty =
-                !r ||
-                r.regattaName === "—" ||
-                (r.isDNS && r.score === 0 && !r.isOverseasCommitment);
+              const slotEmpty =
+                !r || r.regattaName === "—" || r.regattaName === "";
+              // Optimist: treat DNS-zero pad as empty; ILCA: show DNC + 0 pts
+              const optimistEmpty =
+                !standingIsIlca &&
+                Boolean(
+                  r &&
+                    r.isDNS &&
+                    r.score === 0 &&
+                    !r.isOverseasCommitment
+                );
+              const empty = slotEmpty || optimistEmpty;
+              const showIlcaScore = standingIsIlca && r && !slotEmpty;
               return (
                 <div
                   key={i}
@@ -1622,13 +1636,26 @@ export function SailorProfileView({
                     R{i + 1}
                   </p>
                   <p className="text-[12px] sm:text-[13px] font-medium text-neutral-300 leading-snug mt-1.5 line-clamp-2 flex-1 px-0.5">
-                    {empty ? "—" : shortName || "—"}
+                    {empty && !showIlcaScore ? "—" : shortName || "—"}
                   </p>
-                  <p className="text-xl font-bold text-white tabular-nums mt-2">
-                    {empty
-                      ? "—"
-                      : `${r!.score}${r!.isOverseasCommitment ? "†" : r!.isDNS ? "*" : ""}${r!.isCarryForward ? " CF" : ""}`}
-                  </p>
+                  {showIlcaScore ? (
+                    <div className="mt-2 space-y-0.5">
+                      <p className="text-lg font-bold text-white tabular-nums leading-none">
+                        {r!.finishPlace != null && r!.finishPlace > 0
+                          ? `#${r!.finishPlace}`
+                          : "DNC"}
+                      </p>
+                      <p className="text-[11px] font-semibold text-sky-300/90 tabular-nums">
+                        {r!.score} pts
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="text-xl font-bold text-white tabular-nums mt-2">
+                      {empty
+                        ? "—"
+                        : `${r!.score}${r!.isOverseasCommitment ? "†" : r!.isDNS ? "*" : ""}${r!.isCarryForward ? " CF" : ""}`}
+                    </p>
+                  )}
                 </div>
               );
             })}
@@ -1639,7 +1666,12 @@ export function SailorProfileView({
               const empty =
                 !r ||
                 r.regattaName === "—" ||
-                (r.isDNS && r.score === 0 && !r.isOverseasCommitment);
+                (r.isDNS && r.score === 0 && !r.isOverseasCommitment && r.finishPlace == null && !standingIsIlca);
+              const ilcaMiss =
+                standingIsIlca &&
+                r &&
+                (r.finishPlace == null || r.finishPlace <= 0) &&
+                (r.isDNS || r.score === 0);
               return (
                 <li
                   key={i}
@@ -1654,14 +1686,33 @@ export function SailorProfileView({
                       R{i + 1}
                     </span>
                     <span className="text-[13px] font-medium text-neutral-200 truncate">
-                      {empty ? "—" : r?.regattaName || "—"}
+                      {empty && !standingIsIlca
+                        ? "—"
+                        : r?.regattaName && r.regattaName !== "—"
+                          ? r.regattaName
+                          : "—"}
                     </span>
                   </div>
-                  <span className="shrink-0 text-lg font-bold text-white tabular-nums">
-                    {empty
-                      ? "—"
-                      : `${r!.score}${r!.isOverseasCommitment ? "†" : r!.isDNS ? "*" : ""}`}
-                  </span>
+                  {standingIsIlca && r && r.regattaName !== "—" ? (
+                    <span className="shrink-0 text-right">
+                      <span className="block text-base font-bold text-white tabular-nums leading-none">
+                        {r.finishPlace != null && r.finishPlace > 0
+                          ? `#${r.finishPlace}`
+                          : ilcaMiss || r.isDNS
+                            ? "DNC"
+                            : "—"}
+                      </span>
+                      <span className="block text-[11px] font-semibold text-sky-300/90 tabular-nums mt-0.5">
+                        {r.score} pts
+                      </span>
+                    </span>
+                  ) : (
+                    <span className="shrink-0 text-lg font-bold text-white tabular-nums">
+                      {empty
+                        ? "—"
+                        : `${r!.score}${r!.isOverseasCommitment ? "†" : r!.isDNS ? "*" : ""}${r!.isCarryForward ? " CF" : ""}`}
+                    </span>
+                  )}
                 </li>
               );
             })}
@@ -1777,12 +1828,13 @@ export function SailorProfileView({
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex flex-wrap items-end justify-between gap-2">
           <div className="min-w-0 flex-1">
             <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-              Regatta results
-              {dualClass && resultsTab === "ilca4"
-                ? " · ILCA 4"
-                : dualClass && resultsTab === "optimist"
-                  ? " · Optimist"
-                  : ""}
+              {resultsTab === "journey"
+                ? "Sailing journey"
+                : dualClass && resultsTab === "ilca4"
+                  ? "Regatta results · ILCA 4"
+                  : dualClass && resultsTab === "optimist"
+                    ? "Regatta results · Optimist"
+                    : "Regatta results"}
             </h2>
             {resultsTab !== "journey" && (
             <p className="text-[11px] text-neutral-600 mt-1.5">

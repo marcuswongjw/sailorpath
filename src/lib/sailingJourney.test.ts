@@ -73,7 +73,7 @@ describe("sailingJourney", () => {
     expect(silver?.detail).toContain("Early Silver");
   });
 
-  it("merges and sorts journey display", () => {
+  it("merges and sorts journey display latest first", () => {
     const merged = mergeJourneyDisplay(
       [{ id: "o1", when: "2026", title: "Camp", detail: "" }],
       [
@@ -86,8 +86,35 @@ describe("sailingJourney", () => {
         },
       ]
     );
-    expect(merged[0].id).toBe("sys-gold-entry");
-    expect(merged[1].title).toBe("Camp");
+    expect(merged[0].title).toBe("Camp");
+    expect(merged[1].id).toBe("sys-gold-entry");
+  });
+
+  it("adds first ILCA 4 regatta milestone", () => {
+    const sys = buildSystemJourneyMilestones(
+      {},
+      [
+        {
+          regattaDate: "2026-03-08",
+          boatClass: "ILCA 4",
+          regattaName: "Changi ILCA Open",
+        },
+        {
+          regattaDate: "2026-05-01",
+          boatClass: "ILCA 4",
+          regattaName: "Later ILCA",
+        },
+        {
+          regattaDate: "2025-01-01",
+          boatClass: "Optimist",
+          division: "Gold",
+          regattaName: "Opti",
+        },
+      ]
+    );
+    const ilca = sys.find((m) => m.id === "sys-first-ilca4");
+    expect(ilca?.when).toMatch(/2026/);
+    expect(ilca?.detail).toContain("Changi ILCA Open");
   });
 
   it("allows dismissing system milestones", () => {

@@ -95,7 +95,7 @@ export type JourneyResultHint = {
 };
 
 /**
- * System milestones: first Optimist silver, gold entry, left Optimist year.
+ * System milestones: first Optimist silver, gold entry, first ILCA 4, left Optimist year.
  */
 export function buildSystemJourneyMilestones(
   sailor: {
@@ -149,6 +149,40 @@ export function buildSystemJourneyMilestones(
       when: formatJourneyWhen(gold),
       title: "Broke into gold fleet",
       detail: `Promoted to Optimist gold fleet (${gold.slice(0, 4)}).`,
+      system: true,
+    });
+  }
+
+  // First ILCA 4 regatta (dual-class / transition path)
+  let firstIlcaDate: string | null = null;
+  let firstIlcaName: string | null = null;
+  for (const r of results) {
+    const bc = String(r.boatClass || "")
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, " ");
+    const isIlca4 =
+      bc === "ilca 4" ||
+      bc === "ilca4" ||
+      bc === "laser 4.7" ||
+      bc === "laser4.7" ||
+      (bc.includes("ilca") && bc.includes("4"));
+    if (!isIlca4) continue;
+    const d = ymd(r.regattaDate);
+    if (!isValidYmd(d)) continue;
+    if (!firstIlcaDate || d < firstIlcaDate) {
+      firstIlcaDate = d;
+      firstIlcaName = String(r.regattaName || "").trim() || null;
+    }
+  }
+  if (firstIlcaDate) {
+    out.push({
+      id: "sys-first-ilca4",
+      when: formatJourneyWhen(firstIlcaDate),
+      title: "First ILCA 4 regatta",
+      detail: firstIlcaName
+        ? `First ILCA 4 event: ${firstIlcaName}.`
+        : "Started racing ILCA 4.",
       system: true,
     });
   }
@@ -256,5 +290,6 @@ export function mergeJourneyDisplay(
     if (/^\d{4}$/.test(t)) return `${t}-01-01`;
     return t || "9999-99-99";
   };
-  return all.sort((a, b) => sortKey(a.when).localeCompare(sortKey(b.when)));
+  // Latest moments first (descending by when)
+  return all.sort((a, b) => sortKey(b.when).localeCompare(sortKey(a.when)));
 }

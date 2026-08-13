@@ -234,4 +234,32 @@ describe("computeIlcaRankings + squad", () => {
     const squad = selectIlca4NationalSquad(ranked);
     expect(squad.some((s) => s.sailorId === "m1")).toBe(false);
   });
+
+  it("includes national-list sailors with no results at 0 points", () => {
+    const roster = [
+      ...sailors.map((s) => ({ ...s, ilca4NationalList: true })),
+      {
+        id: "absent",
+        name: "No Start",
+        gender: "M",
+        dob: "2012-01-01",
+        nationality: "SGP",
+        ilca4NationalList: true,
+      },
+    ];
+    const ranked = computeIlcaRankings(
+      "ILCA 4",
+      "2026-06-30",
+      roster,
+      regattas,
+      results,
+      { intakeYear: 2026, restrictToNationalList: true }
+    );
+    const absent = ranked.find((r) => r.sailorId === "absent");
+    expect(absent).toBeTruthy();
+    expect(absent?.totalPoints).toBe(0);
+    expect(absent?.eventScores.every((e) => e.points === 0 && e.isDns)).toBe(
+      true
+    );
+  });
 });

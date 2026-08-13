@@ -269,16 +269,23 @@ export function computeIlcaRankings(
     useNationalList &&
     sailors.some((s) => s.ilca4NationalList === true);
 
+  const onNationalList = (s: IlcaSailor): boolean => {
+    if (!useNationalList) return false;
+    if (anyDbFlagged) return s.ilca4NationalList === true;
+    return isSailorOnIlca4NationalList(s);
+  };
+
+  /**
+   * Candidates:
+   * - National list board: everyone on the list (even with no results → 0 pts),
+   *   plus anyone with results who is on the list.
+   * - Unrestricted: anyone with results in the scoring window.
+   */
   const candidates = sailors.filter((s) => {
-    if (!sailorIdsWithResults.has(s.id)) return false;
     if (useNationalList) {
-      if (anyDbFlagged) {
-        if (s.ilca4NationalList !== true) return false;
-      } else if (!isSailorOnIlca4NationalList(s)) {
-        return false;
-      }
+      return onNationalList(s);
     }
-    return true;
+    return sailorIdsWithResults.has(s.id);
   });
 
   const ranked: Omit<IlcaRankedSailor, "rank">[] = candidates.map((s) => {
@@ -287,17 +294,28 @@ export function computeIlcaRankings(
         (x) => x.sailorId === s.id && x.regattaId === reg.id
       );
       const fleetSize = Math.max(1, Number(reg.totalFleetSize) || 1);
-      const isDns = Boolean(res?.isDns) && !res?.isOverseasCommitment;
-      const place = res && !isDns ? Number(res.rank) : fleetSize + 1;
-      const points = highRankingPoints(place, fleetSize, { isDns: !res || isDns });
+      const noResult = !res;
+      const isDns =
+        noResult ||
+        (Boolean(res?.isDns) && !res?.isOverseasCommitment);
+      // Non-participation / DNS → 0 high-ranking points (not fleet-size penalty)
+      const place =
+        res && !isDns && Number.isFinite(Number(res.rank))
+          ? Number(res.rank)
+          : 0;
+      const points = highRankingPoints(
+        place > 0 ? place : fleetSize + 1,
+        fleetSize,
+        { isDns }
+      );
       return {
         regattaId: reg.id,
         regattaName: reg.name,
         date: ymd(reg.date),
-        place: res && !isDns ? Number(res.rank) : 0,
+        place,
         fleetSize,
         points,
-        isDns: !res || isDns,
+        isDns,
       };
     });
     const { bestThree, total } = bestThreeHighPoints(

@@ -63,6 +63,8 @@ export interface SeriesStandingProps {
     isDNS?: boolean;
     isOverseasCommitment?: boolean;
     isCarryForward?: boolean;
+    /** Finishing place for ILCA events (shown next to high points) */
+    finishPlace?: number | null;
   }[];
   trendNote: string;
   /** When set, standing card is styled for ILCA vs Optimist */

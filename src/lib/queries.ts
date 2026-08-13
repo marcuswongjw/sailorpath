@@ -538,7 +538,12 @@ export async function getSailorIlcaStanding(
       .where(inArray(regattaResults.regattaId, scoringIds));
 
     const hasAnyResult = resultRows.some((r) => r.sailorId === sailorId);
-    if (!hasAnyResult) return null;
+    const meRow = sailorRows.find((s) => s.id === sailorId);
+    const onNationalList = Boolean(meRow?.ilca4NationalList);
+
+    // Include national-list sailors even with no results (0 pts per event).
+    // Others need at least one scoring-window result.
+    if (!hasAnyResult && !onNationalList) return null;
 
     const ilcaResults = resultRows.map((row) => ({
       sailorId: row.sailorId,
@@ -574,6 +579,7 @@ export async function getSailorIlcaStanding(
       score: e.points,
       isDNS: e.isDns,
       isOverseasCommitment: false,
+      finishPlace: e.place > 0 ? e.place : null,
     }));
 
     // Pad to 5 slots for the profile strip
