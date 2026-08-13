@@ -122,6 +122,29 @@ export async function PATCH(req: Request) {
     if (body.school !== undefined) {
       patch.school = strOrNull(body.school, 120);
     }
+    if (body.club !== undefined) {
+      const club = strOrNull(body.club, 120);
+      if (!club) {
+        return NextResponse.json(
+          { error: "Club cannot be empty" },
+          { status: 400 }
+        );
+      }
+      patch.club = club;
+    }
+    if (body.sailNumber !== undefined) {
+      const sn = strOrNull(body.sailNumber, 40);
+      if (!sn) {
+        return NextResponse.json(
+          { error: "Optimist sail number cannot be empty" },
+          { status: 400 }
+        );
+      }
+      patch.sailNumber = sn;
+    }
+    if (body.sailNumberIlca4 !== undefined) {
+      patch.sailNumberIlca4 = strOrNull(body.sailNumberIlca4, 40);
+    }
     if (body.dob !== undefined) {
       if (body.dob === null || body.dob === "") {
         patch.dob = null;
@@ -175,6 +198,11 @@ export async function PATCH(req: Request) {
       ["foilBrand", 80],
       ["mast", 80],
       ["equipmentNotes", 400],
+      ["hullBrandIlca4", 80],
+      ["sailMakeIlca4", 80],
+      ["foilBrandIlca4", 80],
+      ["mastIlca4", 80],
+      ["equipmentNotesIlca4", 400],
     ] as const) {
       if (body[key] !== undefined) {
         const next = strOrNull(body[key], max);
@@ -198,6 +226,9 @@ export async function PATCH(req: Request) {
         instagram: sailors.instagram,
         avatarUrl: sailors.avatarUrl,
         school: sailors.school,
+        club: sailors.club,
+        sailNumber: sailors.sailNumber,
+        sailNumberIlca4: sailors.sailNumberIlca4,
         dob: sailors.dob,
         weight: sailors.weight,
         isPublicWeight: sailors.isPublicWeight,
@@ -209,6 +240,11 @@ export async function PATCH(req: Request) {
         foilBrand: sailors.foilBrand,
         mast: sailors.mast,
         equipmentNotes: sailors.equipmentNotes,
+        hullBrandIlca4: sailors.hullBrandIlca4,
+        sailMakeIlca4: sailors.sailMakeIlca4,
+        foilBrandIlca4: sailors.foilBrandIlca4,
+        mastIlca4: sailors.mastIlca4,
+        equipmentNotesIlca4: sailors.equipmentNotesIlca4,
       });
 
     if (previousHandle && updated) {

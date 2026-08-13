@@ -125,6 +125,9 @@ export function SailorProfileView({
     instagram: initialSailor.instagram || "",
     handle: initialSailor.handle || "",
     school: initialSailor.school || "",
+    club: String(initialSailor.club || ""),
+    sailNumber: String(initialSailor.sailNumber || ""),
+    sailNumberIlca4: String(initialSailor.sailNumberIlca4 || ""),
     dob: initialSailor.dob
       ? String(initialSailor.dob).slice(0, 10)
       : "",
@@ -135,6 +138,23 @@ export function SailorProfileView({
     foilBrand: initialEquipment?.foilBrand || "",
     mast: initialEquipment?.mast || "",
     equipmentNotes: initialEquipment?.notes || "",
+    hullBrandIlca4: String(
+      initialSailor.hullBrandIlca4 || initialEquipment?.hullBrandIlca4 || ""
+    ),
+    sailMakeIlca4: String(
+      initialSailor.sailMakeIlca4 || initialEquipment?.sailMakeIlca4 || ""
+    ),
+    foilBrandIlca4: String(
+      initialSailor.foilBrandIlca4 || initialEquipment?.foilBrandIlca4 || ""
+    ),
+    mastIlca4: String(
+      initialSailor.mastIlca4 || initialEquipment?.mastIlca4 || ""
+    ),
+    equipmentNotesIlca4: String(
+      initialSailor.equipmentNotesIlca4 ||
+        initialEquipment?.notesIlca4 ||
+        ""
+    ),
   });
   const [displaySailor, setDisplaySailor] = useState(initialSailor);
   const [results, setResults] = useState(initialResults || []);
@@ -238,6 +258,9 @@ export function SailorProfileView({
           instagram: form.instagram,
           handle: form.handle,
           school: form.school,
+          club: form.club,
+          sailNumber: form.sailNumber,
+          sailNumberIlca4: form.sailNumberIlca4 || null,
           dob: form.dob === "" ? null : form.dob,
           weight: form.weight === "" ? null : Number(form.weight),
           isPublicWeight,
@@ -248,6 +271,11 @@ export function SailorProfileView({
           foilBrand: form.foilBrand,
           mast: form.mast,
           equipmentNotes: form.equipmentNotes,
+          hullBrandIlca4: form.hullBrandIlca4,
+          sailMakeIlca4: form.sailMakeIlca4,
+          foilBrandIlca4: form.foilBrandIlca4,
+          mastIlca4: form.mastIlca4,
+          equipmentNotesIlca4: form.equipmentNotesIlca4,
         }),
       });
       const data = await res.json();
@@ -267,9 +295,19 @@ export function SailorProfileView({
       setIsPublicWeight(Boolean(data.sailor.isPublicWeight));
       setIsPublicDob(Boolean(data.sailor.isPublicDob));
       setIsPublicEquipment(Boolean(data.sailor.isPublicEquipment));
-      if (form.handle) {
-        setForm((f) => ({ ...f, handle: data.sailor.handle || f.handle }));
-      }
+      setForm((f) => ({
+        ...f,
+        handle: data.sailor.handle || f.handle,
+        club: data.sailor.club ?? f.club,
+        sailNumber: data.sailor.sailNumber ?? f.sailNumber,
+        sailNumberIlca4: data.sailor.sailNumberIlca4 ?? f.sailNumberIlca4,
+        hullBrandIlca4: data.sailor.hullBrandIlca4 ?? f.hullBrandIlca4,
+        sailMakeIlca4: data.sailor.sailMakeIlca4 ?? f.sailMakeIlca4,
+        foilBrandIlca4: data.sailor.foilBrandIlca4 ?? f.foilBrandIlca4,
+        mastIlca4: data.sailor.mastIlca4 ?? f.mastIlca4,
+        equipmentNotesIlca4:
+          data.sailor.equipmentNotesIlca4 ?? f.equipmentNotesIlca4,
+      }));
       setSaveMsg("Saved");
       setEditing(false);
       if (data.handleChanged && data.sailor?.handle) {
@@ -699,7 +737,12 @@ export function SailorProfileView({
       displayEquipment.sailMake ||
       displayEquipment.foilBrand ||
       displayEquipment.mast ||
-      displayEquipment.notes);
+      displayEquipment.notes ||
+      displaySailor.hullBrandIlca4 ||
+      displaySailor.sailMakeIlca4 ||
+      displaySailor.foilBrandIlca4 ||
+      displaySailor.mastIlca4 ||
+      displaySailor.equipmentNotesIlca4);
 
   const optimistResults = analytics.listResults;
   const ilca4Results = classBuckets.ilca4;
@@ -1083,17 +1126,17 @@ export function SailorProfileView({
                   >
                     {fleetBadge.label}
                   </span>
-                  {profileVerified || (isOwner && !canClaim) ? (
+                  {profileClaimed || profileVerified ? (
                     <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
                       <BadgeCheck className="h-3 w-3" />
                       Verified
                     </span>
-                  ) : canClaim || (!profileClaimed && !isOwner) ? (
+                  ) : (
                     <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 text-[10px] font-semibold text-amber-200/90">
                       <ShieldAlert className="h-3 w-3" />
                       Unclaimed
                     </span>
-                  ) : null}
+                  )}
                 </div>
                 <p className="mt-0.5 text-[13px] text-neutral-400">
                   {[
@@ -1403,9 +1446,46 @@ export function SailorProfileView({
                 className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
               <p className="mt-1 text-[10px] text-neutral-600 leading-snug">
-                Year is always public. Full date and age show only if you enable
+                Birth year is always public. Full date shows only if you enable
                 “Share full date of birth” under Privacy.
               </p>
+            </label>
+            <label className="block">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+                Sailing club
+              </span>
+              <input
+                value={form.club}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, club: e.target.value }))
+                }
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+                Optimist sail #
+              </span>
+              <input
+                value={form.sailNumber}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, sailNumber: e.target.value }))
+                }
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white font-mono"
+              />
+            </label>
+            <label className="block">
+              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+                ILCA 4 sail #
+              </span>
+              <input
+                value={form.sailNumberIlca4}
+                onChange={(e) =>
+                  setForm((f) => ({ ...f, sailNumberIlca4: e.target.value }))
+                }
+                placeholder="Optional"
+                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white font-mono"
+              />
             </label>
             <label className="block">
               <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
@@ -1434,39 +1514,137 @@ export function SailorProfileView({
                 className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
-            {(
-              [
-                ["hullBrand", "Hull brand"],
-                ["sailMake", "Sail make"],
-                ["foilBrand", "Foil brand"],
-                ["mast", "Mast / spar"],
-              ] as const
-            ).map(([key, label]) => (
-              <label key={key} className="block">
-                <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                  {label}
-                </span>
-                <input
-                  value={String(form[key] ?? "")}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, [key]: e.target.value }))
-                  }
-                  className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                />
-              </label>
-            ))}
-            <label className="block sm:col-span-2">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                Equipment notes
-              </span>
-              <input
-                value={form.equipmentNotes || ""}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, equipmentNotes: e.target.value }))
-                }
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-              />
-            </label>
+            <div className="sm:col-span-2 pt-1">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-orange-400/90 mb-2">
+                Optimist equipment
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {(
+                  [
+                    ["hullBrand", "Hull brand"],
+                    ["sailMake", "Sail make"],
+                    ["foilBrand", "Foil brand"],
+                    ["mast", "Mast / spar"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <label key={key} className="block">
+                    <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+                      {label}
+                    </span>
+                    <input
+                      value={String(form[key] ?? "")}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, [key]: e.target.value }))
+                      }
+                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                ))}
+                <label className="block sm:col-span-2">
+                  <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+                    Optimist equipment notes
+                  </span>
+                  <input
+                    value={form.equipmentNotes || ""}
+                    onChange={(e) =>
+                      setForm((f) => ({
+                        ...f,
+                        equipmentNotes: e.target.value,
+                      }))
+                    }
+                    className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                  />
+                </label>
+              </div>
+            </div>
+            <div className="sm:col-span-2 pt-1">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-sky-400/90 mb-2">
+                ILCA 4 equipment
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {(
+                  [
+                    ["hullBrandIlca4", "Hull brand"],
+                    ["sailMakeIlca4", "Sail make"],
+                    ["foilBrandIlca4", "Foil brand"],
+                    ["mastIlca4", "Mast / spar"],
+                  ] as const
+                ).map(([key, label]) => (
+                  <label key={key} className="block">
+                    <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+                      {label}
+                    </span>
+                    <input
+                      value={String(form[key] ?? "")}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, [key]: e.target.value }))
+                      }
+                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                ))}
+                <label className="block sm:col-span-2">
+                  <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+                    ILCA 4 equipment notes
+                  </span>
+                  <input
+                    value={form.equipmentNotesIlca4 || ""}
+                    onChange={(e) =>
+                      setForm((f) => ({
+                        ...f,
+                        equipmentNotesIlca4: e.target.value,
+                      }))
+                    }
+                    className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                  />
+                </label>
+              </div>
+            </div>
+            <div className="sm:col-span-2 rounded-xl border border-white/[0.07] p-3 space-y-2">
+              <p className="text-[10px] font-bold uppercase tracking-wide text-neutral-500">
+                Privacy
+              </p>
+              <p className="text-[10px] text-neutral-600 leading-snug">
+                Birth year is public when set. Full date of birth, weight, and
+                equipment stay private unless shared.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {(
+                  [
+                    {
+                      label: "Share weight",
+                      checked: isPublicWeight,
+                      set: setIsPublicWeight,
+                    },
+                    {
+                      label: "Share equipment",
+                      checked: isPublicEquipment,
+                      set: setIsPublicEquipment,
+                    },
+                    {
+                      label: "Share full DOB",
+                      checked: isPublicDob,
+                      set: setIsPublicDob,
+                    },
+                  ] as const
+                ).map((row) => (
+                  <label
+                    key={row.label}
+                    className="flex items-center justify-between gap-2 rounded-lg border border-white/[0.06] px-2.5 py-2 cursor-pointer"
+                  >
+                    <span className="text-[11px] font-medium text-neutral-200">
+                      {row.label}
+                    </span>
+                    <input
+                      type="checkbox"
+                      checked={row.checked}
+                      onChange={(e) => row.set(e.target.checked)}
+                      className="rounded border-neutral-600"
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
           </div>
           <button
             type="button"
@@ -1902,10 +2080,15 @@ export function SailorProfileView({
           <div className="px-4 sm:px-5 pb-5 pt-1 space-y-3">
             <p className="text-[11px] text-neutral-500">
               Key moments — campaigns, firsts, and milestones.
+              {displayJourney.some((j) => j.system)
+                ? " Fleet milestones are filled in automatically."
+                : ""}
             </p>
             {displayJourney.length === 0 ? (
               <p className="text-sm text-neutral-600">
-                No journey highlights yet.
+                {isOwner
+                  ? "No highlights yet. Add one below."
+                  : "No journey highlights shared yet."}
               </p>
             ) : (
               <ol className="relative space-y-0 border-l border-white/10">
@@ -1923,15 +2106,70 @@ export function SailorProfileView({
                     )}
                     <p className="text-sm font-semibold text-white mt-0.5">
                       {it.title}
+                      {it.system ? (
+                        <span className="ml-1.5 text-[9px] font-medium uppercase tracking-wide text-amber-500/80">
+                          milestone
+                        </span>
+                      ) : null}
                     </p>
                     {it.detail && (
                       <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
                         {it.detail}
                       </p>
                     )}
+                    {isOwner && (
+                      <button
+                        type="button"
+                        disabled={journeyBusy}
+                        onClick={() => void removeJourneyItem(it.id, it.system)}
+                        className="mt-1 text-[10px] text-rose-400/90"
+                      >
+                        Remove
+                      </button>
+                    )}
                   </li>
                 ))}
               </ol>
+            )}
+            {isOwner && (
+              <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-3">
+                <input
+                  value={journeyDraft.when}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, when: e.target.value }))
+                  }
+                  placeholder="When"
+                  className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+                />
+                <input
+                  value={journeyDraft.title}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, title: e.target.value }))
+                  }
+                  placeholder="Title"
+                  className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+                />
+                <textarea
+                  value={journeyDraft.detail}
+                  onChange={(e) =>
+                    setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
+                  }
+                  placeholder="Detail"
+                  rows={2}
+                  className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
+                />
+                <button
+                  type="button"
+                  disabled={journeyBusy || !journeyDraft.title.trim()}
+                  onClick={() => void addJourneyItem()}
+                  className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-40"
+                >
+                  {journeyBusy ? "Saving…" : "Add highlight"}
+                </button>
+                {journeyMsg && (
+                  <p className="text-[11px] text-emerald-400">{journeyMsg}</p>
+                )}
+              </div>
             )}
           </div>
         ) : null}
@@ -2511,55 +2749,87 @@ export function SailorProfileView({
         </section>
         )}
 
-        {showEquipmentSection && (
+        {showEquipmentSection && resultsTab !== "journey" && (
         <section className={`${cardClass} p-5`}>
           <div className="flex items-center gap-2 mb-1">
             <Settings className="h-3.5 w-3.5 text-orange-400/90" />
             <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
               Equipment
+              {useIlcaStats
+                ? " · ILCA 4"
+                : hasIlcaResults || form.sailNumberIlca4
+                  ? " · Optimist"
+                  : ""}
             </h2>
           </div>
           <p className="text-[11px] text-neutral-500 mb-4">
             Hull, sail, foils &amp; mast
+            {hasIlcaResults || form.sailNumberIlca4
+              ? " — class-specific gear"
+              : ""}
           </p>
-          {hasEquipment ? (
-            <div className="space-y-0">
-              {(
-                [
+          {(() => {
+            const showIlcaGear = useIlcaStats;
+            const rows = showIlcaGear
+              ? ([
+                  ["Hull", displaySailor.hullBrandIlca4],
+                  ["Sail", displaySailor.sailMakeIlca4],
+                  ["Foils", displaySailor.foilBrandIlca4],
+                  ["Mast", displaySailor.mastIlca4],
+                ] as const)
+              : ([
                   ["Hull", displayEquipment.hullBrand],
                   ["Sail", displayEquipment.sailMake],
                   ["Foils", displayEquipment.foilBrand],
                   ["Mast", displayEquipment.mast],
-                ] as const
-              ).map(([label, val]) => (
-                <div
-                  key={label}
-                  className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
-                >
-                  <span className="text-neutral-500">{label}</span>
-                  <span className="text-white font-medium">
-                    {val || "—"}
-                  </span>
+                ] as const);
+            const notes = showIlcaGear
+              ? displaySailor.equipmentNotesIlca4
+              : displayEquipment.notes;
+            const hasAny = rows.some(([, v]) => v) || notes;
+            if (!showEquipment) {
+              return (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
+                  <p className="text-xs text-neutral-500">
+                    Equipment is private.
+                  </p>
                 </div>
-              ))}
-              {displayEquipment.notes ? (
-                <p className="mt-3 text-xs text-neutral-500">
-                  {String(displayEquipment.notes)}
-                </p>
-              ) : null}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center py-6 text-center">
-              <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
-              <p className="text-xs text-neutral-500">
-                {!showEquipment
-                  ? "Equipment is private."
-                  : isOwner
-                    ? "No equipment yet — use Edit to add gear."
-                    : "No equipment logged yet."}
-              </p>
-            </div>
-          )}
+              );
+            }
+            if (!hasAny) {
+              return (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
+                  <p className="text-xs text-neutral-500">
+                    {isOwner
+                      ? "No equipment yet — use Edit to add gear."
+                      : "No equipment logged yet."}
+                  </p>
+                </div>
+              );
+            }
+            return (
+              <div className="space-y-0">
+                {rows.map(([label, val]) => (
+                  <div
+                    key={label}
+                    className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
+                  >
+                    <span className="text-neutral-500">{label}</span>
+                    <span className="text-white font-medium">
+                      {val ? String(val) : "—"}
+                    </span>
+                  </div>
+                ))}
+                {notes ? (
+                  <p className="mt-3 text-xs text-neutral-500">
+                    {String(notes)}
+                  </p>
+                ) : null}
+              </div>
+            );
+          })()}
         </section>
         )}
       </div>
@@ -2575,9 +2845,8 @@ export function SailorProfileView({
           </div>
           <div className="space-y-3">
             <p className="text-[11px] text-neutral-500 leading-relaxed">
-              <span className="text-neutral-400 font-medium">Birth year</span> and{" "}
-              <span className="text-neutral-400 font-medium">age</span> are
-              public for fleet eligibility. Full date of birth stays private
+              <span className="text-neutral-400 font-medium">Birth year</span>{" "}
+              is public for fleet eligibility. Full date of birth stays private
               unless shared. Weight and equipment stay private unless shared.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">

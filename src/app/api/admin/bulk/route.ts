@@ -147,6 +147,10 @@ export async function POST(req: Request) {
       [field]: typed,
       updatedAt: new Date(),
     };
+    // Manual bulk nationality clears sail-derived flag
+    if (field === "nationality") {
+      patch.nationalityFromSail = false;
+    }
     // Legacy “current squad” tracks Jul–Dec 2026 period field
     if (field === "natSquadStatusJul26") {
       patch.nationalSquadStatus = typed;

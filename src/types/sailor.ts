@@ -14,6 +14,8 @@ export type SailorAdmin = {
   club: string;
   school?: string | null;
   nationality?: string | null;
+  /** Nationality was auto-set from sail number prefix */
+  nationalityFromSail?: boolean | null;
   avatarUrl?: string | null;
   bio?: string | null;
   gender?: string | null;
@@ -48,6 +50,11 @@ export type SailorAdmin = {
   foilBrand?: string | null;
   mast?: string | null;
   equipmentNotes?: string | null;
+  hullBrandIlca4?: string | null;
+  sailMakeIlca4?: string | null;
+  foilBrandIlca4?: string | null;
+  mastIlca4?: string | null;
+  equipmentNotesIlca4?: string | null;
   parentId?: string | null;
   createdAt?: Date | string | null;
   updatedAt?: Date | string | null;

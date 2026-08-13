@@ -77,6 +77,11 @@ export type EquipmentProps = {
   foilBrand?: string | null;
   mast?: string | null;
   notes?: string | null;
+  hullBrandIlca4?: string | null;
+  sailMakeIlca4?: string | null;
+  foilBrandIlca4?: string | null;
+  mastIlca4?: string | null;
+  notesIlca4?: string | null;
 };
 
 export interface SailorProfileViewProps {

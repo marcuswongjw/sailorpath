@@ -379,7 +379,12 @@ export async function POST(req: Request) {
       previous: string | null;
       imported: string | null;
       raw: string | null;
-      action: "updated" | "mismatch_older" | "unrecognized" | "unchanged";
+      action:
+        | "updated"
+        | "from_sail"
+        | "mismatch_older"
+        | "unrecognized"
+        | "unchanged";
       detail: string;
     }[] = [];
     let nationalityUpdated = 0;
@@ -495,10 +500,26 @@ export async function POST(req: Request) {
               club: row.club || "N/A",
               ...(row.school ? { school: row.school } : {}),
               ...(row.nationality
-                ? { nationality: row.nationality }
+                ? {
+                    nationality: row.nationality,
+                    nationalityFromSail: false,
+                  }
                 : row.nationalityRaw
-                  ? { nationality: normalizeNationalityCode(row.nationalityRaw) }
-                  : {}),
+                  ? {
+                      nationality: normalizeNationalityCode(row.nationalityRaw),
+                      nationalityFromSail: false,
+                    }
+                  : (() => {
+                      const fromSail = nationalityFromAnySailNumber(
+                        row.sailNumber
+                      );
+                      return fromSail
+                        ? {
+                            nationality: fromSail,
+                            nationalityFromSail: true,
+                          }
+                        : {};
+                    })()),
               ...(row.dob ? { dob: row.dob } : {}),
               ...(row.gender ? { gender: row.gender } : {}),
               // currentFleet / goldEntryDate / silverEntryDate intentionally omitted
@@ -513,6 +534,7 @@ export async function POST(req: Request) {
               club: sailors.club,
               school: sailors.school,
               nationality: sailors.nationality,
+              nationalityFromSail: sailors.nationalityFromSail,
               silverEntryDate: sailors.silverEntryDate,
               goldEntryDate: sailors.goldEntryDate,
             });
@@ -651,8 +673,9 @@ export async function POST(req: Request) {
               curNorm.toLowerCase() === nextNat.toLowerCase();
             if (!same) {
               if (applyClubSchool) {
-                // Latest (or only) event — update profile
+                // Latest regatta nationality input wins (most accurate)
                 profilePatch.nationality = nextNat;
+                profilePatch.nationalityFromSail = false;
                 profileChanged = true;
                 fieldChanged.push("nationality");
                 nationalityUpdated++;
@@ -683,7 +706,7 @@ export async function POST(req: Request) {
           }
         }
 
-        // If nationality still empty, tag from sail # country code (Opti or ILCA).
+        // If nationality still empty (no import column), derive from sail # prefix.
         {
           const curAfter =
             normalizeNationalityCode(
@@ -698,6 +721,7 @@ export async function POST(req: Request) {
             );
             if (fromSail) {
               profilePatch.nationality = fromSail;
+              profilePatch.nationalityFromSail = true;
               profileChanged = true;
               if (!fieldChanged.includes("nationality")) {
                 fieldChanged.push("nationality");
@@ -709,8 +733,8 @@ export async function POST(req: Request) {
                 previous: null,
                 imported: fromSail,
                 raw: row.sailNumber || existing?.sailNumber || null,
-                action: "updated",
-                detail: `Set nationality ${fromSail} from sail number country code.`,
+                action: "from_sail",
+                detail: `Set nationality ${fromSail} from sail number (flagged for admin review).`,
               });
             }
           }

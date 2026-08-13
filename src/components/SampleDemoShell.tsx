@@ -60,8 +60,8 @@ function PrivacySettingsBody({
     <div className="space-y-4">
       <p className="text-[12px] text-neutral-400 leading-relaxed">
         {childLabel
-          ? `Manage ${childLabel}'s privacy. Birth year and age stay public for fleet eligibility.`
-          : "Birth year and age stay public for fleet eligibility. Weight and equipment stay private unless shared."}
+          ? `Manage ${childLabel}'s privacy. Birth year is public for fleet eligibility.`
+          : "Birth year is public for fleet eligibility. Weight and equipment stay private unless shared."}
       </p>
       <div className="space-y-2">
         {(

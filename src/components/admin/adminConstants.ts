@@ -14,6 +14,7 @@ export const DB_SAILOR_COLUMNS: {
   { key: "birthYear", label: "Birth year", defaultOn: true },
   { key: "club", label: "Club", defaultOn: false },
   { key: "nationality", label: "Nationality", defaultOn: false },
+  { key: "natFromSail", label: "Nat from sail #", defaultOn: true },
   { key: "school", label: "School", defaultOn: false },
   { key: "goldEntry", label: "Gold Entry", defaultOn: true },
   { key: "silverEntry", label: "Silver Entry", defaultOn: true },

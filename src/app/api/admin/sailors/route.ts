@@ -721,7 +721,11 @@ export async function POST(req: Request) {
         if (!fromSail) continue;
         await db
           .update(sailors)
-          .set({ nationality: fromSail, updatedAt: new Date() })
+          .set({
+            nationality: fromSail,
+            nationalityFromSail: true,
+            updatedAt: new Date(),
+          })
           .where(eq(sailors.id, s.id));
         updated++;
         if (samples.length < 25) {
@@ -736,11 +740,12 @@ export async function POST(req: Request) {
           entityType: "sailor",
           entityId: s.id,
           entityLabel: s.name,
-          summary: `Set nationality ${fromSail} from sail number`,
+          summary: `Set nationality ${fromSail} from sail number (flagged)`,
           details: {
             sailNumber: s.sailNumber,
             sailNumberIlca4: s.sailNumberIlca4,
             nationality: fromSail,
+            nationalityFromSail: true,
           },
           source: "/api/admin/sailors",
         });
@@ -1035,6 +1040,11 @@ export async function PATCH(req: Request) {
         body.nationality === "" || body.nationality == null
           ? null
           : normalizeNationality(body.nationality);
+      // Manual/admin nationality input clears sail-derived flag
+      patch.nationalityFromSail = false;
+    }
+    if (body.nationalityFromSail !== undefined) {
+      patch.nationalityFromSail = Boolean(body.nationalityFromSail);
     }
     for (const f of ["worlds", "european", "asian", "seaGames"] as const) {
       if (body[f] !== undefined) {

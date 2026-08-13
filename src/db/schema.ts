@@ -43,6 +43,13 @@ export const sailors = pgTable("sailors", {
   school: text("school"),
   /** Country / nationality (e.g. Singapore, SGP) — optional */
   nationality: text("nationality"),
+  /**
+   * True when nationality was auto-derived from sail number prefix
+   * (e.g. SGP 115 → SGP), not from import column or manual admin edit.
+   */
+  nationalityFromSail: boolean("nationality_from_sail")
+    .default(false)
+    .notNull(),
   /** Public profile photo URL (Supabase Storage or external) */
   avatarUrl: text("avatar_url"),
   bio: text("bio"),
@@ -82,12 +89,18 @@ export const sailors = pgTable("sailors", {
   isPublicWeight: boolean("is_public_weight").default(false).notNull(),
   isPublicDob: boolean("is_public_dob").default(false).notNull(),
   isPublicEquipment: boolean("is_public_equipment").default(false).notNull(),
-  /** Current equipment (owner-editable) */
+  /** Current Optimist (or primary) equipment — owner-editable */
   hullBrand: text("hull_brand"),
   sailMake: text("sail_make"),
   foilBrand: text("foil_brand"),
   mast: text("mast"),
   equipmentNotes: text("equipment_notes"),
+  /** ILCA 4 class equipment (dual-class sailors) */
+  hullBrandIlca4: text("hull_brand_ilca4"),
+  sailMakeIlca4: text("sail_make_ilca4"),
+  foilBrandIlca4: text("foil_brand_ilca4"),
+  mastIlca4: text("mast_ilca4"),
+  equipmentNotesIlca4: text("equipment_notes_ilca4"),
   /**
    * Owner-edited sailing journey highlights (JSON array).
    * [{ id, when, title, detail }] — key memories, not full results log.

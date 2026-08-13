@@ -173,7 +173,10 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       <p className="text-xs text-sky-100/90">
                         Sailors with a country code on their sail # (e.g.{" "}
                         <span className="font-mono text-sky-200">SGP 115</span>) but no
-                        nationality can be tagged automatically.
+                        nationality can be tagged automatically. Flagged rows show{" "}
+                        <span className="font-semibold text-amber-200">from sail</span>{" "}
+                        — verify and set nationality manually to clear the flag.
+                        Import nationality columns always win (latest regatta).
                       </p>
                     </div>
                     <button
@@ -1157,6 +1160,26 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                 {s.sailNumberIlca4 || "—"}
                               </span>
                             ),
+                            nationality: (
+                              <span className="text-slate-300">
+                                {s.nationality || "—"}
+                                {s.nationalityFromSail ? (
+                                  <span
+                                    className="ml-1.5 inline-flex rounded-full bg-amber-500/15 border border-amber-500/30 px-1.5 py-px text-[9px] font-bold text-amber-200"
+                                    title="Nationality was auto-set from sail number — verify"
+                                  >
+                                    from sail
+                                  </span>
+                                ) : null}
+                              </span>
+                            ),
+                            natFromSail: s.nationalityFromSail ? (
+                              <span className="inline-flex rounded-full bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-200">
+                                From sail #
+                              </span>
+                            ) : (
+                              <span className="text-slate-600">—</span>
+                            ),
                             ilca4List: (
                               <span
                                 className={`text-[10px] font-bold ${
@@ -1207,7 +1230,6 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                               );
                             })(),
                             club: s.club || "—",
-                            nationality: s.nationality || "—",
                             school: s.school || "—",
                             goldEntry: (
                               <span className="font-mono">
