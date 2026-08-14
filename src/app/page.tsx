@@ -195,25 +195,22 @@ export default async function HomePage() {
                 <UserRound className="h-5 w-5 text-orange-400" />
               </div>
               <h2 className="text-lg font-bold text-white">For Sailors</h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                See exactly where you rank nationally. Track every regatta
-                result, equipment change, and milestone from your first Optimist
-                race through your ILCA transition.
+              <p className="text-sm font-semibold text-white mt-1.5">
+                Own your sailing journey.
               </p>
-              <div className="mt-4 flex flex-col gap-1.5">
-                <Link
-                  href="/rankings"
-                  className="text-[12px] font-bold text-orange-400 hover:text-orange-300"
-                >
-                  Check your ranking →
-                </Link>
-                <Link
-                  href="/claim-profile"
-                  className="text-[12px] font-bold text-orange-300/90 hover:text-orange-200"
-                >
-                  Claim my profile →
-                </Link>
-              </div>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                See exactly where you rank nationally. Automatically track every
+                regatta result, ranking movement, and personal best from your
+                first Optimist race through your ILCA transition. Add milestones,
+                equipment notes, and race reflections — then share what you want
+                and keep the rest private.
+              </p>
+              <Link
+                href="/claim-profile"
+                className="mt-4 text-[12px] font-bold text-orange-400 hover:text-orange-300"
+              >
+                Claim My Profile →
+              </Link>
             </article>
 
             <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col">
@@ -221,10 +218,14 @@ export default async function HomePage() {
                 <Users className="h-5 w-5 text-slate-200" />
               </div>
               <h2 className="text-lg font-bold text-white">For Parents</h2>
+              <p className="text-sm font-semibold text-white mt-1.5">
+                Stop the info-hunt.
+              </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Follow your child&apos;s complete sailing journey in one place.
-                No more digging through WhatsApp groups, PDF results, and
-                scattered club websites.
+                Get a complete, stress-free view of your child&apos;s sailing
+                journey in one private place. Follow ranking progress, results,
+                and milestones without chasing WhatsApp groups or club PDFs. You
+                stay in control of what&apos;s public and what stays private.
               </p>
               <Link
                 href="/claim-profile"
@@ -239,17 +240,29 @@ export default async function HomePage() {
                 <Trophy className="h-5 w-5 text-sky-400" />
               </div>
               <h2 className="text-lg font-bold text-white">For Coaches</h2>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Manage your entire squad. Compare athletes, spot progression
-                trends, and prepare selection reports in minutes instead of
-                hours.
+              <p className="text-sm font-semibold text-white mt-1.5">
+                Escape spreadsheet hell.
               </p>
-              <Link
-                href="/coach-tools"
-                className="mt-4 text-[12px] font-bold text-sky-400 hover:text-sky-300"
-              >
-                Explore coach tools →
-              </Link>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Manage your squad, compare athletes side-by-side, spot
+                progression trends, and generate selection reports in minutes
+                instead of hours. Public rankings and profiles are available now;
+                full squad tools and analytics are coming.
+              </p>
+              <div className="mt-4 flex flex-col gap-1.5">
+                <Link
+                  href="/coach-tools"
+                  className="text-[12px] font-bold text-sky-400 hover:text-sky-300"
+                >
+                  Explore Coach Tools →
+                </Link>
+                <a
+                  href="#early-access"
+                  className="text-[12px] font-bold text-slate-400 hover:text-white"
+                >
+                  Apply for Early Access to Coach Dashboard →
+                </a>
+              </div>
             </article>
           </div>
         </div>
@@ -342,12 +355,9 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Roadmap
-            </h2>
-            <p className="mt-3 text-slate-400 text-sm leading-relaxed">
-              Rankings and logbooks are live. Here&apos;s what we&apos;re building
+              Rankings and logbooks are live. Here&apos;s what&apos;s coming
               next.
-            </p>
+            </h2>
           </div>
 
           <ol className="mx-auto max-w-2xl space-y-0 relative">
@@ -356,17 +366,17 @@ export default async function HomePage() {
                 {
                   date: "Q3 2026",
                   title: "Parent Dashboards",
-                  body: "Link your account to your child's profile for full visibility into their progress and upcoming events.",
+                  body: "Link your account to your child's profile. See progress, ranking movement, and upcoming events in one private view — without the WhatsApp chase.",
                 },
                 {
                   date: "Q4 2026",
                   title: "Coach Squads",
-                  body: "Manage multiple sailors from one account. Role-based access and squad-level analytics.",
+                  body: "Manage multiple sailors from one account. Compare athletes, track trends, and prepare selection reports in minutes instead of hours.",
                 },
                 {
                   date: "2027",
                   title: "Club & Event Tools",
-                  body: "Start-list sync, campaign planning, and automated notifications for rank moves and selection windows.",
+                  body: "Start-list sync, campaign planning, and automated alerts for rank changes and selection windows.",
                 },
               ] as const
             ).map((item, i, arr) => (
@@ -393,10 +403,16 @@ export default async function HomePage() {
             ))}
           </ol>
 
-          <div className="mt-12 mx-auto max-w-lg rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 text-center">
+          <div
+            id="early-access"
+            className="mt-12 mx-auto max-w-lg rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 text-center"
+          >
             <h3 className="text-lg font-bold text-white">
-              Want early access? Join the waitlist.
+              Want first access to parent and coach tools?
             </h3>
+            <p className="mt-2 text-xs text-slate-500">
+              Join the early access list →
+            </p>
             <WaitlistForm />
           </div>
         </div>
@@ -410,13 +426,13 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center mb-8 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
-              Back the build. Anchor your legacy.
+              Back the build. Anchor your place in the fleet.
             </h2>
             <p className="mt-4 text-slate-400 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
-              Become a founding supporter of SailorPath. Your one-time
-              contribution helps build the definitive performance tracker for
-              Singapore&apos;s youth sailors, unlocking permanent profile
-              recognition and insider access.
+              SailorPath is being built for Singapore&apos;s youth sailors,
+              parents, and coaches. Become a Founding Supporter and help shape
+              the definitive performance tracker for the local scene — while
+              locking in permanent recognition and early access.
             </p>
           </div>
 
@@ -429,7 +445,7 @@ export default async function HomePage() {
                   Founding Supporter
                 </h3>
                 <p className="text-xs text-orange-400 font-semibold mt-1">
-                  10 Members Only
+                  Limited to 10 members
                 </p>
               </div>
               <span className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-400 border border-orange-500/20">
@@ -441,41 +457,37 @@ export default async function HomePage() {
               S$99
               <span className="text-xs font-bold text-slate-500">
                 {" "}
-                (One-time contribution)
+                (one-time)
               </span>
             </p>
 
-            <ul className="mt-8 space-y-4 text-xs font-medium text-slate-300">
+            <p className="mt-6 text-[11px] font-bold uppercase tracking-wide text-slate-500">
+              What you get
+            </p>
+            <ul className="mt-3 space-y-4 text-xs font-medium text-slate-300">
               <li className="flex items-start gap-3">
                 <Trophy className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
                 <span>
-                  <strong className="text-white">Exclusive badge</strong>: A
-                  permanent &apos;Founding Supporter&apos; crest on your public
-                  profile.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Compass className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-                <span>
-                  <strong className="text-white">Beta access</strong>: First
-                  access to upcoming parent dashboards and advanced fleet
-                  analytics.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Zap className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-                <span>
-                  <strong className="text-white">Shape the fleet</strong>:
-                  Priority voting rights on our feature development roadmap.
+                  Permanent Founding Supporter crest on your public profile
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <Shield className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
                 <span>
-                  <strong className="text-white">Premium themes</strong>:
-                  Exclusive colour palettes to customize your digital trophy
-                  cabinet.
+                  Lifetime access to Sailor / Parent features (claim, private
+                  logbook, notes, privacy controls, and future parent dashboard)
                 </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Compass className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                <span>
+                  First access to parent dashboards, coach tools, and advanced
+                  analytics as they launch
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Zap className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+                <span>Priority input on the product roadmap</span>
               </li>
             </ul>
 
@@ -489,7 +501,7 @@ export default async function HomePage() {
                 Become a Founding Supporter — S$99
               </a>
               <p className="mt-3 text-center text-[10px] text-slate-600">
-                Secure checkout powered by Stripe.
+                Secure checkout via Stripe.
               </p>
             </div>
           </div>
