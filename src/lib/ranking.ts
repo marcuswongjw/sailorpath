@@ -34,6 +34,8 @@ export interface SailorRecord {
   natSquadStatusJul25?: string | null;
   natSquadStatusJan26?: string | null;
   natSquadStatusJul26?: string | null;
+  natSquadStatusJan27?: string | null;
+  natSquadStatusJul27?: string | null;
   histRankingJun24?: number | null;
   histRankingDec24?: number | null;
   histRankingJun25?: number | null;
@@ -136,6 +138,8 @@ export interface RankedSailor extends SailorRecord {
   overallScore: number;
   /** Nat squad for the ranking period being viewed */
   periodSquadStatus?: string | null;
+  /** Nat squad for the following half (e.g. Jan 2027 while viewing Jul–Dec 2026) */
+  nextPeriodSquadStatus?: string | null;
 }
 
 /**
@@ -193,6 +197,14 @@ export function previousPeriod(period: Period): Period {
   return { year: period.year - 1, half: "Jul-Dec" };
 }
 
+/** Following half-year (e.g. Jul–Dec 2026 → Jan–Jun 2027). */
+export function nextPeriod(period: Period): Period {
+  if (period.half === "Jan-Jun") {
+    return { year: period.year, half: "Jul-Dec" };
+  }
+  return { year: period.year + 1, half: "Jan-Jun" };
+}
+
 /** Nat squad is fixed for a whole half-year (Jan–Jun or Jul–Dec). */
 export function natSquadFieldForPeriod(
   period: Period
@@ -201,20 +213,27 @@ export function natSquadFieldForPeriod(
   if (period.year === 2025 && period.half === "Jul-Dec") return "natSquadStatusJul25";
   if (period.year === 2026 && period.half === "Jan-Jun") return "natSquadStatusJan26";
   if (period.year === 2026 && period.half === "Jul-Dec") return "natSquadStatusJul26";
+  if (period.year === 2027 && period.half === "Jan-Jun") return "natSquadStatusJan27";
+  if (period.year === 2027 && period.half === "Jul-Dec") return "natSquadStatusJul27";
   return null;
 }
 
 export function squadStatusForPeriod(
   sailor: SailorRecord,
-  period: Period
+  period: Period,
+  opts?: { fallbackNational?: boolean }
 ): string | null {
   const field = natSquadFieldForPeriod(period);
   if (field) {
     const v = sailor[field];
     if (v != null && String(v).trim()) return String(v).trim();
+    // Known slot but empty — do not invent next-half status from national
+    if (opts?.fallbackNational === false) return null;
   }
-  // Fallback for current / unmapped periods
-  if (sailor.nationalSquadStatus) return String(sailor.nationalSquadStatus);
+  // Fallback for current / unmapped periods (legacy nationalSquadStatus)
+  if (opts?.fallbackNational !== false && sailor.nationalSquadStatus) {
+    return String(sailor.nationalSquadStatus);
+  }
   return null;
 }
 
@@ -228,6 +247,8 @@ export const NAT_SQUAD_HISTORY: {
   { key: "natSquadStatusJul25", period: { year: 2025, half: "Jul-Dec" }, label: "Jul – Dec 2025" },
   { key: "natSquadStatusJan26", period: { year: 2026, half: "Jan-Jun" }, label: "Jan – Jun 2026" },
   { key: "natSquadStatusJul26", period: { year: 2026, half: "Jul-Dec" }, label: "Jul – Dec 2026" },
+  { key: "natSquadStatusJan27", period: { year: 2027, half: "Jan-Jun" }, label: "Jan – Jun 2027" },
+  { key: "natSquadStatusJul27", period: { year: 2027, half: "Jul-Dec" }, label: "Jul – Dec 2027" },
 ];
 
 export function periodBounds(period: Period): { start: string; end: string } {
@@ -624,6 +645,11 @@ export function calculateRankings(
       bestThreeScores,
       overallScore,
       periodSquadStatus: squadStatusForPeriod(sailor, period),
+      nextPeriodSquadStatus: squadStatusForPeriod(
+        sailor,
+        nextPeriod(period),
+        { fallbackNational: false }
+      ),
     };
   });
 

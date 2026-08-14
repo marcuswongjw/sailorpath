@@ -176,17 +176,26 @@ describe("period helpers", () => {
     expect(natSquadFieldForPeriod({ year: 2025, half: "Jan-Jun" })).toBe(
       "natSquadStatusJan25"
     );
+    expect(natSquadFieldForPeriod({ year: 2027, half: "Jan-Jun" })).toBe(
+      "natSquadStatusJan27"
+    );
     expect(natSquadFieldForPeriod({ year: 2024, half: "Jul-Dec" })).toBeNull();
   });
 
   it("squadStatusForPeriod prefers period field then nationalSquadStatus", () => {
     const sailor = {
       natSquadStatusJul26: "Nat A",
+      natSquadStatusJan27: "Nat B",
       nationalSquadStatus: "DS",
     } as SailorRecord;
     expect(
       squadStatusForPeriod(sailor, { year: 2026, half: "Jul-Dec" })
     ).toBe("Nat A");
+    expect(
+      squadStatusForPeriod(sailor, { year: 2027, half: "Jan-Jun" }, {
+        fallbackNational: false,
+      })
+    ).toBe("Nat B");
     expect(
       squadStatusForPeriod(
         { nationalSquadStatus: "Nat B" } as SailorRecord,

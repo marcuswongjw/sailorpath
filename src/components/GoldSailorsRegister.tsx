@@ -27,6 +27,8 @@ type GoldSailor = {
   natSquadStatusJul25?: string | null;
   natSquadStatusJan26?: string | null;
   natSquadStatusJul26?: string | null;
+  natSquadStatusJan27?: string | null;
+  natSquadStatusJul27?: string | null;
   histRankingJun24?: number | null;
   histRankingDec24?: number | null;
   histRankingJun25?: number | null;
@@ -46,6 +48,8 @@ type SortKey =
   | "natSquadStatusJul25"
   | "natSquadStatusJan26"
   | "natSquadStatusJul26"
+  | "natSquadStatusJan27"
+  | "natSquadStatusJul27"
   | "histRankingJun24"
   | "histRankingDec24"
   | "histRankingJun25"
@@ -272,12 +276,28 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
                   />
                   <Th
-                    label="Jul 26 (Current)"
+                    label="Jul 26"
                     sortKey="natSquadStatusJul26"
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#1a1610] border-b text-orange-300"
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
+                  />
+                  <Th
+                    label="Jan 27 (Next)"
+                    sortKey="natSquadStatusJan27"
+                    current={sortKey}
+                    dir={sortDir}
+                    onSort={onSort}
+                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10 text-sky-300"
+                  />
+                  <Th
+                    label="Jul 27"
+                    sortKey="natSquadStatusJul27"
+                    current={sortKey}
+                    dir={sortDir}
+                    onSort={onSort}
+                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#1a1610] border-b"
                   />
 
                   <Th
@@ -401,14 +421,24 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                           {sailor.natSquadStatusJan26 || "-"}
                         </span>
                       </td>
-                      <td className="py-4 px-4 border-r border-white/5 bg-orange-600/5">
-                        {sailor.natSquadStatusJul26 ? (
-                          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] text-orange-400 font-extrabold">
-                            {sailor.natSquadStatusJul26}
+                      <td className="py-4 px-4 bg-orange-600/5">
+                        <span className="text-[10px] text-slate-400">
+                          {sailor.natSquadStatusJul26 || "-"}
+                        </span>
+                      </td>
+                      <td className="py-4 px-4 bg-sky-600/5">
+                        {sailor.natSquadStatusJan27 ? (
+                          <span className="rounded-full bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 text-[10px] text-sky-300 font-extrabold">
+                            {sailor.natSquadStatusJan27}
                           </span>
                         ) : (
                           <span className="text-slate-500">-</span>
                         )}
+                      </td>
+                      <td className="py-4 px-4 border-r border-white/5 bg-orange-600/5">
+                        <span className="text-[10px] text-slate-400">
+                          {sailor.natSquadStatusJul27 || "-"}
+                        </span>
                       </td>
 
                       <td className="py-4 px-4 bg-blue-600/5 font-mono text-slate-400">

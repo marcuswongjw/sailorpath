@@ -293,6 +293,8 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           <option value="natSquadStatusJul25">Squad Jul 25</option>
                           <option value="natSquadStatusJan26">Squad Jan 26</option>
                           <option value="natSquadStatusJul26">Squad Jul 26</option>
+                          <option value="natSquadStatusJan27">Squad Jan 27</option>
+                          <option value="natSquadStatusJul27">Squad Jul 27</option>
                         </optgroup>
                         <optgroup label="Historical rankings">
                           <option value="histRankingJun24">Hist Jun 24</option>
@@ -364,6 +366,8 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           "natSquadStatusJul25",
                           "natSquadStatusJan26",
                           "natSquadStatusJul26",
+                          "natSquadStatusJan27",
+                          "natSquadStatusJul27",
                         ].includes(bulkField) ? (
                         <select
                           value={bulkValue}
@@ -673,7 +677,9 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             ["natSquadStatusJan25", "Jan – Jun 2025"],
                             ["natSquadStatusJul25", "Jul – Dec 2025"],
                             ["natSquadStatusJan26", "Jan – Jun 2026"],
-                            ["natSquadStatusJul26", "Jul – Dec 2026 (current)"],
+                            ["natSquadStatusJul26", "Jul – Dec 2026"],
+                            ["natSquadStatusJan27", "Jan – Jun 2027 (next)"],
+                            ["natSquadStatusJul27", "Jul – Dec 2027"],
                           ] as const
                         ).map(([key, label]) => (
                           <div key={key}>
@@ -687,8 +693,10 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                 setSailorForm({
                                   ...sailorForm,
                                   [key]: v,
-                                  // Keep legacy “current squad” in sync with Jul–Dec 2026
-                                  ...(key === "natSquadStatusJul26"
+                                  // Keep legacy “current squad” in sync with latest half fields
+                                  ...(key === "natSquadStatusJan27" ||
+                                  key === "natSquadStatusJul27" ||
+                                  key === "natSquadStatusJul26"
                                     ? { nationalSquadStatus: v }
                                     : {}),
                                 });
@@ -1061,6 +1069,8 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             natSquadStatusJul25: "",
                             natSquadStatusJan26: "",
                             natSquadStatusJul26: "",
+                            natSquadStatusJan27: "",
+                            natSquadStatusJul27: "",
                             histRankingJun24: "",
                             histRankingDec24: "",
                             histRankingJun25: "",
@@ -1254,6 +1264,8 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             squadJul25: s.natSquadStatusJul25 || "—",
                             squadJan26: s.natSquadStatusJan26 || "—",
                             squadJul26: s.natSquadStatusJul26 || "—",
+                            squadJan27: s.natSquadStatusJan27 || "—",
+                            squadJul27: s.natSquadStatusJul27 || "—",
                             histJun24: s.histRankingJun24 ?? "—",
                             histDec24: s.histRankingDec24 ?? "—",
                             histJun25: s.histRankingJun25 ?? "—",
@@ -1337,6 +1349,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                           ? s.weight.toString()
                                           : "",
                                         nationalSquadStatus:
+                                          s.natSquadStatusJan27 ||
                                           s.natSquadStatusJul26 ||
                                           s.nationalSquadStatus ||
                                           "",
@@ -1350,6 +1363,10 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                           s.natSquadStatusJul26 ||
                                           s.nationalSquadStatus ||
                                           "",
+                                        natSquadStatusJan27:
+                                          s.natSquadStatusJan27 || "",
+                                        natSquadStatusJul27:
+                                          s.natSquadStatusJul27 || "",
                                         nationality: s.nationality || "",
                                         currentFleet: s.currentFleet || "",
                                         school: s.school || "",

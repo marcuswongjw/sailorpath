@@ -103,6 +103,8 @@ export function buildCareerTimeline(
     natSquadStatusJul25?: string | null;
     natSquadStatusJan26?: string | null;
     natSquadStatusJul26?: string | null;
+    natSquadStatusJan27?: string | null;
+    natSquadStatusJul27?: string | null;
     histRankingJun24?: number | null;
     histRankingDec24?: number | null;
     histRankingJun25?: number | null;
@@ -187,6 +189,8 @@ export function buildCareerTimeline(
       { key: "natSquadStatusJul25", label: "Jul – Dec 2025", sort: "2025-07" },
       { key: "natSquadStatusJan26", label: "Jan – Jun 2026", sort: "2026-01" },
       { key: "natSquadStatusJul26", label: "Jul – Dec 2026", sort: "2026-07" },
+      { key: "natSquadStatusJan27", label: "Jan – Jun 2027", sort: "2027-01" },
+      { key: "natSquadStatusJul27", label: "Jul – Dec 2027", sort: "2027-07" },
     ];
   for (const s of squadSlots) {
     const v = sailor[s.key];

@@ -127,9 +127,22 @@ export function FleetRankingsView({
     return `Squad ${half} ${yy}`;
   }, [period]);
 
+  /** Next half after selected period — e.g. "Squad Jan 27" while viewing Jul–Dec 2026 */
+  const nextSquadColumnLabel = useMemo(() => {
+    const next =
+      period.half === "Jan-Jun"
+        ? { year: period.year, half: "Jul" as const }
+        : { year: period.year + 1, half: "Jan" as const };
+    const yy = String(next.year).slice(-2);
+    return `Squad ${next.half} ${yy}`;
+  }, [period]);
+
   /** Period squad only (natSquadStatus* for selected half via API periodSquadStatus) */
   const squadForFilter = (s: RankedSailor) =>
     String(s.periodSquadStatus || s.nationalSquadStatus || "").trim();
+
+  const nextSquadFor = (s: RankedSailor) =>
+    String(s.nextPeriodSquadStatus || "").trim() || null;
 
   const squadOptions = useMemo(() => {
     const set = new Set<string>();
@@ -509,7 +522,9 @@ export function FleetRankingsView({
                     {showSquad ? (
                       <span className="text-orange-300/90 font-semibold">
                         {" "}
-                        · {squadFor(s) || "—"}
+                        · {squadColumnLabel}: {squadFor(s) || "—"}
+                        {" · "}
+                        {nextSquadColumnLabel}: {nextSquadFor(s) || "—"}
                       </span>
                     ) : null}
                   </p>
@@ -592,6 +607,14 @@ export function FleetRankingsView({
                     {squadColumnLabel}
                   </th>
                 )}
+                {showSquad && (
+                  <th
+                    className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    title={`National squad for the next half after ${periodLabelText} (Nat A / Nat B)`}
+                  >
+                    {nextSquadColumnLabel}
+                  </th>
+                )}
                 {eventSlots.map((ev, idx) => {
                   const off = excluded.has(ev.regattaId);
                   return (
@@ -667,6 +690,17 @@ export function FleetRankingsView({
                         )}
                       </td>
                     )}
+                    {showSquad && (
+                      <td className="px-4 lg:px-5 py-3.5">
+                        {nextSquadFor(s) ? (
+                          <span className="rounded-full bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 text-[10px] font-extrabold text-sky-300">
+                            {nextSquadFor(s)}
+                          </span>
+                        ) : (
+                          <span className="text-slate-600">—</span>
+                        )}
+                      </td>
+                    )}
                     {scores.map((rs, idx) => {
                       const off = excluded.has(rs.regattaId);
                       return (
@@ -715,7 +749,8 @@ export function FleetRankingsView({
           the three best (lowest) scores. Ties: compare all regatta ranks best-first
           (a 1st beats a 2nd, then next-best, and so on), then name. Uncheck events
           above for a what-if score. * = DNS (fleet size + 1). † = SSF overseas
-          commitment. {squadColumnLabel} = national squad for the selected period.
+          commitment. {squadColumnLabel} = national squad for the selected period.{" "}
+          {nextSquadColumnLabel} = Nat A / Nat B (or other) for the following half.
         </p>
       </div>
     </div>

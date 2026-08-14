@@ -21,6 +21,8 @@ const ALLOWED = new Set([
   "natSquadStatusJul25",
   "natSquadStatusJan26",
   "natSquadStatusJul26",
+  "natSquadStatusJan27",
+  "natSquadStatusJul27",
   "club",
   "gender",
   "dob",
@@ -152,7 +154,12 @@ export async function POST(req: Request) {
       patch.nationalityFromSail = false;
     }
     // Legacy “current squad” tracks Jul–Dec 2026 period field
-    if (field === "natSquadStatusJul26") {
+    // Keep legacy "current squad" in sync with the latest half when bulk-editing
+    if (
+      field === "natSquadStatusJul26" ||
+      field === "natSquadStatusJan27" ||
+      field === "natSquadStatusJul27"
+    ) {
       patch.nationalSquadStatus = typed;
     }
     await db.update(sailors).set(patch).where(inArray(sailors.id, sailorIds));

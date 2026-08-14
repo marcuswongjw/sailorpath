@@ -96,6 +96,8 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     natSquadStatusJul25: row.natSquadStatusJul25,
     natSquadStatusJan26: row.natSquadStatusJan26,
     natSquadStatusJul26: row.natSquadStatusJul26,
+    natSquadStatusJan27: row.natSquadStatusJan27,
+    natSquadStatusJul27: row.natSquadStatusJul27,
     histRankingJun24: row.histRankingJun24,
     histRankingDec24: row.histRankingDec24,
     histRankingJun25: row.histRankingJun25,
@@ -451,6 +453,8 @@ export async function getSailorSeriesStanding(
         natSquadStatusJul25: sailors.natSquadStatusJul25,
         natSquadStatusJan26: sailors.natSquadStatusJan26,
         natSquadStatusJul26: sailors.natSquadStatusJul26,
+        natSquadStatusJan27: sailors.natSquadStatusJan27,
+        natSquadStatusJul27: sailors.natSquadStatusJul27,
         nationalSquadStatus: sailors.nationalSquadStatus,
       })
       .from(sailors)
@@ -764,6 +768,8 @@ export async function computeFleetRankings(
           natSquadStatusJul25: sailors.natSquadStatusJul25,
           natSquadStatusJan26: sailors.natSquadStatusJan26,
           natSquadStatusJul26: sailors.natSquadStatusJul26,
+          natSquadStatusJan27: sailors.natSquadStatusJan27,
+          natSquadStatusJul27: sailors.natSquadStatusJul27,
           nationalSquadStatus: sailors.nationalSquadStatus,
         })
         .from(sailors),
@@ -854,7 +860,7 @@ export const getCachedFleetRankings = unstable_cache(
   ): Promise<RankedSailor[]> => {
     return computeFleetRankings(fleet, { year, half });
   },
-  ["fleet-rankings-v3"],
+  ["fleet-rankings-v4"],
   { revalidate: 60 }
 );
 

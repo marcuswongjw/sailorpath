@@ -77,6 +77,8 @@ function toSailorRecords(rows: SailorAdmin[]): SailorRecord[] {
     natSquadStatusJul25: s.natSquadStatusJul25,
     natSquadStatusJan26: s.natSquadStatusJan26,
     natSquadStatusJul26: s.natSquadStatusJul26,
+    natSquadStatusJan27: s.natSquadStatusJan27,
+    natSquadStatusJul27: s.natSquadStatusJul27,
   }));
 }
 

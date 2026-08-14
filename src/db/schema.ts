@@ -68,6 +68,8 @@ export const sailors = pgTable("sailors", {
   natSquadStatusJul25: text("nat_squad_status_jul_25"),
   natSquadStatusJan26: text("nat_squad_status_jan_26"),
   natSquadStatusJul26: text("nat_squad_status_jul_26"),
+  natSquadStatusJan27: text("nat_squad_status_jan_27"),
+  natSquadStatusJul27: text("nat_squad_status_jul_27"),
   histRankingJun24: integer("hist_ranking_jun_24"),
   histRankingDec24: integer("hist_ranking_dec_24"),
   histRankingJun25: integer("hist_ranking_jun_25"),

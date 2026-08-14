@@ -28,6 +28,8 @@ export type SailorAdmin = {
   natSquadStatusJul25?: string | null;
   natSquadStatusJan26?: string | null;
   natSquadStatusJul26?: string | null;
+  natSquadStatusJan27?: string | null;
+  natSquadStatusJul27?: string | null;
   histRankingJun24?: number | null;
   histRankingDec24?: number | null;
   histRankingJun25?: number | null;

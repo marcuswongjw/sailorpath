@@ -24,6 +24,8 @@ export type RosterImportRow = {
   natSquadStatusJul25?: string | null;
   natSquadStatusJan26?: string | null;
   natSquadStatusJul26?: string | null;
+  natSquadStatusJan27?: string | null;
+  natSquadStatusJul27?: string | null;
   histRankingJun24?: string | number | null;
   histRankingDec24?: string | number | null;
   histRankingJun25?: string | number | null;
@@ -160,6 +162,22 @@ export function parseRosterRows(
             "natsquadstatusjul26",
             "nat jul 26",
             "squad jul 26",
+          ])
+        ),
+        natSquadStatusJan27: strOrNull(
+          pickCol(row, [
+            "squadjan27",
+            "natsquadstatusjan27",
+            "nat jan 27",
+            "squad jan 27",
+          ])
+        ),
+        natSquadStatusJul27: strOrNull(
+          pickCol(row, [
+            "squadjul27",
+            "natsquadstatusjul27",
+            "nat jul 27",
+            "squad jul 27",
           ])
         ),
         histRankingJun24: strOrNull(

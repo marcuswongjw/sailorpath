@@ -164,6 +164,8 @@ export async function POST(req: Request) {
         "natSquadStatusJul25",
         "natSquadStatusJan26",
         "natSquadStatusJul26",
+        "natSquadStatusJan27",
+        "natSquadStatusJul27",
         "worlds",
         "european",
         "asian",

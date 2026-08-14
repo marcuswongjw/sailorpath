@@ -895,6 +895,8 @@ export async function POST(req: Request) {
       natSquadStatusJul25: body.natSquadStatusJul25 || null,
       natSquadStatusJan26: body.natSquadStatusJan26 || null,
       natSquadStatusJul26: body.natSquadStatusJul26 || null,
+      natSquadStatusJan27: body.natSquadStatusJan27 || null,
+      natSquadStatusJul27: body.natSquadStatusJul27 || null,
       histRankingJun24: num(body.histRankingJun24),
       histRankingDec24: num(body.histRankingDec24),
       histRankingJun25: num(body.histRankingJun25),
@@ -1004,6 +1006,8 @@ export async function PATCH(req: Request) {
       "natSquadStatusJul25",
       "natSquadStatusJan26",
       "natSquadStatusJul26",
+      "natSquadStatusJan27",
+      "natSquadStatusJul27",
     ] as const) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
     }

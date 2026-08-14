@@ -205,6 +205,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     natSquadStatusJul25: "",
     natSquadStatusJan26: "",
     natSquadStatusJul26: "",
+    natSquadStatusJan27: "",
+    natSquadStatusJul27: "",
     histRankingJun24: "",
     histRankingDec24: "",
     histRankingJun25: "",
@@ -669,14 +671,20 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
               "natSquadStatusJul25",
               "natSquadStatusJan26",
               "natSquadStatusJul26",
+              "natSquadStatusJan27",
+              "natSquadStatusJul27",
             ].includes(bulkField) &&
             bulkValue === "CLEAR"
           ) {
             typedValue = null;
           } else if (bulkValue === "") typedValue = null;
           const next = { ...s, [bulkField]: typedValue };
-          // Keep legacy current-squad field in sync when setting Jul 26
-          if (bulkField === "natSquadStatusJul26") {
+          // Keep legacy current-squad field in sync with latest half edits
+          if (
+            bulkField === "natSquadStatusJul26" ||
+            bulkField === "natSquadStatusJan27" ||
+            bulkField === "natSquadStatusJul27"
+          ) {
             next.nationalSquadStatus = typedValue;
           }
           return next;
@@ -870,8 +878,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       nationality: sailorForm.nationality || null,
       gender: sailorForm.gender,
       bio: sailorForm.bio || null,
-      // Current squad mirrors Jul–Dec 2026 (period-locked) when set
+      // Current squad mirrors latest period-locked field when set
       nationalSquadStatus:
+        sailorForm.natSquadStatusJul27 ||
+        sailorForm.natSquadStatusJan27 ||
         sailorForm.natSquadStatusJul26 ||
         sailorForm.nationalSquadStatus ||
         null,
@@ -892,6 +902,8 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
       natSquadStatusJul25: sailorForm.natSquadStatusJul25 || null,
       natSquadStatusJan26: sailorForm.natSquadStatusJan26 || null,
       natSquadStatusJul26: sailorForm.natSquadStatusJul26 || null,
+      natSquadStatusJan27: sailorForm.natSquadStatusJan27 || null,
+      natSquadStatusJul27: sailorForm.natSquadStatusJul27 || null,
       histRankingJun24: sailorForm.histRankingJun24 || null,
       histRankingDec24: sailorForm.histRankingDec24 || null,
       histRankingJun25: sailorForm.histRankingJun25 || null,
