@@ -20,6 +20,7 @@ import {
   type RegattaResultRecord,
   type RegattaScoreSlot,
 } from "@/lib/ranking";
+import { withProjectedNextSquadStatus } from "@/lib/optimistSquadPreview";
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
 import {
   isInSgSeries,
@@ -844,7 +845,14 @@ export async function computeFleetRankings(
       isOverseasCommitment: row.isOverseasCommitment,
     }));
 
-    return calculateRankings(period, s, r, res).filter((x) => x.fleet === fleet);
+    const ranked = calculateRankings(period, s, r, res).filter(
+      (x) => x.fleet === fleet
+    );
+    // Gold: next-half column = live Nat A/B projection (not stored stamp alone)
+    if (fleet === "Gold") {
+      return withProjectedNextSquadStatus(ranked, period);
+    }
+    return ranked;
   });
 }
 
@@ -860,7 +868,7 @@ export const getCachedFleetRankings = unstable_cache(
   ): Promise<RankedSailor[]> => {
     return computeFleetRankings(fleet, { year, half });
   },
-  ["fleet-rankings-v4"],
+  ["fleet-rankings-v5"],
   { revalidate: 60 }
 );
 

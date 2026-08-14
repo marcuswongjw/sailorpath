@@ -3,6 +3,8 @@ import {
   optimistSquadCutoff,
   selectOptimistNatSquadPreview,
   ageInIntakeYear,
+  withProjectedNextSquadStatus,
+  projectedNextSquadLabel,
 } from "./optimistSquadPreview";
 import type { RankedSailor } from "./ranking";
 
@@ -124,5 +126,41 @@ describe("selectOptimistNatSquadPreview", () => {
     const picks = selectOptimistNatSquadPreview(ranked, 2026);
     expect(picks.some((p) => p.sailorId === "old")).toBe(false);
     expect(picks.some((p) => p.sailorId === "ok")).toBe(true);
+  });
+});
+
+describe("withProjectedNextSquadStatus", () => {
+  it("labels next half after Jul–Dec 2026 as Proj. Squad Jan 27", () => {
+    expect(
+      projectedNextSquadLabel({ year: 2026, half: "Jul-Dec" })
+    ).toBe("Proj. Squad Jan 27");
+  });
+
+  it("projects Nat A/B onto nextPeriodSquadStatus for Jan 2027 intake", () => {
+    const ranked: RankedSailor[] = [];
+    for (let i = 0; i < 10; i++) {
+      ranked.push(sailor(`m${i}`, `Male ${i}`, "M", "2013-01-01", i + 1));
+    }
+    for (let i = 0; i < 10; i++) {
+      ranked.push(sailor(`f${i}`, `Female ${i}`, "F", "2013-01-01", 20 + i));
+    }
+    ranked.sort((a, b) => a.overallScore - b.overallScore);
+
+    const out = withProjectedNextSquadStatus(ranked, {
+      year: 2026,
+      half: "Jul-Dec",
+    });
+    // Top 8 M + top 8 F → Nat A (intake year 2027; born 2013 → age 14)
+    expect(out.filter((s) => s.nextPeriodSquadStatus === "Nat A")).toHaveLength(
+      16
+    );
+    expect(out.find((s) => s.id === "m0")?.nextPeriodSquadStatus).toBe("Nat A");
+    expect(out.find((s) => s.id === "f0")?.nextPeriodSquadStatus).toBe("Nat A");
+    // 9th M is outside top 8 → Nat B or null depending on age buckets
+    expect(
+      ["Nat B", null].includes(
+        out.find((s) => s.id === "m8")?.nextPeriodSquadStatus ?? null
+      )
+    ).toBe(true);
   });
 });

@@ -20,7 +20,11 @@
  */
 
 import { ageYears, birthYear } from "@/lib/age";
-import type { Period, RankedSailor } from "@/lib/ranking";
+import {
+  nextPeriod,
+  type Period,
+  type RankedSailor,
+} from "@/lib/ranking";
 import { isSingaporeNationality } from "@/lib/ilca4NationalList";
 
 export type OptimistSquadTier = "Nat A" | "Nat B";
@@ -278,4 +282,36 @@ export function selectOptimistNatSquadPreview(
   const a = out.filter((p) => p.tier === "Nat A").slice(0, 16);
   const b = out.filter((p) => p.tier === "Nat B").slice(0, 16);
   return [...a, ...b];
+}
+
+/**
+ * Project next-half Nat A / Nat B onto Gold rankings using Appendix I rules.
+ *
+ * - Ranking period Jul–Dec Y → next half Jan–Jun Y+1 (January intake, intake year Y+1)
+ * - Ranking period Jan–Jun Y → next half Jul–Dec Y (July intake, intake year Y)
+ *
+ * Uses current Gold Best 3 of 5 order (array order = ranking position).
+ * Sailors not selected get `nextPeriodSquadStatus = null`.
+ */
+export function withProjectedNextSquadStatus(
+  goldRanked: RankedSailor[],
+  rankingPeriod: Period
+): RankedSailor[] {
+  if (!goldRanked.length) return goldRanked;
+  const next = nextPeriod(rankingPeriod);
+  const intakeYear = next.year;
+  const picks = selectOptimistNatSquadPreview(goldRanked, intakeYear);
+  const tierById = new Map(picks.map((p) => [p.sailorId, p.tier]));
+  return goldRanked.map((s) => ({
+    ...s,
+    nextPeriodSquadStatus: tierById.get(s.id) ?? null,
+  }));
+}
+
+/** Human label for the projected next-half squad column. */
+export function projectedNextSquadLabel(rankingPeriod: Period): string {
+  const next = nextPeriod(rankingPeriod);
+  const half = next.half === "Jan-Jun" ? "Jan" : "Jul";
+  const yy = String(next.year).slice(-2);
+  return `Proj. Squad ${half} ${yy}`;
 }

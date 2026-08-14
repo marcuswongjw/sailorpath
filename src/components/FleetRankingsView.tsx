@@ -8,6 +8,10 @@ import {
   currentPeriodFromSgToday,
   rankingPeriodOptions,
 } from "@/lib/datesSg";
+import {
+  projectedNextSquadLabel,
+  withProjectedNextSquadStatus,
+} from "@/lib/optimistSquadPreview";
 import { Trophy, Calendar, RotateCcw } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 
@@ -127,15 +131,11 @@ export function FleetRankingsView({
     return `Squad ${half} ${yy}`;
   }, [period]);
 
-  /** Next half after selected period — e.g. "Squad Jan 27" while viewing Jul–Dec 2026 */
-  const nextSquadColumnLabel = useMemo(() => {
-    const next =
-      period.half === "Jan-Jun"
-        ? { year: period.year, half: "Jul" as const }
-        : { year: period.year + 1, half: "Jan" as const };
-    const yy = String(next.year).slice(-2);
-    return `Squad ${next.half} ${yy}`;
-  }, [period]);
+  /** Projected next-half Nat A/B column (e.g. Proj. Squad Jan 27) */
+  const nextSquadColumnLabel = useMemo(
+    () => projectedNextSquadLabel(period),
+    [period]
+  );
 
   /** Period squad only (natSquadStatus* for selected half via API periodSquadStatus) */
   const squadForFilter = (s: RankedSailor) =>
@@ -176,10 +176,22 @@ export function FleetRankingsView({
     return slots;
   }, [ranked]);
 
-  // ranks re-numbered after filter (displayRanked order)
+  /**
+   * Full-fleet what-if rank (exclusions) then Nat A/B projection, then
+   * gender / current-squad filters (display # restarts within filter).
+   */
+  const rankingBase = useMemo(() => {
+    if (excluded.size === 0) return ranked;
+    return reRankWithExcluded(ranked, excluded);
+  }, [ranked, excluded]);
 
-  const filteredRanked = useMemo(() => {
-    return ranked.filter((s) => {
+  const rankingWithProjection = useMemo(() => {
+    if (fleet !== "Gold" || rankingBase.length === 0) return rankingBase;
+    return withProjectedNextSquadStatus(rankingBase, period);
+  }, [fleet, rankingBase, period]);
+
+  const displayRanked = useMemo(() => {
+    return rankingWithProjection.filter((s) => {
       if (genderFilter !== "all") {
         const g = String(s.gender || "").toUpperCase();
         if (g !== genderFilter) return false;
@@ -194,12 +206,7 @@ export function FleetRankingsView({
       }
       return true;
     });
-  }, [ranked, genderFilter, squadFilter, showSquad]);
-
-  const displayRanked = useMemo(() => {
-    if (excluded.size === 0) return filteredRanked;
-    return reRankWithExcluded(filteredRanked, excluded);
-  }, [filteredRanked, excluded]);
+  }, [rankingWithProjection, genderFilter, squadFilter, showSquad]);
 
   const carryCount = eventSlots.filter((s) => s.isCarryForward && s.regattaName).length;
   const currentCount = eventSlots.filter((s) => !s.isCarryForward && s.regattaName).length;
@@ -610,7 +617,7 @@ export function FleetRankingsView({
                 {showSquad && (
                   <th
                     className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
-                    title={`National squad for the next half after ${periodLabelText} (Nat A / Nat B)`}
+                    title={`Projected Nat A / Nat B for the next half after ${periodLabelText} (Appendix I: top 8 M/F → age buckets). Live from this Gold ranking — not a locked admin stamp.`}
                   >
                     {nextSquadColumnLabel}
                   </th>
@@ -749,8 +756,10 @@ export function FleetRankingsView({
           the three best (lowest) scores. Ties: compare all regatta ranks best-first
           (a 1st beats a 2nd, then next-best, and so on), then name. Uncheck events
           above for a what-if score. * = DNS (fleet size + 1). † = SSF overseas
-          commitment. {squadColumnLabel} = national squad for the selected period.{" "}
-          {nextSquadColumnLabel} = Nat A / Nat B (or other) for the following half.
+          commitment. {squadColumnLabel} = official national squad for the selected
+          period. {nextSquadColumnLabel} = live projection for the following half
+          using Nat A (top 8 male + top 8 female) then Nat B age buckets (13 / 12 /
+          ≤11), max 16 each, age ≤15 in intake year.
         </p>
       </div>
     </div>
