@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { db, DbUnavailableError, formatDbError } from "@/db";
 import {
   sailors,
@@ -12,8 +13,8 @@ import {
   calculateRankings,
   periodLabel,
   resolveSailorFleet,
-  scoringRegattasForFleet,
   type Period,
+  type RankedSailor,
   type SailorRecord,
   type RegattaRecord,
   type RegattaResultRecord,
@@ -422,20 +423,16 @@ export async function getResultsForSailor(sailorId: string) {
 /**
  * Live Best 3 of 5 strip for a single sailor.
  *
- * Optimised vs full-board compute:
- * 1) Load subject sailor first — bail if guest / dropped
- * 2) Rank only same-fleet peers for the period (not guests / other fleet)
- * 3) Results limited to scoring-window regatta IDs
- *
- * Default period = current half-year in Asia/Singapore.
+ * Reuses the same 60s fleet-ranking cache as /api/rankings and gold/silver SSR,
+ * so opening a profile right after viewing rankings is near-instant.
  */
 export async function getSailorSeriesStanding(
   sailorId: string,
   period: Period = currentPeriodFromSgToday()
 ): Promise<SeriesStanding | null> {
-  return withDb(async () => {
-    // Lean column set — full sailor select was slow on every profile open
-    const sailorRows = await db
+  // Cheap subject lookup only — full board comes from cache
+  const meRow = await withDb(async () => {
+    const [row] = await db
       .select({
         id: sailors.id,
         name: sailors.name,
@@ -456,111 +453,43 @@ export async function getSailorSeriesStanding(
         natSquadStatusJul26: sailors.natSquadStatusJul26,
         nationalSquadStatus: sailors.nationalSquadStatus,
       })
-      .from(sailors);
-
-    const allMapped = sailorRows.map((row) => ({
-      ...row,
-      currentFleet: (() => {
-        const n = normalizeSgSeriesMembership(row.currentFleet);
-        if (n) return n;
-        return row.currentFleet;
-      })(),
-    })) as SailorRecord[];
-
-    const meRow = allMapped.find((x) => x.id === sailorId);
-    if (!meRow) return null;
-
-    const fleetInfo = resolveSailorFleet(meRow, period);
-    if (!fleetInfo?.active) return null;
-
-    const peers = allMapped.filter((s) => {
-      const r = resolveSailorFleet(s, period);
-      return Boolean(r?.active && r.fleet === fleetInfo.fleet);
-    });
-
-    // Optimist ranking regattas only (skip ILCA bulk)
-    const regattaRows = await db
-      .select({
-        id: regattas.id,
-        name: regattas.name,
-        slug: regattas.slug,
-        date: regattas.date,
-        totalFleetSize: regattas.totalFleetSize,
-        division: regattas.division,
-        raceCount: regattas.raceCount,
-        geography: regattas.geography,
-        boatClass: regattas.boatClass,
-        countsForRanking: regattas.countsForRanking,
-      })
-      .from(regattas)
-      .where(
-        or(
-          eq(regattas.boatClass, "Optimist"),
-          sql`lower(coalesce(${regattas.boatClass}, 'optimist')) not like '%ilca%'`
-        )
-      );
-
-    const r: RegattaRecord[] = regattaRows.map((row) => ({
-      id: row.id,
-      name: row.name,
-      slug: row.slug,
-      date: row.date,
-      totalFleetSize: row.totalFleetSize,
-      division: row.division,
-      raceCount: row.raceCount,
-      geography: row.geography ?? "SG",
-      boatClass: row.boatClass ?? "Optimist",
-      countsForRanking: row.countsForRanking !== false,
-    }));
-
-    const slots = scoringRegattasForFleet(fleetInfo.fleet, period, r);
-    const scoringIds = slots.map((x) => x.regatta.id);
-    if (!scoringIds.length) return null;
-
-    const resultRows = await db
-      .select({
-        sailorId: regattaResults.sailorId,
-        regattaId: regattaResults.regattaId,
-        rank: regattaResults.rank,
-        nettScore: regattaResults.nettScore,
-        totalScore: regattaResults.totalScore,
-        isDns: regattaResults.isDns,
-        isOverseasCommitment: regattaResults.isOverseasCommitment,
-      })
-      .from(regattaResults)
-      .where(inArray(regattaResults.regattaId, scoringIds));
-
-    const res: RegattaResultRecord[] = resultRows.map((row) => ({
-      sailorId: row.sailorId,
-      regattaId: row.regattaId,
-      rank: row.rank,
-      nettScore: row.nettScore,
-      totalScore: row.totalScore,
-      isDns: row.isDns,
-      isOverseasCommitment: row.isOverseasCommitment,
-    }));
-
-    const all = calculateRankings(period, peers, r, res).filter(
-      (x) => x.fleet === fleetInfo.fleet
-    );
-    const me = all.find((x) => x.id === sailorId);
-    if (!me) return null;
-    const overallRank = all.findIndex((x) => x.id === sailorId) + 1;
-    const carry = me.regattaScores.filter((rs) => rs.isCarryForward).length;
+      .from(sailors)
+      .where(eq(sailors.id, sailorId))
+      .limit(1);
+    if (!row) return null;
+    const n = normalizeSgSeriesMembership(row.currentFleet);
     return {
-      period,
-      periodLabel: periodLabel(period),
-      fleet: me.fleet,
-      overallRank,
-      fleetSize: all.length,
-      best3of5: me.overallScore,
-      rScores: me.regattaScores,
-      trendNote:
-        carry > 0
-          ? `Includes ${carry} carry-forward score${carry === 1 ? "" : "s"} from previous half`
-          : `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
-    };
+      ...row,
+      currentFleet: n || row.currentFleet,
+    } as SailorRecord;
   });
+  if (!meRow) return null;
+
+  const fleetInfo = resolveSailorFleet(meRow, period);
+  if (!fleetInfo?.active) return null;
+
+  const all = await getCachedFleetRankings(
+    fleetInfo.fleet,
+    period.year,
+    period.half
+  );
+  const me = all.find((x) => x.id === sailorId);
+  if (!me) return null;
+  const overallRank = all.findIndex((x) => x.id === sailorId) + 1;
+  const carry = me.regattaScores.filter((rs) => rs.isCarryForward).length;
+  return {
+    period,
+    periodLabel: periodLabel(period),
+    fleet: me.fleet,
+    overallRank,
+    fleetSize: all.length,
+    best3of5: me.overallScore,
+    rScores: me.regattaScores,
+    trendNote:
+      carry > 0
+        ? `Includes ${carry} carry-forward score${carry === 1 ? "" : "s"} from previous half`
+        : `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
+  };
 }
 
 /**
@@ -912,6 +841,22 @@ export async function computeFleetRankings(
     return calculateRankings(period, s, r, res).filter((x) => x.fleet === fleet);
   });
 }
+
+/**
+ * Shared 60s cache for Gold/Silver boards — used by API, SSR pages, and profile standing.
+ * Warm after visiting rankings so profile open reuses the same payload.
+ */
+export const getCachedFleetRankings = unstable_cache(
+  async (
+    fleet: "Gold" | "Silver",
+    year: number,
+    half: Period["half"]
+  ): Promise<RankedSailor[]> => {
+    return computeFleetRankings(fleet, { year, half });
+  },
+  ["fleet-rankings-v3"],
+  { revalidate: 60 }
+);
 
 export async function ensureProfileForUser(user: {
   id: string;

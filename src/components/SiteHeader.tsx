@@ -15,6 +15,7 @@ export function SiteHeader() {
     <>
       <Link
         href="/sg/optimist/gold"
+        prefetch
         onClick={() => setMobileOpen(false)}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
@@ -22,6 +23,7 @@ export function SiteHeader() {
       </Link>
       <Link
         href="/sg/optimist/silver"
+        prefetch
         onClick={() => setMobileOpen(false)}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
@@ -175,6 +177,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-3 lg:gap-10 min-w-0 flex-1">
             <Link
               href="/"
+              prefetch
               className="flex items-center gap-2 group shrink-0 min-w-0"
             >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-600 font-black text-white text-lg group-hover:bg-orange-500">

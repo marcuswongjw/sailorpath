@@ -30,28 +30,36 @@ export default async function SailorProfilePage({
   let errorMsg: string | null = null;
 
   try {
-    sailor = await getSailorByHandle(sailor_handle);
+    // Auth + handle lookup in parallel (was sequential — added ~100–300ms)
+    const [sailorResult, authResult] = await Promise.all([
+      getSailorByHandle(sailor_handle),
+      getAuthContext().catch(() => null),
+    ]);
+    sailor = sailorResult;
+    auth = authResult;
+
     if (sailor) {
-      auth = await getAuthContext();
       const isLinkedOwner = Boolean(
         auth?.userId && sailor.parentId === auth.userId
       );
       const isSuperadmin = auth?.role === "superadmin";
       const canSeePrivate = isSuperadmin || isLinkedOwner;
 
-      // Parallel core data. ILCA standing is skipped for pure Optimist sailors
-      // (was re-ranking the full board on every profile open).
+      // Skip ILCA board recompute for pure Optimist sailors
       const mayHaveIlca = Boolean(
         sailor.sailNumberIlca4 || sailor.ilca4NationalList
       );
 
+      // Parallel core data. Equipment history only when owner or public equipment.
       const [res, sStand, obs, equipHist] = await Promise.all([
         getResultsForSailor(sailor.id),
         getSailorSeriesStanding(sailor.id).catch(() => null),
         getRaceObservationsForSailor(sailor.id, {
           includePrivate: canSeePrivate,
         }).catch(() => []),
-        getEquipmentLogsForSailor(sailor.id).catch(() => []),
+        canSeePrivate || sailor.isPublicEquipment
+          ? getEquipmentLogsForSailor(sailor.id).catch(() => [])
+          : Promise.resolve([]),
       ]);
 
       results = res;

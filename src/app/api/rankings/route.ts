@@ -1,16 +1,7 @@
 import { NextResponse } from "next/server";
-import { unstable_cache } from "next/cache";
-import { computeFleetRankings } from "@/lib/queries";
+import { getCachedFleetRankings } from "@/lib/queries";
 import type { Period } from "@/lib/ranking";
 import { DbUnavailableError } from "@/db";
-
-const getCachedFleetRankings = unstable_cache(
-  async (fleet: "Gold" | "Silver", year: number, half: Period["half"]) => {
-    return computeFleetRankings(fleet, { year, half });
-  },
-  ["fleet-rankings-v2"],
-  { revalidate: 60 }
-);
 
 export async function GET(req: Request) {
   try {
@@ -25,8 +16,7 @@ export async function GET(req: Request) {
       { period, fleet: f, ranked },
       {
         headers: {
-          // Browser/CDN can reuse briefly; unstable_cache is the main win
-          "Cache-Control": "public, s-maxage=30, stale-while-revalidate=60",
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
         },
       }
     );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { RankedSailor, Period } from "@/lib/ranking";
 import { reRankWithExcluded } from "@/lib/ranking";
@@ -55,22 +55,40 @@ type Slot = {
 export function FleetRankingsView({
   fleet,
   initialPeriod,
+  initialRanked,
+  initialError,
 }: {
   fleet: "Gold" | "Silver";
   initialPeriod?: Period;
+  /** SSR/ISR payload — skips the first client fetch for this period */
+  initialRanked?: RankedSailor[];
+  initialError?: string | null;
 }) {
-  const [period, setPeriod] = useState<Period>(
-    initialPeriod || DEFAULT_PERIOD
-  );
-  const [ranked, setRanked] = useState<RankedSailor[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const ssrPeriod = initialPeriod || DEFAULT_PERIOD;
+  const [period, setPeriod] = useState<Period>(ssrPeriod);
+  const [ranked, setRanked] = useState<RankedSailor[]>(initialRanked ?? []);
+  const [error, setError] = useState<string | null>(initialError ?? null);
+  // No spinner when server already sent the current board
+  const [loading, setLoading] = useState(initialRanked === undefined);
   /** Regatta IDs excluded from Best 3 of 5 (client what-if) */
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [squadFilter, setSquadFilter] = useState<string>("all");
+  /** Skip client fetch once for the SSR period (then always fetch on change). */
+  const skipSsrKey = useRef(
+    initialRanked !== undefined
+      ? `${fleet}:${ssrPeriod.year}:${ssrPeriod.half}`
+      : null
+  );
 
   useEffect(() => {
+    const key = `${fleet}:${period.year}:${period.half}`;
+    if (skipSsrKey.current === key) {
+      skipSsrKey.current = null;
+      setLoading(false);
+      return;
+    }
+
     let cancelled = false;
     (async () => {
       setLoading(true);
