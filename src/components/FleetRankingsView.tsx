@@ -35,6 +35,33 @@ function birthYear(dob?: string | null) {
   return Number.isFinite(y) ? String(y) : "—";
 }
 
+/** Distinct colours for Nat A vs Nat B (and other squad labels). */
+function squadBadgeClass(label: string | null | undefined): string {
+  const s = String(label || "")
+    .trim()
+    .toLowerCase();
+  if (s === "nat a" || s === "national a" || s === "a") {
+    return "bg-amber-500/15 border-amber-400/35 text-amber-300";
+  }
+  if (s === "nat b" || s === "national b" || s === "b") {
+    return "bg-sky-500/15 border-sky-400/35 text-sky-300";
+  }
+  if (s === "ds" || s.includes("development")) {
+    return "bg-violet-500/15 border-violet-400/35 text-violet-300";
+  }
+  return "bg-orange-500/10 border-orange-500/20 text-orange-400";
+}
+
+function SquadBadge({ label }: { label: string }) {
+  return (
+    <span
+      className={`inline-flex rounded-full border px-2 py-0.5 text-[10px] font-extrabold ${squadBadgeClass(label)}`}
+    >
+      {label}
+    </span>
+  );
+}
+
 /** Compact header label for a regatta (keep readable in sticky column) */
 function shortRegattaName(name: string | undefined | null, idx: number) {
   if (!name || !String(name).trim()) return `R${idx + 1}`;
@@ -527,11 +554,23 @@ export function FleetRankingsView({
                   <p className="text-[11px] text-slate-500 mt-1">
                     {s.gender || "—"} · Born {birthYear(s.dob)}
                     {showSquad ? (
-                      <span className="text-orange-300/90 font-semibold">
-                        {" "}
-                        · {squadColumnLabel}: {squadFor(s) || "—"}
-                        {" · "}
-                        {nextSquadColumnLabel}: {nextSquadFor(s) || "—"}
+                      <span className="text-slate-500 font-semibold inline-flex flex-wrap items-center gap-x-1.5 gap-y-1 mt-0.5">
+                        <span>
+                          {squadColumnLabel}:{" "}
+                          {squadFor(s) ? (
+                            <SquadBadge label={squadFor(s)!} />
+                          ) : (
+                            "—"
+                          )}
+                        </span>
+                        <span>
+                          {nextSquadColumnLabel}:{" "}
+                          {nextSquadFor(s) ? (
+                            <SquadBadge label={nextSquadFor(s)!} />
+                          ) : (
+                            "—"
+                          )}
+                        </span>
                       </span>
                     ) : null}
                   </p>
@@ -689,9 +728,7 @@ export function FleetRankingsView({
                     {showSquad && (
                       <td className="px-4 lg:px-5 py-3.5">
                         {squadFor(s) ? (
-                          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-extrabold text-orange-400">
-                            {squadFor(s)}
-                          </span>
+                          <SquadBadge label={squadFor(s)!} />
                         ) : (
                           <span className="text-slate-600">—</span>
                         )}
@@ -700,9 +737,7 @@ export function FleetRankingsView({
                     {showSquad && (
                       <td className="px-4 lg:px-5 py-3.5">
                         {nextSquadFor(s) ? (
-                          <span className="rounded-full bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 text-[10px] font-extrabold text-sky-300">
-                            {nextSquadFor(s)}
-                          </span>
+                          <SquadBadge label={nextSquadFor(s)!} />
                         ) : (
                           <span className="text-slate-600">—</span>
                         )}
