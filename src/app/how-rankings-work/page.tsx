@@ -16,10 +16,10 @@ export default function HowRankingsWorkPage() {
           How rankings work
         </h1>
         <p className="text-sm text-slate-400 leading-relaxed">
-          Technical notes on Singapore Optimist series scoring, ILCA 4 national
-          ranking, and data quality checks used in SailorPath. For sailors and
-          parents, the public boards show the same results — this page is for
-          those who want the rules in detail.
+          Technical notes on Singapore Optimist series scoring and ILCA 4
+          national ranking used in SailorPath. For sailors and parents, the
+          public boards show the same results — this page is for those who want
+          the rules in detail.
         </p>
       </div>
 
@@ -100,20 +100,6 @@ export default function HowRankingsWorkPage() {
             View ILCA 4 standings →
           </Link>
         </p>
-      </section>
-
-      <section className="space-y-3 rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6">
-        <h2 className="text-lg font-bold text-white">Data quality (admin)</h2>
-        <p className="text-sm text-slate-400 leading-relaxed">
-          Superadmin tools flag inconsistencies so rankings stay trustworthy:
-        </p>
-        <ul className="space-y-2 text-sm text-slate-400 leading-relaxed list-disc pl-5">
-          <li>Gold results before the recorded gold entry date</li>
-          <li>Gold races without a gold entry stamp (silver-only profile)</li>
-          <li>Active series sailors past Optimist age (over-age)</li>
-          <li>Empty Series tags without silver/gold entry dates</li>
-          <li>Unrecognized nationality free-text values</li>
-        </ul>
       </section>
 
       <p className="text-center text-[12px] text-slate-600">

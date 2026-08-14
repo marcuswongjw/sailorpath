@@ -21,7 +21,6 @@ import {
   User,
   Heart,
   ClipboardList,
-  MessageSquare,
   Sparkles,
   Settings,
   X,
@@ -343,25 +342,7 @@ export function SampleDemoShell() {
               </button>
             </div>
 
-            {/* Communication */}
             <div className="flex flex-wrap gap-2 pt-1">
-              <button
-                type="button"
-                onClick={() =>
-                  flash(`Demo: message queued to ${p.coachContact}`)
-                }
-                className="inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-4 py-2 text-[11px] font-bold text-white"
-              >
-                <MessageSquare className="h-3.5 w-3.5" />
-                Message coach
-              </button>
-              <button
-                type="button"
-                onClick={() => flash("Demo: open club channel")}
-                className="rounded-full border border-white/15 px-4 py-2 text-[11px] font-bold text-slate-300"
-              >
-                Message club
-              </button>
               <Link
                 href="/sg/optimist/gold"
                 className="rounded-full border border-white/15 px-4 py-2 text-[11px] font-bold text-slate-300"
