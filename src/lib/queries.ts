@@ -805,17 +805,110 @@ export async function getEquipmentLogsForSailor(sailorId: string) {
   });
 }
 
+/**
+ * Public fleet rankings (Gold/Silver).
+ * Loads lean sailor columns + Optimist regattas only + results for those regattas
+ * (avoids full-table scans that made /sg/optimist/gold slow).
+ */
 export async function computeFleetRankings(
   fleet: "Gold" | "Silver",
   period: Period
 ) {
   return withDb(async () => {
-    // Read-only rankings — DNS flag healing is admin-only (healFalseDns)
-    const [s, r, res] = await Promise.all([
-      listSailors(),
-      listRegattas(),
-      listResults(),
+    const [sailorRows, regattaRows] = await Promise.all([
+      db
+        .select({
+          id: sailors.id,
+          name: sailors.name,
+          handle: sailors.handle,
+          sailNumber: sailors.sailNumber,
+          club: sailors.club,
+          school: sailors.school,
+          nationality: sailors.nationality,
+          gender: sailors.gender,
+          dob: sailors.dob,
+          goldEntryDate: sailors.goldEntryDate,
+          silverEntryDate: sailors.silverEntryDate,
+          dropDate: sailors.dropDate,
+          currentFleet: sailors.currentFleet,
+          natSquadStatusJan25: sailors.natSquadStatusJan25,
+          natSquadStatusJul25: sailors.natSquadStatusJul25,
+          natSquadStatusJan26: sailors.natSquadStatusJan26,
+          natSquadStatusJul26: sailors.natSquadStatusJul26,
+          nationalSquadStatus: sailors.nationalSquadStatus,
+        })
+        .from(sailors),
+      db
+        .select({
+          id: regattas.id,
+          name: regattas.name,
+          slug: regattas.slug,
+          date: regattas.date,
+          totalFleetSize: regattas.totalFleetSize,
+          division: regattas.division,
+          raceCount: regattas.raceCount,
+          geography: regattas.geography,
+          boatClass: regattas.boatClass,
+          countsForRanking: regattas.countsForRanking,
+        })
+        .from(regattas)
+        .where(
+          or(
+            eq(regattas.boatClass, "Optimist"),
+            sql`lower(coalesce(${regattas.boatClass}, 'optimist')) not like '%ilca%'`
+          )
+        ),
     ]);
+
+    const s = sailorRows.map((row) => ({
+      ...row,
+      currentFleet: (() => {
+        const n = normalizeSgSeriesMembership(row.currentFleet);
+        if (n) return n;
+        return row.currentFleet;
+      })(),
+    })) as SailorRecord[];
+
+    const r: RegattaRecord[] = regattaRows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      slug: row.slug,
+      date: row.date,
+      totalFleetSize: row.totalFleetSize,
+      division: row.division,
+      raceCount: row.raceCount,
+      geography: row.geography ?? "SG",
+      boatClass: row.boatClass ?? "Optimist",
+      countsForRanking: row.countsForRanking !== false,
+    }));
+
+    const regattaIds = r.map((x) => x.id);
+    const resRows =
+      regattaIds.length === 0
+        ? []
+        : await db
+            .select({
+              sailorId: regattaResults.sailorId,
+              regattaId: regattaResults.regattaId,
+              rank: regattaResults.rank,
+              nettScore: regattaResults.nettScore,
+              totalScore: regattaResults.totalScore,
+              isDns: regattaResults.isDns,
+              isOverseasCommitment: regattaResults.isOverseasCommitment,
+            })
+            .from(regattaResults)
+            .where(inArray(regattaResults.regattaId, regattaIds));
+
+    const res: RegattaResultRecord[] = resRows.map((row) => ({
+      sailorId: row.sailorId,
+      regattaId: row.regattaId,
+      rank: row.rank,
+      nettScore: row.nettScore,
+      totalScore: row.totalScore,
+      isDns: row.isDns,
+      isOverseasCommitment: row.isOverseasCommitment,
+    }));
+
     return calculateRankings(period, s, r, res).filter((x) => x.fleet === fleet);
   });
 }

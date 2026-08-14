@@ -38,19 +38,21 @@ export default async function Ilca4RegattaDetailPage({
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-10 space-y-6">
+    <div className="mx-auto max-w-4xl px-3 sm:px-4 py-8 sm:py-10 space-y-5 sm:space-y-6 w-full min-w-0">
       <Link
         href="/sg/ilca4/regattas"
         className="text-xs font-bold text-sky-400"
       >
         ← ILCA 4 regattas
       </Link>
-      <div>
+      <div className="min-w-0">
         <p className="text-[10px] font-bold uppercase tracking-wider text-sky-400/90 mb-1">
           ILCA 4
         </p>
-        <h1 className="text-2xl font-black text-white">{regatta.name}</h1>
-        <p className="text-xs text-slate-400 mt-1">
+        <h1 className="text-xl sm:text-2xl font-black text-white leading-snug break-words">
+          {regatta.name}
+        </h1>
+        <p className="text-[12px] sm:text-xs text-slate-400 mt-1.5 leading-relaxed">
           {regatta.date} · {regatta.division || "Open"} · fleet{" "}
           {regatta.totalFleetSize}
           {regatta.raceCount != null
@@ -58,7 +60,84 @@ export default async function Ilca4RegattaDetailPage({
             : ""}
         </p>
       </div>
-      <div className="overflow-x-auto rounded-2xl border border-white/5">
+
+      {/* Mobile cards */}
+      <div className="sm:hidden space-y-2">
+        {results.map((r) => {
+          const badge = getPercentileBadge(r.rank, regatta.totalFleetSize);
+          const overseas = Boolean(r.isOverseasCommitment);
+          const dns = Boolean(r.isDns) && !overseas;
+          return (
+            <div
+              key={`${r.sailorId}-${r.regattaId}`}
+              className="rounded-2xl border border-white/5 bg-[#131520]/80 p-3.5 space-y-2"
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-sky-400 font-black tabular-nums shrink-0">
+                      #{r.rank}
+                      {overseas ? "†" : dns ? "*" : ""}
+                    </span>
+                    <Link
+                      href={`/${r.handle}`}
+                      prefetch
+                      className="font-bold text-white hover:text-sky-300 text-[15px] leading-snug break-words"
+                    >
+                      {r.sailorName}
+                    </Link>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    {[r.nationality, r.gender, r.birthYear ?? birthYear(r.dob)]
+                      .filter(Boolean)
+                      .join(" · ") || "—"}
+                  </p>
+                </div>
+                <span
+                  className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full ${badge.className}`}
+                >
+                  {badge.label}
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 text-[12px]">
+                <div className="rounded-lg bg-black/25 px-2.5 py-2">
+                  <p className="text-[10px] text-slate-500 uppercase font-semibold">
+                    Total
+                  </p>
+                  <p className="font-mono font-bold text-white tabular-nums">
+                    {r.totalScore != null ? r.totalScore : "—"}
+                  </p>
+                </div>
+                <div className="rounded-lg bg-black/25 px-2.5 py-2">
+                  <p className="text-[10px] text-slate-500 uppercase font-semibold">
+                    Nett
+                  </p>
+                  <p className="font-mono font-bold text-white tabular-nums">
+                    {r.nettScore != null ? r.nettScore : "—"}
+                  </p>
+                </div>
+              </div>
+              {(overseas || dns) && (
+                <div className="flex flex-wrap gap-1.5">
+                  {overseas && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/25">
+                      Overseas
+                    </span>
+                  )}
+                  {dns && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                      DNS
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop table */}
+      <div className="hidden sm:block overflow-x-auto rounded-2xl border border-white/5">
         <table className="w-full text-sm text-left min-w-[640px]">
           <thead className="bg-white/5 text-xs text-slate-400 uppercase">
             <tr>
@@ -92,6 +171,7 @@ export default async function Ilca4RegattaDetailPage({
                   <td className="px-4 py-3">
                     <Link
                       href={`/${r.handle}`}
+                      prefetch
                       className="font-bold text-white hover:text-sky-300"
                     >
                       {r.sailorName}

@@ -11,24 +11,15 @@ import {
   Users,
   UserRound,
 } from "lucide-react";
-import { listSailors } from "@/lib/queries";
 import { WaitlistForm } from "@/components/WaitlistForm";
 
-export const dynamic = "force-dynamic";
+/**
+ * Static marketing homepage — no DB round-trip so logo → home is instant
+ * (demo profile stays the fast path for product tour).
+ */
+export const revalidate = 300;
 
-export default async function HomePage() {
-  let sailors: Awaited<ReturnType<typeof listSailors>> = [];
-  let dbLive = true;
-
-  try {
-    sailors = await listSailors();
-  } catch (e) {
-    dbLive = false;
-    void e;
-  }
-
-  const featuredSailors = sailors.slice(0, 3);
-
+export default function HomePage() {
   return (
     <div className="relative min-h-screen bg-[#090a0f] flex flex-col justify-between overflow-x-hidden">
       <div className="absolute top-0 left-0 right-0 h-[420px] sm:left-1/4 sm:right-auto sm:w-[500px] sm:h-[500px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
@@ -88,35 +79,19 @@ export default async function HomePage() {
           </form>
 
           <div className="mt-3 flex flex-wrap justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs">
-            {featuredSailors.length > 0 ? (
-              <>
-                <span className="text-slate-600 self-center w-full sm:w-auto mb-0.5 sm:mb-0">
-                  Try:
-                </span>
-                {featuredSailors.map((sailor) => (
-                  <Link
-                    key={sailor.id}
-                    href={`/${sailor.handle}`}
-                    className="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500 hover:text-white transition-all max-w-[11rem] truncate"
-                  >
-                    {sailor.name}
-                  </Link>
-                ))}
-              </>
-            ) : (
-              <Link
-                href="/sample"
-                className="px-2.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-100"
-              >
-                Open demo profile
-              </Link>
-            )}
+            <Link
+              href="/sample"
+              className="px-2.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-100 hover:border-amber-400/40"
+            >
+              Open demo profile
+            </Link>
+            <Link
+              href="/sg/optimist/gold"
+              className="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500 hover:text-white"
+            >
+              Gold standings
+            </Link>
           </div>
-          {!dbLive && (
-            <p className="mt-2 text-[11px] text-slate-600">
-              Live database offline — sample still works.
-            </p>
-          )}
         </div>
       </section>
 

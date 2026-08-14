@@ -427,7 +427,16 @@ export function FleetRankingsView({
         </div>
       )}
 
-      {loading && <p className="text-sm text-slate-500">Loading rankings…</p>}
+      {loading && (
+        <div className="space-y-3 py-4" role="status" aria-live="polite">
+          <div className="h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-white/10">
+            <div className="h-full w-2/5 animate-pulse rounded-full bg-gradient-to-r from-orange-600 via-orange-400 to-amber-300" />
+          </div>
+          <p className="text-sm font-semibold text-slate-500">
+            Loading rankings…
+          </p>
+        </div>
+      )}
       {error && (
         <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs sm:text-sm text-rose-300 no-print">
           {error}{" "}
@@ -461,6 +470,7 @@ export function FleetRankingsView({
                     </p>
                     <Link
                       href={`/${s.handle}`}
+                      prefetch
                       className="font-bold text-white hover:text-orange-400 text-[15px] leading-snug break-words min-w-0"
                     >
                       {s.name}
@@ -606,6 +616,7 @@ export function FleetRankingsView({
                     <td className="px-4 lg:px-5 py-3.5">
                       <Link
                         href={`/${s.handle}`}
+                        prefetch
                         className="font-bold text-white hover:text-orange-400"
                       >
                         {s.name}
