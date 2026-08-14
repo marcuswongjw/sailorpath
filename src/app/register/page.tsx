@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
+import { trackClientUsage } from "@/lib/clientUsage";
 
 export default function RegisterPage() {
   const [displayName, setDisplayName] = useState("");
@@ -50,6 +51,7 @@ export default function RegisterPage() {
         return;
       }
       if (data.session) {
+        trackClientUsage("register", "/register", { mode: "session" });
         try {
           const ac = new AbortController();
           const t = setTimeout(() => ac.abort(), 2500);
@@ -65,6 +67,7 @@ export default function RegisterPage() {
         setDone("session");
         setTimeout(() => window.location.assign("/account?welcome=1"), 600);
       } else {
+        trackClientUsage("register", "/register", { mode: "confirm" });
         setDone("confirm");
       }
     } catch (err) {

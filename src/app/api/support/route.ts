@@ -64,9 +64,16 @@ export async function POST(req: Request) {
       .returning({ id: supportMessages.id });
 
     void trackUsage({
-      eventType: "support_submit",
-      path: "/support",
-      meta: { topic },
+      eventType: topic === "waitlist" ? "waitlist_submit" : "support_submit",
+      path: topic === "waitlist" ? "/" : "/support",
+      meta: {
+        topic,
+        // WaitlistForm sends role in `name` field (privacy: role only, not free text)
+        role:
+          topic === "waitlist" && name
+            ? name.toLowerCase().slice(0, 40)
+            : null,
+      },
     });
 
     return NextResponse.json({

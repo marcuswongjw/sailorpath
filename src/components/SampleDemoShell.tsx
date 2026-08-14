@@ -32,6 +32,7 @@ import {
   UserPlus,
   ChevronRight,
 } from "lucide-react";
+import { trackClientUsage } from "@/lib/clientUsage";
 
 type CoachRosterSailor = {
   name: string;
@@ -171,6 +172,12 @@ export function SampleDemoShell() {
   const standing = SAMPLE_SERIES_STANDING;
 
   const setRoleAndUrl = (r: DemoRole) => {
+    if (r !== role) {
+      trackClientUsage("demo_role_switch", "/sample", {
+        from: role,
+        to: r,
+      });
+    }
     setRole(r);
     setSettingsOpen(false);
     setSelectedCoachSailor(null);

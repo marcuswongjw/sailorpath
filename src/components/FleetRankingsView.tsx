@@ -9,6 +9,7 @@ import {
   rankingPeriodOptions,
 } from "@/lib/datesSg";
 import { Trophy, Calendar, RotateCcw } from "lucide-react";
+import { trackClientUsage } from "@/lib/clientUsage";
 
 const PERIODS = rankingPeriodOptions(6);
 const DEFAULT_PERIOD = currentPeriodFromSgToday();
@@ -259,7 +260,16 @@ export function FleetRankingsView({
               value={`${period.year}|${period.half}`}
               onChange={(e) => {
                 const [year, half] = e.target.value.split("|");
-                setPeriod({ year: Number(year), half: half as Period["half"] });
+                const next = {
+                  year: Number(year),
+                  half: half as Period["half"],
+                };
+                trackClientUsage("ranking_period_change", undefined, {
+                  fleet,
+                  year: next.year,
+                  half: next.half,
+                });
+                setPeriod(next);
               }}
               className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-slate-950 border border-white/10 px-3 sm:px-4 py-2.5 text-sm text-white font-semibold"
             >

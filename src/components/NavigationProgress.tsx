@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import { trackClientUsage } from "@/lib/clientUsage";
 
 /**
  * Thin top progress bar during client navigations.
@@ -14,6 +15,7 @@ export function NavigationProgress() {
   const [width, setWidth] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const hideRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const navStartedAt = useRef<number | null>(null);
   const key = `${pathname}?${searchParams?.toString() || ""}`;
   const prevKey = useRef(key);
 
@@ -30,6 +32,7 @@ export function NavigationProgress() {
 
   const start = () => {
     clearTimers();
+    navStartedAt.current = performance.now();
     setVisible(true);
     setWidth(12);
     timerRef.current = setInterval(() => {
@@ -41,8 +44,15 @@ export function NavigationProgress() {
     }, 120);
   };
 
-  const finish = () => {
+  const finish = (toPath?: string) => {
     clearTimers();
+    if (navStartedAt.current != null) {
+      const ms = Math.round(performance.now() - navStartedAt.current);
+      navStartedAt.current = null;
+      if (ms >= 50 && ms < 60_000) {
+        trackClientUsage("nav_perf", toPath || pathname, { ms });
+      }
+    }
     setWidth(100);
     hideRef.current = setTimeout(() => {
       setVisible(false);
@@ -54,7 +64,7 @@ export function NavigationProgress() {
   useEffect(() => {
     if (prevKey.current !== key) {
       prevKey.current = key;
-      finish();
+      finish(pathname);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);

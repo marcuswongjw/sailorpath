@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { getProductInventory, getUsageSummary } from "@/lib/usage";
+import {
+  getOpsHealth,
+  getProductInventory,
+  getUsageSummary,
+} from "@/lib/usage";
 import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
 import { buildDataQualityReport } from "@/lib/dataQuality";
@@ -21,9 +25,10 @@ export async function GET(req: Request) {
       Math.max(1, Number(url.searchParams.get("days") || 7) || 7)
     );
 
-    const [inventory, usage] = await Promise.all([
+    const [inventory, usage, opsHealth] = await Promise.all([
       getProductInventory(),
       getUsageSummary(days),
+      getOpsHealth(days),
     ]);
 
     // Data quality
@@ -80,6 +85,7 @@ export async function GET(req: Request) {
       generatedAt: new Date().toISOString(),
       inventory,
       usage,
+      opsHealth,
       dataQuality: dataQuality
         ? {
             emptySeries: dataQuality.emptySeries,

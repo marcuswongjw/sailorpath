@@ -3,6 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { profiles, sailorClaims, sailors } from "@/db/schema";
+import { trackUsage } from "@/lib/usage";
 
 export async function GET() {
   try {
@@ -65,6 +66,15 @@ export async function PATCH(req: Request) {
         .update(sailors)
         .set({ parentId: claim.requesterId, updatedAt: new Date() })
         .where(eq(sailors.id, claim.sailorId));
+    }
+
+    if (status === "approved" || status === "rejected") {
+      void trackUsage({
+        eventType: status === "approved" ? "claim_approved" : "claim_rejected",
+        path: "/admin",
+        role: "superadmin",
+        meta: { claimId: id.slice(0, 36) },
+      });
     }
 
     return NextResponse.json({ ok: true, claim: updated });

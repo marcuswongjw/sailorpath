@@ -1,7 +1,22 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { BarChart3, RefreshCw, AlertTriangle } from "lucide-react";
+import {
+  BarChart3,
+  RefreshCw,
+  AlertTriangle,
+  Filter,
+  Activity,
+  HeartPulse,
+  Globe2,
+} from "lucide-react";
+
+type FunnelStep = {
+  key: string;
+  label: string;
+  sessions: number;
+  ratePct: number | null;
+};
 
 type StatsPayload = {
   generatedAt?: string;
@@ -23,9 +38,58 @@ type StatsPayload = {
     sinceDays: number;
     totalEvents: number;
     uniqueSessions: number;
+    uniqueVisitors?: number;
+    returningVisitors?: number;
+    returningVisitorPct?: number | null;
     byType: { eventType: string; count: number }[];
     topPaths: { path: string; count: number }[];
+    funnel?: {
+      rankingToProfile: FunnelStep[];
+      demoToClaim: FunnelStep[];
+      registerToClaim: FunnelStep[];
+      claimOutcomes: {
+        submitted: number;
+        approved: number;
+        rejected: number;
+        approveRatePct: number | null;
+      };
+      waitlistByRole: { role: string; count: number }[];
+    };
+    engagement?: {
+      avgProfileViewsPerSession: number | null;
+      sessionsWithProfile: number;
+      ownProfileViews: number;
+      otherProfileViews: number;
+      rankingPeriodChanges: number;
+      optimistRankingViews: number;
+      ilcaRankingViews: number;
+      demoRoleSwitches: number;
+      avgNavMs: number | null;
+      navSamples: number;
+    };
+    acquisition?: {
+      bySource: { source: string; count: number }[];
+      byDevice: { device: string; count: number }[];
+      mobilePct: number | null;
+    };
     migrationHint?: string;
+  };
+  opsHealth?: {
+    lastSeriesRegattaDate: string | null;
+    daysSinceLastSeriesRegatta: number | null;
+    lastImportAt: string | null;
+    daysSinceLastImport: number | null;
+    importsInWindow: number;
+    goldActiveSailors: number;
+    goldWith3PlusResults: number;
+    goldCoveragePct: number | null;
+    claimsPending: number;
+    claimsApprovedAll: number;
+    claimsRejectedAll: number;
+    avgClaimApproveHours: number | null;
+    missingDob: number;
+    missingSailNumber: number;
+    missingNationality: number;
   };
   dataQuality?: {
     emptySeries?: number;
@@ -73,6 +137,70 @@ type StatsPayload = {
   changeLogHint?: string | null;
   error?: string;
 };
+
+function StatCard({
+  label,
+  value,
+  hint,
+  tone = "default",
+}: {
+  label: string;
+  value: string | number | null | undefined;
+  hint?: string;
+  tone?: "default" | "orange" | "sky" | "emerald" | "amber" | "rose";
+}) {
+  const tones: Record<string, string> = {
+    default: "border-white/5 bg-slate-950/50 text-white",
+    orange: "border-orange-500/20 bg-orange-500/5 text-orange-300",
+    sky: "border-sky-500/20 bg-sky-500/5 text-sky-300",
+    emerald: "border-emerald-500/20 bg-emerald-500/5 text-emerald-300",
+    amber: "border-amber-500/25 bg-amber-500/5 text-amber-300",
+    rose: "border-rose-500/25 bg-rose-500/5 text-rose-300",
+  };
+  return (
+    <div className={`rounded-xl border px-3 py-2.5 ${tones[tone]}`}>
+      <p className="text-[10px] font-bold uppercase tracking-wide opacity-80">
+        {label}
+      </p>
+      <p className="text-xl font-black mt-0.5 text-white">
+        {value == null || value === "" ? "—" : value}
+      </p>
+      {hint && (
+        <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">{hint}</p>
+      )}
+    </div>
+  );
+}
+
+function FunnelList({ steps }: { steps: FunnelStep[] }) {
+  if (!steps.length) {
+    return <p className="text-xs text-slate-600 px-1">No data yet</p>;
+  }
+  return (
+    <ul className="space-y-1.5">
+      {steps.map((s, i) => (
+        <li
+          key={s.key}
+          className="rounded-lg border border-white/5 bg-black/20 px-3 py-2 flex items-center justify-between gap-2"
+        >
+          <div className="min-w-0">
+            <p className="text-[11px] font-bold text-slate-200">
+              {i + 1}. {s.label}
+            </p>
+            {s.ratePct != null && i > 0 && (
+              <p className="text-[10px] text-slate-500">
+                {s.ratePct}% of prior step
+              </p>
+            )}
+          </div>
+          <span className="text-lg font-black text-white tabular-nums shrink-0">
+            {s.sessions}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export function AdminStatsPanel() {
   const [data, setData] = useState<StatsPayload | null>(null);
@@ -127,12 +255,21 @@ export function AdminStatsPanel() {
 
   const inv = data?.inventory;
   const usage = data?.usage;
+  const ops = data?.opsHealth;
   const dq = data?.dataQuality;
   const log = data?.changeLog || [];
+  const funnel = usage?.funnel;
+  const eng = usage?.engagement;
+  const acq = usage?.acquisition;
+
+  const claimedPct =
+    inv?.sailors && inv.sailors > 0 && inv.sailorsClaimed != null
+      ? Math.round((inv.sailorsClaimed / inv.sailors) * 1000) / 10
+      : null;
 
   return (
     <div className="w-full min-w-0 space-y-6">
-      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 space-y-4">
+      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
@@ -140,8 +277,8 @@ export function AdminStatsPanel() {
               Stats & usage
             </h2>
             <p className="text-xs text-slate-500 mt-1">
-              Inventory, data quality, admin change log (includes names), and
-              privacy-light traffic. Migrations:{" "}
+              Funnels, engagement, ops health, acquisition — privacy-light (no
+              emails/names in traffic). Migrations:{" "}
               <code className="text-slate-400">016_usage_events.sql</code>,{" "}
               <code className="text-slate-400">023_admin_change_log.sql</code>.
             </p>
@@ -163,7 +300,9 @@ export function AdminStatsPanel() {
               disabled={busy}
               className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-slate-200 hover:bg-white/10 disabled:opacity-50 flex items-center gap-1.5"
             >
-              <RefreshCw className={`h-3.5 w-3.5 ${busy ? "animate-spin" : ""}`} />
+              <RefreshCw
+                className={`h-3.5 w-3.5 ${busy ? "animate-spin" : ""}`}
+              />
               Refresh
             </button>
           </div>
@@ -188,6 +327,336 @@ export function AdminStatsPanel() {
           </p>
         )}
 
+        {/* North-star strip */}
+        <div>
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+            North star (last {usage?.sinceDays ?? days}d)
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+            <StatCard
+              label="Sessions"
+              value={usage?.uniqueSessions}
+              tone="orange"
+            />
+            <StatCard
+              label="Ranking views"
+              value={
+                (eng?.optimistRankingViews || 0) + (eng?.ilcaRankingViews || 0)
+              }
+            />
+            <StatCard
+              label="Demo views"
+              value={
+                usage?.byType?.find((t) => t.eventType === "sample_view")
+                  ?.count ?? 0
+              }
+            />
+            <StatCard
+              label="Claims in / out"
+              value={`${funnel?.claimOutcomes.submitted ?? 0} → ${funnel?.claimOutcomes.approved ?? 0}`}
+              hint={
+                funnel?.claimOutcomes.approveRatePct != null
+                  ? `${funnel.claimOutcomes.approveRatePct}% approve of decided`
+                  : undefined
+              }
+              tone="emerald"
+            />
+            <StatCard
+              label="% sailors claimed"
+              value={claimedPct != null ? `${claimedPct}%` : "—"}
+              hint={
+                inv
+                  ? `${inv.sailorsClaimed ?? 0} of ${inv.sailors ?? 0}`
+                  : undefined
+              }
+            />
+            <StatCard
+              label="Days since import"
+              value={ops?.daysSinceLastImport}
+              tone={
+                ops?.daysSinceLastImport != null &&
+                ops.daysSinceLastImport > 21
+                  ? "amber"
+                  : "default"
+              }
+            />
+          </div>
+        </div>
+
+        {/* 1. Funnel */}
+        <div>
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+            <Filter className="h-3.5 w-3.5 text-orange-400" />
+            1 · Conversion funnels (same session)
+          </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+            <div className="rounded-xl border border-white/5 p-3 space-y-2">
+              <p className="text-[11px] font-bold text-slate-400">
+                Rankings → profile
+              </p>
+              <FunnelList steps={funnel?.rankingToProfile || []} />
+            </div>
+            <div className="rounded-xl border border-white/5 p-3 space-y-2">
+              <p className="text-[11px] font-bold text-slate-400">
+                Demo → claim
+              </p>
+              <FunnelList steps={funnel?.demoToClaim || []} />
+            </div>
+            <div className="rounded-xl border border-white/5 p-3 space-y-2">
+              <p className="text-[11px] font-bold text-slate-400">
+                Register → claim
+              </p>
+              <FunnelList steps={funnel?.registerToClaim || []} />
+            </div>
+          </div>
+          <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <StatCard
+              label="Claims submitted"
+              value={funnel?.claimOutcomes.submitted}
+            />
+            <StatCard
+              label="Approved (events)"
+              value={funnel?.claimOutcomes.approved}
+              tone="emerald"
+            />
+            <StatCard
+              label="Rejected (events)"
+              value={funnel?.claimOutcomes.rejected}
+              tone="rose"
+            />
+            <StatCard
+              label="Approve rate"
+              value={
+                funnel?.claimOutcomes.approveRatePct != null
+                  ? `${funnel.claimOutcomes.approveRatePct}%`
+                  : "—"
+              }
+            />
+          </div>
+          {(funnel?.waitlistByRole || []).length > 0 && (
+            <div className="mt-3">
+              <p className="text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                Waitlist by role
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {funnel!.waitlistByRole.map((w) => (
+                  <span
+                    key={w.role}
+                    className="rounded-full border border-white/10 bg-white/5 px-2.5 py-0.5 text-[10px] font-bold text-slate-300"
+                  >
+                    {w.role}: {w.count}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 2. Engagement */}
+        <div>
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+            <Activity className="h-3.5 w-3.5 text-sky-400" />
+            2 · Engagement
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+            <StatCard
+              label="Unique visitors"
+              value={usage?.uniqueVisitors}
+              hint="localStorage visitor id"
+            />
+            <StatCard
+              label="Returning visitors"
+              value={
+                usage?.returningVisitorPct != null
+                  ? `${usage.returningVisitors} (${usage.returningVisitorPct}%)`
+                  : usage?.returningVisitors
+              }
+              hint="2+ distinct days in window"
+              tone="sky"
+            />
+            <StatCard
+              label="Avg profiles / session"
+              value={eng?.avgProfileViewsPerSession}
+              hint={`${eng?.sessionsWithProfile ?? 0} sessions with a profile`}
+            />
+            <StatCard
+              label="Own vs other profile"
+              value={`${eng?.ownProfileViews ?? 0} / ${eng?.otherProfileViews ?? 0}`}
+            />
+            <StatCard
+              label="Optimist ranking views"
+              value={eng?.optimistRankingViews}
+            />
+            <StatCard
+              label="ILCA ranking views"
+              value={eng?.ilcaRankingViews}
+              tone="sky"
+            />
+            <StatCard
+              label="Period changes"
+              value={eng?.rankingPeriodChanges}
+              hint="Historical half switches"
+            />
+            <StatCard
+              label="Demo role switches"
+              value={eng?.demoRoleSwitches}
+            />
+            <StatCard
+              label="Avg nav time"
+              value={
+                eng?.avgNavMs != null ? `${eng.avgNavMs} ms` : "—"
+              }
+              hint={
+                eng?.navSamples
+                  ? `${eng.navSamples} client navigations`
+                  : "Click-to-ready"
+              }
+              tone={
+                eng?.avgNavMs != null && eng.avgNavMs > 2500
+                  ? "amber"
+                  : "default"
+              }
+            />
+          </div>
+        </div>
+
+        {/* 3. Ops health */}
+        <div>
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+            <HeartPulse className="h-3.5 w-3.5 text-emerald-400" />
+            3 · Ops health (rankings trust)
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
+            <StatCard
+              label="Last series regatta"
+              value={ops?.lastSeriesRegattaDate}
+              hint={
+                ops?.daysSinceLastSeriesRegatta != null
+                  ? `${ops.daysSinceLastSeriesRegatta}d ago`
+                  : undefined
+              }
+              tone={
+                ops?.daysSinceLastSeriesRegatta != null &&
+                ops.daysSinceLastSeriesRegatta > 45
+                  ? "amber"
+                  : "default"
+              }
+            />
+            <StatCard
+              label="Imports (window)"
+              value={ops?.importsInWindow}
+              hint={
+                ops?.lastImportAt
+                  ? `Last ${String(ops.lastImportAt).slice(0, 10)}`
+                  : "No import events yet"
+              }
+            />
+            <StatCard
+              label="Gold coverage ≥3 results"
+              value={
+                ops?.goldCoveragePct != null
+                  ? `${ops.goldCoveragePct}%`
+                  : "—"
+              }
+              hint={
+                ops
+                  ? `${ops.goldWith3PlusResults} of ${ops.goldActiveSailors} active Gold`
+                  : undefined
+              }
+              tone={
+                ops?.goldCoveragePct != null && ops.goldCoveragePct < 50
+                  ? "amber"
+                  : "emerald"
+              }
+            />
+            <StatCard
+              label="Claims pending"
+              value={ops?.claimsPending}
+              tone={
+                ops?.claimsPending != null && ops.claimsPending > 0
+                  ? "amber"
+                  : "default"
+              }
+            />
+            <StatCard
+              label="Claims approved (all)"
+              value={ops?.claimsApprovedAll}
+            />
+            <StatCard
+              label="Claims rejected (all)"
+              value={ops?.claimsRejectedAll}
+            />
+            <StatCard
+              label="Avg claim approve time"
+              value={
+                ops?.avgClaimApproveHours != null
+                  ? `${ops.avgClaimApproveHours}h`
+                  : "—"
+              }
+            />
+            <StatCard label="Missing DOB" value={ops?.missingDob} />
+            <StatCard
+              label="Missing sail #"
+              value={ops?.missingSailNumber}
+            />
+            <StatCard
+              label="Missing nationality"
+              value={ops?.missingNationality}
+            />
+          </div>
+        </div>
+
+        {/* 4. Acquisition */}
+        <div>
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+            <Globe2 className="h-3.5 w-3.5 text-violet-400" />
+            4 · Acquisition (first-touch, privacy-light)
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+            <StatCard
+              label="Mobile share"
+              value={
+                acq?.mobilePct != null ? `${acq.mobilePct}%` : "—"
+              }
+              tone="sky"
+            />
+            {(acq?.byDevice || []).map((d) => (
+              <StatCard
+                key={d.device}
+                label={d.device}
+                value={d.count}
+                hint="sessions"
+              />
+            ))}
+          </div>
+          <div className="rounded-xl border border-white/5 overflow-hidden">
+            <p className="text-[10px] font-bold text-slate-500 uppercase px-3 py-2 bg-white/5">
+              Sources (sessions)
+            </p>
+            <ul className="max-h-40 overflow-y-auto text-xs divide-y divide-white/5">
+              {(acq?.bySource || []).length === 0 ? (
+                <li className="px-3 py-3 text-slate-600">
+                  No source tags yet — need traffic after this deploy
+                </li>
+              ) : (
+                acq!.bySource.map((s) => (
+                  <li
+                    key={s.source}
+                    className="px-3 py-1.5 flex justify-between gap-2"
+                  >
+                    <span className="font-mono text-slate-300">{s.source}</span>
+                    <span className="font-black text-white">{s.count}</span>
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+          <p className="text-[10px] text-slate-600 mt-2">
+            Sources from utm_source / referrer host (instagram, whatsapp, google,
+            direct…). Device from viewport width. No free-text PII stored.
+          </p>
+        </div>
+
         {/* Inventory */}
         <div>
           <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
@@ -199,9 +668,12 @@ export function AdminStatsPanel() {
               ["Claimed", inv?.sailorsClaimed],
               ["Unclaimed", inv?.sailorsUnclaimed],
               ["Guests (no series)", inv?.guests],
-              ["Regattas (series)", inv?.regattas != null && inv?.personalRegattas != null
-                ? Math.max(0, inv.regattas - inv.personalRegattas)
-                : inv?.regattas],
+              [
+                "Regattas (series)",
+                inv?.regattas != null && inv?.personalRegattas != null
+                  ? Math.max(0, inv.regattas - inv.personalRegattas)
+                  : inv?.regattas,
+              ],
               ["Personal log events", inv?.personalRegattas],
               ["Suggestions (unreviewed)", inv?.personalUnreviewed],
               ["Results rows", inv?.results],
@@ -345,7 +817,8 @@ export function AdminStatsPanel() {
           {(dq?.unrecognizedNationality || []).length > 0 && (
             <div className="mb-3">
               <p className="text-[10px] font-bold uppercase text-sky-300/90 mb-1">
-                Unrecognized nationality ({dq?.unrecognizedNationalityCount ?? 0})
+                Unrecognized nationality (
+                {dq?.unrecognizedNationalityCount ?? 0})
               </p>
               <ul className="rounded-xl border border-white/5 divide-y divide-white/5 max-h-40 overflow-y-auto text-xs">
                 {dq!.unrecognizedNationality!.map((g) => (
@@ -412,10 +885,10 @@ export function AdminStatsPanel() {
           </div>
         </div>
 
-        {/* Traffic */}
+        {/* Raw traffic */}
         <div>
           <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
-            Traffic (privacy-light, last {usage?.sinceDays ?? days} days)
+            Traffic detail (last {usage?.sinceDays ?? days} days)
           </h3>
           <div className="grid grid-cols-2 gap-2 mb-3">
             <div className="rounded-xl border border-orange-500/20 bg-orange-500/5 px-3 py-2.5">

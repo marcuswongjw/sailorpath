@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { safeAuthNext } from "@/lib/supabase/cookie-options";
+import { trackClientUsage } from "@/lib/clientUsage";
 
 function LoginForm() {
   const searchParams = useSearchParams();
@@ -43,6 +44,7 @@ function LoginForm() {
         return;
       }
       setMessage("Logged in — redirecting…");
+      trackClientUsage("login", "/login");
       try {
         const ac = new AbortController();
         const t = setTimeout(() => ac.abort(), 2500);
