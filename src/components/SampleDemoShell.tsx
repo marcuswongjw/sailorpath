@@ -135,13 +135,13 @@ export function SampleDemoShell() {
     SAMPLE_COACH_PANEL.squadTeaser.map((s) => ({
       ...s,
       avgFinish:
-        s.name === "Ashlyn Tan"
+        s.name === "Kimberly Tan"
           ? "3.6"
           : s.name === "Ethan Koh"
             ? "7.1"
             : "9.4",
       selection:
-        s.name === "Ashlyn Tan"
+        s.name === "Kimberly Tan"
           ? "On track"
           : s.name === "Ethan Koh"
             ? "Watch"
@@ -488,7 +488,7 @@ export function SampleDemoShell() {
               ))}
             </select>
             <p className="text-[11px] text-slate-500">
-              Demo: compare Ashlyn (#{c.nationalRank}) vs {compareTo} — live
+              Demo: compare Kimberly (#{c.nationalRank}) vs {compareTo} — live
               product charts side-by-side finish trends.
             </p>
           </div>
@@ -633,7 +633,7 @@ export function SampleDemoShell() {
                         </div>
                       </div>
                       <p className="text-[11px] text-slate-400 leading-relaxed">
-                        {s.name === "Ashlyn Tan"
+                        {s.name === "Kimberly Tan"
                           ? "Strong mid-line starts · light-air height is focus. Coach notes stay private."
                           : "Demo athlete summary — live product opens a coach-only detail drawer without the full public profile chrome."}
                       </p>
@@ -683,7 +683,7 @@ export function SampleDemoShell() {
                 Demo profile
               </p>
               <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                Ashlyn Tan · SGP 115 · SailorPath Profile
+                Kimberly Tan · SGP 115 · SailorPath Profile
               </h1>
               <p className="text-[11px] text-slate-500 mt-0.5">
                 b. {SAMPLE_SAILOR.dob.slice(0, 4)} · dual-class Optimist + ILCA 4 ·

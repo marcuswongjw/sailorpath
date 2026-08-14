@@ -51,9 +51,9 @@ export function sampleAgeYears(
 }
 
 export const SAMPLE_SAILOR = {
-  id: "sample-ashlyn",
-  name: "Ashlyn Tan",
-  handle: "ashlyn-t",
+  id: "sample-kimberly",
+  name: "Kimberly Tan",
+  handle: "kimberly-t",
   sailNumber: "SGP 115",
   sailNumberIlca4: "SGP 2115",
   club: "Changi Sailing Club",
@@ -69,10 +69,10 @@ export const SAMPLE_SAILOR = {
   bio: "Dual-class Optimist Gold & ILCA 4 racer focused on light-wind speed and clean starts. Training toward Asian championships.",
   gender: "F",
   nationalSquadStatus: "Nat A",
-  instagram: "@ashlyn.t_sails",
+  instagram: "@kimberly.t_sails",
   facebook: null as string | null,
-  /** Demo uses styled initials avatar (no photo URL) */
-  avatarUrl: null as string | null,
+  /** Demo headshot (static asset) */
+  avatarUrl: "/demo-kimberly-tan.jpg" as string | null,
   isPublicWeight: false,
   isPublicDob: false,
   /** Public view respects this — gear stays private until shared */
@@ -531,7 +531,7 @@ export const SAMPLE_OBSERVATIONS = SAMPLE_RACE_LOG.observations.map((o, i) => ({
 
 export const SAMPLE_PARENT_PANEL = {
   claimStatus: "Approved · linked as parent",
-  childName: "Ashlyn",
+  childName: "Kimberly",
   coachName: "Coach Lim",
   coachContact: "Coach Lim (CSC Optimist Gold)",
   club: "Changi Sailing Club",
@@ -633,7 +633,7 @@ export const SAMPLE_COACH_PANEL = {
     { name: "Jayden Lee", rank: 14 },
   ],
   squadTeaser: [
-    { name: "Ashlyn Tan", handle: "sample", rank: 3, highlight: "This profile" },
+    { name: "Kimberly Tan", handle: "sample", rank: 3, highlight: "This profile" },
     { name: "Ethan Koh", handle: "#", rank: 7, highlight: "Consistent top-10" },
     { name: "Mia Wong", handle: "#", rank: 11, highlight: "Strong silver→gold path" },
   ],

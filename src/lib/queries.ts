@@ -27,6 +27,7 @@ import {
 import {
   computeIlcaRankings,
   ilcaRankingRegattas,
+  isIlcaSeriesClass,
   type IlcaBoatClass,
 } from "@/lib/ilcaRanking";
 import {
@@ -34,6 +35,8 @@ import {
   desc,
   eq,
   inArray,
+  or,
+  and,
   sql,
 } from "drizzle-orm";
 
@@ -42,6 +45,7 @@ export type SailorMapped = SailorRecord & {
   isPublicDob?: boolean;
   isPublicEquipment?: boolean;
   sailingJourney?: string | null;
+  ilca4NationalList?: boolean | null;
   hullBrand?: string | null;
   sailMake?: string | null;
   foilBrand?: string | null;
@@ -62,6 +66,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     handle: row.handle,
     sailNumber: row.sailNumber,
     sailNumberIlca4: row.sailNumberIlca4,
+    ilca4NationalList: row.ilca4NationalList,
     club: row.club,
     school: row.school,
     nationality: row.nationality,
@@ -429,9 +434,39 @@ export async function getSailorSeriesStanding(
   period: Period = currentPeriodFromSgToday()
 ): Promise<SeriesStanding | null> {
   return withDb(async () => {
-    // One roster read; rank only same-fleet peers (skip guests / other fleet)
-    const sailorRows = await db.select().from(sailors);
-    const allMapped = sailorRows.map(mapSailor);
+    // Lean column set — full sailor select was slow on every profile open
+    const sailorRows = await db
+      .select({
+        id: sailors.id,
+        name: sailors.name,
+        handle: sailors.handle,
+        sailNumber: sailors.sailNumber,
+        club: sailors.club,
+        school: sailors.school,
+        nationality: sailors.nationality,
+        gender: sailors.gender,
+        dob: sailors.dob,
+        goldEntryDate: sailors.goldEntryDate,
+        silverEntryDate: sailors.silverEntryDate,
+        dropDate: sailors.dropDate,
+        currentFleet: sailors.currentFleet,
+        natSquadStatusJan25: sailors.natSquadStatusJan25,
+        natSquadStatusJul25: sailors.natSquadStatusJul25,
+        natSquadStatusJan26: sailors.natSquadStatusJan26,
+        natSquadStatusJul26: sailors.natSquadStatusJul26,
+        nationalSquadStatus: sailors.nationalSquadStatus,
+      })
+      .from(sailors);
+
+    const allMapped = sailorRows.map((row) => ({
+      ...row,
+      currentFleet: (() => {
+        const n = normalizeSgSeriesMembership(row.currentFleet);
+        if (n) return n;
+        return row.currentFleet;
+      })(),
+    })) as SailorRecord[];
+
     const meRow = allMapped.find((x) => x.id === sailorId);
     if (!meRow) return null;
 
@@ -443,7 +478,28 @@ export async function getSailorSeriesStanding(
       return Boolean(r?.active && r.fleet === fleetInfo.fleet);
     });
 
-    const regattaRows = await db.select().from(regattas);
+    // Optimist ranking regattas only (skip ILCA bulk)
+    const regattaRows = await db
+      .select({
+        id: regattas.id,
+        name: regattas.name,
+        slug: regattas.slug,
+        date: regattas.date,
+        totalFleetSize: regattas.totalFleetSize,
+        division: regattas.division,
+        raceCount: regattas.raceCount,
+        geography: regattas.geography,
+        boatClass: regattas.boatClass,
+        countsForRanking: regattas.countsForRanking,
+      })
+      .from(regattas)
+      .where(
+        or(
+          eq(regattas.boatClass, "Optimist"),
+          sql`lower(coalesce(${regattas.boatClass}, 'optimist')) not like '%ilca%'`
+        )
+      );
+
     const r: RegattaRecord[] = regattaRows.map((row) => ({
       id: row.id,
       name: row.name,
@@ -462,7 +518,15 @@ export async function getSailorSeriesStanding(
     if (!scoringIds.length) return null;
 
     const resultRows = await db
-      .select()
+      .select({
+        sailorId: regattaResults.sailorId,
+        regattaId: regattaResults.regattaId,
+        rank: regattaResults.rank,
+        nettScore: regattaResults.nettScore,
+        totalScore: regattaResults.totalScore,
+        isDns: regattaResults.isDns,
+        isOverseasCommitment: regattaResults.isOverseasCommitment,
+      })
       .from(regattaResults)
       .where(inArray(regattaResults.regattaId, scoringIds));
 
@@ -476,7 +540,6 @@ export async function getSailorSeriesStanding(
       isOverseasCommitment: row.isOverseasCommitment,
     }));
 
-    // peers already same fleet — calculateRankings still re-checks resolveSailorFleet
     const all = calculateRankings(period, peers, r, res).filter(
       (x) => x.fleet === fleetInfo.fleet
     );
@@ -511,10 +574,90 @@ export async function getSailorIlcaStanding(
 ): Promise<IlcaSeriesStanding | null> {
   return withDb(async () => {
     const asOf = todayYmdSg();
-    const [sailorRows, regattaRows] = await Promise.all([
-      db.select().from(sailors),
-      db.select().from(regattas),
-    ]);
+
+    // Cheap subject check first — most Optimist-only profiles skip the board re-rank
+    const [meRow] = await db
+      .select({
+        id: sailors.id,
+        name: sailors.name,
+        gender: sailors.gender,
+        dob: sailors.dob,
+        nationality: sailors.nationality,
+        sailNumber: sailors.sailNumber,
+        sailNumberIlca4: sailors.sailNumberIlca4,
+        ilca4NationalList: sailors.ilca4NationalList,
+        club: sailors.club,
+        handle: sailors.handle,
+      })
+      .from(sailors)
+      .where(eq(sailors.id, sailorId))
+      .limit(1);
+    if (!meRow) return null;
+
+    const [anyIlcaResult] = await db
+      .select({ id: regattaResults.id })
+      .from(regattaResults)
+      .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+      .where(
+        and(
+          eq(regattaResults.sailorId, sailorId),
+          or(
+            eq(regattas.boatClass, "ILCA 4"),
+            eq(regattas.boatClass, "ILCA4"),
+            sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%4%'`
+          )
+        )
+      )
+      .limit(1);
+
+    const onNationalList = Boolean(meRow.ilca4NationalList);
+    if (!anyIlcaResult && !onNationalList && !meRow.sailNumberIlca4) {
+      return null;
+    }
+
+    // Lean ILCA-relevant sailors only (national list and/or ILCA sail #)
+    const sailorRows = await db
+      .select({
+        id: sailors.id,
+        name: sailors.name,
+        gender: sailors.gender,
+        dob: sailors.dob,
+        nationality: sailors.nationality,
+        sailNumber: sailors.sailNumber,
+        sailNumberIlca4: sailors.sailNumberIlca4,
+        ilca4NationalList: sailors.ilca4NationalList,
+        club: sailors.club,
+        handle: sailors.handle,
+      })
+      .from(sailors)
+      .where(
+        or(
+          eq(sailors.ilca4NationalList, true),
+          sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIlca4} <> ''`,
+          eq(sailors.id, sailorId)
+        )
+      );
+
+    // ILCA regattas only
+    const regattaRows = await db
+      .select({
+        id: regattas.id,
+        name: regattas.name,
+        date: regattas.date,
+        totalFleetSize: regattas.totalFleetSize,
+        boatClass: regattas.boatClass,
+        countsForRanking: regattas.countsForRanking,
+        raceCount: regattas.raceCount,
+        division: regattas.division,
+      })
+      .from(regattas)
+      .where(
+        or(
+          eq(regattas.boatClass, "ILCA 4"),
+          eq(regattas.boatClass, "ILCA4"),
+          sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%'`
+        )
+      );
 
     const ilcaSailors = sailorRows.map((s) => ({
       id: s.id,
@@ -529,32 +672,35 @@ export async function getSailorIlcaStanding(
       handle: s.handle,
     }));
 
-    const ilcaRegattas = regattaRows.map((r) => ({
-      id: r.id,
-      name: r.name,
-      date: r.date,
-      totalFleetSize: r.totalFleetSize ?? 50,
-      boatClass: r.boatClass,
-      countsForRanking: r.countsForRanking,
-      raceCount: r.raceCount,
-      division: r.division,
-    }));
+    const ilcaRegattas = regattaRows
+      .filter((r) => isIlcaSeriesClass(r.boatClass, boatClass))
+      .map((r) => ({
+        id: r.id,
+        name: r.name,
+        date: r.date,
+        totalFleetSize: r.totalFleetSize ?? 50,
+        boatClass: r.boatClass,
+        countsForRanking: r.countsForRanking,
+        raceCount: r.raceCount,
+        division: r.division,
+      }));
 
     const window = ilcaRankingRegattas(ilcaRegattas, boatClass, asOf);
     if (!window.length) return null;
 
     const scoringIds = window.map((r) => r.id);
     const resultRows = await db
-      .select()
+      .select({
+        sailorId: regattaResults.sailorId,
+        regattaId: regattaResults.regattaId,
+        rank: regattaResults.rank,
+        isDns: regattaResults.isDns,
+        isOverseasCommitment: regattaResults.isOverseasCommitment,
+      })
       .from(regattaResults)
       .where(inArray(regattaResults.regattaId, scoringIds));
 
     const hasAnyResult = resultRows.some((r) => r.sailorId === sailorId);
-    const meRow = sailorRows.find((s) => s.id === sailorId);
-    const onNationalList = Boolean(meRow?.ilca4NationalList);
-
-    // Include national-list sailors even with no results (0 pts per event).
-    // Others need at least one scoring-window result.
     if (!hasAnyResult && !onNationalList) return null;
 
     const ilcaResults = resultRows.map((row) => ({

@@ -39,10 +39,15 @@ export default async function SailorProfilePage({
       const isSuperadmin = auth?.role === "superadmin";
       const canSeePrivate = isSuperadmin || isLinkedOwner;
 
-      const [res, sStand, iStand, obs, equipHist] = await Promise.all([
+      // Parallel core data. ILCA standing is skipped for pure Optimist sailors
+      // (was re-ranking the full board on every profile open).
+      const mayHaveIlca = Boolean(
+        sailor.sailNumberIlca4 || sailor.ilca4NationalList
+      );
+
+      const [res, sStand, obs, equipHist] = await Promise.all([
         getResultsForSailor(sailor.id),
         getSailorSeriesStanding(sailor.id).catch(() => null),
-        getSailorIlcaStanding(sailor.id, "ILCA 4").catch(() => null),
         getRaceObservationsForSailor(sailor.id, {
           includePrivate: canSeePrivate,
         }).catch(() => []),
@@ -51,9 +56,21 @@ export default async function SailorProfilePage({
 
       results = res;
       seriesStanding = sStand;
-      ilcaStanding = iStand;
       observations = obs;
       equipmentHistory = equipHist;
+
+      const hasIlcaResults = (results || []).some((r) => {
+        const bc = String(r.boatClass || "").toLowerCase();
+        return bc.includes("ilca");
+      });
+
+      if (mayHaveIlca || hasIlcaResults) {
+        ilcaStanding = await getSailorIlcaStanding(sailor.id, "ILCA 4").catch(
+          () => null
+        );
+      } else {
+        ilcaStanding = null;
+      }
     }
   } catch (e) {
     errorMsg = e instanceof DbUnavailableError ? e.message : "DB error";

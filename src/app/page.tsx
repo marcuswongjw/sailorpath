@@ -355,9 +355,12 @@ export default async function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Roadmap
+            </h2>
+            <p className="mt-3 text-slate-400 text-sm leading-relaxed">
               Rankings and logbooks are live. Here&apos;s what&apos;s coming
               next.
-            </h2>
+            </p>
           </div>
 
           <ol className="mx-auto max-w-2xl space-y-0 relative">
