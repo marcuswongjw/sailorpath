@@ -35,8 +35,8 @@ export default function HomePage() {
         </h1>
 
         <p className="mx-auto mt-4 sm:mt-6 max-w-xl sm:max-w-2xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
-          See your national ranking, track your sailing journey from Optimist to
-          ILCA, and claim your athlete profile — all in one place.
+          National rankings, personal logbooks, and a complete record of your
+          journey from Optimist to ILCA — all in one place.
         </p>
 
         <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-2.5 w-full max-w-md mx-auto sm:max-w-none sm:justify-center sm:gap-3">
@@ -174,11 +174,10 @@ export default function HomePage() {
                 Own your sailing journey.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                See exactly where you rank nationally. Automatically track every
-                regatta result, ranking movement, and personal best from your
-                first Optimist race through your ILCA transition. Add milestones,
-                equipment notes, and race reflections — then share what you want
-                and keep the rest private.
+                Track every regatta result, ranking movement, and personal best
+                from Optimist to ILCA. Add your own milestones, equipment notes,
+                and race reflections — share what you want, keep the rest
+                private.
               </p>
               <Link
                 href="/claim-profile"
@@ -219,25 +218,16 @@ export default function HomePage() {
                 Escape spreadsheet hell.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Manage your squad, compare athletes side-by-side, spot
-                progression trends, and generate selection reports in minutes
-                instead of hours. Public rankings and profiles are available now;
-                full squad tools and analytics are coming.
+                Compare athletes side-by-side, spot progression trends, and build
+                selection reports from live ranking data. Full squad management
+                tools are coming — join the waitlist to get them first.
               </p>
-              <div className="mt-4 flex flex-col gap-1.5">
-                <Link
-                  href="/coach-tools"
-                  className="text-[12px] font-bold text-sky-400 hover:text-sky-300"
-                >
-                  Explore Coach Tools →
-                </Link>
-                <a
-                  href="#early-access"
-                  className="text-[12px] font-bold text-slate-400 hover:text-white"
-                >
-                  Apply for Early Access to Coach Dashboard →
-                </a>
-              </div>
+              <a
+                href="#roadmap-coach"
+                className="mt-4 text-[12px] font-bold text-sky-400 hover:text-sky-300"
+              >
+                Join coach waitlist →
+              </a>
             </article>
           </div>
         </div>
@@ -250,10 +240,6 @@ export default function HomePage() {
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Rankings &amp; logbook
             </h2>
-            <p className="mt-3 text-slate-400 text-sm leading-relaxed">
-              Built for Singapore Sailing series rules — Optimist, ILCA 4, and
-              your personal journey.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
@@ -264,6 +250,9 @@ export default function HomePage() {
               <h3 className="text-lg font-bold text-white">
                 Optimist Gold/Silver Series Rankings
               </h3>
+              <p className="text-sm font-semibold text-orange-200/90 mt-1.5">
+                Know exactly where you stand after every regatta.
+              </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
                 Automatically calculated using Singapore Sailing&apos;s official
                 scoring rules. Best 3 of 5 results, with fair handling of DNS,
@@ -283,6 +272,9 @@ export default function HomePage() {
               <h3 className="text-lg font-bold text-white">
                 ILCA 4 National Ranking
               </h3>
+              <p className="text-sm font-semibold text-sky-200/90 mt-1.5">
+                Track your transition from Optimist with clarity.
+              </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
                 Track your position as you transition from Optimist. High Ranking
                 Points system with position trend charts and journey timelines.
@@ -299,9 +291,12 @@ export default function HomePage() {
                 <BookOpen className="h-5 w-5 text-amber-300" />
               </div>
               <h3 className="text-lg font-bold text-white">Athlete Logbook</h3>
+              <p className="text-sm font-semibold text-amber-100/90 mt-1.5">
+                Your complete sailing history, owned and controlled by you.
+              </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Your complete sailing history, claimed and controlled by you. Add
-                notes, equipment, and milestones with full privacy controls.
+                Add notes, equipment, and milestones with full privacy controls —
+                from your first Optimist race through ILCA.
               </p>
               <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
                 <li>Dual-class tabs: Optimist and ILCA results together</li>
@@ -339,60 +334,82 @@ export default function HomePage() {
           </div>
 
           <ol className="mx-auto max-w-2xl space-y-0 relative">
-            {(
-              [
-                {
-                  date: "Q3 2026",
-                  title: "Parent Dashboards",
-                  body: "Link your account to your child's profile. See progress, ranking movement, and upcoming events in one private view — without the WhatsApp chase.",
-                },
-                {
-                  date: "Q4 2026",
-                  title: "Coach Squads",
-                  body: "Manage multiple sailors from one account. Compare athletes, track trends, and prepare selection reports in minutes instead of hours.",
-                },
-                {
-                  date: "2027",
-                  title: "Club & Event Tools",
-                  body: "Start-list sync, campaign planning, and automated alerts for rank changes and selection windows.",
-                },
-              ] as const
-            ).map((item, i, arr) => (
-              <li key={item.date} className="relative flex gap-4 pb-10 last:pb-0">
-                {i < arr.length - 1 && (
-                  <span
-                    className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10"
-                    aria-hidden
-                  />
-                )}
-                <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-orange-500/40 bg-orange-500/15" />
-                <div>
-                  <p className="text-[11px] font-black uppercase tracking-widest text-orange-400">
-                    {item.date}
-                  </p>
-                  <h3 className="text-base font-bold text-white mt-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                    {item.body}
-                  </p>
-                </div>
-              </li>
-            ))}
+            <li
+              id="roadmap-parent"
+              className="relative flex gap-4 pb-10"
+            >
+              <span
+                className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10"
+                aria-hidden
+              />
+              <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-orange-500/40 bg-orange-500/15" />
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-black uppercase tracking-widest text-orange-400">
+                  Q3 2026
+                </p>
+                <h3 className="text-base font-bold text-white mt-1">
+                  Parent Dashboards
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
+                  Link your account to your child&apos;s profile. See progress,
+                  ranking movement, and upcoming events in one private view.
+                </p>
+                <p className="mt-3 text-[12px] font-bold text-emerald-400">
+                  Join the parent waitlist →
+                </p>
+                <WaitlistForm
+                  presetRole="Parent"
+                  submitLabel="Join parent waitlist"
+                  compact
+                />
+              </div>
+            </li>
+            <li
+              id="roadmap-coach"
+              className="relative flex gap-4 pb-10"
+            >
+              <span
+                className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10"
+                aria-hidden
+              />
+              <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-sky-500/40 bg-sky-500/15" />
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-black uppercase tracking-widest text-sky-400">
+                  Q4 2026
+                </p>
+                <h3 className="text-base font-bold text-white mt-1">
+                  Coach Squads
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
+                  Manage multiple sailors from one account. Compare athletes,
+                  track trends, and prepare selection reports.
+                </p>
+                <p className="mt-3 text-[12px] font-bold text-sky-400">
+                  Join the coach waitlist →
+                </p>
+                <WaitlistForm
+                  presetRole="Coach"
+                  submitLabel="Join coach waitlist"
+                  compact
+                />
+              </div>
+            </li>
+            <li className="relative flex gap-4 pb-0">
+              <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-white/20 bg-white/5" />
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-black uppercase tracking-widest text-slate-500">
+                  2027
+                </p>
+                <h3 className="text-base font-bold text-white mt-1">
+                  Club &amp; Event Tools
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
+                  Start-list sync, campaign planning, and automated alerts for
+                  rank changes and selection windows.
+                </p>
+              </div>
+            </li>
           </ol>
-
-          <div
-            id="early-access"
-            className="mt-12 mx-auto max-w-lg rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 text-center"
-          >
-            <h3 className="text-lg font-bold text-white">
-              Want first access to parent and coach tools?
-            </h3>
-            <p className="mt-2 text-xs text-slate-500">
-              Join the early access list →
-            </p>
-            <WaitlistForm />
-          </div>
         </div>
       </section>
 
@@ -407,28 +424,19 @@ export default function HomePage() {
               Back the build. Anchor your place in the fleet.
             </h2>
             <p className="mt-4 text-slate-400 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
-              SailorPath is being built for Singapore&apos;s youth sailors,
-              parents, and coaches. Become a Founding Supporter and help shape
-              the definitive performance tracker for the local scene — while
-              locking in permanent recognition and early access.
+              Become a Founding Supporter. Help build the definitive performance
+              tracker for Singapore sailing — and lock in lifetime access,
+              permanent recognition, and priority input on every new feature.
             </p>
           </div>
 
           <div className="mx-auto max-w-md w-full rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300">
             <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all" />
 
-            <div className="flex justify-between items-center mb-6">
-              <div>
-                <h3 className="text-xl font-bold text-white">
-                  Founding Supporter
-                </h3>
-                <p className="text-xs text-orange-400 font-semibold mt-1">
-                  Limited to 10 members
-                </p>
-              </div>
-              <span className="inline-flex items-center rounded-full bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-400 border border-orange-500/20">
-                Limited
-              </span>
+            <div className="mb-6">
+              <h3 className="text-xl font-bold text-white">
+                Founding Supporter
+              </h3>
             </div>
 
             <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">

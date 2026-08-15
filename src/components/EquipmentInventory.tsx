@@ -752,9 +752,7 @@ export function EquipmentInventory({
                       setForm((f) => ({ ...f, label: e.target.value }))
                     }
                     placeholder={
-                      form.category === "hull"
-                        ? "e.g. SGP 115 hull #"
-                        : "e.g. Race sail"
+                      form.category === "hull" ? "SZ 12345" : "e.g. Race sail"
                     }
                     className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
                   />

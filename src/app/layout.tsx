@@ -8,9 +8,9 @@ import { UsageBeacon } from "@/components/UsageBeacon";
 import { NavigationProgress } from "@/components/NavigationProgress";
 
 export const metadata: Metadata = {
-  title: "SailorPath | Singapore Optimist Rankings",
+  title: "SailorPath | Singapore Youth Sailing Rankings & Athlete Logbooks",
   description:
-    "Digital logbook and ranking platform for Singapore Optimist sailors.",
+    "National rankings, personal logbooks, and a complete record of the journey from Optimist to ILCA for Singapore youth sailors.",
 };
 
 export default function RootLayout({
