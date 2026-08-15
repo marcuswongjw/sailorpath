@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { desc, eq } from "drizzle-orm";
+import { cookies } from "next/headers";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailorClaims, sailors } from "@/db/schema";
+import { VIEW_AS_COOKIE, parseViewAs } from "@/lib/viewAs";
 
 /** Logged-in account: owned sailors + claim requests */
 export async function GET() {
@@ -39,10 +41,23 @@ export async function GET() {
         .orderBy(desc(sailorClaims.createdAt)),
     ]);
 
+    const isSuperadmin = auth.role === "superadmin";
+    let viewAs: "admin" | "parent" = "admin";
+    if (isSuperadmin) {
+      try {
+        const jar = await cookies();
+        viewAs = parseViewAs(jar.get(VIEW_AS_COOKIE)?.value);
+      } catch {
+        viewAs = "admin";
+      }
+    }
+
     return NextResponse.json({
       email: auth.email,
       role: auth.role,
-      isSuperadmin: auth.role === "superadmin",
+      isSuperadmin,
+      /** Superadmin working mode: admin | parent (UX only; APIs still superadmin) */
+      viewAs: isSuperadmin ? viewAs : null,
       owned,
       claims,
     });

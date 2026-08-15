@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { DbOffline } from "@/components/DbOffline";
 import { SailorProfileView } from "@/components/SailorProfileView";
 import {
@@ -11,6 +12,11 @@ import {
 } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { getAuthContext } from "@/lib/auth";
+import {
+  VIEW_AS_COOKIE,
+  parseViewAs,
+  resolveProfileAccess,
+} from "@/lib/viewAs";
 
 export const dynamic = "force-dynamic";
 
@@ -28,9 +34,17 @@ export default async function SailorProfilePage({
   let observations;
   let equipmentHistory;
   let errorMsg: string | null = null;
+  let access = resolveProfileAccess({
+    userId: null,
+    role: null,
+    viewAs: "admin",
+    sailorParentId: null,
+  });
 
   try {
-    // Auth + handle lookup in parallel (was sequential — added ~100–300ms)
+    const jar = await cookies();
+    const viewAs = parseViewAs(jar.get(VIEW_AS_COOKIE)?.value);
+
     const [sailorResult, authResult] = await Promise.all([
       getSailorByHandle(sailor_handle),
       getAuthContext().catch(() => null),
@@ -39,25 +53,24 @@ export default async function SailorProfilePage({
     auth = authResult;
 
     if (sailor) {
-      const isLinkedOwner = Boolean(
-        auth?.userId && sailor.parentId === auth.userId
-      );
-      const isSuperadmin = auth?.role === "superadmin";
-      const canSeePrivate = isSuperadmin || isLinkedOwner;
+      access = resolveProfileAccess({
+        userId: auth?.userId,
+        role: auth?.role,
+        viewAs,
+        sailorParentId: sailor.parentId,
+      });
 
-      // Skip ILCA board recompute for pure Optimist sailors
       const mayHaveIlca = Boolean(
         sailor.sailNumberIlca4 || sailor.ilca4NationalList
       );
 
-      // Parallel core data. Equipment history only when owner or public equipment.
       const [res, sStand, obs, equipHist] = await Promise.all([
         getResultsForSailor(sailor.id),
         getSailorSeriesStanding(sailor.id).catch(() => null),
         getRaceObservationsForSailor(sailor.id, {
-          includePrivate: canSeePrivate,
+          includePrivate: access.canSeePrivate,
         }).catch(() => []),
-        canSeePrivate || sailor.isPublicEquipment
+        access.canSeePrivate || sailor.isPublicEquipment
           ? getEquipmentLogsForSailor(sailor.id).catch(() => [])
           : Promise.resolve([]),
       ]);
@@ -91,16 +104,6 @@ export default async function SailorProfilePage({
   if (!sailor) {
     notFound();
   }
-
-  const isLinkedOwner = Boolean(
-    auth?.userId && sailor.parentId === auth.userId
-  );
-  const isSuperadmin = auth?.role === "superadmin";
-  const canSeePrivate = isSuperadmin || isLinkedOwner;
-  const isOwner = isLinkedOwner || isSuperadmin;
-  const canClaim = Boolean(
-    auth?.userId && !sailor.parentId && !isSuperadmin
-  );
 
   const equipment = {
     hullBrand: sailor.hullBrand || null,
@@ -149,9 +152,9 @@ export default async function SailorProfilePage({
       initialIlcaStanding={ilcaStanding}
       initialObservations={observations || []}
       initialEquipmentHistory={equipmentHistory || []}
-      canSeePrivate={canSeePrivate}
-      canClaim={canClaim}
-      isOwner={isOwner}
+      canSeePrivate={access.canSeePrivate}
+      canClaim={access.canClaim}
+      isOwner={access.isOwner}
       isLoggedIn={Boolean(auth?.userId)}
       profileClaimed={Boolean(sailor.parentId)}
       profileVerified={Boolean(sailor.parentId)}

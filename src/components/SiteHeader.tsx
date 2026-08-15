@@ -1,13 +1,30 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
+import type { ViewAs } from "@/lib/viewAs";
 
 export function SiteHeader() {
-  const { email, isSuperadmin, owned, ready, signOut } = useAccount();
+  const { email, isSuperadmin, viewAs, setViewAs, owned, ready, signOut } =
+    useAccount();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [modeBusy, setModeBusy] = useState(false);
+
+  const switchMode = async (mode: ViewAs) => {
+    if (mode === viewAs || modeBusy) return;
+    setModeBusy(true);
+    try {
+      await setViewAs(mode);
+      router.refresh();
+    } finally {
+      setModeBusy(false);
+      setMobileOpen(false);
+    }
+  };
 
   const primaryProfile = owned[0] || null;
 
@@ -138,11 +155,41 @@ export function SiteHeader() {
         My account
       </Link>
       {isSuperadmin && (
+        <div className="flex items-center rounded-full border border-white/10 bg-white/5 p-0.5 text-[10px] font-black uppercase tracking-wide">
+          <button
+            type="button"
+            disabled={modeBusy}
+            onClick={() => void switchMode("admin")}
+            className={`rounded-full px-2.5 py-1 transition-colors ${
+              viewAs === "admin"
+                ? "bg-orange-600 text-white"
+                : "text-slate-400 hover:text-white"
+            }`}
+            title="Full superadmin tools"
+          >
+            Admin
+          </button>
+          <button
+            type="button"
+            disabled={modeBusy}
+            onClick={() => void switchMode("parent")}
+            className={`rounded-full px-2.5 py-1 transition-colors ${
+              viewAs === "parent"
+                ? "bg-sky-600 text-white"
+                : "text-slate-400 hover:text-white"
+            }`}
+            title="Parent mode — claim and manage linked sailors"
+          >
+            Parent
+          </button>
+        </div>
+      )}
+      {isSuperadmin && viewAs === "admin" && (
         <a
           href="https://admin.sailorpath.com/"
           className="text-xs font-bold text-slate-400 hover:text-white"
         >
-          Admin
+          Console
         </a>
       )}
       <button
