@@ -329,8 +329,10 @@ export const equipmentItems = pgTable("equipment_items", {
     .default("good")
     .notNull(),
   isPrimary: boolean("is_primary").default(false).notNull(),
-  /** Comma-separated tags: racing,training,light_air,heavy_air,travel */
+  /** Comma-separated tags: racing,training,light_air,heavy_air,spare,overseas */
   tags: text("tags"),
+  /** Sail primary wind band: light | medium | heavy */
+  windRange: text("wind_range"),
   acquiredOn: date("acquired_on"),
   retiredOn: date("retired_on"),
   useCount: integer("use_count").default(0).notNull(),

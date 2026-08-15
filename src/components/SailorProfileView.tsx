@@ -213,13 +213,15 @@ export function SailorProfileView({
   );
   /** One-time dismissible tip near regatta table (owner / sailor demo) */
   const [dismissSailorTip, setDismissSailorTip] = useState(false);
+  /** Equipment logged per regatta (owner-only linkage from EquipmentInventory) */
+  const [gearByRegatta, setGearByRegatta] = useState<
+    Record<
+      string,
+      { category: string; brand: string | null; label: string | null }[]
+    >
+  >({});
 
-  useEffect(() => {
-    if (!demoMode && isOwner && typeof window !== "undefined") {
-      const sp = new URLSearchParams(window.location.search);
-      if (sp.get("edit") === "1") setEditing(true);
-    }
-  }, [demoMode, isOwner]);
+  // Do not auto-open the profile editor on visit (owners open Edit explicitly).
 
   // Load existing claim status for this sailor
   useEffect(() => {
@@ -326,7 +328,7 @@ export function SailorProfileView({
       setSaveMsg("Saved");
       setEditing(false);
       if (data.handleChanged && data.sailor?.handle) {
-        window.location.assign(`/${data.sailor.handle}?edit=1`);
+        window.location.assign(`/${data.sailor.handle}`);
         return;
       }
       setTimeout(() => setSaveMsg(null), 2500);
@@ -1530,15 +1532,6 @@ export function SailorProfileView({
                 className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
-            <div className="sm:col-span-2 rounded-xl border border-orange-500/15 bg-orange-500/[0.04] px-3 py-2.5">
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Manage sails, foils, and spars in the{" "}
-                <strong className="text-slate-200">Equipment</strong> section
-                below — add multiple items, tag racing vs training, and log uses.
-                Optimist-only sailors won&apos;t see ILCA fields until they
-                unlock ILCA 4 gear.
-              </p>
-            </div>
             <div className="sm:col-span-2 rounded-xl border border-white/[0.07] p-3 space-y-2">
               <p className="text-[10px] font-bold uppercase tracking-wide text-neutral-500">
                 Privacy
@@ -2346,6 +2339,43 @@ export function SailorProfileView({
                             ))}
                           </div>
                         )}
+                        {(() => {
+                          const gear = gearByRegatta[regattaId] || [];
+                          const compact = gear
+                            .filter(
+                              (g) =>
+                                g.category === "hull" || g.category === "sail"
+                            )
+                            .slice(0, 3);
+                          if (!compact.length) return null;
+                          return (
+                            <p
+                              className="mt-1.5 text-[10px] text-slate-400 flex flex-wrap items-center gap-x-2 gap-y-0.5"
+                              title="Equipment used at this regatta"
+                            >
+                              {compact.map((g, i) => {
+                                const icon =
+                                  g.category === "hull" ? "🛶" : "⛵";
+                                const name =
+                                  g.category === "sail"
+                                    ? [
+                                        g.brand || "Sail",
+                                        g.label ? `#${g.label}` : null,
+                                      ]
+                                        .filter(Boolean)
+                                        .join(" ")
+                                    : [g.brand, g.label]
+                                        .filter(Boolean)
+                                        .join(" · ") || "Hull";
+                                return (
+                                  <span key={`${g.category}-${i}`}>
+                                    {icon} {name}
+                                  </span>
+                                );
+                              })}
+                            </p>
+                          );
+                        })()}
                         {raceNotes.length > 0 && (
                           <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-[10px] font-semibold text-sky-200">
                             <StickyNote className="h-3 w-3" />
@@ -2749,6 +2779,7 @@ export function SailorProfileView({
             )
             .slice(0, 40)}
           cardClass={cardClass}
+          onGearByRegatta={setGearByRegatta}
         />
         )}
       </div>

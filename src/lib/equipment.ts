@@ -26,16 +26,24 @@ export type EquipmentTag =
   | "training"
   | "light_air"
   | "heavy_air"
-  | "travel";
+  | "spare"
+  | "overseas";
+
+export type WindRange = "light" | "medium" | "heavy";
+
+export type EquipmentBadge =
+  | "new"
+  | "good"
+  | "check_condition"
+  | "consider_replacement"
+  | "replace_soon";
 
 /**
  * UI sections: Mast Set groups mast/boom/sprit; Foil Set groups board/rudder.
- * Each line item is still a separate category (sub-detail).
  */
 export const EQUIPMENT_CATEGORIES: {
   value: EquipmentCategory;
   label: string;
-  /** Display section on inventory */
   section: "hull" | "sail" | "mast_set" | "foil_set" | "other";
 }[] = [
   { value: "hull", label: "Hull", section: "hull" },
@@ -57,7 +65,7 @@ export const EQUIPMENT_SECTIONS: {
   {
     id: "hull",
     label: "Hull",
-    hint: "Boat / hull brand",
+    hint: "Boat / hull brand and hull number",
     categories: ["hull"],
   },
   {
@@ -69,13 +77,13 @@ export const EQUIPMENT_SECTIONS: {
   {
     id: "mast_set",
     label: "Mast set",
-    hint: "Mast, boom & sprit — add each part as a sub-detail",
+    hint: "Mast, boom & sprit — add each part or a full rig set",
     categories: ["mast", "boom", "sprit"],
   },
   {
     id: "foil_set",
     label: "Foil set",
-    hint: "Daggerboard & rudder — add each part as a sub-detail",
+    hint: "Daggerboard & rudder",
     categories: ["daggerboard", "rudder"],
   },
   {
@@ -91,17 +99,21 @@ export const EQUIPMENT_TAGS: { value: EquipmentTag; label: string }[] = [
   { value: "training", label: "Training" },
   { value: "light_air", label: "Light air" },
   { value: "heavy_air", label: "Heavy air" },
-  { value: "travel", label: "Travel" },
+  { value: "spare", label: "Spare / Backup" },
+  { value: "overseas", label: "Overseas" },
 ];
 
-/** Curated brand lists (SG Optimist common). Always allow free-text Other. */
+export const WIND_RANGES: { value: WindRange; label: string }[] = [
+  { value: "light", label: "Light" },
+  { value: "medium", label: "Medium" },
+  { value: "heavy", label: "Heavy" },
+];
+
 export const BRAND_PRESETS: Partial<Record<EquipmentCategory, string[]>> = {
   hull: ["Winner", "XSP", "Far East", "OnePlus", "Faccenda"],
   sail: ["OneSail", "J-Sail", "Northsail", "CD Sails", "Olimpic Sail"],
-  /** Foil-set brands apply to both daggerboard and rudder */
   daggerboard: ["DSK", "XSP", "Far East", "OnePlus"],
   rudder: ["DSK", "XSP", "Far East", "OnePlus"],
-  /** Mast set — free-text heavy; light presets optional */
   mast: ["Optiparts", "Blackgold", "Selden"],
   boom: ["Optiparts", "Blackgold"],
   sprit: ["Optiparts", "Blackgold"],
@@ -113,16 +125,24 @@ export function brandsForCategory(category: EquipmentCategory): string[] {
   return BRAND_PRESETS[category] || [];
 }
 
-/** True if brand is not in the preset list (custom / other). */
 export function isCustomBrand(
   category: EquipmentCategory,
   brand: string | null | undefined
 ): boolean {
   const b = String(brand || "").trim();
   if (!b) return false;
-  const presets = brandsForCategory(category);
-  return !presets.some((p) => p.toLowerCase() === b.toLowerCase());
+  return !brandsForCategory(category).some(
+    (p) => p.toLowerCase() === b.toLowerCase()
+  );
 }
+
+export type EquipmentUsageHistory = {
+  regattaId: string | null;
+  regattaName: string | null;
+  regattaDate: string | null;
+  rank: number | null;
+  usedOn: string;
+};
 
 export type EquipmentItemDto = {
   id: string;
@@ -131,34 +151,33 @@ export type EquipmentItemDto = {
   category: EquipmentCategory;
   brand: string | null;
   model: string | null;
+  /** Hull number / sail number / nickname */
   label: string | null;
   status: EquipmentStatus;
   condition: EquipmentCondition;
   isPrimary: boolean;
   tags: EquipmentTag[];
+  windRange: WindRange | null;
   acquiredOn: string | null;
   retiredOn: string | null;
   useCount: number;
   lastUsedOn: string | null;
   notes: string | null;
-  needsAttention?: boolean;
-  attentionReason?: string | null;
+  badge: EquipmentBadge;
+  badgeLabel: string;
+  needsAttention: boolean;
+  attentionReason: string | null;
+  usageHistory?: EquipmentUsageHistory[];
 };
-
-/** Soft life thresholds (advisory only). */
-export const EQUIPMENT_ALERTS = {
-  sailMaxUses: 12,
-  sailMaxMonths: 14,
-  foilMaxMonths: 36,
-  sparMaxMonths: 36,
-} as const;
 
 export function parseTags(raw: string | null | undefined): EquipmentTag[] {
   if (!raw) return [];
   const allowed = new Set(EQUIPMENT_TAGS.map((t) => t.value));
+  // Migrate legacy "travel" → spare
   return String(raw)
     .split(/[,|]/)
     .map((s) => s.trim().toLowerCase().replace(/\s+/g, "_"))
+    .map((s) => (s === "travel" ? "spare" : s))
     .filter((s): s is EquipmentTag => allowed.has(s as EquipmentTag));
 }
 
@@ -167,8 +186,17 @@ export function serializeTags(tags: string[] | null | undefined): string | null 
   const allowed = new Set(EQUIPMENT_TAGS.map((t) => t.value));
   const clean = tags
     .map((t) => String(t).trim().toLowerCase().replace(/\s+/g, "_"))
+    .map((t) => (t === "travel" ? "spare" : t))
     .filter((t) => allowed.has(t as EquipmentTag));
-  return clean.length ? clean.join(",") : null;
+  return clean.length ? [...new Set(clean)].join(",") : null;
+}
+
+export function parseWindRange(raw: unknown): WindRange | null {
+  const s = String(raw || "")
+    .trim()
+    .toLowerCase();
+  if (s === "light" || s === "medium" || s === "heavy") return s;
+  return null;
 }
 
 export function categoryLabel(c: EquipmentCategory | string): string {
@@ -181,13 +209,22 @@ export function displayName(item: {
   label?: string | null;
   category?: string;
 }): string {
+  if (item.category === "sail" && item.brand) {
+    const parts = [item.brand, item.model, item.label ? `#${item.label}` : null]
+      .filter(Boolean)
+      .join(" ");
+    if (parts) return parts;
+  }
+  if (item.category === "hull" && item.brand) {
+    return [item.brand, item.label].filter(Boolean).join(" · ") || item.brand;
+  }
   if (item.label?.trim()) return item.label.trim();
   const parts = [item.brand, item.model].filter(Boolean);
   if (parts.length) return parts.join(" ");
   return categoryLabel(item.category || "other");
 }
 
-function monthsSince(ymd: string | null | undefined): number | null {
+export function monthsSince(ymd: string | null | undefined): number | null {
   if (!ymd || !/^\d{4}-\d{2}-\d{2}/.test(ymd)) return null;
   const d = new Date(`${ymd.slice(0, 10)}T12:00:00Z`);
   if (Number.isNaN(d.getTime())) return null;
@@ -198,61 +235,123 @@ function monthsSince(ymd: string | null | undefined): number | null {
   );
 }
 
+/**
+ * Replacement badge rules (highest severity wins):
+ * New: < 3 months
+ * Good: 3–12 months, condition good
+ * Check condition: > 12 months OR condition fair
+ * Consider replacement: > 18 months OR > 20 uses
+ * Replace soon: > 24 months OR worn / replace_soon
+ */
+export function evaluateEquipmentBadge(item: {
+  status: string;
+  condition: string;
+  useCount: number;
+  acquiredOn?: string | null;
+}): {
+  badge: EquipmentBadge;
+  badgeLabel: string;
+  needsAttention: boolean;
+  attentionReason: string | null;
+} {
+  if (item.status === "retired") {
+    return {
+      badge: "good",
+      badgeLabel: "Archived",
+      needsAttention: false,
+      attentionReason: null,
+    };
+  }
+
+  const age = monthsSince(item.acquiredOn);
+  const cond = item.condition;
+  const uses = item.useCount || 0;
+  const needsRepair = cond === "worn" || cond === "replace_soon";
+
+  // Severity order: replace_soon > consider > check > good > new
+  if (needsRepair || (age != null && age > 24)) {
+    return {
+      badge: "replace_soon",
+      badgeLabel: "Replace soon",
+      needsAttention: true,
+      attentionReason: needsRepair
+        ? "Condition needs repair / replace soon"
+        : `Over ${age} months old`,
+    };
+  }
+  if ((age != null && age > 18) || uses > 20) {
+    return {
+      badge: "consider_replacement",
+      badgeLabel: "Consider replacement",
+      needsAttention: true,
+      attentionReason:
+        uses > 20
+          ? `${uses} regatta uses logged`
+          : `Over ${age} months old`,
+    };
+  }
+  if ((age != null && age > 12) || cond === "fair") {
+    return {
+      badge: "check_condition",
+      badgeLabel: "Check condition",
+      needsAttention: true,
+      attentionReason:
+        cond === "fair" ? "Condition: fair" : `Over ${age} months old`,
+    };
+  }
+  if (age != null && age < 3) {
+    return {
+      badge: "new",
+      badgeLabel: "New",
+      needsAttention: false,
+      attentionReason: null,
+    };
+  }
+  // 3–12 months and good (or unknown age with good)
+  return {
+    badge: "good",
+    badgeLabel: "Good",
+    needsAttention: false,
+    attentionReason: null,
+  };
+}
+
+/** @deprecated use evaluateEquipmentBadge */
 export function evaluateEquipmentAttention(item: {
   category: string;
   status: string;
   condition: string;
   useCount: number;
   acquiredOn?: string | null;
-}): { needsAttention: boolean; reason: string | null } {
-  if (item.status === "retired") {
-    return { needsAttention: false, reason: null };
-  }
-  if (item.condition === "replace_soon") {
-    return { needsAttention: true, reason: "Marked replace soon" };
-  }
-  if (item.condition === "worn") {
-    return { needsAttention: true, reason: "Condition: worn" };
-  }
-  const age = monthsSince(item.acquiredOn);
-  if (item.category === "sail") {
-    if (item.useCount >= EQUIPMENT_ALERTS.sailMaxUses) {
-      return {
-        needsAttention: true,
-        reason: `${item.useCount} logged uses — consider a fresh race sail`,
-      };
-    }
-    if (age != null && age >= EQUIPMENT_ALERTS.sailMaxMonths) {
-      return {
-        needsAttention: true,
-        reason: `~${age} months old — check sail shape`,
-      };
-    }
-  }
-  if (
-    (item.category === "daggerboard" || item.category === "rudder") &&
-    age != null &&
-    age >= EQUIPMENT_ALERTS.foilMaxMonths
-  ) {
-    return {
-      needsAttention: true,
-      reason: `Foils ~${age} months — inspect edges`,
-    };
-  }
-  if (
-    (item.category === "mast" ||
-      item.category === "boom" ||
-      item.category === "sprit") &&
-    age != null &&
-    age >= EQUIPMENT_ALERTS.sparMaxMonths
-  ) {
-    return {
-      needsAttention: true,
-      reason: `Spars ~${age} months — check for wear`,
-    };
-  }
-  return { needsAttention: false, reason: null };
+}) {
+  const b = evaluateEquipmentBadge(item);
+  return {
+    needsAttention: b.needsAttention,
+    reason: b.attentionReason,
+  };
 }
+
+export const BADGE_STYLES: Record<
+  EquipmentBadge,
+  { className: string }
+> = {
+  new: {
+    className:
+      "bg-emerald-500/15 border-emerald-500/30 text-emerald-300",
+  },
+  good: {
+    className: "bg-white/5 border-white/10 text-slate-400",
+  },
+  check_condition: {
+    className: "bg-amber-500/15 border-amber-500/30 text-amber-200",
+  },
+  consider_replacement: {
+    className: "bg-orange-500/15 border-orange-500/35 text-orange-300",
+  },
+  replace_soon: {
+    className: "bg-rose-500/15 border-rose-500/35 text-rose-300",
+  },
+};
 
 export function mapEquipmentRow(row: {
   id: string;
@@ -266,6 +365,7 @@ export function mapEquipmentRow(row: {
   condition: string;
   isPrimary: boolean;
   tags: string | null;
+  windRange?: string | null;
   acquiredOn: string | null;
   retiredOn: string | null;
   useCount: number | null;
@@ -273,8 +373,7 @@ export function mapEquipmentRow(row: {
   notes: string | null;
 }): EquipmentItemDto {
   const tags = parseTags(row.tags);
-  const attn = evaluateEquipmentAttention({
-    category: row.category,
+  const badge = evaluateEquipmentBadge({
     status: row.status,
     condition: row.condition,
     useCount: row.useCount || 0,
@@ -292,13 +391,16 @@ export function mapEquipmentRow(row: {
     condition: row.condition as EquipmentCondition,
     isPrimary: Boolean(row.isPrimary),
     tags,
+    windRange: parseWindRange(row.windRange),
     acquiredOn: row.acquiredOn ? String(row.acquiredOn).slice(0, 10) : null,
     retiredOn: row.retiredOn ? String(row.retiredOn).slice(0, 10) : null,
     useCount: Number(row.useCount || 0),
     lastUsedOn: row.lastUsedOn ? String(row.lastUsedOn).slice(0, 10) : null,
     notes: row.notes,
-    needsAttention: attn.needsAttention,
-    attentionReason: attn.reason,
+    badge: badge.badge,
+    badgeLabel: badge.badgeLabel,
+    needsAttention: badge.needsAttention,
+    attentionReason: badge.attentionReason,
   };
 }
 
@@ -309,7 +411,6 @@ function sortItems(list: EquipmentItemDto[]) {
   });
 }
 
-/** Group by category (legacy helper). */
 export function groupEquipmentItems(items: EquipmentItemDto[]) {
   const order = EQUIPMENT_CATEGORIES.map((c) => c.value);
   const byCat = new Map<EquipmentCategory, EquipmentItemDto[]>();
@@ -328,10 +429,6 @@ export function groupEquipmentItems(items: EquipmentItemDto[]) {
     .filter((g) => g.items.length > 0);
 }
 
-/**
- * Inventory sections for UI: Hull, Sail, Mast set, Foil set, Other.
- * Mast set / Foil set contain sub-details (per category items).
- */
 export function groupEquipmentSections(items: EquipmentItemDto[]) {
   return EQUIPMENT_SECTIONS.map((sec) => {
     const byCategory = sec.categories.map((cat) => ({

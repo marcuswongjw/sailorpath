@@ -1,15 +1,23 @@
 import { NextResponse } from "next/server";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
-import { equipmentItems, equipmentUsages, sailors } from "@/db/schema";
+import {
+  equipmentItems,
+  equipmentUsages,
+  regattaResults,
+  regattas,
+  sailors,
+} from "@/db/schema";
 import {
   mapEquipmentRow,
+  parseWindRange,
   serializeTags,
   type EquipmentBoatClass,
   type EquipmentCategory,
   type EquipmentCondition,
   type EquipmentStatus,
+  type EquipmentUsageHistory,
 } from "@/lib/equipment";
 import { todayYmdSg } from "@/lib/datesSg";
 
@@ -148,14 +156,116 @@ export async function GET(req: Request) {
       .where(eq(equipmentItems.sailorId, sailorId))
       .orderBy(desc(equipmentItems.isPrimary), desc(equipmentItems.updatedAt));
 
-    const mapped = rows.map((r) =>
-      mapEquipmentRow({
+    // Usage history + ranks for equipment ↔ results linkage
+    const itemIds = rows.map((r) => r.id);
+    const historyByItem = new Map<string, EquipmentUsageHistory[]>();
+    /** regattaId → compact gear labels for results list */
+    const gearByRegatta: Record<
+      string,
+      { category: string; brand: string | null; label: string | null }[]
+    > = {};
+
+    if (itemIds.length > 0) {
+      try {
+        const usageRows = await db
+          .select({
+            equipmentItemId: equipmentUsages.equipmentItemId,
+            usedOn: equipmentUsages.usedOn,
+            regattaId: equipmentUsages.regattaId,
+            regattaName: regattas.name,
+            regattaDate: regattas.date,
+          })
+          .from(equipmentUsages)
+          .leftJoin(regattas, eq(equipmentUsages.regattaId, regattas.id))
+          .where(eq(equipmentUsages.sailorId, sailorId))
+          .orderBy(desc(equipmentUsages.usedOn));
+
+        // Ranks for linked regattas
+        const regIds = [
+          ...new Set(
+            usageRows
+              .map((u) => u.regattaId)
+              .filter((id): id is string => Boolean(id))
+          ),
+        ];
+        const rankMap = new Map<string, number>();
+        if (regIds.length > 0) {
+          const ranks = await db
+            .select({
+              regattaId: regattaResults.regattaId,
+              rank: regattaResults.rank,
+            })
+            .from(regattaResults)
+            .where(
+              and(
+                eq(regattaResults.sailorId, sailorId),
+                inArray(regattaResults.regattaId, regIds)
+              )
+            );
+          for (const r of ranks) rankMap.set(r.regattaId, r.rank);
+        }
+
+        const itemMeta = new Map(
+          rows.map((r) => [
+            r.id,
+            {
+              category: r.category,
+              brand: r.brand,
+              label: r.label,
+            },
+          ])
+        );
+
+        for (const u of usageRows) {
+          const hist: EquipmentUsageHistory = {
+            regattaId: u.regattaId,
+            regattaName: u.regattaName || null,
+            regattaDate: u.regattaDate
+              ? String(u.regattaDate).slice(0, 10)
+              : null,
+            rank: u.regattaId ? rankMap.get(u.regattaId) ?? null : null,
+            usedOn: String(u.usedOn).slice(0, 10),
+          };
+          const list = historyByItem.get(u.equipmentItemId) || [];
+          if (list.length < 8) list.push(hist);
+          historyByItem.set(u.equipmentItemId, list);
+
+          if (u.regattaId) {
+            const meta = itemMeta.get(u.equipmentItemId);
+            if (meta) {
+              const g = gearByRegatta[u.regattaId] || [];
+              if (
+                !g.some(
+                  (x) =>
+                    x.category === meta.category &&
+                    x.brand === meta.brand &&
+                    x.label === meta.label
+                )
+              ) {
+                g.push(meta);
+                gearByRegatta[u.regattaId] = g;
+              }
+            }
+          }
+        }
+      } catch {
+        /* usages optional until migration */
+      }
+    }
+
+    const mapped = rows.map((r) => {
+      const base = mapEquipmentRow({
         ...r,
+        windRange: (r as { windRange?: string | null }).windRange ?? null,
         acquiredOn: r.acquiredOn ? String(r.acquiredOn) : null,
         retiredOn: r.retiredOn ? String(r.retiredOn) : null,
         lastUsedOn: r.lastUsedOn ? String(r.lastUsedOn) : null,
-      })
-    );
+      });
+      return {
+        ...base,
+        usageHistory: historyByItem.get(r.id) || [],
+      };
+    });
 
     const alerts = mapped.filter(
       (i) => i.needsAttention && i.status !== "retired"
@@ -164,6 +274,7 @@ export async function GET(req: Request) {
     return NextResponse.json({
       items: mapped,
       alerts,
+      gearByRegatta,
       isOwner,
       private: false,
     });
@@ -188,6 +299,76 @@ export async function POST(req: Request) {
 
     const boatClass = (String(body.boatClass || "optimist").toLowerCase() ||
       "optimist") as EquipmentBoatClass;
+    if (!["optimist", "ilca4", "other"].includes(boatClass)) {
+      return NextResponse.json({ error: "Invalid boat class" }, { status: 400 });
+    }
+
+    // Full rig set: mast + boom + sprit in one request
+    if (body.fullRig === true) {
+      const brand =
+        body.brand != null ? String(body.brand).slice(0, 120) : null;
+      const tags = serializeTags(body.tags);
+      const acquiredOn = body.acquiredOn
+        ? String(body.acquiredOn).slice(0, 10)
+        : null;
+      const parts: {
+        category: EquipmentCategory;
+        brand?: string | null;
+        model?: string | null;
+        label?: string | null;
+      }[] = [
+        {
+          category: "mast",
+          brand: body.mastBrand ?? brand,
+          model: body.mastModel ?? null,
+          label: body.mastLabel ?? null,
+        },
+        {
+          category: "boom",
+          brand: body.boomBrand ?? brand,
+          model: body.boomModel ?? null,
+          label: body.boomLabel ?? null,
+        },
+        {
+          category: "sprit",
+          brand: body.spritBrand ?? brand,
+          model: body.spritModel ?? null,
+          label: body.spritLabel ?? null,
+        },
+      ];
+      const created = [];
+      for (const p of parts) {
+        await clearOtherPrimaries(sailorId, boatClass, p.category);
+        const [row] = await db
+          .insert(equipmentItems)
+          .values({
+            sailorId,
+            boatClass,
+            category: p.category,
+            brand: p.brand ? String(p.brand).slice(0, 120) : null,
+            model: p.model ? String(p.model).slice(0, 120) : null,
+            label: p.label ? String(p.label).slice(0, 120) : null,
+            status: "active",
+            condition: "good",
+            isPrimary: true,
+            tags,
+            acquiredOn,
+          })
+          .returning();
+        created.push(
+          mapEquipmentRow({
+            ...row,
+            windRange: null,
+            acquiredOn: row.acquiredOn ? String(row.acquiredOn) : null,
+            retiredOn: row.retiredOn ? String(row.retiredOn) : null,
+            lastUsedOn: row.lastUsedOn ? String(row.lastUsedOn) : null,
+          })
+        );
+      }
+      await syncLegacyPrimaries(sailorId);
+      return NextResponse.json({ items: created, fullRig: true });
+    }
+
     const category = String(body.category || "").toLowerCase() as EquipmentCategory;
     const allowedCat = [
       "hull",
@@ -202,14 +383,13 @@ export async function POST(req: Request) {
     if (!allowedCat.includes(category)) {
       return NextResponse.json({ error: "Invalid category" }, { status: 400 });
     }
-    if (!["optimist", "ilca4", "other"].includes(boatClass)) {
-      return NextResponse.json({ error: "Invalid boat class" }, { status: 400 });
-    }
 
-    const isPrimary = Boolean(body.isPrimary);
+    const isPrimary = body.isPrimary !== false;
     if (isPrimary) {
       await clearOtherPrimaries(sailorId, boatClass, category);
     }
+
+    const windRange = parseWindRange(body.windRange);
 
     const [row] = await db
       .insert(equipmentItems)
@@ -224,6 +404,7 @@ export async function POST(req: Request) {
         condition: (body.condition as EquipmentCondition) || "good",
         isPrimary,
         tags: serializeTags(body.tags),
+        windRange,
         acquiredOn: body.acquiredOn
           ? String(body.acquiredOn).slice(0, 10)
           : null,
@@ -236,6 +417,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       item: mapEquipmentRow({
         ...row,
+        windRange: (row as { windRange?: string | null }).windRange ?? null,
         acquiredOn: row.acquiredOn ? String(row.acquiredOn) : null,
         retiredOn: row.retiredOn ? String(row.retiredOn) : null,
         lastUsedOn: row.lastUsedOn ? String(row.lastUsedOn) : null,
@@ -254,6 +436,92 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Sign in required" }, { status: 401 });
     }
     const body = await req.json();
+
+    // Bulk actions: { bulk: true, ids: [], action: archive|tag|logUse|setPrimary, ... }
+    if (body.bulk === true && Array.isArray(body.ids)) {
+      const ids = body.ids.map((x: unknown) => String(x)).filter(Boolean);
+      if (!ids.length) {
+        return NextResponse.json({ error: "ids required" }, { status: 400 });
+      }
+      const rows = await db
+        .select()
+        .from(equipmentItems)
+        .where(inArray(equipmentItems.id, ids));
+      if (!rows.length) {
+        return NextResponse.json({ error: "Not found" }, { status: 404 });
+      }
+      const sailorId = rows[0].sailorId;
+      if (rows.some((r) => r.sailorId !== sailorId)) {
+        return NextResponse.json(
+          { error: "All items must belong to the same sailor" },
+          { status: 400 }
+        );
+      }
+      const gate = await assertCanEdit(sailorId, auth.userId, auth.role);
+      if ("error" in gate) {
+        return NextResponse.json({ error: gate.error }, { status: gate.status });
+      }
+      const action = String(body.action || "");
+      if (action === "archive") {
+        await db
+          .update(equipmentItems)
+          .set({
+            status: "retired",
+            isPrimary: false,
+            retiredOn: todayYmdSg(),
+            updatedAt: new Date(),
+          })
+          .where(inArray(equipmentItems.id, ids));
+        await syncLegacyPrimaries(sailorId);
+        return NextResponse.json({ ok: true, action: "archive", count: ids.length });
+      }
+      if (action === "tag") {
+        const extra = serializeTags(body.tags);
+        if (!extra) {
+          return NextResponse.json({ error: "tags required" }, { status: 400 });
+        }
+        for (const r of rows) {
+          const merged = serializeTags([
+            ...String(r.tags || "").split(","),
+            ...extra.split(","),
+          ]);
+          await db
+            .update(equipmentItems)
+            .set({ tags: merged, updatedAt: new Date() })
+            .where(eq(equipmentItems.id, r.id));
+        }
+        return NextResponse.json({ ok: true, action: "tag", count: ids.length });
+      }
+      if (action === "logUse") {
+        const usedOn = body.usedOn
+          ? String(body.usedOn).slice(0, 10)
+          : todayYmdSg();
+        const regattaId = body.regattaId
+          ? String(body.regattaId).trim()
+          : null;
+        for (const r of rows) {
+          await db.insert(equipmentUsages).values({
+            equipmentItemId: r.id,
+            sailorId,
+            usedOn,
+            regattaId: regattaId || null,
+            source: regattaId ? "regatta" : "manual",
+            note: body.note != null ? String(body.note).slice(0, 500) : null,
+          });
+          await db
+            .update(equipmentItems)
+            .set({
+              useCount: (r.useCount || 0) + 1,
+              lastUsedOn: usedOn,
+              updatedAt: new Date(),
+            })
+            .where(eq(equipmentItems.id, r.id));
+        }
+        return NextResponse.json({ ok: true, action: "logUse", count: ids.length });
+      }
+      return NextResponse.json({ error: "Unknown bulk action" }, { status: 400 });
+    }
+
     const id = String(body.id || "").trim();
     if (!id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
@@ -339,6 +607,8 @@ export async function PATCH(req: Request) {
         ? String(body.retiredOn).slice(0, 10)
         : null;
     if (body.tags !== undefined) patch.tags = serializeTags(body.tags);
+    if (body.windRange !== undefined)
+      patch.windRange = parseWindRange(body.windRange);
     if (body.category !== undefined) patch.category = String(body.category);
     if (body.boatClass !== undefined) patch.boatClass = String(body.boatClass);
 

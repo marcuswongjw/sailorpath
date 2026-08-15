@@ -164,7 +164,7 @@ export function SiteHeader() {
         <Link
           href={
             owned.length === 1
-              ? `/${primaryProfile.handle}?edit=1`
+              ? `/${primaryProfile.handle}`
               : "/parent"
           }
           onClick={() => setMobileOpen(false)}

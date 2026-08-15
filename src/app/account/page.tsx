@@ -254,10 +254,10 @@ function AccountInner() {
                   </p>
                 </div>
                 <Link
-                  href={`/${s.handle}?edit=1`}
+                  href={`/${s.handle}`}
                   className="rounded-full bg-orange-600/90 px-4 py-2 text-[11px] font-bold text-white text-center hover:bg-orange-500 shrink-0"
                 >
-                  Edit profile
+                  Open profile
                 </Link>
               </li>
             ))}
