@@ -73,7 +73,7 @@ export default async function SailorProfilePage({
         getRaceObservationsForSailor(sailor.id, {
           includePrivate: access.canSeePrivate,
         }).catch(() => []),
-        access.canSeePrivate || sailor.isPublicEquipment
+        access.canSeePrivate
           ? getEquipmentLogsForSailor(sailor.id).catch(() => [])
           : Promise.resolve([]),
       ]);

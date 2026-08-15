@@ -251,7 +251,8 @@ export function SailorProfileView({
 
   const hasPrivateAccess = canSeePrivate;
   const showWeight = isPublicWeight || hasPrivateAccess;
-  const showEquipment = isPublicEquipment || hasPrivateAccess;
+  // Equipment is always private — owner / private access only (never public)
+  const showEquipment = hasPrivateAccess || isOwner;
 
   const saveProfile = async () => {
     if (demoMode) {
@@ -279,7 +280,7 @@ export function SailorProfileView({
           weight: form.weight === "" ? null : Number(form.weight),
           isPublicWeight,
           isPublicDob,
-          isPublicEquipment,
+          isPublicEquipment: false,
           hullBrand: form.hullBrand,
           sailMake: form.sailMake,
           foilBrand: form.foilBrand,
@@ -967,7 +968,7 @@ export function SailorProfileView({
   );
 
   /** Public viewers only see equipment when the sailor made it public */
-  const showEquipmentSection = showEquipment || isOwner;
+  const showEquipmentSection = isOwner || hasPrivateAccess;
 
   // ILCA position trend (Open fleet) — shown for ILCA-only or dual-class ILCA tab
   const ilcaTrendPoints = useMemo(
@@ -1543,21 +1544,16 @@ export function SailorProfileView({
                 Privacy
               </p>
               <p className="text-[10px] text-neutral-600 leading-snug">
-                Birth year is public when set. Full date of birth, weight, and
-                equipment stay private unless shared.
+                Birth year is public when set. Full DOB and weight stay private
+                unless shared. Equipment is always private (owner only).
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {(
                   [
                     {
                       label: "Share weight",
                       checked: isPublicWeight,
                       set: setIsPublicWeight,
-                    },
-                    {
-                      label: "Share equipment",
-                      checked: isPublicEquipment,
-                      set: setIsPublicEquipment,
                     },
                     {
                       label: "Share full DOB",

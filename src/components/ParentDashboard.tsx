@@ -11,6 +11,10 @@ import {
   Clock,
   Sailboat,
   Pencil,
+  AlertTriangle,
+  StickyNote,
+  Plus,
+  Trash2,
 } from "lucide-react";
 import { relationLabel, type ClaimRelation } from "@/lib/claimRelation";
 import { birthYear } from "@/lib/age";
@@ -22,6 +26,19 @@ type Standing = {
   fleetSize: number;
   best3of5: number;
   trendNote: string;
+};
+
+type RecentResult = {
+  regattaName: string;
+  regattaDate: string;
+  rank: number;
+  boatClass: string | null;
+};
+
+type Note = {
+  id: string;
+  body: string;
+  createdAt: string;
 };
 
 type Athlete = {
@@ -40,6 +57,10 @@ type Athlete = {
   nationalSquadStatus?: string | null;
   dob?: string | null;
   standing: Standing | null;
+  recentResults?: RecentResult[];
+  equipmentAlertCount?: number;
+  equipmentAlerts?: { label: string; reason: string }[];
+  notes?: Note[];
 };
 
 type PendingClaim = {
@@ -57,6 +78,8 @@ export function ParentDashboard() {
   const [isParentStyle, setIsParentStyle] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [noteDraft, setNoteDraft] = useState<Record<string, string>>({});
+  const [noteBusy, setNoteBusy] = useState<string | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -87,6 +110,48 @@ export function ParentDashboard() {
     void load();
   }, [load]);
 
+  const addNote = async (sailorId: string) => {
+    const body = (noteDraft[sailorId] || "").trim();
+    if (body.length < 2) return;
+    setNoteBusy(sailorId);
+    try {
+      const res = await fetch("/api/account/parent-notes", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sailorId, body }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not save note");
+      setNoteDraft((d) => ({ ...d, [sailorId]: "" }));
+      await load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Error");
+    } finally {
+      setNoteBusy(null);
+    }
+  };
+
+  const deleteNote = async (id: string) => {
+    if (!confirm("Delete this note?")) return;
+    setNoteBusy(id);
+    try {
+      const res = await fetch(
+        `/api/account/parent-notes?id=${encodeURIComponent(id)}`,
+        { method: "DELETE", credentials: "include" }
+      );
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Delete failed");
+      }
+      await load();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "Error");
+    } finally {
+      setNoteBusy(null);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center py-24 text-sm text-slate-500">
@@ -97,7 +162,7 @@ export function ParentDashboard() {
 
   const title = isParentStyle ? "Parent dashboard" : "My sailors";
   const subtitle = isParentStyle
-    ? "Rankings, profiles, and claims for the athletes you manage."
+    ? "Rankings, recent results, gear alerts, and private notes."
     : "Your linked athlete profiles and claim status.";
 
   return (
@@ -131,7 +196,6 @@ export function ParentDashboard() {
         </p>
       )}
 
-      {/* Pending claims */}
       {pendingClaims.length > 0 && (
         <section className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-5 space-y-3">
           <h2 className="text-xs font-black text-amber-200 uppercase tracking-wider flex items-center gap-2">
@@ -164,17 +228,9 @@ export function ParentDashboard() {
               </li>
             ))}
           </ul>
-          <p className="text-[11px] text-slate-500">
-            An admin will verify your email and note. Track status anytime on{" "}
-            <Link href="/account" className="text-orange-400 font-semibold">
-              My account
-            </Link>
-            .
-          </p>
         </section>
       )}
 
-      {/* Athletes */}
       <section className="space-y-3">
         <h2 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
           Athletes you manage ({athletes.length})
@@ -208,7 +264,7 @@ export function ParentDashboard() {
             </div>
           </div>
         ) : (
-          <ul className="space-y-3">
+          <ul className="space-y-4">
             {athletes.map((a) => (
               <li
                 key={a.id}
@@ -299,6 +355,123 @@ export function ParentDashboard() {
                     no scoring events yet).
                   </p>
                 )}
+
+                {/* Recent results */}
+                {(a.recentResults?.length ?? 0) > 0 && (
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-500 uppercase mb-1.5">
+                      Recent results
+                    </p>
+                    <ul className="space-y-1">
+                      {a.recentResults!.map((r, i) => (
+                        <li
+                          key={`${r.regattaDate}-${i}`}
+                          className="text-[12px] text-slate-300 flex justify-between gap-2"
+                        >
+                          <span className="truncate min-w-0">
+                            <span className="text-slate-500 font-mono text-[11px]">
+                              {r.regattaDate}
+                            </span>{" "}
+                            {r.regattaName}
+                          </span>
+                          <span className="font-bold text-orange-300 tabular-nums shrink-0">
+                            #{r.rank}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Equipment alerts (private) */}
+                {(a.equipmentAlertCount ?? 0) > 0 && (
+                  <div className="rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2.5 space-y-1">
+                    <p className="text-[11px] font-bold text-amber-200 flex items-center gap-1.5">
+                      <AlertTriangle className="h-3.5 w-3.5" />
+                      {a.equipmentAlertCount} equipment alert
+                      {a.equipmentAlertCount === 1 ? "" : "s"}
+                    </p>
+                    {(a.equipmentAlerts || []).map((al, i) => (
+                      <p key={i} className="text-[11px] text-amber-100/90">
+                        {al.label} — {al.reason}
+                      </p>
+                    ))}
+                    <Link
+                      href={`/${a.handle}`}
+                      className="inline-block text-[11px] font-bold text-amber-200 hover:underline mt-0.5"
+                    >
+                      Review gear on profile →
+                    </Link>
+                  </div>
+                )}
+
+                {/* Private notes */}
+                <div className="rounded-xl border border-white/5 bg-black/20 px-3 py-2.5 space-y-2">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1.5">
+                    <StickyNote className="h-3.5 w-3.5 text-emerald-400" />
+                    Private notes
+                  </p>
+                  {(a.notes?.length ?? 0) === 0 ? (
+                    <p className="text-[11px] text-slate-600">
+                      No notes yet — exams, coach chats, travel, etc.
+                    </p>
+                  ) : (
+                    <ul className="space-y-1.5">
+                      {a.notes!.map((n) => (
+                        <li
+                          key={n.id}
+                          className="flex gap-2 items-start text-[12px] text-slate-300"
+                        >
+                          <span className="flex-1 min-w-0">
+                            <span className="text-[10px] text-slate-600 font-mono block">
+                              {n.createdAt
+                                ? n.createdAt.slice(0, 10)
+                                : ""}
+                            </span>
+                            {n.body}
+                          </span>
+                          <button
+                            type="button"
+                            disabled={noteBusy === n.id}
+                            onClick={() => void deleteNote(n.id)}
+                            className="text-slate-600 hover:text-rose-400 p-0.5 shrink-0"
+                            aria-label="Delete note"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <div className="flex gap-2">
+                    <input
+                      value={noteDraft[a.id] || ""}
+                      onChange={(e) =>
+                        setNoteDraft((d) => ({
+                          ...d,
+                          [a.id]: e.target.value,
+                        }))
+                      }
+                      placeholder="Add a private note…"
+                      className="flex-1 min-w-0 rounded-lg bg-black/40 border border-white/10 px-2.5 py-1.5 text-[12px] text-white"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") void addNote(a.id);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      disabled={
+                        noteBusy === a.id ||
+                        !(noteDraft[a.id] || "").trim()
+                      }
+                      onClick={() => void addNote(a.id)}
+                      className="rounded-lg bg-emerald-600/90 px-2.5 py-1.5 text-white disabled:opacity-40"
+                      aria-label="Add note"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
 
                 <div className="flex flex-wrap gap-2">
                   <Link

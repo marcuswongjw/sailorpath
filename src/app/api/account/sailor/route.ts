@@ -187,9 +187,8 @@ export async function PATCH(req: Request) {
     if (typeof body.isPublicDob === "boolean") {
       patch.isPublicDob = body.isPublicDob;
     }
-    if (typeof body.isPublicEquipment === "boolean") {
-      patch.isPublicEquipment = body.isPublicEquipment;
-    }
+    // Equipment is always private for now — ignore client attempts to share
+    patch.isPublicEquipment = false;
 
     let equipmentChanged = false;
     for (const [key, max] of [

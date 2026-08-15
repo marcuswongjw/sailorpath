@@ -25,12 +25,12 @@ async function assertCanEdit(sailorId: string, userId: string, role: string) {
   return { sailor };
 }
 
+/** Equipment is always private — owner or superadmin only (no public view). */
 async function assertCanView(sailorId: string, userId: string | null, role: string | null) {
   const [sailor] = await db
     .select({
       id: sailors.id,
       parentId: sailors.parentId,
-      isPublicEquipment: sailors.isPublicEquipment,
     })
     .from(sailors)
     .where(eq(sailors.id, sailorId))
@@ -38,7 +38,7 @@ async function assertCanView(sailorId: string, userId: string | null, role: stri
   if (!sailor) return { error: "Sailor not found", status: 404 as const };
   const isOwner = Boolean(userId && sailor.parentId === userId);
   const isAdmin = role === "superadmin";
-  if (!sailor.isPublicEquipment && !isOwner && !isAdmin) {
+  if (!isOwner && !isAdmin) {
     return { error: "Equipment is private", status: 403 as const, sailor };
   }
   return { sailor, isOwner: isOwner || isAdmin };
@@ -148,7 +148,7 @@ export async function GET(req: Request) {
       .where(eq(equipmentItems.sailorId, sailorId))
       .orderBy(desc(equipmentItems.isPrimary), desc(equipmentItems.updatedAt));
 
-    let mapped = rows.map((r) =>
+    const mapped = rows.map((r) =>
       mapEquipmentRow({
         ...r,
         acquiredOn: r.acquiredOn ? String(r.acquiredOn) : null,
@@ -157,18 +157,13 @@ export async function GET(req: Request) {
       })
     );
 
-    // Public: only primary active items
-    if (!isOwner) {
-      mapped = mapped.filter(
-        (i) => i.isPrimary && i.status === "active"
-      );
-    }
-
-    const alerts = mapped.filter((i) => i.needsAttention && i.status !== "retired");
+    const alerts = mapped.filter(
+      (i) => i.needsAttention && i.status !== "retired"
+    );
 
     return NextResponse.json({
       items: mapped,
-      alerts: isOwner ? alerts : [],
+      alerts,
       isOwner,
       private: false,
     });

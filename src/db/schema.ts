@@ -334,6 +334,22 @@ export const equipmentItems = pgTable("equipment_items", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+/**
+ * Private parent notes on a linked sailor (owner only).
+ */
+export const parentNotes = pgTable("parent_notes", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  sailorId: uuid("sailor_id")
+    .references(() => sailors.id, { onDelete: "cascade" })
+    .notNull(),
+  authorUserId: uuid("author_user_id")
+    .references(() => profiles.id, { onDelete: "cascade" })
+    .notNull(),
+  body: text("body").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 /** Individual use events for equipment items */
 export const equipmentUsages = pgTable("equipment_usages", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
