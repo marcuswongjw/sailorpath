@@ -16,7 +16,13 @@ import {
   type ViewAs,
 } from "@/lib/viewAs";
 
-export type OwnedSailor = { id: string; name: string; handle: string };
+export type OwnedSailor = {
+  id: string;
+  name: string;
+  handle: string;
+  /** parent | sailor | other — how this account relates to the athlete */
+  ownerRelation?: string | null;
+};
 
 type AccountState = {
   email: string | null;

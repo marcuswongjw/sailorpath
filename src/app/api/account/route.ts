@@ -22,6 +22,7 @@ export async function GET() {
           handle: sailors.handle,
           sailNumber: sailors.sailNumber,
           club: sailors.club,
+          ownerRelation: sailors.ownerRelation,
         })
         .from(sailors)
         .where(eq(sailors.parentId, auth.userId)),

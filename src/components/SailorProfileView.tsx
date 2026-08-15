@@ -1698,16 +1698,24 @@ export function SailorProfileView({
             </div>
             <div className="text-right">
               <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
-                {standingIsIlca ? "Best 3 of 5 pts" : "Best 3 of 5"}
+                {standingIsIlca ? "National rank" : "National rank"}
               </p>
-              <p className="text-2xl font-semibold text-white tabular-nums leading-none">
-                {activeStanding.best3of5}
-              </p>
-              <p className="text-[12px] text-neutral-400 mt-0.5 tabular-nums">
+              <p
+                className={`text-3xl sm:text-4xl font-black tabular-nums leading-none ${
+                  standingIsIlca ? "text-sky-300" : "text-orange-400"
+                }`}
+              >
                 #{activeStanding.overallRank}
-                <span className="text-neutral-600">
-                  {" "}
-                  of {activeStanding.fleetSize}
+              </p>
+              <p className="text-[12px] text-neutral-400 mt-1 tabular-nums">
+                of {activeStanding.fleetSize}
+                {standingIsIlca ? "" : ` · ${activeStanding.fleet}`}
+              </p>
+              <p className="text-[11px] text-neutral-500 mt-1.5 tabular-nums">
+                {standingIsIlca ? "Best 3 of 5" : "Best 3 of 5"}{" "}
+                <span className="font-semibold text-neutral-300">
+                  {activeStanding.best3of5}
+                  {standingIsIlca ? " pts" : ""}
                 </span>
               </p>
             </div>
@@ -2269,7 +2277,7 @@ export function SailorProfileView({
                         )}
                       </span>
                       <span
-                        className={`text-[15px] font-semibold tabular-nums pt-0.5 ${
+                        className={`tabular-nums pt-0.5 flex flex-col items-start leading-tight ${
                           dns && !isIlcaRow
                             ? "text-rose-400"
                             : isIlcaRow
@@ -2279,10 +2287,21 @@ export function SailorProfileView({
                         title={
                           isIlcaRow
                             ? "High Ranking Points (1st = fleet size)"
-                            : "Finishing place"
+                            : fleetSize
+                              ? `Place ${leftValue} of ${fleetSize} sailors`
+                              : "Finishing place"
                         }
                       >
-                        {leftValue}
+                        <span className="text-[15px] font-semibold">
+                          {isIlcaRow ? leftValue : leftValue === "DNS" ? "DNS" : leftValue === "—" ? "—" : `#${leftValue}`}
+                        </span>
+                        {fleetSize != null &&
+                          Number(fleetSize) > 0 &&
+                          leftValue !== "—" && (
+                            <span className="text-[10px] font-medium text-neutral-500 mt-0.5">
+                              /{fleetSize}
+                            </span>
+                          )}
                       </span>
                       <div className="min-w-0">
                         {canLink ? (
@@ -2310,7 +2329,9 @@ export function SailorProfileView({
                         {/* Mobile: show rank / nett under event */}
                         <p className="sm:hidden text-[11px] text-neutral-400 mt-1 tabular-nums">
                           {isIlcaRow
-                            ? `Rank ${midValue}`
+                            ? `Rank #${midValue}${
+                                fleetSize ? ` / ${fleetSize}` : ""
+                              }`
                             : `Nett ${midValue}`}
                         </p>
                         {tags.length > 0 && (
@@ -2340,11 +2361,23 @@ export function SailorProfileView({
                         )}
                       </div>
                       <span
-                        className={`hidden sm:block text-right text-[13px] tabular-nums pt-0.5 ${
+                        className={`hidden sm:flex flex-col items-end text-right tabular-nums pt-0.5 leading-tight ${
                           isIlcaRow ? "text-neutral-200" : "text-neutral-400"
                         }`}
                       >
-                        {midValue}
+                        <span className="text-[13px]">
+                          {isIlcaRow && midValue !== "—" && midValue !== "DNS"
+                            ? `#${midValue}`
+                            : midValue}
+                        </span>
+                        {isIlcaRow &&
+                          fleetSize != null &&
+                          Number(fleetSize) > 0 &&
+                          midValue !== "—" && (
+                            <span className="text-[10px] font-medium text-neutral-500 mt-0.5">
+                              /{fleetSize}
+                            </span>
+                          )}
                       </span>
                       <span className="flex items-center justify-end pt-0.5">
                         <span

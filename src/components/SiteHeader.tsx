@@ -8,7 +8,7 @@ import { useAccount } from "@/components/AccountProvider";
 import type { ViewAs } from "@/lib/viewAs";
 
 export function SiteHeader() {
-  const { email, isSuperadmin, viewAs, setViewAs, owned, ready, signOut } =
+  const { email, role, isSuperadmin, viewAs, setViewAs, owned, ready, signOut } =
     useAccount();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -141,7 +141,23 @@ export function SiteHeader() {
           onClick={() => setMobileOpen(false)}
           className="text-sm font-semibold text-emerald-400 hover:text-emerald-300"
         >
-          Dashboard
+          {(() => {
+            // Prefer parent if any linked profile is a parent claim; sailor if all self
+            const rels = owned
+              .map((o) => String(o.ownerRelation || "").toLowerCase())
+              .filter(Boolean);
+            const anyParent = rels.includes("parent");
+            const allSailor =
+              rels.length > 0 && rels.every((r) => r === "sailor");
+            if (allSailor) return "Sailor Dashboard";
+            if (anyParent) return "Parent Dashboard";
+            if (isSuperadmin && viewAs === "parent") return "Parent Dashboard";
+            if (String(role || "").toLowerCase() === "sailor")
+              return "Sailor Dashboard";
+            if (String(role || "").toLowerCase() === "parent")
+              return "Parent Dashboard";
+            return "Parent Dashboard";
+          })()}
         </Link>
       )}
       {primaryProfile && (

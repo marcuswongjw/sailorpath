@@ -160,10 +160,10 @@ export function ParentDashboard() {
     );
   }
 
-  const title = isParentStyle ? "Parent dashboard" : "My sailors";
+  const title = isParentStyle ? "Parent Dashboard" : "Sailor Dashboard";
   const subtitle = isParentStyle
     ? "Rankings, recent results, gear alerts, and private notes."
-    : "Your linked athlete profiles and claim status.";
+    : "Your ranking, recent results, gear, and notes.";
 
   return (
     <div className="mx-auto max-w-3xl w-full px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
