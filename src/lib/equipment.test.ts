@@ -4,6 +4,10 @@ import {
   parseTags,
   serializeTags,
   displayName,
+  brandsForCategory,
+  groupEquipmentSections,
+  isCustomBrand,
+  BRAND_OTHER,
 } from "./equipment";
 
 describe("equipment helpers", () => {
@@ -19,6 +23,61 @@ describe("equipment helpers", () => {
     expect(displayName({ brand: "North", model: "3DL", category: "sail" })).toBe(
       "North 3DL"
     );
+  });
+
+  it("uses SG brand presets and allows other", () => {
+    expect(brandsForCategory("hull")).toContain("Winner");
+    expect(brandsForCategory("hull")).toContain("Faccenda");
+    expect(brandsForCategory("sail")).toContain("OneSail");
+    expect(brandsForCategory("daggerboard")).toContain("DSK");
+    expect(isCustomBrand("hull", "McLaughlin")).toBe(true);
+    expect(isCustomBrand("hull", "Winner")).toBe(false);
+    expect(BRAND_OTHER).toBe("Other");
+  });
+
+  it("groups mast/boom/sprit as mast set", () => {
+    const sections = groupEquipmentSections([
+      {
+        id: "1",
+        sailorId: "s",
+        boatClass: "optimist",
+        category: "mast",
+        brand: "Optiparts",
+        model: null,
+        label: null,
+        status: "active",
+        condition: "good",
+        isPrimary: true,
+        tags: [],
+        acquiredOn: null,
+        retiredOn: null,
+        useCount: 0,
+        lastUsedOn: null,
+        notes: null,
+      },
+      {
+        id: "2",
+        sailorId: "s",
+        boatClass: "optimist",
+        category: "daggerboard",
+        brand: "DSK",
+        model: null,
+        label: null,
+        status: "active",
+        condition: "good",
+        isPrimary: true,
+        tags: [],
+        acquiredOn: null,
+        retiredOn: null,
+        useCount: 0,
+        lastUsedOn: null,
+        notes: null,
+      },
+    ]);
+    const mast = sections.find((s) => s.id === "mast_set");
+    const foil = sections.find((s) => s.id === "foil_set");
+    expect(mast?.items).toHaveLength(1);
+    expect(foil?.items).toHaveLength(1);
   });
 
   it("flags worn sails and high use", () => {

@@ -28,19 +28,62 @@ export type EquipmentTag =
   | "heavy_air"
   | "travel";
 
+/**
+ * UI sections: Mast Set groups mast/boom/sprit; Foil Set groups board/rudder.
+ * Each line item is still a separate category (sub-detail).
+ */
 export const EQUIPMENT_CATEGORIES: {
   value: EquipmentCategory;
   label: string;
-  group: string;
+  /** Display section on inventory */
+  section: "hull" | "sail" | "mast_set" | "foil_set" | "other";
 }[] = [
-  { value: "hull", label: "Hull", group: "Boat" },
-  { value: "sail", label: "Sail", group: "Sail" },
-  { value: "mast", label: "Mast", group: "Spars" },
-  { value: "boom", label: "Boom", group: "Spars" },
-  { value: "sprit", label: "Sprit", group: "Spars" },
-  { value: "daggerboard", label: "Daggerboard", group: "Foils" },
-  { value: "rudder", label: "Rudder", group: "Foils" },
-  { value: "other", label: "Other", group: "Other" },
+  { value: "hull", label: "Hull", section: "hull" },
+  { value: "sail", label: "Sail", section: "sail" },
+  { value: "mast", label: "Mast", section: "mast_set" },
+  { value: "boom", label: "Boom", section: "mast_set" },
+  { value: "sprit", label: "Sprit", section: "mast_set" },
+  { value: "daggerboard", label: "Daggerboard", section: "foil_set" },
+  { value: "rudder", label: "Rudder", section: "foil_set" },
+  { value: "other", label: "Other", section: "other" },
+];
+
+export const EQUIPMENT_SECTIONS: {
+  id: "hull" | "sail" | "mast_set" | "foil_set" | "other";
+  label: string;
+  hint: string;
+  categories: EquipmentCategory[];
+}[] = [
+  {
+    id: "hull",
+    label: "Hull",
+    hint: "Boat / hull brand",
+    categories: ["hull"],
+  },
+  {
+    id: "sail",
+    label: "Sail",
+    hint: "Race and training sails",
+    categories: ["sail"],
+  },
+  {
+    id: "mast_set",
+    label: "Mast set",
+    hint: "Mast, boom & sprit — add each part as a sub-detail",
+    categories: ["mast", "boom", "sprit"],
+  },
+  {
+    id: "foil_set",
+    label: "Foil set",
+    hint: "Daggerboard & rudder — add each part as a sub-detail",
+    categories: ["daggerboard", "rudder"],
+  },
+  {
+    id: "other",
+    label: "Other",
+    hint: "Sheets, tiller, trolley, etc.",
+    categories: ["other"],
+  },
 ];
 
 export const EQUIPMENT_TAGS: { value: EquipmentTag; label: string }[] = [
@@ -51,15 +94,35 @@ export const EQUIPMENT_TAGS: { value: EquipmentTag; label: string }[] = [
   { value: "travel", label: "Travel" },
 ];
 
+/** Curated brand lists (SG Optimist common). Always allow free-text Other. */
 export const BRAND_PRESETS: Partial<Record<EquipmentCategory, string[]>> = {
-  hull: ["McLaughlin", "Winner", "Nautivela", "Blueblue", "Far East"],
-  sail: ["North", "Doyle", "Quantum", "One Sails", "WB-Sails"],
+  hull: ["Winner", "XSP", "Far East", "OnePlus", "Faccenda"],
+  sail: ["OneSail", "J-Sail", "Northsail", "CD Sails", "Olimpic Sail"],
+  /** Foil-set brands apply to both daggerboard and rudder */
+  daggerboard: ["DSK", "XSP", "Far East", "OnePlus"],
+  rudder: ["DSK", "XSP", "Far East", "OnePlus"],
+  /** Mast set — free-text heavy; light presets optional */
   mast: ["Optiparts", "Blackgold", "Selden"],
   boom: ["Optiparts", "Blackgold"],
   sprit: ["Optiparts", "Blackgold"],
-  daggerboard: ["Optiparts", "Nautix", "WinDesign"],
-  rudder: ["Optiparts", "Nautix", "WinDesign"],
 };
+
+export const BRAND_OTHER = "Other";
+
+export function brandsForCategory(category: EquipmentCategory): string[] {
+  return BRAND_PRESETS[category] || [];
+}
+
+/** True if brand is not in the preset list (custom / other). */
+export function isCustomBrand(
+  category: EquipmentCategory,
+  brand: string | null | undefined
+): boolean {
+  const b = String(brand || "").trim();
+  if (!b) return false;
+  const presets = brandsForCategory(category);
+  return !presets.some((p) => p.toLowerCase() === b.toLowerCase());
+}
 
 export type EquipmentItemDto = {
   id: string;
@@ -239,7 +302,14 @@ export function mapEquipmentRow(row: {
   };
 }
 
-/** Group for inventory layout */
+function sortItems(list: EquipmentItemDto[]) {
+  return [...list].sort((a, b) => {
+    if (a.isPrimary !== b.isPrimary) return a.isPrimary ? -1 : 1;
+    return (b.useCount || 0) - (a.useCount || 0);
+  });
+}
+
+/** Group by category (legacy helper). */
 export function groupEquipmentItems(items: EquipmentItemDto[]) {
   const order = EQUIPMENT_CATEGORIES.map((c) => c.value);
   const byCat = new Map<EquipmentCategory, EquipmentItemDto[]>();
@@ -253,10 +323,28 @@ export function groupEquipmentItems(items: EquipmentItemDto[]) {
     .map((cat) => ({
       category: cat,
       label: categoryLabel(cat),
-      items: (byCat.get(cat) || []).sort((a, b) => {
-        if (a.isPrimary !== b.isPrimary) return a.isPrimary ? -1 : 1;
-        return (b.useCount || 0) - (a.useCount || 0);
-      }),
+      items: sortItems(byCat.get(cat) || []),
     }))
     .filter((g) => g.items.length > 0);
+}
+
+/**
+ * Inventory sections for UI: Hull, Sail, Mast set, Foil set, Other.
+ * Mast set / Foil set contain sub-details (per category items).
+ */
+export function groupEquipmentSections(items: EquipmentItemDto[]) {
+  return EQUIPMENT_SECTIONS.map((sec) => {
+    const byCategory = sec.categories.map((cat) => ({
+      category: cat,
+      label: categoryLabel(cat),
+      items: sortItems(items.filter((i) => i.category === cat)),
+    }));
+    const allItems = byCategory.flatMap((g) => g.items);
+    return {
+      ...sec,
+      byCategory,
+      items: allItems,
+      isEmpty: allItems.length === 0,
+    };
+  });
 }

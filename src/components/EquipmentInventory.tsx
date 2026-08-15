@@ -10,12 +10,14 @@ import {
   X,
 } from "lucide-react";
 import {
-  BRAND_PRESETS,
-  EQUIPMENT_CATEGORIES,
+  BRAND_OTHER,
+  EQUIPMENT_SECTIONS,
   EQUIPMENT_TAGS,
+  brandsForCategory,
   categoryLabel,
   displayName,
-  groupEquipmentItems,
+  groupEquipmentSections,
+  isCustomBrand,
   type EquipmentBoatClass,
   type EquipmentCategory,
   type EquipmentCondition,
@@ -38,6 +40,7 @@ const emptyForm = {
   boatClass: "optimist" as EquipmentBoatClass,
   category: "sail" as EquipmentCategory,
   brand: "",
+  brandCustom: "",
   model: "",
   label: "",
   status: "active" as EquipmentStatus,
@@ -47,6 +50,13 @@ const emptyForm = {
   acquiredOn: "",
   notes: "",
 };
+
+function resolvedBrand(form: typeof emptyForm): string {
+  if (form.brand === BRAND_OTHER || isCustomBrand(form.category, form.brand)) {
+    return form.brandCustom.trim() || form.brand.trim();
+  }
+  return form.brand.trim();
+}
 
 export function EquipmentInventory({
   sailorId,
@@ -111,8 +121,11 @@ export function EquipmentInventory({
     () => items.filter((i) => i.boatClass === classTab),
     [items, classTab]
   );
-  const groups = useMemo(
-    () => groupEquipmentItems(classItems.filter((i) => i.status !== "retired")),
+  const sections = useMemo(
+    () =>
+      groupEquipmentSections(
+        classItems.filter((i) => i.status !== "retired")
+      ),
     [classItems]
   );
   const retired = classItems.filter((i) => i.status === "retired");
@@ -120,12 +133,15 @@ export function EquipmentInventory({
 
   const openAdd = (cat?: EquipmentCategory) => {
     setEditing(null);
+    const category = cat || "sail";
     setForm({
       ...emptyForm,
       boatClass: classTab,
-      category: cat || "sail",
+      category,
+      brand: brandsForCategory(category)[0] || "",
+      brandCustom: "",
       isPrimary: !classItems.some(
-        (i) => i.category === (cat || "sail") && i.isPrimary
+        (i) => i.category === category && i.isPrimary
       ),
     });
     setModal("add");
@@ -133,10 +149,12 @@ export function EquipmentInventory({
 
   const openEdit = (item: EquipmentItemDto) => {
     setEditing(item);
+    const custom = isCustomBrand(item.category, item.brand);
     setForm({
       boatClass: item.boatClass,
       category: item.category,
-      brand: item.brand || "",
+      brand: custom ? BRAND_OTHER : item.brand || "",
+      brandCustom: custom ? item.brand || "" : "",
       model: item.model || "",
       label: item.label || "",
       status: item.status,
@@ -163,11 +181,22 @@ export function EquipmentInventory({
     setBusy(true);
     setMsg(null);
     try {
+      const brand = resolvedBrand(form);
+      if (
+        (form.brand === BRAND_OTHER ||
+          isCustomBrand(form.category, form.brand)) &&
+        !form.brandCustom.trim() &&
+        form.brand === BRAND_OTHER
+      ) {
+        setMsg("Enter the brand name for Other");
+        setBusy(false);
+        return;
+      }
       const payload = {
         sailorId,
         boatClass: form.boatClass,
         category: form.category,
-        brand: form.brand || null,
+        brand: brand || null,
         model: form.model || null,
         label: form.label || null,
         status: form.status,
@@ -265,7 +294,10 @@ export function EquipmentInventory({
     }));
   };
 
-  const brandHints = BRAND_PRESETS[form.category] || [];
+  const brandPresets = brandsForCategory(form.category);
+  const showCustomBrand =
+    form.brand === BRAND_OTHER ||
+    (form.brand !== "" && isCustomBrand(form.category, form.brand));
 
   if (loading) {
     return (
@@ -384,17 +416,17 @@ export function EquipmentInventory({
         </div>
       )}
 
-      {groups.length === 0 ? (
+      {classItems.filter((i) => i.status !== "retired").length === 0 ? (
         <div className="py-8 text-center space-y-2">
           <Wrench className="h-7 w-7 text-slate-600 mx-auto" />
           <p className="text-xs text-slate-500">
             {classTab === "ilca4"
               ? isOwner
-                ? "No ILCA 4 gear yet — add your first hull, sail, or foils."
+                ? "No ILCA 4 gear yet — add hull, sail, or foil set."
                 : "No ILCA 4 equipment logged."
               : isOwner
-                ? "Add your race sail, foils, and spars to track wear."
-                : "No equipment shared yet."}
+                ? "Add hull, sail, mast set, and foil set to track wear."
+                : "No equipment logged yet."}
           </p>
           {isOwner && (
             <button
@@ -407,94 +439,92 @@ export function EquipmentInventory({
           )}
         </div>
       ) : (
-        <div className="space-y-4">
-          {groups.map((g) => (
-            <div key={g.category}>
-              <div className="flex items-center justify-between mb-1.5">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                  {g.label}
-                </p>
-                {isOwner && (
-                  <button
-                    type="button"
-                    onClick={() => openAdd(g.category)}
-                    className="text-[10px] font-bold text-orange-400/90"
-                  >
-                    + Add
-                  </button>
+        <div className="space-y-5">
+          {sections.map((sec) => {
+            if (sec.isEmpty && !isOwner) return null;
+            const isSet =
+              sec.id === "mast_set" || sec.id === "foil_set";
+            return (
+              <div
+                key={sec.id}
+                className="rounded-xl border border-white/5 bg-black/15 p-3 space-y-2.5"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="text-[11px] font-black uppercase tracking-wider text-slate-300">
+                      {sec.label}
+                    </p>
+                    <p className="text-[10px] text-slate-600 mt-0.5">
+                      {sec.hint}
+                    </p>
+                  </div>
+                  {isOwner && !isSet && (
+                    <button
+                      type="button"
+                      onClick={() => openAdd(sec.categories[0])}
+                      className="text-[10px] font-bold text-orange-400/90 shrink-0"
+                    >
+                      + Add
+                    </button>
+                  )}
+                </div>
+
+                {isSet && isOwner && (
+                  <div className="flex flex-wrap gap-1.5">
+                    {sec.categories.map((cat) => (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={() => openAdd(cat)}
+                        className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold text-slate-300 hover:border-orange-500/40 hover:text-orange-200"
+                      >
+                        + {categoryLabel(cat)}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {sec.isEmpty ? (
+                  <p className="text-[11px] text-slate-600 py-1">
+                    Nothing logged yet.
+                  </p>
+                ) : isSet ? (
+                  sec.byCategory
+                    .filter((g) => g.items.length > 0)
+                    .map((g) => (
+                      <div key={g.category} className="space-y-1.5">
+                        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wide pl-0.5">
+                          {g.label}
+                        </p>
+                        <ul className="space-y-2">
+                          {g.items.map((item) => (
+                            <EquipmentCard
+                              key={item.id}
+                              item={item}
+                              isOwner={isOwner}
+                              onLogUse={() => openLogUse(item)}
+                              onEdit={() => openEdit(item)}
+                            />
+                          ))}
+                        </ul>
+                      </div>
+                    ))
+                ) : (
+                  <ul className="space-y-2">
+                    {sec.items.map((item) => (
+                      <EquipmentCard
+                        key={item.id}
+                        item={item}
+                        isOwner={isOwner}
+                        onLogUse={() => openLogUse(item)}
+                        onEdit={() => openEdit(item)}
+                      />
+                    ))}
+                  </ul>
                 )}
               </div>
-              <ul className="space-y-2">
-                {g.items.map((item) => (
-                  <li
-                    key={item.id}
-                    className={`rounded-xl border px-3 py-2.5 ${
-                      item.needsAttention
-                        ? "border-amber-500/25 bg-amber-500/[0.06]"
-                        : "border-white/5 bg-black/20"
-                    }`}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="text-sm font-bold text-white flex items-center gap-1.5 flex-wrap">
-                          {item.isPrimary && (
-                            <Star className="h-3.5 w-3.5 text-amber-400 shrink-0 fill-amber-400/40" />
-                          )}
-                          {displayName(item)}
-                          {item.status === "backup" && (
-                            <span className="text-[9px] font-bold uppercase text-slate-500">
-                              backup
-                            </span>
-                          )}
-                        </p>
-                        <p className="text-[11px] text-slate-500 mt-0.5">
-                          {[
-                            item.brand && item.label ? item.brand : null,
-                            item.model,
-                            ...item.tags.map((t) =>
-                              t.replace(/_/g, " ")
-                            ),
-                            item.condition.replace(/_/g, " "),
-                            `${item.useCount} use${item.useCount === 1 ? "" : "s"}`,
-                          ]
-                            .filter(Boolean)
-                            .join(" · ")}
-                        </p>
-                        {item.lastUsedOn && (
-                          <p className="text-[10px] text-slate-600 mt-0.5">
-                            Last used {item.lastUsedOn}
-                          </p>
-                        )}
-                        {item.needsAttention && item.attentionReason && (
-                          <p className="text-[10px] text-amber-300/90 mt-1">
-                            {item.attentionReason}
-                          </p>
-                        )}
-                      </div>
-                      {isOwner && (
-                        <div className="flex flex-col gap-1 shrink-0">
-                          <button
-                            type="button"
-                            onClick={() => openLogUse(item)}
-                            className="text-[10px] font-bold text-sky-400"
-                          >
-                            Log use
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => openEdit(item)}
-                            className="text-[10px] font-bold text-slate-400"
-                          >
-                            Edit
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
@@ -632,42 +662,78 @@ export function EquipmentInventory({
                     </select>
                   </label>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                    Category
+                    Part
                     <select
                       value={form.category}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        const category = e.target
+                          .value as EquipmentCategory;
+                        const presets = brandsForCategory(category);
                         setForm((f) => ({
                           ...f,
-                          category: e.target.value as EquipmentCategory,
-                        }))
-                      }
+                          category,
+                          brand: presets[0] || BRAND_OTHER,
+                          brandCustom: "",
+                        }));
+                      }}
                       className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-2 py-2 text-sm text-white"
                     >
-                      {EQUIPMENT_CATEGORIES.map((c) => (
-                        <option key={c.value} value={c.value}>
-                          {c.label}
-                        </option>
+                      {EQUIPMENT_SECTIONS.map((sec) => (
+                        <optgroup key={sec.id} label={sec.label}>
+                          {sec.categories.map((cat) => (
+                            <option key={cat} value={cat}>
+                              {categoryLabel(cat)}
+                            </option>
+                          ))}
+                        </optgroup>
                       ))}
                     </select>
                   </label>
                 </div>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase">
                   Brand
-                  <input
-                    list={`brands-${form.category}`}
-                    value={form.brand}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, brand: e.target.value }))
+                  <select
+                    value={
+                      showCustomBrand && form.brand !== BRAND_OTHER
+                        ? BRAND_OTHER
+                        : form.brand || (brandPresets[0] ?? BRAND_OTHER)
                     }
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setForm((f) => ({
+                        ...f,
+                        brand: v,
+                        brandCustom:
+                          v === BRAND_OTHER ? f.brandCustom : "",
+                      }));
+                    }}
                     className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                    placeholder="e.g. North"
-                  />
-                  <datalist id={`brands-${form.category}`}>
-                    {brandHints.map((b) => (
-                      <option key={b} value={b} />
+                  >
+                    {brandPresets.map((b) => (
+                      <option key={b} value={b}>
+                        {b}
+                      </option>
                     ))}
-                  </datalist>
+                    <option value={BRAND_OTHER}>Other…</option>
+                  </select>
                 </label>
+                {showCustomBrand && (
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                    Other brand name
+                    <input
+                      value={form.brandCustom}
+                      onChange={(e) =>
+                        setForm((f) => ({
+                          ...f,
+                          brandCustom: e.target.value,
+                          brand: BRAND_OTHER,
+                        }))
+                      }
+                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                      placeholder="Type brand"
+                    />
+                  </label>
+                )}
                 <label className="block text-[10px] font-bold text-slate-500 uppercase">
                   Model / size
                   <input
@@ -767,7 +833,7 @@ export function EquipmentInventory({
                       setForm((f) => ({ ...f, isPrimary: e.target.checked }))
                     }
                   />
-                  Set as primary for this category
+                  Set as primary for this part
                 </label>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase">
                   Notes
@@ -814,5 +880,82 @@ export function EquipmentInventory({
         </div>
       )}
     </section>
+  );
+}
+
+function EquipmentCard({
+  item,
+  isOwner,
+  onLogUse,
+  onEdit,
+}: {
+  item: EquipmentItemDto;
+  isOwner: boolean;
+  onLogUse: () => void;
+  onEdit: () => void;
+}) {
+  return (
+    <li
+      className={`rounded-xl border px-3 py-2.5 list-none ${
+        item.needsAttention
+          ? "border-amber-500/25 bg-amber-500/[0.06]"
+          : "border-white/5 bg-black/20"
+      }`}
+    >
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <p className="text-sm font-bold text-white flex items-center gap-1.5 flex-wrap">
+            {item.isPrimary && (
+              <Star className="h-3.5 w-3.5 text-amber-400 shrink-0 fill-amber-400/40" />
+            )}
+            {displayName(item)}
+            {item.status === "backup" && (
+              <span className="text-[9px] font-bold uppercase text-slate-500">
+                backup
+              </span>
+            )}
+          </p>
+          <p className="text-[11px] text-slate-500 mt-0.5">
+            {[
+              item.brand && item.label ? item.brand : null,
+              item.model,
+              ...item.tags.map((t) => t.replace(/_/g, " ")),
+              item.condition.replace(/_/g, " "),
+              `${item.useCount} use${item.useCount === 1 ? "" : "s"}`,
+            ]
+              .filter(Boolean)
+              .join(" · ")}
+          </p>
+          {item.lastUsedOn && (
+            <p className="text-[10px] text-slate-600 mt-0.5">
+              Last used {item.lastUsedOn}
+            </p>
+          )}
+          {item.needsAttention && item.attentionReason && (
+            <p className="text-[10px] text-amber-300/90 mt-1">
+              {item.attentionReason}
+            </p>
+          )}
+        </div>
+        {isOwner && (
+          <div className="flex flex-col gap-1 shrink-0">
+            <button
+              type="button"
+              onClick={onLogUse}
+              className="text-[10px] font-bold text-sky-400"
+            >
+              Log use
+            </button>
+            <button
+              type="button"
+              onClick={onEdit}
+              className="text-[10px] font-bold text-slate-400"
+            >
+              Edit
+            </button>
+          </div>
+        )}
+      </div>
+    </li>
   );
 }
