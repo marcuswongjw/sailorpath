@@ -75,6 +75,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     nationalityFromSail: row.nationalityFromSail,
     avatarUrl: row.avatarUrl,
     parentId: row.parentId,
+    ownerRelation: (row as { ownerRelation?: string | null }).ownerRelation,
     goldEntryDate: row.goldEntryDate,
     silverEntryDate: row.silverEntryDate,
     dropDate: row.dropDate,

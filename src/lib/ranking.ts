@@ -18,6 +18,7 @@ export interface SailorRecord {
   nationality?: string | null;
   avatarUrl?: string | null;
   parentId?: string | null;
+  ownerRelation?: string | null;
   goldEntryDate: string | null;
   silverEntryDate: string | null;
   dropDate: string | null;

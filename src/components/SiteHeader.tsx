@@ -134,12 +134,22 @@ export function SiteHeader() {
       <span className="hidden xl:inline text-xs text-slate-300 max-w-[140px] truncate">
         {email}
       </span>
+      {(owned.length > 0 ||
+        (isSuperadmin && viewAs === "parent")) && (
+        <Link
+          href="/parent"
+          onClick={() => setMobileOpen(false)}
+          className="text-sm font-semibold text-emerald-400 hover:text-emerald-300"
+        >
+          Dashboard
+        </Link>
+      )}
       {primaryProfile && (
         <Link
           href={
             owned.length === 1
               ? `/${primaryProfile.handle}?edit=1`
-              : "/account#profiles"
+              : "/parent"
           }
           onClick={() => setMobileOpen(false)}
           className="text-sm font-semibold text-white hover:text-orange-300"

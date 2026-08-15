@@ -4,13 +4,21 @@ import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailorClaims, sailors } from "@/db/schema";
 import { trackUsage } from "@/lib/usage";
+import {
+  parseClaimRelation,
+  relationFromNote,
+  type ClaimRelation,
+} from "@/lib/claimRelation";
 
 /** Logged-in user requests to claim a sailor profile */
 export async function POST(req: Request) {
   try {
     const auth = await getAuthContext();
     if (!auth) {
-      return NextResponse.json({ error: "Sign in to claim a profile" }, { status: 401 });
+      return NextResponse.json(
+        { error: "Sign in to claim a profile" },
+        { status: 401 }
+      );
     }
     const body = await req.json();
     const sailorId = String(body.sailorId || "").trim();
@@ -18,8 +26,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "sailorId required" }, { status: 400 });
     }
 
+    const relation: ClaimRelation =
+      parseClaimRelation(body.relation) ||
+      relationFromNote(body.note) ||
+      "parent";
+
+    const noteRaw =
+      body.note != null ? String(body.note).trim().slice(0, 2000) : "";
+    // Keep [relation] prefix for admin readability if not already present
+    const note =
+      noteRaw && !/^\[(parent|sailor|other)\]/i.test(noteRaw)
+        ? `[${relation}] ${noteRaw}`
+        : noteRaw || `[${relation}]`;
+
     const [sailor] = await db
-      .select({ id: sailors.id, parentId: sailors.parentId, name: sailors.name })
+      .select({
+        id: sailors.id,
+        parentId: sailors.parentId,
+        name: sailors.name,
+      })
       .from(sailors)
       .where(eq(sailors.id, sailorId))
       .limit(1);
@@ -58,7 +83,8 @@ export async function POST(req: Request) {
         sailorId,
         requesterId: auth.userId,
         status: "pending",
-        note: body.note || null,
+        relation,
+        note: note || null,
       })
       .returning();
 
@@ -66,7 +92,7 @@ export async function POST(req: Request) {
       eventType: "claim_submit",
       path: "/api/claims",
       role: auth.role,
-      meta: { status: "pending" },
+      meta: { status: "pending", relation },
     });
 
     return NextResponse.json({

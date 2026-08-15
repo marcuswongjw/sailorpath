@@ -1361,13 +1361,14 @@ export function SailorProfileView({
                   method: "POST",
                   credentials: "include",
                 });
-                const note = `[${claimRelation}] ${claimNote.trim()}`;
+                const note = claimNote.trim();
                 const res = await fetch("/api/claims", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
                   credentials: "include",
                   body: JSON.stringify({
                     sailorId: initialSailor.id,
+                    relation: claimRelation,
                     note,
                   }),
                 });

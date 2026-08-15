@@ -208,6 +208,21 @@ function AccountInner() {
         </section>
       )}
 
+      <section className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6 space-y-3 w-full">
+        <h2 className="text-sm font-black text-white uppercase tracking-wider">
+          Parent / family dashboard
+        </h2>
+        <p className="text-xs text-slate-400 leading-relaxed">
+          Rankings snapshot, linked athletes, and claim status in one place.
+        </p>
+        <Link
+          href="/parent"
+          className="inline-flex rounded-full bg-emerald-600 hover:bg-emerald-500 px-4 py-2 text-[11px] font-bold text-white"
+        >
+          Open dashboard
+        </Link>
+      </section>
+
       {/* Managed profiles */}
       <section
         id="profiles"

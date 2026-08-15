@@ -58,6 +58,8 @@ export type SailorAdmin = {
   mastIlca4?: string | null;
   equipmentNotesIlca4?: string | null;
   parentId?: string | null;
+  /** parent | sailor | other — how the linked account relates */
+  ownerRelation?: string | null;
   createdAt?: Date | string | null;
   updatedAt?: Date | string | null;
 };

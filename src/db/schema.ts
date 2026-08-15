@@ -111,6 +111,13 @@ export const sailors = pgTable("sailors", {
   parentId: uuid("parent_id").references(() => profiles.id, {
     onDelete: "set null",
   }),
+  /**
+   * How the linked account relates to this sailor (set on claim approve).
+   * parent | sailor | other — drives parent dashboard vs self-profile copy.
+   */
+  ownerRelation: text("owner_relation", {
+    enum: ["parent", "sailor", "other"],
+  }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -221,6 +228,10 @@ export const sailorClaims = pgTable("sailor_claims", {
   })
     .default("pending")
     .notNull(),
+  /** Structured relation from claim form: parent | sailor | other */
+  relation: text("relation", {
+    enum: ["parent", "sailor", "other"],
+  }),
   note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
