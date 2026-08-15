@@ -872,6 +872,17 @@ export const getCachedFleetRankings = unstable_cache(
   { revalidate: 60 }
 );
 
+/**
+  * Shared 120s cache for public regattas list — speeds up directory pages.
+  */
+export const getCachedPublicRegattas = unstable_cache(
+  async (): Promise<RegattaRecord[]> => {
+    return listRegattas();
+  },
+  ["public-regattas-list-v1"],
+  { revalidate: 120 }
+);
+
 export async function ensureProfileForUser(user: {
   id: string;
   email?: string | null;

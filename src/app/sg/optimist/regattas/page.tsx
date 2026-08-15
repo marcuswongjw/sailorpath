@@ -1,10 +1,10 @@
 import { DbOffline } from "@/components/DbOffline";
 import { RegattasListClient } from "@/components/RegattasListClient";
-import { listRegattas } from "@/lib/queries";
+import { getCachedPublicRegattas } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 function isOptimistClass(boatClass: string | null | undefined): boolean {
   const s = String(boatClass || "Optimist")
@@ -19,7 +19,7 @@ function isOptimistClass(boatClass: string | null | undefined): boolean {
 
 export default async function OptimistRegattasPage() {
   try {
-    const all = await listRegattas();
+    const all = await getCachedPublicRegattas();
     const regattas = all.filter((r) => isOptimistClass(r.boatClass));
     return (
       <RegattasListClient

@@ -64,9 +64,12 @@ export default async function SailorProfilePage({
         sailor.sailNumberIlca4 || sailor.ilca4NationalList
       );
 
-      const [res, sStand, obs, equipHist] = await Promise.all([
+      const [res, sStand, iStand, obs, equipHist] = await Promise.all([
         getResultsForSailor(sailor.id),
         getSailorSeriesStanding(sailor.id).catch(() => null),
+        mayHaveIlca
+          ? getSailorIlcaStanding(sailor.id, "ILCA 4").catch(() => null)
+          : Promise.resolve(null),
         getRaceObservationsForSailor(sailor.id, {
           includePrivate: access.canSeePrivate,
         }).catch(() => []),
@@ -77,20 +80,21 @@ export default async function SailorProfilePage({
 
       results = res;
       seriesStanding = sStand;
+      ilcaStanding = iStand;
       observations = obs;
       equipmentHistory = equipHist;
 
-      const hasIlcaResults = (results || []).some((r) => {
-        const bc = String(r.boatClass || "").toLowerCase();
-        return bc.includes("ilca");
-      });
+      if (!ilcaStanding && !mayHaveIlca) {
+        const hasIlcaResults = (results || []).some((r) => {
+          const bc = String(r.boatClass || "").toLowerCase();
+          return bc.includes("ilca");
+        });
 
-      if (mayHaveIlca || hasIlcaResults) {
-        ilcaStanding = await getSailorIlcaStanding(sailor.id, "ILCA 4").catch(
-          () => null
-        );
-      } else {
-        ilcaStanding = null;
+        if (hasIlcaResults) {
+          ilcaStanding = await getSailorIlcaStanding(sailor.id, "ILCA 4").catch(
+            () => null
+          );
+        }
       }
     }
   } catch (e) {

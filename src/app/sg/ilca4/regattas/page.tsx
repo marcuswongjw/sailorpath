@@ -1,17 +1,17 @@
 import { DbOffline } from "@/components/DbOffline";
 import { RegattasListClient } from "@/components/RegattasListClient";
-import { listRegattas } from "@/lib/queries";
+import { getCachedPublicRegattas } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function Ilca4RegattasPage() {
   let regattas;
   let errorMsg: string | null = null;
 
   try {
-    const all = await listRegattas();
+    const all = await getCachedPublicRegattas();
     regattas = all.filter((r) => isIlcaSeriesClass(r.boatClass, "ILCA 4"));
   } catch (e) {
     errorMsg = e instanceof DbUnavailableError ? e.message : "DB error";

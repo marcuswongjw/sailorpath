@@ -45,6 +45,7 @@ import {
   ilcaHighPointsForResult,
   type ProfileResult,
 } from "@/lib/profileAnalytics";
+import dynamic from "next/dynamic";
 import {
   PROFILE_CARD_CLASS as cardClass,
   resolveDisplayFleet,
@@ -53,12 +54,24 @@ import {
   nationalityLabel,
   initials,
   formatFullDob,
-  PositionTrendChart,
   type SailorRecordProps,
   type RegattaResultItem,
   type ObservationItem,
   type SailorProfileViewProps,
 } from "@/components/sailor-profile";
+
+const PositionTrendChart = dynamic(
+  () =>
+    import("@/components/sailor-profile/PositionTrendChart").then(
+      (m) => m.PositionTrendChart
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-48 w-full animate-pulse rounded-2xl bg-white/5 border border-white/5" />
+    ),
+  }
+);
 
 export type {
   SailorRecordProps,
