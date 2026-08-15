@@ -46,6 +46,7 @@ import {
   type ProfileResult,
 } from "@/lib/profileAnalytics";
 import dynamic from "next/dynamic";
+import { EquipmentInventory } from "@/components/EquipmentInventory";
 import {
   PROFILE_CARD_CLASS as cardClass,
   resolveDisplayFleet,
@@ -1528,91 +1529,14 @@ export function SailorProfileView({
                 className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
               />
             </label>
-            <div className="sm:col-span-2 pt-1">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-orange-400/90 mb-2">
-                Optimist equipment
+            <div className="sm:col-span-2 rounded-xl border border-orange-500/15 bg-orange-500/[0.04] px-3 py-2.5">
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Manage sails, foils, and spars in the{" "}
+                <strong className="text-slate-200">Equipment</strong> section
+                below — add multiple items, tag racing vs training, and log uses.
+                Optimist-only sailors won&apos;t see ILCA fields until they
+                unlock ILCA 4 gear.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {(
-                  [
-                    ["hullBrand", "Hull brand"],
-                    ["sailMake", "Sail make"],
-                    ["foilBrand", "Foil brand"],
-                    ["mast", "Mast / spar"],
-                  ] as const
-                ).map(([key, label]) => (
-                  <label key={key} className="block">
-                    <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                      {label}
-                    </span>
-                    <input
-                      value={String(form[key] ?? "")}
-                      onChange={(e) =>
-                        setForm((f) => ({ ...f, [key]: e.target.value }))
-                      }
-                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                    />
-                  </label>
-                ))}
-                <label className="block sm:col-span-2">
-                  <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                    Optimist equipment notes
-                  </span>
-                  <input
-                    value={form.equipmentNotes || ""}
-                    onChange={(e) =>
-                      setForm((f) => ({
-                        ...f,
-                        equipmentNotes: e.target.value,
-                      }))
-                    }
-                    className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                  />
-                </label>
-              </div>
-            </div>
-            <div className="sm:col-span-2 pt-1">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-sky-400/90 mb-2">
-                ILCA 4 equipment
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {(
-                  [
-                    ["hullBrandIlca4", "Hull brand"],
-                    ["sailMakeIlca4", "Sail make"],
-                    ["foilBrandIlca4", "Foil brand"],
-                    ["mastIlca4", "Mast / spar"],
-                  ] as const
-                ).map(([key, label]) => (
-                  <label key={key} className="block">
-                    <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                      {label}
-                    </span>
-                    <input
-                      value={String(form[key] ?? "")}
-                      onChange={(e) =>
-                        setForm((f) => ({ ...f, [key]: e.target.value }))
-                      }
-                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                    />
-                  </label>
-                ))}
-                <label className="block sm:col-span-2">
-                  <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                    ILCA 4 equipment notes
-                  </span>
-                  <input
-                    value={form.equipmentNotesIlca4 || ""}
-                    onChange={(e) =>
-                      setForm((f) => ({
-                        ...f,
-                        equipmentNotesIlca4: e.target.value,
-                      }))
-                    }
-                    className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                  />
-                </label>
-              </div>
             </div>
             <div className="sm:col-span-2 rounded-xl border border-white/[0.07] p-3 space-y-2">
               <p className="text-[10px] font-bold uppercase tracking-wide text-neutral-500">
@@ -2764,87 +2688,28 @@ export function SailorProfileView({
         )}
 
         {showEquipmentSection && resultsTab !== "journey" && (
-        <section className={`${cardClass} p-5`}>
-          <div className="flex items-center gap-2 mb-1">
-            <Settings className="h-3.5 w-3.5 text-orange-400/90" />
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-              Equipment
-              {useIlcaStats
-                ? " · ILCA 4"
-                : hasIlcaResults || form.sailNumberIlca4
-                  ? " · Optimist"
-                  : ""}
-            </h2>
-          </div>
-          <p className="text-[11px] text-neutral-500 mb-4">
-            Hull, sail, foils &amp; mast
-            {hasIlcaResults || form.sailNumberIlca4
-              ? " — class-specific gear"
-              : ""}
-          </p>
-          {(() => {
-            const showIlcaGear = useIlcaStats;
-            const rows = showIlcaGear
-              ? ([
-                  ["Hull", displaySailor.hullBrandIlca4],
-                  ["Sail", displaySailor.sailMakeIlca4],
-                  ["Foils", displaySailor.foilBrandIlca4],
-                  ["Mast", displaySailor.mastIlca4],
-                ] as const)
-              : ([
-                  ["Hull", displayEquipment.hullBrand],
-                  ["Sail", displayEquipment.sailMake],
-                  ["Foils", displayEquipment.foilBrand],
-                  ["Mast", displayEquipment.mast],
-                ] as const);
-            const notes = showIlcaGear
-              ? displaySailor.equipmentNotesIlca4
-              : displayEquipment.notes;
-            const hasAny = rows.some(([, v]) => v) || notes;
-            if (!showEquipment) {
-              return (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
-                  <p className="text-xs text-neutral-500">
-                    Equipment is private.
-                  </p>
-                </div>
-              );
-            }
-            if (!hasAny) {
-              return (
-                <div className="flex flex-col items-center py-6 text-center">
-                  <EyeOff className="h-6 w-6 text-neutral-700 mb-2" />
-                  <p className="text-xs text-neutral-500">
-                    {isOwner
-                      ? "No equipment yet — use Edit to add gear."
-                      : "No equipment logged yet."}
-                  </p>
-                </div>
-              );
-            }
-            return (
-              <div className="space-y-0">
-                {rows.map(([label, val]) => (
-                  <div
-                    key={label}
-                    className="flex justify-between py-2.5 border-b border-white/[0.05] last:border-0 text-sm"
-                  >
-                    <span className="text-neutral-500">{label}</span>
-                    <span className="text-white font-medium">
-                      {val ? String(val) : "—"}
-                    </span>
-                  </div>
-                ))}
-                {notes ? (
-                  <p className="mt-3 text-xs text-neutral-500">
-                    {String(notes)}
-                  </p>
-                ) : null}
-              </div>
-            );
-          })()}
-        </section>
+        <EquipmentInventory
+          sailorId={initialSailor.id}
+          isOwner={isOwner}
+          canSeeEquipment={showEquipment || isOwner}
+          mayHaveIlca={Boolean(
+            hasIlcaResults ||
+              displaySailor.sailNumberIlca4 ||
+              displaySailor.ilca4NationalList
+          )}
+          regattaOptions={(results || [])
+            .filter((r) => r.regattaId)
+            .map((r) => ({
+              id: String(r.regattaId),
+              name: String(r.regattaName || "Regatta"),
+              date: String(r.regattaDate || "").slice(0, 10),
+            }))
+            .filter(
+              (r, i, arr) => arr.findIndex((x) => x.id === r.id) === i
+            )
+            .slice(0, 40)}
+          cardClass={cardClass}
+        />
         )}
       </div>
 

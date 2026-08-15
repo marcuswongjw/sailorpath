@@ -265,7 +265,7 @@ export const raceObservations = pgTable(
 );
 
 /**
- * Equipment change log — optional dated snapshots (current gear also on sailors).
+ * Equipment change log — optional dated snapshots (legacy; prefer equipment_items).
  */
 export const equipmentLogs = pgTable("equipment_logs", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
@@ -281,6 +281,78 @@ export const equipmentLogs = pgTable("equipment_logs", {
   regattaId: uuid("regatta_id").references(() => regattas.id, {
     onDelete: "set null",
   }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+/**
+ * Multi-item equipment inventory (Optimist / ILCA 4).
+ */
+export const equipmentItems = pgTable("equipment_items", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  sailorId: uuid("sailor_id")
+    .references(() => sailors.id, { onDelete: "cascade" })
+    .notNull(),
+  boatClass: text("boat_class", {
+    enum: ["optimist", "ilca4", "other"],
+  })
+    .default("optimist")
+    .notNull(),
+  category: text("category", {
+    enum: [
+      "hull",
+      "sail",
+      "mast",
+      "boom",
+      "sprit",
+      "daggerboard",
+      "rudder",
+      "other",
+    ],
+  }).notNull(),
+  brand: text("brand"),
+  model: text("model"),
+  label: text("label"),
+  status: text("status", {
+    enum: ["active", "backup", "retired"],
+  })
+    .default("active")
+    .notNull(),
+  condition: text("condition", {
+    enum: ["new", "good", "fair", "worn", "replace_soon"],
+  })
+    .default("good")
+    .notNull(),
+  isPrimary: boolean("is_primary").default(false).notNull(),
+  /** Comma-separated tags: racing,training,light_air,heavy_air,travel */
+  tags: text("tags"),
+  acquiredOn: date("acquired_on"),
+  retiredOn: date("retired_on"),
+  useCount: integer("use_count").default(0).notNull(),
+  lastUsedOn: date("last_used_on"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+/** Individual use events for equipment items */
+export const equipmentUsages = pgTable("equipment_usages", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  equipmentItemId: uuid("equipment_item_id")
+    .references(() => equipmentItems.id, { onDelete: "cascade" })
+    .notNull(),
+  sailorId: uuid("sailor_id")
+    .references(() => sailors.id, { onDelete: "cascade" })
+    .notNull(),
+  usedOn: date("used_on").notNull(),
+  regattaId: uuid("regatta_id").references(() => regattas.id, {
+    onDelete: "set null",
+  }),
+  source: text("source", {
+    enum: ["manual", "regatta", "import"],
+  })
+    .default("manual")
+    .notNull(),
+  note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
