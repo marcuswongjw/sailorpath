@@ -745,13 +745,17 @@ export function EquipmentInventory({
                   />
                 </label>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                  Nickname
+                  {form.category === "hull" ? "Boat number" : "Nickname"}
                   <input
                     value={form.label}
                     onChange={(e) =>
                       setForm((f) => ({ ...f, label: e.target.value }))
                     }
-                    placeholder="Race sail"
+                    placeholder={
+                      form.category === "hull"
+                        ? "e.g. SGP 115 hull #"
+                        : "e.g. Race sail"
+                    }
                     className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
                   />
                 </label>

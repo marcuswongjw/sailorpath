@@ -1380,7 +1380,7 @@ export function SailorProfileView({
                 setClaimPanelOpen(false);
                 setClaimMsg(
                   data.message ||
-                    "Claim submitted with your email for admin review."
+                    "Claim submitted. Please wait for confirmation."
                 );
               } catch (e: unknown) {
                 setClaimStatus("error");
@@ -2187,7 +2187,7 @@ export function SailorProfileView({
               }`}
             >
               <span />
-              <span>{primaryIsIlca ? "Points" : "Pos"}</span>
+              <span>{primaryIsIlca ? "Points" : "Rank"}</span>
               <span>Event</span>
               <span className="text-right">
                 {primaryIsIlca ? "Rank" : "Nett Score"}
@@ -2346,6 +2346,13 @@ export function SailorProfileView({
                             ))}
                           </div>
                         )}
+                        {raceNotes.length > 0 && (
+                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-[10px] font-semibold text-sky-200">
+                            <StickyNote className="h-3 w-3" />
+                            {raceNotes.length} note
+                            {raceNotes.length === 1 ? "" : "s"}
+                          </span>
+                        )}
                         {isOwner && (
                           <button
                             type="button"
@@ -2353,10 +2360,14 @@ export function SailorProfileView({
                               e.stopPropagation();
                               setExpandedRegattaId(regattaId);
                             }}
-                            className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-orange-500/25 bg-orange-500/10 px-2 py-0.5 text-[10px] font-semibold text-orange-200 hover:bg-orange-500/20"
+                            className={`mt-1.5 inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[10px] font-semibold ${
+                              raceNotes.length > 0
+                                ? "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
+                                : "border-orange-500/25 bg-orange-500/10 text-orange-200 hover:bg-orange-500/20"
+                            }`}
                           >
                             <StickyNote className="h-3 w-3" />
-                            Add note
+                            {raceNotes.length > 0 ? "View notes" : "Add note"}
                           </button>
                         )}
                       </div>

@@ -118,7 +118,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       ok: true,
       claim,
-      message: `Claim submitted for ${sailor.name}. A superadmin will review.`,
+      message: `Claim submitted for ${sailor.name}. Please wait for confirmation.`,
     });
   } catch (e) {
     console.error("claims POST", e);
