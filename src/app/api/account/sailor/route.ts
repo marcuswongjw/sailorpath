@@ -5,10 +5,15 @@ import { db } from "@/db";
 import { equipmentLogs, sailorAliases, sailors } from "@/db/schema";
 import { validateHandle } from "@/lib/handles";
 import { normalizeDob } from "@/lib/normalize";
+import {
+  asHttpUrl,
+  asOptionalNumber,
+  asString,
+  asUuid,
+} from "@/lib/validate";
 
 function strOrNull(v: unknown, max: number) {
-  if (v === null || v === undefined || v === "") return null;
-  return String(v).slice(0, max);
+  return asString(v, max);
 }
 
 /**
@@ -23,10 +28,11 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json();
-    const sailorId = String(body.sailorId || "").trim();
-    if (!sailorId) {
-      return NextResponse.json({ error: "sailorId required" }, { status: 400 });
+    const sailorIdR = asUuid(body.sailorId, "sailorId");
+    if (!sailorIdR.ok) {
+      return NextResponse.json({ error: sailorIdR.error }, { status: 400 });
     }
+    const sailorId = sailorIdR.value;
 
     const [sailor] = await db
       .select({
@@ -110,14 +116,11 @@ export async function PATCH(req: Request) {
       patch.instagram = strOrNull(body.instagram, 80);
     }
     if (body.avatarUrl !== undefined) {
-      const url = strOrNull(body.avatarUrl, 500);
-      if (url && !/^https?:\/\//i.test(url)) {
-        return NextResponse.json(
-          { error: "Avatar URL must start with http:// or https://" },
-          { status: 400 }
-        );
+      const urlR = asHttpUrl(body.avatarUrl, "avatarUrl", 500);
+      if (!urlR.ok) {
+        return NextResponse.json({ error: urlR.error }, { status: 400 });
       }
-      patch.avatarUrl = url;
+      patch.avatarUrl = urlR.value;
     }
     if (body.school !== undefined) {
       patch.school = strOrNull(body.school, 120);
@@ -168,18 +171,19 @@ export async function PATCH(req: Request) {
       }
     }
     if (body.weight !== undefined) {
-      if (body.weight === null || body.weight === "") {
-        patch.weight = null;
-      } else {
-        const w = Number(body.weight);
-        if (!Number.isFinite(w) || w < 20 || w > 120) {
-          return NextResponse.json(
-            { error: "Weight must be between 20 and 120 kg" },
-            { status: 400 }
-          );
-        }
-        patch.weight = Math.round(w);
+      const wR = asOptionalNumber(body.weight, {
+        min: 20,
+        max: 120,
+        field: "weight",
+      });
+      if (!wR.ok) {
+        return NextResponse.json(
+          { error: "Weight must be between 20 and 120 kg" },
+          { status: 400 }
+        );
       }
+      patch.weight =
+        wR.value == null ? null : Math.round(wR.value);
     }
     if (typeof body.isPublicWeight === "boolean") {
       patch.isPublicWeight = body.isPublicWeight;

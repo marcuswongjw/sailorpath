@@ -4,6 +4,12 @@ import { getAuthContext, jsonError, requireSuperadmin } from "@/lib/auth";
 import { db } from "@/db";
 import { supportMessages } from "@/db/schema";
 import { trackUsage } from "@/lib/usage";
+import {
+  clientIpFromRequest,
+  rateLimit,
+  rateLimitResponse,
+} from "@/lib/rateLimit";
+import { asBoundedText, asEmail, asHttpUrl, asString } from "@/lib/validate";
 
 const TOPICS = new Set([
   "account",
@@ -18,29 +24,37 @@ const TOPICS = new Set([
 /** Public: submit a support message */
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const email = String(body.email || "")
-      .trim()
-      .toLowerCase();
-    const message = String(body.body || body.message || "").trim();
-    const name = body.name != null ? String(body.name).trim().slice(0, 120) : null;
-    const topicRaw = String(body.topic || "other").toLowerCase();
-    const topic = TOPICS.has(topicRaw) ? topicRaw : "other";
-    const pageUrl =
-      body.pageUrl != null ? String(body.pageUrl).trim().slice(0, 500) : null;
+    const ip = clientIpFromRequest(req);
+    const rl = rateLimit(`support:${ip}`, 5, 15 * 60 * 1000);
+    if (!rl.ok) return rateLimitResponse(rl.retryAfterSec);
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: "Valid email required" }, { status: 400 });
+    const body = await req.json();
+    const emailR = asEmail(body.email);
+    if (!emailR.ok) {
+      return NextResponse.json({ error: emailR.error }, { status: 400 });
     }
-    if (message.length < 10) {
+    const messageR = asBoundedText(body.body ?? body.message, {
+      min: 10,
+      max: 4000,
+      field: "message",
+      required: true,
+    });
+    if (!messageR.ok || !messageR.value) {
       return NextResponse.json(
-        { error: "Please write a bit more detail (10+ characters)" },
+        { error: messageR.ok ? "Message required" : messageR.error },
         { status: 400 }
       );
     }
-    if (message.length > 4000) {
-      return NextResponse.json({ error: "Message too long" }, { status: 400 });
+    const name = asString(body.name, 120);
+    const topicRaw = String(body.topic || "other").toLowerCase();
+    const topic = TOPICS.has(topicRaw) ? topicRaw : "other";
+    const pageUrlR = asHttpUrl(body.pageUrl, "pageUrl", 500);
+    if (!pageUrlR.ok) {
+      return NextResponse.json({ error: pageUrlR.error }, { status: 400 });
     }
+    const email = emailR.value;
+    const message = messageR.value;
+    const pageUrl = pageUrlR.value;
 
     let userId: string | null = null;
     try {

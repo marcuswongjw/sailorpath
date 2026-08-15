@@ -8,6 +8,7 @@ import {
   date,
   real,
   unique,
+  index,
 } from "drizzle-orm/pg-core";
 
 export const profiles = pgTable("profiles", {
@@ -120,7 +121,11 @@ export const sailors = pgTable("sailors", {
   }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+},
+  (table) => ({
+    parentIdIdx: index("sailors_parent_id_idx").on(table.parentId),
+  })
+);
 
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
@@ -202,6 +207,7 @@ export const regattaResults = pgTable(
   },
   (table) => ({
     unq: unique().on(table.sailorId, table.regattaId),
+    regattaIdIdx: index("regatta_results_regatta_id_idx").on(table.regattaId),
   })
 );
 
@@ -396,20 +402,29 @@ export const supportMessages = pgTable("support_messages", {
  * Privacy-light product usage events (page views, key actions).
  * No free-text PII — path + event type + optional role/session only.
  */
-export const usageEvents = pgTable("usage_events", {
-  id: uuid("id").primaryKey().defaultRandom().notNull(),
-  /** e.g. page_view, ranking_view, profile_view, import, claim, support */
-  eventType: text("event_type").notNull(),
-  /** Pathname only, e.g. /sg/optimist/gold — no query strings with tokens */
-  path: text("path"),
-  /** Optional coarse role if known: public | sailor | parent | coach | superadmin */
-  role: text("role"),
-  /** Anonymous browser session id (client-generated UUID) */
-  sessionId: text("session_id"),
-  /** Optional JSON string for small meta (fleet, period) — no emails/names */
-  meta: text("meta"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+export const usageEvents = pgTable(
+  "usage_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    /** e.g. page_view, ranking_view, profile_view, import, claim, support */
+    eventType: text("event_type").notNull(),
+    /** Pathname only, e.g. /sg/optimist/gold — no query strings with tokens */
+    path: text("path"),
+    /** Optional coarse role if known: public | sailor | parent | coach | superadmin */
+    role: text("role"),
+    /** Anonymous browser session id (client-generated UUID) */
+    sessionId: text("session_id"),
+    /** Optional JSON string for small meta (fleet, period) — no emails/names */
+    meta: text("meta"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    createdTypeIdx: index("usage_events_created_type_idx").on(
+      table.createdAt,
+      table.eventType
+    ),
+  })
+);
 
 /**
  * Admin/data audit trail — may include sailor names (superadmin UI only).

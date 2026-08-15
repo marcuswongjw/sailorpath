@@ -9,6 +9,12 @@ import {
   relationFromNote,
   type ClaimRelation,
 } from "@/lib/claimRelation";
+import {
+  clientIpFromRequest,
+  rateLimit,
+  rateLimitResponse,
+} from "@/lib/rateLimit";
+import { asBoundedText, asUuid } from "@/lib/validate";
 
 /** Logged-in user requests to claim a sailor profile */
 export async function POST(req: Request) {
@@ -20,19 +26,33 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
+    const rl = rateLimit(
+      `claims:${auth.userId}:${clientIpFromRequest(req)}`,
+      10,
+      60 * 60 * 1000
+    );
+    if (!rl.ok) return rateLimitResponse(rl.retryAfterSec);
+
     const body = await req.json();
-    const sailorId = String(body.sailorId || "").trim();
-    if (!sailorId) {
-      return NextResponse.json({ error: "sailorId required" }, { status: 400 });
+    const sailorIdR = asUuid(body.sailorId, "sailorId");
+    if (!sailorIdR.ok) {
+      return NextResponse.json({ error: sailorIdR.error }, { status: 400 });
     }
+    const sailorId = sailorIdR.value;
 
     const relation: ClaimRelation =
       parseClaimRelation(body.relation) ||
       relationFromNote(body.note) ||
       "parent";
 
-    const noteRaw =
-      body.note != null ? String(body.note).trim().slice(0, 2000) : "";
+    const noteR = asBoundedText(body.note, {
+      max: 2000,
+      field: "note",
+    });
+    if (!noteR.ok) {
+      return NextResponse.json({ error: noteR.error }, { status: 400 });
+    }
+    const noteRaw = noteR.value || "";
     // Keep [relation] prefix for admin readability if not already present
     const note =
       noteRaw && !/^\[(parent|sailor|other)\]/i.test(noteRaw)

@@ -15,6 +15,11 @@ import {
   type SailorRecord,
 } from "@/lib/ranking";
 import { periodHalfFromYmd } from "@/lib/datesSg";
+import {
+  asOptionalNumber,
+  asRank,
+  asUuid,
+} from "@/lib/validate";
 
 function parseBool(v: unknown): boolean {
   return (
@@ -337,9 +342,17 @@ export async function POST(req: Request) {
       });
     }
 
-    if (!body.sailorId || !body.regattaId) {
+    const sailorIdR = asUuid(body.sailorId, "sailorId");
+    const regattaIdR = asUuid(body.regattaId, "regattaId");
+    if (!sailorIdR.ok || !regattaIdR.ok) {
       return NextResponse.json(
-        { error: "sailorId and regattaId are required" },
+        {
+          error: !sailorIdR.ok
+            ? sailorIdR.error
+            : regattaIdR.ok
+              ? "sailorId and regattaId are required"
+              : regattaIdR.error,
+        },
         { status: 400 }
       );
     }
@@ -351,38 +364,56 @@ export async function POST(req: Request) {
     const [regMeta] = await db
       .select({ totalFleetSize: regattas.totalFleetSize })
       .from(regattas)
-      .where(eq(regattas.id, body.regattaId))
+      .where(eq(regattas.id, regattaIdR.value))
       .limit(1);
     const dnsPoints = Math.max(1, (regMeta?.totalFleetSize || 50) + 1);
 
-    let rank = Math.round(Number(body.rank));
-    if (!Number.isFinite(rank) || rank <= 0) {
+    let rank: number;
+    if (body.rank === null || body.rank === undefined || body.rank === "") {
       // Default DNS points from regatta fleet size when marking DNS without rank
-      if (isDns) {
-        rank = dnsPoints;
-      } else {
-        rank = 999;
+      rank = isDns ? dnsPoints : dnsPoints;
+      if (!isDns) {
+        return NextResponse.json(
+          { error: "rank is required for non-DNS results (integer ≥ 1)" },
+          { status: 400 }
+        );
       }
+    } else {
+      const rankR = asRank(body.rank);
+      if (!rankR.ok) {
+        return NextResponse.json({ error: rankR.error }, { status: 400 });
+      }
+      rank = rankR.value;
     }
     // Real finish better than DNS (fleet+1) → not a DNS
     if (isDns && rank < dnsPoints) {
       isDns = false;
     }
     // Nett is optional (e.g. overseas commitment has ranking points but no race nett)
-    const nettScore =
-      body.nettScore != null && body.nettScore !== ""
-        ? Number(body.nettScore)
-        : null;
-    const totalScore =
-      body.totalScore != null && body.totalScore !== ""
-        ? Number(body.totalScore)
-        : null;
+    const nettR = asOptionalNumber(body.nettScore, {
+      min: 0,
+      max: 100_000,
+      field: "nettScore",
+    });
+    const totalR = asOptionalNumber(body.totalScore, {
+      min: 0,
+      max: 100_000,
+      field: "totalScore",
+    });
+    if (!nettR.ok) {
+      return NextResponse.json({ error: nettR.error }, { status: 400 });
+    }
+    if (!totalR.ok) {
+      return NextResponse.json({ error: totalR.error }, { status: 400 });
+    }
+    const nettScore = nettR.value;
+    const totalScore = totalR.value;
 
     const [row] = await db
       .insert(regattaResults)
       .values({
-        sailorId: body.sailorId,
-        regattaId: body.regattaId,
+        sailorId: sailorIdR.value,
+        regattaId: regattaIdR.value,
         rank,
         nettScore,
         totalScore,
@@ -419,23 +450,40 @@ export async function PATCH(req: Request) {
   try {
     await requireSuperadmin();
     const body = await req.json();
-    if (!body.id) {
-      return NextResponse.json({ error: "id required" }, { status: 400 });
+    const idR = asUuid(body.id, "id");
+    if (!idR.ok) {
+      return NextResponse.json({ error: idR.error }, { status: 400 });
     }
 
     const patch: Record<string, unknown> = { updatedAt: new Date() };
-    if (body.rank !== undefined) patch.rank = Number(body.rank) || 999;
+    if (body.rank !== undefined) {
+      const rankR = asRank(body.rank);
+      if (!rankR.ok) {
+        return NextResponse.json({ error: rankR.error }, { status: 400 });
+      }
+      patch.rank = rankR.value;
+    }
     if (body.nettScore !== undefined) {
-      patch.nettScore =
-        body.nettScore === "" || body.nettScore == null
-          ? null
-          : Number(body.nettScore);
+      const nettR = asOptionalNumber(body.nettScore, {
+        min: 0,
+        max: 100_000,
+        field: "nettScore",
+      });
+      if (!nettR.ok) {
+        return NextResponse.json({ error: nettR.error }, { status: 400 });
+      }
+      patch.nettScore = nettR.value;
     }
     if (body.totalScore !== undefined) {
-      patch.totalScore =
-        body.totalScore === "" || body.totalScore == null
-          ? null
-          : Number(body.totalScore);
+      const totalR = asOptionalNumber(body.totalScore, {
+        min: 0,
+        max: 100_000,
+        field: "totalScore",
+      });
+      if (!totalR.ok) {
+        return NextResponse.json({ error: totalR.error }, { status: 400 });
+      }
+      patch.totalScore = totalR.value;
     }
     if (body.isDns !== undefined || body.isDNS !== undefined) {
       patch.isDns = parseDns(body);
@@ -451,13 +499,25 @@ export async function PATCH(req: Request) {
         patch.isDns = false;
       }
     }
-    if (body.sailorId !== undefined) patch.sailorId = body.sailorId;
-    if (body.regattaId !== undefined) patch.regattaId = body.regattaId;
+    if (body.sailorId !== undefined) {
+      const s = asUuid(body.sailorId, "sailorId");
+      if (!s.ok) {
+        return NextResponse.json({ error: s.error }, { status: 400 });
+      }
+      patch.sailorId = s.value;
+    }
+    if (body.regattaId !== undefined) {
+      const r = asUuid(body.regattaId, "regattaId");
+      if (!r.ok) {
+        return NextResponse.json({ error: r.error }, { status: 400 });
+      }
+      patch.regattaId = r.value;
+    }
 
     const [existing] = await db
       .select()
       .from(regattaResults)
-      .where(eq(regattaResults.id, body.id))
+      .where(eq(regattaResults.id, idR.value))
       .limit(1);
 
     // If turning on DNS without changing rank, set default fleet+1
@@ -513,7 +573,7 @@ export async function PATCH(req: Request) {
     const [row] = await db
       .update(regattaResults)
       .set(patch as typeof regattaResults.$inferInsert)
-      .where(eq(regattaResults.id, body.id))
+      .where(eq(regattaResults.id, idR.value))
       .returning();
 
     if (!row) {
