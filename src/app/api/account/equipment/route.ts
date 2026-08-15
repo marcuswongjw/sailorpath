@@ -21,6 +21,32 @@ import {
 } from "@/lib/equipment";
 import { todayYmdSg } from "@/lib/datesSg";
 
+function resolveSessionSource(body: {
+  sessionType?: unknown;
+  regattaId?: unknown;
+}): { source: "regatta" | "training" | "manual"; regattaId: string | null } {
+  const rawType = String(body.sessionType || "")
+    .trim()
+    .toLowerCase();
+  const regattaId = body.regattaId ? String(body.regattaId).trim() : null;
+  if (rawType === "training") {
+    return { source: "training", regattaId: null };
+  }
+  if (rawType === "regatta" || regattaId) {
+    return { source: "regatta", regattaId: regattaId || null };
+  }
+  // Legacy: regatta link ⇒ regatta, else training-style manual
+  if (regattaId) return { source: "regatta", regattaId };
+  return { source: "training", regattaId: null };
+}
+
+function isRegattaSession(source: string | null | undefined, regattaId: string | null) {
+  if (source === "regatta") return true;
+  if (source === "training") return false;
+  // Legacy rows: linked regatta counted as regatta
+  return Boolean(regattaId);
+}
+
 async function assertCanEdit(sailorId: string, userId: string, role: string) {
   const [sailor] = await db
     .select({ id: sailors.id, parentId: sailors.parentId })
@@ -159,6 +185,8 @@ export async function GET(req: Request) {
     // Usage history + ranks for equipment ↔ results linkage
     const itemIds = rows.map((r) => r.id);
     const historyByItem = new Map<string, EquipmentUsageHistory[]>();
+    const regattaCountByItem = new Map<string, number>();
+    const trainingCountByItem = new Map<string, number>();
     /** regattaId → compact gear labels for results list */
     const gearByRegatta: Record<
       string,
@@ -172,6 +200,7 @@ export async function GET(req: Request) {
             equipmentItemId: equipmentUsages.equipmentItemId,
             usedOn: equipmentUsages.usedOn,
             regattaId: equipmentUsages.regattaId,
+            source: equipmentUsages.source,
             regattaName: regattas.name,
             regattaDate: regattas.date,
           })
@@ -217,6 +246,19 @@ export async function GET(req: Request) {
         );
 
         for (const u of usageRows) {
+          const isReg = isRegattaSession(u.source, u.regattaId);
+          if (isReg) {
+            regattaCountByItem.set(
+              u.equipmentItemId,
+              (regattaCountByItem.get(u.equipmentItemId) || 0) + 1
+            );
+          } else {
+            trainingCountByItem.set(
+              u.equipmentItemId,
+              (trainingCountByItem.get(u.equipmentItemId) || 0) + 1
+            );
+          }
+
           const hist: EquipmentUsageHistory = {
             regattaId: u.regattaId,
             regattaName: u.regattaName || null,
@@ -260,6 +302,8 @@ export async function GET(req: Request) {
         acquiredOn: r.acquiredOn ? String(r.acquiredOn) : null,
         retiredOn: r.retiredOn ? String(r.retiredOn) : null,
         lastUsedOn: r.lastUsedOn ? String(r.lastUsedOn) : null,
+        regattaUseCount: regattaCountByItem.get(r.id) || 0,
+        trainingUseCount: trainingCountByItem.get(r.id) || 0,
       });
       return {
         ...base,
@@ -492,22 +536,40 @@ export async function PATCH(req: Request) {
         }
         return NextResponse.json({ ok: true, action: "tag", count: ids.length });
       }
-      if (action === "logUse") {
+      if (action === "logUse" || action === "logSession") {
         const usedOn = body.usedOn
           ? String(body.usedOn).slice(0, 10)
           : todayYmdSg();
-        const regattaId = body.regattaId
-          ? String(body.regattaId).trim()
-          : null;
+        const { source, regattaId } = resolveSessionSource(body);
+        if (source === "regatta" && !regattaId) {
+          return NextResponse.json(
+            { error: "Select a regatta for regatta sessions" },
+            { status: 400 }
+          );
+        }
+        const wind = parseWindRange(body.wind);
         for (const r of rows) {
-          await db.insert(equipmentUsages).values({
-            equipmentItemId: r.id,
-            sailorId,
-            usedOn,
-            regattaId: regattaId || null,
-            source: regattaId ? "regatta" : "manual",
-            note: body.note != null ? String(body.note).slice(0, 500) : null,
-          });
+          try {
+            await db.insert(equipmentUsages).values({
+              equipmentItemId: r.id,
+              sailorId,
+              usedOn,
+              regattaId: regattaId || null,
+              source,
+              wind,
+              note: body.note != null ? String(body.note).slice(0, 500) : null,
+            });
+          } catch {
+            // wind column may be missing until migration 042 — retry without wind
+            await db.insert(equipmentUsages).values({
+              equipmentItemId: r.id,
+              sailorId,
+              usedOn,
+              regattaId: regattaId || null,
+              source,
+              note: body.note != null ? String(body.note).slice(0, 500) : null,
+            });
+          }
           await db
             .update(equipmentItems)
             .set({
@@ -517,7 +579,11 @@ export async function PATCH(req: Request) {
             })
             .where(eq(equipmentItems.id, r.id));
         }
-        return NextResponse.json({ ok: true, action: "logUse", count: ids.length });
+        return NextResponse.json({
+          ok: true,
+          action: "logSession",
+          count: ids.length,
+        });
       }
       return NextResponse.json({ error: "Unknown bulk action" }, { status: 400 });
     }
@@ -545,23 +611,40 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: gate.error }, { status: gate.status });
     }
 
-    // Log use shortcut
-    if (body.logUse === true) {
+    // Log session shortcut
+    if (body.logUse === true || body.logSession === true) {
       const usedOn = body.usedOn
         ? String(body.usedOn).slice(0, 10)
         : todayYmdSg();
-      const regattaId = body.regattaId
-        ? String(body.regattaId).trim()
-        : null;
+      const { source, regattaId } = resolveSessionSource(body);
+      if (source === "regatta" && !regattaId) {
+        return NextResponse.json(
+          { error: "Select a regatta for regatta sessions" },
+          { status: 400 }
+        );
+      }
+      const wind = parseWindRange(body.wind);
 
-      await db.insert(equipmentUsages).values({
-        equipmentItemId: id,
-        sailorId: existing.sailorId,
-        usedOn,
-        regattaId: regattaId || null,
-        source: regattaId ? "regatta" : "manual",
-        note: body.note != null ? String(body.note).slice(0, 500) : null,
-      });
+      try {
+        await db.insert(equipmentUsages).values({
+          equipmentItemId: id,
+          sailorId: existing.sailorId,
+          usedOn,
+          regattaId: regattaId || null,
+          source,
+          wind,
+          note: body.note != null ? String(body.note).slice(0, 500) : null,
+        });
+      } catch {
+        await db.insert(equipmentUsages).values({
+          equipmentItemId: id,
+          sailorId: existing.sailorId,
+          usedOn,
+          regattaId: regattaId || null,
+          source,
+          note: body.note != null ? String(body.note).slice(0, 500) : null,
+        });
+      }
 
       const [updated] = await db
         .update(equipmentItems)

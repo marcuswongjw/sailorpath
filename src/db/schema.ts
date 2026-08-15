@@ -329,7 +329,7 @@ export const equipmentItems = pgTable("equipment_items", {
     .default("good")
     .notNull(),
   isPrimary: boolean("is_primary").default(false).notNull(),
-  /** Comma-separated tags: racing,training,light_air,heavy_air,spare,overseas */
+  /** Comma-separated tags: racing,training,spare,overseas */
   tags: text("tags"),
   /** Sail primary wind band: light | medium | heavy */
   windRange: text("wind_range"),
@@ -358,7 +358,7 @@ export const parentNotes = pgTable("parent_notes", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-/** Individual use events for equipment items */
+/** Individual session/use events for equipment items */
 export const equipmentUsages = pgTable("equipment_usages", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   equipmentItemId: uuid("equipment_item_id")
@@ -371,11 +371,14 @@ export const equipmentUsages = pgTable("equipment_usages", {
   regattaId: uuid("regatta_id").references(() => regattas.id, {
     onDelete: "set null",
   }),
+  /** regatta | training | manual | import */
   source: text("source", {
-    enum: ["manual", "regatta", "import"],
+    enum: ["manual", "regatta", "import", "training"],
   })
     .default("manual")
     .notNull(),
+  /** Session wind: light | medium | heavy */
+  wind: text("wind"),
   note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

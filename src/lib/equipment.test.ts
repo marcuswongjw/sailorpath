@@ -18,8 +18,9 @@ describe("equipment helpers", () => {
     expect(serializeTags(["racing", "nope" as never])).toBe("racing");
   });
 
-  it("migrates travel tag to spare / backup", () => {
+  it("migrates travel tag to spare / backup and drops light/heavy air", () => {
     expect(parseTags("travel,racing")).toEqual(["spare", "racing"]);
+    expect(parseTags("racing,light_air,heavy_air")).toEqual(["racing"]);
     expect(serializeTags(["travel" as never, "overseas"])).toBe(
       "spare,overseas"
     );
@@ -80,6 +81,8 @@ describe("equipment helpers", () => {
         acquiredOn: null,
         retiredOn: null,
         useCount: 0,
+        regattaUseCount: 0,
+        trainingUseCount: 0,
         lastUsedOn: null,
         notes: null,
         badge: "good",
@@ -103,6 +106,8 @@ describe("equipment helpers", () => {
         acquiredOn: null,
         retiredOn: null,
         useCount: 0,
+        regattaUseCount: 0,
+        trainingUseCount: 0,
         lastUsedOn: null,
         notes: null,
         badge: "good",

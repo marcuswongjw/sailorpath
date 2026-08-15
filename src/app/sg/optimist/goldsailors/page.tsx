@@ -1,11 +1,21 @@
+import { notFound, redirect } from "next/navigation";
 import { DbOffline } from "@/components/DbOffline";
 import { GoldSailorsRegister } from "@/components/GoldSailorsRegister";
 import { listSailors } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
+import { getAuthContext } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export default async function GoldSailorsPage() {
+  const auth = await getAuthContext().catch(() => null);
+  if (!auth) {
+    redirect("/login?next=/sg/optimist/goldsailors");
+  }
+  if (auth.role !== "superadmin") {
+    notFound();
+  }
+
   try {
     const sailors = await listSailors();
 

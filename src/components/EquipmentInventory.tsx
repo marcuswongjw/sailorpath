@@ -15,14 +15,18 @@ import {
 import {
   BADGE_STYLES,
   BRAND_OTHER,
+  CONDITION_OPTIONS,
+  CONDITION_STYLES,
   EQUIPMENT_SECTIONS,
   EQUIPMENT_TAGS,
   WIND_RANGES,
   brandsForCategory,
   categoryLabel,
   displayName,
+  formatUseSummary,
   groupEquipmentSections,
   isCustomBrand,
+  isMastSetCategory,
   type EquipmentBadge,
   type EquipmentBoatClass,
   type EquipmentCategory,
@@ -30,8 +34,10 @@ import {
   type EquipmentItemDto,
   type EquipmentStatus,
   type EquipmentTag,
+  type SessionType,
   type WindRange,
 } from "@/lib/equipment";
+import { todayYmdSg } from "@/lib/datesSg";
 
 type Props = {
   sailorId: string;
@@ -61,11 +67,15 @@ const emptyForm = {
   isPrimary: true,
   tags: ["racing"] as EquipmentTag[],
   windRange: "" as WindRange | "",
-  acquiredOn: "",
+  acquiredOn: todayYmdSg(),
   notes: "",
 };
 
 function resolvedBrand(form: typeof emptyForm): string {
+  // Other category: free-text brand field
+  if (form.category === "other") {
+    return form.brand.trim();
+  }
   if (form.brand === BRAND_OTHER || isCustomBrand(form.category, form.brand)) {
     return form.brandCustom.trim() || form.brand.trim();
   }
@@ -94,8 +104,11 @@ export function EquipmentInventory({
   const [form, setForm] = useState(emptyForm);
   const [showMore, setShowMore] = useState(false);
   const [useItemIds, setUseItemIds] = useState<string[]>([]);
-  const [useDate, setUseDate] = useState("");
+  const [useDate, setUseDate] = useState(todayYmdSg());
   const [useRegattaId, setUseRegattaId] = useState("");
+  const [useSessionType, setUseSessionType] =
+    useState<SessionType>("regatta");
+  const [useWind, setUseWind] = useState<WindRange | "">("");
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [bulkTag, setBulkTag] = useState<EquipmentTag>("spare");
   const [busy, setBusy] = useState(false);
@@ -166,7 +179,8 @@ export function EquipmentInventory({
       ...emptyForm,
       boatClass: classTab,
       category,
-      brand: presets[0] || BRAND_OTHER,
+      brand: category === "other" ? "" : presets[0] || BRAND_OTHER,
+      acquiredOn: todayYmdSg(),
       isPrimary: !classItems.some(
         (i) => i.category === category && i.isPrimary
       ),
@@ -177,34 +191,61 @@ export function EquipmentInventory({
   const openEdit = (item: EquipmentItemDto) => {
     setEditing(item);
     setShowMore(true);
-    const custom = isCustomBrand(item.category, item.brand);
-    setForm({
-      boatClass: item.boatClass,
-      category: item.category,
-      brand: custom ? BRAND_OTHER : item.brand || "",
-      brandCustom: custom ? item.brand || "" : "",
-      model: item.model || "",
-      label: item.label || "",
-      status: item.status,
-      condition: item.condition,
-      isPrimary: item.isPrimary,
-      tags: item.tags || [],
-      windRange: item.windRange || "",
-      acquiredOn: item.acquiredOn || "",
-      notes: item.notes || "",
-    });
+    if (item.category === "other") {
+      setForm({
+        boatClass: item.boatClass,
+        category: item.category,
+        brand: item.brand || "",
+        brandCustom: "",
+        model: item.model || "",
+        label: item.label || "",
+        status: item.status,
+        condition: item.condition,
+        isPrimary: item.isPrimary,
+        tags: item.tags || [],
+        windRange: item.windRange || "",
+        acquiredOn: item.acquiredOn || todayYmdSg(),
+        notes: item.notes || "",
+      });
+    } else {
+      const custom = isCustomBrand(item.category, item.brand);
+      setForm({
+        boatClass: item.boatClass,
+        category: item.category,
+        brand: custom ? BRAND_OTHER : item.brand || "",
+        brandCustom: custom ? item.brand || "" : "",
+        model: item.model || "",
+        label: item.label || "",
+        status: item.status,
+        condition: item.condition,
+        isPrimary: item.isPrimary,
+        tags: item.tags || [],
+        windRange: item.windRange || "",
+        acquiredOn: item.acquiredOn || todayYmdSg(),
+        notes: item.notes || "",
+      });
+    }
     setModal("edit");
   };
 
   const openLogUse = (ids?: string[]) => {
     const active = classItems.filter((i) => i.status === "active");
+    const selectedItems = ids?.length
+      ? classItems.filter((i) => ids.includes(i.id))
+      : active.filter((i) => i.isPrimary);
     setUseItemIds(
       ids?.length
         ? ids
         : active.filter((i) => i.isPrimary).map((i) => i.id)
     );
-    setUseDate(new Date().toISOString().slice(0, 10));
+    setUseDate(todayYmdSg());
     setUseRegattaId("");
+    setUseSessionType("regatta");
+    // Auto-suggest wind from sail windRange tags when logging a single sail
+    const sail = selectedItems.find(
+      (i) => i.category === "sail" && i.windRange
+    );
+    setUseWind(sail?.windRange || "");
     setModal("use");
   };
 
@@ -213,24 +254,47 @@ export function EquipmentInventory({
     setMsg(null);
     try {
       const brand = resolvedBrand(form);
-      if (form.brand === BRAND_OTHER && !form.brandCustom.trim()) {
+      if (form.category === "other") {
+        if (!brand) {
+          setMsg("Enter a brand or name");
+          setBusy(false);
+          return;
+        }
+        if (!form.label.trim()) {
+          setMsg("Describe what this item is (e.g. tiller extension)");
+          setBusy(false);
+          return;
+        }
+      } else if (form.brand === BRAND_OTHER && !form.brandCustom.trim()) {
         setMsg("Enter the brand name for Other");
         setBusy(false);
         return;
       }
+      // Model only for sails + mast set; label only for hull/sail/other
+      const model =
+        form.category === "sail" || isMastSetCategory(form.category)
+          ? form.model || null
+          : null;
+      const label =
+        form.category === "hull" ||
+        form.category === "sail" ||
+        form.category === "other"
+          ? form.label || null
+          : null;
       const payload = {
         sailorId,
         boatClass: form.boatClass,
         category: form.category,
         brand: brand || null,
-        model: form.model || null,
-        label: form.label || null,
+        model,
+        label,
         status: form.status,
         condition: form.condition,
         isPrimary: form.isPrimary,
         tags: form.tags,
-        windRange: form.windRange || null,
-        acquiredOn: form.acquiredOn || null,
+        windRange:
+          form.category === "sail" ? form.windRange || null : null,
+        acquiredOn: form.acquiredOn || todayYmdSg(),
         notes: form.notes || null,
       };
       const res = await fetch("/api/account/equipment", {
@@ -291,8 +355,19 @@ export function EquipmentInventory({
 
   const logUses = async () => {
     if (!useItemIds.length) return;
+    if (useSessionType === "regatta" && !useRegattaId) {
+      setMsg("Select a regatta for regatta sessions");
+      return;
+    }
     setBusy(true);
     setMsg(null);
+    const sessionPayload = {
+      sessionType: useSessionType,
+      usedOn: useDate || todayYmdSg(),
+      regattaId:
+        useSessionType === "regatta" ? useRegattaId || undefined : undefined,
+      wind: useWind || undefined,
+    };
     try {
       if (useItemIds.length > 1) {
         const res = await fetch("/api/account/equipment", {
@@ -302,9 +377,8 @@ export function EquipmentInventory({
           body: JSON.stringify({
             bulk: true,
             ids: useItemIds,
-            action: "logUse",
-            usedOn: useDate || undefined,
-            regattaId: useRegattaId || undefined,
+            action: "logSession",
+            ...sessionPayload,
           }),
         });
         const data = await res.json();
@@ -316,9 +390,8 @@ export function EquipmentInventory({
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             id: useItemIds[0],
-            logUse: true,
-            usedOn: useDate || undefined,
-            regattaId: useRegattaId || undefined,
+            logSession: true,
+            ...sessionPayload,
           }),
         });
         const data = await res.json();
@@ -477,7 +550,7 @@ export function EquipmentInventory({
               disabled={!classItems.some((i) => i.status === "active")}
               className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] font-bold text-white disabled:opacity-40"
             >
-              Log use
+              Log session
             </button>
             <button
               type="button"
@@ -741,7 +814,7 @@ export function EquipmentInventory({
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-black text-white">
                 {modal === "use"
-                  ? "Log equipment use"
+                  ? "Log session"
                   : modal === "fullRig"
                     ? "Add full rig set"
                     : modal === "bulkTag"
@@ -832,7 +905,7 @@ export function EquipmentInventory({
 
             {modal === "use" && (
               <>
-                <ul className="space-y-1.5 max-h-48 overflow-y-auto">
+                <ul className="space-y-1.5 max-h-40 overflow-y-auto">
                   {classItems
                     .filter((i) => i.status === "active")
                     .map((i) => (
@@ -860,24 +933,48 @@ export function EquipmentInventory({
                       </label>
                     ))}
                 </ul>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                  Date
-                  <input
-                    type="date"
-                    value={useDate}
-                    onChange={(e) => setUseDate(e.target.value)}
-                    className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                  />
-                </label>
-                {regattaOptions.length > 0 && (
+                <div className="grid grid-cols-2 gap-2">
                   <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                    Link regatta
+                    Type
+                    <select
+                      value={useSessionType}
+                      onChange={(e) => {
+                        const t = e.target.value as SessionType;
+                        setUseSessionType(t);
+                        if (t === "training") setUseRegattaId("");
+                      }}
+                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-2 py-2 text-sm text-white"
+                    >
+                      <option value="regatta">Regatta</option>
+                      <option value="training">Training</option>
+                    </select>
+                  </label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                    Date
+                    <input
+                      type="date"
+                      value={useDate}
+                      onChange={(e) => setUseDate(e.target.value)}
+                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-2 py-2 text-sm text-white"
+                    />
+                  </label>
+                </div>
+                {useSessionType === "regatta" && (
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                    Regatta link
                     <select
                       value={useRegattaId}
-                      onChange={(e) => setUseRegattaId(e.target.value)}
+                      onChange={(e) => {
+                        setUseRegattaId(e.target.value);
+                        // Auto-fill date from regatta when selected
+                        const r = regattaOptions.find(
+                          (x) => x.id === e.target.value
+                        );
+                        if (r?.date) setUseDate(r.date);
+                      }}
                       className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
                     >
-                      <option value="">—</option>
+                      <option value="">Select result…</option>
                       {regattaOptions.map((r) => (
                         <option key={r.id} value={r.id}>
                           {r.date} · {r.name}
@@ -886,13 +983,30 @@ export function EquipmentInventory({
                     </select>
                   </label>
                 )}
+                <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                  Wind
+                  <select
+                    value={useWind}
+                    onChange={(e) =>
+                      setUseWind(e.target.value as WindRange | "")
+                    }
+                    className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                  >
+                    <option value="">—</option>
+                    {WIND_RANGES.map((w) => (
+                      <option key={w.value} value={w.value}>
+                        {w.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
                 <button
                   type="button"
                   disabled={busy || !useItemIds.length}
                   onClick={() => void logUses()}
                   className="w-full rounded-full bg-sky-600 py-2.5 text-xs font-bold text-white disabled:opacity-50"
                 >
-                  {busy ? "Saving…" : "Save use"}
+                  {busy ? "Saving…" : "Save session"}
                 </button>
               </>
             )}
@@ -910,8 +1024,13 @@ export function EquipmentInventory({
                         setForm((f) => ({
                           ...f,
                           category,
-                          brand: presets[0] || BRAND_OTHER,
+                          brand:
+                            category === "other"
+                              ? ""
+                              : presets[0] || BRAND_OTHER,
                           brandCustom: "",
+                          model: "",
+                          label: "",
                         }));
                       }}
                       className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-2 py-2 text-sm text-white"
@@ -927,32 +1046,50 @@ export function EquipmentInventory({
                       ))}
                     </select>
                   </label>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                    Brand
-                    <select
-                      value={
-                        showCustomBrand ? BRAND_OTHER : form.brand || BRAND_OTHER
-                      }
-                      onChange={(e) =>
-                        setForm((f) => ({
-                          ...f,
-                          brand: e.target.value,
-                          brandCustom:
-                            e.target.value === BRAND_OTHER ? f.brandCustom : "",
-                        }))
-                      }
-                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-2 py-2 text-sm text-white"
-                    >
-                      {brandPresets.map((b) => (
-                        <option key={b} value={b}>
-                          {b}
-                        </option>
-                      ))}
-                      <option value={BRAND_OTHER}>Other…</option>
-                    </select>
-                  </label>
+                  {form.category === "other" ? (
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                      Brand
+                      <input
+                        value={form.brand}
+                        onChange={(e) =>
+                          setForm((f) => ({ ...f, brand: e.target.value }))
+                        }
+                        placeholder="Free text brand"
+                        className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-2 py-2 text-sm text-white"
+                      />
+                    </label>
+                  ) : (
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                      Brand
+                      <select
+                        value={
+                          showCustomBrand
+                            ? BRAND_OTHER
+                            : form.brand || BRAND_OTHER
+                        }
+                        onChange={(e) =>
+                          setForm((f) => ({
+                            ...f,
+                            brand: e.target.value,
+                            brandCustom:
+                              e.target.value === BRAND_OTHER
+                                ? f.brandCustom
+                                : "",
+                          }))
+                        }
+                        className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-2 py-2 text-sm text-white"
+                      >
+                        {brandPresets.map((b) => (
+                          <option key={b} value={b}>
+                            {b}
+                          </option>
+                        ))}
+                        <option value={BRAND_OTHER}>Other…</option>
+                      </select>
+                    </label>
+                  )}
                 </div>
-                {showCustomBrand && (
+                {form.category !== "other" && showCustomBrand && (
                   <input
                     value={form.brandCustom}
                     onChange={(e) =>
@@ -966,82 +1103,86 @@ export function EquipmentInventory({
                     className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
                   />
                 )}
-                <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                  {form.category === "hull"
-                    ? "Hull number"
-                    : form.category === "sail"
-                      ? "Sail number"
-                      : "Label / number"}
-                  <input
-                    value={form.label}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, label: e.target.value }))
-                    }
-                    placeholder={
-                      form.category === "hull"
-                        ? "SZ 12345"
-                        : form.category === "sail"
-                          ? "e.g. 115"
-                          : "Optional"
-                    }
-                    className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                  />
-                </label>
-
-                {(form.category === "sail" || showMore || modal === "edit") && (
+                {form.category === "other" && (
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                    What is this?
+                    <input
+                      value={form.label}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, label: e.target.value }))
+                      }
+                      placeholder="e.g. tiller extension, trolley, sheet"
+                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                )}
+                {(form.category === "hull" || form.category === "sail") && (
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                    {form.category === "hull" ? "Hull number" : "Sail number"}
+                    <input
+                      value={form.label}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, label: e.target.value }))
+                      }
+                      placeholder={
+                        form.category === "hull" ? "SZ 12345" : "e.g. 115"
+                      }
+                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                )}
+                {/* Mast set: model only (no label/number) */}
+                {isMastSetCategory(form.category) && (
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                    Model
+                    <input
+                      value={form.model}
+                      onChange={(e) =>
+                        setForm((f) => ({ ...f, model: e.target.value }))
+                      }
+                      placeholder="Optional model"
+                      className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                    />
+                  </label>
+                )}
+                {form.category === "sail" && (
                   <>
-                    {form.category === "sail" && (
-                      <>
-                        <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                          Sail cut / series
-                          <input
-                            value={form.model}
-                            onChange={(e) =>
-                              setForm((f) => ({ ...f, model: e.target.value }))
-                            }
-                            placeholder='e.g. "Racing", "Power"'
-                            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                          />
-                        </label>
-                        <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                          Wind range
-                          <select
-                            value={form.windRange}
-                            onChange={(e) =>
-                              setForm((f) => ({
-                                ...f,
-                                windRange: e.target.value as WindRange | "",
-                              }))
-                            }
-                            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                          >
-                            <option value="">—</option>
-                            {WIND_RANGES.map((w) => (
-                              <option key={w.value} value={w.value}>
-                                {w.label}
-                              </option>
-                            ))}
-                          </select>
-                        </label>
-                      </>
-                    )}
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                      Sail cut / series
+                      <input
+                        value={form.model}
+                        onChange={(e) =>
+                          setForm((f) => ({ ...f, model: e.target.value }))
+                        }
+                        placeholder='e.g. "Racing", "Power"'
+                        className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                      />
+                    </label>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase">
+                      Wind range
+                      <select
+                        value={form.windRange}
+                        onChange={(e) =>
+                          setForm((f) => ({
+                            ...f,
+                            windRange: e.target.value as WindRange | "",
+                          }))
+                        }
+                        className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+                      >
+                        <option value="">—</option>
+                        {WIND_RANGES.map((w) => (
+                          <option key={w.value} value={w.value}>
+                            {w.label}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
                   </>
                 )}
 
                 {(showMore || modal === "edit") && (
                   <div className="space-y-3 border-t border-white/5 pt-3">
-                    {form.category !== "sail" && (
-                      <label className="block text-[10px] font-bold text-slate-500 uppercase">
-                        Model
-                        <input
-                          value={form.model}
-                          onChange={(e) =>
-                            setForm((f) => ({ ...f, model: e.target.value }))
-                          }
-                          className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-                        />
-                      </label>
-                    )}
                     <div className="grid grid-cols-2 gap-2">
                       <label className="block text-[10px] font-bold text-slate-500 uppercase">
                         Status
@@ -1073,11 +1214,11 @@ export function EquipmentInventory({
                           }
                           className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-2 py-2 text-sm text-white"
                         >
-                          <option value="new">New</option>
-                          <option value="good">Good</option>
-                          <option value="fair">Fair</option>
-                          <option value="worn">Needs repair</option>
-                          <option value="replace_soon">Replace soon</option>
+                          {CONDITION_OPTIONS.map((c) => (
+                            <option key={c.value} value={c.value}>
+                              {c.label}
+                            </option>
+                          ))}
                         </select>
                       </label>
                     </div>
@@ -1188,11 +1329,24 @@ function BadgeChip({
   badge: EquipmentBadge;
   label: string;
 }) {
+  // Skip "Good" replacement badge when condition already shows status
+  if (badge === "good" || badge === "new") return null;
   return (
     <span
       className={`inline-flex rounded-full border px-1.5 py-0.5 text-[9px] font-bold ${BADGE_STYLES[badge].className}`}
     >
       {label}
+    </span>
+  );
+}
+
+function ConditionChip({ condition }: { condition: EquipmentCondition }) {
+  const s = CONDITION_STYLES[condition] || CONDITION_STYLES.good;
+  return (
+    <span
+      className={`inline-flex rounded-full border px-1.5 py-0.5 text-[9px] font-bold ${s.className}`}
+    >
+      {s.label}
     </span>
   );
 }
@@ -1254,6 +1408,7 @@ function EquipmentCard({
               />
             </button>
             {displayName(item)}
+            <ConditionChip condition={item.condition} />
             <BadgeChip badge={item.badge} label={item.badgeLabel} />
             {item.windRange && (
               <span className="text-[9px] font-bold uppercase text-sky-400/90">
@@ -1266,10 +1421,13 @@ function EquipmentCard({
               item.category === "sail" && item.model
                 ? item.model
                 : null,
+              item.category === "other" && item.label
+                ? item.label
+                : null,
               ...item.tags.map((t) =>
                 EQUIPMENT_TAGS.find((x) => x.value === t)?.label || t
               ),
-              `${item.useCount} use${item.useCount === 1 ? "" : "s"}`,
+              formatUseSummary(item),
             ]
               .filter(Boolean)
               .join(" · ")}
@@ -1306,7 +1464,7 @@ function EquipmentCard({
               onClick={onLogUse}
               className="text-[10px] font-bold text-sky-400"
             >
-              Log use
+              Log session
             </button>
             <button
               type="button"

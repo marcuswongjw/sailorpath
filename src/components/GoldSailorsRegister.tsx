@@ -71,11 +71,11 @@ function SortIcon({
   active: boolean;
   dir: "asc" | "desc";
 }) {
-  if (!active) return <ArrowUpDown className="h-3 w-3 opacity-40 inline ml-1" />;
+  if (!active) return <ArrowUpDown className="h-3 w-3 opacity-40 shrink-0" />;
   return dir === "asc" ? (
-    <ArrowUp className="h-3 w-3 text-orange-400 inline ml-1" />
+    <ArrowUp className="h-3 w-3 text-orange-400 shrink-0" />
   ) : (
-    <ArrowDown className="h-3 w-3 text-orange-400 inline ml-1" />
+    <ArrowDown className="h-3 w-3 text-orange-400 shrink-0" />
   );
 }
 
@@ -99,14 +99,25 @@ function Th({
       <button
         type="button"
         onClick={() => onSort(sortKey)}
-        className="inline-flex items-center justify-center gap-0.5 hover:text-white transition-colors uppercase tracking-wider"
+        className="inline-flex w-full items-center justify-center gap-0.5 hover:text-white transition-colors uppercase tracking-wider"
       >
-        {label}
+        <span className="leading-tight">{label}</span>
         <SortIcon active={current === sortKey} dir={dir} />
       </button>
     </th>
   );
 }
+
+/** Shared cell chrome so group headers, sub-headers, and body stay aligned */
+const CELL = {
+  name: "w-[11rem] min-w-[11rem] max-w-[11rem]",
+  sail: "w-[6.5rem] min-w-[6.5rem]",
+  birth: "w-[6.5rem] min-w-[6.5rem]",
+  squad: "w-[4.5rem] min-w-[4.5rem]",
+  rank: "w-[4rem] min-w-[4rem]",
+  years: "w-[4.5rem] min-w-[4.5rem]",
+  action: "w-[6.5rem] min-w-[6.5rem]",
+} as const;
 
 export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
   const [sortKey, setSortKey] = useState<SortKey>("name");
@@ -116,7 +127,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
     if (sortKey === k) setSortDir((d) => (d === "asc" ? "desc" : "asc"));
     else {
       setSortKey(k);
-      setSortDir(k === "name" || k === "sailNumber" ? "asc" : "asc");
+      setSortDir("asc");
     }
   };
 
@@ -124,7 +135,6 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
     const rows = [...sailors];
     const dir = sortDir === "asc" ? 1 : -1;
     rows.sort((a, b) => {
-      // Dropped sailors still sort within set; keep dropped after active when sorting by name default
       const av = (() => {
         if (sortKey === "name") return a.name || "";
         if (sortKey === "sailNumber") return a.sailNumber || "";
@@ -167,9 +177,9 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
               All Gold Fleet Sailors
             </h1>
             <p className="mt-2 text-sm text-slate-400 max-w-2xl">
-              Singapore Optimist Gold Fleet sailor register — live from the
-              database. Historical rankings, squad periods, and overseas years
-              are edited in Admin → Database → Sailors (or bulk import).
+              Superadmin only — Singapore Optimist Gold Fleet sailor register.
+              Historical rankings, squad periods, and overseas years are edited
+              in Admin → Database → Sailors (or bulk import).
             </p>
             <p className="mt-2 text-[11px] text-slate-600">
               Click any column header to sort. Tap a sailor name to open their
@@ -191,36 +201,56 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
 
         <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden shadow-2xl">
           <div className="overflow-x-auto max-h-[min(80vh,920px)] overflow-y-auto">
-            <table className="w-full text-left border-collapse text-xs min-w-[1400px]">
+            {/*
+              Fixed column widths + correct group colspans keep headers and
+              body cells aligned (previously National Squad was colSpan=4
+              over 6 sub-columns).
+            */}
+            <table className="border-collapse text-xs table-fixed w-max min-w-full">
+              <colgroup>
+                <col className={CELL.name} />
+                <col className={CELL.sail} />
+                <col className={CELL.birth} />
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <col key={`s${i}`} className={CELL.squad} />
+                ))}
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <col key={`r${i}`} className={CELL.rank} />
+                ))}
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <col key={`y${i}`} className={CELL.years} />
+                ))}
+                <col className={CELL.action} />
+              </colgroup>
               <thead>
                 <tr className="text-[9px] font-black text-slate-500 uppercase tracking-widest text-center">
                   <th
                     colSpan={3}
-                    className="sticky top-0 z-30 py-2 px-4 border-b border-r border-white/10 text-left bg-[#0e1018] shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    className="sticky top-0 z-30 py-2 px-2 border-b border-r border-white/10 text-left bg-[#0e1018] shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                   >
                     Competitor
                   </th>
                   <th
-                    colSpan={4}
-                    className="sticky top-0 z-30 py-2 px-4 border-b border-r border-white/10 bg-[#16120e] text-orange-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    colSpan={6}
+                    className="sticky top-0 z-30 py-2 px-2 border-b border-r border-white/10 bg-[#16120e] text-orange-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                   >
                     National Squad History
                   </th>
                   <th
                     colSpan={5}
-                    className="sticky top-0 z-30 py-2 px-4 border-b border-r border-white/10 bg-[#0e1520] text-blue-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    className="sticky top-0 z-30 py-2 px-2 border-b border-r border-white/10 bg-[#0e1520] text-blue-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                   >
                     Historical Rankings
                   </th>
                   <th
                     colSpan={4}
-                    className="sticky top-0 z-30 py-2 px-4 border-b border-r border-white/10 bg-[#0e1a14] text-emerald-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    className="sticky top-0 z-30 py-2 px-2 border-b border-r border-white/10 bg-[#0e1a14] text-emerald-400 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                   >
                     Overseas Representation
                   </th>
                   <th
                     colSpan={1}
-                    className="sticky top-0 z-30 py-2 px-4 border-b border-white/10 bg-[#0e1018] shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    className="sticky top-0 z-30 py-2 px-2 border-b border-white/10 bg-[#0e1018] shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                   >
                     Profile
                   </th>
@@ -232,23 +262,23 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-6 text-left bg-[#12141c] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-2 text-left bg-[#12141c] border-b border-white/10"
                   />
                   <Th
-                    label="Sail Number"
+                    label="Sail #"
                     sortKey="sailNumber"
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#12141c] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#12141c] border-b border-white/10"
                   />
                   <Th
-                    label="Birth year/Gender"
+                    label="YOB / G"
                     sortKey="birthYear"
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#12141c] border-b"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center border-r border-white/10 bg-[#12141c] border-b"
                   />
 
                   <Th
@@ -257,7 +287,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#1a1610] border-b border-white/10"
                   />
                   <Th
                     label="Jul 25"
@@ -265,7 +295,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#1a1610] border-b border-white/10"
                   />
                   <Th
                     label="Jan 26"
@@ -273,7 +303,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#1a1610] border-b border-white/10"
                   />
                   <Th
                     label="Jul 26"
@@ -281,15 +311,15 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#1a1610] border-b border-white/10"
                   />
                   <Th
-                    label="Jan 27 (Next)"
+                    label="Jan 27"
                     sortKey="natSquadStatusJan27"
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#1a1610] border-b border-white/10 text-sky-300"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#1a1610] border-b border-white/10 text-sky-300"
                   />
                   <Th
                     label="Jul 27"
@@ -297,7 +327,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#1a1610] border-b"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center border-r border-white/10 bg-[#1a1610] border-b"
                   />
 
                   <Th
@@ -306,7 +336,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101820] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#101820] border-b border-white/10"
                   />
                   <Th
                     label="Dec 24"
@@ -314,7 +344,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101820] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#101820] border-b border-white/10"
                   />
                   <Th
                     label="Jun 25"
@@ -322,7 +352,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101820] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#101820] border-b border-white/10"
                   />
                   <Th
                     label="Dec 25"
@@ -330,7 +360,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101820] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#101820] border-b border-white/10"
                   />
                   <Th
                     label="Jun 26"
@@ -338,7 +368,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#101820] border-b"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center border-r border-white/10 bg-[#101820] border-b"
                   />
 
                   <Th
@@ -347,7 +377,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101a14] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#101a14] border-b border-white/10"
                   />
                   <Th
                     label="European"
@@ -355,7 +385,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101a14] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#101a14] border-b border-white/10"
                   />
                   <Th
                     label="Asian"
@@ -363,18 +393,18 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center bg-[#101a14] border-b border-white/10"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center bg-[#101a14] border-b border-white/10"
                   />
                   <Th
-                    label="SEA Games"
+                    label="SEA"
                     sortKey="seaGames"
                     current={sortKey}
                     dir={sortDir}
                     onSort={onSort}
-                    className="sticky top-8 z-20 py-3 px-4 text-center border-r border-white/10 bg-[#101a14] border-b"
+                    className="sticky top-7 z-20 py-2.5 px-1 text-center border-r border-white/10 bg-[#101a14] border-b"
                   />
 
-                  <th className="sticky top-8 z-20 py-3 px-6 text-center bg-[#12141c] border-b border-white/10">
+                  <th className="sticky top-7 z-20 py-2.5 px-2 text-center bg-[#12141c] border-b border-white/10">
                     Action
                   </th>
                 </tr>
@@ -391,89 +421,80 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                         isDropped ? "opacity-60 bg-slate-950/20" : ""
                       }`}
                     >
-                      <td className="py-4 px-6 text-left font-bold text-white">
+                      <td className="py-3 px-2 text-left font-bold text-white truncate">
                         <Link
                           href={`/${sailor.handle}`}
                           className="hover:text-orange-500 transition-colors"
+                          title={sailor.name}
                         >
                           {sailor.name}
                         </Link>
                       </td>
-                      <td className="py-4 px-4 font-mono text-slate-400">
+                      <td className="py-3 px-1 font-mono text-slate-400 truncate">
                         {sailor.sailNumber}
                       </td>
-                      <td className="py-4 px-4 text-slate-400 border-r border-white/5">
-                        {by ?? "N/A"} / {sailor.gender || "M"}
+                      <td className="py-3 px-1 text-slate-400 border-r border-white/5">
+                        {by ?? "—"}/{sailor.gender || "M"}
                       </td>
 
-                      <td className="py-4 px-4 bg-orange-600/5">
-                        <span className="text-[10px] text-slate-400">
-                          {sailor.natSquadStatusJan25 || "-"}
-                        </span>
+                      <td className="py-3 px-1 bg-orange-600/5 text-[10px] text-slate-400">
+                        {sailor.natSquadStatusJan25 || "—"}
                       </td>
-                      <td className="py-4 px-4 bg-orange-600/5">
-                        <span className="text-[10px] text-slate-400">
-                          {sailor.natSquadStatusJul25 || "-"}
-                        </span>
+                      <td className="py-3 px-1 bg-orange-600/5 text-[10px] text-slate-400">
+                        {sailor.natSquadStatusJul25 || "—"}
                       </td>
-                      <td className="py-4 px-4 bg-orange-600/5">
-                        <span className="text-[10px] text-slate-400">
-                          {sailor.natSquadStatusJan26 || "-"}
-                        </span>
+                      <td className="py-3 px-1 bg-orange-600/5 text-[10px] text-slate-400">
+                        {sailor.natSquadStatusJan26 || "—"}
                       </td>
-                      <td className="py-4 px-4 bg-orange-600/5">
-                        <span className="text-[10px] text-slate-400">
-                          {sailor.natSquadStatusJul26 || "-"}
-                        </span>
+                      <td className="py-3 px-1 bg-orange-600/5 text-[10px] text-slate-400">
+                        {sailor.natSquadStatusJul26 || "—"}
                       </td>
-                      <td className="py-4 px-4 bg-sky-600/5">
+                      <td className="py-3 px-1 bg-sky-600/5">
                         {sailor.natSquadStatusJan27 ? (
-                          <span className="rounded-full bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 text-[10px] text-sky-300 font-extrabold">
+                          <span className="rounded-full bg-sky-500/10 border border-sky-500/20 px-1.5 py-0.5 text-[10px] text-sky-300 font-extrabold">
                             {sailor.natSquadStatusJan27}
                           </span>
                         ) : (
-                          <span className="text-slate-500">-</span>
+                          <span className="text-slate-500">—</span>
                         )}
                       </td>
-                      <td className="py-4 px-4 border-r border-white/5 bg-orange-600/5">
-                        <span className="text-[10px] text-slate-400">
-                          {sailor.natSquadStatusJul27 || "-"}
-                        </span>
+                      <td className="py-3 px-1 border-r border-white/5 bg-orange-600/5 text-[10px] text-slate-400">
+                        {sailor.natSquadStatusJul27 || "—"}
                       </td>
 
-                      <td className="py-4 px-4 bg-blue-600/5 font-mono text-slate-400">
-                        {sailor.histRankingJun24 ?? "-"}
+                      <td className="py-3 px-1 bg-blue-600/5 font-mono text-slate-400">
+                        {sailor.histRankingJun24 ?? "—"}
                       </td>
-                      <td className="py-4 px-4 bg-blue-600/5 font-mono text-slate-400">
-                        {sailor.histRankingDec24 ?? "-"}
+                      <td className="py-3 px-1 bg-blue-600/5 font-mono text-slate-400">
+                        {sailor.histRankingDec24 ?? "—"}
                       </td>
-                      <td className="py-4 px-4 bg-blue-600/5 font-mono text-slate-400">
-                        {sailor.histRankingJun25 ?? "-"}
+                      <td className="py-3 px-1 bg-blue-600/5 font-mono text-slate-400">
+                        {sailor.histRankingJun25 ?? "—"}
                       </td>
-                      <td className="py-4 px-4 bg-blue-600/5 font-mono text-slate-400">
-                        {sailor.histRankingDec25 ?? "-"}
+                      <td className="py-3 px-1 bg-blue-600/5 font-mono text-slate-400">
+                        {sailor.histRankingDec25 ?? "—"}
                       </td>
-                      <td className="py-4 px-4 border-r border-white/5 bg-blue-600/5 font-mono font-bold text-white">
-                        {sailor.histRankingJun26 ?? "-"}
+                      <td className="py-3 px-1 border-r border-white/5 bg-blue-600/5 font-mono font-bold text-white">
+                        {sailor.histRankingJun26 ?? "—"}
                       </td>
 
-                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
+                      <td className="py-3 px-1 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
                         {formatYearsDisplay(sailor.worlds)}
                       </td>
-                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
+                      <td className="py-3 px-1 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
                         {formatYearsDisplay(sailor.european)}
                       </td>
-                      <td className="py-4 px-4 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
+                      <td className="py-3 px-1 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
                         {formatYearsDisplay(sailor.asian)}
                       </td>
-                      <td className="py-4 px-4 border-r border-white/5 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
+                      <td className="py-3 px-1 border-r border-white/5 bg-emerald-600/5 font-mono text-emerald-400 text-[11px]">
                         {formatYearsDisplay(sailor.seaGames)}
                       </td>
 
-                      <td className="py-4 px-6 text-center">
+                      <td className="py-3 px-2 text-center">
                         <Link
                           href={`/${sailor.handle}`}
-                          className="inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 hover:border-orange-500/40 px-3.5 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white transition-all"
+                          className="inline-flex items-center gap-1 rounded-full bg-white/5 border border-white/10 hover:border-orange-500/40 px-2.5 py-1 text-[10px] font-bold text-slate-300 hover:text-white transition-all"
                         >
                           Profile
                           <ArrowRight className="h-3 w-3" />

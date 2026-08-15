@@ -24,12 +24,12 @@ export type EquipmentCondition =
 export type EquipmentTag =
   | "racing"
   | "training"
-  | "light_air"
-  | "heavy_air"
   | "spare"
   | "overseas";
 
 export type WindRange = "light" | "medium" | "heavy";
+
+export type SessionType = "regatta" | "training";
 
 export type EquipmentBadge =
   | "new"
@@ -97,11 +97,47 @@ export const EQUIPMENT_SECTIONS: {
 export const EQUIPMENT_TAGS: { value: EquipmentTag; label: string }[] = [
   { value: "racing", label: "Racing" },
   { value: "training", label: "Training" },
-  { value: "light_air", label: "Light air" },
-  { value: "heavy_air", label: "Heavy air" },
   { value: "spare", label: "Spare / Backup" },
   { value: "overseas", label: "Overseas" },
 ];
+
+export const CONDITION_OPTIONS: {
+  value: EquipmentCondition;
+  label: string;
+}[] = [
+  { value: "new", label: "New / Excellent" },
+  { value: "good", label: "Good" },
+  { value: "fair", label: "Fair" },
+  { value: "worn", label: "Needs repair" },
+  { value: "replace_soon", label: "Replace soon" },
+];
+
+/** Condition chip colors (separate from replacement-alert badges). */
+export const CONDITION_STYLES: Record<
+  EquipmentCondition,
+  { className: string; label: string }
+> = {
+  new: {
+    label: "New / Excellent",
+    className: "bg-emerald-500/15 border-emerald-500/30 text-emerald-300",
+  },
+  good: {
+    label: "Good",
+    className: "bg-sky-500/15 border-sky-500/30 text-sky-300",
+  },
+  fair: {
+    label: "Fair",
+    className: "bg-amber-500/15 border-amber-500/30 text-amber-200",
+  },
+  worn: {
+    label: "Needs repair",
+    className: "bg-rose-500/15 border-rose-500/35 text-rose-300",
+  },
+  replace_soon: {
+    label: "Replace soon",
+    className: "bg-rose-500/15 border-rose-500/35 text-rose-300",
+  },
+};
 
 export const WIND_RANGES: { value: WindRange; label: string }[] = [
   { value: "light", label: "Light" },
@@ -151,7 +187,7 @@ export type EquipmentItemDto = {
   category: EquipmentCategory;
   brand: string | null;
   model: string | null;
-  /** Hull number / sail number / nickname */
+  /** Hull number / sail number / nickname / "what is this" for other */
   label: string | null;
   status: EquipmentStatus;
   condition: EquipmentCondition;
@@ -161,6 +197,10 @@ export type EquipmentItemDto = {
   acquiredOn: string | null;
   retiredOn: string | null;
   useCount: number;
+  /** Sessions logged as regatta (source regatta or linked regattaId) */
+  regattaUseCount: number;
+  /** Sessions logged as training */
+  trainingUseCount: number;
   lastUsedOn: string | null;
   notes: string | null;
   badge: EquipmentBadge;
@@ -173,11 +213,12 @@ export type EquipmentItemDto = {
 export function parseTags(raw: string | null | undefined): EquipmentTag[] {
   if (!raw) return [];
   const allowed = new Set(EQUIPMENT_TAGS.map((t) => t.value));
-  // Migrate legacy "travel" → spare
+  // Migrate legacy travel → spare; drop light_air / heavy_air (now wind fields)
   return String(raw)
     .split(/[,|]/)
     .map((s) => s.trim().toLowerCase().replace(/\s+/g, "_"))
     .map((s) => (s === "travel" ? "spare" : s))
+    .filter((s) => s !== "light_air" && s !== "heavy_air")
     .filter((s): s is EquipmentTag => allowed.has(s as EquipmentTag));
 }
 
@@ -187,8 +228,39 @@ export function serializeTags(tags: string[] | null | undefined): string | null 
   const clean = tags
     .map((t) => String(t).trim().toLowerCase().replace(/\s+/g, "_"))
     .map((t) => (t === "travel" ? "spare" : t))
+    .filter((t) => t !== "light_air" && t !== "heavy_air")
     .filter((t) => allowed.has(t as EquipmentTag));
   return clean.length ? [...new Set(clean)].join(",") : null;
+}
+
+export function formatUseSummary(item: {
+  useCount: number;
+  regattaUseCount?: number;
+  trainingUseCount?: number;
+}): string {
+  const r = item.regattaUseCount ?? 0;
+  const t = item.trainingUseCount ?? 0;
+  const total = item.useCount || r + t;
+  if (r === 0 && t === 0) {
+    return total === 1 ? "1 use" : `${total} uses`;
+  }
+  if (total <= 0) return "0 uses";
+  // Compact when both present: "22 uses (14R · 8T)"
+  if (r > 0 && t > 0) {
+    return `${total} uses (${r}R · ${t}T)`;
+  }
+  if (r > 0) {
+    return r === 1 ? "1 regatta" : `${r} regattas`;
+  }
+  return t === 1 ? "1 training session" : `${t} training sessions`;
+}
+
+export function isMastSetCategory(c: EquipmentCategory | string): boolean {
+  return c === "mast" || c === "boom" || c === "sprit";
+}
+
+export function isFoilCategory(c: EquipmentCategory | string): boolean {
+  return c === "daggerboard" || c === "rudder";
 }
 
 export function parseWindRange(raw: unknown): WindRange | null {
@@ -217,6 +289,13 @@ export function displayName(item: {
   }
   if (item.category === "hull" && item.brand) {
     return [item.brand, item.label].filter(Boolean).join(" · ") || item.brand;
+  }
+  if (item.category === "other") {
+    return (
+      [item.brand, item.label].filter(Boolean).join(" · ") ||
+      item.label?.trim() ||
+      "Other"
+    );
   }
   if (item.label?.trim()) return item.label.trim();
   const parts = [item.brand, item.model].filter(Boolean);
@@ -371,6 +450,8 @@ export function mapEquipmentRow(row: {
   useCount: number | null;
   lastUsedOn: string | null;
   notes: string | null;
+  regattaUseCount?: number | null;
+  trainingUseCount?: number | null;
 }): EquipmentItemDto {
   const tags = parseTags(row.tags);
   const badge = evaluateEquipmentBadge({
@@ -379,6 +460,9 @@ export function mapEquipmentRow(row: {
     useCount: row.useCount || 0,
     acquiredOn: row.acquiredOn,
   });
+  const useCount = Number(row.useCount || 0);
+  const regattaUseCount = Number(row.regattaUseCount ?? 0);
+  const trainingUseCount = Number(row.trainingUseCount ?? 0);
   return {
     id: row.id,
     sailorId: row.sailorId,
@@ -394,7 +478,9 @@ export function mapEquipmentRow(row: {
     windRange: parseWindRange(row.windRange),
     acquiredOn: row.acquiredOn ? String(row.acquiredOn).slice(0, 10) : null,
     retiredOn: row.retiredOn ? String(row.retiredOn).slice(0, 10) : null,
-    useCount: Number(row.useCount || 0),
+    useCount,
+    regattaUseCount,
+    trainingUseCount,
     lastUsedOn: row.lastUsedOn ? String(row.lastUsedOn).slice(0, 10) : null,
     notes: row.notes,
     badge: badge.badge,
