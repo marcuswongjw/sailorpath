@@ -168,9 +168,9 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
   }, [sailors, sortKey, sortDir]);
 
   return (
-    <div className="flex-1 bg-[#090a0f] py-12">
-      <div className="mx-auto max-w-[95%] px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-white/5 pb-8 mb-12">
+    <div className="flex-1 bg-[#090a0f] py-6 sm:py-10 lg:py-12 overflow-x-clip">
+      <div className="mx-auto max-w-[95%] px-3 sm:px-6 lg:px-8 min-w-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 border-b border-white/5 pb-6 sm:pb-8 mb-6 sm:mb-10">
           <div>
             <h1 className="text-3xl font-extrabold text-white sm:text-4xl tracking-tight flex items-center gap-3">
               <Trophy className="h-8 w-8 text-yellow-500" />

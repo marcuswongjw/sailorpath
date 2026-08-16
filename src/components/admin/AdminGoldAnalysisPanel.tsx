@@ -157,8 +157,8 @@ export function AdminGoldAnalysisPanel({
   };
 
   return (
-    <div className="w-full min-w-0 space-y-6">
-      <div className="glass-panel rounded-3xl border border-white/5 p-5 sm:p-6 space-y-4">
+    <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
+      <div className="glass-panel rounded-2xl sm:rounded-3xl border border-white/5 p-4 sm:p-5 lg:p-6 space-y-4">
         <div className="flex items-start gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/15">
             <GitCompareArrows className="h-5 w-5 text-orange-400" />

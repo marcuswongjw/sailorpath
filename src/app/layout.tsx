@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import "./globals.css";
 import { AccountProvider } from "@/components/AccountProvider";
@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   title: "SailorPath | Singapore Youth Sailing Rankings & Athlete Logbooks",
   description:
     "National rankings, personal logbooks, and a complete record of the journey from Optimist to ILCA for Singapore youth sailors.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: "cover",
+  themeColor: "#090a0f",
 };
 
 export default function RootLayout({

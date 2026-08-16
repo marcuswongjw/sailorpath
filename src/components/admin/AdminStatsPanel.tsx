@@ -272,15 +272,19 @@ function StatCard({
     rose: "border-rose-500/25 bg-rose-500/5 text-rose-300",
   };
   return (
-    <div className={`rounded-xl border px-3 py-2.5 ${tones[tone]}`}>
-      <p className="text-[10px] font-bold uppercase tracking-wide opacity-80">
+    <div
+      className={`rounded-xl border px-2.5 sm:px-3 py-2 sm:py-2.5 min-w-0 ${tones[tone]}`}
+    >
+      <p className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wide opacity-80 leading-tight break-words">
         {label}
       </p>
-      <p className="text-xl font-black mt-0.5 text-white">
+      <p className="text-base sm:text-xl font-black mt-0.5 text-white break-words tabular-nums leading-snug">
         {value == null || value === "" ? "—" : value}
       </p>
       {hint && (
-        <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">{hint}</p>
+        <p className="text-[9px] sm:text-[10px] text-slate-500 mt-0.5 leading-snug break-words">
+          {hint}
+        </p>
       )}
     </div>
   );
@@ -383,26 +387,26 @@ export function AdminStatsPanel() {
       : null;
 
   return (
-    <div className="w-full min-w-0 space-y-6">
-      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 space-y-6">
+    <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
+      <div className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/5 space-y-5 sm:space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-orange-500" />
+          <div className="min-w-0">
+            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <BarChart3 className="h-5 w-5 text-orange-500 shrink-0" />
               Stats & usage
             </h2>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-[11px] sm:text-xs text-slate-500 mt-1 leading-relaxed">
               Funnels, engagement, ops health, acquisition — privacy-light (no
               emails/names in traffic). Migrations:{" "}
               <code className="text-slate-400">016_usage_events.sql</code>,{" "}
               <code className="text-slate-400">023_admin_change_log.sql</code>.
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             <select
               value={days}
               onChange={(e) => setDays(Number(e.target.value))}
-              className="rounded-lg bg-slate-950 border border-white/10 text-white text-xs px-2 py-1.5"
+              className="rounded-lg bg-slate-950 border border-white/10 text-white text-xs px-2 py-2 min-h-[2.25rem] touch-manipulation"
             >
               <option value={1}>Last 1 day</option>
               <option value={7}>Last 7 days</option>

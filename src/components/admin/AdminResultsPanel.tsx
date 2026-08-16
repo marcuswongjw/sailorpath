@@ -282,13 +282,13 @@ export function AdminResultsPanel({
 
                 {/* Results List */}
                 {selectedRegattaIdForResultEdit && (
-                  <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden">
-                    <div className="p-6 border-b border-white/5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-                      <div>
+                  <div className="glass-panel rounded-2xl sm:rounded-3xl border border-white/5 overflow-hidden">
+                    <div className="p-4 sm:p-6 border-b border-white/5 flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
+                      <div className="min-w-0">
                         <h3 className="text-base font-bold text-white">Regatta Results Table</h3>
                         <p className="text-xs text-slate-500">Edit or delete scores for this event.</p>
                       </div>
-                      <div className="flex flex-wrap items-end gap-3">
+                      <div className="flex flex-wrap items-stretch sm:items-end gap-2 sm:gap-3">
                         <button
                           type="button"
                           onClick={() =>
@@ -296,7 +296,7 @@ export function AdminResultsPanel({
                               selectedRegattaIdForResultEdit
                             )
                           }
-                          className="rounded-full bg-slate-800 border border-rose-500/30 hover:bg-rose-500/10 px-4 py-2 text-xs font-bold text-rose-300 flex items-center gap-1"
+                          className="rounded-full bg-slate-800 border border-rose-500/30 hover:bg-rose-500/10 px-3 sm:px-4 py-2 text-[11px] sm:text-xs font-bold text-rose-300 flex items-center justify-center gap-1 touch-manipulation"
                           title="Create DNS (fleet size + 1) for series members with no result"
                         >
                           Fill DNS for non-starters
@@ -319,7 +319,7 @@ export function AdminResultsPanel({
                               _dnsDefault: dnsPts,
                             });
                           }}
-                          className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
+                          className="rounded-full bg-orange-600 hover:bg-orange-500 px-3 sm:px-4 py-2 text-[11px] sm:text-xs font-bold text-white flex items-center justify-center gap-1 touch-manipulation"
                         >
                           <Plus className="h-4 w-4" />
                           Add Score
@@ -327,23 +327,24 @@ export function AdminResultsPanel({
                       </div>
                     </div>
 
-                    <p className="px-6 pb-2 text-[11px] text-slate-500">
+                    <p className="px-3 sm:px-6 pb-2 text-[11px] text-slate-500">
                       Non-starters: <strong className="text-slate-400">Fill DNS</strong> (fleet size + 1)
                       or mark <strong className="text-sky-300">Overseas commitment</strong> and set
                       points to their standing before the trip (e.g. 2nd → 2 pts). Both are editable.
                     </p>
 
-                    <table className="w-full text-left border-collapse text-xs">
+                    <div className="overflow-x-auto max-w-full -mx-1 px-1">
+                    <table className="w-full text-left border-collapse text-xs min-w-[640px]">
                       <thead>
                         <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                          <th className="py-4 px-4 text-center">Rank</th>
-                          <th className="py-4 px-6">Name</th>
-                          <th className="py-4 px-4 text-center">Gender</th>
-                          <th className="py-4 px-4 text-center">Birth year</th>
-                          <th className="py-4 px-4 text-center">Total Score</th>
-                          <th className="py-4 px-4 text-center">Nett Score</th>
-                          <th className="py-4 px-4 text-center">Status</th>
-                          <th className="py-4 px-6 text-right">Actions</th>
+                          <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">Rank</th>
+                          <th className="py-3 sm:py-4 px-4 sm:px-6">Name</th>
+                          <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">Gender</th>
+                          <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">Birth year</th>
+                          <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">Total Score</th>
+                          <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">Nett Score</th>
+                          <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">Status</th>
+                          <th className="py-3 sm:py-4 px-4 sm:px-6 text-right">Actions</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
@@ -444,6 +445,7 @@ export function AdminResultsPanel({
                         )}
                       </tbody>
                     </table>
+                    </div>
                   </div>
                 )}
               </div>

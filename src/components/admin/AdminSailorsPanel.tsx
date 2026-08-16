@@ -144,7 +144,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
   } = p;
 
   return (
-              <div className="w-full min-w-0 space-y-6">
+              <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
 
                 {emptySeriesCount > 0 && onCleanupEmptySeries && (
                   <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -988,8 +988,8 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                 )}
 
                 {/* Sailors List */}
-                <div className="glass-panel rounded-3xl border border-white/5 overflow-hidden">
-                  <div className="p-6 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="glass-panel rounded-2xl sm:rounded-3xl border border-white/5 overflow-hidden">
+                  <div className="p-4 sm:p-6 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
                       <h3 className="text-base font-bold text-white">Sailors List</h3>
                       <p className="text-xs text-slate-500">

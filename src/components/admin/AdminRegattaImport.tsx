@@ -376,8 +376,8 @@ export function AdminRegattaImport({
   };
 
   return (
-    <div className="w-full min-w-0 space-y-6">
-      <div className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/5 w-full">
+    <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
+      <div className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/5 w-full">
         <div
           onDragEnter={handleDrag}
           onDragOver={handleDrag}

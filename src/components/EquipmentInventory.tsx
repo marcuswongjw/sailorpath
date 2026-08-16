@@ -505,7 +505,7 @@ export function EquipmentInventory({
 
   if (loading) {
     return (
-      <section className={`${cardClass} p-5`}>
+      <section className={`${cardClass} p-4 sm:p-5`}>
         <p className="text-xs text-slate-500">Loading equipment…</p>
       </section>
     );
@@ -513,7 +513,7 @@ export function EquipmentInventory({
 
   if (isPrivate || !canSeeEquipment) {
     return (
-      <section className={`${cardClass} p-5`}>
+      <section className={`${cardClass} p-4 sm:p-5`}>
         <div className="flex items-center gap-2 mb-2">
           <Settings className="h-3.5 w-3.5 text-orange-400/90" />
           <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
@@ -528,11 +528,11 @@ export function EquipmentInventory({
   }
 
   return (
-    <section className={`${cardClass} p-5 space-y-4`}>
+    <section className={`${cardClass} p-4 sm:p-5 space-y-4 min-w-0 overflow-x-clip`}>
       <div className="flex items-start justify-between gap-2 flex-wrap">
-        <div>
+        <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <Settings className="h-3.5 w-3.5 text-orange-400/90" />
+            <Settings className="h-3.5 w-3.5 text-orange-400/90 shrink-0" />
             <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
               Equipment
             </h2>
@@ -543,19 +543,19 @@ export function EquipmentInventory({
           </p>
         </div>
         {isOwner && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 shrink-0">
             <button
               type="button"
               onClick={() => openLogUse()}
               disabled={!classItems.some((i) => i.status === "active")}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[10px] font-bold text-white disabled:opacity-40"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[10px] font-bold text-white disabled:opacity-40 touch-manipulation min-h-[2.25rem]"
             >
               Log session
             </button>
             <button
               type="button"
               onClick={() => openQuick()}
-              className="rounded-full bg-orange-600 px-3 py-1.5 text-[10px] font-bold text-white inline-flex items-center gap-1"
+              className="rounded-full bg-orange-600 px-3 py-2 text-[10px] font-bold text-white inline-flex items-center gap-1 touch-manipulation min-h-[2.25rem]"
             >
               <Plus className="h-3 w-3" />
               Add
@@ -621,7 +621,7 @@ export function EquipmentInventory({
 
       {/* Bulk bar */}
       {isOwner && selected.size > 0 && (
-        <div className="sticky top-14 z-20 rounded-xl border border-orange-500/30 bg-[#1a1210] px-3 py-2 flex flex-wrap items-center gap-2">
+        <div className="sticky top-14 z-20 rounded-xl border border-orange-500/30 bg-[#1a1210] px-3 py-2 flex flex-wrap items-center gap-2 shadow-lg">
           <span className="text-[11px] font-bold text-orange-200">
             {selected.size} selected
           </span>

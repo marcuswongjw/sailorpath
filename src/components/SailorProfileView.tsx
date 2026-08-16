@@ -1022,7 +1022,7 @@ export function SailorProfileView({
   ]);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-10 flex-1 w-full space-y-5 bg-[#090a0f]">
+    <div className="mx-auto max-w-3xl px-3 sm:px-6 py-5 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-[#090a0f] overflow-x-clip">
       {/* Claim banner — unclaimed public profiles (logged-in claim or log-in CTA) */}
       {(() => {
         const isUnclaimed =

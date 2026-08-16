@@ -1292,11 +1292,14 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 flex-1 flex flex-col gap-8">
-      <div className="glass-panel rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/5 bg-slate-900/40">
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-300">
-          <Shield className="h-4 w-4 text-orange-500" />
-          <span>Logged in as: <span className="text-white">{user?.email}</span></span>
+    <div className="mx-auto max-w-7xl w-full min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 flex-1 flex flex-col gap-4 sm:gap-6 lg:gap-8 overflow-x-clip">
+      <div className="glass-panel rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-white/5 bg-slate-900/40">
+        <div className="flex items-center gap-2 text-xs font-bold text-slate-300 min-w-0">
+          <Shield className="h-4 w-4 text-orange-500 shrink-0" />
+          <span className="truncate">
+            Logged in as:{" "}
+            <span className="text-white">{user?.email}</span>
+          </span>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {inboxNotifCount > 0 && (
@@ -1328,30 +1331,35 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
         </div>
       </div>
 
-      {/* Tab Navigation — equal width for all tabs */}
+      {/* Main tabs — 2-col on phone, full grid on larger screens */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
-            ["import", "Regatta Excel", FileSpreadsheet],
-            ["edit", "Database & bulk edit", Database],
-            ["analysis", "Gold analysis", GitCompareArrows],
-            ["gold", "Gold ranking", Trophy],
-            ["ilca", "ILCA ranking", Medal],
-            ["stats", "Stats & usage", BarChart3],
+            ["import", "Excel", "Regatta Excel", FileSpreadsheet],
+            ["edit", "Database", "Database & bulk edit", Database],
+            ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
+            ["gold", "Gold", "Gold ranking", Trophy],
+            ["ilca", "ILCA", "ILCA ranking", Medal],
+            ["stats", "Stats", "Stats & usage", BarChart3],
           ] as const
-        ).map(([key, label, Icon]) => (
+        ).map(([key, shortLabel, label, Icon]) => (
           <button
             key={key}
             type="button"
             onClick={() => setActiveTab(key)}
-            className={`relative flex items-center justify-center gap-2 rounded-xl px-2 py-3 text-xs sm:text-sm font-bold transition-all min-h-[3rem] ${
+            className={`relative flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl px-1.5 sm:px-2 py-2.5 sm:py-3 text-[11px] sm:text-sm font-bold transition-all min-h-[2.75rem] sm:min-h-[3rem] touch-manipulation ${
               activeTab === key
                 ? "bg-orange-600 text-white shadow-md shadow-orange-950/30"
                 : "text-slate-400 hover:text-white hover:bg-white/5"
             }`}
           >
-            <Icon className="h-4 w-4 shrink-0" />
-            <span className="text-center leading-tight">{label}</span>
+            <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+            <span className="text-center leading-tight sm:hidden">
+              {shortLabel}
+            </span>
+            <span className="text-center leading-tight hidden sm:inline">
+              {label}
+            </span>
             {key === "edit" && inboxNotifCount > 0 && (
               <span className="absolute -top-1 -right-1 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center">
                 {inboxNotifCount > 9 ? "9+" : inboxNotifCount}
@@ -1395,9 +1403,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
         {/* Database & bulk edit */}
         {activeTab === "edit" && (
-          <div className="w-full min-w-0 space-y-6">
-            {/* Sub Tabs */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-full">
+          <div className="w-full min-w-0 space-y-4 sm:space-y-6">
+            {/* Sub tabs — horizontal scroll on narrow screens */}
+            <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
+              <div className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full">
               {(
                 [
                   ["sailors", "Sailors"],
@@ -1418,7 +1427,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                     setEditingRegattaId(null);
                     setEditingResultId(null);
                   }}
-                  className={`rounded-xl py-2.5 text-xs font-bold transition-all text-center relative ${
+                  className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation ${
                     editSubTab === sub
                       ? "bg-orange-600 text-white"
                       : "text-slate-400 hover:text-white hover:bg-white/5"
@@ -1442,6 +1451,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
                   )}
                 </button>
               ))}
+              </div>
             </div>
 
             {/* Sub-tab content always full width */}

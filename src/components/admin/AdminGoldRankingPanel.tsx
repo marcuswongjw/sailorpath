@@ -282,9 +282,9 @@ export function AdminGoldRankingPanel({
   );
 
   return (
-    <div className="w-full min-w-0 space-y-6">
+    <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
       {/* ── Header ───────────────────────────────────────────── */}
-      <div className="glass-panel rounded-3xl border border-white/5 p-5 sm:p-6 space-y-3">
+      <div className="glass-panel rounded-2xl sm:rounded-3xl border border-white/5 p-4 sm:p-5 lg:p-6 space-y-3">
         <div className="flex items-start gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/15">
             <Trophy className="h-5 w-5 text-amber-400" />
@@ -373,8 +373,8 @@ export function AdminGoldRankingPanel({
                     </button>
                   </div>
                 </div>
-                <div className="max-h-64 overflow-y-auto">
-                  <table className="w-full text-left text-[11px]">
+                <div className="max-h-64 overflow-y-auto overflow-x-auto">
+                  <table className="w-full text-left text-[11px] min-w-[520px]">
                     <thead className="sticky top-0 bg-[#1a1520] text-slate-500 uppercase tracking-wide text-[9px]">
                       <tr>
                         <th className="px-3 py-2 w-8" />
