@@ -60,36 +60,43 @@ export const EQUIPMENT_SECTIONS: {
   id: "hull" | "sail" | "mast_set" | "foil_set" | "other";
   label: string;
   hint: string;
+  /** Short icon glyph for section headers */
+  icon: string;
   categories: EquipmentCategory[];
 }[] = [
   {
     id: "hull",
     label: "Hull",
-    hint: "Boat / hull brand and hull number",
+    hint: "Your race and backup boats",
+    icon: "🛶",
     categories: ["hull"],
   },
   {
     id: "sail",
     label: "Sail",
-    hint: "Race and training sails",
+    hint: "Race, training & wind-range sails",
+    icon: "⛵",
     categories: ["sail"],
   },
   {
     id: "mast_set",
     label: "Mast set",
-    hint: "Mast, boom & sprit — add each part or a full rig set",
+    hint: "Mast, boom & sprit — or add a full rig",
+    icon: "📐",
     categories: ["mast", "boom", "sprit"],
   },
   {
     id: "foil_set",
     label: "Foil set",
     hint: "Daggerboard & rudder",
+    icon: "🗡️",
     categories: ["daggerboard", "rudder"],
   },
   {
     id: "other",
     label: "Other",
-    hint: "Sheets, tiller, trolley, etc.",
+    hint: "Sheets, tiller, trolley…",
+    icon: "🧰",
     categories: ["other"],
   },
 ];
