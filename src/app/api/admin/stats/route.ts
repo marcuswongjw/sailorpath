@@ -6,6 +6,7 @@ import {
   getProductInventory,
   getUsageSummary,
 } from "@/lib/usage";
+import { getExtendedAdminStats } from "@/lib/adminExtendedStats";
 import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
 import { buildDataQualityReport } from "@/lib/dataQuality";
@@ -14,7 +15,7 @@ import { todayYmdSg } from "@/lib/datesSg";
 
 /**
  * GET /api/admin/stats?days=7
- * Superadmin: inventory + usage + data quality + change log.
+ * Superadmin: inventory + usage + extended metrics + data quality + change log.
  */
 export async function GET(req: Request) {
   try {
@@ -25,10 +26,11 @@ export async function GET(req: Request) {
       Math.max(1, Number(url.searchParams.get("days") || 7) || 7)
     );
 
-    const [inventory, usage, opsHealth] = await Promise.all([
+    const [inventory, usage, opsHealth, extended] = await Promise.all([
       getProductInventory(),
       getUsageSummary(days),
       getOpsHealth(days),
+      getExtendedAdminStats(days),
     ]);
 
     // Data quality
@@ -86,6 +88,7 @@ export async function GET(req: Request) {
       inventory,
       usage,
       opsHealth,
+      extended,
       dataQuality: dataQuality
         ? {
             emptySeries: dataQuality.emptySeries,

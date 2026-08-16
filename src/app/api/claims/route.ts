@@ -108,11 +108,34 @@ export async function POST(req: Request) {
       })
       .returning();
 
+    // Optional client session + acquisition (for claim rate by source/device)
+    const sessionId =
+      body.sessionId != null
+        ? String(body.sessionId).trim().slice(0, 64)
+        : null;
+    const source =
+      body.source != null
+        ? String(body.source).trim().toLowerCase().slice(0, 40)
+        : null;
+    const device =
+      body.device === "mobile" || body.device === "desktop"
+        ? body.device
+        : null;
+    const vid =
+      body.vid != null ? String(body.vid).trim().slice(0, 64) : null;
+
     void trackUsage({
       eventType: "claim_submit",
       path: "/api/claims",
       role: auth.role,
-      meta: { status: "pending", relation },
+      sessionId,
+      meta: {
+        status: "pending",
+        relation,
+        source: source || null,
+        device: device || null,
+        vid: vid || null,
+      },
     });
 
     return NextResponse.json({

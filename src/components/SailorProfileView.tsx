@@ -48,6 +48,11 @@ import {
 import dynamic from "next/dynamic";
 import { EquipmentInventory } from "@/components/EquipmentInventory";
 import {
+  getAcquisition,
+  getUsageSessionId,
+  getVisitorId,
+} from "@/lib/clientUsage";
+import {
   PROFILE_CARD_CLASS as cardClass,
   resolveDisplayFleet,
   fleetPillClass,
@@ -1366,6 +1371,7 @@ export function SailorProfileView({
                   credentials: "include",
                 });
                 const note = claimNote.trim();
+                const acq = getAcquisition();
                 const res = await fetch("/api/claims", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
@@ -1374,6 +1380,10 @@ export function SailorProfileView({
                     sailorId: initialSailor.id,
                     relation: claimRelation,
                     note,
+                    sessionId: getUsageSessionId() || undefined,
+                    vid: getVisitorId() || undefined,
+                    source: acq.source,
+                    device: acq.device,
                   }),
                 });
                 const data = await res.json();
