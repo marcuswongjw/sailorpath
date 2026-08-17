@@ -67,13 +67,9 @@ import type { ResultAdmin } from "@/types/result";
 /** Gold entry / drop: 1 Jan or 1 Jul only (half-year boundaries). */
 const HALF_BOUNDARY_OPTS = halfBoundaryOptions();
 
-interface AdminDashboardProps {
-  initialSailors: SailorAdmin[];
-  initialRegattas: RegattaAdmin[];
-  initialResults: ResultAdmin[];
-}
+type AdminDataKey = "sailors" | "regattas" | "results";
 
-export function AdminDashboard({ initialSailors, initialRegattas, initialResults }: AdminDashboardProps) {
+export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<
     "import" | "edit" | "analysis" | "gold" | "ilca" | "stats"
   >("edit");
@@ -147,8 +143,15 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
   const [selectedSailors, setSelectedSailors] = useState<string[]>([]);
   const [bulkField, setBulkField] = useState<string>("");
   const [bulkValue, setBulkValue] = useState<string>("");
-  const [sailorList, setSailorList] = useState(initialSailors);
+  const [sailorList, setSailorList] = useState<SailorAdmin[]>([]);
   const [bulkStatus, setBulkStatus] = useState<string | null>(null);
+  const [loadedData, setLoadedData] = useState<Record<AdminDataKey, boolean>>({
+    sailors: false,
+    regattas: false,
+    results: false,
+  });
+  const [dataLoading, setDataLoading] = useState(false);
+  const [dataLoadError, setDataLoadError] = useState<string | null>(null);
 
   // Database Editor Sub-Tabs & Forms
   const [editSubTab, setEditSubTab] = useState<
@@ -218,7 +221,7 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     seaGames: "",
   });
 
-  const [regattaList, setRegattaList] = useState(initialRegattas || []);
+  const [regattaList, setRegattaList] = useState<RegattaAdmin[]>([]);
   const filteredRegattaList = useMemo(() => {
     const q = regattaSearch.trim().toLowerCase();
     return [...(regattaList || [])]
@@ -268,9 +271,9 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
     countsForRanking: true,
   });
 
-  const [resultsList, setResultsList] = useState(initialResults || []);
+  const [resultsList, setResultsList] = useState<ResultAdmin[]>([]);
   const [selectedRegattaIdForResultEdit, setSelectedRegattaIdForResultEdit] = useState<string>(
-    initialRegattas?.[0]?.id || ""
+    ""
   );
   const [editingResultId, setEditingResultId] = useState<string | null>(null);
   const [showDuplicateFinder, setShowDuplicateFinder] = useState(false);
@@ -287,6 +290,87 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Check superadmin permissions
   const isSuperadmin = adminRole === "superadmin";
+
+  const requiredData = useMemo<AdminDataKey[]>(() => {
+    if (activeTab === "analysis" || activeTab === "gold" || activeTab === "ilca") {
+      return ["sailors", "regattas", "results"];
+    }
+    if (activeTab !== "edit") return [];
+    if (editSubTab === "sailors") return ["sailors"];
+    if (editSubTab === "regattas" || editSubTab === "suggestions") {
+      return ["regattas"];
+    }
+    if (editSubTab === "results") return ["sailors", "regattas", "results"];
+    return [];
+  }, [activeTab, editSubTab]);
+
+  // Load only the records required for the active workspace. This keeps the
+  // initial admin response free of database rows and avoids downloading all
+  // results when an admin opens Stats, Claims, Support, or a single editor.
+  useEffect(() => {
+    if (!isSuperadmin) return;
+    const missing = requiredData.filter((key) => !loadedData[key]);
+    if (missing.length === 0) return;
+
+    let cancelled = false;
+    setDataLoading(true);
+    setDataLoadError(null);
+
+    const endpoints: Record<AdminDataKey, string> = {
+      sailors: "/api/admin/sailors",
+      regattas: "/api/admin/regattas",
+      results: "/api/admin/results",
+    };
+
+    void Promise.all(
+      missing.map(async (key) => {
+        const response = await fetch(endpoints[key], { credentials: "include" });
+        const body = (await response.json()) as {
+          error?: string;
+          sailors?: SailorAdmin[];
+          regattas?: RegattaAdmin[];
+          results?: ResultAdmin[];
+        };
+        if (!response.ok) throw new Error(body.error || `Could not load ${key}`);
+        return { key, body };
+      })
+    )
+      .then((responses) => {
+        if (cancelled) return;
+        for (const { key, body } of responses) {
+          if (key === "sailors" && Array.isArray(body.sailors)) {
+            setSailorList(body.sailors);
+          }
+          if (key === "regattas" && Array.isArray(body.regattas)) {
+            const rows = [...body.regattas].sort((a, b) =>
+              String(b.date || "").localeCompare(String(a.date || ""))
+            );
+            setRegattaList(rows);
+            setSelectedRegattaIdForResultEdit((current) => current || rows[0]?.id || "");
+          }
+          if (key === "results" && Array.isArray(body.results)) {
+            setResultsList(body.results);
+          }
+        }
+        setLoadedData((current) => {
+          const next = { ...current };
+          for (const key of missing) next[key] = true;
+          return next;
+        });
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) {
+          setDataLoadError(error instanceof Error ? error.message : "Failed to load admin data");
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setDataLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isSuperadmin, loadedData, requiredData]);
 
   useEffect(() => {
     if (!isSuperadmin) return;
@@ -347,6 +431,10 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
   // Best 3 of 5 for current SG half (Gold + Silver)
   useEffect(() => {
+    if (sailorList.length === 0) {
+      setBest3BySailor({});
+      return;
+    }
     let cancelled = false;
     (async () => {
       try {
@@ -1384,6 +1472,17 @@ export function AdminDashboard({ initialSailors, initialRegattas, initialResults
 
       {/* Tab Contents — always full width of admin shell */}
       <div className="flex-1 flex flex-col w-full min-w-0">
+        {dataLoadError && (
+          <div className="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+            {dataLoadError}
+          </div>
+        )}
+        {dataLoading && (
+          <div className="mb-4 flex items-center gap-2 text-xs text-slate-400">
+            <RefreshCw className="h-4 w-4 animate-spin text-orange-500" />
+            Loading this workspace…
+          </div>
+        )}
         {/* Tab 1: Excel Import */}
         {activeTab === "import" && (
           <AdminRegattaImport

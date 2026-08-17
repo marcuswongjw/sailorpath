@@ -1,13 +1,7 @@
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AdminDashboard } from "@/components/AdminDashboard";
-import { DbOffline } from "@/components/DbOffline";
-import {
-  listSailorsFull,
-  listRegattasFull,
-  listResults,
-} from "@/lib/queries";
-import { DbUnavailableError } from "@/db";
+import { requireSuperadmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -18,37 +12,15 @@ export default async function AdminPage() {
     host.includes("localhost") ||
     host.includes("127.0.0.1");
   if (!allowed) notFound();
-
-  let sailors;
-  let regattas;
-  let results;
-  let errorMsg: string | null = null;
-
+  // This page is the data boundary for the admin portal. The dashboard is a
+  // client component, so passing records here would serialize the full admin
+  // dataset to every visitor before client-side role checks can run.
   try {
-    const [s, r, res] = await Promise.all([
-      listSailorsFull(),
-      listRegattasFull(),
-      listResults(),
-    ]);
-    sailors = s;
-    regattas = r;
-    results = res;
-  } catch (e) {
-    errorMsg =
-      e instanceof DbUnavailableError
-        ? e.message
-        : "Cannot load admin without database";
+    await requireSuperadmin();
+  } catch {
+    // Avoid confirming that an admin portal exists to non-admin accounts.
+    notFound();
   }
 
-  if (errorMsg || !sailors || !regattas || !results) {
-    return <DbOffline message={errorMsg || "Database load error"} />;
-  }
-
-  return (
-    <AdminDashboard
-      initialSailors={sailors}
-      initialRegattas={regattas}
-      initialResults={results}
-    />
-  );
+  return <AdminDashboard />;
 }
