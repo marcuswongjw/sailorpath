@@ -693,7 +693,8 @@ export async function getOpsHealth(days = 30): Promise<OpsHealth> {
           boatClass: regattas.boatClass,
           countsForRanking: regattas.countsForRanking,
         })
-        .from(regattas),
+        .from(regattas)
+        .where(eq(regattas.countsForRanking, true)),
     ]);
 
     const mapped = sailorRows.map((row) => {

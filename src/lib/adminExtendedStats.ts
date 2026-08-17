@@ -208,11 +208,11 @@ export async function getExtendedAdminStats(
   since.setDate(since.getDate() - windowDays);
   const today = todayYmdSg();
   const sinceYmd = toYmd(since) || "1970-01-01";
-  // Results older than this rarely change ranking-health aggregates
+  // Results older than this rarely change ranking-health aggregates (1.5 years)
   const resultsCutoff = new Date();
-  resultsCutoff.setFullYear(resultsCutoff.getFullYear() - 4);
+  resultsCutoff.setMonth(resultsCutoff.getMonth() - 18);
   const resultsCutoffYmd = resultsCutoff.toISOString().slice(0, 10);
-  const usageLimit = windowDays <= 7 ? 2000 : windowDays <= 30 ? 3500 : 5000;
+  const usageLimit = windowDays <= 7 ? 1000 : windowDays <= 30 ? 2000 : 3000;
 
   // ── One parallel batch (no sequential follow-up queries) ───────────
   const [
@@ -310,7 +310,7 @@ export async function getExtendedAdminStats(
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
       .where(gte(regattas.date, resultsCutoffYmd))
-      .limit(12000)
+      .limit(3500)
       .catch(() => [] as never[]),
     db
       .select({

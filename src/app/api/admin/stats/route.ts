@@ -141,7 +141,7 @@ async function loadDataQualityLite() {
 
   try {
     const cutoff = new Date();
-    cutoff.setFullYear(cutoff.getFullYear() - 3);
+    cutoff.setMonth(cutoff.getMonth() - 18);
     const cutoffYmd = cutoff.toISOString().slice(0, 10);
 
     const [sailorRows, links] = await Promise.all([
@@ -175,7 +175,7 @@ async function loadDataQualityLite() {
             eq(regattas.countsForRanking, true)
           )
         )
-        .limit(12000)
+        .limit(3000)
         .catch(async () => {
           // Fallback if countsForRanking filter fails
           return db
