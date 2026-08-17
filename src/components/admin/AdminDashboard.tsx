@@ -16,7 +16,6 @@ import {
   ArrowUpDown,
   ArrowUp,
   ArrowDown,
-  BarChart3,
   Plus,
   Trash2,
   Edit3,
@@ -32,7 +31,6 @@ import { findDuplicateSailorPairs } from "@/lib/nameMatch";
 import { ClaimsAdminPanel } from "@/components/ClaimsAdminPanel";
 import { PromoteAdminPanel } from "@/components/PromoteAdminPanel";
 import { SupportInboxPanel } from "@/components/SupportInboxPanel";
-import { AdminStatsPanel } from "@/components/admin/AdminStatsPanel";
 import {
   DB_COLS_STORAGE,
   DB_SAILOR_COLUMNS,
@@ -71,7 +69,7 @@ type AdminDataKey = "sailors" | "regattas" | "results";
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<
-    "import" | "edit" | "analysis" | "gold" | "ilca" | "stats"
+    "import" | "edit" | "analysis" | "gold" | "ilca"
   >("edit");
   
   // Auth state — role from server /profiles, never user_metadata
@@ -1420,7 +1418,7 @@ export function AdminDashboard() {
       </div>
 
       {/* Main tabs — 2-col on phone, full grid on larger screens */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
             ["import", "Excel", "Regatta Excel", FileSpreadsheet],
@@ -1428,7 +1426,6 @@ export function AdminDashboard() {
             ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
             ["gold", "Gold", "Gold ranking", Trophy],
             ["ilca", "ILCA", "ILCA ranking", Medal],
-            ["stats", "Stats", "Stats & usage", BarChart3],
           ] as const
         ).map(([key, shortLabel, label, Icon]) => (
           <button
@@ -1775,17 +1772,6 @@ export function AdminDashboard() {
           </div>
         )}
 
-        {activeTab === "stats" && (
-          <div className="w-full min-w-0">
-            {isSuperadmin ? (
-              <AdminStatsPanel />
-            ) : (
-              <div className="glass-panel rounded-3xl p-6 border border-white/5 text-sm text-slate-400">
-                Stats & usage require superadmin.
-              </div>
-            )}
-          </div>
-        )}
       </div>
 
       <AdminCompetitionsPanel
