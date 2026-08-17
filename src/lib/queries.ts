@@ -497,96 +497,58 @@ export async function getSailorSeriesStanding(
  * Prefers national-list board; falls back to all ILCA racers if the sailor
  * has results but is not on the official list.
  */
-export async function getSailorIlcaStanding(
-  sailorId: string,
-  boatClass: IlcaBoatClass = "ILCA 4"
-): Promise<IlcaSeriesStanding | null> {
+export const getCachedIlcaRankings = unstable_cache(
+  async (boatClass: IlcaBoatClass = "ILCA 4") => {
+    return computeIlcaRankingsBoard(boatClass);
+  },
+  ["ilca-rankings-board-v4"],
+  { revalidate: 60 }
+);
+
+async function computeIlcaRankingsBoard(boatClass: IlcaBoatClass = "ILCA 4") {
   return withDb(async () => {
     const asOf = todayYmdSg();
-
-    // Cheap subject check first — most Optimist-only profiles skip the board re-rank
-    const [meRow] = await db
-      .select({
-        id: sailors.id,
-        name: sailors.name,
-        gender: sailors.gender,
-        dob: sailors.dob,
-        nationality: sailors.nationality,
-        sailNumber: sailors.sailNumber,
-        sailNumberIlca4: sailors.sailNumberIlca4,
-        ilca4NationalList: sailors.ilca4NationalList,
-        club: sailors.club,
-        handle: sailors.handle,
-      })
-      .from(sailors)
-      .where(eq(sailors.id, sailorId))
-      .limit(1);
-    if (!meRow) return null;
-
-    const [anyIlcaResult] = await db
-      .select({ id: regattaResults.id })
-      .from(regattaResults)
-      .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-      .where(
-        and(
-          eq(regattaResults.sailorId, sailorId),
+    const [sailorRows, regattaRows] = await Promise.all([
+      db
+        .select({
+          id: sailors.id,
+          name: sailors.name,
+          gender: sailors.gender,
+          dob: sailors.dob,
+          nationality: sailors.nationality,
+          sailNumber: sailors.sailNumber,
+          sailNumberIlca4: sailors.sailNumberIlca4,
+          ilca4NationalList: sailors.ilca4NationalList,
+          club: sailors.club,
+          handle: sailors.handle,
+        })
+        .from(sailors)
+        .where(
+          or(
+            eq(sailors.ilca4NationalList, true),
+            sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIlca4} <> ''`
+          )
+        ),
+      db
+        .select({
+          id: regattas.id,
+          name: regattas.name,
+          date: regattas.date,
+          totalFleetSize: regattas.totalFleetSize,
+          boatClass: regattas.boatClass,
+          countsForRanking: regattas.countsForRanking,
+          raceCount: regattas.raceCount,
+          division: regattas.division,
+        })
+        .from(regattas)
+        .where(
           or(
             eq(regattas.boatClass, "ILCA 4"),
             eq(regattas.boatClass, "ILCA4"),
-            sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%4%'`
+            sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%'`
           )
-        )
-      )
-      .limit(1);
-
-    const onNationalList = Boolean(meRow.ilca4NationalList);
-    if (!anyIlcaResult && !onNationalList && !meRow.sailNumberIlca4) {
-      return null;
-    }
-
-    // Lean ILCA-relevant sailors only (national list and/or ILCA sail #)
-    const sailorRows = await db
-      .select({
-        id: sailors.id,
-        name: sailors.name,
-        gender: sailors.gender,
-        dob: sailors.dob,
-        nationality: sailors.nationality,
-        sailNumber: sailors.sailNumber,
-        sailNumberIlca4: sailors.sailNumberIlca4,
-        ilca4NationalList: sailors.ilca4NationalList,
-        club: sailors.club,
-        handle: sailors.handle,
-      })
-      .from(sailors)
-      .where(
-        or(
-          eq(sailors.ilca4NationalList, true),
-          sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIlca4} <> ''`,
-          eq(sailors.id, sailorId)
-        )
-      );
-
-    // ILCA regattas only
-    const regattaRows = await db
-      .select({
-        id: regattas.id,
-        name: regattas.name,
-        date: regattas.date,
-        totalFleetSize: regattas.totalFleetSize,
-        boatClass: regattas.boatClass,
-        countsForRanking: regattas.countsForRanking,
-        raceCount: regattas.raceCount,
-        division: regattas.division,
-      })
-      .from(regattas)
-      .where(
-        or(
-          eq(regattas.boatClass, "ILCA 4"),
-          eq(regattas.boatClass, "ILCA4"),
-          sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%'`
-        )
-      );
+        ),
+    ]);
 
     const ilcaSailors = sailorRows.map((s) => ({
       id: s.id,
@@ -615,7 +577,7 @@ export async function getSailorIlcaStanding(
       }));
 
     const window = ilcaRankingRegattas(ilcaRegattas, boatClass, asOf);
-    if (!window.length) return null;
+    if (!window.length) return { ranked: [], asOf };
 
     const scoringIds = window.map((r) => r.id);
     const resultRows = await db
@@ -629,9 +591,6 @@ export async function getSailorIlcaStanding(
       .from(regattaResults)
       .where(inArray(regattaResults.regattaId, scoringIds));
 
-    const hasAnyResult = resultRows.some((r) => r.sailorId === sailorId);
-    if (!hasAnyResult && !onNationalList) return null;
-
     const ilcaResults = resultRows.map((row) => ({
       sailorId: row.sailorId,
       regattaId: row.regattaId,
@@ -640,59 +599,56 @@ export async function getSailorIlcaStanding(
       isOverseasCommitment: row.isOverseasCommitment,
     }));
 
-    const build = (restrictToNationalList: boolean) =>
-      computeIlcaRankings(
-        boatClass,
-        asOf,
-        ilcaSailors,
-        ilcaRegattas,
-        ilcaResults,
-        { restrictToNationalList }
-      );
-
-    let ranked = build(true);
-    let unrestricted = false;
-    let me = ranked.find((x) => x.sailorId === sailorId);
-    if (!me) {
-      ranked = build(false);
-      unrestricted = true;
-      me = ranked.find((x) => x.sailorId === sailorId);
-    }
-    if (!me) return null;
-
-    const rScores: RegattaScoreSlot[] = me.eventScores.map((e) => ({
-      regattaId: e.regattaId,
-      regattaName: e.regattaName,
-      score: e.points,
-      isDNS: e.isDns,
-      isOverseasCommitment: false,
-      finishPlace: e.place > 0 ? e.place : null,
-    }));
-
-    // Pad to 5 slots for the profile strip
-    while (rScores.length < 5) {
-      rScores.push({
-        regattaId: `empty-${rScores.length}`,
-        regattaName: "—",
-        score: 0,
-        isDNS: true,
-      });
-    }
-
-    return {
-      periodLabel: `${boatClass} · ranking as of ${asOf}`,
-      fleet: "Open",
-      overallRank: me.rank,
-      fleetSize: ranked.length,
-      best3of5: me.totalPoints,
-      rScores,
-      trendNote: unrestricted
-        ? `Best 3 of 5 high points · not on national list (open board #${me.rank})`
-        : `Best 3 of 5 high points · #${me.rank} of ${ranked.length} nationally`,
+    const ranked = computeIlcaRankings(
       boatClass,
-      unrestricted,
-    };
+      asOf,
+      ilcaSailors,
+      ilcaRegattas,
+      ilcaResults,
+      { restrictToNationalList: true }
+    );
+
+    return { ranked, asOf };
   });
+}
+
+export async function getSailorIlcaStanding(
+  sailorId: string,
+  boatClass: IlcaBoatClass = "ILCA 4"
+): Promise<IlcaSeriesStanding | null> {
+  const { ranked, asOf } = await getCachedIlcaRankings(boatClass);
+  const me = ranked.find((x) => x.sailorId === sailorId);
+  if (!me) return null;
+
+  const rScores: RegattaScoreSlot[] = me.eventScores.map((e) => ({
+    regattaId: e.regattaId,
+    regattaName: e.regattaName,
+    score: e.points,
+    isDNS: e.isDns,
+    isOverseasCommitment: false,
+    finishPlace: e.place > 0 ? e.place : null,
+  }));
+
+  while (rScores.length < 5) {
+    rScores.push({
+      regattaId: `empty-${rScores.length}`,
+      regattaName: "—",
+      score: 0,
+      isDNS: true,
+    });
+  }
+
+  return {
+    periodLabel: `${boatClass} · ranking as of ${asOf}`,
+    fleet: "Open",
+    overallRank: me.rank,
+    fleetSize: ranked.length,
+    best3of5: me.totalPoints,
+    rScores,
+    trendNote: `Best 3 of 5 high points · #${me.rank} of ${ranked.length} nationally`,
+    boatClass,
+    unrestricted: false,
+  };
 }
 
 export async function getRaceObservationsForSailor(

@@ -3,7 +3,7 @@ import { DbOffline } from "@/components/DbOffline";
 import { listSailorsFull, listRegattasFull, listResults } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function Ilca4StandingsPage() {
   let sailors;
