@@ -4,7 +4,7 @@
  * entity names only appear in superadmin data-quality style lists.
  */
 
-import { desc, eq, gte, inArray, isNotNull } from "drizzle-orm";
+import { desc, eq, gte, isNotNull } from "drizzle-orm";
 import { db } from "@/db";
 import {
   equipmentItems,
@@ -208,8 +208,11 @@ export async function getExtendedAdminStats(
   const since = new Date();
   since.setDate(since.getDate() - windowDays);
   const today = todayYmdSg();
+  const sinceYmd = toYmd(since) || "1970-01-01";
+  // Cap result fan-out; full history is rarely needed for admin aggregates
+  const usageLimit = windowDays <= 7 ? 3500 : windowDays <= 30 ? 6000 : 9000;
 
-  // ── Parallel base queries ──────────────────────────────────────────
+  // ── One parallel batch (no sequential follow-up queries) ───────────
   const [
     equipRows,
     usageRows,
@@ -217,6 +220,9 @@ export async function getExtendedAdminStats(
     supportRows,
     claimRows,
     resultClassRows,
+    equipSess,
+    fleetSailors,
+    regattaRows,
   ] = await Promise.all([
     db
       .select({
@@ -230,7 +236,7 @@ export async function getExtendedAdminStats(
         acquiredOn: equipmentItems.acquiredOn,
       })
       .from(equipmentItems)
-      .limit(20000)
+      .limit(8000)
       .catch(() => [] as never[]),
     db
       .select({
@@ -243,7 +249,7 @@ export async function getExtendedAdminStats(
       .from(usageEvents)
       .where(gte(usageEvents.createdAt, since))
       .orderBy(desc(usageEvents.createdAt))
-      .limit(12000)
+      .limit(usageLimit)
       .catch(() => [] as never[]),
     db
       .select({
@@ -261,20 +267,6 @@ export async function getExtendedAdminStats(
         dropDate: sailors.dropDate,
         dob: sailors.dob,
         updatedAt: sailors.updatedAt,
-        name: sailors.name,
-        handle: sailors.handle,
-        sailNumber: sailors.sailNumber,
-        club: sailors.club,
-        school: sailors.school,
-        nationality: sailors.nationality,
-        gender: sailors.gender,
-        silverEntryDate: sailors.silverEntryDate,
-        currentFleet: sailors.currentFleet,
-        natSquadStatusJan25: sailors.natSquadStatusJan25,
-        natSquadStatusJul25: sailors.natSquadStatusJul25,
-        natSquadStatusJan26: sailors.natSquadStatusJan26,
-        natSquadStatusJul26: sailors.natSquadStatusJul26,
-        nationalSquadStatus: sailors.nationalSquadStatus,
       })
       .from(sailors)
       .where(isNotNull(sailors.parentId))
@@ -287,7 +279,7 @@ export async function getExtendedAdminStats(
         updatedAt: supportMessages.updatedAt,
       })
       .from(supportMessages)
-      .limit(5000)
+      .limit(2000)
       .catch(() => [] as never[]),
     db
       .select({
@@ -298,7 +290,7 @@ export async function getExtendedAdminStats(
         updatedAt: sailorClaims.updatedAt,
       })
       .from(sailorClaims)
-      .limit(5000)
+      .limit(2000)
       .catch(() => [] as never[]),
     db
       .select({
@@ -310,37 +302,66 @@ export async function getExtendedAdminStats(
         regattaName: regattas.name,
         totalFleetSize: regattas.totalFleetSize,
         countsForRanking: regattas.countsForRanking,
-        division: regattas.division,
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-      .limit(50000)
+      .limit(25000)
       .catch(() => [] as never[]),
-  ]);
-
-  // Equipment sessions in window
-  let equipSessionsInWindow = 0;
-  let equipLogsByPart = new Map<string, number>();
-  try {
-    const sess = await db
+    db
       .select({
         equipmentItemId: equipmentUsages.equipmentItemId,
         usedOn: equipmentUsages.usedOn,
-        source: equipmentUsages.source,
       })
       .from(equipmentUsages)
-      .where(gte(equipmentUsages.usedOn, toYmd(since) || "1970-01-01"))
-      .limit(20000);
-    equipSessionsInWindow = sess.length;
-    const itemCat = new Map(
-      equipRows.map((r) => [r.id, bucketCategory(String(r.category))])
-    );
-    for (const s of sess) {
-      const part = itemCat.get(s.equipmentItemId) || "other";
-      equipLogsByPart.set(part, (equipLogsByPart.get(part) || 0) + 1);
-    }
-  } catch {
-    /* optional */
+      .where(gte(equipmentUsages.usedOn, sinceYmd))
+      .limit(8000)
+      .catch(() => [] as never[]),
+    // Slim fleet resolution set (replaces 2–3 extra full-table sailor scans)
+    db
+      .select({
+        id: sailors.id,
+        name: sailors.name,
+        handle: sailors.handle,
+        sailNumber: sailors.sailNumber,
+        club: sailors.club,
+        school: sailors.school,
+        nationality: sailors.nationality,
+        gender: sailors.gender,
+        dob: sailors.dob,
+        goldEntryDate: sailors.goldEntryDate,
+        silverEntryDate: sailors.silverEntryDate,
+        dropDate: sailors.dropDate,
+        currentFleet: sailors.currentFleet,
+        nationalSquadStatus: sailors.nationalSquadStatus,
+        ilca4NationalList: sailors.ilca4NationalList,
+      })
+      .from(sailors)
+      .catch(() => [] as never[]),
+    db
+      .select({
+        id: regattas.id,
+        name: regattas.name,
+        slug: regattas.slug,
+        date: regattas.date,
+        totalFleetSize: regattas.totalFleetSize,
+        division: regattas.division,
+        raceCount: regattas.raceCount,
+        geography: regattas.geography,
+        boatClass: regattas.boatClass,
+        countsForRanking: regattas.countsForRanking,
+      })
+      .from(regattas)
+      .catch(() => [] as never[]),
+  ]);
+
+  const equipSessionsInWindow = equipSess.length;
+  const equipLogsByPart = new Map<string, number>();
+  const itemCat = new Map(
+    equipRows.map((r) => [r.id, bucketCategory(String(r.category))])
+  );
+  for (const s of equipSess) {
+    const part = itemCat.get(s.equipmentItemId) || "other";
+    equipLogsByPart.set(part, (equipLogsByPart.get(part) || 0) + 1);
   }
 
   // ── 1. Equipment engagement ────────────────────────────────────────
@@ -472,21 +493,22 @@ export async function getExtendedAdminStats(
 
   // ── 3. Feature adoption (claimed) ──────────────────────────────────
   const equipBySailor = new Set(equipRows.map((r) => r.sailorId));
-  let notesSailors = new Set<string>();
+  // Distinct note authors — keep small; optional tables
+  const notesSailors = new Set<string>();
   try {
-    const pn = await db
-      .select({ sailorId: parentNotes.sailorId })
-      .from(parentNotes)
-      .limit(10000);
+    const [pn, obs] = await Promise.all([
+      db
+        .selectDistinct({ sailorId: parentNotes.sailorId })
+        .from(parentNotes)
+        .limit(3000)
+        .catch(() => [] as { sailorId: string }[]),
+      db
+        .selectDistinct({ sailorId: raceObservations.sailorId })
+        .from(raceObservations)
+        .limit(5000)
+        .catch(() => [] as { sailorId: string }[]),
+    ]);
     for (const p of pn) notesSailors.add(p.sailorId);
-  } catch {
-    /* optional */
-  }
-  try {
-    const obs = await db
-      .select({ sailorId: raceObservations.sailorId })
-      .from(raceObservations)
-      .limit(20000);
     for (const o of obs) notesSailors.add(o.sailorId);
   } catch {
     /* optional */
@@ -630,65 +652,24 @@ export async function getExtendedAdminStats(
     rejectReasons.set(reason, (rejectReasons.get(reason) || 0) + 1);
   }
 
-  // ── 6. Ranking health ──────────────────────────────────────────────
+  // ── 6. Ranking health (uses fleetSailors + regattaRows from batch) ─
   let silverActive = 0;
   let silverWith3 = 0;
   let ilcaListed = 0;
   let ilcaWith3 = 0;
   try {
     const period = currentPeriodFromSgToday();
-    const allSailors = await db
-      .select({
-        id: sailors.id,
-        name: sailors.name,
-        handle: sailors.handle,
-        sailNumber: sailors.sailNumber,
-        club: sailors.club,
-        school: sailors.school,
-        nationality: sailors.nationality,
-        gender: sailors.gender,
-        dob: sailors.dob,
-        goldEntryDate: sailors.goldEntryDate,
-        silverEntryDate: sailors.silverEntryDate,
-        dropDate: sailors.dropDate,
-        currentFleet: sailors.currentFleet,
-        natSquadStatusJan25: sailors.natSquadStatusJan25,
-        natSquadStatusJul25: sailors.natSquadStatusJul25,
-        natSquadStatusJan26: sailors.natSquadStatusJan26,
-        natSquadStatusJul26: sailors.natSquadStatusJul26,
-        nationalSquadStatus: sailors.nationalSquadStatus,
-        ilca4NationalList: sailors.ilca4NationalList,
-      })
-      .from(sailors);
-
-    const mapped = allSailors.map((row) => {
+    const mapped = fleetSailors.map((row) => {
       const n = normalizeSgSeriesMembership(row.currentFleet);
       return { ...row, currentFleet: n || row.currentFleet };
     });
 
-    const goldIds: string[] = [];
-    const silverIds: string[] = [];
+    const silverIdSet = new Set<string>();
     for (const s of mapped) {
       const r = resolveSailorFleet(s as SailorRecord, period);
-      if (r?.active && r.fleet === "Gold") goldIds.push(s.id);
-      if (r?.active && r.fleet === "Silver") silverIds.push(s.id);
+      if (r?.active && r.fleet === "Silver") silverIdSet.add(s.id);
     }
-    silverActive = silverIds.length;
-
-    const regattaRows = await db
-      .select({
-        id: regattas.id,
-        name: regattas.name,
-        slug: regattas.slug,
-        date: regattas.date,
-        totalFleetSize: regattas.totalFleetSize,
-        division: regattas.division,
-        raceCount: regattas.raceCount,
-        geography: regattas.geography,
-        boatClass: regattas.boatClass,
-        countsForRanking: regattas.countsForRanking,
-      })
-      .from(regattas);
+    silverActive = silverIdSet.size;
 
     const rMapped: RegattaRecord[] = regattaRows.map((row) => ({
       id: row.id,
@@ -705,37 +686,35 @@ export async function getExtendedAdminStats(
 
     const silverSlots = scoringRegattasForFleet("Silver", period, rMapped);
     const silverScoring = new Set(silverSlots.map((x) => x.regatta.id));
-    if (silverScoring.size && silverIds.length) {
+    if (silverScoring.size && silverIdSet.size) {
       const bySailor = new Map<string, Set<string>>();
       for (const row of resultClassRows) {
         if (!silverScoring.has(row.regattaId)) continue;
-        if (!silverIds.includes(row.sailorId)) continue;
+        if (!silverIdSet.has(row.sailorId)) continue;
         if (!bySailor.has(row.sailorId)) bySailor.set(row.sailorId, new Set());
         bySailor.get(row.sailorId)!.add(row.regattaId);
       }
-      for (const id of silverIds) {
+      for (const id of silverIdSet) {
         if ((bySailor.get(id)?.size || 0) >= 3) silverWith3 += 1;
       }
     }
 
-    // ILCA listed sailors with ≥3 ILCA results (all-time ranking-ish)
     const ilcaListedIds = mapped
       .filter((s) => Boolean(s.ilca4NationalList))
       .map((s) => s.id);
+    const ilcaListedSet = new Set(ilcaListedIds);
     ilcaListed = ilcaListedIds.length;
-    if (ilcaListedIds.length) {
+    if (ilcaListedSet.size) {
       const bySailor = new Map<string, number>();
       for (const row of resultClassRows) {
         if (profileBoatClassGroup(row.boatClass) !== "ilca4") continue;
-        if (!ilcaListedIds.includes(row.sailorId)) continue;
+        if (!ilcaListedSet.has(row.sailorId)) continue;
         bySailor.set(row.sailorId, (bySailor.get(row.sailorId) || 0) + 1);
       }
       for (const id of ilcaListedIds) {
         if ((bySailor.get(id) || 0) >= 3) ilcaWith3 += 1;
       }
     }
-
-    void goldIds; // gold coverage already in opsHealth
   } catch (e) {
     console.warn("extended ranking health", e);
   }
@@ -813,24 +792,9 @@ export async function getExtendedAdminStats(
     }
   }
 
-  // DOB lookup for age at first ILCA
+  // DOB from fleet batch (no extra round-trips)
   const dobById = new Map<string, string | null>();
-  try {
-    const ids = [...firstIlca.keys()];
-    if (ids.length) {
-      // batch in chunks
-      for (let i = 0; i < ids.length; i += 400) {
-        const chunk = ids.slice(i, i + 400);
-        const rows = await db
-          .select({ id: sailors.id, dob: sailors.dob })
-          .from(sailors)
-          .where(inArray(sailors.id, chunk));
-        for (const row of rows) dobById.set(row.id, row.dob);
-      }
-    }
-  } catch {
-    /* ignore */
-  }
+  for (const s of fleetSailors) dobById.set(s.id, s.dob ?? null);
 
   const ages: number[] = [];
   const months: number[] = [];
@@ -851,26 +815,15 @@ export async function getExtendedAdminStats(
     }
   }
 
-  // Gold never ILCA
+  // Gold never ILCA — from fleet batch
   let goldNeverIlca = 0;
   let goldNeverIlcaDropped = 0;
-  try {
-    const goldish = await db
-      .select({
-        id: sailors.id,
-        goldEntryDate: sailors.goldEntryDate,
-        dropDate: sailors.dropDate,
-      })
-      .from(sailors)
-      .where(isNotNull(sailors.goldEntryDate));
-    for (const s of goldish) {
-      if (ilcaSailors.has(s.id)) continue;
-      goldNeverIlca += 1;
-      const drop = toYmd(s.dropDate);
-      if (drop && drop <= today) goldNeverIlcaDropped += 1;
-    }
-  } catch {
-    /* ignore */
+  for (const s of fleetSailors) {
+    if (!s.goldEntryDate) continue;
+    if (ilcaSailors.has(s.id)) continue;
+    goldNeverIlca += 1;
+    const drop = toYmd(s.dropDate);
+    if (drop && drop <= today) goldNeverIlcaDropped += 1;
   }
 
   return {

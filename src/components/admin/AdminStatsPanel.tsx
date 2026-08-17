@@ -135,6 +135,9 @@ type StatsPayload = {
     details: string | null;
   }[];
   changeLogHint?: string | null;
+  cached?: boolean;
+  cacheAgeMs?: number | null;
+  computeMs?: number;
   extended?: {
     equipment?: {
       sailorsWithEquipment: number;
@@ -326,11 +329,13 @@ export function AdminStatsPanel() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (opts?: { force?: boolean }) => {
     setBusy(true);
     setErr(null);
     try {
-      const res = await fetch(`/api/admin/stats?days=${days}`, {
+      const q = new URLSearchParams({ days: String(days) });
+      if (opts?.force) q.set("refresh", "1");
+      const res = await fetch(`/api/admin/stats?${q}`, {
         credentials: "include",
       });
       const json = await res.json();
@@ -338,7 +343,7 @@ export function AdminStatsPanel() {
       setData(json);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Failed");
-      setData(null);
+      // Keep previous data on refresh failure (stale-while-revalidate UX)
     } finally {
       setBusy(false);
     }
@@ -359,7 +364,6 @@ export function AdminStatsPanel() {
       } catch (e) {
         if (!ignore) {
           setErr(e instanceof Error ? e.message : "Failed");
-          setData(null);
         }
       } finally {
         if (!ignore) setBusy(false);
@@ -415,9 +419,9 @@ export function AdminStatsPanel() {
             </select>
             <button
               type="button"
-              onClick={() => void load()}
+              onClick={() => void load({ force: true })}
               disabled={busy}
-              className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-slate-200 hover:bg-white/10 disabled:opacity-50 flex items-center gap-1.5"
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-slate-200 hover:bg-white/10 disabled:opacity-50 flex items-center gap-1.5 touch-manipulation"
             >
               <RefreshCw
                 className={`h-3.5 w-3.5 ${busy ? "animate-spin" : ""}`}
@@ -440,9 +444,46 @@ export function AdminStatsPanel() {
           </div>
         )}
 
+        {/* First load skeleton */}
+        {busy && !data && (
+          <div className="space-y-3 animate-pulse">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-16 rounded-xl border border-white/5 bg-white/[0.04]"
+                />
+              ))}
+            </div>
+            <div className="h-28 rounded-xl border border-white/5 bg-white/[0.03]" />
+            <p className="text-[11px] text-slate-500 text-center py-2">
+              Computing stats — first load can take a few seconds…
+            </p>
+          </div>
+        )}
+
         {data?.generatedAt && (
-          <p className="text-[10px] text-slate-600 font-mono">
-            Generated {data.generatedAt}
+          <p className="text-[10px] text-slate-600 font-mono flex flex-wrap gap-x-3 gap-y-0.5">
+            <span>
+              Generated {String(data.generatedAt).slice(0, 19).replace("T", " ")}
+              UTC
+            </span>
+            {data.computeMs != null && (
+              <span>Compute {data.computeMs}ms</span>
+            )}
+            {data.cached ? (
+              <span className="text-emerald-500/80">
+                Cached
+                {data.cacheAgeMs != null
+                  ? ` · ${Math.round(data.cacheAgeMs / 1000)}s ago`
+                  : ""}
+              </span>
+            ) : (
+              <span className="text-slate-500">Live</span>
+            )}
+            {busy && data && (
+              <span className="text-orange-400/80">Refreshing…</span>
+            )}
           </p>
         )}
 

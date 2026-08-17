@@ -171,8 +171,12 @@ export type UsageSummary = {
 };
 
 export async function getUsageSummary(days = 7): Promise<UsageSummary> {
+  const windowDays = Math.max(1, Math.min(days, 90));
   const since = new Date();
-  since.setDate(since.getDate() - Math.max(1, Math.min(days, 90)));
+  since.setDate(since.getDate() - windowDays);
+  // Bound JS aggregation cost by window size
+  const rowLimit =
+    windowDays <= 7 ? 3000 : windowDays <= 30 ? 5000 : 7000;
 
   const emptyFunnel = {
     rankingToProfile: [] as FunnelStep[],
@@ -218,7 +222,7 @@ export async function getUsageSummary(days = 7): Promise<UsageSummary> {
       .from(usageEvents)
       .where(gte(usageEvents.createdAt, since))
       .orderBy(desc(usageEvents.createdAt))
-      .limit(8000);
+      .limit(rowLimit);
 
     const byTypeMap = new Map<string, number>();
     const pathMap = new Map<string, number>();
@@ -657,28 +661,40 @@ export async function getOpsHealth(days = 30): Promise<OpsHealth> {
   let goldWith3PlusResults = 0;
   try {
     const period = currentPeriodFromSgToday();
-    const sailorRows = await db
-      .select({
-        id: sailors.id,
-        name: sailors.name,
-        handle: sailors.handle,
-        sailNumber: sailors.sailNumber,
-        club: sailors.club,
-        school: sailors.school,
-        nationality: sailors.nationality,
-        gender: sailors.gender,
-        dob: sailors.dob,
-        goldEntryDate: sailors.goldEntryDate,
-        silverEntryDate: sailors.silverEntryDate,
-        dropDate: sailors.dropDate,
-        currentFleet: sailors.currentFleet,
-        natSquadStatusJan25: sailors.natSquadStatusJan25,
-        natSquadStatusJul25: sailors.natSquadStatusJul25,
-        natSquadStatusJan26: sailors.natSquadStatusJan26,
-        natSquadStatusJul26: sailors.natSquadStatusJul26,
-        nationalSquadStatus: sailors.nationalSquadStatus,
-      })
-      .from(sailors);
+    const [sailorRows, regattaRows] = await Promise.all([
+      db
+        .select({
+          id: sailors.id,
+          name: sailors.name,
+          handle: sailors.handle,
+          sailNumber: sailors.sailNumber,
+          club: sailors.club,
+          school: sailors.school,
+          nationality: sailors.nationality,
+          gender: sailors.gender,
+          dob: sailors.dob,
+          goldEntryDate: sailors.goldEntryDate,
+          silverEntryDate: sailors.silverEntryDate,
+          dropDate: sailors.dropDate,
+          currentFleet: sailors.currentFleet,
+          nationalSquadStatus: sailors.nationalSquadStatus,
+        })
+        .from(sailors),
+      db
+        .select({
+          id: regattas.id,
+          name: regattas.name,
+          slug: regattas.slug,
+          date: regattas.date,
+          totalFleetSize: regattas.totalFleetSize,
+          division: regattas.division,
+          raceCount: regattas.raceCount,
+          geography: regattas.geography,
+          boatClass: regattas.boatClass,
+          countsForRanking: regattas.countsForRanking,
+        })
+        .from(regattas),
+    ]);
 
     const mapped = sailorRows.map((row) => {
       const n = normalizeSgSeriesMembership(row.currentFleet);
@@ -694,21 +710,6 @@ export async function getOpsHealth(days = 30): Promise<OpsHealth> {
     }
     goldActiveSailors = goldIds.length;
 
-    const regattaRows = await db
-      .select({
-        id: regattas.id,
-        name: regattas.name,
-        slug: regattas.slug,
-        date: regattas.date,
-        totalFleetSize: regattas.totalFleetSize,
-        division: regattas.division,
-        raceCount: regattas.raceCount,
-        geography: regattas.geography,
-        boatClass: regattas.boatClass,
-        countsForRanking: regattas.countsForRanking,
-      })
-      .from(regattas);
-
     const rMapped = regattaRows.map((row) => ({
       id: row.id,
       name: row.name,
@@ -723,17 +724,24 @@ export async function getOpsHealth(days = 30): Promise<OpsHealth> {
     }));
 
     const slots = scoringRegattasForFleet("Gold", period, rMapped as never);
-    const scoringIds = new Set(slots.map((x) => x.regatta.id));
+    const scoringIdList = slots.map((x) => x.regatta.id);
+    const scoringIds = new Set(scoringIdList);
 
-    if (scoringIds.size > 0 && goldIds.length > 0) {
-      const { inArray } = await import("drizzle-orm");
+    if (scoringIdList.length > 0 && goldIds.length > 0) {
+      const { inArray, and: andOp } = await import("drizzle-orm");
+      // Filter by scoring regattas (usually ≤5) instead of all gold sailors' history
       const resRows = await db
         .select({
           sailorId: regattaResults.sailorId,
           regattaId: regattaResults.regattaId,
         })
         .from(regattaResults)
-        .where(inArray(regattaResults.sailorId, goldIds));
+        .where(
+          andOp(
+            inArray(regattaResults.regattaId, scoringIdList),
+            inArray(regattaResults.sailorId, goldIds)
+          )
+        );
 
       const bySailor = new Map<string, Set<string>>();
       for (const row of resRows) {
@@ -859,26 +867,66 @@ export async function getProductInventory() {
   } = await import("@/db/schema");
   const { count, eq, isNotNull } = await import("drizzle-orm");
 
-  const [sailorCount] = await db.select({ n: count() }).from(sailors);
-  const [regattaCount] = await db.select({ n: count() }).from(regattas);
-  const [resultCount] = await db.select({ n: count() }).from(regattaResults);
-  const [claimPending] = await db
-    .select({ n: count() })
-    .from(sailorClaims)
-    .where(eq(sailorClaims.status, "pending"));
-  const [supportNew] = await db
-    .select({ n: count() })
-    .from(supportMessages)
-    .where(eq(supportMessages.status, "new"));
-  const [profileCount] = await db.select({ n: count() }).from(profiles);
-
-  const fleetRows = await db
-    .select({
-      fleet: sailors.currentFleet,
-      n: count(),
-    })
-    .from(sailors)
-    .groupBy(sailors.currentFleet);
+  const [
+    sailorCountRows,
+    regattaCountRows,
+    resultCountRows,
+    claimPendingRows,
+    supportNewRows,
+    profileCountRows,
+    fleetRows,
+    claimedRows,
+    unclaimedRows,
+    guestRows,
+    personalRows,
+    unreviewedRows,
+  ] = await Promise.all([
+    db.select({ n: count() }).from(sailors),
+    db.select({ n: count() }).from(regattas),
+    db.select({ n: count() }).from(regattaResults),
+    db
+      .select({ n: count() })
+      .from(sailorClaims)
+      .where(eq(sailorClaims.status, "pending")),
+    db
+      .select({ n: count() })
+      .from(supportMessages)
+      .where(eq(supportMessages.status, "new")),
+    db.select({ n: count() }).from(profiles),
+    db
+      .select({
+        fleet: sailors.currentFleet,
+        n: count(),
+      })
+      .from(sailors)
+      .groupBy(sailors.currentFleet),
+    db
+      .select({ n: count() })
+      .from(sailors)
+      .where(isNotNull(sailors.parentId)),
+    db
+      .select({ n: count() })
+      .from(sailors)
+      .where(sql`${sailors.parentId} is null`),
+    db
+      .select({ n: count() })
+      .from(sailors)
+      .where(
+        sql`${sailors.goldEntryDate} is null and ${sailors.silverEntryDate} is null and (${sailors.currentFleet} is null or ${sailors.currentFleet} = '')`
+      ),
+    db
+      .select({ n: count() })
+      .from(regattas)
+      .where(eq(regattas.countsForRanking, false))
+      .catch(() => [{ n: 0 }]),
+    db
+      .select({ n: count() })
+      .from(regattas)
+      .where(
+        and(eq(regattas.countsForRanking, false), isNull(regattas.reviewedAt))
+      )
+      .catch(() => [{ n: 0 }]),
+  ]);
 
   const fleet: Record<string, number> = {};
   for (const r of fleetRows) {
@@ -886,58 +934,18 @@ export async function getProductInventory() {
     fleet[k] = Number(r.n) || 0;
   }
 
-  const [claimed] = await db
-    .select({ n: count() })
-    .from(sailors)
-    .where(isNotNull(sailors.parentId));
-
-  const [unclaimed] = await db
-    .select({ n: count() })
-    .from(sailors)
-    .where(sql`${sailors.parentId} is null`);
-
-  const [guests] = await db
-    .select({ n: count() })
-    .from(sailors)
-    .where(
-      sql`${sailors.goldEntryDate} is null and ${sailors.silverEntryDate} is null and (${sailors.currentFleet} is null or ${sailors.currentFleet} = '')`
-    );
-
-  let personalRegattas = 0;
-  let personalUnreviewed = 0;
-  try {
-    const [pr] = await db
-      .select({ n: count() })
-      .from(regattas)
-      .where(eq(regattas.countsForRanking, false));
-    personalRegattas = Number(pr?.n || 0);
-  } catch {
-    /* column may not exist until migration 017 */
-  }
-  try {
-    const [ur] = await db
-      .select({ n: count() })
-      .from(regattas)
-      .where(
-        and(eq(regattas.countsForRanking, false), isNull(regattas.reviewedAt))
-      );
-    personalUnreviewed = Number(ur?.n || 0);
-  } catch {
-    /* migration 018 */
-  }
-
   return {
-    sailors: Number(sailorCount?.n || 0),
-    regattas: Number(regattaCount?.n || 0),
-    results: Number(resultCount?.n || 0),
-    profiles: Number(profileCount?.n || 0),
-    claimsPending: Number(claimPending?.n || 0),
-    supportNew: Number(supportNew?.n || 0),
-    sailorsClaimed: Number(claimed?.n || 0),
-    sailorsUnclaimed: Number(unclaimed?.n || 0),
-    guests: Number(guests?.n || 0),
-    personalRegattas,
-    personalUnreviewed,
+    sailors: Number(sailorCountRows[0]?.n || 0),
+    regattas: Number(regattaCountRows[0]?.n || 0),
+    results: Number(resultCountRows[0]?.n || 0),
+    profiles: Number(profileCountRows[0]?.n || 0),
+    claimsPending: Number(claimPendingRows[0]?.n || 0),
+    supportNew: Number(supportNewRows[0]?.n || 0),
+    sailorsClaimed: Number(claimedRows[0]?.n || 0),
+    sailorsUnclaimed: Number(unclaimedRows[0]?.n || 0),
+    guests: Number(guestRows[0]?.n || 0),
+    personalRegattas: Number(personalRows[0]?.n || 0),
+    personalUnreviewed: Number(unreviewedRows[0]?.n || 0),
     fleet,
   };
 }
