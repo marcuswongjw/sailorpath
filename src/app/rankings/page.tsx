@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Trophy, Anchor, Medal } from "lucide-react";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 export default function RankingsHubPage() {
   return (

@@ -39,6 +39,7 @@ import {
   inArray,
   or,
   and,
+  ilike,
   sql,
 } from "drizzle-orm";
 
@@ -186,15 +187,37 @@ export async function searchSailors(
         ? { query: queryOrFilters }
         : queryOrFilters || {};
 
-    let rows = await db.select().from(sailors).orderBy(asc(sailors.name));
-
-    const q = (f.query || "").trim().toLowerCase();
+    const q = (f.query || "").trim();
+    const conditions = [];
     if (q) {
-      rows = rows.filter((s) => {
-        const hay = `${s.name} ${s.sailNumber || ""} ${s.club || ""} ${s.handle || ""} ${s.school || ""} ${s.nationality || ""}`.toLowerCase();
-        return hay.includes(q);
-      });
+      const pattern = `%${q}%`;
+      conditions.push(
+        or(
+          ilike(sailors.name, pattern),
+          ilike(sailors.sailNumber, pattern),
+          ilike(sailors.club, pattern),
+          ilike(sailors.handle, pattern),
+          ilike(sailors.school, pattern),
+          ilike(sailors.nationality, pattern)
+        )
+      );
     }
+    if (f.squad && f.squad !== "all") {
+      conditions.push(eq(sailors.nationalSquadStatus, f.squad));
+    }
+    if (f.nationality?.trim()) {
+      conditions.push(ilike(sailors.nationality, `%${f.nationality.trim()}%`));
+    }
+    if (f.club?.trim()) {
+      conditions.push(ilike(sailors.club, `%${f.club.trim()}%`));
+    }
+    if (f.school?.trim()) {
+      conditions.push(ilike(sailors.school, `%${f.school.trim()}%`));
+    }
+
+    let rows = await (conditions.length > 0
+      ? db.select().from(sailors).where(and(...conditions)).orderBy(asc(sailors.name))
+      : db.select().from(sailors).orderBy(asc(sailors.name)));
 
     // Fleet filter = active ranking tier for current SG half (not just entry history)
     const fleet = (f.fleet || "all").toLowerCase();
@@ -215,35 +238,6 @@ export async function searchSailors(
       });
     }
 
-    if (f.squad && f.squad !== "all") {
-      rows = rows.filter(
-        (s) => String(s.nationalSquadStatus || "") === f.squad
-      );
-    }
-    if (f.nationality?.trim()) {
-      const n = f.nationality.trim().toLowerCase();
-      rows = rows.filter((s) =>
-        String(s.nationality || "")
-          .toLowerCase()
-          .includes(n)
-      );
-    }
-    if (f.club?.trim()) {
-      const c = f.club.trim().toLowerCase();
-      rows = rows.filter((s) =>
-        String(s.club || "")
-          .toLowerCase()
-          .includes(c)
-      );
-    }
-    if (f.school?.trim()) {
-      const sc = f.school.trim().toLowerCase();
-      rows = rows.filter((s) =>
-        String(s.school || "")
-          .toLowerCase()
-          .includes(sc)
-      );
-    }
     if (f.birthYearFrom || f.birthYearTo) {
       rows = rows.filter((s) => {
         if (!s.dob) return false;
