@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
-import type { ViewAs } from "@/lib/viewAs";
 
 type Owned = {
   id: string;
@@ -26,7 +25,7 @@ type Claim = {
 function AccountInner() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { isSuperadmin, viewAs, setViewAs } = useAccount();
+  const { isSuperadmin } = useAccount();
   const welcome = searchParams.get("welcome") === "1";
   const [email, setEmail] = useState<string | null>(null);
   const [owned, setOwned] = useState<Owned[]>([]);
@@ -37,18 +36,6 @@ function AccountInner() {
   const [pw2, setPw2] = useState("");
   const [pwMsg, setPwMsg] = useState<string | null>(null);
   const [pwBusy, setPwBusy] = useState(false);
-  const [modeBusy, setModeBusy] = useState(false);
-
-  const switchMode = async (mode: ViewAs) => {
-    if (mode === viewAs || modeBusy) return;
-    setModeBusy(true);
-    try {
-      await setViewAs(mode);
-      router.refresh();
-    } finally {
-      setModeBusy(false);
-    }
-  };
 
   useEffect(() => {
     (async () => {
@@ -154,57 +141,18 @@ function AccountInner() {
       {isSuperadmin && (
         <section className="glass-card rounded-2xl border border-orange-500/20 bg-orange-500/5 p-5 sm:p-6 space-y-3 w-full">
           <h2 className="text-sm font-black text-white uppercase tracking-wider">
-            Working as
+            Superadmin
           </h2>
           <p className="text-xs text-slate-400 leading-relaxed">
-            Your account is always superadmin for console tools. Switch to{" "}
-            <strong className="text-slate-200">Parent</strong> when claiming or
-            managing a linked sailor — you only get owner tools on profiles
-            linked to this account, not every athlete.
+            Full console access. Owner tools only apply on profiles linked to
+            this account — not every athlete.
           </p>
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              disabled={modeBusy}
-              onClick={() => void switchMode("admin")}
-              className={`rounded-full px-4 py-2 text-xs font-bold transition-colors ${
-                viewAs === "admin"
-                  ? "bg-orange-600 text-white"
-                  : "border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
-              }`}
-            >
-              Admin
-            </button>
-            <button
-              type="button"
-              disabled={modeBusy}
-              onClick={() => void switchMode("parent")}
-              className={`rounded-full px-4 py-2 text-xs font-bold transition-colors ${
-                viewAs === "parent"
-                  ? "bg-sky-600 text-white"
-                  : "border border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
-              }`}
-            >
-              Parent
-            </button>
-          </div>
-          <p className="text-[11px] text-slate-500">
-            Current mode:{" "}
-            <span className="font-bold text-slate-300">
-              {viewAs === "parent" ? "Parent" : "Admin"}
-            </span>
-            {viewAs === "admin" && (
-              <>
-                {" · "}
-                <a
-                  href="https://admin.sailorpath.com/"
-                  className="text-orange-400 font-semibold hover:underline"
-                >
-                  Open admin console
-                </a>
-              </>
-            )}
-          </p>
+          <a
+            href="https://admin.sailorpath.com/"
+            className="inline-flex rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white hover:bg-orange-500"
+          >
+            Open admin console
+          </a>
         </section>
       )}
 
