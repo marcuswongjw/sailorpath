@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
 
@@ -24,7 +24,6 @@ type Claim = {
 
 function AccountInner() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const { isSuperadmin } = useAccount();
   const welcome = searchParams.get("welcome") === "1";
   const [email, setEmail] = useState<string | null>(null);
