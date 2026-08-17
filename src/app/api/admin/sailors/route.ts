@@ -1078,8 +1078,7 @@ export async function PATCH(req: Request) {
       "histRankingJun26",
     ] as const) {
       if (body[f] !== undefined) {
-        patch[f] =
-          body[f] === "" || body[f] == null ? null : Number(body[f]);
+        patch[f] = num(body[f]);
       }
     }
 

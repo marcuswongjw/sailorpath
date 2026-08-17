@@ -86,7 +86,8 @@ export async function POST(req: Request) {
       const s = String(value).trim().toLowerCase();
       typed = s === "y" || s === "yes" || s === "true" || s === "1";
     } else if (NUMERIC.has(field)) {
-      typed = value === "" ? null : Number(value);
+      const n = Number(value);
+      typed = value === "" || value == null || !Number.isFinite(n) ? null : n;
     } else if (YEARS_LIST.has(field)) {
       typed = value === "" || value == null ? null : normalizeYearsList(value);
     } else if (field === "currentFleet") {
