@@ -4,7 +4,7 @@
  * entity names only appear in superadmin data-quality style lists.
  */
 
-import { desc, eq, gte, isNotNull } from "drizzle-orm";
+import { desc, eq, gte, isNotNull, sql } from "drizzle-orm";
 import { db } from "@/db";
 import {
   equipmentItems,
@@ -21,7 +21,6 @@ import {
 import { birthYear } from "@/lib/age";
 import { currentPeriodFromSgToday, todayYmdSg, toYmd } from "@/lib/datesSg";
 import { evaluateEquipmentBadge } from "@/lib/equipment";
-import { parseSailingJourney } from "@/lib/sailingJourney";
 import {
   resolveSailorFleet,
   scoringRegattasForFleet,
@@ -209,8 +208,11 @@ export async function getExtendedAdminStats(
   since.setDate(since.getDate() - windowDays);
   const today = todayYmdSg();
   const sinceYmd = toYmd(since) || "1970-01-01";
-  // Cap result fan-out; full history is rarely needed for admin aggregates
-  const usageLimit = windowDays <= 7 ? 3500 : windowDays <= 30 ? 6000 : 9000;
+  // Results older than this rarely change ranking-health aggregates
+  const resultsCutoff = new Date();
+  resultsCutoff.setFullYear(resultsCutoff.getFullYear() - 4);
+  const resultsCutoffYmd = resultsCutoff.toISOString().slice(0, 10);
+  const usageLimit = windowDays <= 7 ? 2000 : windowDays <= 30 ? 3500 : 5000;
 
   // ── One parallel batch (no sequential follow-up queries) ───────────
   const [
@@ -236,8 +238,9 @@ export async function getExtendedAdminStats(
         acquiredOn: equipmentItems.acquiredOn,
       })
       .from(equipmentItems)
-      .limit(8000)
+      .limit(4000)
       .catch(() => [] as never[]),
+    // Only events needed for claim-by-source / retention (not full traffic dump)
     db
       .select({
         eventType: usageEvents.eventType,
@@ -256,7 +259,8 @@ export async function getExtendedAdminStats(
         id: sailors.id,
         parentId: sailors.parentId,
         ownerRelation: sailors.ownerRelation,
-        sailingJourney: sailors.sailingJourney,
+        // Avoid shipping multi-KB journey JSON per row — flag only
+        hasJourney: sql<boolean>`coalesce(nullif(trim(${sailors.sailingJourney}), ''), '[]') not in ('[]', 'null')`,
         isPublicWeight: sailors.isPublicWeight,
         isPublicDob: sailors.isPublicDob,
         isPublicEquipment: sailors.isPublicEquipment,
@@ -279,7 +283,7 @@ export async function getExtendedAdminStats(
         updatedAt: supportMessages.updatedAt,
       })
       .from(supportMessages)
-      .limit(2000)
+      .limit(1000)
       .catch(() => [] as never[]),
     db
       .select({
@@ -290,7 +294,7 @@ export async function getExtendedAdminStats(
         updatedAt: sailorClaims.updatedAt,
       })
       .from(sailorClaims)
-      .limit(2000)
+      .limit(1000)
       .catch(() => [] as never[]),
     db
       .select({
@@ -305,7 +309,8 @@ export async function getExtendedAdminStats(
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-      .limit(25000)
+      .where(gte(regattas.date, resultsCutoffYmd))
+      .limit(12000)
       .catch(() => [] as never[]),
     db
       .select({
@@ -314,9 +319,8 @@ export async function getExtendedAdminStats(
       })
       .from(equipmentUsages)
       .where(gte(equipmentUsages.usedOn, sinceYmd))
-      .limit(8000)
+      .limit(4000)
       .catch(() => [] as never[]),
-    // Slim fleet resolution set (replaces 2–3 extra full-table sailor scans)
     db
       .select({
         id: sailors.id,
@@ -529,8 +533,7 @@ export async function getExtendedAdminStats(
   let withPrivacy = 0;
   let withDual = 0;
   for (const s of claimedSailorRows) {
-    const journey = parseSailingJourney(s.sailingJourney);
-    if (journey.length > 0) withMilestones += 1;
+    if (s.hasJourney) withMilestones += 1;
     if (equipBySailor.has(s.id)) withEquipment += 1;
     if (notesSailors.has(s.id)) withNotes += 1;
     if (s.isPublicWeight || s.isPublicDob || s.isPublicEquipment)

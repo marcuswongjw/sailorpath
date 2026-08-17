@@ -138,6 +138,10 @@ type StatsPayload = {
   cached?: boolean;
   cacheAgeMs?: number | null;
   computeMs?: number;
+  deepComputeMs?: number;
+  deepCached?: boolean;
+  deepPending?: boolean;
+  part?: string;
   extended?: {
     equipment?: {
       sailorsWithEquipment: number;
@@ -327,27 +331,66 @@ export function AdminStatsPanel() {
   const [data, setData] = useState<StatsPayload | null>(null);
   const [days, setDays] = useState(7);
   const [busy, setBusy] = useState(false);
+  const [deepBusy, setDeepBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
-  const load = useCallback(async (opts?: { force?: boolean }) => {
-    setBusy(true);
-    setErr(null);
-    try {
-      const q = new URLSearchParams({ days: String(days) });
-      if (opts?.force) q.set("refresh", "1");
-      const res = await fetch(`/api/admin/stats?${q}`, {
-        credentials: "include",
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error || "Failed to load stats");
-      setData(json);
-    } catch (e) {
-      setErr(e instanceof Error ? e.message : "Failed");
-      // Keep previous data on refresh failure (stale-while-revalidate UX)
-    } finally {
-      setBusy(false);
-    }
-  }, [days]);
+  /** Core first (fast), then deep metrics in background. */
+  const load = useCallback(
+    async (opts?: { force?: boolean }) => {
+      setBusy(true);
+      setErr(null);
+      try {
+        const q = new URLSearchParams({
+          days: String(days),
+          part: "core",
+        });
+        if (opts?.force) q.set("refresh", "1");
+        const res = await fetch(`/api/admin/stats?${q}`, {
+          credentials: "include",
+        });
+        const json = await res.json();
+        if (!res.ok) throw new Error(json.error || "Failed to load stats");
+        setData(json);
+        setBusy(false);
+
+        // Deep path: equipment, ILCA, data quality — does not block first paint
+        setDeepBusy(true);
+        try {
+          const dq = new URLSearchParams({
+            days: String(days),
+            part: "deep",
+          });
+          if (opts?.force) dq.set("refresh", "1");
+          const deepRes = await fetch(`/api/admin/stats?${dq}`, {
+            credentials: "include",
+          });
+          const deepJson = await deepRes.json();
+          if (deepRes.ok) {
+            setData((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    extended: deepJson.extended ?? prev.extended,
+                    dataQuality: deepJson.dataQuality ?? prev.dataQuality,
+                    deepPending: false,
+                    deepComputeMs: deepJson.computeMs,
+                    deepCached: deepJson.cached,
+                  }
+                : deepJson
+            );
+          }
+        } catch {
+          /* core already shown */
+        } finally {
+          setDeepBusy(false);
+        }
+      } catch (e) {
+        setErr(e instanceof Error ? e.message : "Failed");
+        setBusy(false);
+      }
+    },
+    [days]
+  );
 
   useEffect(() => {
     let ignore = false;
@@ -355,18 +398,47 @@ export function AdminStatsPanel() {
       setBusy(true);
       setErr(null);
       try {
-        const res = await fetch(`/api/admin/stats?days=${days}`, {
-          credentials: "include",
-        });
+        const res = await fetch(
+          `/api/admin/stats?days=${days}&part=core`,
+          { credentials: "include" }
+        );
         const json = await res.json();
         if (!res.ok) throw new Error(json.error || "Failed to load stats");
-        if (!ignore) setData(json);
+        if (ignore) return;
+        setData(json);
+        setBusy(false);
+
+        setDeepBusy(true);
+        try {
+          const deepRes = await fetch(
+            `/api/admin/stats?days=${days}&part=deep`,
+            { credentials: "include" }
+          );
+          const deepJson = await deepRes.json();
+          if (!ignore && deepRes.ok) {
+            setData((prev) =>
+              prev
+                ? {
+                    ...prev,
+                    extended: deepJson.extended ?? null,
+                    dataQuality: deepJson.dataQuality ?? null,
+                    deepPending: false,
+                    deepComputeMs: deepJson.computeMs,
+                    deepCached: deepJson.cached,
+                  }
+                : deepJson
+            );
+          }
+        } catch {
+          /* ignore */
+        } finally {
+          if (!ignore) setDeepBusy(false);
+        }
       } catch (e) {
         if (!ignore) {
           setErr(e instanceof Error ? e.message : "Failed");
+          setBusy(false);
         }
-      } finally {
-        if (!ignore) setBusy(false);
       }
     }
     fetchData();
@@ -378,12 +450,13 @@ export function AdminStatsPanel() {
   const inv = data?.inventory;
   const usage = data?.usage;
   const ops = data?.opsHealth;
-  const ext = data?.extended;
-  const dq = data?.dataQuality;
+  const ext = data?.extended ?? undefined;
+  const dq = data?.dataQuality ?? undefined;
   const log = data?.changeLog || [];
   const funnel = usage?.funnel;
   const eng = usage?.engagement;
   const acq = usage?.acquisition;
+  const deepLoading = deepBusy || Boolean(data?.deepPending && !ext);
 
   const claimedPct =
     inv?.sailors && inv.sailors > 0 && inv.sailorsClaimed != null
@@ -465,22 +538,20 @@ export function AdminStatsPanel() {
         {data?.generatedAt && (
           <p className="text-[10px] text-slate-600 font-mono flex flex-wrap gap-x-3 gap-y-0.5">
             <span>
-              Generated {String(data.generatedAt).slice(0, 19).replace("T", " ")}
-              UTC
+              Core{" "}
+              {data.computeMs != null ? `${data.computeMs}ms` : "—"}
+              {data.cached ? " · cached" : " · live"}
             </span>
-            {data.computeMs != null && (
-              <span>Compute {data.computeMs}ms</span>
-            )}
-            {data.cached ? (
-              <span className="text-emerald-500/80">
-                Cached
-                {data.cacheAgeMs != null
-                  ? ` · ${Math.round(data.cacheAgeMs / 1000)}s ago`
-                  : ""}
+            {deepLoading ? (
+              <span className="text-orange-400/90">
+                Loading equipment / ranking / quality…
               </span>
-            ) : (
-              <span className="text-slate-500">Live</span>
-            )}
+            ) : data.deepComputeMs != null ? (
+              <span>
+                Deep {data.deepComputeMs}ms
+                {data.deepCached ? " · cached" : ""}
+              </span>
+            ) : null}
             {busy && data && (
               <span className="text-orange-400/80">Refreshing…</span>
             )}
@@ -818,9 +889,14 @@ export function AdminStatsPanel() {
         </div>
 
         {/* 5. Equipment engagement */}
-        <div>
-          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+        <div className={deepLoading && !ext ? "opacity-60" : ""}>
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-2">
             5 · Equipment engagement
+            {deepLoading && !ext && (
+              <span className="text-[9px] font-semibold text-orange-400/90 normal-case tracking-normal">
+                loading…
+              </span>
+            )}
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2">
             <StatCard

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
+import { and, eq, gte } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import {
   getOpsHealth,
@@ -14,16 +14,21 @@ import { listAdminChanges } from "@/lib/adminChangeLog";
 import { todayYmdSg } from "@/lib/datesSg";
 import { cacheAgeMs, cacheGet, cacheSet } from "@/lib/statsCache";
 
-/** Warm-instance cache — stats are expensive (many table scans). */
-const STATS_CACHE_MS = 45_000;
-
-type StatsPayload = Record<string, unknown>;
-
 /**
- * GET /api/admin/stats?days=7&refresh=1
- * Superadmin: inventory + usage + extended metrics + data quality + change log.
- * Cached ~45s per `days` bucket unless refresh=1.
+ * Why this was slow:
+ * - One request loaded ALL results × regattas for data-quality + extended
+ * - Ops re-scanned every sailor/regatta for gold coverage
+ * - Serverless has no durable process cache (memory cache often misses)
+ *
+ * Fix: two-part API.
+ *   part=core  — inventory, usage, ops, change log  (seconds → sub-second when cached)
+ *   part=deep  — extended metrics + data quality     (heavy; loaded after UI paints)
  */
+const CORE_CACHE_MS = 60_000;
+const DEEP_CACHE_MS = 120_000;
+
+type Payload = Record<string, unknown>;
+
 export async function GET(req: Request) {
   try {
     await requireSuperadmin();
@@ -32,11 +37,13 @@ export async function GET(req: Request) {
       90,
       Math.max(1, Number(url.searchParams.get("days") || 7) || 7)
     );
+    const part = url.searchParams.get("part") === "deep" ? "deep" : "core";
     const forceRefresh = url.searchParams.get("refresh") === "1";
-    const cacheKey = `admin-stats:v2:${days}`;
+    const cacheKey = `admin-stats:v3:${part}:${days}`;
+    const ttl = part === "deep" ? DEEP_CACHE_MS : CORE_CACHE_MS;
 
     if (!forceRefresh) {
-      const hit = cacheGet<StatsPayload>(cacheKey, STATS_CACHE_MS);
+      const hit = cacheGet<Payload>(cacheKey, ttl);
       if (hit) {
         return NextResponse.json({
           ...hit,
@@ -47,42 +54,17 @@ export async function GET(req: Request) {
     }
 
     const t0 = Date.now();
-
-    // Everything in parallel — previously dataQuality + changeLog ran after
-    // the heavy work and doubled wall-clock time.
-    const [inventory, usage, opsHealth, extended, dataQuality, changeLog] =
-      await Promise.all([
-        getProductInventory(),
-        getUsageSummary(days),
-        getOpsHealth(days),
-        getExtendedAdminStats(days),
-        loadDataQuality(),
-        listAdminChanges({ limit: 40, days }).catch(() => [] as never[]),
-      ]);
-
-    const payload: StatsPayload = {
-      ok: true,
-      generatedAt: new Date().toISOString(),
-      computeMs: Date.now() - t0,
-      inventory,
-      usage,
-      opsHealth,
-      extended,
-      dataQuality,
-      changeLog,
-      changeLogHint:
-        !changeLog || (Array.isArray(changeLog) && changeLog.length === 0)
-          ? "No entries yet, or run migration 023_admin_change_log.sql in Supabase."
-          : null,
-      cached: false,
-      cacheAgeMs: 0,
-    };
+    const payload =
+      part === "deep"
+        ? await buildDeep(days, t0)
+        : await buildCore(days, t0);
 
     cacheSet(cacheKey, payload);
 
     return NextResponse.json(payload, {
       headers: {
-        "Cache-Control": "private, max-age=30, stale-while-revalidate=60",
+        // Allow browser to reuse for a short window; auth still required
+        "Cache-Control": "private, max-age=20, stale-while-revalidate=90",
       },
     });
   } catch (e) {
@@ -90,7 +72,61 @@ export async function GET(req: Request) {
   }
 }
 
-async function loadDataQuality() {
+async function buildCore(days: number, t0: number): Promise<Payload> {
+  // Light path only — no full result table scans
+  const [inventory, usage, opsHealth, changeLog] = await Promise.all([
+    getProductInventory(),
+    getUsageSummary(days),
+    getOpsHealth(days),
+    listAdminChanges({ limit: 30, days }).catch(() => [] as never[]),
+  ]);
+
+  return {
+    ok: true,
+    part: "core",
+    generatedAt: new Date().toISOString(),
+    computeMs: Date.now() - t0,
+    inventory,
+    usage,
+    opsHealth,
+    changeLog,
+    changeLogHint:
+      !changeLog || (Array.isArray(changeLog) && changeLog.length === 0)
+        ? "No entries yet, or run migration 023_admin_change_log.sql in Supabase."
+        : null,
+    // Placeholders so UI doesn't break before deep arrives
+    extended: null,
+    dataQuality: null,
+    deepPending: true,
+    cached: false,
+    cacheAgeMs: 0,
+  };
+}
+
+async function buildDeep(days: number, t0: number): Promise<Payload> {
+  const [extended, dataQuality] = await Promise.all([
+    getExtendedAdminStats(days),
+    loadDataQualityLite(),
+  ]);
+
+  return {
+    ok: true,
+    part: "deep",
+    generatedAt: new Date().toISOString(),
+    computeMs: Date.now() - t0,
+    extended,
+    dataQuality,
+    deepPending: false,
+    cached: false,
+    cacheAgeMs: 0,
+  };
+}
+
+/**
+ * Data quality without loading every result row.
+ * Only ranking Optimist results from the last ~3 years — enough for flags.
+ */
+async function loadDataQualityLite() {
   const empty = {
     emptySeries: 0,
     goldBeforeEntryCount: 0,
@@ -104,7 +140,10 @@ async function loadDataQuality() {
   };
 
   try {
-    // Slim columns only — full sailor rows were a major cost
+    const cutoff = new Date();
+    cutoff.setFullYear(cutoff.getFullYear() - 3);
+    const cutoffYmd = cutoff.toISOString().slice(0, 10);
+
     const [sailorRows, links] = await Promise.all([
       db
         .select({
@@ -128,7 +167,31 @@ async function loadDataQuality() {
           boatClass: regattas.boatClass,
         })
         .from(regattaResults)
-        .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id)),
+        .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+        .where(
+          and(
+            gte(regattas.date, cutoffYmd),
+            // Prefer series results only (far fewer rows)
+            eq(regattas.countsForRanking, true)
+          )
+        )
+        .limit(12000)
+        .catch(async () => {
+          // Fallback if countsForRanking filter fails
+          return db
+            .select({
+              sailorId: regattaResults.sailorId,
+              regattaDate: regattas.date,
+              regattaName: regattas.name,
+              division: regattas.division,
+              countsForRanking: regattas.countsForRanking,
+              boatClass: regattas.boatClass,
+            })
+            .from(regattaResults)
+            .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+            .where(gte(regattas.date, cutoffYmd))
+            .limit(8000);
+        }),
     ]);
 
     const byId = new Map(sailorRows.map((s) => [s.id, s]));
@@ -153,15 +216,15 @@ async function loadDataQuality() {
     return {
       emptySeries: dataQuality.emptySeries,
       goldBeforeEntryCount: dataQuality.goldBeforeEntry.length,
-      goldBeforeEntry: dataQuality.goldBeforeEntry.slice(0, 40),
+      goldBeforeEntry: dataQuality.goldBeforeEntry.slice(0, 30),
       goldWithoutEntryCount: dataQuality.goldWithoutEntry.length,
-      goldWithoutEntry: dataQuality.goldWithoutEntry.slice(0, 40),
+      goldWithoutEntry: dataQuality.goldWithoutEntry.slice(0, 30),
       overAgeOptimistCount: dataQuality.overAgeOptimist.length,
-      overAgeOptimist: dataQuality.overAgeOptimist.slice(0, 40),
+      overAgeOptimist: dataQuality.overAgeOptimist.slice(0, 30),
       unrecognizedNationalityCount:
         dataQuality.unrecognizedNationality.length,
       unrecognizedNationality:
-        dataQuality.unrecognizedNationality.slice(0, 40),
+        dataQuality.unrecognizedNationality.slice(0, 30),
     };
   } catch (e) {
     console.warn("stats dataQuality", e);
