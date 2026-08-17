@@ -31,22 +31,29 @@ export type PublicRegatta = {
 };
 
 function periodKey(dateStr: string): string {
-  const d = new Date(dateStr);
-  if (!Number.isFinite(d.getTime())) return "Other";
-  const y = d.getFullYear();
-  const m = d.getMonth();
-  const half = m < 6 ? "Jan – Jun" : "Jul – Dec";
-  return `${half} ${y}`;
+  const ymd = String(dateStr || "").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return "Other";
+  const year = Number(ymd.slice(0, 4));
+  const month = Number(ymd.slice(5, 7));
+  if (!Number.isFinite(year) || !Number.isFinite(month)) return "Other";
+  const half = month <= 6 ? "Jan – Jun" : "Jul – Dec";
+  return `${half} ${year}`;
 }
 
 function formatNiceDate(dateStr: string) {
-  const d = new Date(dateStr);
-  if (!Number.isFinite(d.getTime())) return dateStr;
-  return d.toLocaleDateString("en-SG", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+  const ymd = String(dateStr || "").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return dateStr;
+  const parts = ymd.split("-");
+  if (parts.length === 3) {
+    const [y, m, d] = parts;
+    const months = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    const monthName = months[Number(m) - 1];
+    if (monthName) return `${Number(d)} ${monthName} ${y}`;
+  }
+  return dateStr;
 }
 
 type RegattasListProps = {
