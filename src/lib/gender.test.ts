@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildGenderAuditRows,
   formatGenderLabel,
   formatGenderLong,
   normalizeGender,
+  suggestGenderFromName,
 } from "./gender";
 
 describe("normalizeGender", () => {
@@ -34,5 +36,21 @@ describe("formatGenderLabel", () => {
     expect(formatGenderLabel("FEMALE")).toBe("F");
     expect(formatGenderLabel("")).toBe("—");
     expect(formatGenderLong("m")).toBe("Male");
+  });
+});
+
+describe("suggestGenderFromName / buildGenderAuditRows", () => {
+  it("suggests F for Adele and flags conflict when stored as M", () => {
+    expect(suggestGenderFromName("Chiang Ziyi Adele")).toBe("F");
+    const rows = buildGenderAuditRows([
+      {
+        id: "1",
+        name: "Chiang Ziyi Adele",
+        gender: "M",
+        club: "SAFYC",
+      },
+    ]);
+    expect(rows[0]?.suggested).toBe("F");
+    expect(rows[0]?.conflict).toBe(true);
   });
 });

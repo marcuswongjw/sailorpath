@@ -34,6 +34,8 @@ import {
 } from "@/components/admin/adminForms";
 import type { SailorAdmin } from "@/types/sailor";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
+import { AdminGenderAuditPanel } from "@/components/admin/AdminGenderAuditPanel";
+import { formatGenderLabel } from "@/lib/gender";
 
 const HALF_BOUNDARY_OPTS = halfBoundaryOptions();
 
@@ -96,6 +98,7 @@ export type AdminSailorsPanelProps = {
   onCleanupEmptySeries?: () => void | Promise<void>;
   emptySeriesCount?: number;
   onBackfillNationalityFromSail?: () => void | Promise<void>;
+  onSailorsChange?: (sailors: SailorAdmin[]) => void;
 };
 
 export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
@@ -147,10 +150,16 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     onCleanupEmptySeries,
     emptySeriesCount = 0,
     onBackfillNationalityFromSail,
+    onSailorsChange,
   } = p;
 
   return (
               <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
+
+                <AdminGenderAuditPanel
+                  sailors={sailorList}
+                  onSailorsChange={onSailorsChange}
+                />
 
                 {emptySeriesCount > 0 && onCleanupEmptySeries && (
                   <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -678,10 +687,11 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       <div>
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Gender (M/F)</label>
                         <select
-                          value={sailorForm.gender || "M"}
+                          value={sailorForm.gender || ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, gender: e.target.value })}
                           className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
                         >
+                          <option value="">Unknown</option>
                           <option value="M">Male (M)</option>
                           <option value="F">Female (F)</option>
                         </select>
@@ -1242,7 +1252,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                   : "—"}
                               </span>
                             ),
-                            gender: s.gender || "M",
+                            gender: formatGenderLabel(s.gender),
                             birthYear: (() => {
                               const y = birthYear(s.dob as string | null);
                               return y != null ? (
@@ -1396,7 +1406,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                         natSquadStatusJul27:
                                           s.natSquadStatusJul27 || "",
                                         nationality: s.nationality || "",
-                                        gender: s.gender || "M",
+                                        gender: s.gender || "",
                                         currentFleet: s.currentFleet || "",
                                         school: s.school || "",
                                         histRankingJun24:

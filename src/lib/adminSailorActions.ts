@@ -522,6 +522,64 @@ async function applyGoldParticipationDrops(
 }
 
 /**
+ * Bulk set sailor genders from admin gender audit.
+ * Body: { updates: [{ sailorId, gender: "M"|"F"|null }] }
+ */
+async function setSailorGenders(
+  body: Record<string, unknown>,
+  auth: AuthContext
+): Promise<NextResponse> {
+  const raw = Array.isArray(body.updates) ? body.updates : [];
+  const updates: { sailorId: string; gender: "M" | "F" | null }[] = [];
+  for (const u of raw) {
+    if (!u || typeof u !== "object") continue;
+    const row = u as Record<string, unknown>;
+    const sailorId = String(row.sailorId || "").trim();
+    if (!sailorId) continue;
+    const gender =
+      row.gender === null || row.gender === ""
+        ? null
+        : normalizeGender(row.gender);
+    // Allow explicit null clear; reject junk non-null
+    if (row.gender != null && row.gender !== "" && gender == null) {
+      continue;
+    }
+    updates.push({ sailorId, gender });
+  }
+  if (updates.length === 0) {
+    return NextResponse.json(
+      { error: "No valid gender updates" },
+      { status: 400 }
+    );
+  }
+
+  let updated = 0;
+  for (const u of updates) {
+    await db
+      .update(sailors)
+      .set({ gender: u.gender, updatedAt: new Date() })
+      .where(eq(sailors.id, u.sailorId));
+    updated++;
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "sailor.set_gender",
+      entityType: "sailor",
+      entityId: u.sailorId,
+      summary: `Set gender → ${u.gender || "null"}`,
+      details: u,
+      source: "/api/admin/sailors",
+    });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    updated,
+    message: `Updated gender on ${updated} sailor(s).`,
+  });
+}
+
+/**
  * Normalize sailor.gender to M | F | null (e.g. "Male" → "M", junk → null).
  * Does not invent gender or flip M↔F.
  */
@@ -981,6 +1039,8 @@ export async function runSailorAction(
       return applySilverInactivityDrops(body, auth);
     case "normalizeSailorGenders":
       return normalizeSailorGenders(auth);
+    case "setSailorGenders":
+      return setSailorGenders(body, auth);
     case "seedIlca4NationalList":
       return seedIlca4NationalList(auth);
     case "setIlca4NationalList":

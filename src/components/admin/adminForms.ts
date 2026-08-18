@@ -49,7 +49,7 @@ export function emptySailorForm(): SailorFormState {
     sailNumberIlca4: "",
     club: "",
     nationality: "",
-    gender: "M",
+    gender: "",
     nationalSquadStatus: "",
     currentFleet: "",
     instagram: "",

@@ -434,7 +434,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
                         {sailor.sailNumber}
                       </td>
                       <td className="py-3 px-1 text-slate-400 border-r border-white/5">
-                        {by ?? "—"}/{sailor.gender || "M"}
+                        {by ?? "—"}/{sailor.gender === "F" || sailor.gender === "M" ? sailor.gender : "—"}
                       </td>
 
                       <td className="py-3 px-1 bg-orange-600/5 text-[10px] text-slate-400">
