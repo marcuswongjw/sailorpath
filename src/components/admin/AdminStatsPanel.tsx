@@ -90,8 +90,14 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
     if (!isSuperadmin) return;
     setLoading(true);
     setError(null);
+    const ac = new AbortController();
+    const timer = window.setTimeout(() => ac.abort(), 20_000);
     try {
-      const res = await fetch("/api/admin/stats", { credentials: "include" });
+      const res = await fetch("/api/admin/stats", {
+        credentials: "include",
+        signal: ac.signal,
+        cache: "no-store",
+      });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         throw new Error(
@@ -100,8 +106,16 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
       }
       setStats(data as AdminStatsPayload);
     } catch (e: unknown) {
-      setError(errorMessage(e, "Failed to load stats"));
+      const aborted =
+        (e instanceof DOMException && e.name === "AbortError") ||
+        (e instanceof Error && e.name === "AbortError");
+      setError(
+        aborted
+          ? "Stats timed out after 20s — try Refresh. If it keeps failing, check DATABASE_URL / usage_events."
+          : errorMessage(e, "Failed to load stats")
+      );
     } finally {
+      window.clearTimeout(timer);
       setLoading(false);
     }
   }, [isSuperadmin]);

@@ -1,30 +1,12 @@
 /**
  * Lean admin Stats aggregates — COUNT / DISTINCT only (no full result scans).
  * Privacy: numbers only, no PII.
+ *
+ * Uses a small number of SQL round-trips (avoids saturating postgres.js max:5
+ * and Supabase transaction-pooler concurrency).
  */
 
-import { unstable_cache } from "next/cache";
-import {
-  and,
-  count,
-  countDistinct,
-  desc,
-  eq,
-  gte,
-  isNotNull,
-  isNull,
-  or,
-  sql,
-} from "drizzle-orm";
-import { db } from "@/db";
-import {
-  regattas,
-  sailorClaims,
-  sailors,
-  supportMessages,
-  usageEvents,
-} from "@/db/schema";
-import { CACHE_TAG_ADMIN_STATS } from "@/lib/cacheTags";
+import { pgSql } from "@/db";
 
 export type AdminStatsPayload = {
   generatedAt: string;
@@ -65,75 +47,53 @@ function pct(n: number, d: number): number | null {
   return Math.round((n / d) * 1000) / 10;
 }
 
+function num(v: unknown): number {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 0;
+}
+
 function daysBetween(from: Date, to: Date): number {
   return Math.max(0, Math.floor((to.getTime() - from.getTime()) / 86_400_000));
 }
 
-async function computeAdminStats(): Promise<AdminStatsPayload> {
+/**
+ * Compute live admin stats. Prefer this over many parallel Drizzle selects —
+ * one inventory CTE + one usage pass stays well under the pool limit.
+ */
+export async function getAdminStats(): Promise<AdminStatsPayload> {
   const now = new Date();
-  const weekAgo = new Date(now.getTime() - 7 * 86_400_000);
 
-  const [
-    claimedRow,
-    seriesRow,
-    claimsPendingRow,
-    supportNewRow,
-    rankingRegattaRow,
-    sailorsTotalRow,
-    missingDobRow,
-    missingSailRow,
-  ] = await Promise.all([
-    db
-      .select({ n: count() })
-      .from(sailors)
-      .where(isNotNull(sailors.parentId)),
-    db
-      .select({ n: count() })
-      .from(sailors)
-      .where(
-        and(
-          or(
-            sql`lower(trim(coalesce(${sailors.currentFleet}, ''))) in ('series', 'gold', 'silver', 'in sg fleet', 'member')`,
-            isNotNull(sailors.silverEntryDate),
-            isNotNull(sailors.goldEntryDate)
-          ),
-          or(
-            isNull(sailors.dropDate),
-            sql`${sailors.dropDate}::text > to_char((now() at time zone 'Asia/Singapore'), 'YYYY-MM-DD')`
+  const inventory = await pgSql`
+    select
+      (select count(*)::int from public.sailors) as sailors_total,
+      (select count(*)::int from public.sailors where parent_id is not null) as claimed,
+      (select count(*)::int from public.sailors
+        where (
+          lower(trim(coalesce(current_fleet, ''))) in (
+            'series', 'gold', 'silver', 'in sg fleet', 'member'
           )
+          or silver_entry_date is not null
+          or gold_entry_date is not null
         )
-      ),
-    db
-      .select({ n: count() })
-      .from(sailorClaims)
-      .where(eq(sailorClaims.status, "pending")),
-    db
-      .select({ n: count() })
-      .from(supportMessages)
-      .where(eq(supportMessages.status, "new")),
-    db
-      .select({ n: count() })
-      .from(regattas)
-      .where(eq(regattas.countsForRanking, true)),
-    db.select({ n: count() }).from(sailors),
-    db
-      .select({ n: count() })
-      .from(sailors)
-      .where(isNull(sailors.dob)),
-    db
-      .select({ n: count() })
-      .from(sailors)
-      .where(
-        or(
-          isNull(sailors.sailNumber),
-          sql`trim(coalesce(${sailors.sailNumber}, '')) = ''`,
-          sql`${sailors.sailNumber} ~* '^SGP[[:space:]]*0+$'`
+        and (
+          drop_date is null
+          or drop_date::text > to_char((now() at time zone 'Asia/Singapore'), 'YYYY-MM-DD')
         )
-      ),
-  ]);
+      ) as series_sailors,
+      (select count(*)::int from public.sailor_claims where status = 'pending') as claims_pending,
+      (select count(*)::int from public.support_messages where status = 'new') as support_new,
+      (select count(*)::int from public.regattas where counts_for_ranking = true) as ranking_regattas,
+      (select count(*)::int from public.sailors where dob is null) as missing_dob,
+      (select count(*)::int from public.sailors
+        where sail_number is null
+           or trim(coalesce(sail_number, '')) = ''
+           or sail_number ~* '^SGP[[:space:]]*0+$'
+      ) as missing_sail
+  `;
 
-  const claimedSailors = Number(claimedRow[0]?.n ?? 0);
-  const seriesSailors = Number(seriesRow[0]?.n ?? 0);
+  const row = inventory[0] ?? {};
+  const claimedSailors = num(row.claimed);
+  const seriesSailors = num(row.series_sailors);
 
   let usageEventsOk = true;
   let weeklyActiveSessions: number | null = null;
@@ -146,38 +106,33 @@ async function computeAdminStats(): Promise<AdminStatsPayload> {
   let daysSinceLastImport: number | null = null;
 
   try {
-    const [sessionsRow, trafficRows, lastImportRow] = await Promise.all([
-      db
-        .select({ n: countDistinct(usageEvents.sessionId) })
-        .from(usageEvents)
-        .where(
-          and(
-            gte(usageEvents.createdAt, weekAgo),
-            isNotNull(usageEvents.sessionId)
-          )
-        ),
-      db
-        .select({
-          eventType: usageEvents.eventType,
-          n: count(),
-        })
-        .from(usageEvents)
-        .where(gte(usageEvents.createdAt, weekAgo))
-        .groupBy(usageEvents.eventType),
-      db
-        .select({
-          createdAt: usageEvents.createdAt,
-        })
-        .from(usageEvents)
-        .where(eq(usageEvents.eventType, "import"))
-        .orderBy(desc(usageEvents.createdAt))
-        .limit(1),
+    const [sessions, traffic, lastImport] = await Promise.all([
+      pgSql`
+        select count(distinct session_id)::int as n
+        from public.usage_events
+        where created_at >= now() - interval '7 days'
+          and session_id is not null
+          and session_id <> ''
+      `,
+      pgSql`
+        select event_type, count(*)::int as n
+        from public.usage_events
+        where created_at >= now() - interval '7 days'
+        group by event_type
+      `,
+      pgSql`
+        select created_at
+        from public.usage_events
+        where event_type = 'import'
+        order by created_at desc
+        limit 1
+      `,
     ]);
 
-    weeklyActiveSessions = Number(sessionsRow[0]?.n ?? 0);
-    for (const row of trafficRows) {
-      const n = Number(row.n ?? 0);
-      switch (row.eventType) {
+    weeklyActiveSessions = num(sessions[0]?.n);
+    for (const t of traffic) {
+      const n = num(t.n);
+      switch (String(t.event_type)) {
         case "ranking_view":
           rankingViews = n;
           break;
@@ -198,9 +153,10 @@ async function computeAdminStats(): Promise<AdminStatsPayload> {
       }
     }
 
-    const importAt = lastImportRow[0]?.createdAt;
+    const importAt = lastImport[0]?.created_at;
     if (importAt) {
-      const d = importAt instanceof Date ? importAt : new Date(String(importAt));
+      const d =
+        importAt instanceof Date ? importAt : new Date(String(importAt));
       if (!Number.isNaN(d.getTime())) {
         lastImportAt = d.toISOString();
         daysSinceLastImport = daysBetween(d, now);
@@ -218,13 +174,13 @@ async function computeAdminStats(): Promise<AdminStatsPayload> {
       claimedSailors,
       seriesSailors,
       rosterClaimedPct: pct(claimedSailors, seriesSailors),
-      claimsPending: Number(claimsPendingRow[0]?.n ?? 0),
+      claimsPending: num(row.claims_pending),
     },
     ops: {
-      supportNew: Number(supportNewRow[0]?.n ?? 0),
+      supportNew: num(row.support_new),
       daysSinceLastImport,
       lastImportAt,
-      rankingRegattas: Number(rankingRegattaRow[0]?.n ?? 0),
+      rankingRegattas: num(row.ranking_regattas),
     },
     traffic7d: {
       rankingViews,
@@ -234,19 +190,18 @@ async function computeAdminStats(): Promise<AdminStatsPayload> {
       adminOpens,
     },
     dataTrust: {
-      sailorsTotal: Number(sailorsTotalRow[0]?.n ?? 0),
-      missingDob: Number(missingDobRow[0]?.n ?? 0),
-      missingOrPlaceholderSail: Number(missingSailRow[0]?.n ?? 0),
+      sailorsTotal: num(row.sailors_total),
+      missingDob: num(row.missing_dob),
+      missingOrPlaceholderSail: num(row.missing_sail),
     },
     usageEventsOk,
   };
 }
 
-export const getCachedAdminStats = unstable_cache(
-  async () => computeAdminStats(),
-  ["admin-stats-v1"],
-  { revalidate: CACHE_SECONDS, tags: [CACHE_TAG_ADMIN_STATS] }
-);
+/** @deprecated use getAdminStats — kept for older imports */
+export async function getCachedAdminStats(): Promise<AdminStatsPayload> {
+  return getAdminStats();
+}
 
 /** Test helper — format roster % without DB. */
 export function formatRosterClaimedPct(
