@@ -403,10 +403,12 @@ async function fixGohSiakYiakIanIlcaOnly(
  * completed half-year. Sets drop_date to the next half boundary.
  */
 async function applyGoldParticipationDrops(
-  body: any,
+  body: Record<string, unknown>,
   auth: AuthContext
 ): Promise<NextResponse> {
-  const asOf = String(body.asOf || todayYmdSg()).slice(0, 10);
+  const asOf = String(
+    body.asOf == null ? todayYmdSg() : body.asOf
+  ).slice(0, 10);
 
   const sailorRows = await db.select().from(sailors);
   const regattaRows = await db.select().from(regattas);
@@ -558,12 +560,12 @@ async function seedIlca4NationalList(
 
 /** Bulk set/clear ILCA 4 national list flag */
 async function setIlca4NationalList(
-  body: any,
+  body: Record<string, unknown>,
   auth: AuthContext
 ): Promise<NextResponse> {
   const ids = Array.isArray(body.sailorIds)
     ? (body.sailorIds as unknown[]).map((x) => String(x)).filter(Boolean)
-    : body.sailorId
+    : body.sailorId != null && body.sailorId !== ""
       ? [String(body.sailorId)]
       : [];
   const value = Boolean(body.value);
@@ -782,10 +784,10 @@ async function recomputeSilverEntryDates(
  * (the route then continues to its default create-sailor behavior).
  */
 export async function runSailorAction(
-  body: any,
+  body: Record<string, unknown>,
   auth: AuthContext
 ): Promise<NextResponse | null> {
-  switch (String(body?.action || "")) {
+  switch (String(body.action == null ? "" : body.action)) {
     case "applyIlcaNameCorrections":
       return applyIlcaNameCorrections(auth);
     case "applyIlcaSailorFixes":

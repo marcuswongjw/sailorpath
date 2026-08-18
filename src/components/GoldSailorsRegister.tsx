@@ -139,7 +139,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
         if (sortKey === "name") return a.name || "";
         if (sortKey === "sailNumber") return a.sailNumber || "";
         if (sortKey === "birthYear") return birthYearOf(a.dob) ?? 9999;
-        const raw = (a as any)[sortKey];
+        const raw = (a as Record<string, unknown>)[sortKey];
         if (raw == null || raw === "") return sortDir === "asc" ? 99999 : -1;
         if (typeof raw === "number") return raw;
         return String(raw);
@@ -148,7 +148,7 @@ export function GoldSailorsRegister({ sailors }: { sailors: GoldSailor[] }) {
         if (sortKey === "name") return b.name || "";
         if (sortKey === "sailNumber") return b.sailNumber || "";
         if (sortKey === "birthYear") return birthYearOf(b.dob) ?? 9999;
-        const raw = (b as any)[sortKey];
+        const raw = (b as Record<string, unknown>)[sortKey];
         if (raw == null || raw === "") return sortDir === "asc" ? 99999 : -1;
         if (typeof raw === "number") return raw;
         return String(raw);

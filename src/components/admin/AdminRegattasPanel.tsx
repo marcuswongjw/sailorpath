@@ -4,22 +4,12 @@ import { Plus, Trash2, Calendar } from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
+import {
+  emptyRegattaForm,
+  type RegattaFormState,
+} from "@/components/admin/adminForms";
 
-export interface RegattaFormState {
-  name?: string;
-  slug?: string;
-  startDate?: string;
-  endDate?: string;
-  date?: string | Date;
-  division?: string;
-  geography?: string;
-  boatClass?: string;
-  countsForRanking?: boolean;
-  totalFleetSize?: string | number;
-  raceCount?: string | number;
-  notes?: string;
-  [key: string]: any;
-}
+export type { RegattaFormState };
 
 export type AdminRegattasPanelProps = {
   isSuperadmin?: boolean;
@@ -103,15 +93,8 @@ export function AdminRegattasPanel({
                     onClick={() => {
                       setEditingRegattaId("new");
                       setRegattaForm({
-                        id: "",
-                        name: "",
+                        ...emptyRegattaForm(),
                         date: new Date().toISOString().split("T")[0],
-                        totalFleetSize: 50,
-                        division: "Gold",
-                        raceCount: "",
-                        geography: "SGP",
-                        boatClass: "Optimist",
-                        countsForRanking: true,
                       });
                     }}
                     className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2.5 text-xs font-bold text-white flex items-center justify-center gap-1 shrink-0"
@@ -147,17 +130,23 @@ export function AdminRegattasPanel({
                               onClick={() => {
                                 setEditingRegattaId(r.id);
                                 setRegattaForm({
-                                  ...r,
+                                  id: r.id,
+                                  name: r.name || "",
+                                  date: String(r.date || "").slice(0, 10),
+                                  slug: r.slug,
                                   division: r.division || "",
                                   raceCount:
-                                    r.raceCount != null ? String(r.raceCount) : "",
+                                    r.raceCount != null
+                                      ? String(r.raceCount)
+                                      : "",
                                   totalFleetSize:
                                     r.totalFleetSize != null
                                       ? String(r.totalFleetSize)
                                       : "",
                                   geography: r.geography || "SGP",
                                   boatClass: r.boatClass || "Optimist",
-                                  countsForRanking: r.countsForRanking !== false,
+                                  countsForRanking:
+                                    r.countsForRanking !== false,
                                 });
                               }}
                               className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${

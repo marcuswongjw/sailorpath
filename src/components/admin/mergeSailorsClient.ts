@@ -1,7 +1,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
-import { parseApi } from "@/components/admin/parseApi";
+import { parseApi, apiErr, apiStr, apiNum } from "@/components/admin/parseApi";
 import type { SailorAdmin } from "@/types/sailor";
 import type { ResultAdmin } from "@/types/result";
 
@@ -42,13 +42,16 @@ export async function mergeSailorsClient(
     body: JSON.stringify({ keepId, mergeId }),
   });
   const data = await parseApi(res);
-  if (!res.ok) throw new Error(data.error || "Merge failed");
+  if (!res.ok) throw new Error(apiErr(data, "Merge failed"));
+
+  const keep =
+    data.keep && typeof data.keep === "object"
+      ? (data.keep as SailorAdmin)
+      : undefined;
 
   setSailorList((prev) => {
     const without = prev.filter((s) => s.id !== mergeId);
-    return without.map((s) =>
-      s.id === keepId && data.keep ? data.keep : s
-    );
+    return without.map((s) => (s.id === keepId && keep ? keep : s));
   });
 
   if (refreshResultsList) {
@@ -65,5 +68,12 @@ export async function mergeSailorsClient(
     );
   }
 
-  return data as MergeSailorsResponse;
+  return {
+    message: apiStr(data, "message"),
+    keep,
+    resultsMoved: apiNum(data, "resultsMoved"),
+    resultsMergedConflict: apiNum(data, "resultsMergedConflict"),
+    resultsDroppedConflict: apiNum(data, "resultsDroppedConflict"),
+    error: apiStr(data, "error"),
+  };
 }

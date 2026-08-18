@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Trophy, ArrowUpCircle } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { errorMessage } from "@/lib/errors";
+import type { SailorAdmin } from "@/types/sailor";
 
 type Candidate = {
   id: string;
@@ -20,7 +22,7 @@ export function PromoteAdminPanel({
   onPromoted,
 }: {
   isSuperadmin: boolean;
-  onPromoted?: (sailor: any) => void;
+  onPromoted?: (sailor: SailorAdmin) => void;
 }) {
   const { toast, confirm } = useFeedback();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -64,11 +66,11 @@ export function PromoteAdminPanel({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Promote failed");
-      onPromoted?.(data.sailor);
+      onPromoted?.(data.sailor as SailorAdmin);
       toast.success(data.message || "Promoted");
       await load();
-    } catch (e: any) {
-      toast.error(e.message || "Failed");
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Failed"));
     }
   };
 

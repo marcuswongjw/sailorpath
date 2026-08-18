@@ -61,6 +61,7 @@ import {
   type SailorProfileViewProps,
 } from "@/components/sailor-profile";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { errorMessage } from "@/lib/errors";
 
 const PositionTrendChart = dynamic(
   () =>
@@ -241,7 +242,7 @@ export function SailorProfileView({
         const data = await res.json();
         if (!res.ok || cancelled) return;
         const mine = (data.claims || []).find(
-          (c: any) =>
+          (c: { sailorId?: string; status?: string }) =>
             c.sailorId === initialSailor.id && c.status === "pending"
         );
         if (mine) {
@@ -305,7 +306,7 @@ export function SailorProfileView({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Save failed");
-      setDisplaySailor((s: any) => ({
+      setDisplaySailor((s: SailorRecordProps) => ({
         ...s,
         ...data.sailor,
         dob: data.sailor.dob ?? (form.dob || s.dob),
@@ -340,8 +341,8 @@ export function SailorProfileView({
         return;
       }
       setTimeout(() => setSaveMsg(null), 2500);
-    } catch (e: any) {
-      setSaveMsg(e.message || "Save failed");
+    } catch (e: unknown) {
+      setSaveMsg(errorMessage(e, "Save failed"));
     } finally {
       setSaveBusy(false);
     }
@@ -388,16 +389,18 @@ export function SailorProfileView({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Could not save photo");
-      setDisplaySailor((s: any) => ({
+      setDisplaySailor((s: SailorRecordProps) => ({
         ...s,
         avatarUrl: data.sailor.avatarUrl || publicUrl,
       }));
       setAvatarMsg("Photo updated");
       setTimeout(() => setAvatarMsg(null), 2500);
-    } catch (e: any) {
+    } catch (e: unknown) {
       setAvatarMsg(
-        e.message ||
+        errorMessage(
+          e,
           "Upload failed — ensure avatars bucket exists (see docs)"
+        )
       );
     } finally {
       setAvatarBusy(false);
@@ -415,7 +418,7 @@ export function SailorProfileView({
     });
   };
 
-  const startEditObservation = (o: any, regattaId: string) => {
+  const startEditObservation = (o: ObservationItem, regattaId: string) => {
     setExpandedRegattaId(regattaId);
     setEditingObsId(o.id || null);
     setObsForm({
@@ -484,8 +487,8 @@ export function SailorProfileView({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Save failed");
-      const row = data.observation;
-      setObservations((prev: any[]) => {
+      const row = data.observation as ObservationItem;
+      setObservations((prev: ObservationItem[]) => {
         const rest = prev.filter(
           (o) =>
             !(
@@ -493,25 +496,32 @@ export function SailorProfileView({
               o.raceNumber === row.raceNumber
             )
         );
+        const existingName = prev.find((p) => p.regattaId === row.regattaId)
+          ?.regattaName;
+        const resultName = initialResults.find(
+          (r: RegattaResultItem) => r.regattaId === regattaId
+        )?.regattaName;
         return [
           ...rest,
           {
             ...row,
             regattaName:
-              prev.find((p) => p.regattaId === row.regattaId)?.regattaName ||
-              initialResults.find((r: any) => r.regattaId === regattaId)
-                ?.regattaName,
+              (typeof existingName === "string" ? existingName : undefined) ||
+              resultName,
           },
-        ].sort(
-          (a, b) =>
-            String(b.regattaDate || "").localeCompare(String(a.regattaDate || "")) ||
-            a.raceNumber - b.raceNumber
-        );
+        ].sort((a, b) => {
+          const bd = String(b.regattaDate == null ? "" : b.regattaDate);
+          const ad = String(a.regattaDate == null ? "" : a.regattaDate);
+          return (
+            bd.localeCompare(ad) ||
+            Number(a.raceNumber ?? 0) - Number(b.raceNumber ?? 0)
+          );
+        });
       });
       setObsMsg(editingObsId ? "Observation updated" : "Observation saved");
       resetObsForm();
-    } catch (e: any) {
-      setObsMsg(e.message || "Failed");
+    } catch (e: unknown) {
+      setObsMsg(errorMessage(e, "Failed"));
     } finally {
       setObsBusy(false);
     }
@@ -610,10 +620,12 @@ export function SailorProfileView({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Save failed");
       if (data.entry) {
-        setResults((prev: any[]) =>
-          [data.entry, ...prev].sort((a, b) =>
-            String(b.regattaDate || "").localeCompare(String(a.regattaDate || ""))
-          )
+        setResults((prev: RegattaResultItem[]) =>
+          [data.entry as RegattaResultItem, ...prev].sort((a, b) => {
+            const bd = String(b.regattaDate == null ? "" : b.regattaDate);
+            const ad = String(a.regattaDate == null ? "" : a.regattaDate);
+            return bd.localeCompare(ad);
+          })
         );
       }
       setPersonalForm({
@@ -625,17 +637,22 @@ export function SailorProfileView({
         nett: "",
       });
       setPersonalMsg("Added to logbook (non-ranking)");
-    } catch (e: any) {
-      setPersonalMsg(e.message || "Failed");
+    } catch (e: unknown) {
+      setPersonalMsg(errorMessage(e, "Failed"));
     } finally {
       setPersonalBusy(false);
     }
   };
 
-  const deletePersonalResult = async (res: any) => {
-    if (demoMode || !res?.resultId) return;
+  const deletePersonalResult = async (res: {
+    resultId?: string | null;
+    id?: string;
+    regattaName?: string | null;
+  }) => {
+    const resultId = res.resultId ?? res.id;
+    if (demoMode || resultId == null || resultId === "") return;
     const ok = await confirm({
-      title: `Remove “${res.regattaName}” from your logbook?`,
+      title: `Remove “${res.regattaName ?? "event"}” from your logbook?`,
       tone: "danger",
       confirmLabel: "Remove",
     });
@@ -646,23 +663,24 @@ export function SailorProfileView({
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ resultId: res.resultId }),
+        body: JSON.stringify({ resultId }),
       });
       const data = await r.json();
       if (!r.ok) throw new Error(data.error || "Delete failed");
-      setResults((prev: any[]) =>
-        prev.filter((x) => x.resultId !== res.resultId && x.id !== res.resultId)
+      setResults((prev: RegattaResultItem[]) =>
+        prev.filter((x) => x.resultId !== resultId && x.id !== resultId)
       );
       setPersonalMsg("Removed");
-    } catch (e: any) {
-      toast.error(e.message || "Delete failed");
-      setPersonalMsg(e.message || "Delete failed");
+    } catch (e: unknown) {
+      const msg = errorMessage(e, "Delete failed");
+      toast.error(msg);
+      setPersonalMsg(msg);
     } finally {
       setPersonalBusy(false);
     }
   };
 
-  const deleteObservation = async (o: any) => {
+  const deleteObservation = async (o: ObservationItem) => {
     if (demoMode || !o?.id) return;
     const ok = await confirm({
       title: `Delete observation for race ${o.raceNumber}?`,
@@ -681,12 +699,15 @@ export function SailorProfileView({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Delete failed");
-      setObservations((prev: any[]) => prev.filter((x) => x.id !== o.id));
+      setObservations((prev: ObservationItem[]) =>
+        prev.filter((x) => x.id !== o.id)
+      );
       if (editingObsId === o.id) resetObsForm();
       setObsMsg("Observation deleted");
-    } catch (e: any) {
-      toast.error(e.message || "Delete failed");
-      setObsMsg(e.message || "Delete failed");
+    } catch (e: unknown) {
+      const msg = errorMessage(e, "Delete failed");
+      toast.error(msg);
+      setObsMsg(msg);
     } finally {
       setObsBusy(false);
     }
@@ -694,8 +715,11 @@ export function SailorProfileView({
 
   const obsForRegatta = (regattaId: string) =>
     observations
-      .filter((o: any) => o.regattaId === regattaId)
-      .sort((a: any, b: any) => a.raceNumber - b.raceNumber);
+      .filter((o: ObservationItem) => o.regattaId === regattaId)
+      .sort(
+        (a: ObservationItem, b: ObservationItem) =>
+          Number(a.raceNumber ?? 0) - Number(b.raceNumber ?? 0)
+      );
 
 
   /** Split raw results by boat class (before gold filtering). ILCA 6 folds into ILCA 4. */
@@ -2422,7 +2446,7 @@ export function SailorProfileView({
                           </p>
                         ) : (
                           <ul className="space-y-2">
-                            {raceNotes.map((o: Record<string, unknown>) => (
+                            {raceNotes.map((o) => (
                               <li
                                 key={String(
                                   o.id || `${o.regattaId}-${o.raceNumber}`

@@ -27,6 +27,10 @@ import {
   defaultDbColVisible,
 } from "@/components/admin/adminConstants";
 import { NationalitySelect } from "@/components/CountrySelect";
+import {
+  emptySailorForm,
+  type SailorFormState,
+} from "@/components/admin/adminForms";
 import type { SailorAdmin } from "@/types/sailor";
 
 const HALF_BOUNDARY_OPTS = halfBoundaryOptions();
@@ -39,7 +43,7 @@ export type DuplicatePair = {
   how?: string;
 };
 
-export type SailorFormState = Record<string, any>;
+export type { SailorFormState };
 
 export type AdminSailorsPanelProps = {
   isSuperadmin: boolean;
@@ -1049,37 +1053,8 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           setCompetitionsSailorId(null);
                           setEditingSailorId("new");
                           setSailorForm({
-                            id: "",
-                            name: "",
-                            handle: "",
+                            ...emptySailorForm(),
                             sailNumber: "SGP ",
-                            club: "",
-                            nationality: "",
-                            gender: "M",
-                            nationalSquadStatus: "",
-                            currentFleet: "",
-                            instagram: "",
-                                                    dob: "",
-                            weight: "",
-                            bio: "",
-                            goldEntryDate: "",
-                            silverEntryDate: "",
-                            dropDate: "",
-                            natSquadStatusJan25: "",
-                            natSquadStatusJul25: "",
-                            natSquadStatusJan26: "",
-                            natSquadStatusJul26: "",
-                            natSquadStatusJan27: "",
-                            natSquadStatusJul27: "",
-                            histRankingJun24: "",
-                            histRankingDec24: "",
-                            histRankingJun25: "",
-                            histRankingDec25: "",
-                            histRankingJun26: "",
-                            worlds: "",
-                            european: "",
-                            asian: "",
-                            seaGames: "",
                           });
                         }}
                         className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
@@ -1344,7 +1319,14 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                       const d = (v: unknown) =>
                                         v ? String(v).slice(0, 10) : "";
                                       setSailorForm({
-                                        ...s,
+                                        ...emptySailorForm(),
+                                        id: s.id,
+                                        name: s.name || "",
+                                        handle: s.handle || "",
+                                        sailNumber: s.sailNumber || "",
+                                        sailNumberIlca4:
+                                          s.sailNumberIlca4 || "",
+                                        club: s.club || "",
                                         weight: s.weight
                                           ? s.weight.toString()
                                           : "",
@@ -1368,6 +1350,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                         natSquadStatusJul27:
                                           s.natSquadStatusJul27 || "",
                                         nationality: s.nationality || "",
+                                        gender: s.gender || "M",
                                         currentFleet: s.currentFleet || "",
                                         school: s.school || "",
                                         histRankingJun24:
@@ -1397,10 +1380,22 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                         goldEntryDate: d(s.goldEntryDate),
                                         silverEntryDate: d(s.silverEntryDate),
                                         dropDate: d(s.dropDate),
-                                        worlds: s.worlds != null ? String(s.worlds) : "",
-                                        european: s.european != null ? String(s.european) : "",
-                                        asian: s.asian != null ? String(s.asian) : "",
-                                        seaGames: s.seaGames != null ? String(s.seaGames) : "",
+                                        worlds:
+                                          s.worlds != null
+                                            ? String(s.worlds)
+                                            : "",
+                                        european:
+                                          s.european != null
+                                            ? String(s.european)
+                                            : "",
+                                        asian:
+                                          s.asian != null
+                                            ? String(s.asian)
+                                            : "",
+                                        seaGames:
+                                          s.seaGames != null
+                                            ? String(s.seaGames)
+                                            : "",
                                       });
                                       setEditingSailorId(s.id);
                                     }}

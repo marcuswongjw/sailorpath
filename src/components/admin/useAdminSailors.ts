@@ -7,11 +7,13 @@ import {
   DB_COLS_STORAGE,
   defaultDbColVisible,
 } from "@/components/admin/adminConstants";
-import { parseApi } from "@/components/admin/parseApi";
+import { parseApi, apiErr, apiStr, apiNum } from "@/components/admin/parseApi";
+import { emptySailorForm } from "@/components/admin/adminForms";
 import { mergeSailorsClient } from "@/components/admin/mergeSailorsClient";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { birthYear } from "@/lib/age";
 import { currentPeriodFromSgToday, isHalfBoundaryYmd } from "@/lib/datesSg";
+import { errorMessage } from "@/lib/errors";
 import {
   isInSgSeries,
   seriesMembershipLabel,
@@ -33,41 +35,6 @@ type UseAdminSailorsArgs = {
   competitionsSailorId: string | null;
   setCompetitionsSailorId: Dispatch<SetStateAction<string | null>>;
 };
-
-const emptySailorForm = () => ({
-  id: "",
-  name: "",
-  handle: "",
-  sailNumber: "",
-  sailNumberIlca4: "",
-  club: "",
-  nationality: "",
-  gender: "M",
-  nationalSquadStatus: "",
-  instagram: "",
-  avatarUrl: "",
-  dob: "",
-  weight: "",
-  bio: "",
-  goldEntryDate: "",
-  silverEntryDate: "",
-  dropDate: "",
-  natSquadStatusJan25: "",
-  natSquadStatusJul25: "",
-  natSquadStatusJan26: "",
-  natSquadStatusJul26: "",
-  natSquadStatusJan27: "",
-  natSquadStatusJul27: "",
-  histRankingJun24: "",
-  histRankingDec24: "",
-  histRankingJun25: "",
-  histRankingDec25: "",
-  histRankingJun26: "",
-  worlds: "",
-  european: "",
-  asian: "",
-  seaGames: "",
-});
 
 /**
  * Sailors Database sub-tab: filters, sort, columns, selection, duplicates,
@@ -117,7 +84,7 @@ export function useAdminSailors({
     {}
   );
   const [editingSailorId, setEditingSailorId] = useState<string | null>(null);
-  const [sailorForm, setSailorForm] = useState<any>(emptySailorForm);
+  const [sailorForm, setSailorForm] = useState(emptySailorForm);
   const [showDuplicateFinder, setShowDuplicateFinder] = useState(false);
 
   const openSailorResults = (sailorId: string) => {
@@ -215,7 +182,9 @@ export function useAdminSailors({
     }
     if (dbSquadFilter !== "all") {
       const field = natSquadFieldForPeriod(currentPeriodFromSgToday());
-      const periodVal = field ? (s as any)[field] : null;
+      const periodVal = field
+        ? (s as Record<string, unknown>)[field]
+        : null;
       const sq =
         periodVal || s.natSquadStatusJul26 || s.nationalSquadStatus || "";
       if (String(sq) !== dbSquadFilter) return false;
@@ -260,12 +229,15 @@ export function useAdminSailors({
         body: JSON.stringify({ action: "backfillNationalityFromSail" }),
       });
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Backfill failed");
+      if (!res.ok) throw new Error(apiErr(data, "Backfill failed"));
       const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
       if (list.sailors) setSailorList(list.sailors);
-      toast.success(data.message || `Updated ${data.updated} sailors`);
+      toast.success(
+        apiStr(data, "message") ||
+          `Updated ${apiNum(data, "updated") ?? 0} sailors`
+      );
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : "Backfill failed");
+      toast.error(errorMessage(e, "Backfill failed"));
     }
   };
 
@@ -287,12 +259,15 @@ export function useAdminSailors({
         body: JSON.stringify({ action: "stampEmptySeriesSilver" }),
       });
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Cleanup failed");
+      if (!res.ok) throw new Error(apiErr(data, "Cleanup failed"));
       const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
       if (list.sailors) setSailorList(list.sailors);
-      toast.success(data.message || `Updated ${data.updated} sailors`);
+      toast.success(
+        apiStr(data, "message") ||
+          `Updated ${apiNum(data, "updated") ?? 0} sailors`
+      );
     } catch (e: unknown) {
-      toast.error(e instanceof Error ? e.message : "Cleanup failed");
+      toast.error(errorMessage(e, "Cleanup failed"));
     }
   };
 
@@ -328,7 +303,7 @@ export function useAdminSailors({
   const sortedDbSailors = useMemo(() => {
     const rows = [...filteredDbSailors];
     const dir = dbSortDir === "asc" ? 1 : -1;
-    const val = (s: any) => {
+    const val = (s: SailorAdmin): string | number => {
       switch (dbSortKey) {
         case "name":
           return s.name || "";
@@ -352,11 +327,11 @@ export function useAdminSailors({
         case "school":
           return s.school || "";
         case "goldEntry":
-          return s.goldEntryDate || "";
+          return s.goldEntryDate ? String(s.goldEntryDate) : "";
         case "silverEntry":
-          return s.silverEntryDate || "";
+          return s.silverEntryDate ? String(s.silverEntryDate) : "";
         case "dropDate":
-          return s.dropDate || "";
+          return s.dropDate ? String(s.dropDate) : "";
         case "squadJan25":
           return s.natSquadStatusJan25 || "";
         case "squadJul25":
@@ -376,13 +351,13 @@ export function useAdminSailors({
         case "histJun26":
           return s.histRankingJun26 ?? 99999;
         case "worlds":
-          return s.worlds ?? 99999;
+          return s.worlds != null ? String(s.worlds) : "";
         case "european":
-          return s.european ?? 99999;
+          return s.european != null ? String(s.european) : "";
         case "asian":
-          return s.asian ?? 99999;
+          return s.asian != null ? String(s.asian) : "";
         case "seaGames":
-          return s.seaGames ?? 99999;
+          return s.seaGames != null ? String(s.seaGames) : "";
         default:
           return s.name || "";
       }
@@ -457,12 +432,12 @@ export function useAdminSailors({
         }),
       });
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Bulk update failed");
+      if (!res.ok) throw new Error(apiErr(data, "Bulk update failed"));
 
       setSailorList((prev) =>
         prev.map((s) => {
           if (!selectedSailors.includes(s.id)) return s;
-          let typedValue: any = bulkValue;
+          let typedValue: string | number | null = bulkValue;
           const isNumeric = [
             "histRankingJun24",
             "histRankingDec24",
@@ -492,19 +467,21 @@ export function useAdminSailors({
             bulkField === "natSquadStatusJan27" ||
             bulkField === "natSquadStatusJul27"
           ) {
-            next.nationalSquadStatus = typedValue;
+            next.nationalSquadStatus =
+              typedValue == null ? null : String(typedValue);
           }
           return next;
         })
       );
       setBulkStatus(
-        data.message || `Updated ${selectedSailors.length} sailors.`
+        apiStr(data, "message") ||
+          `Updated ${selectedSailors.length} sailors.`
       );
       setSelectedSailors([]);
       setBulkValue("");
       setTimeout(() => setBulkStatus(null), 3000);
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e: unknown) {
+      toast.error(errorMessage(e));
     }
   };
 
@@ -525,7 +502,7 @@ export function useAdminSailors({
       return;
     }
 
-    const score = (s: any) => {
+    const score = (s: SailorAdmin) => {
       let n = 0;
       if (s.goldEntryDate) n += 5;
       if (s.silverEntryDate) n += 2;
@@ -571,12 +548,12 @@ export function useAdminSailors({
       );
       setTimeout(() => setBulkStatus(null), 6000);
       toast.success(
-        `${data.message}\n\nResults moved: ${data.resultsMoved ?? 0}\n` +
+        `${data.message || "Merged"}\n\nResults moved: ${data.resultsMoved ?? 0}\n` +
           `Conflicts resolved: ${data.resultsMergedConflict ?? 0}\n` +
           `Conflicts kept (kept sailor better): ${data.resultsDroppedConflict ?? 0}`
       );
-    } catch (e: any) {
-      toast.error(e.message || "Merge failed");
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Merge failed"));
     }
   };
 
@@ -603,8 +580,8 @@ export function useAdminSailors({
         setResultsList,
       });
       toast.success(data.message || `Merged ${merge.name} → ${keep.name}`);
-    } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Merge failed");
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Merge failed"));
     }
   };
 
@@ -635,7 +612,7 @@ export function useAdminSailors({
         }),
       });
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Bulk delete failed");
+      if (!res.ok) throw new Error(apiErr(data, "Bulk delete failed"));
       setSailorList((prev) =>
         prev.filter((s) => !selectedSailors.includes(s.id))
       );
@@ -643,10 +620,10 @@ export function useAdminSailors({
         prev.filter((r) => !selectedSailors.includes(r.sailorId))
       );
       setSelectedSailors([]);
-      setBulkStatus(data.message || "Deleted.");
+      setBulkStatus(apiStr(data, "message") || "Deleted.");
       setTimeout(() => setBulkStatus(null), 4000);
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e: unknown) {
+      toast.error(errorMessage(e));
     }
   };
 
@@ -753,12 +730,13 @@ export function useAdminSailors({
           body: JSON.stringify(payload),
         });
         const data = await parseApi(res);
-        if (!res.ok)
-          throw new Error(data.error || data.detail || "Create failed");
-        setSailorList((prev) => [...prev, data.sailor]);
+        if (!res.ok) throw new Error(apiErr(data, "Create failed"));
+        const sailor = data.sailor as SailorAdmin;
+        setSailorList((prev) => [...prev, sailor]);
+        const warning = apiStr(data, "warning");
         toast.success(
-          data.warning
-            ? `Sailor created. Note: ${data.warning}`
+          warning
+            ? `Sailor created. Note: ${warning}`
             : "Sailor created successfully!"
         );
       } else {
@@ -768,20 +746,21 @@ export function useAdminSailors({
           body: JSON.stringify({ ...payload, id: editingSailorId }),
         });
         const data = await parseApi(res);
-        if (!res.ok)
-          throw new Error(data.error || data.detail || "Update failed");
+        if (!res.ok) throw new Error(apiErr(data, "Update failed"));
+        const sailor = data.sailor as SailorAdmin;
         setSailorList((prev) =>
-          prev.map((s) => (s.id === editingSailorId ? data.sailor : s))
+          prev.map((s) => (s.id === editingSailorId ? sailor : s))
         );
+        const warning = apiStr(data, "warning");
         toast.success(
-          data.warning
-            ? `Sailor updated. Note: ${data.warning}`
+          warning
+            ? `Sailor updated. Note: ${warning}`
             : "Sailor updated successfully!"
         );
       }
       setEditingSailorId(null);
-    } catch (e: any) {
-      toast.error(e.message || "Update failed");
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Update failed"));
     }
   };
 
@@ -809,12 +788,12 @@ export function useAdminSailors({
         { method: "DELETE" }
       );
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Delete failed");
+      if (!res.ok) throw new Error(apiErr(data, "Delete failed"));
       setSailorList((prev) => prev.filter((s) => s.id !== id));
       setResultsList((prev) => prev.filter((r) => r.sailorId !== id));
       toast.success("Sailor deleted.");
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e: unknown) {
+      toast.error(errorMessage(e));
     }
   };
 

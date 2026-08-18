@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useMemo, type Dispatch, type SetStateAction } from "react";
-import { parseApi } from "@/components/admin/parseApi";
+import { parseApi, apiErr } from "@/components/admin/parseApi";
+import { emptyRegattaForm } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { errorMessage } from "@/lib/errors";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 
@@ -34,17 +36,7 @@ export function useAdminRegattas({
   const [regattaRankingFilter, setRegattaRankingFilter] =
     useState<string>("all");
   const [editingRegattaId, setEditingRegattaId] = useState<string | null>(null);
-  const [regattaForm, setRegattaForm] = useState<any>({
-    id: "",
-    name: "",
-    date: "",
-    totalFleetSize: 50,
-    division: "Gold",
-    raceCount: "",
-    geography: "SGP",
-    boatClass: "Optimist",
-    countsForRanking: true,
-  });
+  const [regattaForm, setRegattaForm] = useState(emptyRegattaForm);
 
   const filteredRegattaList = useMemo(() => {
     const q = regattaSearch.trim().toLowerCase();
@@ -99,10 +91,11 @@ export function useAdminRegattas({
           body: JSON.stringify(regattaForm),
         });
         const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || "Create failed");
-        setRegattaList((prev) => [...prev, data.regatta]);
+        if (!res.ok) throw new Error(apiErr(data, "Create failed"));
+        const regatta = data.regatta as RegattaAdmin;
+        setRegattaList((prev) => [...prev, regatta]);
         if (!selectedRegattaIdForResultEdit) {
-          setSelectedRegattaIdForResultEdit(data.regatta.id);
+          setSelectedRegattaIdForResultEdit(regatta.id);
         }
         toast.success("Regatta created successfully!");
       } else {
@@ -112,15 +105,16 @@ export function useAdminRegattas({
           body: JSON.stringify({ ...regattaForm, id: editingRegattaId }),
         });
         const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || "Update failed");
+        if (!res.ok) throw new Error(apiErr(data, "Update failed"));
+        const regatta = data.regatta as RegattaAdmin;
         setRegattaList((prev) =>
-          prev.map((r) => (r.id === editingRegattaId ? data.regatta : r))
+          prev.map((r) => (r.id === editingRegattaId ? regatta : r))
         );
         toast.success("Regatta updated successfully!");
       }
       setEditingRegattaId(null);
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e: unknown) {
+      toast.error(errorMessage(e));
     }
   };
 
@@ -149,15 +143,15 @@ export function useAdminRegattas({
         { method: "DELETE" }
       );
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Delete failed");
+      if (!res.ok) throw new Error(apiErr(data, "Delete failed"));
       setRegattaList((prev) => prev.filter((r) => r.id !== id));
       setResultsList((prev) => prev.filter((row) => row.regattaId !== id));
       if (selectedRegattaIdForResultEdit === id) {
         setSelectedRegattaIdForResultEdit("");
       }
       toast.success("Regatta deleted.");
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e: unknown) {
+      toast.error(errorMessage(e));
     }
   };
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { LifeBuoy, CheckCircle, Mail } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { errorMessage } from "@/lib/errors";
 
 type Msg = {
   id: string;
@@ -54,8 +55,8 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
       await load();
-    } catch (e: any) {
-      toast.error(e.message || "Failed");
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Failed"));
     }
   };
 

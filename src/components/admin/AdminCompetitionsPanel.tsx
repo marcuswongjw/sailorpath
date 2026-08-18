@@ -1,12 +1,16 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, type Dispatch, type SetStateAction } from "react";
 import { Medal, Plus, Edit3, Trash2 } from "lucide-react";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
+import {
+  emptyResultForm,
+  type ResultFormState,
+} from "@/components/admin/adminForms";
 
 export type AdminCompetitionsPanelProps = {
   competitionsSailorId: string | null;
@@ -16,8 +20,8 @@ export type AdminCompetitionsPanelProps = {
   resultsList: ResultAdmin[];
   editingResultId: string | null;
   setEditingResultId: (id: string | null) => void;
-  resultForm: any;
-  setResultForm: (v: any) => void;
+  resultForm: ResultFormState;
+  setResultForm: Dispatch<SetStateAction<ResultFormState>>;
   closeSailorResults: () => void;
   handleSaveResult: () => void | Promise<void>;
   handleDeleteResult: (id: string) => void | Promise<void>;
@@ -142,13 +146,9 @@ export function AdminCompetitionsPanel({
                       : regattaList[0];
                 setEditingResultId("new");
                 setResultForm({
-                  id: "",
+                  ...emptyResultForm(),
                   regattaId: preferred?.id || regattaList[0]?.id || "",
                   sailorId: sid,
-                  rank: 1,
-                  nettScore: "",
-                  totalScore: "",
-                  isDNS: false,
                 });
               }}
               className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
@@ -430,16 +430,20 @@ export function AdminCompetitionsPanel({
                           onClick={() => {
                             setEditingResultId(r.id);
                             setResultForm({
+                              ...emptyResultForm(),
                               id: r.id,
                               regattaId: r.regattaId,
                               sailorId: sid,
                               nettScore:
-                                r.nettScore?.toString?.() ?? r.nettScore,
+                                r.nettScore != null
+                                  ? String(r.nettScore)
+                                  : "",
                               totalScore:
                                 r.totalScore != null
                                   ? String(r.totalScore)
                                   : "",
-                              rank: r.rank?.toString?.() ?? r.rank,
+                              rank:
+                                r.rank != null ? String(r.rank) : "",
                               isDNS: dns && !overseas,
                               isDns: dns && !overseas,
                               isOverseasCommitment: overseas,

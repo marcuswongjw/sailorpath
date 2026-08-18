@@ -1,24 +1,20 @@
 "use client";
 
+import type { Dispatch, SetStateAction } from "react";
 import { Plus, Trash2, Edit3 } from "lucide-react";
 import { rankingPeriodOptions } from "@/lib/datesSg";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
+import {
+  emptyResultForm,
+  type ResultFormState,
+} from "@/components/admin/adminForms";
 
 const DNS_PERIODS = rankingPeriodOptions(4);
 
-export interface ResultFormState {
-  regattaId?: string;
-  sailorId?: string;
-  rank?: string | number;
-  nettScore?: string | number;
-  totalScore?: string | number;
-  isDns?: boolean;
-  notes?: string;
-  [key: string]: any;
-}
+export type { ResultFormState };
 
 export type AdminResultsPanelProps = {
   isSuperadmin: boolean;
@@ -30,7 +26,7 @@ export type AdminResultsPanelProps = {
   editingResultId: string | null;
   setEditingResultId: (id: string | null) => void;
   resultForm: ResultFormState;
-  setResultForm: (v: ResultFormState) => void;
+  setResultForm: Dispatch<SetStateAction<ResultFormState>>;
   handleSaveResult: () => void | Promise<void>;
   handleDeleteResult: (id: string) => void | Promise<void>;
   handleFillDnsForRegatta: (regattaId: string) => void | Promise<void>;
@@ -309,14 +305,9 @@ export function AdminResultsPanel({
                             const dnsPts = (reg?.totalFleetSize || 50) + 1;
                             setEditingResultId("new");
                             setResultForm({
-                              id: "",
+                              ...emptyResultForm(),
                               regattaId: selectedRegattaIdForResultEdit,
-                              sailorId: "",
-                              rank: 1,
-                              nettScore: "",
-                              totalScore: "",
-                              isDNS: false,
-                              _dnsDefault: dnsPts,
+                              rank: dnsPts,
                             });
                           }}
                           className="rounded-full bg-orange-600 hover:bg-orange-500 px-3 sm:px-4 py-2 text-[11px] sm:text-xs font-bold text-white flex items-center justify-center gap-1 touch-manipulation"
@@ -409,13 +400,22 @@ export function AdminResultsPanel({
                                       onClick={() => {
                                         setEditingResultId(res.id);
                                         setResultForm({
-                                          ...res,
-                                          nettScore: res.nettScore != null ? String(res.nettScore) : "",
+                                          ...emptyResultForm(),
+                                          id: res.id,
+                                          regattaId: res.regattaId,
+                                          sailorId: res.sailorId,
+                                          nettScore:
+                                            res.nettScore != null
+                                              ? String(res.nettScore)
+                                              : "",
                                           totalScore:
                                             res.totalScore != null
                                               ? String(res.totalScore)
                                               : "",
-                                          rank: res.rank != null ? String(res.rank) : "",
+                                          rank:
+                                            res.rank != null
+                                              ? String(res.rank)
+                                              : "",
                                           isDNS: dns && !overseas,
                                           isDns: dns && !overseas,
                                           isOverseasCommitment: overseas,

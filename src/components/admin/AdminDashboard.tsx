@@ -368,7 +368,7 @@ function AdminDashboardInner() {
                 <AdminSailorsPanel
                   isSuperadmin={isSuperadmin}
                   sailorList={data.sailorList}
-                  {...(sailors.panelProps as any)}
+                  {...sailors.panelProps}
                 />
               )}
 

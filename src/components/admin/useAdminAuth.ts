@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import type { User } from "@supabase/supabase-js";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 
 export type AdminRole = "superadmin" | "coach" | "sailor" | "parent";
@@ -10,7 +11,7 @@ export type AdminRole = "superadmin" | "coach" | "sailor" | "parent";
  * (profiles), never from user_metadata.
  */
 export function useAdminAuth() {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [adminRole, setAdminRole] = useState<AdminRole>("sailor");
 

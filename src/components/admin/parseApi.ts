@@ -1,12 +1,37 @@
 /**
  * Parse JSON from admin API responses; surface non-JSON error bodies.
- * Returns a loose object so call sites can read `.error` / `.message` without casts.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function parseApi(res: Response): Promise<any> {
+
+export type AdminApiJson = Record<string, unknown>;
+
+/** Prefer error → detail → message for user-facing failures. */
+export function apiErr(data: AdminApiJson, fallback: string): string {
+  for (const key of ["error", "detail", "message"] as const) {
+    const v = data[key];
+    if (typeof v === "string" && v.trim()) return v;
+  }
+  return fallback;
+}
+
+export function apiStr(data: AdminApiJson, key: string): string | undefined {
+  const v = data[key];
+  return typeof v === "string" ? v : undefined;
+}
+
+export function apiNum(data: AdminApiJson, key: string): number | undefined {
+  const v = data[key];
+  return typeof v === "number" && Number.isFinite(v) ? v : undefined;
+}
+
+export async function parseApi(res: Response): Promise<AdminApiJson> {
   const text = await res.text();
   try {
-    return text ? JSON.parse(text) : {};
+    if (!text) return {};
+    const parsed: unknown = JSON.parse(text);
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+      return parsed as AdminApiJson;
+    }
+    return { value: parsed };
   } catch {
     throw new Error(
       res.ok

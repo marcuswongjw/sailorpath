@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { parseApi } from "@/components/admin/parseApi";
+import { parseApi, apiErr, apiStr, apiNum } from "@/components/admin/parseApi";
+import { emptyResultForm } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { errorMessage } from "@/lib/errors";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 
@@ -30,16 +32,7 @@ export function useAdminResults({
 }: UseAdminResultsArgs) {
   const { toast, confirm } = useFeedback();
   const [editingResultId, setEditingResultId] = useState<string | null>(null);
-  const [resultForm, setResultForm] = useState<any>({
-    id: "",
-    regattaId: "",
-    sailorId: "",
-    rank: 1,
-    nettScore: "",
-    totalScore: "",
-    isDNS: false,
-    isOverseasCommitment: false,
-  });
+  const [resultForm, setResultForm] = useState(emptyResultForm);
 
   const handleSaveResult = async () => {
     if (!isSuperadmin) {
@@ -77,9 +70,9 @@ export function useAdminResults({
           body: JSON.stringify(payload),
         });
         const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || "Create failed");
+        if (!res.ok) throw new Error(apiErr(data, "Create failed"));
+        const row = data.result as ResultAdmin;
         setResultsList((prev) => {
-          const row = data.result;
           const without = prev.filter(
             (r) =>
               !(r.sailorId === row.sailorId && r.regattaId === row.regattaId)
@@ -94,15 +87,16 @@ export function useAdminResults({
           body: JSON.stringify({ ...payload, id: editingResultId }),
         });
         const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || "Update failed");
+        if (!res.ok) throw new Error(apiErr(data, "Update failed"));
+        const row = data.result as ResultAdmin;
         setResultsList((prev) =>
-          prev.map((r) => (r.id === editingResultId ? data.result : r))
+          prev.map((r) => (r.id === editingResultId ? row : r))
         );
         toast.success("Result updated successfully!");
       }
       setEditingResultId(null);
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e: unknown) {
+      toast.error(errorMessage(e));
     }
   };
 
@@ -132,11 +126,14 @@ export function useAdminResults({
         body: JSON.stringify({ action: "fillDns", regattaId }),
       });
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Fill DNS failed");
+      if (!res.ok) throw new Error(apiErr(data, "Fill DNS failed"));
       await refreshResultsList({ regattaId });
-      toast.success(data.message || `Created ${data.created} DNS rows.`);
-    } catch (e: any) {
-      toast.error(e.message || "Fill DNS failed");
+      toast.success(
+        apiStr(data, "message") ||
+          `Created ${apiNum(data, "created") ?? 0} DNS rows.`
+      );
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Fill DNS failed"));
     }
   };
 
@@ -172,16 +169,21 @@ export function useAdminResults({
         }),
       });
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Period DNS fill failed");
+      if (!res.ok) throw new Error(apiErr(data, "Period DNS fill failed"));
       await refreshResultsList();
-      const events = (data.rankingRegattas || [])
-        .map((e: any) => `• ${e.name} (${e.date}) → DNS ${e.dnsPoints}`)
+      const rankingRaw = data.rankingRegattas;
+      const rankingList = Array.isArray(rankingRaw) ? rankingRaw : [];
+      const events = rankingList
+        .map((e) => {
+          const row = e as Record<string, unknown>;
+          return `• ${String(row.name ?? "")} (${String(row.date ?? "")}) → DNS ${String(row.dnsPoints ?? "")}`;
+        })
         .join("\n");
       toast.success(
-        `${data.message}\n\nRanking regattas:\n${events || "(none found — import regattas with dates in this period)"}`
+        `${apiStr(data, "message") || "Done"}\n\nRanking regattas:\n${events || "(none found — import regattas with dates in this period)"}`
       );
-    } catch (e: any) {
-      toast.error(e.message || "Period DNS fill failed");
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Period DNS fill failed"));
     }
   };
 
@@ -208,11 +210,11 @@ export function useAdminResults({
         { method: "DELETE" }
       );
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Delete failed");
+      if (!res.ok) throw new Error(apiErr(data, "Delete failed"));
       setResultsList((prev) => prev.filter((r) => r.id !== id));
       toast.success("Result deleted.");
-    } catch (e: any) {
-      toast.error(e.message);
+    } catch (e: unknown) {
+      toast.error(errorMessage(e));
     }
   };
 

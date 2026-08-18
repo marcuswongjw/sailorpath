@@ -13,7 +13,7 @@ import {
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
 import { parseRegattaTitle } from "@/lib/excel/parseRegattaTitle";
-import { parseApi } from "@/components/admin/parseApi";
+import { parseApi, apiErr, apiStr } from "@/components/admin/parseApi";
 import type { ImportPossibleDuplicate } from "@/types/import";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
@@ -27,6 +27,7 @@ import {
   isSingleFleetClass,
 } from "@/lib/countries";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { errorMessage } from "@/lib/errors";
 
 type Props = {
   isSuperadmin: boolean;
@@ -313,36 +314,57 @@ export function AdminRegattaImport({
       setImportProgress(78);
       setImportStatus("Processing server response…");
       const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || data.message || "Import failed");
+      if (!res.ok) throw new Error(apiErr(data, "Import failed"));
 
       setImportProgress(88);
       setImportStatus("Refreshing sailors & results…");
-      await refreshListsAfterImport(data.regatta || null);
+      const importedRegatta =
+        data.regatta && typeof data.regatta === "object"
+          ? (data.regatta as RegattaAdmin)
+          : null;
+      await refreshListsAfterImport(importedRegatta);
       setImportProgress(100);
 
       {
-        const extra = [data.hint, ...(data.errorSamples || []).slice(0, 3)]
+        const hint = apiStr(data, "hint");
+        const samples = Array.isArray(data.errorSamples)
+          ? data.errorSamples.slice(0, 3)
+          : [];
+        const extra = [hint, ...samples]
           .filter(Boolean)
+          .map(String)
           .join("\n");
+        const message = apiStr(data, "message");
         if (extra) {
           toast.info(
-            `${data.message || "Import finished with issues"}\n\n${extra}`
+            `${message || "Import finished with issues"}\n\n${extra}`
           );
         } else {
-          toast.success(data.message || "Import complete");
+          toast.success(message || "Import complete");
         }
       }
-      const unmatchedCount = (data.unmatched || []).length;
+      const unmatchedCount = Array.isArray(data.unmatched)
+        ? data.unmatched.length
+        : 0;
       const dupes = Array.isArray(data.possibleDuplicates)
-        ? data.possibleDuplicates
+        ? (data.possibleDuplicates as ImportPossibleDuplicate[])
         : [];
       setImportPossibleDuplicates(dupes);
       const natFlags = Array.isArray(data.nationalityFlags)
-        ? data.nationalityFlags
+        ? (data.nationalityFlags as Array<{
+            sailorId: string;
+            name: string;
+            previous: string | null;
+            imported: string | null;
+            raw: string | null;
+            action: string;
+            detail: string;
+          }>)
         : [];
       setNationalityFlags(natFlags);
+      const message = apiStr(data, "message") || "Import complete";
       setImportStatus(
-        (data.message || "Import complete") +
+        message +
           (unmatchedCount
             ? ` · ${unmatchedCount} unmatched name(s) skipped — add/fix sailor names and re-import.`
             : "") +
@@ -351,7 +373,7 @@ export function AdminRegattaImport({
             : "")
       );
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : "Import failed";
+      const msg = errorMessage(e, "Import failed");
       const isNetworkDrop =
         /failed to fetch|networkerror|load failed|network request failed|aborted|timeout/i.test(
           msg
