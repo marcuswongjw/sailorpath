@@ -891,6 +891,51 @@ export function SailorProfileView({
       ? ilca4Results
       : optimistResults;
 
+  /**
+   * Optimist results plus series-window DNS (missed ranking events).
+   * Keeps the Results list aligned with the Best 3/5 strip / trend.
+   */
+  const optimistResultsWithSeriesDns = useMemo(() => {
+    const standing = initialSeriesStanding;
+    if (!standing?.rScores?.length) return optimistResults as ProfileResult[];
+    const existingIds = new Set(
+      (optimistResults as ProfileResult[]).map((r) => String(r.regattaId || ""))
+    );
+    const existingNames = new Set(
+      (optimistResults as ProfileResult[]).map((r) =>
+        String(r.regattaName || "")
+          .trim()
+          .toLowerCase()
+      )
+    );
+    const fleetDiv = String(standing.fleet || "Silver");
+    const extras: ProfileResult[] = [];
+    for (const rs of standing.rScores) {
+      if (!rs.isDNS || !(rs.score > 0)) continue;
+      const name = String(rs.regattaName || "").trim();
+      if (!name || name === "—") continue;
+      if (existingIds.has(String(rs.regattaId || ""))) continue;
+      if (existingNames.has(name.toLowerCase())) continue;
+      extras.push({
+        id: `series-dns-${rs.regattaId}`,
+        regattaId: rs.regattaId,
+        regattaName: name,
+        regattaDate: rs.regattaDate || null,
+        rank: rs.score,
+        isDns: true,
+        isDNS: true,
+        division: fleetDiv,
+        countsForRanking: true,
+        totalFleetSize: rs.score > 1 ? rs.score - 1 : null,
+        fleetSize: rs.score > 1 ? rs.score - 1 : null,
+      });
+    }
+    if (!extras.length) return optimistResults as ProfileResult[];
+    return [...(optimistResults as ProfileResult[]), ...extras].sort((a, b) =>
+      String(b.regattaDate || "").localeCompare(String(a.regattaDate || ""))
+    );
+  }, [optimistResults, initialSeriesStanding]);
+
   /** Active class list for the results panel (tabs when dual-class) */
   const activeResultsList =
     dualClass && resultsTab === "ilca4"
@@ -898,12 +943,18 @@ export function SailorProfileView({
       : dualClass && resultsTab === "journey"
         ? []
         : dualClass
-          ? optimistResults
-          : resultsForPrimarySection;
+          ? optimistResultsWithSeriesDns
+          : hasIlcaResults && classBuckets.optimist.length === 0
+            ? ilca4Results
+            : optimistResultsWithSeriesDns;
   const visibleResults = showAllResults
     ? activeResultsList
     : activeResultsList.slice(0, 8);
   const hasMoreResults = activeResultsList.length > 8;
+  const seriesDnsCount =
+    initialSeriesStanding?.rScores?.filter(
+      (rs) => rs.isDNS && rs.score > 0 && rs.regattaName && rs.regattaName !== "—"
+    ).length ?? 0;
   /** Showing ILCA columns (points + rank) vs Optimist (place + nett) */
   const primaryIsIlca =
     (dualClass && resultsTab === "ilca4") ||
@@ -1842,8 +1893,16 @@ export function SailorProfileView({
             <p className="mt-3 text-[10px] sm:text-[11px] text-slate-400 leading-relaxed">
               <span className="font-semibold text-slate-300">Key: </span>
               <span className="tabular-nums">CF</span> = carry-forward ·{" "}
-              <span className="tabular-nums">*</span> = DNS ·{" "}
+              <span className="tabular-nums">*</span> = DNS (did not start;
+              series score = fleet size + 1) ·{" "}
               <span className="tabular-nums">†</span> = overseas commitment
+            </p>
+          )}
+          {!standingIsIlca && seriesDnsCount > 0 && (
+            <p className="mt-1.5 text-[11px] text-neutral-500 leading-relaxed">
+              {seriesDnsCount} missed ranking{" "}
+              {seriesDnsCount === 1 ? "event" : "events"} in this window
+              (DNS) — listed under Results below and on the position trend.
             </p>
           )}
           {activeStanding.trendNote && (
