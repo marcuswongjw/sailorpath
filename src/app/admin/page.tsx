@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AdminDashboard } from "@/components/AdminDashboard";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { requireSuperadmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
@@ -22,5 +23,9 @@ export default async function AdminPage() {
     notFound();
   }
 
-  return <AdminDashboard />;
+  return (
+    <ErrorBoundary>
+      <AdminDashboard />
+    </ErrorBoundary>
+  );
 }

@@ -186,13 +186,19 @@ export function AdminRegattaImport({
   const refreshListsAfterImport = async (regatta?: RegattaAdmin | null) => {
     if (regatta) onRegattaUpserted?.(regatta);
     try {
-      const list = await fetch("/api/admin/sailors").then((r) => r.json());
+      const list = await fetch("/api/admin/sailors?all=1", {
+        credentials: "include",
+      }).then((r) => r.json());
       if (list.sailors) onSailorsUpdated?.(list.sailors);
     } catch {
       /* ignore */
     }
     try {
-      const rRes = await fetch("/api/admin/results");
+      // Prefer the imported event only — avoids pulling every result row.
+      const resultsUrl = regatta?.id
+        ? `/api/admin/results?regattaId=${encodeURIComponent(regatta.id)}`
+        : "/api/admin/results?all=1";
+      const rRes = await fetch(resultsUrl, { credentials: "include" });
       if (rRes.ok) {
         const rData = await rRes.json();
         if (rData.results) onResultsUpdated?.(rData.results);
@@ -212,7 +218,9 @@ export function AdminRegattaImport({
     regatta?: RegattaAdmin;
   }> => {
     try {
-      const res = await fetch("/api/admin/regattas");
+      const res = await fetch("/api/admin/regattas?all=1", {
+        credentials: "include",
+      });
       if (!res.ok) return { ok: false, message: "" };
       const data = await res.json();
       const list: RegattaAdmin[] = data.regattas || [];
@@ -229,11 +237,14 @@ export function AdminRegattaImport({
 
       let resultCount = 0;
       try {
-        const rRes = await fetch("/api/admin/results");
+        const rRes = await fetch(
+          `/api/admin/results?regattaId=${encodeURIComponent(reg.id)}`,
+          { credentials: "include" }
+        );
         if (rRes.ok) {
           const rData = await rRes.json();
           const results: ResultAdmin[] = rData.results || [];
-          resultCount = results.filter((r) => r.regattaId === reg.id).length;
+          resultCount = results.length;
           if (rData.results) onResultsUpdated?.(rData.results);
         }
       } catch {

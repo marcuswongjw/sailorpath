@@ -208,7 +208,9 @@ export function AdminGoldRankingPanel({
       setDropReviewOpen(false);
       setSelectedDropIds(new Set());
       if (onSailorsChange) {
-        const listRes = await fetch("/api/admin/sailors");
+        const listRes = await fetch("/api/admin/sailors?all=1", {
+          credentials: "include",
+        });
         const listData = await listRes.json();
         if (listRes.ok && listData.sailors) {
           onSailorsChange(listData.sailors);

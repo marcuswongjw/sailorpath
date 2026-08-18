@@ -9,11 +9,42 @@ import {
   ILCA_MIN_RACES_FOR_RANKING,
 } from "@/lib/ilcaRanking";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     await requireSuperadmin();
-    const rows = await db.select().from(regattas).orderBy(asc(regattas.date));
-    return NextResponse.json({ regattas: rows });
+    const sp = new URL(req.url).searchParams;
+    const all = sp.get("all") === "1" || !sp.has("limit");
+    const limitRaw = Number(sp.get("limit"));
+    const offsetRaw = Number(sp.get("offset"));
+    // Regatta list is usually small; default returns all (capped).
+    const limit = all
+      ? Math.min(
+          2000,
+          Number.isFinite(limitRaw) && limitRaw > 0 ? limitRaw : 2000
+        )
+      : Math.min(
+          100,
+          Number.isFinite(limitRaw) && limitRaw > 0 ? limitRaw : 50
+        );
+    const offset = Math.max(0, Number.isFinite(offsetRaw) ? offsetRaw : 0);
+
+    const { count, desc } = await import("drizzle-orm");
+    const [rows, totalRow] = await Promise.all([
+      db
+        .select()
+        .from(regattas)
+        .orderBy(desc(regattas.date))
+        .limit(limit)
+        .offset(offset),
+      db.select({ n: count() }).from(regattas),
+    ]);
+
+    return NextResponse.json({
+      regattas: rows,
+      total: Number(totalRow[0]?.n || 0),
+      limit,
+      offset,
+    });
   } catch (e) {
     return jsonError(e);
   }

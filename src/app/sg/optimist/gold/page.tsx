@@ -1,3 +1,4 @@
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { FleetRankingsView } from "@/components/FleetRankingsView";
 import { getCachedFleetRankings } from "@/lib/queries";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
@@ -24,11 +25,13 @@ export default async function GoldPage() {
   }
 
   return (
-    <FleetRankingsView
-      fleet="Gold"
-      initialPeriod={period}
-      initialRanked={initialRanked}
-      initialError={initialError}
-    />
+    <ErrorBoundary>
+      <FleetRankingsView
+        fleet="Gold"
+        initialPeriod={period}
+        initialRanked={initialRanked}
+        initialError={initialError}
+      />
+    </ErrorBoundary>
   );
 }

@@ -47,11 +47,7 @@ import {
 } from "@/lib/profileAnalytics";
 import dynamic from "next/dynamic";
 import { EquipmentInventory } from "@/components/EquipmentInventory";
-import {
-  getAcquisition,
-  getUsageSessionId,
-  getVisitorId,
-} from "@/lib/clientUsage";
+import { ClaimPanel } from "@/components/sailor-profile/ClaimPanel";
 import {
   PROFILE_CARD_CLASS as cardClass,
   resolveDisplayFleet,
@@ -116,12 +112,7 @@ export function SailorProfileView({
   );
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
-  const [claimBusy, setClaimBusy] = useState(false);
   const [claimPanelOpen, setClaimPanelOpen] = useState(false);
-  const [claimRelation, setClaimRelation] = useState<"sailor" | "parent" | "other">(
-    "parent"
-  );
-  const [claimNote, setClaimNote] = useState("");
   const [copyMsg, setCopyMsg] = useState<string | null>(null);
   const [editing, setEditing] = useState(false);
   const [saveBusy, setSaveBusy] = useState(false);
@@ -1334,78 +1325,16 @@ export function SailorProfileView({
 
       {/* Claim panel */}
       {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
-        <div className={`${cardClass} p-4 space-y-3`}>
-          <p className="text-sm font-medium text-white">
-            Verify link to this sailor
-          </p>
-          <p className="text-[12px] text-neutral-500 leading-relaxed">
-            Your signup email is shown to admins. Confirm sail number / club.
-          </p>
-          <select
-            value={claimRelation}
-            onChange={(e) =>
-              setClaimRelation(e.target.value as "sailor" | "parent" | "other")
-            }
-            className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
-          >
-            <option value="parent">Parent / guardian</option>
-            <option value="sailor">The sailor</option>
-            <option value="other">Coach / other</option>
-          </select>
-          <textarea
-            value={claimNote}
-            onChange={(e) => setClaimNote(e.target.value)}
-            rows={3}
-            placeholder={`e.g. Parent of ${displaySailor.name}. Sail ${displaySailor.sailNumber || "…"}`}
-            className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
-          />
-          <button
-            type="button"
-            disabled={claimBusy || claimNote.trim().length < 8}
-            onClick={async () => {
-              setClaimBusy(true);
-              setClaimMsg(null);
-              try {
-                await fetch("/api/auth/ensure-profile", {
-                  method: "POST",
-                  credentials: "include",
-                });
-                const note = claimNote.trim();
-                const acq = getAcquisition();
-                const res = await fetch("/api/claims", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  credentials: "include",
-                  body: JSON.stringify({
-                    sailorId: initialSailor.id,
-                    relation: claimRelation,
-                    note,
-                    sessionId: getUsageSessionId() || undefined,
-                    vid: getVisitorId() || undefined,
-                    source: acq.source,
-                    device: acq.device,
-                  }),
-                });
-                const data = await res.json();
-                if (!res.ok) throw new Error(data.error || "Claim failed");
-                setClaimStatus("pending");
-                setClaimPanelOpen(false);
-                setClaimMsg(
-                  data.message ||
-                    "Claim submitted. Please wait for confirmation."
-                );
-              } catch (e: unknown) {
-                setClaimStatus("error");
-                setClaimMsg(e instanceof Error ? e.message : "Error");
-              } finally {
-                setClaimBusy(false);
-              }
-            }}
-            className="rounded-lg bg-orange-500 text-white px-4 py-2 text-[11px] font-semibold disabled:opacity-50"
-          >
-            {claimBusy ? "Submitting…" : "Submit claim"}
-          </button>
-        </div>
+        <ClaimPanel
+          sailorId={initialSailor.id}
+          sailorName={displaySailor.name}
+          sailNumber={displaySailor.sailNumber}
+          onClose={() => setClaimPanelOpen(false)}
+          onResult={(status, msg) => {
+            setClaimStatus(status);
+            setClaimMsg(msg);
+          }}
+        />
       )}
 
       {/* Owner editor */}

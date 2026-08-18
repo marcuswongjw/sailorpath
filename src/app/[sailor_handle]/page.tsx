@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import { DbOffline } from "@/components/DbOffline";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SailorProfileView } from "@/components/SailorProfileView";
 import {
   getSailorByHandle,
@@ -123,7 +124,20 @@ export default async function SailorProfilePage({
   };
 
   return (
-    <SailorProfileView
+    <ErrorBoundary
+      fallback={
+        <div className="mx-auto max-w-xl px-4 py-16 text-center space-y-3">
+          <h1 className="text-xl font-black text-white">
+            Profile failed to load
+          </h1>
+          <p className="text-sm text-slate-400">
+            Something broke while rendering this profile. Try again, or contact
+            support if it persists.
+          </p>
+        </div>
+      }
+    >
+      <SailorProfileView
       initialSailor={{
         ...sailor,
         isPublicWeight: sailor.isPublicWeight ?? false,
@@ -163,5 +177,6 @@ export default async function SailorProfilePage({
       profileClaimed={Boolean(sailor.parentId)}
       profileVerified={Boolean(sailor.parentId)}
     />
+    </ErrorBoundary>
   );
 }

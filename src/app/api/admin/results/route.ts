@@ -78,17 +78,69 @@ async function healFalseDnsFlags() {
   }
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     await requireSuperadmin();
-    // Read-only: use POST action healFalseDns / clearFalseDns to fix flags
-    const rows = await db.select().from(regattaResults);
+    const sp = new URL(req.url).searchParams;
+    const regattaId = (sp.get("regattaId") || "").trim();
+    const all = sp.get("all") === "1";
+    const limitRaw = Number(sp.get("limit"));
+    const offsetRaw = Number(sp.get("offset"));
+    const { count } = await import("drizzle-orm");
+
+    // Prefer per-regatta loads for the results editor (biggest win).
+    // Ranking tabs pass all=1 with a hard cap.
+    if (regattaId) {
+      const idCheck = asUuid(regattaId, "regattaId");
+      if (!idCheck.ok) {
+        return NextResponse.json({ error: idCheck.error }, { status: 400 });
+      }
+      const rows = await db
+        .select()
+        .from(regattaResults)
+        .where(eq(regattaResults.regattaId, idCheck.value));
+      return NextResponse.json({
+        results: rows.map((r) => ({
+          ...r,
+          isDNS: r.isDns,
+          isOverseasCommitment: r.isOverseasCommitment,
+        })),
+        regattaId: idCheck.value,
+        total: rows.length,
+      });
+    }
+
+    if (!all) {
+      return NextResponse.json(
+        {
+          error:
+            "Pass regattaId=… for one event, or all=1 for ranking/analysis (capped).",
+        },
+        { status: 400 }
+      );
+    }
+
+    const limit = Math.min(
+      20000,
+      Number.isFinite(limitRaw) && limitRaw > 0 ? limitRaw : 20000
+    );
+    const offset = Math.max(0, Number.isFinite(offsetRaw) ? offsetRaw : 0);
+
+    const [rows, totalRow] = await Promise.all([
+      db.select().from(regattaResults).limit(limit).offset(offset),
+      db.select({ n: count() }).from(regattaResults),
+    ]);
+
     return NextResponse.json({
       results: rows.map((r) => ({
         ...r,
         isDNS: r.isDns,
         isOverseasCommitment: r.isOverseasCommitment,
       })),
+      total: Number(totalRow[0]?.n || 0),
+      limit,
+      offset,
+      all: true,
     });
   } catch (e) {
     return jsonError(e);

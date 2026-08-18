@@ -252,7 +252,9 @@ export function AdminIlcaRankingPanel({
   };
 
   const refreshSailors = useCallback(async () => {
-    const list = await fetch("/api/admin/sailors").then((r) => r.json());
+    const list = await fetch("/api/admin/sailors?all=1", {
+      credentials: "include",
+    }).then((r) => r.json());
     if (list.sailors && onSailorsChange) {
       onSailorsChange(list.sailors);
     }

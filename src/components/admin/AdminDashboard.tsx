@@ -148,6 +148,8 @@ export function AdminDashboard() {
     regattas: false,
     results: false,
   });
+  /** Results editor loads one regatta; ranking tabs need the full set. */
+  const [hasFullResults, setHasFullResults] = useState(false);
   const [dataLoading, setDataLoading] = useState(false);
   const [dataLoadError, setDataLoadError] = useState<string | null>(null);
 
@@ -304,10 +306,18 @@ export function AdminDashboard() {
 
   // Load only the records required for the active workspace. This keeps the
   // initial admin response free of database rows and avoids downloading all
-  // results when an admin opens Stats, Claims, Support, or a single editor.
+  // results when an admin opens Claims, Support, or a single editor.
   useEffect(() => {
     if (!isSuperadmin) return;
-    const missing = requiredData.filter((key) => !loadedData[key]);
+    const needsFullResults =
+      activeTab === "analysis" ||
+      activeTab === "gold" ||
+      activeTab === "ilca";
+
+    const missing = requiredData.filter((key) => {
+      if (key === "results" && needsFullResults && !hasFullResults) return true;
+      return !loadedData[key];
+    });
     if (missing.length === 0) return;
 
     let cancelled = false;
@@ -315,14 +325,22 @@ export function AdminDashboard() {
     setDataLoadError(null);
 
     const endpoints: Record<AdminDataKey, string> = {
-      sailors: "/api/admin/sailors",
-      regattas: "/api/admin/regattas",
-      results: "/api/admin/results",
+      sailors: "/api/admin/sailors?all=1",
+      regattas: "/api/admin/regattas?all=1",
+      results: needsFullResults
+        ? "/api/admin/results?all=1"
+        : selectedRegattaIdForResultEdit
+          ? `/api/admin/results?regattaId=${encodeURIComponent(selectedRegattaIdForResultEdit)}`
+          : "",
     };
 
     void Promise.all(
       missing.map(async (key) => {
-        const response = await fetch(endpoints[key], { credentials: "include" });
+        const url = endpoints[key];
+        if (!url) {
+          return { key, body: { results: [] as ResultAdmin[] } };
+        }
+        const response = await fetch(url, { credentials: "include" });
         const body = (await response.json()) as {
           error?: string;
           sailors?: SailorAdmin[];
@@ -347,7 +365,19 @@ export function AdminDashboard() {
             setSelectedRegattaIdForResultEdit((current) => current || rows[0]?.id || "");
           }
           if (key === "results" && Array.isArray(body.results)) {
-            setResultsList(body.results);
+            if (needsFullResults) {
+              setResultsList(body.results);
+              setHasFullResults(true);
+            } else {
+              // Merge/replace rows for the selected regatta only
+              const rid = selectedRegattaIdForResultEdit;
+              setResultsList((prev) => {
+                const others = rid
+                  ? prev.filter((r) => r.regattaId !== rid)
+                  : prev;
+                return [...others, ...body.results!];
+              });
+            }
           }
         }
         setLoadedData((current) => {
@@ -368,7 +398,48 @@ export function AdminDashboard() {
     return () => {
       cancelled = true;
     };
-  }, [isSuperadmin, loadedData, requiredData]);
+  }, [
+    isSuperadmin,
+    loadedData,
+    requiredData,
+    activeTab,
+    selectedRegattaIdForResultEdit,
+    hasFullResults,
+  ]);
+
+  // Results editor: reload when switching regatta (avoid downloading every result).
+  useEffect(() => {
+    if (!isSuperadmin) return;
+    if (activeTab !== "edit" || editSubTab !== "results") return;
+    const rid = selectedRegattaIdForResultEdit;
+    if (!rid) return;
+
+    let cancelled = false;
+    void (async () => {
+      try {
+        const response = await fetch(
+          `/api/admin/results?regattaId=${encodeURIComponent(rid)}`,
+          { credentials: "include" }
+        );
+        const body = (await response.json()) as {
+          error?: string;
+          results?: ResultAdmin[];
+        };
+        if (!response.ok) throw new Error(body.error || "Could not load results");
+        if (cancelled || !Array.isArray(body.results)) return;
+        setResultsList((prev) => {
+          const others = prev.filter((r) => r.regattaId !== rid);
+          return [...others, ...body.results!];
+        });
+      } catch {
+        /* keep existing rows; banner handled elsewhere */
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isSuperadmin, activeTab, editSubTab, selectedRegattaIdForResultEdit]);
 
   useEffect(() => {
     if (!isSuperadmin) return;
@@ -542,7 +613,7 @@ export function AdminDashboard() {
       });
       const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Backfill failed");
-      const list = await fetch("/api/admin/sailors").then((r) => r.json());
+      const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
       if (list.sailors) setSailorList(list.sailors);
       alert(data.message || `Updated ${data.updated} sailors`);
     } catch (e: unknown) {
@@ -570,7 +641,7 @@ export function AdminDashboard() {
       });
       const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Cleanup failed");
-      const list = await fetch("/api/admin/sailors").then((r) => r.json());
+      const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
       if (list.sailors) setSailorList(list.sailors);
       alert(data.message || `Updated ${data.updated} sailors`);
     } catch (e: unknown) {
@@ -1134,12 +1205,23 @@ export function AdminDashboard() {
     }
   };
 
-  const refreshResultsList = async () => {
+  const refreshResultsList = async (opts?: { regattaId?: string }) => {
     try {
-      const res = await fetch("/api/admin/results");
+      const url = opts?.regattaId
+        ? `/api/admin/results?regattaId=${encodeURIComponent(opts.regattaId)}`
+        : "/api/admin/results?all=1";
+      const res = await fetch(url, { credentials: "include" });
       const data = await parseApi(res);
-      if (res.ok && Array.isArray(data.results)) {
+      if (!res.ok || !Array.isArray(data.results)) return;
+      if (opts?.regattaId) {
+        const rid = opts.regattaId;
+        setResultsList((prev) => {
+          const others = prev.filter((r) => r.regattaId !== rid);
+          return [...others, ...data.results];
+        });
+      } else {
         setResultsList(data.results);
+        setHasFullResults(true);
       }
     } catch {
       /* keep existing list */
@@ -1157,7 +1239,9 @@ export function AdminDashboard() {
         refreshResultsList(),
         (async () => {
           try {
-            const res = await fetch("/api/admin/regattas");
+            const res = await fetch("/api/admin/regattas?all=1", {
+              credentials: "include",
+            });
             const data = await parseApi(res);
             if (res.ok && Array.isArray(data.regattas)) {
               setRegattaList(data.regattas);
@@ -1265,7 +1349,7 @@ export function AdminDashboard() {
       });
       const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Fill DNS failed");
-      await refreshResultsList();
+      await refreshResultsList({ regattaId });
       alert(data.message || `Created ${data.created} DNS rows.`);
     } catch (e: any) {
       alert(e.message || "Fill DNS failed");
@@ -1499,7 +1583,21 @@ export function AdminDashboard() {
                   : [...prev, regatta];
               });
             }}
-            onResultsUpdated={(results) => setResultsList(results)}
+            onResultsUpdated={(incoming) => {
+              const touched = new Set(incoming.map((r) => r.regattaId));
+              // Per-event refresh (import): merge. Full dump: replace.
+              if (touched.size <= 1) {
+                const rid = [...touched][0];
+                setResultsList((prev) =>
+                  rid
+                    ? [...prev.filter((r) => r.regattaId !== rid), ...incoming]
+                    : incoming
+                );
+              } else {
+                setResultsList(incoming);
+                setHasFullResults(true);
+              }
+            }}
           />
         )}
 

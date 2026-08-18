@@ -44,6 +44,14 @@ export async function PATCH(req: Request) {
         foilBrand: sailors.foilBrand,
         mast: sailors.mast,
         equipmentNotes: sailors.equipmentNotes,
+        // ILCA 4 equipment must be selected too — the change-detection loop
+        // below compares against these values to decide whether to write an
+        // equipment log row.
+        hullBrandIlca4: sailors.hullBrandIlca4,
+        sailMakeIlca4: sailors.sailMakeIlca4,
+        foilBrandIlca4: sailors.foilBrandIlca4,
+        mastIlca4: sailors.mastIlca4,
+        equipmentNotesIlca4: sailors.equipmentNotesIlca4,
       })
       .from(sailors)
       .where(eq(sailors.id, sailorId))
@@ -210,7 +218,7 @@ export async function PATCH(req: Request) {
       if (body[key] !== undefined) {
         const next = strOrNull(body[key], max);
         patch[key] = next;
-        if (next !== (sailor as any)[key]) equipmentChanged = true;
+        if (next !== sailor[key]) equipmentChanged = true;
       }
     }
 
