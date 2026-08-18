@@ -446,26 +446,24 @@ export function optimistHistoryByPeriodEnd(
   return ids;
 }
 
-/** YYYY-MM-DD minus one calendar year (string-safe for ISO dates). */
-export function oneYearBeforeYmd(ymd: string): string {
-  const [y, m, d] = ymd.split("-").map(Number);
-  if (!y || !m || !d) return ymd;
-  return `${y - 1}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-}
-
 /**
- * Sailors who actually started an Optimist ranking regatta in the year ending
- * at the period end (used to keep Silver boards free of old import ghosts).
- * DNS does not count; overseas-commitment rows also do not (no local start).
+ * Silver national-board activity window for `period`:
+ * previous half ∪ current half.
+ *
+ * Rule: miss every ranking start in half N → dropped from the board in half N+1.
+ * Equivalently, to appear in period P a sailor needs ≥1 non-DNS Optimist ranking
+ * start in P−1 or in P (so new sailors who start racing in P still appear).
+ * DNS / overseas-commitment rows do not count as starts. Gold is not filtered.
  */
-export function optimistSailorsWithStartInLastYear(
+export function optimistSailorsEligibleForSilverPeriod(
   period: Period,
   regattas: RegattaRecord[],
   results: RegattaResultRecord[],
   seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
 ): Set<string> {
-  const pEndStr = periodBounds(period).end;
-  const cutoff = oneYearBeforeYmd(pEndStr);
+  const prev = previousPeriod(period);
+  const start = periodBounds(prev).start;
+  const end = periodBounds(period).end;
   const ids = new Set<string>();
   const regById = new Map(regattas.map((r) => [r.id, r]));
   for (const res of results) {
@@ -475,7 +473,7 @@ export function optimistSailorsWithStartInLastYear(
     if (r.countsForRanking === false) continue;
     if (!regattaMatchesSeriesClass(r, seriesBoatClass)) continue;
     const d = toYmd(r.date);
-    if (!d || d > pEndStr || d < cutoff) continue;
+    if (!d || d < start || d > end) continue;
     ids.add(res.sailorId);
   }
   return ids;
@@ -692,12 +690,12 @@ export function calculateRankings(
   });
 
   /**
-   * Silver only: drop sailors with no Optimist start in the trailing year
-   * ending at period end. Old imports (2022/2023 etc.) still create SGP
-   * auto-include membership and pad the board with all-DNS rows — Gold is
-   * left alone (fixed ~100-sailor national Gold list).
+   * Silver only: must have started ≥1 Optimist ranking regatta in the
+   * previous half or the current half. Missing an entire half drops you
+   * from the *next* period’s national Silver board. Gold is untouched
+   * (fixed ~100-sailor list).
    */
-  const silverActiveIds = optimistSailorsWithStartInLastYear(
+  const silverActiveIds = optimistSailorsEligibleForSilverPeriod(
     period,
     regattas,
     results,

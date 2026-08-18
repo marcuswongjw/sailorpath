@@ -379,7 +379,7 @@ describe("resolveSailorFleet", () => {
   });
 });
 
-describe("calculateRankings Silver 1-year activity filter", () => {
+describe("calculateRankings Silver previous/current half activity", () => {
   const period = { year: 2026, half: "Jul-Dec" as const };
   const sailor = (
     id: string,
@@ -414,27 +414,30 @@ describe("calculateRankings Silver 1-year activity filter", () => {
     countsForRanking: true,
   });
 
-  it("drops Silver sailors whose only Optimist starts are older than 1 year", () => {
+  it("drops Silver sailors who missed the previous half and have no current starts", () => {
+    // Jul–Dec 2026 board: need a start in Jan–Jun 2026 or Jul–Dec 2026
     const regattas = [
-      regatta("old", "2023-03-01"),
-      regatta("r1", "2026-07-04"),
-      regatta("r2", "2026-07-18"),
-      regatta("r3", "2026-08-01"),
+      regatta("old-2025", "2025-09-01"), // prior year — not enough alone
+      regatta("prev", "2026-03-01"), // previous half
+      regatta("cur", "2026-07-04"), // current half
     ];
-    const active = sailor("active");
-    const ghost = sailor("ghost"); // only raced in 2023
+    const racedPrev = sailor("raced-prev");
+    const racedCur = sailor("raced-cur");
+    const missedBoth = sailor("missed"); // only 2025
     const results = [
-      { sailorId: "active", regattaId: "r1", rank: 12, isDns: false },
-      { sailorId: "ghost", regattaId: "old", rank: 20, isDns: false },
+      { sailorId: "raced-prev", regattaId: "prev", rank: 10, isDns: false },
+      { sailorId: "raced-cur", regattaId: "cur", rank: 12, isDns: false },
+      { sailorId: "missed", regattaId: "old-2025", rank: 20, isDns: false },
     ];
     const ranked = calculateRankings(
       period,
-      [active, ghost],
+      [racedPrev, racedCur, missedBoth],
       regattas,
       results
     );
-    expect(ranked.map((s) => s.id)).toEqual(["active"]);
-    expect(ranked[0].fleet).toBe("Silver");
+    expect(ranked.map((s) => s.id).sort()).toEqual(
+      ["raced-cur", "raced-prev"].sort()
+    );
   });
 
   it("keeps Gold sailors even with no starts in the window", () => {
