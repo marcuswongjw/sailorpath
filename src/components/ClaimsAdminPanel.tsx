@@ -15,6 +15,7 @@ import {
   relationLabel,
   type ClaimRelation,
 } from "@/lib/claimRelation";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type ClaimRow = {
   id: string;
@@ -37,6 +38,7 @@ type ClaimRow = {
 const RELATIONS: ClaimRelation[] = ["parent", "sailor", "other"];
 
 export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
+  const { toast, confirm } = useFeedback();
   const [claims, setClaims] = useState<ClaimRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -80,7 +82,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
     body: Record<string, unknown>
   ): Promise<void> => {
     if (!isSuperadmin) {
-      alert("Superadmin only");
+      toast.error("Superadmin only");
       return;
     }
     setBusyId(id);
@@ -94,7 +96,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       if (!res.ok) throw new Error(data.error || "Update failed");
       await load();
     } catch (e: unknown) {
-      alert(e instanceof Error ? e.message : "Failed");
+      toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
       setBusyId(null);
     }
@@ -330,13 +332,16 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                       type="button"
                       disabled={busy}
                       onClick={() => {
-                        if (
-                          !confirm(
-                            `Unlink owner from ${c.sailorName}? Profile becomes unclaimed.`
-                          )
-                        )
-                          return;
-                        void patch(c.id, { unclaim: true });
+                        void (async () => {
+                          const ok = await confirm({
+                            title: `Unlink owner from ${c.sailorName}?`,
+                            message: "Profile becomes unclaimed.",
+                            confirmLabel: "Unlink",
+                            tone: "danger",
+                          });
+                          if (!ok) return;
+                          await patch(c.id, { unclaim: true });
+                        })();
                       }}
                       className="inline-flex items-center justify-center gap-1 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-[11px] font-bold text-rose-200 disabled:opacity-50"
                     >

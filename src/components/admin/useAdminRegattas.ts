@@ -2,6 +2,7 @@
 
 import { useState, useMemo, type Dispatch, type SetStateAction } from "react";
 import { parseApi } from "@/components/admin/parseApi";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 
@@ -25,6 +26,7 @@ export function useAdminRegattas({
   selectedRegattaIdForResultEdit,
   setSelectedRegattaIdForResultEdit,
 }: UseAdminRegattasArgs) {
+  const { toast, confirm } = useFeedback();
   const [regattaSearch, setRegattaSearch] = useState("");
   const [regattaDivisionFilter, setRegattaDivisionFilter] =
     useState<string>("all");
@@ -80,13 +82,13 @@ export function useAdminRegattas({
 
   const handleSaveRegatta = async () => {
     if (!isSuperadmin) {
-      alert(
+      toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
       );
       return;
     }
     if (!regattaForm.name || !regattaForm.date) {
-      alert("Regatta Name and Date are required.");
+      toast.error("Regatta Name and Date are required.");
       return;
     }
     try {
@@ -102,7 +104,7 @@ export function useAdminRegattas({
         if (!selectedRegattaIdForResultEdit) {
           setSelectedRegattaIdForResultEdit(data.regatta.id);
         }
-        alert("Regatta created successfully!");
+        toast.success("Regatta created successfully!");
       } else {
         const res = await fetch("/api/admin/regattas", {
           method: "PATCH",
@@ -114,32 +116,33 @@ export function useAdminRegattas({
         setRegattaList((prev) =>
           prev.map((r) => (r.id === editingRegattaId ? data.regatta : r))
         );
-        alert("Regatta updated successfully!");
+        toast.success("Regatta updated successfully!");
       }
       setEditingRegattaId(null);
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 
   const handleDeleteRegatta = async (id: string) => {
     if (!isSuperadmin) {
-      alert(
+      toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
       );
       return;
     }
     if (!id) {
-      alert("Missing regatta id — refresh the page and try again.");
+      toast.error("Missing regatta id — refresh the page and try again.");
       return;
     }
-    if (
-      !confirm(
-        "Are you sure you want to delete this regatta? All results associated with it will also be deleted."
-      )
-    ) {
-      return;
-    }
+    const ok = await confirm({
+      title: "Delete this regatta?",
+      message:
+        "All results associated with it will also be deleted.",
+      confirmLabel: "Delete",
+      tone: "danger",
+    });
+    if (!ok) return;
     try {
       const res = await fetch(
         `/api/admin/regattas?id=${encodeURIComponent(id)}`,
@@ -152,9 +155,9 @@ export function useAdminRegattas({
       if (selectedRegattaIdForResultEdit === id) {
         setSelectedRegattaIdForResultEdit("");
       }
-      alert("Regatta deleted.");
+      toast.success("Regatta deleted.");
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 

@@ -5,6 +5,7 @@ import { AlertTriangle, CheckCircle, RefreshCw, Sparkles } from "lucide-react";
 import { regattaDateLabel } from "@/types/regatta";
 import type { RegattaAdmin } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type Suggestion = {
   id: string;
@@ -31,6 +32,7 @@ export function AdminSuggestionsPanel({
 }: {
   onRegattaUpdated?: (reg: RegattaAdmin) => void;
 }) {
+  const { toast } = useFeedback();
   const [items, setItems] = useState<Suggestion[]>([]);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -121,7 +123,7 @@ export function AdminSuggestionsPanel({
       setItems((prev) => prev.filter((x) => x.id !== id));
       return data.regatta;
     } catch (e) {
-      alert(e instanceof Error ? e.message : "Failed");
+      toast.error(e instanceof Error ? e.message : "Failed");
       return null;
     } finally {
       setActionId(null);

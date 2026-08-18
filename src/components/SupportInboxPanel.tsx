@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LifeBuoy, CheckCircle, Mail } from "lucide-react";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type Msg = {
   id: string;
@@ -15,6 +16,7 @@ type Msg = {
 };
 
 export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
+  const { toast } = useFeedback();
   const [messages, setMessages] = useState<Msg[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,7 +55,7 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       if (!res.ok) throw new Error(data.error || "Update failed");
       await load();
     } catch (e: any) {
-      alert(e.message || "Failed");
+      toast.error(e.message || "Failed");
     }
   };
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Trophy, ArrowUpCircle } from "lucide-react";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type Candidate = {
   id: string;
@@ -21,6 +22,7 @@ export function PromoteAdminPanel({
   isSuperadmin: boolean;
   onPromoted?: (sailor: any) => void;
 }) {
+  const { toast, confirm } = useFeedback();
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,10 +48,14 @@ export function PromoteAdminPanel({
 
   const promote = async (sailorId: string, name: string) => {
     if (!isSuperadmin) {
-      alert("Superadmin only");
+      toast.error("Superadmin only");
       return;
     }
-    if (!confirm(`Promote ${name} to Gold Fleet?`)) return;
+    const ok = await confirm({
+      title: `Promote ${name} to Gold Fleet?`,
+      confirmLabel: "Promote",
+    });
+    if (!ok) return;
     try {
       const res = await fetch("/api/admin/promote", {
         method: "POST",
@@ -59,10 +65,10 @@ export function PromoteAdminPanel({
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Promote failed");
       onPromoted?.(data.sailor);
-      alert(data.message || "Promoted");
+      toast.success(data.message || "Promoted");
       await load();
     } catch (e: any) {
-      alert(e.message || "Failed");
+      toast.error(e.message || "Failed");
     }
   };
 

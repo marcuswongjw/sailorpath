@@ -34,6 +34,7 @@ import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import { Trophy, Users, Medal, Plane, Tent, Loader2 } from "lucide-react";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type Props = {
   sailors: SailorAdmin[];
@@ -115,6 +116,7 @@ export function AdminGoldRankingPanel({
   results,
   onSailorsChange,
 }: Props) {
+  const { confirm } = useFeedback();
   const now = new Date();
   const y = now.getFullYear();
   const defaultKind: OptimistIntakeKind =
@@ -183,13 +185,14 @@ export function AdminGoldRankingPanel({
       setDropMsg("No matching drop candidates selected.");
       return;
     }
-    if (
-      !confirm(
-        `Set gold drop date for ${selected.length} sailor(s)?\n\nOnly completed halves are evaluated (current half is excluded).\nThis cannot be undone from this panel.`
-      )
-    ) {
-      return;
-    }
+    const ok = await confirm({
+      title: `Set gold drop date for ${selected.length} sailor(s)?`,
+      message:
+        "Only completed halves are evaluated (current half is excluded).\nThis cannot be undone from this panel.",
+      confirmLabel: "Set drop date",
+      tone: "danger",
+    });
+    if (!ok) return;
     setDropBusy(true);
     setDropMsg(null);
     try {

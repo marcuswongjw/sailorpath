@@ -9,6 +9,7 @@ import {
 } from "@/components/admin/adminConstants";
 import { parseApi } from "@/components/admin/parseApi";
 import { mergeSailorsClient } from "@/components/admin/mergeSailorsClient";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { birthYear } from "@/lib/age";
 import { currentPeriodFromSgToday, isHalfBoundaryYmd } from "@/lib/datesSg";
 import {
@@ -84,6 +85,7 @@ export function useAdminSailors({
   competitionsSailorId,
   setCompetitionsSailorId,
 }: UseAdminSailorsArgs) {
+  const { toast, confirm } = useFeedback();
   const [ignoredDuplicateKeys, setIgnoredDuplicateKeys] = useState<Set<string>>(
     () => {
       if (typeof window === "undefined") return new Set();
@@ -244,13 +246,13 @@ export function useAdminSailors({
   );
 
   const handleBackfillNationalityFromSail = async () => {
-    if (
-      !confirm(
-        "Set nationality from sail number country codes (e.g. SGP 115 → SGP) for sailors who have no nationality yet?"
-      )
-    ) {
-      return;
-    }
+    const ok = await confirm({
+      title: "Backfill nationality from sail numbers?",
+      message:
+        "Set nationality from sail number country codes (e.g. SGP 115 → SGP) for sailors who have no nationality yet.",
+      confirmLabel: "Continue",
+    });
+    if (!ok) return;
     try {
       const res = await fetch("/api/admin/sailors", {
         method: "POST",
@@ -261,24 +263,23 @@ export function useAdminSailors({
       if (!res.ok) throw new Error(data.error || "Backfill failed");
       const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
       if (list.sailors) setSailorList(list.sailors);
-      alert(data.message || `Updated ${data.updated} sailors`);
+      toast.success(data.message || `Updated ${data.updated} sailors`);
     } catch (e: unknown) {
-      alert(e instanceof Error ? e.message : "Backfill failed");
+      toast.error(e instanceof Error ? e.message : "Backfill failed");
     }
   };
 
   const handleCleanupEmptySeries = async () => {
     if (!isSuperadmin) {
-      alert("Only Superadmins can run this.");
+      toast.error("Only Superadmins can run this.");
       return;
     }
-    if (
-      !confirm(
-        `Stamp silver entry (Singapore today) on ${emptySeriesCount} Series sailor(s) with no entry dates?`
-      )
-    ) {
-      return;
-    }
+    const ok = await confirm({
+      title: "Stamp empty Series sailors?",
+      message: `Stamp silver entry (Singapore today) on ${emptySeriesCount} Series sailor(s) with no entry dates?`,
+      confirmLabel: "Continue",
+    });
+    if (!ok) return;
     try {
       const res = await fetch("/api/admin/sailors", {
         method: "POST",
@@ -289,9 +290,9 @@ export function useAdminSailors({
       if (!res.ok) throw new Error(data.error || "Cleanup failed");
       const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
       if (list.sailors) setSailorList(list.sailors);
-      alert(data.message || `Updated ${data.updated} sailors`);
+      toast.success(data.message || `Updated ${data.updated} sailors`);
     } catch (e: unknown) {
-      alert(e instanceof Error ? e.message : "Cleanup failed");
+      toast.error(e instanceof Error ? e.message : "Cleanup failed");
     }
   };
 
@@ -432,17 +433,17 @@ export function useAdminSailors({
 
   const handleApplyBulk = async () => {
     if (!isSuperadmin) {
-      alert(
+      toast.error(
         "Error: 403 Forbidden. Only Superadmins can update fleet properties."
       );
       return;
     }
     if (selectedSailors.length === 0) {
-      alert("Please select at least one sailor to bulk edit.");
+      toast.error("Please select at least one sailor to bulk edit.");
       return;
     }
     if (!bulkField) {
-      alert("Please select a field to update.");
+      toast.error("Please select a field to update.");
       return;
     }
     try {
@@ -503,24 +504,24 @@ export function useAdminSailors({
       setBulkValue("");
       setTimeout(() => setBulkStatus(null), 3000);
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 
   const handleMergeSailors = async () => {
     if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can merge sailors.");
+      toast.error("Error: 403 Forbidden. Only Superadmins can merge sailors.");
       return;
     }
     if (selectedSailors.length !== 2) {
-      alert("Select exactly two sailors (tick two checkboxes), then Merge.");
+      toast.error("Select exactly two sailors (tick two checkboxes), then Merge.");
       return;
     }
     const [aId, bId] = selectedSailors;
     const a = sailorList.find((s) => s.id === aId);
     const b = sailorList.find((s) => s.id === bId);
     if (!a || !b) {
-      alert("Could not find both sailors — refresh and try again.");
+      toast.error("Could not find both sailors — refresh and try again.");
       return;
     }
 
@@ -544,12 +545,15 @@ export function useAdminSailors({
       merge = a;
     }
 
-    const ok = confirm(
-      `Merge duplicate sailors?\n\n` +
+    const ok = await confirm({
+      title: "Merge duplicate sailors?",
+      message:
         `KEEP (profile retained):\n  ${keep.name} · ${keep.sailNumber || "—"}\n\n` +
         `DELETE after merge (results + aliases moved):\n  ${merge.name} · ${merge.sailNumber || "—"}\n\n` +
-        `Results move to the kept sailor. On the same regatta, the better (lower) rank is kept.\n\nContinue?`
-    );
+        `Results move to the kept sailor. On the same regatta, the better (lower) rank is kept.`,
+      confirmLabel: "Merge",
+      tone: "danger",
+    });
     if (!ok) return;
 
     try {
@@ -566,13 +570,13 @@ export function useAdminSailors({
           `Merged ${merge.name} → ${keep.name} (${data.resultsMoved ?? 0} results moved).`
       );
       setTimeout(() => setBulkStatus(null), 6000);
-      alert(
+      toast.success(
         `${data.message}\n\nResults moved: ${data.resultsMoved ?? 0}\n` +
           `Conflicts resolved: ${data.resultsMergedConflict ?? 0}\n` +
           `Conflicts kept (kept sailor better): ${data.resultsDroppedConflict ?? 0}`
       );
     } catch (e: any) {
-      alert(e.message || "Merge failed");
+      toast.error(e.message || "Merge failed");
     }
   };
 
@@ -581,16 +585,16 @@ export function useAdminSailors({
     const keep = sailorList.find((s) => s.id === keepId);
     const merge = sailorList.find((s) => s.id === mergeId);
     if (!keep || !merge) {
-      alert("Sailors not found");
+      toast.error("Sailors not found");
       return;
     }
-    if (
-      !confirm(
-        `Merge ILCA 4 duplicates?\n\nKEEP: ${keep.name}\nDELETE: ${merge.name}\n\nResults and aliases move to keep.`
-      )
-    ) {
-      return;
-    }
+    const ok = await confirm({
+      title: "Merge ILCA 4 duplicates?",
+      message: `KEEP: ${keep.name}\nDELETE: ${merge.name}\n\nResults and aliases move to keep.`,
+      confirmLabel: "Merge",
+      tone: "danger",
+    });
+    if (!ok) return;
     try {
       const data = await mergeSailorsClient({
         keepId,
@@ -598,28 +602,29 @@ export function useAdminSailors({
         setSailorList,
         setResultsList,
       });
-      alert(data.message || `Merged ${merge.name} → ${keep.name}`);
+      toast.success(data.message || `Merged ${merge.name} → ${keep.name}`);
     } catch (e) {
-      alert(e instanceof Error ? e.message : "Merge failed");
+      toast.error(e instanceof Error ? e.message : "Merge failed");
     }
   };
 
   const handleBulkDelete = async () => {
     if (!isSuperadmin) {
-      alert("Superadmin only");
+      toast.error("Superadmin only");
       return;
     }
     if (selectedSailors.length === 0) {
-      alert("Select at least one sailor to delete.");
+      toast.error("Select at least one sailor to delete.");
       return;
     }
-    if (
-      !confirm(
-        `Delete ${selectedSailors.length} sailor(s) and all their regatta results? This cannot be undone.`
-      )
-    ) {
-      return;
-    }
+    const ok = await confirm({
+      title: `Delete ${selectedSailors.length} sailor(s)?`,
+      message:
+        "Delete selected sailors and all their regatta results? This cannot be undone.",
+      confirmLabel: "Delete",
+      tone: "danger",
+    });
+    if (!ok) return;
     try {
       const res = await fetch("/api/admin/bulk", {
         method: "POST",
@@ -641,19 +646,19 @@ export function useAdminSailors({
       setBulkStatus(data.message || "Deleted.");
       setTimeout(() => setBulkStatus(null), 4000);
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 
   const handleSaveSailor = async () => {
     if (!isSuperadmin) {
-      alert(
+      toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
       );
       return;
     }
     if (!sailorForm.name || !sailorForm.sailNumber) {
-      alert("Name and Sail Number are required.");
+      toast.error("Name and Sail Number are required.");
       return;
     }
     const existing = sailorList.find((s) => s.id === editingSailorId);
@@ -663,7 +668,7 @@ export function useAdminSailors({
       Boolean(existing?.silverEntryDate) ||
       Boolean(existing?.goldEntryDate);
     if (wantsGold && !hasSilverPath) {
-      alert(
+      toast.error(
         "Gold entry requires Silver history first. Set Silver entry date, save, then set Gold entry."
       );
       return;
@@ -672,7 +677,7 @@ export function useAdminSailors({
       sailorForm.goldEntryDate &&
       !isHalfBoundaryYmd(String(sailorForm.goldEntryDate))
     ) {
-      alert(
+      toast.error(
         "Gold entry date must be 1 Jan or 1 Jul (half-year boundary), e.g. 2026-01-01 or 2026-07-01."
       );
       return;
@@ -681,7 +686,7 @@ export function useAdminSailors({
       sailorForm.dropDate &&
       !isHalfBoundaryYmd(String(sailorForm.dropDate))
     ) {
-      alert(
+      toast.error(
         "Drop date must be 1 Jan or 1 Jul (half-year boundary), e.g. 2026-07-01."
       );
       return;
@@ -751,7 +756,7 @@ export function useAdminSailors({
         if (!res.ok)
           throw new Error(data.error || data.detail || "Create failed");
         setSailorList((prev) => [...prev, data.sailor]);
-        alert(
+        toast.success(
           data.warning
             ? `Sailor created. Note: ${data.warning}`
             : "Sailor created successfully!"
@@ -768,7 +773,7 @@ export function useAdminSailors({
         setSailorList((prev) =>
           prev.map((s) => (s.id === editingSailorId ? data.sailor : s))
         );
-        alert(
+        toast.success(
           data.warning
             ? `Sailor updated. Note: ${data.warning}`
             : "Sailor updated successfully!"
@@ -776,27 +781,28 @@ export function useAdminSailors({
       }
       setEditingSailorId(null);
     } catch (e: any) {
-      alert(e.message || "Update failed");
+      toast.error(e.message || "Update failed");
     }
   };
 
   const handleDeleteSailor = async (id: string) => {
     if (!isSuperadmin) {
-      alert(
+      toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
       );
       return;
     }
     if (!id) {
-      alert("Missing sailor id — refresh the page and try again.");
+      toast.error("Missing sailor id — refresh the page and try again.");
       return;
     }
-    if (
-      !confirm(
-        "Are you sure you want to delete this sailor? Their results will also be deleted."
-      )
-    )
-      return;
+    const ok = await confirm({
+      title: "Delete this sailor?",
+      message: "Their results will also be deleted.",
+      confirmLabel: "Delete",
+      tone: "danger",
+    });
+    if (!ok) return;
     try {
       const res = await fetch(
         `/api/admin/sailors?id=${encodeURIComponent(id)}`,
@@ -806,9 +812,9 @@ export function useAdminSailors({
       if (!res.ok) throw new Error(data.error || "Delete failed");
       setSailorList((prev) => prev.filter((s) => s.id !== id));
       setResultsList((prev) => prev.filter((r) => r.sailorId !== id));
-      alert("Sailor deleted.");
+      toast.success("Sailor deleted.");
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 

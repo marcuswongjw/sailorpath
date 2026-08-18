@@ -2,6 +2,7 @@
 
 import { useState, type Dispatch, type SetStateAction } from "react";
 import { parseApi } from "@/components/admin/parseApi";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 
@@ -27,6 +28,7 @@ export function useAdminResults({
   selectedRegattaIdForResultEdit,
   setSelectedRegattaIdForResultEdit,
 }: UseAdminResultsArgs) {
+  const { toast, confirm } = useFeedback();
   const [editingResultId, setEditingResultId] = useState<string | null>(null);
   const [resultForm, setResultForm] = useState<any>({
     id: "",
@@ -41,13 +43,13 @@ export function useAdminResults({
 
   const handleSaveResult = async () => {
     if (!isSuperadmin) {
-      alert(
+      toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
       );
       return;
     }
     if (!resultForm.sailorId || !resultForm.regattaId) {
-      alert("Sailor and Regatta must be selected.");
+      toast.error("Sailor and Regatta must be selected.");
       return;
     }
     const overseas = Boolean(resultForm.isOverseasCommitment);
@@ -84,7 +86,7 @@ export function useAdminResults({
           );
           return [...without, row];
         });
-        alert("Result added successfully!");
+        toast.success("Result added successfully!");
       } else {
         const res = await fetch("/api/admin/results", {
           method: "PATCH",
@@ -96,29 +98,32 @@ export function useAdminResults({
         setResultsList((prev) =>
           prev.map((r) => (r.id === editingResultId ? data.result : r))
         );
-        alert("Result updated successfully!");
+        toast.success("Result updated successfully!");
       }
       setEditingResultId(null);
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 
   const handleFillDnsForRegatta = async (regattaId: string) => {
     if (!isSuperadmin) {
-      alert("Error: 403 Forbidden.");
+      toast.error("Error: 403 Forbidden.");
       return;
     }
     if (!regattaId) {
-      alert("Select a regatta first.");
+      toast.error("Select a regatta first.");
       return;
     }
     const reg = regattaList.find((r) => r.id === regattaId);
-    const ok = confirm(
-      `Create DNS scores for active ${reg?.division || ""} fleet members who do not have a result at “${reg?.name || "this regatta"}”?\n\n` +
+    const ok = await confirm({
+      title: `Create DNS scores for ${reg?.division || ""} fleet?`,
+      message:
+        `Create DNS for active fleet members who do not have a result at “${reg?.name || "this regatta"}”.\n\n` +
         `DNS points = fleet size + 1 = ${(reg?.totalFleetSize || 0) + 1}.\n` +
-        `You can edit any row afterwards (e.g. overseas commitment).`
-    );
+        `You can edit any row afterwards (e.g. overseas commitment).`,
+      confirmLabel: "Continue",
+    });
     if (!ok) return;
     try {
       const res = await fetch("/api/admin/results", {
@@ -129,9 +134,9 @@ export function useAdminResults({
       const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Fill DNS failed");
       await refreshResultsList({ regattaId });
-      alert(data.message || `Created ${data.created} DNS rows.`);
+      toast.success(data.message || `Created ${data.created} DNS rows.`);
     } catch (e: any) {
-      alert(e.message || "Fill DNS failed");
+      toast.error(e.message || "Fill DNS failed");
     }
   };
 
@@ -142,15 +147,18 @@ export function useAdminResults({
     half: "Jan-Jun" | "Jul-Dec"
   ) => {
     if (!isSuperadmin) {
-      alert("Error: 403 Forbidden.");
+      toast.error("Error: 403 Forbidden.");
       return;
     }
-    const ok = confirm(
-      `Ensure DNS for all active ${fleet} fleet sailors in ${half} ${year}?\n\n` +
+    const ok = await confirm({
+      title: `Ensure DNS for ${fleet} fleet?`,
+      message:
+        `Ensure DNS for all active ${fleet} fleet sailors in ${half} ${year}.\n\n` +
         `Each sailor will get a result for every ranking regatta in that period they are missing.\n` +
         `Missing → rank = that regatta’s fleet size + 1 (DNS).\n` +
-        `Existing results (including overseas) are left unchanged.`
-    );
+        `Existing results (including overseas) are left unchanged.`,
+      confirmLabel: "Continue",
+    });
     if (!ok) return;
     try {
       const res = await fetch("/api/admin/results", {
@@ -169,26 +177,31 @@ export function useAdminResults({
       const events = (data.rankingRegattas || [])
         .map((e: any) => `• ${e.name} (${e.date}) → DNS ${e.dnsPoints}`)
         .join("\n");
-      alert(
+      toast.success(
         `${data.message}\n\nRanking regattas:\n${events || "(none found — import regattas with dates in this period)"}`
       );
     } catch (e: any) {
-      alert(e.message || "Period DNS fill failed");
+      toast.error(e.message || "Period DNS fill failed");
     }
   };
 
   const handleDeleteResult = async (id: string) => {
     if (!isSuperadmin) {
-      alert(
+      toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
       );
       return;
     }
     if (!id) {
-      alert("Missing result id — refresh the page and try again.");
+      toast.error("Missing result id — refresh the page and try again.");
       return;
     }
-    if (!confirm("Are you sure you want to delete this result?")) return;
+    const ok = await confirm({
+      title: "Delete this result?",
+      confirmLabel: "Delete",
+      tone: "danger",
+    });
+    if (!ok) return;
     try {
       const res = await fetch(
         `/api/admin/results?id=${encodeURIComponent(id)}`,
@@ -197,9 +210,9 @@ export function useAdminResults({
       const data = await parseApi(res);
       if (!res.ok) throw new Error(data.error || "Delete failed");
       setResultsList((prev) => prev.filter((r) => r.id !== id));
-      alert("Result deleted.");
+      toast.success("Result deleted.");
     } catch (e: any) {
-      alert(e.message);
+      toast.error(e.message);
     }
   };
 

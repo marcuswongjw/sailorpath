@@ -26,6 +26,7 @@ import {
   geographySelectOptions,
   isSingleFleetClass,
 } from "@/lib/countries";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type Props = {
   isSuperadmin: boolean;
@@ -43,6 +44,7 @@ export function AdminRegattaImport({
   onRegattaUpserted,
   onResultsUpdated,
 }: Props) {
+  const { toast } = useFeedback();
   const [dragActive, setDragActive] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
   /** 0–100; shown while reading / importing */
@@ -155,7 +157,7 @@ export function AdminRegattaImport({
       } catch (err) {
         setImportProgress(0);
         setImportStatus(null);
-        alert(
+        toast.error(
           err instanceof Error ? err.message : "Failed to parse spreadsheet"
         );
       } finally {
@@ -167,7 +169,7 @@ export function AdminRegattaImport({
       setImportBusy(false);
       setImportProgress(0);
       setImportStatus(null);
-      alert("Failed to read file");
+      toast.error("Failed to read file");
     };
     reader.readAsArrayBuffer(file);
   };
@@ -267,11 +269,11 @@ export function AdminRegattaImport({
 
   const handleImportToDb = async () => {
     if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can import.");
+      toast.error("Error: 403 Forbidden. Only Superadmins can import.");
       return;
     }
     if (!fullImportRows.length || !importMeta.name || !importMeta.date) {
-      alert("Parse a file and set regatta name + date first.");
+      toast.error("Parse a file and set regatta name + date first.");
       return;
     }
     setImportBusy(true);
@@ -318,14 +320,16 @@ export function AdminRegattaImport({
       await refreshListsAfterImport(data.regatta || null);
       setImportProgress(100);
 
-      if (data.hint || data.errorSamples?.length) {
+      {
         const extra = [data.hint, ...(data.errorSamples || []).slice(0, 3)]
           .filter(Boolean)
           .join("\n");
         if (extra) {
-          alert(
+          toast.info(
             `${data.message || "Import finished with issues"}\n\n${extra}`
           );
+        } else {
+          toast.success(data.message || "Import complete");
         }
       }
       const unmatchedCount = (data.unmatched || []).length;
@@ -360,14 +364,14 @@ export function AdminRegattaImport({
         if (recovered.ok) {
           setImportProgress(100);
           setImportStatus(recovered.message);
-          alert(recovered.message);
+          toast.info(recovered.message);
           return;
         }
         setImportProgress(0);
         setImportStatus(null);
         setImportPossibleDuplicates([]);
         setNationalityFlags([]);
-        alert(
+        toast.error(
           "Failed to fetch — the server may have timed out after saving. " +
             "Check Database → Regattas / Results before re-importing (re-import is safe and upserts)."
         );
@@ -378,7 +382,7 @@ export function AdminRegattaImport({
       setImportStatus(null);
       setImportPossibleDuplicates([]);
       setNationalityFlags([]);
-      alert(msg);
+      toast.error(msg);
     } finally {
       window.clearInterval(pulse);
       setImportBusy(false);

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Suspense } from "react";
 import "./globals.css";
 import { AccountProvider } from "@/components/AccountProvider";
+import { FeedbackProvider } from "@/components/ui/FeedbackProvider";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { UsageBeacon } from "@/components/UsageBeacon";
@@ -28,15 +29,17 @@ export default function RootLayout({
     <html lang="en" className="h-full antialiased dark overflow-x-clip">
       <body className="min-h-full flex flex-col bg-[#090a0f] text-slate-100 font-sans selection:bg-orange-500/30 overflow-x-clip w-full max-w-[100vw]">
         <AccountProvider>
-          <Suspense fallback={null}>
-            <NavigationProgress />
-          </Suspense>
-          <UsageBeacon />
-          <SiteHeader />
-          <main className="flex-1 flex flex-col min-w-0 w-full max-w-[100vw] overflow-x-clip">
-            {children}
-          </main>
-          <SiteFooter />
+          <FeedbackProvider>
+            <Suspense fallback={null}>
+              <NavigationProgress />
+            </Suspense>
+            <UsageBeacon />
+            <SiteHeader />
+            <main className="flex-1 flex flex-col min-w-0 w-full max-w-[100vw] overflow-x-clip">
+              {children}
+            </main>
+            <SiteFooter />
+          </FeedbackProvider>
         </AccountProvider>
       </body>
     </html>

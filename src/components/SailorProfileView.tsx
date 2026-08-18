@@ -61,6 +61,7 @@ import {
   type ObservationItem,
   type SailorProfileViewProps,
 } from "@/components/sailor-profile";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 const PositionTrendChart = dynamic(
   () =>
@@ -101,6 +102,7 @@ export function SailorProfileView({
   hidePrivacySection = false,
   profileVerified = false,
 }: SailorProfileViewProps) {
+  const { toast, confirm } = useFeedback();
   const [isPublicWeight, setIsPublicWeight] = useState<boolean>(
     Boolean(initialSailor.isPublicWeight)
   );
@@ -553,7 +555,12 @@ export function SailorProfileView({
   };
 
   const removeJourneyItem = async (id: string, isSystem?: boolean) => {
-    if (!confirm("Remove this highlight from your journey?")) return;
+    const ok = await confirm({
+      title: "Remove this highlight from your journey?",
+      tone: "danger",
+      confirmLabel: "Remove",
+    });
+    if (!ok) return;
     if (isSystem) {
       await persistJourney(dismissSystemMilestone(journey, id));
       return;
@@ -617,7 +624,12 @@ export function SailorProfileView({
 
   const deletePersonalResult = async (res: any) => {
     if (demoMode || !res?.resultId) return;
-    if (!confirm(`Remove “${res.regattaName}” from your logbook?`)) return;
+    const ok = await confirm({
+      title: `Remove “${res.regattaName}” from your logbook?`,
+      tone: "danger",
+      confirmLabel: "Remove",
+    });
+    if (!ok) return;
     setPersonalBusy(true);
     try {
       const r = await fetch("/api/account/results", {
@@ -633,6 +645,7 @@ export function SailorProfileView({
       );
       setPersonalMsg("Removed");
     } catch (e: any) {
+      toast.error(e.message || "Delete failed");
       setPersonalMsg(e.message || "Delete failed");
     } finally {
       setPersonalBusy(false);
@@ -641,7 +654,12 @@ export function SailorProfileView({
 
   const deleteObservation = async (o: any) => {
     if (demoMode || !o?.id) return;
-    if (!confirm(`Delete observation for race ${o.raceNumber}?`)) return;
+    const ok = await confirm({
+      title: `Delete observation for race ${o.raceNumber}?`,
+      tone: "danger",
+      confirmLabel: "Delete",
+    });
+    if (!ok) return;
     setObsBusy(true);
     setObsMsg(null);
     try {
@@ -657,6 +675,7 @@ export function SailorProfileView({
       if (editingObsId === o.id) resetObsForm();
       setObsMsg("Observation deleted");
     } catch (e: any) {
+      toast.error(e.message || "Delete failed");
       setObsMsg(e.message || "Delete failed");
     } finally {
       setObsBusy(false);

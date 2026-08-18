@@ -32,6 +32,7 @@ import {
   Loader2,
   ListChecks,
 } from "lucide-react";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type Props = {
   sailors: SailorAdmin[];
@@ -61,6 +62,7 @@ export function AdminIlcaRankingPanel({
   onSailorsChange,
   onMergePair,
 }: Props) {
+  const { confirm } = useFeedback();
   const now = new Date();
   const y = now.getFullYear();
   /** ILCA 6 not active — rankings are ILCA 4 only for now */
@@ -382,13 +384,13 @@ export function AdminIlcaRankingPanel({
   };
 
   const seedFromNames = async () => {
-    if (
-      !confirm(
-        `Match DB sailors to the ${ILCA4_NATIONAL_RANKING_NAMES.length}-name official list and turn ON their national-list flag?\n\nExisting ON flags are kept. Only missing matches are set.`
-      )
-    ) {
-      return;
-    }
+    const ok = await confirm({
+      title: `Match DB sailors to the ${ILCA4_NATIONAL_RANKING_NAMES.length}-name official list?`,
+      message:
+        "Turn ON their national-list flag.\n\nExisting ON flags are kept. Only missing matches are set.",
+      confirmLabel: "Seed list",
+    });
+    if (!ok) return;
     setSeedBusy(true);
     setMsg(null);
     try {

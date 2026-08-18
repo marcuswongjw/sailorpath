@@ -18,6 +18,7 @@ import {
   type WindRange,
 } from "@/lib/equipment";
 import { todayYmdSg } from "@/lib/datesSg";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { emptyForm } from "./constants";
 import type { EquipmentInventoryProps, ModalKind } from "./types";
 import { defaultFullRigBrand } from "./utils";
@@ -33,6 +34,7 @@ export function useEquipmentInventory({
   onGearByRegatta,
   regattaOptions = [],
 }: HookProps) {
+  const { toast: feedbackToast, confirm } = useFeedback();
   const [items, setItems] = useState<EquipmentItemDto[]>([]);
   const [alerts, setAlerts] = useState<EquipmentItemDto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -368,13 +370,11 @@ export function useEquipmentInventory({
 
   const makePrimary = async (item: EquipmentItemDto) => {
     if (item.isPrimary) return;
-    if (
-      !confirm(
-        `Set “${displayName(item)}” as the primary ${categoryLabel(item.category)}?`
-      )
-    ) {
-      return;
-    }
+    const ok = await confirm({
+      title: `Set “${displayName(item)}” as the primary ${categoryLabel(item.category)}?`,
+      confirmLabel: "Set primary",
+    });
+    if (!ok) return;
     setBusy(true);
     try {
       const res = await fetch("/api/account/equipment", {
@@ -390,7 +390,7 @@ export function useEquipmentInventory({
       flash("Primary updated");
       await load();
     } catch (e) {
-      alert(e instanceof Error ? e.message : "Error");
+      feedbackToast.error(e instanceof Error ? e.message : "Error");
     } finally {
       setBusy(false);
     }
@@ -399,7 +399,12 @@ export function useEquipmentInventory({
   const bulkArchive = async () => {
     const ids = [...selected];
     if (!ids.length) return;
-    if (!confirm(`Archive ${ids.length} item(s) to Past equipment?`)) return;
+    const ok = await confirm({
+      title: `Archive ${ids.length} item(s) to Past equipment?`,
+      tone: "danger",
+      confirmLabel: "Archive",
+    });
+    if (!ok) return;
     setBusy(true);
     try {
       const res = await fetch("/api/account/equipment", {
@@ -413,7 +418,7 @@ export function useEquipmentInventory({
       flash("Moved to past equipment");
       await load();
     } catch (e) {
-      alert(e instanceof Error ? e.message : "Error");
+      feedbackToast.error(e instanceof Error ? e.message : "Error");
     } finally {
       setBusy(false);
     }
@@ -441,7 +446,7 @@ export function useEquipmentInventory({
       flash("Tag applied");
       await load();
     } catch (e) {
-      alert(e instanceof Error ? e.message : "Error");
+      feedbackToast.error(e instanceof Error ? e.message : "Error");
     } finally {
       setBusy(false);
     }

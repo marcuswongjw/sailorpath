@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { relationLabel, type ClaimRelation } from "@/lib/claimRelation";
 import { birthYear } from "@/lib/age";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type Standing = {
   periodLabel: string;
@@ -73,6 +74,7 @@ type PendingClaim = {
 };
 
 export function ParentDashboard() {
+  const { toast, confirm } = useFeedback();
   const [athletes, setAthletes] = useState<Athlete[]>([]);
   const [pendingClaims, setPendingClaims] = useState<PendingClaim[]>([]);
   const [isParentStyle, setIsParentStyle] = useState(true);
@@ -126,14 +128,19 @@ export function ParentDashboard() {
       setNoteDraft((d) => ({ ...d, [sailorId]: "" }));
       await load();
     } catch (e) {
-      alert(e instanceof Error ? e.message : "Error");
+      toast.error(e instanceof Error ? e.message : "Error");
     } finally {
       setNoteBusy(null);
     }
   };
 
   const deleteNote = async (id: string) => {
-    if (!confirm("Delete this note?")) return;
+    const ok = await confirm({
+      title: "Delete this note?",
+      tone: "danger",
+      confirmLabel: "Delete",
+    });
+    if (!ok) return;
     setNoteBusy(id);
     try {
       const res = await fetch(
@@ -146,7 +153,7 @@ export function ParentDashboard() {
       }
       await load();
     } catch (e) {
-      alert(e instanceof Error ? e.message : "Error");
+      toast.error(e instanceof Error ? e.message : "Error");
     } finally {
       setNoteBusy(null);
     }
