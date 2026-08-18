@@ -190,26 +190,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Social proof */}
-      <section className="border-t border-white/5 bg-[#0b0c13] py-4 sm:py-5">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <ul className="flex flex-wrap justify-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-semibold text-slate-400">
-            <li className="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-emerald-200">
-              Live · Optimist Gold &amp; Silver
-            </li>
-            <li className="rounded-full border border-sky-500/25 bg-sky-500/10 px-3 py-1.5 text-sky-200">
-              Live · ILCA 4 national ranking
-            </li>
-            <li className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
-              Claim · private logbook &amp; gear
-            </li>
-            <li className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
-              Parent dashboard when you link a child
-            </li>
-          </ul>
-        </div>
-      </section>
-
       {/* How it works */}
       <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
