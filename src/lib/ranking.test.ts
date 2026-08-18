@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   bestThreeOf,
+  calculateRankings,
   compareRankedSailors,
   getPercentileBadge,
   natSquadFieldForPeriod,
@@ -375,6 +376,85 @@ describe("resolveSailorFleet", () => {
       jan26
     );
     expect(r2).toBeNull();
+  });
+});
+
+describe("calculateRankings Silver 1-year activity filter", () => {
+  const period = { year: 2026, half: "Jul-Dec" as const };
+  const sailor = (
+    id: string,
+    over: Partial<SailorRecord> = {}
+  ): SailorRecord =>
+    ({
+      id,
+      name: id,
+      handle: id,
+      sailNumber: "SGP 1",
+      club: "C",
+      nationality: "SGP",
+      currentFleet: "Series",
+      silverEntryDate: "2024-01-01",
+      goldEntryDate: null,
+      dropDate: null,
+      ...over,
+    }) as SailorRecord;
+
+  const regatta = (
+    id: string,
+    date: string,
+    division: string = "Silver"
+  ): RegattaRecord => ({
+    id,
+    name: id,
+    slug: id,
+    date,
+    totalFleetSize: 50,
+    division,
+    boatClass: "Optimist",
+    countsForRanking: true,
+  });
+
+  it("drops Silver sailors whose only Optimist starts are older than 1 year", () => {
+    const regattas = [
+      regatta("old", "2023-03-01"),
+      regatta("r1", "2026-07-04"),
+      regatta("r2", "2026-07-18"),
+      regatta("r3", "2026-08-01"),
+    ];
+    const active = sailor("active");
+    const ghost = sailor("ghost"); // only raced in 2023
+    const results = [
+      { sailorId: "active", regattaId: "r1", rank: 12, isDns: false },
+      { sailorId: "ghost", regattaId: "old", rank: 20, isDns: false },
+    ];
+    const ranked = calculateRankings(
+      period,
+      [active, ghost],
+      regattas,
+      results
+    );
+    expect(ranked.map((s) => s.id)).toEqual(["active"]);
+    expect(ranked[0].fleet).toBe("Silver");
+  });
+
+  it("keeps Gold sailors even with no starts in the window", () => {
+    const regattas = [
+      regatta("g1", "2026-07-04", "Gold"),
+      regatta("g2", "2026-07-18", "Gold"),
+      regatta("g3", "2026-08-01", "Gold"),
+    ];
+    const goldInactive = sailor("gold-idle", {
+      goldEntryDate: "2025-01-01",
+      silverEntryDate: "2024-01-01",
+    });
+    const ranked = calculateRankings(
+      period,
+      [goldInactive],
+      regattas,
+      [] // no results → all DNS pads, but Gold is never filtered
+    );
+    expect(ranked.map((s) => s.id)).toEqual(["gold-idle"]);
+    expect(ranked[0].fleet).toBe("Gold");
   });
 });
 

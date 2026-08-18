@@ -431,10 +431,7 @@ export function optimistHistoryByPeriodEnd(
   results: RegattaResultRecord[],
   seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
 ): Set<string> {
-  const pEndStr =
-    period.half === "Jan-Jun"
-      ? `${period.year}-06-30`
-      : `${period.year}-12-31`;
+  const pEndStr = periodBounds(period).end;
   const ids = new Set<string>();
   const regById = new Map(regattas.map((r) => [r.id, r]));
   for (const res of results) {
@@ -444,6 +441,41 @@ export function optimistHistoryByPeriodEnd(
     if (!regattaMatchesSeriesClass(r, seriesBoatClass)) continue;
     const d = toYmd(r.date);
     if (!d || d > pEndStr) continue;
+    ids.add(res.sailorId);
+  }
+  return ids;
+}
+
+/** YYYY-MM-DD minus one calendar year (string-safe for ISO dates). */
+export function oneYearBeforeYmd(ymd: string): string {
+  const [y, m, d] = ymd.split("-").map(Number);
+  if (!y || !m || !d) return ymd;
+  return `${y - 1}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+}
+
+/**
+ * Sailors who actually started an Optimist ranking regatta in the year ending
+ * at the period end (used to keep Silver boards free of old import ghosts).
+ * DNS does not count; overseas-commitment rows also do not (no local start).
+ */
+export function optimistSailorsWithStartInLastYear(
+  period: Period,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[],
+  seriesBoatClass: string = DEFAULT_SERIES_BOAT_CLASS
+): Set<string> {
+  const pEndStr = periodBounds(period).end;
+  const cutoff = oneYearBeforeYmd(pEndStr);
+  const ids = new Set<string>();
+  const regById = new Map(regattas.map((r) => [r.id, r]));
+  for (const res of results) {
+    if (Boolean(res.isDns)) continue;
+    const r = regById.get(res.regattaId);
+    if (!r) continue;
+    if (r.countsForRanking === false) continue;
+    if (!regattaMatchesSeriesClass(r, seriesBoatClass)) continue;
+    const d = toYmd(r.date);
+    if (!d || d > pEndStr || d < cutoff) continue;
     ids.add(res.sailorId);
   }
   return ids;
@@ -659,8 +691,24 @@ export function calculateRankings(
     };
   });
 
-  // Best 3 of 5, then best-to-worst regatta ranks, then name
-  rankedSailors.sort((a, b) => compareRankedSailors(a, b));
+  /**
+   * Silver only: drop sailors with no Optimist start in the trailing year
+   * ending at period end. Old imports (2022/2023 etc.) still create SGP
+   * auto-include membership and pad the board with all-DNS rows — Gold is
+   * left alone (fixed ~100-sailor national Gold list).
+   */
+  const silverActiveIds = optimistSailorsWithStartInLastYear(
+    period,
+    regattas,
+    results,
+    seriesBoatClass
+  );
+  const rankedFiltered = rankedSailors.filter(
+    (s) => s.fleet === "Gold" || silverActiveIds.has(s.id)
+  );
 
-  return rankedSailors;
+  // Best 3 of 5, then best-to-worst regatta ranks, then name
+  rankedFiltered.sort((a, b) => compareRankedSailors(a, b));
+
+  return rankedFiltered;
 }
