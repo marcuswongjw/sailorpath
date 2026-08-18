@@ -8,8 +8,6 @@ import {
   Anchor,
   Medal,
   BookOpen,
-  Users,
-  UserRound,
 } from "lucide-react";
 import { WaitlistForm } from "@/components/WaitlistForm";
 
@@ -300,78 +298,6 @@ export default function HomePage() {
             >
               Open demo profile →
             </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Audience features */}
-      <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-14">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 mb-3">
-                <UserRound className="h-5 w-5 text-orange-400" />
-              </div>
-              <h2 className="text-lg font-bold text-white">For Sailors</h2>
-              <p className="text-sm font-semibold text-white mt-1.5">
-                Own your sailing journey.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Track every regatta result, ranking movement, and personal best
-                from Optimist to ILCA. Add your own milestones, equipment notes,
-                and race reflections — share what you want, keep the rest
-                private.
-              </p>
-              <Link
-                href="/claim-profile"
-                className="mt-4 text-[12px] font-bold text-orange-400 hover:text-orange-300"
-              >
-                Claim this profile →
-              </Link>
-            </article>
-
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 mb-3">
-                <Users className="h-5 w-5 text-slate-200" />
-              </div>
-              <h2 className="text-lg font-bold text-white">For Parents</h2>
-              <p className="text-sm font-semibold text-white mt-1.5">
-                Stop the info-hunt.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Link your account to your child&apos;s profile and open the{" "}
-                <strong className="text-slate-300">Parent Dashboard</strong>{" "}
-                today — rankings, results, and milestones in one private place.
-                More family tools are on the roadmap.
-              </p>
-              <Link
-                href="/claim-profile"
-                className="mt-4 text-[12px] font-bold text-slate-300 hover:text-white"
-              >
-                Link to your child&apos;s profile →
-              </Link>
-            </article>
-
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-sky-500/25 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
-                <Trophy className="h-5 w-5 text-sky-400" />
-              </div>
-              <h2 className="text-lg font-bold text-white">For Coaches</h2>
-              <p className="text-sm font-semibold text-white mt-1.5">
-                Escape spreadsheet hell.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Compare athletes side-by-side, spot progression trends, and build
-                selection reports from live ranking data. Full squad management
-                tools are coming — join the waitlist to get them first.
-              </p>
-              <a
-                href="#roadmap-coach"
-                className="mt-4 text-[12px] font-bold text-sky-400 hover:text-sky-300"
-              >
-                Join coach waitlist →
-              </a>
-            </article>
           </div>
         </div>
       </section>
