@@ -16,8 +16,102 @@ import { WaitlistForm } from "@/components/WaitlistForm";
 /**
  * Static marketing homepage — no DB round-trip so logo → home is instant
  * (demo profile stays the fast path for product tour).
+ *
+ * Conversion spine: Hero → social proof → How it works → Founding → Demo →
+ * audiences → rankings explainers → roadmap.
  */
 export const revalidate = 300;
+
+const FOUNDING_URL = "https://buy.stripe.com/00weVd3jFf8h9ZvelL4Rq00";
+
+function FoundingCard({ compact = false }: { compact?: boolean }) {
+  return (
+    <div
+      className={`mx-auto w-full rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300 ${
+        compact ? "max-w-2xl p-5 sm:p-6" : "max-w-md p-6 sm:p-8 md:p-10"
+      }`}
+    >
+      <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all" />
+
+      {compact ? (
+        <div className="relative flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+          <div className="min-w-0 flex-1 text-left">
+            <p className="text-[11px] font-black uppercase tracking-widest text-orange-400">
+              Founding Supporter
+            </p>
+            <h3 className="text-lg sm:text-xl font-bold text-white mt-1">
+              Back the build — S$99 one-time
+            </h3>
+            <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Lifetime access, profile crest, and priority say on the roadmap.
+              Secure checkout via Stripe.
+            </p>
+          </div>
+          <a
+            href={FOUNDING_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="shrink-0 inline-flex justify-center rounded-full bg-orange-600 hover:bg-orange-500 px-5 py-3 text-xs font-bold text-white border border-orange-500/30 min-h-[44px] items-center"
+          >
+            Become a Founding Supporter
+          </a>
+        </div>
+      ) : (
+        <>
+          <div className="mb-6">
+            <h3 className="text-xl font-bold text-white">Founding Supporter</h3>
+          </div>
+          <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">
+            S$99
+            <span className="text-xs font-bold text-slate-500"> (one-time)</span>
+          </p>
+          <p className="mt-6 text-[11px] font-bold uppercase tracking-wide text-slate-500">
+            What you get
+          </p>
+          <ul className="mt-3 space-y-4 text-xs font-medium text-slate-300">
+            <li className="flex items-start gap-3">
+              <Trophy className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+              <span>
+                Permanent Founding Supporter crest on your public profile
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Shield className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+              <span>
+                Lifetime access to Sailor / Parent features (claim, private
+                logbook, notes, privacy controls, and parent dashboard)
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Compass className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+              <span>
+                First access to coach tools and advanced analytics as they
+                launch
+              </span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Zap className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+              <span>Priority input on the product roadmap</span>
+            </li>
+          </ul>
+          <div className="mt-8">
+            <a
+              href={FOUNDING_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="flex w-full justify-center rounded-full bg-orange-600 py-3.5 px-4 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
+            >
+              Become a Founding Supporter — S$99
+            </a>
+            <p className="mt-3 text-center text-[10px] text-slate-600">
+              Secure checkout via Stripe.
+            </p>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -26,7 +120,7 @@ export default function HomePage() {
       <div className="absolute top-40 right-0 w-[320px] h-[320px] bg-sky-600/10 rounded-full blur-[100px] pointer-events-none -z-10 hidden sm:block" />
 
       {/* Hero */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-10 sm:pt-16 sm:pb-20 text-center lg:pt-24">
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 sm:pt-16 sm:pb-12 text-center lg:pt-24">
         <h1 className="mx-auto max-w-4xl text-[1.65rem] leading-snug sm:text-5xl lg:text-6xl font-black tracking-tight text-white sm:leading-tight">
           {"The performance tracker for "}
           <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-sky-500 bg-clip-text text-transparent">
@@ -56,11 +150,11 @@ export default function HomePage() {
         </div>
 
         <p className="mx-auto mt-4 max-w-2xl text-[11px] sm:text-[12px] text-slate-500 leading-relaxed">
-          Official ranking data for Singapore Sailing&apos;s Optimist Gold/Silver
-          Series and ILCA 4 National Ranking
+          Official ranking data for Singapore Sailing&apos;s Optimist
+          Gold/Silver Series and ILCA 4 National Ranking
         </p>
 
-        <div className="mx-auto mt-6 sm:mt-12 max-w-md w-full">
+        <div className="mx-auto mt-6 sm:mt-10 max-w-md w-full">
           <form action="/search" className="relative">
             <input
               type="search"
@@ -95,10 +189,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-16">
+      {/* Social proof */}
+      <section className="border-t border-white/5 bg-[#0b0c13] py-4 sm:py-5">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-8 sm:mb-12">
+          <ul className="flex flex-wrap justify-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-semibold text-slate-400">
+            <li className="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-3 py-1.5 text-emerald-200">
+              Live · Optimist Gold &amp; Silver
+            </li>
+            <li className="rounded-full border border-sky-500/25 bg-sky-500/10 px-3 py-1.5 text-sky-200">
+              Live · ILCA 4 national ranking
+            </li>
+            <li className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
+              Claim · private logbook &amp; gear
+            </li>
+            <li className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5">
+              Parent dashboard when you link a child
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-8 sm:mb-10">
             How SailorPath Works
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
@@ -140,8 +254,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Founding — mid-page conversion */}
+      <section
+        id="founding-membership"
+        className="border-t border-white/5 bg-[#0b0c13] py-10 sm:py-14"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
+              Back the build. Anchor your place in the fleet.
+            </h2>
+            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+              Rankings are live — founding support funds what comes next.
+            </p>
+          </div>
+          <FoundingCard compact />
+          <p className="text-center">
+            <a
+              href="#founding-details"
+              className="text-[12px] font-semibold text-slate-500 hover:text-orange-300"
+            >
+              See full founding benefits ↓
+            </a>
+          </p>
+        </div>
+      </section>
+
       {/* Live demo profile */}
-      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-16">
+      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center rounded-2xl border border-orange-500/20 bg-gradient-to-b from-orange-500/[0.08] to-transparent px-6 py-10 sm:py-12">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
@@ -162,7 +302,7 @@ export default function HomePage() {
       </section>
 
       {/* Audience features */}
-      <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-16">
+      <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
             <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 flex flex-col">
@@ -196,10 +336,10 @@ export default function HomePage() {
                 Stop the info-hunt.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Get a complete, stress-free view of your child&apos;s sailing
-                journey in one private place. Follow ranking progress, results,
-                and milestones without chasing WhatsApp groups or club PDFs. You
-                stay in control of what&apos;s public and what stays private.
+                Link your account to your child&apos;s profile and open the{" "}
+                <strong className="text-slate-300">Parent Dashboard</strong>{" "}
+                today — rankings, results, and milestones in one private place.
+                More family tools are on the roadmap.
               </p>
               <Link
                 href="/claim-profile"
@@ -234,7 +374,7 @@ export default function HomePage() {
       </section>
 
       {/* Ranking features */}
-      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-16">
+      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
@@ -320,7 +460,7 @@ export default function HomePage() {
       {/* Roadmap */}
       <section
         id="roadmap"
-        className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-16"
+        className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-14"
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10">
@@ -328,34 +468,44 @@ export default function HomePage() {
               Roadmap
             </h2>
             <p className="mt-3 text-slate-400 text-sm leading-relaxed">
-              Rankings and logbooks are live. Here&apos;s what&apos;s coming
-              next.
+              Rankings, claimed profiles, and the Parent Dashboard are live.
+              Here&apos;s what&apos;s coming next.
             </p>
           </div>
 
           <ol className="mx-auto max-w-2xl space-y-0 relative">
-            <li
-              id="roadmap-parent"
-              className="relative flex gap-4 pb-10"
-            >
+            <li id="roadmap-parent" className="relative flex gap-4 pb-10">
               <span
                 className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10"
                 aria-hidden
               />
-              <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-orange-500/40 bg-orange-500/15" />
+              <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-emerald-500/40 bg-emerald-500/15" />
               <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-black uppercase tracking-widest text-orange-400">
-                  Q3 2026
+                <p className="text-[11px] font-black uppercase tracking-widest text-emerald-400">
+                  Live now
                 </p>
                 <h3 className="text-base font-bold text-white mt-1">
-                  Parent Dashboards
+                  Parent Dashboard
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Link your account to your child&apos;s profile. See progress,
-                  ranking movement, and upcoming events in one private view.
+                  Link your account to your child&apos;s profile and open{" "}
+                  <Link
+                    href="/parent"
+                    className="text-emerald-300 font-semibold hover:text-emerald-200"
+                  >
+                    /parent
+                  </Link>{" "}
+                  for progress, ranking movement, and private notes. More family
+                  tools (multi-child alerts, calendars) land in Q3 2026.
                 </p>
-                <p className="mt-3 text-[12px] font-bold text-emerald-400">
-                  Join the parent waitlist →
+                <Link
+                  href="/claim-profile"
+                  className="mt-3 inline-block text-[12px] font-bold text-emerald-400 hover:text-emerald-300"
+                >
+                  Link a child profile →
+                </Link>
+                <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                  Waitlist for next family features
                 </p>
                 <WaitlistForm
                   presetRole="Parent"
@@ -364,10 +514,7 @@ export default function HomePage() {
                 />
               </div>
             </li>
-            <li
-              id="roadmap-coach"
-              className="relative flex gap-4 pb-10"
-            >
+            <li id="roadmap-coach" className="relative flex gap-4 pb-10">
               <span
                 className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10"
                 aria-hidden
@@ -413,84 +560,22 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Founding Membership */}
+      {/* Founding details (full card) */}
       <section
-        id="founding-membership"
-        className="py-12 sm:py-20 bg-[#090a0f] border-t border-white/5"
+        id="founding-details"
+        className="py-12 sm:py-16 bg-[#090a0f] border-t border-white/5"
       >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center mb-8 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white sm:text-4xl tracking-tight">
-              Back the build. Anchor your place in the fleet.
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Founding Supporter details
             </h2>
-            <p className="mt-4 text-slate-400 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
-              Become a Founding Supporter. Help build the definitive performance
-              tracker for Singapore sailing — and lock in lifetime access,
-              permanent recognition, and priority input on every new feature.
+            <p className="mt-3 text-slate-400 max-w-2xl mx-auto leading-relaxed text-sm">
+              One-time S$99 · lifetime access · permanent recognition on your
+              profile.
             </p>
           </div>
-
-          <div className="mx-auto max-w-md w-full rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] p-6 sm:p-8 md:p-10 shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all" />
-
-            <div className="mb-6">
-              <h3 className="text-xl font-bold text-white">
-                Founding Supporter
-              </h3>
-            </div>
-
-            <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">
-              S$99
-              <span className="text-xs font-bold text-slate-500">
-                {" "}
-                (one-time)
-              </span>
-            </p>
-
-            <p className="mt-6 text-[11px] font-bold uppercase tracking-wide text-slate-500">
-              What you get
-            </p>
-            <ul className="mt-3 space-y-4 text-xs font-medium text-slate-300">
-              <li className="flex items-start gap-3">
-                <Trophy className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-                <span>
-                  Permanent Founding Supporter crest on your public profile
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Shield className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-                <span>
-                  Lifetime access to Sailor / Parent features (claim, private
-                  logbook, notes, privacy controls, and future parent dashboard)
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Compass className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-                <span>
-                  First access to parent dashboards, coach tools, and advanced
-                  analytics as they launch
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Zap className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-                <span>Priority input on the product roadmap</span>
-              </li>
-            </ul>
-
-            <div className="mt-8">
-              <a
-                href="https://buy.stripe.com/00weVd3jFf8h9ZvelL4Rq00"
-                target="_blank"
-                rel="noreferrer"
-                className="flex w-full justify-center rounded-full bg-orange-600 py-3.5 px-4 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
-              >
-                Become a Founding Supporter — S$99
-              </a>
-              <p className="mt-3 text-center text-[10px] text-slate-600">
-                Secure checkout via Stripe.
-              </p>
-            </div>
-          </div>
+          <FoundingCard />
         </div>
       </section>
     </div>
