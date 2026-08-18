@@ -5,13 +5,16 @@ import { parseApi, apiErr } from "@/components/admin/parseApi";
 import { emptyRegattaForm } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
+import { cascadeLine } from "@/lib/confirmCopy";
 import type { RegattaAdmin } from "@/types/regatta";
+import { regattaDateLabel } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 
 type UseAdminRegattasArgs = {
   isSuperadmin: boolean;
   regattaList: RegattaAdmin[];
   setRegattaList: Dispatch<SetStateAction<RegattaAdmin[]>>;
+  resultsList: ResultAdmin[];
   setResultsList: Dispatch<SetStateAction<ResultAdmin[]>>;
   selectedRegattaIdForResultEdit: string;
   setSelectedRegattaIdForResultEdit: Dispatch<SetStateAction<string>>;
@@ -27,6 +30,7 @@ export function useAdminRegattas({
   isSuperadmin,
   regattaList,
   setRegattaList,
+  resultsList,
   setResultsList,
   selectedRegattaIdForResultEdit,
   setSelectedRegattaIdForResultEdit,
@@ -135,11 +139,21 @@ export function useAdminRegattas({
       toast.error("Missing regatta id — refresh the page and try again.");
       return;
     }
+    const reg = regattaList.find((r) => r.id === id);
+    const resultCount = resultsList.filter((row) => row.regattaId === id).length;
+    // resultsList may only hold the editor slice — prefer regatta.totalFleetSize hint when 0
+    const cascadeHint =
+      resultCount > 0
+        ? cascadeLine("Result rows (loaded)", resultCount)
+        : "• Result rows: all scores for this event (server cascade)";
     const ok = await confirm({
-      title: "Delete this regatta?",
+      title: `Delete ${reg?.name || "this regatta"}?`,
       message:
-        "All results associated with it will also be deleted.",
-      confirmLabel: "Delete",
+        `${reg?.name || "Regatta"} · ${regattaDateLabel(reg?.date)}\n` +
+        `${reg?.division ? `Division: ${reg.division}\n` : ""}` +
+        `${reg?.countsForRanking === false ? "Non-ranking event\n" : ""}` +
+        `\nCascade:\n${cascadeHint}\n\nThis cannot be undone.`,
+      confirmLabel: "Delete regatta",
       tone: "danger",
     });
     if (!ok) return;

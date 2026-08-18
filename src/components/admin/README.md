@@ -40,6 +40,7 @@ Shared types: `src/types/{sailor,regatta,result,import}.ts`.
 - `refreshResultsList({ regattaId? })` — per-regatta merge vs full replace + `hasFullResults`.
 - Import `onResultsUpdated`: single-regatta merge vs multi-regatta full dump replace.
 - Delete sailor/regatta cascades local results; merge updates lists via `mergeSailorsClient`.
+- Destructive confirms include entity names + cascade counts; bulk sailor delete requires typing `DELETE`.
 
 **IA:** primary tabs include **Database** (Sailors · Regattas · Results) and
 **Ops** (Suggestions · Claims · Promote · Support). URL sync:

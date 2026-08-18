@@ -26,6 +26,11 @@ export type ConfirmOptions = {
   cancelLabel?: string;
   /** Destructive actions use rose styling */
   tone?: "danger" | "default";
+  /**
+   * When set, user must type this exact string (case-sensitive) before
+   * Confirm is enabled — use for irreversible bulk deletes (e.g. "DELETE").
+   */
+  requireTypedConfirm?: string;
 };
 
 type FeedbackApi = {
@@ -49,6 +54,7 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
     opts: ConfirmOptions;
     resolve: (value: boolean) => void;
   } | null>(null);
+  const [typedConfirm, setTypedConfirm] = useState("");
 
   const pushToast = useCallback((message: string, tone: ToastTone) => {
     const id = ++toastId.current;
@@ -69,6 +75,7 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
 
   const confirm = useCallback((opts: ConfirmOptions) => {
     return new Promise<boolean>((resolve) => {
+      setTypedConfirm("");
       setConfirmState({ opts, resolve });
     });
   }, []);
@@ -78,6 +85,7 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
       current?.resolve(value);
       return null;
     });
+    setTypedConfirm("");
   }, []);
 
   const api = useMemo(() => ({ toast, confirm }), [toast, confirm]);
@@ -134,6 +142,36 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
                     {confirmState.opts.message}
                   </p>
                 )}
+                {confirmState.opts.requireTypedConfirm && (
+                  <div className="pt-2 space-y-1.5">
+                    <label
+                      htmlFor="sp-confirm-type"
+                      className="block text-[10px] font-bold uppercase tracking-wider text-slate-500"
+                    >
+                      Type{" "}
+                      <span className="font-mono text-rose-300">
+                        {confirmState.opts.requireTypedConfirm}
+                      </span>{" "}
+                      to confirm
+                    </label>
+                    <input
+                      id="sp-confirm-type"
+                      type="text"
+                      autoFocus
+                      autoComplete="off"
+                      value={typedConfirm}
+                      onChange={(e) => setTypedConfirm(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key !== "Enter") return;
+                        const required =
+                          confirmState.opts.requireTypedConfirm || "";
+                        if (typedConfirm === required) closeConfirm(true);
+                      }}
+                      className="w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-rose-500/50"
+                      placeholder={confirmState.opts.requireTypedConfirm}
+                    />
+                  </div>
+                )}
               </div>
               <button
                 type="button"
@@ -154,9 +192,13 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
               </button>
               <button
                 type="button"
-                autoFocus
+                autoFocus={!confirmState.opts.requireTypedConfirm}
+                disabled={
+                  Boolean(confirmState.opts.requireTypedConfirm) &&
+                  typedConfirm !== confirmState.opts.requireTypedConfirm
+                }
                 onClick={() => closeConfirm(true)}
-                className={`rounded-full px-4 py-2 text-xs font-bold text-white ${
+                className={`rounded-full px-4 py-2 text-xs font-bold text-white disabled:opacity-40 disabled:cursor-not-allowed ${
                   confirmState.opts.tone === "danger"
                     ? "bg-rose-600 hover:bg-rose-500"
                     : "bg-orange-600 hover:bg-orange-500"

@@ -5,12 +5,16 @@ import { parseApi, apiErr, apiStr, apiNum } from "@/components/admin/parseApi";
 import { emptyResultForm } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
+import { regattaDateLabel } from "@/types/regatta";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
+import type { SailorAdmin } from "@/types/sailor";
 
 type UseAdminResultsArgs = {
   isSuperadmin: boolean;
   regattaList: RegattaAdmin[];
+  sailorList: SailorAdmin[];
+  resultsList: ResultAdmin[];
   setResultsList: Dispatch<SetStateAction<ResultAdmin[]>>;
   refreshResultsList: (opts?: { regattaId?: string }) => Promise<void>;
   /** Owned by useAdminData (fetch coupling); threaded through for the editor UI. */
@@ -27,6 +31,8 @@ type UseAdminResultsArgs = {
 export function useAdminResults({
   isSuperadmin,
   regattaList,
+  sailorList,
+  resultsList,
   setResultsList,
   refreshResultsList,
   selectedRegattaIdForResultEdit,
@@ -204,9 +210,27 @@ export function useAdminResults({
       toast.error("Missing result id — refresh the page and try again.");
       return;
     }
+    const row = resultsList.find((r) => r.id === id);
+    const sailor = row
+      ? sailorList.find((s) => s.id === row.sailorId)
+      : undefined;
+    const reg = row
+      ? regattaList.find((r) => r.id === row.regattaId)
+      : undefined;
+    const sailorLabel = sailor
+      ? `${sailor.name} · ${sailor.sailNumber || "—"}`
+      : row?.sailorId || "Unknown sailor";
+    const regLabel = reg
+      ? `${reg.name} (${regattaDateLabel(reg.date)})`
+      : row?.regattaId || "Unknown regatta";
     const ok = await confirm({
       title: "Delete this result?",
-      confirmLabel: "Delete",
+      message:
+        `${sailorLabel}\n${regLabel}\n` +
+        `Rank: ${row?.rank ?? "—"}\n` +
+        `${row?.isOverseasCommitment ? "Status: Overseas\n" : row?.isDns || row?.isDNS ? "Status: DNS\n" : ""}` +
+        `\nThis removes only this score row. It cannot be undone.`,
+      confirmLabel: "Delete result",
       tone: "danger",
     });
     if (!ok) return;

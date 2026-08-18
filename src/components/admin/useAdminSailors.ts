@@ -14,6 +14,7 @@ import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { birthYear } from "@/lib/age";
 import { currentPeriodFromSgToday, isHalfBoundaryYmd } from "@/lib/datesSg";
 import { errorMessage } from "@/lib/errors";
+import { cascadeLine, summarizeNames } from "@/lib/confirmCopy";
 import {
   isInSgSeries,
   seriesMembershipLabel,
@@ -602,12 +603,26 @@ export function useAdminSailors({
       toast.error("Select at least one sailor to delete.");
       return;
     }
+    const selectedRows = sailorList.filter((s) =>
+      selectedSailors.includes(s.id)
+    );
+    const resultCount = resultsList.filter((r) =>
+      selectedSailors.includes(r.sailorId)
+    ).length;
+    const { listed, extra } = summarizeNames(
+      selectedRows.map((s) => `${s.name} · ${s.sailNumber || "—"}`)
+    );
     const ok = await confirm({
       title: `Delete ${selectedSailors.length} sailor(s)?`,
       message:
-        "Delete selected sailors and all their regatta results? This cannot be undone.",
-      confirmLabel: "Delete",
+        `This permanently removes:\n${listed}` +
+        (extra ? `\n• +${extra} more` : "") +
+        `\n\nCascade:\n${cascadeLine("Regatta results", resultCount)}\n` +
+        `• Aliases / claim links for these athletes\n\n` +
+        `This cannot be undone.`,
+      confirmLabel: "Delete permanently",
       tone: "danger",
+      requireTypedConfirm: "DELETE",
     });
     if (!ok) return;
     try {
@@ -786,10 +801,17 @@ export function useAdminSailors({
       toast.error("Missing sailor id — refresh the page and try again.");
       return;
     }
+    const sailor = sailorList.find((s) => s.id === id);
+    const resultCount = resultsList.filter((r) => r.sailorId === id).length;
+    const label = sailor
+      ? `${sailor.name} · ${sailor.sailNumber || "—"}`
+      : id;
     const ok = await confirm({
-      title: "Delete this sailor?",
-      message: "Their results will also be deleted.",
-      confirmLabel: "Delete",
+      title: `Delete ${sailor?.name || "this sailor"}?`,
+      message:
+        `${label}\n\nCascade:\n${cascadeLine("Regatta results", resultCount)}\n` +
+        `• Aliases linked to this athlete\n\nThis cannot be undone.`,
+      confirmLabel: "Delete sailor",
       tone: "danger",
     });
     if (!ok) return;

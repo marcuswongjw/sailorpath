@@ -335,8 +335,11 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                         void (async () => {
                           const ok = await confirm({
                             title: `Unlink owner from ${c.sailorName}?`,
-                            message: "Profile becomes unclaimed.",
-                            confirmLabel: "Unlink",
+                            message:
+                              `Sailor: ${c.sailorName}\n` +
+                              `Requester claim will stay in history as unlinked.\n\n` +
+                              `The profile becomes unclaimed — private logbook access for the current owner ends.`,
+                            confirmLabel: "Unlink owner",
                             tone: "danger",
                           });
                           if (!ok) return;

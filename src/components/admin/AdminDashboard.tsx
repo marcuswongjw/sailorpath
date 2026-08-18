@@ -152,6 +152,8 @@ function AdminDashboardInner() {
   const results = useAdminResults({
     isSuperadmin,
     regattaList: data.regattaList,
+    sailorList: data.sailorList,
+    resultsList: data.resultsList,
     setResultsList: data.setResultsList,
     refreshResultsList: data.refreshResultsList,
     selectedRegattaIdForResultEdit: data.selectedRegattaIdForResultEdit,
@@ -184,6 +186,7 @@ function AdminDashboardInner() {
     isSuperadmin,
     regattaList: data.regattaList,
     setRegattaList: data.setRegattaList,
+    resultsList: data.resultsList,
     setResultsList: data.setResultsList,
     selectedRegattaIdForResultEdit: data.selectedRegattaIdForResultEdit,
     setSelectedRegattaIdForResultEdit: data.setSelectedRegattaIdForResultEdit,
