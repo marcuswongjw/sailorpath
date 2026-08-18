@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DbOffline } from "@/components/DbOffline";
+import { RegattaEventHeader } from "@/components/RegattaEventHeader";
 import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { getPercentileBadge } from "@/lib/ranking";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import { birthYear } from "@/lib/age";
+import { formatGenderLabel } from "@/lib/gender";
 
 export const dynamic = "force-dynamic";
 
@@ -39,27 +41,15 @@ export default async function Ilca4RegattaDetailPage({
 
   return (
     <div className="mx-auto max-w-4xl px-3 sm:px-4 py-8 sm:py-10 space-y-5 sm:space-y-6 w-full min-w-0">
-      <Link
-        href="/sg/ilca4/regattas"
-        className="text-xs font-bold text-sky-400"
-      >
-        ← ILCA 4 regattas
-      </Link>
-      <div className="min-w-0">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-sky-400/90 mb-1">
-          ILCA 4
-        </p>
-        <h1 className="text-xl sm:text-2xl font-black text-white leading-snug break-words">
-          {regatta.name}
-        </h1>
-        <p className="text-[12px] sm:text-xs text-slate-400 mt-1.5 leading-relaxed">
-          {regatta.date} · {regatta.division || "Open"} · fleet{" "}
-          {regatta.totalFleetSize}
-          {regatta.raceCount != null
-            ? ` · ${regatta.raceCount} race${regatta.raceCount === 1 ? "" : "s"}`
-            : ""}
-        </p>
-      </div>
+      <RegattaEventHeader
+        name={regatta.name}
+        date={String(regatta.date)}
+        division={regatta.division || "Open"}
+        totalFleetSize={regatta.totalFleetSize}
+        raceCount={regatta.raceCount ?? null}
+        series="ilca4"
+        countsForRanking={regatta.countsForRanking !== false}
+      />
 
       {/* Mobile cards */}
       <div className="sm:hidden space-y-2">
@@ -88,7 +78,13 @@ export default async function Ilca4RegattaDetailPage({
                     </Link>
                   </div>
                   <p className="text-[11px] text-slate-500 mt-1">
-                    {[r.nationality, r.gender, r.birthYear ?? birthYear(r.dob)]
+                    {[
+                      r.nationality,
+                      formatGenderLabel(r.gender) !== "—"
+                        ? formatGenderLabel(r.gender)
+                        : null,
+                      r.birthYear ?? birthYear(r.dob),
+                    ]
                       .filter(Boolean)
                       .join(" · ") || "—"}
                   </p>
@@ -181,7 +177,7 @@ export default async function Ilca4RegattaDetailPage({
                     {r.nationality || "—"}
                   </td>
                   <td className="px-4 py-3 text-center text-slate-300">
-                    {r.gender || "—"}
+                    {formatGenderLabel(r.gender)}
                   </td>
                   <td className="px-4 py-3 text-center font-mono text-slate-300">
                     {r.birthYear ?? birthYear(r.dob) ?? "—"}

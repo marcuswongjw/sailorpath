@@ -293,6 +293,14 @@ export function AdminResultsPanel({
           </div>
         )}
 
+      {!selectedRegattaIdForResultEdit && (
+        <AdminEmptyState
+          icon={Search}
+          title="Choose a regatta to edit results"
+          description="Use the searchable picker above (filter by series / non-ranking). Then add scores, fill DNS, or filter sailors in the table."
+        />
+      )}
+
       {/* Result Form Card */}
       {editingResultId && (
         <div className="glass-panel rounded-3xl p-6 border border-white/5 space-y-4">

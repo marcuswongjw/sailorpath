@@ -333,6 +333,7 @@ export async function getRegattaBySlug(slug: string) {
       geography: row.geography ?? "SG",
       boatClass: row.boatClass ?? "Optimist",
       raceCount: row.raceCount,
+      countsForRanking: row.countsForRanking !== false,
     } satisfies RegattaRecord;
   });
 }

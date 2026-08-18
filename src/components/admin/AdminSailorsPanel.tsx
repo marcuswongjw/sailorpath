@@ -260,13 +260,17 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                   </p>
                 </div>
 
-                {/* Duplicate finder — always available (not selection-dependent) */}
+                {/* Duplicate finder — always available; bulk tip only when nothing selected */}
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-[11px] text-slate-500">
-                    Tick rows to bulk-edit, merge, or delete. Use{" "}
-                    <strong className="text-slate-400">Find similar names</strong> to spot
-                    duplicates.
-                  </p>
+                  {selectedSailors.length === 0 ? (
+                    <p className="text-[11px] text-slate-500">
+                      Tick rows to open bulk edit, merge, or delete.
+                    </p>
+                  ) : (
+                    <p className="text-[11px] text-slate-500">
+                      Bulk toolbar is open above the table.
+                    </p>
+                  )}
                   <button
                     type="button"
                     onClick={() => setShowDuplicateFinder((v) => !v)}

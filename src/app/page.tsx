@@ -133,7 +133,7 @@ export default function HomePage() {
           journey from Optimist to ILCA — all in one place.
         </p>
 
-        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-2.5 w-full max-w-md mx-auto sm:max-w-none sm:justify-center sm:gap-3">
+        <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3 w-full max-w-md mx-auto sm:max-w-none">
           <Link
             href="/rankings"
             className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
@@ -141,12 +141,15 @@ export default function HomePage() {
             <Trophy className="h-4 w-4 shrink-0" />
             View Live Rankings
           </Link>
-          <Link
-            href="/claim-profile"
-            className="w-full sm:w-auto rounded-full border border-white/15 bg-white/5 px-6 py-3.5 text-xs font-bold text-white hover:border-orange-500/40 hover:bg-white/10 transition-all text-center min-h-[44px] inline-flex items-center justify-center"
-          >
-            Claim this profile
-          </Link>
+          <p className="text-[12px] sm:text-[13px] text-slate-400">
+            Sailor or parent?{" "}
+            <Link
+              href="/claim-profile"
+              className="font-bold text-orange-400 hover:text-orange-300 underline-offset-2 hover:underline"
+            >
+              Claim a profile
+            </Link>
+          </p>
         </div>
 
         <p className="mx-auto mt-4 max-w-2xl text-[11px] sm:text-[12px] text-slate-500 leading-relaxed">
@@ -468,8 +471,14 @@ export default function HomePage() {
               Roadmap
             </h2>
             <p className="mt-3 text-slate-400 text-sm leading-relaxed">
-              Rankings, claimed profiles, and the Parent Dashboard are live.
-              Here&apos;s what&apos;s coming next.
+              Rankings, claimed profiles, and the{" "}
+              <Link
+                href="/parent"
+                className="text-emerald-300 font-semibold hover:text-emerald-200"
+              >
+                Parent Dashboard
+              </Link>{" "}
+              are live today. Coach squads and club tools are next.
             </p>
           </div>
 
@@ -488,22 +497,30 @@ export default function HomePage() {
                   Parent Dashboard
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Link your account to your child&apos;s profile and open{" "}
+                  Already shipping: link a child, then open{" "}
                   <Link
                     href="/parent"
                     className="text-emerald-300 font-semibold hover:text-emerald-200"
                   >
                     /parent
                   </Link>{" "}
-                  for progress, ranking movement, and private notes. More family
-                  tools (multi-child alerts, calendars) land in Q3 2026.
+                  for rankings, results, and private notes. Coming later:
+                  multi-child alerts and calendars.
                 </p>
-                <Link
-                  href="/claim-profile"
-                  className="mt-3 inline-block text-[12px] font-bold text-emerald-400 hover:text-emerald-300"
-                >
-                  Link a child profile →
-                </Link>
+                <div className="mt-3 flex flex-wrap gap-3 items-center">
+                  <Link
+                    href="/parent"
+                    className="inline-block text-[12px] font-bold text-emerald-400 hover:text-emerald-300"
+                  >
+                    Open Parent Dashboard →
+                  </Link>
+                  <Link
+                    href="/claim-profile"
+                    className="inline-block text-[12px] font-semibold text-slate-400 hover:text-white"
+                  >
+                    Link a child first
+                  </Link>
+                </div>
                 <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-slate-500">
                   Waitlist for next family features
                 </p>
