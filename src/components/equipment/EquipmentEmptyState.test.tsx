@@ -35,7 +35,23 @@ describe("EquipmentEmptyState UI", () => {
       />
     );
 
-    expect(screen.getByText(/no equipment logged yet/i)).toBeInTheDocument();
+    expect(screen.getByText(/no gear logged yet/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/only the sailor can add equipment/i)
+    ).toBeInTheDocument();
     expect(screen.queryByRole("button")).not.toBeInTheDocument();
+  });
+
+  it("reminds owners that gear stays private", () => {
+    render(
+      <EquipmentEmptyState
+        isOwner
+        onQuickAdd={() => {}}
+        onOpenFullRig={() => {}}
+      />
+    );
+    expect(
+      screen.getByText(/hull, sail, and foils stay private/i)
+    ).toBeInTheDocument();
   });
 });

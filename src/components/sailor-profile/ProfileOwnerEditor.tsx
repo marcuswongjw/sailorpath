@@ -119,8 +119,9 @@ export function ProfileOwnerEditor({
             className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
           />
           <p className="mt-1 text-[10px] text-neutral-600 leading-snug">
-            Birth year is always public. Full date shows only if you enable
-            “Share full date of birth” under Privacy.
+            Public profiles show the birth year only (e.g. Born 2013). Turn on
+            “Also share month &amp; day” under Privacy if you want the full date
+            visible.
           </p>
         </label>
         <label className="block">
@@ -192,8 +193,9 @@ export function ProfileOwnerEditor({
             Privacy
           </p>
           <p className="text-[10px] text-neutral-600 leading-snug">
-            Birth year is public when set. Full DOB and weight stay private
-            unless shared. Equipment is always private (owner only).
+            Birth year is always shown on the public profile when set. Month and
+            day stay private unless you share them. Weight stays private unless
+            shared. Equipment is always private (sailor and linked parents only).
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {(
@@ -204,7 +206,7 @@ export function ProfileOwnerEditor({
                   set: setIsPublicWeight,
                 },
                 {
-                  label: "Share full DOB",
+                  label: "Also share month & day",
                   checked: isPublicDob,
                   set: setIsPublicDob,
                 },

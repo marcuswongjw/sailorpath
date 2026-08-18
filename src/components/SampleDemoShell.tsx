@@ -53,15 +53,14 @@ function PrivacySettingsBody({
   onSave: () => void;
 }) {
   const [weight, setWeight] = useState(false);
-  const [equipment, setEquipment] = useState(false);
   const [fullDob, setFullDob] = useState(false);
 
   return (
     <div className="space-y-4">
       <p className="text-[12px] text-neutral-400 leading-relaxed">
         {childLabel
-          ? `Manage ${childLabel}'s privacy. Birth year is public for fleet eligibility.`
-          : "Birth year is public for fleet eligibility. Weight and equipment stay private unless shared."}
+          ? `Manage ${childLabel}'s privacy. Birth year is always public when set; month and day stay private unless shared. Equipment is always private to the family.`
+          : "Birth year is always public when set. Month/day and weight stay private unless shared. Equipment is always private to the sailor and linked parents."}
       </p>
       <div className="space-y-2">
         {(
@@ -73,14 +72,8 @@ function PrivacySettingsBody({
               set: setWeight,
             },
             {
-              label: "Share equipment",
-              hint: "Show hull / sail / gear publicly",
-              checked: equipment,
-              set: setEquipment,
-            },
-            {
-              label: "Share full date of birth",
-              hint: "Also show day/month (year is always public)",
+              label: "Also share month & day",
+              hint: "Year is always public; this also shows the full date",
               checked: fullDob,
               set: setFullDob,
             },

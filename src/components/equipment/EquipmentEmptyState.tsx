@@ -17,12 +17,12 @@ export function EquipmentEmptyState({
       </div>
       <div>
         <p className="text-sm font-bold text-white">
-          {isOwner ? "Build your gear bag" : "No equipment logged yet"}
+          {isOwner ? "Build your gear bag" : "No gear logged yet"}
         </p>
         <p className="text-[11px] text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
           {isOwner
-            ? "Start with the hull and race sail you use most. You can add the rest anytime."
-            : "This sailor hasn’t added private gear yet."}
+            ? "Hull, sail, and foils stay private — only you and linked parents can see them. Start with what you race most."
+            : "Only the sailor can add equipment from their profile. Gear stays private to the family."}
         </p>
       </div>
       {isOwner && (

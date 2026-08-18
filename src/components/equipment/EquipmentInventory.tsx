@@ -57,9 +57,12 @@ export function EquipmentInventory({
             Equipment
           </h2>
         </div>
-        <p className="text-xs text-slate-500 text-center py-8">
-          Equipment is private to the owner.
-        </p>
+        <div className="text-center py-8 space-y-1 px-2">
+          <p className="text-sm font-bold text-white">Equipment is private</p>
+          <p className="text-xs text-slate-500 leading-relaxed max-w-xs mx-auto">
+            Gear details are only visible to the sailor and linked parents.
+          </p>
+        </div>
       </section>
     );
   }
