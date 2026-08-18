@@ -1,23 +1,47 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
 
+type OpenMenu = "optimist" | "ilca" | null;
+
 export function SiteHeader() {
   const { email, role, isSuperadmin, owned, ready, signOut } = useAccount();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
+  const navRef = useRef<HTMLElement>(null);
 
   const primaryProfile = owned[0] || null;
+  const showClaimCta = ready && !email;
+
+  useEffect(() => {
+    if (!openMenu) return;
+    const onDoc = (e: MouseEvent) => {
+      if (!navRef.current?.contains(e.target as Node)) setOpenMenu(null);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenMenu(null);
+    };
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [openMenu]);
 
   const optimistLinks = (
     <>
       <Link
         href="/sg/optimist/gold"
         prefetch
-        onClick={() => setMobileOpen(false)}
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
         SG Gold Fleet
@@ -25,14 +49,20 @@ export function SiteHeader() {
       <Link
         href="/sg/optimist/silver"
         prefetch
-        onClick={() => setMobileOpen(false)}
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
         SG Silver Fleet
       </Link>
       <Link
         href="/sg/optimist/regattas"
-        onClick={() => setMobileOpen(false)}
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
         SG Regattas
@@ -40,7 +70,10 @@ export function SiteHeader() {
       {isSuperadmin && (
         <Link
           href="/sg/optimist/goldsailors"
-          onClick={() => setMobileOpen(false)}
+          onClick={() => {
+            setMobileOpen(false);
+            setOpenMenu(null);
+          }}
           className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
         >
           SG All Gold Fleet Sailors
@@ -53,14 +86,20 @@ export function SiteHeader() {
     <>
       <Link
         href="/sg/ilca4"
-        onClick={() => setMobileOpen(false)}
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
         SG Ranking
       </Link>
       <Link
         href="/sg/ilca4/regattas"
-        onClick={() => setMobileOpen(false)}
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
         SG Regattas
@@ -70,29 +109,62 @@ export function SiteHeader() {
 
   const navLinks = (
     <>
-      <div className="relative group">
+      <Link
+        href="/rankings"
+        prefetch
+        className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0"
+      >
+        Rankings
+      </Link>
+      <div className="relative">
         <button
           type="button"
-          className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none"
+          aria-expanded={openMenu === "optimist"}
+          aria-haspopup="menu"
+          onClick={() =>
+            setOpenMenu((m) => (m === "optimist" ? null : "optimist"))
+          }
+          className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none focus-visible:text-white"
         >
           Optimist
-          <ChevronDown className="h-4 w-4 text-slate-500 group-hover:text-slate-300" />
+          <ChevronDown
+            className={`h-4 w-4 text-slate-500 transition-transform ${
+              openMenu === "optimist" ? "rotate-180 text-slate-300" : ""
+            }`}
+          />
         </button>
-        <div className="absolute left-0 top-[52px] hidden group-hover:block w-56 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50">
-          {optimistLinks}
-        </div>
+        {openMenu === "optimist" && (
+          <div
+            role="menu"
+            className="absolute left-0 top-[52px] w-56 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50"
+          >
+            {optimistLinks}
+          </div>
+        )}
       </div>
-      <div className="relative group">
+      <div className="relative">
         <button
           type="button"
-          className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none"
+          aria-expanded={openMenu === "ilca"}
+          aria-haspopup="menu"
+          onClick={() => setOpenMenu((m) => (m === "ilca" ? null : "ilca"))}
+          className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none focus-visible:text-white"
         >
           ILCA 4
-          <ChevronDown className="h-4 w-4 text-slate-500 group-hover:text-slate-300" />
+          <ChevronDown
+            className={`h-4 w-4 text-slate-500 transition-transform ${
+              openMenu === "ilca" ? "rotate-180 text-slate-300" : ""
+            }`}
+          />
         </button>
-        <div className="absolute left-0 top-[52px] hidden group-hover:block w-52 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50">
-          {ilcaLinks}
-        </div>
+        {openMenu === "ilca" && (
+          <div
+            role="menu"
+            className="absolute left-0 top-[52px] w-52 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50"
+          >
+            {ilcaLinks}
+          </div>
+        )}
       </div>
       <Link
         href="/search"
@@ -127,7 +199,6 @@ export function SiteHeader() {
           className="text-sm font-semibold text-emerald-400 hover:text-emerald-300"
         >
           {(() => {
-            // Prefer parent if any linked profile is a parent claim; sailor if all self
             const rels = owned
               .map((o) => String(o.ownerRelation || "").toLowerCase())
               .filter(Boolean);
@@ -147,9 +218,7 @@ export function SiteHeader() {
       {primaryProfile && (
         <Link
           href={
-            owned.length === 1
-              ? `/${primaryProfile.handle}`
-              : "/parent"
+            owned.length === 1 ? `/${primaryProfile.handle}` : "/parent"
           }
           onClick={() => setMobileOpen(false)}
           className="text-sm font-semibold text-white hover:text-orange-300"
@@ -183,6 +252,13 @@ export function SiteHeader() {
   ) : (
     <>
       <Link
+        href="/claim-profile"
+        onClick={() => setMobileOpen(false)}
+        className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-500"
+      >
+        Claim this profile
+      </Link>
+      <Link
         href="/login"
         className="text-sm font-semibold text-slate-400 hover:text-white"
       >
@@ -190,7 +266,7 @@ export function SiteHeader() {
       </Link>
       <Link
         href="/register"
-        className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-500"
+        className="text-sm font-semibold text-slate-400 hover:text-white"
       >
         Create account
       </Link>
@@ -201,9 +277,14 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 w-full max-w-[100vw] border-b border-white/5 bg-[#090a0f]/95 backdrop-blur-md overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
       <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
         <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
-          <div className="flex items-center gap-3 lg:gap-10 min-w-0 flex-1">
+          <div className="flex items-center gap-3 lg:gap-8 min-w-0 flex-1">
             <BrandLogoLink />
-            <nav className="hidden md:flex items-center gap-6">{navLinks}</nav>
+            <nav
+              ref={navRef}
+              className="hidden md:flex items-center gap-5 lg:gap-6"
+            >
+              {navLinks}
+            </nav>
           </div>
 
           <div className="hidden md:flex items-center gap-2 lg:gap-3 flex-wrap justify-end">
@@ -214,7 +295,11 @@ export function SiteHeader() {
             type="button"
             className="md:hidden rounded-lg border border-white/10 p-2.5 text-slate-300 touch-manipulation min-h-[2.5rem] min-w-[2.5rem] inline-flex items-center justify-center"
             aria-label="Toggle menu"
-            onClick={() => setMobileOpen((o) => !o)}
+            aria-expanded={mobileOpen}
+            onClick={() => {
+              setOpenMenu(null);
+              setMobileOpen((o) => !o);
+            }}
           >
             {mobileOpen ? (
               <X className="h-5 w-5" />
@@ -226,7 +311,23 @@ export function SiteHeader() {
 
         {mobileOpen && (
           <div className="md:hidden border-t border-white/5 py-3 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col gap-0.5 max-h-[min(70vh,32rem)] overflow-y-auto">
-            <p className="px-1 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            <Link
+              href="/rankings"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-xl px-3 py-3 text-sm font-semibold text-orange-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              Rankings
+            </Link>
+            {showClaimCta && (
+              <Link
+                href="/claim-profile"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-xl px-3 py-3 text-sm font-bold text-white bg-orange-600/90 hover:bg-orange-500 touch-manipulation min-h-[2.75rem] flex items-center justify-center"
+              >
+                Claim this profile
+              </Link>
+            )}
+            <p className="px-1 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
               Optimist
             </p>
             <Link

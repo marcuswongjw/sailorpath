@@ -10,12 +10,25 @@ vi.mock("@/lib/clientUsage", () => ({
   getVisitorId: () => "vid-test",
 }));
 
+async function fillClaimForm(
+  user: ReturnType<typeof userEvent.setup>,
+  noteText: string
+) {
+  await user.selectOptions(
+    screen.getByRole("combobox"),
+    "parent"
+  );
+  const note = screen.getByPlaceholderText(/parent of test sailor/i);
+  await user.clear(note);
+  await user.type(note, noteText);
+}
+
 describe("ClaimPanel UI", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
 
-  it("keeps submit disabled until the note is long enough", async () => {
+  it("keeps submit disabled until relation and note are ready", async () => {
     const user = userEvent.setup();
     render(
       <ClaimPanel
@@ -31,11 +44,10 @@ describe("ClaimPanel UI", () => {
     const note = screen.getByPlaceholderText(/parent of test sailor/i);
     expect(button).toBeDisabled();
 
-    await user.type(note, "short");
+    await user.type(note, "Parent of Test Sailor at CSC");
     expect(button).toBeDisabled();
 
-    await user.clear(note);
-    await user.type(note, "Parent of Test Sailor at CSC");
+    await user.selectOptions(screen.getByRole("combobox"), "parent");
     expect(button).toBeEnabled();
   });
 
@@ -71,10 +83,7 @@ describe("ClaimPanel UI", () => {
       />
     );
 
-    await user.type(
-      screen.getByPlaceholderText(/parent of test sailor/i),
-      "Parent of Test Sailor at CSC"
-    );
+    await fillClaimForm(user, "Parent of Test Sailor at CSC");
     await user.click(screen.getByRole("button", { name: /submit claim/i }));
 
     await waitFor(() => {
@@ -113,10 +122,7 @@ describe("ClaimPanel UI", () => {
       />
     );
 
-    await user.type(
-      screen.getByPlaceholderText(/parent of test sailor/i),
-      "Parent of Test Sailor at CSC"
-    );
+    await fillClaimForm(user, "Parent of Test Sailor at CSC");
     await user.click(screen.getByRole("button", { name: /submit claim/i }));
 
     await waitFor(() => {

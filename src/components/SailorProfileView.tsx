@@ -1129,9 +1129,7 @@ export function SailorProfileView({
               className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-2 text-[12px] font-bold text-white hover:bg-orange-400"
             >
               <UserPlus className="h-3.5 w-3.5" />
-              {!demoMode && !isLoggedIn
-                ? "Log in to claim"
-                : "Claim this profile"}
+              Claim this profile
             </button>
           </div>
         );
@@ -1336,7 +1334,7 @@ export function SailorProfileView({
                   className="inline-flex items-center gap-1.5 rounded-lg bg-white text-neutral-900 px-2.5 py-1 text-[11px] font-semibold"
                 >
                   <UserPlus className="h-3 w-3" />
-                  Log in to claim
+                  Claim this profile
                 </Link>
               )}
               {canClaim && claimStatus !== "pending" && (
@@ -1354,10 +1352,10 @@ export function SailorProfileView({
                 >
                   <UserPlus className="h-3 w-3" />
                   {demoMode
-                    ? "Claim (demo)"
+                    ? "Claim this profile (demo)"
                     : claimPanelOpen
                       ? "Cancel"
-                      : "Claim profile"}
+                      : "Claim this profile"}
                 </button>
               )}
               {canClaim && claimStatus === "pending" && (
@@ -1489,9 +1487,41 @@ export function SailorProfileView({
         </div>
       )}
 
+      {/* Sticky jump links — long dual-class profiles */}
+      <nav
+        aria-label="Profile sections"
+        className="sticky top-14 sm:top-16 z-20 -mx-1 px-1 py-1.5 flex gap-1.5 overflow-x-auto scrollbar-thin bg-[#090a0f]/95 backdrop-blur-md border-b border-white/5"
+      >
+        {resultsTab !== "journey" && activeStanding && (
+          <a
+            href="#profile-standing"
+            className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40 touch-manipulation"
+          >
+            Standing
+          </a>
+        )}
+        <a
+          href="#profile-results"
+          className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40 touch-manipulation"
+        >
+          {resultsTab === "journey" ? "Journey" : "Results"}
+        </a>
+        {showEquipmentSection && (
+          <a
+            href="#profile-equipment"
+            className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40 touch-manipulation"
+          >
+            Equipment
+          </a>
+        )}
+      </nav>
+
       {/* ── Series / ILCA national standing ─────────────────── */}
       {activeStanding && resultsTab !== "journey" && (
-        <section className={`${cardClass} p-4 sm:p-5`}>
+        <section
+          id="profile-standing"
+          className={`${cardClass} p-4 sm:p-5 scroll-mt-28`}
+        >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="flex items-start gap-2.5 min-w-0">
               <div
@@ -1776,6 +1806,7 @@ export function SailorProfileView({
       )}
 
       {/* ── Regatta results ────────────────────────────────── */}
+      <div id="profile-results" className="scroll-mt-28 space-y-4">
       <section className={`${cardClass} overflow-hidden`}>
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex flex-wrap items-end justify-between gap-2">
           <div className="min-w-0 flex-1">
@@ -2401,8 +2432,9 @@ export function SailorProfileView({
           </>
         ) : null}
       </section>
+      </div>
 
-      {/* ── Journey + Equipment (journey lives in class tabs when dual-class) ── */}
+      {/* ── Journey + Equipment (equipment stays visible on Journey tab) ── */}
       <div
         className={`grid grid-cols-1 gap-4 ${
           showEquipmentSection && !dualClass ? "lg:grid-cols-2" : ""
@@ -2422,7 +2454,7 @@ export function SailorProfileView({
           />
         )}
 
-        {showEquipmentSection && resultsTab !== "journey" && (
+        {showEquipmentSection && (
         <EquipmentInventory
           sailorId={initialSailor.id}
           isOwner={isOwner}
@@ -2432,6 +2464,13 @@ export function SailorProfileView({
               displaySailor.sailNumberIlca4 ||
               displaySailor.ilca4NationalList
           )}
+          preferredBoatClass={
+            resultsTab === "ilca4"
+              ? "ilca4"
+              : resultsTab === "optimist"
+                ? "optimist"
+                : null
+          }
           regattaOptions={(results || [])
             .filter((r) => r.regattaId)
             .map((r) => ({

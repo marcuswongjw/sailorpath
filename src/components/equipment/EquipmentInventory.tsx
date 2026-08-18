@@ -22,6 +22,7 @@ export function EquipmentInventory({
   isOwner,
   canSeeEquipment,
   mayHaveIlca,
+  preferredBoatClass = null,
   regattaOptions = [],
   cardClass = "rounded-2xl border border-white/5 bg-[#131520]/80",
   onGearByRegatta,
@@ -31,6 +32,7 @@ export function EquipmentInventory({
     mayHaveIlca,
     onGearByRegatta,
     regattaOptions,
+    preferredBoatClass,
   });
 
   if (eq.loading) {
@@ -50,7 +52,10 @@ export function EquipmentInventory({
 
   if (eq.isPrivate || !canSeeEquipment) {
     return (
-      <section className={`${cardClass} p-4 sm:p-5`}>
+      <section
+        id="profile-equipment"
+        className={`${cardClass} p-4 sm:p-5 scroll-mt-24`}
+      >
         <div className="flex items-center gap-2 mb-2">
           <Settings className="h-3.5 w-3.5 text-orange-400/90" />
           <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
@@ -69,7 +74,8 @@ export function EquipmentInventory({
 
   return (
     <section
-      className={`${cardClass} p-4 sm:p-5 space-y-4 min-w-0 overflow-x-clip relative`}
+      id="profile-equipment"
+      className={`${cardClass} p-4 sm:p-5 space-y-4 min-w-0 overflow-x-clip relative scroll-mt-24`}
     >
       <EquipmentToast toast={eq.toast} />
 

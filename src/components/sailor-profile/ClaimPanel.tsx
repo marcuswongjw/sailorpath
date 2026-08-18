@@ -36,13 +36,15 @@ export function ClaimPanel({
   onClose,
   onResult,
 }: Props) {
-  const [relation, setRelation] = useState<"sailor" | "parent" | "other">(
-    "parent"
-  );
+  /** Empty until chosen — avoid biasing sailors toward Parent. */
+  const [relation, setRelation] = useState<
+    "" | "sailor" | "parent" | "other"
+  >("");
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
 
   const submit = async () => {
+    if (!relation) return;
     setBusy(true);
     try {
       const acq = getAcquisition();
@@ -73,10 +75,15 @@ export function ClaimPanel({
       <select
         value={relation}
         onChange={(e) =>
-          setRelation(e.target.value as "sailor" | "parent" | "other")
+          setRelation(
+            e.target.value as "" | "sailor" | "parent" | "other"
+          )
         }
         className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
       >
+        <option value="" disabled>
+          Select relation…
+        </option>
         <option value="parent">Parent / guardian</option>
         <option value="sailor">The sailor</option>
         <option value="other">Coach / other</option>
@@ -90,7 +97,7 @@ export function ClaimPanel({
       />
       <button
         type="button"
-        disabled={busy || !isClaimNoteReady(note)}
+        disabled={busy || !relation || !isClaimNoteReady(note)}
         onClick={() => void submit()}
         className="rounded-lg bg-orange-500 text-white px-4 py-2 text-[11px] font-semibold disabled:opacity-50"
       >

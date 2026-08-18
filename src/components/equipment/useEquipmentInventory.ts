@@ -29,7 +29,11 @@ import { defaultFullRigBrand } from "./utils";
 
 type HookProps = Pick<
   EquipmentInventoryProps,
-  "sailorId" | "mayHaveIlca" | "onGearByRegatta" | "regattaOptions"
+  | "sailorId"
+  | "mayHaveIlca"
+  | "onGearByRegatta"
+  | "regattaOptions"
+  | "preferredBoatClass"
 >;
 
 export function useEquipmentInventory({
@@ -37,6 +41,7 @@ export function useEquipmentInventory({
   mayHaveIlca,
   onGearByRegatta,
   regattaOptions = [],
+  preferredBoatClass = null,
 }: HookProps) {
   const { toast: feedbackToast, confirm } = useFeedback();
   const [items, setItems] = useState<EquipmentItemDto[]>([]);
@@ -45,6 +50,14 @@ export function useEquipmentInventory({
   const [isPrivate, setIsPrivate] = useState(false);
   const [classTab, setClassTab] = useState<EquipmentBoatClass>("optimist");
   const [ilcaUnlocked, setIlcaUnlocked] = useState(false);
+
+  // Sync with dual-class profile tabs (Optimist / ILCA 4)
+  useEffect(() => {
+    if (preferredBoatClass === "optimist" || preferredBoatClass === "ilca4") {
+      setClassTab(preferredBoatClass);
+      if (preferredBoatClass === "ilca4") setIlcaUnlocked(true);
+    }
+  }, [preferredBoatClass]);
   const [modal, setModal] = useState<ModalKind>(null);
   const [editing, setEditing] = useState<EquipmentItemDto | null>(null);
   const [form, setForm] = useState(emptyForm);

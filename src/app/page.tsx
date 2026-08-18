@@ -51,7 +51,7 @@ export default function HomePage() {
             href="/claim-profile"
             className="w-full sm:w-auto rounded-full border border-white/15 bg-white/5 px-6 py-3.5 text-xs font-bold text-white hover:border-orange-500/40 hover:bg-white/10 transition-all text-center min-h-[44px] inline-flex items-center justify-center"
           >
-            Claim My Profile
+            Claim this profile
           </Link>
         </div>
 
@@ -183,7 +183,7 @@ export default function HomePage() {
                 href="/claim-profile"
                 className="mt-4 text-[12px] font-bold text-orange-400 hover:text-orange-300"
               >
-                Claim My Profile →
+                Claim this profile →
               </Link>
             </article>
 

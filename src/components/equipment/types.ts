@@ -14,6 +14,8 @@ export type EquipmentInventoryProps = {
   isOwner: boolean;
   canSeeEquipment: boolean;
   mayHaveIlca: boolean;
+  /** When profile dual-class tab changes, sync equipment class. */
+  preferredBoatClass?: EquipmentBoatClass | null;
   regattaOptions?: { id: string; name: string; date: string }[];
   cardClass?: string;
   onGearByRegatta?: (

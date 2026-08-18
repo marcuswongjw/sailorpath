@@ -75,7 +75,7 @@ export default function ClaimProfilePage() {
               Submit a claim on your profile
             </p>
             <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              On the sailor page, use Claim profile and choose{" "}
+              On the sailor page, use Claim this profile and choose{" "}
               <strong className="text-slate-300">Parent</strong> or{" "}
               <strong className="text-slate-300">Sailor</strong>. An admin will
               review and link the account. Parents then use the{" "}
