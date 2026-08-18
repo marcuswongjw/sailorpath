@@ -5,6 +5,7 @@
 | File | Role |
 |------|------|
 | `AdminDashboard.tsx` | Thin shell: auth gate, tab/URL nav, hook composition, panels |
+| `AdminSignInGate.tsx` | Guest sign-in CTA on admin host (U4 — no bare 404) |
 | `adminNav.ts` | Primary/Ops/Database tab helpers + `?tab=&sub=&regattaId=` sync |
 | `useAdminAuth.ts` | Session, loading, `adminRole`, `isSuperadmin` |
 | `useAdminData.ts` | Sailor/regatta/results lists, lazy fetch, `hasFullResults`, `refreshResultsList`, patch helpers; owns `selectedRegattaId` (fetch coupling) |

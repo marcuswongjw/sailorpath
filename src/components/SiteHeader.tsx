@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
+import { BrandLogoLink } from "@/components/BrandMark";
 
 export function SiteHeader() {
   const { email, role, isSuperadmin, owned, ready, signOut } = useAccount();
@@ -201,18 +202,7 @@ export function SiteHeader() {
       <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
         <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
           <div className="flex items-center gap-3 lg:gap-10 min-w-0 flex-1">
-            <Link
-              href="/"
-              prefetch
-              className="flex items-center gap-2 group shrink-0 min-w-0"
-            >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-600 font-black text-white text-lg group-hover:bg-orange-500">
-                SP
-              </span>
-              <span className="font-extrabold text-base sm:text-xl text-white tracking-tight truncate">
-                Sailor<span className="text-orange-500">Path</span>
-              </span>
-            </Link>
+            <BrandLogoLink />
             <nav className="hidden md:flex items-center gap-6">{navLinks}</nav>
           </div>
 

@@ -1,9 +1,10 @@
 import { ImageResponse } from "next/og";
+import { BRAND } from "@/lib/brand";
 
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
-/** Tab favicon — matches SiteHeader orange SP mark. */
+/** Tab favicon — matches BrandMark (orange SP). */
 export default function Icon() {
   return new ImageResponse(
     (
@@ -14,7 +15,7 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#ea580c",
+          background: BRAND.orange,
           borderRadius: 8,
           color: "#ffffff",
           fontSize: 16,
@@ -24,7 +25,7 @@ export default function Icon() {
             "ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif",
         }}
       >
-        SP
+        {BRAND.markLetters}
       </div>
     ),
     { ...size }

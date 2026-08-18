@@ -1,9 +1,10 @@
 import { ImageResponse } from "next/og";
+import { BRAND } from "@/lib/brand";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-/** iOS home-screen icon — same SP mark with more padding. */
+/** iOS home-screen icon — same BrandMark with more padding. */
 export default function AppleIcon() {
   return new ImageResponse(
     (
@@ -14,7 +15,7 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#ea580c",
+          background: BRAND.orange,
           borderRadius: 36,
           color: "#ffffff",
           fontSize: 72,
@@ -24,7 +25,7 @@ export default function AppleIcon() {
             "ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif",
         }}
       >
-        SP
+        {BRAND.markLetters}
       </div>
     ),
     { ...size }

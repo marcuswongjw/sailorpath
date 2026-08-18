@@ -1,7 +1,13 @@
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { AdminMetricsGuide } from "@/components/admin/AdminMetricsGuide";
-import { requireSuperadmin } from "@/lib/auth";
+import { AdminSignInGate } from "@/components/admin/AdminSignInGate";
+import { getAuthContext } from "@/lib/auth";
+import {
+  adminReturnUrl,
+  isAdminHost,
+  publicSiteOrigin,
+} from "@/lib/adminHost";
 
 export const dynamic = "force-dynamic";
 
@@ -13,15 +19,19 @@ export const metadata = {
 
 export default async function AdminMetricsPage() {
   const host = (await headers()).get("host") || "";
-  const allowed =
-    host.includes("admin.sailorpath.com") ||
-    host.includes("localhost") ||
-    host.includes("127.0.0.1");
-  if (!allowed) notFound();
+  if (!isAdminHost(host)) notFound();
 
-  try {
-    await requireSuperadmin();
-  } catch {
+  const ctx = await getAuthContext();
+  if (!ctx) {
+    return (
+      <AdminSignInGate
+        reason="unsigned"
+        nextUrl={adminReturnUrl(host, "/admin/metrics")}
+        siteOrigin={publicSiteOrigin()}
+      />
+    );
+  }
+  if (ctx.role !== "superadmin") {
     notFound();
   }
 
