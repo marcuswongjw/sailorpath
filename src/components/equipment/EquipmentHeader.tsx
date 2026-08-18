@@ -32,12 +32,12 @@ export function EquipmentHeader({
             </span>
           )}
         </div>
-        <p className="text-[11px] text-neutral-500 max-w-md leading-relaxed">
+        <p className="text-[11px] text-slate-400 max-w-md leading-relaxed">
           Track every hull, sail, foil, and rig. Know what to rig on race day
           — and when it&apos;s time to replace.
         </p>
         {activeCount > 0 && (
-          <p className="text-[10px] text-slate-500 mt-1.5 tabular-nums">
+          <p className="text-[10px] text-slate-400 mt-1.5 tabular-nums">
             {primaryCount} primary
             {alertCount > 0 ? ` · ${alertCount} need attention` : ""}
           </p>

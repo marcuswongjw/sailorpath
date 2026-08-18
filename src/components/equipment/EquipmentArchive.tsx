@@ -31,7 +31,7 @@ export function EquipmentArchive({
           >
             <span>
               {displayName(r)}
-              <span className="text-slate-600">
+              <span className="text-slate-400">
                 {" "}
                 · {categoryLabel(r.category)}
               </span>

@@ -59,17 +59,24 @@ export function EquipmentCard({
               type="button"
               disabled={!isOwner || item.isPrimary}
               onClick={onMakePrimary}
+              aria-label={
+                item.isPrimary
+                  ? `${displayName(item)} is primary gear`
+                  : `Make ${displayName(item)} primary`
+              }
+              aria-pressed={item.isPrimary}
               title={item.isPrimary ? "Primary gear" : "Make primary"}
-              className={`mt-0.5 shrink-0 touch-manipulation ${
+              className={`mt-0.5 shrink-0 touch-manipulation min-h-[2.25rem] min-w-[2.25rem] inline-flex items-center justify-center rounded-lg ${
                 item.isPrimary
                   ? "text-amber-400"
-                  : "text-slate-600 hover:text-amber-400"
+                  : "text-slate-500 hover:text-amber-400"
               }`}
             >
               <Star
                 className={`h-3.5 w-3.5 ${
                   item.isPrimary ? "fill-amber-400/60" : ""
                 }`}
+                aria-hidden
               />
             </button>
             <p className="text-[13px] font-bold text-white leading-snug min-w-0">
@@ -105,13 +112,13 @@ export function EquipmentCard({
             ))}
           </div>
 
-          <p className="text-[10px] text-slate-500 mt-1.5 tabular-nums">
+          <p className="text-[10px] text-slate-400 mt-1.5 tabular-nums">
             {formatUseSummary(item)}
             {item.category === "sail" && item.model ? ` · ${item.model}` : ""}
           </p>
 
           {(item.usageHistory?.length ?? 0) > 0 && (
-            <p className="text-[10px] text-slate-600 mt-1 leading-snug">
+            <p className="text-[10px] text-slate-400 mt-1 leading-snug">
               <span className="text-slate-500">Used at</span>{" "}
               {item
                 .usageHistory!.filter((u) => u.regattaName)
@@ -132,7 +139,7 @@ export function EquipmentCard({
             <button
               type="button"
               onClick={onMakePrimary}
-              className="flex-1 py-2 text-[10px] font-bold text-amber-400/90 hover:bg-white/[0.03] touch-manipulation"
+              className="flex-1 min-h-[2.75rem] py-2.5 text-[10px] font-bold text-amber-400/90 hover:bg-white/[0.03] touch-manipulation"
             >
               Make primary
             </button>
@@ -140,14 +147,14 @@ export function EquipmentCard({
           <button
             type="button"
             onClick={onLogUse}
-            className="flex-1 py-2 text-[10px] font-bold text-sky-400 hover:bg-white/[0.03] touch-manipulation"
+            className="flex-1 min-h-[2.75rem] py-2.5 text-[10px] font-bold text-sky-400 hover:bg-white/[0.03] touch-manipulation"
           >
             Log session
           </button>
           <button
             type="button"
             onClick={onEdit}
-            className="flex-1 py-2 text-[10px] font-bold text-slate-400 hover:bg-white/[0.03] touch-manipulation"
+            className="flex-1 min-h-[2.75rem] py-2.5 text-[10px] font-bold text-slate-400 hover:bg-white/[0.03] touch-manipulation"
           >
             Edit
           </button>

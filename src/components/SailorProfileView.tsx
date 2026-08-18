@@ -1468,7 +1468,7 @@ export function SailorProfileView({
                   {isIlca ? "ILCA 4" : isJourney ? "Journey" : "Optimist"}
                   <span
                     className={`ml-1.5 tabular-nums text-[10px] sm:text-[11px] ${
-                      selected ? "text-white/80" : "text-neutral-600"
+                      selected ? "text-white/80" : "text-neutral-400"
                     }`}
                   >
                     ({count})

@@ -57,7 +57,7 @@ export function EquipmentSectionList({
                       </span>
                     )}
                   </p>
-                  <p className="text-[10px] text-slate-600 mt-0.5 leading-snug">
+                  <p className="text-[10px] text-slate-400 mt-0.5 leading-snug">
                     {sec.hint}
                   </p>
                 </div>
@@ -98,7 +98,7 @@ export function EquipmentSectionList({
             )}
 
             {sec.isEmpty ? (
-              <p className="text-[11px] text-slate-600 px-3.5 pb-3.5 pt-0.5">
+              <p className="text-[11px] text-slate-400 px-3.5 pb-3.5 pt-0.5">
                 Nothing here yet
                 {isOwner ? " — tap + to add." : "."}
               </p>
