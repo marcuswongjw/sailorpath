@@ -2,18 +2,25 @@ import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
-import { regattaResults, sailorAliases, sailors } from "@/db/schema";
+import {
+  equipmentItems,
+  equipmentLogs,
+  equipmentUsages,
+  parentNotes,
+  raceObservations,
+  regattaResults,
+  sailorAliases,
+  sailorClaims,
+  sailors,
+} from "@/db/schema";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 /**
  * Merge duplicate sailor profiles.
- * POST { keepId, mergeId }
- * - Moves all regatta_results from mergeId → keepId (on conflict keeps keepId row,
- *   or takes merge row if keep has worse rank / missing)
- * - Moves aliases; adds merge name as alias of keep
- * - Fills blank keep profile fields from merge
- * - Deletes merge sailor (cascade leftovers)
- * All operations run inside an atomic database transaction.
+ * POST { keepId, mergeId, forceOwnershipConflict?: boolean }
+ *
+ * Moves results, aliases, equipment, notes, observations, and claims onto keep,
+ * then deletes merge. Refuses conflicting ownership unless forceOwnershipConflict.
  */
 export async function POST(req: Request) {
   try {
@@ -21,6 +28,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const keepId = String(body.keepId || "").trim();
     const mergeId = String(body.mergeId || "").trim();
+    const forceOwnershipConflict = body.forceOwnershipConflict === true;
 
     if (!keepId || !mergeId) {
       return NextResponse.json(
@@ -52,7 +60,26 @@ export async function POST(req: Request) {
     const keepSailor = keep[0];
     const mergeSailor = merge[0];
 
-    // Execute all mutations atomically in a single DB transaction
+    const keepOwner = keepSailor.parentId || null;
+    const mergeOwner = mergeSailor.parentId || null;
+    if (
+      keepOwner &&
+      mergeOwner &&
+      keepOwner !== mergeOwner &&
+      !forceOwnershipConflict
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "Both profiles are claimed by different accounts. Unclaim one side first, or pass forceOwnershipConflict=true to keep the survivor’s owner and drop the duplicate’s link.",
+          code: "OWNERSHIP_CONFLICT",
+          keepOwner,
+          mergeOwner,
+        },
+        { status: 409 }
+      );
+    }
+
     const txResult = await db.transaction(async (tx) => {
       const mergeResults = await tx
         .select()
@@ -82,7 +109,6 @@ export async function POST(req: Request) {
             .where(eq(regattaResults.id, row.id));
           resultsMoved++;
         } else {
-          // Both have a result for same regatta — keep better (lower) rank
           const keepRank = existing[0].rank ?? 9999;
           const mergeRank = row.rank ?? 9999;
           if (mergeRank < keepRank) {
@@ -129,12 +155,10 @@ export async function POST(req: Request) {
             .where(eq(sailorAliases.id, a.id));
           aliasesMoved++;
         } catch {
-          // unique alias conflict — delete duplicate alias
           await tx.delete(sailorAliases).where(eq(sailorAliases.id, a.id));
         }
       }
 
-      // Keep merge name (and sail number label) as aliases for future import matching
       for (const aliasName of [mergeSailor.name, mergeSailor.sailNumber].filter(
         Boolean
       ) as string[]) {
@@ -147,6 +171,70 @@ export async function POST(req: Request) {
           aliasesMoved++;
         } catch {
           /* already exists */
+        }
+      }
+
+      // Equipment inventory + session usages
+      const equipmentMoved = await tx
+        .update(equipmentItems)
+        .set({ sailorId: keepId, updatedAt: new Date() })
+        .where(eq(equipmentItems.sailorId, mergeId))
+        .returning({ id: equipmentItems.id });
+      await tx
+        .update(equipmentUsages)
+        .set({ sailorId: keepId })
+        .where(eq(equipmentUsages.sailorId, mergeId));
+
+      // Legacy equipment logs
+      await tx
+        .update(equipmentLogs)
+        .set({ sailorId: keepId })
+        .where(eq(equipmentLogs.sailorId, mergeId));
+
+      // Parent notes
+      const notesMoved = await tx
+        .update(parentNotes)
+        .set({ sailorId: keepId, updatedAt: new Date() })
+        .where(eq(parentNotes.sailorId, mergeId))
+        .returning({ id: parentNotes.id });
+
+      // Claims — re-point to keep (unique constraints are soft)
+      const claimsMoved = await tx
+        .update(sailorClaims)
+        .set({ sailorId: keepId, updatedAt: new Date() })
+        .where(eq(sailorClaims.sailorId, mergeId))
+        .returning({ id: sailorClaims.id });
+
+      // Observations — skip rows that would collide on unique(sailor, regatta, race)
+      const mergeObs = await tx
+        .select()
+        .from(raceObservations)
+        .where(eq(raceObservations.sailorId, mergeId));
+      let observationsMoved = 0;
+      let observationsDropped = 0;
+      for (const obs of mergeObs) {
+        const clash = await tx
+          .select({ id: raceObservations.id })
+          .from(raceObservations)
+          .where(
+            and(
+              eq(raceObservations.sailorId, keepId),
+              eq(raceObservations.regattaId, obs.regattaId),
+              eq(raceObservations.raceNumber, obs.raceNumber)
+            )
+          )
+          .limit(1);
+        if (clash[0]) {
+          await tx
+            .delete(raceObservations)
+            .where(eq(raceObservations.id, obs.id));
+          observationsDropped++;
+        } else {
+          await tx
+            .update(raceObservations)
+            .set({ sailorId: keepId, updatedAt: new Date() })
+            .where(eq(raceObservations.id, obs.id));
+          observationsMoved++;
         }
       }
 
@@ -183,7 +271,6 @@ export async function POST(req: Request) {
           fill[f] = mv;
         }
       }
-      // sail number: replace placeholder only
       if (
         (!keepSailor.sailNumber ||
           /^SGP\s*0+$/i.test(keepSailor.sailNumber)) &&
@@ -192,7 +279,6 @@ export async function POST(req: Request) {
       ) {
         fill.sailNumber = mergeSailor.sailNumber;
       }
-      // ILCA 4 sail: fill if keep is blank
       if (
         !String(keepSailor.sailNumberIlca4 || "").trim() &&
         String(mergeSailor.sailNumberIlca4 || "").trim()
@@ -222,11 +308,19 @@ export async function POST(req: Request) {
         }
       }
 
+      // Ownership: prefer keep; if keep unclaimed, adopt merge owner
+      let ownershipTransferred = false;
+      if (!keepOwner && mergeOwner) {
+        fill.parentId = mergeOwner;
+        fill.ownerRelation =
+          mergeSailor.ownerRelation || keepSailor.ownerRelation || null;
+        ownershipTransferred = true;
+      }
+
       if (Object.keys(fill).length > 1) {
         await tx.update(sailors).set(fill).where(eq(sailors.id, keepId));
       }
 
-      // Delete duplicate sailor (results should already be moved; cascade cleans rest)
       await tx.delete(sailors).where(eq(sailors.id, mergeId));
 
       const [updatedKeep] = await tx
@@ -241,6 +335,12 @@ export async function POST(req: Request) {
         resultsMergedConflict,
         resultsDroppedConflict,
         aliasesMoved,
+        equipmentMoved: equipmentMoved.length,
+        notesMoved: notesMoved.length,
+        claimsMoved: claimsMoved.length,
+        observationsMoved,
+        observationsDropped,
+        ownershipTransferred,
       };
     });
 
@@ -254,6 +354,12 @@ export async function POST(req: Request) {
       resultsMergedConflict: txResult.resultsMergedConflict,
       resultsDroppedConflict: txResult.resultsDroppedConflict,
       aliasesMoved: txResult.aliasesMoved,
+      equipmentMoved: txResult.equipmentMoved,
+      notesMoved: txResult.notesMoved,
+      claimsMoved: txResult.claimsMoved,
+      observationsMoved: txResult.observationsMoved,
+      observationsDropped: txResult.observationsDropped,
+      ownershipTransferred: txResult.ownershipTransferred,
     });
   } catch (e) {
     console.error("sailors merge", e);

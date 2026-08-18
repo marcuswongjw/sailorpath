@@ -7,7 +7,7 @@ import {
 import { getAuthContext } from "@/lib/auth";
 import {
   clientIpFromRequest,
-  rateLimit,
+  rateLimitAsync,
   rateLimitResponse,
 } from "@/lib/rateLimit";
 
@@ -57,14 +57,14 @@ export async function POST(req: Request) {
 
     // Limit before auth/database work. Session limits constrain a normal
     // browser while the IP limit prevents clients from rotating session IDs.
-    const ipLimit = rateLimit(
+    const ipLimit = await rateLimitAsync(
       `usage:ip:${clientIpFromRequest(req)}`,
       USAGE_IP_LIMIT,
       USAGE_WINDOW_MS
     );
     if (!ipLimit.ok) return rateLimitResponse(ipLimit.retryAfterSec);
     if (sessionId) {
-      const sessionLimit = rateLimit(
+      const sessionLimit = await rateLimitAsync(
         `usage:session:${sessionId}`,
         USAGE_SESSION_LIMIT,
         USAGE_WINDOW_MS

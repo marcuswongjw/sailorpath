@@ -43,8 +43,12 @@ use `/admin/metrics` for the KPI playbook. Usage events still write via `POST /a
 
 ## Cache invalidation
 
-After import / result / regatta / ranking-relevant sailor writes, Route Handlers call
+After import / result / regatta / ranking-relevant sailor writes (including
+**promote** and ranking-field **bulk**), Route Handlers call
 `revalidatePublicRankings()` (`src/lib/revalidatePublic.ts`). That marks shared
 `unstable_cache` tags (`fleet-rankings`, `ilca-rankings`, `public-regattas`) and ISR
 paths (`/sg/optimist/gold`, silver, ILCA, regatta directories, `/api/rankings`) so public
 boards refresh without waiting for the 60s timer.
+
+Heavy tabs (Import / Analysis / Gold / ILCA / Claims / Promote / Support) are
+`next/dynamic` loaded so opening Database does not pull `xlsx` into the first paint.

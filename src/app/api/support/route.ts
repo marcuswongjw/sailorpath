@@ -6,7 +6,7 @@ import { supportMessages } from "@/db/schema";
 import { trackUsage } from "@/lib/usage";
 import {
   clientIpFromRequest,
-  rateLimit,
+  rateLimitAsync,
   rateLimitResponse,
 } from "@/lib/rateLimit";
 import { asBoundedText, asEmail, asHttpUrl, asString } from "@/lib/validate";
@@ -25,7 +25,7 @@ const TOPICS = new Set([
 export async function POST(req: Request) {
   try {
     const ip = clientIpFromRequest(req);
-    const rl = rateLimit(`support:${ip}`, 5, 15 * 60 * 1000);
+    const rl = await rateLimitAsync(`support:${ip}`, 5, 15 * 60 * 1000);
     if (!rl.ok) return rateLimitResponse(rl.retryAfterSec);
 
     const body = await req.json();

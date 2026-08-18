@@ -137,6 +137,24 @@ export async function PATCH(req: Request) {
     const setAccountRole = body.setAccountRole !== false;
 
     if (nextStatus === "approved" && relation) {
+      const [target] = await db
+        .select({ parentId: sailors.parentId })
+        .from(sailors)
+        .where(eq(sailors.id, claim.sailorId))
+        .limit(1);
+      if (
+        target?.parentId &&
+        target.parentId !== claim.requesterId
+      ) {
+        return NextResponse.json(
+          {
+            error:
+              "This sailor is already linked to another account. Unclaim that profile first, then approve.",
+          },
+          { status: 409 }
+        );
+      }
+
       await db
         .update(sailors)
         .set({

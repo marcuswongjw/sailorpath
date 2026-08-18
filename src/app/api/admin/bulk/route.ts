@@ -8,6 +8,16 @@ import {
   normalizeNationality,
   normalizeYearsList,
 } from "@/lib/seriesMembership";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+
+const RANKING_BULK_FIELDS = new Set([
+  "goldEntryDate",
+  "silverEntryDate",
+  "dropDate",
+  "currentFleet",
+  "ilca4NationalList",
+  "sailNumberIlca4",
+]);
 
 const ALLOWED = new Set([
   "goldEntryDate",
@@ -70,6 +80,7 @@ export async function POST(req: Request) {
         .delete(sailors)
         .where(inArray(sailors.id, sailorIds))
         .returning({ id: sailors.id });
+      revalidatePublicRankings(`bulk:delete:${deleted.length}`);
       return NextResponse.json({
         message: `Deleted ${deleted.length} sailors (and their results).`,
         count: deleted.length,
@@ -164,6 +175,10 @@ export async function POST(req: Request) {
       patch.nationalSquadStatus = typed;
     }
     await db.update(sailors).set(patch).where(inArray(sailors.id, sailorIds));
+
+    if (RANKING_BULK_FIELDS.has(String(field))) {
+      revalidatePublicRankings(`bulk:${field}:${sailorIds.length}`);
+    }
 
     return NextResponse.json({
       message: `Updated ${field} for ${sailorIds.length} sailors`,

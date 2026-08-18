@@ -11,7 +11,7 @@ import {
 } from "@/lib/claimRelation";
 import {
   clientIpFromRequest,
-  rateLimit,
+  rateLimitAsync,
   rateLimitResponse,
 } from "@/lib/rateLimit";
 import { asBoundedText, asUuid } from "@/lib/validate";
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
         { status: 401 }
       );
     }
-    const rl = rateLimit(
+    const rl = await rateLimitAsync(
       `claims:${auth.userId}:${clientIpFromRequest(req)}`,
       10,
       60 * 60 * 1000

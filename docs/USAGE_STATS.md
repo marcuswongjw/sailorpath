@@ -75,6 +75,9 @@ Hot-path indexes: `040_indexes_hot_paths.sql` (includes `usage_events(created_at
 | `POST /api/claims` | 10 / hour / user+IP |
 | `POST /api/support` | 5 / 15 min / IP |
 
+Uses Upstash Redis when `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
+are set; otherwise falls back to in-process memory (resets on cold start).
+
 ## Files
 
 | Path | Role |

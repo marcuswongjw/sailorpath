@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import {
   Database,
   FileSpreadsheet,
@@ -12,18 +13,10 @@ import {
   Trophy,
   Medal,
 } from "lucide-react";
-import { ClaimsAdminPanel } from "@/components/ClaimsAdminPanel";
-import { PromoteAdminPanel } from "@/components/PromoteAdminPanel";
-import { SupportInboxPanel } from "@/components/SupportInboxPanel";
-import { AdminSuggestionsPanel } from "@/components/admin/AdminSuggestionsPanel";
-import { AdminRegattaImport } from "@/components/admin/AdminRegattaImport";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
 import { AdminSailorsPanel } from "@/components/admin/AdminSailorsPanel";
 import { AdminCompetitionsPanel } from "@/components/admin/AdminCompetitionsPanel";
-import { AdminGoldAnalysisPanel } from "@/components/admin/AdminGoldAnalysisPanel";
-import { AdminIlcaRankingPanel } from "@/components/admin/AdminIlcaRankingPanel";
-import { AdminGoldRankingPanel } from "@/components/admin/AdminGoldRankingPanel";
 import { useAdminAuth } from "@/components/admin/useAdminAuth";
 import {
   useAdminData,
@@ -35,6 +28,66 @@ import { useAdminSailors } from "@/components/admin/useAdminSailors";
 import { useAdminRegattas } from "@/components/admin/useAdminRegattas";
 import { useAdminResults } from "@/components/admin/useAdminResults";
 import { useAdminCompetitions } from "@/components/admin/useAdminCompetitions";
+
+function PanelLoading() {
+  return (
+    <div className="flex items-center gap-2 py-12 justify-center text-xs text-slate-400">
+      <RefreshCw className="h-4 w-4 animate-spin text-orange-500" />
+      Loading panel…
+    </div>
+  );
+}
+
+const AdminRegattaImport = dynamic(
+  () =>
+    import("@/components/admin/AdminRegattaImport").then(
+      (m) => m.AdminRegattaImport
+    ),
+  { loading: () => <PanelLoading />, ssr: false }
+);
+const AdminSuggestionsPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminSuggestionsPanel").then(
+      (m) => m.AdminSuggestionsPanel
+    ),
+  { loading: () => <PanelLoading /> }
+);
+const ClaimsAdminPanel = dynamic(
+  () =>
+    import("@/components/ClaimsAdminPanel").then((m) => m.ClaimsAdminPanel),
+  { loading: () => <PanelLoading /> }
+);
+const PromoteAdminPanel = dynamic(
+  () =>
+    import("@/components/PromoteAdminPanel").then((m) => m.PromoteAdminPanel),
+  { loading: () => <PanelLoading /> }
+);
+const SupportInboxPanel = dynamic(
+  () =>
+    import("@/components/SupportInboxPanel").then((m) => m.SupportInboxPanel),
+  { loading: () => <PanelLoading /> }
+);
+const AdminGoldAnalysisPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminGoldAnalysisPanel").then(
+      (m) => m.AdminGoldAnalysisPanel
+    ),
+  { loading: () => <PanelLoading /> }
+);
+const AdminGoldRankingPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminGoldRankingPanel").then(
+      (m) => m.AdminGoldRankingPanel
+    ),
+  { loading: () => <PanelLoading /> }
+);
+const AdminIlcaRankingPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminIlcaRankingPanel").then(
+      (m) => m.AdminIlcaRankingPanel
+    ),
+  { loading: () => <PanelLoading /> }
+);
 
 export function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<AdminActiveTab>("edit");

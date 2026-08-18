@@ -4,6 +4,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
 import { hasSilverHistory } from "@/lib/seriesMembership";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 /** List Silver series members eligible for Gold promotion */
 export async function GET() {
@@ -89,6 +90,7 @@ export async function POST(req: Request) {
       .where(eq(sailors.id, sailorId))
       .returning();
 
+    revalidatePublicRankings(`promote:${sailorId}`);
     return NextResponse.json({
       ok: true,
       sailor: updated,

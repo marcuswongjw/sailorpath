@@ -46,7 +46,6 @@ import {
   type ProfileResult,
 } from "@/lib/profileAnalytics";
 import dynamic from "next/dynamic";
-import { EquipmentInventory } from "@/components/EquipmentInventory";
 import { ClaimPanel } from "@/components/sailor-profile/ClaimPanel";
 import {
   PROFILE_CARD_CLASS as cardClass,
@@ -72,6 +71,17 @@ const PositionTrendChart = dynamic(
     ssr: false,
     loading: () => (
       <div className="h-48 w-full animate-pulse rounded-2xl bg-white/5 border border-white/5" />
+    ),
+  }
+);
+
+const EquipmentInventory = dynamic(
+  () =>
+    import("@/components/EquipmentInventory").then((m) => m.EquipmentInventory),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-40 w-full animate-pulse rounded-2xl bg-white/5 border border-white/5" />
     ),
   }
 );
