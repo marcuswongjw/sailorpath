@@ -18,6 +18,8 @@ import {
   emptyResultForm,
   type ResultFormState,
 } from "@/components/admin/adminForms";
+import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
+import { Medal } from "lucide-react";
 
 const DNS_PERIODS = rankingPeriodOptions(4);
 
@@ -647,23 +649,42 @@ export function AdminResultsPanel({
                 })}
                 {eventResultCount === 0 && (
                   <tr>
-                    <td
-                      colSpan={8}
-                      className="text-center py-12 text-slate-500"
-                    >
-                      No sailor results logged. Click Add Score or Fill DNS for
-                      non-starters.
+                    <td colSpan={8} className="p-0">
+                      <AdminEmptyState
+                        icon={Medal}
+                        title="No results for this event"
+                        description="Add a score manually or fill DNS for series members who did not start."
+                        action={{
+                          label: "Add score",
+                          onClick: () => {
+                            const reg = regattaList.find(
+                              (r) => r.id === selectedRegattaIdForResultEdit
+                            );
+                            const dnsPts = (reg?.totalFleetSize || 50) + 1;
+                            setEditingResultId("new");
+                            setResultForm({
+                              ...emptyResultForm(),
+                              regattaId: selectedRegattaIdForResultEdit,
+                              rank: dnsPts,
+                            });
+                          },
+                        }}
+                      />
                     </td>
                   </tr>
                 )}
                 {eventResultCount > 0 && eventResults.length === 0 && (
                   <tr>
-                    <td
-                      colSpan={8}
-                      className="text-center py-12 text-slate-500"
-                    >
-                      No sailors match “{sailorFilter.trim()}”. Clear the
-                      filter to see all {eventResultCount} rows.
+                    <td colSpan={8} className="p-0">
+                      <AdminEmptyState
+                        icon={Search}
+                        title={`No sailors match “${sailorFilter.trim()}”`}
+                        description={`Clear the filter to see all ${eventResultCount} rows.`}
+                        action={{
+                          label: "Clear filter",
+                          onClick: () => setSailorFilter(""),
+                        }}
+                      />
                     </td>
                   </tr>
                 )}

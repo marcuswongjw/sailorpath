@@ -13,7 +13,6 @@ import {
   RefreshCw,
   Shield,
   GitCompareArrows,
-  Trophy,
   Medal,
 } from "lucide-react";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
@@ -88,10 +87,10 @@ const AdminGoldAnalysisPanel = dynamic(
     ),
   { loading: () => <PanelLoading /> }
 );
-const AdminGoldRankingPanel = dynamic(
+const AdminSelectionPanel = dynamic(
   () =>
-    import("@/components/admin/AdminGoldRankingPanel").then(
-      (m) => m.AdminGoldRankingPanel
+    import("@/components/admin/AdminSelectionPanel").then(
+      (m) => m.AdminSelectionPanel
     ),
   { loading: () => <PanelLoading /> }
 );
@@ -223,7 +222,10 @@ function AdminDashboardInner() {
     setActiveTab(tab);
     if (tab === "edit") {
       setEditSubTab((prev) =>
-        prev === "sailors" || prev === "regattas" || prev === "results"
+        prev === "sailors" ||
+        prev === "regattas" ||
+        prev === "results" ||
+        prev === "selection"
           ? prev
           : "sailors"
       );
@@ -343,7 +345,7 @@ function AdminDashboardInner() {
       </div>
 
       {/* Primary tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
             ["stats", "Stats", "Live stats", Activity],
@@ -351,7 +353,6 @@ function AdminDashboardInner() {
             ["edit", "Database", "Sailors & results", Database],
             ["ops", "Ops", "Claims & support", ClipboardList],
             ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
-            ["gold", "Gold", "Gold ranking", Trophy],
             ["ilca", "ILCA", "ILCA ranking", Medal],
           ] as const
         ).map(([key, shortLabel, label, Icon]) => (
@@ -468,6 +469,15 @@ function AdminDashboardInner() {
                   {...results.panelProps}
                 />
               )}
+
+              {editSubTab === "selection" && (
+                <AdminSelectionPanel
+                  sailors={data.sailorList}
+                  regattas={data.regattaList}
+                  results={data.resultsList}
+                  onSailorsChange={data.setSailorList}
+                />
+              )}
             </div>
           </div>
         )}
@@ -568,17 +578,6 @@ function AdminDashboardInner() {
               sailors={data.sailorList}
               regattas={data.regattaList}
               results={data.resultsList}
-            />
-          </div>
-        )}
-
-        {activeTab === "gold" && (
-          <div className="w-full min-w-0">
-            <AdminGoldRankingPanel
-              sailors={data.sailorList}
-              regattas={data.regattaList}
-              results={data.resultsList}
-              onSailorsChange={data.setSailorList}
             />
           </div>
         )}

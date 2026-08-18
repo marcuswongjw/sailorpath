@@ -1,22 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import {
-  calculateRankings,
-  periodLabel,
-  type Period,
   type SailorRecord,
   type RegattaRecord,
   type RegattaResultRecord,
 } from "@/lib/ranking";
-import { birthYear } from "@/lib/age";
-import {
-  OPTIMIST_SQUAD_POLICY,
-  optimistSquadCutoff,
-  selectOptimistNatSquadPreview,
-  type OptimistIntakeKind,
-} from "@/lib/optimistSquadPreview";
 import {
   ASIAN_OCEANIA_2026,
   PERTH_CAMP_2026,
@@ -33,7 +22,7 @@ import {
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
-import { Trophy, Users, Medal, Plane, Tent, Loader2 } from "lucide-react";
+import { Plane, Tent, Loader2, Trophy } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 type Props = {
@@ -41,15 +30,6 @@ type Props = {
   regattas: RegattaAdmin[];
   results: ResultAdmin[];
   onSailorsChange?: (sailors: SailorAdmin[]) => void;
-};
-
-const REASON_LABEL: Record<string, string> = {
-  top8_male: "Top 8 male",
-  top8_female: "Top 8 female",
-  age13: "Age 13 bucket",
-  age12: "Age 12 bucket",
-  age11_or_under: "Age ≤11 bucket",
-  fill_same_gender: "Fill (same gender)",
 };
 
 function toSailorRecords(rows: SailorAdmin[]): SailorRecord[] {
@@ -110,37 +90,20 @@ function toResultRecords(rows: ResultAdmin[]): RegattaResultRecord[] {
   }));
 }
 
-export function AdminGoldRankingPanel({
+export function AdminSelectionPanel({
   sailors,
   regattas,
   results,
   onSailorsChange,
 }: Props) {
   const { confirm } = useFeedback();
-  const now = new Date();
-  const y = now.getFullYear();
-  const defaultKind: OptimistIntakeKind =
-    now.getMonth() < 6 ? "january" : "july";
-  const defaultYear =
-    defaultKind === "january" && now.getMonth() === 11 ? y + 1 : y;
 
-  const [intakeKind, setIntakeKind] =
-    useState<OptimistIntakeKind>(defaultKind);
-  const [intakeYear, setIntakeYear] = useState(defaultYear);
-  const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [dropBusy, setDropBusy] = useState(false);
   const [dropMsg, setDropMsg] = useState<string | null>(null);
   const [dropReviewOpen, setDropReviewOpen] = useState(false);
   const [selectedDropIds, setSelectedDropIds] = useState<Set<string>>(
     new Set()
   );
-
-  const cutoff = useMemo(
-    () => optimistSquadCutoff(intakeKind, intakeYear),
-    [intakeKind, intakeYear]
-  );
-
-  const rankingPeriod: Period = cutoff.period;
 
   const sailorRecs = useMemo(() => toSailorRecords(sailors), [sailors]);
   const regattaRecs = useMemo(() => toRegattaRecords(regattas), [regattas]);
@@ -226,43 +189,6 @@ export function AdminGoldRankingPanel({
     }
   };
 
-  const goldRanked = useMemo(() => {
-    // Only count ranking regattas on/before official cutoff date
-    const asOf = cutoff.asOf;
-    const regsCapped = regattaRecs.map((r) => ({
-      ...r,
-      countsForRanking:
-        r.countsForRanking !== false &&
-        String(r.date).slice(0, 10) <= asOf,
-    }));
-    const ranked = calculateRankings(
-      rankingPeriod,
-      sailorRecs,
-      regsCapped,
-      resultRecs,
-      "Optimist"
-    ).filter((x) => x.fleet === "Gold");
-    return ranked.slice(0, OPTIMIST_SQUAD_POLICY.activeGoldCap);
-  }, [sailorRecs, regattaRecs, resultRecs, rankingPeriod, cutoff.asOf]);
-
-  const filteredGold = useMemo(() => {
-    if (genderFilter === "all") return goldRanked;
-    return goldRanked.filter(
-      (s) => String(s.gender || "").toUpperCase() === genderFilter
-    );
-  }, [goldRanked, genderFilter]);
-
-  const squadPreview = useMemo(
-    () => selectOptimistNatSquadPreview(goldRanked, cutoff.intakeYear),
-    [goldRanked, cutoff.intakeYear]
-  );
-  const natA = squadPreview.filter((p) => p.tier === "Nat A");
-  const natB = squadPreview.filter((p) => p.tier === "Nat B");
-  const squadById = useMemo(() => {
-    const m = new Map(squadPreview.map((p) => [p.sailorId, p]));
-    return m;
-  }, [squadPreview]);
-
   // ── Asian + Perth selection (same events) ──────────────
   const selectionMatched = useMemo(
     () => matchSelectionEvents(regattaRecs, ASIAN_OCEANIA_2026.events),
@@ -291,15 +217,17 @@ export function AdminGoldRankingPanel({
       {/* ── Header ───────────────────────────────────────────── */}
       <div className="glass-panel rounded-2xl sm:rounded-3xl border border-white/5 p-4 sm:p-5 lg:p-6 space-y-3">
         <div className="flex items-start gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/15">
-            <Trophy className="h-5 w-5 text-amber-400" />
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-500/15">
+            <Trophy className="h-5 w-5 text-violet-400" />
           </div>
           <div className="min-w-0 flex-1">
             <h2 className="text-base font-bold text-white">
-              Optimist Gold ranking · Nat A/B · campaigns
+              Optimist selection · campaigns
             </h2>
             <p className="text-[12px] text-slate-400 mt-1 max-w-3xl leading-relaxed">
-              {OPTIMIST_SQUAD_POLICY.notes}
+              Asian Oceania and Perth Camp teams from shared 2026 selection
+              events. Combined place = sum of Gold finishing places (missing
+              event → fleet size + 1).
             </p>
             <p className="text-[11px] text-slate-500 mt-1 max-w-3xl">
               Participation rule: gold sailors need ≥
@@ -435,173 +363,6 @@ export function AdminGoldRankingPanel({
         {dropMsg && (
           <p className="text-[11px] text-emerald-400 font-medium">{dropMsg}</p>
         )}
-
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-          <label className="text-xs text-slate-400">
-            Intake
-            <select
-              className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-              value={intakeKind}
-              onChange={(e) =>
-                setIntakeKind(e.target.value as OptimistIntakeKind)
-              }
-            >
-              <option value="july">July intake (as of 30 Jun)</option>
-              <option value="january">January intake (as of 20 Dec)</option>
-            </select>
-          </label>
-          <label className="text-xs text-slate-400">
-            Intake year
-            <input
-              type="number"
-              min={2024}
-              max={2040}
-              className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-              value={intakeYear}
-              onChange={(e) =>
-                setIntakeYear(Number(e.target.value) || defaultYear)
-              }
-            />
-          </label>
-          <label className="text-xs text-slate-400">
-            Gender filter (Gold table)
-            <select
-              className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
-              value={genderFilter}
-              onChange={(e) =>
-                setGenderFilter(e.target.value as "all" | "M" | "F")
-              }
-            >
-              <option value="all">All</option>
-              <option value="M">Male</option>
-              <option value="F">Female</option>
-            </select>
-          </label>
-        </div>
-        <p className="text-[11px] text-amber-300/90 font-medium">
-          {cutoff.label} · series {periodLabel(rankingPeriod)} ·{" "}
-          {goldRanked.length} active Gold (max {OPTIMIST_SQUAD_POLICY.activeGoldCap})
-          · Nat A {natA.length} · Nat B {natB.length}
-        </p>
-      </div>
-
-      {/* ── Gold table + Nat A/B ─────────────────────────────── */}
-      <div className="grid grid-cols-1 xl:grid-cols-5 gap-4">
-        <div className="xl:col-span-3 glass-panel rounded-2xl border border-white/5 overflow-hidden">
-          <div className="px-4 py-3 border-b border-white/5">
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <Medal className="h-4 w-4 text-amber-400" />
-              Active Gold sailors (top {OPTIMIST_SQUAD_POLICY.activeGoldCap})
-            </h3>
-            <p className="text-[11px] text-slate-500 mt-0.5">
-              Best 3 of 5 · lower is better · ≤15 in intake year for squad
-              eligibility
-            </p>
-          </div>
-          {filteredGold.length === 0 ? (
-            <p className="p-6 text-sm text-slate-500 text-center">
-              No active Gold sailors for this period.
-            </p>
-          ) : (
-            <div className="overflow-x-auto max-h-[36rem] overflow-y-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="sticky top-0 bg-[#131520] z-10">
-                  <tr className="text-[10px] uppercase tracking-wide text-slate-500 border-b border-white/5">
-                    <th className="px-3 py-2 font-bold">#</th>
-                    <th className="px-3 py-2 font-bold">Sailor</th>
-                    <th className="px-3 py-2 font-bold">G</th>
-                    <th className="px-3 py-2 font-bold">BY</th>
-                    <th className="px-3 py-2 font-bold">Best 3</th>
-                    <th className="px-3 py-2 font-bold">Stored</th>
-                    <th className="px-3 py-2 font-bold">Preview</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {filteredGold.map((s, i) => {
-                    const rank =
-                      genderFilter === "all"
-                        ? i + 1
-                        : goldRanked.findIndex((x) => x.id === s.id) + 1;
-                    const prev = squadById.get(s.id);
-                    return (
-                      <tr
-                        key={s.id}
-                        className={
-                          prev ? "text-slate-200" : "text-slate-500"
-                        }
-                      >
-                        <td className="px-3 py-2 tabular-nums font-bold text-amber-400">
-                          {rank}
-                        </td>
-                        <td className="px-3 py-2 font-semibold text-white">
-                          {s.handle ? (
-                            <Link
-                              href={`/${s.handle}`}
-                              className="hover:text-amber-300"
-                              target="_blank"
-                            >
-                              {s.name}
-                            </Link>
-                          ) : (
-                            s.name
-                          )}
-                        </td>
-                        <td className="px-3 py-2">{s.gender || "—"}</td>
-                        <td className="px-3 py-2 tabular-nums">
-                          {birthYear(s.dob as string | null) ?? "—"}
-                        </td>
-                        <td className="px-3 py-2 tabular-nums font-bold text-white">
-                          {s.overallScore}
-                        </td>
-                        <td className="px-3 py-2">
-                          {s.periodSquadStatus ? (
-                            <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 text-[10px] font-bold text-orange-300">
-                              {s.periodSquadStatus}
-                            </span>
-                          ) : (
-                            <span className="text-slate-600">—</span>
-                          )}
-                        </td>
-                        <td className="px-3 py-2">
-                          {prev ? (
-                            <span
-                              className={`rounded-full px-2 py-0.5 text-[10px] font-bold border ${
-                                prev.tier === "Nat A"
-                                  ? "bg-amber-500/15 border-amber-500/30 text-amber-200"
-                                  : "bg-sky-500/10 border-sky-500/25 text-sky-200"
-                              }`}
-                              title={REASON_LABEL[prev.reason] || prev.reason}
-                            >
-                              {prev.tier}
-                            </span>
-                          ) : (
-                            <span className="text-slate-600">—</span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-
-        <div className="xl:col-span-2 space-y-4">
-          <SquadList
-            title={`Nat A · ${intakeKind === "july" ? "July" : "January"} ${intakeYear}`}
-            color="amber"
-            picks={natA}
-            empty="No Nat A places filled."
-          />
-          <SquadList
-            title={`Nat B · ${intakeKind === "july" ? "July" : "January"} ${intakeYear}`}
-            color="sky"
-            picks={natB}
-            empty="No Nat B places filled."
-            footer="A places are excluded from B. Age buckets then fill same gender. Max 16 each."
-          />
-        </div>
       </div>
 
       {/* ── Selection event match status ─────────────────────── */}
@@ -816,85 +577,6 @@ export function AdminGoldRankingPanel({
             </table>
           </div>
         </div>
-      )}
-    </div>
-  );
-}
-
-function SquadList({
-  title,
-  color,
-  picks,
-  empty,
-  footer,
-}: {
-  title: string;
-  color: "amber" | "sky";
-  picks: {
-    sailorId: string;
-    name: string;
-    rankingPosition: number;
-    overallScore: number;
-    gender: string;
-    reason: string;
-    ageInIntakeYear: number | null;
-    currentPeriodSquad: string | null;
-  }[];
-  empty: string;
-  footer?: string;
-}) {
-  const icon =
-    color === "amber" ? "text-amber-400" : "text-sky-400";
-  const badge =
-    color === "amber"
-      ? "text-amber-300"
-      : "text-sky-300";
-  return (
-    <div className="glass-panel rounded-2xl border border-white/5 overflow-hidden">
-      <div className="px-4 py-3 border-b border-white/5 flex items-center gap-2">
-        <Users className={`h-4 w-4 ${icon}`} />
-        <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-          {title}
-        </h3>
-        <span className="text-[10px] text-slate-500 ml-auto">
-          {picks.length}/16
-        </span>
-      </div>
-      {picks.length === 0 ? (
-        <p className="p-4 text-xs text-slate-500">{empty}</p>
-      ) : (
-        <ol className="divide-y divide-white/5 max-h-[18rem] overflow-y-auto">
-          {picks.map((p, i) => (
-            <li
-              key={p.sailorId}
-              className="px-4 py-2 text-xs flex justify-between gap-2"
-            >
-              <span>
-                <span className="text-slate-500 tabular-nums mr-2">
-                  {i + 1}.
-                </span>
-                <span className="font-semibold text-white">{p.name}</span>
-                <span className="block text-[10px] text-slate-500 mt-0.5">
-                  Series #{p.rankingPosition} · {p.gender} · age{" "}
-                  {p.ageInIntakeYear ?? "?"} · best3 {p.overallScore}
-                  {p.currentPeriodSquad
-                    ? ` · stored ${p.currentPeriodSquad}`
-                    : ""}
-                  {" · "}
-                  {REASON_LABEL[p.reason] || p.reason}
-                </span>
-              </span>
-              <span className={`shrink-0 text-[9px] font-bold ${badge}`}>
-                {title.includes("Nat A") ? "A" : "B"}
-              </span>
-            </li>
-          ))}
-        </ol>
-      )}
-      {footer && (
-        <p className="px-4 py-2 text-[9px] text-slate-600 border-t border-white/5">
-          {footer}
-        </p>
       )}
     </div>
   );

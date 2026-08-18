@@ -15,6 +15,14 @@ describe("parseAdminNav", () => {
     expect(parseAdminNav(new URLSearchParams("tab=ilca")).tab).toBe("ilca");
   });
 
+  it("migrates legacy gold tab to Database → Selection", () => {
+    expect(parseAdminNav(new URLSearchParams("tab=gold"))).toEqual({
+      tab: "edit",
+      sub: "selection",
+      regattaId: null,
+    });
+  });
+
   it("migrates legacy edit+claims to ops+claims", () => {
     expect(parseAdminNav(new URLSearchParams("tab=edit&sub=claims"))).toEqual({
       tab: "ops",

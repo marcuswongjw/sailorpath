@@ -18,6 +18,8 @@
 | `AdminSailorsPanel.tsx` | Sailors sub-tab (filters, bulk, form, table) |
 | `AdminRegattasPanel.tsx` | Regattas sub-tab (list + detail) |
 | `AdminResultsPanel.tsx` | Results sub-tab: searchable regatta picker, sailor filter, DNS fill |
+| `AdminSelectionPanel.tsx` | Database → Selection (campaigns, participation drops) |
+| `AdminEmptyState.tsx` | Shared empty state for list panels |
 | `AdminCompetitionsPanel.tsx` | Per-sailor results modal from Database |
 | `AdminSuggestionsPanel.tsx` | Personal/non-ranking suggestions queue |
 | `ClaimsAdminPanel.tsx` | Profile claims review queue |
@@ -35,17 +37,18 @@ Shared types: `src/types/{sailor,regatta,result,import}.ts`.
 
 ## Data-loading behavior (preserve)
 
-- Ranking tabs (`analysis` / `gold` / `ilca`) load `?all=1` and set `hasFullResults`.
+- Ranking tabs (`analysis` / `ilca`) and Database → Selection load `?all=1` and set `hasFullResults`.
 - Results editor loads per `regattaId` and **merges** into `resultsList`.
 - `refreshResultsList({ regattaId? })` — per-regatta merge vs full replace + `hasFullResults`.
 - Import `onResultsUpdated`: single-regatta merge vs multi-regatta full dump replace.
 - Delete sailor/regatta cascades local results; merge updates lists via `mergeSailorsClient`.
 - Destructive confirms include entity names + cascade counts; bulk sailor delete requires typing `DELETE`.
 
-**IA:** primary tabs include **Database** (Sailors · Regattas · Results) and
-**Ops** (Suggestions · Claims · Promote · Support). URL sync:
-`?tab=ops&sub=claims`, `?tab=edit&sub=results&regattaId=…` (legacy
-`tab=edit&sub=claims` migrates to Ops).
+**IA:** primary tabs include **Database** (Sailors · Regattas · Results ·
+Selection) and **Ops** (Suggestions · Claims · Promote · Support). The old
+**Gold ranking** tab is removed (Nat A/B lives on public boards; campaigns
+moved to Database → Selection). URL sync: `?tab=ops&sub=claims`,
+`?tab=edit&sub=selection` (legacy `tab=gold` → Selection).
 
 Claims / promote / support / import / sailors / regattas / results use standalone panels.
 Shell keeps auth gate, tab navigation, and hook wiring only.

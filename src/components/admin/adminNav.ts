@@ -9,11 +9,10 @@ export type AdminActiveTab =
   | "edit"
   | "ops"
   | "analysis"
-  | "gold"
   | "ilca";
 
 /** Database CRUD sub-tabs */
-export type AdminDbSubTab = "sailors" | "regattas" | "results";
+export type AdminDbSubTab = "sailors" | "regattas" | "results" | "selection";
 
 /** Ops triage sub-tabs */
 export type AdminOpsSubTab =
@@ -37,7 +36,6 @@ const PRIMARY_TABS: readonly AdminActiveTab[] = [
   "edit",
   "ops",
   "analysis",
-  "gold",
   "ilca",
 ] as const;
 
@@ -45,6 +43,7 @@ const DB_SUBS: readonly AdminDbSubTab[] = [
   "sailors",
   "regattas",
   "results",
+  "selection",
 ] as const;
 
 const OPS_SUBS: readonly AdminOpsSubTab[] = [
@@ -84,6 +83,12 @@ export function parseAdminNav(
   let tabRaw = params.get("tab");
   let subRaw = params.get("sub");
   const regattaIdRaw = params.get("regattaId")?.trim() || null;
+
+  // Legacy: Gold ranking primary tab → Database → Selection
+  if (tabRaw === "gold") {
+    tabRaw = "edit";
+    subRaw = subRaw && isDbSub(subRaw) ? subRaw : "selection";
+  }
 
   // Legacy: ops subs lived under Database (edit)
   if (
@@ -142,6 +147,7 @@ export const ADMIN_DB_SUB_TABS: { id: AdminDbSubTab; label: string }[] = [
   { id: "sailors", label: "Sailors" },
   { id: "regattas", label: "Regattas" },
   { id: "results", label: "Results" },
+  { id: "selection", label: "Selection" },
 ];
 
 export const ADMIN_OPS_SUB_TABS: { id: AdminOpsSubTab; label: string }[] = [

@@ -16,6 +16,7 @@ import {
   Save,
   Grid,
   UserCheck,
+  Users,
 } from "lucide-react";
 import { birthYear } from "@/lib/age";
 import {
@@ -32,6 +33,7 @@ import {
   type SailorFormState,
 } from "@/components/admin/adminForms";
 import type { SailorAdmin } from "@/types/sailor";
+import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 
 const HALF_BOUNDARY_OPTS = halfBoundaryOptions();
 
@@ -249,15 +251,40 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                   </p>
                 </div>
 
-                {/* Bulk edit toolbar (merged from former Bulk Date Editor) */}
+                {/* Duplicate finder — always available (not selection-dependent) */}
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-[11px] text-slate-500">
+                    Tick rows to bulk-edit, merge, or delete. Use{" "}
+                    <strong className="text-slate-400">Find similar names</strong> to spot
+                    duplicates.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setShowDuplicateFinder((v) => !v)}
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white flex items-center gap-1.5"
+                  >
+                    <Copy className="h-3.5 w-3.5 text-orange-400" />
+                    Find similar names
+                    {duplicatePairs.length > 0 && (
+                      <span className="rounded-full bg-orange-600/20 text-orange-300 px-1.5 py-0.5 text-[10px]">
+                        {duplicatePairs.length}
+                      </span>
+                    )}
+                  </button>
+                </div>
+
+                {/* Bulk edit toolbar — only when at least one row is selected */}
+                {selectedSailors.length > 0 && (
                 <div className="glass-panel rounded-2xl border border-orange-500/20 bg-orange-500/[0.03] p-4 space-y-3">
                   <div className="flex items-center gap-2">
                     <Grid className="h-4 w-4 text-orange-500" />
-                    <h3 className="text-sm font-bold text-white">Bulk edit selected sailors</h3>
+                    <h3 className="text-sm font-bold text-white">
+                      Bulk edit · {selectedSailors.length} selected
+                    </h3>
                   </div>
                   <p className="text-[11px] text-slate-500">
-                    Tick sailors in the table below, choose a property and value, then apply. Use
-                    Columns to show historical / overseas fields in the same overview.
+                    Choose a property and value, then apply. Use Columns to show historical /
+                    overseas fields in the same overview.
                   </p>
                   <div className="flex flex-wrap items-end gap-4">
                     <div className="flex flex-col gap-1 min-w-[180px]">
@@ -447,26 +474,13 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       Delete selected
                     </button>
                   </div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <p className="text-[10px] text-slate-500 flex-1 min-w-[200px]">
-                      <strong className="text-slate-400">Merge duplicates:</strong> tick exactly two
-                      rows → <strong className="text-emerald-400">Merge 2 selected</strong>. The more
-                      complete profile is kept; the other is deleted after results/aliases move over.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setShowDuplicateFinder((v) => !v)}
-                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white flex items-center gap-1.5"
-                    >
-                      <Copy className="h-3.5 w-3.5 text-orange-400" />
-                      Find similar names
-                      {duplicatePairs.length > 0 && (
-                        <span className="rounded-full bg-orange-600/20 text-orange-300 px-1.5 py-0.5 text-[10px]">
-                          {duplicatePairs.length}
-                        </span>
-                      )}
-                    </button>
-                  </div>
+                  <p className="text-[10px] text-slate-500">
+                    <strong className="text-slate-400">Merge:</strong> tick exactly two rows →{" "}
+                    <strong className="text-emerald-400">Merge 2 selected</strong>. The more
+                    complete profile is kept; results/aliases move over.
+                  </p>
+                </div>
+                )}
 
                   {showDuplicateFinder && (
                     <div className="rounded-xl border border-white/10 bg-slate-950/60 p-4 space-y-3">
@@ -566,13 +580,13 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       )}
                     </div>
                   )}
+
                   {bulkStatus && (
                     <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
                       <CheckCircle className="h-4 w-4" />
                       {bulkStatus}
                     </div>
                   )}
-                </div>
 
                 {/* Sailor Form — fixed modal so Edit is always visible */}
                 {editingSailorId && (
@@ -1121,6 +1135,38 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
+                        {sortedDbSailors.length === 0 && (
+                          <tr>
+                            <td colSpan={20} className="p-0">
+                              <AdminEmptyState
+                                icon={Users}
+                                title={
+                                  sailorList.length === 0
+                                    ? "No sailors loaded"
+                                    : "No sailors match filters"
+                                }
+                                description={
+                                  sailorList.length === 0
+                                    ? "Import a regatta or add a sailor to start the roster."
+                                    : "Clear search or widen fleet/class/squad filters."
+                                }
+                                action={
+                                  isSuperadmin
+                                    ? {
+                                        label: "Add sailor",
+                                        onClick: () => {
+                                          setSailorForm({
+                                            ...emptySailorForm(),
+                                          });
+                                          setEditingSailorId("new");
+                                        },
+                                      }
+                                    : undefined
+                                }
+                              />
+                            </td>
+                          </tr>
+                        )}
                         {sortedDbSailors.map((s) => {
                           const seriesLabel = seriesLabelOf(s);
                           const isChecked = selectedSailors.includes(s.id);

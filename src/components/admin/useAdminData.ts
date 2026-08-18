@@ -58,20 +58,24 @@ export function useAdminData({
 
   const needsFullResults =
     activeTab === "analysis" ||
-    activeTab === "gold" ||
-    activeTab === "ilca";
+    activeTab === "ilca" ||
+    (activeTab === "edit" && editSubTab === "selection");
 
   const needSailors =
     isSuperadmin &&
     (needsFullResults ||
       (activeTab === "edit" &&
-        (editSubTab === "sailors" || editSubTab === "results")));
+        (editSubTab === "sailors" ||
+          editSubTab === "results" ||
+          editSubTab === "selection")));
 
   const needRegattas =
     isSuperadmin &&
     (needsFullResults ||
       (activeTab === "edit" &&
-        (editSubTab === "regattas" || editSubTab === "results")) ||
+        (editSubTab === "regattas" ||
+          editSubTab === "results" ||
+          editSubTab === "selection")) ||
       (activeTab === "ops" && editSubTab === "suggestions"));
 
   const needResultsEditor =

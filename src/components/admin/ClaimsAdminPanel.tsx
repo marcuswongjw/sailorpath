@@ -16,6 +16,8 @@ import {
   type ClaimRelation,
 } from "@/lib/claimRelation";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
+import { Inbox } from "lucide-react";
 
 type ClaimRow = {
   id: string;
@@ -364,9 +366,17 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
           );
         })}
         {!loading && visible.length === 0 && (
-          <p className="text-xs text-slate-500 text-center py-12 w-full">
-            No {filter === "all" ? "" : filter} claims.
-          </p>
+          <div className="w-full">
+            <AdminEmptyState
+              icon={Inbox}
+              title={
+                filter === "all"
+                  ? "No claims yet"
+                  : `No ${filter} claims`
+              }
+              description="When parents or sailors submit a profile claim, they show up here for review."
+            />
+          </div>
         )}
       </div>
     </div>

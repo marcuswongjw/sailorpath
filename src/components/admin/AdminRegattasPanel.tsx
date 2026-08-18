@@ -8,6 +8,7 @@ import {
   emptyRegattaForm,
   type RegattaFormState,
 } from "@/components/admin/adminForms";
+import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 
 export type { RegattaFormState };
 
@@ -117,9 +118,11 @@ export function AdminRegattasPanel({
                     </div>
                     <div className="overflow-y-auto flex-1 divide-y divide-white/5">
                       {filteredRegattaList.length === 0 ? (
-                        <p className="p-6 text-xs text-slate-500 text-center">
-                          No regattas match filters.
-                        </p>
+                        <AdminEmptyState
+                          icon={Calendar}
+                          title="No regattas match filters"
+                          description="Try clearing search or changing division / ranking filters."
+                        />
                       ) : (
                         filteredRegattaList.map((r) => {
                           const active = editingRegattaId === r.id;

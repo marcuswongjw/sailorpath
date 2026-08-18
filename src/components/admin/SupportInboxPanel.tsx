@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LifeBuoy, CheckCircle, Mail } from "lucide-react";
+import { LifeBuoy, CheckCircle, Mail, Inbox } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
+import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 
 type Msg = {
   id: string;
@@ -148,9 +149,17 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
           </div>
         ))}
         {!loading && messages.length === 0 && (
-          <p className="text-xs text-slate-500 text-center py-10">
-            No messages in this filter.
-          </p>
+          <AdminEmptyState
+            icon={Inbox}
+            title={
+              filter === "new"
+                ? "Inbox zero"
+                : filter === "resolved"
+                  ? "No resolved messages"
+                  : "No support messages"
+            }
+            description="New help requests from the site land here for triage."
+          />
         )}
       </div>
     </div>
