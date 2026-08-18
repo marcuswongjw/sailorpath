@@ -1,42 +1,20 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState } from "react";
 import {
   Database,
   FileSpreadsheet,
   AlertTriangle,
   UserCheck,
-  Calendar,
-  Grid,
-  CheckCircle,
   RefreshCw,
-  Save,
   Shield,
-  Columns3,
-  ArrowUpDown,
-  ArrowUp,
-  ArrowDown,
-  Plus,
-  Trash2,
-  Edit3,
-  User,
-  Medal,
-  Copy,
   GitCompareArrows,
   Trophy,
+  Medal,
 } from "lucide-react";
-import { getPercentileBadge, natSquadFieldForPeriod } from "@/lib/ranking";
-import { createBrowserSupabase } from "@/lib/supabase/browser";
-import { findDuplicateSailorPairs } from "@/lib/nameMatch";
 import { ClaimsAdminPanel } from "@/components/ClaimsAdminPanel";
 import { PromoteAdminPanel } from "@/components/PromoteAdminPanel";
 import { SupportInboxPanel } from "@/components/SupportInboxPanel";
-import {
-  DB_COLS_STORAGE,
-  DB_SAILOR_COLUMNS,
-  defaultDbColVisible,
-} from "@/components/admin/adminConstants";
-import { parseApi } from "@/components/admin/parseApi";
 import { AdminSuggestionsPanel } from "@/components/admin/AdminSuggestionsPanel";
 import { AdminRegattaImport } from "@/components/admin/AdminRegattaImport";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
@@ -46,1383 +24,69 @@ import { AdminCompetitionsPanel } from "@/components/admin/AdminCompetitionsPane
 import { AdminGoldAnalysisPanel } from "@/components/admin/AdminGoldAnalysisPanel";
 import { AdminIlcaRankingPanel } from "@/components/admin/AdminIlcaRankingPanel";
 import { AdminGoldRankingPanel } from "@/components/admin/AdminGoldRankingPanel";
-import { birthYear } from "@/lib/age";
+import { useAdminAuth } from "@/components/admin/useAdminAuth";
 import {
-  currentPeriodFromSgToday,
-  halfBoundaryOptions,
-  isHalfBoundaryYmd,
-  todayYmdSg,
-} from "@/lib/datesSg";
-import {
-  isInSgSeries,
-  seriesMembershipLabel,
-} from "@/lib/seriesMembership";
-import type { SailorAdmin } from "@/types/sailor";
-import type { RegattaAdmin } from "@/types/regatta";
-import { regattaDateLabel } from "@/types/regatta";
-import type { ResultAdmin } from "@/types/result";
-
-/** Gold entry / drop: 1 Jan or 1 Jul only (half-year boundaries). */
-const HALF_BOUNDARY_OPTS = halfBoundaryOptions();
-
-type AdminDataKey = "sailors" | "regattas" | "results";
+  useAdminData,
+  type AdminActiveTab,
+  type AdminEditSubTab,
+} from "@/components/admin/useAdminData";
+import { useAdminNotifications } from "@/components/admin/useAdminNotifications";
+import { useAdminSailors } from "@/components/admin/useAdminSailors";
+import { useAdminRegattas } from "@/components/admin/useAdminRegattas";
+import { useAdminResults } from "@/components/admin/useAdminResults";
+import { useAdminCompetitions } from "@/components/admin/useAdminCompetitions";
 
 export function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<
-    "import" | "edit" | "analysis" | "gold" | "ilca"
-  >("edit");
-  
-  // Auth state — role from server /profiles, never user_metadata
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [adminRole, setAdminRole] = useState<"superadmin" | "coach" | "sailor" | "parent">("sailor");
+  const [activeTab, setActiveTab] = useState<AdminActiveTab>("edit");
+  const [editSubTab, setEditSubTab] = useState<AdminEditSubTab>("sailors");
 
-  useEffect(() => {
-    let subscription: { unsubscribe: () => void } | undefined;
+  const { user, loading, adminRole, isSuperadmin } = useAdminAuth();
 
-    async function loadRole() {
-      try {
-        const supabase = createBrowserSupabase();
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        if (!session?.user) {
-          setUser(null);
-          setAdminRole("sailor");
-          setLoading(false);
-          return;
-        }
-        setUser(session.user);
-        try {
-          const res = await fetch("/api/admin/me");
-          const data = await res.json();
-          setAdminRole((data.role || "sailor") as any);
-        } catch {
-          setAdminRole("sailor");
-        }
-      } catch {
-        setUser(null);
-        setAdminRole("sailor");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    try {
-      const supabase = createBrowserSupabase();
-      loadRole();
-      const { data } = supabase.auth.onAuthStateChange(() => {
-        loadRole();
-      });
-      subscription = data.subscription;
-    } catch {
-      setLoading(false);
-    }
-
-    return () => subscription?.unsubscribe();
-  }, []);
-
-
-  // Ignored duplicate pairs (localStorage, pair key idA|idB sorted)
-  const [ignoredDuplicateKeys, setIgnoredDuplicateKeys] = useState<Set<string>>(
-    () => {
-      if (typeof window === "undefined") return new Set();
-      try {
-        const raw = localStorage.getItem("sailorpath_ignored_duplicates");
-        const arr = raw ? (JSON.parse(raw) as string[]) : [];
-        return new Set(arr);
-      } catch {
-        return new Set();
-      }
-    }
-  );
-
-  // Bulk Editor States
-  const [selectedSailors, setSelectedSailors] = useState<string[]>([]);
-  const [bulkField, setBulkField] = useState<string>("");
-  const [bulkValue, setBulkValue] = useState<string>("");
-  const [sailorList, setSailorList] = useState<SailorAdmin[]>([]);
-  const [bulkStatus, setBulkStatus] = useState<string | null>(null);
-  const [loadedData, setLoadedData] = useState<Record<AdminDataKey, boolean>>({
-    sailors: false,
-    regattas: false,
-    results: false,
-  });
-  /** Results editor loads one regatta; ranking tabs need the full set. */
-  const [hasFullResults, setHasFullResults] = useState(false);
-  const [dataLoading, setDataLoading] = useState(false);
-  const [dataLoadError, setDataLoadError] = useState<string | null>(null);
-
-  // Database Editor Sub-Tabs & Forms
-  const [editSubTab, setEditSubTab] = useState<
-    | "sailors"
-    | "regattas"
-    | "results"
-    | "suggestions"
-    | "claims"
-    | "promote"
-    | "support"
-  >("sailors");
-  const [dbSearch, setDbSearch] = useState("");
-  const [dbFleetFilter, setDbFleetFilter] = useState<string>("all");
-  const [dbSquadFilter, setDbSquadFilter] = useState<string>("all");
-  const [regattaSearch, setRegattaSearch] = useState("");
-  const [regattaDivisionFilter, setRegattaDivisionFilter] =
-    useState<string>("all");
-  /** all | series | nonranking */
-  const [regattaRankingFilter, setRegattaRankingFilter] =
-    useState<string>("all");
-  const [dbColVisible, setDbColVisible] = useState<Record<string, boolean>>(
-    defaultDbColVisible
-  );
-  const [dbColPickerOpen, setDbColPickerOpen] = useState(false);
-  const [dbSortKey, setDbSortKey] = useState<string>("name");
-  const [dbSortDir, setDbSortDir] = useState<"asc" | "desc">("asc");
-  const [best3BySailor, setBest3BySailor] = useState<Record<string, number>>(
-    {}
-  );
-  const [competitionsSailorId, setCompetitionsSailorId] = useState<string | null>(
-    null
-  );
-  const [competitionsLoading, setCompetitionsLoading] = useState(false);
-  const [editingSailorId, setEditingSailorId] = useState<string | null>(null);
-  const [sailorForm, setSailorForm] = useState<any>({
-    id: "",
-    name: "",
-    handle: "",
-    sailNumber: "",
-    sailNumberIlca4: "",
-    club: "",
-    nationality: "",
-    gender: "M",
-    nationalSquadStatus: "",
-    instagram: "",
-    avatarUrl: "",
-    dob: "",
-    weight: "",
-    bio: "",
-    goldEntryDate: "",
-    silverEntryDate: "",
-    dropDate: "",
-    natSquadStatusJan25: "",
-    natSquadStatusJul25: "",
-    natSquadStatusJan26: "",
-    natSquadStatusJul26: "",
-    natSquadStatusJan27: "",
-    natSquadStatusJul27: "",
-    histRankingJun24: "",
-    histRankingDec24: "",
-    histRankingJun25: "",
-    histRankingDec25: "",
-    histRankingJun26: "",
-    worlds: "",
-    european: "",
-    asian: "",
-    seaGames: "",
-  });
-
-  const [regattaList, setRegattaList] = useState<RegattaAdmin[]>([]);
-  const filteredRegattaList = useMemo(() => {
-    const q = regattaSearch.trim().toLowerCase();
-    return [...(regattaList || [])]
-      .filter((r) => {
-        if (
-          regattaDivisionFilter !== "all" &&
-          String(r.division || "Gold") !== regattaDivisionFilter
-        ) {
-          return false;
-        }
-        const isNon = r.countsForRanking === false;
-        if (regattaRankingFilter === "series" && isNon) return false;
-        if (regattaRankingFilter === "nonranking" && !isNon) return false;
-        if (!q) return true;
-        const hay =
-          `${r.name || ""} ${r.date || ""} ${r.division || ""} ${r.slug || ""}`.toLowerCase();
-        return hay.includes(q);
-      })
-      .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-  }, [
-    regattaList,
-    regattaSearch,
-    regattaDivisionFilter,
-    regattaRankingFilter,
-  ]);
-  const suggestionCount = useMemo(
-    () =>
-      (regattaList || []).filter(
-        (r) => r.countsForRanking === false && !r.reviewedAt
-      ).length,
-    [regattaList]
-  );
-
-  /** Pending claims + new support messages (notification badges) */
-  const [claimsPendingCount, setClaimsPendingCount] = useState(0);
-  const [supportNewCount, setSupportNewCount] = useState(0);
-  const [editingRegattaId, setEditingRegattaId] = useState<string | null>(null);
-  const [regattaForm, setRegattaForm] = useState<any>({
-    id: "",
-    name: "",
-    date: "",
-    totalFleetSize: 50,
-    division: "Gold",
-    raceCount: "",
-    geography: "SGP",
-    boatClass: "Optimist",
-    countsForRanking: true,
-  });
-
-  const [resultsList, setResultsList] = useState<ResultAdmin[]>([]);
-  const [selectedRegattaIdForResultEdit, setSelectedRegattaIdForResultEdit] = useState<string>(
-    ""
-  );
-  const [editingResultId, setEditingResultId] = useState<string | null>(null);
-  const [showDuplicateFinder, setShowDuplicateFinder] = useState(false);
-  const [resultForm, setResultForm] = useState<any>({
-    id: "",
-    regattaId: "",
-    sailorId: "",
-    rank: 1,
-    nettScore: "",
-    totalScore: "",
-    isDNS: false,
-    isOverseasCommitment: false,
-  });
-
-  // Check superadmin permissions
-  const isSuperadmin = adminRole === "superadmin";
-
-  const requiredData = useMemo<AdminDataKey[]>(() => {
-    if (activeTab === "analysis" || activeTab === "gold" || activeTab === "ilca") {
-      return ["sailors", "regattas", "results"];
-    }
-    if (activeTab !== "edit") return [];
-    if (editSubTab === "sailors") return ["sailors"];
-    if (editSubTab === "regattas" || editSubTab === "suggestions") {
-      return ["regattas"];
-    }
-    if (editSubTab === "results") return ["sailors", "regattas", "results"];
-    return [];
-  }, [activeTab, editSubTab]);
-
-  // Load only the records required for the active workspace. This keeps the
-  // initial admin response free of database rows and avoids downloading all
-  // results when an admin opens Claims, Support, or a single editor.
-  useEffect(() => {
-    if (!isSuperadmin) return;
-    const needsFullResults =
-      activeTab === "analysis" ||
-      activeTab === "gold" ||
-      activeTab === "ilca";
-
-    const missing = requiredData.filter((key) => {
-      if (key === "results" && needsFullResults && !hasFullResults) return true;
-      return !loadedData[key];
-    });
-    if (missing.length === 0) return;
-
-    let cancelled = false;
-    setDataLoading(true);
-    setDataLoadError(null);
-
-    const endpoints: Record<AdminDataKey, string> = {
-      sailors: "/api/admin/sailors?all=1",
-      regattas: "/api/admin/regattas?all=1",
-      results: needsFullResults
-        ? "/api/admin/results?all=1"
-        : selectedRegattaIdForResultEdit
-          ? `/api/admin/results?regattaId=${encodeURIComponent(selectedRegattaIdForResultEdit)}`
-          : "",
-    };
-
-    void Promise.all(
-      missing.map(async (key) => {
-        const url = endpoints[key];
-        if (!url) {
-          return { key, body: { results: [] as ResultAdmin[] } };
-        }
-        const response = await fetch(url, { credentials: "include" });
-        const body = (await response.json()) as {
-          error?: string;
-          sailors?: SailorAdmin[];
-          regattas?: RegattaAdmin[];
-          results?: ResultAdmin[];
-        };
-        if (!response.ok) throw new Error(body.error || `Could not load ${key}`);
-        return { key, body };
-      })
-    )
-      .then((responses) => {
-        if (cancelled) return;
-        for (const { key, body } of responses) {
-          if (key === "sailors" && Array.isArray(body.sailors)) {
-            setSailorList(body.sailors);
-          }
-          if (key === "regattas" && Array.isArray(body.regattas)) {
-            const rows = [...body.regattas].sort((a, b) =>
-              String(b.date || "").localeCompare(String(a.date || ""))
-            );
-            setRegattaList(rows);
-            setSelectedRegattaIdForResultEdit((current) => current || rows[0]?.id || "");
-          }
-          if (key === "results" && Array.isArray(body.results)) {
-            if (needsFullResults) {
-              setResultsList(body.results);
-              setHasFullResults(true);
-            } else {
-              // Merge/replace rows for the selected regatta only
-              const rid = selectedRegattaIdForResultEdit;
-              setResultsList((prev) => {
-                const others = rid
-                  ? prev.filter((r) => r.regattaId !== rid)
-                  : prev;
-                return [...others, ...body.results!];
-              });
-            }
-          }
-        }
-        setLoadedData((current) => {
-          const next = { ...current };
-          for (const key of missing) next[key] = true;
-          return next;
-        });
-      })
-      .catch((error: unknown) => {
-        if (!cancelled) {
-          setDataLoadError(error instanceof Error ? error.message : "Failed to load admin data");
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setDataLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [
+  const data = useAdminData({
     isSuperadmin,
-    loadedData,
-    requiredData,
     activeTab,
-    selectedRegattaIdForResultEdit,
-    hasFullResults,
-  ]);
-
-  // Results editor: reload when switching regatta (avoid downloading every result).
-  useEffect(() => {
-    if (!isSuperadmin) return;
-    if (activeTab !== "edit" || editSubTab !== "results") return;
-    const rid = selectedRegattaIdForResultEdit;
-    if (!rid) return;
-
-    let cancelled = false;
-    void (async () => {
-      try {
-        const response = await fetch(
-          `/api/admin/results?regattaId=${encodeURIComponent(rid)}`,
-          { credentials: "include" }
-        );
-        const body = (await response.json()) as {
-          error?: string;
-          results?: ResultAdmin[];
-        };
-        if (!response.ok) throw new Error(body.error || "Could not load results");
-        if (cancelled || !Array.isArray(body.results)) return;
-        setResultsList((prev) => {
-          const others = prev.filter((r) => r.regattaId !== rid);
-          return [...others, ...body.results!];
-        });
-      } catch {
-        /* keep existing rows; banner handled elsewhere */
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [isSuperadmin, activeTab, editSubTab, selectedRegattaIdForResultEdit]);
-
-  useEffect(() => {
-    if (!isSuperadmin) return;
-    let cancelled = false;
-    const loadNotifs = async () => {
-      try {
-        const [cRes, sRes] = await Promise.all([
-          fetch("/api/admin/claims"),
-          fetch("/api/support?status=new"),
-        ]);
-        const cData = await cRes.json().catch(() => ({}));
-        const sData = await sRes.json().catch(() => ({}));
-        if (cancelled) return;
-        if (cRes.ok && Array.isArray(cData.claims)) {
-          setClaimsPendingCount(
-            cData.claims.filter(
-              (c: { status?: string }) => c.status === "pending"
-            ).length
-          );
-        }
-        if (sRes.ok && Array.isArray(sData.messages)) {
-          setSupportNewCount(sData.messages.length);
-        }
-      } catch {
-        /* ignore */
-      }
-    };
-    void loadNotifs();
-    const t = setInterval(loadNotifs, 60_000);
-    return () => {
-      cancelled = true;
-      clearInterval(t);
-    };
-  }, [isSuperadmin]);
-
-  const inboxNotifCount = claimsPendingCount + supportNewCount;
-
-  // Column prefs
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(DB_COLS_STORAGE);
-      if (raw) {
-        const parsed = JSON.parse(raw) as Record<string, boolean>;
-        setDbColVisible({ ...defaultDbColVisible(), ...parsed });
-      }
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(DB_COLS_STORAGE, JSON.stringify(dbColVisible));
-    } catch {
-      /* ignore */
-    }
-  }, [dbColVisible]);
-
-  // Best 3 of 5 for current SG half (Gold + Silver)
-  useEffect(() => {
-    if (sailorList.length === 0) {
-      setBest3BySailor({});
-      return;
-    }
-    let cancelled = false;
-    (async () => {
-      try {
-        const cur = currentPeriodFromSgToday();
-        const halfQ = encodeURIComponent(cur.half);
-        const [g, s] = await Promise.all([
-          fetch(
-            `/api/rankings?fleet=Gold&year=${cur.year}&half=${halfQ}`
-          ).then((r) => r.json()),
-          fetch(
-            `/api/rankings?fleet=Silver&year=${cur.year}&half=${halfQ}`
-          ).then((r) => r.json()),
-        ]);
-        if (cancelled) return;
-        const m: Record<string, number> = {};
-        for (const row of [...(g.ranked || []), ...(s.ranked || [])]) {
-          if (row?.id != null && row.overallScore != null) {
-            m[row.id] = row.overallScore;
-          }
-        }
-        setBest3BySailor(m);
-      } catch {
-        if (!cancelled) setBest3BySailor({});
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
-  }, [sailorList, resultsList, regattaList]);
-
-  const filteredDbSailors = sailorList.filter((s) => {
-    const q = dbSearch.trim().toLowerCase();
-    if (q) {
-      const hay = `${s.name} ${s.sailNumber || ""} ${s.sailNumberIlca4 || ""} ${s.club || ""} ${s.school || ""} ${s.handle || ""}`.toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    if (dbFleetFilter !== "all") {
-      const inSeries = isInSgSeries(s);
-      const hasIlca =
-        Boolean(String(s.sailNumberIlca4 || "").trim()) ||
-        Boolean((s as { ilca4NationalList?: boolean }).ilca4NationalList);
-      if (dbFleetFilter === "series" && !inSeries) return false;
-      if (dbFleetFilter === "guest" && inSeries) return false;
-      // Ranking-style filters (derived for current dates, not Fleet current)
-      if (dbFleetFilter === "gold") {
-        if (!inSeries || !s.goldEntryDate) return false;
-      }
-      if (dbFleetFilter === "silver") {
-        if (!inSeries || s.goldEntryDate) return false;
-      }
-      if (dbFleetFilter === "ilca4" && !hasIlca) return false;
-      if (dbFleetFilter === "dual") {
-        const hasOpti =
-          inSeries ||
-          Boolean(s.goldEntryDate) ||
-          Boolean(s.silverEntryDate) ||
-          (Boolean(String(s.sailNumber || "").trim()) &&
-            !/^SGP\s*0+$/i.test(String(s.sailNumber)));
-        if (!hasIlca || !hasOpti) return false;
-      }
-    }
-    if (dbSquadFilter !== "all") {
-      // Prefer mapped field for current SG half; fallback legacy nationalSquadStatus
-      const field = natSquadFieldForPeriod(currentPeriodFromSgToday());
-      const periodVal = field ? (s as any)[field] : null;
-      const sq = periodVal || s.natSquadStatusJul26 || s.nationalSquadStatus || "";
-      if (String(sq) !== dbSquadFilter) return false;
-    }
-    return true;
+    editSubTab,
   });
 
-  const seriesLabelOf = (s: Parameters<typeof seriesMembershipLabel>[0]) =>
-    seriesMembershipLabel(s);
+  const { claimsPendingCount, supportNewCount, inboxNotifCount } =
+    useAdminNotifications(isSuperadmin);
 
-  /** In SG Fleet with no gold/silver entry — cannot rank until stamped */
-  const emptySeriesCount = useMemo(
-    () =>
-      sailorList.filter((s) => {
-        const cf = String(s.currentFleet || "")
-          .trim()
-          .toLowerCase();
-        const isSeriesTag =
-          cf === "series" ||
-          cf === "gold" ||
-          cf === "silver" ||
-          cf === "in sg fleet" ||
-          cf === "member";
-        if (!isSeriesTag) return false;
-        return !s.goldEntryDate && !s.silverEntryDate;
-      }).length,
-    [sailorList]
-  );
+  const results = useAdminResults({
+    isSuperadmin,
+    regattaList: data.regattaList,
+    setResultsList: data.setResultsList,
+    refreshResultsList: data.refreshResultsList,
+    selectedRegattaIdForResultEdit: data.selectedRegattaIdForResultEdit,
+    setSelectedRegattaIdForResultEdit: data.setSelectedRegattaIdForResultEdit,
+  });
 
-  const handleBackfillNationalityFromSail = async () => {
-    if (
-      !confirm(
-        "Set nationality from sail number country codes (e.g. SGP 115 → SGP) for sailors who have no nationality yet?"
-      )
-    ) {
-      return;
-    }
-    try {
-      const res = await fetch("/api/admin/sailors", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "backfillNationalityFromSail" }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Backfill failed");
-      const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
-      if (list.sailors) setSailorList(list.sailors);
-      alert(data.message || `Updated ${data.updated} sailors`);
-    } catch (e: unknown) {
-      alert(e instanceof Error ? e.message : "Backfill failed");
-    }
-  };
+  const competitions = useAdminCompetitions({
+    refreshResultsList: data.refreshResultsList,
+    setRegattaList: data.setRegattaList,
+    setEditingResultId: results.setEditingResultId,
+  });
 
-  const handleCleanupEmptySeries = async () => {
-    if (!isSuperadmin) {
-      alert("Only Superadmins can run this.");
-      return;
-    }
-    if (
-      !confirm(
-        `Stamp silver entry (Singapore today) on ${emptySeriesCount} Series sailor(s) with no entry dates?`
-      )
-    ) {
-      return;
-    }
-    try {
-      const res = await fetch("/api/admin/sailors", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "stampEmptySeriesSilver" }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Cleanup failed");
-      const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
-      if (list.sailors) setSailorList(list.sailors);
-      alert(data.message || `Updated ${data.updated} sailors`);
-    } catch (e: unknown) {
-      alert(e instanceof Error ? e.message : "Cleanup failed");
-    }
-  };
+  const sailors = useAdminSailors({
+    isSuperadmin,
+    sailorList: data.sailorList,
+    setSailorList: data.setSailorList,
+    resultsList: data.resultsList,
+    setResultsList: data.setResultsList,
+    regattaListLength: data.regattaList.length,
+    refreshResultsList: data.refreshResultsList,
+    openSailorResultsBase: competitions.openSailorResults,
+    competitionsSailorId: competitions.competitionsSailorId,
+    setCompetitionsSailorId: competitions.setCompetitionsSailorId,
+  });
 
-  const duplicatePairs = useMemo(() => {
-    const pairKey = (a: string, b: string) =>
-      [a, b].sort().join("|");
-    return findDuplicateSailorPairs(
-      sailorList.map((s) => ({
-        id: s.id,
-        name: s.name,
-        sailNumber: s.sailNumber,
-      })),
-      0.6
-    ).filter((p) => !ignoredDuplicateKeys.has(pairKey(p.a.id, p.b.id)));
-  }, [sailorList, ignoredDuplicateKeys]);
-
-  const ignoreDuplicatePair = (aId: string, bId: string) => {
-    const key = [aId, bId].sort().join("|");
-    setIgnoredDuplicateKeys((prev) => {
-      const next = new Set(prev);
-      next.add(key);
-      try {
-        localStorage.setItem(
-          "sailorpath_ignored_duplicates",
-          JSON.stringify([...next])
-        );
-      } catch {
-        /* ignore */
-      }
-      return next;
-    });
-  };
-
-  const sortedDbSailors = useMemo(() => {
-    const rows = [...filteredDbSailors];
-    const dir = dbSortDir === "asc" ? 1 : -1;
-    const val = (s: any) => {
-      switch (dbSortKey) {
-        case "name":
-          return s.name || "";
-        case "sailNumber":
-          return s.sailNumber || "";
-        case "series":
-          return seriesLabelOf(s);
-        case "best3":
-          return best3BySailor[s.id] ?? 99999;
-        case "gender":
-          return s.gender || "";
-        case "birthYear":
-        case "age": {
-          // legacy "age" key maps to birth year for sort
-          const y = birthYear(s.dob as string | null);
-          return y == null ? 99999 : y;
-        }
-        case "club":
-          return s.club || "";
-        case "nationality":
-          return s.nationality || "";
-        case "school":
-          return s.school || "";
-        case "goldEntry":
-          return s.goldEntryDate || "";
-        case "silverEntry":
-          return s.silverEntryDate || "";
-        case "dropDate":
-          return s.dropDate || "";
-        case "squadJan25":
-          return s.natSquadStatusJan25 || "";
-        case "squadJul25":
-          return s.natSquadStatusJul25 || "";
-        case "squadJan26":
-          return s.natSquadStatusJan26 || "";
-        case "squadJul26":
-          return s.natSquadStatusJul26 || "";
-        case "histJun24":
-          return s.histRankingJun24 ?? 99999;
-        case "histDec24":
-          return s.histRankingDec24 ?? 99999;
-        case "histJun25":
-          return s.histRankingJun25 ?? 99999;
-        case "histDec25":
-          return s.histRankingDec25 ?? 99999;
-        case "histJun26":
-          return s.histRankingJun26 ?? 99999;
-        case "worlds":
-          return s.worlds ?? 99999;
-        case "european":
-          return s.european ?? 99999;
-        case "asian":
-          return s.asian ?? 99999;
-        case "seaGames":
-          return s.seaGames ?? 99999;
-        default:
-          return s.name || "";
-      }
-    };
-    rows.sort((a, b) => {
-      const av = val(a);
-      const bv = val(b);
-      if (typeof av === "number" && typeof bv === "number") {
-        if (av !== bv) return (av - bv) * dir;
-      } else {
-        const c = String(av).localeCompare(String(bv), undefined, {
-          numeric: true,
-          sensitivity: "base",
-        });
-        if (c !== 0) return c * dir;
-      }
-      return String(a.name).localeCompare(String(b.name));
-    });
-    return rows;
-  }, [filteredDbSailors, dbSortKey, dbSortDir, best3BySailor]);
-
-  const toggleDbSort = (key: string) => {
-    if (dbSortKey === key) setDbSortDir((d) => (d === "asc" ? "desc" : "asc"));
-    else {
-      setDbSortKey(key);
-      setDbSortDir(key === "best3" ? "asc" : "asc");
-    }
-  };
-
-  const colOn = (key: string) => dbColVisible[key] !== false;
-
-  // Bulk Edit Handlers
-  const toggleSelectSailor = (id: string) => {
-    setSelectedSailors((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
-
-  const toggleSelectAllVisible = () => {
-    const ids = sortedDbSailors.map((s) => s.id);
-    const allOn =
-      ids.length > 0 && ids.every((id) => selectedSailors.includes(id));
-    if (allOn) {
-      setSelectedSailors((prev) => prev.filter((id) => !ids.includes(id)));
-    } else {
-      setSelectedSailors((prev) => Array.from(new Set([...prev, ...ids])));
-    }
-  };
-
-  const handleApplyBulk = async () => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can update fleet properties.");
-      return;
-    }
-    if (selectedSailors.length === 0) {
-      alert("Please select at least one sailor to bulk edit.");
-      return;
-    }
-    if (!bulkField) {
-      alert("Please select a field to update.");
-      return;
-    }
-    try {
-      const res = await fetch("/api/admin/bulk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sailorIds: selectedSailors,
-          field: bulkField,
-          value: bulkValue,
-        }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Bulk update failed");
-
-      setSailorList((prev) =>
-        prev.map((s) => {
-          if (!selectedSailors.includes(s.id)) return s;
-          let typedValue: any = bulkValue;
-          const isNumeric = [
-            "histRankingJun24", "histRankingDec24", "histRankingJun25", "histRankingDec25", "histRankingJun26",
-            "weight",
-          ].includes(bulkField);
-          if (isNumeric) typedValue = bulkValue === "" ? null : parseInt(bulkValue) || null;
-          else if (
-            [
-              "natSquadStatusJan25",
-              "natSquadStatusJul25",
-              "natSquadStatusJan26",
-              "natSquadStatusJul26",
-              "natSquadStatusJan27",
-              "natSquadStatusJul27",
-            ].includes(bulkField) &&
-            bulkValue === "CLEAR"
-          ) {
-            typedValue = null;
-          } else if (bulkValue === "") typedValue = null;
-          const next = { ...s, [bulkField]: typedValue };
-          // Keep legacy current-squad field in sync with latest half edits
-          if (
-            bulkField === "natSquadStatusJul26" ||
-            bulkField === "natSquadStatusJan27" ||
-            bulkField === "natSquadStatusJul27"
-          ) {
-            next.nationalSquadStatus = typedValue;
-          }
-          return next;
-        })
-      );
-      setBulkStatus(data.message || `Updated ${selectedSailors.length} sailors.`);
-      setSelectedSailors([]);
-      setBulkValue("");
-      setTimeout(() => setBulkStatus(null), 3000);
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
-
-  const handleMergeSailors = async () => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can merge sailors.");
-      return;
-    }
-    if (selectedSailors.length !== 2) {
-      alert("Select exactly two sailors (tick two checkboxes), then Merge.");
-      return;
-    }
-    const [aId, bId] = selectedSailors;
-    const a = sailorList.find((s) => s.id === aId);
-    const b = sailorList.find((s) => s.id === bId);
-    if (!a || !b) {
-      alert("Could not find both sailors — refresh and try again.");
-      return;
-    }
-
-    // Prefer keep = more complete profile / real sail number / gold history
-    const score = (s: any) => {
-      let n = 0;
-      if (s.goldEntryDate) n += 5;
-      if (s.silverEntryDate) n += 2;
-      if (s.sailNumber && !/^SGP\s*0+$/i.test(s.sailNumber)) n += 3;
-      if (s.dob) n += 1;
-      if (s.club && s.club !== "N/A") n += 1;
-      if (s.currentFleet) n += 2;
-      if (s.nationalSquadStatus) n += 1;
-      const resCount = resultsList.filter((r) => r.sailorId === s.id).length;
-      n += resCount;
-      return n;
-    };
-    let keep = a;
-    let merge = b;
-    if (score(b) > score(a)) {
-      keep = b;
-      merge = a;
-    }
-
-    const ok = confirm(
-      `Merge duplicate sailors?\n\n` +
-        `KEEP (profile retained):\n  ${keep.name} · ${keep.sailNumber || "—"}\n\n` +
-        `DELETE after merge (results + aliases moved):\n  ${merge.name} · ${merge.sailNumber || "—"}\n\n` +
-        `Results move to the kept sailor. On the same regatta, the better (lower) rank is kept.\n\nContinue?`
-    );
-    if (!ok) return;
-
-    try {
-      const res = await fetch("/api/admin/sailors/merge", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ keepId: keep.id, mergeId: merge.id }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Merge failed");
-
-      setSailorList((prev) => {
-        const without = prev.filter((s) => s.id !== merge.id);
-        return without.map((s) => (s.id === keep.id && data.keep ? data.keep : s));
-      });
-      setSelectedSailors([]);
-      // Refresh results so moved rows show under keep
-      try {
-        await refreshResultsList();
-      } catch {
-        /* ignore */
-      }
-      setBulkStatus(
-        data.message ||
-          `Merged ${merge.name} → ${keep.name} (${data.resultsMoved ?? 0} results moved).`
-      );
-      setTimeout(() => setBulkStatus(null), 6000);
-      alert(
-        `${data.message}\n\nResults moved: ${data.resultsMoved ?? 0}\n` +
-          `Conflicts resolved: ${data.resultsMergedConflict ?? 0}\n` +
-          `Conflicts kept (kept sailor better): ${data.resultsDroppedConflict ?? 0}`
-      );
-    } catch (e: any) {
-      alert(e.message || "Merge failed");
-    }
-  };
-
-  const handleBulkDelete = async () => {
-    if (!isSuperadmin) {
-      alert("Superadmin only");
-      return;
-    }
-    if (selectedSailors.length === 0) {
-      alert("Select at least one sailor to delete.");
-      return;
-    }
-    if (
-      !confirm(
-        `Delete ${selectedSailors.length} sailor(s) and all their regatta results? This cannot be undone.`
-      )
-    ) {
-      return;
-    }
-    try {
-      const res = await fetch("/api/admin/bulk", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "delete",
-          sailorIds: selectedSailors,
-        }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Bulk delete failed");
-      setSailorList((prev) => prev.filter((s) => !selectedSailors.includes(s.id)));
-      setResultsList((prev) =>
-        prev.filter((r) => !selectedSailors.includes(r.sailorId))
-      );
-      setSelectedSailors([]);
-      setBulkStatus(data.message || "Deleted.");
-      setTimeout(() => setBulkStatus(null), 4000);
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
-
-  // Sailor CRUD Handlers — persist to DB
-  const handleSaveSailor = async () => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
-      return;
-    }
-    if (!sailorForm.name || !sailorForm.sailNumber) {
-      alert("Name and Sail Number are required.");
-      return;
-    }
-    // Client-side Gold-from-Silver guard (server also enforces)
-    const existing = sailorList.find((s) => s.id === editingSailorId);
-    const wantsGold = Boolean(sailorForm.goldEntryDate);
-    const hasSilverPath =
-      Boolean(sailorForm.silverEntryDate) ||
-      Boolean(existing?.silverEntryDate) ||
-      Boolean(existing?.goldEntryDate);
-    if (wantsGold && !hasSilverPath) {
-      alert(
-        "Gold entry requires Silver history first. Set Silver entry date, save, then set Gold entry."
-      );
-      return;
-    }
-    if (
-      sailorForm.goldEntryDate &&
-      !isHalfBoundaryYmd(String(sailorForm.goldEntryDate))
-    ) {
-      alert(
-        "Gold entry date must be 1 Jan or 1 Jul (half-year boundary), e.g. 2026-01-01 or 2026-07-01."
-      );
-      return;
-    }
-    if (
-      sailorForm.dropDate &&
-      !isHalfBoundaryYmd(String(sailorForm.dropDate))
-    ) {
-      alert(
-        "Drop date must be 1 Jan or 1 Jul (half-year boundary), e.g. 2026-07-01."
-      );
-      return;
-    }
-    // Only send known fields (avoid dumping internal/extra props that break APIs)
-    const dateOnly = (v: unknown) => {
-      if (v == null || v === "") return null;
-      const s = String(v);
-      return /^\d{4}-\d{2}-\d{2}/.test(s) ? s.slice(0, 10) : s;
-    };
-    const payload = {
-      name: sailorForm.name,
-      handle: sailorForm.handle,
-      sailNumber: sailorForm.sailNumber,
-      sailNumberIlca4: sailorForm.sailNumberIlca4
-        ? String(sailorForm.sailNumberIlca4).trim() || null
-        : null,
-      club: sailorForm.club,
-      school: sailorForm.school ?? null,
-      nationality: sailorForm.nationality || null,
-      gender: sailorForm.gender,
-      bio: sailorForm.bio || null,
-      // Current squad mirrors latest period-locked field when set
-      nationalSquadStatus:
-        sailorForm.natSquadStatusJul27 ||
-        sailorForm.natSquadStatusJan27 ||
-        sailorForm.natSquadStatusJul26 ||
-        sailorForm.nationalSquadStatus ||
-        null,
-      currentFleet:
-        ["series", "gold", "silver"].includes(
-          String(sailorForm.currentFleet || "").toLowerCase()
-        )
-          ? "Series"
-          : "Guest",
-      goldEntryDate: dateOnly(sailorForm.goldEntryDate),
-      silverEntryDate: dateOnly(sailorForm.silverEntryDate),
-      dropDate: dateOnly(sailorForm.dropDate),
-      dob: dateOnly(sailorForm.dob),
-      weight: sailorForm.weight === "" || sailorForm.weight == null ? null : sailorForm.weight,
-      instagram: sailorForm.instagram || null,
-      avatarUrl: sailorForm.avatarUrl || null,
-      natSquadStatusJan25: sailorForm.natSquadStatusJan25 || null,
-      natSquadStatusJul25: sailorForm.natSquadStatusJul25 || null,
-      natSquadStatusJan26: sailorForm.natSquadStatusJan26 || null,
-      natSquadStatusJul26: sailorForm.natSquadStatusJul26 || null,
-      natSquadStatusJan27: sailorForm.natSquadStatusJan27 || null,
-      natSquadStatusJul27: sailorForm.natSquadStatusJul27 || null,
-      histRankingJun24: sailorForm.histRankingJun24 || null,
-      histRankingDec24: sailorForm.histRankingDec24 || null,
-      histRankingJun25: sailorForm.histRankingJun25 || null,
-      histRankingDec25: sailorForm.histRankingDec25 || null,
-      histRankingJun26: sailorForm.histRankingJun26 || null,
-      worlds: sailorForm.worlds || null,
-      european: sailorForm.european || null,
-      asian: sailorForm.asian || null,
-      seaGames: sailorForm.seaGames || null,
-    };
-    try {
-      if (editingSailorId === "new") {
-        const res = await fetch("/api/admin/sailors", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || data.detail || "Create failed");
-        setSailorList((prev) => [...prev, data.sailor]);
-        alert(data.warning ? `Sailor created. Note: ${data.warning}` : "Sailor created successfully!");
-      } else {
-        const res = await fetch("/api/admin/sailors", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...payload, id: editingSailorId }),
-        });
-        const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || data.detail || "Update failed");
-        setSailorList((prev) =>
-          prev.map((s) => (s.id === editingSailorId ? data.sailor : s))
-        );
-        alert(
-          data.warning
-            ? `Sailor updated. Note: ${data.warning}`
-            : "Sailor updated successfully!"
-        );
-      }
-      setEditingSailorId(null);
-    } catch (e: any) {
-      alert(e.message || "Update failed");
-    }
-  };
-
-  const handleDeleteSailor = async (id: string) => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
-      return;
-    }
-    if (!id) {
-      alert("Missing sailor id — refresh the page and try again.");
-      return;
-    }
-    if (!confirm("Are you sure you want to delete this sailor? Their results will also be deleted."))
-      return;
-    try {
-      const res = await fetch(`/api/admin/sailors?id=${encodeURIComponent(id)}`, {
-        method: "DELETE",
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Delete failed");
-      setSailorList((prev) => prev.filter((s) => s.id !== id));
-      setResultsList((prev) => prev.filter((r) => r.sailorId !== id));
-      alert("Sailor deleted.");
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
-
-  const handleSaveRegatta = async () => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
-      return;
-    }
-    if (!regattaForm.name || !regattaForm.date) {
-      alert("Regatta Name and Date are required.");
-      return;
-    }
-    try {
-      if (editingRegattaId === "new") {
-        const res = await fetch("/api/admin/regattas", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(regattaForm),
-        });
-        const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || "Create failed");
-        setRegattaList((prev) => [...prev, data.regatta]);
-        if (!selectedRegattaIdForResultEdit) {
-          setSelectedRegattaIdForResultEdit(data.regatta.id);
-        }
-        alert("Regatta created successfully!");
-      } else {
-        const res = await fetch("/api/admin/regattas", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...regattaForm, id: editingRegattaId }),
-        });
-        const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || "Update failed");
-        setRegattaList((prev) =>
-          prev.map((r) => (r.id === editingRegattaId ? data.regatta : r))
-        );
-        alert("Regatta updated successfully!");
-      }
-      setEditingRegattaId(null);
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
-
-  const handleDeleteRegatta = async (id: string) => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
-      return;
-    }
-    if (!id) {
-      alert("Missing regatta id — refresh the page and try again.");
-      return;
-    }
-    if (
-      !confirm(
-        "Are you sure you want to delete this regatta? All results associated with it will also be deleted."
-      )
-    ) {
-      return;
-    }
-    try {
-      const res = await fetch(`/api/admin/regattas?id=${encodeURIComponent(id)}`, {
-        method: "DELETE",
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Delete failed");
-      setRegattaList((prev) => prev.filter((r) => r.id !== id));
-      setResultsList((prev) => prev.filter((row) => row.regattaId !== id));
-      if (selectedRegattaIdForResultEdit === id) {
-        setSelectedRegattaIdForResultEdit("");
-      }
-      alert("Regatta deleted.");
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
-
-  const refreshResultsList = async (opts?: { regattaId?: string }) => {
-    try {
-      const url = opts?.regattaId
-        ? `/api/admin/results?regattaId=${encodeURIComponent(opts.regattaId)}`
-        : "/api/admin/results?all=1";
-      const res = await fetch(url, { credentials: "include" });
-      const data = await parseApi(res);
-      if (!res.ok || !Array.isArray(data.results)) return;
-      if (opts?.regattaId) {
-        const rid = opts.regattaId;
-        setResultsList((prev) => {
-          const others = prev.filter((r) => r.regattaId !== rid);
-          return [...others, ...data.results];
-        });
-      } else {
-        setResultsList(data.results);
-        setHasFullResults(true);
-      }
-    } catch {
-      /* keep existing list */
-    }
-  };
-
-  const openSailorResults = async (sailorId: string) => {
-    setEditingSailorId(null);
-    setEditingResultId(null);
-    setCompetitionsSailorId(sailorId);
-    setCompetitionsLoading(true);
-    try {
-      // Refresh results + regattas so ILCA 4 events appear alongside Optimist
-      await Promise.all([
-        refreshResultsList(),
-        (async () => {
-          try {
-            const res = await fetch("/api/admin/regattas?all=1", {
-              credentials: "include",
-            });
-            const data = await parseApi(res);
-            if (res.ok && Array.isArray(data.regattas)) {
-              setRegattaList(data.regattas);
-            }
-          } catch {
-            /* keep existing list */
-          }
-        })(),
-      ]);
-    } finally {
-      setCompetitionsLoading(false);
-    }
-  };
-
-  const closeSailorResults = () => {
-    setCompetitionsSailorId(null);
-    setEditingResultId(null);
-  };
-
-  const handleSaveResult = async () => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
-      return;
-    }
-    if (!resultForm.sailorId || !resultForm.regattaId) {
-      alert("Sailor and Regatta must be selected.");
-      return;
-    }
-    const overseas = Boolean(resultForm.isOverseasCommitment);
-    const reg = regattaList.find((r) => r.id === resultForm.regattaId);
-    const dnsPts = (reg?.totalFleetSize || 50) + 1;
-    const rankNum = Number(resultForm.rank);
-    // Real finish better than DNS points → not DNS
-    let isDns = overseas
-      ? false
-      : Boolean(resultForm.isDNS || resultForm.isDns);
-    if (isDns && Number.isFinite(rankNum) && rankNum < dnsPts) {
-      isDns = false;
-    }
-    const payload = {
-      ...resultForm,
-      rank: rankNum,
-      isDns,
-      isDNS: isDns,
-      isOverseasCommitment: overseas,
-    };
-    try {
-      if (editingResultId === "new") {
-        const res = await fetch("/api/admin/results", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || "Create failed");
-        setResultsList((prev) => {
-          const row = data.result;
-          const without = prev.filter(
-            (r) =>
-              !(r.sailorId === row.sailorId && r.regattaId === row.regattaId)
-          );
-          return [...without, row];
-        });
-        alert("Result added successfully!");
-      } else {
-        const res = await fetch("/api/admin/results", {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...payload, id: editingResultId }),
-        });
-        const data = await parseApi(res);
-        if (!res.ok) throw new Error(data.error || "Update failed");
-        setResultsList((prev) =>
-          prev.map((r) => (r.id === editingResultId ? data.result : r))
-        );
-        alert("Result updated successfully!");
-      }
-      setEditingResultId(null);
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
-
-  const handleFillDnsForRegatta = async (regattaId: string) => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden.");
-      return;
-    }
-    if (!regattaId) {
-      alert("Select a regatta first.");
-      return;
-    }
-    const reg = regattaList.find((r) => r.id === regattaId);
-    const ok = confirm(
-      `Create DNS scores for active ${reg?.division || ""} fleet members who do not have a result at “${reg?.name || "this regatta"}”?\n\n` +
-        `DNS points = fleet size + 1 = ${(reg?.totalFleetSize || 0) + 1}.\n` +
-        `You can edit any row afterwards (e.g. overseas commitment).`
-    );
-    if (!ok) return;
-    try {
-      const res = await fetch("/api/admin/results", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "fillDns", regattaId }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Fill DNS failed");
-      await refreshResultsList({ regattaId });
-      alert(data.message || `Created ${data.created} DNS rows.`);
-    } catch (e: any) {
-      alert(e.message || "Fill DNS failed");
-    }
-  };
-
-  /** Ensure every active fleet sailor has results for all ranking regattas in a half-year */
-  const handleFillDnsForPeriod = async (
-    fleet: "Gold" | "Silver",
-    year: number,
-    half: "Jan-Jun" | "Jul-Dec"
-  ) => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden.");
-      return;
-    }
-    const ok = confirm(
-      `Ensure DNS for all active ${fleet} fleet sailors in ${half} ${year}?\n\n` +
-        `Each sailor will get a result for every ranking regatta in that period they are missing.\n` +
-        `Missing → rank = that regatta’s fleet size + 1 (DNS).\n` +
-        `Existing results (including overseas) are left unchanged.`
-    );
-    if (!ok) return;
-    try {
-      const res = await fetch("/api/admin/results", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "fillDnsPeriod",
-          fleet,
-          year,
-          half,
-        }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Period DNS fill failed");
-      await refreshResultsList();
-      const events = (data.rankingRegattas || [])
-        .map(
-          (e: any) =>
-            `• ${e.name} (${e.date}) → DNS ${e.dnsPoints}`
-        )
-        .join("\n");
-      alert(
-        `${data.message}\n\nRanking regattas:\n${events || "(none found — import regattas with dates in this period)"}`
-      );
-    } catch (e: any) {
-      alert(e.message || "Period DNS fill failed");
-    }
-  };
-
-  const handleDeleteResult = async (id: string) => {
-    if (!isSuperadmin) {
-      alert("Error: 403 Forbidden. Only Superadmins can write to the database.");
-      return;
-    }
-    if (!id) {
-      alert("Missing result id — refresh the page and try again.");
-      return;
-    }
-    if (!confirm("Are you sure you want to delete this result?")) return;
-    try {
-      const res = await fetch(`/api/admin/results?id=${encodeURIComponent(id)}`, {
-        method: "DELETE",
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(data.error || "Delete failed");
-      setResultsList((prev) => prev.filter((r) => r.id !== id));
-      alert("Result deleted.");
-    } catch (e: any) {
-      alert(e.message);
-    }
-  };
+  const regattas = useAdminRegattas({
+    isSuperadmin,
+    regattaList: data.regattaList,
+    setRegattaList: data.setRegattaList,
+    setResultsList: data.setResultsList,
+    selectedRegattaIdForResultEdit: data.selectedRegattaIdForResultEdit,
+    setSelectedRegattaIdForResultEdit: data.setSelectedRegattaIdForResultEdit,
+  });
 
   if (loading) {
     return (
@@ -1440,9 +104,12 @@ export function AdminDashboard() {
             <Shield className="h-6 w-6" />
           </div>
           <div className="space-y-2">
-            <h1 className="text-xl font-black text-white">Admin Authentication Required</h1>
+            <h1 className="text-xl font-black text-white">
+              Admin Authentication Required
+            </h1>
             <p className="text-xs text-slate-400 leading-relaxed">
-              To make persistent database updates on the SailorPath platform, you must log in with an authorized administrator account.
+              To make persistent database updates on the SailorPath platform, you
+              must log in with an authorized administrator account.
             </p>
           </div>
           <a
@@ -1453,7 +120,8 @@ export function AdminDashboard() {
           </a>
           <p className="text-[10px] text-slate-500 leading-relaxed">
             After login you return here. For a live (non-demo) admin, set{" "}
-            <code className="text-slate-400">DATABASE_URL</code> on Vercel and make your{" "}
+            <code className="text-slate-400">DATABASE_URL</code> on Vercel and
+            make your{" "}
             <code className="text-slate-400">profiles.role = superadmin</code>.
           </p>
         </div>
@@ -1467,8 +135,7 @@ export function AdminDashboard() {
         <div className="flex items-center gap-2 text-xs font-bold text-slate-300 min-w-0">
           <Shield className="h-4 w-4 text-orange-500 shrink-0" />
           <span className="truncate">
-            Logged in as:{" "}
-            <span className="text-white">{user?.email}</span>
+            Logged in as: <span className="text-white">{user?.email}</span>
           </span>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -1485,7 +152,10 @@ export function AdminDashboard() {
             >
               <UserCheck className="h-3.5 w-3.5" />
               {claimsPendingCount > 0 && (
-                <span>{claimsPendingCount} claim{claimsPendingCount === 1 ? "" : "s"}</span>
+                <span>
+                  {claimsPendingCount} claim
+                  {claimsPendingCount === 1 ? "" : "s"}
+                </span>
               )}
               {claimsPendingCount > 0 && supportNewCount > 0 && (
                 <span className="text-rose-400/60">·</span>
@@ -1544,269 +214,161 @@ export function AdminDashboard() {
         ))}
       </div>
 
-      {/* RLS Policy Indicator Banner for non-superadmins */}
       {!isSuperadmin && (
         <div className="bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-4 flex items-start gap-3">
           <AlertTriangle className="h-5 w-5 flex-shrink-0 text-red-500 mt-0.5" />
           <div>
-            <h3 className="font-bold text-sm">Access Denied (RLS & UI Blocked)</h3>
+            <h3 className="font-bold text-sm">
+              Access Denied (RLS & UI Blocked)
+            </h3>
             <p className="text-xs text-red-300/80 mt-1">
-              Your active role is **{adminRole}**. Regatta result modification, AI reconciliation, and bulk fleet changes require explicit `role = 'superadmin'` credentials. In a real environment, database writing is blocked by RLS policies.
+              Your active role is **{adminRole}**. Regatta result modification, AI reconciliation, and bulk fleet changes require explicit `role = &apos;superadmin&apos;` credentials. In a real environment, database writing is blocked by RLS policies.
             </p>
           </div>
         </div>
       )}
 
-      {/* Tab Contents — always full width of admin shell */}
       <div className="flex-1 flex flex-col w-full min-w-0">
-        {dataLoadError && (
+        {data.dataLoadError && (
           <div className="mb-4 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
-            {dataLoadError}
+            {data.dataLoadError}
           </div>
         )}
-        {dataLoading && (
+        {data.dataLoading && (
           <div className="mb-4 flex items-center gap-2 text-xs text-slate-400">
             <RefreshCw className="h-4 w-4 animate-spin text-orange-500" />
             Loading this workspace…
           </div>
         )}
-        {/* Tab 1: Excel Import */}
+
         {activeTab === "import" && (
           <AdminRegattaImport
             isSuperadmin={isSuperadmin}
-            onSailorsUpdated={(sailors) => setSailorList(sailors)}
-            onRegattaUpserted={(regatta) => {
-              setRegattaList((prev) => {
-                const exists = prev.some((r) => r.id === regatta.id);
-                return exists
-                  ? prev.map((r) => (r.id === regatta.id ? regatta : r))
-                  : [...prev, regatta];
-              });
-            }}
-            onResultsUpdated={(incoming) => {
-              const touched = new Set(incoming.map((r) => r.regattaId));
-              // Per-event refresh (import): merge. Full dump: replace.
-              if (touched.size <= 1) {
-                const rid = [...touched][0];
-                setResultsList((prev) =>
-                  rid
-                    ? [...prev.filter((r) => r.regattaId !== rid), ...incoming]
-                    : incoming
-                );
-              } else {
-                setResultsList(incoming);
-                setHasFullResults(true);
-              }
-            }}
+            onSailorsUpdated={(sailorsList) => data.setSailorList(sailorsList)}
+            onRegattaUpserted={data.patchRegattaUpsert}
+            onResultsUpdated={data.patchResultsFromImport}
           />
         )}
 
-        {/* Database & bulk edit */}
         {activeTab === "edit" && (
           <div className="w-full min-w-0 space-y-4 sm:space-y-6">
-            {/* Sub tabs — horizontal scroll on narrow screens */}
             <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
               <div className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full">
-              {(
-                [
-                  ["sailors", "Sailors"],
-                  ["regattas", "Regattas"],
-                  ["results", "Results"],
-                  ["suggestions", "Suggestions"],
-                  ["claims", "Claims"],
-                  ["promote", "Promote"],
-                  ["support", "Support"],
-                ] as const
-              ).map(([sub, label]) => (
-                <button
-                  key={sub}
-                  type="button"
-                  onClick={() => {
-                    setEditSubTab(sub);
-                    setEditingSailorId(null);
-                    setEditingRegattaId(null);
-                    setEditingResultId(null);
-                  }}
-                  className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation ${
-                    editSubTab === sub
-                      ? "bg-orange-600 text-white"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  {label}
-                  {sub === "suggestions" && suggestionCount > 0 && (
-                    <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[9px] font-black text-white">
-                      {suggestionCount}
-                    </span>
-                  )}
-                  {sub === "claims" && claimsPendingCount > 0 && (
-                    <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white">
-                      {claimsPendingCount}
-                    </span>
-                  )}
-                  {sub === "support" && supportNewCount > 0 && (
-                    <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[9px] font-black text-white">
-                      {supportNewCount}
-                    </span>
-                  )}
-                </button>
-              ))}
-              </div>
-            </div>
-
-            {/* Sub-tab content always full width */}
-            <div className="w-full min-w-0 min-h-[50vh]">
-            {/* Sub-Tab Content: SAILORS */}
-            {editSubTab === "sailors" && (
-              <AdminSailorsPanel
-                isSuperadmin={isSuperadmin}
-                sailorList={sailorList}
-                filteredDbSailors={filteredDbSailors}
-                sortedDbSailors={sortedDbSailors}
-                selectedSailors={selectedSailors}
-                setSelectedSailors={setSelectedSailors}
-                dbSearch={dbSearch}
-                setDbSearch={setDbSearch}
-                dbFleetFilter={dbFleetFilter}
-                setDbFleetFilter={setDbFleetFilter}
-                dbSquadFilter={dbSquadFilter}
-                setDbSquadFilter={setDbSquadFilter}
-                setDbColVisible={setDbColVisible}
-                dbColPickerOpen={dbColPickerOpen}
-                setDbColPickerOpen={setDbColPickerOpen}
-                dbSortKey={dbSortKey}
-                dbSortDir={dbSortDir}
-                toggleDbSort={toggleDbSort}
-                colOn={colOn}
-                seriesLabelOf={seriesLabelOf}
-                best3BySailor={best3BySailor}
-                duplicatePairs={duplicatePairs as any}
-                bulkField={bulkField}
-                setBulkField={setBulkField}
-                bulkValue={bulkValue}
-                setBulkValue={setBulkValue}
-                handleApplyBulk={handleApplyBulk}
-                handleBulkDelete={handleBulkDelete}
-                handleMergeSailors={handleMergeSailors}
-                toggleSelectSailor={toggleSelectSailor}
-                toggleSelectAllVisible={toggleSelectAllVisible}
-                editingSailorId={editingSailorId}
-                setEditingSailorId={setEditingSailorId}
-                sailorForm={sailorForm}
-                setSailorForm={setSailorForm}
-                handleSaveSailor={handleSaveSailor}
-                handleDeleteSailor={handleDeleteSailor}
-                showDuplicateFinder={showDuplicateFinder}
-                setShowDuplicateFinder={setShowDuplicateFinder}
-                ignoreDuplicatePair={ignoreDuplicatePair}
-                bulkStatus={bulkStatus}
-                openSailorResults={openSailorResults}
-                competitionsSailorId={competitionsSailorId}
-                setCompetitionsSailorId={setCompetitionsSailorId}
-                emptySeriesCount={emptySeriesCount}
-                onCleanupEmptySeries={handleCleanupEmptySeries}
-                onBackfillNationalityFromSail={handleBackfillNationalityFromSail}
-              />
-            )}
-
-            {/* Sub-Tab Content: REGATTAS */}
-            {editSubTab === "regattas" && (
-              <AdminRegattasPanel
-                isSuperadmin={isSuperadmin}
-                filteredRegattaList={filteredRegattaList}
-                regattaSearch={regattaSearch}
-                setRegattaSearch={setRegattaSearch}
-                regattaDivisionFilter={regattaDivisionFilter}
-                setRegattaDivisionFilter={setRegattaDivisionFilter}
-                regattaRankingFilter={regattaRankingFilter}
-                setRegattaRankingFilter={setRegattaRankingFilter}
-                editingRegattaId={editingRegattaId}
-                setEditingRegattaId={setEditingRegattaId}
-                regattaForm={regattaForm}
-                setRegattaForm={setRegattaForm}
-                handleSaveRegatta={handleSaveRegatta}
-                handleDeleteRegatta={handleDeleteRegatta}
-              />
-            )}
-
-            {/* Sub-Tab Content: RESULTS */}
-            {editSubTab === "results" && (
-              <AdminResultsPanel
-                isSuperadmin={isSuperadmin}
-                sailorList={sailorList}
-                regattaList={regattaList}
-                resultsList={resultsList}
-                selectedRegattaIdForResultEdit={selectedRegattaIdForResultEdit}
-                setSelectedRegattaIdForResultEdit={setSelectedRegattaIdForResultEdit}
-                editingResultId={editingResultId}
-                setEditingResultId={setEditingResultId}
-                resultForm={resultForm}
-                setResultForm={setResultForm}
-                handleSaveResult={handleSaveResult}
-                handleDeleteResult={handleDeleteResult}
-                handleFillDnsForRegatta={handleFillDnsForRegatta}
-                handleFillDnsForPeriod={handleFillDnsForPeriod}
-              />
-            )}
-
-            {editSubTab === "suggestions" && (
-              <div className="w-full min-w-0">
-                {isSuperadmin ? (
-                  <AdminSuggestionsPanel
-                    onRegattaUpdated={(reg) => {
-                      setRegattaList((prev) => {
-                        const exists = prev.some((r) => r.id === reg.id);
-                        return exists
-                          ? prev.map((r) =>
-                              r.id === reg.id ? { ...r, ...reg } : r
-                            )
-                          : [...prev, reg as RegattaAdmin];
-                      });
+                {(
+                  [
+                    ["sailors", "Sailors"],
+                    ["regattas", "Regattas"],
+                    ["results", "Results"],
+                    ["suggestions", "Suggestions"],
+                    ["claims", "Claims"],
+                    ["promote", "Promote"],
+                    ["support", "Support"],
+                  ] as const
+                ).map(([sub, label]) => (
+                  <button
+                    key={sub}
+                    type="button"
+                    onClick={() => {
+                      setEditSubTab(sub);
+                      sailors.setEditingSailorId(null);
+                      regattas.setEditingRegattaId(null);
+                      results.setEditingResultId(null);
                     }}
-                  />
-                ) : (
-                  <p className="text-sm text-slate-500">
-                    Suggestions require superadmin.
-                  </p>
-                )}
+                    className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation ${
+                      editSubTab === sub
+                        ? "bg-orange-600 text-white"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {label}
+                    {sub === "suggestions" && regattas.suggestionCount > 0 && (
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[9px] font-black text-white">
+                        {regattas.suggestionCount}
+                      </span>
+                    )}
+                    {sub === "claims" && claimsPendingCount > 0 && (
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white">
+                        {claimsPendingCount}
+                      </span>
+                    )}
+                    {sub === "support" && supportNewCount > 0 && (
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[9px] font-black text-white">
+                        {supportNewCount}
+                      </span>
+                    )}
+                  </button>
+                ))}
               </div>
-            )}
-
-            {editSubTab === "claims" && (
-              <div className="w-full min-w-0">
-                <ClaimsAdminPanel isSuperadmin={isSuperadmin} />
-              </div>
-            )}
-            {editSubTab === "promote" && (
-              <div className="w-full min-w-0">
-                <PromoteAdminPanel
-                  isSuperadmin={isSuperadmin}
-                  onPromoted={(sailor) => {
-                    setSailorList((prev) =>
-                      prev.map((s) =>
-                        s.id === sailor.id ? { ...s, ...sailor } : s
-                      )
-                    );
-                  }}
-                />
-              </div>
-            )}
-            {editSubTab === "support" && (
-              <div className="w-full min-w-0">
-                <SupportInboxPanel isSuperadmin={isSuperadmin} />
-              </div>
-            )}
             </div>
-            {/* end sub-tab content full-width shell */}
+
+            <div className="w-full min-w-0 min-h-[50vh]">
+              {editSubTab === "sailors" && (
+                <AdminSailorsPanel
+                  isSuperadmin={isSuperadmin}
+                  sailorList={data.sailorList}
+                  {...(sailors.panelProps as any)}
+                />
+              )}
+
+              {editSubTab === "regattas" && (
+                <AdminRegattasPanel
+                  isSuperadmin={isSuperadmin}
+                  {...regattas.panelProps}
+                />
+              )}
+
+              {editSubTab === "results" && (
+                <AdminResultsPanel
+                  isSuperadmin={isSuperadmin}
+                  sailorList={data.sailorList}
+                  regattaList={data.regattaList}
+                  resultsList={data.resultsList}
+                  {...results.panelProps}
+                />
+              )}
+
+              {editSubTab === "suggestions" && (
+                <div className="w-full min-w-0">
+                  {isSuperadmin ? (
+                    <AdminSuggestionsPanel
+                      onRegattaUpdated={data.patchRegattaPartial}
+                    />
+                  ) : (
+                    <p className="text-sm text-slate-500">
+                      Suggestions require superadmin.
+                    </p>
+                  )}
+                </div>
+              )}
+
+              {editSubTab === "claims" && (
+                <div className="w-full min-w-0">
+                  <ClaimsAdminPanel isSuperadmin={isSuperadmin} />
+                </div>
+              )}
+              {editSubTab === "promote" && (
+                <div className="w-full min-w-0">
+                  <PromoteAdminPanel
+                    isSuperadmin={isSuperadmin}
+                    onPromoted={data.patchSailorPartial}
+                  />
+                </div>
+              )}
+              {editSubTab === "support" && (
+                <div className="w-full min-w-0">
+                  <SupportInboxPanel isSuperadmin={isSuperadmin} />
+                </div>
+              )}
+            </div>
           </div>
         )}
 
         {activeTab === "analysis" && (
           <div className="w-full min-w-0">
             <AdminGoldAnalysisPanel
-              sailors={sailorList}
-              regattas={regattaList}
-              results={resultsList}
+              sailors={data.sailorList}
+              regattas={data.regattaList}
+              results={data.resultsList}
             />
           </div>
         )}
@@ -1814,10 +376,10 @@ export function AdminDashboard() {
         {activeTab === "gold" && (
           <div className="w-full min-w-0">
             <AdminGoldRankingPanel
-              sailors={sailorList}
-              regattas={regattaList}
-              results={resultsList}
-              onSailorsChange={setSailorList}
+              sailors={data.sailorList}
+              regattas={data.regattaList}
+              results={data.resultsList}
+              onSailorsChange={data.setSailorList}
             />
           </div>
         )}
@@ -1825,74 +387,30 @@ export function AdminDashboard() {
         {activeTab === "ilca" && (
           <div className="w-full min-w-0">
             <AdminIlcaRankingPanel
-              sailors={sailorList}
-              regattas={regattaList}
-              results={resultsList}
-              onSailorsChange={setSailorList}
-              onMergePair={async (keepId, mergeId) => {
-                const keep = sailorList.find((s) => s.id === keepId);
-                const merge = sailorList.find((s) => s.id === mergeId);
-                if (!keep || !merge) {
-                  alert("Sailors not found");
-                  return;
-                }
-                // Reuse mergeSailors flow via ids
-                setSelectedSailors([keepId, mergeId]);
-                // Direct merge call (mirrors mergeSelectedSailors)
-                if (
-                  !confirm(
-                    `Merge ILCA 4 duplicates?\n\nKEEP: ${keep.name}\nDELETE: ${merge.name}\n\nResults and aliases move to keep.`
-                  )
-                ) {
-                  return;
-                }
-                try {
-                  const res = await fetch("/api/admin/sailors/merge", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ keepId, mergeId }),
-                  });
-                  const data = await res.json();
-                  if (!res.ok) throw new Error(data.error || "Merge failed");
-                  setSailorList((prev) =>
-                    prev.filter((s) => s.id !== mergeId)
-                  );
-                  setResultsList((prev) =>
-                    prev.map((r) =>
-                      r.sailorId === mergeId
-                        ? { ...r, sailorId: keepId }
-                        : r
-                    )
-                  );
-                  alert(
-                    data.message ||
-                      `Merged ${merge.name} → ${keep.name}`
-                  );
-                } catch (e) {
-                  alert(e instanceof Error ? e.message : "Merge failed");
-                }
-              }}
+              sailors={data.sailorList}
+              regattas={data.regattaList}
+              results={data.resultsList}
+              onSailorsChange={data.setSailorList}
+              onMergePair={sailors.handleMergePair}
             />
           </div>
         )}
-
       </div>
 
       <AdminCompetitionsPanel
-        competitionsSailorId={competitionsSailorId}
-        competitionsLoading={competitionsLoading}
-        sailorList={sailorList}
-        regattaList={regattaList}
-        resultsList={resultsList}
-        editingResultId={editingResultId}
-        setEditingResultId={setEditingResultId}
-        resultForm={resultForm}
-        setResultForm={setResultForm}
-        closeSailorResults={closeSailorResults}
-        handleSaveResult={handleSaveResult}
-        handleDeleteResult={handleDeleteResult}
+        competitionsSailorId={competitions.competitionsSailorId}
+        competitionsLoading={competitions.competitionsLoading}
+        sailorList={data.sailorList}
+        regattaList={data.regattaList}
+        resultsList={data.resultsList}
+        editingResultId={results.editingResultId}
+        setEditingResultId={results.setEditingResultId}
+        resultForm={results.resultForm}
+        setResultForm={results.setResultForm}
+        closeSailorResults={competitions.closeSailorResults}
+        handleSaveResult={results.handleSaveResult}
+        handleDeleteResult={results.handleDeleteResult}
       />
-
     </div>
   );
 }
