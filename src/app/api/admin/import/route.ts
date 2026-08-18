@@ -23,6 +23,7 @@ import {
 } from "@/lib/countries";
 import { trackUsage } from "@/lib/usage";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+import { adminLog, createAdminRequestId } from "@/lib/adminLog";
 import type { ImportPossibleDuplicate } from "@/types/import";
 import {
   isAnyIlcaClass,
@@ -76,8 +77,10 @@ function findWithinFileDuplicates(
 }
 
 export async function POST(req: Request) {
+  const requestId = createAdminRequestId();
+  const t0 = Date.now();
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
     const {
       regattaName,
@@ -1059,6 +1062,26 @@ export async function POST(req: Request) {
       revalidatePublicRankings(`import:${reg.id}`);
     }
 
+    adminLog({
+      requestId,
+      action: "import.regatta",
+      path: "/api/admin/import",
+      role: auth.role,
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      entityType: "regatta",
+      entityId: reg.id,
+      entityLabel: reg.name,
+      outcome: matched > 0 ? "ok" : "error",
+      ms: Date.now() - t0,
+      meta: {
+        matched,
+        created,
+        inputRows: cleanRows.length,
+        rowErrors,
+      },
+    });
+
     return NextResponse.json({
       message:
         matched === 0 && rowErrors > 0
@@ -1087,6 +1110,14 @@ export async function POST(req: Request) {
         : undefined,
     });
   } catch (e) {
+    adminLog({
+      requestId,
+      action: "import.regatta",
+      path: "/api/admin/import",
+      outcome: "error",
+      ms: Date.now() - t0,
+      error: e instanceof Error ? e.message : String(e),
+    });
     console.error(e);
     return jsonError(e);
   }

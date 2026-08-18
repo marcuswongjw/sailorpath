@@ -6,6 +6,11 @@ import {
   getUsageSessionId,
   getVisitorId,
 } from "@/lib/clientUsage";
+import {
+  CLAIM_NOTE_MIN,
+  isClaimNoteReady,
+  submitClaimRequest,
+} from "@/lib/claimClient";
 import { PROFILE_CARD_CLASS as cardClass } from "@/components/sailor-profile/helpers";
 
 type ClaimResultStatus = "pending" | "error";
@@ -40,34 +45,18 @@ export function ClaimPanel({
   const submit = async () => {
     setBusy(true);
     try {
-      await fetch("/api/auth/ensure-profile", {
-        method: "POST",
-        credentials: "include",
-      });
       const acq = getAcquisition();
-      const res = await fetch("/api/claims", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          sailorId,
-          relation,
-          note: note.trim(),
-          sessionId: getUsageSessionId() || undefined,
-          vid: getVisitorId() || undefined,
-          source: acq.source,
-          device: acq.device,
-        }),
+      const result = await submitClaimRequest({
+        sailorId,
+        relation,
+        note,
+        sessionId: getUsageSessionId() || undefined,
+        vid: getVisitorId() || undefined,
+        source: acq.source,
+        device: acq.device,
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Claim failed");
-      onResult(
-        "pending",
-        data.message || "Claim submitted. Please wait for confirmation."
-      );
-      onClose();
-    } catch (e: unknown) {
-      onResult("error", e instanceof Error ? e.message : "Error");
+      onResult(result.status, result.message);
+      if (result.ok) onClose();
     } finally {
       setBusy(false);
     }
@@ -101,12 +90,17 @@ export function ClaimPanel({
       />
       <button
         type="button"
-        disabled={busy || note.trim().length < 8}
+        disabled={busy || !isClaimNoteReady(note)}
         onClick={() => void submit()}
         className="rounded-lg bg-orange-500 text-white px-4 py-2 text-[11px] font-semibold disabled:opacity-50"
       >
         {busy ? "Submitting…" : "Submit claim"}
       </button>
+      {!isClaimNoteReady(note) && note.trim().length > 0 && (
+        <p className="text-[10px] text-slate-500">
+          Note needs at least {CLAIM_NOTE_MIN} characters.
+        </p>
+      )}
     </div>
   );
 }

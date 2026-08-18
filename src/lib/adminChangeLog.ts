@@ -1,10 +1,12 @@
 /**
  * Fail-soft admin audit trail (may include names — superadmin only).
+ * Also emits a structured console line via `adminLog` for log drains.
  */
 
 import { db } from "@/db";
 import { adminChangeLog } from "@/db/schema";
 import { desc } from "drizzle-orm";
+import { adminLog } from "@/lib/adminLog";
 
 export type AdminChangeInput = {
   actorUserId?: string | null;
@@ -16,6 +18,8 @@ export type AdminChangeInput = {
   summary: string;
   details?: unknown;
   source?: string | null;
+  /** Optional correlation id from the HTTP handler */
+  requestId?: string | null;
 };
 
 export async function logAdminChange(
@@ -41,9 +45,32 @@ export async function logAdminChange(
       details,
       source: input.source?.slice(0, 120) || null,
     });
+    adminLog({
+      requestId: input.requestId || undefined,
+      action: input.action,
+      path: input.source || undefined,
+      actorUserId: input.actorUserId,
+      actorEmail: input.actorEmail,
+      entityType: input.entityType,
+      entityId: input.entityId,
+      entityLabel: input.entityLabel,
+      outcome: "ok",
+      meta: { summary: String(input.summary).slice(0, 120) },
+    });
     return { ok: true };
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
+    adminLog({
+      requestId: input.requestId || undefined,
+      action: input.action,
+      path: input.source || undefined,
+      actorUserId: input.actorUserId,
+      actorEmail: input.actorEmail,
+      entityType: input.entityType,
+      entityId: input.entityId,
+      outcome: "error",
+      error: msg,
+    });
     if (/admin_change_log|does not exist|relation/i.test(msg)) {
       return {
         ok: false,

@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { sailors } from "@/db/schema";
 import { hasSilverHistory } from "@/lib/seriesMembership";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+import { adminLog, createAdminRequestId } from "@/lib/adminLog";
 
 /** List Silver series members eligible for Gold promotion */
 export async function GET() {
@@ -42,8 +43,10 @@ export async function GET() {
 
 /** Promote sailor to Gold (requires Silver history) */
 export async function POST(req: Request) {
+  const requestId = createAdminRequestId();
+  const t0 = Date.now();
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
     const sailorId = String(body.sailorId || "").trim();
     if (!sailorId) {
@@ -91,12 +94,34 @@ export async function POST(req: Request) {
       .returning();
 
     revalidatePublicRankings(`promote:${sailorId}`);
+    adminLog({
+      requestId,
+      action: "promote.gold",
+      path: "/api/admin/promote",
+      role: auth.role,
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      entityType: "sailor",
+      entityId: sailorId,
+      entityLabel: s.name,
+      outcome: "ok",
+      ms: Date.now() - t0,
+      meta: { goldEntryDate: String(goldDate).slice(0, 10) },
+    });
     return NextResponse.json({
       ok: true,
       sailor: updated,
       message: `Promoted ${s.name} to Gold (Series + gold entry ${goldDate}).`,
     });
   } catch (e) {
+    adminLog({
+      requestId,
+      action: "promote.gold",
+      path: "/api/admin/promote",
+      outcome: "error",
+      ms: Date.now() - t0,
+      error: e instanceof Error ? e.message : String(e),
+    });
     console.error("promote", e);
     return jsonError(e);
   }

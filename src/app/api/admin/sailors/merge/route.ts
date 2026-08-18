@@ -14,6 +14,7 @@ import {
   sailors,
 } from "@/db/schema";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+import { adminLog, createAdminRequestId } from "@/lib/adminLog";
 
 /**
  * Merge duplicate sailor profiles.
@@ -23,8 +24,10 @@ import { revalidatePublicRankings } from "@/lib/revalidatePublic";
  * then deletes merge. Refuses conflicting ownership unless forceOwnershipConflict.
  */
 export async function POST(req: Request) {
+  const requestId = createAdminRequestId();
+  const t0 = Date.now();
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
     const keepId = String(body.keepId || "").trim();
     const mergeId = String(body.mergeId || "").trim();
@@ -345,6 +348,25 @@ export async function POST(req: Request) {
     });
 
     revalidatePublicRankings(`sailors:merge:${keepId}`);
+    adminLog({
+      requestId,
+      action: "sailors.merge",
+      path: "/api/admin/sailors/merge",
+      role: auth.role,
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      entityType: "sailor",
+      entityId: keepId,
+      entityLabel: keepSailor.name,
+      outcome: "ok",
+      ms: Date.now() - t0,
+      meta: {
+        mergeId,
+        resultsMoved: txResult.resultsMoved,
+        equipmentMoved: txResult.equipmentMoved,
+        ownershipTransferred: txResult.ownershipTransferred,
+      },
+    });
     return NextResponse.json({
       ok: true,
       message: `Merged “${mergeSailor.name}” into “${keepSailor.name}”.`,
@@ -362,6 +384,14 @@ export async function POST(req: Request) {
       ownershipTransferred: txResult.ownershipTransferred,
     });
   } catch (e) {
+    adminLog({
+      requestId,
+      action: "sailors.merge",
+      path: "/api/admin/sailors/merge",
+      outcome: "error",
+      ms: Date.now() - t0,
+      error: e instanceof Error ? e.message : String(e),
+    });
     console.error("sailors merge", e);
     return jsonError(e);
   }

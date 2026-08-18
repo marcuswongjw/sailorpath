@@ -17,6 +17,10 @@ import {
   type SessionType,
   type WindRange,
 } from "@/lib/equipment";
+import {
+  buildEquipmentSavePayload,
+  buildFullRigPayload,
+} from "@/lib/equipmentPayload";
 import { todayYmdSg } from "@/lib/datesSg";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { emptyForm } from "./constants";
@@ -209,54 +213,31 @@ export function useEquipmentInventory({
     setBusy(true);
     setMsg(null);
     try {
-      const brand = resolveBrand(form.category, form.brand, form.brandCustom);
-      if (form.category === "other") {
-        if (!brand) {
-          setMsg("Enter a brand or name");
-          setBusy(false);
-          return;
-        }
-        if (!form.label.trim()) {
-          setMsg("Describe what this item is (e.g. tiller extension)");
-          setBusy(false);
-          return;
-        }
-      } else if (form.brand === BRAND_OTHER && !form.brandCustom.trim()) {
+      if (form.category === "other" && !form.label.trim()) {
+        setMsg("Describe what this item is (e.g. tiller extension)");
+        setBusy(false);
+        return;
+      }
+      if (form.brand === BRAND_OTHER && !form.brandCustom.trim()) {
         setMsg("Enter the brand name for Other");
         setBusy(false);
         return;
       }
-      const model =
-        form.category === "sail" || isMastSetCategory(form.category)
-          ? form.model || null
-          : null;
-      const label =
-        form.category === "hull" ||
-        form.category === "sail" ||
-        form.category === "other"
-          ? form.label || null
-          : null;
-      const payload = {
-        sailorId,
-        boatClass: form.boatClass,
-        category: form.category,
-        brand: brand || null,
-        model,
-        label,
-        status: form.status,
-        condition: form.condition,
-        isPrimary: form.isPrimary,
-        tags: form.tags,
-        windRange: form.category === "sail" ? form.windRange || null : null,
+      const built = buildEquipmentSavePayload(sailorId, {
+        ...form,
         acquiredOn: form.acquiredOn || todayYmdSg(),
-        notes: form.notes || null,
-      };
+      });
+      if (!built.ok) {
+        setMsg(built.error);
+        setBusy(false);
+        return;
+      }
       const res = await fetch("/api/account/equipment", {
         method: editing ? "PATCH" : "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(
-          editing ? { id: editing.id, ...payload } : payload
+          editing ? { id: editing.id, ...built.payload } : built.payload
         ),
       });
       const data = await res.json();
@@ -276,12 +257,14 @@ export function useEquipmentInventory({
     setBusy(true);
     setMsg(null);
     try {
-      const brand =
-        fullRigBrand === BRAND_OTHER
-          ? fullRigBrandCustom.trim()
-          : fullRigBrand.trim();
-      if (!brand) {
-        setMsg("Select or enter a brand");
+      const built = buildFullRigPayload(
+        sailorId,
+        classTab,
+        fullRigBrand,
+        fullRigBrandCustom
+      );
+      if (!built.ok) {
+        setMsg(built.error);
         setBusy(false);
         return;
       }
@@ -289,13 +272,7 @@ export function useEquipmentInventory({
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sailorId,
-          boatClass: classTab,
-          fullRig: true,
-          brand,
-          tags: ["racing"],
-        }),
+        body: JSON.stringify(built.payload),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Save failed");

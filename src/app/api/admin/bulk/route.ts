@@ -9,6 +9,7 @@ import {
   normalizeYearsList,
 } from "@/lib/seriesMembership";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+import { adminLog, createAdminRequestId } from "@/lib/adminLog";
 
 const RANKING_BULK_FIELDS = new Set([
   "goldEntryDate",
@@ -66,8 +67,10 @@ const YEARS_LIST = new Set(["worlds", "european", "asian", "seaGames"]);
 const BOOLEAN = new Set<string>(["ilca4NationalList"]);
 
 export async function POST(req: Request) {
+  const requestId = createAdminRequestId();
+  const t0 = Date.now();
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const { sailorIds, field, value, action } = await req.json();
 
     if (!Array.isArray(sailorIds) || !sailorIds.length) {
@@ -81,6 +84,18 @@ export async function POST(req: Request) {
         .where(inArray(sailors.id, sailorIds))
         .returning({ id: sailors.id });
       revalidatePublicRankings(`bulk:delete:${deleted.length}`);
+      adminLog({
+        requestId,
+        action: "bulk.delete",
+        path: "/api/admin/bulk",
+        role: auth.role,
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        entityType: "sailor",
+        outcome: "ok",
+        ms: Date.now() - t0,
+        meta: { count: deleted.length },
+      });
       return NextResponse.json({
         message: `Deleted ${deleted.length} sailors (and their results).`,
         count: deleted.length,
@@ -180,10 +195,31 @@ export async function POST(req: Request) {
       revalidatePublicRankings(`bulk:${field}:${sailorIds.length}`);
     }
 
+    adminLog({
+      requestId,
+      action: "bulk.update",
+      path: "/api/admin/bulk",
+      role: auth.role,
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      entityType: "sailor",
+      outcome: "ok",
+      ms: Date.now() - t0,
+      meta: { field: String(field), count: sailorIds.length },
+    });
+
     return NextResponse.json({
       message: `Updated ${field} for ${sailorIds.length} sailors`,
     });
   } catch (e) {
+    adminLog({
+      requestId,
+      action: "bulk.mutation",
+      path: "/api/admin/bulk",
+      outcome: "error",
+      ms: Date.now() - t0,
+      error: e instanceof Error ? e.message : String(e),
+    });
     console.error(e);
     return jsonError(e);
   }
