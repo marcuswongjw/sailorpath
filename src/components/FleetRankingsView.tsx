@@ -14,6 +14,7 @@ import {
 } from "@/lib/optimistSquadPreview";
 import { Trophy, Calendar, RotateCcw } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
+import { formatGenderLabel, normalizeGender } from "@/lib/gender";
 
 const PERIODS = rankingPeriodOptions(6);
 const DEFAULT_PERIOD = currentPeriodFromSgToday();
@@ -104,7 +105,9 @@ export function FleetRankingsView({
   const [loading, setLoading] = useState(initialRanked === undefined);
   /** Regatta IDs excluded from Best 3 of 5 (client what-if) */
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
-  const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
+  const [genderFilter, setGenderFilter] = useState<
+    "all" | "M" | "F" | "unknown"
+  >("all");
   const [squadFilter, setSquadFilter] = useState<string>("all");
   /** Skip client fetch once for the SSR period (then always fetch on change). */
   const skipSsrKey = useRef(
@@ -220,8 +223,12 @@ export function FleetRankingsView({
   const displayRanked = useMemo(() => {
     return rankingWithProjection.filter((s) => {
       if (genderFilter !== "all") {
-        const g = String(s.gender || "").toUpperCase();
-        if (g !== genderFilter) return false;
+        const g = normalizeGender(s.gender);
+        if (genderFilter === "unknown") {
+          if (g) return false;
+        } else if (g !== genderFilter) {
+          return false;
+        }
       }
       if (showSquad && squadFilter !== "all") {
         const sq = String(squadForFilter(s) || "").trim();
@@ -331,7 +338,9 @@ export function FleetRankingsView({
             <select
               value={genderFilter}
               onChange={(e) =>
-                setGenderFilter(e.target.value as "all" | "M" | "F")
+                setGenderFilter(
+                  e.target.value as "all" | "M" | "F" | "unknown"
+                )
               }
               className="min-w-0 w-full rounded-xl bg-slate-950 border border-white/10 px-2.5 sm:px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
               aria-label="Filter by gender"
@@ -339,6 +348,7 @@ export function FleetRankingsView({
               <option value="all">All genders</option>
               <option value="M">Male</option>
               <option value="F">Female</option>
+              <option value="unknown">Unknown</option>
             </select>
             {showSquad && (
               <select
@@ -364,7 +374,13 @@ export function FleetRankingsView({
         <p className="text-[11px] text-amber-200/90 font-semibold no-print">
           Showing {displayRanked.length} of {ranked.length} sailors
           {genderFilter !== "all"
-            ? ` · ${genderFilter === "M" ? "Male" : "Female"}`
+            ? ` · ${
+                genderFilter === "M"
+                  ? "Male"
+                  : genderFilter === "F"
+                    ? "Female"
+                    : "Unknown gender"
+              }`
             : ""}
           {squadFilter !== "all"
             ? ` · ${squadFilter === "none" ? "No squad" : squadFilter}`
@@ -552,7 +568,7 @@ export function FleetRankingsView({
                     </Link>
                   </div>
                   <p className="text-[11px] text-slate-500 mt-1">
-                    {s.gender || "—"} · Born {birthYear(s.dob)}
+                    {formatGenderLabel(s.gender)} · Born {birthYear(s.dob)}
                     {showSquad ? (
                       <span className="text-slate-500 font-semibold inline-flex flex-wrap items-center gap-x-1.5 gap-y-1 mt-0.5">
                         <span>
@@ -720,7 +736,7 @@ export function FleetRankingsView({
                       </Link>
                     </td>
                     <td className="px-3 py-3.5 text-center text-slate-300">
-                      {s.gender || "—"}
+                      {formatGenderLabel(s.gender)}
                     </td>
                     <td className="px-3 py-3.5 text-center font-mono text-slate-300">
                       {birthYear(s.dob)}

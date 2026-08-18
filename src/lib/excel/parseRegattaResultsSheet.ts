@@ -31,17 +31,11 @@ function emptyRow(): RegattaImportRow {
   };
 }
 
-/** Normalize gender from sheet to M | F | null. */
-export function normalizeImportGender(v: unknown): string | null {
-  if (v == null || v === "") return null;
-  const s = String(v).trim().toLowerCase();
-  if (!s || /^n\/?a$/i.test(s)) return null;
-  if (s === "m" || s === "male" || s === "boy" || s === "man") return "M";
-  if (s === "f" || s === "female" || s === "girl" || s === "woman") return "F";
-  if (s.startsWith("m")) return "M";
-  if (s.startsWith("f")) return "F";
-  return null;
-}
+export {
+  normalizeGender,
+  normalizeImportGender,
+} from "@/lib/gender";
+import { normalizeImportGender } from "@/lib/gender";
 
 /** Map raw sheet objects to regatta result import rows. */
 export function parseRegattaResultRows(

@@ -1,5 +1,6 @@
 import { excelDateToIso } from "@/lib/normalize";
 import { pickCol } from "@/lib/excel/pickCol";
+import { normalizeGender } from "@/lib/gender";
 
 /** One row from a gold/silver roster spreadsheet (admin bulk sailors import). */
 export type RosterImportRow = {
@@ -118,7 +119,7 @@ export function parseRosterRows(
             "noc",
           ])
         ),
-        gender: strOrNull(pickCol(row, ["gender", "sex"])),
+        gender: normalizeGender(pickCol(row, ["gender", "sex"])),
         goldEntryDate,
         silverEntryDate,
         dropDate,

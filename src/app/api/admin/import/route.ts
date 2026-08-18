@@ -30,7 +30,7 @@ import {
   isAnyIlcaClass,
   ILCA_MIN_RACES_FOR_RANKING,
 } from "@/lib/ilcaRanking";
-import { normalizeImportGender } from "@/lib/excel/parseRegattaResultsSheet";
+import { normalizeImportGender } from "@/lib/gender";
 import { birthYear as birthYearFromDob } from "@/lib/age";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
 

@@ -19,6 +19,7 @@ import {
 } from "@/lib/ilcaSailorFixes";
 import { findGoldParticipationDrops } from "@/lib/goldFleetDrop";
 import { findSilverInactivityDrops } from "@/lib/silverSeriesDrop";
+import { normalizeGender } from "@/lib/gender";
 import {
   isOnIlca4NationalListByName,
   ILCA4_NATIONAL_RANKING_NAMES,
@@ -521,6 +522,65 @@ async function applyGoldParticipationDrops(
 }
 
 /**
+ * Normalize sailor.gender to M | F | null (e.g. "Male" → "M", junk → null).
+ * Does not invent gender or flip M↔F.
+ */
+async function normalizeSailorGenders(
+  auth: AuthContext
+): Promise<NextResponse> {
+  const rows = await db
+    .select({
+      id: sailors.id,
+      name: sailors.name,
+      gender: sailors.gender,
+    })
+    .from(sailors);
+
+  let updated = 0;
+  let cleared = 0;
+  const samples: string[] = [];
+  for (const s of rows) {
+    const prev = s.gender == null ? null : String(s.gender).trim();
+    if (!prev) continue;
+    const next = normalizeGender(prev);
+    // Already canonical single-letter code
+    if (next && prev === next) continue;
+
+    await db
+      .update(sailors)
+      .set({ gender: next, updatedAt: new Date() })
+      .where(eq(sailors.id, s.id));
+    updated++;
+    if (!next) cleared++;
+    if (samples.length < 30) {
+      samples.push(`${s.name}: ${prev} → ${next || "null"}`);
+    }
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "sailor.normalize_gender",
+      entityType: "sailor",
+      entityId: s.id,
+      entityLabel: s.name,
+      summary: `Normalize gender ${prev} → ${next || "null"}`,
+      details: { from: prev, to: next },
+      source: "/api/admin/sailors",
+    });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    updated,
+    cleared,
+    samples,
+    message:
+      updated > 0
+        ? `Normalized gender on ${updated} sailor(s) (${cleared} cleared as unknown).`
+        : "All sailor genders already canonical (M/F/null).",
+  });
+}
+
+/**
  * Auto-drop Silver-track sailors who took part in zero Optimist ranking
  * regattas in a completed half. Sets drop_date to the next half boundary.
  */
@@ -919,6 +979,8 @@ export async function runSailorAction(
       return applyGoldParticipationDrops(body, auth);
     case "applySilverInactivityDrops":
       return applySilverInactivityDrops(body, auth);
+    case "normalizeSailorGenders":
+      return normalizeSailorGenders(auth);
     case "seedIlca4NationalList":
       return seedIlca4NationalList(auth);
     case "setIlca4NationalList":

@@ -28,6 +28,7 @@ import {
 import { withProjectedNextSquadStatus } from "@/lib/optimistSquadPreview";
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
 import { findSilverInactivityDrops } from "@/lib/silverSeriesDrop";
+import { normalizeGender } from "@/lib/gender";
 import {
   isInSgSeries,
   normalizeSgSeriesMembership,
@@ -804,6 +805,7 @@ export async function computeFleetRankings(
 
     const s = sailorRows.map((row) => ({
       ...row,
+      gender: normalizeGender(row.gender),
       currentFleet: (() => {
         const n = normalizeSgSeriesMembership(row.currentFleet);
         if (n) return n;
