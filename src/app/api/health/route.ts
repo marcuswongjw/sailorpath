@@ -1,6 +1,17 @@
 import { NextResponse } from "next/server";
+import { getAuthContext } from "@/lib/auth";
 
 export async function GET() {
+  // Authenticated superadmins get the full diagnostic payload.
+  // Everyone else sees only the live/offline status.
+  let isSuperadmin = false;
+  try {
+    const ctx = await getAuthContext();
+    if (ctx?.role === "superadmin") isSuperadmin = true;
+  } catch {
+    /* not signed in — return minimal response below */
+  }
+
   const hasDatabaseUrl = Boolean(
     process.env.DATABASE_URL?.trim() ||
       process.env.POSTGRES_URL?.trim() ||
@@ -143,6 +154,12 @@ export async function GET() {
     } else if (emptySeriesNoEntryCount && emptySeriesNoEntryCount > 0) {
       liveHint = `Database is live; ${emptySeriesNoEntryCount} Series sailor(s) have no entry dates — use Admin → Sailors stamp, or SQL 022`;
     }
+  }
+
+  // Unauthenticated or non-admin: return minimal status only.
+  // Full diagnostics (schema, migrations, connection details) are superadmin-only.
+  if (!isSuperadmin) {
+    return NextResponse.json({ ok: live, mode: live ? "live" : "offline" });
   }
 
   return NextResponse.json({

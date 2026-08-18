@@ -58,24 +58,29 @@ export function jsonError(error: unknown) {
   const msg = error instanceof Error ? error.message : "Error";
   const status =
     msg === "UNAUTHORIZED" ? 401 : msg === "FORBIDDEN" ? 403 : 500;
-  // Surface useful message for admin UI (still safe — no secrets)
-  let publicMsg =
-    msg === "UNAUTHORIZED"
-      ? "Not signed in"
-      : msg === "FORBIDDEN"
-        ? "Superadmin role required"
-        : msg.length < 280
-          ? msg
-          : msg.slice(0, 240) + "…";
-  // Common schema drift — never hide as vague "system error"
-  if (/column.*does not exist/i.test(msg)) {
-    publicMsg = msg.slice(0, 240);
+
+  // In production, only expose safe pre-approved messages.
+  // Schema drift, column names, and internal errors are already logged via
+  // console.error() in every route handler and visible in Vercel logs.
+  const isProduction = process.env.NODE_ENV === "production";
+
+  let publicMsg: string;
+  let detail: string | undefined;
+
+  if (msg === "UNAUTHORIZED") {
+    publicMsg = "Not signed in";
+  } else if (msg === "FORBIDDEN") {
+    publicMsg = "Superadmin role required";
+  } else if (isProduction) {
+    publicMsg = "Internal error";
+  } else {
+    // Development: surface full messages for debugging
+    publicMsg = msg.length < 280 ? msg : msg.slice(0, 240) + "\u2026";
+    if (msg.length < 500) detail = msg;
   }
-  return Response.json(
-    {
-      error: publicMsg,
-      detail: msg.length < 500 ? msg : msg.slice(0, 500),
-    },
-    { status }
-  );
+
+  const body: Record<string, string> = { error: publicMsg };
+  if (detail) body.detail = detail;
+
+  return Response.json(body, { status });
 }

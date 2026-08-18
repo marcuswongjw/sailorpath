@@ -1,6 +1,14 @@
 /**
  * Lightweight sliding-window rate limiter (in-process).
- * Good enough for Vercel serverless soft protection; resets on cold start.
+ *
+ * NOTE: This resets on every Vercel serverless cold start. An attacker who
+ * triggers requests across different instances can bypass the limit. For
+ * production hardening, replace the in-memory Map with Upstash Redis or
+ * Vercel KV so state survives cold starts.
+ *
+ * For now this provides reasonable burst protection within a warm instance,
+ * which covers the majority of abuse patterns against /api/support and
+ * /api/claims.
  */
 
 type Bucket = number[];
