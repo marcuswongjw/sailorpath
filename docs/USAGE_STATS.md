@@ -1,5 +1,9 @@
 # Stats & usage tracking (proposal + implementation)
 
+> **Metrics playbook (recommended KPIs):** open the in-app guide at
+> [`/admin/metrics`](/admin/metrics) (superadmin). That page lists what to
+> track, definitions, and why — without heavy live queries.
+
 ## Goals
 
 1. Know **what the product holds** (inventory): sailors, fleets, regattas, claims, support.

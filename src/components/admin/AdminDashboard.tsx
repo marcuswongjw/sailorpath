@@ -1411,6 +1411,12 @@ export function AdminDashboard() {
               )}
             </button>
           )}
+          <a
+            href="/admin/metrics"
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:border-orange-500/40 hover:text-white"
+          >
+            Metrics guide
+          </a>
           <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[10px] font-black text-orange-400 capitalize">
             {adminRole}
           </span>
