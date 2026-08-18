@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 
 import Link from "next/link";
 import { normalizeNationality } from "@/lib/seriesMembership";
@@ -11,10 +17,9 @@ import {
   Pencil,
   BookOpen,
   Camera,
-  Settings,
+  Eye,
   EyeOff,
   Anchor,
-  Clock,
   Trophy,
   ChevronDown,
   ChevronRight,
@@ -149,6 +154,8 @@ export function SailorProfileView({
   const [claimPanelOpen, setClaimPanelOpen] = useState(false);
   const [copyMsg, setCopyMsg] = useState<string | null>(null);
   const [editing, setEditing] = useState(false);
+  /** Owner-only: preview the profile as the public sees it (masks private surfaces). */
+  const [previewPublic, setPreviewPublic] = useState(false);
   const [saveBusy, setSaveBusy] = useState(false);
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
   const [expandedRegattaId, setExpandedRegattaId] = useState<string | null>(null);
@@ -283,10 +290,13 @@ export function SailorProfileView({
     };
   }, [demoMode, isLoggedIn, canClaim, initialSailor.id]);
 
-  const hasPrivateAccess = canSeePrivate;
-  const showWeight = isPublicWeight || hasPrivateAccess;
+  /** When owner enables Preview public, hide private/owner-only surfaces. */
+  const ownerView = isOwner && !previewPublic;
+  const hasPrivateAccess = canSeePrivate && !previewPublic;
+  const showWeight =
+    isPublicWeight || hasPrivateAccess || (isOwner && !previewPublic);
   // Equipment is always private — owner / private access only (never public)
-  const showEquipment = hasPrivateAccess || isOwner;
+  const showEquipment = hasPrivateAccess || ownerView;
 
   const saveProfile = async () => {
     if (demoMode) {
@@ -738,7 +748,14 @@ export function SailorProfileView({
 
   const obsForRegatta = (regattaId: string) =>
     observations
-      .filter((o: ObservationItem) => o.regattaId === regattaId)
+      .filter((o: ObservationItem) => {
+        if (o.regattaId !== regattaId) return false;
+        // Public / preview-public: only non-private notes
+        if (!ownerView && !hasPrivateAccess && o.isPrivate !== false) {
+          return false;
+        }
+        return true;
+      })
       .sort(
         (a: ObservationItem, b: ObservationItem) =>
           Number(a.raceNumber ?? 0) - Number(b.raceNumber ?? 0)
@@ -815,7 +832,7 @@ export function SailorProfileView({
   const bornYear =
     /^\d{4}-\d{2}-\d{2}$/.test(dobYmd) ? dobYmd.slice(0, 4) : null;
   const showFullDob =
-    Boolean(bornYear) && (isPublicDob || hasPrivateAccess);
+    Boolean(bornYear) && (isPublicDob || hasPrivateAccess || ownerView);
   const fullDobLabel =
     showFullDob && dobYmd ? formatFullDob(dobYmd) : null;
 
@@ -900,22 +917,16 @@ export function SailorProfileView({
     normalizeNationality(displaySailor.nationality) ||
     (String(displaySailor.nationality || "").trim() ? "SGP" : "SGP");
 
-  // Stats cells by mode — include gold entry year when known
-  const goldTenureLabel = analytics.timeInGoldLabel
-    ? analytics.goldEntryYear
-      ? `${analytics.timeInGoldLabel}${
-          analytics.isDroppedFromGold ? " (ended)" : ""
-        }`
-      : analytics.timeInGoldLabel
-    : "—";
-  const goldTenureSub =
+  // Tenure cell: short duration value + compact “since” hint (avoids wrapping soup)
+  const goldTenureLabel = analytics.timeInGoldLabel || "—";
+  const goldTenureHint =
     analytics.goldEntryYear != null
       ? analytics.isDroppedFromGold
-        ? `Gold since ${analytics.goldEntryYear} · dropped`
-        : `Gold since ${analytics.goldEntryYear}`
+        ? `Since ${analytics.goldEntryYear} · ended`
+        : `Since ${analytics.goldEntryYear}`
       : analytics.isDroppedFromGold
-        ? "Dropped from gold"
-        : "In gold fleet";
+        ? "Ended"
+        : null;
 
   /**
    * ILCA-focused stats whenever:
@@ -996,7 +1007,8 @@ export function SailorProfileView({
           },
           {
             value: goldTenureLabel,
-            label: goldTenureSub,
+            label: "Gold tenure",
+            hint: goldTenureHint,
             color: "text-white",
           },
         ]
@@ -1018,7 +1030,8 @@ export function SailorProfileView({
           },
           {
             value: goldTenureLabel,
-            label: goldTenureSub,
+            label: "Gold tenure",
+            hint: goldTenureHint,
             color: "text-white",
           },
         ];
@@ -1052,8 +1065,8 @@ export function SailorProfileView({
           .includes("open"))
   );
 
-  /** Public viewers only see equipment when the sailor made it public */
-  const showEquipmentSection = isOwner || hasPrivateAccess;
+  /** Equipment stays family/owner-private (never on public / preview-public). */
+  const showEquipmentSection = ownerView || hasPrivateAccess;
 
   // ILCA position trend (Open fleet) — shown for ILCA-only or dual-class ILCA tab
   const ilcaTrendPoints = useMemo(
@@ -1186,7 +1199,7 @@ export function SailorProfileView({
                 </span>
               )}
             </div>
-            {isOwner && !demoMode && (
+            {ownerView && !demoMode && (
               <>
                 <button
                   type="button"
@@ -1213,93 +1226,139 @@ export function SailorProfileView({
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                    {displaySailor.name}
-                  </h1>
-                  <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${fleetBadge.className}`}
-                  >
-                    {fleetBadge.label}
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <h1 className="text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                  {displaySailor.name}
+                </h1>
+                <span
+                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${fleetBadge.className}`}
+                >
+                  {fleetBadge.label}
+                </span>
+                {profileClaimed || profileVerified ? (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
+                    <BadgeCheck className="h-3 w-3" />
+                    Verified
                   </span>
-                  {profileClaimed || profileVerified ? (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
-                      <BadgeCheck className="h-3 w-3" />
-                      Verified
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 text-[10px] font-semibold text-amber-200/90">
-                      <ShieldAlert className="h-3 w-3" />
-                      Unclaimed
-                    </span>
-                  )}
-                </div>
-                <p className="mt-0.5 text-[13px] text-neutral-400">
-                  {[
-                    hasOptimistResults || !hasIlcaResults ? "Optimist" : null,
-                    hasIlcaResults ? "ILCA 4" : null,
-                    displaySailor.club ? String(displaySailor.club) : null,
-                  ]
-                    .filter(Boolean)
-                    .join(" · ")}
-                </p>
-                {activeStanding &&
-                  resultsTab !== "journey" &&
-                  activeStanding.overallRank != null && (
-                    <p
-                      className={`mt-1.5 text-[12px] sm:text-[13px] font-semibold tabular-nums leading-snug ${
-                        standingIsIlca ? "text-sky-300/95" : "text-orange-300/95"
-                      }`}
-                    >
-                      #{activeStanding.overallRank}
-                      {activeStanding.fleet
-                        ? ` ${activeStanding.fleet}`
-                        : standingIsIlca
-                          ? " ILCA"
-                          : ""}
-                      {" · "}
-                      Best 3/5: {activeStanding.best3of5}
-                      {standingIsIlca ? " pts" : ""}
-                      {activeStanding.periodLabel
-                        ? ` · ${activeStanding.periodLabel}`
-                        : ""}
-                    </p>
-                  )}
-              </div>
-              <div className="shrink-0 text-right space-y-1.5">
-                {/* Hide Optimist sail once aged out / left Optimist (ILCA-first) */}
-                {!leftOptimistYear &&
-                  sailDisplay &&
-                  sailDisplay !== "—" &&
-                  !/^SGP\s*0+$/i.test(sailDisplay) && (
-                <div>
-                  <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">
-                    Optimist sail
-                  </p>
-                  <div className="inline-flex items-center rounded-lg bg-orange-500 px-2.5 py-1.5 shadow-md shadow-orange-950/40">
-                    <span className="text-sm sm:text-[15px] font-bold tabular-nums text-white tracking-tight">
-                      {sailDisplay.includes(" ") ? sailDisplay : `${noc} ${sailDisplay}`}
-                    </span>
-                  </div>
-                </div>
+                ) : (
+                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 text-[10px] font-semibold text-amber-200/90">
+                    <ShieldAlert className="h-3 w-3" />
+                    Unclaimed
+                  </span>
                 )}
-                {sailIlca4 && (
-                  <div>
-                    <p className="text-[8px] font-semibold uppercase tracking-[0.14em] text-neutral-500 mb-1">
-                      ILCA 4 sail
-                    </p>
-                    <div className="inline-flex items-center rounded-lg bg-sky-600 px-2.5 py-1.5 shadow-md shadow-sky-950/40">
-                      <span className="text-sm sm:text-[15px] font-bold tabular-nums text-white tracking-tight">
+              </div>
+              {activeStanding &&
+                resultsTab !== "journey" &&
+                activeStanding.overallRank != null && (
+                  <p
+                    className={`mt-1.5 text-[12px] sm:text-[13px] font-semibold tabular-nums leading-snug ${
+                      standingIsIlca ? "text-sky-300/95" : "text-orange-300/95"
+                    }`}
+                  >
+                    #{activeStanding.overallRank}
+                    {activeStanding.fleet
+                      ? ` ${activeStanding.fleet}`
+                      : standingIsIlca
+                        ? " ILCA"
+                        : ""}
+                    {" · "}
+                    Best 3/5: {activeStanding.best3of5}
+                    {standingIsIlca ? " pts" : ""}
+                    {activeStanding.periodLabel
+                      ? ` · ${activeStanding.periodLabel}`
+                      : ""}
+                  </p>
+                )}
+              {/* Compact identity passport: sail · club · nationality · born */}
+              <p className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[12px] sm:text-[13px] text-neutral-400">
+                {(() => {
+                  const parts: ReactNode[] = [];
+                  const push = (node: ReactNode, key: string) => {
+                    if (parts.length > 0) {
+                      parts.push(
+                        <span
+                          key={`sep-${key}`}
+                          className="text-neutral-600"
+                          aria-hidden
+                        >
+                          ·
+                        </span>
+                      );
+                    }
+                    parts.push(<span key={key}>{node}</span>);
+                  };
+                  if (
+                    !leftOptimistYear &&
+                    sailDisplay &&
+                    sailDisplay !== "—" &&
+                    !/^SGP\s*0+$/i.test(sailDisplay)
+                  ) {
+                    push(
+                      <span className="tabular-nums font-medium text-neutral-300">
+                        {sailDisplay.includes(" ")
+                          ? sailDisplay
+                          : `${noc} ${sailDisplay}`}
+                      </span>,
+                      "opt-sail"
+                    );
+                  }
+                  if (sailIlca4) {
+                    push(
+                      <span className="tabular-nums font-medium text-sky-300/90">
+                        ILCA{" "}
                         {sailIlca4.includes(" ")
                           ? sailIlca4
                           : `${noc} ${sailIlca4}`}
+                      </span>,
+                      "ilca-sail"
+                    );
+                  }
+                  if (displaySailor.club) {
+                    push(String(displaySailor.club), "club");
+                  }
+                  push(
+                    <span className="inline-flex items-center gap-1">
+                      <span aria-hidden>
+                        {nationalityFlag(displaySailor.nationality)}
                       </span>
-                    </div>
-                  </div>
-                )}
-              </div>
+                      {nationalityLabel(displaySailor.nationality)}
+                    </span>,
+                    "nat"
+                  );
+                  if (bornYear) {
+                    push(
+                      showFullDob && fullDobLabel ? (
+                        <>
+                          Born{" "}
+                          <span className="text-neutral-300 font-medium">
+                            {fullDobLabel}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          Born{" "}
+                          <span className="text-neutral-300 font-medium">
+                            {bornYear}
+                          </span>
+                        </>
+                      ),
+                      "born"
+                    );
+                  }
+                  if (showWeight && displaySailor.weight != null) {
+                    push(
+                      <>
+                        <span className="text-neutral-300 font-medium">
+                          {displaySailor.weight} kg
+                        </span>
+                      </>,
+                      "weight"
+                    );
+                  }
+                  return parts;
+                })()}
+              </p>
             </div>
 
             {displaySailor.bio && (
@@ -1308,41 +1367,12 @@ export function SailorProfileView({
               </p>
             )}
 
-            <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] text-neutral-500">
-              <span className="inline-flex items-center gap-1.5">
-                <span aria-hidden>
-                  {nationalityFlag(displaySailor.nationality)}
-                </span>
-                {nationalityLabel(displaySailor.nationality)}
-              </span>
-              {bornYear && (
-                <span>
-                  {showFullDob && fullDobLabel ? (
-                    <>
-                      Born{" "}
-                      <span className="text-neutral-300 font-medium">
-                        {fullDobLabel}
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      Birth year{" "}
-                      <span className="text-neutral-300 font-medium">
-                        {bornYear}
-                      </span>
-                    </>
-                  )}
-                </span>
-              )}
-              {showWeight && displaySailor.weight != null && (
-                <span>
-                  Weight{" "}
-                  <span className="text-neutral-300 font-medium">
-                    {displaySailor.weight} kg
-                  </span>
-                </span>
-              )}
-            </div>
+            {isOwner && previewPublic && (
+              <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-lg border border-sky-500/30 bg-sky-500/10 px-2.5 py-1 text-[11px] font-medium text-sky-200">
+                <Eye className="h-3 w-3" />
+                Previewing public profile
+              </div>
+            )}
 
             <div className="mt-3 flex flex-wrap gap-2">
               <button
@@ -1401,6 +1431,33 @@ export function SailorProfileView({
               {isOwner && (
                 <button
                   type="button"
+                  onClick={() => {
+                    setPreviewPublic((p) => {
+                      const next = !p;
+                      if (next) {
+                        setEditing(false);
+                        setExpandedRegattaId(null);
+                      }
+                      return next;
+                    });
+                  }}
+                  className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-[11px] font-medium ${
+                    previewPublic
+                      ? "border-sky-500/40 bg-sky-500/15 text-sky-200"
+                      : "border-white/10 bg-white/[0.03] text-neutral-300 hover:text-white"
+                  }`}
+                >
+                  {previewPublic ? (
+                    <EyeOff className="h-3 w-3" />
+                  ) : (
+                    <Eye className="h-3 w-3" />
+                  )}
+                  {previewPublic ? "Exit preview" : "Preview public"}
+                </button>
+              )}
+              {isOwner && !previewPublic && (
+                <button
+                  type="button"
                   onClick={() => setEditing((e) => !e)}
                   className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[11px] font-medium text-neutral-300 hover:text-white"
                 >
@@ -1445,7 +1502,7 @@ export function SailorProfileView({
       )}
 
       {/* Owner editor */}
-      {isOwner && editing && (
+      {ownerView && editing && (
         <ProfileOwnerEditor
           form={form}
           setForm={setForm}
@@ -1797,6 +1854,11 @@ export function SailorProfileView({
               <p className="mt-1.5 text-[9px] sm:text-[10px] font-medium uppercase tracking-[0.1em] text-neutral-500 leading-tight">
                 {s.label}
               </p>
+              {"hint" in s && s.hint ? (
+                <p className="mt-0.5 text-[9px] sm:text-[10px] font-medium text-neutral-600 leading-tight normal-case tracking-normal">
+                  {s.hint}
+                </p>
+              ) : null}
             </div>
           ))}
         </div>
@@ -1924,7 +1986,7 @@ export function SailorProfileView({
               </div>
             )}
           </div>
-          {isOwner && resultsTab !== "journey" && (
+          {ownerView && resultsTab !== "journey" && (
             <p className="text-[11px] text-neutral-500 inline-flex items-center gap-1">
               <StickyNote className="h-3 w-3 text-orange-400" />
               Expand a row for race notes
@@ -1932,7 +1994,7 @@ export function SailorProfileView({
           )}
         </div>
 
-        {isOwner &&
+        {ownerView &&
           !dismissSailorTip &&
           resultsTab !== "journey" &&
           (demoMode ? demoRole === "sailor" : true) && (
@@ -1959,7 +2021,7 @@ export function SailorProfileView({
           <ProfileJourneyPanel
             variant="tab"
             items={displayJourney}
-            isOwner={isOwner}
+            isOwner={ownerView}
             draft={journeyDraft}
             setDraft={setJourneyDraft}
             busy={journeyBusy}
@@ -1969,7 +2031,7 @@ export function SailorProfileView({
           />
         ) : null}
 
-        {resultsTab !== "journey" && isOwner && !demoMode && (
+        {resultsTab !== "journey" && ownerView && !demoMode && (
           <div className="mx-4 sm:mx-5 mb-3 rounded-xl border border-white/[0.06] bg-black/20 p-3 space-y-2">
             <p className="text-[10px] font-medium uppercase tracking-wide text-neutral-500">
               Add non-ranking result
@@ -2067,6 +2129,8 @@ export function SailorProfileView({
                 const raceNotes = obsForRegatta(regattaId);
                 const fleetSize = res.totalFleetSize ?? res.fleetSize;
                 const nonRanking = res.countsForRanking === false;
+                /** Public: expand only when there are visible notes; owners always can. */
+                const canExpand = raceNotes.length > 0 || ownerView;
                 const canLink =
                   !nonRanking &&
                   !isIlcaRow &&
@@ -2101,32 +2165,60 @@ export function SailorProfileView({
                     ? String(nett)
                     : "—";
                 const tags = buildResultTags(res, analytics.goldEntryDate);
+                const showFleetSizeUnderPlace =
+                  fleetSize != null &&
+                  Number(fleetSize) > 0 &&
+                  leftValue !== "—";
 
                 return (
                   <div key={regattaId + String(idx)}>
                     <div
-                      role="button"
-                      tabIndex={0}
-                      onClick={() =>
-                        setExpandedRegattaId(expanded ? null : regattaId)
+                      role={canExpand ? "button" : undefined}
+                      tabIndex={canExpand ? 0 : undefined}
+                      onClick={
+                        canExpand
+                          ? () =>
+                              setExpandedRegattaId(
+                                expanded ? null : regattaId
+                              )
+                          : undefined
                       }
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          setExpandedRegattaId(expanded ? null : regattaId);
-                        }
-                      }}
-                      className={`grid gap-2 items-start px-4 sm:px-5 py-3.5 cursor-pointer hover:bg-white/[0.02] grid-cols-[1.25rem_2.75rem_1fr_auto] ${
+                      onKeyDown={
+                        canExpand
+                          ? (e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                setExpandedRegattaId(
+                                  expanded ? null : regattaId
+                                );
+                              }
+                            }
+                          : undefined
+                      }
+                      className={`grid gap-2 items-start px-4 sm:px-5 py-3.5 grid-cols-[1.25rem_2.75rem_1fr_auto] ${
+                        canExpand
+                          ? "cursor-pointer hover:bg-white/[0.02]"
+                          : "cursor-default"
+                      } ${
                         isIlcaRow
                           ? "sm:grid-cols-[1.25rem_2.75rem_1fr_2.5rem_4.25rem]"
                           : "sm:grid-cols-[1.25rem_2.75rem_1fr_4.5rem_4.25rem]"
                       }`}
                     >
-                      <span className="pt-1 text-neutral-500" aria-hidden>
-                        {expanded ? (
-                          <ChevronDown className="h-3.5 w-3.5" />
+                      <span
+                        className={`pt-1 ${
+                          canExpand ? "text-neutral-500" : "text-transparent"
+                        }`}
+                        aria-hidden
+                      >
+                        {canExpand ? (
+                          expanded ? (
+                            <ChevronDown className="h-3.5 w-3.5" />
+                          ) : (
+                            <ChevronRight className="h-3.5 w-3.5" />
+                          )
                         ) : (
-                          <ChevronRight className="h-3.5 w-3.5" />
+                          <span className="inline-block h-3.5 w-3.5" />
                         )}
                       </span>
                       <span
@@ -2148,9 +2240,7 @@ export function SailorProfileView({
                         <span className="text-[15px] font-semibold">
                           {isIlcaRow ? leftValue : leftValue === "DNS" ? "DNS" : leftValue === "—" ? "—" : `#${leftValue}`}
                         </span>
-                        {fleetSize != null &&
-                          Number(fleetSize) > 0 &&
-                          leftValue !== "—" && (
+                        {showFleetSizeUnderPlace && (
                             <span className="text-[10px] font-medium text-neutral-500 mt-0.5">
                               /{fleetSize}
                             </span>
@@ -2174,19 +2264,29 @@ export function SailorProfileView({
                           {[
                             res.geography,
                             formatEventWhen(res.regattaDate as string),
-                            fleetSize ? `${fleetSize} boats` : null,
+                            // Avoid repeating fleet size already under place (#n / N)
+                            !showFleetSizeUnderPlace && fleetSize
+                              ? `${fleetSize} boats`
+                              : null,
                           ]
                             .filter(Boolean)
                             .join(" · ")}
                         </p>
-                        {/* Mobile: show rank / nett under event */}
-                        <p className="sm:hidden text-[11px] text-neutral-400 mt-1 tabular-nums">
-                          {isIlcaRow
-                            ? `Rank #${midValue}${
-                                fleetSize ? ` / ${fleetSize}` : ""
-                              }`
-                            : `Nett ${midValue}`}
-                        </p>
+                        {/* Mobile: complementary score only (Optimist rank is already left col) */}
+                        {(() => {
+                          const mobileSecondary = isIlcaRow
+                            ? midValue !== "—" && midValue !== "DNS"
+                              ? `Rank #${midValue}`
+                              : midValue === "DNS"
+                                ? "DNS"
+                                : null
+                            : `Nett ${midValue}`;
+                          return mobileSecondary ? (
+                            <p className="sm:hidden text-[11px] text-neutral-400 mt-1 tabular-nums">
+                              {mobileSecondary}
+                            </p>
+                          ) : null;
+                        })()}
                         {tags.length > 0 && (
                           <div className="mt-1.5 flex flex-wrap gap-1">
                             {tags.map((t) => (
@@ -2200,6 +2300,7 @@ export function SailorProfileView({
                           </div>
                         )}
                         {(() => {
+                          if (!showEquipment) return null;
                           const gear = gearByRegatta[regattaId] || [];
                           const compact = gear
                             .filter(
@@ -2243,7 +2344,7 @@ export function SailorProfileView({
                             {raceNotes.length === 1 ? "" : "s"}
                           </span>
                         )}
-                        {isOwner && (
+                        {ownerView && (
                           <button
                             type="button"
                             onClick={(e) => {
@@ -2289,7 +2390,7 @@ export function SailorProfileView({
                       </span>
                     </div>
 
-                    {isOwner && !demoMode && nonRanking && res.resultId && (
+                    {ownerView && !demoMode && nonRanking && res.resultId && (
                         <button
                           type="button"
                           disabled={personalBusy}
@@ -2300,7 +2401,7 @@ export function SailorProfileView({
                         </button>
                       )}
 
-                    {expanded && (
+                    {expanded && canExpand && (
                       <div className="px-4 sm:px-5 pb-4 space-y-3 border-t border-white/[0.04] bg-black/15">
                         <div className="flex items-center gap-2 pt-3 text-[11px] font-medium text-neutral-500 uppercase tracking-wide">
                           <BookOpen className="h-3.5 w-3.5 text-orange-400" />
@@ -2308,7 +2409,7 @@ export function SailorProfileView({
                         </div>
                         {raceNotes.length === 0 ? (
                           <p className="text-xs text-neutral-600">
-                            {isOwner
+                            {ownerView
                               ? "No notes yet — add wind, place, and takeaways below."
                               : "No public race notes for this event."}
                           </p>
@@ -2338,7 +2439,7 @@ export function SailorProfileView({
                                     {String(o.note)}
                                   </p>
                                 ) : null}
-                                {isOwner && (
+                                {ownerView && (
                                   <div className="mt-1.5 flex gap-2">
                                     <button
                                       type="button"
@@ -2380,7 +2481,7 @@ export function SailorProfileView({
                             ))}
                           </ul>
                         )}
-                        {isOwner && (
+                        {ownerView && (
                           <div className="rounded-lg border border-orange-500/20 bg-orange-500/[0.06] p-3 space-y-2">
                             <p className="text-[10px] font-medium uppercase text-orange-300/90">
                               {editingObsId
@@ -2518,7 +2619,7 @@ export function SailorProfileView({
           <ProfileJourneyPanel
             variant="card"
             items={displayJourney}
-            isOwner={isOwner}
+            isOwner={ownerView}
             draft={journeyDraft}
             setDraft={setJourneyDraft}
             busy={journeyBusy}
@@ -2531,8 +2632,8 @@ export function SailorProfileView({
         {showEquipmentSection && (
         <EquipmentInventory
           sailorId={initialSailor.id}
-          isOwner={isOwner}
-          canSeeEquipment={showEquipment || isOwner}
+          isOwner={ownerView}
+          canSeeEquipment={showEquipment}
           mayHaveIlca={Boolean(
             hasIlcaResults ||
               displaySailor.sailNumberIlca4 ||
