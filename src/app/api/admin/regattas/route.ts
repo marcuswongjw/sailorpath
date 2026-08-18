@@ -8,6 +8,7 @@ import {
   isAnyIlcaClass,
   ILCA_MIN_RACES_FOR_RANKING,
 } from "@/lib/ilcaRanking";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 export async function GET(req: Request) {
   try {
@@ -126,6 +127,7 @@ export async function POST(req: Request) {
       })
       .returning();
 
+    revalidatePublicRankings(`regattas:upsert:${row.id}`);
     return NextResponse.json({ regatta: row, rankingNote });
   } catch (e) {
     console.error("regattas POST", e);
@@ -241,6 +243,7 @@ export async function PATCH(req: Request) {
     if (!row) {
       return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
     }
+    revalidatePublicRankings(`regattas:patch:${row.id}`);
     return NextResponse.json({ regatta: row, rankingNote });
   } catch (e) {
     console.error("regattas PATCH", e);
@@ -263,6 +266,7 @@ export async function DELETE(req: Request) {
     if (!deleted[0]) {
       return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
     }
+    revalidatePublicRankings(`regattas:delete:${id}`);
     return NextResponse.json({ ok: true, id });
   } catch (e) {
     console.error("regattas DELETE", e);

@@ -1,4 +1,9 @@
 import { unstable_cache } from "next/cache";
+import {
+  CACHE_TAG_FLEET_RANKINGS,
+  CACHE_TAG_ILCA_RANKINGS,
+  CACHE_TAG_PUBLIC_REGATTAS,
+} from "@/lib/cacheTags";
 import { db, DbUnavailableError, formatDbError } from "@/db";
 import {
   sailors,
@@ -502,7 +507,7 @@ export const getCachedIlcaRankings = unstable_cache(
     return computeIlcaRankingsBoard(boatClass);
   },
   ["ilca-rankings-board-v4"],
-  { revalidate: 60 }
+  { revalidate: 60, tags: [CACHE_TAG_ILCA_RANKINGS] }
 );
 
 async function computeIlcaRankingsBoard(boatClass: IlcaBoatClass = "ILCA 4") {
@@ -820,7 +825,7 @@ export const getCachedFleetRankings = unstable_cache(
     return computeFleetRankings(fleet, { year, half });
   },
   ["fleet-rankings-v5"],
-  { revalidate: 60 }
+  { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
 /**
@@ -831,7 +836,7 @@ export const getCachedPublicRegattas = unstable_cache(
     return listRegattas();
   },
   ["public-regattas-list-v1"],
-  { revalidate: 120 }
+  { revalidate: 120, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 
 export async function ensureProfileForUser(user: {

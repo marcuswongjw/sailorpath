@@ -40,3 +40,11 @@ Shell keeps auth gate, tab navigation, and hook wiring only.
 
 The old live **Stats & usage** tab (`AdminStatsPanel` + `/api/admin/stats`) was removed —
 use `/admin/metrics` for the KPI playbook. Usage events still write via `POST /api/usage`.
+
+## Cache invalidation
+
+After import / result / regatta / ranking-relevant sailor writes, Route Handlers call
+`revalidatePublicRankings()` (`src/lib/revalidatePublic.ts`). That marks shared
+`unstable_cache` tags (`fleet-rankings`, `ilca-rankings`, `public-regattas`) and ISR
+paths (`/sg/optimist/gold`, silver, ILCA, regatta directories, `/api/rankings`) so public
+boards refresh without waiting for the 60s timer.

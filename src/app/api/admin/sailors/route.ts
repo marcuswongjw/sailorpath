@@ -15,6 +15,23 @@ import {
   validateHalfBoundaryDate,
 } from "@/lib/datesSg";
 import { runSailorAction } from "@/lib/adminSailorActions";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+
+const RANKING_SAILOR_FIELDS = new Set([
+  "goldEntryDate",
+  "silverEntryDate",
+  "dropDate",
+  "currentFleet",
+  "ilca4NationalList",
+  "sailNumberIlca4",
+]);
+
+function sailorPatchAffectsRankings(body: Record<string, unknown>): boolean {
+  for (const key of RANKING_SAILOR_FIELDS) {
+    if (body[key] !== undefined) return true;
+  }
+  return false;
+}
 
 const DATE_FIELDS = [
   "goldEntryDate",
@@ -97,7 +114,14 @@ export async function POST(req: Request) {
     // Named bulk actions (ILCA fixes, participation drops, backfills, …)
     // live in src/lib/adminSailorActions.ts.
     const actionRes = await runSailorAction(body, auth);
-    if (actionRes) return actionRes;
+    if (actionRes) {
+      if (actionRes.ok) {
+        revalidatePublicRankings(
+          `sailors:action:${String((body as { action?: string }).action || "")}`
+        );
+      }
+      return actionRes;
+    }
 
     const handle =
       (body.handle as string)?.trim() ||
@@ -418,6 +442,9 @@ export async function PATCH(req: Request) {
         details: { fields: Object.keys(patch).filter((k) => k !== "updatedAt") },
         source: "/api/admin/sailors",
       });
+      if (sailorPatchAffectsRankings(body as Record<string, unknown>)) {
+        revalidatePublicRankings(`sailors:patch:${row.id}`);
+      }
       return NextResponse.json({ sailor: row });
     } catch (e) {
       // Retry without nationality if column not migrated
@@ -436,6 +463,9 @@ export async function PATCH(req: Request) {
             { error: "Sailor not found" },
             { status: 404 }
           );
+        }
+        if (sailorPatchAffectsRankings(body as Record<string, unknown>)) {
+          revalidatePublicRankings(`sailors:patch:${row.id}`);
         }
         return NextResponse.json({
           sailor: row,
@@ -463,6 +493,7 @@ export async function DELETE(req: Request) {
     if (!deleted[0]) {
       return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
     }
+    revalidatePublicRankings(`sailors:delete:${id}`);
     return NextResponse.json({ ok: true, id });
   } catch (e) {
     console.error("sailors DELETE", e);

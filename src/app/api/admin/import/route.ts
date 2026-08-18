@@ -22,6 +22,7 @@ import {
   normalizeNationalityCode,
 } from "@/lib/countries";
 import { trackUsage } from "@/lib/usage";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import type { ImportPossibleDuplicate } from "@/types/import";
 import {
   isAnyIlcaClass,
@@ -1052,6 +1053,11 @@ export async function POST(req: Request) {
         nationalityUpdated,
       },
     });
+
+    // Bust ISR + shared ranking caches so Gold/Silver/ILCA refresh promptly.
+    if (matched > 0) {
+      revalidatePublicRankings(`import:${reg.id}`);
+    }
 
     return NextResponse.json({
       message:

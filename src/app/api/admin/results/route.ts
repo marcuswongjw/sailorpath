@@ -3,6 +3,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import {
   activeSailorsForFleet,
   missingDnsPairs,
@@ -157,6 +158,7 @@ export async function POST(req: Request) {
       body.action === "clearFalseDns"
     ) {
       await healFalseDnsFlags();
+      revalidatePublicRankings("results:healFalseDns");
       return NextResponse.json({
         ok: true,
         message:
@@ -259,6 +261,7 @@ export async function POST(req: Request) {
         if (row) created++;
       }
 
+      revalidatePublicRankings(`results:fillDnsPeriod:${fleet}:${year}:${half}`);
       return NextResponse.json({
         ok: true,
         message: `Ensured DNS for ${fleet} fleet ${half} ${year}: ${created} missing results created (rank = each regatta fleet size + 1). ${fleetSailors.length} active sailors × ${events.length} ranking regattas.`,
@@ -383,6 +386,7 @@ export async function POST(req: Request) {
         }
       }
 
+      revalidatePublicRankings(`results:fillDns:${reg.id}`);
       return NextResponse.json({
         ok: true,
         message: `Created ${created} DNS results (score ${dnsPoints} = fleet ${reg.totalFleetSize} + 1) for active ${reg.division} fleet members missing this regatta.`,
@@ -485,6 +489,7 @@ export async function POST(req: Request) {
       })
       .returning();
 
+    revalidatePublicRankings(`results:upsert:${row.id}`);
     return NextResponse.json({
       result: {
         ...row,
@@ -631,6 +636,7 @@ export async function PATCH(req: Request) {
     if (!row) {
       return NextResponse.json({ error: "Result not found" }, { status: 404 });
     }
+    revalidatePublicRankings(`results:patch:${row.id}`);
     return NextResponse.json({
       result: {
         ...row,
@@ -658,6 +664,7 @@ export async function DELETE(req: Request) {
     if (!deleted[0]) {
       return NextResponse.json({ error: "Result not found" }, { status: 404 });
     }
+    revalidatePublicRankings(`results:delete:${id}`);
     return NextResponse.json({ ok: true, id });
   } catch (e) {
     console.error("results DELETE", e);

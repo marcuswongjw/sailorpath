@@ -3,6 +3,7 @@ import { and, eq } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, sailorAliases, sailors } from "@/db/schema";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 /**
  * Merge duplicate sailor profiles.
@@ -243,6 +244,7 @@ export async function POST(req: Request) {
       };
     });
 
+    revalidatePublicRankings(`sailors:merge:${keepId}`);
     return NextResponse.json({
       ok: true,
       message: `Merged “${mergeSailor.name}” into “${keepSailor.name}”.`,
