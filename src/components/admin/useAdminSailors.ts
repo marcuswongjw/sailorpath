@@ -34,6 +34,9 @@ type UseAdminSailorsArgs = {
   openSailorResultsBase: (sailorId: string) => void | Promise<void>;
   competitionsSailorId: string | null;
   setCompetitionsSailorId: Dispatch<SetStateAction<string | null>>;
+  /** Refetch sailors (and results when deletes cascade) from the server. */
+  invalidateSailors?: () => void;
+  invalidateResults?: () => void;
 };
 
 /**
@@ -51,6 +54,8 @@ export function useAdminSailors({
   openSailorResultsBase,
   competitionsSailorId,
   setCompetitionsSailorId,
+  invalidateSailors,
+  invalidateResults,
 }: UseAdminSailorsArgs) {
   const { toast, confirm } = useFeedback();
   const [ignoredDuplicateKeys, setIgnoredDuplicateKeys] = useState<Set<string>>(
@@ -230,8 +235,7 @@ export function useAdminSailors({
       });
       const data = await parseApi(res);
       if (!res.ok) throw new Error(apiErr(data, "Backfill failed"));
-      const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
-      if (list.sailors) setSailorList(list.sailors);
+      invalidateSailors?.();
       toast.success(
         apiStr(data, "message") ||
           `Updated ${apiNum(data, "updated") ?? 0} sailors`
@@ -260,8 +264,7 @@ export function useAdminSailors({
       });
       const data = await parseApi(res);
       if (!res.ok) throw new Error(apiErr(data, "Cleanup failed"));
-      const list = await fetch("/api/admin/sailors?all=1").then((r) => r.json());
-      if (list.sailors) setSailorList(list.sailors);
+      invalidateSailors?.();
       toast.success(
         apiStr(data, "message") ||
           `Updated ${apiNum(data, "updated") ?? 0} sailors`
@@ -480,6 +483,7 @@ export function useAdminSailors({
       setSelectedSailors([]);
       setBulkValue("");
       setTimeout(() => setBulkStatus(null), 3000);
+      invalidateSailors?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
     }
@@ -552,6 +556,8 @@ export function useAdminSailors({
           `Conflicts resolved: ${data.resultsMergedConflict ?? 0}\n` +
           `Conflicts kept (kept sailor better): ${data.resultsDroppedConflict ?? 0}`
       );
+      invalidateSailors?.();
+      invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Merge failed"));
     }
@@ -580,6 +586,8 @@ export function useAdminSailors({
         setResultsList,
       });
       toast.success(data.message || `Merged ${merge.name} → ${keep.name}`);
+      invalidateSailors?.();
+      invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Merge failed"));
     }
@@ -622,6 +630,8 @@ export function useAdminSailors({
       setSelectedSailors([]);
       setBulkStatus(apiStr(data, "message") || "Deleted.");
       setTimeout(() => setBulkStatus(null), 4000);
+      invalidateSailors?.();
+      invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
     }
@@ -758,6 +768,7 @@ export function useAdminSailors({
             : "Sailor updated successfully!"
         );
       }
+      invalidateSailors?.();
       setEditingSailorId(null);
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Update failed"));
@@ -791,6 +802,8 @@ export function useAdminSailors({
       if (!res.ok) throw new Error(apiErr(data, "Delete failed"));
       setSailorList((prev) => prev.filter((s) => s.id !== id));
       setResultsList((prev) => prev.filter((r) => r.sailorId !== id));
+      invalidateSailors?.();
+      invalidateResults?.();
       toast.success("Sailor deleted.");
     } catch (e: unknown) {
       toast.error(errorMessage(e));

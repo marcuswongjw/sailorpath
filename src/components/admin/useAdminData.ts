@@ -295,6 +295,26 @@ export function useAdminData({
     [setSailorList]
   );
 
+  /** Refetch sailors from the server (after bulk/merge/actions). */
+  const invalidateSailors = useCallback(() => {
+    void queryClient.invalidateQueries({ queryKey: adminQueryKeys.sailors() });
+  }, [queryClient]);
+
+  const invalidateRegattas = useCallback(() => {
+    void queryClient.invalidateQueries({ queryKey: adminQueryKeys.regattas() });
+  }, [queryClient]);
+
+  /** Invalidate all results caches (full + per-regatta). */
+  const invalidateResults = useCallback(() => {
+    void queryClient.invalidateQueries({ queryKey: ["admin", "results"] });
+  }, [queryClient]);
+
+  const invalidateAllLists = useCallback(() => {
+    invalidateSailors();
+    invalidateRegattas();
+    invalidateResults();
+  }, [invalidateSailors, invalidateRegattas, invalidateResults]);
+
   return {
     sailorList,
     setSailorList,
@@ -321,5 +341,9 @@ export function useAdminData({
     patchRegattaUpsert,
     patchRegattaPartial,
     patchSailorPartial,
+    invalidateSailors,
+    invalidateRegattas,
+    invalidateResults,
+    invalidateAllLists,
   };
 }

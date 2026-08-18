@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Users, BarChart3, FileText } from "lucide-react";
 
-export const dynamic = "force-dynamic";
+/** Pure static content — no request-time data. */
+export const revalidate = false;
 
 export default function CoachToolsPage() {
   return (

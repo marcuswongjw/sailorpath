@@ -19,10 +19,14 @@
 | `AdminResultsPanel.tsx` | Results sub-tab + period DNS fill |
 | `AdminCompetitionsPanel.tsx` | Per-sailor results modal from Database |
 | `AdminSuggestionsPanel.tsx` | Personal/non-ranking suggestions queue |
+| `ClaimsAdminPanel.tsx` | Profile claims review queue |
+| `PromoteAdminPanel.tsx` | Fleet promotion / demotion tools |
+| `SupportInboxPanel.tsx` | Support inbox |
 | `AdminMetricsGuide.tsx` | Static KPI playbook (`/admin/metrics`) |
 | `adminConstants.ts` | Sailor table column defs + localStorage keys |
 | `parseApi.ts` | Shared JSON response parser for admin fetch calls |
 | `../AdminDashboard.tsx` | Re-export for existing imports |
+| `../ClaimsAdminPanel.tsx` etc. | Thin re-exports for old import paths |
 
 Excel parsing lives in `src/lib/excel/` (regatta results).  
 Shared types: `src/types/{sailor,regatta,result,import}.ts`.
@@ -65,7 +69,9 @@ Admin list loads use **TanStack Query** (`AdminQueryProvider` + `useAdminData`):
 | `admin/results/regatta/:id` | per-event results editor |
 
 Queries enable only for the active workspace. Mutations still patch the cache via
-`setQueryData` helpers (`setSailorList`, `patchResultsFromImport`, …).
+`setQueryData` helpers (`setSailorList`, `patchResultsFromImport`, …), then call
+`invalidateSailors` / `invalidateRegattas` / `invalidateResults` /
+`invalidateAllLists` so the next read hits the server.
 
 ## Bundle analysis
 

@@ -15,6 +15,9 @@ type UseAdminRegattasArgs = {
   setResultsList: Dispatch<SetStateAction<ResultAdmin[]>>;
   selectedRegattaIdForResultEdit: string;
   setSelectedRegattaIdForResultEdit: Dispatch<SetStateAction<string>>;
+  /** Refetch regattas (and results when deletes cascade) from the server. */
+  invalidateRegattas?: () => void;
+  invalidateResults?: () => void;
 };
 
 /**
@@ -27,6 +30,8 @@ export function useAdminRegattas({
   setResultsList,
   selectedRegattaIdForResultEdit,
   setSelectedRegattaIdForResultEdit,
+  invalidateRegattas,
+  invalidateResults,
 }: UseAdminRegattasArgs) {
   const { toast, confirm } = useFeedback();
   const [regattaSearch, setRegattaSearch] = useState("");
@@ -113,6 +118,7 @@ export function useAdminRegattas({
         toast.success("Regatta updated successfully!");
       }
       setEditingRegattaId(null);
+      invalidateRegattas?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
     }
@@ -150,6 +156,8 @@ export function useAdminRegattas({
         setSelectedRegattaIdForResultEdit("");
       }
       toast.success("Regatta deleted.");
+      invalidateRegattas?.();
+      invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
     }

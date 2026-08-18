@@ -1,6 +1,7 @@
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
+/** Pure static content — no request-time data. */
+export const revalidate = false;
 
 export default function HowRankingsWorkPage() {
   return (

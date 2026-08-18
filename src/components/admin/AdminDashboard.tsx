@@ -55,17 +55,23 @@ const AdminSuggestionsPanel = dynamic(
 );
 const ClaimsAdminPanel = dynamic(
   () =>
-    import("@/components/ClaimsAdminPanel").then((m) => m.ClaimsAdminPanel),
+    import("@/components/admin/ClaimsAdminPanel").then(
+      (m) => m.ClaimsAdminPanel
+    ),
   { loading: () => <PanelLoading /> }
 );
 const PromoteAdminPanel = dynamic(
   () =>
-    import("@/components/PromoteAdminPanel").then((m) => m.PromoteAdminPanel),
+    import("@/components/admin/PromoteAdminPanel").then(
+      (m) => m.PromoteAdminPanel
+    ),
   { loading: () => <PanelLoading /> }
 );
 const SupportInboxPanel = dynamic(
   () =>
-    import("@/components/SupportInboxPanel").then((m) => m.SupportInboxPanel),
+    import("@/components/admin/SupportInboxPanel").then(
+      (m) => m.SupportInboxPanel
+    ),
   { loading: () => <PanelLoading /> }
 );
 const AdminGoldAnalysisPanel = dynamic(
@@ -120,6 +126,7 @@ function AdminDashboardInner() {
     refreshResultsList: data.refreshResultsList,
     selectedRegattaIdForResultEdit: data.selectedRegattaIdForResultEdit,
     setSelectedRegattaIdForResultEdit: data.setSelectedRegattaIdForResultEdit,
+    invalidateResults: data.invalidateResults,
   });
 
   const competitions = useAdminCompetitions({
@@ -139,6 +146,8 @@ function AdminDashboardInner() {
     openSailorResultsBase: competitions.openSailorResults,
     competitionsSailorId: competitions.competitionsSailorId,
     setCompetitionsSailorId: competitions.setCompetitionsSailorId,
+    invalidateSailors: data.invalidateSailors,
+    invalidateResults: data.invalidateResults,
   });
 
   const regattas = useAdminRegattas({
@@ -148,6 +157,8 @@ function AdminDashboardInner() {
     setResultsList: data.setResultsList,
     selectedRegattaIdForResultEdit: data.selectedRegattaIdForResultEdit,
     setSelectedRegattaIdForResultEdit: data.setSelectedRegattaIdForResultEdit,
+    invalidateRegattas: data.invalidateRegattas,
+    invalidateResults: data.invalidateResults,
   });
 
   if (loading) {
@@ -309,6 +320,7 @@ function AdminDashboardInner() {
             onSailorsUpdated={(sailorsList) => data.setSailorList(sailorsList)}
             onRegattaUpserted={data.patchRegattaUpsert}
             onResultsUpdated={data.patchResultsFromImport}
+            onImportComplete={data.invalidateAllLists}
           />
         )}
 

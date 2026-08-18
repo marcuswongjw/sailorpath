@@ -35,6 +35,8 @@ type Props = {
   onSailorsUpdated?: (sailors: SailorAdmin[]) => void;
   onRegattaUpserted?: (regatta: RegattaAdmin) => void;
   onResultsUpdated?: (results: ResultAdmin[]) => void;
+  /** Refetch all admin lists after a successful import. */
+  onImportComplete?: () => void;
 };
 
 /**
@@ -45,6 +47,7 @@ export function AdminRegattaImport({
   onSailorsUpdated,
   onRegattaUpserted,
   onResultsUpdated,
+  onImportComplete,
 }: Props) {
   const { toast } = useFeedback();
   const [dragActive, setDragActive] = useState(false);
@@ -210,6 +213,7 @@ export function AdminRegattaImport({
     } catch {
       /* optional */
     }
+    onImportComplete?.();
   };
 
   /**

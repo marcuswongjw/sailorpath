@@ -16,6 +16,8 @@ type UseAdminResultsArgs = {
   /** Owned by useAdminData (fetch coupling); threaded through for the editor UI. */
   selectedRegattaIdForResultEdit: string;
   setSelectedRegattaIdForResultEdit: Dispatch<SetStateAction<string>>;
+  /** Refetch results caches after mutations. */
+  invalidateResults?: () => void;
 };
 
 /**
@@ -29,6 +31,7 @@ export function useAdminResults({
   refreshResultsList,
   selectedRegattaIdForResultEdit,
   setSelectedRegattaIdForResultEdit,
+  invalidateResults,
 }: UseAdminResultsArgs) {
   const { toast, confirm } = useFeedback();
   const [editingResultId, setEditingResultId] = useState<string | null>(null);
@@ -95,6 +98,7 @@ export function useAdminResults({
         toast.success("Result updated successfully!");
       }
       setEditingResultId(null);
+      invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
     }
@@ -128,6 +132,7 @@ export function useAdminResults({
       const data = await parseApi(res);
       if (!res.ok) throw new Error(apiErr(data, "Fill DNS failed"));
       await refreshResultsList({ regattaId });
+      invalidateResults?.();
       toast.success(
         apiStr(data, "message") ||
           `Created ${apiNum(data, "created") ?? 0} DNS rows.`
@@ -171,6 +176,7 @@ export function useAdminResults({
       const data = await parseApi(res);
       if (!res.ok) throw new Error(apiErr(data, "Period DNS fill failed"));
       await refreshResultsList();
+      invalidateResults?.();
       const rankingRaw = data.rankingRegattas;
       const rankingList = Array.isArray(rankingRaw) ? rankingRaw : [];
       const events = rankingList
@@ -213,6 +219,7 @@ export function useAdminResults({
       if (!res.ok) throw new Error(apiErr(data, "Delete failed"));
       setResultsList((prev) => prev.filter((r) => r.id !== id));
       toast.success("Result deleted.");
+      invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
     }
