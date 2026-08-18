@@ -1,5 +1,5 @@
 import { PageLoading } from "@/components/PageLoading";
 
 export default function Loading() {
-  return <PageLoading label="Loading ILCA 4 rankings…" />;
+  return <PageLoading label="Loading ILCA 4 rankings…" variant="rankings" />;
 }

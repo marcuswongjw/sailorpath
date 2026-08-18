@@ -854,9 +854,9 @@ export async function computeFleetRankings(
     }));
 
     /**
-     * Auto-stamp Optimist dropDate for Silver-track sailors who missed an
-     * entire completed half (no ranking starts → drop at next half boundary).
-     * Runs on ranking compute so boards + profiles stay in sync.
+     * Auto-stamp Optimist dropDate for Silver-track inactivity.
+     * Apply in-memory for this board compute; persist async so SSR/ISR
+     * is not blocked on dozens of UPDATEs (was causing long loading flash).
      */
     const asOf = todayYmdSg();
     const silverDrops = findSilverInactivityDrops(s, r, res, asOf);
@@ -864,18 +864,20 @@ export async function computeFleetRankings(
       const dropById = new Map(
         silverDrops.map((d) => [d.sailorId, d.dropDate] as const)
       );
-      await Promise.all(
+      for (const sailor of s) {
+        const stamped = dropById.get(sailor.id);
+        if (stamped) sailor.dropDate = stamped;
+      }
+      void Promise.all(
         silverDrops.map((d) =>
           db
             .update(sailors)
             .set({ dropDate: d.dropDate, updatedAt: new Date() })
             .where(eq(sailors.id, d.sailorId))
         )
-      );
-      for (const sailor of s) {
-        const stamped = dropById.get(sailor.id);
-        if (stamped) sailor.dropDate = stamped;
-      }
+      ).catch((err) => {
+        console.warn("[sailorpath] silver inactivity drop persist failed", err);
+      });
     }
 
     const ranked = calculateRankings(period, s, r, res).filter(

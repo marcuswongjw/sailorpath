@@ -16,9 +16,6 @@ import { Trophy, Calendar, RotateCcw } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 import { formatGenderLabel, normalizeGender } from "@/lib/gender";
 
-const PERIODS = rankingPeriodOptions(6);
-const DEFAULT_PERIOD = currentPeriodFromSgToday();
-
 function scoreCell(
   score: number | undefined,
   isDNS?: boolean,
@@ -97,7 +94,8 @@ export function FleetRankingsView({
   initialRanked?: RankedSailor[];
   initialError?: string | null;
 }) {
-  const ssrPeriod = initialPeriod || DEFAULT_PERIOD;
+  const ssrPeriod = initialPeriod || currentPeriodFromSgToday();
+  const PERIODS = useMemo(() => rankingPeriodOptions(6), []);
   const [period, setPeriod] = useState<Period>(ssrPeriod);
   const [ranked, setRanked] = useState<RankedSailor[]>(initialRanked ?? []);
   const [error, setError] = useState<string | null>(initialError ?? null);
@@ -270,8 +268,14 @@ export function FleetRankingsView({
     return scores.slice(0, 5);
   };
 
-  const isCurrent =
-    period.year === 2026 && period.half === "Jul-Dec";
+  const isCurrent = Boolean(
+    PERIODS.find(
+      (p) =>
+        p.isCurrent &&
+        p.period.year === period.year &&
+        p.period.half === period.half
+    )
+  );
   const periodLabelText =
     PERIODS.find(
       (p) => p.period.year === period.year && p.period.half === period.half
@@ -538,13 +542,19 @@ export function FleetRankingsView({
       )}
 
       {loading && (
-        <div className="space-y-3 py-4" role="status" aria-live="polite">
-          <div className="h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-white/10">
-            <div className="h-full w-2/5 animate-pulse rounded-full bg-gradient-to-r from-orange-600 via-orange-400 to-amber-300" />
-          </div>
-          <p className="text-sm font-semibold text-slate-500">
-            Loading rankings…
-          </p>
+        <div
+          className="space-y-2 py-2"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading rankings"
+        >
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-12 rounded-xl border border-white/5 bg-white/[0.03] animate-pulse"
+              style={{ animationDelay: `${i * 50}ms` }}
+            />
+          ))}
         </div>
       )}
       {error && (
