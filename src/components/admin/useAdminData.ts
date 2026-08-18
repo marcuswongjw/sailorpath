@@ -15,7 +15,13 @@ import {
 
 export type AdminDataKey = "sailors" | "regattas" | "results";
 
-export type AdminActiveTab = "import" | "edit" | "analysis" | "gold" | "ilca";
+export type AdminActiveTab =
+  | "stats"
+  | "import"
+  | "edit"
+  | "analysis"
+  | "gold"
+  | "ilca";
 export type AdminEditSubTab =
   | "sailors"
   | "regattas"

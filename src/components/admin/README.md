@@ -22,6 +22,7 @@
 | `ClaimsAdminPanel.tsx` | Profile claims review queue |
 | `PromoteAdminPanel.tsx` | Fleet promotion / demotion tools |
 | `SupportInboxPanel.tsx` | Support inbox |
+| `AdminStatsPanel.tsx` | Lean live Stats tab (COUNT cards via `/api/admin/stats`) |
 | `AdminMetricsGuide.tsx` | Static KPI playbook (`/admin/metrics`) |
 | `adminConstants.ts` | Sailor table column defs + localStorage keys |
 | `parseApi.ts` | Shared JSON response parser for admin fetch calls |
@@ -42,8 +43,9 @@ Shared types: `src/types/{sailor,regatta,result,import}.ts`.
 Claims / promote / support / import / sailors / regattas / results use standalone panels.
 Shell keeps auth gate, tab navigation, and hook wiring only.
 
-The old live **Stats & usage** tab (`AdminStatsPanel` + `/api/admin/stats`) was removed —
-use `/admin/metrics` for the KPI playbook. Usage events still write via `POST /api/usage`.
+**Stats** tab shows live COUNT/DISTINCT cards (`AdminStatsPanel` +
+`GET /api/admin/stats`, cached ~60s). `/admin/metrics` remains the definitions
+playbook. Usage events still write via `POST /api/usage`.
 
 ## Cache invalidation
 

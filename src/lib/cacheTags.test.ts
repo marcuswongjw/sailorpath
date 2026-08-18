@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  CACHE_TAG_ADMIN_STATS,
   CACHE_TAG_FLEET_RANKINGS,
   CACHE_TAG_ILCA_RANKINGS,
   CACHE_TAG_PUBLIC_REGATTAS,
@@ -11,6 +12,7 @@ describe("cacheTags", () => {
     expect(CACHE_TAG_FLEET_RANKINGS).toBe("fleet-rankings");
     expect(CACHE_TAG_ILCA_RANKINGS).toBe("ilca-rankings");
     expect(CACHE_TAG_PUBLIC_REGATTAS).toBe("public-regattas");
+    expect(CACHE_TAG_ADMIN_STATS).toBe("admin-stats");
     expect(PUBLIC_RANKING_CACHE_TAGS).toEqual([
       CACHE_TAG_FLEET_RANKINGS,
       CACHE_TAG_ILCA_RANKINGS,

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import {
+  Activity,
   Database,
   FileSpreadsheet,
   AlertTriangle,
@@ -93,6 +94,11 @@ const AdminIlcaRankingPanel = dynamic(
     import("@/components/admin/AdminIlcaRankingPanel").then(
       (m) => m.AdminIlcaRankingPanel
     ),
+  { loading: () => <PanelLoading /> }
+);
+const AdminStatsPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminStatsPanel").then((m) => m.AdminStatsPanel),
   { loading: () => <PanelLoading /> }
 );
 
@@ -250,10 +256,11 @@ function AdminDashboardInner() {
         </div>
       </div>
 
-      {/* Main tabs — 2-col on phone, full grid on larger screens */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      {/* Main tabs — 2-col on phone, denser grid on larger screens */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
+            ["stats", "Stats", "Live stats", Activity],
             ["import", "Excel", "Regatta Excel", FileSpreadsheet],
             ["edit", "Database", "Database & bulk edit", Database],
             ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
@@ -312,6 +319,10 @@ function AdminDashboardInner() {
             <RefreshCw className="h-4 w-4 animate-spin text-orange-500" />
             Loading this workspace…
           </div>
+        )}
+
+        {activeTab === "stats" && (
+          <AdminStatsPanel isSuperadmin={isSuperadmin} />
         )}
 
         {activeTab === "import" && (

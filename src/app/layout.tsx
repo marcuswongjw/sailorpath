@@ -12,6 +12,10 @@ export const metadata: Metadata = {
   title: "SailorPath | Singapore Youth Sailing Rankings & Athlete Logbooks",
   description:
     "National rankings, personal logbooks, and a complete record of the journey from Optimist to ILCA for Singapore youth sailors.",
+  icons: {
+    icon: [{ url: "/icon", type: "image/png" }],
+    apple: [{ url: "/apple-icon", type: "image/png" }],
+  },
 };
 
 export const viewport: Viewport = {

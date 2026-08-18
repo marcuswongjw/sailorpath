@@ -1,11 +1,10 @@
 # Stats & usage tracking
 
-> **Metrics playbook (recommended KPIs):** open the in-app guide at
-> [`/admin/metrics`](/admin/metrics) (superadmin). That page lists what to
-> track, definitions, and why — without heavy live queries.
+> **Live Stats:** Admin → **Stats** tab (or `GET /api/admin/stats`) — lean
+> COUNT/DISTINCT cards, cached ~60s. No full-table result scans.
 >
-> The live Admin **Stats & usage** tab and `GET /api/admin/stats` were removed
-> (P1 maintainability). Event ingestion remains.
+> **Metrics playbook (definitions):** [`/admin/metrics`](/admin/metrics)
+> documents what to track and why. Event ingestion remains via `usage_events`.
 
 ## Goals
 
@@ -54,7 +53,8 @@ Browser (UsageBeacon)
     → trackUsage() → INSERT usage_events
 
 Superadmin
-    → /admin/metrics  (static KPI playbook — no heavy live scan)
+    → Admin → Stats     (live cards via GET /api/admin/stats)
+    → /admin/metrics    (static KPI playbook — definitions)
 ```
 
 ### One-time setup
