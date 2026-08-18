@@ -882,15 +882,6 @@ export function SailorProfileView({
     [ilca4Results]
   );
 
-  // Dual class: default to Optimist unless left Optimist → ILCA first.
-  const resultsForPrimarySection = dualClass
-    ? preferIlcaFirst
-      ? ilca4Results
-      : optimistResults
-    : hasIlcaResults && classBuckets.optimist.length === 0
-      ? ilca4Results
-      : optimistResults;
-
   /**
    * Optimist results plus series-window DNS (missed ranking events).
    * Keeps the Results list aligned with the Best 3/5 strip / trend.
