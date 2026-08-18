@@ -231,6 +231,8 @@ export function SailorProfileView({
   const [journeyMsg, setJourneyMsg] = useState<string | null>(null);
   /** Public list shows 8 by default; owner/public can expand to full log */
   const [showAllResults, setShowAllResults] = useState(false);
+  /** Established Gold: default Gold-only results; allow All Optimist */
+  const [optimistScope, setOptimistScope] = useState<"gold" | "all">("gold");
   /** Dual-class profiles: Optimist · ILCA 4 · Journey */
   const [resultsTab, setResultsTab] = useState<"optimist" | "ilca4" | "journey">(
     () => {
@@ -831,12 +833,23 @@ export function SailorProfileView({
       displaySailor.mastIlca4 ||
       displaySailor.equipmentNotesIlca4);
 
-  const optimistResults = analytics.listResults;
+  /** Gold-filtered when established_gold; otherwise all Optimist results */
+  const optimistResultsGold = analytics.listResults;
+  const optimistResultsAll = classBuckets.optimist;
+  const optimistResults =
+    analytics.mode === "established_gold" && optimistScope === "all"
+      ? optimistResultsAll
+      : optimistResultsGold;
   const ilca4Results = classBuckets.ilca4;
   const hasIlcaResults = ilca4Results.length > 0;
   const hasOptimistResults =
-    optimistResults.length > 0 || classBuckets.optimist.length > 0;
-  const dualClass = hasIlcaResults && classBuckets.optimist.length > 0;
+    optimistResultsAll.length > 0 || optimistResultsGold.length > 0;
+  const dualClass = hasIlcaResults && optimistResultsAll.length > 0;
+  const showOptimistScopeFilter =
+    analytics.mode === "established_gold" &&
+    resultsTab !== "ilca4" &&
+    resultsTab !== "journey" &&
+    !(hasIlcaResults && optimistResultsAll.length === 0);
   const ilca4Tenure = useMemo(() => {
     if (!ilca4Results.length) return null;
     const first = [...ilca4Results]
@@ -1232,6 +1245,28 @@ export function SailorProfileView({
                     .filter(Boolean)
                     .join(" · ")}
                 </p>
+                {activeStanding &&
+                  resultsTab !== "journey" &&
+                  activeStanding.overallRank != null && (
+                    <p
+                      className={`mt-1.5 text-[12px] sm:text-[13px] font-semibold tabular-nums leading-snug ${
+                        standingIsIlca ? "text-sky-300/95" : "text-orange-300/95"
+                      }`}
+                    >
+                      #{activeStanding.overallRank}
+                      {activeStanding.fleet
+                        ? ` ${activeStanding.fleet}`
+                        : standingIsIlca
+                          ? " ILCA"
+                          : ""}
+                      {" · "}
+                      Best 3/5: {activeStanding.best3of5}
+                      {standingIsIlca ? " pts" : ""}
+                      {activeStanding.periodLabel
+                        ? ` · ${activeStanding.periodLabel}`
+                        : ""}
+                    </p>
+                  )}
               </div>
               <div className="shrink-0 text-right space-y-1.5">
                 {/* Hide Optimist sail once aged out / left Optimist (ILCA-first) */}
@@ -1573,13 +1608,18 @@ export function SailorProfileView({
                 of {activeStanding.fleetSize}
                 {standingIsIlca ? "" : ` · ${activeStanding.fleet}`}
               </p>
-              <p className="text-[11px] text-neutral-500 mt-1.5 tabular-nums">
-                {standingIsIlca ? "Best 3 of 5" : "Best 3 of 5"}{" "}
-                <span className="font-semibold text-neutral-300">
+              <p className="text-[11px] text-neutral-400 mt-1.5 tabular-nums">
+                Best 3 of 5{" "}
+                <span className="font-semibold text-neutral-200">
                   {activeStanding.best3of5}
                   {standingIsIlca ? " pts" : ""}
                 </span>
               </p>
+              {!standingIsIlca && (
+                <p className="text-[10px] text-neutral-500 mt-0.5">
+                  Sum of best three places (lower is better)
+                </p>
+              )}
             </div>
           </div>
           <div className="mt-4 hidden sm:grid grid-cols-5 gap-2">
@@ -1699,9 +1739,17 @@ export function SailorProfileView({
               );
             })}
           </ul>
+          {!standingIsIlca && (
+            <p className="mt-3 text-[10px] sm:text-[11px] text-slate-400 leading-relaxed">
+              <span className="font-semibold text-slate-300">Key: </span>
+              <span className="tabular-nums">CF</span> = carry-forward ·{" "}
+              <span className="tabular-nums">*</span> = DNS ·{" "}
+              <span className="tabular-nums">†</span> = overseas commitment
+            </p>
+          )}
           {activeStanding.trendNote && (
             <p
-              className={`mt-3 text-[11px] font-medium ${
+              className={`mt-2 text-[11px] font-medium ${
                 standingIsIlca ? "text-sky-300/90" : "text-emerald-400/90"
               }`}
             >
@@ -1787,8 +1835,8 @@ export function SailorProfileView({
         </section>
       )}
 
-      {/* ── Position trend ───────────────────────────────────── */}
-      {resultsTab !== "journey" && (
+      {/* ── Position trend (hide until ≥2 ranked finishes) ─── */}
+      {resultsTab !== "journey" && trendPoints.length >= 2 && (
       <section className={`${cardClass} p-4 sm:p-5`}>
         <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
           Position trend
@@ -1820,34 +1868,60 @@ export function SailorProfileView({
                     : "Regatta results"}
             </h2>
             {resultsTab !== "journey" && (
-            <p className="text-[11px] text-neutral-600 mt-1.5">
+            <p className="text-[11px] text-neutral-400 mt-1.5">
               {(() => {
-                const list =
-                  dualClass && resultsTab === "ilca4"
-                    ? ilca4Results
-                    : dualClass
-                      ? optimistResults
-                      : resultsForPrimarySection;
+                const list = activeResultsList;
                 const n = list.length;
                 return showAllResults
                   ? `All ${n} listed`
                   : `Showing ${Math.min(8, n)} of ${n}`;
               })()}
-              {dualClass && resultsTab === "optimist" && analytics.mode === "established_gold"
+              {showOptimistScopeFilter && optimistScope === "gold"
                 ? " · gold fleet"
                 : ""}
               {dualClass && resultsTab === "ilca4" && ilca4Tenure
                 ? ` · in ILCA 4 ${ilca4Tenure.label} (from first race)`
                 : ""}
-              {!dualClass &&
-              analytics.mode === "established_gold" &&
-              !primaryIsIlca
-                ? " · gold fleet"
-                : ""}
               {!dualClass && primaryIsIlca && ilca4Tenure
                 ? ` · in ILCA 4 ${ilca4Tenure.label} (from first race)`
                 : ""}
             </p>
+            )}
+            {showOptimistScopeFilter && (
+              <div
+                className="mt-2 inline-flex rounded-full border border-white/10 bg-black/30 p-0.5 gap-0.5"
+                role="group"
+                aria-label="Optimist results filter"
+              >
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOptimistScope("gold");
+                    setShowAllResults(false);
+                  }}
+                  className={`rounded-full px-3 py-1.5 text-[10px] font-bold touch-manipulation min-h-[2rem] ${
+                    optimistScope === "gold"
+                      ? "bg-orange-600 text-white"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  Gold only
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOptimistScope("all");
+                    setShowAllResults(false);
+                  }}
+                  className={`rounded-full px-3 py-1.5 text-[10px] font-bold touch-manipulation min-h-[2rem] ${
+                    optimistScope === "all"
+                      ? "bg-orange-600 text-white"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  All Optimist
+                </button>
+              </div>
             )}
           </div>
           {isOwner && resultsTab !== "journey" && (
