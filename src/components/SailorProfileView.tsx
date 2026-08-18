@@ -1440,6 +1440,31 @@ export function SailorProfileView({
                       "weight"
                     );
                   }
+                  const dropYmd = displaySailor.dropDate
+                    ? String(displaySailor.dropDate).slice(0, 10)
+                    : "";
+                  if (/^\d{4}-\d{2}-\d{2}$/.test(dropYmd)) {
+                    const dropLabel = (() => {
+                      try {
+                        return new Date(`${dropYmd}T12:00:00+08:00`).toLocaleDateString(
+                          "en-SG",
+                          {
+                            month: "short",
+                            year: "numeric",
+                            timeZone: "Asia/Singapore",
+                          }
+                        );
+                      } catch {
+                        return dropYmd.slice(0, 7);
+                      }
+                    })();
+                    push(
+                      <span className="text-amber-200/90 font-medium">
+                        Left series {dropLabel}
+                      </span>,
+                      "drop"
+                    );
+                  }
                   return parts;
                 })()}
               </p>

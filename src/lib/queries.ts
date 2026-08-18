@@ -27,6 +27,7 @@ import {
 } from "@/lib/ranking";
 import { withProjectedNextSquadStatus } from "@/lib/optimistSquadPreview";
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
+import { findSilverInactivityDrops } from "@/lib/silverSeriesDrop";
 import {
   isInSgSeries,
   normalizeSgSeriesMembership,
@@ -850,6 +851,31 @@ export async function computeFleetRankings(
       isOverseasCommitment: row.isOverseasCommitment,
     }));
 
+    /**
+     * Auto-stamp Optimist dropDate for Silver-track sailors who missed an
+     * entire completed half (no ranking starts → drop at next half boundary).
+     * Runs on ranking compute so boards + profiles stay in sync.
+     */
+    const asOf = todayYmdSg();
+    const silverDrops = findSilverInactivityDrops(s, r, res, asOf);
+    if (silverDrops.length > 0) {
+      const dropById = new Map(
+        silverDrops.map((d) => [d.sailorId, d.dropDate] as const)
+      );
+      await Promise.all(
+        silverDrops.map((d) =>
+          db
+            .update(sailors)
+            .set({ dropDate: d.dropDate, updatedAt: new Date() })
+            .where(eq(sailors.id, d.sailorId))
+        )
+      );
+      for (const sailor of s) {
+        const stamped = dropById.get(sailor.id);
+        if (stamped) sailor.dropDate = stamped;
+      }
+    }
+
     const ranked = calculateRankings(period, s, r, res).filter(
       (x) => x.fleet === fleet
     );
@@ -873,7 +899,7 @@ export const getCachedFleetRankings = unstable_cache(
   ): Promise<RankedSailor[]> => {
     return computeFleetRankings(fleet, { year, half });
   },
-  ["fleet-rankings-v5"],
+  ["fleet-rankings-v6"],
   { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 

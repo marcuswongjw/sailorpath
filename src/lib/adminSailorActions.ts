@@ -18,6 +18,7 @@ import {
   GOH_SIAK_YIAK_IAN_NAME,
 } from "@/lib/ilcaSailorFixes";
 import { findGoldParticipationDrops } from "@/lib/goldFleetDrop";
+import { findSilverInactivityDrops } from "@/lib/silverSeriesDrop";
 import {
   isOnIlca4NationalListByName,
   ILCA4_NATIONAL_RANKING_NAMES,
@@ -520,6 +521,126 @@ async function applyGoldParticipationDrops(
 }
 
 /**
+ * Auto-drop Silver-track sailors who took part in zero Optimist ranking
+ * regattas in a completed half. Sets drop_date to the next half boundary.
+ */
+async function applySilverInactivityDrops(
+  body: Record<string, unknown>,
+  auth: AuthContext
+): Promise<NextResponse> {
+  const asOf = String(
+    body.asOf == null ? todayYmdSg() : body.asOf
+  ).slice(0, 10);
+
+  const sailorRows = await db.select().from(sailors);
+  const regattaRows = await db.select().from(regattas);
+  const resultRows = await db.select().from(regattaResults);
+
+  const sailorRecs = sailorRows.map((s) => ({
+    id: s.id,
+    name: s.name,
+    handle: s.handle,
+    sailNumber: s.sailNumber,
+    sailNumberIlca4: s.sailNumberIlca4,
+    club: s.club,
+    school: s.school,
+    nationality: s.nationality,
+    avatarUrl: s.avatarUrl,
+    goldEntryDate: s.goldEntryDate
+      ? String(s.goldEntryDate).slice(0, 10)
+      : null,
+    silverEntryDate: s.silverEntryDate
+      ? String(s.silverEntryDate).slice(0, 10)
+      : null,
+    dropDate: s.dropDate ? String(s.dropDate).slice(0, 10) : null,
+    currentFleet: s.currentFleet,
+    dob: s.dob ? String(s.dob).slice(0, 10) : null,
+    gender: s.gender,
+    nationalSquadStatus: s.nationalSquadStatus,
+  }));
+  const regattaRecs = regattaRows.map((r) => ({
+    id: r.id,
+    name: r.name,
+    slug: r.slug,
+    date: String(r.date).slice(0, 10),
+    totalFleetSize: r.totalFleetSize,
+    division: r.division ?? undefined,
+    raceCount: r.raceCount ?? undefined,
+    geography: r.geography ?? "SG",
+    boatClass: r.boatClass ?? "Optimist",
+    countsForRanking: r.countsForRanking !== false,
+  }));
+  const resultRecs = resultRows.map((r) => ({
+    sailorId: r.sailorId,
+    regattaId: r.regattaId,
+    rank: r.rank,
+    nettScore: r.nettScore,
+    totalScore: r.totalScore,
+    isDns: Boolean(r.isDns),
+    isOverseasCommitment: Boolean(r.isOverseasCommitment),
+  }));
+
+  const dryRun = Boolean(body.dryRun);
+  let candidates = findSilverInactivityDrops(
+    sailorRecs,
+    regattaRecs,
+    resultRecs,
+    asOf
+  );
+  const onlyIds = Array.isArray(body.sailorIds)
+    ? new Set(
+        (body.sailorIds as unknown[])
+          .map((x) => String(x).trim())
+          .filter(Boolean)
+      )
+    : null;
+  if (onlyIds && onlyIds.size > 0) {
+    candidates = candidates.filter((c) => onlyIds.has(c.sailorId));
+  }
+
+  if (dryRun) {
+    return NextResponse.json({
+      ok: true,
+      dryRun: true,
+      asOf,
+      candidates,
+      message: `Found ${candidates.length} silver inactivity drop candidate(s).`,
+    });
+  }
+
+  let updated = 0;
+  for (const c of candidates) {
+    await db
+      .update(sailors)
+      .set({ dropDate: c.dropDate, updatedAt: new Date() })
+      .where(eq(sailors.id, c.sailorId));
+    updated++;
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "sailor.silver_inactivity_drop",
+      entityType: "sailor",
+      entityId: c.sailorId,
+      entityLabel: c.name,
+      summary: `Silver/series drop ${c.dropDate} (no ranking starts in ${c.failedPeriod.half} ${c.failedPeriod.year})`,
+      details: c,
+      source: "/api/admin/sailors",
+    });
+  }
+
+  return NextResponse.json({
+    ok: true,
+    asOf,
+    updated,
+    candidates,
+    message:
+      updated > 0
+        ? `Set Optimist drop date on ${updated} silver sailor(s) for inactivity.`
+        : "No silver inactivity drops needed.",
+  });
+}
+
+/**
  * Seed ILCA 4 national list flags from the official authority name list
  * (name-token match). Only turns flags ON — never clears existing true.
  */
@@ -796,6 +917,8 @@ export async function runSailorAction(
       return fixGohSiakYiakIanIlcaOnly(auth);
     case "applyGoldParticipationDrops":
       return applyGoldParticipationDrops(body, auth);
+    case "applySilverInactivityDrops":
+      return applySilverInactivityDrops(body, auth);
     case "seedIlca4NationalList":
       return seedIlca4NationalList(auth);
     case "setIlca4NationalList":
