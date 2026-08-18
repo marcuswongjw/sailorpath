@@ -8,6 +8,7 @@ import {
   brandsForCategory,
   groupEquipmentSections,
   isCustomBrand,
+  resolveBrand,
   BRAND_OTHER,
   parseWindRange,
 } from "./equipment";
@@ -61,6 +62,15 @@ describe("equipment helpers", () => {
     expect(isCustomBrand("hull", "McLaughlin")).toBe(true);
     expect(isCustomBrand("hull", "Winner")).toBe(false);
     expect(BRAND_OTHER).toBe("Other");
+  });
+
+  it("resolveBrand picks preset, custom Other, or free-text for other category", () => {
+    expect(resolveBrand("hull", "Winner", "")).toBe("Winner");
+    expect(resolveBrand("hull", BRAND_OTHER, "McLaughlin")).toBe("McLaughlin");
+    expect(resolveBrand("hull", BRAND_OTHER, "")).toBe(BRAND_OTHER);
+    expect(resolveBrand("other", "  Acme  ", "ignored")).toBe("Acme");
+    // Legacy custom brand stored in brand field (not BRAND_OTHER)
+    expect(resolveBrand("sail", "CustomCut", "fallback")).toBe("fallback");
   });
 
   it("groups mast/boom/sprit as mast set", () => {

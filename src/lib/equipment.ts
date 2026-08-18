@@ -179,6 +179,19 @@ export function isCustomBrand(
   );
 }
 
+/** Resolve the brand string to persist from form select + optional custom field. */
+export function resolveBrand(
+  category: EquipmentCategory,
+  brand: string,
+  brandCustom: string
+): string {
+  if (category === "other") return brand.trim();
+  if (brand === BRAND_OTHER || isCustomBrand(category, brand)) {
+    return brandCustom.trim() || brand.trim();
+  }
+  return brand.trim();
+}
+
 export type EquipmentUsageHistory = {
   regattaId: string | null;
   regattaName: string | null;
