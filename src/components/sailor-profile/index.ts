@@ -16,3 +16,7 @@ export {
   formatFullDob,
 } from "./helpers";
 export { PositionTrendChart } from "./PositionTrendChart";
+export { ProfileOwnerEditor } from "./ProfileOwnerEditor";
+export type { ProfileOwnerForm } from "./ProfileOwnerEditor";
+export { ProfileJourneyPanel } from "./ProfileJourneyPanel";
+export type { JourneyDraft } from "./ProfileJourneyPanel";

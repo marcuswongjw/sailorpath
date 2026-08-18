@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import {
@@ -10,12 +10,29 @@ import {
   sailorClaims,
   sailors,
 } from "@/db/schema";
-import { getSailorSeriesStanding } from "@/lib/queries";
+import { getCachedFleetRankings } from "@/lib/queries";
 import { parseClaimRelation, relationFromNote } from "@/lib/claimRelation";
 import { mapEquipmentRow } from "@/lib/equipment";
+import { currentPeriodFromSgToday } from "@/lib/datesSg";
+import {
+  periodLabel,
+  resolveSailorFleet,
+  type SailorRecord,
+} from "@/lib/ranking";
+import { normalizeSgSeriesMembership } from "@/lib/seriesMembership";
+
+type StandingSummary = {
+  periodLabel: string;
+  fleet: string;
+  overallRank: number;
+  fleetSize: number;
+  best3of5: number;
+  trendNote: string;
+};
 
 /**
  * GET /api/account/family — linked athletes for parent / owner dashboard.
+ * Batches DB reads (no per-athlete N+1).
  */
 export async function GET() {
   try {
@@ -40,6 +57,15 @@ export async function GET() {
         ownerRelation: sailors.ownerRelation,
         nationalSquadStatus: sailors.nationalSquadStatus,
         dob: sailors.dob,
+        goldEntryDate: sailors.goldEntryDate,
+        silverEntryDate: sailors.silverEntryDate,
+        dropDate: sailors.dropDate,
+        natSquadStatusJan25: sailors.natSquadStatusJan25,
+        natSquadStatusJul25: sailors.natSquadStatusJul25,
+        natSquadStatusJan26: sailors.natSquadStatusJan26,
+        natSquadStatusJul26: sailors.natSquadStatusJul26,
+        natSquadStatusJan27: sailors.natSquadStatusJan27,
+        natSquadStatusJul27: sailors.natSquadStatusJul27,
       })
       .from(sailors)
       .where(eq(sailors.parentId, auth.userId));
@@ -60,146 +86,193 @@ export async function GET() {
       .where(eq(sailorClaims.requesterId, auth.userId))
       .orderBy(desc(sailorClaims.createdAt));
 
-    const athletes = await Promise.all(
-      owned.map(async (s) => {
-        let standing: {
-          periodLabel: string;
-          fleet: string;
-          overallRank: number;
-          fleetSize: number;
-          best3of5: number;
-          trendNote: string;
-        } | null = null;
-        try {
-          const st = await getSailorSeriesStanding(s.id);
-          if (st) {
+    const ids = owned.map((s) => s.id);
+    const period = currentPeriodFromSgToday();
+
+    const [goldBoard, silverBoard, allRecentResults, allGear, allNotes] =
+      await Promise.all([
+        ids.length
+          ? getCachedFleetRankings("Gold", period.year, period.half).catch(
+              () => []
+            )
+          : Promise.resolve([]),
+        ids.length
+          ? getCachedFleetRankings("Silver", period.year, period.half).catch(
+              () => []
+            )
+          : Promise.resolve([]),
+        ids.length
+          ? db
+              .select({
+                sailorId: regattaResults.sailorId,
+                regattaName: regattas.name,
+                regattaDate: regattas.date,
+                rank: regattaResults.rank,
+                boatClass: regattas.boatClass,
+              })
+              .from(regattaResults)
+              .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+              .where(inArray(regattaResults.sailorId, ids))
+              .orderBy(desc(regattas.date))
+              .catch(() => [])
+          : Promise.resolve([]),
+        ids.length
+          ? db
+              .select()
+              .from(equipmentItems)
+              .where(inArray(equipmentItems.sailorId, ids))
+              .catch(() => [])
+          : Promise.resolve([]),
+        ids.length
+          ? db
+              .select()
+              .from(parentNotes)
+              .where(
+                and(
+                  inArray(parentNotes.sailorId, ids),
+                  eq(parentNotes.authorUserId, auth.userId)
+                )
+              )
+              .orderBy(desc(parentNotes.createdAt))
+              .catch(() => [])
+          : Promise.resolve([]),
+      ]);
+
+    // Top 3 recent results per sailor
+    const recentBySailor = new Map<
+      string,
+      {
+        regattaName: string;
+        regattaDate: string;
+        rank: number;
+        boatClass: string | null;
+      }[]
+    >();
+    for (const r of allRecentResults) {
+      const list = recentBySailor.get(r.sailorId) || [];
+      if (list.length >= 3) continue;
+      list.push({
+        regattaName: r.regattaName,
+        regattaDate: String(r.regattaDate).slice(0, 10),
+        rank: r.rank,
+        boatClass: r.boatClass,
+      });
+      recentBySailor.set(r.sailorId, list);
+    }
+
+    // Equipment alerts per sailor
+    const gearAlertsBySailor = new Map<
+      string,
+      { count: number; alerts: { label: string; reason: string }[] }
+    >();
+    for (const g of allGear) {
+      const mapped = mapEquipmentRow({
+        ...g,
+        acquiredOn: g.acquiredOn ? String(g.acquiredOn) : null,
+        retiredOn: g.retiredOn ? String(g.retiredOn) : null,
+        lastUsedOn: g.lastUsedOn ? String(g.lastUsedOn) : null,
+      });
+      if (!mapped.needsAttention || mapped.status === "retired") continue;
+      const cur = gearAlertsBySailor.get(g.sailorId) || {
+        count: 0,
+        alerts: [],
+      };
+      cur.count += 1;
+      if (cur.alerts.length < 3) {
+        cur.alerts.push({
+          label: mapped.label || mapped.brand || mapped.category || "Gear",
+          reason: mapped.attentionReason || "Needs attention",
+        });
+      }
+      gearAlertsBySailor.set(g.sailorId, cur);
+    }
+
+    // Notes per sailor (already filtered to author; keep 5 each)
+    const notesBySailor = new Map<
+      string,
+      { id: string; body: string; createdAt: string }[]
+    >();
+    for (const n of allNotes) {
+      const list = notesBySailor.get(n.sailorId) || [];
+      if (list.length >= 5) continue;
+      list.push({
+        id: n.id,
+        body: n.body,
+        createdAt: n.createdAt ? new Date(n.createdAt).toISOString() : "",
+      });
+      notesBySailor.set(n.sailorId, list);
+    }
+
+    const athletes = owned.map((s) => {
+      const relation =
+        parseClaimRelation(s.ownerRelation) ||
+        parseClaimRelation(
+          claims.find((c) => c.sailorId === s.id && c.status === "approved")
+            ?.relation
+        ) ||
+        relationFromNote(
+          claims.find((c) => c.sailorId === s.id && c.status === "approved")
+            ?.note
+        ) ||
+        null;
+
+      let standing: StandingSummary | null = null;
+      try {
+        const n = normalizeSgSeriesMembership(s.currentFleet);
+        const record = {
+          ...s,
+          currentFleet: n || s.currentFleet,
+        } as SailorRecord;
+        const fleetInfo = resolveSailorFleet(record, period);
+        if (fleetInfo?.active) {
+          const board =
+            fleetInfo.fleet === "Silver" ? silverBoard : goldBoard;
+          const me = board.find((x) => x.id === s.id);
+          if (me) {
+            const overallRank = board.findIndex((x) => x.id === s.id) + 1;
+            const carry = me.regattaScores.filter((rs) => rs.isCarryForward)
+              .length;
             standing = {
-              periodLabel: st.periodLabel,
-              fleet: st.fleet,
-              overallRank: st.overallRank,
-              fleetSize: st.fleetSize,
-              best3of5: st.best3of5,
-              trendNote: st.trendNote,
+              periodLabel: periodLabel(period),
+              fleet: me.fleet,
+              overallRank,
+              fleetSize: board.length,
+              best3of5: me.overallScore,
+              trendNote:
+                carry > 0
+                  ? `Includes ${carry} carry-forward score${carry === 1 ? "" : "s"} from previous half`
+                  : `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
             };
           }
-        } catch {
-          standing = null;
         }
+      } catch {
+        standing = null;
+      }
 
-        const relation =
-          parseClaimRelation(s.ownerRelation) ||
-          parseClaimRelation(
-            claims.find(
-              (c) => c.sailorId === s.id && c.status === "approved"
-            )?.relation
-          ) ||
-          relationFromNote(
-            claims.find(
-              (c) => c.sailorId === s.id && c.status === "approved"
-            )?.note
-          ) ||
-          null;
+      const gear = gearAlertsBySailor.get(s.id);
 
-        // Recent results
-        let recentResults: {
-          regattaName: string;
-          regattaDate: string;
-          rank: number;
-          boatClass: string | null;
-        }[] = [];
-        try {
-          const resRows = await db
-            .select({
-              regattaName: regattas.name,
-              regattaDate: regattas.date,
-              rank: regattaResults.rank,
-              boatClass: regattas.boatClass,
-            })
-            .from(regattaResults)
-            .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-            .where(eq(regattaResults.sailorId, s.id))
-            .orderBy(desc(regattas.date))
-            .limit(3);
-          recentResults = resRows.map((r) => ({
-            regattaName: r.regattaName,
-            regattaDate: String(r.regattaDate).slice(0, 10),
-            rank: r.rank,
-            boatClass: r.boatClass,
-          }));
-        } catch {
-          recentResults = [];
-        }
-
-        // Equipment alerts (private inventory)
-        let equipmentAlertCount = 0;
-        let equipmentAlerts: { label: string; reason: string }[] = [];
-        try {
-          const gear = await db
-            .select()
-            .from(equipmentItems)
-            .where(eq(equipmentItems.sailorId, s.id));
-          for (const g of gear) {
-            const mapped = mapEquipmentRow({
-              ...g,
-              acquiredOn: g.acquiredOn ? String(g.acquiredOn) : null,
-              retiredOn: g.retiredOn ? String(g.retiredOn) : null,
-              lastUsedOn: g.lastUsedOn ? String(g.lastUsedOn) : null,
-            });
-            if (mapped.needsAttention && mapped.status !== "retired") {
-              equipmentAlertCount += 1;
-              if (equipmentAlerts.length < 3) {
-                equipmentAlerts.push({
-                  label:
-                    mapped.label ||
-                    mapped.brand ||
-                    mapped.category ||
-                    "Gear",
-                  reason: mapped.attentionReason || "Needs attention",
-                });
-              }
-            }
-          }
-        } catch {
-          /* table may not exist until migration 038 */
-        }
-
-        // Parent notes
-        let notes: {
-          id: string;
-          body: string;
-          createdAt: string;
-        }[] = [];
-        try {
-          const noteRows = await db
-            .select()
-            .from(parentNotes)
-            .where(eq(parentNotes.sailorId, s.id))
-            .orderBy(desc(parentNotes.createdAt))
-            .limit(5);
-          notes = noteRows
-            .filter((n) => n.authorUserId === auth.userId)
-            .map((n) => ({
-              id: n.id,
-              body: n.body,
-              createdAt: n.createdAt
-                ? new Date(n.createdAt).toISOString()
-                : "",
-            }));
-        } catch {
-          notes = [];
-        }
-
-        return {
-          ...s,
-          ownerRelation: relation,
-          standing,
-          recentResults,
-          equipmentAlertCount,
-          equipmentAlerts,
-          notes,
-        };
-      })
-    );
+      return {
+        id: s.id,
+        name: s.name,
+        handle: s.handle,
+        sailNumber: s.sailNumber,
+        sailNumberIlca4: s.sailNumberIlca4,
+        club: s.club,
+        school: s.school,
+        gender: s.gender,
+        nationality: s.nationality,
+        avatarUrl: s.avatarUrl,
+        currentFleet: s.currentFleet,
+        nationalSquadStatus: s.nationalSquadStatus,
+        dob: s.dob,
+        ownerRelation: relation,
+        standing,
+        recentResults: recentBySailor.get(s.id) || [],
+        equipmentAlertCount: gear?.count || 0,
+        equipmentAlerts: gear?.alerts || [],
+        notes: notesBySailor.get(s.id) || [],
+      };
+    });
 
     const pendingClaims = claims
       .filter((c) => c.status === "pending")

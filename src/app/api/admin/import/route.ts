@@ -31,6 +31,7 @@ import {
 } from "@/lib/ilcaRanking";
 import { normalizeImportGender } from "@/lib/excel/parseRegattaResultsSheet";
 import { birthYear as birthYearFromDob } from "@/lib/age";
+import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
 
 export type { ImportPossibleDuplicate };
 
@@ -123,6 +124,17 @@ export async function POST(req: Request) {
 
     if (!regattaName || !eventDate || !Array.isArray(rows)) {
       return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+    }
+
+    if (Array.isArray(rows) && rows.length > MAX_IMPORT_ROWS) {
+      return NextResponse.json(
+        {
+          error: `Too many rows (${rows.length}). Import at most ${MAX_IMPORT_ROWS} results per upload — split the spreadsheet and import in batches.`,
+          maxRows: MAX_IMPORT_ROWS,
+          inputRows: rows.length,
+        },
+        { status: 400 }
+      );
     }
 
     const cleanRows = rows

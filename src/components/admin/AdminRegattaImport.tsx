@@ -28,6 +28,7 @@ import {
 } from "@/lib/countries";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
+import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
 
 type Props = {
   isSuperadmin: boolean;
@@ -275,6 +276,12 @@ export function AdminRegattaImport({
     }
     if (!fullImportRows.length || !importMeta.name || !importMeta.date) {
       toast.error("Parse a file and set regatta name + date first.");
+      return;
+    }
+    if (fullImportRows.length > MAX_IMPORT_ROWS) {
+      toast.error(
+        `Too many rows (${fullImportRows.length}). Split the sheet — max ${MAX_IMPORT_ROWS} per import.`
+      );
       return;
     }
     setImportBusy(true);

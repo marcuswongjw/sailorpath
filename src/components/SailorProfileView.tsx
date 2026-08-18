@@ -46,7 +46,6 @@ import {
   type ProfileResult,
 } from "@/lib/profileAnalytics";
 import dynamic from "next/dynamic";
-import { ClaimPanel } from "@/components/sailor-profile/ClaimPanel";
 import {
   PROFILE_CARD_CLASS as cardClass,
   resolveDisplayFleet,
@@ -60,6 +59,7 @@ import {
   type ObservationItem,
   type SailorProfileViewProps,
 } from "@/components/sailor-profile";
+import type { ProfileOwnerForm } from "@/components/sailor-profile/ProfileOwnerEditor";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 
@@ -85,6 +85,27 @@ const EquipmentInventory = dynamic(
       <div className="h-40 w-full animate-pulse rounded-2xl bg-white/5 border border-white/5" />
     ),
   }
+);
+
+const ClaimPanel = dynamic(
+  () =>
+    import("@/components/sailor-profile/ClaimPanel").then((m) => m.ClaimPanel),
+  { ssr: false }
+);
+
+const ProfileOwnerEditor = dynamic(
+  () =>
+    import("@/components/sailor-profile/ProfileOwnerEditor").then(
+      (m) => m.ProfileOwnerEditor
+    ),
+  { ssr: false }
+);
+
+const ProfileJourneyPanel = dynamic(
+  () =>
+    import("@/components/sailor-profile/ProfileJourneyPanel").then(
+      (m) => m.ProfileJourneyPanel
+    )
 );
 
 export type {
@@ -143,7 +164,7 @@ export function SailorProfileView({
   const [editingObsId, setEditingObsId] = useState<string | null>(null);
   const [obsBusy, setObsBusy] = useState(false);
   const [obsMsg, setObsMsg] = useState<string | null>(null);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<ProfileOwnerForm>({
     bio: initialSailor.bio || "",
     instagram: initialSailor.instagram || "",
     handle: initialSailor.handle || "",
@@ -1392,191 +1413,17 @@ export function SailorProfileView({
 
       {/* Owner editor */}
       {isOwner && editing && (
-        <div className={`${cardClass} p-5 space-y-3`}>
-          <h2 className="text-sm font-semibold text-white flex items-center gap-2">
-            <Pencil className="h-3.5 w-3.5 text-neutral-400" />
-            Edit profile
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <label className="block sm:col-span-2">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                Bio
-              </span>
-              <textarea
-                value={form.bio}
-                onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
-                rows={3}
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-              />
-            </label>
-            <label className="block sm:col-span-2">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                Profile URL
-              </span>
-              <div className="mt-1 flex rounded-lg bg-black/40 border border-white/10 overflow-hidden">
-                <span className="pl-3 self-center text-[11px] text-neutral-600 shrink-0">
-                  sailorpath.com/
-                </span>
-                <input
-                  value={form.handle}
-                  onChange={(e) =>
-                    setForm((f) => ({
-                      ...f,
-                      handle: e.target.value
-                        .toLowerCase()
-                        .replace(/[^a-z0-9-]/g, ""),
-                    }))
-                  }
-                  className="w-full bg-transparent py-2 px-2 text-sm text-white font-mono focus:outline-none"
-                />
-              </div>
-            </label>
-            <label className="block">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                School
-              </span>
-              <input
-                value={form.school}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, school: e.target.value }))
-                }
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-              />
-            </label>
-            <label className="block">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                Date of birth
-              </span>
-              <input
-                type="date"
-                value={form.dob}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, dob: e.target.value }))
-                }
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-              />
-              <p className="mt-1 text-[10px] text-neutral-600 leading-snug">
-                Birth year is always public. Full date shows only if you enable
-                “Share full date of birth” under Privacy.
-              </p>
-            </label>
-            <label className="block">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                Sailing club
-              </span>
-              <input
-                value={form.club}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, club: e.target.value }))
-                }
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-              />
-            </label>
-            <label className="block">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                Optimist sail #
-              </span>
-              <input
-                value={form.sailNumber}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, sailNumber: e.target.value }))
-                }
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white font-mono"
-              />
-            </label>
-            <label className="block">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                ILCA 4 sail #
-              </span>
-              <input
-                value={form.sailNumberIlca4}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, sailNumberIlca4: e.target.value }))
-                }
-                placeholder="Optional"
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white font-mono"
-              />
-            </label>
-            <label className="block">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                Weight (kg)
-              </span>
-              <input
-                type="number"
-                min={20}
-                max={120}
-                value={form.weight}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, weight: e.target.value }))
-                }
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-              />
-            </label>
-            <label className="block">
-              <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
-                Instagram
-              </span>
-              <input
-                value={form.instagram || ""}
-                onChange={(e) =>
-                  setForm((f) => ({ ...f, instagram: e.target.value }))
-                }
-                className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
-              />
-            </label>
-            <div className="sm:col-span-2 rounded-xl border border-white/[0.07] p-3 space-y-2">
-              <p className="text-[10px] font-bold uppercase tracking-wide text-neutral-500">
-                Privacy
-              </p>
-              <p className="text-[10px] text-neutral-600 leading-snug">
-                Birth year is public when set. Full DOB and weight stay private
-                unless shared. Equipment is always private (owner only).
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {(
-                  [
-                    {
-                      label: "Share weight",
-                      checked: isPublicWeight,
-                      set: setIsPublicWeight,
-                    },
-                    {
-                      label: "Share full DOB",
-                      checked: isPublicDob,
-                      set: setIsPublicDob,
-                    },
-                  ] as const
-                ).map((row) => (
-                  <label
-                    key={row.label}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-white/[0.06] px-2.5 py-2 cursor-pointer"
-                  >
-                    <span className="text-[11px] font-medium text-neutral-200">
-                      {row.label}
-                    </span>
-                    <input
-                      type="checkbox"
-                      checked={row.checked}
-                      onChange={(e) => row.set(e.target.checked)}
-                      className="rounded border-neutral-600"
-                    />
-                  </label>
-                ))}
-              </div>
-            </div>
-          </div>
-          <button
-            type="button"
-            disabled={saveBusy}
-            onClick={() => void saveProfile()}
-            className="rounded-lg bg-orange-500 text-white px-4 py-2 text-xs font-semibold disabled:opacity-50"
-          >
-            {saveBusy ? "Saving…" : "Save changes"}
-          </button>
-          {saveMsg && (
-            <p className="text-[11px] text-emerald-400">{saveMsg}</p>
-          )}
-        </div>
+        <ProfileOwnerEditor
+          form={form}
+          setForm={setForm}
+          isPublicWeight={isPublicWeight}
+          setIsPublicWeight={setIsPublicWeight}
+          isPublicDob={isPublicDob}
+          setIsPublicDob={setIsPublicDob}
+          saveBusy={saveBusy}
+          saveMsg={saveMsg}
+          onSave={() => void saveProfile()}
+        />
       )}
 
       {/* ── Class tabs (dual-class) — above ranking so they control the whole profile ── */}
@@ -2004,101 +1851,17 @@ export function SailorProfileView({
           )}
 
         {resultsTab === "journey" && dualClass ? (
-          <div className="px-4 sm:px-5 pb-5 pt-1 space-y-3">
-            <p className="text-[11px] text-neutral-500">
-              Key moments — campaigns, firsts, and milestones.
-              {displayJourney.some((j) => j.system)
-                ? " Fleet milestones are filled in automatically."
-                : ""}
-            </p>
-            {displayJourney.length === 0 ? (
-              <p className="text-sm text-neutral-600">
-                {isOwner
-                  ? "No highlights yet. Add one below."
-                  : "No journey highlights shared yet."}
-              </p>
-            ) : (
-              <ol className="relative space-y-0 border-l border-white/10">
-                {displayJourney.map((it) => (
-                  <li key={it.id} className="relative pl-4 pb-4 last:pb-0">
-                    <span
-                      className={`absolute -left-[3px] top-1.5 h-1.5 w-1.5 rounded-full ${
-                        it.system ? "bg-amber-400" : "bg-violet-400"
-                      }`}
-                    />
-                    {it.when && (
-                      <p className="text-[11px] font-semibold uppercase tracking-wide text-violet-300">
-                        {it.when}
-                      </p>
-                    )}
-                    <p className="text-sm font-semibold text-white mt-0.5">
-                      {it.title}
-                      {it.system ? (
-                        <span className="ml-1.5 text-[9px] font-medium uppercase tracking-wide text-amber-500/80">
-                          milestone
-                        </span>
-                      ) : null}
-                    </p>
-                    {it.detail && (
-                      <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
-                        {it.detail}
-                      </p>
-                    )}
-                    {isOwner && (
-                      <button
-                        type="button"
-                        disabled={journeyBusy}
-                        onClick={() => void removeJourneyItem(it.id, it.system)}
-                        className="mt-1 text-[10px] text-rose-400/90"
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            )}
-            {isOwner && (
-              <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-3">
-                <input
-                  value={journeyDraft.when}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, when: e.target.value }))
-                  }
-                  placeholder="When"
-                  className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-                />
-                <input
-                  value={journeyDraft.title}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, title: e.target.value }))
-                  }
-                  placeholder="Title"
-                  className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-                />
-                <textarea
-                  value={journeyDraft.detail}
-                  onChange={(e) =>
-                    setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
-                  }
-                  placeholder="Detail"
-                  rows={2}
-                  className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
-                />
-                <button
-                  type="button"
-                  disabled={journeyBusy || !journeyDraft.title.trim()}
-                  onClick={() => void addJourneyItem()}
-                  className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-40"
-                >
-                  {journeyBusy ? "Saving…" : "Add highlight"}
-                </button>
-                {journeyMsg && (
-                  <p className="text-[11px] text-emerald-400">{journeyMsg}</p>
-                )}
-              </div>
-            )}
-          </div>
+          <ProfileJourneyPanel
+            variant="tab"
+            items={displayJourney}
+            isOwner={isOwner}
+            draft={journeyDraft}
+            setDraft={setJourneyDraft}
+            busy={journeyBusy}
+            message={journeyMsg}
+            onAdd={() => void addJourneyItem()}
+            onRemove={(id, isSystem) => void removeJourneyItem(id, isSystem)}
+          />
         ) : null}
 
         {resultsTab !== "journey" && isOwner && !demoMode && (
@@ -2646,107 +2409,17 @@ export function SailorProfileView({
         }`}
       >
         {!dualClass && (
-        <section className={`${cardClass} p-5`}>
-          <div className="flex items-center gap-2 mb-1">
-            <Anchor className="h-3.5 w-3.5 text-sky-400/90" />
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
-              Sailing journey
-            </h2>
-          </div>
-          <p className="text-[11px] text-neutral-500 mb-4">
-            Key moments — campaigns, firsts, and milestones.
-            {displayJourney.some((j) => j.system)
-              ? " Fleet milestones are filled in automatically."
-              : ""}
-          </p>
-          {displayJourney.length === 0 ? (
-            <p className="text-sm text-neutral-600">
-              {isOwner
-                ? "No highlights yet. Add one below."
-                : "No journey highlights shared yet."}
-            </p>
-          ) : (
-            <ol className="relative ml-0.5 space-y-0 border-l border-white/10">
-              {displayJourney.map((it) => (
-                <li key={it.id} className="relative pl-4 pb-4 last:pb-0">
-                  <span
-                    className={`absolute -left-[3px] top-1.5 h-1.5 w-1.5 rounded-full ${
-                      it.system ? "bg-amber-400" : "bg-neutral-500"
-                    }`}
-                  />
-                  {it.when && (
-                    <p className="text-[11px] font-semibold uppercase tracking-wide text-orange-400">
-                      {it.when}
-                    </p>
-                  )}
-                  <p className="text-sm font-semibold text-white mt-0.5">
-                    {it.title}
-                    {it.system ? (
-                      <span className="ml-1.5 text-[9px] font-medium uppercase tracking-wide text-amber-500/80">
-                        milestone
-                      </span>
-                    ) : null}
-                  </p>
-                  {it.detail && (
-                    <p className="text-xs text-neutral-500 mt-0.5 leading-relaxed">
-                      {it.detail}
-                    </p>
-                  )}
-                  {isOwner && (
-                    <button
-                      type="button"
-                      disabled={journeyBusy}
-                      onClick={() => void removeJourneyItem(it.id, it.system)}
-                      className="mt-1 text-[10px] text-rose-400/90"
-                    >
-                      Remove
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ol>
-          )}
-          {isOwner && (
-            <div className="mt-4 space-y-2 border-t border-white/[0.06] pt-3">
-              <input
-                value={journeyDraft.when}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, when: e.target.value }))
-                }
-                placeholder="When"
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-              />
-              <input
-                value={journeyDraft.title}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, title: e.target.value }))
-                }
-                placeholder="Title"
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-              />
-              <textarea
-                value={journeyDraft.detail}
-                onChange={(e) =>
-                  setJourneyDraft((d) => ({ ...d, detail: e.target.value }))
-                }
-                placeholder="Detail"
-                rows={2}
-                className="w-full rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white resize-none"
-              />
-              <button
-                type="button"
-                disabled={journeyBusy || !journeyDraft.title.trim()}
-                onClick={() => void addJourneyItem()}
-                className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-40"
-              >
-                {journeyBusy ? "Saving…" : "Add highlight"}
-              </button>
-              {journeyMsg && (
-                <p className="text-[11px] text-emerald-400">{journeyMsg}</p>
-              )}
-            </div>
-          )}
-        </section>
+          <ProfileJourneyPanel
+            variant="card"
+            items={displayJourney}
+            isOwner={isOwner}
+            draft={journeyDraft}
+            setDraft={setJourneyDraft}
+            busy={journeyBusy}
+            message={journeyMsg}
+            onAdd={() => void addJourneyItem()}
+            onRemove={(id, isSystem) => void removeJourneyItem(id, isSystem)}
+          />
         )}
 
         {showEquipmentSection && resultsTab !== "journey" && (
