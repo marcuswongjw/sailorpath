@@ -17,7 +17,7 @@
 | `AdminRegattaImport.tsx` | Regatta Excel import tab (self-contained) |
 | `AdminSailorsPanel.tsx` | Sailors sub-tab (filters, bulk, form, table) |
 | `AdminRegattasPanel.tsx` | Regattas sub-tab (list + detail) |
-| `AdminResultsPanel.tsx` | Results sub-tab + period DNS fill |
+| `AdminResultsPanel.tsx` | Results sub-tab: searchable regatta picker, sailor filter, DNS fill |
 | `AdminCompetitionsPanel.tsx` | Per-sailor results modal from Database |
 | `AdminSuggestionsPanel.tsx` | Personal/non-ranking suggestions queue |
 | `ClaimsAdminPanel.tsx` | Profile claims review queue |
