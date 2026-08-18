@@ -28,6 +28,7 @@ import { useAdminSailors } from "@/components/admin/useAdminSailors";
 import { useAdminRegattas } from "@/components/admin/useAdminRegattas";
 import { useAdminResults } from "@/components/admin/useAdminResults";
 import { useAdminCompetitions } from "@/components/admin/useAdminCompetitions";
+import { AdminQueryProvider } from "@/components/admin/AdminQueryProvider";
 
 function PanelLoading() {
   return (
@@ -90,6 +91,14 @@ const AdminIlcaRankingPanel = dynamic(
 );
 
 export function AdminDashboard() {
+  return (
+    <AdminQueryProvider>
+      <AdminDashboardInner />
+    </AdminQueryProvider>
+  );
+}
+
+function AdminDashboardInner() {
   const [activeTab, setActiveTab] = useState<AdminActiveTab>("edit");
   const [editSubTab, setEditSubTab] = useState<AdminEditSubTab>("sailors");
 

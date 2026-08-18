@@ -1,10 +1,17 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
-import { parseApi } from "@/components/admin/parseApi";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import {
+  fetchAdminRegattas,
+  fetchAdminResultsAll,
+  fetchAdminResultsForRegatta,
+  fetchAdminSailors,
+} from "@/components/admin/adminFetch";
 
 export type AdminDataKey = "sailors" | "regattas" | "results";
 
@@ -24,237 +31,248 @@ type UseAdminDataArgs = {
   editSubTab: AdminEditSubTab;
 };
 
+type Updater<T> = T | ((prev: T) => T);
+
+function applyUpdater<T>(prev: T, updater: Updater<T>): T {
+  return typeof updater === "function"
+    ? (updater as (p: T) => T)(prev)
+    : updater;
+}
+
 /**
- * Lazy-loaded admin lists + refresh/patch helpers.
- * Ranking tabs load `?all=1` and set hasFullResults; results editor merges per regattaId.
- * Owns selectedRegattaId because lazy results fetch is coupled to it.
+ * Lazy-loaded admin lists via TanStack Query.
+ * Ranking tabs load full results; results editor merges per-regatta slices.
+ * Owns selectedRegattaId because results fetch is coupled to it.
  */
 export function useAdminData({
   isSuperadmin,
   activeTab,
   editSubTab,
 }: UseAdminDataArgs) {
-  const [sailorList, setSailorList] = useState<SailorAdmin[]>([]);
-  const [regattaList, setRegattaList] = useState<RegattaAdmin[]>([]);
-  const [resultsList, setResultsList] = useState<ResultAdmin[]>([]);
+  const queryClient = useQueryClient();
   const [selectedRegattaIdForResultEdit, setSelectedRegattaIdForResultEdit] =
     useState<string>("");
-  const [loadedData, setLoadedData] = useState<Record<AdminDataKey, boolean>>({
-    sailors: false,
-    regattas: false,
-    results: false,
-  });
-  /** Results editor loads one regatta; ranking tabs need the full set. */
+  /** True once a full `?all=1` results payload has been cached this session. */
   const [hasFullResults, setHasFullResults] = useState(false);
-  const [dataLoading, setDataLoading] = useState(false);
-  const [dataLoadError, setDataLoadError] = useState<string | null>(null);
 
-  const requiredData = useMemo<AdminDataKey[]>(() => {
-    if (
-      activeTab === "analysis" ||
-      activeTab === "gold" ||
-      activeTab === "ilca"
-    ) {
-      return ["sailors", "regattas", "results"];
-    }
-    if (activeTab !== "edit") return [];
-    if (editSubTab === "sailors") return ["sailors"];
-    if (editSubTab === "regattas" || editSubTab === "suggestions") {
-      return ["regattas"];
-    }
-    if (editSubTab === "results") return ["sailors", "regattas", "results"];
-    return [];
-  }, [activeTab, editSubTab]);
+  const needsFullResults =
+    activeTab === "analysis" ||
+    activeTab === "gold" ||
+    activeTab === "ilca";
 
-  // Load only the records required for the active workspace.
+  const needSailors =
+    isSuperadmin &&
+    (needsFullResults ||
+      (activeTab === "edit" &&
+        (editSubTab === "sailors" || editSubTab === "results")));
+
+  const needRegattas =
+    isSuperadmin &&
+    (needsFullResults ||
+      (activeTab === "edit" &&
+        (editSubTab === "regattas" ||
+          editSubTab === "suggestions" ||
+          editSubTab === "results")));
+
+  const needResultsEditor =
+    isSuperadmin && activeTab === "edit" && editSubTab === "results";
+
+  const sailorsQuery = useQuery({
+    queryKey: adminQueryKeys.sailors(),
+    queryFn: fetchAdminSailors,
+    enabled: needSailors,
+  });
+
+  const regattasQuery = useQuery({
+    queryKey: adminQueryKeys.regattas(),
+    queryFn: fetchAdminRegattas,
+    enabled: needRegattas,
+  });
+
+  const resultsAllQuery = useQuery({
+    queryKey: adminQueryKeys.resultsAll(),
+    queryFn: fetchAdminResultsAll,
+    enabled: isSuperadmin && needsFullResults,
+  });
+
+  const resultsRegattaQuery = useQuery({
+    queryKey: adminQueryKeys.resultsByRegatta(
+      selectedRegattaIdForResultEdit || "_"
+    ),
+    queryFn: () =>
+      fetchAdminResultsForRegatta(selectedRegattaIdForResultEdit),
+    enabled:
+      needResultsEditor &&
+      Boolean(selectedRegattaIdForResultEdit) &&
+      !needsFullResults,
+  });
+
+  // Seed selected regatta when list first arrives
   useEffect(() => {
-    if (!isSuperadmin) return;
-    const needsFullResults =
-      activeTab === "analysis" ||
-      activeTab === "gold" ||
-      activeTab === "ilca";
+    if (!regattasQuery.data?.length) return;
+    setSelectedRegattaIdForResultEdit((current) => current || regattasQuery.data![0].id);
+  }, [regattasQuery.data]);
 
-    const missing = requiredData.filter((key) => {
-      if (key === "results" && needsFullResults && !hasFullResults) return true;
-      return !loadedData[key];
-    });
-    if (missing.length === 0) return;
+  // Mark full results once ranking tabs have loaded them
+  useEffect(() => {
+    if (resultsAllQuery.isSuccess && resultsAllQuery.data) {
+      setHasFullResults(true);
+    }
+  }, [resultsAllQuery.isSuccess, resultsAllQuery.data]);
 
-    let cancelled = false;
-    setDataLoading(true);
-    setDataLoadError(null);
+  const sailorList = sailorsQuery.data ?? [];
+  const regattaList = regattasQuery.data ?? [];
 
-    const endpoints: Record<AdminDataKey, string> = {
-      sailors: "/api/admin/sailors?all=1",
-      regattas: "/api/admin/regattas?all=1",
-      results: needsFullResults
-        ? "/api/admin/results?all=1"
-        : selectedRegattaIdForResultEdit
-          ? `/api/admin/results?regattaId=${encodeURIComponent(selectedRegattaIdForResultEdit)}`
-          : "",
-    };
-
-    void Promise.all(
-      missing.map(async (key) => {
-        const url = endpoints[key];
-        if (!url) {
-          return { key, body: { results: [] as ResultAdmin[] } };
-        }
-        const response = await fetch(url, { credentials: "include" });
-        const body = (await response.json()) as {
-          error?: string;
-          sailors?: SailorAdmin[];
-          regattas?: RegattaAdmin[];
-          results?: ResultAdmin[];
-        };
-        if (!response.ok) throw new Error(body.error || `Could not load ${key}`);
-        return { key, body };
-      })
-    )
-      .then((responses) => {
-        if (cancelled) return;
-        for (const { key, body } of responses) {
-          if (key === "sailors" && Array.isArray(body.sailors)) {
-            setSailorList(body.sailors);
-          }
-          if (key === "regattas" && Array.isArray(body.regattas)) {
-            const rows = [...body.regattas].sort((a, b) =>
-              String(b.date || "").localeCompare(String(a.date || ""))
-            );
-            setRegattaList(rows);
-            setSelectedRegattaIdForResultEdit(
-              (current) => current || rows[0]?.id || ""
-            );
-          }
-          if (key === "results" && Array.isArray(body.results)) {
-            if (needsFullResults) {
-              setResultsList(body.results);
-              setHasFullResults(true);
-            } else {
-              // Merge/replace rows for the selected regatta only
-              const rid = selectedRegattaIdForResultEdit;
-              setResultsList((prev) => {
-                const others = rid
-                  ? prev.filter((r) => r.regattaId !== rid)
-                  : prev;
-                return [...others, ...body.results!];
-              });
-            }
-          }
-        }
-        setLoadedData((current) => {
-          const next = { ...current };
-          for (const key of missing) next[key] = true;
-          return next;
-        });
-      })
-      .catch((error: unknown) => {
-        if (!cancelled) {
-          setDataLoadError(
-            error instanceof Error ? error.message : "Failed to load admin data"
-          );
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setDataLoading(false);
-      });
-
-    return () => {
-      cancelled = true;
-    };
+  const resultsList = useMemo(() => {
+    if (hasFullResults || needsFullResults) {
+      return resultsAllQuery.data ?? [];
+    }
+    // Results editor: active regatta slice only (competitions forces a full load).
+    return resultsRegattaQuery.data ?? [];
   }, [
-    isSuperadmin,
-    loadedData,
-    requiredData,
-    activeTab,
-    selectedRegattaIdForResultEdit,
     hasFullResults,
+    needsFullResults,
+    resultsAllQuery.data,
+    resultsRegattaQuery.data,
   ]);
 
-  // Results editor: reload when switching regatta (avoid downloading every result).
-  useEffect(() => {
-    if (!isSuperadmin) return;
-    if (activeTab !== "edit" || editSubTab !== "results") return;
-    const rid = selectedRegattaIdForResultEdit;
-    if (!rid) return;
+  const dataLoading =
+    (needSailors && sailorsQuery.isFetching) ||
+    (needRegattas && regattasQuery.isFetching) ||
+    (needsFullResults && resultsAllQuery.isFetching) ||
+    (needResultsEditor &&
+      !needsFullResults &&
+      Boolean(selectedRegattaIdForResultEdit) &&
+      resultsRegattaQuery.isFetching);
 
-    let cancelled = false;
-    void (async () => {
-      try {
-        const response = await fetch(
-          `/api/admin/results?regattaId=${encodeURIComponent(rid)}`,
-          { credentials: "include" }
-        );
-        const body = (await response.json()) as {
-          error?: string;
-          results?: ResultAdmin[];
-        };
-        if (!response.ok) throw new Error(body.error || "Could not load results");
-        if (cancelled || !Array.isArray(body.results)) return;
-        setResultsList((prev) => {
-          const others = prev.filter((r) => r.regattaId !== rid);
-          return [...others, ...body.results!];
-        });
-      } catch {
-        /* keep existing rows; banner handled elsewhere */
+  const dataLoadError =
+    (sailorsQuery.error instanceof Error && sailorsQuery.error.message) ||
+    (regattasQuery.error instanceof Error && regattasQuery.error.message) ||
+    (resultsAllQuery.error instanceof Error && resultsAllQuery.error.message) ||
+    (resultsRegattaQuery.error instanceof Error &&
+      resultsRegattaQuery.error.message) ||
+    null;
+
+  const setSailorList = useCallback(
+    (updater: Updater<SailorAdmin[]>) => {
+      queryClient.setQueryData<SailorAdmin[]>(adminQueryKeys.sailors(), (prev) =>
+        applyUpdater(prev ?? [], updater)
+      );
+    },
+    [queryClient]
+  );
+
+  const setRegattaList = useCallback(
+    (updater: Updater<RegattaAdmin[]>) => {
+      queryClient.setQueryData<RegattaAdmin[]>(
+        adminQueryKeys.regattas(),
+        (prev) => applyUpdater(prev ?? [], updater)
+      );
+    },
+    [queryClient]
+  );
+
+  const setResultsList = useCallback(
+    (updater: Updater<ResultAdmin[]>) => {
+      const next = applyUpdater(
+        hasFullResults || needsFullResults
+          ? (queryClient.getQueryData<ResultAdmin[]>(adminQueryKeys.resultsAll()) ??
+              [])
+          : resultsList,
+        updater
+      );
+
+      if (hasFullResults || needsFullResults) {
+        queryClient.setQueryData(adminQueryKeys.resultsAll(), next);
+        setHasFullResults(true);
+        return;
       }
-    })();
 
-    return () => {
-      cancelled = true;
-    };
-  }, [isSuperadmin, activeTab, editSubTab, selectedRegattaIdForResultEdit]);
+      // Split updated rows back into per-regatta query caches
+      const byRegatta = new Map<string, ResultAdmin[]>();
+      for (const row of next) {
+        const list = byRegatta.get(row.regattaId) || [];
+        list.push(row);
+        byRegatta.set(row.regattaId, list);
+      }
+      for (const [rid, rows] of byRegatta) {
+        queryClient.setQueryData(adminQueryKeys.resultsByRegatta(rid), rows);
+      }
+    },
+    [queryClient, hasFullResults, needsFullResults, resultsList]
+  );
 
   const refreshResultsList = useCallback(
     async (opts?: { regattaId?: string }) => {
       try {
-        const url = opts?.regattaId
-          ? `/api/admin/results?regattaId=${encodeURIComponent(opts.regattaId)}`
-          : "/api/admin/results?all=1";
-        const res = await fetch(url, { credentials: "include" });
-        const data = await parseApi(res);
-        if (!res.ok || !Array.isArray(data.results)) return;
         if (opts?.regattaId) {
-          const rid = opts.regattaId;
-          setResultsList((prev) => {
-            const others = prev.filter((r) => r.regattaId !== rid);
-            return [...others, ...data.results];
+          const rows = await queryClient.fetchQuery({
+            queryKey: adminQueryKeys.resultsByRegatta(opts.regattaId),
+            queryFn: () => fetchAdminResultsForRegatta(opts.regattaId!),
           });
-        } else {
-          setResultsList(data.results);
-          setHasFullResults(true);
+          if (hasFullResults) {
+            queryClient.setQueryData<ResultAdmin[]>(
+              adminQueryKeys.resultsAll(),
+              (prev) => {
+                const others = (prev ?? []).filter(
+                  (r) => r.regattaId !== opts.regattaId
+                );
+                return [...others, ...rows];
+              }
+            );
+          }
+          return;
         }
+        await queryClient.fetchQuery({
+          queryKey: adminQueryKeys.resultsAll(),
+          queryFn: fetchAdminResultsAll,
+        });
+        setHasFullResults(true);
       } catch {
         /* keep existing list */
       }
     },
-    []
+    [queryClient, hasFullResults]
   );
 
-  /** Import: merge single-regatta vs replace full dump. */
-  const patchResultsFromImport = useCallback((incoming: ResultAdmin[]) => {
-    const touched = new Set(incoming.map((r) => r.regattaId));
-    if (touched.size <= 1) {
-      const rid = [...touched][0];
-      setResultsList((prev) =>
-        rid
-          ? [...prev.filter((r) => r.regattaId !== rid), ...incoming]
-          : incoming
-      );
-    } else {
-      setResultsList(incoming);
-      setHasFullResults(true);
-    }
-  }, []);
+  const patchResultsFromImport = useCallback(
+    (incoming: ResultAdmin[]) => {
+      const touched = new Set(incoming.map((r) => r.regattaId));
+      if (touched.size <= 1) {
+        const rid = [...touched][0];
+        if (!rid) return;
+        queryClient.setQueryData(
+          adminQueryKeys.resultsByRegatta(rid),
+          incoming
+        );
+        if (hasFullResults) {
+          queryClient.setQueryData<ResultAdmin[]>(
+            adminQueryKeys.resultsAll(),
+            (prev) => {
+              const others = (prev ?? []).filter((r) => r.regattaId !== rid);
+              return [...others, ...incoming];
+            }
+          );
+        }
+      } else {
+        queryClient.setQueryData(adminQueryKeys.resultsAll(), incoming);
+        setHasFullResults(true);
+      }
+    },
+    [queryClient, hasFullResults]
+  );
 
-  const patchRegattaUpsert = useCallback((regatta: RegattaAdmin) => {
-    setRegattaList((prev) => {
-      const exists = prev.some((r) => r.id === regatta.id);
-      return exists
-        ? prev.map((r) => (r.id === regatta.id ? regatta : r))
-        : [...prev, regatta];
-    });
-  }, []);
+  const patchRegattaUpsert = useCallback(
+    (regatta: RegattaAdmin) => {
+      setRegattaList((prev) => {
+        const exists = prev.some((r) => r.id === regatta.id);
+        return exists
+          ? prev.map((r) => (r.id === regatta.id ? regatta : r))
+          : [...prev, regatta];
+      });
+    },
+    [setRegattaList]
+  );
 
   const patchRegattaPartial = useCallback(
     (reg: Partial<RegattaAdmin> & { id: string }) => {
@@ -265,7 +283,7 @@ export function useAdminData({
           : [...prev, reg as RegattaAdmin];
       });
     },
-    []
+    [setRegattaList]
   );
 
   const patchSailorPartial = useCallback(
@@ -274,7 +292,7 @@ export function useAdminData({
         prev.map((s) => (s.id === sailor.id ? { ...s, ...sailor } : s))
       );
     },
-    []
+    [setSailorList]
   );
 
   return {
@@ -286,7 +304,14 @@ export function useAdminData({
     setResultsList,
     selectedRegattaIdForResultEdit,
     setSelectedRegattaIdForResultEdit,
-    loadedData,
+    loadedData: {
+      sailors: sailorsQuery.isSuccess || sailorList.length > 0,
+      regattas: regattasQuery.isSuccess || regattaList.length > 0,
+      results:
+        resultsAllQuery.isSuccess ||
+        resultsRegattaQuery.isSuccess ||
+        resultsList.length > 0,
+    } as Record<AdminDataKey, boolean>,
     hasFullResults,
     setHasFullResults,
     dataLoading,

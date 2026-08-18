@@ -52,3 +52,25 @@ boards refresh without waiting for the 60s timer.
 
 Heavy tabs (Import / Analysis / Gold / ILCA / Claims / Promote / Support) are
 `next/dynamic` loaded so opening Database does not pull `xlsx` into the first paint.
+
+## Data fetching
+
+Admin list loads use **TanStack Query** (`AdminQueryProvider` + `useAdminData`):
+
+| Key | Endpoint |
+|-----|----------|
+| `admin/sailors` | `GET /api/admin/sailors?all=1` |
+| `admin/regattas` | `GET /api/admin/regattas?all=1` |
+| `admin/results/all` | `GET /api/admin/results?all=1` (ranking tabs) |
+| `admin/results/regatta/:id` | per-event results editor |
+
+Queries enable only for the active workspace. Mutations still patch the cache via
+`setQueryData` helpers (`setSailorList`, `patchResultsFromImport`, …).
+
+## Bundle analysis
+
+```bash
+npm run analyze   # ANALYZE=true next build --webpack → .next/analyze/*.html
+```
+
+See `docs/BUNDLE_ANALYSIS.md` for how to read reports and current findings.
