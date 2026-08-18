@@ -1196,54 +1196,50 @@ export function SailorProfileView({
     leftOptimistYear,
   ]);
 
+  const isUnclaimedProfile =
+    !profileClaimed && !profileVerified && !isOwner;
+  const showUnclaimedBanner =
+    isUnclaimedProfile &&
+    (demoMode ? canClaim || demoRole === "public" : true);
+
   return (
     <div className="mx-auto max-w-3xl px-3 sm:px-6 py-5 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-[#090a0f] overflow-x-clip">
-      {/* Claim banner — unclaimed public profiles (logged-in claim or log-in CTA) */}
-      {(() => {
-        const isUnclaimed =
-          !profileClaimed && !profileVerified && !isOwner;
-        const showBanner =
-          isUnclaimed &&
-          (demoMode
-            ? canClaim || demoRole === "public"
-            : true);
-        if (!showBanner) return null;
-        const handleClaim = () => {
-          if (demoMode) {
-            onDemoClaim?.();
-            return;
-          }
-          if (!isLoggedIn) {
-            if (typeof window !== "undefined") {
-              window.location.href = `/login?next=${encodeURIComponent(
-                `/${displaySailor.handle || ""}`
-              )}`;
-            }
-            return;
-          }
-          setClaimPanelOpen(true);
-        };
-        return (
+      {/* Claim banner — single primary CTA for unclaimed profiles (header repeats suppressed) */}
+      {showUnclaimedBanner && (
           <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-r from-orange-500/15 to-amber-500/5 px-4 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="min-w-0">
               <p className="text-sm font-semibold text-white">
-                Is this you? Claim your profile →
+                Is this you? Claim your profile
               </p>
               <p className="text-[12px] text-neutral-400 mt-0.5">
-                Link as sailor or parent to unlock logbook, privacy, and notes.
+                Link as sailor or parent to unlock logbook, privacy, notes, and
+                equipment.
               </p>
             </div>
             <button
               type="button"
-              onClick={handleClaim}
+              onClick={() => {
+                if (demoMode) {
+                  onDemoClaim?.();
+                  return;
+                }
+                if (!isLoggedIn) {
+                  if (typeof window !== "undefined") {
+                    window.location.href = `/login?next=${encodeURIComponent(
+                      `/${displaySailor.handle || ""}`
+                    )}`;
+                  }
+                  return;
+                }
+                setClaimPanelOpen(true);
+              }}
               className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-2 text-[12px] font-bold text-white hover:bg-orange-400"
             >
               <UserPlus className="h-3.5 w-3.5" />
               Claim this profile
             </button>
           </div>
-        );
-      })()}
+      )}
 
       {/* Coach squad context strip (demo) */}
       {demoMode && demoRole === "coach" && (
@@ -1537,7 +1533,11 @@ export function SailorProfileView({
                 <Link2 className="h-3 w-3" />
                 {copyMsg || "Copy link"}
               </button>
-              {!demoMode && !isLoggedIn && !profileClaimed && (
+              {/* Header claim CTAs only when the top banner is not shown */}
+              {!showUnclaimedBanner &&
+                !demoMode &&
+                !isLoggedIn &&
+                !profileClaimed && (
                 <Link
                   href={`/login?next=${encodeURIComponent(`/${displaySailor.handle || ""}`)}`}
                   className="inline-flex items-center gap-1.5 rounded-lg bg-white text-neutral-900 px-2.5 py-1 text-[11px] font-semibold"
@@ -1546,7 +1546,9 @@ export function SailorProfileView({
                   Claim this profile
                 </Link>
               )}
-              {canClaim && claimStatus !== "pending" && (
+              {!showUnclaimedBanner &&
+                canClaim &&
+                claimStatus !== "pending" && (
                 <button
                   type="button"
                   disabled={demoMode && !onDemoClaim}
@@ -1742,7 +1744,7 @@ export function SailorProfileView({
         >
           {resultsTab === "journey" ? "Journey" : "Results"}
         </a>
-        {showEquipmentSection && (
+        {(showEquipmentSection || !isOwner) && (
           <a
             href="#profile-equipment"
             className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40 touch-manipulation"
@@ -2049,8 +2051,8 @@ export function SailorProfileView({
         </section>
       )}
 
-      {/* ── Position trend (hide until ≥2 ranked finishes) ─── */}
-      {resultsTab !== "journey" && trendPoints.length >= 2 && (
+      {/* ── Position trend ─── */}
+      {resultsTab !== "journey" && (
       <section className={`${cardClass} p-4 sm:p-5`}>
         <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
           Position trend
@@ -2059,11 +2061,19 @@ export function SailorProfileView({
           Finishing position by regatta (lower is better)
           {trendCaption}
         </p>
-        <PositionTrendChart
-          points={trendPoints}
-          mode={trendMode}
-          goldEntryDate={trendGoldEntry}
-        />
+        {trendPoints.length >= 2 ? (
+          <PositionTrendChart
+            points={trendPoints}
+            mode={trendMode}
+            goldEntryDate={trendGoldEntry}
+          />
+        ) : (
+          <p className="text-sm text-neutral-500 py-6 text-center leading-relaxed">
+            {trendPoints.length === 1
+              ? "One finish so far — the chart appears after a second ranked result."
+              : "No ranked finishes yet to chart. Results and series DNS will show here once they land."}
+          </p>
+        )}
       </section>
       )}
 
@@ -2781,7 +2791,8 @@ export function SailorProfileView({
           />
         )}
 
-        {showEquipmentSection && (
+        {showEquipmentSection ? (
+        <div id="profile-equipment" className="scroll-mt-28">
         <EquipmentInventory
           sailorId={initialSailor.id}
           isOwner={ownerView}
@@ -2812,6 +2823,25 @@ export function SailorProfileView({
           cardClass={cardClass}
           onGearByRegatta={setGearByRegatta}
         />
+        </div>
+        ) : (
+          !isOwner && (
+            <section
+              id="profile-equipment"
+              className={`${cardClass} p-4 sm:p-5 scroll-mt-28`}
+            >
+              <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+                Equipment
+              </h2>
+              <p className="mt-2 text-[13px] text-neutral-400 leading-relaxed">
+                Gear is private to the sailor and their linked family — not shown
+                on public profiles.
+                {showUnclaimedBanner
+                  ? " Claim this profile to add hull, sail, and foils."
+                  : ""}
+              </p>
+            </section>
+          )
         )}
       </div>
 

@@ -104,7 +104,7 @@ export function PositionTrendChart({
 
   if (!trendSvg) {
     return (
-      <p className="text-sm text-neutral-600 py-8 text-center">
+      <p className="text-sm text-neutral-500 py-6 text-center leading-relaxed">
         Need at least two ranked finishes to chart progress.
       </p>
     );
