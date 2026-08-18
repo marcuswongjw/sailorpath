@@ -43,10 +43,29 @@ function isValidYmd(d: string): boolean {
   return /^\d{4}-\d{2}-\d{2}$/.test(d);
 }
 
+/** Finishing place for stats (best / avg / top-10). DNS never counts as a finish. */
 function parseRank(r: ProfileResult): number | null {
   const dns = Boolean(r.isDns || r.isDNS);
   if (dns || r.rank == null || !Number.isFinite(Number(r.rank))) return null;
   return Number(r.rank);
+}
+
+/**
+ * Rank/score for position trend — includes DNS using stored rank (fleet+1)
+ * or fleetSize+1 so missed series events still appear on the chart.
+ */
+function parseTrendRank(r: ProfileResult): number | null {
+  if (r.rank != null && Number.isFinite(Number(r.rank))) {
+    return Number(r.rank);
+  }
+  const dns = Boolean(r.isDns || r.isDNS);
+  if (dns) {
+    const fs = r.totalFleetSize ?? r.fleetSize;
+    if (fs != null && Number.isFinite(Number(fs)) && Number(fs) > 0) {
+      return Number(fs) + 1;
+    }
+  }
+  return null;
 }
 
 /**
@@ -110,6 +129,8 @@ export type TrendPoint = {
   rank: number;
   name: string;
   fleet: "Gold" | "Silver" | "Open" | "—";
+  /** True when this point is a DNS / DNC series score (not a sailed finish) */
+  isDns?: boolean;
 };
 
 export type ResultTag = {
@@ -335,10 +356,29 @@ export function buildProfileAnalytics(
     show: medalGold + medalSilver + medalBronze > 0,
   };
 
-  // Trend: last 10 (chrono order for chart = oldest→newest among those 10)
-  let trendSource = chronoAll;
+  // Trend: last 10 including DNS (chrono = oldest→newest). Stats still exclude DNS.
+  const trendAll = results
+    .map((r) => ({
+      r,
+      rank: parseTrendRank(r),
+      date: ymd(r.regattaDate),
+      fleet: fleetLabelForResult(r, goldOk),
+      isDns: Boolean(r.isDns || r.isDNS),
+    }))
+    .filter(
+      (x): x is {
+        r: ProfileResult;
+        rank: number;
+        date: string;
+        fleet: "Gold" | "Silver" | "Open" | "—";
+        isDns: boolean;
+      } => x.rank != null && isValidYmd(x.date)
+    )
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  let trendSource = trendAll;
   if (mode === "established_gold") {
-    trendSource = chronoAll.filter((x) => x.fleet === "Gold");
+    trendSource = trendAll.filter((x) => x.fleet === "Gold");
   }
   // other / new_gold: include silver + gold
   const trendSlice = trendSource.slice(-10);
@@ -347,6 +387,7 @@ export function buildProfileAnalytics(
     rank: c.rank,
     name: c.r.regattaName || "Regatta",
     fleet: c.fleet,
+    isDns: c.isDns || undefined,
   }));
 
   // Display results: last 8 newest first, filtered by mode
@@ -394,7 +435,8 @@ export function buildProfileAnalytics(
 }
 
 /**
- * Position trend for ILCA (or any open-fleet) results — last 10 ranked finishes.
+ * Position trend for ILCA (or any open-fleet) results — last 10 finishes,
+ * including DNS/DNC when a score/rank is available.
  */
 export function buildIlcaPositionTrend(
   results: ProfileResult[]
@@ -402,12 +444,17 @@ export function buildIlcaPositionTrend(
   const ranked = results
     .map((r) => ({
       r,
-      rank: parseRank(r),
+      rank: parseTrendRank(r),
       date: ymd(r.regattaDate),
+      isDns: Boolean(r.isDns || r.isDNS),
     }))
     .filter(
-      (x): x is { r: ProfileResult; rank: number; date: string } =>
-        x.rank != null && isValidYmd(x.date)
+      (x): x is {
+        r: ProfileResult;
+        rank: number;
+        date: string;
+        isDns: boolean;
+      } => x.rank != null && isValidYmd(x.date)
     )
     .sort((a, b) => a.date.localeCompare(b.date));
   return ranked.slice(-10).map((c) => ({
@@ -415,7 +462,55 @@ export function buildIlcaPositionTrend(
     rank: c.rank,
     name: c.r.regattaName || "Regatta",
     fleet: "Open" as const,
+    isDns: c.isDns || undefined,
   }));
+}
+
+export type StandingTrendScore = {
+  regattaId?: string;
+  regattaName: string;
+  regattaDate?: string | null;
+  score: number;
+  isDNS?: boolean;
+};
+
+/**
+ * Fold series-standing slots (incl. imputed DNS for missed ranking events)
+ * into the profile position trend so the chart matches the Best 3/5 strip.
+ */
+export function mergeStandingScoresIntoTrend(
+  trend: TrendPoint[],
+  scores: StandingTrendScore[] | null | undefined,
+  fleet: TrendPoint["fleet"]
+): TrendPoint[] {
+  if (!scores?.length) return trend;
+
+  const extras: TrendPoint[] = [];
+  for (const s of scores) {
+    if (!Number.isFinite(s.score)) continue;
+    // Empty Optimist pad (score 0 DNS) — not a real series event
+    if (s.isDNS && s.score === 0) continue;
+    const date = ymd(s.regattaDate);
+    if (!isValidYmd(date)) continue;
+    const name = String(s.regattaName || "").trim() || "Regatta";
+    const already = trend.some(
+      (t) =>
+        t.date === date ||
+        t.name.toLowerCase() === name.toLowerCase()
+    );
+    if (already) continue;
+    extras.push({
+      date,
+      rank: s.score,
+      name,
+      fleet,
+      isDns: Boolean(s.isDNS) || undefined,
+    });
+  }
+  if (!extras.length) return trend;
+  return [...trend, ...extras]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(-10);
 }
 
 /** ILCA 4 key-stats for profiles that are ILCA-only (no Optimist focus). */

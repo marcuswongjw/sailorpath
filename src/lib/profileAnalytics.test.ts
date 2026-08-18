@@ -5,6 +5,7 @@ import {
   buildResultTags,
   fleetLabelForResult,
   ilcaHighPointsForResult,
+  mergeStandingScoresIntoTrend,
   optimistLeftYear,
   prefersIlcaFirstProfile,
   profileBoatClassGroup,
@@ -141,6 +142,88 @@ describe("buildProfileAnalytics", () => {
     // Jan 2024 → Jul 2025 = 18 months
     expect(a.monthsInGold).toBe(18);
     expect(a.timeInGoldLabel).toMatch(/1y|18/);
+  });
+
+  it("includes DNS finishes on the position trend (not in best/avg)", () => {
+    const a = buildProfileAnalytics({ goldEntryDate: null }, [
+      {
+        id: "s1",
+        regattaName: "Sailed",
+        regattaDate: "2026-03-01",
+        rank: 12,
+        division: "Silver",
+      },
+      {
+        id: "s2",
+        regattaName: "Missed",
+        regattaDate: "2026-07-01",
+        rank: 58,
+        isDns: true,
+        division: "Silver",
+        fleetSize: 57,
+      },
+    ]);
+    expect(a.mode).toBe("other");
+    expect(a.bestSilverFinish).toBe(12);
+    expect(a.trend).toHaveLength(2);
+    expect(a.trend.map((t) => t.rank)).toEqual([12, 58]);
+    expect(a.trend[1].isDns).toBe(true);
+  });
+});
+
+describe("mergeStandingScoresIntoTrend", () => {
+  it("appends imputed DNS standing slots missing from result trend", () => {
+    const base = [
+      {
+        date: "2026-03-28",
+        rank: 48,
+        name: "SAFYC Silver (Mar 26)",
+        fleet: "Silver" as const,
+      },
+      {
+        date: "2026-06-20",
+        rank: 36,
+        name: "Temasek Silver (Jun 26)",
+        fleet: "Silver" as const,
+      },
+    ];
+    const merged = mergeStandingScoresIntoTrend(
+      base,
+      [
+        {
+          regattaName: "SAFYC Silver (Mar 26)",
+          regattaDate: "2026-03-28",
+          score: 48,
+        },
+        {
+          regattaName: "Temasek Silver (Jun 26)",
+          regattaDate: "2026-06-20",
+          score: 36,
+        },
+        {
+          regattaName: "SAFYC Silver (Jul 26)",
+          regattaDate: "2026-07-12",
+          score: 58,
+          isDNS: true,
+        },
+        {
+          regattaName: "Cincapura Silver (Jul 26)",
+          regattaDate: "2026-07-26",
+          score: 56,
+          isDNS: true,
+        },
+        {
+          regattaName: "Pesta Sukan Silver (Aug 26)",
+          regattaDate: "2026-08-02",
+          score: 52,
+          isDNS: true,
+        },
+      ],
+      "Silver"
+    );
+    expect(merged).toHaveLength(5);
+    expect(merged.slice(-3).map((t) => t.rank)).toEqual([58, 56, 52]);
+    expect(merged.slice(-3).every((t) => t.isDns)).toBe(true);
   });
 });
 

@@ -63,6 +63,8 @@ export interface SeriesStandingProps {
     isDNS?: boolean;
     isOverseasCommitment?: boolean;
     isCarryForward?: boolean;
+    /** ISO date of the scoring regatta (for position trend) */
+    regattaDate?: string | null;
     /** Finishing place for ILCA events (shown next to high points) */
     finishPlace?: number | null;
   }[];

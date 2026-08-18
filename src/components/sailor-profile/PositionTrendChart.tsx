@@ -234,18 +234,22 @@ export function PositionTrendChart({
               : p.fleet === "Open"
                 ? "#38bdf8"
                 : "#e5e7eb";
+          const dns = Boolean(p.isDns);
           return (
             <g key={i}>
               <circle
                 cx={cx}
                 cy={cy}
                 r={5}
-                fill={fill}
-                stroke="#090a0f"
-                strokeWidth="2"
+                fill={dns ? "transparent" : fill}
+                stroke={fill}
+                strokeWidth={dns ? 2 : 2}
+                strokeDasharray={dns ? "2 2" : undefined}
               >
                 <title>
-                  {p.name}: {ordinal(p.rank)} ({p.date}) · {p.fleet}
+                  {p.name}:{" "}
+                  {dns ? `DNS ${p.rank}*` : ordinal(p.rank)} ({p.date}) ·{" "}
+                  {p.fleet}
                 </title>
               </circle>
               <text
@@ -256,7 +260,7 @@ export function PositionTrendChart({
                 fontSize="11"
                 fontWeight="600"
               >
-                {p.rank}
+                {dns ? `${p.rank}*` : p.rank}
               </text>
             </g>
           );

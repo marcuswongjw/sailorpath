@@ -43,6 +43,7 @@ import {
   buildProfileAnalytics,
   buildResultTags,
   fleetLabelForResult,
+  mergeStandingScoresIntoTrend,
   optimistLeftYear,
   prefersIlcaFirstProfile,
   profileBoatClassGroup,
@@ -986,6 +987,10 @@ export function SailorProfileView({
           },
         ];
 
+  /** Pure silver (no gold entry): never show Best gold / Gold tenure. */
+  const isSilverOnlyProfile =
+    !useIlcaStats && !analytics.goldEntryDate && !analytics.isGoldFleet;
+
   const statCells = useIlcaStats
     ? ilcaStatCells
     : analytics.mode === "established_gold"
@@ -1012,29 +1017,52 @@ export function SailorProfileView({
             color: "text-white",
           },
         ]
-      : [
-          {
-            value: String(analytics.regattaCount),
-            label: "Regattas",
-            color: "text-white",
-          },
-          {
-            value: analytics.bestSilverLabel,
-            label: "Best silver rank",
-            color: "text-emerald-400",
-          },
-          {
-            value: analytics.bestGoldLabel,
-            label: "Best gold rank",
-            color: "text-amber-400",
-          },
-          {
-            value: goldTenureLabel,
-            label: "Gold tenure",
-            hint: goldTenureHint,
-            color: "text-white",
-          },
-        ];
+      : isSilverOnlyProfile
+        ? [
+            {
+              value: String(analytics.regattaCount),
+              label: "Regattas",
+              color: "text-white",
+            },
+            {
+              value: analytics.bestSilverLabel,
+              label: "Best finish",
+              color: "text-emerald-400",
+            },
+            {
+              value: String(analytics.top10Count),
+              label: "Top 10",
+              color: "text-emerald-400",
+            },
+            {
+              value: analytics.avgFinishLabel,
+              label: "Avg. finish",
+              color: "text-blue-400",
+            },
+          ]
+        : [
+            {
+              value: String(analytics.regattaCount),
+              label: "Regattas",
+              color: "text-white",
+            },
+            {
+              value: analytics.bestSilverLabel,
+              label: "Best silver rank",
+              color: "text-emerald-400",
+            },
+            {
+              value: analytics.bestGoldLabel,
+              label: "Best gold rank",
+              color: "text-amber-400",
+            },
+            {
+              value: goldTenureLabel,
+              label: "Gold tenure",
+              hint: goldTenureHint,
+              color: "text-white",
+            },
+          ];
 
   const keyStatsTitle = useIlcaStats
     ? "Key stats (ILCA 4)"
@@ -1075,14 +1103,28 @@ export function SailorProfileView({
   );
   const showIlcaTrend =
     primaryIsIlca || (dualClass && resultsTab === "ilca4");
-  const trendPoints = showIlcaTrend ? ilcaTrendPoints : analytics.trend;
+  /** Merge series-standing DNS (missed ranking events) into Optimist trend. */
+  const optimistTrendPoints = useMemo(() => {
+    const standing = initialSeriesStanding;
+    if (!standing?.rScores?.length) return analytics.trend;
+    const fleet =
+      String(standing.fleet || "").toLowerCase() === "gold"
+        ? ("Gold" as const)
+        : ("Silver" as const);
+    return mergeStandingScoresIntoTrend(
+      analytics.trend,
+      standing.rScores,
+      fleet
+    );
+  }, [analytics.trend, initialSeriesStanding]);
+  const trendPoints = showIlcaTrend ? ilcaTrendPoints : optimistTrendPoints;
   const trendMode = showIlcaTrend ? ("other" as const) : analytics.mode;
   const trendGoldEntry = showIlcaTrend ? null : analytics.goldEntryDate;
   const trendCaption = showIlcaTrend
     ? " · last 10 ILCA 4 regattas"
     : analytics.mode === "established_gold"
       ? " · last 10 gold events"
-      : " · last 10 regattas";
+      : " · last 10 regattas (incl. DNS)";
 
   // System + owner journey milestones (Optimist + ILCA results for first ILCA 4)
   const displayJourney = useMemo(() => {

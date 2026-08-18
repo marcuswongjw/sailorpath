@@ -128,6 +128,8 @@ export type RegattaScoreSlot = {
   /** Score borrowed from previous half-year while current period has &lt; 5 events */
   isCarryForward?: boolean;
   periodLabel?: string;
+  /** ISO date of the scoring regatta (for profile trend / charts) */
+  regattaDate?: string | null;
   /** Finishing place (ILCA profile strip: show rank + points) */
   finishPlace?: number | null;
 };
@@ -633,6 +635,9 @@ export function calculateRankings(
         isOverseasCommitment: scored.isOverseasCommitment,
         isCarryForward: slot.isCarryForward,
         periodLabel: slot.periodLabel,
+        regattaDate: slot.regatta.date
+          ? String(slot.regatta.date).slice(0, 10)
+          : null,
       };
     });
 
