@@ -1,26 +1,19 @@
 /**
- * Legacy view-as helpers. Superadmin no longer switches to a "parent" mode —
- * they always work as admin. Cookie/API kept so old clients don't break.
+ * Profile access helpers.
+ *
+ * Superadmin parent "view-as" mode was retired — capability is always admin.
+ * Cookie/API stubs remain elsewhere only to clear legacy clients.
  */
 
 export type ViewAs = "admin" | "parent";
 
+/** @deprecated Parent mode removed; always "admin". */
 export const VIEW_AS_COOKIE = "sp_view_as";
+/** @deprecated */
 export const VIEW_AS_STORAGE_KEY = "sp_view_as";
 
 /** Always admin — parent mode for superadmin is retired. */
 export function parseViewAs(_raw?: unknown): ViewAs {
-  return "admin";
-}
-
-/** Read from cookie header (server) or document.cookie (client). */
-export function viewAsFromCookieString(
-  _cookieHeader?: string | null
-): ViewAs {
-  return "admin";
-}
-
-export function viewAsFromDocumentCookie(): ViewAs {
   return "admin";
 }
 
@@ -32,7 +25,6 @@ export function viewAsFromDocumentCookie(): ViewAs {
 export function resolveProfileAccess(opts: {
   userId: string | null | undefined;
   role: string | null | undefined;
-  viewAs?: ViewAs;
   sailorParentId: string | null | undefined;
 }): {
   isLinkedOwner: boolean;

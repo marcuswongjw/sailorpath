@@ -10,11 +10,6 @@ import {
   type ReactNode,
 } from "react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
-import {
-  VIEW_AS_STORAGE_KEY,
-  parseViewAs,
-  type ViewAs,
-} from "@/lib/viewAs";
 
 export type OwnedSailor = {
   id: string;
@@ -28,12 +23,6 @@ type AccountState = {
   email: string | null;
   role: string | null;
   isSuperadmin: boolean;
-  /**
-   * Superadmin only: working as admin tools vs parent UX.
-   * Capability stays superadmin either way.
-   */
-  viewAs: ViewAs;
-  setViewAs: (mode: ViewAs) => Promise<void>;
   owned: OwnedSailor[];
   /** Auth + first account load finished */
   ready: boolean;
@@ -52,7 +41,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
   const [email, setEmail] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
   const [isSuperadmin, setIsSuperadmin] = useState(false);
-  const [viewAs, setViewAsState] = useState<ViewAs>("admin");
   const [owned, setOwned] = useState<OwnedSailor[]>([]);
   const [ready, setReady] = useState(false);
 
@@ -63,7 +51,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
         setOwned([]);
         setRole(null);
         setIsSuperadmin(false);
-        setViewAsState("admin");
         return;
       }
       const data = await res.json();
@@ -71,24 +58,11 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       if (data.email) setEmail(data.email);
       const r = data.role || null;
       setRole(r);
-      const superA = r === "superadmin" || Boolean(data.isSuperadmin);
-      setIsSuperadmin(superA);
-      if (superA) {
-        const mode = parseViewAs(data.viewAs);
-        setViewAsState(mode);
-        try {
-          localStorage.setItem(VIEW_AS_STORAGE_KEY, mode);
-        } catch {
-          /* ignore */
-        }
-      } else {
-        setViewAsState("admin");
-      }
+      setIsSuperadmin(r === "superadmin" || Boolean(data.isSuperadmin));
     } catch {
       setOwned([]);
       setRole(null);
       setIsSuperadmin(false);
-      setViewAsState("admin");
     }
   }, []);
 
@@ -98,14 +72,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 
     (async () => {
       try {
-        // Hydrate mode early from localStorage for snappy UI
-        try {
-          const stored = localStorage.getItem(VIEW_AS_STORAGE_KEY);
-          if (stored) setViewAsState(parseViewAs(stored));
-        } catch {
-          /* ignore */
-        }
-
         const supabase = createBrowserSupabase();
         const {
           data: { session },
@@ -119,7 +85,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
           setIsSuperadmin(false);
           setOwned([]);
           setRole(null);
-          setViewAsState("admin");
         }
 
         const { data } = supabase.auth.onAuthStateChange((_e, s) => {
@@ -129,7 +94,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
             setIsSuperadmin(false);
             setOwned([]);
             setRole(null);
-            setViewAsState("admin");
           }
         });
         unsub = () => data.subscription.unsubscribe();
@@ -143,35 +107,6 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       unsub?.();
     };
   }, [loadAccount]);
-
-  const setViewAs = useCallback(
-    async (mode: ViewAs) => {
-      const next = parseViewAs(mode);
-      setViewAsState(next);
-      try {
-        localStorage.setItem(VIEW_AS_STORAGE_KEY, next);
-      } catch {
-        /* ignore */
-      }
-      try {
-        await fetch("/api/account/view-as", {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ viewAs: next }),
-        });
-      } catch {
-        /* cookie best-effort; local state already set */
-      }
-      // Soft refresh so SSR pages pick up cookie on next navigation
-      if (typeof window !== "undefined") {
-        window.dispatchEvent(
-          new CustomEvent("sp-view-as", { detail: { viewAs: next } })
-        );
-      }
-    },
-    []
-  );
 
   const signOut = useCallback(async () => {
     try {
@@ -187,24 +122,12 @@ export function AccountProvider({ children }: { children: ReactNode }) {
       email,
       role,
       isSuperadmin,
-      viewAs: isSuperadmin ? viewAs : "admin",
-      setViewAs,
       owned,
       ready,
       refresh: loadAccount,
       signOut,
     }),
-    [
-      email,
-      role,
-      isSuperadmin,
-      viewAs,
-      setViewAs,
-      owned,
-      ready,
-      loadAccount,
-      signOut,
-    ]
+    [email, role, isSuperadmin, owned, ready, loadAccount, signOut]
   );
 
   return (

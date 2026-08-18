@@ -45,8 +45,6 @@ export async function GET() {
       email: auth.email,
       role: auth.role,
       isSuperadmin,
-      /** Always admin — superadmin parent mode removed */
-      viewAs: isSuperadmin ? "admin" : null,
       owned,
       claims,
     });

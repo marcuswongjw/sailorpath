@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
 import { DbOffline } from "@/components/DbOffline";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { SailorProfileView } from "@/components/SailorProfileView";
@@ -13,11 +12,7 @@ import {
 } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { getAuthContext } from "@/lib/auth";
-import {
-  VIEW_AS_COOKIE,
-  parseViewAs,
-  resolveProfileAccess,
-} from "@/lib/viewAs";
+import { resolveProfileAccess } from "@/lib/viewAs";
 
 export const dynamic = "force-dynamic";
 
@@ -38,14 +33,10 @@ export default async function SailorProfilePage({
   let access = resolveProfileAccess({
     userId: null,
     role: null,
-    viewAs: "admin",
     sailorParentId: null,
   });
 
   try {
-    const jar = await cookies();
-    const viewAs = parseViewAs(jar.get(VIEW_AS_COOKIE)?.value);
-
     const [sailorResult, authResult] = await Promise.all([
       getSailorByHandle(sailor_handle),
       getAuthContext().catch(() => null),
@@ -57,7 +48,6 @@ export default async function SailorProfilePage({
       access = resolveProfileAccess({
         userId: auth?.userId,
         role: auth?.role,
-        viewAs,
         sailorParentId: sailor.parentId,
       });
 

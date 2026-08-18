@@ -10,8 +10,8 @@
 | `AdminRegattasPanel.tsx` | Regattas sub-tab (list + detail) |
 | `AdminResultsPanel.tsx` | Results sub-tab + period DNS fill |
 | `AdminCompetitionsPanel.tsx` | Per-sailor results modal from Database |
-| `AdminStatsPanel.tsx` | Stats & usage |
 | `AdminSuggestionsPanel.tsx` | Personal/non-ranking suggestions queue |
+| `AdminMetricsGuide.tsx` | Static KPI playbook (`/admin/metrics`) |
 | `adminConstants.ts` | Sailor table column defs + localStorage keys |
 | `parseApi.ts` | Shared JSON response parser for admin fetch calls |
 | `../AdminDashboard.tsx` | Re-export for existing imports |
@@ -21,3 +21,6 @@ Shared types: `src/types/{sailor,regatta,result,import}.ts`.
 
 Claims / promote / support / import / sailors / regattas / results use standalone panels.
 Shell keeps auth, shared state, competitions modal, and tab navigation.
+
+The old live **Stats & usage** tab (`AdminStatsPanel` + `/api/admin/stats`) was removed —
+use `/admin/metrics` for the KPI playbook. Usage events still write via `POST /api/usage`.
