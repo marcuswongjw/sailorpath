@@ -49,10 +49,12 @@ URL-encode special characters in the password (`@` → `%40`, `#` → `%23`).
 | `SUPERADMIN_EMAIL` | your login email |
 | `NEXT_PUBLIC_SITE_URL` | `https://sailorpath.com` |
 | `NEXT_PUBLIC_COOKIE_DOMAIN` | `.sailorpath.com` |
-| `UPSTASH_REDIS_REST_URL` | optional — durable rate limits for usage/claims/support |
-| `UPSTASH_REDIS_REST_TOKEN` | optional — pair with URL above |
+| `UPSTASH_REDIS_REST_URL` | **recommended in production** — durable rate limits for usage/claims/support ([Upstash Redis](https://upstash.com/)) |
+| `UPSTASH_REDIS_REST_TOKEN` | pair with URL above |
 
-Production responses include security headers (`X-Frame-Options`, `nosniff`, HSTS, etc.) via `next.config.ts`.
+Without Upstash, rate limits fall back to in-process memory and reset on every serverless cold start. Superadmin `/api/health` reports `rateLimit.upstashConfigured`.
+
+Production responses include security headers (`X-Frame-Options`, `nosniff`, HSTS, **Content-Security-Policy**, etc.) via `next.config.ts`.
 
 Then **Deployments → Redeploy** the latest `main` commit (do not use an old deployment).
 

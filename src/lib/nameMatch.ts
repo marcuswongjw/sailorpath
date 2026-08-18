@@ -196,45 +196,138 @@ export function findDuplicateSailorPairs(
 }
 
 /**
+ * Precomputed indexes for import name matching.
+ * Build once per import, then O(1) exact/token hits and token-pruned fuzzy scans.
+ */
+export type SailorNameIndex = {
+  sailors: SailorMatchRow[];
+  byId: Map<string, SailorMatchRow>;
+  byExact: Map<string, SailorMatchRow>;
+  byNorm: Map<string, SailorMatchRow>;
+  byTokenKey: Map<string, SailorMatchRow>;
+  /** Inverted index: name token → sailors that contain it */
+  byToken: Map<string, SailorMatchRow[]>;
+  aliasExact: Map<string, string>;
+  aliasNorm: Map<string, string>;
+  aliasTokenKey: Map<string, string>;
+};
+
+export function buildSailorNameIndex(
+  sailors: SailorMatchRow[],
+  aliases: { sailorId: string; aliasName: string }[] = []
+): SailorNameIndex {
+  const byId = new Map(sailors.map((s) => [s.id, s]));
+  const byExact = new Map<string, SailorMatchRow>();
+  const byNorm = new Map<string, SailorMatchRow>();
+  const byTokenKey = new Map<string, SailorMatchRow>();
+  const byToken = new Map<string, SailorMatchRow[]>();
+
+  for (const s of sailors) {
+    if (!s.name?.trim()) continue;
+    byExact.set(s.name, s);
+    const norm = normalizeName(s.name);
+    if (!byNorm.has(norm)) byNorm.set(norm, s);
+    const key = nameTokenKey(s.name);
+    if (!byTokenKey.has(key)) byTokenKey.set(key, s);
+    for (const t of nameTokens(s.name)) {
+      const list = byToken.get(t);
+      if (list) list.push(s);
+      else byToken.set(t, [s]);
+    }
+  }
+
+  const aliasExact = new Map<string, string>();
+  const aliasNorm = new Map<string, string>();
+  const aliasTokenKey = new Map<string, string>();
+  for (const a of aliases) {
+    if (!a.aliasName?.trim() || !byId.has(a.sailorId)) continue;
+    aliasExact.set(a.aliasName, a.sailorId);
+    const n = normalizeName(a.aliasName);
+    if (!aliasNorm.has(n)) aliasNorm.set(n, a.sailorId);
+    const k = nameTokenKey(a.aliasName);
+    if (!aliasTokenKey.has(k)) aliasTokenKey.set(k, a.sailorId);
+  }
+
+  return {
+    sailors,
+    byId,
+    byExact,
+    byNorm,
+    byTokenKey,
+    byToken,
+    aliasExact,
+    aliasNorm,
+    aliasTokenKey,
+  };
+}
+
+/** Candidates that share ≥1 name token (or full list if query has no tokens). */
+function fuzzyCandidates(
+  index: SailorNameIndex,
+  rawName: string
+): SailorMatchRow[] {
+  const tokens = nameTokens(rawName);
+  if (!tokens.length) return index.sailors;
+  const seen = new Set<string>();
+  const out: SailorMatchRow[] = [];
+  for (const t of tokens) {
+    const list = index.byToken.get(t);
+    if (!list) continue;
+    for (const s of list) {
+      if (seen.has(s.id)) continue;
+      seen.add(s.id);
+      out.push(s);
+    }
+  }
+  // No shared tokens → empty (avoid O(n) scan of unrelated roster)
+  return out;
+}
+
+/**
  * Find best sailor for a raw import name.
+ * Pass a `SailorNameIndex` from `buildSailorNameIndex` for batch imports.
  * 1) exact  2) case-insensitive  3) token-order key  4) high token overlap
  */
 export function findSailorByName(
   rawName: string,
-  sailors: SailorMatchRow[],
+  sailorsOrIndex: SailorMatchRow[] | SailorNameIndex,
   aliases: { sailorId: string; aliasName: string }[] = []
 ): { sailor: SailorMatchRow; how: string } | null {
+  const index: SailorNameIndex = Array.isArray(sailorsOrIndex)
+    ? buildSailorNameIndex(sailorsOrIndex, aliases)
+    : sailorsOrIndex;
+
   const raw = rawName.trim();
   if (!raw) return null;
   const norm = normalizeName(raw);
   const key = nameTokenKey(raw);
 
-  const byId = new Map(sailors.map((s) => [s.id, s]));
-
-  for (const a of aliases) {
-    if (a.aliasName === raw || normalizeName(a.aliasName) === norm) {
-      const s = byId.get(a.sailorId);
-      if (s) return { sailor: s, how: "alias" };
+  const aliasId =
+    index.aliasExact.get(raw) ||
+    index.aliasNorm.get(norm) ||
+    index.aliasTokenKey.get(key);
+  if (aliasId) {
+    const s = index.byId.get(aliasId);
+    if (s) {
+      const how = index.aliasExact.has(raw)
+        ? "alias"
+        : index.aliasNorm.has(norm)
+          ? "alias"
+          : "alias-tokens";
+      return { sailor: s, how };
     }
-    if (nameTokenKey(a.aliasName) === key) {
-      const s = byId.get(a.sailorId);
-      if (s) return { sailor: s, how: "alias-tokens" };
-    }
   }
 
-  for (const s of sailors) {
-    if (s.name === raw) return { sailor: s, how: "exact" };
-  }
-  for (const s of sailors) {
-    if (normalizeName(s.name) === norm) return { sailor: s, how: "case" };
-  }
-  for (const s of sailors) {
-    if (nameTokenKey(s.name) === key) return { sailor: s, how: "tokens" };
-  }
+  const exact = index.byExact.get(raw);
+  if (exact) return { sailor: exact, how: "exact" };
+  const byCase = index.byNorm.get(norm);
+  if (byCase) return { sailor: byCase, how: "case" };
+  const byTok = index.byTokenKey.get(key);
+  if (byTok) return { sailor: byTok, how: "tokens" };
 
   let best: SailorMatchRow | null = null;
   let bestSim = 0;
-  for (const s of sailors) {
+  for (const s of fuzzyCandidates(index, raw)) {
     const sim = combinedNameSimilarity(raw, s.name);
     if (sim > bestSim) {
       bestSim = sim;
@@ -253,11 +346,19 @@ export function findSailorByName(
 
 export function suggestSailorByName(
   rawName: string,
-  sailors: SailorMatchRow[]
+  sailorsOrIndex: SailorMatchRow[] | SailorNameIndex
 ): { id: string; name: string; similarity: number } | null {
+  const index: SailorNameIndex = Array.isArray(sailorsOrIndex)
+    ? buildSailorNameIndex(sailorsOrIndex)
+    : sailorsOrIndex;
+
   let best: SailorMatchRow | null = null;
   let bestSim = 0;
-  for (const s of sailors) {
+  const pool = fuzzyCandidates(index, rawName);
+  // If inverted index yields nothing, fall back to full scan so suggestions
+  // still surface near-misses with zero shared tokens (rare).
+  const candidates = pool.length > 0 ? pool : index.sailors;
+  for (const s of candidates) {
     const sim = combinedNameSimilarity(rawName, s.name);
     if (sim > bestSim) {
       bestSim = sim;

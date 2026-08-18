@@ -117,4 +117,40 @@ describe("claim client helpers", () => {
       message: "Already claimed",
     });
   });
+
+  it("rejects incomplete notes before calling the network", async () => {
+    const fetchImpl = vi.fn();
+    const result = await submitClaimRequest(
+      {
+        sailorId: "s1",
+        relation: "parent",
+        note: "short",
+      },
+      fetchImpl as unknown as typeof fetch
+    );
+    expect(result.ok).toBe(false);
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+
+  it("handles network failures on claim submit", async () => {
+    const fetchImpl = vi.fn(async (input: RequestInfo | URL) => {
+      const url = String(input);
+      if (url.includes("ensure-profile")) {
+        return new Response("{}", { status: 200 });
+      }
+      throw new TypeError("Failed to fetch");
+    });
+
+    const result = await submitClaimRequest(
+      {
+        sailorId: "s1",
+        relation: "parent",
+        note: "Parent of Test Sailor",
+      },
+      fetchImpl as unknown as typeof fetch
+    );
+    expect(result.ok).toBe(false);
+    expect(result.status).toBe("error");
+    expect(result.message.length).toBeGreaterThan(0);
+  });
 });

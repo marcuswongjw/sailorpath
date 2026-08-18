@@ -138,6 +138,14 @@ async function upstashRateLimit(
   }
 }
 
+/** True when Upstash Redis REST credentials are present (no network check). */
+export function isUpstashConfigured(): boolean {
+  return Boolean(
+    process.env.UPSTASH_REDIS_REST_URL?.trim() &&
+      process.env.UPSTASH_REDIS_REST_TOKEN?.trim()
+  );
+}
+
 /**
  * Durable when Upstash env is configured; otherwise in-memory.
  * Use this from Route Handlers for public write endpoints.

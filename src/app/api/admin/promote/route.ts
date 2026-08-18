@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
+import { and, eq, isNull, or, sql } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors } from "@/db/schema";
@@ -7,24 +7,49 @@ import { hasSilverHistory } from "@/lib/seriesMembership";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { adminLog, createAdminRequestId } from "@/lib/adminLog";
 
+/** Singapore calendar date YYYY-MM-DD for drop-date comparisons. */
+function sgTodayYmd(): string {
+  return new Date().toLocaleDateString("en-CA", {
+    timeZone: "Asia/Singapore",
+  });
+}
+
 /** List Silver series members eligible for Gold promotion */
 export async function GET() {
   try {
     await requireSuperadmin();
-    const rows = await db.select().from(sailors);
-    const candidates = rows.filter((s) => {
-      // Already left Optimist
-      if (s.dropDate) {
-        const ymd = String(s.dropDate).slice(0, 10);
-        const today = new Date().toLocaleDateString("en-CA", {
-          timeZone: "Asia/Singapore",
-        });
-        if (/^\d{4}-\d{2}-\d{2}$/.test(ymd) && ymd <= today) return false;
-      }
-      const alreadyGold = Boolean(s.goldEntryDate);
-      if (alreadyGold) return false;
-      return hasSilverHistory(s);
-    });
+    const today = sgTodayYmd();
+
+    // SQL-prefilter: not already Gold, not past drop, and has Silver/Series signal.
+    // Final pass still uses hasSilverHistory for legacy fleet-tag edge cases.
+    const rows = await db
+      .select({
+        id: sailors.id,
+        name: sailors.name,
+        handle: sailors.handle,
+        sailNumber: sailors.sailNumber,
+        silverEntryDate: sailors.silverEntryDate,
+        goldEntryDate: sailors.goldEntryDate,
+        currentFleet: sailors.currentFleet,
+        nationalSquadStatus: sailors.nationalSquadStatus,
+        dropDate: sailors.dropDate,
+      })
+      .from(sailors)
+      .where(
+        and(
+          isNull(sailors.goldEntryDate),
+          or(
+            sql`${sailors.dropDate} is null`,
+            sql`${sailors.dropDate}::text > ${today}`
+          ),
+          or(
+            sql`${sailors.silverEntryDate} is not null`,
+            sql`lower(trim(coalesce(${sailors.currentFleet}, ''))) in ('silver', 'gold', 'series')`
+          )
+        )
+      );
+
+    const candidates = rows.filter((s) => hasSilverHistory(s));
     return NextResponse.json({
       candidates: candidates.map((s) => ({
         id: s.id,

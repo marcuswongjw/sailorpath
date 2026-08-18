@@ -77,6 +77,8 @@ Hot-path indexes: `040_indexes_hot_paths.sql` (includes `usage_events(created_at
 
 Uses Upstash Redis when `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
 are set; otherwise falls back to in-process memory (resets on cold start).
+**Turn Upstash on in production** so abuse limits survive Vercel instance churn.
+Check `rateLimit` on superadmin `GET /api/health`.
 
 ## Files
 
@@ -85,7 +87,7 @@ are set; otherwise falls back to in-process memory (resets on cold start).
 | `src/db/schema.ts` → `usageEvents` | Drizzle model |
 | `src/db/migrations/016_usage_events.sql` | SQL migration |
 | `src/lib/usage.ts` | `trackUsage` + event type allow-list |
-| `src/lib/rateLimit.ts` | In-process limiter |
+| `src/lib/rateLimit.ts` | Memory + optional Upstash limiter |
 | `src/app/api/usage/route.ts` | Public write |
 | `src/components/UsageBeacon.tsx` | Client page tracking |
 | `src/components/admin/AdminMetricsGuide.tsx` | KPI playbook UI |

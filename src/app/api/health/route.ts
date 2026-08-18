@@ -174,8 +174,26 @@ export async function GET() {
       NEXT_PUBLIC_SUPABASE_URL: hasSupabaseUrl,
       NEXT_PUBLIC_SUPABASE_ANON_KEY: hasAnonKey,
       SUPERADMIN_EMAIL: Boolean(process.env.SUPERADMIN_EMAIL?.trim()),
+      UPSTASH_REDIS: Boolean(
+        process.env.UPSTASH_REDIS_REST_URL?.trim() &&
+          process.env.UPSTASH_REDIS_REST_TOKEN?.trim()
+      ),
       supabaseHost: supabaseHost || null,
     },
+    rateLimit: (() => {
+      const upstashConfigured = Boolean(
+        process.env.UPSTASH_REDIS_REST_URL?.trim() &&
+          process.env.UPSTASH_REDIS_REST_TOKEN?.trim()
+      );
+      return {
+        upstashConfigured,
+        /** Preferred backend when Upstash env is set; memory otherwise. */
+        preferredBackend: upstashConfigured ? "upstash" : "memory",
+        hint: upstashConfigured
+          ? "Durable Upstash rate limits are configured."
+          : "Set UPSTASH_REDIS_REST_URL + UPSTASH_REDIS_REST_TOKEN on Vercel for durable limits across cold starts.",
+      };
+    })(),
     database: {
       connected: dbOk,
       step,

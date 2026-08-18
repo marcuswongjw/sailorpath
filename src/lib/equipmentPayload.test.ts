@@ -86,4 +86,47 @@ describe("equipment payload happy paths", () => {
     const result = buildFullRigPayload("sailor-1", "optimist", "Other", "  ");
     expect(result.ok).toBe(false);
   });
+
+  it("rejects missing sailor id", () => {
+    const result = buildEquipmentSavePayload("", baseForm());
+    expect(result.ok).toBe(false);
+  });
+
+  it("normalizes empty optional fields to null", () => {
+    const result = buildEquipmentSavePayload("sailor-1", {
+      ...baseForm(),
+      model: "  ",
+      label: "",
+      notes: "   ",
+      acquiredOn: "",
+      windRange: "",
+      tags: [],
+      isPrimary: false,
+    });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.payload.model).toBeNull();
+    expect(result.payload.label).toBeNull();
+    expect(result.payload.notes).toBeNull();
+    expect(result.payload.acquiredOn).toBeNull();
+    expect(result.payload.windRange).toBeNull();
+    expect(result.payload.tags).toEqual([]);
+    expect(result.payload.isPrimary).toBe(false);
+  });
+
+  it("accepts mast without wind range", () => {
+    const result = buildEquipmentSavePayload("sailor-1", {
+      ...baseForm(),
+      boatClass: "ilca4",
+      category: "mast",
+      brand: "Selden",
+      model: "Radial",
+      windRange: "",
+      tags: ["training"],
+    });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.payload.category).toBe("mast");
+    expect(result.payload.windRange).toBeNull();
+  });
 });

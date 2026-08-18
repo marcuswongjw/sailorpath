@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { rateLimit, rateLimitAsync } from "./rateLimit";
+import { isUpstashConfigured, rateLimit, rateLimitAsync } from "./rateLimit";
 
 describe("rateLimit", () => {
   it("allows up to limit then blocks", () => {
@@ -23,5 +23,16 @@ describe("rateLimitAsync", () => {
     expect(b.ok).toBe(true);
     expect(c.ok).toBe(false);
     expect(a.backend).toBe("memory");
+  });
+});
+
+describe("isUpstashConfigured", () => {
+  it("is false without env credentials in the test process", () => {
+    expect(isUpstashConfigured()).toBe(
+      Boolean(
+        process.env.UPSTASH_REDIS_REST_URL?.trim() &&
+          process.env.UPSTASH_REDIS_REST_TOKEN?.trim()
+      )
+    );
   });
 });

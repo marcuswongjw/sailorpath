@@ -4,6 +4,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaResults, regattas, sailorAliases, sailors } from "@/db/schema";
 import {
+  buildSailorNameIndex,
   combinedNameSimilarity,
   findSailorByName,
   suggestSailorByName,
@@ -436,6 +437,9 @@ export async function POST(req: Request) {
       id: s.id,
       name: s.name,
     }));
+    // Rebuild when we create guests mid-import (see below)
+    let nameIndex = buildSailorNameIndex(sailorList, aliasList);
+    const beforeImportIndex = buildSailorNameIndex(dbBeforeImport);
 
     // Within-file similar names (before create — pure sheet check)
     possibleDuplicates.push(
@@ -444,7 +448,7 @@ export async function POST(req: Request) {
 
     for (const row of cleanRows) {
       try {
-        const hit = findSailorByName(row.name, sailorList, aliasList);
+        const hit = findSailorByName(row.name, nameIndex);
         let sailorId: string | null = hit?.sailor.id ?? null;
 
         if (hit) {
@@ -472,7 +476,7 @@ export async function POST(req: Request) {
 
         // Before creating a guest: flag close DB names that did not auto-match
         if (!sailorId) {
-          const sug = suggestSailorByName(row.name, dbBeforeImport);
+          const sug = suggestSailorByName(row.name, beforeImportIndex);
           if (sug && sug.similarity >= 0.6) {
             const key = `${row.name.toLowerCase()}|${sug.id}`;
             if (!vsDbSeen.has(key)) {
@@ -568,12 +572,14 @@ export async function POST(req: Request) {
           } catch {
             /* alias exists */
           }
+          // Keep indexed matcher in sync with guests created mid-import
+          nameIndex = buildSailorNameIndex(sailorList, aliasList);
           created++;
           matchHow["created"] = (matchHow["created"] || 0) + 1;
         }
 
         if (!sailorId) {
-          const sug = suggestSailorByName(row.name, sailorList);
+          const sug = suggestSailorByName(row.name, beforeImportIndex);
           unmatched.push({
             rawName: row.name,
             rank: row.rank,
