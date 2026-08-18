@@ -4,7 +4,8 @@
 
 | File | Role |
 |------|------|
-| `AdminDashboard.tsx` | Thin shell: auth gate, tab nav, hook composition, panels |
+| `AdminDashboard.tsx` | Thin shell: auth gate, tab/URL nav, hook composition, panels |
+| `adminNav.ts` | Primary/Ops/Database tab helpers + `?tab=&sub=&regattaId=` sync |
 | `useAdminAuth.ts` | Session, loading, `adminRole`, `isSuperadmin` |
 | `useAdminData.ts` | Sailor/regatta/results lists, lazy fetch, `hasFullResults`, `refreshResultsList`, patch helpers; owns `selectedRegattaId` (fetch coupling) |
 | `useAdminNotifications.ts` | Claims/support badge counts + 60s poll |
@@ -39,6 +40,11 @@ Shared types: `src/types/{sailor,regatta,result,import}.ts`.
 - `refreshResultsList({ regattaId? })` — per-regatta merge vs full replace + `hasFullResults`.
 - Import `onResultsUpdated`: single-regatta merge vs multi-regatta full dump replace.
 - Delete sailor/regatta cascades local results; merge updates lists via `mergeSailorsClient`.
+
+**IA:** primary tabs include **Database** (Sailors · Regattas · Results) and
+**Ops** (Suggestions · Claims · Promote · Support). URL sync:
+`?tab=ops&sub=claims`, `?tab=edit&sub=results&regattaId=…` (legacy
+`tab=edit&sub=claims` migrates to Ops).
 
 Claims / promote / support / import / sailors / regattas / results use standalone panels.
 Shell keeps auth gate, tab navigation, and hook wiring only.

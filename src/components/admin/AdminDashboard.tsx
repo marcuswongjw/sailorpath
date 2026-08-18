@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Activity,
+  ClipboardList,
   Database,
   FileSpreadsheet,
   AlertTriangle,
@@ -19,11 +21,15 @@ import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
 import { AdminSailorsPanel } from "@/components/admin/AdminSailorsPanel";
 import { AdminCompetitionsPanel } from "@/components/admin/AdminCompetitionsPanel";
 import { useAdminAuth } from "@/components/admin/useAdminAuth";
+import { useAdminData } from "@/components/admin/useAdminData";
 import {
-  useAdminData,
+  ADMIN_DB_SUB_TABS,
+  ADMIN_OPS_SUB_TABS,
+  parseAdminNav,
+  serializeAdminNav,
   type AdminActiveTab,
   type AdminEditSubTab,
-} from "@/components/admin/useAdminData";
+} from "@/components/admin/adminNav";
 import { useAdminNotifications } from "@/components/admin/useAdminNotifications";
 import { useAdminSailors } from "@/components/admin/useAdminSailors";
 import { useAdminRegattas } from "@/components/admin/useAdminRegattas";
@@ -105,14 +111,32 @@ const AdminStatsPanel = dynamic(
 export function AdminDashboard() {
   return (
     <AdminQueryProvider>
-      <AdminDashboardInner />
+      <Suspense
+        fallback={
+          <div className="flex-1 flex items-center justify-center min-h-[60vh]">
+            <RefreshCw className="h-8 w-8 text-orange-500 animate-spin" />
+          </div>
+        }
+      >
+        <AdminDashboardInner />
+      </Suspense>
     </AdminQueryProvider>
   );
 }
 
 function AdminDashboardInner() {
-  const [activeTab, setActiveTab] = useState<AdminActiveTab>("edit");
-  const [editSubTab, setEditSubTab] = useState<AdminEditSubTab>("sailors");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const initialNav = useMemo(
+    () => parseAdminNav(searchParams),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- seed once from first URL
+    []
+  );
+
+  const [activeTab, setActiveTab] = useState<AdminActiveTab>(initialNav.tab);
+  const [editSubTab, setEditSubTab] = useState<AdminEditSubTab>(initialNav.sub);
 
   const { user, loading, adminRole, isSuperadmin } = useAdminAuth();
 
@@ -166,6 +190,65 @@ function AdminDashboardInner() {
     invalidateRegattas: data.invalidateRegattas,
     invalidateResults: data.invalidateResults,
   });
+
+  // Seed results regatta from ?regattaId= before list default kicks in
+  useEffect(() => {
+    if (!initialNav.regattaId) return;
+    data.setSelectedRegattaIdForResultEdit(initialNav.regattaId);
+  }, [initialNav.regattaId, data.setSelectedRegattaIdForResultEdit]);
+
+  // Keep URL in sync (deep links + refresh-safe context)
+  useEffect(() => {
+    const qs = serializeAdminNav({
+      tab: activeTab,
+      sub: editSubTab,
+      regattaId: data.selectedRegattaIdForResultEdit || null,
+    });
+    if (searchParams.toString() === qs) return;
+    const base = pathname || "/admin";
+    router.replace(qs ? `${base}?${qs}` : base, { scroll: false });
+  }, [
+    activeTab,
+    editSubTab,
+    data.selectedRegattaIdForResultEdit,
+    pathname,
+    router,
+    searchParams,
+  ]);
+
+  const goTab = useCallback((tab: AdminActiveTab) => {
+    setActiveTab(tab);
+    if (tab === "edit") {
+      setEditSubTab((prev) =>
+        prev === "sailors" || prev === "regattas" || prev === "results"
+          ? prev
+          : "sailors"
+      );
+    } else if (tab === "ops") {
+      setEditSubTab((prev) =>
+        prev === "suggestions" ||
+        prev === "claims" ||
+        prev === "promote" ||
+        prev === "support"
+          ? prev
+          : "claims"
+      );
+    }
+  }, []);
+
+  const goSub = useCallback(
+    (sub: AdminEditSubTab) => {
+      setEditSubTab(sub);
+      sailors.setEditingSailorId(null);
+      regattas.setEditingRegattaId(null);
+      results.setEditingResultId(null);
+    },
+    [
+      sailors.setEditingSailorId,
+      regattas.setEditingRegattaId,
+      results.setEditingResultId,
+    ]
+  );
 
   if (loading) {
     return (
@@ -222,7 +305,7 @@ function AdminDashboardInner() {
             <button
               type="button"
               onClick={() => {
-                setActiveTab("edit");
+                setActiveTab("ops");
                 setEditSubTab(
                   claimsPendingCount > 0 ? "claims" : "support"
                 );
@@ -256,13 +339,14 @@ function AdminDashboardInner() {
         </div>
       </div>
 
-      {/* Main tabs — 2-col on phone, denser grid on larger screens */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      {/* Primary tabs */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
             ["stats", "Stats", "Live stats", Activity],
             ["import", "Excel", "Regatta Excel", FileSpreadsheet],
-            ["edit", "Database", "Database & bulk edit", Database],
+            ["edit", "Database", "Sailors & results", Database],
+            ["ops", "Ops", "Claims & support", ClipboardList],
             ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
             ["gold", "Gold", "Gold ranking", Trophy],
             ["ilca", "ILCA", "ILCA ranking", Medal],
@@ -271,7 +355,7 @@ function AdminDashboardInner() {
           <button
             key={key}
             type="button"
-            onClick={() => setActiveTab(key)}
+            onClick={() => goTab(key)}
             className={`relative flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl px-1.5 sm:px-2 py-2.5 sm:py-3 text-[11px] sm:text-sm font-bold transition-all min-h-[2.75rem] sm:min-h-[3rem] touch-manipulation ${
               activeTab === key
                 ? "bg-orange-600 text-white shadow-md shadow-orange-950/30"
@@ -285,7 +369,7 @@ function AdminDashboardInner() {
             <span className="text-center leading-tight hidden sm:inline">
               {label}
             </span>
-            {key === "edit" && inboxNotifCount > 0 && (
+            {key === "ops" && inboxNotifCount > 0 && (
               <span className="absolute -top-1 -right-1 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center">
                 {inboxNotifCount > 9 ? "9+" : inboxNotifCount}
               </span>
@@ -339,48 +423,18 @@ function AdminDashboardInner() {
           <div className="w-full min-w-0 space-y-4 sm:space-y-6">
             <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
               <div className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full">
-                {(
-                  [
-                    ["sailors", "Sailors"],
-                    ["regattas", "Regattas"],
-                    ["results", "Results"],
-                    ["suggestions", "Suggestions"],
-                    ["claims", "Claims"],
-                    ["promote", "Promote"],
-                    ["support", "Support"],
-                  ] as const
-                ).map(([sub, label]) => (
+                {ADMIN_DB_SUB_TABS.map(({ id, label }) => (
                   <button
-                    key={sub}
+                    key={id}
                     type="button"
-                    onClick={() => {
-                      setEditSubTab(sub);
-                      sailors.setEditingSailorId(null);
-                      regattas.setEditingRegattaId(null);
-                      results.setEditingResultId(null);
-                    }}
+                    onClick={() => goSub(id)}
                     className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation ${
-                      editSubTab === sub
+                      editSubTab === id
                         ? "bg-orange-600 text-white"
                         : "text-slate-400 hover:text-white hover:bg-white/5"
                     }`}
                   >
                     {label}
-                    {sub === "suggestions" && regattas.suggestionCount > 0 && (
-                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[9px] font-black text-white">
-                        {regattas.suggestionCount}
-                      </span>
-                    )}
-                    {sub === "claims" && claimsPendingCount > 0 && (
-                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white">
-                        {claimsPendingCount}
-                      </span>
-                    )}
-                    {sub === "support" && supportNewCount > 0 && (
-                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[9px] font-black text-white">
-                        {supportNewCount}
-                      </span>
-                    )}
                   </button>
                 ))}
               </div>
@@ -411,7 +465,47 @@ function AdminDashboardInner() {
                   {...results.panelProps}
                 />
               )}
+            </div>
+          </div>
+        )}
 
+        {activeTab === "ops" && (
+          <div className="w-full min-w-0 space-y-4 sm:space-y-6">
+            <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
+              <div className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full">
+                {ADMIN_OPS_SUB_TABS.map(({ id, label }) => (
+                  <button
+                    key={id}
+                    type="button"
+                    onClick={() => goSub(id)}
+                    className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation ${
+                      editSubTab === id
+                        ? "bg-orange-600 text-white"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {label}
+                    {id === "suggestions" && regattas.suggestionCount > 0 && (
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[9px] font-black text-white">
+                        {regattas.suggestionCount}
+                      </span>
+                    )}
+                    {id === "claims" && claimsPendingCount > 0 && (
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white">
+                        {claimsPendingCount}
+                      </span>
+                    )}
+                    {id === "support" && supportNewCount > 0 && (
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[9px] font-black text-white">
+                        {supportNewCount}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="w-full min-w-0 min-h-[50vh]">
               {editSubTab === "suggestions" && (
                 <div className="w-full min-w-0">
                   {isSuperadmin ? (
@@ -443,6 +537,23 @@ function AdminDashboardInner() {
                 <div className="w-full min-w-0">
                   <SupportInboxPanel isSuperadmin={isSuperadmin} />
                 </div>
+              )}
+
+              {/* If URL/state briefly has a DB sub while on Ops, nudge to claims */}
+              {(editSubTab === "sailors" ||
+                editSubTab === "regattas" ||
+                editSubTab === "results") && (
+                <p className="text-sm text-slate-500">
+                  Switch to a triage queue above, or open{" "}
+                  <button
+                    type="button"
+                    className="text-orange-400 font-semibold"
+                    onClick={() => goTab("edit")}
+                  >
+                    Database
+                  </button>
+                  .
+                </p>
               )}
             </div>
           </div>

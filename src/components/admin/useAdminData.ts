@@ -12,24 +12,19 @@ import {
   fetchAdminResultsForRegatta,
   fetchAdminSailors,
 } from "@/components/admin/adminFetch";
+import type {
+  AdminActiveTab,
+  AdminEditSubTab,
+} from "@/components/admin/adminNav";
 
 export type AdminDataKey = "sailors" | "regattas" | "results";
 
-export type AdminActiveTab =
-  | "stats"
-  | "import"
-  | "edit"
-  | "analysis"
-  | "gold"
-  | "ilca";
-export type AdminEditSubTab =
-  | "sailors"
-  | "regattas"
-  | "results"
-  | "suggestions"
-  | "claims"
-  | "promote"
-  | "support";
+export type {
+  AdminActiveTab,
+  AdminEditSubTab,
+  AdminDbSubTab,
+  AdminOpsSubTab,
+} from "@/components/admin/adminNav";
 
 type UseAdminDataArgs = {
   isSuperadmin: boolean;
@@ -76,9 +71,8 @@ export function useAdminData({
     isSuperadmin &&
     (needsFullResults ||
       (activeTab === "edit" &&
-        (editSubTab === "regattas" ||
-          editSubTab === "suggestions" ||
-          editSubTab === "results")));
+        (editSubTab === "regattas" || editSubTab === "results")) ||
+      (activeTab === "ops" && editSubTab === "suggestions"));
 
   const needResultsEditor =
     isSuperadmin && activeTab === "edit" && editSubTab === "results";
