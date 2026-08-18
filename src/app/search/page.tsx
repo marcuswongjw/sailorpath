@@ -3,7 +3,7 @@ import { DbOffline } from "@/components/DbOffline";
 import { searchSailors } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { seriesMembershipLabel } from "@/lib/seriesMembership";
-import { nationalitySelectOptions } from "@/lib/countries";
+import { SearchNationalityField } from "@/components/SearchNationalityField";
 
 export const dynamic = "force-dynamic";
 
@@ -103,20 +103,11 @@ export default async function SearchPage({
               <option value="DS">DS</option>
             </select>
           </label>
-          <label className="text-[10px] font-bold text-slate-500 uppercase">
+          <label className="text-[10px] font-bold text-slate-500 uppercase col-span-2 sm:col-span-1">
             Nationality
-            <select
-              name="nationality"
-              defaultValue={nationality}
-              className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white"
-            >
-              <option value="">Any</option>
-              {nationalitySelectOptions().map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.code} — {c.name}
-                </option>
-              ))}
-            </select>
+            <div className="mt-1">
+              <SearchNationalityField defaultValue={nationality} />
+            </div>
           </label>
           <label className="text-[10px] font-bold text-slate-500 uppercase">
             Club

@@ -105,6 +105,8 @@ export function FleetRankingsView({
   const [loading, setLoading] = useState(initialRanked === undefined);
   /** Regatta IDs excluded from Best 3 of 5 (client what-if) */
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
+  /** Mobile: keep what-if toggles collapsed unless opened */
+  const [mobileAdjustOpen, setMobileAdjustOpen] = useState(false);
   const [genderFilter, setGenderFilter] = useState<
     "all" | "M" | "F" | "unknown"
   >("all");
@@ -407,11 +409,8 @@ export function FleetRankingsView({
                 )}
               </p>
               <div className="flex items-center gap-2 min-w-0 flex-wrap">
-                <p className="text-[10px] text-slate-500 font-semibold hidden sm:block">
+                <p className="text-[10px] text-slate-500 font-semibold hidden md:block">
                   Uncheck a regatta to exclude it from Best 3 of 5
-                </p>
-                <p className="text-[10px] text-slate-500 font-semibold sm:hidden">
-                  Tap R# to exclude from Best 3 of 5
                 </p>
                 {excluded.size > 0 && (
                   <button
@@ -425,45 +424,65 @@ export function FleetRankingsView({
                 )}
               </div>
             </div>
-            {/* Mobile: equal-width row that fits viewport (no page-wide overflow) */}
-            <div className="grid md:hidden grid-cols-5 gap-1 w-full min-w-0">
-              {eventSlots.map((ev, idx) => {
-                const off = excluded.has(ev.regattaId);
-                const canToggle = Boolean(ev.regattaName) && !ev.regattaId.startsWith("slot-");
-                return (
-                  <button
-                    key={ev.regattaId + idx}
-                    type="button"
-                    disabled={!canToggle}
-                    onClick={() => toggleExclude(ev.regattaId)}
-                    className={`min-w-0 w-full rounded-lg border px-0.5 py-1.5 text-center transition-all ${
-                      off
-                        ? "bg-slate-900/80 border-rose-500/40 opacity-50"
-                        : ev.isCarryForward
-                          ? "bg-sky-500/10 border-sky-500/25"
-                          : "bg-white/5 border-white/5"
-                    } ${canToggle ? "cursor-pointer" : "cursor-default"}`}
-                    title={
-                      canToggle
-                        ? `${off ? "Include" : "Exclude"} ${ev.regattaName}`
-                        : undefined
-                    }
-                  >
-                    <p className="text-[9px] font-black text-orange-400">R{idx + 1}</p>
-                    <p className="text-[7px] sm:text-[8px] font-semibold text-slate-300 leading-tight line-clamp-2 break-words">
-                      {shortRegattaName(ev.regattaName, idx)}
-                    </p>
-                    {ev.isCarryForward && (
-                      <p className="text-[7px] font-bold text-sky-400 mt-0.5">prev</p>
-                    )}
-                    {canToggle && (
-                      <p className="text-[7px] font-bold text-slate-500 mt-0.5">
-                        {off ? "OFF" : "ON"}
-                      </p>
-                    )}
-                  </button>
-                );
-              })}
+            {/* Mobile: what-if toggles behind disclosure — less noise */}
+            <div className="md:hidden w-full min-w-0">
+              <button
+                type="button"
+                onClick={() => setMobileAdjustOpen((o) => !o)}
+                className="w-full flex items-center justify-between rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 text-[11px] font-semibold text-slate-300"
+              >
+                <span>
+                  Adjust Best 3/5
+                  {excluded.size > 0
+                    ? ` · ${excluded.size} excluded`
+                    : ""}
+                </span>
+                <span className="text-slate-500">
+                  {mobileAdjustOpen ? "Hide" : "Show"}
+                </span>
+              </button>
+              {mobileAdjustOpen && (
+                <div className="mt-2 grid grid-cols-5 gap-1 w-full min-w-0">
+                  {eventSlots.map((ev, idx) => {
+                    const off = excluded.has(ev.regattaId);
+                    const canToggle =
+                      Boolean(ev.regattaName) &&
+                      !ev.regattaId.startsWith("slot-");
+                    return (
+                      <button
+                        key={ev.regattaId + idx}
+                        type="button"
+                        disabled={!canToggle}
+                        onClick={() => toggleExclude(ev.regattaId)}
+                        className={`min-w-0 w-full rounded-lg border px-0.5 py-1.5 text-center transition-all ${
+                          off
+                            ? "bg-slate-900/80 border-rose-500/40 opacity-50"
+                            : ev.isCarryForward
+                              ? "bg-sky-500/10 border-sky-500/25"
+                              : "bg-white/5 border-white/5"
+                        } ${canToggle ? "cursor-pointer" : "cursor-default"}`}
+                        title={
+                          canToggle
+                            ? `${off ? "Include" : "Exclude"} ${ev.regattaName}`
+                            : undefined
+                        }
+                      >
+                        <p className="text-[9px] font-black text-orange-400">
+                          R{idx + 1}
+                        </p>
+                        <p className="text-[8px] font-semibold text-slate-400 leading-tight line-clamp-1">
+                          {ev.isCarryForward ? "CF" : "·"}
+                        </p>
+                        {canToggle && (
+                          <p className="text-[8px] font-bold text-slate-500 mt-0.5">
+                            {off ? "OFF" : "ON"}
+                          </p>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
             <div className="hidden md:grid grid-cols-5 gap-2">
               {eventSlots.map((ev, idx) => {
@@ -544,88 +563,72 @@ export function FleetRankingsView({
         </p>
       )}
 
-      {/* Mobile cards — constrained to viewport width (aligned with header) */}
-      <div className="md:hidden space-y-2.5 no-print w-full max-w-full min-w-0">
+      {/* Mobile cards — compact: rank · name · Best 3 · score strip */}
+      <div className="md:hidden space-y-2 no-print w-full max-w-full min-w-0">
         {displayRanked.map((s, i) => {
           const scores = padScores(s, i);
           return (
             <div
               key={s.id}
-              className="w-full max-w-full min-w-0 rounded-2xl p-3 border border-white/5 bg-[#131520]/80 space-y-2.5"
+              className="w-full max-w-full min-w-0 rounded-xl px-3 py-2.5 border border-white/5 bg-[#131520]/80"
             >
-              <div className="flex items-start justify-between gap-2 min-w-0">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-baseline gap-2 min-w-0">
-                    <p className="text-orange-400 font-black text-sm shrink-0 tabular-nums">
-                      #{i + 1}
-                    </p>
+              <div className="flex items-center justify-between gap-2 min-w-0">
+                <div className="min-w-0 flex-1 flex items-baseline gap-2">
+                  <p className="text-orange-400 font-black text-sm shrink-0 tabular-nums w-7">
+                    #{i + 1}
+                  </p>
+                  <div className="min-w-0">
                     <Link
                       href={`/${s.handle}`}
                       prefetch
-                      className="font-bold text-white hover:text-orange-400 text-[15px] leading-snug break-words min-w-0"
+                      className="font-bold text-white hover:text-orange-400 text-[14px] leading-snug truncate block"
                     >
                       {s.name}
                     </Link>
+                    <p className="text-[10px] text-slate-500 mt-0.5 truncate">
+                      {formatGenderLabel(s.gender)}
+                      {birthYear(s.dob) != null
+                        ? ` · ${birthYear(s.dob)}`
+                        : ""}
+                      {showSquad && squadFor(s)
+                        ? ` · ${squadFor(s)}`
+                        : ""}
+                    </p>
                   </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
-                    {formatGenderLabel(s.gender)} · Born {birthYear(s.dob)}
-                    {showSquad ? (
-                      <span className="text-slate-500 font-semibold inline-flex flex-wrap items-center gap-x-1.5 gap-y-1 mt-0.5">
-                        <span>
-                          {squadColumnLabel}:{" "}
-                          {squadFor(s) ? (
-                            <SquadBadge label={squadFor(s)!} />
-                          ) : (
-                            "—"
-                          )}
-                        </span>
-                        <span>
-                          {nextSquadColumnLabel}:{" "}
-                          {nextSquadFor(s) ? (
-                            <SquadBadge label={nextSquadFor(s)!} />
-                          ) : (
-                            "—"
-                          )}
-                        </span>
-                      </span>
-                    ) : null}
-                  </p>
                 </div>
-                <div className="text-right shrink-0 pl-1">
+                <div className="text-right shrink-0">
                   <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wide">
                     Best 3
                   </p>
-                  <p className="font-black text-white text-lg tabular-nums leading-none mt-0.5">
+                  <p className="font-black text-white text-base tabular-nums leading-none mt-0.5">
                     {s.overallScore}
                   </p>
                 </div>
               </div>
-              {/* Equal 5-col score grid — never expands past card width */}
-              <div className="grid grid-cols-5 gap-1 w-full min-w-0">
+              <div className="mt-2 grid grid-cols-5 gap-1 w-full min-w-0">
                 {scores.map((rs, idx) => {
                   const off = excluded.has(rs.regattaId);
                   return (
                     <div
                       key={rs.regattaId + idx}
-                      className={`min-w-0 rounded-lg border px-0.5 py-1.5 text-center ${
+                      className={`min-w-0 rounded-md border px-0.5 py-1 text-center ${
                         off
                           ? "bg-slate-900/60 border-rose-500/30 opacity-50"
                           : rs.isCarryForward
                             ? "bg-sky-500/10 border-sky-500/20"
                             : "bg-white/5 border-white/5"
                       }`}
-                      title={rs.regattaName || eventSlots[idx]?.regattaName || undefined}
+                      title={
+                        rs.regattaName ||
+                        eventSlots[idx]?.regattaName ||
+                        undefined
+                      }
                     >
-                      <p className="text-[9px] text-orange-400/90 font-black">
+                      <p className="text-[8px] text-orange-400/90 font-black">
                         R{idx + 1}
+                        {rs.isCarryForward ? "ᶜ" : ""}
                       </p>
-                      <p className="text-[7px] text-slate-500 leading-tight line-clamp-2 min-h-[1.4rem] break-words">
-                        {shortRegattaName(
-                          rs.regattaName || eventSlots[idx]?.regattaName,
-                          idx
-                        )}
-                      </p>
-                      <p className="text-[11px] font-mono font-bold text-white mt-0.5 tabular-nums">
+                      <p className="text-[12px] font-mono font-bold text-white tabular-nums leading-tight">
                         {Number.isFinite(rs.score)
                           ? scoreCell(
                               rs.score,
@@ -649,10 +652,10 @@ export function FleetRankingsView({
           <table className="w-full text-left text-sm min-w-[720px] border-collapse">
             <thead className="text-[10px] text-slate-400 uppercase tracking-wider">
               <tr>
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 w-12 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
+                <th className="sticky top-0 left-0 z-30 px-4 lg:px-5 py-3 w-12 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
                   #
                 </th>
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
+                <th className="sticky top-0 left-12 z-30 px-4 lg:px-5 py-3 min-w-[9rem] bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
                   Sailor
                 </th>
                 <th className="sticky top-0 z-20 px-3 py-3 text-center bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
@@ -723,10 +726,10 @@ export function FleetRankingsView({
                     key={s.id}
                     className="border-t border-white/5 hover:bg-white/[0.02]"
                   >
-                    <td className="px-4 lg:px-5 py-3.5 font-bold text-orange-400">
+                    <td className="sticky left-0 z-10 px-4 lg:px-5 py-3.5 font-bold text-orange-400 bg-[#0e1018]">
                       {i + 1}
                     </td>
-                    <td className="px-4 lg:px-5 py-3.5">
+                    <td className="sticky left-12 z-10 px-4 lg:px-5 py-3.5 bg-[#0e1018]">
                       <Link
                         href={`/${s.handle}`}
                         prefetch
