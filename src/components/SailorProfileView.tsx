@@ -1335,24 +1335,59 @@ export function SailorProfileView({
               {activeStanding &&
                 resultsTab !== "journey" &&
                 activeStanding.overallRank != null && (
-                  <p
-                    className={`mt-1.5 text-[12px] sm:text-[13px] font-semibold tabular-nums leading-snug ${
-                      standingIsIlca ? "text-sky-300/95" : "text-orange-300/95"
-                    }`}
-                  >
-                    #{activeStanding.overallRank}
-                    {activeStanding.fleet
-                      ? ` ${activeStanding.fleet}`
-                      : standingIsIlca
-                        ? " ILCA"
+                  <div className="mt-1.5 space-y-0.5">
+                    <p
+                      className={`text-[12px] sm:text-[13px] font-semibold tabular-nums leading-snug ${
+                        standingIsIlca
+                          ? "text-sky-300/95"
+                          : "text-orange-300/95"
+                      }`}
+                    >
+                      #{activeStanding.overallRank}
+                      {activeStanding.fleet
+                        ? ` ${activeStanding.fleet}`
+                        : standingIsIlca
+                          ? " ILCA"
+                          : ""}
+                      {" · "}
+                      Best 3/5: {activeStanding.best3of5}
+                      {standingIsIlca ? " pts" : ""}
+                      {activeStanding.periodLabel
+                        ? ` · ${activeStanding.periodLabel}`
                         : ""}
-                    {" · "}
-                    Best 3/5: {activeStanding.best3of5}
-                    {standingIsIlca ? " pts" : ""}
-                    {activeStanding.periodLabel
-                      ? ` · ${activeStanding.periodLabel}`
-                      : ""}
-                  </p>
+                    </p>
+                    {!standingIsIlca &&
+                      (() => {
+                        const scores = activeStanding.rScores || [];
+                        const cf = scores.filter((r) => r.isCarryForward).length;
+                        const dns = scores.filter(
+                          (r) =>
+                            r.isDNS &&
+                            r.score > 0 &&
+                            r.regattaName &&
+                            r.regattaName !== "—"
+                        ).length;
+                        if (!cf && !dns) return null;
+                        const bits: string[] = [];
+                        if (cf) {
+                          bits.push(
+                            `${cf} carry-forward${cf === 1 ? "" : "s"}`
+                          );
+                        }
+                        if (dns) {
+                          bits.push(`${dns} DNS`);
+                        }
+                        return (
+                          <p className="text-[11px] font-normal text-neutral-500 leading-snug">
+                            Includes {bits.join(" + ")}
+                            {dns
+                              ? " — missed events listed under Results"
+                              : ""}
+                            .
+                          </p>
+                        );
+                      })()}
+                  </div>
                 )}
               {/* Compact identity passport: sail · club · nationality · born */}
               <p className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[12px] sm:text-[13px] text-neutral-400">

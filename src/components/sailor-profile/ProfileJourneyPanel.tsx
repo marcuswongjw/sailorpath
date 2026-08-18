@@ -95,10 +95,10 @@ export function ProfileJourneyPanel({
                   {it.when}
                 </p>
               )}
-              <p className="text-sm font-semibold text-white mt-0.5">
-                {it.title}
+              <p className="text-sm font-semibold text-white mt-0.5 inline-flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+                <span>{it.title}</span>
                 {it.system ? (
-                  <span className="ml-1.5 text-[9px] font-medium uppercase tracking-wide text-amber-500/80">
+                  <span className="rounded px-1 py-px text-[9px] font-medium uppercase tracking-wide text-amber-400/90 bg-amber-500/10 border border-amber-500/20">
                     milestone
                   </span>
                 ) : null}
