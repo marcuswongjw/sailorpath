@@ -12,6 +12,10 @@ import {
 } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { getAuthContext } from "@/lib/auth";
+import {
+  toPublicEquipmentProps,
+  toPublicSailorProps,
+} from "@/lib/publicSailor";
 import { resolveProfileAccess } from "@/lib/viewAs";
 
 export const dynamic = "force-dynamic";
@@ -100,18 +104,9 @@ export default async function SailorProfilePage({
     notFound();
   }
 
-  const equipment = {
-    hullBrand: sailor.hullBrand || null,
-    sailMake: sailor.sailMake || null,
-    foilBrand: sailor.foilBrand || null,
-    mast: sailor.mast || null,
-    notes: sailor.equipmentNotes || null,
-    hullBrandIlca4: sailor.hullBrandIlca4 || null,
-    sailMakeIlca4: sailor.sailMakeIlca4 || null,
-    foilBrandIlca4: sailor.foilBrandIlca4 || null,
-    mastIlca4: sailor.mastIlca4 || null,
-    notesIlca4: sailor.equipmentNotesIlca4 || null,
-  };
+  const canSeePrivate = access.canSeePrivate;
+  const publicSailor = toPublicSailorProps(sailor, { canSeePrivate });
+  const equipment = toPublicEquipmentProps(sailor, canSeePrivate);
 
   return (
     <ErrorBoundary
@@ -128,12 +123,7 @@ export default async function SailorProfilePage({
       }
     >
       <SailorProfileView
-      initialSailor={{
-        ...sailor,
-        isPublicWeight: sailor.isPublicWeight ?? false,
-        isPublicDob: sailor.isPublicDob ?? false,
-        isPublicEquipment: sailor.isPublicEquipment ?? false,
-      }}
+      initialSailor={publicSailor}
       initialResults={(results || []).map((r) => ({
         id: r.resultId || r.regattaId,
         resultId: r.resultId,
@@ -160,7 +150,7 @@ export default async function SailorProfilePage({
       initialIlcaStanding={ilcaStanding}
       initialObservations={observations || []}
       initialEquipmentHistory={equipmentHistory || []}
-      canSeePrivate={access.canSeePrivate}
+      canSeePrivate={canSeePrivate}
       canClaim={access.canClaim}
       isOwner={access.isOwner}
       isLoggedIn={Boolean(auth?.userId)}

@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { trackUsage, USAGE_EVENT_TYPES } from "@/lib/usage";
+import {
+  sanitizeUsageMeta,
+  trackUsage,
+  USAGE_EVENT_TYPES,
+} from "@/lib/usage";
 import { getAuthContext } from "@/lib/auth";
 import {
   clientIpFromRequest,
@@ -16,6 +20,7 @@ const USAGE_WINDOW_MS = 60_000;
  * POST /api/usage — record a privacy-light usage event.
  * Body: { eventType, path?, sessionId?, meta? }
  * Auth optional; if signed in, role is attached (no email stored).
+ * Meta is allowlisted — unknown keys are dropped.
  */
 export async function POST(req: Request) {
   try {
@@ -25,6 +30,16 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json().catch(() => ({}));
+    // Secondary size gate when Content-Length was omitted / forged.
+    try {
+      const raw = JSON.stringify(body);
+      if (raw.length > MAX_USAGE_BODY_BYTES) {
+        return NextResponse.json({ error: "Payload too large" }, { status: 413 });
+      }
+    } catch {
+      /* ignore */
+    }
+
     const eventType = String(body.eventType || "").trim();
     if (!eventType) {
       return NextResponse.json({ error: "eventType required" }, { status: 400 });
@@ -74,7 +89,7 @@ export async function POST(req: Request) {
       path: body.path,
       role,
       sessionId,
-      meta: body.meta && typeof body.meta === "object" ? body.meta : null,
+      meta: sanitizeUsageMeta(body.meta),
     });
 
     return NextResponse.json(result);

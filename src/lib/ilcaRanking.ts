@@ -70,6 +70,7 @@ export type IlcaEventScore = {
 export type IlcaRankedSailor = {
   sailorId: string;
   name: string;
+  handle?: string | null;
   gender: "M" | "F" | null;
   /** Calendar birth year (public-facing; not age) */
   birthYear: number | null;
@@ -328,6 +329,7 @@ export function computeIlcaRankings(
     return {
       sailorId: s.id,
       name: s.name,
+      handle: s.handle ?? null,
       gender: normalizeGender(s.gender),
       birthYear: birthYear(s.dob),
       ageInIntakeYear: ageInIntakeYear(s.dob, intakeYear),

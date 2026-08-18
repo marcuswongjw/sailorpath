@@ -34,8 +34,11 @@ import {
 import {
   computeIlcaRankings,
   ilcaRankingRegattas,
+  ilcaSquadCutoff,
   isIlcaSeriesClass,
   type IlcaBoatClass,
+  type IlcaIntakeKind,
+  type IlcaRankedSailor,
 } from "@/lib/ilcaRanking";
 import {
   asc,
@@ -502,17 +505,59 @@ export async function getSailorSeriesStanding(
  * Prefers national-list board; falls back to all ILCA racers if the sailor
  * has results but is not on the official list.
  */
+export type IlcaBoardPayload = {
+  ranked: IlcaRankedSailor[];
+  asOf: string;
+  intakeKind: IlcaIntakeKind;
+  intakeYear: number;
+  label: string;
+};
+
+/**
+ * Cached ILCA national board for a squad intake cutoff.
+ * Arguments (class / intake / year) are part of the cache key.
+ */
 export const getCachedIlcaRankings = unstable_cache(
-  async (boatClass: IlcaBoatClass = "ILCA 4") => {
-    return computeIlcaRankingsBoard(boatClass);
+  async (
+    boatClass: IlcaBoatClass,
+    intakeKind: IlcaIntakeKind,
+    intakeYear: number
+  ): Promise<IlcaBoardPayload> => {
+    const cutoff = ilcaSquadCutoff(intakeKind, intakeYear);
+    const board = await computeIlcaRankingsBoard(
+      boatClass,
+      cutoff.asOf,
+      cutoff.intakeYear
+    );
+    return {
+      ...board,
+      intakeKind,
+      intakeYear: cutoff.intakeYear,
+      label: cutoff.label,
+    };
   },
-  ["ilca-rankings-board-v4"],
+  ["ilca-rankings-board-v5"],
   { revalidate: 60, tags: [CACHE_TAG_ILCA_RANKINGS] }
 );
 
-async function computeIlcaRankingsBoard(boatClass: IlcaBoatClass = "ILCA 4") {
+/** Default intake for "now" (same rules as the public ILCA UI). */
+export function defaultIlcaIntake(now = new Date()): {
+  kind: IlcaIntakeKind;
+  year: number;
+} {
+  const y = now.getFullYear();
+  const kind: IlcaIntakeKind = now.getMonth() < 6 ? "january" : "july";
+  const year = kind === "january" && now.getMonth() === 11 ? y + 1 : y;
+  return { kind, year };
+}
+
+async function computeIlcaRankingsBoard(
+  boatClass: IlcaBoatClass = "ILCA 4",
+  asOfYmd?: string,
+  intakeYear?: number
+) {
   return withDb(async () => {
-    const asOf = todayYmdSg();
+    const asOf = asOfYmd || todayYmdSg();
     const [sailorRows, regattaRows] = await Promise.all([
       db
         .select({
@@ -610,7 +655,10 @@ async function computeIlcaRankingsBoard(boatClass: IlcaBoatClass = "ILCA 4") {
       ilcaSailors,
       ilcaRegattas,
       ilcaResults,
-      { restrictToNationalList: true }
+      {
+        intakeYear: intakeYear ?? Number(asOf.slice(0, 4)),
+        restrictToNationalList: true,
+      }
     );
 
     return { ranked, asOf };
@@ -621,7 +669,8 @@ export async function getSailorIlcaStanding(
   sailorId: string,
   boatClass: IlcaBoatClass = "ILCA 4"
 ): Promise<IlcaSeriesStanding | null> {
-  const { ranked, asOf } = await getCachedIlcaRankings(boatClass);
+  const { kind, year } = defaultIlcaIntake();
+  const { ranked, asOf } = await getCachedIlcaRankings(boatClass, kind, year);
   const me = ranked.find((x) => x.sailorId === sailorId);
   if (!me) return null;
 

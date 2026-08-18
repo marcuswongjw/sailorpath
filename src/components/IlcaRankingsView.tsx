@@ -1,52 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  computeIlcaRankings,
-  ilcaSquadCutoff,
-  ilcaRankingRegattas,
   ILCA_POLICY_NOTES,
   type IlcaIntakeKind,
   type IlcaRankedSailor,
 } from "@/lib/ilcaRanking";
-import { Trophy, Calendar } from "lucide-react";
-
-export type IlcaPublicSailor = {
-  id: string;
-  name: string;
-  handle?: string | null;
-  gender?: string | null;
-  dob?: string | null;
-  nationality?: string | null;
-  sailNumber?: string | null;
-  sailNumberIlca4?: string | null;
-  ilca4NationalList?: boolean | null;
-  club?: string | null;
-};
-
-export type IlcaPublicRegatta = {
-  id: string;
-  name: string;
-  date: string;
-  totalFleetSize: number;
-  boatClass?: string | null;
-  countsForRanking?: boolean | null;
-  raceCount?: number | null;
-};
-
-export type IlcaPublicResult = {
-  sailorId: string;
-  regattaId: string;
-  rank: number;
-  isDns?: boolean | null;
-  isOverseasCommitment?: boolean | null;
-};
+import { Trophy, Calendar, RefreshCw } from "lucide-react";
+import { trackClientUsage } from "@/lib/clientUsage";
 
 type Props = {
-  sailors: IlcaPublicSailor[];
-  regattas: IlcaPublicRegatta[];
-  results: IlcaPublicResult[];
+  initialRanked: IlcaRankedSailor[];
+  initialIntakeKind: IlcaIntakeKind;
+  initialIntakeYear: number;
+  initialLabel: string;
+  initialAsOf: string;
 };
 
 function shortRegattaName(name: string | undefined | null, idx: number) {
@@ -63,12 +32,6 @@ function shortRegattaName(name: string | undefined | null, idx: number) {
   return (out || n.slice(0, 16)) + "…";
 }
 
-function birthYear(dob?: string | null) {
-  if (!dob) return "—";
-  const y = new Date(dob).getFullYear();
-  return Number.isFinite(y) ? String(y) : "—";
-}
-
 function scoreCell(points: number | undefined, isDns?: boolean) {
   if (points == null || !Number.isFinite(points)) return "—";
   if (isDns) return "0*";
@@ -76,79 +39,78 @@ function scoreCell(points: number | undefined, isDns?: boolean) {
 }
 
 /**
- * Public ILCA 4 standings — same layout language as Optimist Gold/Silver
- * (R1–R5 event columns + Best 3 of 5). No squad shortlist on public page.
+ * Public ILCA 4 standings — same layout language as Optimist Gold/Silver.
+ * Board is computed on the server (cached); intake switches hit /api/rankings.
  */
-export function IlcaRankingsView({ sailors, regattas, results }: Props) {
+export function IlcaRankingsView({
+  initialRanked,
+  initialIntakeKind,
+  initialIntakeYear,
+  initialLabel,
+  initialAsOf,
+}: Props) {
   const now = new Date();
   const y = now.getFullYear();
-  const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(
-    now.getMonth() < 6 ? "january" : "july"
-  );
-  const [intakeYear, setIntakeYear] = useState(
-    intakeKind === "january" && now.getMonth() === 11 ? y + 1 : y
-  );
+  const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(initialIntakeKind);
+  const [intakeYear, setIntakeYear] = useState(initialIntakeYear);
+  const [ranked, setRanked] = useState(initialRanked);
+  const [label, setLabel] = useState(initialLabel);
+  const [asOf, setAsOf] = useState(initialAsOf);
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const cutoff = useMemo(
-    () => ilcaSquadCutoff(intakeKind, intakeYear),
-    [intakeKind, intakeYear]
-  );
-
-  const windowRegattas = useMemo(
-    () => ilcaRankingRegattas(regattas, "ILCA 4", cutoff.asOf),
-    [regattas, cutoff.asOf]
-  );
-
-  const ranked = useMemo(
-    () =>
-      computeIlcaRankings(
-        "ILCA 4",
-        cutoff.asOf,
-        sailors.map((s) => ({
-          id: s.id,
-          name: s.name,
-          gender: s.gender,
-          dob: s.dob,
-          nationality: s.nationality,
-          sailNumber: s.sailNumber,
-          sailNumberIlca4: s.sailNumberIlca4,
-          ilca4NationalList: s.ilca4NationalList,
-          club: s.club,
-          handle: s.handle,
-        })),
-        regattas,
-        results,
-        { intakeYear: cutoff.intakeYear, restrictToNationalList: true }
-      ),
-    [cutoff, sailors, regattas, results]
-  );
+  const loadBoard = useCallback(async (kind: IlcaIntakeKind, year: number) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(
+        `/api/rankings?fleet=ILCA4&intake=${encodeURIComponent(kind)}&year=${year}`,
+        { credentials: "same-origin" }
+      );
+      const data = (await res.json()) as {
+        error?: string;
+        ranked?: IlcaRankedSailor[];
+        label?: string;
+        asOf?: string;
+      };
+      if (!res.ok) throw new Error(data.error || "Could not load rankings");
+      setRanked(Array.isArray(data.ranked) ? data.ranked : []);
+      if (data.label) setLabel(data.label);
+      if (data.asOf) setAsOf(data.asOf);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not load rankings");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const filtered = useMemo(() => {
     if (genderFilter === "all") return ranked;
     return ranked.filter((r) => r.gender === genderFilter);
   }, [ranked, genderFilter]);
 
-  /** Re-number after gender filter (same as Optimist) */
   const displayRanked = useMemo(() => {
     return filtered.map((r, i) => ({ ...r, displayRank: i + 1 }));
   }, [filtered]);
 
-  const handleById = useMemo(() => {
-    const m = new Map<string, string>();
-    for (const s of sailors) {
-      if (s.handle) m.set(s.id, s.handle);
-    }
-    return m;
-  }, [sailors]);
-
-  const eventSlots = windowRegattas.map((r, idx) => ({
-    regattaId: r.id,
-    regattaName: r.name,
-    date: String(r.date).slice(0, 10),
-    fleetSize: r.totalFleetSize,
-    idx,
-  }));
+  const eventSlots = useMemo(() => {
+    const first = ranked.find((r) => r.eventScores?.length);
+    if (!first) return [] as {
+      regattaId: string;
+      regattaName: string;
+      date: string;
+      fleetSize: number;
+      idx: number;
+    }[];
+    return first.eventScores.map((e, idx) => ({
+      regattaId: e.regattaId,
+      regattaName: e.regattaName,
+      date: e.date,
+      fleetSize: e.fleetSize,
+      idx,
+    }));
+  }, [ranked]);
 
   const pointsFor = (r: IlcaRankedSailor, regattaId: string) => {
     const e = r.eventScores.find((x) => x.regattaId === regattaId);
@@ -183,8 +145,16 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
               value={`${intakeKind}|${intakeYear}`}
               onChange={(e) => {
                 const [kind, year] = e.target.value.split("|");
-                setIntakeKind(kind as IlcaIntakeKind);
-                setIntakeYear(Number(year) || y);
+                const nextKind = kind as IlcaIntakeKind;
+                const nextYear = Number(year) || y;
+                setIntakeKind(nextKind);
+                setIntakeYear(nextYear);
+                trackClientUsage("ranking_period_change", "/sg/ilca4", {
+                  fleet: "ILCA4",
+                  intake: nextKind,
+                  year: nextYear,
+                });
+                void loadBoard(nextKind, nextYear);
               }}
               className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-slate-950 border border-white/10 px-3 sm:px-4 py-2.5 text-sm text-white font-semibold"
             >
@@ -213,11 +183,15 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
         </div>
       </div>
 
-      <p className="text-[11px] text-sky-300/90 font-medium">
-        {cutoff.label} · {displayRanked.length}
+      <p className="text-[11px] text-sky-300/90 font-medium inline-flex items-center gap-2">
+        {loading && <RefreshCw className="h-3 w-3 animate-spin" />}
+        {label} · {displayRanked.length}
         {genderFilter !== "all" ? ` of ${ranked.length}` : ""} ranked · scoring
-        window ≤ {cutoff.asOf}
+        window ≤ {asOf}
       </p>
+      {error && (
+        <p className="text-[11px] text-rose-300 font-medium">{error}</p>
+      )}
       <p className="text-[11px] text-slate-500 leading-relaxed max-w-3xl">
         {ILCA_POLICY_NOTES.highPoints} {ILCA_POLICY_NOTES.nationalList}
       </p>
@@ -230,7 +204,6 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
         </p>
       )}
 
-      {/* Event legend (like Optimist R1–R5) */}
       {eventSlots.length > 0 && (
         <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0">
           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
@@ -272,18 +245,17 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
         </div>
       )}
 
-      {displayRanked.length === 0 && (
+      {displayRanked.length === 0 && !loading && (
         <p className="text-sm text-slate-500">
-          No ILCA 4 ranking results for listed sailors on or before{" "}
-          {cutoff.asOf}. Import ILCA 4 regattas and ensure sailors are on the
-          national list (admin).
+          No ILCA 4 ranking results for listed sailors on or before {asOf}.
+          Import ILCA 4 regattas and ensure sailors are on the national list
+          (admin).
         </p>
       )}
 
-      {/* Mobile cards — Optimist-style */}
       <div className="md:hidden space-y-2.5 no-print w-full max-w-full min-w-0">
         {displayRanked.map((s) => {
-          const handle = handleById.get(s.sailorId);
+          const handle = s.handle;
           return (
             <div
               key={s.sailorId}
@@ -309,9 +281,7 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
                     )}
                   </div>
                   <p className="text-[11px] text-slate-500 mt-1">
-                    {s.gender || "—"} · Born {birthYear(
-                      sailors.find((x) => x.id === s.sailorId)?.dob
-                    )}
+                    {s.gender || "—"} · Born {s.birthYear ?? "—"}
                   </p>
                 </div>
                 <div className="text-right shrink-0 pl-1">
@@ -364,7 +334,6 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
         })}
       </div>
 
-      {/* Desktop table — same column layout as Optimist */}
       <div className="hidden md:block rounded-2xl border border-white/5 overflow-hidden w-full max-w-full min-w-0">
         <div className="overflow-x-auto max-h-[min(75vh,900px)] overflow-y-auto max-w-full">
           <table className="w-full text-left text-sm min-w-[720px] border-collapse">
@@ -398,9 +367,7 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
                         R{idx + 1}
                       </span>
                       <span className="block text-[9px] font-semibold text-slate-400 normal-case tracking-normal leading-tight mt-0.5 line-clamp-2">
-                        {ev
-                          ? shortRegattaName(ev.regattaName, idx)
-                          : "—"}
+                        {ev ? shortRegattaName(ev.regattaName, idx) : "—"}
                       </span>
                     </th>
                   );
@@ -412,8 +379,7 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
             </thead>
             <tbody>
               {displayRanked.map((s) => {
-                const handle = handleById.get(s.sailorId);
-                const sailor = sailors.find((x) => x.id === s.sailorId);
+                const handle = s.handle;
                 return (
                   <tr
                     key={s.sailorId}
@@ -438,7 +404,7 @@ export function IlcaRankingsView({ sailors, regattas, results }: Props) {
                       {s.gender || "—"}
                     </td>
                     <td className="px-3 py-3.5 text-center font-mono text-slate-300">
-                      {birthYear(sailor?.dob)}
+                      {s.birthYear ?? "—"}
                     </td>
                     {Array.from({ length: 5 }).map((_, idx) => {
                       const ev = eventSlots[idx];

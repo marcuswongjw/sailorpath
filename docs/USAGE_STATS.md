@@ -43,6 +43,7 @@
 - Paths are **pathname only** (query strings stripped — may contain tokens).
 - Session id is a **browser sessionStorage UUID**, not a login id.
 - Role is coarse (`public` / profile role) when known.
+- `meta` is **allowlisted** (`sanitizeUsageMeta` in `src/lib/usage.ts`) — unknown keys are dropped.
 
 ## How it works
 

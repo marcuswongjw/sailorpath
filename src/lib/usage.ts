@@ -36,6 +36,41 @@ export type TrackUsageInput = {
   meta?: Record<string, string | number | boolean | null> | undefined | null;
 };
 
+/**
+ * Closed meta schema — drop anything else so callers cannot store emails,
+ * names, free-text notes, or other PII in usage_events.
+ */
+export const USAGE_META_KEYS = [
+  "vid",
+  "source",
+  "device",
+  "refHost",
+  "fleet",
+  "year",
+  "half",
+  "intake",
+  "mode",
+  "status",
+  "relation",
+  "geography",
+  "own",
+  "ms",
+  "topic",
+  "role",
+  "from",
+  "to",
+  "claimId",
+  "matched",
+  "created",
+  "inputRows",
+  "rowErrors",
+  "nationalityUpdated",
+] as const;
+
+export type UsageMetaKey = (typeof USAGE_META_KEYS)[number];
+
+const META_KEY_SET = new Set<string>(USAGE_META_KEYS);
+
 /** Strip query/hash; cap length; only allow path-like strings. */
 export function sanitizePath(raw: unknown): string | null {
   if (raw == null || raw === "") return null;
@@ -45,6 +80,36 @@ export function sanitizePath(raw: unknown): string | null {
   if (s.length > 200) s = s.slice(0, 200);
   if (/[\x00-\x1f]/.test(s)) return null;
   return s;
+}
+
+function sanitizeMetaValue(
+  value: unknown
+): string | number | boolean | null | undefined {
+  if (value == null) return null;
+  if (typeof value === "boolean") return value;
+  if (typeof value === "number") {
+    return Number.isFinite(value) ? value : undefined;
+  }
+  if (typeof value === "string") {
+    const trimmed = value.trim().slice(0, 80);
+    return trimmed || null;
+  }
+  return undefined;
+}
+
+/** Keep only allowlisted scalar keys. */
+export function sanitizeUsageMeta(
+  raw: unknown
+): Record<string, string | number | boolean | null> | null {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return null;
+  const out: Record<string, string | number | boolean | null> = {};
+  for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+    if (!META_KEY_SET.has(key)) continue;
+    const cleaned = sanitizeMetaValue(value);
+    if (cleaned === undefined) continue;
+    out[key] = cleaned;
+  }
+  return Object.keys(out).length ? out : null;
 }
 
 export async function trackUsage(
@@ -63,9 +128,10 @@ export async function trackUsage(
       ? String(input.sessionId).trim().slice(0, 64)
       : null;
   let meta: string | null = null;
-  if (input.meta && typeof input.meta === "object") {
+  const cleaned = sanitizeUsageMeta(input.meta);
+  if (cleaned) {
     try {
-      meta = JSON.stringify(input.meta).slice(0, 500);
+      meta = JSON.stringify(cleaned).slice(0, 500);
     } catch {
       meta = null;
     }

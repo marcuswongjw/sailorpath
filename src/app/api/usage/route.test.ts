@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { POST } from "@/app/api/usage/route";
+import { sanitizeUsageMeta } from "@/lib/usage";
 
 describe("POST /api/usage", () => {
   it("rejects custom event names before any analytics write", async () => {
@@ -30,5 +31,33 @@ describe("POST /api/usage", () => {
     );
 
     expect(response.status).toBe(413);
+  });
+});
+
+describe("sanitizeUsageMeta", () => {
+  it("keeps allowlisted keys and drops PII-like extras", () => {
+    expect(
+      sanitizeUsageMeta({
+        vid: "abc",
+        source: "google",
+        device: "mobile",
+        email: "leak@example.com",
+        name: "Secret Sailor",
+        note: "private",
+        fleet: "gold",
+        year: 2026,
+      })
+    ).toEqual({
+      vid: "abc",
+      source: "google",
+      device: "mobile",
+      fleet: "gold",
+      year: 2026,
+    });
+  });
+
+  it("returns null for empty / non-objects", () => {
+    expect(sanitizeUsageMeta(null)).toBeNull();
+    expect(sanitizeUsageMeta({ email: "x" })).toBeNull();
   });
 });
