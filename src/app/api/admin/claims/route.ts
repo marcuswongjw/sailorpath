@@ -10,6 +10,7 @@ import {
   relationFromNote,
   type ClaimRelation,
 } from "@/lib/claimRelation";
+import { logAdminChange } from "@/lib/adminChangeLog";
 
 export async function GET() {
   try {
@@ -65,7 +66,7 @@ export async function GET() {
  */
 export async function PATCH(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
     const id = String(body.id || "").trim();
     if (!id) {
@@ -238,6 +239,48 @@ export async function PATCH(req: Request) {
           claimId: id.slice(0, 36),
           relation: relation || null,
         },
+      });
+    }
+
+    if (statusRaw === "approved" || statusRaw === "rejected" || body.unclaim === true) {
+      let sailorLabel: string | null = null;
+      try {
+        const [s] = await db
+          .select({ name: sailors.name })
+          .from(sailors)
+          .where(eq(sailors.id, claim.sailorId))
+          .limit(1);
+        sailorLabel = s?.name || null;
+      } catch {
+        /* optional */
+      }
+      const action = body.unclaim === true
+        ? "claim.unlink"
+        : statusRaw === "approved"
+          ? "claim.approve"
+          : "claim.reject";
+      const summary =
+        body.unclaim === true
+          ? `Unlinked claim on ${sailorLabel || claim.sailorId}`
+          : statusRaw === "approved"
+            ? `Approved claim on ${sailorLabel || claim.sailorId}`
+            : `Rejected claim on ${sailorLabel || claim.sailorId}`;
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action,
+        entityType: "claim",
+        entityId: id,
+        entityLabel: sailorLabel,
+        summary,
+        details: {
+          sailorId: claim.sailorId,
+          requesterId: claim.requesterId,
+          status: body.unclaim === true ? "rejected" : statusRaw,
+          relation: relation || null,
+          unclaim: body.unclaim === true,
+        },
+        source: "/api/admin/claims",
       });
     }
 

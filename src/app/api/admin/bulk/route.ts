@@ -10,6 +10,7 @@ import {
 } from "@/lib/seriesMembership";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { adminLog, createAdminRequestId } from "@/lib/adminLog";
+import { logAdminChange } from "@/lib/adminChangeLog";
 
 const RANKING_BULK_FIELDS = new Set([
   "goldEntryDate",
@@ -95,6 +96,18 @@ export async function POST(req: Request) {
         outcome: "ok",
         ms: Date.now() - t0,
         meta: { count: deleted.length },
+      });
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "bulk.delete",
+        entityType: "bulk",
+        entityId: null,
+        entityLabel: null,
+        summary: `Bulk deleted ${deleted.length} sailors`,
+        details: { count: deleted.length, sailorIds: deleted.map((d) => d.id) },
+        source: "/api/admin/bulk",
+        requestId,
       });
       return NextResponse.json({
         message: `Deleted ${deleted.length} sailors (and their results).`,
@@ -206,6 +219,22 @@ export async function POST(req: Request) {
       outcome: "ok",
       ms: Date.now() - t0,
       meta: { field: String(field), count: sailorIds.length },
+    });
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "bulk.update",
+      entityType: "bulk",
+      entityId: null,
+      entityLabel: String(field),
+      summary: `Bulk updated ${field} for ${sailorIds.length} sailors`,
+      details: {
+        field: String(field),
+        count: sailorIds.length,
+        value: typed,
+      },
+      source: "/api/admin/bulk",
+      requestId,
     });
 
     return NextResponse.json({

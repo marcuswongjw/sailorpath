@@ -20,7 +20,8 @@ export type AdminOpsSubTab =
   | "suggestions"
   | "claims"
   | "promote"
-  | "support";
+  | "support"
+  | "audit";
 
 /** Any Database or Ops sub-tab */
 export type AdminEditSubTab = AdminDbSubTab | AdminOpsSubTab;
@@ -53,6 +54,7 @@ const OPS_SUBS: readonly AdminOpsSubTab[] = [
   "claims",
   "promote",
   "support",
+  "audit",
 ] as const;
 
 function isPrimaryTab(v: string | null | undefined): v is AdminActiveTab {
@@ -157,4 +159,5 @@ export const ADMIN_OPS_SUB_TABS: { id: AdminOpsSubTab; label: string }[] = [
   { id: "claims", label: "Claims" },
   { id: "promote", label: "Promote" },
   { id: "support", label: "Support" },
+  { id: "audit", label: "Audit" },
 ];

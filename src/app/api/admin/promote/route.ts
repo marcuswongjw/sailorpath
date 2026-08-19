@@ -6,6 +6,7 @@ import { sailors } from "@/db/schema";
 import { hasSilverHistory } from "@/lib/seriesMembership";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { adminLog, createAdminRequestId } from "@/lib/adminLog";
+import { logAdminChange } from "@/lib/adminChangeLog";
 
 /** Singapore calendar date YYYY-MM-DD for drop-date comparisons. */
 function sgTodayYmd(): string {
@@ -132,6 +133,18 @@ export async function POST(req: Request) {
       outcome: "ok",
       ms: Date.now() - t0,
       meta: { goldEntryDate: String(goldDate).slice(0, 10) },
+    });
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "promote.gold",
+      entityType: "sailor",
+      entityId: sailorId,
+      entityLabel: s.name,
+      summary: `Promoted ${s.name} to Gold`,
+      details: { goldEntryDate: String(goldDate).slice(0, 10) },
+      source: "/api/admin/promote",
+      requestId,
     });
     return NextResponse.json({
       ok: true,

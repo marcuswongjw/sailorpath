@@ -221,6 +221,22 @@ export async function POST(req: Request) {
         .insert(sailors)
         .values(values as typeof sailors.$inferInsert)
         .returning();
+      const { logAdminChange } = await import("@/lib/adminChangeLog");
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "sailor.create",
+        entityType: "sailor",
+        entityId: row.id,
+        entityLabel: row.name,
+        summary: `Created sailor ${row.name}`,
+        details: {
+          handle: row.handle,
+          currentFleet: row.currentFleet,
+          sailNumber: row.sailNumber,
+        },
+        source: "/api/admin/sailors",
+      });
       return NextResponse.json({ sailor: row });
     } catch (e) {
       // Retry without nationality if column not migrated yet
@@ -233,6 +249,23 @@ export async function POST(req: Request) {
           .insert(sailors)
           .values(values as typeof sailors.$inferInsert)
           .returning();
+        const { logAdminChange } = await import("@/lib/adminChangeLog");
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "sailor.create",
+          entityType: "sailor",
+          entityId: row.id,
+          entityLabel: row.name,
+          summary: `Created sailor ${row.name}`,
+          details: {
+            handle: row.handle,
+            currentFleet: row.currentFleet,
+            sailNumber: row.sailNumber,
+            warning: "saved_without_nationality",
+          },
+          source: "/api/admin/sailors",
+        });
         return NextResponse.json({
           sailor: row,
           warning:
@@ -483,17 +516,28 @@ export async function PATCH(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const id = new URL(req.url).searchParams.get("id");
     if (!id) return NextResponse.json({ error: "id required" }, { status: 400 });
     const deleted = await db
       .delete(sailors)
       .where(eq(sailors.id, id))
-      .returning({ id: sailors.id });
+      .returning({ id: sailors.id, name: sailors.name });
     if (!deleted[0]) {
       return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
     }
     revalidatePublicRankings(`sailors:delete:${id}`);
+    const { logAdminChange } = await import("@/lib/adminChangeLog");
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "sailor.delete",
+      entityType: "sailor",
+      entityId: deleted[0].id,
+      entityLabel: deleted[0].name || null,
+      summary: `Deleted sailor ${deleted[0].name || id}`,
+      source: "/api/admin/sailors",
+    });
     return NextResponse.json({ ok: true, id });
   } catch (e) {
     console.error("sailors DELETE", e);

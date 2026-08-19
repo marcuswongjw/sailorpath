@@ -107,10 +107,17 @@ const AdminStatsPanel = dynamic(
     import("@/components/admin/AdminStatsPanel").then((m) => m.AdminStatsPanel),
   { loading: () => <PanelLoading /> }
 );
-const AdminChangeLogPanel = dynamic(
+const AdminProductChangelogPanel = dynamic(
   () =>
-    import("@/components/admin/AdminChangeLogPanel").then(
-      (m) => m.AdminChangeLogPanel
+    import("@/components/admin/AdminProductChangelogPanel").then(
+      (m) => m.AdminProductChangelogPanel
+    ),
+  { loading: () => <PanelLoading /> }
+);
+const AdminAuditLogPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminAuditLogPanel").then(
+      (m) => m.AdminAuditLogPanel
     ),
   { loading: () => <PanelLoading /> }
 );
@@ -145,7 +152,14 @@ function AdminDashboardInner() {
   const [activeTab, setActiveTab] = useState<AdminActiveTab>(initialNav.tab);
   const [editSubTab, setEditSubTab] = useState<AdminEditSubTab>(initialNav.sub);
 
-  const { user, loading, adminRole, isSuperadmin } = useAdminAuth();
+  const {
+    user,
+    loading,
+    adminRole,
+    isSuperadmin,
+    productChangelogUnread,
+    markProductChangelogSeen,
+  } = useAdminAuth();
 
   const data = useAdminData({
     isSuperadmin,
@@ -242,7 +256,8 @@ function AdminDashboardInner() {
         prev === "suggestions" ||
         prev === "claims" ||
         prev === "promote" ||
-        prev === "support"
+        prev === "support" ||
+        prev === "audit"
           ? prev
           : "claims"
       );
@@ -385,6 +400,11 @@ function AdminDashboardInner() {
             {key === "ops" && inboxNotifCount > 0 && (
               <span className="absolute -top-1 -right-1 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center">
                 {inboxNotifCount > 9 ? "9+" : inboxNotifCount}
+              </span>
+            )}
+            {key === "changelog" && productChangelogUnread && (
+              <span className="absolute -top-1 -right-1 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-sky-500 text-[9px] font-black text-white flex items-center justify-center">
+                •
               </span>
             )}
           </button>
@@ -562,6 +582,12 @@ function AdminDashboardInner() {
                 </div>
               )}
 
+              {editSubTab === "audit" && (
+                <div className="w-full min-w-0">
+                  <AdminAuditLogPanel isSuperadmin={isSuperadmin} />
+                </div>
+              )}
+
               {/* If URL/state briefly has a DB sub while on Ops, nudge to claims */}
               {(editSubTab === "sailors" ||
                 editSubTab === "regattas" ||
@@ -606,7 +632,9 @@ function AdminDashboardInner() {
 
         {activeTab === "changelog" && (
           <div className="w-full min-w-0">
-            <AdminChangeLogPanel isSuperadmin={isSuperadmin} />
+            <AdminProductChangelogPanel
+              onMarkedSeen={markProductChangelogSeen}
+            />
           </div>
         )}
       </div>

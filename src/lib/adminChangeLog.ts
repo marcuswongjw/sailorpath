@@ -5,7 +5,7 @@
 
 import { db } from "@/db";
 import { adminChangeLog } from "@/db/schema";
-import { desc } from "drizzle-orm";
+import { and, desc, gte } from "drizzle-orm";
 import { adminLog } from "@/lib/adminLog";
 
 export type AdminChangeInput = {
@@ -106,22 +106,21 @@ export async function listAdminChanges(opts?: {
     const rows = await db
       .select()
       .from(adminChangeLog)
+      .where(and(gte(adminChangeLog.createdAt, since)))
       .orderBy(desc(adminChangeLog.createdAt))
       .limit(limit);
-    return rows
-      .filter((r) => !r.createdAt || r.createdAt >= since)
-      .map((r) => ({
-        id: r.id,
-        createdAt: r.createdAt,
-        actorEmail: r.actorEmail,
-        action: r.action,
-        entityType: r.entityType,
-        entityId: r.entityId,
-        entityLabel: r.entityLabel,
-        summary: r.summary,
-        details: r.details,
-        source: r.source,
-      }));
+    return rows.map((r) => ({
+      id: r.id,
+      createdAt: r.createdAt,
+      actorEmail: r.actorEmail,
+      action: r.action,
+      entityType: r.entityType,
+      entityId: r.entityId,
+      entityLabel: r.entityLabel,
+      summary: r.summary,
+      details: r.details,
+      source: r.source,
+    }));
   } catch {
     return [];
   }

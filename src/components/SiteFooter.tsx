@@ -17,6 +17,12 @@ export function SiteFooter() {
         <p>© {new Date().getFullYear()} SailorPath</p>
         <div className="flex flex-wrap items-center justify-center gap-4">
           <Link
+            href="/whats-new"
+            className="hover:text-orange-400 transition-colors"
+          >
+            What&apos;s new
+          </Link>
+          <Link
             href="/support"
             className="hover:text-orange-400 transition-colors"
           >

@@ -9,6 +9,7 @@ import {
   ILCA_MIN_RACES_FOR_RANKING,
 } from "@/lib/ilcaRanking";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+import { logAdminChange } from "@/lib/adminChangeLog";
 
 export async function GET(req: Request) {
   try {
@@ -53,7 +54,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
     if (!body.name || !body.date) {
       return NextResponse.json(
@@ -128,6 +129,23 @@ export async function POST(req: Request) {
       .returning();
 
     revalidatePublicRankings(`regattas:upsert:${row.id}`);
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "regatta.upsert",
+      entityType: "regatta",
+      entityId: row.id,
+      entityLabel: row.name || null,
+      summary: `Upserted regatta ${row.name}`,
+      details: {
+        date: row.date,
+        division: row.division,
+        boatClass: row.boatClass,
+        countsForRanking: row.countsForRanking,
+        totalFleetSize: row.totalFleetSize,
+      },
+      source: "/api/admin/regattas",
+    });
     return NextResponse.json({ regatta: row, rankingNote });
   } catch (e) {
     console.error("regattas POST", e);
@@ -137,7 +155,7 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
     if (!body.id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
@@ -244,6 +262,29 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
     }
     revalidatePublicRankings(`regattas:patch:${row.id}`);
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: body.action === "promote"
+        ? "regatta.promote"
+        : body.action === "dismiss"
+          ? "regatta.dismiss"
+          : "regatta.patch",
+      entityType: "regatta",
+      entityId: row.id,
+      entityLabel: row.name || null,
+      summary:
+        body.action === "promote"
+          ? `Promoted regatta ${row.name} to ranking`
+          : body.action === "dismiss"
+            ? `Dismissed regatta suggestion ${row.name}`
+            : `Updated regatta ${row.name}`,
+      details: {
+        fields: Object.keys(patch).filter((k) => k !== "updatedAt"),
+        action: body.action || null,
+      },
+      source: "/api/admin/regattas",
+    });
     return NextResponse.json({ regatta: row, rankingNote });
   } catch (e) {
     console.error("regattas PATCH", e);
@@ -253,7 +294,7 @@ export async function PATCH(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const id = new URL(req.url).searchParams.get("id");
     if (!id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
@@ -262,11 +303,21 @@ export async function DELETE(req: Request) {
     const deleted = await db
       .delete(regattas)
       .where(eq(regattas.id, id))
-      .returning({ id: regattas.id });
+      .returning({ id: regattas.id, name: regattas.name });
     if (!deleted[0]) {
       return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
     }
     revalidatePublicRankings(`regattas:delete:${id}`);
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "regatta.delete",
+      entityType: "regatta",
+      entityId: deleted[0].id,
+      entityLabel: deleted[0].name || null,
+      summary: `Deleted regatta ${deleted[0].name || id}`,
+      source: "/api/admin/regattas",
+    });
     return NextResponse.json({ ok: true, id });
   } catch (e) {
     console.error("regattas DELETE", e);

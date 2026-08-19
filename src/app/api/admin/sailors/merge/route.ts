@@ -15,6 +15,7 @@ import {
 } from "@/db/schema";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { adminLog, createAdminRequestId } from "@/lib/adminLog";
+import { logAdminChange } from "@/lib/adminChangeLog";
 
 /**
  * Merge duplicate sailor profiles.
@@ -366,6 +367,31 @@ export async function POST(req: Request) {
         equipmentMoved: txResult.equipmentMoved,
         ownershipTransferred: txResult.ownershipTransferred,
       },
+    });
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "sailors.merge",
+      entityType: "sailor",
+      entityId: keepId,
+      entityLabel: keepSailor.name,
+      summary: `Merged “${mergeSailor.name}” into “${keepSailor.name}”`,
+      details: {
+        mergeId,
+        mergeName: mergeSailor.name,
+        resultsMoved: txResult.resultsMoved,
+        resultsMergedConflict: txResult.resultsMergedConflict,
+        resultsDroppedConflict: txResult.resultsDroppedConflict,
+        aliasesMoved: txResult.aliasesMoved,
+        equipmentMoved: txResult.equipmentMoved,
+        notesMoved: txResult.notesMoved,
+        claimsMoved: txResult.claimsMoved,
+        observationsMoved: txResult.observationsMoved,
+        observationsDropped: txResult.observationsDropped,
+        ownershipTransferred: txResult.ownershipTransferred,
+      },
+      source: "/api/admin/sailors/merge",
+      requestId,
     });
     return NextResponse.json({
       ok: true,

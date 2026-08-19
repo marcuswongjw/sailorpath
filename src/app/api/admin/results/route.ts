@@ -21,6 +21,7 @@ import {
   asRank,
   asUuid,
 } from "@/lib/validate";
+import { logAdminChange } from "@/lib/adminChangeLog";
 
 function parseBool(v: unknown): boolean {
   return (
@@ -150,7 +151,7 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
 
     if (
@@ -159,6 +160,16 @@ export async function POST(req: Request) {
     ) {
       await healFalseDnsFlags();
       revalidatePublicRankings("results:healFalseDns");
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "result.heal_false_dns",
+        entityType: "bulk",
+        entityId: null,
+        entityLabel: null,
+        summary: "Cleared false DNS flags where rank better than fleet size + 1",
+        source: "/api/admin/results",
+      });
       return NextResponse.json({
         ok: true,
         message:
@@ -262,6 +273,25 @@ export async function POST(req: Request) {
       }
 
       revalidatePublicRankings(`results:fillDnsPeriod:${fleet}:${year}:${half}`);
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "result.fill_dns_period",
+        entityType: "bulk",
+        entityId: null,
+        entityLabel: `${fleet} ${half} ${year}`,
+        summary: `Filled DNS for ${fleet} ${half} ${year}: ${created} created`,
+        details: {
+          created,
+          fleet,
+          year,
+          half,
+          activeSailors: fleetSailors.length,
+          rankingRegattas: events.length,
+          missingBefore: pairs.length,
+        },
+        source: "/api/admin/results",
+      });
       return NextResponse.json({
         ok: true,
         message: `Ensured DNS for ${fleet} fleet ${half} ${year}: ${created} missing results created (rank = each regatta fleet size + 1). ${fleetSailors.length} active sailors × ${events.length} ranking regattas.`,
@@ -387,6 +417,23 @@ export async function POST(req: Request) {
       }
 
       revalidatePublicRankings(`results:fillDns:${reg.id}`);
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "result.fill_dns",
+        entityType: "regatta",
+        entityId: reg.id,
+        entityLabel: reg.name || null,
+        summary: `Filled DNS for ${reg.name}: ${created} created`,
+        details: {
+          created,
+          dnsPoints,
+          eligible: eligibleIds.size,
+          alreadyHadResults: have.size,
+          division: reg.division,
+        },
+        source: "/api/admin/results",
+      });
       return NextResponse.json({
         ok: true,
         message: `Created ${created} DNS results (score ${dnsPoints} = fleet ${reg.totalFleetSize} + 1) for active ${reg.division} fleet members missing this regatta.`,
@@ -490,6 +537,48 @@ export async function POST(req: Request) {
       .returning();
 
     revalidatePublicRankings(`results:upsert:${row.id}`);
+    let sailorLabel: string | null = null;
+    let regattaLabel: string | null = null;
+    try {
+      const [[sailorRow], [regattaRow]] = await Promise.all([
+        db
+          .select({ name: sailors.name })
+          .from(sailors)
+          .where(eq(sailors.id, row.sailorId))
+          .limit(1),
+        db
+          .select({ name: regattas.name })
+          .from(regattas)
+          .where(eq(regattas.id, row.regattaId))
+          .limit(1),
+      ]);
+      sailorLabel = sailorRow?.name || null;
+      regattaLabel = regattaRow?.name || null;
+    } catch {
+      /* labels optional */
+    }
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "result.upsert",
+      entityType: "result",
+      entityId: row.id,
+      entityLabel:
+        sailorLabel && regattaLabel
+          ? `${sailorLabel} @ ${regattaLabel}`
+          : sailorLabel || regattaLabel,
+      summary: `Upserted result${sailorLabel ? ` for ${sailorLabel}` : ""}${regattaLabel ? ` at ${regattaLabel}` : ""}`,
+      details: {
+        sailorId: row.sailorId,
+        regattaId: row.regattaId,
+        sailorName: sailorLabel,
+        regattaName: regattaLabel,
+        rank: row.rank,
+        isDns: row.isDns,
+        isOverseasCommitment: row.isOverseasCommitment,
+      },
+      source: "/api/admin/results",
+    });
     return NextResponse.json({
       result: {
         ...row,
@@ -505,7 +594,7 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const body = await req.json();
     const idR = asUuid(body.id, "id");
     if (!idR.ok) {
@@ -637,6 +726,48 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Result not found" }, { status: 404 });
     }
     revalidatePublicRankings(`results:patch:${row.id}`);
+    let sailorLabel: string | null = null;
+    let regattaLabel: string | null = null;
+    try {
+      const [[sailorRow], [regattaRow]] = await Promise.all([
+        db
+          .select({ name: sailors.name })
+          .from(sailors)
+          .where(eq(sailors.id, row.sailorId))
+          .limit(1),
+        db
+          .select({ name: regattas.name })
+          .from(regattas)
+          .where(eq(regattas.id, row.regattaId))
+          .limit(1),
+      ]);
+      sailorLabel = sailorRow?.name || null;
+      regattaLabel = regattaRow?.name || null;
+    } catch {
+      /* labels optional */
+    }
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "result.patch",
+      entityType: "result",
+      entityId: row.id,
+      entityLabel:
+        sailorLabel && regattaLabel
+          ? `${sailorLabel} @ ${regattaLabel}`
+          : sailorLabel || regattaLabel,
+      summary: `Updated result${sailorLabel ? ` for ${sailorLabel}` : ""}${regattaLabel ? ` at ${regattaLabel}` : ""}`,
+      details: {
+        sailorId: row.sailorId,
+        regattaId: row.regattaId,
+        sailorName: sailorLabel,
+        regattaName: regattaLabel,
+        fields: Object.keys(patch).filter((k) => k !== "updatedAt"),
+        rank: row.rank,
+        isDns: row.isDns,
+      },
+      source: "/api/admin/results",
+    });
     return NextResponse.json({
       result: {
         ...row,
@@ -652,7 +783,7 @@ export async function PATCH(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     const id = new URL(req.url).searchParams.get("id");
     if (!id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
@@ -660,11 +791,31 @@ export async function DELETE(req: Request) {
     const deleted = await db
       .delete(regattaResults)
       .where(eq(regattaResults.id, id))
-      .returning({ id: regattaResults.id });
+      .returning({
+        id: regattaResults.id,
+        sailorId: regattaResults.sailorId,
+        regattaId: regattaResults.regattaId,
+        rank: regattaResults.rank,
+      });
     if (!deleted[0]) {
       return NextResponse.json({ error: "Result not found" }, { status: 404 });
     }
     revalidatePublicRankings(`results:delete:${id}`);
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "result.delete",
+      entityType: "result",
+      entityId: deleted[0].id,
+      entityLabel: null,
+      summary: `Deleted result ${id}`,
+      details: {
+        sailorId: deleted[0].sailorId,
+        regattaId: deleted[0].regattaId,
+        rank: deleted[0].rank,
+      },
+      source: "/api/admin/results",
+    });
     return NextResponse.json({ ok: true, id });
   } catch (e) {
     console.error("results DELETE", e);

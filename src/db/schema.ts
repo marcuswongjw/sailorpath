@@ -22,6 +22,10 @@ export const profiles = pgTable("profiles", {
     .notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  /** Admin product changelog unread watermark (not used for public users yet). */
+  lastSeenProductChangelogAt: timestamp("last_seen_product_changelog_at", {
+    withTimezone: true,
+  }),
 });
 
 export const sailors = pgTable("sailors", {

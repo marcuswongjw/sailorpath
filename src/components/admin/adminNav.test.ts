@@ -34,6 +34,14 @@ describe("parseAdminNav", () => {
     });
   });
 
+  it("parses Ops → Audit", () => {
+    expect(parseAdminNav(new URLSearchParams("tab=ops&sub=audit"))).toEqual({
+      tab: "ops",
+      sub: "audit",
+      regattaId: null,
+    });
+  });
+
   it("keeps Database results + regattaId", () => {
     expect(
       parseAdminNav(
@@ -63,6 +71,9 @@ describe("serializeAdminNav", () => {
     expect(
       serializeAdminNav({ tab: "ops", sub: "support" })
     ).toBe("tab=ops&sub=support");
+    expect(serializeAdminNav({ tab: "ops", sub: "audit" })).toBe(
+      "tab=ops&sub=audit"
+    );
   });
 
   it("includes regattaId only for results", () => {
