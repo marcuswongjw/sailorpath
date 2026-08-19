@@ -8,6 +8,8 @@ import {
   Anchor,
   Medal,
   BookOpen,
+  Users,
+  UserRound,
 } from "lucide-react";
 import { WaitlistForm } from "@/components/WaitlistForm";
 
@@ -15,98 +17,67 @@ import { WaitlistForm } from "@/components/WaitlistForm";
  * Static marketing homepage — no DB round-trip so logo → home is instant
  * (demo profile stays the fast path for product tour).
  *
- * Conversion spine: Hero → social proof → How it works → Founding → Demo →
- * audiences → rankings explainers → roadmap.
+ * Conversion spine: Hero → How it works → Demo → audiences →
+ * rankings explainers → roadmap → Founding (end).
  */
 export const revalidate = 300;
 
 const FOUNDING_URL = "https://buy.stripe.com/00weVd3jFf8h9ZvelL4Rq00";
 
-function FoundingCard({ compact = false }: { compact?: boolean }) {
+function FoundingCard() {
   return (
-    <div
-      className={`mx-auto w-full rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300 ${
-        compact ? "max-w-2xl p-5 sm:p-6" : "max-w-md p-6 sm:p-8 md:p-10"
-      }`}
-    >
+    <div className="mx-auto w-full max-w-md rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300 p-6 sm:p-8 md:p-10">
       <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all" />
 
-      {compact ? (
-        <div className="relative flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-          <div className="min-w-0 flex-1 text-left">
-            <p className="text-[11px] font-black uppercase tracking-widest text-orange-400">
-              Founding Supporter
-            </p>
-            <h3 className="text-lg sm:text-xl font-bold text-white mt-1">
-              Back the build — S$99 one-time
-            </h3>
-            <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Lifetime access, profile crest, and priority say on the roadmap.
-              Secure checkout via Stripe.
-            </p>
-          </div>
-          <a
-            href={FOUNDING_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="shrink-0 inline-flex justify-center rounded-full bg-orange-600 hover:bg-orange-500 px-5 py-3 text-xs font-bold text-white border border-orange-500/30 min-h-[44px] items-center"
-          >
-            Become a Founding Supporter
-          </a>
-        </div>
-      ) : (
-        <>
-          <div className="mb-6">
-            <h3 className="text-xl font-bold text-white">Founding Supporter</h3>
-          </div>
-          <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">
-            S$99
-            <span className="text-xs font-bold text-slate-500"> (one-time)</span>
-          </p>
-          <p className="mt-6 text-[11px] font-bold uppercase tracking-wide text-slate-500">
-            What you get
-          </p>
-          <ul className="mt-3 space-y-4 text-xs font-medium text-slate-300">
-            <li className="flex items-start gap-3">
-              <Trophy className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-              <span>
-                Permanent Founding Supporter crest on your public profile
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Shield className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-              <span>
-                Lifetime access to Sailor / Parent features (claim, private
-                logbook, notes, privacy controls, and parent dashboard)
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Compass className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-              <span>
-                First access to coach tools and advanced analytics as they
-                launch
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <Zap className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-              <span>Priority input on the product roadmap</span>
-            </li>
-          </ul>
-          <div className="mt-8">
-            <a
-              href={FOUNDING_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="flex w-full justify-center rounded-full bg-orange-600 py-3.5 px-4 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
-            >
-              Become a Founding Supporter — S$99
-            </a>
-            <p className="mt-3 text-center text-[10px] text-slate-600">
-              Secure checkout via Stripe.
-            </p>
-          </div>
-        </>
-      )}
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-white">Founding Supporter</h3>
+      </div>
+      <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">
+        S$99
+        <span className="text-xs font-bold text-slate-500"> (one-time)</span>
+      </p>
+      <p className="mt-6 text-[11px] font-bold uppercase tracking-wide text-slate-500">
+        What you get
+      </p>
+      <ul className="mt-3 space-y-4 text-xs font-medium text-slate-300">
+        <li className="flex items-start gap-3">
+          <Trophy className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+          <span>
+            Permanent Founding Supporter crest on your public profile
+          </span>
+        </li>
+        <li className="flex items-start gap-3">
+          <Shield className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+          <span>
+            Lifetime access to Sailor / Parent features (claim, private
+            logbook, notes, privacy controls, and parent dashboard)
+          </span>
+        </li>
+        <li className="flex items-start gap-3">
+          <Compass className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+          <span>
+            First access to coach tools and advanced analytics as they
+            launch
+          </span>
+        </li>
+        <li className="flex items-start gap-3">
+          <Zap className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
+          <span>Priority input on the product roadmap</span>
+        </li>
+      </ul>
+      <div className="mt-8">
+        <a
+          href={FOUNDING_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="flex w-full justify-center rounded-full bg-orange-600 py-3.5 px-4 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
+        >
+          Become a Founding Supporter — S$99
+        </a>
+        <p className="mt-3 text-center text-[10px] text-slate-600">
+          Secure checkout via Stripe.
+        </p>
+      </div>
     </div>
   );
 }
@@ -235,32 +206,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Founding — mid-page conversion */}
-      <section
-        id="founding-membership"
-        className="border-t border-white/5 bg-[#0b0c13] py-10 sm:py-14"
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
-              Back the build. Anchor your place in the fleet.
-            </h2>
-            <p className="mt-2 text-sm text-slate-400 leading-relaxed">
-              Rankings are live — founding support funds what comes next.
-            </p>
-          </div>
-          <FoundingCard compact />
-          <p className="text-center">
-            <a
-              href="#founding-details"
-              className="text-[12px] font-semibold text-slate-500 hover:text-orange-300"
-            >
-              See full founding benefits ↓
-            </a>
-          </p>
-        </div>
-      </section>
-
       {/* Live demo profile */}
       <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -278,6 +223,78 @@ export default function HomePage() {
             >
               Open demo profile →
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Audience features */}
+      <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 flex flex-col">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 mb-3">
+                <UserRound className="h-5 w-5 text-orange-400" />
+              </div>
+              <h2 className="text-lg font-bold text-white">For Sailors</h2>
+              <p className="text-sm font-semibold text-white mt-1.5">
+                Own your sailing journey.
+              </p>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Track every regatta result, ranking movement, and personal best
+                from Optimist to ILCA. Add your own milestones, equipment notes,
+                and race reflections — share what you want, keep the rest
+                private.
+              </p>
+              <Link
+                href="/claim-profile"
+                className="mt-4 text-[12px] font-bold text-orange-400 hover:text-orange-300"
+              >
+                Claim this profile →
+              </Link>
+            </article>
+
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 mb-3">
+                <Users className="h-5 w-5 text-slate-200" />
+              </div>
+              <h2 className="text-lg font-bold text-white">For Parents</h2>
+              <p className="text-sm font-semibold text-white mt-1.5">
+                Stop the info-hunt.
+              </p>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Link your account to your child&apos;s profile and open the{" "}
+                <strong className="text-slate-300">Parent Dashboard</strong>{" "}
+                today — rankings, results, and milestones in one private place.
+                More family tools are on the roadmap.
+              </p>
+              <Link
+                href="/claim-profile"
+                className="mt-4 text-[12px] font-bold text-slate-300 hover:text-white"
+              >
+                Link to your child&apos;s profile →
+              </Link>
+            </article>
+
+            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-sky-500/25 flex flex-col">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
+                <Trophy className="h-5 w-5 text-sky-400" />
+              </div>
+              <h2 className="text-lg font-bold text-white">For Coaches</h2>
+              <p className="text-sm font-semibold text-white mt-1.5">
+                Escape spreadsheet hell.
+              </p>
+              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
+                Compare athletes side-by-side, spot progression trends, and build
+                selection reports from live ranking data. Full squad management
+                tools are coming — join the waitlist to get them first.
+              </p>
+              <a
+                href="#roadmap-coach"
+                className="mt-4 text-[12px] font-bold text-sky-400 hover:text-sky-300"
+              >
+                Join coach waitlist →
+              </a>
+            </article>
           </div>
         </div>
       </section>
