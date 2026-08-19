@@ -27,6 +27,7 @@
 | `PromoteAdminPanel.tsx` | Fleet promotion / demotion tools |
 | `SupportInboxPanel.tsx` | Support inbox |
 | `AdminStatsPanel.tsx` | Lean live Stats tab (COUNT cards via `/api/admin/stats`) |
+| `AdminChangeLogPanel.tsx` | Change log tab: curated product releases + admin audit trail |
 | `AdminMetricsGuide.tsx` | Static KPI playbook (`/admin/metrics`) |
 | `adminConstants.ts` | Sailor table column defs + localStorage keys |
 | `parseApi.ts` | Shared JSON response parser for admin fetch calls |
@@ -57,6 +58,11 @@ Shell keeps auth gate, tab navigation, and hook wiring only.
 **Stats** tab shows live COUNT/DISTINCT cards (`AdminStatsPanel` +
 `GET /api/admin/stats`, cached ~60s). `/admin/metrics` remains the definitions
 playbook. Usage events still write via `POST /api/usage`.
+
+**Change log** tab (`?tab=changelog`): curated product entries from
+`src/lib/productChangelog.ts`, plus live Admin audit from
+`admin_change_log` via `GET /api/admin/change-log` (`listAdminChanges`).
+Append new product ships to `PRODUCT_CHANGELOG` (newest first).
 
 ## Cache invalidation
 

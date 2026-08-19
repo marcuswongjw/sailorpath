@@ -14,6 +14,7 @@ import {
   Shield,
   GitCompareArrows,
   Medal,
+  ScrollText,
 } from "lucide-react";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
@@ -104,6 +105,13 @@ const AdminIlcaRankingPanel = dynamic(
 const AdminStatsPanel = dynamic(
   () =>
     import("@/components/admin/AdminStatsPanel").then((m) => m.AdminStatsPanel),
+  { loading: () => <PanelLoading /> }
+);
+const AdminChangeLogPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminChangeLogPanel").then(
+      (m) => m.AdminChangeLogPanel
+    ),
   { loading: () => <PanelLoading /> }
 );
 
@@ -345,7 +353,7 @@ function AdminDashboardInner() {
       </div>
 
       {/* Primary tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
             ["stats", "Stats", "Live stats", Activity],
@@ -354,6 +362,7 @@ function AdminDashboardInner() {
             ["ops", "Ops", "Claims & support", ClipboardList],
             ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
             ["ilca", "ILCA", "ILCA ranking", Medal],
+            ["changelog", "Log", "Change log", ScrollText],
           ] as const
         ).map(([key, shortLabel, label, Icon]) => (
           <button
@@ -592,6 +601,12 @@ function AdminDashboardInner() {
               onSailorsChange={data.setSailorList}
               onMergePair={sailors.handleMergePair}
             />
+          </div>
+        )}
+
+        {activeTab === "changelog" && (
+          <div className="w-full min-w-0">
+            <AdminChangeLogPanel isSuperadmin={isSuperadmin} />
           </div>
         )}
       </div>

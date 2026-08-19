@@ -9,7 +9,8 @@ export type AdminActiveTab =
   | "edit"
   | "ops"
   | "analysis"
-  | "ilca";
+  | "ilca"
+  | "changelog";
 
 /** Database CRUD sub-tabs */
 export type AdminDbSubTab = "sailors" | "regattas" | "results" | "selection";
@@ -37,6 +38,7 @@ const PRIMARY_TABS: readonly AdminActiveTab[] = [
   "ops",
   "analysis",
   "ilca",
+  "changelog",
 ] as const;
 
 const DB_SUBS: readonly AdminDbSubTab[] = [
