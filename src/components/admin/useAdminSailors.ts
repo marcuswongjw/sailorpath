@@ -104,6 +104,8 @@ export function useAdminSailors({
       const raw = localStorage.getItem(DB_COLS_STORAGE);
       if (raw) {
         const parsed = JSON.parse(raw) as Record<string, boolean>;
+        // Hydrate browser-only preferences after SSR to avoid a mismatch.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setDbColVisible({ ...defaultDbColVisible(), ...parsed });
       }
     } catch {
@@ -121,10 +123,7 @@ export function useAdminSailors({
 
   // Best 3 of 5 for current SG half (Gold + Silver)
   useEffect(() => {
-    if (sailorList.length === 0) {
-      setBest3BySailor({});
-      return;
-    }
+    if (sailorList.length === 0) return;
     let cancelled = false;
     (async () => {
       try {

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Trophy, ArrowUpCircle } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import type { SailorAdmin } from "@/types/sailor";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 
 type Candidate = {
   id: string;
@@ -25,28 +26,20 @@ export function PromoteAdminPanel({
   onPromoted?: (sailor: SailorAdmin) => void;
 }) {
   const { toast, confirm } = useFeedback();
-  const [candidates, setCandidates] = useState<Candidate[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const load = async () => {
-    setLoading(true);
-    setError(null);
-    try {
+  const candidatesQuery = useQuery({
+    queryKey: adminQueryKeys.promote(),
+    enabled: isSuperadmin,
+    queryFn: async () => {
       const res = await fetch("/api/admin/promote");
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed");
-      setCandidates(data.candidates || []);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    void load();
-  }, []);
+      return (data.candidates || []) as Candidate[];
+    },
+  });
+  const candidates = candidatesQuery.data ?? [];
+  const loading = candidatesQuery.isFetching;
+  const error =
+    candidatesQuery.error instanceof Error ? candidatesQuery.error.message : null;
 
   const promote = async (sailorId: string, name: string) => {
     if (!isSuperadmin) {
@@ -68,7 +61,7 @@ export function PromoteAdminPanel({
       if (!res.ok) throw new Error(data.error || "Promote failed");
       onPromoted?.(data.sailor as SailorAdmin);
       toast.success(data.message || "Promoted");
-      await load();
+      await candidatesQuery.refetch();
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Failed"));
     }

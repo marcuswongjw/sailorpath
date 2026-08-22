@@ -140,13 +140,9 @@ export function AdminResultsPanel({
     return () => document.removeEventListener("mousedown", onDoc);
   }, [pickerOpen]);
 
-  // Clear sailor filter when switching events
-  useEffect(() => {
-    setSailorFilter("");
-  }, [selectedRegattaIdForResultEdit]);
-
   const pickRegatta = (id: string) => {
     setSelectedRegattaIdForResultEdit(id);
+    setSailorFilter("");
     setEditingResultId(null);
     setPickerOpen(false);
     setRegattaQuery("");

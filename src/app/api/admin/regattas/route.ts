@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattas } from "@/db/schema";
-import { asc, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { slugifyWithDate } from "@/lib/slug";
 import {
   isAnyIlcaClass,

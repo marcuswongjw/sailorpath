@@ -7,4 +7,9 @@ export const adminQueryKeys = {
   resultsAll: () => ["admin", "results", "all"] as const,
   resultsByRegatta: (regattaId: string) =>
     ["admin", "results", "regatta", regattaId] as const,
+  stats: () => ["admin", "stats"] as const,
+  audit: (days: number) => ["admin", "audit", days] as const,
+  claims: () => ["admin", "claims"] as const,
+  promote: () => ["admin", "promote"] as const,
+  support: (status: string) => ["admin", "support", status] as const,
 };

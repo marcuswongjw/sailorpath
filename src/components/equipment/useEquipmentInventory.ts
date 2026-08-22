@@ -8,8 +8,6 @@ import {
   displayName,
   groupEquipmentSections,
   isCustomBrand,
-  isMastSetCategory,
-  resolveBrand,
   type EquipmentBoatClass,
   type EquipmentCategory,
   type EquipmentItemDto,
@@ -54,6 +52,8 @@ export function useEquipmentInventory({
   // Sync with dual-class profile tabs (Optimist / ILCA 4)
   useEffect(() => {
     if (preferredBoatClass === "optimist" || preferredBoatClass === "ilca4") {
+      // Mirror the controlled profile tab when its external selection changes.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setClassTab(preferredBoatClass);
       if (preferredBoatClass === "ilca4") setIlcaUnlocked(true);
     }
@@ -114,6 +114,8 @@ export function useEquipmentInventory({
   }, [sailorId, mayHaveIlca, onGearByRegatta]);
 
   useEffect(() => {
+    // Initial inventory fetch; load is also reused after inventory mutations.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
   }, [load]);
 

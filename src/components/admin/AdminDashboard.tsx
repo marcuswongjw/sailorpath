@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Activity,
@@ -166,6 +167,8 @@ function AdminDashboardInner() {
     activeTab,
     editSubTab,
   });
+  const setSelectedRegattaIdForResultEdit =
+    data.setSelectedRegattaIdForResultEdit;
 
   const { claimsPendingCount, supportNewCount, inboxNotifCount } =
     useAdminNotifications(isSuperadmin);
@@ -214,12 +217,15 @@ function AdminDashboardInner() {
     invalidateRegattas: data.invalidateRegattas,
     invalidateResults: data.invalidateResults,
   });
+  const { setEditingSailorId } = sailors;
+  const { setEditingRegattaId } = regattas;
+  const { setEditingResultId } = results;
 
   // Seed results regatta from ?regattaId= before list default kicks in
   useEffect(() => {
     if (!initialNav.regattaId) return;
-    data.setSelectedRegattaIdForResultEdit(initialNav.regattaId);
-  }, [initialNav.regattaId, data.setSelectedRegattaIdForResultEdit]);
+    setSelectedRegattaIdForResultEdit(initialNav.regattaId);
+  }, [initialNav.regattaId, setSelectedRegattaIdForResultEdit]);
 
   // Keep URL in sync (deep links + refresh-safe context)
   useEffect(() => {
@@ -267,15 +273,11 @@ function AdminDashboardInner() {
   const goSub = useCallback(
     (sub: AdminEditSubTab) => {
       setEditSubTab(sub);
-      sailors.setEditingSailorId(null);
-      regattas.setEditingRegattaId(null);
-      results.setEditingResultId(null);
+      setEditingSailorId(null);
+      setEditingRegattaId(null);
+      setEditingResultId(null);
     },
-    [
-      sailors.setEditingSailorId,
-      regattas.setEditingRegattaId,
-      results.setEditingResultId,
-    ]
+    [setEditingSailorId, setEditingRegattaId, setEditingResultId]
   );
 
   if (loading) {
@@ -355,12 +357,12 @@ function AdminDashboardInner() {
               )}
             </button>
           )}
-          <a
+          <Link
             href="/admin/metrics"
             className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:border-orange-500/40 hover:text-white"
           >
             Metrics guide
-          </a>
+          </Link>
           <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[10px] font-black text-orange-400 capitalize">
             {adminRole}
           </span>

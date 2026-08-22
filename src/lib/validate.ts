@@ -132,7 +132,6 @@ export function asHttpUrl(
     return { ok: false, error: `${field} must start with http:// or https://` };
   }
   try {
-    // eslint-disable-next-line no-new
     new URL(s);
   } catch {
     return { ok: false, error: `${field} is not a valid URL` };

@@ -1,47 +1,42 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+
+type ClaimNotification = { status?: string };
 
 /**
  * Pending claims + new support message badge counts (60s poll).
  */
 export function useAdminNotifications(isSuperadmin: boolean) {
-  const [claimsPendingCount, setClaimsPendingCount] = useState(0);
-  const [supportNewCount, setSupportNewCount] = useState(0);
+  const claimsQuery = useQuery({
+    queryKey: adminQueryKeys.claims(),
+    enabled: isSuperadmin,
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      const res = await fetch("/api/admin/claims");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load claims");
+      return (data.claims || []) as ClaimNotification[];
+    },
+  });
 
-  useEffect(() => {
-    if (!isSuperadmin) return;
-    let cancelled = false;
-    const loadNotifs = async () => {
-      try {
-        const [cRes, sRes] = await Promise.all([
-          fetch("/api/admin/claims"),
-          fetch("/api/support?status=new"),
-        ]);
-        const cData = await cRes.json().catch(() => ({}));
-        const sData = await sRes.json().catch(() => ({}));
-        if (cancelled) return;
-        if (cRes.ok && Array.isArray(cData.claims)) {
-          setClaimsPendingCount(
-            cData.claims.filter(
-              (c: { status?: string }) => c.status === "pending"
-            ).length
-          );
-        }
-        if (sRes.ok && Array.isArray(sData.messages)) {
-          setSupportNewCount(sData.messages.length);
-        }
-      } catch {
-        /* ignore */
-      }
-    };
-    void loadNotifs();
-    const t = setInterval(loadNotifs, 60_000);
-    return () => {
-      cancelled = true;
-      clearInterval(t);
-    };
-  }, [isSuperadmin]);
+  const supportQuery = useQuery({
+    queryKey: adminQueryKeys.support("new"),
+    enabled: isSuperadmin,
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      const res = await fetch("/api/support?status=new");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load support");
+      return (data.messages || []) as unknown[];
+    },
+  });
+
+  const claimsPendingCount = (claimsQuery.data ?? []).filter(
+    (claim) => claim.status === "pending"
+  ).length;
+  const supportNewCount = supportQuery.data?.length ?? 0;
 
   const inboxNotifCount = claimsPendingCount + supportNewCount;
 

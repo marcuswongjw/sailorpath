@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import {
   ClipboardList,
   History,
@@ -9,6 +10,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 
 type AuditRow = {
   id: string;
@@ -44,34 +46,25 @@ export function AdminAuditLogPanel({
 }: {
   isSuperadmin: boolean;
 }) {
-  const [audit, setAudit] = useState<AuditRow[]>([]);
-  const [auditLoading, setAuditLoading] = useState(false);
-  const [auditError, setAuditError] = useState<string | null>(null);
   const [days, setDays] = useState(30);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  const loadAudit = useCallback(async () => {
-    if (!isSuperadmin) return;
-    setAuditLoading(true);
-    setAuditError(null);
-    try {
+  const auditQuery = useQuery({
+    queryKey: adminQueryKeys.audit(days),
+    enabled: isSuperadmin,
+    queryFn: async () => {
       const res = await fetch(
         `/api/admin/change-log?limit=100&days=${days}`
       );
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to load audit log");
-      setAudit(data.changes || []);
-    } catch (e) {
-      setAuditError(e instanceof Error ? e.message : "Error");
-      setAudit([]);
-    } finally {
-      setAuditLoading(false);
-    }
-  }, [days, isSuperadmin]);
-
-  useEffect(() => {
-    void loadAudit();
-  }, [loadAudit]);
+      return (data.changes || []) as AuditRow[];
+    },
+  });
+  const audit = auditQuery.data ?? [];
+  const auditLoading = auditQuery.isFetching;
+  const auditError =
+    auditQuery.error instanceof Error ? auditQuery.error.message : null;
 
   return (
     <div className="w-full min-w-0 space-y-4">
@@ -118,7 +111,7 @@ export function AdminAuditLogPanel({
             ))}
             <button
               type="button"
-              onClick={() => void loadAudit()}
+              onClick={() => void auditQuery.refetch()}
               disabled={auditLoading}
               className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white disabled:opacity-50"
             >

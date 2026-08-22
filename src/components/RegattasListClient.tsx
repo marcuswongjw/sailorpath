@@ -11,7 +11,6 @@ import {
   Trophy,
   Award,
   Filter,
-  CheckCircle2,
   List,
   LayoutGrid,
   Sparkles,
@@ -81,7 +80,6 @@ export function RegattasListClient({
   description = "Explore official Singapore Optimist ranking series regattas and local practice events.",
   badgeLabel = "Regatta Directory",
   detailBasePath = "/sg/optimist/regattas",
-  hideBoatClassFilter = false,
   accent = "orange",
 }: RegattasListProps) {
   const [query, setQuery] = useState("");
@@ -89,7 +87,6 @@ export function RegattasListClient({
   const [division, setDivision] = useState<string>("all");
   const [period, setPeriod] = useState<string>("all");
   const [geography, setGeography] = useState<string>("all");
-  const [boatClass, setBoatClass] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "compact">("grid");
 
   const accentBadge =
@@ -145,15 +142,6 @@ export function RegattasListClient({
     return Array.from(set).sort();
   }, [regattas]);
 
-  const classes = useMemo(() => {
-    const set = new Set<string>();
-    for (const r of regattas) {
-      const c = String(r.boatClass || "Optimist").trim();
-      if (c) set.add(c);
-    }
-    return Array.from(set).sort();
-  }, [regattas]);
-
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return regattas.filter((r) => {
@@ -171,18 +159,12 @@ export function RegattasListClient({
       ) {
         return false;
       }
-      if (
-        boatClass !== "all" &&
-        String(r.boatClass || "Optimist") !== boatClass
-      ) {
-        return false;
-      }
       if (!q) return true;
       return `${r.name} ${r.date} ${r.division || ""} ${r.geography || ""} ${r.boatClass || ""}`
         .toLowerCase()
         .includes(q);
     });
-  }, [regattas, query, rankingFilter, division, period, geography, boatClass]);
+  }, [regattas, query, rankingFilter, division, period, geography]);
 
   const grouped = useMemo(() => {
     const map = new Map<string, PublicRegatta[]>();

@@ -109,6 +109,8 @@ export function ParentDashboard() {
   }, []);
 
   useEffect(() => {
+    // This effect starts the client-only dashboard request; later refreshes reuse load().
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
   }, [load]);
 

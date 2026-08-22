@@ -18,31 +18,9 @@ function isOptimistClass(boatClass: string | null | undefined): boolean {
 }
 
 export default async function OptimistRegattasPage() {
+  let all;
   try {
-    const all = await getCachedPublicRegattas();
-    const regattas = all.filter((r) => isOptimistClass(r.boatClass));
-    return (
-      <RegattasListClient
-        title="Optimist regattas"
-        badgeLabel="SG Optimist"
-        description="Singapore Optimist ranking series and local events. ILCA 4 events are listed separately under ILCA 4 → SG Regattas."
-        detailBasePath="/sg/optimist/regattas"
-        hideBoatClassFilter
-        accent="orange"
-        regattas={regattas.map((r) => ({
-          id: r.id,
-          name: r.name,
-          slug: r.slug,
-          date: r.date,
-          totalFleetSize: r.totalFleetSize,
-          division: r.division,
-          raceCount: r.raceCount ?? null,
-          geography: r.geography ?? "SG",
-          boatClass: r.boatClass ?? "Optimist",
-          countsForRanking: r.countsForRanking !== false,
-        }))}
-      />
-    );
+    all = await getCachedPublicRegattas();
   } catch (e) {
     return (
       <DbOffline
@@ -50,4 +28,28 @@ export default async function OptimistRegattasPage() {
       />
     );
   }
+
+  const regattas = all.filter((r) => isOptimistClass(r.boatClass));
+  return (
+    <RegattasListClient
+      title="Optimist regattas"
+      badgeLabel="SG Optimist"
+      description="Singapore Optimist ranking series and local events. ILCA 4 events are listed separately under ILCA 4 → SG Regattas."
+      detailBasePath="/sg/optimist/regattas"
+      hideBoatClassFilter
+      accent="orange"
+      regattas={regattas.map((r) => ({
+        id: r.id,
+        name: r.name,
+        slug: r.slug,
+        date: r.date,
+        totalFleetSize: r.totalFleetSize,
+        division: r.division,
+        raceCount: r.raceCount ?? null,
+        geography: r.geography ?? "SG",
+        boatClass: r.boatClass ?? "Optimist",
+        countsForRanking: r.countsForRanking !== false,
+      }))}
+    />
+  );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
@@ -53,8 +53,6 @@ export function useAdminData({
   const queryClient = useQueryClient();
   const [selectedRegattaIdForResultEdit, setSelectedRegattaIdForResultEdit] =
     useState<string>("");
-  /** True once a full `?all=1` results payload has been cached this session. */
-  const [hasFullResults, setHasFullResults] = useState(false);
 
   const needsFullResults =
     activeTab === "analysis" ||
@@ -93,6 +91,9 @@ export function useAdminData({
     enabled: needRegattas,
   });
 
+  const selectedRegattaId =
+    selectedRegattaIdForResultEdit || regattasQuery.data?.[0]?.id || "";
+
   const resultsAllQuery = useQuery({
     queryKey: adminQueryKeys.resultsAll(),
     queryFn: fetchAdminResultsAll,
@@ -101,28 +102,18 @@ export function useAdminData({
 
   const resultsRegattaQuery = useQuery({
     queryKey: adminQueryKeys.resultsByRegatta(
-      selectedRegattaIdForResultEdit || "_"
+      selectedRegattaId || "_"
     ),
     queryFn: () =>
-      fetchAdminResultsForRegatta(selectedRegattaIdForResultEdit),
+      fetchAdminResultsForRegatta(selectedRegattaId),
     enabled:
       needResultsEditor &&
-      Boolean(selectedRegattaIdForResultEdit) &&
+      Boolean(selectedRegattaId) &&
       !needsFullResults,
   });
 
-  // Seed selected regatta when list first arrives
-  useEffect(() => {
-    if (!regattasQuery.data?.length) return;
-    setSelectedRegattaIdForResultEdit((current) => current || regattasQuery.data![0].id);
-  }, [regattasQuery.data]);
-
-  // Mark full results once ranking tabs have loaded them
-  useEffect(() => {
-    if (resultsAllQuery.isSuccess && resultsAllQuery.data) {
-      setHasFullResults(true);
-    }
-  }, [resultsAllQuery.isSuccess, resultsAllQuery.data]);
+  // Query data remains cached even when its ranking tab is disabled.
+  const hasFullResults = resultsAllQuery.data !== undefined;
 
   const sailorList = sailorsQuery.data ?? [];
   const regattaList = regattasQuery.data ?? [];
@@ -146,7 +137,7 @@ export function useAdminData({
     (needsFullResults && resultsAllQuery.isFetching) ||
     (needResultsEditor &&
       !needsFullResults &&
-      Boolean(selectedRegattaIdForResultEdit) &&
+      Boolean(selectedRegattaId) &&
       resultsRegattaQuery.isFetching);
 
   const dataLoadError =
@@ -188,7 +179,6 @@ export function useAdminData({
 
       if (hasFullResults || needsFullResults) {
         queryClient.setQueryData(adminQueryKeys.resultsAll(), next);
-        setHasFullResults(true);
         return;
       }
 
@@ -231,7 +221,6 @@ export function useAdminData({
           queryKey: adminQueryKeys.resultsAll(),
           queryFn: fetchAdminResultsAll,
         });
-        setHasFullResults(true);
       } catch {
         /* keep existing list */
       }
@@ -260,7 +249,6 @@ export function useAdminData({
         }
       } else {
         queryClient.setQueryData(adminQueryKeys.resultsAll(), incoming);
-        setHasFullResults(true);
       }
     },
     [queryClient, hasFullResults]
@@ -326,7 +314,7 @@ export function useAdminData({
     setRegattaList,
     resultsList,
     setResultsList,
-    selectedRegattaIdForResultEdit,
+    selectedRegattaIdForResultEdit: selectedRegattaId,
     setSelectedRegattaIdForResultEdit,
     loadedData: {
       sailors: sailorsQuery.isSuccess || sailorList.length > 0,
@@ -337,7 +325,6 @@ export function useAdminData({
         resultsList.length > 0,
     } as Record<AdminDataKey, boolean>,
     hasFullResults,
-    setHasFullResults,
     dataLoading,
     dataLoadError,
     refreshResultsList,

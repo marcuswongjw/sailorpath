@@ -14,6 +14,7 @@ export const VIEW_AS_STORAGE_KEY = "sp_view_as";
 
 /** Always admin — parent mode for superadmin is retired. */
 export function parseViewAs(_raw?: unknown): ViewAs {
+  void _raw;
   return "admin";
 }
 

@@ -267,6 +267,8 @@ export function buildProfileAnalytics(
     fleet: string;
   } | null
 ): ProfileAnalytics {
+  void _observations;
+  void _seriesStanding;
   const today = new Date().toLocaleDateString("en-CA", {
     timeZone: "Asia/Singapore",
   });
@@ -319,7 +321,6 @@ export function buildProfileAnalytics(
     fleet: "Gold" | "Silver" | "Open" | "—";
   }[];
 
-  const chronoAll = [...rankedAll].sort((a, b) => a.date.localeCompare(b.date));
   const goldRanked = rankedAll.filter((x) => x.fleet === "Gold");
   const silverRanked = rankedAll.filter((x) => x.fleet === "Silver");
 

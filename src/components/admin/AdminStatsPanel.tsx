@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import {
-  Activity,
   AlertTriangle,
   Database,
   HeartPulse,
@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import type { AdminStatsPayload } from "@/lib/adminStats";
 import { errorMessage } from "@/lib/errors";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 
 type Props = {
   isSuperadmin: boolean;
@@ -82,47 +83,49 @@ function fmt(n: number | null | undefined): string {
  * Lean live Stats — COUNT/DISTINCT cards from GET /api/admin/stats.
  */
 export function AdminStatsPanel({ isSuperadmin }: Props) {
-  const [stats, setStats] = useState<AdminStatsPayload | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const load = useCallback(async () => {
-    if (!isSuperadmin) return;
-    setLoading(true);
-    setError(null);
-    const ac = new AbortController();
-    const timer = window.setTimeout(() => ac.abort(), 20_000);
-    try {
-      const res = await fetch("/api/admin/stats", {
-        credentials: "include",
-        signal: ac.signal,
-        cache: "no-store",
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
+  const statsQuery = useQuery({
+    queryKey: adminQueryKeys.stats(),
+    enabled: isSuperadmin,
+    staleTime: 60_000,
+    retry: false,
+    queryFn: async ({ signal }) => {
+      const ac = new AbortController();
+      const onAbort = () => ac.abort();
+      signal.addEventListener("abort", onAbort, { once: true });
+      const timer = window.setTimeout(() => ac.abort(), 20_000);
+      try {
+        const res = await fetch("/api/admin/stats", {
+          credentials: "include",
+          signal: ac.signal,
+          cache: "no-store",
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(
+            typeof data.error === "string" ? data.error : "Failed to load stats"
+          );
+        }
+        return data as AdminStatsPayload;
+      } catch (e: unknown) {
+        const aborted =
+          (e instanceof DOMException && e.name === "AbortError") ||
+          (e instanceof Error && e.name === "AbortError");
         throw new Error(
-          typeof data.error === "string" ? data.error : "Failed to load stats"
+          aborted
+            ? "Stats timed out after 20s — try Refresh. If it keeps failing, check DATABASE_URL / usage_events."
+            : errorMessage(e, "Failed to load stats")
         );
+      } finally {
+        window.clearTimeout(timer);
+        signal.removeEventListener("abort", onAbort);
       }
-      setStats(data as AdminStatsPayload);
-    } catch (e: unknown) {
-      const aborted =
-        (e instanceof DOMException && e.name === "AbortError") ||
-        (e instanceof Error && e.name === "AbortError");
-      setError(
-        aborted
-          ? "Stats timed out after 20s — try Refresh. If it keeps failing, check DATABASE_URL / usage_events."
-          : errorMessage(e, "Failed to load stats")
-      );
-    } finally {
-      window.clearTimeout(timer);
-      setLoading(false);
-    }
-  }, [isSuperadmin]);
-
-  useEffect(() => {
-    void load();
-  }, [load]);
+    },
+  });
+  const stats = statsQuery.data ?? null;
+  const loading = statsQuery.isFetching;
+  const error = statsQuery.error
+    ? errorMessage(statsQuery.error, "Failed to load stats")
+    : null;
 
   if (!isSuperadmin) {
     return (
@@ -159,7 +162,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
           )}
           <button
             type="button"
-            onClick={() => void load()}
+            onClick={() => void statsQuery.refetch()}
             disabled={loading}
             className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-200 hover:border-orange-500/40 disabled:opacity-50"
           >

@@ -58,6 +58,8 @@ export function useAdminAuth() {
 
     try {
       const supabase = createBrowserSupabase();
+      // Initial auth synchronization; later calls come from the auth subscription.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       void loadRole();
       const { data } = supabase.auth.onAuthStateChange(() => {
         void loadRole();

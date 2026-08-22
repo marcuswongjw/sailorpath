@@ -155,6 +155,7 @@ export function SearchNationalityField({
             <button
               type="button"
               role="option"
+              aria-selected={!value}
               className="w-full px-3 py-2 text-left text-xs text-slate-400 hover:bg-white/5"
               onMouseDown={(e) => e.preventDefault()}
               onClick={clear}

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import {
   UserCheck,
   CheckCircle,
@@ -18,6 +19,7 @@ import {
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { Inbox } from "lucide-react";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 
 type ClaimRow = {
   id: string;
@@ -41,9 +43,6 @@ const RELATIONS: ClaimRelation[] = ["parent", "sailor", "other"];
 
 export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const { toast, confirm } = useFeedback();
-  const [claims, setClaims] = useState<ClaimRow[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<
     "all" | "pending" | "approved" | "rejected"
   >("pending");
@@ -53,31 +52,20 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   >({});
   const [busyId, setBusyId] = useState<string | null>(null);
 
-  const load = async () => {
-    setLoading(true);
-    setError(null);
-    try {
+  const claimsQuery = useQuery({
+    queryKey: adminQueryKeys.claims(),
+    enabled: isSuperadmin,
+    queryFn: async () => {
       const res = await fetch("/api/admin/claims");
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to load claims");
-      const list: ClaimRow[] = data.claims || [];
-      setClaims(list);
-      const drafts: Record<string, ClaimRelation> = {};
-      for (const c of list) {
-        const r = (c.effectiveRelation || "parent") as ClaimRelation;
-        drafts[c.id] = RELATIONS.includes(r) ? r : "parent";
-      }
-      setRelationDraft(drafts);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    void load();
-  }, []);
+      return (data.claims || []) as ClaimRow[];
+    },
+  });
+  const claims = claimsQuery.data ?? [];
+  const loading = claimsQuery.isFetching;
+  const error =
+    claimsQuery.error instanceof Error ? claimsQuery.error.message : null;
 
   const patch = async (
     id: string,
@@ -96,7 +84,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
-      await load();
+      await claimsQuery.refetch();
     } catch (e: unknown) {
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
@@ -178,7 +166,9 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
 
       <div className="w-full space-y-3">
         {visible.map((c) => {
-          const draft = relationDraft[c.id] || "parent";
+          const effectiveRelation = (c.effectiveRelation || "parent") as ClaimRelation;
+          const draft = relationDraft[c.id] ||
+            (RELATIONS.includes(effectiveRelation) ? effectiveRelation : "parent");
           const busy = busyId === c.id;
           return (
             <div

@@ -128,7 +128,6 @@ export function SailorProfileView({
   initialSeriesStanding = null,
   initialIlcaStanding = null,
   initialObservations = [],
-  initialEquipmentHistory = [],
   canSeePrivate = false,
   canClaim = false,
   isOwner = false,
@@ -137,7 +136,6 @@ export function SailorProfileView({
   demoMode = false,
   demoRole,
   onDemoClaim,
-  hidePrivacySection = false,
   profileVerified = false,
 }: SailorProfileViewProps) {
   const { toast, confirm } = useFeedback();
@@ -146,9 +144,6 @@ export function SailorProfileView({
   );
   const [isPublicDob, setIsPublicDob] = useState<boolean>(
     Boolean(initialSailor.isPublicDob)
-  );
-  const [isPublicEquipment, setIsPublicEquipment] = useState<boolean>(
-    Boolean(initialSailor.isPublicEquipment)
   );
   const [claimStatus, setClaimStatus] = useState<string | null>(null);
   const [claimMsg, setClaimMsg] = useState<string | null>(null);
@@ -220,10 +215,6 @@ export function SailorProfileView({
   });
   const [personalBusy, setPersonalBusy] = useState(false);
   const [personalMsg, setPersonalMsg] = useState<string | null>(null);
-  const [displayEquipment, setDisplayEquipment] = useState(initialEquipment);
-  const [equipHistory, setEquipHistory] = useState(
-    initialEquipmentHistory || []
-  );
   const [avatarBusy, setAvatarBusy] = useState(false);
   const [avatarMsg, setAvatarMsg] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -345,16 +336,8 @@ export function SailorProfileView({
         ...data.sailor,
         dob: data.sailor.dob ?? (form.dob || s.dob),
       }));
-      setDisplayEquipment({
-        hullBrand: data.sailor.hullBrand,
-        sailMake: data.sailor.sailMake,
-        foilBrand: data.sailor.foilBrand,
-        mast: data.sailor.mast,
-        notes: data.sailor.equipmentNotes,
-      });
       setIsPublicWeight(Boolean(data.sailor.isPublicWeight));
       setIsPublicDob(Boolean(data.sailor.isPublicDob));
-      setIsPublicEquipment(Boolean(data.sailor.isPublicEquipment));
       setForm((f) => ({
         ...f,
         handle: data.sailor.handle || f.handle,
@@ -836,20 +819,6 @@ export function SailorProfileView({
     Boolean(bornYear) && (isPublicDob || hasPrivateAccess || ownerView);
   const fullDobLabel =
     showFullDob && dobYmd ? formatFullDob(dobYmd) : null;
-
-  const hasEquipment =
-    showEquipment &&
-    displayEquipment &&
-    (displayEquipment.hullBrand ||
-      displayEquipment.sailMake ||
-      displayEquipment.foilBrand ||
-      displayEquipment.mast ||
-      displayEquipment.notes ||
-      displaySailor.hullBrandIlca4 ||
-      displaySailor.sailMakeIlca4 ||
-      displaySailor.foilBrandIlca4 ||
-      displaySailor.mastIlca4 ||
-      displaySailor.equipmentNotesIlca4);
 
   /** Gold-filtered when established_gold; otherwise all Optimist results */
   const optimistResultsGold = analytics.listResults;

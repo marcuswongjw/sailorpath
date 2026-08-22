@@ -58,7 +58,7 @@ export async function GET() {
       "Add DATABASE_URL (Supabase Transaction pooler :6543) on Vercel Production and Redeploy.";
   } else {
     try {
-      const { pgSql, getDatabaseUrlMeta, formatDbError } = await import("@/db");
+      const { pgSql, getDatabaseUrlMeta } = await import("@/db");
       urlMeta = getDatabaseUrlMeta();
 
       step = "select_1";

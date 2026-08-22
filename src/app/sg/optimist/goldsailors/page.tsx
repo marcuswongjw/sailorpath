@@ -16,20 +16,9 @@ export default async function GoldSailorsPage() {
     notFound();
   }
 
+  let sailors;
   try {
-    const sailors = await listSailors();
-
-    // Gold register: anyone with a gold entry (including those with drop date)
-    const goldSailors = sailors.filter((s) => Boolean(s.goldEntryDate));
-    goldSailors.sort((a, b) => {
-      // Dropped (have drop date) after active
-      const aDrop = a.dropDate ? 1 : 0;
-      const bDrop = b.dropDate ? 1 : 0;
-      if (aDrop !== bDrop) return aDrop - bDrop;
-      return a.name.localeCompare(b.name);
-    });
-
-    return <GoldSailorsRegister sailors={goldSailors} />;
+    sailors = await listSailors();
   } catch (e) {
     return (
       <DbOffline
@@ -37,4 +26,16 @@ export default async function GoldSailorsPage() {
       />
     );
   }
+
+  // Gold register: anyone with a gold entry (including those with drop date)
+  const goldSailors = sailors.filter((s) => Boolean(s.goldEntryDate));
+  goldSailors.sort((a, b) => {
+    // Dropped (have drop date) after active
+    const aDrop = a.dropDate ? 1 : 0;
+    const bDrop = b.dropDate ? 1 : 0;
+    if (aDrop !== bDrop) return aDrop - bDrop;
+    return a.name.localeCompare(b.name);
+  });
+
+  return <GoldSailorsRegister sailors={goldSailors} />;
 }

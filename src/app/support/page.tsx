@@ -12,17 +12,11 @@ function SupportForm() {
   const [email, setEmail] = useState("");
   const [topic, setTopic] = useState("bug");
   const [body, setBody] = useState("");
-  const [pageUrl, setPageUrl] = useState("");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setPageUrl(
-      searchParams.get("from") ||
-        (typeof document !== "undefined" ? document.referrer : "") ||
-        (typeof window !== "undefined" ? window.location.href : "")
-    );
     (async () => {
       try {
         const supabase = createBrowserSupabase();
@@ -34,13 +28,15 @@ function SupportForm() {
         /* optional */
       }
     })();
-  }, [searchParams]);
+  }, []);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setBusy(true);
     setError(null);
     try {
+      const pageUrl =
+        searchParams.get("from") || document.referrer || window.location.href;
       const res = await fetch("/api/support", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -150,7 +146,6 @@ function SupportForm() {
             placeholder="What happened? What were you trying to do?"
           />
         </label>
-        <input type="hidden" value={pageUrl} readOnly />
         <button
           type="submit"
           disabled={busy}

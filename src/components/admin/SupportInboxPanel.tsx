@@ -1,10 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { LifeBuoy, CheckCircle, Mail, Inbox } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 
 type Msg = {
   id: string;
@@ -19,31 +21,24 @@ type Msg = {
 
 export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const { toast } = useFeedback();
-  const [messages, setMessages] = useState<Msg[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<"new" | "all" | "resolved">("new");
 
-  const load = async () => {
-    setLoading(true);
-    setError(null);
-    try {
+  const messagesQuery = useQuery({
+    queryKey: adminQueryKeys.support(filter),
+    enabled: isSuperadmin,
+    queryFn: async () => {
       const q =
         filter === "all" ? "" : `?status=${filter === "resolved" ? "resolved" : "new"}`;
       const res = await fetch(`/api/support${q}`);
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to load");
-      setMessages(data.messages || []);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    void load();
-  }, [filter]);
+      return (data.messages || []) as Msg[];
+    },
+  });
+  const messages = messagesQuery.data ?? [];
+  const loading = messagesQuery.isFetching;
+  const error =
+    messagesQuery.error instanceof Error ? messagesQuery.error.message : null;
 
   const setStatus = async (id: string, status: string) => {
     if (!isSuperadmin) return;
@@ -55,7 +50,7 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Update failed");
-      await load();
+      await messagesQuery.refetch();
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Failed"));
     }
