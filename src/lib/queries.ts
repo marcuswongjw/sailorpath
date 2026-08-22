@@ -9,6 +9,7 @@ import {
   sailors,
   regattas,
   regattaResults,
+  regattaRaceResults,
   profiles,
   raceObservations,
   equipmentLogs,
@@ -403,7 +404,7 @@ export async function getResultsForRegatta(regattaId: string) {
 
 export async function getResultsForSailor(sailorId: string) {
   return withDb(async () => {
-    return db
+    const results = await db
       .select({
         resultId: regattaResults.id,
         rank: regattaResults.rank,
@@ -426,6 +427,45 @@ export async function getResultsForSailor(sailorId: string) {
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
       .where(eq(regattaResults.sailorId, sailorId))
       .orderBy(desc(regattas.date));
+
+    if (!results.length) {
+      return results.map((result) => ({ ...result, raceResults: [] }));
+    }
+    try {
+      const raceRows = await db
+        .select({
+          regattaResultId: regattaRaceResults.regattaResultId,
+          raceNumber: regattaRaceResults.raceNumber,
+          score: regattaRaceResults.score,
+          scoringCode: regattaRaceResults.scoringCode,
+          discarded: regattaRaceResults.discarded,
+          rawValue: regattaRaceResults.rawValue,
+        })
+        .from(regattaRaceResults)
+        .where(
+          inArray(
+            regattaRaceResults.regattaResultId,
+            results.map((result) => result.resultId)
+          )
+        )
+        .orderBy(asc(regattaRaceResults.raceNumber));
+      const racesByResult = new Map<string, typeof raceRows>();
+      for (const race of raceRows) {
+        const list = racesByResult.get(race.regattaResultId) || [];
+        list.push(race);
+        racesByResult.set(race.regattaResultId, list);
+      }
+      return results.map((result) => ({
+        ...result,
+        raceResults: racesByResult.get(result.resultId) || [],
+      }));
+    } catch (error) {
+      // Keep profiles available during rollout before migration 044 is applied.
+      if (/regatta_race_results|does not exist|relation/i.test(formatDbError(error))) {
+        return results.map((result) => ({ ...result, raceResults: [] }));
+      }
+      throw error;
+    }
   });
 }
 

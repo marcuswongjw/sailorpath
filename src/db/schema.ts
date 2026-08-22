@@ -215,6 +215,28 @@ export const regattaResults = pgTable(
   })
 );
 
+/** Official race scores published by the event organiser. */
+export const regattaRaceResults = pgTable(
+  "regatta_race_results",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    regattaResultId: uuid("regatta_result_id")
+      .references(() => regattaResults.id, { onDelete: "cascade" })
+      .notNull(),
+    raceNumber: integer("race_number").notNull(),
+    score: real("score").notNull(),
+    scoringCode: text("scoring_code"),
+    discarded: boolean("discarded").default(false).notNull(),
+    rawValue: text("raw_value").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    unq: unique().on(table.regattaResultId, table.raceNumber),
+    resultIdIdx: index("regatta_race_results_result_id_idx").on(table.regattaResultId),
+  })
+);
+
 export const sailorAliases = pgTable("sailor_aliases", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   sailorId: uuid("sailor_id")

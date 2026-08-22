@@ -22,6 +22,13 @@ export type ProfileResult = {
   raceCount?: number | null;
   countsForRanking?: boolean;
   boatClass?: string | null;
+  raceResults?: Array<{
+    raceNumber: number;
+    score: number;
+    scoringCode?: string | null;
+    discarded?: boolean;
+    rawValue?: string;
+  }>;
 };
 
 export type ProfileObservation = {

@@ -2092,10 +2092,14 @@ export function SailorProfileView({
                 const slug = res.regattaSlug || res.id;
                 const expanded = expandedRegattaId === regattaId;
                 const raceNotes = obsForRegatta(regattaId);
+                const officialRaces = (res.raceResults || []).slice().sort(
+                  (a, b) => a.raceNumber - b.raceNumber
+                );
                 const fleetSize = res.totalFleetSize ?? res.fleetSize;
                 const nonRanking = res.countsForRanking === false;
                 /** Public: expand only when there are visible notes; owners always can. */
-                const canExpand = raceNotes.length > 0 || ownerView;
+                const canExpand =
+                  officialRaces.length > 0 || raceNotes.length > 0 || ownerView;
                 const canLink =
                   !nonRanking &&
                   !isIlcaRow &&
@@ -2309,6 +2313,13 @@ export function SailorProfileView({
                             {raceNotes.length === 1 ? "" : "s"}
                           </span>
                         )}
+                        {officialRaces.length > 0 && (
+                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-200">
+                            <Trophy className="h-3 w-3" />
+                            {officialRaces.length} race score
+                            {officialRaces.length === 1 ? "" : "s"}
+                          </span>
+                        )}
                         {ownerView && (
                           <button
                             type="button"
@@ -2368,6 +2379,32 @@ export function SailorProfileView({
 
                     {expanded && canExpand && (
                       <div className="px-4 sm:px-5 pb-4 space-y-3 border-t border-white/[0.04] bg-black/15">
+                        {officialRaces.length > 0 && (
+                          <div className="pt-3 space-y-2">
+                            <div className="flex items-center gap-2 text-[11px] font-medium text-neutral-500 uppercase tracking-wide">
+                              <Trophy className="h-3.5 w-3.5 text-emerald-400" />
+                              Official race scores
+                            </div>
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                              {officialRaces.map((race) => (
+                                <div
+                                  key={race.raceNumber}
+                                  className="rounded-lg border border-white/[0.06] bg-black/20 px-3 py-2"
+                                >
+                                  <p className="text-[10px] text-neutral-500">Race {race.raceNumber}</p>
+                                  <p className="text-sm font-semibold text-neutral-100 tabular-nums">
+                                    {race.rawValue || race.score}
+                                  </p>
+                                  {race.scoringCode && (
+                                    <p className="text-[10px] font-medium text-amber-300">
+                                      {race.scoringCode}
+                                    </p>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                         <div className="flex items-center gap-2 pt-3 text-[11px] font-medium text-neutral-500 uppercase tracking-wide">
                           <BookOpen className="h-3.5 w-3.5 text-orange-400" />
                           Race observations

@@ -35,6 +35,13 @@ export interface RegattaResultItem {
   nettScore?: number | null;
   isDns?: boolean;
   notes?: string | null;
+  raceResults?: Array<{
+    raceNumber: number;
+    score: number;
+    scoringCode?: string | null;
+    discarded?: boolean;
+    rawValue?: string;
+  }>;
   [key: string]: unknown;
 }
 

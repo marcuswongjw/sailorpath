@@ -2,7 +2,14 @@ import { NextResponse } from "next/server";
 import { and, eq, inArray, max } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
-import { regattaResults, regattas, sailorAliases, sailors } from "@/db/schema";
+import {
+  regattaRaceResults,
+  regattaResults,
+  regattas,
+  sailorAliases,
+  sailors,
+} from "@/db/schema";
+import type { OfficialRaceResultInput } from "@/types/raceResult";
 import {
   buildSailorNameIndex,
   combinedNameSimilarity,
@@ -119,6 +126,7 @@ export async function POST(req: Request) {
         sailNumber?: string | null;
         dob?: string | number | null;
         birthYear?: string | number | null;
+        races?: OfficialRaceResultInput[];
       }[];
       createMissing?: boolean;
     } = body;
@@ -172,6 +180,25 @@ export async function POST(req: Request) {
           sailNumber,
           dob,
           dobIsYearOnly,
+          races: Array.isArray(r.races)
+            ? r.races
+                .filter(
+                  (race) =>
+                    Number.isInteger(Number(race.raceNumber)) &&
+                    Number(race.raceNumber) > 0 &&
+                    Number.isFinite(Number(race.score))
+                )
+                .slice(0, 100)
+                .map((race) => ({
+                  raceNumber: Number(race.raceNumber),
+                  score: Number(race.score),
+                  scoringCode: race.scoringCode
+                    ? String(race.scoringCode).trim().toUpperCase().slice(0, 12)
+                    : null,
+                  discarded: Boolean(race.discarded),
+                  rawValue: String(race.rawValue || race.score).trim().slice(0, 40),
+                }))
+            : [],
         };
       })
       .filter((r) => r.name.length > 0);
@@ -181,6 +208,26 @@ export async function POST(req: Request) {
         { error: "No named rows to import (check Name column)" },
         { status: 400 }
       );
+    }
+
+    const hasOfficialRaces = cleanRows.some((row) => row.races.length > 0);
+    if (hasOfficialRaces) {
+      try {
+        await db.select({ id: regattaRaceResults.id }).from(regattaRaceResults).limit(1);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        if (/regatta_race_results|does not exist|relation/i.test(message)) {
+          return NextResponse.json(
+            {
+              error:
+                "Official race-results storage is not installed yet. Run migration 044_official_race_results.sql in Supabase, then import again.",
+              migration: "044_official_race_results.sql",
+            },
+            { status: 503 }
+          );
+        }
+        throw error;
+      }
     }
 
     const slug = `${slugify(regattaName)}-${eventDate}`;
@@ -431,6 +478,10 @@ export async function POST(req: Request) {
       nationality: string | null;
     }[] = [];
     const pendingAliases: { sailorId: string; aliasName: string }[] = [];
+    const pendingOfficialRaces: {
+      sailorId: string;
+      races: OfficialRaceResultInput[];
+    }[] = [];
 
     // Snapshot DB before creates so "vs-db" warnings use pre-import sailors
     const dbBeforeImport = sailorList.map((s) => ({
@@ -857,6 +908,9 @@ export async function POST(req: Request) {
           birthYear,
           nationality: resultNat,
         });
+        if (row.races.length) {
+          pendingOfficialRaces.push({ sailorId, races: row.races });
+        }
         matched++;
 
         if (hit && hit.how !== "exact") {
@@ -906,6 +960,50 @@ export async function POST(req: Request) {
                   gender: r.gender,
                   birthYear: r.birthYear,
                   nationality: r.nationality,
+                  updatedAt: new Date(),
+                },
+              })
+          )
+        );
+      }
+    }
+
+    if (pendingOfficialRaces.length) {
+      const sailorIds = pendingOfficialRaces.map((item) => item.sailorId);
+      const storedResults = await db
+        .select({ id: regattaResults.id, sailorId: regattaResults.sailorId })
+        .from(regattaResults)
+        .where(
+          and(
+            eq(regattaResults.regattaId, reg.id),
+            inArray(regattaResults.sailorId, sailorIds)
+          )
+        );
+      const resultIdBySailor = new Map(
+        storedResults.map((result) => [result.sailorId, result.id])
+      );
+      const officialRows = pendingOfficialRaces.flatMap((item) => {
+        const regattaResultId = resultIdBySailor.get(item.sailorId);
+        if (!regattaResultId) return [];
+        return item.races.map((race) => ({ ...race, regattaResultId }));
+      });
+      const CHUNK = 25;
+      for (let i = 0; i < officialRows.length; i += CHUNK) {
+        await Promise.all(
+          officialRows.slice(i, i + CHUNK).map((race) =>
+            db
+              .insert(regattaRaceResults)
+              .values(race)
+              .onConflictDoUpdate({
+                target: [
+                  regattaRaceResults.regattaResultId,
+                  regattaRaceResults.raceNumber,
+                ],
+                set: {
+                  score: race.score,
+                  scoringCode: race.scoringCode,
+                  discarded: race.discarded,
+                  rawValue: race.rawValue,
                   updatedAt: new Date(),
                 },
               })

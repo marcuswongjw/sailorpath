@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { read, utils } from "xlsx";
 import {
   Upload,
   AlertTriangle,
   CheckCircle,
+  Download,
 } from "lucide-react";
 import {
   parseRegattaResultRows,
@@ -39,6 +39,15 @@ type Props = {
   onImportComplete?: () => void;
 };
 
+async function loadXlsx() {
+  const moduleUrl = "/vendor/xlsx/xlsx.mjs";
+  return (await import(
+    /* webpackIgnore: true */ moduleUrl
+  )) as typeof import("xlsx");
+}
+
+const MAX_IMPORT_FILE_BYTES = 15 * 1024 * 1024;
+
 /**
  * Regatta Excel import tab (self-contained state + handlers).
  */
@@ -70,6 +79,10 @@ export function AdminRegattaImport({
     }[]
   >([]);
   const [fullImportRows, setFullImportRows] = useState<RegattaImportRow[]>([]);
+  const [pdfScreenshots, setPdfScreenshots] = useState<
+    { pageNumber: number; dataUrl: string }[]
+  >([]);
+  const [sourceStem, setSourceStem] = useState("regatta-results");
   const [importMeta, setImportMeta] = useState({
     name: "",
     date: new Date().toISOString().slice(0, 10),
@@ -93,22 +106,78 @@ export function AdminRegattaImport({
     }
   };
 
+  const handlePdf = async (file: File) => {
+    setImportBusy(true);
+    setImportProgress(10);
+    setImportStatus(`Rendering and reading “${file.name}”…`);
+    setImportPossibleDuplicates([]);
+    setNationalityFlags([]);
+    try {
+      const { readRegattaPdf } = await import("@/lib/pdf/readRegattaPdf");
+      setImportProgress(30);
+      const parsed = await readRegattaPdf(file);
+      if (!parsed.rows.length) {
+        throw new Error(
+          "No result rows were found. This PDF must use a Sailwave-style results table with Rank, Name, race, Total, and Nett columns."
+        );
+      }
+      setImportProgress(85);
+      const title = parseRegattaTitle(file.name);
+      setFullImportRows(parsed.rows);
+      setPdfScreenshots(parsed.screenshots);
+      setSourceStem(title.stem || "regatta-results");
+      setImportMeta((meta) => ({
+        ...meta,
+        name: title.name || meta.name || title.stem,
+        date: title.date || meta.date,
+        division: title.division || meta.division,
+        boatClass: title.boatClass || meta.boatClass,
+        fleetSize: parsed.entries || parsed.rows.length,
+        raceCount: parsed.raceCount || "",
+      }));
+      setImportProgress(100);
+      setImportStatus(
+        `Converted ${parsed.rows.length} competitors and ${parsed.raceCount} races from ${parsed.screenshots.length} PDF page${parsed.screenshots.length === 1 ? "" : "s"}. Review the screenshots and table, download Excel if required, then import.`
+      );
+    } catch (error) {
+      setImportProgress(0);
+      setImportStatus(null);
+      setFullImportRows([]);
+      setPdfScreenshots([]);
+      toast.error(errorMessage(error, "Failed to read PDF"));
+    } finally {
+      setImportBusy(false);
+      window.setTimeout(() => setImportProgress(0), 800);
+    }
+  };
+
   const handleFile = (file: File) => {
+    if (file.size > MAX_IMPORT_FILE_BYTES) {
+      toast.error("File is too large. The upload limit is 15 MB.");
+      return;
+    }
+    if (file.type === "application/pdf" || /\.pdf$/i.test(file.name)) {
+      void handlePdf(file);
+      return;
+    }
     setImportBusy(true);
     setImportProgress(5);
     setImportStatus(`Reading “${file.name}”…`);
     setImportPossibleDuplicates([]);
     setNationalityFlags([]);
+    setPdfScreenshots([]);
+    setSourceStem(file.name.replace(/\.[^.]+$/, "") || "regatta-results");
     const reader = new FileReader();
     reader.onprogress = (ev) => {
       if (ev.lengthComputable && ev.total > 0) {
         setImportProgress(Math.min(40, Math.round((ev.loaded / ev.total) * 40)));
       }
     };
-    reader.onload = (ev) => {
+    reader.onload = async (ev) => {
       try {
         setImportProgress(45);
         setImportStatus("Parsing spreadsheet…");
+        const { read, utils } = await loadXlsx();
         const data = ev.target?.result;
         const workbook = read(data, { type: "array" });
         const sheetName = workbook.SheetNames[0];
@@ -120,6 +189,12 @@ export function AdminRegattaImport({
         });
         setImportProgress(80);
         const mapped = parseRegattaResultRows(json);
+        const parsedRaceCount = Math.max(
+          0,
+          ...mapped.flatMap((row) =>
+            row.races.map((race) => race.raceNumber)
+          )
+        );
         setFullImportRows(mapped);
         setImportPossibleDuplicates([]);
         setImportProgress(100);
@@ -147,6 +222,7 @@ export function AdminRegattaImport({
                 : m.division,
           boatClass: title.boatClass || m.boatClass,
           fleetSize: mapped.length || m.fleetSize,
+          raceCount: parsedRaceCount || m.raceCount,
         }));
 
         const titleNote = title.date
@@ -177,6 +253,32 @@ export function AdminRegattaImport({
       toast.error("Failed to read file");
     };
     reader.readAsArrayBuffer(file);
+  };
+
+  const downloadConvertedExcel = async () => {
+    const { utils, writeFile } = await loadXlsx();
+    const maxRace = Math.max(
+      0,
+      ...fullImportRows.flatMap((row) => row.races.map((race) => race.raceNumber))
+    );
+    const rows = fullImportRows.map((row) => {
+      const output: Record<string, string | number> = {
+        Rank: row.rank ?? "",
+        "Sail Num": row.sailNumber ?? "",
+        Name: row.name,
+      };
+      for (let raceNumber = 1; raceNumber <= maxRace; raceNumber++) {
+        const race = row.races.find((item) => item.raceNumber === raceNumber);
+        output[`R${raceNumber}`] = race?.rawValue || "";
+      }
+      output.Total = row.total ?? "";
+      output.Nett = row.nett ?? "";
+      return output;
+    });
+    const workbook = utils.book_new();
+    const worksheet = utils.json_to_sheet(rows);
+    utils.book_append_sheet(workbook, worksheet, "Results");
+    writeFile(workbook, `${sourceStem}-converted.xlsx`);
   };
 
   const handleDrop = (e: React.DragEvent) => {
@@ -439,10 +541,12 @@ export function AdminRegattaImport({
         >
           <Upload className="h-10 w-10 text-orange-500 mb-4" />
           <p className="text-sm font-bold text-white mb-2">
-            Drag and drop your Regatta Excel/CSV file here
+            Drag and drop your Regatta PDF, Excel, or CSV file here
           </p>
           <p className="text-xs text-slate-500 mb-4 max-w-3xl">
-            Supports .xlsx, .xls, and .csv. Required: Name (+ Rank/Nett if
+            Supports .pdf, .xlsx, .xls, and .csv. PDFs are rendered page by
+            page for review and converted into a downloadable Excel workbook.
+            Required: Name (+ Rank/Nett if
             available). Optional: Total Score, Club, Nationality, Sail Number,
             Birth Year / DOB. When club / school / sail # differ from the
             profile, the{" "}
@@ -458,7 +562,7 @@ export function AdminRegattaImport({
               type="file"
               onChange={handleFileChange}
               className="hidden"
-              accept=".xlsx,.xls,.csv"
+              accept=".pdf,.xlsx,.xls,.csv,application/pdf"
             />
           </label>
         </div>
@@ -602,7 +706,82 @@ export function AdminRegattaImport({
         )}
 
         {fullImportRows.length > 0 && (
-          <div className="mt-6 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-left">
+          <div className="mt-6 w-full space-y-5 text-left">
+            {pdfScreenshots.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <p className="text-xs font-bold text-white">PDF page review</p>
+                    <p className="text-[11px] text-slate-500">
+                      Compare these source pages with the extracted race table before importing.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => void downloadConvertedExcel()}
+                    className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-bold text-emerald-200 hover:bg-emerald-500/20"
+                  >
+                    <Download className="h-4 w-4" />
+                    Download converted Excel
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                  {pdfScreenshots.map((page) => (
+                    <figure key={page.pageNumber} className="overflow-hidden rounded-xl border border-white/10 bg-white">
+                      {/* The image is generated locally from the admin-selected PDF. */}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={page.dataUrl} alt={`PDF page ${page.pageNumber}`} className="h-auto w-full" />
+                      <figcaption className="bg-slate-950 px-3 py-1.5 text-[10px] text-slate-400">
+                        Page {page.pageNumber}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="overflow-x-auto rounded-xl border border-white/10">
+              <table className="min-w-full text-[11px]">
+                <thead className="bg-slate-950 text-slate-400">
+                  <tr>
+                    <th className="px-3 py-2 text-left">Rank</th>
+                    <th className="px-3 py-2 text-left">Sail</th>
+                    <th className="px-3 py-2 text-left">Name</th>
+                    {Array.from(
+                      { length: Number(importMeta.raceCount) || 0 },
+                      (_, index) => (
+                        <th key={index} className="px-3 py-2 text-right">R{index + 1}</th>
+                      )
+                    )}
+                    <th className="px-3 py-2 text-right">Nett</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 bg-slate-900/60 text-slate-200">
+                  {fullImportRows.slice(0, 12).map((row, index) => (
+                    <tr key={`${row.rank}-${row.name}-${index}`}>
+                      <td className="px-3 py-2">{row.rank ?? "—"}</td>
+                      <td className="px-3 py-2 whitespace-nowrap">{row.sailNumber || "—"}</td>
+                      <td className="px-3 py-2 whitespace-nowrap font-medium">{row.name}</td>
+                      {Array.from(
+                        { length: Number(importMeta.raceCount) || 0 },
+                        (_, raceIndex) => {
+                          const race = row.races.find((item) => item.raceNumber === raceIndex + 1);
+                          return <td key={raceIndex} className="px-3 py-2 text-right whitespace-nowrap">{race?.rawValue || "—"}</td>;
+                        }
+                      )}
+                      <td className="px-3 py-2 text-right">{row.nett ?? "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {fullImportRows.length > 12 && (
+                <p className="border-t border-white/5 bg-slate-950 px-3 py-2 text-[10px] text-slate-500">
+                  Showing 12 of {fullImportRows.length} competitors. The Excel download contains every row.
+                </p>
+              )}
+            </div>
+
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <label className="text-xs text-slate-400 sm:col-span-2">
               Regatta name
               <input
@@ -791,6 +970,7 @@ export function AdminRegattaImport({
                 ? `Importing… ${Math.round(importProgress)}%`
                 : `Import ${fullImportRows.length} rows to database`}
             </button>
+          </div>
           </div>
         )}
       </div>

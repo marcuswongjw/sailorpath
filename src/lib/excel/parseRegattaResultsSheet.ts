@@ -1,4 +1,5 @@
 import { excelDateToIso } from "@/lib/normalize";
+import type { OfficialRaceResultInput } from "@/types/raceResult";
 
 /** Competitor row from a regatta results spreadsheet. */
 export type RegattaImportRow = {
@@ -13,6 +14,7 @@ export type RegattaImportRow = {
   sailNumber: string | null;
   dob: string | null;
   birthYear: number | null;
+  races: OfficialRaceResultInput[];
 };
 
 function emptyRow(): RegattaImportRow {
@@ -28,6 +30,7 @@ function emptyRow(): RegattaImportRow {
     sailNumber: null,
     dob: null,
     birthYear: null,
+    races: [],
   };
 }
 
@@ -116,6 +119,17 @@ export function parseRegattaResultRows(
             !/year/i.test(k)
         );
 
+      const raceKeys = keys
+        .map((key) => {
+          const match = key.trim().match(/^R(?:ace\s*)?(\d+)$/i);
+          return match ? { key, raceNumber: Number(match[1]) } : null;
+        })
+        .filter(
+          (value): value is { key: string; raceNumber: number } =>
+            value != null && value.raceNumber > 0
+        )
+        .sort((a, b) => a.raceNumber - b.raceNumber);
+
       if (!nameKey) return emptyRow();
       const name = String(r[nameKey] ?? "").trim();
       if (!name || /^name$/i.test(name)) return emptyRow();
@@ -156,6 +170,11 @@ export function parseRegattaResultRows(
           : "";
       const sailNumber =
         sailRaw && !/^n\/?a$/i.test(sailRaw) ? sailRaw : null;
+      const races = raceKeys
+        .map(({ key, raceNumber }) =>
+          parseOfficialRaceValue(r[key], raceNumber)
+        )
+        .filter((race): race is OfficialRaceResultInput => race != null);
 
       let birthYear: number | null = null;
       let dob: string | null = null;
@@ -197,9 +216,30 @@ export function parseRegattaResultRows(
         sailNumber,
         dob,
         birthYear,
+        races,
       };
     })
     .filter((r) => r.name);
+}
+
+/** Parse Sailwave-style cells such as `4.0`, `(12.0)`, or `52.0 DSQ`. */
+export function parseOfficialRaceValue(
+  value: unknown,
+  raceNumber: number
+): OfficialRaceResultInput | null {
+  const rawValue = String(value ?? "").trim();
+  if (!rawValue) return null;
+  const scoreMatch = rawValue.match(/-?\d+(?:\.\d+)?/);
+  const score = scoreMatch ? Number(scoreMatch[0]) : Number.NaN;
+  if (!Number.isFinite(score)) return null;
+  const codeMatch = rawValue.match(/\b[A-Z]{2,5}\b/i);
+  return {
+    raceNumber,
+    score,
+    scoringCode: codeMatch ? codeMatch[0].toUpperCase() : null,
+    discarded: /^\s*[([]/.test(rawValue),
+    rawValue,
+  };
 }
 
 export function summarizeRegattaImport(rows: RegattaImportRow[]): string {
