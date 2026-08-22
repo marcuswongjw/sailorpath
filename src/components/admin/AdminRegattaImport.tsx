@@ -5,7 +5,6 @@ import {
   Upload,
   AlertTriangle,
   CheckCircle,
-  Download,
 } from "lucide-react";
 import {
   parseRegattaResultRows,
@@ -82,7 +81,6 @@ export function AdminRegattaImport({
   const [pdfScreenshots, setPdfScreenshots] = useState<
     { pageNumber: number; dataUrl: string }[]
   >([]);
-  const [sourceStem, setSourceStem] = useState("regatta-results");
   const [importMeta, setImportMeta] = useState({
     name: "",
     date: new Date().toISOString().slice(0, 10),
@@ -123,22 +121,32 @@ export function AdminRegattaImport({
       }
       setImportProgress(85);
       const title = parseRegattaTitle(file.name);
-      setFullImportRows(parsed.rows);
-      setPdfScreenshots(parsed.screenshots);
-      setSourceStem(title.stem || "regatta-results");
-      setImportMeta((meta) => ({
-        ...meta,
-        name: title.name || meta.name || title.stem,
-        date: title.date || meta.date,
-        division: title.division || meta.division,
-        boatClass: title.boatClass || meta.boatClass,
+      const nextMeta = {
+        ...importMeta,
+        name: title.name || importMeta.name || title.stem,
+        date: title.date || importMeta.date,
+        division: title.division || importMeta.division,
+        boatClass: title.boatClass || importMeta.boatClass,
         fleetSize: parsed.entries || parsed.rows.length,
         raceCount: parsed.raceCount || "",
-      }));
-      setImportProgress(100);
+      };
+      setFullImportRows(parsed.rows);
+      setPdfScreenshots(parsed.screenshots);
+      setImportMeta(nextMeta);
+      if (!title.date) {
+        setImportProgress(100);
+        setImportStatus(
+          `Extracted ${parsed.rows.length} competitors and ${parsed.raceCount} races. Add the event date below, then select Import.`
+        );
+        toast.info(
+          "Results were extracted, but the filename has no valid date. Add the event date before importing."
+        );
+        return;
+      }
       setImportStatus(
-        `Converted ${parsed.rows.length} competitors and ${parsed.raceCount} races from ${parsed.screenshots.length} PDF page${parsed.screenshots.length === 1 ? "" : "s"}. Review the screenshots and table, download Excel if required, then import.`
+        `Extracted ${parsed.rows.length} competitors and ${parsed.raceCount} races. Uploading directly to SailorPath…`
       );
+      await handleImportToDb(parsed.rows, nextMeta);
     } catch (error) {
       setImportProgress(0);
       setImportStatus(null);
@@ -166,7 +174,6 @@ export function AdminRegattaImport({
     setImportPossibleDuplicates([]);
     setNationalityFlags([]);
     setPdfScreenshots([]);
-    setSourceStem(file.name.replace(/\.[^.]+$/, "") || "regatta-results");
     const reader = new FileReader();
     reader.onprogress = (ev) => {
       if (ev.lengthComputable && ev.total > 0) {
@@ -255,32 +262,6 @@ export function AdminRegattaImport({
     reader.readAsArrayBuffer(file);
   };
 
-  const downloadConvertedExcel = async () => {
-    const { utils, writeFile } = await loadXlsx();
-    const maxRace = Math.max(
-      0,
-      ...fullImportRows.flatMap((row) => row.races.map((race) => race.raceNumber))
-    );
-    const rows = fullImportRows.map((row) => {
-      const output: Record<string, string | number> = {
-        Rank: row.rank ?? "",
-        "Sail Num": row.sailNumber ?? "",
-        Name: row.name,
-      };
-      for (let raceNumber = 1; raceNumber <= maxRace; raceNumber++) {
-        const race = row.races.find((item) => item.raceNumber === raceNumber);
-        output[`R${raceNumber}`] = race?.rawValue || "";
-      }
-      output.Total = row.total ?? "";
-      output.Nett = row.nett ?? "";
-      return output;
-    });
-    const workbook = utils.book_new();
-    const worksheet = utils.json_to_sheet(rows);
-    utils.book_append_sheet(workbook, worksheet, "Results");
-    writeFile(workbook, `${sourceStem}-converted.xlsx`);
-  };
-
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -322,7 +303,9 @@ export function AdminRegattaImport({
    * When the import POST times out / drops, the browser reports "Failed to fetch"
    * even though rows may already be committed. Check whether the regatta landed.
    */
-  const recoverAfterNetworkError = async (): Promise<{
+  const recoverAfterNetworkError = async (
+    meta = importMeta
+  ): Promise<{
     ok: boolean;
     message: string;
     regatta?: RegattaAdmin;
@@ -334,8 +317,8 @@ export function AdminRegattaImport({
       if (!res.ok) return { ok: false, message: "" };
       const data = await res.json();
       const list: RegattaAdmin[] = data.regattas || [];
-      const name = importMeta.name.trim().toLowerCase();
-      const date = importMeta.date.slice(0, 10);
+      const name = meta.name.trim().toLowerCase();
+      const date = meta.date.slice(0, 10);
       const reg = list.find((r) => {
         const rn = String(r.name || "")
           .trim()
@@ -375,25 +358,30 @@ export function AdminRegattaImport({
     }
   };
 
-  const handleImportToDb = async () => {
+  async function handleImportToDb(
+    rowsOverride?: RegattaImportRow[],
+    metaOverride?: typeof importMeta
+  ) {
+    const rowsToImport = rowsOverride || fullImportRows;
+    const meta = metaOverride || importMeta;
     if (!isSuperadmin) {
       toast.error("Error: 403 Forbidden. Only Superadmins can import.");
       return;
     }
-    if (!fullImportRows.length || !importMeta.name || !importMeta.date) {
+    if (!rowsToImport.length || !meta.name || !meta.date) {
       toast.error("Parse a file and set regatta name + date first.");
       return;
     }
-    if (fullImportRows.length > MAX_IMPORT_ROWS) {
+    if (rowsToImport.length > MAX_IMPORT_ROWS) {
       toast.error(
-        `Too many rows (${fullImportRows.length}). Split the sheet — max ${MAX_IMPORT_ROWS} per import.`
+        `Too many rows (${rowsToImport.length}). Split the sheet — max ${MAX_IMPORT_ROWS} per import.`
       );
       return;
     }
     setImportBusy(true);
     setImportProgress(8);
     setImportStatus(
-      `Importing ${fullImportRows.length} rows to database…`
+      `Importing ${rowsToImport.length} rows to database…`
     );
     setImportPossibleDuplicates([]);
     // Slow crawl while waiting on server (no real stream from API)
@@ -409,18 +397,18 @@ export function AdminRegattaImport({
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
-          regattaName: importMeta.name,
-          eventDate: importMeta.date,
-          division: importMeta.division,
-          totalFleetSize: importMeta.fleetSize || fullImportRows.length,
-          boatClass: importMeta.boatClass,
-          geography: importMeta.geography,
-          countsForRanking: importMeta.countsForRanking,
+          regattaName: meta.name,
+          eventDate: meta.date,
+          division: meta.division,
+          totalFleetSize: meta.fleetSize || rowsToImport.length,
+          boatClass: meta.boatClass,
+          geography: meta.geography,
+          countsForRanking: meta.countsForRanking,
           raceCount:
-            importMeta.raceCount === "" || importMeta.raceCount == null
+            meta.raceCount === "" || meta.raceCount == null
               ? null
-              : Number(importMeta.raceCount),
-          rows: fullImportRows,
+              : Number(meta.raceCount),
+          rows: rowsToImport,
           createMissing: true,
         }),
       });
@@ -495,7 +483,7 @@ export function AdminRegattaImport({
       if (isNetworkDrop) {
         setImportProgress(85);
         setImportStatus("Connection dropped — checking if import saved…");
-        const recovered = await recoverAfterNetworkError();
+        const recovered = await recoverAfterNetworkError(meta);
         if (recovered.ok) {
           setImportProgress(100);
           setImportStatus(recovered.message);
@@ -523,7 +511,7 @@ export function AdminRegattaImport({
       setImportBusy(false);
       setTimeout(() => setImportProgress(0), 1200);
     }
-  };
+  }
 
   return (
     <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
@@ -544,8 +532,9 @@ export function AdminRegattaImport({
             Drag and drop your Regatta PDF, Excel, or CSV file here
           </p>
           <p className="text-xs text-slate-500 mb-4 max-w-3xl">
-            Supports .pdf, .xlsx, .xls, and .csv. PDFs are rendered page by
-            page for review and converted into a downloadable Excel workbook.
+            Supports .pdf, .xlsx, .xls, and .csv. PDFs are extracted and saved
+            directly to SailorPath in one step when the filename includes the
+            event date.
             Required: Name (+ Rank/Nett if
             available). Optional: Total Score, Club, Nationality, Sail Number,
             Birth Year / DOB. When club / school / sail # differ from the
@@ -709,21 +698,12 @@ export function AdminRegattaImport({
           <div className="mt-6 w-full space-y-5 text-left">
             {pdfScreenshots.length > 0 && (
               <div className="space-y-3">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div>
-                    <p className="text-xs font-bold text-white">PDF page review</p>
-                    <p className="text-[11px] text-slate-500">
-                      Compare these source pages with the extracted race table before importing.
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => void downloadConvertedExcel()}
-                    className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-bold text-emerald-200 hover:bg-emerald-500/20"
-                  >
-                    <Download className="h-4 w-4" />
-                    Download converted Excel
-                  </button>
+                <div>
+                  <p className="text-xs font-bold text-white">PDF page review</p>
+                  <p className="text-[11px] text-slate-500">
+                    Source pages remain on this screen so you can verify the
+                    automatically uploaded results.
+                  </p>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                   {pdfScreenshots.map((page) => (
@@ -776,7 +756,8 @@ export function AdminRegattaImport({
               </table>
               {fullImportRows.length > 12 && (
                 <p className="border-t border-white/5 bg-slate-950 px-3 py-2 text-[10px] text-slate-500">
-                  Showing 12 of {fullImportRows.length} competitors. The Excel download contains every row.
+                  Showing 12 of {fullImportRows.length} competitors. Every
+                  extracted row is included in the website import.
                 </p>
               )}
             </div>
