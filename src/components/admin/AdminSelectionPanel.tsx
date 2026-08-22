@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   type SailorRecord,
   type RegattaRecord,
@@ -10,6 +10,7 @@ import {
   ASIAN_OCEANIA_2026,
   PERTH_CAMP_2026,
   computeCombinedSelectionScores,
+  getSelectionDataStatus,
   matchSelectionEvents,
   selectAsianOceaniaTeam,
   selectPerthCamp,
@@ -24,6 +25,7 @@ import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import { Plane, Tent, Loader2, Trophy } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { fetchAdminResultsForRegatta } from "@/components/admin/adminFetch";
 
 type Props = {
   sailors: SailorAdmin[];
@@ -87,6 +89,7 @@ function toResultRecords(rows: ResultAdmin[]): RegattaResultRecord[] {
     totalScore: r.totalScore,
     isDns: Boolean(r.isDns || r.isDNS),
     isOverseasCommitment: Boolean(r.isOverseasCommitment),
+    raceResults: r.raceResults,
   }));
 }
 
@@ -104,6 +107,8 @@ export function AdminSelectionPanel({
   const [selectedDropIds, setSelectedDropIds] = useState<Set<string>>(
     new Set()
   );
+  const [selectionResults, setSelectionResults] = useState<ResultAdmin[] | null>(null);
+  const [selectionLoadError, setSelectionLoadError] = useState<string | null>(null);
 
   const sailorRecs = useMemo(() => toSailorRecords(sailors), [sailors]);
   const regattaRecs = useMemo(() => toRegattaRecords(regattas), [regattas]);
@@ -194,14 +199,53 @@ export function AdminSelectionPanel({
     () => matchSelectionEvents(regattaRecs, ASIAN_OCEANIA_2026.events),
     [regattaRecs]
   );
+  const matchedRegattaKey = useMemo(
+    () =>
+      selectionMatched
+        .map((match) => match.regatta?.id)
+        .filter(Boolean)
+        .join(","),
+    [selectionMatched]
+  );
+
+  useEffect(() => {
+    const ids = matchedRegattaKey ? matchedRegattaKey.split(",") : [];
+    let cancelled = false;
+    if (!ids.length) return;
+    void Promise.all(ids.map((id) => fetchAdminResultsForRegatta(id, true)))
+      .then((groups) => {
+        if (!cancelled) setSelectionResults(groups.flat());
+      })
+      .catch((error: unknown) => {
+        if (!cancelled) {
+          setSelectionResults([]);
+          setSelectionLoadError(
+            error instanceof Error ? error.message : "Could not load official race scores."
+          );
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [matchedRegattaKey]);
+
+  const selectionResultRecs = useMemo(
+    () => toResultRecords(selectionResults || []),
+    [selectionResults]
+  );
+  const selectionLoading = Boolean(matchedRegattaKey) && selectionResults === null && !selectionLoadError;
+  const selectionStatus = useMemo(
+    () => getSelectionDataStatus(selectionMatched, selectionResultRecs),
+    [selectionMatched, selectionResultRecs]
+  );
   const combinedScores = useMemo(
     () =>
       computeCombinedSelectionScores(
         selectionMatched,
         sailorRecs,
-        resultRecs
+        selectionResultRecs
       ),
-    [selectionMatched, sailorRecs, resultRecs]
+    [selectionMatched, sailorRecs, selectionResultRecs]
   );
   const asianTeam = useMemo(
     () => selectAsianOceaniaTeam(combinedScores),
@@ -226,8 +270,8 @@ export function AdminSelectionPanel({
             </h2>
             <p className="text-[12px] text-slate-400 mt-1 max-w-3xl leading-relaxed">
               Asian Oceania and Perth Camp teams from shared 2026 selection
-              events. Combined place = sum of Gold finishing places (missing
-              event → fleet size + 1).
+              events. The shortlist now combines every Gold Fleet race, then
+              applies the policy discard table and Appendix A8 tie-breaks.
             </p>
             <p className="text-[11px] text-slate-500 mt-1 max-w-3xl">
               Participation rule: gold sailors need ≥
@@ -371,9 +415,24 @@ export function AdminSelectionPanel({
           2026 selection events (shared by Asian Champs &amp; Perth Camp)
         </h3>
         <p className="text-[11px] text-slate-500">
-          Combined score = sum of finishing places in Optimist Gold. Missing
-          event → fleet size + 1 penalty. Match regattas by name + date window.
+          Every non-medal race is combined. An absent sailor receives fleet
+          size + 1 for each race in that event. Current combined series: {selectionStatus.usableRaceCount}{" "}
+          races, {selectionStatus.discardCount} discard{selectionStatus.discardCount === 1 ? "" : "s"}.
         </p>
+        {selectionLoading && (
+          <p className="text-[11px] text-sky-300 inline-flex items-center gap-1.5">
+            <Loader2 className="h-3 w-3 animate-spin" /> Loading official race scores…
+          </p>
+        )}
+        {selectionLoadError && (
+          <p className="text-[11px] text-rose-300">Race score load failed: {selectionLoadError}</p>
+        )}
+        {!selectionLoading && selectionStatus.warnings.length > 0 && (
+          <div className="rounded-lg border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-[11px] text-amber-200">
+            <span className="font-bold">Provisional / incomplete:</span>{" "}
+            {selectionStatus.warnings.join(" ")}
+          </div>
+        )}
         <ul className="space-y-1.5">
           {selectionMatched.map((m) => (
             <li
@@ -405,6 +464,15 @@ export function AdminSelectionPanel({
         </ul>
       </div>
 
+      <div className="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4 text-[11px] text-sky-100/80 leading-relaxed">
+        <span className="font-bold text-sky-200">Policy checks before confirmation:</span>{" "}
+        this is a computational shortlist, not a final selection. The panel must
+        verify Singapore citizenship, affiliated-club membership, regular 12–16
+        weekly water hours, at least two weekly fitness sessions, athlete-agreement
+        readiness, financial standing, fitness, attendance, attitude and coach input.
+        The selection committee may alter team size, cancel selection or decline to select.
+      </div>
+
       {/* ── Asian Oceania + Perth ────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div className="glass-panel rounded-2xl border border-white/5 overflow-hidden">
@@ -419,6 +487,9 @@ export function AdminSelectionPanel({
               </p>
               <p className="text-[10px] text-slate-600 mt-1">
                 {ASIAN_OCEANIA_2026.notes}
+              </p>
+              <p className="text-[10px] text-violet-300/70 mt-1">
+                {ASIAN_OCEANIA_2026.funding}
               </p>
             </div>
           </div>
@@ -443,12 +514,13 @@ export function AdminSelectionPanel({
                     </span>
                     <span className="font-semibold text-white">{s.name}</span>
                     <span className="block text-[10px] text-slate-500 mt-0.5">
-                      {s.gender || "?"} · BY {s.birthYear ?? "—"} · combined{" "}
-                      {s.combinedScore}
+                      {s.gender || "?"} · BY {s.birthYear ?? "—"} · net{" "}
+                      {s.combinedScore} (gross {s.grossScore}; {s.discardCount}{" "}
+                      discard{s.discardCount === 1 ? "" : "s"})
                       {s.eventScores
                         .map(
                           (e) =>
-                            ` · ${e.missing ? "miss" : e.isDns ? "DNS" : e.rank}`
+                            ` · ${e.missingEvent ? "miss" : e.grossScore}`
                         )
                         .join("")}
                     </span>
@@ -456,6 +528,11 @@ export function AdminSelectionPanel({
                 </li>
               ))}
             </ol>
+          )}
+          {asianTeam.reserves.length > 0 && (
+            <div className="border-t border-white/5 px-4 py-2 text-[10px] text-slate-500">
+              Additional-entry order: {asianTeam.reserves.slice(0, 5).map((s) => `${s.name} (${s.combinedScore})`).join(" · ")}
+            </div>
           )}
         </div>
 
@@ -471,6 +548,9 @@ export function AdminSelectionPanel({
               </p>
               <p className="text-[10px] text-slate-600 mt-1">
                 {PERTH_CAMP_2026.notes}
+              </p>
+              <p className="text-[10px] text-emerald-300/70 mt-1">
+                {PERTH_CAMP_2026.funding}
               </p>
             </div>
           </div>
@@ -505,7 +585,7 @@ export function AdminSelectionPanel({
                               {p.name}
                             </span>
                             <span className="text-slate-500 ml-1.5">
-                              {p.slot} · combined {p.combinedScore}
+                              {p.slot} · net {p.combinedScore} (gross {p.grossScore})
                             </span>
                           </span>
                         </li>
@@ -524,7 +604,7 @@ export function AdminSelectionPanel({
         <div className="glass-panel rounded-2xl border border-white/5 overflow-hidden">
           <div className="px-4 py-3 border-b border-white/5">
             <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-              Selection events · combined place leaderboard
+              Selection events · combined race-score leaderboard
             </h3>
           </div>
           <div className="overflow-x-auto max-h-64 overflow-y-auto">
@@ -540,7 +620,7 @@ export function AdminSelectionPanel({
                       {m.def.label.slice(0, 12)}…
                     </th>
                   ))}
-                  <th className="px-3 py-2">Combined</th>
+                  <th className="px-3 py-2">Net</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -561,15 +641,14 @@ export function AdminSelectionPanel({
                         key={e.regattaId}
                         className="px-3 py-1.5 tabular-nums"
                       >
-                        {e.missing
-                          ? `—(${e.score})`
-                          : e.isDns
-                            ? `DNS(${e.score})`
-                            : e.rank}
+                        {e.missingEvent ? `Miss (${e.grossScore})` : e.grossScore}
                       </td>
                     ))}
                     <td className="px-3 py-1.5 tabular-nums font-bold text-white">
                       {s.combinedScore}
+                      <span className="block text-[9px] font-normal text-slate-500">
+                        gross {s.grossScore} · {s.discardCount} discard{s.discardCount === 1 ? "" : "s"}
+                      </span>
                     </td>
                   </tr>
                 ))}

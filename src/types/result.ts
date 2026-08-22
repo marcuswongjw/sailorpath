@@ -16,4 +16,7 @@ export type ResultAdmin = {
   regattaName?: string | null;
   createdAt?: Date | string | null;
   updatedAt?: Date | string | null;
+  /** Loaded only when includeRaces=1 is requested. */
+  raceResults?: OfficialRaceResultInput[];
 };
+import type { OfficialRaceResultInput } from "@/types/raceResult";

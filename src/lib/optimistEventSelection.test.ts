@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   computeCombinedSelectionScores,
+  combinedRaceDiscardCount,
   matchSelectionEvents,
   selectAsianOceaniaTeam,
   selectPerthCamp,
@@ -68,8 +69,15 @@ function results(): RegattaResultRecord[] {
   const out: RegattaResultRecord[] = [];
   let place = 1;
   for (const s of sailors()) {
-    out.push({ sailorId: s.id, regattaId: "r1", rank: place });
-    out.push({ sailorId: s.id, regattaId: "r2", rank: place });
+    const raceResults = [1, 2].map((raceNumber) => ({
+      raceNumber,
+      score: place,
+      scoringCode: null,
+      discarded: false,
+      rawValue: String(place),
+    }));
+    out.push({ sailorId: s.id, regattaId: "r1", rank: place, raceResults });
+    out.push({ sailorId: s.id, regattaId: "r2", rank: place, raceResults });
     place++;
   }
   return out;
@@ -81,6 +89,75 @@ describe("matchSelectionEvents", () => {
     expect(m.every((x) => x.matched)).toBe(true);
     expect(m[0]?.regatta?.id).toBe("r1");
     expect(m[1]?.regatta?.id).toBe("r2");
+  });
+});
+
+describe("combined race-score policy", () => {
+  it.each([
+    [0, 0],
+    [6, 0],
+    [7, 1],
+    [14, 1],
+    [15, 2],
+    [21, 2],
+    [22, 3],
+    [28, 3],
+    [29, 4],
+  ])("uses %i races to award %i discards", (raceCount, expected) => {
+    expect(combinedRaceDiscardCount(raceCount)).toBe(expected);
+  });
+
+  it("matches the worked example, including per-race absence penalties and A8", () => {
+    const exampleRegattas: RegattaRecord[] = [
+      { ...regattas[0], totalFleetSize: 12, raceCount: 6 },
+      { ...regattas[1], totalFleetSize: 8, raceCount: 3 },
+    ];
+    const exampleSailors = ["A", "B", "C"].map((name) => ({
+      id: name,
+      name,
+      handle: name.toLowerCase(),
+      sailNumber: name,
+      club: "Club",
+      goldEntryDate: "2024-01-01",
+      silverEntryDate: null,
+      dropDate: null,
+    }));
+    const raceRow = (sailorId: string, regattaId: string, scores: number[]): RegattaResultRecord => ({
+      sailorId,
+      regattaId,
+      rank: 1,
+      raceResults: scores.map((score, index) => ({
+        raceNumber: index + 1,
+        score,
+        scoringCode: null,
+        discarded: false,
+        rawValue: String(score),
+      })),
+    });
+    const exampleResults = [
+      raceRow("A", "r1", [4, 5, 3, 6, 7, 2]),
+      raceRow("A", "r2", [2, 4, 3]),
+      raceRow("B", "r1", [1, 2, 1, 4, 5, 13]),
+      raceRow("B", "r2", [1, 1, 2]),
+      raceRow("C", "r1", [2, 1, 2, 1, 4, 1]),
+      // C did not participate in event 2: 8 + 1 for each of its 3 races.
+    ];
+    const matched = matchSelectionEvents(exampleRegattas, OPTIMIST_2026_SELECTION_EVENTS);
+    const ranked = computeCombinedSelectionScores(matched, exampleSailors, exampleResults);
+    expect(ranked.map((row) => [row.name, row.combinedScore])).toEqual([
+      ["B", 17],
+      ["C", 29],
+      ["A", 29],
+    ]);
+  });
+
+  it("does not substitute aggregate event ranks when race detail is absent", () => {
+    const matched = matchSelectionEvents(regattas, OPTIMIST_2026_SELECTION_EVENTS);
+    expect(
+      computeCombinedSelectionScores(matched, sailors(), [
+        { sailorId: "m1", regattaId: "r1", rank: 1 },
+      ])
+    ).toEqual([]);
   });
 });
 

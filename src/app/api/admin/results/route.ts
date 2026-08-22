@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
-import { regattaResults, regattas, sailors } from "@/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { regattaRaceResults, regattaResults, regattas, sailors } from "@/db/schema";
+import { asc, eq, inArray, sql } from "drizzle-orm";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import {
   activeSailorsForFleet,
@@ -45,6 +45,42 @@ function parseOverseas(body: Record<string, unknown>): boolean {
   );
 }
 
+async function attachOfficialRaces<
+  T extends { id: string; isDns: boolean | null; isOverseasCommitment: boolean | null },
+>(rows: T[]) {
+  if (!rows.length) return [];
+  const raceRows = await db
+    .select({
+      regattaResultId: regattaRaceResults.regattaResultId,
+      raceNumber: regattaRaceResults.raceNumber,
+      score: regattaRaceResults.score,
+      scoringCode: regattaRaceResults.scoringCode,
+      discarded: regattaRaceResults.discarded,
+      rawValue: regattaRaceResults.rawValue,
+    })
+    .from(regattaRaceResults)
+    .where(inArray(regattaRaceResults.regattaResultId, rows.map((row) => row.id)))
+    .orderBy(asc(regattaRaceResults.regattaResultId), asc(regattaRaceResults.raceNumber));
+  const racesByResult = new Map<string, typeof raceRows>();
+  for (const race of raceRows) {
+    const list = racesByResult.get(race.regattaResultId) || [];
+    list.push(race);
+    racesByResult.set(race.regattaResultId, list);
+  }
+  return rows.map((row) => ({
+    ...row,
+    isDNS: row.isDns,
+    isOverseasCommitment: row.isOverseasCommitment,
+    raceResults: (racesByResult.get(row.id) || []).map((race) => ({
+      raceNumber: race.raceNumber,
+      score: race.score,
+      scoringCode: race.scoringCode,
+      discarded: race.discarded,
+      rawValue: race.rawValue,
+    })),
+  }));
+}
+
 /**
  * Eligible for DNS fill on a regatta: same rules as ranking board
  * (Guest/Series + gold entry/drop via resolveSailorFleet).
@@ -85,6 +121,7 @@ export async function GET(req: Request) {
     await requireSuperadmin();
     const sp = new URL(req.url).searchParams;
     const regattaId = (sp.get("regattaId") || "").trim();
+    const includeRaces = sp.get("includeRaces") === "1";
     const all = sp.get("all") === "1";
     const limitRaw = Number(sp.get("limit"));
     const offsetRaw = Number(sp.get("offset"));
@@ -101,12 +138,15 @@ export async function GET(req: Request) {
         .select()
         .from(regattaResults)
         .where(eq(regattaResults.regattaId, idCheck.value));
+      const results = includeRaces
+        ? await attachOfficialRaces(rows)
+        : rows.map((r) => ({
+            ...r,
+            isDNS: r.isDns,
+            isOverseasCommitment: r.isOverseasCommitment,
+          }));
       return NextResponse.json({
-        results: rows.map((r) => ({
-          ...r,
-          isDNS: r.isDns,
-          isOverseasCommitment: r.isOverseasCommitment,
-        })),
+        results,
         regattaId: idCheck.value,
         total: rows.length,
       });

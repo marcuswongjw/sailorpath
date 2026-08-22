@@ -36,10 +36,11 @@ export async function fetchAdminResultsAll(): Promise<ResultAdmin[]> {
 }
 
 export async function fetchAdminResultsForRegatta(
-  regattaId: string
+  regattaId: string,
+  includeRaces = false
 ): Promise<ResultAdmin[]> {
   const body = await adminJson<{ results?: ResultAdmin[] }>(
-    `/api/admin/results?regattaId=${encodeURIComponent(regattaId)}`
+    `/api/admin/results?regattaId=${encodeURIComponent(regattaId)}${includeRaces ? "&includeRaces=1" : ""}`
   );
   return Array.isArray(body.results) ? body.results : [];
 }

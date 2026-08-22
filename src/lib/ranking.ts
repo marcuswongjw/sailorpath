@@ -4,6 +4,7 @@ import {
   isSgpNationality,
 } from "@/lib/seriesMembership";
 import { toYmd } from "@/lib/datesSg";
+import type { OfficialRaceResultInput } from "@/types/raceResult";
 
 
 export interface SailorRecord {
@@ -112,6 +113,8 @@ export interface RegattaResultRecord {
    * points usually = standing before the trip (editable).
    */
   isOverseasCommitment?: boolean | null;
+  /** Official organiser-published scores, separate from private race notes. */
+  raceResults?: OfficialRaceResultInput[];
 }
 
 export interface Period {
