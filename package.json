@@ -7,6 +7,8 @@
     "build": "next build",
     "analyze": "ANALYZE=true next build --webpack",
     "analyze:turbo": "next experimental-analyze",
+    "check:bundle": "node scripts/check-bundle-budget.mjs",
+    "smoke:admin": "node scripts/smoke-admin-performance.mjs",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",

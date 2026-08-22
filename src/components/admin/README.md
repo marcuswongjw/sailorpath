@@ -106,4 +106,8 @@ Queries enable only for the active workspace. Mutations still patch the cache vi
 npm run analyze   # ANALYZE=true next build --webpack → .next/analyze/*.html
 ```
 
+CI also runs `npm run check:bundle` after the production build. The check caps
+total client JavaScript at 2.5 MB and any individual chunk at 400 KB; update a
+budget only when an intentional feature justifies the measured increase.
+
 See `docs/BUNDLE_ANALYSIS.md` for how to read reports and current findings.

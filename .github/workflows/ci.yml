@@ -26,6 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Lint
+        run: npm run lint -- --max-warnings=0
+
       - name: Unit tests
         run: npm test
 
@@ -36,3 +39,6 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://sailorpath.com
           NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
           NEXT_PUBLIC_SUPABASE_ANON_KEY: public-anon-key-for-ci
+
+      - name: Enforce client bundle budget
+        run: npm run check:bundle

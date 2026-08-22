@@ -16,6 +16,9 @@ export {
   formatFullDob,
 } from "./helpers";
 export { PositionTrendChart } from "./PositionTrendChart";
+export { ProfilePerformanceSummary } from "./ProfilePerformanceSummary";
+export { ProfileClassNavigation } from "./ProfileClassNavigation";
+export type { ProfileClassTab } from "./ProfileClassNavigation";
 export { ProfileOwnerEditor } from "./ProfileOwnerEditor";
 export type { ProfileOwnerForm } from "./ProfileOwnerEditor";
 export { ProfileJourneyPanel } from "./ProfileJourneyPanel";

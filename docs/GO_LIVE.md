@@ -98,6 +98,22 @@ UPDATE profiles SET role = 'superadmin' WHERE email = 'you@email.com';
 4. Import a small Excel (Name / Rank / Nett columns)  
 5. Check https://sailorpath.com/sg/optimist/gold  
 
+## 8. Production performance smoke test
+
+The manually triggered **Production admin smoke** GitHub workflow signs in as
+a real superadmin, verifies the admin Stats page and `/api/admin/stats`, and
+fails when either exceeds its response-time budget.
+
+Configure the GitHub `production` environment with:
+
+- Variable: `SMOKE_BASE_URL` (`https://sailorpath.com`)
+- Secrets: `SMOKE_SUPABASE_URL`, `SMOKE_SUPABASE_ANON_KEY`
+- Secrets: `SMOKE_ADMIN_EMAIL`, `SMOKE_ADMIN_PASSWORD`
+
+Use a dedicated smoke-test superadmin account and rotate its password like any
+other production credential. Run the workflow after meaningful admin or
+database changes.
+
 ## What is intentionally gone
 
 - Silent Demo Mode / mock sailors in production  
