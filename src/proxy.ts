@@ -2,14 +2,64 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { getAuthCookieOptions } from "@/lib/supabase/cookie-options";
 
+const PUBLIC_SINGLE_SEGMENT_PATHS = new Set([
+  "account",
+  "admin",
+  "claim-profile",
+  "coach-tools",
+  "demo-profile",
+  "how-rankings-work",
+  "login",
+  "parent",
+  "rankings",
+  "register",
+  "sample",
+  "search",
+  "support",
+  "whats-new",
+]);
+
+/** Routes whose server-rendered content depends on a refreshed auth cookie. */
+export function shouldRefreshSession(
+  pathname: string,
+  isAdminRoot: boolean
+): boolean {
+  if (isAdminRoot) return true;
+  if (
+    pathname === "/admin" ||
+    pathname.startsWith("/admin/") ||
+    pathname === "/account" ||
+    pathname.startsWith("/account/") ||
+    pathname === "/parent" ||
+    pathname.startsWith("/parent/") ||
+    pathname === "/sg/optimist/goldsailors" ||
+    pathname.startsWith("/sg/optimist/goldsailors/")
+  ) {
+    return true;
+  }
+
+  // One-segment paths not owned by the app router are sailor profile handles.
+  const segments = pathname.split("/").filter(Boolean);
+  return (
+    segments.length === 1 &&
+    !segments[0].includes(".") &&
+    !PUBLIC_SINGLE_SEGMENT_PATHS.has(segments[0])
+  );
+}
+
 export async function proxy(request: NextRequest) {
   const host = request.headers.get("host") || "";
+  const pathname = request.nextUrl.pathname;
   const isAdminRoot =
-    host.includes("admin.sailorpath.com") && request.nextUrl.pathname === "/";
+    host.includes("admin.sailorpath.com") && pathname === "/";
 
   let response = isAdminRoot
     ? NextResponse.rewrite(new URL("/admin", request.url))
     : NextResponse.next({ request: { headers: request.headers } });
+
+  if (!shouldRefreshSession(pathname, isAdminRoot)) {
+    return response;
+  }
 
   const supabaseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "";
@@ -65,6 +115,11 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|icon|apple-icon|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/",
+    "/admin/:path*",
+    "/account/:path*",
+    "/parent/:path*",
+    "/sg/optimist/goldsailors/:path*",
+    "/:sailor_handle",
   ],
 };
