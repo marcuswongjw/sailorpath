@@ -20,6 +20,12 @@ const TOPICS = new Set([
   "waitlist",
   "other",
 ]);
+const SUPPORT_STATUSES = ["new", "read", "resolved"] as const;
+type SupportStatus = (typeof SUPPORT_STATUSES)[number];
+
+function isSupportStatus(value: string): value is SupportStatus {
+  return SUPPORT_STATUSES.some((status) => status === value);
+}
 
 /** Public: submit a support message */
 export async function POST(req: Request) {
@@ -106,17 +112,32 @@ export async function GET(req: Request) {
   try {
     await requireSuperadmin();
     const { searchParams } = new URL(req.url);
-    const status = searchParams.get("status");
-
-    let rows = await db
-      .select()
-      .from(supportMessages)
-      .orderBy(desc(supportMessages.createdAt))
-      .limit(100);
-
-    if (status && ["new", "read", "resolved"].includes(status)) {
-      rows = rows.filter((r) => r.status === status);
+    const statusParam = searchParams.get("status");
+    if (statusParam !== null && !isSupportStatus(statusParam)) {
+      return NextResponse.json(
+        { error: "status must be new, read, or resolved" },
+        { status: 400 }
+      );
     }
+    const status = statusParam as SupportStatus | null;
+    const requestedLimit = Number(searchParams.get("limit"));
+    const limit =
+      Number.isInteger(requestedLimit) && requestedLimit > 0
+        ? Math.min(requestedLimit, 100)
+        : 100;
+
+    const rows = status
+      ? await db
+          .select()
+          .from(supportMessages)
+          .where(eq(supportMessages.status, status))
+          .orderBy(desc(supportMessages.createdAt))
+          .limit(limit)
+      : await db
+          .select()
+          .from(supportMessages)
+          .orderBy(desc(supportMessages.createdAt))
+          .limit(limit);
 
     return NextResponse.json({ messages: rows });
   } catch (e) {
