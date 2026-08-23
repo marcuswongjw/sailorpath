@@ -9,6 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { useRouter } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 
 export type OwnedSailor = {
@@ -38,6 +39,7 @@ const AccountContext = createContext<AccountState | null>(null);
  * Avoids double network on every page.
  */
 export function AccountProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const [email, setEmail] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
   const [isSuperadmin, setIsSuperadmin] = useState(false);
@@ -114,8 +116,8 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
-    window.location.assign("/");
-  }, []);
+    router.replace("/");
+  }, [router]);
 
   const value = useMemo<AccountState>(
     () => ({

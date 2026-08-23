@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Heart,
   Trophy,
@@ -74,6 +75,7 @@ type PendingClaim = {
 };
 
 export function ParentDashboard() {
+  const router = useRouter();
   const { toast, confirm } = useFeedback();
   const [athletes, setAthletes] = useState<Athlete[]>([]);
   const [pendingClaims, setPendingClaims] = useState<PendingClaim[]>([]);
@@ -91,9 +93,7 @@ export function ParentDashboard() {
         credentials: "include",
       });
       if (res.status === 401) {
-        window.location.assign(
-          `/login?next=${encodeURIComponent("/parent")}`
-        );
+        router.replace(`/login?next=${encodeURIComponent("/parent")}`);
         return;
       }
       const data = await res.json();
@@ -106,7 +106,7 @@ export function ParentDashboard() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     // This effect starts the client-only dashboard request; later refreshes reuse load().

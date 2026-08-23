@@ -2,7 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
 
@@ -23,6 +23,7 @@ type Claim = {
 };
 
 function AccountInner() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const { isSuperadmin } = useAccount();
   const welcome = searchParams.get("welcome") === "1";
@@ -44,9 +45,7 @@ function AccountInner() {
           data: { session },
         } = await supabase.auth.getSession();
         if (!session) {
-          window.location.assign(
-            `/login?next=${encodeURIComponent("/account")}`
-          );
+          router.replace(`/login?next=${encodeURIComponent("/account")}`);
           return;
         }
         setEmail(session.user.email ?? null);
@@ -75,7 +74,7 @@ function AccountInner() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [router]);
 
   const changePassword = async (e: React.FormEvent) => {
     e.preventDefault();

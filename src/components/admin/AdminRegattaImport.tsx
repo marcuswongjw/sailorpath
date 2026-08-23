@@ -13,7 +13,10 @@ import {
 } from "@/lib/excel/parseRegattaResultsSheet";
 import { parseRegattaTitle } from "@/lib/excel/parseRegattaTitle";
 import { parseApi, apiErr, apiStr } from "@/components/admin/parseApi";
-import type { ImportPossibleDuplicate } from "@/types/import";
+import type {
+  ImportPossibleDuplicate,
+  RegattaImportReview,
+} from "@/types/import";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import type { SailorAdmin } from "@/types/sailor";
@@ -47,6 +50,23 @@ async function loadXlsx() {
 
 const MAX_IMPORT_FILE_BYTES = 15 * 1024 * 1024;
 
+type RegattaImportMeta = {
+  name: string;
+  date: string;
+  division: string;
+  fleetSize: number;
+  boatClass: string;
+  geography: string;
+  countsForRanking: boolean;
+  raceCount: string | number;
+};
+
+type PendingRegattaReview = {
+  review: RegattaImportReview;
+  rows: RegattaImportRow[];
+  meta: RegattaImportMeta;
+};
+
 /**
  * Regatta Excel import tab (self-contained state + handlers).
  */
@@ -77,11 +97,12 @@ export function AdminRegattaImport({
       detail: string;
     }[]
   >([]);
+  const [pendingReview, setPendingReview] = useState<PendingRegattaReview | null>(null);
   const [fullImportRows, setFullImportRows] = useState<RegattaImportRow[]>([]);
   const [pdfScreenshots, setPdfScreenshots] = useState<
     { pageNumber: number; dataUrl: string }[]
   >([]);
-  const [importMeta, setImportMeta] = useState({
+  const [importMeta, setImportMeta] = useState<RegattaImportMeta>({
     name: "",
     date: new Date().toISOString().slice(0, 10),
     division: "Gold",
@@ -110,6 +131,7 @@ export function AdminRegattaImport({
     setImportStatus(`Rendering and reading “${file.name}”…`);
     setImportPossibleDuplicates([]);
     setNationalityFlags([]);
+    setPendingReview(null);
     try {
       const { readRegattaPdf } = await import("@/lib/pdf/readRegattaPdf");
       setImportProgress(30);
@@ -173,6 +195,7 @@ export function AdminRegattaImport({
     setImportStatus(`Reading “${file.name}”…`);
     setImportPossibleDuplicates([]);
     setNationalityFlags([]);
+    setPendingReview(null);
     setPdfScreenshots([]);
     const reader = new FileReader();
     reader.onprogress = (ev) => {
@@ -360,7 +383,8 @@ export function AdminRegattaImport({
 
   async function handleImportToDb(
     rowsOverride?: RegattaImportRow[],
-    metaOverride?: typeof importMeta
+    metaOverride?: RegattaImportMeta,
+    confirmedRegattaId?: string
   ) {
     const rowsToImport = rowsOverride || fullImportRows;
     const meta = metaOverride || importMeta;
@@ -384,6 +408,7 @@ export function AdminRegattaImport({
       `Importing ${rowsToImport.length} rows to database…`
     );
     setImportPossibleDuplicates([]);
+    if (!confirmedRegattaId) setPendingReview(null);
     // Slow crawl while waiting on server (no real stream from API)
     let tick = 8;
     const pulse = window.setInterval(() => {
@@ -410,12 +435,34 @@ export function AdminRegattaImport({
               : Number(meta.raceCount),
           rows: rowsToImport,
           createMissing: true,
+          confirmedRegattaId: confirmedRegattaId || null,
+          confirmedReviewToken:
+            confirmedRegattaId && pendingReview?.review.regattaId === confirmedRegattaId
+              ? pendingReview.review.reviewToken
+              : null,
         }),
       });
       setImportProgress(78);
       setImportStatus("Processing server response…");
       const data = await parseApi(res);
       if (!res.ok) throw new Error(apiErr(data, "Import failed"));
+
+      if (data.requiresConfirmation === true && data.review && typeof data.review === "object") {
+        const review = data.review as RegattaImportReview;
+        setPendingReview({
+          review,
+          rows: rowsToImport.map((row) => ({
+            ...row,
+            races: row.races.map((race) => ({ ...race })),
+          })),
+          meta: { ...meta },
+        });
+        setImportProgress(100);
+        setImportStatus(
+          `Review required before updating “${review.regattaName}”. No database changes have been made.`
+        );
+        return;
+      }
 
       setImportProgress(88);
       setImportStatus("Refreshing sailors & results…");
@@ -473,6 +520,7 @@ export function AdminRegattaImport({
             ? ` · ${natFlags.length} nationality flag(s) — review below.`
             : "")
       );
+      setPendingReview(null);
     } catch (e: unknown) {
       const msg = errorMessage(e, "Import failed");
       const isNetworkDrop =
@@ -534,7 +582,8 @@ export function AdminRegattaImport({
           <p className="text-xs text-slate-500 mb-4 max-w-3xl">
             Supports .pdf, .xlsx, .xls, and .csv. PDFs are extracted and saved
             directly to SailorPath in one step when the filename includes the
-            event date.
+            event date. Updates to an existing regatta pause for discrepancy
+            review before anything is replaced.
             Required: Name (+ Rank/Nett if
             available). Optional: Total Score, Club, Nationality, Sail Number,
             Birth Year / DOB. When club / school / sail # differ from the
@@ -592,6 +641,97 @@ export function AdminRegattaImport({
                 <span>{importStatus}</span>
               </div>
             )}
+          </div>
+        )}
+
+        {pendingReview && (
+          <div className="mt-5 rounded-2xl border border-amber-400/35 bg-amber-500/8 p-4 space-y-4">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-5 w-5 shrink-0 text-amber-300 mt-0.5" />
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-amber-100">
+                  Review discrepancies before replacing current results
+                </p>
+                <p className="text-[11px] text-amber-100/70 mt-1">
+                  The upload matched “{pendingReview.review.regattaName}”. No database
+                  changes have been made. Confirming makes this document authoritative:
+                  changed values are updated and competitors or races missing from the
+                  upload are removed from this regatta.
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+              {[
+                ["Sailors added", pendingReview.review.summary.addedSailors],
+                ["Sailors removed", pendingReview.review.summary.removedSailors],
+                ["Results changed", pendingReview.review.summary.changedResults],
+                ["Races added", pendingReview.review.summary.addedRaces],
+                ["Races removed", pendingReview.review.summary.removedRaces],
+                ["Races changed", pendingReview.review.summary.changedRaces],
+                ["Event fields", pendingReview.review.summary.metadataChanges],
+              ].map(([label, count]) => (
+                <div key={String(label)} className="rounded-lg border border-white/10 bg-slate-950/60 px-2.5 py-2">
+                  <p className="text-lg font-black tabular-nums text-white">{count}</p>
+                  <p className="text-[9px] uppercase tracking-wide text-slate-500">{label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="max-h-72 overflow-auto rounded-xl border border-white/10">
+              <table className="min-w-[680px] w-full text-left text-[11px]">
+                <thead className="sticky top-0 bg-slate-950 text-slate-500 uppercase tracking-wide text-[9px]">
+                  <tr>
+                    <th className="px-3 py-2">Type</th>
+                    <th className="px-3 py-2">Sailor</th>
+                    <th className="px-3 py-2">Field</th>
+                    <th className="px-3 py-2">Current</th>
+                    <th className="px-3 py-2">Uploaded</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 bg-slate-900/70 text-slate-200">
+                  {pendingReview.review.discrepancies.map((item, index) => (
+                    <tr key={`${item.kind}-${item.sailorName || "event"}-${item.field}-${index}`}>
+                      <td className="px-3 py-2 whitespace-nowrap text-amber-300">{item.kind.replaceAll("-", " ")}</td>
+                      <td className="px-3 py-2 font-semibold text-white">{item.sailorName || "Regatta"}</td>
+                      <td className="px-3 py-2">{item.field}</td>
+                      <td className="px-3 py-2 font-mono text-rose-200">{item.before ?? "—"}</td>
+                      <td className="px-3 py-2 font-mono text-emerald-200">{item.after ?? "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {pendingReview.review.truncated && (
+              <p className="text-[10px] text-amber-200/70">
+                Showing the first 500 differences. The totals above include all detected differences.
+              </p>
+            )}
+
+            <div className="flex flex-wrap justify-end gap-2">
+              <button
+                type="button"
+                disabled={importBusy}
+                onClick={() => {
+                  setPendingReview(null);
+                  setImportStatus("Update cancelled. Current regatta results were not changed.");
+                }}
+                className="rounded-full border border-white/15 px-4 py-2 text-xs font-bold text-slate-300 hover:bg-white/5 disabled:opacity-50"
+              >
+                Cancel update
+              </button>
+              <button
+                type="button"
+                disabled={importBusy}
+                onClick={() => {
+                  const pending = pendingReview;
+                  void handleImportToDb(pending.rows, pending.meta, pending.review.regattaId);
+                }}
+                className="rounded-full bg-amber-500 px-4 py-2 text-xs font-black text-slate-950 hover:bg-amber-400 disabled:opacity-50"
+              >
+                Confirm and replace results
+              </button>
+            </div>
           </div>
         )}
 
@@ -702,7 +842,7 @@ export function AdminRegattaImport({
                   <p className="text-xs font-bold text-white">PDF page review</p>
                   <p className="text-[11px] text-slate-500">
                     Source pages remain on this screen so you can verify the
-                    automatically uploaded results.
+                    extracted results and any proposed update.
                   </p>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">

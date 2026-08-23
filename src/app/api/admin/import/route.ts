@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import { and, eq, inArray, max } from "drizzle-orm";
+import { createHash } from "node:crypto";
+import { and, eq, inArray, max, notInArray } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import {
@@ -33,6 +34,10 @@ import { trackUsage } from "@/lib/usage";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { adminLog, createAdminRequestId } from "@/lib/adminLog";
 import type { ImportPossibleDuplicate } from "@/types/import";
+import type {
+  RegattaImportDiscrepancy,
+  RegattaImportReview,
+} from "@/types/import";
 import {
   isAnyIlcaClass,
   ILCA_MIN_RACES_FOR_RANKING,
@@ -47,6 +52,179 @@ export type { ImportPossibleDuplicate };
 export const maxDuration = 60;
 
 const MAX_DUPLICATE_FLAGS = 40;
+const MAX_REVIEW_DETAILS = 500;
+
+type ReviewUploadRow = {
+  name: string;
+  rank: number | null;
+  nett: number | null;
+  total: number | null;
+  races: OfficialRaceResultInput[];
+};
+
+function sameImportValue(a: unknown, b: unknown): boolean {
+  if (a == null && b == null) return true;
+  if (typeof a === "number" || typeof b === "number") {
+    const left = Number(a);
+    const right = Number(b);
+    return Number.isFinite(left) && Number.isFinite(right) && left === right;
+  }
+  return String(a) === String(b);
+}
+
+async function buildExistingRegattaReview(args: {
+  existing: typeof regattas.$inferSelect;
+  uploadedName: string;
+  fleetSize: number;
+  geography: string;
+  ranking: boolean;
+  raceCount: number | null;
+  rows: ReviewUploadRow[];
+}): Promise<RegattaImportReview> {
+  const current = await db
+    .select({
+      resultId: regattaResults.id,
+      sailorId: regattaResults.sailorId,
+      sailorName: sailors.name,
+      rank: regattaResults.rank,
+      nett: regattaResults.nettScore,
+      total: regattaResults.totalScore,
+    })
+    .from(regattaResults)
+    .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
+    .where(eq(regattaResults.regattaId, args.existing.id));
+
+  const sailorIds = current.map((row) => row.sailorId);
+  const resultIds = current.map((row) => row.resultId);
+  const [aliases, storedRaces] = await Promise.all([
+    sailorIds.length
+      ? db
+          .select({ sailorId: sailorAliases.sailorId, aliasName: sailorAliases.aliasName })
+          .from(sailorAliases)
+          .where(inArray(sailorAliases.sailorId, sailorIds))
+      : Promise.resolve([]),
+    resultIds.length
+      ? db
+          .select({
+            regattaResultId: regattaRaceResults.regattaResultId,
+            raceNumber: regattaRaceResults.raceNumber,
+            score: regattaRaceResults.score,
+            scoringCode: regattaRaceResults.scoringCode,
+            discarded: regattaRaceResults.discarded,
+            rawValue: regattaRaceResults.rawValue,
+          })
+          .from(regattaRaceResults)
+          .where(inArray(regattaRaceResults.regattaResultId, resultIds))
+      : Promise.resolve([]),
+  ]);
+
+  const index = buildSailorNameIndex(
+    current.map((row) => ({ id: row.sailorId, name: row.sailorName })),
+    aliases
+  );
+  const currentBySailor = new Map(current.map((row) => [row.sailorId, row]));
+  const racesByResult = new Map<string, typeof storedRaces>();
+  for (const race of storedRaces) {
+    const list = racesByResult.get(race.regattaResultId) || [];
+    list.push(race);
+    racesByResult.set(race.regattaResultId, list);
+  }
+
+  const discrepancies: RegattaImportDiscrepancy[] = [];
+  const summary = {
+    addedSailors: 0,
+    removedSailors: 0,
+    changedResults: 0,
+    addedRaces: 0,
+    removedRaces: 0,
+    changedRaces: 0,
+    metadataChanges: 0,
+  };
+  let totalDiscrepancies = 0;
+  const add = (item: RegattaImportDiscrepancy) => {
+    totalDiscrepancies++;
+    if (discrepancies.length < MAX_REVIEW_DETAILS) discrepancies.push(item);
+  };
+  const metadata = [
+    ["Name", args.existing.name, args.uploadedName],
+    ["Fleet size", args.existing.totalFleetSize, args.fleetSize],
+    ["Geography", args.existing.geography, args.geography],
+    ["Ranking status", args.existing.countsForRanking, args.ranking],
+    ["Race count", args.existing.raceCount, args.raceCount],
+  ] as const;
+  for (const [field, before, after] of metadata) {
+    if (sameImportValue(before, after)) continue;
+    summary.metadataChanges++;
+    add({ kind: "metadata", field, before: String(before ?? "—"), after: String(after ?? "—") });
+  }
+
+  const matchedSailorIds = new Set<string>();
+  for (const uploaded of args.rows) {
+    const hit = findSailorByName(uploaded.name, index);
+    const stored = hit ? currentBySailor.get(hit.sailor.id) : null;
+    if (!stored) {
+      summary.addedSailors++;
+      add({ kind: "sailor-added", sailorName: uploaded.name, field: "Competitor", before: null, after: "Added" });
+      continue;
+    }
+    matchedSailorIds.add(stored.sailorId);
+    const aggregates = [
+      ["Rank", stored.rank, uploaded.rank == null ? 999 : Math.round(uploaded.rank)],
+      ["Nett", stored.nett, uploaded.nett],
+      ["Total", stored.total, uploaded.total],
+    ] as const;
+    for (const [field, before, after] of aggregates) {
+      if (sameImportValue(before, after)) continue;
+      summary.changedResults++;
+      add({ kind: "result", sailorName: stored.sailorName, field, before, after });
+    }
+
+    const oldRaces = new Map(
+      (racesByResult.get(stored.resultId) || []).map((race) => [race.raceNumber, race])
+    );
+    const newRaces = new Map(uploaded.races.map((race) => [race.raceNumber, race]));
+    const raceNumbers = new Set([...oldRaces.keys(), ...newRaces.keys()]);
+    for (const raceNumber of [...raceNumbers].sort((a, b) => a - b)) {
+      const before = oldRaces.get(raceNumber);
+      const after = newRaces.get(raceNumber);
+      if (!before && after) {
+        summary.addedRaces++;
+        add({ kind: "race-added", sailorName: stored.sailorName, field: `R${raceNumber}`, before: null, after: after.rawValue });
+      } else if (before && !after) {
+        summary.removedRaces++;
+        add({ kind: "race-removed", sailorName: stored.sailorName, field: `R${raceNumber}`, before: before.rawValue, after: null });
+      } else if (
+        before &&
+        after &&
+        (!sameImportValue(before.score, after.score) ||
+          !sameImportValue(before.scoringCode, after.scoringCode) ||
+          before.discarded !== after.discarded)
+      ) {
+        summary.changedRaces++;
+        add({ kind: "race-changed", sailorName: stored.sailorName, field: `R${raceNumber}`, before: before.rawValue, after: after.rawValue });
+      }
+    }
+  }
+
+  for (const stored of current) {
+    if (matchedSailorIds.has(stored.sailorId)) continue;
+    summary.removedSailors++;
+    add({ kind: "sailor-removed", sailorName: stored.sailorName, field: "Competitor", before: "Present", after: "Missing from upload" });
+  }
+
+  const reviewToken = createHash("sha256")
+    .update(JSON.stringify({ regattaId: args.existing.id, updatedAt: args.existing.updatedAt, discrepancies }))
+    .digest("hex");
+  return {
+    reviewToken,
+    regattaId: args.existing.id,
+    regattaName: args.existing.name,
+    uploadedName: args.uploadedName,
+    discrepancies,
+    truncated: totalDiscrepancies > discrepancies.length,
+    summary,
+  };
+}
 
 /** Pairwise similar names within the import sheet (60%+). Cap pairs for speed. */
 function findWithinFileDuplicates(
@@ -102,6 +280,8 @@ export async function POST(req: Request) {
       raceCount: raceCountRaw,
       rows,
       createMissing = true,
+      confirmedRegattaId,
+      confirmedReviewToken,
     }: {
       regattaName: string;
       eventDate: string;
@@ -129,6 +309,9 @@ export async function POST(req: Request) {
         races?: OfficialRaceResultInput[];
       }[];
       createMissing?: boolean;
+      /** Required only after reviewing discrepancies for an existing event. */
+      confirmedRegattaId?: string | null;
+      confirmedReviewToken?: string | null;
     } = body;
 
     if (!regattaName || !eventDate || !Array.isArray(rows)) {
@@ -286,13 +469,56 @@ export async function POST(req: Request) {
       )
       .limit(5);
 
+    const [slugMatch] =
+      sameDay.length === 0
+        ? await db
+            .select()
+            .from(regattas)
+            .where(eq(regattas.slug, slug))
+            .limit(1)
+        : [];
+    const existingTarget =
+      sameDay.find((candidate) => candidate.slug === slug) ||
+      (sameDay.length > 0 ? sameDay[0] : slugMatch);
+
+    if (confirmedRegattaId && existingTarget?.id !== confirmedRegattaId) {
+      return NextResponse.json(
+        {
+          error:
+            "The matched regatta changed after review. Process the document again before updating.",
+        },
+        { status: 409 }
+      );
+    }
+
+    if (existingTarget) {
+      const review = await buildExistingRegattaReview({
+        existing: existingTarget,
+        uploadedName: regattaName,
+        fleetSize,
+        geography: geo,
+        ranking,
+        raceCount,
+        rows: cleanRows,
+      });
+      if (
+        review.discrepancies.length > 0 &&
+        (confirmedRegattaId !== existingTarget.id ||
+          confirmedReviewToken !== review.reviewToken)
+      ) {
+        return NextResponse.json({
+          requiresConfirmation: true,
+          message: `Review ${review.discrepancies.length}${review.truncated ? "+" : ""} discrepancy item(s) before updating “${existingTarget.name}”.`,
+          review,
+        });
+      }
+    }
+
     let reg: (typeof regattas.$inferSelect) | undefined;
 
-    if (sameDay.length >= 1) {
+    if (existingTarget && sameDay.length >= 1) {
       // Prefer exact slug match among same-day fleet; else sole match; else first
-      const target =
-        sameDay.find((r) => r.slug === slug) ||
-        (sameDay.length === 1 ? sameDay[0] : sameDay[0]);
+      const target = existingTarget;
 
       // Refresh slug to new title only if free (or already ours)
       let nextSlug = target.slug;
@@ -968,8 +1194,13 @@ export async function POST(req: Request) {
       }
     }
 
-    if (pendingOfficialRaces.length) {
-      const sailorIds = pendingOfficialRaces.map((item) => item.sailorId);
+    const authoritativeReplace =
+      confirmedRegattaId === reg.id && rowErrors === 0 && unmatched.length === 0;
+    let removedRaceRows = 0;
+    let removedResultRows = 0;
+
+    if (pendingResults.length && (pendingOfficialRaces.length || authoritativeReplace)) {
+      const sailorIds = pendingResults.map((item) => item.sailorId);
       const storedResults = await db
         .select({ id: regattaResults.id, sailorId: regattaResults.sailorId })
         .from(regattaResults)
@@ -1010,6 +1241,57 @@ export async function POST(req: Request) {
           )
         );
       }
+      if (authoritativeReplace && storedResults.length) {
+        const racesBySailor = new Map(
+          pendingOfficialRaces.map((item) => [
+            item.sailorId,
+            new Set(item.races.map((race) => race.raceNumber)),
+          ])
+        );
+        const sailorByResultId = new Map(
+          storedResults.map((result) => [result.id, result.sailorId])
+        );
+        const currentOfficialRows = await db
+          .select({
+            id: regattaRaceResults.id,
+            regattaResultId: regattaRaceResults.regattaResultId,
+            raceNumber: regattaRaceResults.raceNumber,
+          })
+          .from(regattaRaceResults)
+          .where(
+            inArray(
+              regattaRaceResults.regattaResultId,
+              storedResults.map((result) => result.id)
+            )
+          );
+        const obsoleteRaceIds = currentOfficialRows
+          .filter((race) => {
+            const sailorId = sailorByResultId.get(race.regattaResultId);
+            return !sailorId || !racesBySailor.get(sailorId)?.has(race.raceNumber);
+          })
+          .map((race) => race.id);
+        if (obsoleteRaceIds.length) {
+          const removed = await db
+            .delete(regattaRaceResults)
+            .where(inArray(regattaRaceResults.id, obsoleteRaceIds))
+            .returning({ id: regattaRaceResults.id });
+          removedRaceRows = removed.length;
+        }
+      }
+    }
+
+    if (authoritativeReplace && pendingResults.length) {
+      const keptSailorIds = pendingResults.map((result) => result.sailorId);
+      const removed = await db
+        .delete(regattaResults)
+        .where(
+          and(
+            eq(regattaResults.regattaId, reg.id),
+            notInArray(regattaResults.sailorId, keptSailorIds)
+          )
+        )
+        .returning({ id: regattaResults.id });
+      removedResultRows = removed.length;
     }
 
     // Best-effort alias inserts in parallel chunks
@@ -1127,7 +1409,7 @@ export async function POST(req: Request) {
         entityType: "regatta",
         entityId: reg.id,
         entityLabel: reg.name,
-        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}, ${boat}, ${geo}, ${ranking ? "ranking" : "non-ranking"}); ${created} guests, ${updatedProfiles} profiles, ${nationalityUpdated} nationality, ${resultsDemographicsUpdated} result gender/BY stamps, ${silverUpdated} silver dates`,
+        summary: `Imported ${matched}/${cleanRows.length} results for ${regattaName} (${eventDate}, ${boat}, ${geo}, ${ranking ? "ranking" : "non-ranking"}); ${created} guests, ${updatedProfiles} profiles, ${nationalityUpdated} nationality, ${resultsDemographicsUpdated} result gender/BY stamps, ${silverUpdated} silver dates, ${removedResultRows} obsolete results removed`,
         details: {
           matched,
           created,
@@ -1136,6 +1418,9 @@ export async function POST(req: Request) {
           resultsDemographicsUpdated,
           silverUpdated,
           rowErrors,
+          authoritativeReplace,
+          removedResultRows,
+          removedRaceRows,
           profileFields: profileChangeFields,
           nationalityFlagCount: nationalityFlags.length,
         },
@@ -1206,7 +1491,7 @@ export async function POST(req: Request) {
                 ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
                 : "See errors below."
             }`
-          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, gender/birth year stamped on ${resultsDemographicsUpdated} result row(s), ${silverUpdated} silver entry dates recomputed). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}${natNote}`,
+          : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, gender/birth year stamped on ${resultsDemographicsUpdated} result row(s), ${silverUpdated} silver entry dates recomputed${authoritativeReplace ? `, ${removedResultRows} obsolete result row(s) removed` : ""}). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}${natNote}`,
       regatta: reg,
       matched,
       created,
@@ -1218,6 +1503,9 @@ export async function POST(req: Request) {
       unmatched: unmatched.slice(0, 80),
       possibleDuplicates: dupeFlags,
       inputRows: cleanRows.length,
+      authoritativeReplace,
+      removedResultRows,
+      removedRaceRows,
       rowErrors,
       matchHow,
       errorSamples,

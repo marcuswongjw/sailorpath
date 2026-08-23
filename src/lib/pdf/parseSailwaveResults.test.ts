@@ -40,4 +40,76 @@ describe("parseSailwaveResults", () => {
       rawValue: "52.0 DSQ",
     });
   });
+
+  it("deduplicates overpainted headers and merges wrapped Sailwave cells", () => {
+    const header: Array<[number, string]> = [
+      [10, "Rank"], [60, "Name"], [150, "Sail"], [200, "Age"],
+      [250, "Gender"], [300, "Sch"], [350, "Sch Name"], [500, "Club"],
+      [650, "R1"], [700, "R2"], [750, "Total"], [800, "Nett"],
+    ];
+    const result = parseSailwaveResults([
+      {
+        pageNumber: 1,
+        text: "Sailed: 2, Discards: 1, Entries: 2",
+        items: [
+          ...line(700, header),
+          ...line(699.25, header),
+          ...line(680, [
+            [10, "1st"], [60, "Damien Huang"], [150, "3300"], [200, "11-"],
+            [250, "M"], [300, "SEC"], [350, "Raffles Institution"],
+            [500, "SAF Yacht Club"], [650, "16"], [700, "(78"],
+            [750, "94"], [800, "16"],
+          ]),
+          ...line(666.5, [[200, "12yo"], [700, "DSQ)"]]),
+          ...line(640, [
+            [10, "2nd"], [60, "Wangsun Chen"], [150, "SGP20"], [250, "M"],
+            [350, "NA"], [500, "Constant Wind"], [650, "(35"], [700, "5"],
+            [750, "40"], [800, "5"],
+          ]),
+          ...line(626.5, [[650, "SCP)"]]),
+          ...line(590, [[10, "Prizes"]]),
+          ...line(570, [[10, "1st"], [60, "Not a competitor"]]),
+        ],
+      },
+    ]);
+
+    expect(result).toMatchObject({ raceCount: 2, entries: 2, discards: 1 });
+    expect(result.rows).toHaveLength(2);
+    expect(result.rows[0]).toMatchObject({
+      name: "Damien Huang",
+      sailNumber: "3300",
+      gender: "M",
+      school: "Raffles Institution",
+      club: "SAF Yacht Club",
+    });
+    expect(result.rows[0].races).toHaveLength(2);
+    expect(result.rows[0].races[1]).toMatchObject({
+      raceNumber: 2,
+      score: 78,
+      scoringCode: "DSQ",
+      discarded: true,
+      rawValue: "(78 DSQ)",
+    });
+    expect(result.rows[1]).toMatchObject({ sailNumber: "SGP20", school: null });
+    expect(result.rows[1].races[0]).toMatchObject({
+      scoringCode: "SCP",
+      discarded: true,
+      rawValue: "(35 SCP)",
+    });
+  });
+
+  it("rejects extracted race scores that do not reconcile with published totals", () => {
+    expect(() =>
+      parseSailwaveResults([
+        {
+          pageNumber: 1,
+          text: "Sailed: 1, Discards: 0, Entries: 1",
+          items: [
+            ...line(700, [[10, "Rank"], [60, "Name"], [200, "R1"], [250, "Total"], [300, "Nett"]]),
+            ...line(680, [[10, "1st"], [60, "Incorrect Total"], [200, "1"], [250, "2"], [300, "1"]]),
+          ],
+        },
+      ])
+    ).toThrow("race scores do not match the published total");
+  });
 });

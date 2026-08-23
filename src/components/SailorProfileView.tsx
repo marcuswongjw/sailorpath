@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { normalizeNationality } from "@/lib/seriesMembership";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import {
@@ -127,6 +128,7 @@ export function SailorProfileView({
   onDemoClaim,
   profileVerified = false,
 }: SailorProfileViewProps) {
+  const router = useRouter();
   const { toast, confirm } = useFeedback();
   const [isPublicWeight, setIsPublicWeight] = useState<boolean>(
     Boolean(initialSailor.isPublicWeight)
@@ -343,7 +345,7 @@ export function SailorProfileView({
       setSaveMsg("Saved");
       setEditing(false);
       if (data.handleChanged && data.sailor?.handle) {
-        window.location.assign(`/${data.sailor.handle}`);
+        router.replace(`/${encodeURIComponent(data.sailor.handle)}`);
         return;
       }
       setTimeout(() => setSaveMsg(null), 2500);
@@ -1182,11 +1184,11 @@ export function SailorProfileView({
                   return;
                 }
                 if (!isLoggedIn) {
-                  if (typeof window !== "undefined") {
-                    window.location.href = `/login?next=${encodeURIComponent(
+                  router.push(
+                    `/login?next=${encodeURIComponent(
                       `/${displaySailor.handle || ""}`
-                    )}`;
-                  }
+                    )}`
+                  );
                   return;
                 }
                 setClaimPanelOpen(true);

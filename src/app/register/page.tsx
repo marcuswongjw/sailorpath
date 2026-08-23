@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { trackClientUsage } from "@/lib/clientUsage";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -65,7 +67,7 @@ export default function RegisterPage() {
           /* ok */
         }
         setDone("session");
-        setTimeout(() => window.location.assign("/account?welcome=1"), 600);
+        setTimeout(() => router.replace("/account?welcome=1"), 600);
       } else {
         trackClientUsage("register", "/register", { mode: "confirm" });
         setDone("confirm");
