@@ -347,7 +347,7 @@ export function SampleDemoShell() {
                 href="/sg/optimist/gold"
                 className="rounded-full border border-white/15 px-4 py-2 text-[11px] font-bold text-slate-300"
               >
-                View live standings
+                View current standings
               </Link>
             </div>
           </div>
@@ -469,7 +469,7 @@ export function SampleDemoShell() {
               ))}
             </select>
             <p className="text-[11px] text-slate-500">
-              Demo: compare Kimberly (#{c.nationalRank}) vs {compareTo} — live
+              Demo: compare Kimberly (#{c.nationalRank}) with {compareTo}
               product charts side-by-side finish trends.
             </p>
           </div>
@@ -502,7 +502,7 @@ export function SampleDemoShell() {
                 setCoachNotes((prev) => [
                   {
                     date: new Date().toISOString().slice(0, 10),
-                    text: "(Demo) New coach note — live app stores notes per athlete with visibility controls.",
+                    text: "(Demo) New coach note — SailorPath stores notes per athlete with visibility controls.",
                   },
                   ...prev,
                 ]);
@@ -616,7 +616,7 @@ export function SampleDemoShell() {
                       <p className="text-[11px] text-slate-400 leading-relaxed">
                         {s.name === "Kimberly Tan"
                           ? "Strong mid-line starts · light-air height is focus. Coach notes stay private."
-                          : "Demo athlete summary — live product opens a coach-only detail drawer without the full public profile chrome."}
+                          : "Demo athlete summary — the planned coach view opens a focused athlete detail panel."}
                       </p>
                       <button
                         type="button"

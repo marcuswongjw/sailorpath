@@ -34,7 +34,7 @@ export default function CoachToolsPage() {
           <div>
             <p className="text-sm font-bold text-white">Available now</p>
             <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              Live Optimist Gold/Silver and ILCA 4 boards, plus public profiles
+              Current Optimist Gold/Silver and ILCA 4 standings, plus public profiles
               for progression checks.
             </p>
           </div>
@@ -56,7 +56,7 @@ export default function CoachToolsPage() {
           href="/rankings"
           className="rounded-full bg-orange-600 hover:bg-orange-500 px-5 py-2.5 text-center text-xs font-bold text-white"
         >
-          View live rankings
+          View current rankings
         </Link>
         <Link
           href="/#roadmap"

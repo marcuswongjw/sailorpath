@@ -269,7 +269,7 @@ export async function POST(req: Request) {
         return NextResponse.json({
           sailor: row,
           warning:
-            "Saved without nationality — run 005_nationality.sql in Supabase to enable that field.",
+            "Saved without nationality. That field is temporarily unavailable.",
         });
       }
       throw e;
@@ -503,7 +503,7 @@ export async function PATCH(req: Request) {
         return NextResponse.json({
           sailor: row,
           warning:
-            "Saved without nationality — run 005_nationality.sql in Supabase to enable that field.",
+            "Saved without nationality. That field is temporarily unavailable.",
         });
       }
       throw e;

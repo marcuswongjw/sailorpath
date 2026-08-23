@@ -407,7 +407,7 @@ export function SailorProfileView({
       setAvatarMsg(
         errorMessage(
           e,
-          "Upload failed — ensure avatars bucket exists (see docs)"
+          "We couldn’t upload the photo. Try again or contact support if the problem continues."
         )
       );
     } finally {
@@ -1279,7 +1279,7 @@ export function SailorProfileView({
                 {profileClaimed || profileVerified ? (
                   <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-semibold text-emerald-300">
                     <BadgeCheck className="h-3 w-3" />
-                    Verified
+                    Claimed
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 text-[10px] font-semibold text-amber-200/90">
@@ -2385,7 +2385,7 @@ export function SailorProfileView({
                           <div className="pt-3 space-y-2">
                             <div className="flex items-center gap-2 text-[11px] font-medium text-neutral-500 uppercase tracking-wide">
                               <Trophy className="h-3.5 w-3.5 text-emerald-400" />
-                              Official race scores
+                              Published race scores
                             </div>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                               {officialRaces.map((race) => (

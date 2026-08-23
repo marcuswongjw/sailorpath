@@ -2,9 +2,6 @@ import Link from "next/link";
 import {
   Search,
   Trophy,
-  Zap,
-  Shield,
-  Compass,
   Anchor,
   Medal,
   BookOpen,
@@ -18,69 +15,9 @@ import { WaitlistForm } from "@/components/WaitlistForm";
  * (demo profile stays the fast path for product tour).
  *
  * Conversion spine: Hero → How it works → Demo → audiences →
- * rankings explainers → roadmap → Founding (end).
+ * rankings explainers → roadmap.
  */
 export const revalidate = 300;
-
-const FOUNDING_URL = "https://buy.stripe.com/00weVd3jFf8h9ZvelL4Rq00";
-
-function FoundingCard() {
-  return (
-    <div className="mx-auto w-full max-w-md rounded-3xl border border-orange-500/20 bg-gradient-to-b from-[#131520] to-[#0d0f17] shadow-2xl relative overflow-hidden group hover:border-orange-500/40 transition-all duration-300 p-6 sm:p-8 md:p-10">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-orange-600/10 rounded-full blur-2xl group-hover:bg-orange-600/20 transition-all" />
-
-      <div className="mb-6">
-        <h3 className="text-xl font-bold text-white">Founding Supporter</h3>
-      </div>
-      <p className="text-4xl font-extrabold text-white tracking-tight flex items-baseline gap-1.5">
-        S$99
-        <span className="text-xs font-bold text-slate-500"> (one-time)</span>
-      </p>
-      <p className="mt-6 text-[11px] font-bold uppercase tracking-wide text-slate-500">
-        What you get
-      </p>
-      <ul className="mt-3 space-y-4 text-xs font-medium text-slate-300">
-        <li className="flex items-start gap-3">
-          <Trophy className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-          <span>
-            Permanent Founding Supporter crest on your public profile
-          </span>
-        </li>
-        <li className="flex items-start gap-3">
-          <Shield className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-          <span>
-            Lifetime access to Sailor / Parent features (claim, private
-            logbook, notes, privacy controls, and parent dashboard)
-          </span>
-        </li>
-        <li className="flex items-start gap-3">
-          <Compass className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-          <span>
-            First access to coach tools and advanced analytics as they
-            launch
-          </span>
-        </li>
-        <li className="flex items-start gap-3">
-          <Zap className="h-4 w-4 text-orange-500 flex-shrink-0 mt-0.5" />
-          <span>Priority input on the product roadmap</span>
-        </li>
-      </ul>
-      <div className="mt-8">
-        <a
-          href={FOUNDING_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="flex w-full justify-center rounded-full bg-orange-600 py-3.5 px-4 text-center text-sm font-bold text-white hover:bg-orange-500 transition-all hover:scale-[1.02] shadow-lg shadow-orange-950/20 border border-orange-500/30"
-        >
-          Become a Founding Supporter — S$99
-        </a>
-        <p className="mt-3 text-center text-[10px] text-slate-600">
-          Secure checkout via Stripe.
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export default function HomePage() {
   return (
@@ -91,15 +28,15 @@ export default function HomePage() {
       {/* Hero */}
       <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 sm:pt-16 sm:pb-12 text-center lg:pt-24">
         <h1 className="mx-auto max-w-4xl text-[1.65rem] leading-snug sm:text-5xl lg:text-6xl font-black tracking-tight text-white sm:leading-tight">
-          {"The performance tracker for "}
+          {"See the standings. Keep the whole "}
           <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-sky-500 bg-clip-text text-transparent">
-            Singapore&apos;s youth sailors
+            sailing journey.
           </span>
         </h1>
 
         <p className="mx-auto mt-4 sm:mt-6 max-w-xl sm:max-w-2xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
-          National rankings, personal logbooks, and a complete record of your
-          journey from Optimist to ILCA — all in one place.
+          Follow current Optimist and ILCA 4 rankings, explore regatta results,
+          and keep one personal sailing record as you move between classes.
         </p>
 
         <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3 w-full max-w-md mx-auto sm:max-w-none">
@@ -108,7 +45,7 @@ export default function HomePage() {
             className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
           >
             <Trophy className="h-4 w-4 shrink-0" />
-            View Live Rankings
+            View Current Rankings
           </Link>
           <p className="text-[12px] sm:text-[13px] text-slate-400">
             Sailor or parent?{" "}
@@ -122,8 +59,8 @@ export default function HomePage() {
         </div>
 
         <p className="mx-auto mt-4 max-w-2xl text-[11px] sm:text-[12px] text-slate-500 leading-relaxed">
-          Official ranking data for Singapore Sailing&apos;s Optimist
-          Gold/Silver Series and ILCA 4 National Ranking
+          Rankings calculated from published regatta results using the
+          applicable Singapore series rules.
         </p>
 
         <div className="mx-auto mt-6 sm:mt-10 max-w-md w-full">
@@ -172,18 +109,18 @@ export default function HomePage() {
               [
                 {
                   step: "1",
-                  title: "We collect results",
-                  body: "Every ranking regatta in Singapore feeds into SailorPath automatically.",
+                  title: "Results are added",
+                  body: "Published regatta results are imported and reviewed before standings are updated.",
                 },
                 {
                   step: "2",
-                  title: "Your profile builds itself",
-                  body: "Results, ranking points, and fleet positions populate your athlete logbook.",
+                  title: "Your sailing record grows",
+                  body: "Results, ranking points, and fleet positions build a record across regattas and classes.",
                 },
                 {
                   step: "3",
                   title: "You take ownership",
-                  body: "Claim your profile to add milestones, equipment notes, and race reflections.",
+                  body: "Claim your profile to add private notes, equipment, milestones, and sharing preferences.",
                 },
               ] as const
             ).map((item) => (
@@ -214,8 +151,8 @@ export default function HomePage() {
               See what your profile looks like
             </h2>
             <p className="mt-3 text-sm text-slate-400 leading-relaxed max-w-md mx-auto">
-              Explore a full dual-class sample — Optimist Gold ranking, ILCA 4
-              results, and Public / Sailor / Parent / Coach views.
+              Explore a dual-class sample with Optimist Gold standings, ILCA 4
+              results, and previews for sailors, parents, and coaches.
             </p>
             <Link
               href="/sample"
@@ -240,10 +177,9 @@ export default function HomePage() {
                 Own your sailing journey.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Track every regatta result, ranking movement, and personal best
-                from Optimist to ILCA. Add your own milestones, equipment notes,
-                and race reflections — share what you want, keep the rest
-                private.
+                Follow regatta results, ranking movement, and personal progress
+                from Optimist to ILCA. Add milestones, equipment notes, and race
+                reflections — share what you want and keep the rest private.
               </p>
               <Link
                 href="/claim-profile"
@@ -284,9 +220,9 @@ export default function HomePage() {
                 Escape spreadsheet hell.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Compare athletes side-by-side, spot progression trends, and build
-                selection reports from live ranking data. Full squad management
-                tools are coming — join the waitlist to get them first.
+                Use current public standings and sailor profiles today. Squad
+                comparisons, selection reports, and management tools are planned
+                — join the waitlist for updates.
               </p>
               <a
                 href="#roadmap-coach"
@@ -320,9 +256,9 @@ export default function HomePage() {
                 Know exactly where you stand after every regatta.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Automatically calculated using Singapore Sailing&apos;s official
-                scoring rules. Best 3 of 5 results, with fair handling of DNS,
-                overseas commitments, and fleet movements.
+                Calculated from published results using the applicable series
+                rules. Best 3 of 5 results, with handling for DNS, overseas
+                commitments, and fleet movements.
               </p>
               <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
                 <li>SGP sailors auto-included when they race</li>
@@ -358,11 +294,11 @@ export default function HomePage() {
               </div>
               <h3 className="text-lg font-bold text-white">Athlete Logbook</h3>
               <p className="text-sm font-semibold text-amber-100/90 mt-1.5">
-                Your complete sailing history, owned and controlled by you.
+                Keep your sailing history together and under your control.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Add notes, equipment, and milestones with full privacy controls —
-                from your first Optimist race through ILCA.
+                Add notes, equipment, and milestones with sharing controls — from
+                your first Optimist race through ILCA.
               </p>
               <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
                 <li>Dual-class tabs: Optimist and ILCA results together</li>
@@ -401,7 +337,7 @@ export default function HomePage() {
               >
                 Parent Dashboard
               </Link>{" "}
-              are live today. Coach squads and club tools are next.
+              are available today. Coach squads and club tools are next.
             </p>
           </div>
 
@@ -414,7 +350,7 @@ export default function HomePage() {
               <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-emerald-500/40 bg-emerald-500/15" />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-black uppercase tracking-widest text-emerald-400">
-                  Live now
+                  Available now
                 </p>
                 <h3 className="text-base font-bold text-white mt-1">
                   Parent Dashboard
@@ -500,24 +436,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Founding details (full card) */}
-      <section
-        id="founding-details"
-        className="py-12 sm:py-16 bg-[#090a0f] border-t border-white/5"
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-8">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Founding Supporter details
-            </h2>
-            <p className="mt-3 text-slate-400 max-w-2xl mx-auto leading-relaxed text-sm">
-              One-time S$99 · lifetime access · permanent recognition on your
-              profile.
-            </p>
-          </div>
-          <FoundingCard />
-        </div>
-      </section>
     </div>
   );
 }

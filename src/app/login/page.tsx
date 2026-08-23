@@ -12,7 +12,11 @@ function LoginForm() {
   const nextTarget = safeAuthNext(searchParams.get("next"), "/account");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(searchParams.get("error"));
+  const [error, setError] = useState<string | null>(
+    searchParams.has("error")
+      ? "We couldn’t complete authentication. Please try again."
+      : null
+  );
   const [message, setMessage] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
@@ -31,16 +35,16 @@ function LoginForm() {
       if (authError) {
         const msg = authError.message || "Login failed";
         if (/invalid login credentials/i.test(msg)) {
-          setError(
-            "Invalid email or password. If this account was created before Confirm email was turned off, confirm or delete it in Supabase → Authentication → Users, then register again."
-          );
+          setError("The email or password is incorrect. Check both and try again.");
+        } else if (/email not confirmed/i.test(msg)) {
+          setError("Confirm your email before signing in. Check your inbox for the confirmation link.");
         } else {
-          setError(msg);
+          setError("We couldn’t sign you in. Try again or contact support if the problem continues.");
         }
         return;
       }
       if (!data.session) {
-        setError("No session returned. Try again.");
+        setError("We couldn’t complete sign-in. Please try again.");
         return;
       }
       setMessage("Logged in — redirecting…");
@@ -58,8 +62,8 @@ function LoginForm() {
         /* profile optional until DB live */
       }
       window.location.assign(nextTarget);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unexpected error");
+    } catch {
+      setError("Account services are temporarily unavailable. Please try again later.");
     } finally {
       setBusy(false);
     }

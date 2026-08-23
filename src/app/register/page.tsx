@@ -40,7 +40,9 @@ export default function RegisterPage() {
         if (/already registered/i.test(authError.message)) {
           setError("Email already registered. Try logging in.");
         } else {
-          setError(authError.message);
+          setError(
+            "We couldn’t create the account. Check your details and try again."
+          );
         }
         return;
       }
@@ -72,8 +74,10 @@ export default function RegisterPage() {
         trackClientUsage("register", "/register", { mode: "confirm" });
         setDone("confirm");
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Unexpected error");
+    } catch {
+      setError(
+        "Account services are temporarily unavailable. Please try again later."
+      );
     } finally {
       setBusy(false);
     }
@@ -86,16 +90,15 @@ export default function RegisterPage() {
           <h1 className="text-xl font-black text-white">Confirm your email</h1>
           <p className="text-xs text-slate-400 leading-relaxed">
             We created an account for <strong className="text-white">{email}</strong>.
-            Check your inbox for a confirmation link from Supabase. After
-            confirming,{" "}
+            Check your inbox for a confirmation link. After confirming,{" "}
             <Link href="/login" className="text-orange-400 font-bold">
               log in
             </Link>
             , then claim your sailor profile from Search.
           </p>
           <p className="text-[11px] text-slate-600 leading-relaxed">
-            If nothing arrives: site admin can turn off &quot;Confirm email&quot;
-            in Supabase Auth settings for testing.
+            If it does not arrive within a few minutes, check your spam folder
+            or contact support.
           </p>
         </div>
       </div>
@@ -158,6 +161,17 @@ export default function RegisterPage() {
             {busy ? "Creating…" : "Create account"}
           </button>
         </form>
+        <p className="text-center text-[11px] leading-relaxed text-slate-500">
+          By creating an account, you agree to the{" "}
+          <Link href="/terms" className="font-semibold text-slate-300 hover:text-white">
+            Terms
+          </Link>{" "}
+          and acknowledge the{" "}
+          <Link href="/privacy" className="font-semibold text-slate-300 hover:text-white">
+            Privacy notice
+          </Link>
+          .
+        </p>
         <p className="text-center text-xs text-slate-400">
           Have an account?{" "}
           <Link href="/login" className="text-orange-500 font-bold">

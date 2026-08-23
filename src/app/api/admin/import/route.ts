@@ -408,8 +408,7 @@ export async function POST(req: Request) {
           return NextResponse.json(
             {
               error:
-                "Official race-results storage is not installed yet. Run migration 044_official_race_results.sql in Supabase, then import again.",
-              migration: "044_official_race_results.sql",
+                "Race-score storage is temporarily unavailable. Contact platform support before retrying this import.",
             },
             { status: 503 }
           );
@@ -1154,9 +1153,9 @@ export async function POST(req: Request) {
         if (errorSamples.length < 5) {
           errorSamples.push(`${row.name}: ${msg.slice(0, 160)}`);
         }
-        // Common: integer column vs decimal nett before migration 003
+        // Common: score storage does not yet accept decimal nett values.
         const hint = /integer|numeric|invalid input|nett/i.test(msg)
-          ? " (run SQL migration 003_nett_score_real.sql — nett must allow decimals like 14.5)"
+          ? " (score storage needs maintenance before decimal nett values can be saved)"
           : "";
         unmatched.push({
           rawName: row.name,
@@ -1493,7 +1492,7 @@ export async function POST(req: Request) {
         matched === 0 && rowErrors > 0
           ? `Import failed for all rows. ${
               needsNettMigration
-                ? "Likely cause: nett_score is still INTEGER — run migration 003 in Supabase (allows 14.5 points)."
+                ? "Score storage needs maintenance before decimal nett values can be saved."
                 : "See errors below."
             }`
           : `Imported ${reg.name}: ${matched}/${cleanRows.length} results saved (${created} guests auto-created, ${updatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, gender/birth year stamped on ${resultsDemographicsUpdated} result row(s), ${silverUpdated} silver entry dates recomputed${authoritativeReplace ? `, ${removedResultRows} obsolete result row(s) removed` : ""}). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${unmatched.filter((u) => !u.error).length} unmatched.${dupeNote}${natNote}`,
@@ -1515,7 +1514,7 @@ export async function POST(req: Request) {
       matchHow,
       errorSamples,
       hint: needsNettMigration
-        ? "Supabase SQL Editor → run: ALTER TABLE public.regatta_results ALTER COLUMN nett_score TYPE real USING nett_score::real;"
+        ? "Contact platform support before retrying this import."
         : undefined,
     });
   } catch (e) {

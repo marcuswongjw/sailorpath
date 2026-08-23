@@ -407,7 +407,7 @@ export function AdminIlcaRankingPanel({
       setMsg(
         e instanceof Error
           ? e.message
-          : "Seed failed — run migration 026_ilca4_national_list.sql in Supabase?"
+          : "The national-list update failed. Contact platform support if it continues."
       );
     } finally {
       setSeedBusy(false);
@@ -785,10 +785,8 @@ export function AdminIlcaRankingPanel({
             </div>
           )}
           <p className="px-4 py-2 text-[9px] text-slate-600 border-t border-white/5">
-            Run migration{" "}
-            <code className="text-slate-400">026_ilca4_national_list.sql</code>{" "}
-            in Supabase if toggles fail. Seed matches official names by token
-            order (e.g. &quot;Goh, Ian&quot; ≈ &quot;Ian Goh&quot;).
+            Seed matching compares names regardless of token order (for example,
+            &quot;Goh, Ian&quot; and &quot;Ian Goh&quot;).
           </p>
         </div>
       )}

@@ -77,7 +77,7 @@ type RegattasListProps = {
 export function RegattasListClient({
   regattas,
   title = "Regattas & Competitions",
-  description = "Explore official Singapore Optimist ranking series regattas and local practice events.",
+  description = "Explore published Singapore Optimist ranking series results and local events.",
   badgeLabel = "Regatta Directory",
   detailBasePath = "/sg/optimist/regattas",
   accent = "orange",

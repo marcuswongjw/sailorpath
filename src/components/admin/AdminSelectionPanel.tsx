@@ -220,7 +220,7 @@ export function AdminSelectionPanel({
         if (!cancelled) {
           setSelectionResults([]);
           setSelectionLoadError(
-            error instanceof Error ? error.message : "Could not load official race scores."
+            error instanceof Error ? error.message : "Could not load published race scores."
           );
         }
       });
@@ -421,7 +421,7 @@ export function AdminSelectionPanel({
         </p>
         {selectionLoading && (
           <p className="text-[11px] text-sky-300 inline-flex items-center gap-1.5">
-            <Loader2 className="h-3 w-3 animate-spin" /> Loading official race scores…
+            <Loader2 className="h-3 w-3 animate-spin" /> Loading published race scores…
           </p>
         )}
         {selectionLoadError && (

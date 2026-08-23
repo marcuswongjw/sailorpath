@@ -26,7 +26,19 @@ export function SiteFooter() {
             href="/support"
             className="hover:text-orange-400 transition-colors"
           >
-            Help / Support
+            Help &amp; support
+          </Link>
+          <Link
+            href="/privacy"
+            className="hover:text-orange-400 transition-colors"
+          >
+            Privacy
+          </Link>
+          <Link
+            href="/terms"
+            className="hover:text-orange-400 transition-colors"
+          >
+            Terms
           </Link>
           {!hideDemo && (
             <Link

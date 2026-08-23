@@ -316,7 +316,7 @@ function AccountInner() {
             <li>Open your public sailor page.</li>
             <li>
               Click <strong className="text-white">Claim this profile</strong>{" "}
-              and add a verification note.
+              and add a short note to help us review the claim.
             </li>
             <li>Wait for admin approval — then use Edit profile.</li>
           </ol>

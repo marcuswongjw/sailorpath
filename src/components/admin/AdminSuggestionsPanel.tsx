@@ -142,7 +142,7 @@ export function AdminSuggestionsPanel({
             <p className="text-xs text-slate-500 mt-1 max-w-2xl">
               When a claimed sailor adds an overseas / other logbook event, it
               appears here. <strong className="text-slate-300">Promote</strong>{" "}
-              to put it on the official regatta list (eligible for Best 3 of 5),
+              to put it on the ranking regatta list (eligible for Best 3 of 5),
               or <strong className="text-slate-300">Dismiss</strong> to keep it
               logbook-only.
             </p>
@@ -164,7 +164,7 @@ export function AdminSuggestionsPanel({
             {err}
             {/reviewed_at|column/i.test(err) && (
               <span className="block mt-1 text-rose-100/80">
-                Run migration 018_regatta_reviewed_at.sql in Supabase.
+                This feature needs platform maintenance before it can be used.
               </span>
             )}
           </div>

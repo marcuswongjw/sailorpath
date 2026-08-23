@@ -46,7 +46,7 @@ function MobileRaceScores({ races }: { races: OfficialRaceResultInput[] }) {
       <summary className="cursor-pointer list-none px-3 py-2 text-[11px] font-semibold text-emerald-300 marker:content-none">
         <span className="inline-flex items-center gap-1.5">
           <span aria-hidden className="transition-transform group-open:rotate-90">›</span>
-          {races.length} official race score{races.length === 1 ? "" : "s"}
+          {races.length} published race score{races.length === 1 ? "" : "s"}
         </span>
       </summary>
       <div className="grid grid-cols-3 gap-1.5 border-t border-white/5 p-2.5">

@@ -311,10 +311,7 @@ function AdminDashboardInner() {
             Sign In to Admin Portal
           </a>
           <p className="text-[10px] text-slate-500 leading-relaxed">
-            After login you return here. For a live (non-demo) admin, set{" "}
-            <code className="text-slate-400">DATABASE_URL</code> on Vercel and
-            make your{" "}
-            <code className="text-slate-400">profiles.role = superadmin</code>.
+            After signing in, you will return to the admin console.
           </p>
         </div>
       </div>
@@ -373,7 +370,7 @@ function AdminDashboardInner() {
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
-            ["stats", "Stats", "Live stats", Activity],
+            ["stats", "Stats", "Platform stats", Activity],
             ["import", "Excel", "Regatta Excel", FileSpreadsheet],
             ["edit", "Database", "Sailors & results", Database],
             ["ops", "Ops", "Claims & support", ClipboardList],
@@ -418,10 +415,11 @@ function AdminDashboardInner() {
           <AlertTriangle className="h-5 w-5 flex-shrink-0 text-red-500 mt-0.5" />
           <div>
             <h3 className="font-bold text-sm">
-              Access Denied (RLS & UI Blocked)
+              Admin access required
             </h3>
             <p className="text-xs text-red-300/80 mt-1">
-              Your active role is **{adminRole}**. Regatta result modification, AI reconciliation, and bulk fleet changes require explicit `role = &apos;superadmin&apos;` credentials. In a real environment, database writing is blocked by RLS policies.
+              This account does not have permission to change regatta results or
+              sailor records. Sign in with an authorized administrator account.
             </p>
           </div>
         </div>

@@ -8,7 +8,7 @@ export default function RankingsHubPage() {
     <div className="mx-auto max-w-3xl px-4 py-12 sm:py-16 space-y-8">
       <div className="text-center space-y-3">
         <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-          Live rankings
+          Current rankings
         </h1>
         <p className="text-sm text-slate-400 max-w-lg mx-auto leading-relaxed">
           Singapore youth dinghy series — pick a board to view current

@@ -112,6 +112,6 @@ export interface SailorProfileViewProps {
   onDemoClaim?: () => void;
   /** Hide bottom privacy card (e.g. moved to Settings modal in demo) */
   hidePrivacySection?: boolean;
-  /** Show "Verified" vs "Unclaimed" badge in header */
+  /** Show "Claimed" vs "Unclaimed" badge in header */
   profileVerified?: boolean;
 }

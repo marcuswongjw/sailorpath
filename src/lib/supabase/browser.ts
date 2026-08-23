@@ -13,7 +13,7 @@ export function createBrowserSupabase() {
     "";
   if (!url || !key || url.includes("placeholder")) {
     throw new Error(
-      "Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY on Vercel and redeploy."
+      "Account services are temporarily unavailable. Please try again later."
     );
   }
   const cookieOptions = getAuthCookieOptions();

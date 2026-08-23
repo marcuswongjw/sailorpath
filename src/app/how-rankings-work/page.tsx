@@ -105,7 +105,7 @@ export default function HowRankingsWorkPage() {
 
       <p className="text-center text-[12px] text-slate-600">
         <Link href="/rankings" className="text-slate-500 hover:text-white">
-          Live rankings
+          Current rankings
         </Link>
         {" · "}
         <Link href="/support" className="text-slate-500 hover:text-white">

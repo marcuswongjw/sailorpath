@@ -535,7 +535,7 @@ export function FleetRankingsView({
               <p className="text-[11px] text-amber-200/90 font-semibold">
                 Viewing what-if ranking: {excluded.size} regatta
                 {excluded.size === 1 ? "" : "s"} excluded · Best 3 of remaining
-                scores. Official standings restore when you reset.
+                scores. Current standings return when you reset.
               </p>
             )}
           </div>
@@ -560,10 +560,11 @@ export function FleetRankingsView({
       )}
       {error && (
         <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs sm:text-sm text-rose-300 no-print">
-          {error}{" "}
-          <Link href="/api/health" className="underline font-bold">
-            Check /api/health
+          Rankings could not be loaded. Try again in a moment or{" "}
+          <Link href="/support" className="underline font-bold">
+            contact support
           </Link>
+          .
         </div>
       )}
       {!loading && !error && ranked.length === 0 && (

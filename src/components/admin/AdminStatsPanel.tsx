@@ -112,7 +112,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
           (e instanceof Error && e.name === "AbortError");
         throw new Error(
           aborted
-            ? "Stats timed out after 20s — try Refresh. If it keeps failing, check DATABASE_URL / usage_events."
+            ? "Stats took too long to load. Try Refresh, then contact support if the problem continues."
             : errorMessage(e, "Failed to load stats")
         );
       } finally {
@@ -140,7 +140,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
         <div className="min-w-0 space-y-1">
           <h1 className="text-lg sm:text-xl font-black text-white tracking-tight">
-            Live stats
+            Platform stats
           </h1>
           <p className="text-[12px] text-slate-400 leading-relaxed max-w-xl">
             Privacy-safe aggregates (counts only). Cached ~{stats?.cacheSeconds ?? 60}
@@ -192,8 +192,8 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
         <>
           {!stats.usageEventsOk && (
             <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-[12px] text-amber-100">
-              Usage events unavailable — traffic cards show zero. Confirm
-              migration 016 (`usage_events`) is applied.
+              Traffic metrics are temporarily unavailable. Other platform
+              statistics are unaffected.
             </div>
           )}
 
