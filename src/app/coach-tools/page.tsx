@@ -1,5 +1,11 @@
 import Link from "next/link";
 import { Users, BarChart3, FileText } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Coach tools | SailorPath",
+  description: "See current SailorPath tools and the roadmap for sailing coaches and squad managers.",
+};
 
 /** Pure static content — no request-time data. */
 export const revalidate = false;

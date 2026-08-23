@@ -44,7 +44,7 @@ export function SiteHeader() {
         }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
-        SG Gold Fleet
+        Gold standings
       </Link>
       <Link
         href="/sg/optimist/silver"
@@ -55,7 +55,7 @@ export function SiteHeader() {
         }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
-        SG Silver Fleet
+        Silver standings
       </Link>
       <Link
         href="/sg/optimist/regattas"
@@ -65,7 +65,7 @@ export function SiteHeader() {
         }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
-        SG Regattas
+        Optimist regattas
       </Link>
       {isSuperadmin && (
         <Link
@@ -76,7 +76,7 @@ export function SiteHeader() {
           }}
           className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
         >
-          SG All Gold Fleet Sailors
+          All Gold Fleet sailors
         </Link>
       )}
     </>
@@ -92,7 +92,7 @@ export function SiteHeader() {
         }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
-        SG Ranking
+        ILCA 4 standings
       </Link>
       <Link
         href="/sg/ilca4/regattas"
@@ -102,7 +102,7 @@ export function SiteHeader() {
         }}
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
-        SG Regattas
+        ILCA 4 regattas
       </Link>
     </>
   );
@@ -179,7 +179,7 @@ export function SiteHeader() {
           onClick={() => setMobileOpen(false)}
           className="text-sm font-semibold text-amber-300/90 hover:text-amber-200 py-2 md:py-0"
         >
-          Demo
+          Explore demo
         </Link>
       )}
     </>
@@ -238,7 +238,7 @@ export function SiteHeader() {
           href="https://admin.sailorpath.com/"
           className="text-xs font-bold text-slate-400 hover:text-white"
         >
-          Console
+          Admin console
         </a>
       )}
       <button
@@ -252,17 +252,17 @@ export function SiteHeader() {
   ) : (
     <>
       <Link
-        href="/claim-profile"
+        href="/search"
         onClick={() => setMobileOpen(false)}
         className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-500"
       >
-        Claim this profile
+        Find and claim a profile
       </Link>
       <Link
         href="/login"
         className="text-sm font-semibold text-slate-400 hover:text-white"
       >
-        Log In
+        Log in
       </Link>
       <Link
         href="/register"
@@ -320,11 +320,11 @@ export function SiteHeader() {
             </Link>
             {showClaimCta && (
               <Link
-                href="/claim-profile"
+                href="/search"
                 onClick={() => setMobileOpen(false)}
                 className="rounded-xl px-3 py-3 text-sm font-bold text-white bg-orange-600/90 hover:bg-orange-500 touch-manipulation min-h-[2.75rem] flex items-center justify-center"
               >
-                Claim this profile
+                Find and claim a profile
               </Link>
             )}
             <p className="px-1 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
@@ -335,21 +335,21 @@ export function SiteHeader() {
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
             >
-              SG Gold Fleet
+              Gold standings
             </Link>
             <Link
               href="/sg/optimist/silver"
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
             >
-              SG Silver Fleet
+              Silver standings
             </Link>
             <Link
               href="/sg/optimist/regattas"
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
             >
-              SG Regattas
+              Optimist regattas
             </Link>
             {isSuperadmin && (
               <Link
@@ -357,7 +357,7 @@ export function SiteHeader() {
                 onClick={() => setMobileOpen(false)}
                 className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
               >
-                SG All Gold Fleet Sailors
+                All Gold Fleet sailors
               </Link>
             )}
             <p className="px-1 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
@@ -368,14 +368,14 @@ export function SiteHeader() {
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
             >
-              SG Ranking
+              ILCA 4 standings
             </Link>
             <Link
               href="/sg/ilca4/regattas"
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
             >
-              SG Regattas
+              ILCA 4 regattas
             </Link>
             <Link
               href="/search"
@@ -390,7 +390,7 @@ export function SiteHeader() {
                 onClick={() => setMobileOpen(false)}
                 className="rounded-xl px-3 py-3 text-sm font-semibold text-amber-200 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
               >
-                Demo profiles
+                Explore demo
               </Link>
             )}
             <Link
@@ -398,7 +398,7 @@ export function SiteHeader() {
               onClick={() => setMobileOpen(false)}
               className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
             >
-              Help / Support
+              Help &amp; support
             </Link>
             <div className="mt-3 pt-3 border-t border-white/5 flex flex-col gap-1">
               {authButtons}

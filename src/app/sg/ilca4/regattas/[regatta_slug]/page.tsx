@@ -5,6 +5,12 @@ import { RegattaEventHeader } from "@/components/RegattaEventHeader";
 import { DbUnavailableError } from "@/db";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ILCA 4 regatta results | SailorPath",
+  description: "Published ILCA 4 event standings and individual race scores.",
+};
 
 export const dynamic = "force-dynamic";
 
@@ -49,7 +55,7 @@ export default async function Ilca4RegattaDetailPage({
         accent="sky"
       />
       <p className="text-[10px] text-slate-600">
-        Parentheses indicate a discarded race score · * DNS · † Overseas commitment
+        Source: published regatta results reviewed before import · Parentheses indicate a discarded race score · * DNS · † Overseas commitment
       </p>
     </div>
   );

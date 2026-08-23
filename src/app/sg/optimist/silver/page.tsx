@@ -4,6 +4,12 @@ import { getCachedFleetRankings } from "@/lib/queries";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
 import { DbUnavailableError } from "@/db";
 import type { RankedSailor } from "@/lib/ranking";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Optimist Silver standings | SailorPath",
+  description: "Current Singapore Optimist Silver Fleet best-3-of-5 series standings.",
+};
 
 /** ISR — first paint includes rankings (no client waterfall). */
 export const revalidate = 60;

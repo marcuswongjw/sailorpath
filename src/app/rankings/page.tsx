@@ -1,5 +1,11 @@
 import Link from "next/link";
 import { Trophy, Anchor, Medal } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Current sailing rankings | SailorPath",
+  description: "View current Singapore Optimist Gold, Optimist Silver, and ILCA 4 standings.",
+};
 
 export const revalidate = 300;
 

@@ -6,6 +6,12 @@ import {
   getCachedIlcaRankings,
 } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "ILCA 4 national standings | SailorPath",
+  description: "Current Singapore ILCA 4 national standings using high ranking points and the best 3 of 5 events.",
+};
 
 /** ISR — shared with getCachedIlcaRankings (tagged; busted after import). */
 export const revalidate = 60;

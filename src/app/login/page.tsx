@@ -85,24 +85,37 @@ function LoginForm() {
           </p>
         )}
         <form onSubmit={onSubmit} className="space-y-4">
-          <input
-            type="email"
-            required
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@email.com"
-            className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
-          />
-          <input
-            type="password"
-            required
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
-          />
+          <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+            Email
+            <input
+              type="email"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@email.com"
+              className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+            />
+          </label>
+          <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+            Password
+            <input
+              type="password"
+              required
+              autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+            />
+          </label>
+          <div className="text-right">
+            <Link
+              href="/forgot-password"
+              className="text-xs font-semibold text-slate-400 hover:text-white"
+            >
+              Forgot password?
+            </Link>
+          </div>
           <button
             type="submit"
             disabled={busy}
@@ -113,7 +126,10 @@ function LoginForm() {
         </form>
         <p className="text-center text-xs text-slate-400">
           No account?{" "}
-          <Link href="/register" className="text-orange-500 font-bold">
+          <Link
+            href={`/register?next=${encodeURIComponent(nextTarget)}`}
+            className="text-orange-500 font-bold"
+          >
             Register
           </Link>
         </p>

@@ -112,6 +112,15 @@ export function IlcaRankingsView({
       idx,
     }));
   }, [ranked]);
+  const latestResultDate = useMemo(
+    () =>
+      eventSlots
+        .map((event) => event.date)
+        .filter(Boolean)
+        .sort()
+        .at(-1),
+    [eventSlots]
+  );
 
   const pointsFor = (r: IlcaRankedSailor, regattaId: string) => {
     const e = r.eventScores.find((x) => x.regattaId === regattaId);
@@ -190,6 +199,12 @@ export function IlcaRankingsView({
         {genderFilter !== "all" ? ` of ${ranked.length}` : ""} ranked · scoring
         window ≤ {asOf}
       </p>
+      {!loading && ranked.length > 0 && (
+        <p className="text-[11px] font-medium text-slate-500">
+          {latestResultDate ? `Results through ${latestResultDate} · ` : ""}
+          Source: published regatta results reviewed before import
+        </p>
+      )}
       {error && (
         <p className="text-[11px] text-rose-300 font-medium">{error}</p>
       )}

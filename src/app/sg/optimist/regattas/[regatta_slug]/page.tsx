@@ -4,6 +4,12 @@ import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaEventHeader } from "@/components/RegattaEventHeader";
 import { DbUnavailableError } from "@/db";
 import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Optimist regatta results | SailorPath",
+  description: "Published Optimist event standings and individual race scores.",
+};
 
 export const dynamic = "force-dynamic";
 
@@ -48,7 +54,7 @@ export default async function RegattaDetailPage({
         accent="orange"
       />
       <p className="text-[10px] text-slate-600">
-        Parentheses indicate a discarded race score · * DNS · † Overseas commitment
+        Source: published regatta results reviewed before import · Parentheses indicate a discarded race score · * DNS · † Overseas commitment
       </p>
     </div>
   );

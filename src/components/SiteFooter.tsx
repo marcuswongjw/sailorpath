@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useAccount } from "@/components/AccountProvider";
 
 /**
- * Footer links — hides Demo when account already owns a claimed profile.
+ * Footer links — hides the demo when an account already owns a claimed profile.
  * Uses shared AccountProvider (no second /api/account fetch).
  */
 export function SiteFooter() {
@@ -45,7 +45,7 @@ export function SiteFooter() {
               href="/sample"
               className="hover:text-slate-300 transition-colors"
             >
-              Demo
+              Explore demo
             </Link>
           )}
           <Link

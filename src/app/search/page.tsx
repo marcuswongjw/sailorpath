@@ -4,6 +4,12 @@ import { searchSailors } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { seriesMembershipLabel } from "@/lib/seriesMembership";
 import { SearchNationalityField } from "@/components/SearchNationalityField";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Find a sailor profile | SailorPath",
+  description: "Search SailorPath by sailor name, sail number, club, school, fleet, or nationality.",
+};
 
 export const dynamic = "force-dynamic";
 

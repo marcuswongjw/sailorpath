@@ -9,6 +9,13 @@ import {
   UserRound,
 } from "lucide-react";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Singapore sailing rankings and sailor records | SailorPath",
+  description:
+    "Follow current Optimist and ILCA 4 standings, explore regatta results, and keep one sailing record across classes.",
+};
 
 /**
  * Static marketing homepage — no DB round-trip so logo → home is instant
@@ -45,15 +52,15 @@ export default function HomePage() {
             className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
           >
             <Trophy className="h-4 w-4 shrink-0" />
-            View Current Rankings
+            View current rankings
           </Link>
           <p className="text-[12px] sm:text-[13px] text-slate-400">
             Sailor or parent?{" "}
             <Link
-              href="/claim-profile"
+              href="/search"
               className="font-bold text-orange-400 hover:text-orange-300 underline-offset-2 hover:underline"
             >
-              Claim a profile
+              Find and claim a profile
             </Link>
           </p>
         </div>
@@ -102,7 +109,7 @@ export default function HomePage() {
       <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-8 sm:mb-10">
-            How SailorPath Works
+            How SailorPath works
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {(
@@ -172,7 +179,7 @@ export default function HomePage() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 mb-3">
                 <UserRound className="h-5 w-5 text-orange-400" />
               </div>
-              <h2 className="text-lg font-bold text-white">For Sailors</h2>
+              <h2 className="text-lg font-bold text-white">For sailors</h2>
               <p className="text-sm font-semibold text-white mt-1.5">
                 Own your sailing journey.
               </p>
@@ -182,10 +189,10 @@ export default function HomePage() {
                 reflections — share what you want and keep the rest private.
               </p>
               <Link
-                href="/claim-profile"
+                href="/search"
                 className="mt-4 text-[12px] font-bold text-orange-400 hover:text-orange-300"
               >
-                Claim this profile →
+                Find and claim your profile →
               </Link>
             </article>
 
@@ -193,9 +200,9 @@ export default function HomePage() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 mb-3">
                 <Users className="h-5 w-5 text-slate-200" />
               </div>
-              <h2 className="text-lg font-bold text-white">For Parents</h2>
+              <h2 className="text-lg font-bold text-white">For parents</h2>
               <p className="text-sm font-semibold text-white mt-1.5">
-                Stop the info-hunt.
+                Keep their sailing progress in one place.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
                 Link your account to your child&apos;s profile and open the{" "}
@@ -204,7 +211,7 @@ export default function HomePage() {
                 More family tools are on the roadmap.
               </p>
               <Link
-                href="/claim-profile"
+                href="/search"
                 className="mt-4 text-[12px] font-bold text-slate-300 hover:text-white"
               >
                 Link to your child&apos;s profile →
@@ -215,9 +222,9 @@ export default function HomePage() {
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
                 <Trophy className="h-5 w-5 text-sky-400" />
               </div>
-              <h2 className="text-lg font-bold text-white">For Coaches</h2>
+              <h2 className="text-lg font-bold text-white">For coaches</h2>
               <p className="text-sm font-semibold text-white mt-1.5">
-                Escape spreadsheet hell.
+                See every sailor in context.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
                 Use current public standings and sailor profiles today. Squad

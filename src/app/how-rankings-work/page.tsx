@@ -1,4 +1,10 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "How the rankings work | SailorPath",
+  description: "Understand SailorPath scoring for Singapore Optimist and ILCA 4 ranking series.",
+};
 
 /** Pure static content — no request-time data. */
 export const revalidate = false;

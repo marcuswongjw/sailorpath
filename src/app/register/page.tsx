@@ -1,19 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
+import { safeAuthNext } from "@/lib/supabase/cookie-options";
 import { trackClientUsage } from "@/lib/clientUsage";
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextTarget = safeAuthNext(
+    searchParams.get("next"),
+    "/account?welcome=1"
+  );
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<"session" | "confirm" | null>(null);
   const [busy, setBusy] = useState(false);
+  const [resendBusy, setResendBusy] = useState(false);
+  const [resendMessage, setResendMessage] = useState<string | null>(null);
+
+  const confirmationRedirect = () =>
+    `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextTarget)}`;
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +44,7 @@ export default function RegisterPage() {
         password,
         options: {
           data: { full_name: cleanName },
-          emailRedirectTo: `${window.location.origin}/auth/callback?next=/account?welcome=1`,
+          emailRedirectTo: confirmationRedirect(),
         },
       });
       if (authError) {
@@ -69,7 +80,7 @@ export default function RegisterPage() {
           /* ok */
         }
         setDone("session");
-        setTimeout(() => router.replace("/account?welcome=1"), 600);
+        setTimeout(() => router.replace(nextTarget), 600);
       } else {
         trackClientUsage("register", "/register", { mode: "confirm" });
         setDone("confirm");
@@ -83,6 +94,28 @@ export default function RegisterPage() {
     }
   };
 
+  const resendConfirmation = async () => {
+    setResendBusy(true);
+    setResendMessage(null);
+    try {
+      const supabase = createBrowserSupabase();
+      const { error: resendError } = await supabase.auth.resend({
+        type: "signup",
+        email: email.trim().toLowerCase(),
+        options: { emailRedirectTo: confirmationRedirect() },
+      });
+      setResendMessage(
+        resendError
+          ? "We couldn’t resend the email yet. Wait a moment and try again."
+          : "Confirmation email sent. Check your inbox and spam folder."
+      );
+    } catch {
+      setResendMessage("Account services are temporarily unavailable.");
+    } finally {
+      setResendBusy(false);
+    }
+  };
+
   if (done === "confirm") {
     return (
       <div className="min-h-[70vh] flex items-center justify-center px-4">
@@ -90,16 +123,22 @@ export default function RegisterPage() {
           <h1 className="text-xl font-black text-white">Confirm your email</h1>
           <p className="text-xs text-slate-400 leading-relaxed">
             We created an account for <strong className="text-white">{email}</strong>.
-            Check your inbox for a confirmation link. After confirming,{" "}
-            <Link href="/login" className="text-orange-400 font-bold">
-              log in
-            </Link>
-            , then claim your sailor profile from Search.
+            Check your inbox and open the confirmation link. We’ll return you
+            to the sailor profile you selected so you can submit the claim.
           </p>
-          <p className="text-[11px] text-slate-600 leading-relaxed">
-            If it does not arrive within a few minutes, check your spam folder
-            or contact support.
-          </p>
+          <button
+            type="button"
+            disabled={resendBusy}
+            onClick={() => void resendConfirmation()}
+            className="text-xs font-bold text-orange-400 hover:text-orange-300 disabled:opacity-50"
+          >
+            {resendBusy ? "Sending…" : "Resend confirmation email"}
+          </button>
+          {resendMessage && (
+            <p className="text-[11px] text-slate-400 leading-relaxed">
+              {resendMessage}
+            </p>
+          )}
         </div>
       </div>
     );
@@ -127,32 +166,45 @@ export default function RegisterPage() {
           <p className="text-xs font-bold text-rose-400 text-center">{error}</p>
         )}
         <form onSubmit={onSubmit} className="space-y-4">
-          <input
-            required
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-            placeholder="Your name (parent or sailor)"
-            className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
-          />
-          <input
-            type="email"
-            required
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@email.com"
-            className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
-          />
-          <input
-            type="password"
-            required
-            minLength={6}
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password (min 6)"
-            className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
-          />
+          <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+            Full name
+            <input
+              required
+              autoComplete="name"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder="Parent or sailor name"
+              className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+            />
+          </label>
+          <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+            Email
+            <input
+              type="email"
+              required
+              autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@email.com"
+              className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+            />
+          </label>
+          <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+            Password
+            <input
+              type="password"
+              required
+              minLength={6}
+              autoComplete="new-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              aria-describedby="password-help"
+              className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+            />
+            <span id="password-help" className="block font-normal text-slate-500">
+              Use at least 6 characters.
+            </span>
+          </label>
           <button
             type="submit"
             disabled={busy}
@@ -174,11 +226,28 @@ export default function RegisterPage() {
         </p>
         <p className="text-center text-xs text-slate-400">
           Have an account?{" "}
-          <Link href="/login" className="text-orange-500 font-bold">
+          <Link
+            href={`/login?next=${encodeURIComponent(nextTarget)}`}
+            className="text-orange-500 font-bold"
+          >
             Log in
           </Link>
         </p>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-[70vh] flex items-center justify-center text-slate-500 text-sm">
+          Loading…
+        </div>
+      }
+    >
+      <RegisterForm />
+    </Suspense>
   );
 }

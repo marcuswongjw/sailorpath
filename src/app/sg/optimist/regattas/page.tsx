@@ -3,6 +3,12 @@ import { RegattasListClient } from "@/components/RegattasListClient";
 import { getCachedPublicRegattas } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Optimist regatta results | SailorPath",
+  description: "Browse published Singapore Optimist regatta results, fleet sizes, and individual race scores.",
+};
 
 export const revalidate = 60;
 
@@ -34,7 +40,7 @@ export default async function OptimistRegattasPage() {
     <RegattasListClient
       title="Optimist regattas"
       badgeLabel="SG Optimist"
-      description="Singapore Optimist ranking series and local events. ILCA 4 events are listed separately under ILCA 4 → SG Regattas."
+      description="Published Singapore Optimist ranking series and local event results. ILCA 4 events are listed separately under ILCA 4 regattas."
       detailBasePath="/sg/optimist/regattas"
       hideBoatClassFilter
       accent="orange"

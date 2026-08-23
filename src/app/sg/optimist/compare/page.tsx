@@ -1,5 +1,11 @@
 import { CompareSailorsView } from "@/components/CompareSailorsView";
 import type { Period } from "@/lib/ranking";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Compare Optimist sailors | SailorPath",
+  description: "Compare two sailors across Singapore Optimist ranking regattas.",
+};
 
 export const dynamic = "force-dynamic";
 
