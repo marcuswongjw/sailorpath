@@ -371,8 +371,9 @@ export async function listSailorsFull() {
 
 export async function getResultsForRegatta(regattaId: string) {
   return withDb(async () => {
-    const rows = await db
+    const rowsPromise = db
       .select({
+        resultId: regattaResults.id,
         sailorId: regattaResults.sailorId,
         regattaId: regattaResults.regattaId,
         rank: regattaResults.rank,
@@ -394,10 +395,46 @@ export async function getResultsForRegatta(regattaId: string) {
       .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
       .where(eq(regattaResults.regattaId, regattaId))
       .orderBy(asc(regattaResults.rank));
+
+    const raceRowsPromise = db
+      .select({
+        regattaResultId: regattaRaceResults.regattaResultId,
+        raceNumber: regattaRaceResults.raceNumber,
+        score: regattaRaceResults.score,
+        scoringCode: regattaRaceResults.scoringCode,
+        discarded: regattaRaceResults.discarded,
+        rawValue: regattaRaceResults.rawValue,
+      })
+      .from(regattaRaceResults)
+      .innerJoin(
+        regattaResults,
+        eq(regattaRaceResults.regattaResultId, regattaResults.id)
+      )
+      .where(eq(regattaResults.regattaId, regattaId))
+      .orderBy(
+        asc(regattaRaceResults.regattaResultId),
+        asc(regattaRaceResults.raceNumber)
+      )
+      .catch((error) => {
+        // Keep public regatta pages available during rollout before migration 044.
+        if (/regatta_race_results|does not exist|relation/i.test(formatDbError(error))) {
+          return [];
+        }
+        throw error;
+      });
+
+    const [rows, raceRows] = await Promise.all([rowsPromise, raceRowsPromise]);
+    const racesByResult = new Map<string, typeof raceRows>();
+    for (const race of raceRows) {
+      const list = racesByResult.get(race.regattaResultId) || [];
+      list.push(race);
+      racesByResult.set(race.regattaResultId, list);
+    }
     return rows.map((r) => ({
       ...r,
       gender: r.gender || r.sailorGender || null,
       nationality: r.nationality || r.sailorNationality || null,
+      raceResults: racesByResult.get(r.resultId) || [],
     }));
   });
 }
