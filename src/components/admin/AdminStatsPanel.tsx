@@ -7,6 +7,7 @@ import {
   AlertTriangle,
   Database,
   HeartPulse,
+  Users,
   RefreshCw,
   Target,
   TrendingUp,
@@ -196,6 +197,12 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
               statistics are unaffected.
             </div>
           )}
+          {!stats.authAccountsOk && (
+            <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-[12px] text-amber-100">
+              Account activity is temporarily unavailable. Aggregate traffic
+              and platform statistics are unaffected.
+            </div>
+          )}
 
           <Section icon={Target} title="North stars">
             <Card
@@ -276,6 +283,87 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
               hint="sample_view · admin_open"
             />
           </Section>
+
+          <Section icon={Users} title="Signed-in accounts">
+            <Card label="Registered" value={fmt(stats.accounts.registered)} />
+            <Card label="Confirmed" value={fmt(stats.accounts.confirmed)} />
+            <Card
+              label="Signed in · 7 days"
+              value={fmt(stats.accounts.signedInLast7d)}
+              hint="Accounts with a recent sign-in"
+            />
+            <Card
+              label="Auth sessions"
+              value={fmt(stats.accounts.authSessions)}
+              hint="Valid session records, not live online presence"
+            />
+          </Section>
+
+          {stats.authAccountsOk && (
+            <section className="space-y-3">
+              <div>
+                <h2 className="text-sm font-black text-white tracking-tight">
+                  Recent account activity
+                </h2>
+                <p className="mt-1 text-[11px] text-slate-500">
+                  Superadmin only. A session can remain valid while the person
+                  is away, so this does not claim real-time online status.
+                </p>
+              </div>
+              <div className="overflow-x-auto rounded-2xl border border-white/5 bg-white/[0.03]">
+                <table className="w-full min-w-[720px] text-left text-[11px]">
+                  <thead className="border-b border-white/5 text-[10px] uppercase tracking-wider text-slate-500">
+                    <tr>
+                      <th className="px-4 py-3 font-bold">Account</th>
+                      <th className="px-4 py-3 font-bold">Role</th>
+                      <th className="px-4 py-3 font-bold">Last sign-in</th>
+                      <th className="px-4 py-3 font-bold">Last session refresh</th>
+                      <th className="px-4 py-3 font-bold text-right">Sessions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5">
+                    {stats.accounts.recent.map((account) => (
+                      <tr key={account.id} className="text-slate-300">
+                        <td className="px-4 py-3">
+                          <p className="font-bold text-white">
+                            {account.fullName ||
+                              account.email ||
+                              "Unnamed account"}
+                          </p>
+                          {account.fullName && account.email && (
+                            <p className="mt-0.5 text-slate-500">{account.email}</p>
+                          )}
+                        </td>
+                        <td className="px-4 py-3 capitalize">{account.role}</td>
+                        <td className="px-4 py-3 tabular-nums">
+                          {account.lastSignInAt
+                            ? new Date(account.lastSignInAt).toLocaleString()
+                            : "Never"}
+                        </td>
+                        <td className="px-4 py-3 tabular-nums">
+                          {account.lastSessionRefreshAt
+                            ? new Date(
+                                account.lastSessionRefreshAt
+                              ).toLocaleString()
+                            : "—"}
+                        </td>
+                        <td className="px-4 py-3 text-right font-bold tabular-nums">
+                          {fmt(account.authSessionCount)}
+                        </td>
+                      </tr>
+                    ))}
+                    {stats.accounts.recent.length === 0 && (
+                      <tr>
+                        <td colSpan={5} className="px-4 py-8 text-center text-slate-500">
+                          No accounts found.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          )}
 
           <Section icon={Database} title="Data trust">
             <Card

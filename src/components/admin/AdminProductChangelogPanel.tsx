@@ -83,19 +83,13 @@ export function AdminProductChangelogPanel({
           Product change log
         </h3>
         <p className="text-xs text-slate-500 mt-1 leading-relaxed max-w-2xl">
-          Shipped product updates for the team. Mutation history lives under{" "}
+          Admin-only record of shipped product updates. Mutation history lives
+          under{" "}
           <Link
             href="/admin?tab=ops&sub=audit"
             className="text-orange-400 hover:text-orange-300 font-semibold"
           >
             Ops → Audit
-          </Link>
-          . Public-facing subset:{" "}
-          <Link
-            href="/whats-new"
-            className="text-orange-400 hover:text-orange-300 font-semibold"
-          >
-            /whats-new
           </Link>
           .
         </p>

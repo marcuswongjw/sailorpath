@@ -67,8 +67,8 @@ tab POSTs `/api/account/changelog-seen` (profile watermark; migration
 compares watermark to newest entry date.
 
 **Ops → Audit** (`?tab=ops&sub=audit`): live `admin_change_log` via
-`GET /api/admin/change-log`. Public subset: `/whats-new` via
-`getPublicChangelogEntries()` (excludes admin-only audiences).
+`GET /api/admin/change-log`. Product release notes remain admin-only under the
+Change log tab.
 
 Append new product ships to `PRODUCT_CHANGELOG` (newest first).
 

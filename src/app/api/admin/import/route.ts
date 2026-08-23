@@ -545,6 +545,7 @@ export async function POST(req: Request) {
           totalFleetSize: fleetSize,
           geography: geo,
           countsForRanking: ranking,
+          reviewedAt: ranking === false ? new Date() : target.reviewedAt,
           raceCount,
           updatedAt: new Date(),
         })
@@ -563,6 +564,7 @@ export async function POST(req: Request) {
           geography: geo,
           boatClass: boat,
           countsForRanking: ranking,
+          reviewedAt: ranking === false ? new Date() : null,
           raceCount,
         })
         .onConflictDoUpdate({
@@ -575,6 +577,7 @@ export async function POST(req: Request) {
             geography: geo,
             boatClass: boat,
             countsForRanking: ranking,
+            reviewedAt: ranking === false ? new Date() : null,
             raceCount,
             updatedAt: new Date(),
           },

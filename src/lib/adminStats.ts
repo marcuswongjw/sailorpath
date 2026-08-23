@@ -1,6 +1,7 @@
 /**
  * Lean admin Stats aggregates — COUNT / DISTINCT only (no full result scans).
- * Privacy: numbers only, no PII.
+ * Account details are fetched only for the superadmin-gated Stats endpoint.
+ * No auth details are copied into usage_events.
  *
  * Uses a small number of SQL round-trips (avoids saturating postgres.js max:5
  * and Supabase transaction-pooler concurrency).
@@ -36,8 +37,26 @@ export type AdminStatsPayload = {
     missingDob: number;
     missingOrPlaceholderSail: number;
   };
+  accounts: {
+    registered: number;
+    confirmed: number;
+    signedInLast7d: number;
+    authSessions: number;
+    recent: Array<{
+      id: string;
+      email: string;
+      fullName: string | null;
+      role: string;
+      createdAt: string;
+      lastSignInAt: string | null;
+      lastSessionRefreshAt: string | null;
+      authSessionCount: number;
+    }>;
+  };
   /** true when usage_events table was readable */
   usageEventsOk: boolean;
+  /** true when the server connection could read Supabase's auth schema */
+  authAccountsOk: boolean;
 };
 
 const CACHE_SECONDS = 60;
@@ -104,6 +123,12 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
   let adminOpens = 0;
   let lastImportAt: string | null = null;
   let daysSinceLastImport: number | null = null;
+  let authAccountsOk = true;
+  let registered = 0;
+  let confirmed = 0;
+  let signedInLast7d = 0;
+  let authSessions = 0;
+  let recentAccounts: AdminStatsPayload["accounts"]["recent"] = [];
 
   try {
     const [sessions, traffic, lastImport] = await Promise.all([
@@ -166,6 +191,95 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
     usageEventsOk = false;
   }
 
+  try {
+    const accountRows = await pgSql`
+      with session_totals as (
+        select
+          user_id,
+          count(*) filter (where not_after is null or not_after > now())::int as session_count,
+          max(refreshed_at) as last_session_refresh_at
+        from auth.sessions
+        group by user_id
+      ), account_summary as (
+        select
+          count(*)::int as registered,
+          count(*) filter (where u.confirmed_at is not null)::int as confirmed,
+          count(*) filter (where u.last_sign_in_at >= now() - interval '7 days')::int as signed_in_last_7d,
+          coalesce(sum(st.session_count), 0)::int as auth_sessions
+        from auth.users u
+        left join session_totals st on st.user_id = u.id
+        where u.deleted_at is null
+          and coalesce(u.is_anonymous, false) = false
+      ), recent_accounts as (
+        select
+          u.id,
+          coalesce(u.email, '') as email,
+          p.full_name,
+          coalesce(p.role, 'user') as profile_role,
+          u.created_at,
+          u.last_sign_in_at,
+          st.last_session_refresh_at,
+          coalesce(st.session_count, 0)::int as session_count
+        from auth.users u
+        left join public.profiles p on p.id = u.id
+        left join session_totals st on st.user_id = u.id
+        where u.deleted_at is null
+          and coalesce(u.is_anonymous, false) = false
+        order by u.last_sign_in_at desc nulls last, u.created_at desc
+        limit 20
+      )
+      select
+        s.registered,
+        s.confirmed,
+        s.signed_in_last_7d,
+        s.auth_sessions,
+        coalesce(
+          json_agg(
+            json_build_object(
+              'id', r.id,
+              'email', r.email,
+              'fullName', r.full_name,
+              'role', r.profile_role,
+              'createdAt', r.created_at,
+              'lastSignInAt', r.last_sign_in_at,
+              'lastSessionRefreshAt', r.last_session_refresh_at,
+              'authSessionCount', r.session_count
+            ) order by r.last_sign_in_at desc nulls last, r.created_at desc
+          ) filter (where r.id is not null),
+          '[]'::json
+        ) as recent
+      from account_summary s
+      left join recent_accounts r on true
+      group by s.registered, s.confirmed, s.signed_in_last_7d, s.auth_sessions
+    `;
+    const accounts = accountRows[0] ?? {};
+    registered = num(accounts.registered);
+    confirmed = num(accounts.confirmed);
+    signedInLast7d = num(accounts.signed_in_last_7d);
+    authSessions = num(accounts.auth_sessions);
+    const recent = Array.isArray(accounts.recent) ? accounts.recent : [];
+    recentAccounts = recent.map((account) => {
+      const row = account as Record<string, unknown>;
+      const iso = (value: unknown): string | null => {
+        if (!value) return null;
+        const date = value instanceof Date ? value : new Date(String(value));
+        return Number.isNaN(date.getTime()) ? null : date.toISOString();
+      };
+      return {
+        id: String(row.id || ""),
+        email: String(row.email || ""),
+        fullName: row.fullName ? String(row.fullName) : null,
+        role: String(row.role || "user"),
+        createdAt: iso(row.createdAt) || now.toISOString(),
+        lastSignInAt: iso(row.lastSignInAt),
+        lastSessionRefreshAt: iso(row.lastSessionRefreshAt),
+        authSessionCount: num(row.authSessionCount),
+      };
+    });
+  } catch {
+    authAccountsOk = false;
+  }
+
   return {
     generatedAt: now.toISOString(),
     cacheSeconds: CACHE_SECONDS,
@@ -194,7 +308,15 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
       missingDob: num(row.missing_dob),
       missingOrPlaceholderSail: num(row.missing_sail),
     },
+    accounts: {
+      registered,
+      confirmed,
+      signedInLast7d,
+      authSessions,
+      recent: recentAccounts,
+    },
     usageEventsOk,
+    authAccountsOk,
   };
 }
 

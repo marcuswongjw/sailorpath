@@ -1,6 +1,6 @@
 /**
  * Curated product changelog (deploy-time).
- * Newest first. Used by Admin → Change log and public /whats-new.
+ * Newest first. Used by Admin → Change log.
  */
 
 export type ProductChangeArea =
@@ -25,7 +25,7 @@ export type ProductSeverity = "info" | "improvement" | "breaking";
 export type ProductChangelogEntry = {
   /** Stable id — do not renumber; used for keys and unread identity */
   id: string;
-  /** URL fragment on /whats-new#slug */
+  /** Stable anchor slug in Admin → Change log */
   slug: string;
   /** ISO date YYYY-MM-DD */
   date: string;
@@ -40,26 +40,17 @@ export type ProductChangelogEntry = {
   commit?: string;
 };
 
-const PUBLIC_AUDIENCES: ReadonlySet<ProductAudience> = new Set([
-  "public",
-  "sailor",
-  "parent",
-  "coach",
-]);
-
 export const PRODUCT_CHANGELOG: ProductChangelogEntry[] = [
   {
     id: "2026-08-19-changelog-system",
     slug: "changelog-system",
     date: "2026-08-19",
-    title: "Change log system: product, audit, and What’s new",
+    title: "Admin product and audit change logs",
     summary:
-      "Admin Change log for product ships, Ops → Audit for mutation trail, unread badge for admins, and a public What’s new page for sailor/parent/coach-facing updates.",
+      "Admin Change log for product ships, Ops → Audit for mutation history, and an unread badge for admins.",
     area: "Platform",
-    audience: ["public", "sailor", "parent", "coach", "admin"],
+    audience: ["admin"],
     severity: "improvement",
-    href: "/whats-new",
-    ctaLabel: "What’s new",
   },
   {
     id: "2026-08-18-audience-cards",
@@ -286,13 +277,6 @@ export const PRODUCT_CHANGELOG: ProductChangelogEntry[] = [
     commit: "9f04934",
   },
 ];
-
-/** Entries safe to show on the public /whats-new page. */
-export function getPublicChangelogEntries(): ProductChangelogEntry[] {
-  return PRODUCT_CHANGELOG.filter((e) =>
-    e.audience.some((a) => PUBLIC_AUDIENCES.has(a))
-  );
-}
 
 /** Newest product entry date as Date (noon UTC). */
 export function getLatestProductChangelogAt(): Date {

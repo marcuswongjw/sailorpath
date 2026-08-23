@@ -159,6 +159,53 @@ describe("combined race-score policy", () => {
       ])
     ).toEqual([]);
   });
+
+  it("keeps DNE in the net score and discards the next-highest race", () => {
+    const selectionRegatta: RegattaRecord = {
+      ...regattas[0],
+      raceCount: 8,
+      totalFleetSize: 51,
+    };
+    const tanQi: SailorRecord = {
+      id: "tan-qi",
+      name: "Tan Qi",
+      handle: "tan-qi",
+      sailNumber: "SGP 1",
+      club: "Club",
+      goldEntryDate: "2024-01-01",
+      silverEntryDate: null,
+      dropDate: null,
+    };
+    const scores = [37, 21, 26, 27, 10, 52, 47, 36];
+    const result: RegattaResultRecord = {
+      sailorId: tanQi.id,
+      regattaId: selectionRegatta.id,
+      rank: 33,
+      nettScore: 209,
+      totalScore: 256,
+      raceResults: scores.map((score, index) => ({
+        raceNumber: index + 1,
+        score,
+        scoringCode: index === 5 ? "DNE" : null,
+        discarded: index === 6,
+        rawValue: index === 5 ? "52.0 DNE" : String(score),
+      })),
+    };
+    const matched = matchSelectionEvents(
+      [selectionRegatta],
+      [OPTIMIST_2026_SELECTION_EVENTS[0]]
+    );
+    const [row] = computeCombinedSelectionScores(matched, [tanQi], [result]);
+
+    expect(row.grossScore).toBe(256);
+    expect(row.combinedScore).toBe(209);
+    expect(row.raceScores[5]).toMatchObject({
+      score: 52,
+      nonDiscardable: true,
+      discarded: false,
+    });
+    expect(row.raceScores[6]).toMatchObject({ score: 47, discarded: true });
+  });
 });
 
 describe("selectAsianOceaniaTeam", () => {

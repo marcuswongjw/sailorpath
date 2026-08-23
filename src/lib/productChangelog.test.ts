@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   PRODUCT_CHANGELOG,
   getLatestProductChangelogAt,
-  getPublicChangelogEntries,
   isProductChangelogUnread,
 } from "./productChangelog";
 
@@ -12,14 +11,6 @@ describe("productChangelog", () => {
     const slugs = PRODUCT_CHANGELOG.map((e) => e.slug);
     expect(new Set(ids).size).toBe(ids.length);
     expect(new Set(slugs).size).toBe(slugs.length);
-  });
-
-  it("excludes admin-only entries from public list", () => {
-    const publicIds = new Set(getPublicChangelogEntries().map((e) => e.id));
-    expect(publicIds.has("2026-08-17-admin-ux")).toBe(false);
-    expect(publicIds.has("2026-08-16-admin-stats")).toBe(false);
-    expect(publicIds.has("2026-08-18-gender-audit")).toBe(false);
-    expect(publicIds.has("2026-08-18-audience-cards")).toBe(true);
   });
 
   it("detects unread when lastSeen is null or older", () => {

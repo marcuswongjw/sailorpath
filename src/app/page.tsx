@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Search,
   Trophy,
@@ -168,6 +169,27 @@ export default function HomePage() {
               Open demo profile →
             </Link>
           </div>
+
+          <Link
+            href="/sample"
+            aria-label="Open the interactive Kimberly Tan demo profile"
+            className="group mx-auto mt-6 sm:mt-8 block max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-[#07080c] shadow-2xl shadow-black/30 transition-colors hover:border-orange-500/40"
+          >
+            <Image
+              src="/marketing/demo-profile.png"
+              alt="SailorPath demo profile showing Kimberly Tan's public profile, fleet standing, class tabs, and claim action"
+              width={1212}
+              height={888}
+              sizes="(max-width: 1024px) calc(100vw - 32px), 1024px"
+              className="h-auto w-full"
+            />
+            <span className="flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-left text-[11px] sm:text-xs text-slate-400">
+              <span>Actual SailorPath demo profile</span>
+              <span className="shrink-0 font-bold text-orange-400 group-hover:text-orange-300">
+                Explore it →
+              </span>
+            </span>
+          </Link>
         </div>
       </section>
 
@@ -250,6 +272,27 @@ export default function HomePage() {
               Rankings &amp; logbook
             </h2>
           </div>
+
+          <Link
+            href="/sg/optimist/gold"
+            aria-label="Open the current Optimist Gold Fleet rankings"
+            className="group mb-8 sm:mb-10 block overflow-hidden rounded-2xl border border-white/10 bg-[#07080c] shadow-2xl shadow-black/30 transition-colors hover:border-orange-500/40"
+          >
+            <Image
+              src="/marketing/rankings-board.png"
+              alt="SailorPath Optimist Gold Fleet ranking table with the five scoring events and the three selected Best 3 of 5 results highlighted"
+              width={1984}
+              height={1196}
+              sizes="(max-width: 1280px) calc(100vw - 32px), 1280px"
+              className="h-auto w-full"
+            />
+            <span className="flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-left text-[11px] sm:text-xs text-slate-400">
+              <span>Actual Gold Fleet ranking board</span>
+              <span className="shrink-0 font-bold text-orange-400 group-hover:text-orange-300">
+                View current standings →
+              </span>
+            </span>
+          </Link>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
             <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 flex flex-col">

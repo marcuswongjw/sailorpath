@@ -28,6 +28,7 @@ export function RegattaEventHeader({
   const rankingsHref = isIlca ? "/sg/ilca4" : "/sg/optimist/gold";
   const classLabel = isIlca ? "ILCA 4" : "Optimist";
   const divLabel = String(division || (isIlca ? "Open" : "—")).trim() || "—";
+  const divisionIsNonRanking = /^(non[\s-]?ranking|practice)$/i.test(divLabel);
 
   return (
     <div className="space-y-3 min-w-0">
@@ -69,9 +70,11 @@ export function RegattaEventHeader({
           >
             {classLabel}
           </span>
-          <span className="inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold border bg-white/5 text-slate-300 border-white/10">
-            {divLabel}
-          </span>
+          {!divisionIsNonRanking && (
+            <span className="inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold border bg-white/5 text-slate-300 border-white/10">
+              {divLabel}
+            </span>
+          )}
           {!countsForRanking && (
             <span className="inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold border bg-sky-500/10 text-sky-300 border-sky-500/25">
               Non-ranking

@@ -87,6 +87,7 @@ export type SailorRaceScore = {
   score: number;
   missing: boolean;
   discarded: boolean;
+  nonDiscardable: boolean;
 };
 
 export type SailorEventScore = {
@@ -160,6 +161,14 @@ function normalizeGender(g: string | null | undefined): "M" | "F" | null {
 
 function isMedalRace(scoringCode: string | null | undefined, rawValue: string): boolean {
   return /\bmedal\b/i.test(`${scoringCode || ""} ${rawValue}`);
+}
+
+/** RRS A5.3: a DNE score cannot be excluded from a series score. */
+function isNonDiscardableRace(
+  scoringCode: string | null | undefined,
+  rawValue: string
+): boolean {
+  return /\bDNE\b/i.test(`${scoringCode || ""} ${rawValue}`);
 }
 
 export function combinedRaceDiscardCount(totalRaces: number): number {
@@ -290,7 +299,16 @@ export function computeCombinedSelectionScores(
         const missing = !imported;
         if (missing) missingRaces++;
         grossScore += score;
-        raceScores.push({ regattaId: regatta.id, raceNumber, score, missing, discarded: false });
+        raceScores.push({
+          regattaId: regatta.id,
+          raceNumber,
+          score,
+          missing,
+          discarded: false,
+          nonDiscardable: imported
+            ? isNonDiscardableRace(imported.scoringCode, imported.rawValue)
+            : false,
+        });
       }
       if (result && races.size > 0) eventsSailed++;
       eventScores.push({
@@ -304,7 +322,12 @@ export function computeCombinedSelectionScores(
     }
 
     const discardIndexes = raceScores
-      .map((race, index) => ({ index, score: race.score }))
+      .map((race, index) => ({
+        index,
+        score: race.score,
+        nonDiscardable: race.nonDiscardable,
+      }))
+      .filter((race) => !race.nonDiscardable)
       .sort((a, b) => b.score - a.score || b.index - a.index)
       .slice(0, discardCount)
       .map((entry) => entry.index);
