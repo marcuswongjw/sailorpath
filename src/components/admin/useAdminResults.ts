@@ -55,15 +55,10 @@ export function useAdminResults({
       return;
     }
     const overseas = Boolean(resultForm.isOverseasCommitment);
-    const reg = regattaList.find((r) => r.id === resultForm.regattaId);
-    const dnsPts = (reg?.totalFleetSize || 50) + 1;
     const rankNum = Number(resultForm.rank);
-    let isDns = overseas
+    const isDns = overseas
       ? false
       : Boolean(resultForm.isDNS || resultForm.isDns);
-    if (isDns && Number.isFinite(rankNum) && rankNum < dnsPts) {
-      isDns = false;
-    }
     const payload = {
       ...resultForm,
       rank: rankNum,

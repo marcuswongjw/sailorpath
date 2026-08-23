@@ -1,5 +1,6 @@
 import {
   normalizeImportGender,
+  inferLikelyDnsRows,
   parseOfficialRaceValue,
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
@@ -104,11 +105,6 @@ function validateParsedRows(
     );
   }
 
-  const ranks = rows.map((row) => row.rank).filter((rank): rank is number => rank != null);
-  if (new Set(ranks).size !== ranks.length) {
-    throw new Error("Duplicate competitor ranks were found in the PDF results table.");
-  }
-
   for (const row of rows) {
     const label = row.name || `rank ${row.rank ?? "unknown"}`;
     const raceNumbers = row.races.map((race) => race.raceNumber);
@@ -189,6 +185,7 @@ export function parseSailwaveResults(pages: PdfTextPage[]): ParsedSailwavePdf {
         sailNumber: optionalValue(values.sailNumber),
         dob: null,
         birthYear: null,
+        isDns: false,
         races,
       });
     };
@@ -238,7 +235,7 @@ export function parseSailwaveResults(pages: PdfTextPage[]): ParsedSailwavePdf {
     new Map(rows.map((row) => [`${row.rank}|${row.sailNumber}|${row.name}`, row])).values()
   );
   const result = {
-    rows: deduped,
+    rows: inferLikelyDnsRows(deduped),
     raceCount: metadataNumber("Sailed") || maxRace,
     entries: metadataNumber("Entries"),
     discards: metadataNumber("Discards"),

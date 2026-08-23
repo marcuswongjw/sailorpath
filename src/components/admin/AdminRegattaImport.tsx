@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import {
   parseRegattaResultRows,
+  inferLikelyDnsRows,
   summarizeRegattaImport,
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
@@ -165,6 +166,17 @@ export function AdminRegattaImport({
         );
         return;
       }
+      const likelyDnsCount = parsed.rows.filter((row) => row.isDns).length;
+      if (likelyDnsCount > 0) {
+        setImportProgress(100);
+        setImportStatus(
+          `Extracted ${parsed.rows.length} competitors and ${parsed.raceCount} races. Review ${likelyDnsCount} likely DNS row${likelyDnsCount === 1 ? "" : "s"} and the ranking scores below, then select Import.`
+        );
+        toast.info(
+          "Likely non-starters were detected. Confirm or edit their DNS status and ranking score before importing."
+        );
+        return;
+      }
       setImportStatus(
         `Extracted ${parsed.rows.length} competitors and ${parsed.raceCount} races. Uploading directly to SailorPath…`
       );
@@ -218,7 +230,7 @@ export function AdminRegattaImport({
           raw: false,
         });
         setImportProgress(80);
-        const mapped = parseRegattaResultRows(json);
+        const mapped = inferLikelyDnsRows(parseRegattaResultRows(json));
         const parsedRaceCount = Math.max(
           0,
           ...mapped.flatMap((row) =>
@@ -294,6 +306,21 @@ export function AdminRegattaImport({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) handleFile(e.target.files[0]);
+  };
+
+  const updateImportRow = (
+    index: number,
+    patch: Partial<Pick<RegattaImportRow, "rank" | "isDns">>
+  ) => {
+    setFullImportRows((rows) =>
+      rows.map((row, rowIndex) =>
+        rowIndex === index ? { ...row, ...patch } : row
+      )
+    );
+    setPendingReview(null);
+    setImportStatus(
+      "Result edits are ready. Select Import to validate and save them."
+    );
   };
 
   const refreshListsAfterImport = async (regatta?: RegattaAdmin | null) => {
@@ -577,23 +604,30 @@ export function AdminRegattaImport({
         >
           <Upload className="h-10 w-10 text-orange-500 mb-4" />
           <p className="text-sm font-bold text-white mb-2">
-            Drag and drop your Regatta PDF, Excel, or CSV file here
+            Drop a regatta results PDF, Excel, or CSV file here
           </p>
-          <p className="text-xs text-slate-500 mb-4 max-w-3xl">
-            Supports .pdf, .xlsx, .xls, and .csv. PDFs are extracted and saved
-            directly to SailorPath in one step when the filename includes the
-            event date. Updates to an existing regatta pause for discrepancy
-            review before anything is replaced.
-            Required: Name (+ Rank/Nett if
-            available). Optional: Total Score, Club, Nationality, Sail Number,
-            Birth Year / DOB. When club / school / sail # differ from the
-            profile, the{" "}
-            <strong className="text-slate-300">latest regatta date wins</strong>{" "}
-            (any class). Optimist series rankings ignore ILCA 4 and other
-            classes. Unmatched names become{" "}
-            <strong className="text-slate-300">guests</strong> (not on SG series
-            until you admit them in Database).
-          </p>
+          <div className="mb-4 max-w-3xl space-y-2 text-xs leading-relaxed text-slate-500">
+            <p>
+              Supports .pdf, .xlsx, .xls, and .csv. SailorPath reads PDFs and
+              imports them directly when the filename contains the event date.
+              Existing regattas always pause for discrepancy review before any
+              result is replaced.
+            </p>
+            <p>
+              Tied ranks are allowed. Repeated bottom ranks are flagged as
+              likely DNS so you can confirm the status and edit the ranking
+              score before import. Required: sailor name, plus rank or nett when
+              available. Optional: race scores, total score, club, school,
+              nationality, sail number, and birth year / DOB.
+            </p>
+            <p>
+              Profile details follow the most recent regatta date. Sail numbers
+              remain class-specific, and Optimist rankings exclude other boat
+              classes. Unmatched sailors are added as{" "}
+              <strong className="text-slate-300">guests</strong> and stay off the
+              SG series until admitted in Database.
+            </p>
+          </div>
           <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
             Select File
             <input
@@ -860,11 +894,19 @@ export function AdminRegattaImport({
               </div>
             )}
 
-            <div className="overflow-x-auto rounded-xl border border-white/10">
+            <div>
+              <p className="mb-2 text-[11px] text-slate-500">
+                Review extracted ranks below. DNS suggestions are highlighted;
+                the ranking score remains editable and does not have to equal
+                fleet size + 1.
+              </p>
+            </div>
+            <div className="max-h-[32rem] overflow-auto rounded-xl border border-white/10">
               <table className="min-w-full text-[11px]">
-                <thead className="bg-slate-950 text-slate-400">
+                <thead className="sticky top-0 z-10 bg-slate-950 text-slate-400">
                   <tr>
-                    <th className="px-3 py-2 text-left">Rank</th>
+                    <th className="px-3 py-2 text-left">Rank / ranking score</th>
+                    <th className="px-3 py-2 text-center">DNS</th>
                     <th className="px-3 py-2 text-left">Sail</th>
                     <th className="px-3 py-2 text-left">Name</th>
                     {Array.from(
@@ -877,9 +919,45 @@ export function AdminRegattaImport({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 bg-slate-900/60 text-slate-200">
-                  {fullImportRows.slice(0, 12).map((row, index) => (
-                    <tr key={`${row.rank}-${row.name}-${index}`}>
-                      <td className="px-3 py-2">{row.rank ?? "—"}</td>
+                  {fullImportRows.map((row, index) => (
+                    <tr
+                      key={`${row.name}-${row.sailNumber || "no-sail"}-${index}`}
+                      className={row.isDns ? "bg-amber-500/[0.07]" : undefined}
+                    >
+                      <td className="px-3 py-2">
+                        <input
+                          type="number"
+                          min={1}
+                          value={row.rank ?? ""}
+                          disabled={importBusy}
+                          onChange={(event) => {
+                            const value = event.target.value;
+                            updateImportRow(index, {
+                              rank: value === "" ? null : Number(value),
+                            });
+                          }}
+                          aria-label={`Ranking score for ${row.name}`}
+                          className="w-20 rounded-md border border-white/10 bg-slate-950 px-2 py-1 font-mono text-white disabled:opacity-50"
+                        />
+                      </td>
+                      <td className="px-3 py-2 text-center">
+                        <input
+                          type="checkbox"
+                          checked={row.isDns}
+                          disabled={importBusy}
+                          onChange={(event) => {
+                            const isDns = event.target.checked;
+                            updateImportRow(index, {
+                              isDns,
+                              ...(isDns && row.rank == null
+                                ? { rank: importMeta.fleetSize + 1 }
+                                : {}),
+                            });
+                          }}
+                          aria-label={`${row.name} did not start`}
+                          className="h-4 w-4 rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-amber-500"
+                        />
+                      </td>
                       <td className="px-3 py-2 whitespace-nowrap">{row.sailNumber || "—"}</td>
                       <td className="px-3 py-2 whitespace-nowrap font-medium">{row.name}</td>
                       {Array.from(
@@ -894,12 +972,6 @@ export function AdminRegattaImport({
                   ))}
                 </tbody>
               </table>
-              {fullImportRows.length > 12 && (
-                <p className="border-t border-white/5 bg-slate-950 px-3 py-2 text-[10px] text-slate-500">
-                  Showing 12 of {fullImportRows.length} competitors. Every
-                  extracted row is included in the website import.
-                </p>
-              )}
             </div>
 
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">

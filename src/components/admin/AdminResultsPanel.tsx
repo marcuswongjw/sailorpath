@@ -369,24 +369,13 @@ export function AdminResultsPanel({
               <input
                 type="number"
                 value={resultForm.rank}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  const reg = regattaList.find(
-                    (r) => r.id === resultForm.regattaId
-                  );
-                  const dnsPts = (reg?.totalFleetSize || 50) + 1;
-                  const n = Number(val);
-                  const clearDns = Number.isFinite(n) && n > 0 && n < dnsPts;
-                  setResultForm({
-                    ...resultForm,
-                    rank: val,
-                    ...(clearDns ? { isDNS: false, isDns: false } : {}),
-                  });
-                }}
+                onChange={(e) =>
+                  setResultForm({ ...resultForm, rank: e.target.value })
+                }
                 className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
               />
               <p className="mt-1 text-[10px] text-slate-600">
-                DNS points = fleet+1. Enter a better rank to clear DNS.
+                DNS defaults to fleet size + 1, but this score remains editable.
               </p>
             </div>
             <div className="flex items-center gap-2 h-full pt-5 md:pl-4">
@@ -413,8 +402,8 @@ export function AdminResultsPanel({
                 htmlFor="dnsCheckbox"
                 className="text-xs font-bold text-slate-400 cursor-pointer"
               >
-                Did Not Start (DNS) — sets rank to fleet+1; better rank
-                auto-clears this
+                Did Not Start (DNS) — initially sets rank to fleet size + 1;
+                edit the score afterward if the event used a different value
               </label>
             </div>
             <div className="flex items-center gap-2 h-full pt-2 md:pl-4 md:col-span-2">

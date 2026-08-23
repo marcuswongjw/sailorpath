@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaRaceResults, regattaResults, regattas, sailors } from "@/db/schema";
-import { asc, eq, inArray, sql } from "drizzle-orm";
+import { asc, eq, inArray } from "drizzle-orm";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import {
   activeSailorsForFleet,
@@ -99,23 +99,6 @@ function sailorEligibleForRegattaDns(
   return res.fleet === "Gold";
 }
 
-/** Clear DNS when rank is better (lower) than fleet size + 1 */
-async function healFalseDnsFlags() {
-  try {
-    await db.execute(sql`
-      UPDATE regatta_results AS r
-      SET is_dns = false, updated_at = now()
-      FROM regattas AS g
-      WHERE r.regatta_id = g.id
-        AND r.is_dns = true
-        AND COALESCE(r.is_overseas_commitment, false) = false
-        AND r.rank < (COALESCE(g.total_fleet_size, 50) + 1)
-    `);
-  } catch (e) {
-    console.warn("healFalseDnsFlags", e);
-  }
-}
-
 export async function GET(req: Request) {
   try {
     await requireSuperadmin();
@@ -193,29 +176,6 @@ export async function POST(req: Request) {
   try {
     const auth = await requireSuperadmin();
     const body = await req.json();
-
-    if (
-      body.action === "healFalseDns" ||
-      body.action === "clearFalseDns"
-    ) {
-      await healFalseDnsFlags();
-      revalidatePublicRankings("results:healFalseDns");
-      void logAdminChange({
-        actorUserId: auth.userId,
-        actorEmail: auth.email,
-        action: "result.heal_false_dns",
-        entityType: "bulk",
-        entityId: null,
-        entityLabel: null,
-        summary: "Cleared false DNS flags where rank better than fleet size + 1",
-        source: "/api/admin/results",
-      });
-      return NextResponse.json({
-        ok: true,
-        message:
-          "Cleared DNS on any result where rank is better than fleet size + 1.",
-      });
-    }
 
     /**
      * fillDnsPeriod: ensure every active Gold/Silver sailor for a half-year has a
@@ -528,10 +488,6 @@ export async function POST(req: Request) {
       }
       rank = rankR.value;
     }
-    // Real finish better than DNS (fleet+1) → not a DNS
-    if (isDns && rank < dnsPoints) {
-      isDns = false;
-    }
     // Nett is optional (e.g. overseas commitment has ranking points but no race nett)
     const nettR = asOptionalNumber(body.nettScore, {
       min: 0,
@@ -718,41 +674,6 @@ export async function PATCH(req: Request) {
           const pts = (reg.totalFleetSize || 50) + 1;
           patch.rank = pts;
         }
-      }
-    }
-
-    // Rank better than DNS (fleet+1) → clear DNS flag
-    if (existing) {
-      const [reg] = await db
-        .select({ totalFleetSize: regattas.totalFleetSize })
-        .from(regattas)
-        .where(
-          eq(
-            regattas.id,
-            (body.regattaId as string) || existing.regattaId
-          )
-        )
-        .limit(1);
-      const dnsPts = Math.max(1, (reg?.totalFleetSize || 50) + 1);
-      const finalRank =
-        patch.rank !== undefined
-          ? Number(patch.rank)
-          : Number(existing.rank);
-      const willBeDns =
-        patch.isDns !== undefined
-          ? Boolean(patch.isDns)
-          : Boolean(existing.isDns);
-      const overseas =
-        patch.isOverseasCommitment !== undefined
-          ? Boolean(patch.isOverseasCommitment)
-          : Boolean(existing.isOverseasCommitment);
-      if (
-        willBeDns &&
-        !overseas &&
-        Number.isFinite(finalRank) &&
-        finalRank < dnsPts
-      ) {
-        patch.isDns = false;
       }
     }
 

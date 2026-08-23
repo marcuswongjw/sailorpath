@@ -59,6 +59,7 @@ type ReviewUploadRow = {
   rank: number | null;
   nett: number | null;
   total: number | null;
+  isDns: boolean;
   races: OfficialRaceResultInput[];
 };
 
@@ -89,6 +90,7 @@ async function buildExistingRegattaReview(args: {
       rank: regattaResults.rank,
       nett: regattaResults.nettScore,
       total: regattaResults.totalScore,
+      isDns: regattaResults.isDns,
     })
     .from(regattaResults)
     .innerJoin(sailors, eq(regattaResults.sailorId, sailors.id))
@@ -172,6 +174,7 @@ async function buildExistingRegattaReview(args: {
       ["Rank", stored.rank, uploaded.rank == null ? 999 : Math.round(uploaded.rank)],
       ["Nett", stored.nett, uploaded.nett],
       ["Total", stored.total, uploaded.total],
+      ["DNS", stored.isDns ? "Yes" : "No", uploaded.isDns ? "Yes" : "No"],
     ] as const;
     for (const [field, before, after] of aggregates) {
       if (sameImportValue(before, after)) continue;
@@ -306,6 +309,7 @@ export async function POST(req: Request) {
         sailNumber?: string | null;
         dob?: string | number | null;
         birthYear?: string | number | null;
+        isDns?: boolean;
         races?: OfficialRaceResultInput[];
       }[];
       createMissing?: boolean;
@@ -363,6 +367,7 @@ export async function POST(req: Request) {
           sailNumber,
           dob,
           dobIsYearOnly,
+          isDns: r.isDns === true,
           races: Array.isArray(r.races)
             ? r.races
                 .filter(
@@ -1129,7 +1134,7 @@ export async function POST(req: Request) {
           rank,
           nettScore: nett,
           totalScore: total,
-          isDns: false,
+          isDns: row.isDns,
           gender: gNorm,
           birthYear,
           nationality: resultNat,

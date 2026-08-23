@@ -14,6 +14,8 @@ export type RegattaImportRow = {
   sailNumber: string | null;
   dob: string | null;
   birthYear: number | null;
+  /** Suggested/imported DNS status; admin can override before saving. */
+  isDns: boolean;
   races: OfficialRaceResultInput[];
 };
 
@@ -30,8 +32,41 @@ function emptyRow(): RegattaImportRow {
     sailNumber: null,
     dob: null,
     birthYear: null,
+    isDns: false,
     races: [],
   };
+}
+
+const NON_START_CODES = new Set(["DNS", "DNC"]);
+
+/**
+ * Suggest DNS without treating all tied ranks as non-starters.
+ * Strong evidence: every published race is DNS/DNC. Otherwise, only a tied
+ * worst rank is suggested, and the admin review remains authoritative.
+ */
+export function inferLikelyDnsRows(
+  rows: readonly RegattaImportRow[]
+): RegattaImportRow[] {
+  const ranks = rows
+    .map((row) => row.rank)
+    .filter((rank): rank is number => rank != null && Number.isFinite(rank));
+  const worstRank = ranks.length ? Math.max(...ranks) : null;
+  const worstRankCount =
+    worstRank == null ? 0 : ranks.filter((rank) => rank === worstRank).length;
+
+  return rows.map((row) => {
+    const allRacesAreNonStarts =
+      row.races.length > 0 &&
+      row.races.every((race) =>
+        NON_START_CODES.has(String(race.scoringCode || "").toUpperCase())
+      );
+    const tiedWorstRank =
+      worstRankCount > 1 && row.rank != null && row.rank === worstRank;
+    return {
+      ...row,
+      isDns: row.isDns || allRacesAreNonStarts || tiedWorstRank,
+    };
+  });
 }
 
 export {
@@ -90,6 +125,9 @@ export function parseRegattaResultRows(
       const genderKey =
         keys.find((k) => /^(gender|sex|gendre)$/i.test(k.trim())) ||
         keys.find((k) => /^gender|^\s*sex\s*$/i.test(k));
+      const dnsKey =
+        keys.find((k) => /^(dns|did not start|non-starter)$/i.test(k.trim())) ||
+        keys.find((k) => /^(status|result status)$/i.test(k.trim()));
       const sailKey =
         keys.find((k) =>
           /^(sail\s*(number|no\.?|#|num)?|sailnumber|boat\s*(number|no\.?)?)$/i.test(
@@ -164,6 +202,10 @@ export function parseRegattaResultRows(
         genderKey != null && r[genderKey] != null
           ? normalizeImportGender(r[genderKey])
           : null;
+      const dnsRaw = dnsKey != null ? String(r[dnsKey] ?? "").trim() : "";
+      const isDns = /^(?:1|true|yes|y|dns|dnc|did not start|non-starter)$/i.test(
+        dnsRaw
+      );
       const sailRaw =
         sailKey != null && r[sailKey] != null
           ? String(r[sailKey]).trim()
@@ -216,6 +258,7 @@ export function parseRegattaResultRows(
         sailNumber,
         dob,
         birthYear,
+        isDns,
         races,
       };
     })

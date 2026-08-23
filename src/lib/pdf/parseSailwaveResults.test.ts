@@ -112,4 +112,46 @@ describe("parseSailwaveResults", () => {
       ])
     ).toThrow("race scores do not match the published total");
   });
+
+  it("accepts tied ranks and suggests DNS only for the tied worst rank", () => {
+    const header: Array<[number, string]> = [
+      [10, "Rank"], [60, "Name"], [200, "R1"], [250, "Total"], [300, "Nett"],
+    ];
+    const result = parseSailwaveResults([
+      {
+        pageNumber: 1,
+        text: "Sailed: 1, Discards: 0, Entries: 4",
+        items: [
+          ...line(700, header),
+          ...line(680, [[10, "1st"], [60, "Winner"], [200, "1"], [250, "1"], [300, "1"]]),
+          ...line(660, [[10, "2nd"], [60, "Tied finisher A"], [200, "2"], [250, "2"], [300, "2"]]),
+          ...line(640, [[10, "2nd"], [60, "Tied finisher B"], [200, "2"], [250, "2"], [300, "2"]]),
+          ...line(620, [[10, "4th"], [60, "Last sailor"], [200, "4"], [250, "4"], [300, "4"]]),
+        ],
+      },
+    ]);
+
+    expect(result.rows.map((row) => row.rank)).toEqual([1, 2, 2, 4]);
+    expect(result.rows.map((row) => row.isDns)).toEqual([false, false, false, false]);
+  });
+
+  it("suggests tied bottom-ranked sailors as DNS for admin review", () => {
+    const header: Array<[number, string]> = [
+      [10, "Rank"], [60, "Name"], [200, "R1"], [250, "Total"], [300, "Nett"],
+    ];
+    const result = parseSailwaveResults([
+      {
+        pageNumber: 1,
+        text: "Sailed: 1, Discards: 0, Entries: 3",
+        items: [
+          ...line(700, header),
+          ...line(680, [[10, "1st"], [60, "Winner"], [200, "1"], [250, "1"], [300, "1"]]),
+          ...line(660, [[10, "50th"], [60, "Non-starter A"], [200, "4 DNS"], [250, "4"], [300, "4"]]),
+          ...line(640, [[10, "50th"], [60, "Non-starter B"], [200, "4 DNS"], [250, "4"], [300, "4"]]),
+        ],
+      },
+    ]);
+
+    expect(result.rows.map((row) => row.isDns)).toEqual([false, true, true]);
+  });
 });
