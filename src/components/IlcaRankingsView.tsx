@@ -9,6 +9,7 @@ import {
 } from "@/lib/ilcaRanking";
 import { Trophy, Calendar, RefreshCw } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
+import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
 
 type Props = {
   initialRanked: IlcaRankedSailor[];
@@ -133,8 +134,8 @@ export function IlcaRankingsView({
               National standings
             </h1>
             <p className="text-[11px] sm:text-sm text-slate-500 mt-1 leading-snug">
-              High Ranking Points · Best 3 of last 5 · 1st = fleet size pts · *
-              = DNS (0 pts)
+              High Ranking Points · Best 3 of last 5 · highlighted scores are
+              selected · 1st = fleet size pts · * = DNS (0 pts)
             </p>
           </div>
         </div>
@@ -256,6 +257,10 @@ export function IlcaRankingsView({
       <div className="md:hidden space-y-2.5 no-print w-full max-w-full min-w-0">
         {displayRanked.map((s) => {
           const handle = s.handle;
+          const selectedIndexes = bestThreeSelectedIndexes(
+            eventSlots.map((event) => pointsFor(s, event.regattaId).points),
+            { higherIsBetter: true }
+          );
           return (
             <div
               key={s.sailorId}
@@ -310,11 +315,13 @@ export function IlcaRankingsView({
                     );
                   }
                   const { points, isDns } = pointsFor(s, ev.regattaId);
+                  const selected = selectedIndexes.has(idx);
                   return (
                     <div
                       key={ev.regattaId}
-                      className="min-w-0 rounded-lg border border-white/5 bg-white/5 px-0.5 py-1.5 text-center"
-                      title={ev.regattaName}
+                      data-best-three-selected={selected || undefined}
+                      className={`min-w-0 rounded-lg border px-0.5 py-1.5 text-center ${selected ? "border-sky-400/45 bg-sky-500/15 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.12)]" : "border-white/5 bg-white/5"}`}
+                      title={`${ev.regattaName}${selected ? " · counts toward Best 3 of 5" : ""}`}
                     >
                       <p className="text-[9px] text-sky-400/90 font-black">
                         R{idx + 1}
@@ -322,7 +329,8 @@ export function IlcaRankingsView({
                       <p className="text-[7px] text-slate-500 leading-tight line-clamp-2 min-h-[1.4rem] break-words">
                         {shortRegattaName(ev.regattaName, idx)}
                       </p>
-                      <p className="text-[11px] font-mono font-bold text-white mt-0.5 tabular-nums">
+                      <p className={`mt-0.5 font-mono text-[11px] tabular-nums ${selected ? "font-black text-sky-200" : "font-semibold text-slate-500"}`}>
+                        {selected && <span className="sr-only">Selected score: </span>}
                         {scoreCell(points, isDns)}
                       </p>
                     </div>
@@ -380,6 +388,12 @@ export function IlcaRankingsView({
             <tbody>
               {displayRanked.map((s) => {
                 const handle = s.handle;
+                const selectedIndexes = bestThreeSelectedIndexes(
+                  eventSlots.map((event) =>
+                    pointsFor(s, event.regattaId).points
+                  ),
+                  { higherIsBetter: true }
+                );
                 return (
                   <tr
                     key={s.sailorId}
@@ -419,16 +433,19 @@ export function IlcaRankingsView({
                         );
                       }
                       const { points, isDns } = pointsFor(s, ev.regattaId);
+                      const selected = selectedIndexes.has(idx);
                       return (
                         <td
                           key={ev.regattaId}
-                          className="px-3 py-3.5 text-center font-mono text-xs text-slate-300"
+                          data-best-three-selected={selected || undefined}
+                          className={`px-3 py-3.5 text-center font-mono text-xs ${selected ? "bg-sky-500/15 font-black text-sky-200 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.18)]" : "font-medium text-slate-500"}`}
                           title={
                             isDns
-                              ? `${ev.regattaName} · DNS`
-                              : `${ev.regattaName} · ${points} pts`
+                              ? `${ev.regattaName} · DNS${selected ? " · counts toward Best 3 of 5" : ""}`
+                              : `${ev.regattaName} · ${points} pts${selected ? " · counts toward Best 3 of 5" : ""}`
                           }
                         >
+                          {selected && <span className="sr-only">Selected score: </span>}
                           {scoreCell(points, isDns)}
                         </td>
                       );
@@ -445,8 +462,8 @@ export function IlcaRankingsView({
         <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5 bg-[#0c0d14]">
           R1–R5 = last up to 5 ILCA 4 ranking regattas on or before the cutoff
           (R1 oldest). Cell = High Ranking Points (1st = fleet size). Best 3 of
-          5 = sum of the three highest point scores. * = DNS (0). Higher total
-          is better.
+          5 = sum of the three highest point scores. Highlighted cells are the
+          three selected scores. * = DNS (0). Higher total is better.
         </p>
       </div>
     </div>

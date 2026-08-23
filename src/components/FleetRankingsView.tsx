@@ -15,6 +15,7 @@ import {
 import { Trophy, Calendar, RotateCcw } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 import { formatGenderLabel, normalizeGender } from "@/lib/gender";
+import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
 
 function scoreCell(
   score: number | undefined,
@@ -299,7 +300,7 @@ export function FleetRankingsView({
               {fleet} Fleet Rankings
             </h1>
             <p className="text-[11px] sm:text-sm text-slate-500 mt-1 leading-snug">
-              Best 3 of 5 · * DNS · † overseas
+              Best 3 of 5 · highlighted scores are selected · * DNS · † overseas
               {carryCount > 0 && (
                 <span className="ml-1.5 text-sky-400/90 font-semibold">
                   · {carryCount} carry-forward
@@ -577,6 +578,15 @@ export function FleetRankingsView({
       <div className="md:hidden space-y-2 no-print w-full max-w-full min-w-0">
         {displayRanked.map((s, i) => {
           const scores = padScores(s, i);
+          const excludedIndexes = new Set(
+            scores.flatMap((score, index) =>
+              excluded.has(score.regattaId) ? [index] : []
+            )
+          );
+          const selectedIndexes = bestThreeSelectedIndexes(
+            scores.map((score) => score.score),
+            { excludedIndexes }
+          );
           return (
             <div
               key={s.id}
@@ -618,12 +628,16 @@ export function FleetRankingsView({
               <div className="mt-2 grid grid-cols-5 gap-1 w-full min-w-0">
                 {scores.map((rs, idx) => {
                   const off = excluded.has(rs.regattaId);
+                  const selected = selectedIndexes.has(idx);
                   return (
                     <div
                       key={rs.regattaId + idx}
+                      data-best-three-selected={selected || undefined}
                       className={`min-w-0 rounded-md border px-0.5 py-1 text-center ${
                         off
                           ? "bg-slate-900/60 border-rose-500/30 opacity-50"
+                          : selected
+                            ? "bg-orange-500/15 border-orange-400/45 shadow-[inset_0_0_0_1px_rgba(251,146,60,0.12)]"
                           : rs.isCarryForward
                             ? "bg-sky-500/10 border-sky-500/20"
                             : "bg-white/5 border-white/5"
@@ -638,7 +652,8 @@ export function FleetRankingsView({
                         R{idx + 1}
                         {rs.isCarryForward ? "ᶜ" : ""}
                       </p>
-                      <p className="text-[12px] font-mono font-bold text-white tabular-nums leading-tight">
+                      <p className={`text-[12px] font-mono tabular-nums leading-tight ${selected ? "font-black text-orange-200" : "font-semibold text-slate-400"}`}>
+                        {selected && <span className="sr-only">Selected score: </span>}
                         {Number.isFinite(rs.score)
                           ? scoreCell(
                               rs.score,
@@ -731,6 +746,15 @@ export function FleetRankingsView({
             <tbody>
               {displayRanked.map((s, i) => {
                 const scores = padScores(s, i);
+                const excludedIndexes = new Set(
+                  scores.flatMap((score, index) =>
+                    excluded.has(score.regattaId) ? [index] : []
+                  )
+                );
+                const selectedIndexes = bestThreeSelectedIndexes(
+                  scores.map((score) => score.score),
+                  { excludedIndexes }
+                );
                 return (
                   <tr
                     key={s.id}
@@ -774,11 +798,17 @@ export function FleetRankingsView({
                     )}
                     {scores.map((rs, idx) => {
                       const off = excluded.has(rs.regattaId);
+                      const selected = selectedIndexes.has(idx);
                       return (
                         <td
                           key={rs.regattaId + idx}
+                          data-best-three-selected={selected || undefined}
                           className={`px-3 py-3.5 text-center font-mono text-xs ${
-                            off ? "text-slate-600 line-through" : "text-slate-300"
+                            off
+                              ? "text-slate-600 line-through"
+                              : selected
+                                ? "bg-orange-500/15 font-black text-orange-200 shadow-[inset_0_0_0_1px_rgba(251,146,60,0.18)]"
+                                : "font-medium text-slate-500"
                           }`}
                           title={
                             rs.regattaName || eventSlots[idx]?.regattaName
@@ -790,10 +820,11 @@ export function FleetRankingsView({
                                     : rs.isDNS
                                       ? " (DNS)"
                                       : ""
-                                }${off ? " · excluded" : ""}`
+                                }${off ? " · excluded" : selected ? " · counts toward Best 3 of 5" : ""}`
                               : undefined
                           }
                         >
+                          {selected && <span className="sr-only">Selected score: </span>}
                           {Number.isFinite(rs.score)
                             ? scoreCell(
                                 rs.score,
@@ -816,8 +847,9 @@ export function FleetRankingsView({
         <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5 bg-[#0c0d14]">
           R1–R5 = scoring window for this fleet (R1 = oldest, R5 = newest). If the
           current half has fewer than 5 events, the most recent events from the
-          previous half fill the window (sky “prev” / carry). Best 3 of 5 = sum of
-          the three best (lowest) scores. Ties: compare all regatta ranks best-first
+          previous half fill the window (sky “prev” / carry). Highlighted cells are
+          the three selected scores. Best 3 of 5 = sum of the three best (lowest)
+          scores. Ties: compare all regatta ranks best-first
           (a 1st beats a 2nd, then next-best, and so on), then name. Uncheck events
           above for a what-if score. * = DNS (fleet size + 1). † = SSF overseas
           commitment. {squadColumnLabel} = official national squad for the selected
