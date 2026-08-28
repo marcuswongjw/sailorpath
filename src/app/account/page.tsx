@@ -25,7 +25,8 @@ type Claim = {
 function AccountInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { isSuperadmin } = useAccount();
+  const { role, isSuperadmin } = useAccount();
+  const isCoach = role === "coach";
   const welcome = searchParams.get("welcome") === "1";
   const [email, setEmail] = useState<string | null>(null);
   const [owned, setOwned] = useState<Owned[]>([]);
@@ -125,16 +126,54 @@ function AccountInner() {
       {welcome && (
         <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 px-4 sm:px-5 py-4">
           <p className="text-sm font-bold text-emerald-200">
-            Account created — next, claim your sailor profile
+            {isCoach
+              ? "Coach account approved — your dashboard is ready"
+              : "Account created — next, claim your sailor profile"}
           </p>
           <p className="text-xs text-emerald-100/80 mt-1 leading-relaxed">
-            Creating an account does not link a ranking profile yet. Search for
-            your name, open the profile, and submit a claim.
+            {isCoach
+              ? "Open the Coach Dashboard to create a squad and add sailors."
+              : "Creating an account does not link a ranking profile yet. Search for your name, open the profile, and submit a claim."}
           </p>
         </div>
       )}
 
       {error && <p className="text-sm font-bold text-rose-400">{error}</p>}
+
+      {isCoach && (
+        <section className="rounded-2xl border border-orange-500/25 bg-orange-500/[0.07] p-5 sm:p-6 space-y-3 w-full">
+          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+            Coach dashboard
+          </h2>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            Manage your private squad roster and review live rankings and regatta results.
+          </p>
+          <Link
+            href="/coach-tools"
+            className="inline-flex rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-[11px] font-bold text-white"
+          >
+            Open Coach Dashboard
+          </Link>
+        </section>
+      )}
+
+      {!isCoach && !isSuperadmin && (
+        <section className="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 sm:p-6 space-y-3 w-full">
+          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+            Are you a coach?
+          </h2>
+          <p className="text-xs text-slate-400 leading-relaxed">
+            Request coach access for this account. An admin will review it before
+            the private squad dashboard is enabled.
+          </p>
+          <Link
+            href="/coach-tools"
+            className="inline-flex rounded-full bg-sky-600 hover:bg-sky-500 px-4 py-2 text-[11px] font-bold text-white"
+          >
+            Request coach access
+          </Link>
+        </section>
+      )}
 
       {isSuperadmin && (
         <section className="glass-card rounded-2xl border border-orange-500/20 bg-orange-500/5 p-5 sm:p-6 space-y-3 w-full">
@@ -154,6 +193,7 @@ function AccountInner() {
         </section>
       )}
 
+      {!isCoach && (
       <section className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6 space-y-3 w-full">
         <h2 className="text-sm font-black text-white uppercase tracking-wider">
           Parent / family dashboard
@@ -168,8 +208,10 @@ function AccountInner() {
           Open dashboard
         </Link>
       </section>
+      )}
 
       {/* Managed profiles */}
+      {!isCoach && (
       <section
         id="profiles"
         className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full"
@@ -210,6 +252,7 @@ function AccountInner() {
           </ul>
         )}
       </section>
+      )}
 
       {/* Account settings */}
       <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-4 w-full">
@@ -254,6 +297,7 @@ function AccountInner() {
       </section>
 
       {/* Claims */}
+      {!isCoach && (
       <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full">
         <h2 className="text-sm font-black text-white uppercase tracking-wider">
           Claim requests
@@ -298,9 +342,10 @@ function AccountInner() {
           </ul>
         )}
       </section>
+      )}
 
       {/* How to claim — only if no owned */}
-      {owned.length === 0 && (
+      {!isCoach && owned.length === 0 && (
         <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full">
           <h2 className="text-sm font-black text-white uppercase tracking-wider">
             How to claim a profile

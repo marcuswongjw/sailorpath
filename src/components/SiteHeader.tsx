@@ -226,10 +226,21 @@ export function SiteHeader() {
           My profile
         </Link>
       )}
+      {role === "coach" && (
+        <Link
+          href="/coach-tools"
+          onClick={() => setMobileOpen(false)}
+          className="text-sm font-semibold text-orange-400 hover:text-orange-300"
+        >
+          Coach Dashboard
+        </Link>
+      )}
       <Link
         href="/account"
         onClick={() => setMobileOpen(false)}
-        className="text-sm font-semibold text-orange-400 hover:text-orange-300"
+        className={`text-sm font-semibold hover:text-orange-300 ${
+          role === "coach" ? "text-slate-400" : "text-orange-400"
+        }`}
       >
         My account
       </Link>
