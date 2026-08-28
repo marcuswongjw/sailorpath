@@ -42,6 +42,14 @@ describe("parseAdminNav", () => {
     });
   });
 
+  it("parses Ops → Coach access", () => {
+    expect(parseAdminNav(new URLSearchParams("tab=ops&sub=coaches"))).toEqual({
+      tab: "ops",
+      sub: "coaches",
+      regattaId: null,
+    });
+  });
+
   it("keeps Database results + regattaId", () => {
     expect(
       parseAdminNav(
@@ -73,6 +81,9 @@ describe("serializeAdminNav", () => {
     ).toBe("tab=ops&sub=support");
     expect(serializeAdminNav({ tab: "ops", sub: "audit" })).toBe(
       "tab=ops&sub=audit"
+    );
+    expect(serializeAdminNav({ tab: "ops", sub: "coaches" })).toBe(
+      "tab=ops&sub=coaches"
     );
   });
 

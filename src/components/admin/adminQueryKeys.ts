@@ -10,6 +10,7 @@ export const adminQueryKeys = {
   stats: () => ["admin", "stats"] as const,
   audit: (days: number) => ["admin", "audit", days] as const,
   claims: () => ["admin", "claims"] as const,
+  coachAccess: () => ["admin", "coach-access"] as const,
   promote: () => ["admin", "promote"] as const,
   support: (status: string) => ["admin", "support", status] as const,
 };

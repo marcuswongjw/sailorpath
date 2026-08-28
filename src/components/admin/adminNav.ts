@@ -19,6 +19,7 @@ export type AdminDbSubTab = "sailors" | "regattas" | "results" | "selection";
 export type AdminOpsSubTab =
   | "suggestions"
   | "claims"
+  | "coaches"
   | "promote"
   | "support"
   | "audit";
@@ -52,6 +53,7 @@ const DB_SUBS: readonly AdminDbSubTab[] = [
 const OPS_SUBS: readonly AdminOpsSubTab[] = [
   "suggestions",
   "claims",
+  "coaches",
   "promote",
   "support",
   "audit",
@@ -157,6 +159,7 @@ export const ADMIN_DB_SUB_TABS: { id: AdminDbSubTab; label: string }[] = [
 export const ADMIN_OPS_SUB_TABS: { id: AdminOpsSubTab; label: string }[] = [
   { id: "suggestions", label: "Suggestions" },
   { id: "claims", label: "Claims" },
+  { id: "coaches", label: "Coach access" },
   { id: "promote", label: "Promote" },
   { id: "support", label: "Support" },
   { id: "audit", label: "Audit" },

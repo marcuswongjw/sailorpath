@@ -14,6 +14,7 @@ import {
   raceObservations,
   equipmentLogs,
   sailorAliases,
+  coachAccessRequests,
 } from "@/db/schema";
 import {
   calculateRankings,
@@ -1007,7 +1008,19 @@ export async function ensureProfileForUser(user: {
       .from(profiles)
       .where(eq(profiles.id, user.id))
       .limit(1);
-    if (existing[0]) return { profile: existing[0], created: false };
+    if (existing[0]) {
+      if (
+        user.user_metadata?.account_intent === "coach" &&
+        existing[0].role !== "coach" &&
+        existing[0].role !== "superadmin"
+      ) {
+        await db
+          .insert(coachAccessRequests)
+          .values({ requesterId: user.id })
+          .onConflictDoNothing({ target: coachAccessRequests.requesterId });
+      }
+      return { profile: existing[0], created: false };
+    }
 
     const fullName =
       (user.user_metadata?.full_name as string) ||
@@ -1037,6 +1050,17 @@ export async function ensureProfileForUser(user: {
         set: { email: user.email || "", updatedAt: new Date() },
       })
       .returning({ id: profiles.id, role: profiles.role });
+
+    if (
+      user.user_metadata?.account_intent === "coach" &&
+      row.role !== "coach" &&
+      row.role !== "superadmin"
+    ) {
+      await db
+        .insert(coachAccessRequests)
+        .values({ requesterId: user.id })
+        .onConflictDoNothing({ target: coachAccessRequests.requesterId });
+    }
 
     return { profile: row, created: true };
   });

@@ -68,6 +68,13 @@ const ClaimsAdminPanel = dynamic(
     ),
   { loading: () => <PanelLoading /> }
 );
+const CoachAccessAdminPanel = dynamic(
+  () =>
+    import("@/components/admin/CoachAccessAdminPanel").then(
+      (m) => m.CoachAccessAdminPanel
+    ),
+  { loading: () => <PanelLoading /> }
+);
 const PromoteAdminPanel = dynamic(
   () =>
     import("@/components/admin/PromoteAdminPanel").then(
@@ -170,7 +177,7 @@ function AdminDashboardInner() {
   const setSelectedRegattaIdForResultEdit =
     data.setSelectedRegattaIdForResultEdit;
 
-  const { claimsPendingCount, supportNewCount, inboxNotifCount } =
+  const { claimsPendingCount, supportNewCount, coachPendingCount, inboxNotifCount } =
     useAdminNotifications(isSuperadmin);
 
   const results = useAdminResults({
@@ -261,6 +268,7 @@ function AdminDashboardInner() {
       setEditSubTab((prev) =>
         prev === "suggestions" ||
         prev === "claims" ||
+        prev === "coaches" ||
         prev === "promote" ||
         prev === "support" ||
         prev === "audit"
@@ -334,7 +342,11 @@ function AdminDashboardInner() {
               onClick={() => {
                 setActiveTab("ops");
                 setEditSubTab(
-                  claimsPendingCount > 0 ? "claims" : "support"
+                  claimsPendingCount > 0
+                    ? "claims"
+                    : coachPendingCount > 0
+                      ? "coaches"
+                      : "support"
                 );
               }}
               className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 px-3 py-1.5 text-[11px] font-bold text-rose-200 hover:bg-rose-500/25"
@@ -346,7 +358,17 @@ function AdminDashboardInner() {
                   {claimsPendingCount === 1 ? "" : "s"}
                 </span>
               )}
-              {claimsPendingCount > 0 && supportNewCount > 0 && (
+              {claimsPendingCount > 0 &&
+                (coachPendingCount > 0 || supportNewCount > 0) && (
+                <span className="text-rose-400/60">·</span>
+              )}
+              {coachPendingCount > 0 && (
+                <span>
+                  {coachPendingCount} coach
+                  {coachPendingCount === 1 ? "" : "es"}
+                </span>
+              )}
+              {coachPendingCount > 0 && supportNewCount > 0 && (
                 <span className="text-rose-400/60">·</span>
               )}
               {supportNewCount > 0 && (
@@ -538,6 +560,11 @@ function AdminDashboardInner() {
                         {claimsPendingCount}
                       </span>
                     )}
+                    {id === "coaches" && coachPendingCount > 0 && (
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-violet-500 px-1 text-[9px] font-black text-white">
+                        {coachPendingCount}
+                      </span>
+                    )}
                     {id === "support" && supportNewCount > 0 && (
                       <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[9px] font-black text-white">
                         {supportNewCount}
@@ -566,6 +593,11 @@ function AdminDashboardInner() {
               {editSubTab === "claims" && (
                 <div className="w-full min-w-0">
                   <ClaimsAdminPanel isSuperadmin={isSuperadmin} />
+                </div>
+              )}
+              {editSubTab === "coaches" && (
+                <div className="w-full min-w-0">
+                  <CoachAccessAdminPanel isSuperadmin={isSuperadmin} />
                 </div>
               )}
               {editSubTab === "promote" && (

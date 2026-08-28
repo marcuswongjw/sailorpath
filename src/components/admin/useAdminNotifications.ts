@@ -33,16 +33,32 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     },
   });
 
+  const coachAccessQuery = useQuery({
+    queryKey: adminQueryKeys.coachAccess(),
+    enabled: isSuperadmin,
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      const res = await fetch("/api/admin/coach-access");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load coach requests");
+      return (data.requests || []) as ClaimNotification[];
+    },
+  });
+
   const claimsPendingCount = (claimsQuery.data ?? []).filter(
     (claim) => claim.status === "pending"
   ).length;
   const supportNewCount = supportQuery.data?.length ?? 0;
+  const coachPendingCount = (coachAccessQuery.data ?? []).filter(
+    (request) => request.status === "pending"
+  ).length;
 
-  const inboxNotifCount = claimsPendingCount + supportNewCount;
+  const inboxNotifCount = claimsPendingCount + supportNewCount + coachPendingCount;
 
   return {
     claimsPendingCount,
     supportNewCount,
+    coachPendingCount,
     inboxNotifCount,
   };
 }

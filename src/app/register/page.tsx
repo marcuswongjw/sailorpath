@@ -130,7 +130,7 @@ function RegisterForm() {
             Check your inbox and open the confirmation link. We&apos;ll return you
             {isCoachSignup
               ? " to the Coach Dashboard, where you can request coach approval."
-              : " to the sailor profile you selected so you can submit the claim."}
+              : " to SailorPath, where you can claim a profile or continue to your account."}
           </p>
           <button
             type="button"
@@ -168,7 +168,7 @@ function RegisterForm() {
           <p className="text-xs text-slate-400 mt-2 leading-relaxed">
             {isCoachSignup
               ? "Create your login first. SailorPath reviews coach access before the private squad dashboard is enabled."
-              : "Step 1 of 2 — create a login. You claim an existing sailor ranking profile after you sign in."}
+              : "Create your login. Sailors and parents can claim a ranking profile; coaches can request dashboard access after signing in."}
           </p>
         </div>
         {error && (
@@ -182,7 +182,7 @@ function RegisterForm() {
               autoComplete="name"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              placeholder={isCoachSignup ? "Coach name" : "Parent or sailor name"}
+              placeholder={isCoachSignup ? "Coach name" : "Parent, sailor, or coach name"}
               className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
             />
           </label>
@@ -242,6 +242,14 @@ function RegisterForm() {
             Log in
           </Link>
         </p>
+        {!isCoachSignup && (
+          <p className="text-center text-xs text-slate-400">
+            Signing up as a coach?{" "}
+            <Link href="/register?role=coach&next=%2Fcoach-tools" className="font-bold text-sky-400 hover:text-sky-300">
+              Use coach registration
+            </Link>
+          </p>
+        )}
       </div>
     </div>
   );

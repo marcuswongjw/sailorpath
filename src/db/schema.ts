@@ -28,6 +28,44 @@ export const profiles = pgTable("profiles", {
   }),
 });
 
+/** A coach may request access, but only a superadmin may grant the coach role. */
+export const coachAccessRequests = pgTable(
+  "coach_access_requests",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    requesterId: uuid("requester_id")
+      .references(() => profiles.id, { onDelete: "cascade" })
+      .notNull(),
+    status: text("status", {
+      enum: ["pending", "approved", "rejected"],
+    })
+      .default("pending")
+      .notNull(),
+    requestedAt: timestamp("requested_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    reviewedBy: uuid("reviewed_by").references(() => profiles.id, {
+      onDelete: "set null",
+    }),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => ({
+    requesterUnq: unique("coach_access_requests_requester_unq").on(
+      table.requesterId
+    ),
+    reviewedByIdx: index("coach_access_requests_reviewed_by_idx").on(
+      table.reviewedBy
+    ),
+    statusRequestedIdx: index("coach_access_requests_status_requested_idx").on(
+      table.status,
+      table.requestedAt
+    ),
+  })
+);
+
 export const sailors = pgTable("sailors", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),
