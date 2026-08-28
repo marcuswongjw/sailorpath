@@ -12,7 +12,22 @@ export type AuthContext = {
 };
 
 export async function getAuthContext(): Promise<AuthContext | null> {
-  const supabase = await createServerSupabase();
+  let supabase: Awaited<ReturnType<typeof createServerSupabase>>;
+  try {
+    supabase = await createServerSupabase();
+  } catch (error) {
+    // Local/static environments without auth configuration should render as
+    // signed out instead of taking the whole page through the error boundary.
+    if (
+      error instanceof Error &&
+      /Missing NEXT_PUBLIC_SUPABASE_URL|Missing NEXT_PUBLIC_SUPABASE_ANON_KEY/.test(
+        error.message
+      )
+    ) {
+      return null;
+    }
+    throw error;
+  }
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -40,13 +55,22 @@ export async function getAuthContext(): Promise<AuthContext | null> {
 }
 
 export async function requireSuperadmin(): Promise<AuthContext> {
+  return requireRoles(["superadmin"]);
+}
+
+/** Require an authenticated coach workspace user. Superadmins retain access for support/testing. */
+export async function requireCoach(): Promise<AuthContext> {
+  return requireRoles(["coach", "superadmin"]);
+}
+
+async function requireRoles(roles: AppRole[]): Promise<AuthContext> {
   const ctx = await getAuthContext();
   if (!ctx) {
     const err = new Error("UNAUTHORIZED");
     (err as Error & { status: number }).status = 401;
     throw err;
   }
-  if (ctx.role !== "superadmin") {
+  if (!roles.includes(ctx.role)) {
     const err = new Error("FORBIDDEN");
     (err as Error & { status: number }).status = 403;
     throw err;
@@ -70,7 +94,7 @@ export function jsonError(error: unknown) {
   if (msg === "UNAUTHORIZED") {
     publicMsg = "Not signed in";
   } else if (msg === "FORBIDDEN") {
-    publicMsg = "Superadmin role required";
+    publicMsg = "You do not have access to this area";
   } else if (isProduction) {
     publicMsg = "Internal error";
   } else {

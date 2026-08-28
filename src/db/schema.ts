@@ -131,6 +131,49 @@ export const sailors = pgTable("sailors", {
   })
 );
 
+/** Coach-owned groups. Athlete membership is private and never exposed publicly. */
+export const coachSquads = pgTable(
+  "coach_squads",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    coachId: uuid("coach_id")
+      .references(() => profiles.id, { onDelete: "cascade" })
+      .notNull(),
+    name: text("name").default("My squad").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    coachIdIdx: index("coach_squads_coach_id_idx").on(table.coachId),
+    coachNameUnq: unique("coach_squads_coach_name_unq").on(
+      table.coachId,
+      table.name
+    ),
+  })
+);
+
+export const coachSquadMembers = pgTable(
+  "coach_squad_members",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    squadId: uuid("squad_id")
+      .references(() => coachSquads.id, { onDelete: "cascade" })
+      .notNull(),
+    sailorId: uuid("sailor_id")
+      .references(() => sailors.id, { onDelete: "cascade" })
+      .notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    squadIdIdx: index("coach_squad_members_squad_id_idx").on(table.squadId),
+    sailorIdIdx: index("coach_squad_members_sailor_id_idx").on(table.sailorId),
+    squadSailorUnq: unique("coach_squad_members_squad_sailor_unq").on(
+      table.squadId,
+      table.sailorId
+    ),
+  })
+);
+
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),

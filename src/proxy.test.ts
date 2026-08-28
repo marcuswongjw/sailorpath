@@ -27,6 +27,7 @@ describe("proxy routing", () => {
     expect(shouldRefreshSession("/rankings", false)).toBe(false);
     expect(shouldRefreshSession("/admin", false)).toBe(true);
     expect(shouldRefreshSession("/account", false)).toBe(true);
+    expect(shouldRefreshSession("/coach-tools", false)).toBe(true);
     expect(shouldRefreshSession("/sg/optimist/goldsailors", false)).toBe(true);
     expect(shouldRefreshSession("/alice-tan", false)).toBe(true);
     expect(shouldRefreshSession("/robots.txt", false)).toBe(false);

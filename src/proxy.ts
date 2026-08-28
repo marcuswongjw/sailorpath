@@ -32,6 +32,7 @@ export function shouldRefreshSession(
     pathname.startsWith("/account/") ||
     pathname === "/parent" ||
     pathname.startsWith("/parent/") ||
+    pathname === "/coach-tools" ||
     pathname === "/sg/optimist/goldsailors" ||
     pathname.startsWith("/sg/optimist/goldsailors/")
   ) {
@@ -119,6 +120,7 @@ export const config = {
     "/admin/:path*",
     "/account/:path*",
     "/parent/:path*",
+    "/coach-tools",
     "/sg/optimist/goldsailors/:path*",
     "/:sailor_handle",
   ],

@@ -15,7 +15,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Singapore sailing rankings and sailor records | SailorPath",
   description:
-    "Follow current Optimist and ILCA 4 standings, explore regatta results, and keep one sailing record across classes.",
+    "Follow Optimist and ILCA 4 standings, keep one sailing record across classes, or organize a private coach squad dashboard.",
 };
 
 /**
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
  * (demo profile stays the fast path for product tour).
  *
  * Conversion spine: Hero → How it works → Demo → audiences →
- * rankings explainers → roadmap.
+ * rankings explainers → available now / next.
  */
 export const revalidate = 300;
 
@@ -44,7 +44,8 @@ export default function HomePage() {
 
         <p className="mx-auto mt-4 sm:mt-6 max-w-xl sm:max-w-2xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
           Follow current Optimist and ILCA 4 rankings, explore regatta results,
-          and keep one personal sailing record as you move between classes.
+          and keep one sailing record across classes. Coaches can bring their
+          squad&apos;s live standings and latest results into one private view.
         </p>
 
         <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3 w-full max-w-md mx-auto sm:max-w-none">
@@ -127,8 +128,8 @@ export default function HomePage() {
                 },
                 {
                   step: "3",
-                  title: "You take ownership",
-                  body: "Claim your profile to add private notes, equipment, milestones, and sharing preferences.",
+                  title: "Choose your workspace",
+                  body: "Sailors and parents can claim a profile. Approved coaches can build a private squad dashboard.",
                 },
               ] as const
             ).map((item) => (
@@ -154,42 +155,44 @@ export default function HomePage() {
       {/* Live demo profile */}
       <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center rounded-2xl border border-orange-500/20 bg-gradient-to-b from-orange-500/[0.08] to-transparent px-6 py-10 sm:py-12">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              See what your profile looks like
-            </h2>
-            <p className="mt-3 text-sm text-slate-400 leading-relaxed max-w-md mx-auto">
-              Explore a dual-class sample with Optimist Gold standings, ILCA 4
-              results, and previews for sailors, parents, and coaches.
-            </p>
+          <div className="mx-auto max-w-5xl overflow-hidden text-center rounded-2xl border border-orange-500/20 bg-gradient-to-b from-orange-500/[0.08] to-transparent px-4 pt-8 sm:px-6 sm:pt-10">
+            <div className="mx-auto max-w-2xl">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                See what your profile looks like
+              </h2>
+              <p className="mt-3 text-sm text-slate-400 leading-relaxed max-w-md mx-auto">
+                Explore a dual-class profile, then switch between the public,
+                sailor, parent, and coach perspectives.
+              </p>
+              <Link
+                href="/sample"
+                className="mt-6 inline-flex items-center justify-center rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-orange-950/20 border border-orange-500/30 min-h-[44px]"
+              >
+                Open interactive demo →
+              </Link>
+            </div>
+
             <Link
               href="/sample"
-              className="mt-6 inline-flex items-center justify-center rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-orange-950/20 border border-orange-500/30 min-h-[44px]"
+              aria-label="Open the interactive Kimberly Tan demo profile"
+              className="group mt-8 block overflow-hidden rounded-t-2xl border border-b-0 border-white/10 bg-[#07080c] shadow-2xl shadow-black/30 transition-colors hover:border-orange-500/40"
             >
-              Open demo profile →
+              <Image
+                src="/marketing/demo-profile.png"
+                alt="SailorPath demo profile showing Kimberly Tan's public profile, fleet standing, class tabs, and claim action"
+                width={1212}
+                height={888}
+                sizes="(max-width: 1024px) calc(100vw - 64px), 960px"
+                className="h-auto w-full"
+              />
+              <span className="flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-left text-[11px] sm:text-xs text-slate-400">
+                <span>Actual SailorPath demo profile</span>
+                <span className="shrink-0 font-bold text-orange-400 group-hover:text-orange-300">
+                  Explore it →
+                </span>
+              </span>
             </Link>
           </div>
-
-          <Link
-            href="/sample"
-            aria-label="Open the interactive Kimberly Tan demo profile"
-            className="group mx-auto mt-6 sm:mt-8 block max-w-5xl overflow-hidden rounded-2xl border border-white/10 bg-[#07080c] shadow-2xl shadow-black/30 transition-colors hover:border-orange-500/40"
-          >
-            <Image
-              src="/marketing/demo-profile.png"
-              alt="SailorPath demo profile showing Kimberly Tan's public profile, fleet standing, class tabs, and claim action"
-              width={1212}
-              height={888}
-              sizes="(max-width: 1024px) calc(100vw - 32px), 1024px"
-              className="h-auto w-full"
-            />
-            <span className="flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-left text-[11px] sm:text-xs text-slate-400">
-              <span>Actual SailorPath demo profile</span>
-              <span className="shrink-0 font-bold text-orange-400 group-hover:text-orange-300">
-                Explore it →
-              </span>
-            </span>
-          </Link>
         </div>
       </section>
 
@@ -246,19 +249,22 @@ export default function HomePage() {
               </div>
               <h2 className="text-lg font-bold text-white">For coaches</h2>
               <p className="text-sm font-semibold text-white mt-1.5">
-                See every sailor in context.
+                Keep your squad in one live view.
               </p>
               <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Use current public standings and sailor profiles today. Squad
-                comparisons, selection reports, and management tools are planned
-                — join the waitlist for updates.
+                Build a private roster, see each sailor&apos;s current ranking,
+                Best 3 of 5, squad status, and latest result, then compare two
+                sailors side by side.
               </p>
-              <a
-                href="#roadmap-coach"
+              <Link
+                href="/register?role=coach&next=%2Fcoach-tools"
                 className="mt-4 text-[12px] font-bold text-sky-400 hover:text-sky-300"
               >
-                Join coach waitlist →
-              </a>
+                Create a coach account →
+              </Link>
+              <p className="mt-2 text-[10px] leading-relaxed text-slate-500">
+                Coach access is reviewed before the dashboard is enabled.
+              </p>
             </article>
           </div>
         </div>
@@ -369,7 +375,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Roadmap */}
+      {/* Available now and roadmap */}
       <section
         id="roadmap"
         className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-14"
@@ -377,17 +383,24 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Roadmap
+              Available now &amp; next
             </h2>
             <p className="mt-3 text-slate-400 text-sm leading-relaxed">
-              Rankings, claimed profiles, and the{" "}
+              Rankings, claimed profiles, the{" "}
               <Link
                 href="/parent"
                 className="text-emerald-300 font-semibold hover:text-emerald-200"
               >
                 Parent Dashboard
               </Link>{" "}
-              are available today. Coach squads and club tools are next.
+              and the{" "}
+              <Link
+                href="/coach-tools"
+                className="text-sky-300 font-semibold hover:text-sky-200"
+              >
+                Coach Dashboard
+              </Link>{" "}
+              are available today. Club and event tools are next.
             </p>
           </div>
 
@@ -448,23 +461,30 @@ export default function HomePage() {
               <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-sky-500/40 bg-sky-500/15" />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-black uppercase tracking-widest text-sky-400">
-                  Q4 2026
+                  Available now
                 </p>
                 <h3 className="text-base font-bold text-white mt-1">
                   Coach Squads
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Manage multiple sailors from one account. Compare athletes,
-                  track trends, and prepare selection reports.
+                  Build a private roster with live rankings and recent results,
+                  then compare two sailors in the same fleet. Selection reports
+                  and deeper coach notes remain on the roadmap.
                 </p>
-                <p className="mt-3 text-[12px] font-bold text-sky-400">
-                  Join the coach waitlist →
-                </p>
-                <WaitlistForm
-                  presetRole="Coach"
-                  submitLabel="Join coach waitlist"
-                  compact
-                />
+                <div className="mt-3 flex flex-wrap gap-3 items-center">
+                  <Link
+                    href="/coach-tools"
+                    className="text-[12px] font-bold text-sky-400 hover:text-sky-300"
+                  >
+                    Open Coach Dashboard →
+                  </Link>
+                  <Link
+                    href="/register?role=coach&next=%2Fcoach-tools"
+                    className="text-[12px] font-semibold text-slate-400 hover:text-white"
+                  >
+                    Create coach account
+                  </Link>
+                </div>
               </div>
             </li>
             <li className="relative flex gap-4 pb-0">

@@ -10,9 +10,10 @@ import { trackClientUsage } from "@/lib/clientUsage";
 function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isCoachSignup = searchParams.get("role") === "coach";
   const nextTarget = safeAuthNext(
     searchParams.get("next"),
-    "/account?welcome=1"
+    isCoachSignup ? "/coach-tools" : "/account?welcome=1"
   );
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,7 +44,10 @@ function RegisterForm() {
         email: cleanEmail,
         password,
         options: {
-          data: { full_name: cleanName },
+          data: {
+            full_name: cleanName,
+            account_intent: isCoachSignup ? "coach" : "sailor_or_parent",
+          },
           emailRedirectTo: confirmationRedirect(),
         },
       });
@@ -123,8 +127,10 @@ function RegisterForm() {
           <h1 className="text-xl font-black text-white">Confirm your email</h1>
           <p className="text-xs text-slate-400 leading-relaxed">
             We created an account for <strong className="text-white">{email}</strong>.
-            Check your inbox and open the confirmation link. We’ll return you
-            to the sailor profile you selected so you can submit the claim.
+            Check your inbox and open the confirmation link. We&apos;ll return you
+            {isCoachSignup
+              ? " to the Coach Dashboard, where you can request coach approval."
+              : " to the sailor profile you selected so you can submit the claim."}
           </p>
           <button
             type="button"
@@ -147,7 +153,7 @@ function RegisterForm() {
   if (done === "session") {
     return (
       <div className="min-h-[70vh] flex items-center justify-center text-orange-400 text-sm font-bold">
-        Account created — opening My account…
+        Account created — opening {isCoachSignup ? "Coach Dashboard" : "My account"}…
       </div>
     );
   }
@@ -156,10 +162,13 @@ function RegisterForm() {
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-md glass-card rounded-3xl border border-white/5 p-8 space-y-6">
         <div className="text-center">
-          <h1 className="text-2xl font-black text-white">Create account</h1>
+          <h1 className="text-2xl font-black text-white">
+            {isCoachSignup ? "Create coach account" : "Create account"}
+          </h1>
           <p className="text-xs text-slate-400 mt-2 leading-relaxed">
-            Step 1 of 2 — create a login. You claim an existing sailor ranking
-            profile after you sign in.
+            {isCoachSignup
+              ? "Create your login first. SailorPath reviews coach access before the private squad dashboard is enabled."
+              : "Step 1 of 2 — create a login. You claim an existing sailor ranking profile after you sign in."}
           </p>
         </div>
         {error && (
@@ -173,7 +182,7 @@ function RegisterForm() {
               autoComplete="name"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Parent or sailor name"
+              placeholder={isCoachSignup ? "Coach name" : "Parent or sailor name"}
               className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
             />
           </label>
@@ -210,7 +219,7 @@ function RegisterForm() {
             disabled={busy}
             className="w-full rounded-full bg-orange-600 py-3 text-sm font-bold text-white hover:bg-orange-500 disabled:opacity-50"
           >
-            {busy ? "Creating…" : "Create account"}
+            {busy ? "Creating…" : isCoachSignup ? "Create coach account" : "Create account"}
           </button>
         </form>
         <p className="text-center text-[11px] leading-relaxed text-slate-500">
