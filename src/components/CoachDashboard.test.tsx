@@ -9,6 +9,8 @@ const initialData: CoachSquadDashboard = {
   squad: { id: "squad-1", name: "National youth" },
   period: { year: 2026, half: "Jul-Dec" },
   following: [],
+  updatedThrough: "2026-08-01",
+  actionReviews: [],
   members: [
     {
       id: "member-1",
@@ -29,6 +31,7 @@ const initialData: CoachSquadDashboard = {
       ],
       recentResults: [{ resultId: "result-1", regattaName: "Pesta Sukan", regattaSlug: "pesta-sukan", date: "2026-08-01", rank: 1, nettScore: 6, fleetSize: 77, races: [{ raceNumber: 1, score: 1, code: null, discarded: false, rawValue: "1" }] }],
       coachNote: "Work on starts",
+      developmentRecords: [],
       selectionReadiness: { tone: "ready", label: "Ranking record established", detail: "Gold Fleet criteria apply." },
       latestResult: {
         regattaName: "Pesta Sukan",
@@ -54,6 +57,7 @@ const initialData: CoachSquadDashboard = {
       scoringEvents: [],
       recentResults: [],
       coachNote: "",
+      developmentRecords: [],
       selectionReadiness: { tone: "watch", label: "Building selection record", detail: "More events required." },
       latestResult: null,
     },
@@ -105,6 +109,7 @@ describe("CoachDashboard", () => {
 
     const user = userEvent.setup();
     render(<CoachDashboard initialData={initialData} />);
+    await user.click(screen.getByRole("button", { name: "Manage sailors" }));
     await user.type(screen.getByLabelText("Search sailors to add"), "Kim");
     await waitFor(() => expect(screen.getByRole("button", { name: /^Squad$/i })).toBeInTheDocument());
     await user.click(screen.getByRole("button", { name: /^Squad$/i }));
@@ -140,10 +145,46 @@ describe("CoachDashboard", () => {
       .mockResolvedValueOnce(new Response(JSON.stringify(followed), { status: 201 }));
     const user = userEvent.setup();
     render(<CoachDashboard initialData={initialData} />);
+    await user.click(screen.getByRole("button", { name: "Manage sailors" }));
     await user.type(screen.getByLabelText("Search sailors to add"), "Kim");
     await waitFor(() => expect(screen.getByRole("button", { name: "Follow" })).toBeInTheDocument());
     await user.click(screen.getByRole("button", { name: "Follow" }));
     await waitFor(() => expect(screen.getByText("1 sailor")).toBeInTheDocument());
     expect(screen.getByRole("status")).toHaveTextContent("added to Following");
+  });
+
+  it("keeps administration behind Manage sailors and sorts the active squad", async () => {
+    const user = userEvent.setup();
+    render(<CoachDashboard initialData={initialData} />);
+    expect(screen.queryByRole("dialog", { name: "Manage sailors" })).not.toBeInTheDocument();
+    await user.selectOptions(screen.getByLabelText("Sort"), "name");
+    const details = screen.getAllByRole("button", { name: /Open .* details/ });
+    expect(details[0]).toHaveAccessibleName("Open Alyssa Wong details");
+    await user.click(screen.getByRole("button", { name: "Manage sailors" }));
+    expect(screen.getByRole("dialog", { name: "Manage sailors" })).toBeInTheDocument();
+  });
+
+  it("adds a structured coaching observation", async () => {
+    const withObservation = { ...initialData, members: initialData.members.map((member, index) => index ? member : { ...member, developmentRecords: [{ id: "dev-1", type: "observation" as const, category: "Starts", title: "Held a clear lane", detail: "Four of five practice starts", recordDate: "2026-08-29", status: "active", targetDate: null }] }) };
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(new Response(JSON.stringify(withObservation), { status: 201 }));
+    const user = userEvent.setup();
+    render(<CoachDashboard initialData={initialData} />);
+    await user.click(screen.getByRole("button", { name: "Open Alyssa Wong details" }));
+    await user.type(screen.getByLabelText("Record title"), "Held a clear lane");
+    await user.type(screen.getByLabelText("Record detail"), "Four of five practice starts");
+    await user.click(screen.getByRole("button", { name: "Add coaching record" }));
+    await waitFor(() => expect(screen.getByText("Held a clear lane")).toBeInTheDocument());
+    expect(screen.getByRole("status")).toHaveTextContent("Observation saved");
+  });
+
+  it("marks a generated squad action as reviewed", async () => {
+    const reviewed = { ...initialData, actionReviews: [{ actionKey: "sailor-1:incomplete:2026-Jul-Dec", status: "reviewed" as const }] };
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(new Response(JSON.stringify(reviewed), { status: 200 }));
+    const user = userEvent.setup();
+    render(<CoachDashboard initialData={initialData} />);
+    const before = screen.getAllByRole("button", { name: "Mark reviewed" }).length;
+    await user.click(screen.getAllByRole("button", { name: "Mark reviewed" })[0]);
+    await waitFor(() => expect(screen.getAllByRole("button", { name: "Mark reviewed" })).toHaveLength(before - 1));
+    expect(screen.getByRole("status")).toHaveTextContent("marked reviewed");
   });
 });

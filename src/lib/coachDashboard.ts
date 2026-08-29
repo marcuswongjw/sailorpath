@@ -1,6 +1,8 @@
 import { db } from "@/db";
 import {
   coachFollowedSailors,
+  coachDevelopmentRecords,
+  coachActionReviews,
   coachSquadMembers,
   coachSquads,
   coachSailorNotes,
@@ -10,7 +12,7 @@ import {
   sailors,
 } from "@/db/schema";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
-import { getCachedFleetRankings } from "@/lib/queries";
+import { getCachedFleetRankings, getCachedPreviousFleetRankings } from "@/lib/queries";
 import { and, asc, desc, eq, inArray } from "drizzle-orm";
 
 export type CoachSquadMember = {
@@ -36,6 +38,10 @@ export type CoachSquadMember = {
     races: Array<{ raceNumber: number; score: number; code: string | null; discarded: boolean; rawValue: string }>;
   }>;
   coachNote: string;
+  developmentRecords: Array<{
+    id: string; type: "observation" | "goal" | "attendance"; category: string | null;
+    title: string; detail: string | null; recordDate: string; status: string; targetDate: string | null;
+  }>;
   selectionReadiness: { tone: "ready" | "watch" | "development"; label: string; detail: string };
   latestResult: {
     regattaName: string;
@@ -50,6 +56,8 @@ export type CoachSquadDashboard = {
   squad: { id: string; name: string } | null;
   members: CoachSquadMember[];
   following: CoachSquadMember[];
+  updatedThrough: string | null;
+  actionReviews: Array<{ actionKey: string; status: "reviewed" | "dismissed" }>;
   period: { year: number; half: "Jan-Jun" | "Jul-Dec" };
 };
 
@@ -64,7 +72,7 @@ export async function getCoachSquadDashboard(
     .orderBy(asc(coachSquads.createdAt))
     .limit(1);
 
-  if (!squad) return { squad: null, members: [], following: [], period };
+  if (!squad) return { squad: null, members: [], following: [], updatedThrough: null, actionReviews: [], period };
 
   const [rows, followedRows] = await Promise.all([db
     .select({
@@ -94,13 +102,15 @@ export async function getCoachSquadDashboard(
     .where(eq(coachFollowedSailors.coachId, coachId))
     .orderBy(asc(sailors.name))]);
 
-  if (!rows.length && !followedRows.length) return { squad, members: [], following: [], period };
+  if (!rows.length && !followedRows.length) return { squad, members: [], following: [], updatedThrough: null, actionReviews: [], period };
 
   const allRows = [...rows, ...followedRows];
   const sailorIds = [...new Set(allRows.map((row) => row.sailorId))];
-  const [gold, silver, resultRows, noteRows] = await Promise.all([
+  const [gold, silver, previousGold, previousSilver, resultRows, noteRows, developmentRows, actionReviewRows] = await Promise.all([
     getCachedFleetRankings("Gold", period.year, period.half),
     getCachedFleetRankings("Silver", period.year, period.half),
+    getCachedPreviousFleetRankings("Gold", period.year, period.half),
+    getCachedPreviousFleetRankings("Silver", period.year, period.half),
     db
       .select({
         resultId: regattaResults.id,
@@ -119,6 +129,17 @@ export async function getCoachSquadDashboard(
     db.select({ sailorId: coachSailorNotes.sailorId, note: coachSailorNotes.note })
       .from(coachSailorNotes)
       .where(and(eq(coachSailorNotes.coachId, coachId), inArray(coachSailorNotes.sailorId, sailorIds))),
+    db.select({
+      id: coachDevelopmentRecords.id, sailorId: coachDevelopmentRecords.sailorId,
+      type: coachDevelopmentRecords.type, category: coachDevelopmentRecords.category,
+      title: coachDevelopmentRecords.title, detail: coachDevelopmentRecords.detail,
+      recordDate: coachDevelopmentRecords.recordDate, status: coachDevelopmentRecords.status,
+      targetDate: coachDevelopmentRecords.targetDate,
+    }).from(coachDevelopmentRecords)
+      .where(and(eq(coachDevelopmentRecords.coachId, coachId), inArray(coachDevelopmentRecords.sailorId, sailorIds)))
+      .orderBy(desc(coachDevelopmentRecords.recordDate), desc(coachDevelopmentRecords.createdAt)),
+    db.select({ actionKey: coachActionReviews.actionKey, status: coachActionReviews.status })
+      .from(coachActionReviews).where(eq(coachActionReviews.coachId, coachId)),
   ]);
 
   const resultIds = resultRows.map((row) => row.resultId);
@@ -140,6 +161,14 @@ export async function getCoachSquadDashboard(
     list.push(race); racesByResult.set(race.regattaResultId, list);
   }
   const noteBySailor = new Map(noteRows.map((row) => [row.sailorId, row.note]));
+  const developmentBySailor = new Map<string, typeof developmentRows>();
+  for (const record of developmentRows) {
+    const list = developmentBySailor.get(record.sailorId) || [];
+    list.push(record); developmentBySailor.set(record.sailorId, list);
+  }
+  const previousRankBySailor = new Map<string, number>();
+  previousGold.forEach((sailor, index) => previousRankBySailor.set(sailor.id, index + 1));
+  previousSilver.forEach((sailor, index) => previousRankBySailor.set(sailor.id, index + 1));
 
   const standingBySailor = new Map<
     string,
@@ -149,6 +178,7 @@ export async function getCoachSquadDashboard(
       bestThreeOfFive: number;
       squadStatus: string | null;
       scoringEvents: CoachSquadMember["scoringEvents"];
+      fleetSize: number;
     }
   >();
   for (const [index, sailor] of gold.entries()) {
@@ -163,6 +193,7 @@ export async function getCoachSquadDashboard(
         date: score.regattaDate || null, score: score.score, selected: selected.has(scoreIndex),
         isDns: score.isDNS, isOverseas: Boolean(score.isOverseasCommitment),
       })),
+      fleetSize: gold.length,
     });
   }
   for (const [index, sailor] of silver.entries()) {
@@ -177,6 +208,7 @@ export async function getCoachSquadDashboard(
         date: score.regattaDate || null, score: score.score, selected: selected.has(scoreIndex),
         isDns: score.isDNS, isOverseas: Boolean(score.isOverseasCommitment),
       })),
+      fleetSize: silver.length,
     });
   }
   const latestBySailor = new Map<string, (typeof resultRows)[number]>();
@@ -203,10 +235,9 @@ export async function getCoachSquadDashboard(
         ranking: standing?.ranking || null,
         bestThreeOfFive: standing?.bestThreeOfFive ?? null,
         squadStatus: standing?.squadStatus || null,
-        recentMovement: (() => {
-          const recent = resultsBySailor.get(row.sailorId) || [];
-          return recent.length > 1 ? recent[1].rank - recent[0].rank : null;
-        })(),
+        recentMovement: standing?.ranking && previousRankBySailor.has(row.sailorId)
+          ? previousRankBySailor.get(row.sailorId)! - standing.ranking
+          : null,
         scoringEvents: standing?.scoringEvents || [],
         recentResults: (resultsBySailor.get(row.sailorId) || []).map((result) => ({
           resultId: result.resultId, regattaName: result.regattaName,
@@ -218,13 +249,20 @@ export async function getCoachSquadDashboard(
           })),
         })),
         coachNote: noteBySailor.get(row.sailorId) || "",
+        developmentRecords: (developmentBySailor.get(row.sailorId) || []).map((record) => ({
+          id: record.id, type: record.type, category: record.category, title: record.title,
+          detail: record.detail, recordDate: record.recordDate, status: record.status,
+          targetDate: record.targetDate,
+        })),
         selectionReadiness: standing?.fleet === "Gold"
           ? {
               tone: standing.scoringEvents.filter((event) => event.selected && !event.isDns).length >= 3 ? "ready" : "watch",
               label: standing.scoringEvents.filter((event) => event.selected && !event.isDns).length >= 3 ? "Ranking record established" : "Building selection record",
               detail: "Gold Fleet sailors may be considered when the published event criteria are met.",
             }
-          : { tone: "development", label: "Silver development pathway", detail: "Current Optimist selection events require Gold Fleet eligibility." },
+          : standing?.fleet === "Silver"
+            ? silverProgressionSignal(standing.ranking, standing.fleetSize)
+            : { tone: "development", label: "No current series position", detail: "Add eligible ranking results to establish a progression signal." },
         latestResult: latest
           ? {
               regattaName: latest.regattaName,
@@ -240,9 +278,18 @@ export async function getCoachSquadDashboard(
   return {
     squad,
     period,
+    updatedThrough: [...gold, ...silver].flatMap((sailor) => sailor.regattaScores.map((score) => score.regattaDate || "")).sort().at(-1) || null,
+    actionReviews: actionReviewRows,
     members: rows.map(buildMember),
     following: followedRows.map(buildMember),
   };
+}
+
+export function silverProgressionSignal(rank: number, fleetSize: number): CoachSquadMember["selectionReadiness"] {
+  const percentile = fleetSize > 0 ? Math.round((rank / fleetSize) * 100) : 100;
+  if (percentile <= 15) return { tone: "ready", label: "Strong Gold progression signal", detail: `Top ${percentile}% of the current Silver board. This coaching signal is not official and does not decide promotion; confirm published criteria.` };
+  if (percentile <= 30) return { tone: "watch", label: "Progressing toward Gold", detail: `Top ${percentile}% of the current Silver board. Focus on consistency and completed ranking events.` };
+  return { tone: "development", label: "Developing in Silver", detail: `Currently top ${percentile}% of Silver. Use goals and attendance trends to guide the next progression step.` };
 }
 
 /** Match duplicate scores by occurrence so exactly the calculated Best 3 are highlighted. */

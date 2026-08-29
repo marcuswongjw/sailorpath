@@ -258,6 +258,46 @@ export const coachSailorNotes = pgTable(
   })
 );
 
+/** Structured, private coaching history: observations, goals, and attendance. */
+export const coachDevelopmentRecords = pgTable(
+  "coach_development_records",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    coachId: uuid("coach_id").references(() => profiles.id, { onDelete: "cascade" }).notNull(),
+    sailorId: uuid("sailor_id").references(() => sailors.id, { onDelete: "cascade" }).notNull(),
+    type: text("type", { enum: ["observation", "goal", "attendance"] }).notNull(),
+    category: text("category"),
+    title: text("title").notNull(),
+    detail: text("detail"),
+    recordDate: date("record_date").notNull(),
+    status: text("status").default("active").notNull(),
+    targetDate: date("target_date"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    coachSailorDateIdx: index("coach_development_records_coach_sailor_date_idx").on(table.coachId, table.sailorId, table.recordDate),
+    sailorIdIdx: index("coach_development_records_sailor_id_idx").on(table.sailorId),
+  })
+);
+
+/** Per-coach acknowledgement state for generated dashboard actions. */
+export const coachActionReviews = pgTable(
+  "coach_action_reviews",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    coachId: uuid("coach_id").references(() => profiles.id, { onDelete: "cascade" }).notNull(),
+    sailorId: uuid("sailor_id").references(() => sailors.id, { onDelete: "cascade" }).notNull(),
+    actionKey: text("action_key").notNull(),
+    status: text("status", { enum: ["reviewed", "dismissed"] }).notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    coachActionUnq: unique("coach_action_reviews_coach_action_unq").on(table.coachId, table.actionKey),
+    sailorIdIdx: index("coach_action_reviews_sailor_id_idx").on(table.sailorId),
+  })
+);
+
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),

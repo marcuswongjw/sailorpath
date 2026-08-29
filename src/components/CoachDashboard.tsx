@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, BarChart3, ChevronRight, GitCompareArrows, Plus, Search, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
+import { ArrowRight, BarChart3, ChevronRight, GitCompareArrows, Plus, Search, Settings2, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
 import type { CoachSquadDashboard } from "@/lib/coachDashboard";
 
 type SearchMatch = { id: string; name: string; handle: string; sailNumber: string; club: string };
@@ -23,6 +23,15 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   const [squadName, setSquadName] = useState(initialData.squad?.name || "My squad");
   const [activeSailorId, setActiveSailorId] = useState<string | null>(null);
   const [noteDraft, setNoteDraft] = useState("");
+  const [manageOpen, setManageOpen] = useState(false);
+  const [sortKey, setSortKey] = useState<"ranking" | "name" | "movement" | "best3">("ranking");
+  const [recordType, setRecordType] = useState<"observation" | "goal" | "attendance">("observation");
+  const [recordTitle, setRecordTitle] = useState("");
+  const [recordDetail, setRecordDetail] = useState("");
+  const [recordCategory, setRecordCategory] = useState("Starts");
+  const [recordStatus, setRecordStatus] = useState("active");
+  const [recordDate, setRecordDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [targetDate, setTargetDate] = useState("");
 
   useEffect(() => {
     if (query.trim().length < 2) {
@@ -53,13 +62,20 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   const selectedMembers = selected.map((id) => data.members.find((member) => member.sailorId === id));
   const activeSailor = [...data.members, ...data.following].find((member) => member.sailorId === activeSailorId) || null;
   const actions = useMemo(() => data.members.flatMap((member) => {
-    const items: Array<{ sailorId: string; sailor: string; text: string; priority: number }> = [];
-    if (member.scoringEvents.some((event) => event.isDns)) items.push({ sailorId: member.sailorId, sailor: member.name, text: "DNS appears in the current ranking series", priority: 1 });
-    if (member.scoringEvents.filter((event) => event.selected && !event.isDns).length < 3) items.push({ sailorId: member.sailorId, sailor: member.name, text: "Fewer than 3 completed counting events", priority: 2 });
-    if (member.recentMovement != null && member.recentMovement < 0) items.push({ sailorId: member.sailorId, sailor: member.name, text: `Latest finish moved down ${Math.abs(member.recentMovement)} place${Math.abs(member.recentMovement) === 1 ? "" : "s"}`, priority: 3 });
+    const items: Array<{ key: string; sailorId: string; sailor: string; text: string; priority: number }> = [];
+    const periodKey = `${data.period.year}-${data.period.half}`;
+    if (member.scoringEvents.some((event) => event.isDns)) items.push({ key: `${member.sailorId}:dns:${periodKey}`, sailorId: member.sailorId, sailor: member.name, text: "DNS appears in the current ranking series", priority: 1 });
+    if (member.scoringEvents.filter((event) => event.selected && !event.isDns).length < 3) items.push({ key: `${member.sailorId}:incomplete:${periodKey}`, sailorId: member.sailorId, sailor: member.name, text: "Fewer than 3 completed counting events", priority: 2 });
+    if (member.recentMovement != null && member.recentMovement < 0) items.push({ key: `${member.sailorId}:rank-drop:${data.updatedThrough}`, sailorId: member.sailorId, sailor: member.name, text: `Series rank moved down ${Math.abs(member.recentMovement)} place${Math.abs(member.recentMovement) === 1 ? "" : "s"} after the latest event`, priority: 3 });
     return items;
-  }).sort((a, b) => a.priority - b.priority).slice(0, 6), [data.members]);
+  }).filter((action) => !data.actionReviews.some((review) => review.actionKey === action.key)).sort((a, b) => a.priority - b.priority).slice(0, 6), [data.members, data.actionReviews, data.period, data.updatedThrough]);
   const compareFleet = selectedMembers[0]?.fleet;
+  const sortedMembers = useMemo(() => [...data.members].sort((a, b) => {
+    if (sortKey === "name") return a.name.localeCompare(b.name);
+    if (sortKey === "movement") return (b.recentMovement ?? -999) - (a.recentMovement ?? -999) || a.name.localeCompare(b.name);
+    if (sortKey === "best3") return (a.bestThreeOfFive ?? 9999) - (b.bestThreeOfFive ?? 9999) || a.name.localeCompare(b.name);
+    return (a.ranking ?? 9999) - (b.ranking ?? 9999) || a.name.localeCompare(b.name);
+  }), [data.members, sortKey]);
   const compareHref = selected.length === 2 && compareFleet
     ? `/sg/optimist/compare?fleet=${compareFleet}&year=${data.period.year}&half=${encodeURIComponent(data.period.half)}&a=${selected[0]}&b=${selected[1]}`
     : null;
@@ -148,26 +164,50 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     try {
       const response = await fetch("/api/coach/notes", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ sailorId: activeSailor.sailorId, note: noteDraft }) });
       const body = await readJson<{ note: string }>(response);
-      setData((current) => ({ ...current, members: current.members.map((member) => member.sailorId === activeSailor.sailorId ? { ...member, coachNote: body.note } : member) }));
+      setData((current) => ({ ...current,
+        members: current.members.map((member) => member.sailorId === activeSailor.sailorId ? { ...member, coachNote: body.note } : member),
+        following: current.following.map((member) => member.sailorId === activeSailor.sailorId ? { ...member, coachNote: body.note } : member),
+      }));
       setMessage("Private coach note saved.");
     } catch (error) { setMessage(error instanceof Error ? error.message : "Could not save note"); }
     finally { setBusyId(null); }
   }
 
+  async function saveDevelopmentRecord() {
+    if (!activeSailor || !recordTitle.trim()) return;
+    setBusyId("development"); setMessage(null);
+    try {
+      const response = await fetch("/api/coach/development", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ sailorId: activeSailor.sailorId, type: recordType, title: recordTitle, detail: recordDetail, category: recordType === "observation" ? recordCategory : null, recordDate, targetDate: recordType === "goal" ? targetDate : null, status: recordType === "attendance" ? recordStatus : "active" }) });
+      setData(await readJson<CoachSquadDashboard>(response));
+      setRecordTitle(""); setRecordDetail(""); setTargetDate("");
+      setMessage(`${recordType === "goal" ? "Goal" : recordType === "attendance" ? "Attendance" : "Observation"} saved.`);
+    } catch (error) { setMessage(error instanceof Error ? error.message : "Could not save coaching record"); }
+    finally { setBusyId(null); }
+  }
+
+  async function reviewAction(action: (typeof actions)[number], status: "reviewed" | "dismissed") {
+    setBusyId(action.key); setMessage(null);
+    try {
+      const response = await fetch("/api/coach/action-reviews", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ sailorId: action.sailorId, actionKey: action.key, status }) });
+      setData(await readJson<CoachSquadDashboard>(response));
+      setMessage(status === "reviewed" ? "Action marked reviewed." : "Action dismissed for this ranking update.");
+    } catch (error) { setMessage(error instanceof Error ? error.message : "Could not update action"); }
+    finally { setBusyId(null); }
+  }
+
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12 space-y-6">
+    <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 sm:py-12">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-orange-400">Coach workspace</p>
           <h1 className="mt-1 text-3xl font-black tracking-tight text-white sm:text-4xl">Squad dashboard</h1>
-          <p className="mt-2 text-sm text-slate-400">Live public rankings and results for the sailors you follow.</p>
+          <p className="mt-2 text-sm text-slate-400">Live rankings, development priorities, and follow-up for your sailors.</p>
+          <p className="mt-1 text-[10px] font-semibold text-slate-600">Ranking results through {data.updatedThrough || "no published event yet"}</p>
         </div>
-        <Link href="/rankings" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-bold text-white hover:border-orange-500/40">
-          View all rankings <ArrowRight className="h-3.5 w-3.5" />
-        </Link>
+        <div className="flex gap-2"><button type="button" onClick={() => setManageOpen(true)} className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-orange-500"><Settings2 className="h-3.5 w-3.5" /> Manage sailors</button><Link href="/rankings" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-bold text-white hover:border-orange-500/40">Rankings <ArrowRight className="h-3.5 w-3.5" /></Link></div>
       </header>
 
-      <section className="grid grid-cols-2 gap-3 lg:grid-cols-4" aria-label="Squad summary">
+      <section className="order-2 grid grid-cols-2 gap-3 lg:grid-cols-4" aria-label="Squad summary">
         {[
           ["Squad sailors", String(data.members.length), Users],
           ["Ranked now", String(rankedCount), BarChart3],
@@ -182,18 +222,19 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
         ))}
       </section>
 
-      <section className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-4" aria-labelledby="action-centre-title">
+      <section className="order-1 rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-4" aria-labelledby="action-centre-title">
         <div className="flex items-center justify-between gap-4">
           <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-amber-400">Today</p><h2 id="action-centre-title" className="mt-1 text-base font-black text-white">Squad action centre</h2></div>
           <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-300">{actions.length} to review</span>
         </div>
-        {actions.length ? <div className="mt-3 grid gap-2 md:grid-cols-2">{actions.map((action) => <button key={`${action.sailorId}-${action.text}`} type="button" onClick={() => openSailor(action.sailorId)} className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-black/20 p-3 text-left hover:border-amber-500/30"><span className="min-w-0 flex-1"><span className="block truncate text-xs font-bold text-white">{action.sailor}</span><span className="block text-[11px] text-slate-400">{action.text}</span></span><ChevronRight className="h-4 w-4 text-slate-600" /></button>)}</div> : <p className="mt-3 text-xs text-slate-400">No ranking or attendance flags need attention.</p>}
+        {actions.length ? <div className="mt-3 grid gap-2 md:grid-cols-2">{actions.map((action) => <div key={action.key} className="rounded-xl border border-white/[0.07] bg-black/20 p-3"><button type="button" onClick={() => openSailor(action.sailorId)} className="flex w-full items-center gap-3 text-left"><span className="min-w-0 flex-1"><span className="block truncate text-xs font-bold text-white">{action.sailor}</span><span className="block text-[11px] text-slate-400">{action.text}</span></span><ChevronRight className="h-4 w-4 text-slate-600" /></button><div className="mt-2 flex gap-2"><button type="button" onClick={() => reviewAction(action, "reviewed")} disabled={busyId === action.key} className="rounded-md bg-amber-500/10 px-2 py-1 text-[9px] font-bold text-amber-300 disabled:opacity-50">Mark reviewed</button><button type="button" onClick={() => reviewAction(action, "dismissed")} disabled={busyId === action.key} className="rounded-md px-2 py-1 text-[9px] font-bold text-slate-500 hover:bg-white/5">Dismiss</button></div></div>)}</div> : <p className="mt-3 text-xs text-slate-400">No ranking or attendance flags need attention.</p>}
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_21rem]">
+      <section className="order-3">
         <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#0b0c12]">
           <div className="flex flex-col gap-3 border-b border-white/10 p-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
+              <label htmlFor="squad-sort" className="text-[10px] font-bold uppercase tracking-wider text-slate-600">Sort</label><select id="squad-sort" value={sortKey} onChange={(event) => setSortKey(event.target.value as typeof sortKey)} className="rounded-lg border border-white/10 bg-black/30 px-2 py-1.5 text-[11px] font-bold text-slate-300"><option value="ranking">Fleet rank</option><option value="name">Name</option><option value="movement">Movement</option><option value="best3">Best 3</option></select>
               <input value={squadName} onChange={(event) => setSquadName(event.target.value)} onBlur={renameSquad}
                 onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }}
                 aria-label="Squad name" maxLength={80}
@@ -220,7 +261,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
             </div>
           ) : (
             <div className="divide-y divide-white/[0.06]">
-              {data.members.map((member) => (
+              {sortedMembers.map((member) => (
                 <article key={member.id} className="grid gap-3 p-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center">
                   <input type="checkbox" checked={selected.includes(member.sailorId)} onChange={() => toggleCompare(member.sailorId)}
                     aria-label={`Select ${member.name} for comparison`} className="h-4 w-4 accent-orange-500" />
@@ -232,7 +273,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                     </div>
                     <p className="mt-1 text-[11px] text-slate-500">{member.sailNumber} · {member.club}{member.bestThreeOfFive != null ? ` · Best 3: ${member.bestThreeOfFive}` : ""}</p>
                     {member.latestResult && <p className="mt-1 text-[11px] text-slate-400">Latest: {member.latestResult.regattaName} · #{member.latestResult.rank} of {member.latestResult.fleetSize}</p>}
-                    {member.recentMovement != null && <span className={`mt-1 inline-flex items-center gap-1 text-[10px] font-bold ${member.recentMovement > 0 ? "text-emerald-400" : member.recentMovement < 0 ? "text-rose-400" : "text-slate-500"}`}>{member.recentMovement > 0 ? <TrendingUp className="h-3 w-3" /> : member.recentMovement < 0 ? <TrendingDown className="h-3 w-3" /> : null}{member.recentMovement === 0 ? "Same finish as previous event" : `${Math.abs(member.recentMovement)} place${Math.abs(member.recentMovement) === 1 ? "" : "s"} ${member.recentMovement > 0 ? "better" : "lower"} than previous event`}</span>}
+                    {member.recentMovement != null && <span className={`mt-1 inline-flex items-center gap-1 text-[10px] font-bold ${member.recentMovement > 0 ? "text-emerald-400" : member.recentMovement < 0 ? "text-rose-400" : "text-slate-500"}`}>{member.recentMovement > 0 ? <TrendingUp className="h-3 w-3" /> : member.recentMovement < 0 ? <TrendingDown className="h-3 w-3" /> : null}{member.recentMovement === 0 ? "Series rank unchanged" : `Series rank ${member.recentMovement > 0 ? "up" : "down"} ${Math.abs(member.recentMovement)}`}</span>}
                   </button>
                   <button type="button" onClick={() => removeSailor(member.sailorId)} disabled={busyId === member.sailorId}
                     aria-label={`Remove ${member.name} from squad`} className="justify-self-end rounded-lg p-2 text-slate-600 hover:bg-rose-500/10 hover:text-rose-400 disabled:opacity-50">
@@ -244,9 +285,10 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
           )}
         </div>
 
-        <aside className="h-fit rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+        {manageOpen && <aside role="dialog" aria-modal="true" aria-label="Manage sailors" className="fixed inset-0 z-40 flex items-start justify-center overflow-y-auto bg-black/75 p-4 sm:pt-20" onMouseDown={(event) => { if (event.target === event.currentTarget) setManageOpen(false); }}><div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#0b0c12] p-5 shadow-2xl"><div className="flex items-start justify-between"><div>
           <h2 className="text-sm font-bold text-white">Add a sailor</h2>
           <p className="mt-1 text-[11px] leading-relaxed text-slate-500">Search by name, sail number, club, school, or profile handle.</p>
+          </div><button type="button" onClick={() => setManageOpen(false)} aria-label="Close manage sailors" className="rounded-lg p-2 text-slate-500 hover:bg-white/5 hover:text-white"><X className="h-4 w-4" /></button></div>
           <div className="relative mt-4">
             <Search className="absolute left-3 top-3 h-4 w-4 text-slate-600" />
             <input value={query} onChange={(event) => {
@@ -273,10 +315,10 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
             ))}
             {query.trim().length >= 2 && matches.length === 0 && <p className="py-5 text-center text-[11px] text-slate-600">No new matches yet.</p>}
           </div>
-        </aside>
+        </div></aside>}
       </section>
 
-      <section className="rounded-2xl border border-sky-500/20 bg-sky-500/[0.025] p-4 sm:p-5" aria-labelledby="following-title">
+      <section className="order-4 rounded-2xl border border-sky-500/20 bg-sky-500/[0.025] p-4 sm:p-5" aria-labelledby="following-title">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-sky-400">Watchlist</p><h2 id="following-title" className="mt-1 text-lg font-black text-white">Following</h2><p className="mt-1 text-[11px] text-slate-500">Track sailors of personal interest or keep watching their progress after they move fleets.</p></div><span className="text-[11px] font-bold text-slate-500">{data.following.length} sailor{data.following.length === 1 ? "" : "s"}</span></div>
         {data.following.length ? <div className="mt-4 grid gap-2 md:grid-cols-2">{data.following.map((member) => <article key={member.id} className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-black/20 p-3"><button type="button" onClick={() => openSailor(member.sailorId)} aria-label={`Open ${member.name} details`} className="min-w-0 flex-1 text-left"><span className="block truncate text-xs font-bold text-white">{member.name}</span><span className="mt-0.5 block truncate text-[10px] text-slate-500">{member.fleet ? `${member.fleet} #${member.ranking}` : "Not on current ranking"} · {member.club}</span></button><button type="button" onClick={() => unfollowSailor(member.sailorId)} disabled={busyId === member.sailorId} aria-label={`Stop following ${member.name}`} className="rounded-lg p-2 text-slate-600 hover:bg-rose-500/10 hover:text-rose-400 disabled:opacity-50"><Trash2 className="h-4 w-4" /></button></article>)}</div> : <p className="mt-4 rounded-xl border border-dashed border-white/10 px-4 py-7 text-center text-xs text-slate-600">Use sailor search above and choose Follow.</p>}
       </section>
@@ -292,6 +334,10 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
           <section className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.025] p-4"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Selection readiness</h3><p className="mt-2 text-sm font-bold text-white">{activeSailor.selectionReadiness.label}</p><p className="mt-1 text-xs leading-relaxed text-slate-400">{activeSailor.selectionReadiness.detail}</p></section>
 
           <section className="mt-6"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Recent regattas & race scores</h3><div className="mt-3 space-y-3">{activeSailor.recentResults.map((result) => <div key={result.resultId} className="rounded-xl border border-white/[0.08] p-4"><div className="flex justify-between gap-3"><div><Link href={`/regattas/${result.regattaSlug}`} className="text-sm font-bold text-white hover:text-orange-400">{result.regattaName}</Link><p className="mt-0.5 text-[10px] text-slate-500">{result.date}</p></div><p className="text-sm font-black text-white">#{result.rank}{result.nettScore != null ? <span className="ml-1 text-[10px] font-medium text-slate-500">· {result.nettScore} net</span> : null}</p></div>{result.races.length ? <div className="mt-3 flex flex-wrap gap-1.5">{result.races.map((race) => <span key={race.raceNumber} title={race.rawValue} className={`rounded-md border px-2 py-1 text-[10px] ${race.discarded ? "border-slate-700 text-slate-600 line-through" : "border-sky-500/20 bg-sky-500/5 text-sky-300"}`}>R{race.raceNumber}: {race.code || race.score}</span>)}</div> : <p className="mt-3 text-[10px] text-slate-600">No official race-by-race scores imported.</p>}</div>)}</div></section>
+
+          <section className="mt-6"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Coaching history</h3><div className="mt-3 space-y-2">{activeSailor.developmentRecords.length ? activeSailor.developmentRecords.map((record) => <div key={record.id} className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-3"><div className="flex items-center justify-between gap-3"><span className="rounded-full bg-white/5 px-2 py-0.5 text-[9px] font-bold uppercase text-slate-400">{record.type}</span><span className="text-[9px] text-slate-600">{record.recordDate}</span></div><p className="mt-2 text-xs font-bold text-white">{record.title}</p>{record.detail && <p className="mt-1 text-[11px] leading-relaxed text-slate-400">{record.detail}</p>}<p className="mt-1 text-[9px] font-semibold text-sky-400">{record.category || record.status}{record.targetDate ? ` · target ${record.targetDate}` : ""}</p></div>) : <p className="rounded-xl border border-dashed border-white/10 px-3 py-5 text-center text-[11px] text-slate-600">No structured coaching records yet.</p>}</div>
+            <div className="mt-3 rounded-xl border border-white/10 bg-black/20 p-3"><div className="grid grid-cols-2 gap-2"><select aria-label="Record type" value={recordType} onChange={(event) => setRecordType(event.target.value as typeof recordType)} className="rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white"><option value="observation">Observation</option><option value="goal">Development goal</option><option value="attendance">Attendance</option></select><input aria-label="Record date" type="date" value={recordDate} onChange={(event) => setRecordDate(event.target.value)} className="rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white" /></div>{recordType === "observation" && <select aria-label="Skill category" value={recordCategory} onChange={(event) => setRecordCategory(event.target.value)} className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white">{["Starts","Upwind speed","Tacking","Downwind speed","Gybing","Mark rounding","Tactics","Rules","Boat handling","Confidence"].map((category) => <option key={category}>{category}</option>)}</select>}{recordType === "attendance" && <select aria-label="Attendance status" value={recordStatus} onChange={(event) => setRecordStatus(event.target.value)} className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white"><option value="present">Present</option><option value="absent">Absent</option><option value="planned">Planned absence</option></select>}{recordType === "goal" && <input aria-label="Target date" type="date" value={targetDate} onChange={(event) => setTargetDate(event.target.value)} className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white" />}<input aria-label="Record title" value={recordTitle} onChange={(event) => setRecordTitle(event.target.value)} maxLength={160} placeholder={recordType === "attendance" ? "Session or reason" : recordType === "goal" ? "Measurable development goal" : "What did you observe?"} className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-xs text-white" /><textarea aria-label="Record detail" value={recordDetail} onChange={(event) => setRecordDetail(event.target.value)} maxLength={4000} rows={3} placeholder="Context, success measure, or follow-up" className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 p-3 text-xs text-white" /><button type="button" onClick={saveDevelopmentRecord} disabled={!recordTitle.trim() || busyId === "development"} className="mt-2 w-full rounded-lg bg-sky-600 px-3 py-2 text-xs font-bold text-white disabled:opacity-40">{busyId === "development" ? "Saving…" : "Add coaching record"}</button></div>
+          </section>
 
           <section className="mt-6"><label htmlFor="coach-note" className="text-xs font-bold uppercase tracking-wider text-slate-400">Private coach note</label><p className="mt-1 text-[10px] text-slate-600">Visible only in your coach account.</p><textarea id="coach-note" value={noteDraft} onChange={(event) => setNoteDraft(event.target.value)} maxLength={4000} rows={5} className="mt-3 w-full rounded-xl border border-white/10 bg-black/30 p-3 text-sm text-white outline-none focus:border-orange-500/50" placeholder="Focus areas, training observations, or follow-up…" /><div className="mt-2 flex items-center justify-between"><span className="text-[10px] text-slate-600">{noteDraft.length}/4000</span><button type="button" onClick={saveNote} disabled={busyId === "note"} className="rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-50">{busyId === "note" ? "Saving…" : "Save note"}</button></div></section>
         </div>

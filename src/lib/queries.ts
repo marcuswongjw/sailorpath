@@ -18,6 +18,7 @@ import {
 } from "@/db/schema";
 import {
   calculateRankings,
+  periodBounds,
   periodLabel,
   resolveSailorFleet,
   type Period,
@@ -832,7 +833,8 @@ export async function getEquipmentLogsForSailor(sailorId: string) {
  */
 export async function computeFleetRankings(
   fleet: "Gold" | "Silver",
-  period: Period
+  period: Period,
+  excludeLatestEvent = false
 ) {
   return withDb(async () => {
     const [sailorRows, regattaRows] = await Promise.all([
@@ -959,7 +961,12 @@ export async function computeFleetRankings(
       });
     }
 
-    const ranked = calculateRankings(period, s, r, res).filter(
+    const excludedRegattaId = excludeLatestEvent
+      ? latestRankingRegattaIdForFleet(r, fleet, period)
+      : null;
+    const rankingRegattas = excludedRegattaId ? r.filter((row) => row.id !== excludedRegattaId) : r;
+    const rankingResults = excludedRegattaId ? res.filter((row) => row.regattaId !== excludedRegattaId) : res;
+    const ranked = calculateRankings(period, s, rankingRegattas, rankingResults).filter(
       (x) => x.fleet === fleet
     );
     // Gold: next-half column = live Nat A/B projection (not stored stamp alone)
@@ -985,6 +992,27 @@ export const getCachedFleetRankings = unstable_cache(
   ["fleet-rankings-v6"],
   { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
+
+/** Previous published series shape: recompute the board before its latest ranking event. */
+export const getCachedPreviousFleetRankings = unstable_cache(
+  async (fleet: "Gold" | "Silver", year: number, half: Period["half"]): Promise<RankedSailor[]> =>
+    computeFleetRankings(fleet, { year, half }, true),
+  ["previous-fleet-rankings-v1"],
+  { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
+);
+
+export function latestRankingRegattaIdForFleet(
+  rows: RegattaRecord[], fleet: "Gold" | "Silver", period: Period
+): string | null {
+  const { start, end } = periodBounds(period);
+  const candidates = rows.filter((row) => {
+    const date = String(row.date || "").slice(0, 10);
+    const division = String(row.division || "Gold").toLowerCase();
+    return row.countsForRanking !== false && date >= start && date <= end && division.includes(fleet.toLowerCase());
+  });
+  candidates.sort((a, b) => String(b.date).localeCompare(String(a.date)) || b.id.localeCompare(a.id));
+  return candidates[0]?.id || null;
+}
 
 /**
   * Shared 120s cache for public regattas list — speeds up directory pages.
