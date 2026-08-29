@@ -21,6 +21,14 @@ const initialData: CoachSquadDashboard = {
       ranking: 1,
       bestThreeOfFive: 4,
       squadStatus: "Nat A",
+      recentMovement: 2,
+      scoringEvents: [
+        { regattaId: "r1", regattaName: "SAFYC", date: "2026-07-01", score: 1, selected: true, isDns: false, isOverseas: false },
+        { regattaId: "r2", regattaName: "Pesta Sukan", date: "2026-08-01", score: 3, selected: true, isDns: false, isOverseas: false },
+      ],
+      recentResults: [{ resultId: "result-1", regattaName: "Pesta Sukan", regattaSlug: "pesta-sukan", date: "2026-08-01", rank: 1, nettScore: 6, fleetSize: 77, races: [{ raceNumber: 1, score: 1, code: null, discarded: false, rawValue: "1" }] }],
+      coachNote: "Work on starts",
+      selectionReadiness: { tone: "ready", label: "Ranking record established", detail: "Gold Fleet criteria apply." },
       latestResult: {
         regattaName: "Pesta Sukan",
         regattaSlug: "pesta-sukan",
@@ -41,6 +49,11 @@ const initialData: CoachSquadDashboard = {
       ranking: 3,
       bestThreeOfFive: 8,
       squadStatus: "Nat A",
+      recentMovement: -1,
+      scoringEvents: [],
+      recentResults: [],
+      coachNote: "",
+      selectionReadiness: { tone: "watch", label: "Building selection record", detail: "More events required." },
       latestResult: null,
     },
   ],
@@ -96,5 +109,26 @@ describe("CoachDashboard", () => {
     await user.click(screen.getByRole("button", { name: /Kimberly Tan/i }));
     await waitFor(() => expect(screen.getByRole("link", { name: "Kimberly Tan" })).toBeInTheDocument());
     expect(screen.getByRole("status")).toHaveTextContent("Sailor added");
+  });
+
+  it("opens the sailor detail drawer with counting scores and official races", async () => {
+    const user = userEvent.setup();
+    render(<CoachDashboard initialData={initialData} />);
+    await user.click(screen.getByRole("button", { name: "Open Alyssa Wong details" }));
+    expect(screen.getByRole("dialog", { name: /Alyssa Wong coach details/ })).toBeInTheDocument();
+    expect(screen.getAllByText("Counting")).toHaveLength(2);
+    expect(screen.getByText("R1: 1")).toBeInTheDocument();
+    expect(screen.getByDisplayValue("Work on starts")).toBeInTheDocument();
+  });
+
+  it("saves a private coach note", async () => {
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(new Response(JSON.stringify({ note: "Practice mark rounding" }), { status: 200 }));
+    const user = userEvent.setup();
+    render(<CoachDashboard initialData={initialData} />);
+    await user.click(screen.getByRole("button", { name: "Open Alyssa Wong details" }));
+    const note = screen.getByLabelText("Private coach note");
+    await user.clear(note); await user.type(note, "Practice mark rounding");
+    await user.click(screen.getByRole("button", { name: "Save note" }));
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Private coach note saved"));
   });
 });

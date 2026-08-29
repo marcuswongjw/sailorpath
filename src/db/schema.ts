@@ -212,6 +212,30 @@ export const coachSquadMembers = pgTable(
   })
 );
 
+/** Private notes visible only to the coach who wrote them. */
+export const coachSailorNotes = pgTable(
+  "coach_sailor_notes",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    coachId: uuid("coach_id")
+      .references(() => profiles.id, { onDelete: "cascade" })
+      .notNull(),
+    sailorId: uuid("sailor_id")
+      .references(() => sailors.id, { onDelete: "cascade" })
+      .notNull(),
+    note: text("note").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    coachSailorUnq: unique("coach_sailor_notes_coach_sailor_unq").on(
+      table.coachId,
+      table.sailorId
+    ),
+    sailorIdIdx: index("coach_sailor_notes_sailor_id_idx").on(table.sailorId),
+  })
+);
+
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),

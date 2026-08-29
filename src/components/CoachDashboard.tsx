@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, BarChart3, GitCompareArrows, Plus, Search, Trash2, Users } from "lucide-react";
+import { ArrowRight, BarChart3, ChevronRight, GitCompareArrows, Plus, Search, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
 import type { CoachSquadDashboard } from "@/lib/coachDashboard";
 
 type SearchMatch = { id: string; name: string; handle: string; sailNumber: string; club: string };
@@ -21,6 +21,8 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   const [busyId, setBusyId] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [squadName, setSquadName] = useState(initialData.squad?.name || "My squad");
+  const [activeSailorId, setActiveSailorId] = useState<string | null>(null);
+  const [noteDraft, setNoteDraft] = useState("");
 
   useEffect(() => {
     if (query.trim().length < 2) {
@@ -49,6 +51,14 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     return scores.length ? (scores.reduce((sum, score) => sum + score, 0) / scores.length).toFixed(1) : "—";
   }, [data.members]);
   const selectedMembers = selected.map((id) => data.members.find((member) => member.sailorId === id));
+  const activeSailor = data.members.find((member) => member.sailorId === activeSailorId) || null;
+  const actions = useMemo(() => data.members.flatMap((member) => {
+    const items: Array<{ sailorId: string; sailor: string; text: string; priority: number }> = [];
+    if (member.scoringEvents.some((event) => event.isDns)) items.push({ sailorId: member.sailorId, sailor: member.name, text: "DNS appears in the current ranking series", priority: 1 });
+    if (member.scoringEvents.filter((event) => event.selected && !event.isDns).length < 3) items.push({ sailorId: member.sailorId, sailor: member.name, text: "Fewer than 3 completed counting events", priority: 2 });
+    if (member.recentMovement != null && member.recentMovement < 0) items.push({ sailorId: member.sailorId, sailor: member.name, text: `Latest finish moved down ${Math.abs(member.recentMovement)} place${Math.abs(member.recentMovement) === 1 ? "" : "s"}`, priority: 3 });
+    return items;
+  }).sort((a, b) => a.priority - b.priority).slice(0, 6), [data.members]);
   const compareFleet = selectedMembers[0]?.fleet;
   const compareHref = selected.length === 2 && compareFleet
     ? `/sg/optimist/compare?fleet=${compareFleet}&year=${data.period.year}&half=${encodeURIComponent(data.period.half)}&a=${selected[0]}&b=${selected[1]}`
@@ -104,6 +114,23 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     });
   }
 
+  function openSailor(sailorId: string) {
+    const sailor = data.members.find((member) => member.sailorId === sailorId);
+    setActiveSailorId(sailorId); setNoteDraft(sailor?.coachNote || "");
+  }
+
+  async function saveNote() {
+    if (!activeSailor) return;
+    setBusyId("note"); setMessage(null);
+    try {
+      const response = await fetch("/api/coach/notes", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ sailorId: activeSailor.sailorId, note: noteDraft }) });
+      const body = await readJson<{ note: string }>(response);
+      setData((current) => ({ ...current, members: current.members.map((member) => member.sailorId === activeSailor.sailorId ? { ...member, coachNote: body.note } : member) }));
+      setMessage("Private coach note saved.");
+    } catch (error) { setMessage(error instanceof Error ? error.message : "Could not save note"); }
+    finally { setBusyId(null); }
+  }
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:py-12 space-y-6">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -130,6 +157,14 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
             <p className="mt-0.5 text-[11px] font-semibold text-slate-500">{String(label)}</p>
           </div>
         ))}
+      </section>
+
+      <section className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-4" aria-labelledby="action-centre-title">
+        <div className="flex items-center justify-between gap-4">
+          <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-amber-400">Today</p><h2 id="action-centre-title" className="mt-1 text-base font-black text-white">Squad action centre</h2></div>
+          <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-300">{actions.length} to review</span>
+        </div>
+        {actions.length ? <div className="mt-3 grid gap-2 md:grid-cols-2">{actions.map((action) => <button key={`${action.sailorId}-${action.text}`} type="button" onClick={() => openSailor(action.sailorId)} className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-black/20 p-3 text-left hover:border-amber-500/30"><span className="min-w-0 flex-1"><span className="block truncate text-xs font-bold text-white">{action.sailor}</span><span className="block text-[11px] text-slate-400">{action.text}</span></span><ChevronRight className="h-4 w-4 text-slate-600" /></button>)}</div> : <p className="mt-3 text-xs text-slate-400">No ranking or attendance flags need attention.</p>}
       </section>
 
       <section className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_21rem]">
@@ -166,7 +201,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                 <article key={member.id} className="grid gap-3 p-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center">
                   <input type="checkbox" checked={selected.includes(member.sailorId)} onChange={() => toggleCompare(member.sailorId)}
                     aria-label={`Select ${member.name} for comparison`} className="h-4 w-4 accent-orange-500" />
-                  <div className="min-w-0">
+                  <button type="button" onClick={() => openSailor(member.sailorId)} className="min-w-0 text-left" aria-label={`Open ${member.name} details`}>
                     <div className="flex flex-wrap items-center gap-2">
                       <Link href={`/${member.handle}`} className="truncate text-sm font-bold text-white hover:text-orange-400">{member.name}</Link>
                       {member.fleet && <span className="rounded-full border border-orange-500/25 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold text-orange-300">{member.fleet} #{member.ranking}</span>}
@@ -174,7 +209,8 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                     </div>
                     <p className="mt-1 text-[11px] text-slate-500">{member.sailNumber} · {member.club}{member.bestThreeOfFive != null ? ` · Best 3: ${member.bestThreeOfFive}` : ""}</p>
                     {member.latestResult && <p className="mt-1 text-[11px] text-slate-400">Latest: {member.latestResult.regattaName} · #{member.latestResult.rank} of {member.latestResult.fleetSize}</p>}
-                  </div>
+                    {member.recentMovement != null && <span className={`mt-1 inline-flex items-center gap-1 text-[10px] font-bold ${member.recentMovement > 0 ? "text-emerald-400" : member.recentMovement < 0 ? "text-rose-400" : "text-slate-500"}`}>{member.recentMovement > 0 ? <TrendingUp className="h-3 w-3" /> : member.recentMovement < 0 ? <TrendingDown className="h-3 w-3" /> : null}{member.recentMovement === 0 ? "Same finish as previous event" : `${Math.abs(member.recentMovement)} place${Math.abs(member.recentMovement) === 1 ? "" : "s"} ${member.recentMovement > 0 ? "better" : "lower"} than previous event`}</span>}
+                  </button>
                   <button type="button" onClick={() => removeSailor(member.sailorId)} disabled={busyId === member.sailorId}
                     aria-label={`Remove ${member.name} from squad`} className="justify-self-end rounded-lg p-2 text-slate-600 hover:bg-rose-500/10 hover:text-rose-400 disabled:opacity-50">
                     <Trash2 className="h-4 w-4" />
@@ -214,6 +250,20 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
       </section>
 
       {message && <p role="status" className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-slate-300">{message}</p>}
+
+      {activeSailor && <div className="fixed inset-0 z-50 flex justify-end bg-black/70" role="dialog" aria-modal="true" aria-label={`${activeSailor.name} coach details`} onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveSailorId(null); }}>
+        <div className="h-full w-full max-w-xl overflow-y-auto border-l border-white/10 bg-[#0b0c12] p-5 sm:p-7">
+          <div className="flex items-start justify-between gap-4"><div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-400">Coach view · private</p><h2 className="mt-1 text-2xl font-black text-white">{activeSailor.name}</h2><p className="mt-1 text-xs text-slate-500">{activeSailor.fleet || "Unranked"}{activeSailor.ranking ? ` #${activeSailor.ranking}` : ""} · {activeSailor.sailNumber} · {activeSailor.club}</p></div><button type="button" onClick={() => setActiveSailorId(null)} aria-label="Close sailor details" className="rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white"><X className="h-5 w-5" /></button></div>
+
+          <section className="mt-6"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Best 3 of 5</h3><div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">{activeSailor.scoringEvents.map((event) => <div key={event.regattaId} className={`rounded-xl border p-3 ${event.selected ? "border-orange-500/50 bg-orange-500/10" : "border-white/[0.07] bg-white/[0.02]"}`}><p className="truncate text-[10px] font-bold text-slate-400">{event.regattaName}</p><p className={`mt-1 text-xl font-black ${event.selected ? "text-orange-300" : "text-white"}`}>{event.score}{event.isDns ? "*" : event.isOverseas ? "†" : ""}</p>{event.selected && <p className="mt-1 text-[9px] font-bold uppercase text-orange-400">Counting</p>}</div>)}</div></section>
+
+          <section className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.025] p-4"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Selection readiness</h3><p className="mt-2 text-sm font-bold text-white">{activeSailor.selectionReadiness.label}</p><p className="mt-1 text-xs leading-relaxed text-slate-400">{activeSailor.selectionReadiness.detail}</p></section>
+
+          <section className="mt-6"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Recent regattas & race scores</h3><div className="mt-3 space-y-3">{activeSailor.recentResults.map((result) => <div key={result.resultId} className="rounded-xl border border-white/[0.08] p-4"><div className="flex justify-between gap-3"><div><Link href={`/regattas/${result.regattaSlug}`} className="text-sm font-bold text-white hover:text-orange-400">{result.regattaName}</Link><p className="mt-0.5 text-[10px] text-slate-500">{result.date}</p></div><p className="text-sm font-black text-white">#{result.rank}{result.nettScore != null ? <span className="ml-1 text-[10px] font-medium text-slate-500">· {result.nettScore} net</span> : null}</p></div>{result.races.length ? <div className="mt-3 flex flex-wrap gap-1.5">{result.races.map((race) => <span key={race.raceNumber} title={race.rawValue} className={`rounded-md border px-2 py-1 text-[10px] ${race.discarded ? "border-slate-700 text-slate-600 line-through" : "border-sky-500/20 bg-sky-500/5 text-sky-300"}`}>R{race.raceNumber}: {race.code || race.score}</span>)}</div> : <p className="mt-3 text-[10px] text-slate-600">No official race-by-race scores imported.</p>}</div>)}</div></section>
+
+          <section className="mt-6"><label htmlFor="coach-note" className="text-xs font-bold uppercase tracking-wider text-slate-400">Private coach note</label><p className="mt-1 text-[10px] text-slate-600">Visible only in your coach account.</p><textarea id="coach-note" value={noteDraft} onChange={(event) => setNoteDraft(event.target.value)} maxLength={4000} rows={5} className="mt-3 w-full rounded-xl border border-white/10 bg-black/30 p-3 text-sm text-white outline-none focus:border-orange-500/50" placeholder="Focus areas, training observations, or follow-up…" /><div className="mt-2 flex items-center justify-between"><span className="text-[10px] text-slate-600">{noteDraft.length}/4000</span><button type="button" onClick={saveNote} disabled={busyId === "note"} className="rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-50">{busyId === "note" ? "Saving…" : "Save note"}</button></div></section>
+        </div>
+      </div>}
     </div>
   );
 }
