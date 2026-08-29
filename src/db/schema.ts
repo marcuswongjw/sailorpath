@@ -212,6 +212,28 @@ export const coachSquadMembers = pgTable(
   })
 );
 
+/** Coach-owned watchlist, separate from sailors actively managed in a squad. */
+export const coachFollowedSailors = pgTable(
+  "coach_followed_sailors",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    coachId: uuid("coach_id")
+      .references(() => profiles.id, { onDelete: "cascade" })
+      .notNull(),
+    sailorId: uuid("sailor_id")
+      .references(() => sailors.id, { onDelete: "cascade" })
+      .notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    coachSailorUnq: unique("coach_followed_sailors_coach_sailor_unq").on(
+      table.coachId,
+      table.sailorId
+    ),
+    sailorIdIdx: index("coach_followed_sailors_sailor_id_idx").on(table.sailorId),
+  })
+);
+
 /** Private notes visible only to the coach who wrote them. */
 export const coachSailorNotes = pgTable(
   "coach_sailor_notes",

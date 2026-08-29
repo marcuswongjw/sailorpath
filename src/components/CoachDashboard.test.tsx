@@ -8,6 +8,7 @@ import type { CoachSquadDashboard } from "@/lib/coachDashboard";
 const initialData: CoachSquadDashboard = {
   squad: { id: "squad-1", name: "National youth" },
   period: { year: 2026, half: "Jul-Dec" },
+  following: [],
   members: [
     {
       id: "member-1",
@@ -105,8 +106,8 @@ describe("CoachDashboard", () => {
     const user = userEvent.setup();
     render(<CoachDashboard initialData={initialData} />);
     await user.type(screen.getByLabelText("Search sailors to add"), "Kim");
-    await waitFor(() => expect(screen.getByRole("button", { name: /Kimberly Tan/i })).toBeInTheDocument());
-    await user.click(screen.getByRole("button", { name: /Kimberly Tan/i }));
+    await waitFor(() => expect(screen.getByRole("button", { name: /^Squad$/i })).toBeInTheDocument());
+    await user.click(screen.getByRole("button", { name: /^Squad$/i }));
     await waitFor(() => expect(screen.getByRole("link", { name: "Kimberly Tan" })).toBeInTheDocument());
     expect(screen.getByRole("status")).toHaveTextContent("Sailor added");
   });
@@ -130,5 +131,19 @@ describe("CoachDashboard", () => {
     await user.clear(note); await user.type(note, "Practice mark rounding");
     await user.click(screen.getByRole("button", { name: "Save note" }));
     await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Private coach note saved"));
+  });
+
+  it("adds a search result to Following without adding it to the squad", async () => {
+    const followed = { ...initialData, following: [{ ...initialData.members[1], id: "follow-1", sailorId: "sailor-3", name: "Kimberly Tan", handle: "kimberly-tan" }] } satisfies CoachSquadDashboard;
+    vi.spyOn(globalThis, "fetch")
+      .mockResolvedValueOnce(new Response(JSON.stringify({ sailors: [{ id: "sailor-3", name: "Kimberly Tan", handle: "kimberly-tan", sailNumber: "SGP 115", club: "SAF Yacht Club" }] }), { status: 200 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify(followed), { status: 201 }));
+    const user = userEvent.setup();
+    render(<CoachDashboard initialData={initialData} />);
+    await user.type(screen.getByLabelText("Search sailors to add"), "Kim");
+    await waitFor(() => expect(screen.getByRole("button", { name: "Follow" })).toBeInTheDocument());
+    await user.click(screen.getByRole("button", { name: "Follow" }));
+    await waitFor(() => expect(screen.getByText("1 sailor")).toBeInTheDocument());
+    expect(screen.getByRole("status")).toHaveTextContent("added to Following");
   });
 });

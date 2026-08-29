@@ -33,7 +33,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
       try {
         const response = await fetch(`/api/coach/sailors?q=${encodeURIComponent(query.trim())}`, { signal: controller.signal });
         const body = await readJson<{ sailors: SearchMatch[] }>(response);
-        const memberIds = new Set(data.members.map((member) => member.sailorId));
+        const memberIds = new Set([...data.members, ...data.following].map((member) => member.sailorId));
         setMatches(body.sailors.filter((sailor) => !memberIds.has(sailor.id)));
       } catch (error) {
         if ((error as Error).name !== "AbortError") setMessage(error instanceof Error ? error.message : "Search failed");
@@ -43,7 +43,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [query, data.members]);
+  }, [query, data.members, data.following]);
 
   const rankedCount = data.members.filter((member) => member.ranking != null).length;
   const averageBest = useMemo(() => {
@@ -51,7 +51,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     return scores.length ? (scores.reduce((sum, score) => sum + score, 0) / scores.length).toFixed(1) : "—";
   }, [data.members]);
   const selectedMembers = selected.map((id) => data.members.find((member) => member.sailorId === id));
-  const activeSailor = data.members.find((member) => member.sailorId === activeSailorId) || null;
+  const activeSailor = [...data.members, ...data.following].find((member) => member.sailorId === activeSailorId) || null;
   const actions = useMemo(() => data.members.flatMap((member) => {
     const items: Array<{ sailorId: string; sailor: string; text: string; priority: number }> = [];
     if (member.scoringEvents.some((event) => event.isDns)) items.push({ sailorId: member.sailorId, sailor: member.name, text: "DNS appears in the current ranking series", priority: 1 });
@@ -94,6 +94,29 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     finally { setBusyId(null); }
   }
 
+  async function mutateFollowing(method: "POST" | "DELETE", sailorId: string) {
+    const queryString = method === "DELETE" ? `?sailorId=${encodeURIComponent(sailorId)}` : "";
+    const response = await fetch(`/api/coach/following${queryString}`, {
+      method,
+      ...(method === "POST" ? { headers: { "content-type": "application/json" }, body: JSON.stringify({ sailorId }) } : {}),
+    });
+    setData(await readJson<CoachSquadDashboard>(response));
+  }
+
+  async function followSailor(sailorId: string) {
+    setBusyId(sailorId); setMessage(null);
+    try { await mutateFollowing("POST", sailorId); setQuery(""); setMatches([]); setMessage("Sailor added to Following."); }
+    catch (error) { setMessage(error instanceof Error ? error.message : "Could not follow sailor"); }
+    finally { setBusyId(null); }
+  }
+
+  async function unfollowSailor(sailorId: string) {
+    setBusyId(sailorId); setMessage(null);
+    try { await mutateFollowing("DELETE", sailorId); setMessage("Sailor removed from Following."); }
+    catch (error) { setMessage(error instanceof Error ? error.message : "Could not remove sailor"); }
+    finally { setBusyId(null); }
+  }
+
   async function renameSquad() {
     if (!squadName.trim() || squadName.trim() === data.squad?.name) return;
     setBusyId("rename"); setMessage(null);
@@ -115,7 +138,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   }
 
   function openSailor(sailorId: string) {
-    const sailor = data.members.find((member) => member.sailorId === sailorId);
+    const sailor = [...data.members, ...data.following].find((member) => member.sailorId === sailorId);
     setActiveSailorId(sailorId); setNoteDraft(sailor?.coachNote || "");
   }
 
@@ -235,18 +258,27 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
           </div>
           <div className="mt-3 space-y-1.5" aria-live="polite">
             {matches.map((sailor) => (
-              <button key={sailor.id} type="button" onClick={() => addSailor(sailor.id)} disabled={busyId === sailor.id}
-                className="flex w-full items-center gap-3 rounded-xl border border-white/[0.06] bg-black/20 p-3 text-left hover:border-orange-500/30 disabled:opacity-50">
+              <div key={sailor.id} className="rounded-xl border border-white/[0.06] bg-black/20 p-3">
+                <div className="flex items-center gap-3">
                 <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/10 text-[11px] font-black text-orange-300">
                   {sailor.name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("")}
                 </span>
                 <span className="min-w-0 flex-1"><span className="block truncate text-xs font-bold text-white">{sailor.name}</span><span className="block truncate text-[10px] text-slate-500">{sailor.sailNumber} · {sailor.club}</span></span>
-                <Plus className="h-4 w-4 text-orange-400" />
-              </button>
+                </div>
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  <button type="button" onClick={() => addSailor(sailor.id)} disabled={busyId === sailor.id} className="rounded-lg bg-orange-600 px-2 py-1.5 text-[10px] font-bold text-white disabled:opacity-50"><Plus className="mr-1 inline h-3 w-3" />Squad</button>
+                  <button type="button" onClick={() => followSailor(sailor.id)} disabled={busyId === sailor.id} className="rounded-lg border border-white/10 px-2 py-1.5 text-[10px] font-bold text-slate-300 disabled:opacity-50">Follow</button>
+                </div>
+              </div>
             ))}
             {query.trim().length >= 2 && matches.length === 0 && <p className="py-5 text-center text-[11px] text-slate-600">No new matches yet.</p>}
           </div>
         </aside>
+      </section>
+
+      <section className="rounded-2xl border border-sky-500/20 bg-sky-500/[0.025] p-4 sm:p-5" aria-labelledby="following-title">
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-sky-400">Watchlist</p><h2 id="following-title" className="mt-1 text-lg font-black text-white">Following</h2><p className="mt-1 text-[11px] text-slate-500">Track sailors of personal interest or keep watching their progress after they move fleets.</p></div><span className="text-[11px] font-bold text-slate-500">{data.following.length} sailor{data.following.length === 1 ? "" : "s"}</span></div>
+        {data.following.length ? <div className="mt-4 grid gap-2 md:grid-cols-2">{data.following.map((member) => <article key={member.id} className="flex items-center gap-3 rounded-xl border border-white/[0.07] bg-black/20 p-3"><button type="button" onClick={() => openSailor(member.sailorId)} aria-label={`Open ${member.name} details`} className="min-w-0 flex-1 text-left"><span className="block truncate text-xs font-bold text-white">{member.name}</span><span className="mt-0.5 block truncate text-[10px] text-slate-500">{member.fleet ? `${member.fleet} #${member.ranking}` : "Not on current ranking"} · {member.club}</span></button><button type="button" onClick={() => unfollowSailor(member.sailorId)} disabled={busyId === member.sailorId} aria-label={`Stop following ${member.name}`} className="rounded-lg p-2 text-slate-600 hover:bg-rose-500/10 hover:text-rose-400 disabled:opacity-50"><Trash2 className="h-4 w-4" /></button></article>)}</div> : <p className="mt-4 rounded-xl border border-dashed border-white/10 px-4 py-7 text-center text-xs text-slate-600">Use sailor search above and choose Follow.</p>}
       </section>
 
       {message && <p role="status" className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-slate-300">{message}</p>}

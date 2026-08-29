@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { coachSquadMembers, coachSquads, sailors } from "@/db/schema";
+import { coachFollowedSailors, coachSquadMembers, coachSquads, sailors } from "@/db/schema";
 import { jsonError, requireCoach } from "@/lib/auth";
 import {
   ensureCoachSquad,
@@ -40,6 +40,10 @@ export async function POST(request: Request) {
       .insert(coachSquadMembers)
       .values({ squadId: squad.id, sailorId })
       .onConflictDoNothing();
+    await db.delete(coachFollowedSailors).where(and(
+      eq(coachFollowedSailors.coachId, auth.userId),
+      eq(coachFollowedSailors.sailorId, sailorId)
+    ));
     return NextResponse.json(await getCoachSquadDashboard(auth.userId), { status: 201 });
   } catch (error) {
     return jsonError(error);

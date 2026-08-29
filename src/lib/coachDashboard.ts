@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import {
+  coachFollowedSailors,
   coachSquadMembers,
   coachSquads,
   coachSailorNotes,
@@ -48,6 +49,7 @@ export type CoachSquadMember = {
 export type CoachSquadDashboard = {
   squad: { id: string; name: string } | null;
   members: CoachSquadMember[];
+  following: CoachSquadMember[];
   period: { year: number; half: "Jan-Jun" | "Jul-Dec" };
 };
 
@@ -62,9 +64,9 @@ export async function getCoachSquadDashboard(
     .orderBy(asc(coachSquads.createdAt))
     .limit(1);
 
-  if (!squad) return { squad: null, members: [], period };
+  if (!squad) return { squad: null, members: [], following: [], period };
 
-  const rows = await db
+  const [rows, followedRows] = await Promise.all([db
     .select({
       memberId: coachSquadMembers.id,
       sailorId: sailors.id,
@@ -77,11 +79,25 @@ export async function getCoachSquadDashboard(
     .from(coachSquadMembers)
     .innerJoin(sailors, eq(coachSquadMembers.sailorId, sailors.id))
     .where(eq(coachSquadMembers.squadId, squad.id))
-    .orderBy(asc(sailors.name));
+    .orderBy(asc(sailors.name)),
+  db.select({
+      memberId: coachFollowedSailors.id,
+      sailorId: sailors.id,
+      name: sailors.name,
+      handle: sailors.handle,
+      sailNumber: sailors.sailNumber,
+      club: sailors.club,
+      avatarUrl: sailors.avatarUrl,
+    })
+    .from(coachFollowedSailors)
+    .innerJoin(sailors, eq(coachFollowedSailors.sailorId, sailors.id))
+    .where(eq(coachFollowedSailors.coachId, coachId))
+    .orderBy(asc(sailors.name))]);
 
-  if (!rows.length) return { squad, members: [], period };
+  if (!rows.length && !followedRows.length) return { squad, members: [], following: [], period };
 
-  const sailorIds = rows.map((row) => row.sailorId);
+  const allRows = [...rows, ...followedRows];
+  const sailorIds = [...new Set(allRows.map((row) => row.sailorId))];
   const [gold, silver, resultRows, noteRows] = await Promise.all([
     getCachedFleetRankings("Gold", period.year, period.half),
     getCachedFleetRankings("Silver", period.year, period.half),
@@ -172,10 +188,7 @@ export async function getCoachSquadDashboard(
     resultsBySailor.set(result.sailorId, list);
   }
 
-  return {
-    squad,
-    period,
-    members: rows.map((row) => {
+  const buildMember = (row: (typeof allRows)[number]): CoachSquadMember => {
       const standing = standingBySailor.get(row.sailorId);
       const latest = latestBySailor.get(row.sailorId);
       return {
@@ -222,7 +235,13 @@ export async function getCoachSquadDashboard(
             }
           : null,
       };
-    }),
+    };
+
+  return {
+    squad,
+    period,
+    members: rows.map(buildMember),
+    following: followedRows.map(buildMember),
   };
 }
 
