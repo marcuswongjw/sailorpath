@@ -136,7 +136,19 @@ export function AdminRegattaImport({
     try {
       const { readRegattaPdf } = await import("@/lib/pdf/readRegattaPdf");
       setImportProgress(30);
-      const parsed = await readRegattaPdf(file);
+      const parsed = await readRegattaPdf(file, (progress) => {
+        if (progress.phase === "rendering") {
+          setImportProgress(
+            10 + Math.round(((progress.pageNumber - 1) / progress.pageCount) * 20)
+          );
+          return;
+        }
+        setImportStatus(
+          `This PDF contains images rather than selectable text. Running OCR on page ${progress.pageNumber} of ${progress.pageCount}…`
+        );
+        const completedPages = progress.pageNumber - 1 + progress.progress;
+        setImportProgress(30 + Math.round((completedPages / progress.pageCount) * 50));
+      });
       if (!parsed.rows.length) {
         throw new Error(
           "No result rows were found. This PDF must use a Sailwave-style results table with Rank, Name, race, Total, and Nett columns."
@@ -144,6 +156,9 @@ export function AdminRegattaImport({
       }
       setImportProgress(85);
       const title = parseRegattaTitle(file.name);
+      const unnamedNote = parsed.unnamedEntries
+        ? ` ${parsed.unnamedEntries} published entr${parsed.unnamedEntries === 1 ? "y has" : "ies have"} no sailor name and will count toward fleet size but will not create a profile.`
+        : "";
       const nextMeta = {
         ...importMeta,
         name: title.name || importMeta.name || title.stem,
@@ -159,7 +174,7 @@ export function AdminRegattaImport({
       if (!title.date) {
         setImportProgress(100);
         setImportStatus(
-          `Extracted ${parsed.rows.length} competitors and ${parsed.raceCount} races. Add the event date below, then select Import.`
+          `${parsed.usedOcr ? "OCR extracted" : "Extracted"} ${parsed.rows.length} named competitors and ${parsed.raceCount} races.${unnamedNote} Add the event date below, then select Import.`
         );
         toast.info(
           "Results were extracted, but the filename has no valid date. Add the event date before importing."
@@ -167,10 +182,20 @@ export function AdminRegattaImport({
         return;
       }
       const likelyDnsCount = parsed.rows.filter((row) => row.isDns).length;
+      if (parsed.usedOcr) {
+        setImportProgress(100);
+        setImportStatus(
+          `OCR extracted ${parsed.rows.length} named competitors and ${parsed.raceCount} races.${unnamedNote} Review names, sail numbers, race scores, and DNS suggestions below, then select Import.`
+        );
+        toast.info(
+          "OCR extraction is ready for review. Confirm the names and scores before importing."
+        );
+        return;
+      }
       if (likelyDnsCount > 0) {
         setImportProgress(100);
         setImportStatus(
-          `Extracted ${parsed.rows.length} competitors and ${parsed.raceCount} races. Review ${likelyDnsCount} likely DNS row${likelyDnsCount === 1 ? "" : "s"} and the ranking scores below, then select Import.`
+          `${parsed.usedOcr ? "OCR extracted" : "Extracted"} ${parsed.rows.length} named competitors and ${parsed.raceCount} races.${unnamedNote} Review ${likelyDnsCount} likely DNS row${likelyDnsCount === 1 ? "" : "s"} and the ranking scores below, then select Import.`
         );
         toast.info(
           "Likely non-starters were detected. Confirm or edit their DNS status and ranking score before importing."
@@ -178,7 +203,7 @@ export function AdminRegattaImport({
         return;
       }
       setImportStatus(
-        `Extracted ${parsed.rows.length} competitors and ${parsed.raceCount} races. Uploading directly to SailorPath…`
+        `${parsed.usedOcr ? "OCR extracted" : "Extracted"} ${parsed.rows.length} named competitors and ${parsed.raceCount} races.${unnamedNote} Uploading directly to SailorPath…`
       );
       await handleImportToDb(parsed.rows, nextMeta);
     } catch (error) {
@@ -310,7 +335,7 @@ export function AdminRegattaImport({
 
   const updateImportRow = (
     index: number,
-    patch: Partial<Pick<RegattaImportRow, "rank" | "isDns">>
+    patch: Partial<Pick<RegattaImportRow, "name" | "rank" | "isDns">>
   ) => {
     setFullImportRows((rows) =>
       rows.map((row, rowIndex) =>
@@ -959,7 +984,18 @@ export function AdminRegattaImport({
                         />
                       </td>
                       <td className="px-3 py-2 whitespace-nowrap">{row.sailNumber || "—"}</td>
-                      <td className="px-3 py-2 whitespace-nowrap font-medium">{row.name}</td>
+                      <td className="px-3 py-2 whitespace-nowrap font-medium">
+                        <input
+                          type="text"
+                          value={row.name}
+                          disabled={importBusy}
+                          onChange={(event) => {
+                            updateImportRow(index, { name: event.target.value });
+                          }}
+                          aria-label={`Sailor name for row ${index + 1}`}
+                          className="min-w-44 rounded-md border border-white/10 bg-slate-950 px-2 py-1 text-white disabled:opacity-50"
+                        />
+                      </td>
                       {Array.from(
                         { length: Number(importMeta.raceCount) || 0 },
                         (_, raceIndex) => {

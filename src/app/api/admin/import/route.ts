@@ -724,6 +724,20 @@ export async function POST(req: Request) {
     // Rebuild when we create guests mid-import (see below)
     let nameIndex = buildSailorNameIndex(sailorList, aliasList);
     const beforeImportIndex = buildSailorNameIndex(dbBeforeImport);
+    const isIlcaImport = ["ilca 4", "ilca4", "laser 4.7", "laser4.7"].includes(
+      boat.trim().toLowerCase()
+    );
+    const sailorsByClassSailNumber = new Map<string, typeof sailorList>();
+    for (const sailor of sailorList) {
+      const sailNumber = normalizeSailNumber(
+        isIlcaImport ? sailor.sailNumberIlca4 : sailor.sailNumber
+      );
+      if (!sailNumber) continue;
+      sailorsByClassSailNumber.set(sailNumber, [
+        ...(sailorsByClassSailNumber.get(sailNumber) || []),
+        sailor,
+      ]);
+    }
 
     // Within-file similar names (before create — pure sheet check)
     possibleDuplicates.push(
@@ -733,9 +747,19 @@ export async function POST(req: Request) {
     for (const row of cleanRows) {
       try {
         const hit = findSailorByName(row.name, nameIndex);
-        let sailorId: string | null = hit?.sailor.id ?? null;
+        const sailMatches = row.sailNumber
+          ? sailorsByClassSailNumber.get(row.sailNumber) || []
+          : [];
+        const matchedBySailNumber = sailMatches.length === 1;
+        let sailorId: string | null = matchedBySailNumber
+          ? sailMatches[0].id
+          : hit?.sailor.id ?? null;
 
-        if (hit) {
+        if (matchedBySailNumber) {
+          matchHow["sail-number"] = (matchHow["sail-number"] || 0) + 1;
+        }
+
+        if (hit && !matchedBySailNumber) {
           matchHow[hit.how] = (matchHow[hit.how] || 0) + 1;
           // Soft fuzzy match used — surface for admin review
           if (hit.how.startsWith("fuzzy")) {
@@ -1146,7 +1170,7 @@ export async function POST(req: Request) {
         }
         matched++;
 
-        if (hit && hit.how !== "exact") {
+        if (!matchedBySailNumber && hit && hit.how !== "exact") {
           pendingAliases.push({ sailorId, aliasName: row.name });
         }
       } catch (rowErr) {

@@ -3,7 +3,17 @@ import { parseSailwaveResults, type PdfTextPage } from "./parseSailwaveResults";
 export const MAX_PDF_BYTES = 15 * 1024 * 1024;
 export const MAX_PDF_PAGES = 20;
 
-export async function readRegattaPdf(file: File) {
+type PdfReadProgress = {
+  phase: "rendering" | "ocr";
+  pageNumber: number;
+  pageCount: number;
+  progress: number;
+};
+
+export async function readRegattaPdf(
+  file: File,
+  onProgress?: (progress: PdfReadProgress) => void
+) {
   if (file.size > MAX_PDF_BYTES) {
     throw new Error("PDF is too large. The limit is 15 MB.");
   }
@@ -22,7 +32,15 @@ export async function readRegattaPdf(file: File) {
 
   const pages: PdfTextPage[] = [];
   const screenshots: { pageNumber: number; dataUrl: string }[] = [];
+  const canvases: { pageNumber: number; canvas: HTMLCanvasElement }[] = [];
+  const rasterScale = pdfDocument.numPages > 8 ? 2 : 3;
   for (let pageNumber = 1; pageNumber <= pdfDocument.numPages; pageNumber++) {
+    onProgress?.({
+      phase: "rendering",
+      pageNumber,
+      pageCount: pdfDocument.numPages,
+      progress: (pageNumber - 1) / pdfDocument.numPages,
+    });
     const page = await pdfDocument.getPage(pageNumber);
     const content = await page.getTextContent();
     const items = content.items.flatMap((item) => {
@@ -35,7 +53,8 @@ export async function readRegattaPdf(file: File) {
       text: items.map((item) => item.str).join(" "),
     });
 
-    const viewport = page.getViewport({ scale: 1.35 });
+    // Dense tables need 3x for OCR. Longer PDFs use 2x to cap browser memory.
+    const viewport = page.getViewport({ scale: items.length ? 1.35 : rasterScale });
     const canvas = window.document.createElement("canvas");
     canvas.width = Math.ceil(viewport.width);
     canvas.height = Math.ceil(viewport.height);
@@ -43,8 +62,18 @@ export async function readRegattaPdf(file: File) {
     if (!context) throw new Error("This browser cannot create a PDF preview.");
     await page.render({ canvas, canvasContext: context, viewport }).promise;
     screenshots.push({ pageNumber, dataUrl: canvas.toDataURL("image/jpeg", 0.82) });
+    canvases.push({ pageNumber, canvas });
     page.cleanup();
   }
   await pdfDocument.destroy();
-  return { ...parseSailwaveResults(pages), screenshots };
+
+  const embedded = parseSailwaveResults(pages);
+  if (embedded.rows.length > 0) return { ...embedded, screenshots, usedOcr: false };
+
+  const { ocrRegattaPdfPages } = await import("./ocrRegattaPdf");
+  const ocrPages = await ocrRegattaPdfPages(canvases, (progress) => {
+    onProgress?.({ phase: "ocr", ...progress });
+  });
+  const ocrResult = parseSailwaveResults(ocrPages);
+  return { ...ocrResult, screenshots, usedOcr: true };
 }
