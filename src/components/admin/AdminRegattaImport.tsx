@@ -68,6 +68,21 @@ type PendingRegattaReview = {
   meta: RegattaImportMeta;
 };
 
+type ImportTargetCandidate = {
+  id: string;
+  name: string;
+  slug: string;
+  date: string;
+  division: string;
+  boatClass: string;
+};
+
+type PendingImportTargetSelection = {
+  candidates: ImportTargetCandidate[];
+  rows: RegattaImportRow[];
+  meta: RegattaImportMeta;
+};
+
 /**
  * Regatta Excel import tab (self-contained state + handlers).
  */
@@ -99,6 +114,8 @@ export function AdminRegattaImport({
     }[]
   >([]);
   const [pendingReview, setPendingReview] = useState<PendingRegattaReview | null>(null);
+  const [pendingTargetSelection, setPendingTargetSelection] =
+    useState<PendingImportTargetSelection | null>(null);
   const [fullImportRows, setFullImportRows] = useState<RegattaImportRow[]>([]);
   const [pdfScreenshots, setPdfScreenshots] = useState<
     { pageNumber: number; dataUrl: string }[]
@@ -460,7 +477,10 @@ export function AdminRegattaImport({
       `Importing ${rowsToImport.length} rows to database…`
     );
     setImportPossibleDuplicates([]);
-    if (!confirmedRegattaId) setPendingReview(null);
+    if (!confirmedRegattaId) {
+      setPendingReview(null);
+      setPendingTargetSelection(null);
+    }
     // Slow crawl while waiting on server (no real stream from API)
     let tick = 8;
     const pulse = window.setInterval(() => {
@@ -497,6 +517,24 @@ export function AdminRegattaImport({
       setImportProgress(78);
       setImportStatus("Processing server response…");
       const data = await parseApi(res);
+      if (
+        data.requiresTargetSelection === true &&
+        Array.isArray(data.candidates)
+      ) {
+        setPendingTargetSelection({
+          candidates: data.candidates as ImportTargetCandidate[],
+          rows: rowsToImport.map((row) => ({
+            ...row,
+            races: row.races.map((race) => ({ ...race })),
+          })),
+          meta: { ...meta },
+        });
+        setImportProgress(100);
+        setImportStatus(
+          "More than one same-day event matches this import. Select the intended event before reviewing changes."
+        );
+        return;
+      }
       if (!res.ok) throw new Error(apiErr(data, "Import failed"));
 
       if (data.requiresConfirmation === true && data.review && typeof data.review === "object") {
@@ -509,6 +547,7 @@ export function AdminRegattaImport({
           })),
           meta: { ...meta },
         });
+        setPendingTargetSelection(null);
         setImportProgress(100);
         setImportStatus(
           `Review required before updating “${review.regattaName}”. No database changes have been made.`
@@ -573,6 +612,7 @@ export function AdminRegattaImport({
             : "")
       );
       setPendingReview(null);
+      setPendingTargetSelection(null);
     } catch (e: unknown) {
       const msg = errorMessage(e, "Import failed");
       const isNetworkDrop =
@@ -700,6 +740,53 @@ export function AdminRegattaImport({
                 <span>{importStatus}</span>
               </div>
             )}
+          </div>
+        )}
+
+        {pendingTargetSelection && (
+          <div className="mt-5 rounded-2xl border border-amber-400/35 bg-amber-500/8 p-4 space-y-4">
+            <div className="flex items-start gap-2">
+              <AlertTriangle className="h-5 w-5 shrink-0 text-amber-300 mt-0.5" />
+              <div className="min-w-0">
+                <p className="text-sm font-bold text-amber-100">
+                  Select the event to update
+                </p>
+                <p className="text-[11px] text-amber-100/70 mt-1">
+                  Multiple regattas share this date, class, and division. Choose one before SailorPath compares or replaces any results.
+                </p>
+              </div>
+            </div>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {pendingTargetSelection.candidates.map((candidate) => (
+                <button
+                  key={candidate.id}
+                  type="button"
+                  disabled={importBusy}
+                  onClick={() => {
+                    const pending = pendingTargetSelection;
+                    void handleImportToDb(
+                      pending.rows,
+                      pending.meta,
+                      candidate.id
+                    );
+                  }}
+                  className="rounded-xl border border-white/10 bg-slate-950/60 p-3 text-left hover:border-amber-400/60 disabled:opacity-50"
+                >
+                  <span className="block text-xs font-bold text-white">{candidate.name}</span>
+                  <span className="mt-1 block text-[10px] text-slate-400">
+                    {candidate.date} · {candidate.boatClass} · {candidate.division}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              disabled={importBusy}
+              onClick={() => setPendingTargetSelection(null)}
+              className="rounded-full border border-white/15 px-4 py-2 text-xs font-bold text-slate-300 hover:border-white/30 hover:text-white disabled:opacity-50"
+            >
+              Cancel selection
+            </button>
           </div>
         )}
 

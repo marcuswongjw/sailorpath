@@ -45,6 +45,7 @@ import {
 import { normalizeImportGender } from "@/lib/gender";
 import { birthYear as birthYearFromDob } from "@/lib/age";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
+import { resolveImportTarget } from "@/lib/importTarget";
 import { asPositiveInteger, asRank } from "@/lib/validate";
 
 export type { ImportPossibleDuplicate };
@@ -491,19 +492,49 @@ export async function POST(req: Request) {
           eq(regattas.division, div)
         )
       )
-      .limit(5);
+      .limit(50);
 
     const [slugMatch] =
-      sameDay.length === 0
-        ? await db
-            .select()
-            .from(regattas)
-            .where(eq(regattas.slug, slug))
-            .limit(1)
-        : [];
+      await db
+        .select()
+        .from(regattas)
+        .where(eq(regattas.slug, slug))
+        .limit(1);
+    const targetResolution = resolveImportTarget({
+      sameDay,
+      incomingSlug: slug,
+      slugMatch: slugMatch || null,
+      selectedId: confirmedRegattaId,
+    });
+    if (targetResolution.kind === "selection-required") {
+      return NextResponse.json(
+        {
+          error:
+            "Multiple same-day regattas match this import. Select the event to update before continuing.",
+          requiresTargetSelection: true,
+          candidates: sameDay.map((candidate) => ({
+            id: candidate.id,
+            name: candidate.name,
+            slug: candidate.slug,
+            date: String(candidate.date),
+            division: candidate.division,
+            boatClass: candidate.boatClass,
+          })),
+        },
+        { status: 409 }
+      );
+    }
+    if (targetResolution.kind === "selected-target-not-found") {
+      return NextResponse.json(
+        {
+          error:
+            "The selected regatta is no longer a valid same-day match. Process the document again before updating.",
+        },
+        { status: 409 }
+      );
+    }
     const existingTarget =
-      sameDay.find((candidate) => candidate.slug === slug) ||
-      (sameDay.length > 0 ? sameDay[0] : slugMatch);
+      targetResolution.kind === "target" ? targetResolution.target : null;
 
     if (confirmedRegattaId && existingTarget?.id !== confirmedRegattaId) {
       return NextResponse.json(
