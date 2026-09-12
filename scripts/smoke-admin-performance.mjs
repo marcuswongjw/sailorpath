@@ -16,12 +16,18 @@ const baseUrl = (process.env.SMOKE_BASE_URL || "https://sailorpath.com").replace
   /\/$/,
   ""
 );
+const smokeHost = new URL(baseUrl).hostname.toLowerCase();
+const authCookieName =
+  smokeHost === "admin.sailorpath.com"
+    ? "sailorpath-admin-auth"
+    : "sailorpath-public-auth";
 const cookieJar = new Map();
 const supabase = createBrowserClient(
   process.env.SMOKE_SUPABASE_URL,
   process.env.SMOKE_SUPABASE_ANON_KEY,
   {
     isSingleton: false,
+    cookieOptions: { name: authCookieName },
     cookies: {
       getAll: () =>
         [...cookieJar].map(([name, value]) => ({ name, value })),
