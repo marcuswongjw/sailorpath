@@ -8,6 +8,7 @@ import {
   isAnyIlcaClass,
   ILCA_MIN_RACES_FOR_RANKING,
 } from "@/lib/ilcaRanking";
+import { asPositiveInteger } from "@/lib/validate";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { logAdminChange } from "@/lib/adminChangeLog";
 
@@ -65,7 +66,16 @@ export async function POST(req: Request) {
     const slug =
       (body.slug as string)?.trim() ||
       slugifyWithDate(String(body.name), String(body.date));
-    const totalFleetSize = Number(body.totalFleetSize) || 50;
+    const fleetSizeResult = asPositiveInteger(
+      body.totalFleetSize == null || body.totalFleetSize === ""
+        ? 50
+        : body.totalFleetSize,
+      "totalFleetSize"
+    );
+    if (!fleetSizeResult.ok) {
+      return NextResponse.json({ error: fleetSizeResult.error }, { status: 400 });
+    }
+    const totalFleetSize = fleetSizeResult.value;
     const division = body.division || "Gold";
     const raceCount =
       body.raceCount === "" || body.raceCount == null

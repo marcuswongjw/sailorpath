@@ -45,6 +45,7 @@ import {
 import { normalizeImportGender } from "@/lib/gender";
 import { birthYear as birthYearFromDob } from "@/lib/age";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
+import { asPositiveInteger, asRank } from "@/lib/validate";
 
 export type { ImportPossibleDuplicate };
 
@@ -333,7 +334,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const cleanRows = rows
+    const parsedRows = rows
       .map((r) => {
         const sailNumber = normalizeSailNumber(r.sailNumber);
         // Full DOB preferred; birth year alone is year-only (YYYY-01-01 placeholder)
@@ -391,12 +392,32 @@ export async function POST(req: Request) {
       })
       .filter((r) => r.name.length > 0);
 
-    if (!cleanRows.length) {
+    if (!parsedRows.length) {
       return NextResponse.json(
         { error: "No named rows to import (check Name column)" },
         { status: 400 }
       );
     }
+
+    const cleanRows: Array<(typeof parsedRows)[number] & { rank: number }> = [];
+    for (const [index, row] of parsedRows.entries()) {
+      const rank = asRank(row.rank, `row ${index + 1} rank`);
+      if (!rank.ok) {
+        return NextResponse.json({ error: rank.error }, { status: 400 });
+      }
+      cleanRows.push({ ...row, rank: rank.value });
+    }
+
+    const fleetSizeInput =
+      totalFleetSize == null ? cleanRows.length : totalFleetSize;
+    const fleetSizeResult = asPositiveInteger(
+      fleetSizeInput,
+      "totalFleetSize"
+    );
+    if (!fleetSizeResult.ok) {
+      return NextResponse.json({ error: fleetSizeResult.error }, { status: 400 });
+    }
+    const fleetSize = fleetSizeResult.value;
 
     const hasOfficialRaces = cleanRows.some((row) => row.races.length > 0);
     if (hasOfficialRaces) {
@@ -418,7 +439,6 @@ export async function POST(req: Request) {
     }
 
     const slug = `${slugify(regattaName)}-${eventDate}`;
-    const fleetSize = totalFleetSize || cleanRows.length || 50;
     const geo =
       normalizeGeography(geography) ||
       String(geography || "SG")

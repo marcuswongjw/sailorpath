@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   asEmail,
+  asPositiveInteger,
   asRank,
   asUuid,
   asYmd,
@@ -22,6 +23,12 @@ describe("validate", () => {
     if (asRank(3.7).ok) {
       expect(asRank(3.7)).toMatchObject({ value: 4 });
     }
+  });
+
+  it("asPositiveInteger", () => {
+    expect(asPositiveInteger(-1, "fleet size").ok).toBe(false);
+    expect(asPositiveInteger(0, "fleet size").ok).toBe(false);
+    expect(asPositiveInteger(1, "fleet size")).toMatchObject({ value: 1 });
   });
 
   it("asYmd", () => {

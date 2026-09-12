@@ -88,6 +88,25 @@ export function asRank(
   return { ok: true, value: n };
 }
 
+/** Positive integer for counts such as fleet size. */
+export function asPositiveInteger(
+  v: unknown,
+  field = "value",
+  max = 10_000
+): { ok: true; value: number } | { ok: false; error: string } {
+  if (v === null || v === undefined || v === "") {
+    return { ok: false, error: `${field} is required` };
+  }
+  const n = Number(v);
+  if (!Number.isInteger(n) || n < 1 || n > max) {
+    return {
+      ok: false,
+      error: `${field} must be an integer from 1 to ${max}`,
+    };
+  }
+  return { ok: true, value: n };
+}
+
 export function asOptionalNumber(
   v: unknown,
   opts?: { min?: number; max?: number; field?: string }
