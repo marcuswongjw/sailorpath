@@ -14,6 +14,7 @@ import {
 import {
   isSailorOnIlca4NationalList,
   ILCA4_NATIONAL_RANKING_NAMES,
+  isSingaporeNationality,
 } from "@/lib/ilca4NationalList";
 import { birthYear } from "@/lib/age";
 import {
@@ -180,6 +181,19 @@ export function AdminIlcaRankingPanel({
   const squad = useMemo(
     () =>
       boatClass === "ILCA 4" ? selectIlca4NationalSquad(ranked) : [],
+    [boatClass, ranked]
+  );
+  const missingEligibilityBirthYears = useMemo(
+    () =>
+      boatClass === "ILCA 4"
+        ? ranked.filter(
+            (sailor) =>
+              sailor.rank <= 25 &&
+              isSingaporeNationality(sailor.nationality) &&
+              (sailor.gender === "M" || sailor.gender === "F") &&
+              sailor.ageInIntakeYear == null
+          )
+        : [],
     [boatClass, ranked]
   );
 
@@ -977,8 +991,7 @@ export function AdminIlcaRankingPanel({
             </div>
           )}
           <p className="px-4 py-2 text-[9px] text-slate-600 border-t border-white/5">
-            Birth year from DOB. Top 25 SGP for squad · intake year{" "}
-            {cutoff.intakeYear}.
+            Birth year from DOB. Squad eligibility requires a verified birth year, SGP nationality, top-25 ranking, and age ≤17 in intake year {cutoff.intakeYear}.
           </p>
         </div>
 
@@ -1024,6 +1037,15 @@ export function AdminIlcaRankingPanel({
                 </li>
               ))}
             </ol>
+          )}
+          {missingEligibilityBirthYears.length > 0 && (
+            <p className="border-t border-amber-400/20 bg-amber-500/5 px-4 py-3 text-[11px] leading-relaxed text-amber-100/85">
+              {missingEligibilityBirthYears.length} top-25 SGP sailor
+              {missingEligibilityBirthYears.length === 1 ? "" : "s"} {" "}
+              {missingEligibilityBirthYears.length === 1 ? "is" : "are"} excluded
+              from the squad preview until a birth year is recorded: {" "}
+              {missingEligibilityBirthYears.map((sailor) => sailor.name).join(", ")}.
+            </p>
           )}
           <p className="px-4 py-2 text-[9px] text-slate-600 border-t border-white/5">
             {ILCA_POLICY_NOTES.squad}

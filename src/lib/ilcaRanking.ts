@@ -389,7 +389,9 @@ export function selectIlca4NationalSquad(
     .filter((r) => r.rank <= 25)
     .filter((r) => isSingaporeNationality(r.nationality))
     .filter((r) => r.gender === "M" || r.gender === "F")
-    .filter((r) => r.ageInIntakeYear == null || r.ageInIntakeYear <= 17);
+    .filter(
+      (r) => r.ageInIntakeYear != null && r.ageInIntakeYear <= 17
+    );
 
   const picked = new Set<string>();
   const out: SquadSelection[] = [];
@@ -461,7 +463,7 @@ export const ILCA_POLICY_NOTES = {
   nationalList:
     "Only sailors marked on the ILCA 4 national ranking list (admin-managed) appear on the public board.",
   squad:
-    "ILCA 4 national squad (≤16, SGP nationality only, birth year implies ≤17 in intake year): ranking as of 30 Jun (July intake) or 20 Dec (January intake). From top 25: top 2 M/F overall, then top 2 M/F in the intake-year-16 bucket, then top 4 M/F in ≤15 bucket; fill remaining with next highest same gender.",
+    "ILCA 4 national squad (≤16, SGP nationality only, verified birth year and age ≤17 in intake year): ranking as of 30 Jun (July intake) or 20 Dec (January intake). From top 25: top 2 M/F overall, then top 2 M/F in the intake-year-16 bucket, then top 4 M/F in ≤15 bucket; fill remaining with next highest same gender.",
 } as const;
 
 // Re-export helper used by import notes

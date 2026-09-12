@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import type { IlcaRankedSailor } from "./ilcaRanking";
 import {
   ageInIntakeYear,
   bestThreeHighPoints,
@@ -233,6 +234,23 @@ describe("computeIlcaRankings + squad", () => {
     );
     const squad = selectIlca4NationalSquad(ranked);
     expect(squad.some((s) => s.sailorId === "m1")).toBe(false);
+  });
+
+  it("excludes a top-ranked sailor whose birth year is unknown", () => {
+    const missingAge: IlcaRankedSailor = {
+      sailorId: "missing-age",
+      name: "Missing Age",
+      gender: "M",
+      birthYear: null,
+      ageInIntakeYear: null,
+      nationality: "SGP",
+      eventScores: [],
+      bestThreePoints: [30, 30, 30],
+      totalPoints: 90,
+      rank: 1,
+    };
+
+    expect(selectIlca4NationalSquad([missingAge])).toEqual([]);
   });
 
   it("includes national-list sailors with no results at 0 points", () => {
