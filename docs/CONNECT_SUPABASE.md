@@ -47,10 +47,11 @@ postgresql://postgres:PASSWORD@db.XXXX.supabase.co:5432/postgres
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Project Settings → API → `anon` `public` |
 | `SUPERADMIN_EMAIL` | your email (e.g. `marcuswongjw@gmail.com`) |
 | `NEXT_PUBLIC_SITE_URL` | `https://sailorpath.com` |
-| `NEXT_PUBLIC_COOKIE_DOMAIN` | `.sailorpath.com` (so login works on admin subdomain) |
 
 4. **Deployments → … on latest → Redeploy**  
    (env changes do **not** apply until redeploy)
+
+Authentication cookies are host-only by design. Do not add `NEXT_PUBLIC_COOKIE_DOMAIN`; users sign in separately on `sailorpath.com` and `admin.sailorpath.com` to prevent a public sibling subdomain from reading an administrator session.
 
 ### C. Confirm with `/api/health`
 

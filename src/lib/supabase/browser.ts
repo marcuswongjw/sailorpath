@@ -16,7 +16,7 @@ export function createBrowserSupabase() {
       "Account services are temporarily unavailable. Please try again later."
     );
   }
-  const cookieOptions = getAuthCookieOptions();
+  const cookieOptions = getAuthCookieOptions(window.location.hostname);
   return createBrowserClient(
     url,
     key,

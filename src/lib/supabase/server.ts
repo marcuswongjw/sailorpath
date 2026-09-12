@@ -1,5 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getAuthCookieOptions } from "@/lib/supabase/cookie-options";
 
 export async function createServerSupabase() {
@@ -13,7 +13,15 @@ export async function createServerSupabase() {
     throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY");
   }
   const cookieStore = await cookies();
-  const cookieOptions = getAuthCookieOptions();
+  const requestHeaders = await headers();
+  const cookieOptions = getAuthCookieOptions(requestHeaders.get("host"));
+  const cookieWriteOptions = cookieOptions
+    ? {
+        path: cookieOptions.path,
+        sameSite: cookieOptions.sameSite,
+        secure: cookieOptions.secure,
+      }
+    : {};
 
   return createServerClient(url, key, {
     ...(cookieOptions ? { cookieOptions } : {}),
@@ -26,7 +34,7 @@ export async function createServerSupabase() {
           cookiesToSet.forEach(({ name, value, options }) =>
             cookieStore.set(name, value, {
               ...options,
-              ...(cookieOptions || {}),
+              ...cookieWriteOptions,
             })
           );
         } catch {

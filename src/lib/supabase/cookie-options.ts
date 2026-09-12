@@ -1,19 +1,37 @@
-export function getAuthCookieOptions():
-  | { domain: string; path: string; sameSite: "lax"; secure: boolean }
-  | undefined {
-  const fromEnv = process.env.NEXT_PUBLIC_COOKIE_DOMAIN?.trim();
-  if (fromEnv) {
-    return { domain: fromEnv, path: "/", sameSite: "lax", secure: true };
-  }
-  if (process.env.VERCEL_ENV === "production") {
-    return {
-      domain: ".sailorpath.com",
-      path: "/",
-      sameSite: "lax",
-      secure: true,
-    };
-  }
-  return undefined;
+type AuthCookieOptions = {
+  name: string;
+  path: string;
+  sameSite: "lax";
+  secure: boolean;
+};
+
+function normalizeHost(host: string | null | undefined): string {
+  return String(host || "")
+    .trim()
+    .toLowerCase()
+    .replace(/:\d+$/, "");
+}
+
+/**
+ * Production sessions use distinct host-only cookie names for the public and
+ * admin applications. Do not set a Domain attribute: browser Supabase cookies
+ * are script-readable, and a parent-domain credential would be exposed to every
+ * sibling subdomain.
+ */
+export function getAuthCookieOptions(
+  host?: string | null
+): AuthCookieOptions | undefined {
+  if (process.env.VERCEL_ENV !== "production") return undefined;
+
+  return {
+    name:
+      normalizeHost(host) === "admin.sailorpath.com"
+        ? "sailorpath-admin-auth"
+        : "sailorpath-public-auth",
+    path: "/",
+    sameSite: "lax",
+    secure: true,
+  };
 }
 
 export function safeAuthNext(

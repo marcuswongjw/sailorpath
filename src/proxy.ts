@@ -72,7 +72,14 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  const cookieOptions = getAuthCookieOptions();
+  const cookieOptions = getAuthCookieOptions(host);
+  const cookieWriteOptions = cookieOptions
+    ? {
+        path: cookieOptions.path,
+        sameSite: cookieOptions.sameSite,
+        secure: cookieOptions.secure,
+      }
+    : {};
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
     ...(cookieOptions ? { cookieOptions } : {}),
     cookies: {
@@ -103,7 +110,7 @@ export async function proxy(request: NextRequest) {
         cookiesToSet.forEach(({ name, value, options }) => {
           response.cookies.set(name, value, {
             ...options,
-            ...(cookieOptions || {}),
+            ...cookieWriteOptions,
           });
         });
       },

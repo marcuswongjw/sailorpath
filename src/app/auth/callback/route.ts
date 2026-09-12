@@ -25,7 +25,14 @@ export async function GET(request: Request) {
   }
 
   const cookieStore = await cookies();
-  const cookieOptions = getAuthCookieOptions();
+  const cookieOptions = getAuthCookieOptions(new URL(request.url).hostname);
+  const cookieWriteOptions = cookieOptions
+    ? {
+        path: cookieOptions.path,
+        sameSite: cookieOptions.sameSite,
+        secure: cookieOptions.secure,
+      }
+    : {};
   const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
     ...(cookieOptions ? { cookieOptions } : {}),
     cookies: {
@@ -37,7 +44,7 @@ export async function GET(request: Request) {
           cookiesToSet.forEach(({ name, value, options }) =>
             cookieStore.set(name, value, {
               ...options,
-              ...(cookieOptions || {}),
+              ...cookieWriteOptions,
             })
           );
         } catch {
