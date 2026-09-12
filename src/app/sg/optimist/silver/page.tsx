@@ -1,6 +1,7 @@
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { FleetRankingsView } from "@/components/FleetRankingsView";
 import { getCachedFleetRankings } from "@/lib/queries";
+import { toPublicRankedSailors } from "@/lib/publicRankings";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
 import { DbUnavailableError } from "@/db";
 import type { RankedSailor } from "@/lib/ranking";
@@ -24,6 +25,7 @@ export default async function SilverPage() {
       period.year,
       period.half
     );
+    initialRanked = toPublicRankedSailors(initialRanked);
   } catch (e) {
     initialError =
       e instanceof DbUnavailableError ? e.message : "Failed to load rankings";

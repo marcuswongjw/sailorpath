@@ -4,6 +4,7 @@ import {
   getCachedFleetRankings,
   getCachedIlcaRankings,
 } from "@/lib/queries";
+import { toPublicRankedSailors } from "@/lib/publicRankings";
 import type { Period } from "@/lib/ranking";
 import type { IlcaIntakeKind } from "@/lib/ilcaRanking";
 import { DbUnavailableError } from "@/db";
@@ -50,8 +51,9 @@ export async function GET(req: Request) {
     ) as Period["half"];
     const period: Period = { year, half };
     const ranked = await getCachedFleetRankings(fleet, period.year, period.half);
+    const publicRanked = toPublicRankedSailors(ranked);
     return NextResponse.json(
-      { period, fleet, ranked },
+      { period, fleet, ranked: publicRanked },
       {
         headers: {
           "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
