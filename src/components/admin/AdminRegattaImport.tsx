@@ -32,6 +32,7 @@ import {
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
+import { parseCsv, tableRowsToRecords } from "@/lib/excel/parseTabularFile";
 
 type Props = {
   isSuperadmin: boolean;
@@ -41,13 +42,6 @@ type Props = {
   /** Refetch all admin lists after a successful import. */
   onImportComplete?: () => void;
 };
-
-async function loadXlsx() {
-  const moduleUrl = "/vendor/xlsx/xlsx.mjs";
-  return (await import(
-    /* webpackIgnore: true */ moduleUrl
-  )) as typeof import("xlsx");
-}
 
 const MAX_IMPORT_FILE_BYTES = 15 * 1024 * 1024;
 
@@ -150,6 +144,7 @@ export function AdminRegattaImport({
     setImportPossibleDuplicates([]);
     setNationalityFlags([]);
     setPendingReview(null);
+    setPendingTargetSelection(null);
     try {
       const { readRegattaPdf } = await import("@/lib/pdf/readRegattaPdf");
       setImportProgress(30);
@@ -244,12 +239,19 @@ export function AdminRegattaImport({
       void handlePdf(file);
       return;
     }
+    const isCsv = /\.csv$/i.test(file.name);
+    const isXlsx = /\.xlsx$/i.test(file.name);
+    if (!isCsv && !isXlsx) {
+      toast.error("Unsupported file type. Select a .pdf, .xlsx, or .csv file.");
+      return;
+    }
     setImportBusy(true);
     setImportProgress(5);
     setImportStatus(`Reading “${file.name}”…`);
     setImportPossibleDuplicates([]);
     setNationalityFlags([]);
     setPendingReview(null);
+    setPendingTargetSelection(null);
     setPdfScreenshots([]);
     const reader = new FileReader();
     reader.onprogress = (ev) => {
@@ -261,18 +263,31 @@ export function AdminRegattaImport({
       try {
         setImportProgress(45);
         setImportStatus("Parsing spreadsheet…");
-        const { read, utils } = await loadXlsx();
         const data = ev.target?.result;
-        const workbook = read(data, { type: "array" });
-        const sheetName = workbook.SheetNames[0];
-        const sheet = workbook.Sheets[sheetName];
+        if (!(data instanceof ArrayBuffer)) {
+          throw new Error("Failed to read spreadsheet data.");
+        }
+
+        let sheetName: string;
+        let tableRows: readonly (readonly unknown[])[];
+        if (isCsv) {
+          sheetName = file.name.replace(/\.csv$/i, "") || "CSV";
+          tableRows = parseCsv(new TextDecoder().decode(data));
+        } else {
+          const { default: readXlsxFile } = await import(
+            "read-excel-file/browser"
+          );
+          const [firstSheet] = await readXlsxFile(data);
+          if (!firstSheet) {
+            throw new Error("The .xlsx file contains no worksheets.");
+          }
+          sheetName = firstSheet.sheet;
+          tableRows = firstSheet.data;
+        }
         setImportProgress(60);
-        const json = utils.sheet_to_json<Record<string, unknown>>(sheet, {
-          defval: "",
-          raw: false,
-        });
+        const records = tableRowsToRecords(tableRows);
         setImportProgress(80);
-        const mapped = inferLikelyDnsRows(parseRegattaResultRows(json));
+        const mapped = inferLikelyDnsRows(parseRegattaResultRows(records));
         const parsedRaceCount = Math.max(
           0,
           ...mapped.flatMap((row) =>
@@ -673,7 +688,7 @@ export function AdminRegattaImport({
           </p>
           <div className="mb-4 max-w-3xl space-y-2 text-xs leading-relaxed text-slate-500">
             <p>
-              Supports .pdf, .xlsx, .xls, and .csv. SailorPath reads PDFs and
+              Supports .pdf, .xlsx, and .csv. SailorPath reads PDFs and
               imports them directly when the filename contains the event date.
               Existing regattas always pause for discrepancy review before any
               result is replaced.
@@ -699,7 +714,7 @@ export function AdminRegattaImport({
               type="file"
               onChange={handleFileChange}
               className="hidden"
-              accept=".pdf,.xlsx,.xls,.csv,application/pdf"
+              accept=".pdf,.xlsx,.csv,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
             />
           </label>
         </div>

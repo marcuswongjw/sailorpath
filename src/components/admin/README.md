@@ -82,7 +82,9 @@ paths (`/sg/optimist/gold`, silver, ILCA, regatta directories, `/api/rankings`) 
 boards refresh without waiting for the 60s timer.
 
 Heavy tabs (Import / Analysis / Gold / ILCA / Claims / Promote / Support) are
-`next/dynamic` loaded so opening Database does not pull `xlsx` into the first paint.
+`next/dynamic` loaded so opening Database does not pull spreadsheet parsing into
+the first paint. The Import tab also loads `read-excel-file` only when parsing an
+`.xlsx` file; `.csv` files use the native client-side parser.
 
 ## Data fetching
 
