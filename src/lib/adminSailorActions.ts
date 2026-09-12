@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { and, eq, inArray } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import type { AuthContext } from "@/lib/auth";
 import { db } from "@/db";
 import {
@@ -28,6 +28,7 @@ import { nationalityFromAnySailNumber } from "@/lib/countries";
 import { normalizeNationality } from "@/lib/seriesMembership";
 import { deriveAllSilverEntryDates } from "@/lib/deriveFleetEntryDates";
 import { todayYmdSg } from "@/lib/datesSg";
+import { mergeSailors } from "@/lib/mergeSailors";
 
 /**
  * Named admin actions for /api/admin/sailors POST.
@@ -126,83 +127,7 @@ async function applyIlcaSailorFixes(
       details.push(`Renamed “${fix.mergeName}” → “${fix.keepName}”`);
       merges++;
     } else if (keepId && mergeId && keepId !== mergeId) {
-      // Move results from merge → keep
-      const mergeResults = await db
-        .select()
-        .from(regattaResults)
-        .where(eq(regattaResults.sailorId, mergeId));
-      for (const row of mergeResults) {
-        const existing = await db
-          .select()
-          .from(regattaResults)
-          .where(
-            and(
-              eq(regattaResults.sailorId, keepId),
-              eq(regattaResults.regattaId, row.regattaId)
-            )
-          )
-          .limit(1);
-        if (!existing[0]) {
-          await db
-            .update(regattaResults)
-            .set({ sailorId: keepId, updatedAt: new Date() })
-            .where(eq(regattaResults.id, row.id));
-        } else {
-          await db
-            .delete(regattaResults)
-            .where(eq(regattaResults.id, row.id));
-        }
-      }
-      // Aliases
-      const mergeAliases = await db
-        .select()
-        .from(sailorAliases)
-        .where(eq(sailorAliases.sailorId, mergeId));
-      for (const a of mergeAliases) {
-        try {
-          await db
-            .update(sailorAliases)
-            .set({ sailorId: keepId })
-            .where(eq(sailorAliases.id, a.id));
-        } catch {
-          await db
-            .delete(sailorAliases)
-            .where(eq(sailorAliases.id, a.id));
-        }
-      }
-      try {
-        await db.insert(sailorAliases).values({
-          sailorId: keepId,
-          aliasName: fix.mergeName,
-        });
-      } catch {
-        /* exists */
-      }
-      // Fill blank fields from merge before delete
-      const keepSailor = keepRows[0];
-      const mergeSailor = mergeRows[0];
-      const fill: Record<string, unknown> = { updatedAt: new Date() };
-      if (
-        !String(keepSailor.sailNumberIlca4 || "").trim() &&
-        String(mergeSailor.sailNumberIlca4 || "").trim()
-      ) {
-        fill.sailNumberIlca4 = mergeSailor.sailNumberIlca4;
-      }
-      for (const f of [
-        "goldEntryDate",
-        "silverEntryDate",
-        "dropDate",
-        "dob",
-        "club",
-        "school",
-        "gender",
-      ] as const) {
-        if (!keepSailor[f] && mergeSailor[f]) fill[f] = mergeSailor[f];
-      }
-      if (Object.keys(fill).length > 1) {
-        await db.update(sailors).set(fill).where(eq(sailors.id, keepId));
-      }
-      await db.delete(sailors).where(eq(sailors.id, mergeId));
+      await mergeSailors({ keepId, mergeId, forceOwnershipConflict: true });
       details.push(
         `Merged “${fix.mergeName}” into “${fix.keepName}”`
       );
