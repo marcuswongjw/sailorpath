@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { Trophy, Anchor, Medal } from "lucide-react";
+import { Trophy, Anchor, Medal, Wind } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Current sailing rankings | SailorPath",
-  description: "View current Singapore Optimist Gold, Optimist Silver, and ILCA 4 standings.",
+  title: "Current sailing rankings & race results | SailorPath",
+  description: "View current Singapore Optimist Gold, Optimist Silver, ILCA 4, and WingFoil standings.",
 };
 
 export const revalidate = 300;
@@ -55,16 +55,36 @@ export default function RankingsHubPage() {
 
         <Link
           href="/sg/ilca4"
-          className="group rounded-2xl border border-sky-500/25 bg-sky-500/5 p-5 hover:border-sky-500/50 transition-colors sm:col-span-2"
+          className="group rounded-2xl border border-sky-500/25 bg-sky-500/5 p-5 hover:border-sky-500/50 transition-colors"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
             <Anchor className="h-5 w-5 text-sky-400" />
           </div>
           <h2 className="text-base font-bold text-white group-hover:text-sky-300">
-            ILCA 4 National Ranking
+            ILCA 4
           </h2>
           <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
             High Ranking Points · Best 3 of last 5 ranking regattas.
+          </p>
+        </Link>
+
+        <Link
+          href="/sg/wingfoil"
+          className="group rounded-2xl border border-teal-500/25 bg-teal-500/5 p-5 hover:border-teal-500/50 transition-colors"
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-500/15 mb-3">
+            <Wind className="h-5 w-5 text-teal-400" />
+          </div>
+          <div className="flex items-center gap-2">
+            <h2 className="text-base font-bold text-white group-hover:text-teal-300">
+              WingFoil
+            </h2>
+            <span className="text-[9px] font-black uppercase text-teal-400 bg-teal-500/15 px-1.5 py-0.5 rounded border border-teal-500/25">
+              Sprint Slalom
+            </span>
+          </div>
+          <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+            Event-based Sprint Slalom regattas, heat finishes &amp; specifications.
           </p>
         </Link>
       </div>

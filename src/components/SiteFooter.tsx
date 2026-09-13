@@ -61,6 +61,12 @@ export function SiteFooter() {
           >
             Gold standings
           </Link>
+          <Link
+            href="/sg/wingfoil"
+            className="hover:text-teal-300 transition-colors"
+          >
+            WingFoil
+          </Link>
         </div>
       </div>
     </footer>

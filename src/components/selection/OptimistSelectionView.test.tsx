@@ -174,7 +174,7 @@ describe("OptimistSelectionView", () => {
     expect(screen.getByText("Optimist Selection Trials")).toBeInTheDocument();
     expect(screen.getByText("SSF Selection Trials")).toBeInTheDocument();
     expect(
-      screen.getByText(/Detailed selection matrices & What-If calculator are for registered accounts/)
+      screen.getByText(/Detailed selection matrices & complete rosters are for registered accounts/)
     ).toBeInTheDocument();
     expect(screen.getByText("Lucas Wong")).toBeInTheDocument();
   });

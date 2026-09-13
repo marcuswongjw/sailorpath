@@ -11,8 +11,6 @@ import {
   AlertCircle,
   Calendar,
   MapPin,
-  Sliders,
-  RotateCcw,
 } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
 import type { OptimistSelectionPayload } from "@/lib/selectionQueries";
@@ -32,10 +30,6 @@ export function OptimistSelectionView({
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [perthBucketFilter, setPerthBucketFilter] = useState<string>("all");
 
-  // What-if simulated adjustments: Map of sailorId -> bonus adjustment points
-  const [whatIfOffsets, setWhatIfOffsets] = useState<Record<string, number>>({});
-  const [whatIfOpen, setWhatIfOpen] = useState(false);
-
   const {
     matched,
     selectionStatus,
@@ -51,27 +45,14 @@ export function OptimistSelectionView({
     return combinedScores.find((s) => ownedIds.has(s.sailorId)) || null;
   }, [isLoggedIn, owned, combinedScores]);
 
-  // Combined scores sorted with any active What-If adjustments applied
-  const simulatedScores = useMemo(() => {
-    if (Object.keys(whatIfOffsets).length === 0) return combinedScores;
-    const copy = combinedScores.map((row) => {
-      const offset = whatIfOffsets[row.sailorId] || 0;
-      return {
-        ...row,
-        combinedScore: row.combinedScore + offset,
-      };
-    });
-    return copy.sort((a, b) => a.combinedScore - b.combinedScore);
-  }, [combinedScores, whatIfOffsets]);
-
   // Filtered rows for Asian / Combined
   const displayAsianRows = useMemo(() => {
-    let rows = simulatedScores;
+    let rows = combinedScores;
     if (genderFilter !== "all") {
       rows = rows.filter((r) => r.gender === genderFilter);
     }
     return rows;
-  }, [simulatedScores, genderFilter]);
+  }, [combinedScores, genderFilter]);
 
   // Perth filtered rows
   const displayPerthRows = useMemo(() => {
@@ -268,11 +249,11 @@ export function OptimistSelectionView({
             </span>
             <div>
               <p className="text-sm font-bold text-white">
-                Detailed selection matrices & What-If calculator are for registered accounts
+                Detailed selection matrices & complete rosters are for registered accounts
               </p>
               <p className="text-xs text-slate-400 mt-0.5">
                 Create a free SailorPath account to view complete 10-person qualifying rosters,
-                tie-breaks, individual race scores, and simulation tools.
+                tie-breaks, individual race scores, and reserves.
               </p>
             </div>
           </div>
@@ -379,111 +360,8 @@ export function OptimistSelectionView({
               <option value="by2015">Born 2015 (Top 2 boys & girls)</option>
             </select>
           )}
-
-          {/* What-If Toggle */}
-          {isLoggedIn && (
-            <button
-              type="button"
-              onClick={() => setWhatIfOpen((o) => !o)}
-              className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold transition-all ${
-                whatIfOpen || Object.keys(whatIfOffsets).length > 0
-                  ? "border-amber-500/40 bg-amber-500/10 text-amber-300"
-                  : "border-white/10 bg-white/5 text-slate-300 hover:text-white"
-              }`}
-            >
-              <Sliders className="h-3.5 w-3.5" />
-              <span>What-If Simulator</span>
-              {Object.keys(whatIfOffsets).length > 0 && (
-                <span className="rounded-full bg-amber-500/20 px-1.5 text-[10px] font-black">
-                  {Object.keys(whatIfOffsets).length}
-                </span>
-              )}
-            </button>
-          )}
         </div>
       </div>
-
-      {/* ── What-If Simulator Drawer ── */}
-      {whatIfOpen && (
-        <div className="rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 space-y-3">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Sliders className="h-4 w-4 text-amber-400" />
-              <p className="text-xs font-bold text-white">
-                Hypothetical Finish Simulator
-              </p>
-            </div>
-            {Object.keys(whatIfOffsets).length > 0 && (
-              <button
-                type="button"
-                onClick={() => setWhatIfOffsets({})}
-                className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-300 hover:text-amber-200"
-              >
-                <RotateCcw className="h-3 w-3" />
-                Reset all adjustments
-              </button>
-            )}
-          </div>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            Adjust hypothetical points for upcoming trial races to see how the
-            cut-off line and qualifying team order would shift.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 pt-1">
-            {combinedScores.slice(0, 15).map((sailor) => {
-              const currentOffset = whatIfOffsets[sailor.sailorId] || 0;
-              return (
-                <div
-                  key={sailor.sailorId}
-                  className="rounded-lg border border-white/5 bg-black/30 p-2.5 flex items-center justify-between gap-2"
-                >
-                  <div className="min-w-0">
-                    <p className="text-xs font-bold text-white truncate">
-                      {sailor.name}
-                    </p>
-                    <p className="text-[10px] text-slate-400">
-                      Actual: {sailor.combinedScore} pts · Simulated:{" "}
-                      <span className="font-bold text-amber-300">
-                        {sailor.combinedScore + currentOffset} pts
-                      </span>
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-1 shrink-0">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setWhatIfOffsets((prev) => ({
-                          ...prev,
-                          [sailor.sailorId]: currentOffset - 2,
-                        }))
-                      }
-                      className="h-6 w-6 rounded bg-white/10 text-white hover:bg-white/20 text-xs font-black flex items-center justify-center"
-                      title="Simulate 2 points better"
-                    >
-                      -
-                    </button>
-                    <span className="w-8 text-center text-xs font-mono font-bold text-white">
-                      {currentOffset > 0 ? `+${currentOffset}` : currentOffset}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setWhatIfOffsets((prev) => ({
-                          ...prev,
-                          [sailor.sailorId]: currentOffset + 2,
-                        }))
-                      }
-                      className="h-6 w-6 rounded bg-white/10 text-white hover:bg-white/20 text-xs font-black flex items-center justify-center"
-                      title="Simulate 2 points worse"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
 
       {/* ── TAB 1: Asian & Oceania Championship ── */}
       {activeTab === "asian" && (
@@ -797,7 +675,7 @@ export function OptimistSelectionView({
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
-                  {simulatedScores.map((s, idx) => (
+                  {combinedScores.map((s, idx) => (
                     <tr key={s.sailorId} className="hover:bg-white/[0.02]">
                       <td className="px-4 py-2.5 font-mono text-slate-400">
                         #{idx + 1}

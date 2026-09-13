@@ -518,7 +518,7 @@ export function FleetRankingsView({
             <div className="md:hidden w-full min-w-0 space-y-1.5">
               <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
                 <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">
-                  Tap event to include/exclude for what-if
+                  Tap event to include/exclude
                 </span>
                 {excluded.size > 0 && (
                   <button

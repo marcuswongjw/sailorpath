@@ -188,6 +188,16 @@ export function SiteHeader() {
         )}
       </div>
       <Link
+        href="/sg/wingfoil"
+        prefetch
+        className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0 flex items-center gap-1.5"
+      >
+        <span>WingFoil</span>
+        <span className="text-[9px] font-black uppercase text-teal-400 bg-teal-500/10 px-1.5 py-0.5 rounded border border-teal-500/20">
+          New
+        </span>
+      </Link>
+      <Link
         href="/search"
         onClick={() => setMobileOpen(false)}
         className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0"
@@ -408,6 +418,19 @@ export function SiteHeader() {
               className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 4 regattas
+            </Link>
+            <p className="px-1 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              WingFoil
+            </p>
+            <Link
+              href="/sg/wingfoil"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-xl px-3 py-3 text-sm font-semibold text-teal-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center justify-between"
+            >
+              <span>WingFoil Racing</span>
+              <span className="text-[9px] font-black uppercase text-teal-400 bg-teal-500/10 px-1.5 py-0.5 rounded border border-teal-500/20">
+                New
+              </span>
             </Link>
             <Link
               href="/search"
