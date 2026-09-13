@@ -42,7 +42,7 @@ import { isAnyIlcaClass, ILCA_MIN_RACES_FOR_RANKING } from "@/lib/ilcaRanking";
 import { normalizeImportGender } from "@/lib/gender";
 import { birthYear as birthYearFromDob } from "@/lib/age";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
-import { resolveImportTarget } from "@/lib/importTarget";
+import { NEW_IMPORT_TARGET, resolveImportTarget } from "@/lib/importTarget";
 import { asPositiveInteger, asRank } from "@/lib/validate";
 
 export type { ImportPossibleDuplicate };
@@ -120,6 +120,8 @@ function sameImportValue(a: unknown, b: unknown): boolean {
   return String(a) === String(b);
 }
 
+class ImportConflictError extends Error {}
+
 async function buildExistingRegattaReview(args: {
   existing: typeof regattas.$inferSelect;
   uploadedName: string;
@@ -128,7 +130,8 @@ async function buildExistingRegattaReview(args: {
   ranking: boolean;
   raceCount: number | null;
   rows: ReviewUploadRow[];
-}): Promise<RegattaImportReview> {
+}, connection: Pick<typeof db, "select"> = db): Promise<RegattaImportReview> {
+  const db = connection;
   const current = await db
     .select({
       resultId: regattaResults.id,
@@ -434,7 +437,7 @@ export async function POST(req: Request) {
     if (Array.isArray(rows) && rows.length > MAX_IMPORT_ROWS) {
       return NextResponse.json(
         {
-          error: `Too many rows (${rows.length}). Import at most ${MAX_IMPORT_ROWS} results per upload — split the spreadsheet and import in batches.`,
+          error: `Too many rows (${rows.length}). Import at most ${MAX_IMPORT_ROWS} results; do not split an existing event into replacement uploads.`,
           maxRows: MAX_IMPORT_ROWS,
           inputRows: rows.length,
         },
@@ -620,7 +623,7 @@ export async function POST(req: Request) {
       return NextResponse.json(
         {
           error:
-            "Multiple same-day regattas match this import. Select the event to update before continuing.",
+            "Same-day regattas match this import. Select an event to update or create a separate event.",
           requiresTargetSelection: true,
           candidates: sameDay.map((candidate) => ({
             id: candidate.id,
@@ -646,7 +649,7 @@ export async function POST(req: Request) {
     const existingTarget =
       targetResolution.kind === "target" ? targetResolution.target : null;
 
-    if (confirmedRegattaId && existingTarget?.id !== confirmedRegattaId) {
+    if (confirmedRegattaId && confirmedRegattaId !== NEW_IMPORT_TARGET && existingTarget?.id !== confirmedRegattaId) {
       return NextResponse.json(
         {
           error:
@@ -693,6 +696,16 @@ export async function POST(req: Request) {
     const outcome = await db.transaction(
       async (tx): Promise<ImportTransactionOutcome> => {
         const db = tx;
+        if (existingTarget) {
+          const [current] = await db.select().from(regattas).where(eq(regattas.id, existingTarget.id));
+          if (!current || current.updatedAt.getTime() !== existingTarget.updatedAt.getTime()) {
+            throw new ImportConflictError("This event changed while the import was being prepared. Review it again before saving.");
+          }
+          const review = await buildExistingRegattaReview({ existing: current, uploadedName: regattaName, fleetSize, geography: geo, ranking, raceCount, rows: cleanRows }, db);
+          if (review.discrepancies.length && confirmedReviewToken !== review.reviewToken) {
+            throw new ImportConflictError("Results changed after review. Import the file again to review the current differences.");
+          }
+        }
         let reg: typeof regattas.$inferSelect | undefined;
 
         if (existingTarget && sameDay.length >= 1) {
@@ -741,21 +754,6 @@ export async function POST(req: Request) {
               countsForRanking: ranking,
               reviewedAt: ranking === false ? new Date() : null,
               raceCount,
-            })
-            .onConflictDoUpdate({
-              target: regattas.slug,
-              set: {
-                name: regattaName,
-                totalFleetSize: fleetSize,
-                division: div,
-                date: eventDate,
-                geography: geo,
-                boatClass: boat,
-                countsForRanking: ranking,
-                reviewedAt: ranking === false ? new Date() : null,
-                raceCount,
-                updatedAt: new Date(),
-              },
             })
             .returning();
           reg = upserted;
@@ -1322,6 +1320,10 @@ export async function POST(req: Request) {
 
         // Parallel upsert results in chunks (sequential N inserts timed out serverless
         // after DB writes completed — browser saw "Failed to fetch").
+        if (unmatched.length) throw new ImportConflictError("Some competitors could not be matched. No changes were saved. Check the sailor names and retry.");
+        if (new Set(pendingResults.map((result) => result.sailorId)).size !== pendingResults.length) {
+          throw new ImportConflictError("Multiple rows matched the same sailor. No changes were saved. Resolve duplicate or ambiguous names before retrying.");
+        }
         if (pendingResults.length) {
           const CHUNK = 15;
           for (let i = 0; i < pendingResults.length; i += CHUNK) {
@@ -1578,7 +1580,7 @@ export async function POST(req: Request) {
           removedRaceRows,
           profileChangeFields,
         };
-      }
+      }, { isolationLevel: "serializable" }
     );
 
     const {
@@ -1726,6 +1728,7 @@ export async function POST(req: Request) {
         : undefined,
     });
   } catch (e) {
+    if (e instanceof ImportConflictError) return NextResponse.json({ error: e.message }, { status: 409 });
     adminLog({
       requestId,
       action: "import.regatta",

@@ -1,4 +1,4 @@
-import { excelDateToIso } from "@/lib/normalize";
+import { excelDateToIso, toNumber } from "@/lib/normalize";
 import type { OfficialRaceResultInput } from "@/types/raceResult";
 
 /** Competitor row from a regatta results spreadsheet. */
@@ -96,7 +96,7 @@ export function parseRegattaResultRows(
         keys.find((k) => /rank|pos|place|position/i.test(k));
       const nettKey =
         keys.find((k) => /^nett$/i.test(k.trim())) ||
-        keys.find((k) => /nett/i.test(k));
+        keys.find((k) => /^net$/i.test(k.trim()) || /nett/i.test(k));
       const totalKey =
         keys.find((k) => /^total score$/i.test(k.trim())) ||
         keys.find((k) => /^total$/i.test(k.trim())) ||
@@ -170,17 +170,17 @@ export function parseRegattaResultRows(
 
       if (!nameKey) return emptyRow();
       const name = String(r[nameKey] ?? "").trim();
-      if (!name || /^name$/i.test(name)) return emptyRow();
+      if (!name || /^(name|sailor|sailor name|competitor|competitor name|helm name)$/i.test(name)) return emptyRow();
 
       const rankRaw = rankKey != null ? r[rankKey] : null;
       const nettRaw = nettKey != null ? r[nettKey] : null;
       const totalRaw = totalKey != null ? r[totalKey] : null;
       const rank =
-        rankRaw !== "" && rankRaw != null ? Number(rankRaw) : null;
+        toNumber(rankRaw);
       const nett =
-        nettRaw !== "" && nettRaw != null ? Number(nettRaw) : null;
+        toNumber(nettRaw);
       const total =
-        totalRaw !== "" && totalRaw != null ? Number(totalRaw) : null;
+        toNumber(totalRaw);
       const clubRaw =
         clubKey != null && r[clubKey] != null
           ? String(r[clubKey]).trim()

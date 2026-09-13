@@ -183,6 +183,7 @@ export default function HomePage() {
                 width={1212}
                 height={888}
                 sizes="(max-width: 1024px) calc(100vw - 64px), 960px"
+                loading="eager"
                 className="h-auto w-full"
               />
               <span className="flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-left text-[11px] sm:text-xs text-slate-400">

@@ -1,15 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Upload,
   AlertTriangle,
   CheckCircle,
 } from "lucide-react";
 import {
-  parseRegattaResultRows,
-  inferLikelyDnsRows,
-  summarizeRegattaImport,
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
 import { parseRegattaTitle } from "@/lib/excel/parseRegattaTitle";
@@ -32,7 +29,9 @@ import {
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
-import { parseCsv, tableRowsToRecords } from "@/lib/excel/parseTabularFile";
+import { parseCsv } from "@/lib/excel/parseTabularFile";
+import { readResultsWorkbook, type ResultsSheet } from "@/lib/excel/readResultsWorkbook";
+import { NEW_IMPORT_TARGET } from "@/lib/importTarget";
 
 type Props = {
   isSuperadmin: boolean;
@@ -55,6 +54,19 @@ type RegattaImportMeta = {
   countsForRanking: boolean;
   raceCount: string | number;
 };
+
+function emptyImportMeta(): RegattaImportMeta {
+  return {
+    name: "",
+    date: "",
+    division: "Gold",
+    fleetSize: 50,
+    boatClass: DEFAULT_BOAT_CLASS,
+    geography: DEFAULT_GEOGRAPHY,
+    countsForRanking: true,
+    raceCount: "",
+  };
+}
 
 type PendingRegattaReview = {
   review: RegattaImportReview;
@@ -88,6 +100,10 @@ export function AdminRegattaImport({
   onImportComplete,
 }: Props) {
   const { toast } = useFeedback();
+  const fileBusy = useRef(false);
+  const [sheetOptions, setSheetOptions] = useState<ReturnType<typeof readResultsWorkbook>>([]);
+  const [sourceFilename, setSourceFilename] = useState("");
+  const [selectedSheet, setSelectedSheet] = useState("");
   const [dragActive, setDragActive] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
   /** 0–100; shown while reading / importing */
@@ -114,18 +130,29 @@ export function AdminRegattaImport({
   const [pdfScreenshots, setPdfScreenshots] = useState<
     { pageNumber: number; dataUrl: string }[]
   >([]);
-  const [importMeta, setImportMeta] = useState<RegattaImportMeta>({
-    name: "",
-    date: new Date().toISOString().slice(0, 10),
-    division: "Gold",
-    fleetSize: 50,
-    boatClass: DEFAULT_BOAT_CLASS,
-    geography: DEFAULT_GEOGRAPHY,
-    /** true = counts toward series rankings */
-    countsForRanking: true,
-    /** Completed races — ILCA needs ≥3 for ranking */
-    raceCount: "" as string | number,
-  });
+  const [importMeta, setImportMeta] =
+    useState<RegattaImportMeta>(emptyImportMeta);
+
+  const selectResultsSheet = (candidate: ReturnType<typeof readResultsWorkbook>[number], filename: string) => {
+    const fromFile = parseRegattaTitle(filename);
+    const fromSheet = parseRegattaTitle(candidate.sheetName);
+    const boatClass = fromSheet.boatClass || fromFile.boatClass || DEFAULT_BOAT_CLASS;
+    setSelectedSheet(candidate.sheetName);
+    setFullImportRows(candidate.rows);
+    setPendingReview(null);
+    setPendingTargetSelection(null);
+    setImportMeta({
+      name: fromFile.name || fromSheet.name || candidate.sheetName,
+      date: fromFile.date || fromSheet.date || "",
+      boatClass,
+      division: isSingleFleetClass(boatClass) ? "Open" : fromSheet.division || fromFile.division || "Gold",
+      fleetSize: candidate.rows.length,
+      raceCount: candidate.raceCount || "",
+      geography: DEFAULT_GEOGRAPHY,
+      countsForRanking: true,
+    });
+    setImportStatus(`Parsed ${candidate.rows.length} competitors from “${candidate.sheetName}”. Review the date, class, and scores before importing.`);
+  };
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -171,12 +198,15 @@ export function AdminRegattaImport({
       const unnamedNote = parsed.unnamedEntries
         ? ` ${parsed.unnamedEntries} published entr${parsed.unnamedEntries === 1 ? "y has" : "ies have"} no sailor name and will count toward fleet size but will not create a profile.`
         : "";
+      const boatClass = title.boatClass || DEFAULT_BOAT_CLASS;
       const nextMeta = {
-        ...importMeta,
-        name: title.name || importMeta.name || title.stem,
-        date: title.date || importMeta.date,
-        division: title.division || importMeta.division,
-        boatClass: title.boatClass || importMeta.boatClass,
+        ...emptyImportMeta(),
+        name: title.name || title.stem,
+        date: title.date || "",
+        division: isSingleFleetClass(boatClass)
+          ? "Open"
+          : title.division || "Gold",
+        boatClass,
         fleetSize: parsed.entries || parsed.rows.length,
         raceCount: parsed.raceCount || "",
       };
@@ -231,12 +261,21 @@ export function AdminRegattaImport({
   };
 
   const handleFile = (file: File) => {
+    if (fileBusy.current || importBusy) return;
+    setFullImportRows([]);
+    setPendingReview(null);
+    setPendingTargetSelection(null);
+    setSheetOptions([]);
+    setSelectedSheet("");
+    setImportStatus(null);
+    setImportMeta(emptyImportMeta());
     if (file.size > MAX_IMPORT_FILE_BYTES) {
       toast.error("File is too large. The upload limit is 15 MB.");
       return;
     }
     if (file.type === "application/pdf" || /\.pdf$/i.test(file.name)) {
-      void handlePdf(file);
+      fileBusy.current = true;
+      void handlePdf(file).finally(() => { fileBusy.current = false; });
       return;
     }
     const isCsv = /\.csv$/i.test(file.name);
@@ -245,6 +284,7 @@ export function AdminRegattaImport({
       toast.error("Unsupported file type. Select a .pdf, .xlsx, or .csv file.");
       return;
     }
+    fileBusy.current = true;
     setImportBusy(true);
     setImportProgress(5);
     setImportStatus(`Reading “${file.name}”…`);
@@ -269,72 +309,21 @@ export function AdminRegattaImport({
           throw new Error("Failed to read spreadsheet data.");
         }
 
-        let sheetName: string;
-        let tableRows: readonly (readonly unknown[])[];
+        let sheets: ResultsSheet[];
         if (isCsv) {
-          sheetName = file.name.replace(/\.csv$/i, "") || "CSV";
-          tableRows = parseCsv(new TextDecoder().decode(data));
+          sheets = [{ sheet: file.name.replace(/\.csv$/i, "") || "CSV", data: parseCsv(new TextDecoder().decode(data)) }];
         } else {
           const { default: readXlsxFile } = await import(
             "read-excel-file/browser"
           );
-          const [firstSheet] = await readXlsxFile(data);
-          if (!firstSheet) {
-            throw new Error("The .xlsx file contains no worksheets.");
-          }
-          sheetName = firstSheet.sheet;
-          tableRows = firstSheet.data;
+          sheets = await readXlsxFile(data);
         }
-        setImportProgress(60);
-        const records = tableRowsToRecords(tableRows);
-        setImportProgress(80);
-        const mapped = inferLikelyDnsRows(parseRegattaResultRows(records));
-        const parsedRaceCount = Math.max(
-          0,
-          ...mapped.flatMap((row) =>
-            row.races.map((race) => race.raceNumber)
-          )
-        );
-        setFullImportRows(mapped);
-        setImportPossibleDuplicates([]);
+        const candidates = readResultsWorkbook(sheets);
+        setSheetOptions(candidates);
+        setSourceFilename(file.name);
+        if (candidates.length === 1) selectResultsSheet(candidates[0], file.name);
+        else setImportStatus("Several results sheets found. Choose the fleet to import below.");
         setImportProgress(100);
-
-        // Prefer filename; fall back to first sheet name for date/title
-        const fromFile = parseRegattaTitle(file.name);
-        const fromSheet = parseRegattaTitle(sheetName);
-        const title = {
-          date: fromFile.date || fromSheet.date,
-          name: fromFile.name || fromSheet.name,
-          division: fromFile.division || fromSheet.division,
-          boatClass: fromFile.boatClass || fromSheet.boatClass,
-        };
-
-        setImportMeta((m) => ({
-          ...m,
-          name: title.name || m.name || fromFile.stem || sheetName,
-          date: title.date || m.date,
-          division: title.division
-            ? title.division
-            : /silver/i.test(file.name + sheetName)
-              ? "Silver"
-              : /gold/i.test(file.name + sheetName)
-                ? "Gold"
-                : m.division,
-          boatClass: title.boatClass || m.boatClass,
-          fleetSize: mapped.length || m.fleetSize,
-          raceCount: parsedRaceCount || m.raceCount,
-        }));
-
-        const titleNote = title.date
-          ? ` Title → ${title.name || "—"} · ${title.date}${
-              title.division ? ` · ${title.division}` : ""
-            }.`
-          : "";
-        setImportStatus(
-          `Parsed ${mapped.length} competitor rows from “${sheetName}”` +
-            summarizeRegattaImport(mapped) +
-            `.${titleNote} Confirm geography, ranking, division + date, then Import.`
-        );
       } catch (err) {
         setImportProgress(0);
         setImportStatus(null);
@@ -342,11 +331,13 @@ export function AdminRegattaImport({
           err instanceof Error ? err.message : "Failed to parse spreadsheet"
         );
       } finally {
+        fileBusy.current = false;
         setImportBusy(false);
         setTimeout(() => setImportProgress(0), 800);
       }
     };
     reader.onerror = () => {
+      fileBusy.current = false;
       setImportBusy(false);
       setImportProgress(0);
       setImportStatus(null);
@@ -459,10 +450,7 @@ export function AdminRegattaImport({
       return {
         ok: true,
         regatta: reg,
-        message:
-          resultCount > 0
-            ? `Import likely succeeded (network dropped after save). Found “${reg.name}” with ${resultCount} result row(s) linked to this regatta. Refresh admin if lists look stale.`
-            : `Regatta “${reg.name}” was saved, but this check found 0 result rows for it (no finishers stored yet). That usually means the request dropped mid-import before results were written — re-import the same file (safe; upserts).`,
+        message: `The connection dropped. “${reg.name}” currently has ${resultCount} stored result row(s), but they may be from an earlier import. Re-import the complete file and review the comparison to verify the saved state.`,
       };
     } catch {
       return { ok: false, message: "" };
@@ -486,7 +474,7 @@ export function AdminRegattaImport({
     }
     if (rowsToImport.length > MAX_IMPORT_ROWS) {
       toast.error(
-        `Too many rows (${rowsToImport.length}). Split the sheet — max ${MAX_IMPORT_ROWS} per import.`
+        `Too many rows (${rowsToImport.length}). The maximum is ${MAX_IMPORT_ROWS}; do not split an existing event into replacement uploads.`
       );
       return;
     }
@@ -550,7 +538,7 @@ export function AdminRegattaImport({
         });
         setImportProgress(100);
         setImportStatus(
-          "More than one same-day event matches this import. Select the intended event before reviewing changes."
+          "A same-day event matches this import. Select one to update or create a separate event."
         );
         return;
       }
@@ -655,7 +643,7 @@ export function AdminRegattaImport({
         setNationalityFlags([]);
         toast.error(
           "Failed to fetch — the server may have timed out after saving. " +
-            "Check Database → Regattas / Results before re-importing (re-import is safe and upserts)."
+            "Check Database → Regattas / Results, then re-import the complete file and review the comparison."
         );
         return;
       }
@@ -762,6 +750,19 @@ export function AdminRegattaImport({
           </div>
         )}
 
+        {sheetOptions.length > 1 && (
+          <label className="mt-4 block text-sm text-slate-300">
+            Results worksheet
+            <select value={selectedSheet} disabled={importBusy} className="ml-3 rounded bg-slate-900 p-2" onChange={(event) => {
+              const candidate = sheetOptions.find((sheet) => sheet.sheetName === event.target.value);
+              if (candidate) selectResultsSheet(candidate, sourceFilename);
+            }}>
+              <option value="" disabled>Choose a worksheet</option>
+              {sheetOptions.map((sheet) => <option key={sheet.sheetName} value={sheet.sheetName}>{sheet.sheetName} ({sheet.rows.length} competitors)</option>)}
+            </select>
+          </label>
+        )}
+
         {pendingTargetSelection && (
           <div className="mt-5 rounded-2xl border border-amber-400/35 bg-amber-500/8 p-4 space-y-4">
             <div className="flex items-start gap-2">
@@ -771,11 +772,15 @@ export function AdminRegattaImport({
                   Select the event to update
                 </p>
                 <p className="text-[11px] text-amber-100/70 mt-1">
-                  Multiple regattas share this date, class, and division. Choose one before SailorPath compares or replaces any results.
+                  Existing regattas share this date, class, and division. Select one to update, or create a separate event.
                 </p>
               </div>
             </div>
             <div className="grid gap-2 sm:grid-cols-2">
+              <button type="button" disabled={importBusy} className="rounded-xl border border-white/10 p-3 text-left text-white disabled:opacity-50" onClick={() => {
+                const pending = pendingTargetSelection;
+                void handleImportToDb(pending.rows, pending.meta, NEW_IMPORT_TARGET);
+              }}>Create a separate event</button>
               {pendingTargetSelection.candidates.map((candidate) => (
                 <button
                   key={candidate.id}

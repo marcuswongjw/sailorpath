@@ -3,6 +3,8 @@ export type ImportTarget = {
   slug: string;
 };
 
+export const NEW_IMPORT_TARGET = "new-regatta";
+
 export type ImportTargetResolution<T extends ImportTarget> =
   | { kind: "target"; target: T }
   | { kind: "selection-required" }
@@ -11,8 +13,7 @@ export type ImportTargetResolution<T extends ImportTarget> =
 
 /**
  * Resolves an event for an import without relying on database row order.
- * A renamed upload may reuse the sole same-day event, but multiple same-day
- * candidates require an explicit administrator selection.
+ * A different title always requires an explicit choice, even with one candidate.
  */
 export function resolveImportTarget<T extends ImportTarget>(args: {
   sameDay: T[];
@@ -25,6 +26,8 @@ export function resolveImportTarget<T extends ImportTarget>(args: {
   );
   if (exactSameDay) return { kind: "target", target: exactSameDay };
 
+  if (args.selectedId === NEW_IMPORT_TARGET && !args.slugMatch) return { kind: "new-regatta" };
+
   if (args.selectedId) {
     const selected = args.sameDay.find(
       (candidate) => candidate.id === args.selectedId
@@ -34,10 +37,7 @@ export function resolveImportTarget<T extends ImportTarget>(args: {
       : { kind: "selected-target-not-found" };
   }
 
-  if (args.sameDay.length === 1) {
-    return { kind: "target", target: args.sameDay[0] };
-  }
-  if (args.sameDay.length > 1) return { kind: "selection-required" };
+  if (args.sameDay.length > 0) return { kind: "selection-required" };
   if (args.slugMatch) return { kind: "target", target: args.slugMatch };
   return { kind: "new-regatta" };
 }

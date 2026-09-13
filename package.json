@@ -31,6 +31,7 @@
     "tesseract.js": "^6.0.1"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
     "@next/bundle-analyzer": "16.3.5",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^7.0.1",
