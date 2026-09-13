@@ -11,6 +11,7 @@ import { Trophy, Calendar, RefreshCw } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
 import { mobileRegattaBadge } from "@/components/FleetRankingsView";
+import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
 type Props = {
   initialRanked: IlcaRankedSailor[];
@@ -284,10 +285,12 @@ export function IlcaRankingsView({
             >
               <div className="flex items-start justify-between gap-2 min-w-0">
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-baseline gap-2 min-w-0">
-                    <p className="text-sky-400 font-black text-sm shrink-0 tabular-nums">
-                      #{s.displayRank}
-                    </p>
+                  <div className="flex items-center gap-2 min-w-0">
+                    <RankMedalBadge
+                      rank={s.displayRank}
+                      className="w-6 shrink-0"
+                      nonPodiumClassName="text-sky-400 font-black text-sm shrink-0 tabular-nums w-6 text-center"
+                    />
                     {handle ? (
                       <Link
                         href={`/${handle}`}
@@ -448,8 +451,11 @@ export function IlcaRankingsView({
                     key={s.sailorId}
                     className="border-t border-white/5 hover:bg-white/[0.02]"
                   >
-                    <td className="px-4 lg:px-5 py-3.5 font-bold text-sky-400">
-                      {s.displayRank}
+                    <td className="px-4 lg:px-5 py-3.5">
+                      <RankMedalBadge
+                        rank={s.displayRank}
+                        nonPodiumClassName="font-bold text-sky-400 font-mono"
+                      />
                     </td>
                     <td className="px-4 lg:px-5 py-3.5">
                       {handle ? (

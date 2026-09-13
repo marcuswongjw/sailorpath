@@ -8,7 +8,18 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import { Plus, Trash2, Edit3, Search, ChevronsUpDown } from "lucide-react";
+import Link from "next/link";
+import {
+  Plus,
+  Trash2,
+  Edit3,
+  Search,
+  ChevronsUpDown,
+  Calendar,
+  Trophy,
+  ExternalLink,
+  Medal,
+} from "lucide-react";
 import { rankingPeriodOptions } from "@/lib/datesSg";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
@@ -19,7 +30,7 @@ import {
   type ResultFormState,
 } from "@/components/admin/adminForms";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
-import { Medal } from "lucide-react";
+import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
 const DNS_PERIODS = rankingPeriodOptions(4);
 
@@ -343,13 +354,66 @@ export function AdminResultsPanel({
         </div>
       </div>
 
-      {selectedRegattaIdForResultEdit &&
-        selectedRegatta?.countsForRanking === false && (
-          <div className="rounded-xl border border-sky-500/30 bg-sky-500/10 px-4 py-3 text-xs font-bold text-sky-200">
-            This regatta is <strong>non-ranking</strong> — results here are for
-            logbook only and are not used in Best 3 of 5 series scoring.
+      {selectedRegatta && (
+        <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 bg-[#131520] flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1.5 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[10px] font-black uppercase tracking-wider text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">
+                {selectedRegatta.boatClass || "Optimist"}
+              </span>
+              {selectedRegatta.division && (
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300 bg-white/5 px-2 py-0.5 rounded border border-white/10">
+                  {selectedRegatta.division}
+                </span>
+              )}
+              <span
+                className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
+                  selectedRegatta.countsForRanking === false
+                    ? "text-sky-300 bg-sky-500/10 border-sky-500/20"
+                    : "text-emerald-300 bg-emerald-500/10 border-emerald-500/20"
+                }`}
+              >
+                {selectedRegatta.countsForRanking === false
+                  ? "Non-Ranking"
+                  : "Series Ranking"}
+              </span>
+              <h4 className="text-sm font-bold text-white truncate">
+                {selectedRegatta.name}
+              </h4>
+            </div>
+            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-400 pt-1">
+              <span className="flex items-center gap-1">
+                <Calendar className="h-3.5 w-3.5 text-slate-500" />
+                {regattaDateLabel(selectedRegatta.date)}
+              </span>
+              <span className="flex items-center gap-1">
+                <Trophy className="h-3.5 w-3.5 text-slate-500" />
+                Fleet Size: {selectedRegatta.totalFleetSize}
+                {selectedRegatta.raceCount != null
+                  ? ` · ${selectedRegatta.raceCount} Races`
+                  : ""}
+              </span>
+            </div>
           </div>
-        )}
+
+          <div className="flex items-center gap-2 shrink-0 border-t md:border-t-0 pt-3 md:pt-0 border-white/5">
+            {selectedRegatta.slug && (
+              <Link
+                href={
+                  (selectedRegatta.boatClass || "").toLowerCase().includes("ilca")
+                    ? `/sg/ilca4/regattas/${selectedRegatta.slug}`
+                    : `/sg/optimist/regattas/${selectedRegatta.slug}`
+                }
+                target="_blank"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-1.5 text-xs font-bold text-slate-300 transition-all"
+              >
+                <ExternalLink className="h-3.5 w-3.5 text-orange-400" />
+                View Public Page
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
 
       {!selectedRegattaIdForResultEdit && (
         <AdminEmptyState
@@ -581,29 +645,18 @@ export function AdminResultsPanel({
           </p>
 
           <div className="overflow-x-auto max-w-full -mx-1 px-1">
-            <table className="w-full text-left border-collapse text-xs min-w-[640px]">
+            <table className="w-full text-left border-collapse text-xs min-w-[720px]">
               <thead>
                 <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">Rank</th>
-                  <th className="py-3 sm:py-4 px-4 sm:px-6">Name</th>
-                  <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">
-                    Gender
-                  </th>
-                  <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">
-                    Birth year
-                  </th>
-                  <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">
-                    Total Score
-                  </th>
-                  <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">
-                    Nett Score
-                  </th>
-                  <th className="py-3 sm:py-4 px-3 sm:px-4 text-center">
-                    Status
-                  </th>
-                  <th className="py-3 sm:py-4 px-4 sm:px-6 text-right">
-                    Actions
-                  </th>
+                  <th className="py-3 px-3 text-center w-14">Rank</th>
+                  <th className="py-3 px-4 sm:px-6">Competitor / Sailor</th>
+                  <th className="py-3 px-3 text-center">Sail #</th>
+                  <th className="py-3 px-3 text-center">Gender</th>
+                  <th className="py-3 px-3 text-center">Birth year</th>
+                  <th className="py-3 px-3 text-center">Total</th>
+                  <th className="py-3 px-3 text-center font-black text-orange-300">Nett</th>
+                  <th className="py-3 px-3 text-center">Status</th>
+                  <th className="py-3 px-4 sm:px-6 text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
@@ -620,7 +673,7 @@ export function AdminResultsPanel({
                   return (
                     <tr
                       key={res.id}
-                      className={`hover:bg-white/5 transition-colors ${
+                      className={`hover:bg-white/[0.03] transition-colors ${
                         overseas
                           ? "bg-sky-500/[0.04]"
                           : dns
@@ -628,33 +681,46 @@ export function AdminResultsPanel({
                             : ""
                       }`}
                     >
-                      <td className="py-4 px-4 text-center font-mono font-bold text-orange-400">
-                        {res.rank}
-                        {overseas ? "†" : dns ? "*" : ""}
+                      <td className="py-3 px-3 text-center">
+                        <RankMedalBadge
+                          rank={res.rank}
+                          suffix={overseas ? "†" : dns ? "*" : ""}
+                          nonPodiumClassName="font-bold text-orange-400 font-mono"
+                        />
                       </td>
-                      <td className="py-4 px-6 font-bold text-white">
-                        {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
+                      <td className="py-3 px-4 sm:px-6 min-w-[140px]">
+                        <div className="font-bold text-white leading-tight">
+                          {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
+                        </div>
+                        <div className="text-[10px] text-slate-400 mt-0.5 truncate max-w-[220px]">
+                          {[sailor?.club, sailor?.school, sailor?.nationality]
+                            .filter(Boolean)
+                            .join(" · ") || "—"}
+                        </div>
                       </td>
-                      <td className="py-4 px-4 text-center text-slate-300">
+                      <td className="py-3 px-3 text-center font-mono font-bold text-slate-300">
+                        {sailor?.sailNumber || sailor?.sailNumberIlca4 || "—"}
+                      </td>
+                      <td className="py-3 px-3 text-center text-slate-300">
                         {sailor?.gender || "—"}
                       </td>
-                      <td className="py-4 px-4 text-center font-mono text-slate-300">
+                      <td className="py-3 px-3 text-center font-mono text-slate-300">
                         {birthY}
                       </td>
-                      <td className="py-4 px-4 text-center font-mono">
+                      <td className="py-3 px-3 text-center font-mono text-slate-400">
                         {res.totalScore != null ? res.totalScore : "—"}
                       </td>
-                      <td className="py-4 px-4 text-center font-mono">
+                      <td className="py-3 px-3 text-center font-mono font-black text-orange-300">
                         {res.nettScore != null ? res.nettScore : "—"}
                       </td>
-                      <td className="py-4 px-4 text-center">
+                      <td className="py-3 px-3 text-center">
                         <span
-                          className={`inline-block px-2 py-0.5 rounded text-[10px] ${
+                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
                             overseas
-                              ? "bg-sky-500/10 text-sky-300 border border-sky-500/25"
+                              ? "bg-sky-500/15 text-sky-300 border border-sky-500/30"
                               : dns
-                                ? "bg-rose-500/10 text-rose-500 border border-rose-500/20"
-                                : "bg-slate-800 text-slate-400"
+                                ? "bg-rose-500/15 text-rose-400 border border-rose-500/30"
+                                : "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
                           }`}
                         >
                           {overseas ? "Overseas" : dns ? "DNS" : "Finished"}
@@ -704,7 +770,7 @@ export function AdminResultsPanel({
                 })}
                 {eventResultCount === 0 && (
                   <tr>
-                    <td colSpan={8} className="p-0">
+                    <td colSpan={9} className="p-0">
                       <AdminEmptyState
                         icon={Medal}
                         title="No results for this event"
@@ -730,7 +796,7 @@ export function AdminResultsPanel({
                 )}
                 {eventResultCount > 0 && eventResults.length === 0 && (
                   <tr>
-                    <td colSpan={8} className="p-0">
+                    <td colSpan={9} className="p-0">
                       <AdminEmptyState
                         icon={Search}
                         title={`No sailors match “${sailorFilter.trim()}”`}

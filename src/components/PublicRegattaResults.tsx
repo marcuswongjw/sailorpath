@@ -2,6 +2,7 @@ import Link from "next/link";
 import { birthYear } from "@/lib/age";
 import { formatGenderLabel } from "@/lib/gender";
 import { getPercentileBadge } from "@/lib/ranking";
+import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import type { getResultsForRegatta } from "@/lib/queries";
 import type { OfficialRaceResultInput } from "@/types/raceResult";
 
@@ -93,10 +94,12 @@ export function PublicRegattaResults({
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-baseline gap-2">
-                    <span className={`${colors.rank} shrink-0 font-black tabular-nums`}>
-                      #{result.rank}{overseas ? "†" : dns ? "*" : ""}
-                    </span>
+                  <div className="flex items-center gap-2">
+                    <RankMedalBadge
+                      rank={result.rank}
+                      suffix={overseas ? "†" : dns ? "*" : ""}
+                      nonPodiumClassName={`${colors.rank} shrink-0 font-black tabular-nums`}
+                    />
                     <Link
                       href={`/${result.handle}`}
                       prefetch
@@ -177,9 +180,13 @@ export function PublicRegattaResults({
               const dns = Boolean(result.isDns) && !overseas;
               const races = new Map(result.raceResults.map((race) => [race.raceNumber, race]));
               return (
-                <tr key={`${result.sailorId}-${result.regattaId}`} className="border-t border-white/5">
-                  <td className={`px-3 py-3 text-center font-mono font-bold ${colors.rank}`}>
-                    {result.rank}{overseas ? "†" : dns ? "*" : ""}
+                <tr key={`${result.sailorId}-${result.regattaId}`} className="border-t border-white/5 hover:bg-white/[0.02] transition-colors">
+                  <td className="px-3 py-3 text-center">
+                    <RankMedalBadge
+                      rank={result.rank}
+                      suffix={overseas ? "†" : dns ? "*" : ""}
+                      nonPodiumClassName={colors.rank}
+                    />
                   </td>
                   <td className="px-3 py-3">
                     <Link href={`/${result.handle}`} prefetch className={`${colors.link} font-bold text-white`}>

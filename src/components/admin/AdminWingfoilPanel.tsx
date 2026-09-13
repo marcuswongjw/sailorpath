@@ -27,6 +27,7 @@ import {
   type WingfoilRaceScore,
 } from "@/lib/wingfoil";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
 export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boolean }) {
   const { toast } = useFeedback();
@@ -728,22 +729,8 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                       key={`${sailor.name}-${sailor.sailNumber}`}
                       className="hover:bg-white/[0.02] transition-colors"
                     >
-                      <td className="px-3 py-3 text-center font-black text-white">
-                        {sailor.rank === 1 ? (
-                          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-400 text-slate-950 font-black text-[11px] shadow-sm shadow-amber-400/30">
-                            1
-                          </span>
-                        ) : sailor.rank === 2 ? (
-                          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-300 text-slate-950 font-black text-[11px]">
-                            2
-                          </span>
-                        ) : sailor.rank === 3 ? (
-                          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-700 text-amber-100 font-black text-[11px]">
-                            3
-                          </span>
-                        ) : (
-                          <span className="text-slate-400 font-bold">{sailor.rank}</span>
-                        )}
+                      <td className="px-3 py-3 text-center">
+                        <RankMedalBadge rank={sailor.rank} />
                       </td>
                       <td className="px-3 py-3 font-mono font-bold text-white">
                         {sailor.sailNumber}

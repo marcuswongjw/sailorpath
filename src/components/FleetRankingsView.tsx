@@ -17,6 +17,7 @@ import { trackClientUsage } from "@/lib/clientUsage";
 import { formatGenderLabel, normalizeGender } from "@/lib/gender";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
 import { useAccount } from "@/components/AccountProvider";
+import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
 function scoreCell(
   score: number | undefined,
@@ -685,11 +686,13 @@ export function FleetRankingsView({
               className="w-full max-w-full min-w-0 rounded-xl px-3 py-2.5 border border-white/5 bg-[#131520]/80"
             >
               <div className="flex items-center justify-between gap-2 min-w-0">
-                <div className="min-w-0 flex-1 flex items-baseline gap-2">
-                  <p className="text-orange-400 font-black text-sm shrink-0 tabular-nums w-7">
-                    #{i + 1}
-                  </p>
-                  <div className="min-w-0">
+                <div className="min-w-0 flex-1 flex items-center gap-2">
+                  <RankMedalBadge
+                    rank={i + 1}
+                    className="w-6 shrink-0"
+                    nonPodiumClassName="text-orange-400 font-black text-sm shrink-0 tabular-nums w-6 text-center"
+                  />
+                  <div className="min-w-0 flex-1">
                     <Link
                       href={`/${s.handle}`}
                       prefetch
@@ -890,8 +893,11 @@ export function FleetRankingsView({
                     key={s.id}
                     className="border-t border-white/5 hover:bg-white/[0.02]"
                   >
-                    <td className="sticky left-0 z-10 px-4 lg:px-5 py-3.5 font-bold text-orange-400 bg-[#0e1018]">
-                      {i + 1}
+                    <td className="sticky left-0 z-10 px-4 lg:px-5 py-3.5 bg-[#0e1018]">
+                      <RankMedalBadge
+                        rank={i + 1}
+                        nonPodiumClassName="font-bold text-orange-400 font-mono"
+                      />
                     </td>
                     <td className="sticky left-12 z-10 px-4 lg:px-5 py-3.5 bg-[#0e1018]">
                       <Link

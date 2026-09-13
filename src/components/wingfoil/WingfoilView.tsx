@@ -13,6 +13,7 @@ import {
   SINGAPORE_WINGFOIL_REGATTAS,
   WINGFOIL_SPECIFICATIONS,
 } from "@/lib/wingfoil";
+import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
 export function WingfoilView() {
   const [selectedRegattaId, setSelectedRegattaId] = useState<string>(
@@ -179,8 +180,11 @@ export function WingfoilView() {
                 <tbody className="divide-y divide-white/5 font-sans">
                   {displayResults.map((racer) => (
                     <tr key={racer.rank + racer.name} className="hover:bg-white/[0.02] transition-colors">
-                      <td className="px-4 py-3 text-center font-mono font-bold text-teal-400">
-                        #{racer.rank}
+                      <td className="px-4 py-3 text-center">
+                        <RankMedalBadge
+                          rank={racer.rank}
+                          nonPodiumClassName="font-mono font-bold text-teal-400"
+                        />
                       </td>
                       <td className="px-4 py-3">
                         <p className="font-bold text-white">{racer.name}</p>
@@ -246,9 +250,11 @@ export function WingfoilView() {
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-500/15 text-teal-400 font-mono font-bold text-xs border border-teal-500/30">
-                      #{racer.rank}
-                    </span>
+                    <RankMedalBadge
+                      rank={racer.rank}
+                      className="h-7 w-7 text-xs"
+                      nonPodiumClassName="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-500/15 text-teal-400 font-mono font-bold text-xs border border-teal-500/30"
+                    />
                     <div>
                       <p className="font-bold text-white text-sm leading-tight">
                         {racer.name}
