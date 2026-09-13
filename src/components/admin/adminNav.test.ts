@@ -10,9 +10,12 @@ describe("parseAdminNav", () => {
     });
   });
 
-  it("parses stats / import / ranking / changelog tabs", () => {
+  it("parses stats / import / ranking / wingfoil / changelog tabs", () => {
     expect(parseAdminNav(new URLSearchParams("tab=stats")).tab).toBe("stats");
     expect(parseAdminNav(new URLSearchParams("tab=ilca")).tab).toBe("ilca");
+    expect(parseAdminNav(new URLSearchParams("tab=wingfoil")).tab).toBe(
+      "wingfoil"
+    );
     expect(parseAdminNav(new URLSearchParams("tab=changelog")).tab).toBe(
       "changelog"
     );
@@ -107,6 +110,9 @@ describe("serializeAdminNav", () => {
   it("omits sub for top-level tabs", () => {
     expect(serializeAdminNav({ tab: "stats", sub: "sailors" })).toBe(
       "tab=stats"
+    );
+    expect(serializeAdminNav({ tab: "wingfoil", sub: "sailors" })).toBe(
+      "tab=wingfoil"
     );
     expect(serializeAdminNav({ tab: "changelog", sub: "sailors" })).toBe(
       "tab=changelog"

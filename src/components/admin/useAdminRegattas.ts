@@ -41,6 +41,8 @@ export function useAdminRegattas({
   const [regattaSearch, setRegattaSearch] = useState("");
   const [regattaDivisionFilter, setRegattaDivisionFilter] =
     useState<string>("all");
+  /** all | optimist | ilca | wingfoil */
+  const [regattaClassFilter, setRegattaClassFilter] = useState<string>("all");
   /** all | series | nonranking */
   const [regattaRankingFilter, setRegattaRankingFilter] =
     useState<string>("all");
@@ -57,12 +59,24 @@ export function useAdminRegattas({
         ) {
           return false;
         }
+        if (regattaClassFilter !== "all") {
+          const bc = (r.boatClass || "Optimist").toLowerCase();
+          if (regattaClassFilter === "optimist" && !bc.includes("optimist")) {
+            return false;
+          }
+          if (regattaClassFilter === "ilca" && !/ilca|laser/i.test(bc)) {
+            return false;
+          }
+          if (regattaClassFilter === "wingfoil" && !bc.includes("wingfoil")) {
+            return false;
+          }
+        }
         const isNon = r.countsForRanking === false;
         if (regattaRankingFilter === "series" && isNon) return false;
         if (regattaRankingFilter === "nonranking" && !isNon) return false;
         if (!q) return true;
         const hay =
-          `${r.name || ""} ${r.date || ""} ${r.division || ""} ${r.slug || ""}`.toLowerCase();
+          `${r.name || ""} ${r.date || ""} ${r.division || ""} ${r.boatClass || ""} ${r.slug || ""}`.toLowerCase();
         return hay.includes(q);
       })
       .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
@@ -70,6 +84,7 @@ export function useAdminRegattas({
     regattaList,
     regattaSearch,
     regattaDivisionFilter,
+    regattaClassFilter,
     regattaRankingFilter,
   ]);
 
@@ -183,6 +198,8 @@ export function useAdminRegattas({
     setRegattaSearch,
     regattaDivisionFilter,
     setRegattaDivisionFilter,
+    regattaClassFilter,
+    setRegattaClassFilter,
     regattaRankingFilter,
     setRegattaRankingFilter,
     editingRegattaId,

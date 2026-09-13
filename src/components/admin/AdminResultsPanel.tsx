@@ -68,9 +68,13 @@ export function AdminResultsPanel({
   handleFillDnsForPeriod,
 }: AdminResultsPanelProps) {
   const [regattaQuery, setRegattaQuery] = useState("");
+  const [regattaClassFilter, setRegattaClassFilter] = useState<
+    "all" | "optimist" | "ilca" | "wingfoil"
+  >("all");
   const [regattaRankingFilter, setRegattaRankingFilter] = useState<
     "all" | "series" | "nonranking"
   >("all");
+  const [dnsAutomationOpen, setDnsAutomationOpen] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [sailorFilter, setSailorFilter] = useState("");
   const pickerRef = useRef<HTMLDivElement>(null);
@@ -84,16 +88,28 @@ export function AdminResultsPanel({
     const q = regattaQuery.trim().toLowerCase();
     return [...regattaList]
       .filter((r) => {
+        if (regattaClassFilter !== "all") {
+          const bc = (r.boatClass || "Optimist").toLowerCase();
+          if (regattaClassFilter === "optimist" && !bc.includes("optimist")) {
+            return false;
+          }
+          if (regattaClassFilter === "ilca" && !/ilca|laser/i.test(bc)) {
+            return false;
+          }
+          if (regattaClassFilter === "wingfoil" && !bc.includes("wingfoil")) {
+            return false;
+          }
+        }
         const isNon = r.countsForRanking === false;
         if (regattaRankingFilter === "series" && isNon) return false;
         if (regattaRankingFilter === "nonranking" && !isNon) return false;
         if (!q) return true;
         const hay =
-          `${r.name || ""} ${r.date || ""} ${r.division || ""} ${r.slug || ""}`.toLowerCase();
+          `${r.name || ""} ${r.date || ""} ${r.division || ""} ${r.boatClass || ""} ${r.slug || ""}`.toLowerCase();
         return hay.includes(q);
       })
       .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-  }, [regattaList, regattaQuery, regattaRankingFilter]);
+  }, [regattaList, regattaQuery, regattaClassFilter, regattaRankingFilter]);
 
   const sailorById = useMemo(() => {
     const m = new Map<string, SailorAdmin>();
@@ -150,39 +166,57 @@ export function AdminResultsPanel({
 
   return (
     <div className="w-full min-w-0 space-y-6">
-      {/* Period-wide DNS */}
-      <div className="glass-panel rounded-3xl p-6 border border-rose-500/20 bg-rose-500/[0.03] space-y-3">
-        <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-          Ensure DNS for fleet period
-        </h3>
-        <p className="text-xs text-slate-500 leading-relaxed">
-          Gold (or Silver) fleet sailors must have a result for{" "}
-          <strong className="text-slate-400">every ranking regatta</strong> in
-          the half-year they are in that fleet. Missing events get DNS = fleet
-          size + 1. Run this after importing period regattas. Edit overseas
-          commitment scores afterwards.
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {DNS_PERIODS.flatMap(({ period, label }) =>
-            (["Gold", "Silver"] as const).map((fleet) => (
-              <button
-                key={`${fleet}-${period.year}-${period.half}`}
-                type="button"
-                disabled={!isSuperadmin}
-                onClick={() =>
-                  void handleFillDnsForPeriod(fleet, period.year, period.half)
-                }
-                className={
-                  fleet === "Gold"
-                    ? "rounded-full bg-rose-600/90 hover:bg-rose-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
-                    : "rounded-full bg-slate-700 hover:bg-slate-600 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
-                }
-              >
-                {fleet} · {label.replace(" (Current)", "")}
-              </button>
-            ))
-          )}
+      {/* Optimist Period-wide DNS (Collapsible) */}
+      <div className="glass-panel rounded-2xl p-4 border border-rose-500/20 bg-rose-500/[0.03] space-y-2">
+        <div
+          className="flex items-center justify-between cursor-pointer select-none"
+          onClick={() => setDnsAutomationOpen((o) => !o)}
+        >
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-rose-500" />
+            <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+              Optimist Fleet DNS Automation (Gold / Silver)
+            </h3>
+          </div>
+          <button
+            type="button"
+            className="text-xs text-rose-300/80 hover:text-white font-semibold transition-colors"
+          >
+            {dnsAutomationOpen ? "Collapse" : "Expand Tool"}
+          </button>
         </div>
+        {dnsAutomationOpen && (
+          <div className="space-y-3 pt-2 border-t border-rose-500/15">
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Gold (or Silver) fleet sailors must have a result for{" "}
+              <strong className="text-slate-300">every ranking regatta</strong> in
+              the half-year they are in that fleet. Missing events get DNS = fleet
+              size + 1. Run this after importing period regattas. Edit overseas
+              commitment scores afterwards.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {DNS_PERIODS.flatMap(({ period, label }) =>
+                (["Gold", "Silver"] as const).map((fleet) => (
+                  <button
+                    key={`${fleet}-${period.year}-${period.half}`}
+                    type="button"
+                    disabled={!isSuperadmin}
+                    onClick={() =>
+                      void handleFillDnsForPeriod(fleet, period.year, period.half)
+                    }
+                    className={
+                      fleet === "Gold"
+                        ? "rounded-full bg-rose-600/90 hover:bg-rose-500 disabled:opacity-40 px-3.5 py-1.5 text-xs font-bold text-white"
+                        : "rounded-full bg-slate-700 hover:bg-slate-600 disabled:opacity-40 px-3.5 py-1.5 text-xs font-bold text-white"
+                    }
+                  >
+                    {fleet} · {label.replace(" (Current)", "")}
+                  </button>
+                ))
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Searchable regatta picker */}
@@ -193,30 +227,58 @@ export function AdminResultsPanel({
               Select regatta event
             </h3>
             <p className="text-xs text-slate-500">
-              Search by name, date, or division — then edit scores below.
+              Search by name, date, division, or boat class — then edit scores below.
             </p>
           </div>
-          <div className="flex flex-wrap gap-1">
-            {(
-              [
-                ["all", "All"],
-                ["series", "Series"],
-                ["nonranking", "Non-ranking"],
-              ] as const
-            ).map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                onClick={() => setRegattaRankingFilter(id)}
-                className={`rounded-full px-3 py-1.5 text-[10px] font-bold ${
-                  regattaRankingFilter === id
-                    ? "bg-orange-600 text-white"
-                    : "bg-white/5 text-slate-400 hover:text-white"
-                }`}
-              >
-                {label}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center gap-2">
+            {/* Class Filter */}
+            <div className="flex rounded-full bg-white/5 p-0.5 border border-white/10">
+              {(
+                [
+                  ["all", "All Classes"],
+                  ["optimist", "Optimist"],
+                  ["ilca", "ILCA 4"],
+                  ["wingfoil", "WingFoil"],
+                ] as const
+              ).map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setRegattaClassFilter(id)}
+                  className={`rounded-full px-2.5 py-1 text-[10px] font-bold transition-all ${
+                    regattaClassFilter === id
+                      ? "bg-orange-600 text-white"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+
+            {/* Ranking Filter */}
+            <div className="flex rounded-full bg-white/5 p-0.5 border border-white/10">
+              {(
+                [
+                  ["all", "All"],
+                  ["series", "Series"],
+                  ["nonranking", "Non-ranking"],
+                ] as const
+              ).map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setRegattaRankingFilter(id)}
+                  className={`rounded-full px-2.5 py-1 text-[10px] font-bold transition-all ${
+                    regattaRankingFilter === id
+                      ? "bg-slate-700 text-white"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 

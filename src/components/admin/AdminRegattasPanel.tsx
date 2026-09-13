@@ -19,6 +19,8 @@ export type AdminRegattasPanelProps = {
   setRegattaSearch: (v: string) => void;
   regattaDivisionFilter: string;
   setRegattaDivisionFilter: (v: string) => void;
+  regattaClassFilter?: string;
+  setRegattaClassFilter?: (v: string) => void;
   regattaRankingFilter: string;
   setRegattaRankingFilter: (v: string) => void;
   editingRegattaId: string | null;
@@ -35,6 +37,8 @@ export function AdminRegattasPanel({
   setRegattaSearch,
   regattaDivisionFilter,
   setRegattaDivisionFilter,
+  regattaClassFilter = "all",
+  setRegattaClassFilter,
   regattaRankingFilter,
   setRegattaRankingFilter,
   editingRegattaId,
@@ -55,9 +59,24 @@ export function AdminRegattasPanel({
                       type="search"
                       value={regattaSearch}
                       onChange={(e) => setRegattaSearch(e.target.value)}
-                      placeholder="Name, date, division…"
+                      placeholder="Name, date, division, class…"
                       className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
                     />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                      Class
+                    </label>
+                    <select
+                      value={regattaClassFilter}
+                      onChange={(e) => setRegattaClassFilter?.(e.target.value)}
+                      className="mt-1 w-full sm:w-36 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                    >
+                      <option value="all">All Classes</option>
+                      <option value="optimist">Optimist</option>
+                      <option value="ilca">ILCA 4 / 6</option>
+                      <option value="wingfoil">WingFoil</option>
+                    </select>
                   </div>
                   <div>
                     <label className="text-[10px] font-bold text-slate-500 uppercase">
@@ -66,9 +85,9 @@ export function AdminRegattasPanel({
                     <select
                       value={regattaDivisionFilter}
                       onChange={(e) => setRegattaDivisionFilter(e.target.value)}
-                      className="mt-1 w-full sm:w-40 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full sm:w-36 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
                     >
-                      <option value="all">All</option>
+                      <option value="all">All Divisions</option>
                       <option value="Gold">Gold</option>
                       <option value="Silver">Silver</option>
                       <option value="Both">Both</option>
@@ -82,7 +101,7 @@ export function AdminRegattasPanel({
                     <select
                       value={regattaRankingFilter}
                       onChange={(e) => setRegattaRankingFilter(e.target.value)}
-                      className="mt-1 w-full sm:w-40 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full sm:w-36 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
                     >
                       <option value="all">All events</option>
                       <option value="series">Series only</option>
@@ -95,6 +114,7 @@ export function AdminRegattasPanel({
                       setEditingRegattaId("new");
                       setRegattaForm({
                         ...emptyRegattaForm(),
+                        boatClass: regattaClassFilter === "wingfoil" ? "WingFoil" : regattaClassFilter === "ilca" ? "ILCA 4" : "Optimist",
                         date: new Date().toISOString().split("T")[0],
                       });
                     }}
@@ -385,9 +405,34 @@ export function AdminRegattasPanel({
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
-                              Class
-                            </label>
+                            <div className="flex items-center justify-between">
+                              <label className="text-[10px] font-bold text-slate-500 uppercase">
+                                Class
+                              </label>
+                              <div className="flex gap-1">
+                                {(["Optimist", "ILCA 4", "ILCA 6", "WingFoil"] as const).map(
+                                  (cls) => (
+                                    <button
+                                      key={cls}
+                                      type="button"
+                                      onClick={() =>
+                                        setRegattaForm({
+                                          ...regattaForm,
+                                          boatClass: cls,
+                                        })
+                                      }
+                                      className={`px-1.5 py-0.5 rounded text-[9px] font-bold transition-all ${
+                                        regattaForm.boatClass === cls
+                                          ? "bg-orange-600 text-white"
+                                          : "bg-white/5 text-slate-400 hover:text-white"
+                                      }`}
+                                    >
+                                      {cls}
+                                    </button>
+                                  )
+                                )}
+                              </div>
+                            </div>
                             <input
                               type="text"
                               value={regattaForm.boatClass || "Optimist"}
@@ -398,7 +443,7 @@ export function AdminRegattasPanel({
                                 })
                               }
                               className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
-                              placeholder="Optimist"
+                              placeholder="Optimist, ILCA 4, WingFoil..."
                             />
                           </div>
                         </div>

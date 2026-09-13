@@ -16,6 +16,7 @@ import {
   GitCompareArrows,
   Medal,
   ScrollText,
+  Flame,
 } from "lucide-react";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
@@ -126,6 +127,13 @@ const AdminAuditLogPanel = dynamic(
   () =>
     import("@/components/admin/AdminAuditLogPanel").then(
       (m) => m.AdminAuditLogPanel
+    ),
+  { loading: () => <PanelLoading /> }
+);
+const AdminWingfoilPanel = dynamic(
+  () =>
+    import("@/components/admin/AdminWingfoilPanel").then(
+      (m) => m.AdminWingfoilPanel
     ),
   { loading: () => <PanelLoading /> }
 );
@@ -389,15 +397,16 @@ function AdminDashboardInner() {
       </div>
 
       {/* Primary tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
         {(
           [
-            ["stats", "Stats", "Platform stats", Activity],
-            ["import", "Excel", "Regatta Excel", FileSpreadsheet],
-            ["edit", "Database", "Sailors & results", Database],
-            ["ops", "Ops", "Claims & support", ClipboardList],
-            ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
+            ["edit", "Database", "Database", Database],
+            ["wingfoil", "WingFoil", "WingFoil", Flame],
             ["ilca", "ILCA", "ILCA ranking", Medal],
+            ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
+            ["import", "Excel", "Regatta Excel", FileSpreadsheet],
+            ["ops", "Ops", "Claims & support", ClipboardList],
+            ["stats", "Stats", "Platform stats", Activity],
             ["changelog", "Log", "Change log", ScrollText],
           ] as const
         ).map(([key, shortLabel, label, Icon]) => (
@@ -663,6 +672,12 @@ function AdminDashboardInner() {
               onSailorsChange={data.setSailorList}
               onMergePair={sailors.handleMergePair}
             />
+          </div>
+        )}
+
+        {activeTab === "wingfoil" && (
+          <div className="w-full min-w-0">
+            <AdminWingfoilPanel isSuperadmin={isSuperadmin} />
           </div>
         )}
 
