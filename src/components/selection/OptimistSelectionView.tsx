@@ -93,6 +93,115 @@ export function OptimistSelectionView({
     return { rank, isSafe, isBubble, isReserve, pointsToCutoff };
   }, [mySailor, combinedScores]);
 
+  if (!accountReady) {
+    return (
+      <div className="mx-auto w-full max-w-4xl px-4 py-20 flex flex-col items-center justify-center space-y-3">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-orange-500 border-t-transparent" />
+        <p className="text-xs text-slate-500 font-medium">Verifying member access…</p>
+      </div>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:py-16 space-y-8">
+        {/* Breadcrumb back */}
+        <div>
+          <Link
+            href="/sg/optimist/gold"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+          >
+            <span>← Back to Optimist Gold Rankings</span>
+          </Link>
+        </div>
+
+        {/* Member Access Gate Card */}
+        <div className="glass-card relative overflow-hidden rounded-3xl border border-orange-500/25 bg-[#0c0d14] p-6 sm:p-10 text-center space-y-6">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-72 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-500/15 border border-orange-500/30 text-orange-400 shadow-lg shadow-orange-500/10">
+            <Lock className="h-8 w-8" />
+          </div>
+
+          <div className="relative space-y-2 max-w-xl mx-auto">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-0.5 text-[11px] font-bold text-orange-400">
+              <Trophy className="h-3 w-3" />
+              <span>Singapore Optimist Class</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              2026 Selection Trials
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Official selection trials standings, combined series points, and provisional team rosters for the{" "}
+              <strong className="text-white">2026 Asian &amp; Oceania Championship</strong> and{" "}
+              <strong className="text-white">Perth Training Camp</strong> are exclusive to registered members.
+            </p>
+          </div>
+
+          {/* Action buttons */}
+          <div className="relative flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto pt-2">
+            <Link
+              href="/login?next=%2Fsg%2Foptimist%2Fselection"
+              className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 py-3.5 shadow-lg shadow-orange-950/30 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
+            >
+              Sign In to View Selection
+            </Link>
+            <Link
+              href="/register?next=%2Fsg%2Foptimist%2Fselection"
+              className="w-full sm:w-auto rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-6 py-3.5 border border-white/10 inline-flex items-center justify-center min-h-[44px]"
+            >
+              Create Free Account
+            </Link>
+          </div>
+
+          {/* Feature Highlights Grid */}
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-white/5 text-left">
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
+              <div className="flex items-center gap-2">
+                <Trophy className="h-4 w-4 text-orange-400 shrink-0" />
+                <h2 className="text-xs font-bold text-white">Asian &amp; Oceania 2026 Roster</h2>
+              </div>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Top 10 qualifying standings, gender quotas (min 3 per gender), and reserves.
+              </p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-sky-400 shrink-0" />
+                <h2 className="text-xs font-bold text-white">Perth Training Camp Roster</h2>
+              </div>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Age bucket allocations for birth years 2013, 2014, and 2015.
+              </p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
+              <div className="flex items-center gap-2">
+                <Award className="h-4 w-4 text-amber-400 shrink-0" />
+                <h2 className="text-xs font-bold text-white">Combined Low-Point Matrices</h2>
+              </div>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Real-time race scores, automatic discard formulas, and tie-break rules.
+              </p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
+              <div className="flex items-center gap-2">
+                <Compass className="h-4 w-4 text-emerald-400 shrink-0" />
+                <h2 className="text-xs font-bold text-white">Athlete Cushion Buffers</h2>
+              </div>
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Claimed athlete spotlight with exact point cushions to qualification cutoffs.
+              </p>
+            </div>
+          </div>
+
+          <p className="text-[11px] text-slate-500">
+            Free access for Singapore sailors, sailing parents, and registered coaches.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 py-6 sm:py-10 space-y-6">
       {/* ── Header ── */}
@@ -236,40 +345,6 @@ export function OptimistSelectionView({
             >
               View Race Breakdown
             </button>
-          </div>
-        </div>
-      )}
-
-      {/* ── Unauthenticated Visitors Gating Banner ── */}
-      {accountReady && !isLoggedIn && (
-        <div className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-start gap-3">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/20 text-orange-400">
-              <Lock className="h-4 w-4" />
-            </span>
-            <div>
-              <p className="text-sm font-bold text-white">
-                Detailed selection matrices & complete rosters are for registered accounts
-              </p>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Create a free SailorPath account to view complete 10-person qualifying rosters,
-                tie-breaks, individual race scores, and reserves.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 shrink-0 pl-11 sm:pl-0">
-            <Link
-              href="/register?next=%2Fsg%2Foptimist%2Fselection"
-              className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-500 transition-colors"
-            >
-              Create free account
-            </Link>
-            <Link
-              href="/login?next=%2Fsg%2Foptimist%2Fselection"
-              className="text-xs font-semibold text-slate-400 hover:text-white px-2"
-            >
-              Log in
-            </Link>
           </div>
         </div>
       )}

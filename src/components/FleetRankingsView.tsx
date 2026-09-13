@@ -387,7 +387,12 @@ export function FleetRankingsView({
                   className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[11px] font-bold text-orange-300 hover:bg-orange-500/20 transition-colors"
                 >
                   <Trophy className="h-3 w-3 text-orange-400" />
-                  <span>2026 Selection Trials (Asian & Perth) →</span>
+                  <span>2026 Selection Trials (Asian & Perth)</span>
+                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-400 bg-orange-500/15 px-1.5 py-0.5 rounded-full border border-orange-500/25">
+                    <Lock className="h-2.5 w-2.5" />
+                    Log in required
+                  </span>
+                  <span>→</span>
                 </Link>
               </div>
             )}

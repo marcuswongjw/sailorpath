@@ -162,7 +162,7 @@ const mockPayload: OptimistSelectionPayload = {
 };
 
 describe("OptimistSelectionView", () => {
-  it("renders selection trials header, progress status, and table", () => {
+  it("renders member access gate when user is not logged in", () => {
     mockUseAccount.mockReturnValue({
       email: null,
       owned: [],
@@ -171,11 +171,25 @@ describe("OptimistSelectionView", () => {
 
     render(<OptimistSelectionView initialData={mockPayload} />);
 
+    expect(screen.getByText("Sign In to View Selection")).toBeInTheDocument();
+    expect(screen.getByText("Create Free Account")).toBeInTheDocument();
+    expect(
+      screen.getByText(/Asian & Oceania 2026 Roster/)
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Lucas Wong")).not.toBeInTheDocument();
+  });
+
+  it("renders selection trials header, progress status, and table when logged in", () => {
+    mockUseAccount.mockReturnValue({
+      email: "member@example.com",
+      owned: [],
+      ready: true,
+    });
+
+    render(<OptimistSelectionView initialData={mockPayload} />);
+
     expect(screen.getByText("Optimist Selection Trials")).toBeInTheDocument();
     expect(screen.getByText("SSF Selection Trials")).toBeInTheDocument();
-    expect(
-      screen.getByText(/Detailed selection matrices & complete rosters are for registered accounts/)
-    ).toBeInTheDocument();
     expect(screen.getByText("Lucas Wong")).toBeInTheDocument();
   });
 
