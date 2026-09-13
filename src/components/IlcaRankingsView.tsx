@@ -7,11 +7,24 @@ import {
   type IlcaIntakeKind,
   type IlcaRankedSailor,
 } from "@/lib/ilcaRanking";
-import { Trophy, Calendar, RefreshCw } from "lucide-react";
+import { Trophy, Calendar, RefreshCw, Filter } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
 import { mobileRegattaBadge } from "@/components/FleetRankingsView";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
+
+const ILCA_INTAKE_OPTIONS: Array<{
+  kind: IlcaIntakeKind;
+  year: number;
+  label: string;
+}> = [
+  { kind: "july", year: 2026, label: "July 2026 intake (as of 30 Jun 2026)" },
+  { kind: "january", year: 2026, label: "January 2026 intake (as of 20 Dec 2025)" },
+  { kind: "july", year: 2025, label: "July 2025 intake (as of 30 Jun 2025)" },
+  { kind: "january", year: 2025, label: "January 2025 intake (as of 20 Dec 2024)" },
+  { kind: "july", year: 2024, label: "July 2024 intake (as of 30 Jun 2024)" },
+  { kind: "january", year: 2024, label: "January 2024 intake (as of 20 Dec 2023)" },
+];
 
 type Props = {
   initialRanked: IlcaRankedSailor[];
@@ -145,14 +158,14 @@ export function IlcaRankingsView({
               National standings
             </h1>
             <p className="text-[11px] sm:text-sm text-slate-500 mt-1 leading-snug">
-              High Ranking Points · Best 3 of last 5 · highlighted scores are
-              selected · 1st = fleet size pts · * = DNS (0 pts)
+              Best 3 of last 5 · highlighted scores are selected · 1st = fleet
+              size pts · * = DNS (0 pts)
             </p>
           </div>
         </div>
-        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full lg:w-auto min-w-0">
-          <div className="flex items-center gap-2 min-w-0 w-full sm:w-auto">
-            <Calendar className="h-4 w-4 text-sky-400 shrink-0" />
+        <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 w-full lg:w-auto min-w-0">
+          <div className="relative flex items-center min-w-0 w-full sm:w-auto">
+            <Calendar className="absolute left-3.5 h-4 w-4 text-sky-400 pointer-events-none" />
             <select
               value={`${intakeKind}|${intakeYear}`}
               onChange={(e) => {
@@ -168,30 +181,41 @@ export function IlcaRankingsView({
                 });
                 void loadBoard(nextKind, nextYear);
               }}
-              className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-slate-950 border border-white/10 px-3 sm:px-4 py-2.5 text-sm text-white font-semibold"
+              className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-slate-950/90 border border-white/10 pl-10 pr-8 py-2 text-xs sm:text-sm text-white font-semibold cursor-pointer hover:border-sky-500/40 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500/30 transition-all shadow-sm"
+              aria-label="Select ILCA 4 intake period"
             >
-              {[y - 1, y, y + 1].flatMap((yr) => [
-                <option key={`july-${yr}`} value={`july|${yr}`}>
-                  July {yr} intake (as of 30 Jun)
-                </option>,
-                <option key={`jan-${yr}`} value={`january|${yr}`}>
-                  January {yr} intake (as of 20 Dec {yr - 1})
-                </option>,
-              ])}
+              {ILCA_INTAKE_OPTIONS.map((opt) => (
+                <option
+                  key={`${opt.kind}-${opt.year}`}
+                  value={`${opt.kind}|${opt.year}`}
+                  className="bg-slate-900 text-white"
+                >
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
-          <select
-            value={genderFilter}
-            onChange={(e) =>
-              setGenderFilter(e.target.value as "all" | "M" | "F")
-            }
-            className="min-w-0 w-full sm:w-auto rounded-xl bg-slate-950 border border-white/10 px-2.5 sm:px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
-            aria-label="Filter by gender"
-          >
-            <option value="all">All genders</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-          </select>
+          <div className="relative flex items-center min-w-0 w-full sm:w-auto">
+            <Filter className="absolute left-3 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+            <select
+              value={genderFilter}
+              onChange={(e) =>
+                setGenderFilter(e.target.value as "all" | "M" | "F")
+              }
+              className="min-w-0 w-full sm:w-auto rounded-xl bg-slate-950/90 border border-white/10 pl-8 pr-8 py-2 text-xs sm:text-sm text-white font-semibold cursor-pointer hover:border-sky-500/40 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500/30 transition-all shadow-sm"
+              aria-label="Filter by gender"
+            >
+              <option value="all" className="bg-slate-900 text-white">
+                All genders
+              </option>
+              <option value="M" className="bg-slate-900 text-white">
+                Male
+              </option>
+              <option value="F" className="bg-slate-900 text-white">
+                Female
+              </option>
+            </select>
+          </div>
         </div>
       </div>
 

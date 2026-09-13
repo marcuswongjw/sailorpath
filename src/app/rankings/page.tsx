@@ -75,16 +75,13 @@ export default function RankingsHubPage() {
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-500/15 mb-3">
             <Wind className="h-5 w-5 text-teal-400" />
           </div>
-          <div className="flex items-center gap-2">
+          <div>
             <h2 className="text-base font-bold text-white group-hover:text-teal-300">
               WingFoil
             </h2>
-            <span className="text-[9px] font-black uppercase text-teal-400 bg-teal-500/15 px-1.5 py-0.5 rounded border border-teal-500/25">
-              Sprint Slalom
-            </span>
           </div>
           <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-            Event-based Sprint Slalom regattas, heat finishes &amp; specifications.
+            Event standings, heat finishes &amp; specifications.
           </p>
         </Link>
       </div>

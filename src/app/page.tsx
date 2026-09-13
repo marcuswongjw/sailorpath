@@ -54,9 +54,8 @@ export default function HomePage() {
         <p className="mx-auto mt-4 sm:mt-6 max-w-2xl sm:max-w-3xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
           Follow live standings across <strong className="text-slate-200">Optimist</strong>,{" "}
           <strong className="text-slate-200">ILCA 4</strong>, and{" "}
-          <strong className="text-slate-200">WingFoil</strong>. Track the official{" "}
-          <strong className="text-orange-400">2026 Selection Trials</strong>, explore regatta scoreboards,
-          and keep one continuous athlete record. Coaches and parents get dedicated private workspaces.
+          <strong className="text-slate-200">WingFoil</strong>. Track all overseas training and competition selection,
+          explore regatta scoreboards, and keep one continuous athlete record. Coaches and parents get dedicated private workspaces.
         </p>
 
         {/* Primary CTA Buttons */}
@@ -134,7 +133,7 @@ export default function HomePage() {
               ⛵ ILCA 4
             </Link>
             <Link
-              href="/wingfoil"
+              href="/sg/wingfoil"
               className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
             >
               🏄‍♂️ WingFoil
@@ -166,9 +165,9 @@ export default function HomePage() {
             <p className="text-[11px] text-slate-400 mt-0.5">Official low &amp; high points</p>
           </div>
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
-            <p className="text-2xl sm:text-3xl font-black text-white font-mono">100%</p>
-            <p className="text-xs font-bold text-emerald-400 mt-0.5">World Sailing Rules</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">RRS Appendix A &amp; Discards</p>
+            <p className="text-2xl sm:text-3xl font-black text-white font-mono">Live</p>
+            <p className="text-xs font-bold text-emerald-400 mt-0.5">Dynamic Standings</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Updated after every regatta</p>
           </div>
         </div>
       </section>
@@ -214,9 +213,6 @@ export default function HomePage() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 text-orange-400">
                     <Trophy className="h-5 w-5" />
                   </span>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-300 bg-orange-500/15 px-2.5 py-1 rounded-full border border-orange-500/30">
-                    Best 3 of 5
-                  </span>
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">Optimist Class</h3>
@@ -225,8 +221,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Rolling 5-regatta national series. Gold/Silver fleet intake and drops applied twice a year
-                  (1 Jan / 1 Jul), with automated DNS scoring and carry-forward points.
+                  Live national ranking based on 5-regatta national series every half-yearly. Gold/Silver fleet intake and drops applied twice a year (1 Jan / 1 Jul).
                 </p>
                 <ul className="space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
                   <li className="flex items-center gap-1.5">
@@ -266,9 +261,6 @@ export default function HomePage() {
                 <div className="flex items-center justify-between">
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400">
                     <Anchor className="h-5 w-5" />
-                  </span>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-sky-300 bg-sky-500/15 px-2.5 py-1 rounded-full border border-sky-500/30">
-                    High Points
                   </span>
                 </div>
                 <div>
@@ -320,19 +312,15 @@ export default function HomePage() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/15 text-purple-400">
                     <Wind className="h-5 w-5" />
                   </span>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-purple-300 bg-purple-500/15 px-2.5 py-1 rounded-full border border-purple-500/30">
-                    Sprint Slalom
-                  </span>
                 </div>
                 <div>
                   <h3 className="text-lg font-bold text-white">WingFoil Class</h3>
                   <p className="text-xs font-semibold text-purple-300/90 mt-0.5">
-                    Downwind Sprint Slalom &amp; Heats Hub
+                    Sprint Slalom Event Standings
                   </p>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Singapore&apos;s home for competitive WingFoil racing. Stand-alone event series scored under
-                  RRS Appendix A / B8 with 1 discard after 4+ races, heat finishes (R1–R9), and gear specs.
+                  Competitive WingFoil racing in Singapore. Track event standings, individual heat finishes (R1–R9), discard scoring, and equipment setups.
                 </p>
                 <ul className="space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
                   <li className="flex items-center gap-1.5">
@@ -352,7 +340,7 @@ export default function HomePage() {
 
               <div className="flex items-center gap-2 pt-2 border-t border-white/5">
                 <Link
-                  href="/wingfoil"
+                  href="/sg/wingfoil"
                   className="rounded-lg bg-purple-600 hover:bg-purple-500 px-3 py-1.5 text-xs font-bold text-white transition-colors"
                 >
                   Open WingFoil Hub →

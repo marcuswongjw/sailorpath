@@ -321,32 +321,45 @@ export function FleetRankingsView({
 
   return (
     <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-4 sm:space-y-6 overflow-x-clip">
-      {showSquad && accountReady && !isLoggedIn && (
-        <div className="rounded-xl border border-orange-500/25 bg-orange-500/[0.07] px-3.5 py-3 sm:px-4 sm:py-3.5 flex flex-col sm:flex-row sm:items-center gap-3 no-print">
+      {fleet === "Gold" && accountReady && !isLoggedIn && (
+        <div className="rounded-xl border border-orange-500/25 bg-orange-500/[0.07] px-3.5 py-3 sm:px-4 sm:py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 no-print">
           <div className="flex items-start gap-2.5 min-w-0 flex-1">
             <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15 text-orange-400 border border-orange-500/20">
               <Lock className="h-3.5 w-3.5" />
             </span>
             <div className="min-w-0">
-              <p className="text-sm font-bold text-white leading-snug">
-                Projected national squad status is for signed-in accounts
-              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-sm font-bold text-white leading-snug">
+                  Projected National Squad &amp; 2026 Selection Trials
+                </p>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-400 bg-orange-500/15 px-1.5 py-0.5 rounded-full border border-orange-500/25">
+                  Sign in required
+                </span>
+              </div>
               <p className="text-[12px] text-slate-400 mt-0.5 leading-snug">
-                Create an account to view projected Nat A / Nat B status for
-                the next half.
+                Signed-in accounts can access projected Nat A / Nat B squad status and the 2026 Asian &amp; Perth Selection Trials leaderboard.
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 sm:shrink-0 pl-10 sm:pl-0">
+          <div className="flex flex-wrap items-center gap-2 sm:shrink-0 pl-10 md:pl-0">
+            <Link
+              href="/sg/optimist/selection"
+              prefetch
+              className="inline-flex items-center gap-1 rounded-full bg-orange-500/15 border border-orange-500/30 px-3 py-1.5 text-xs font-bold text-orange-300 hover:bg-orange-500/25 transition-colors"
+            >
+              <Trophy className="h-3 w-3 text-orange-400" />
+              <span>Selection Trials</span>
+              <span>→</span>
+            </Link>
             <Link
               href="/register?next=%2Fsg%2Foptimist%2Fgold"
-              className="inline-flex rounded-full bg-orange-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-orange-500"
+              className="inline-flex rounded-full bg-orange-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-orange-500 shadow-sm"
             >
               Create account
             </Link>
             <Link
               href="/login?next=%2Fsg%2Foptimist%2Fgold"
-              className="text-xs font-semibold text-slate-400 hover:text-white"
+              className="text-xs font-semibold text-slate-400 hover:text-white px-1.5 py-1"
             >
               Log in
             </Link>
@@ -379,7 +392,7 @@ export function FleetRankingsView({
                 </span>
               )}
             </p>
-            {fleet === "Gold" && (
+            {fleet === "Gold" && isLoggedIn && (
               <div className="mt-2.5">
                 <Link
                   href="/sg/optimist/selection"
@@ -387,11 +400,7 @@ export function FleetRankingsView({
                   className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[11px] font-bold text-orange-300 hover:bg-orange-500/20 transition-colors"
                 >
                   <Trophy className="h-3 w-3 text-orange-400" />
-                  <span>2026 Selection Trials (Asian & Perth)</span>
-                  <span className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-400 bg-orange-500/15 px-1.5 py-0.5 rounded-full border border-orange-500/25">
-                    <Lock className="h-2.5 w-2.5" />
-                    Log in required
-                  </span>
+                  <span>2026 Selection Trials (Asian &amp; Perth)</span>
                   <span>→</span>
                 </Link>
               </div>

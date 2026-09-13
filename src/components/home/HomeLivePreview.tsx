@@ -133,7 +133,7 @@ const SAMPLE_STANDINGS: Record<
   wingfoil: {
     title: "WingFoil Sprint Slalom",
     subtitle: "Downwind Sprint Slalom · Stand-Alone Series with Heats",
-    link: "/wingfoil",
+    link: "/sg/wingfoil",
     linkLabel: "Open WingFoil Hub",
     rows: [
       {
@@ -273,19 +273,22 @@ export function HomeLivePreview() {
               </span>
             </div>
 
+            <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.05] px-3.5 py-2 text-[11px] text-amber-300/90 flex items-center justify-between gap-2">
+              <span>⚠️ Demo preview with illustrative sample names and results. Open class links below for official live standings.</span>
+            </div>
+
             {/* Standings Table Card */}
             <div className="rounded-2xl border border-white/5 bg-black/30 overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs min-w-[560px]">
+                <table className="w-full text-left text-xs min-w-[480px]">
                   <thead>
                     <tr className="border-b border-white/5 bg-white/[0.02] text-[10px] uppercase font-bold text-slate-400 tracking-wider">
                       <th className="py-2.5 px-3 text-center w-14">Rank</th>
                       <th className="py-2.5 px-4">Sailor / Competitor</th>
                       <th className="py-2.5 px-3 text-center">Sail #</th>
-                      <th className="py-2.5 px-3 text-center font-bold text-orange-300">
+                      <th className="py-2.5 px-4 text-right font-bold text-orange-300">
                         {standingsData.rows[0].scoreLabel}
                       </th>
-                      <th className="py-2.5 px-4 text-right">Status</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
@@ -311,15 +314,8 @@ export function HomeLivePreview() {
                         <td className="py-3 px-3 text-center font-mono font-bold text-slate-300">
                           {row.sailNumber}
                         </td>
-                        <td className="py-3 px-3 text-center font-mono font-black text-orange-300 text-sm">
+                        <td className="py-3 px-4 text-right font-mono font-black text-orange-300 text-sm">
                           {row.score}
-                        </td>
-                        <td className="py-3 px-4 text-right">
-                          <span
-                            className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${row.tagColor}`}
-                          >
-                            {row.tag}
-                          </span>
                         </td>
                       </tr>
                     ))}
