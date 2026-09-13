@@ -148,6 +148,17 @@ export interface RankedSailor extends SailorRecord {
   nextPeriodSquadStatus?: string | null;
 }
 
+/** Drop next-half / live projection so public ranking payloads cannot leak it. */
+export function stripProjectedNextSquadStatus(
+  ranked: RankedSailor[]
+): RankedSailor[] {
+  return ranked.map((s) =>
+    s.nextPeriodSquadStatus == null
+      ? s
+      : { ...s, nextPeriodSquadStatus: null }
+  );
+}
+
 /**
  * Finish percentile band (quintiles / 20% splits).
  * Rank 1 in a fleet of 40 → 2.5% → Top 20%.

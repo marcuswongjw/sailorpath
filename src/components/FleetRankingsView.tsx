@@ -12,10 +12,11 @@ import {
   projectedNextSquadLabel,
   withProjectedNextSquadStatus,
 } from "@/lib/optimistSquadPreview";
-import { Trophy, Calendar, RotateCcw } from "lucide-react";
+import { Trophy, Calendar, RotateCcw, Lock } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 import { formatGenderLabel, normalizeGender } from "@/lib/gender";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
+import { useAccount } from "@/components/AccountProvider";
 
 function scoreCell(
   score: number | undefined,
@@ -96,6 +97,8 @@ export function FleetRankingsView({
   initialError?: string | null;
 }) {
   const ssrPeriod = initialPeriod || currentPeriodFromSgToday();
+  const { email, ready: accountReady } = useAccount();
+  const isLoggedIn = Boolean(email);
   const PERIODS = useMemo(() => rankingPeriodOptions(6), []);
   const [period, setPeriod] = useState<Period>(ssrPeriod);
   const [ranked, setRanked] = useState<RankedSailor[]>(initialRanked ?? []);
@@ -154,6 +157,8 @@ export function FleetRankingsView({
   }, [fleet, period]);
 
   const showSquad = fleet === "Gold";
+  /** Live next-half Nat A/B projection is signed-in only. */
+  const showProjectedSquad = showSquad && isLoggedIn;
 
   /** Header for period squad, e.g. "Squad Jul 26" for Jul–Dec 2026 */
   const squadColumnLabel = useMemo(() => {
@@ -217,9 +222,9 @@ export function FleetRankingsView({
   }, [ranked, excluded]);
 
   const rankingWithProjection = useMemo(() => {
-    if (fleet !== "Gold" || rankingBase.length === 0) return rankingBase;
+    if (!showProjectedSquad || rankingBase.length === 0) return rankingBase;
     return withProjectedNextSquadStatus(rankingBase, period);
-  }, [fleet, rankingBase, period]);
+  }, [showProjectedSquad, rankingBase, period]);
 
   const displayRanked = useMemo(() => {
     return rankingWithProjection.filter((s) => {
@@ -295,6 +300,39 @@ export function FleetRankingsView({
 
   return (
     <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 py-6 sm:py-12 space-y-4 sm:space-y-6 overflow-x-clip">
+      {showSquad && accountReady && !isLoggedIn && (
+        <div className="rounded-xl border border-orange-500/25 bg-orange-500/[0.07] px-3.5 py-3 sm:px-4 sm:py-3.5 flex flex-col sm:flex-row sm:items-center gap-3 no-print">
+          <div className="flex items-start gap-2.5 min-w-0 flex-1">
+            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15 text-orange-400 border border-orange-500/20">
+              <Lock className="h-3.5 w-3.5" />
+            </span>
+            <div className="min-w-0">
+              <p className="text-sm font-bold text-white leading-snug">
+                Projected national squad status is for signed-in accounts
+              </p>
+              <p className="text-[12px] text-slate-400 mt-0.5 leading-snug">
+                Create an account to view projected Nat A / Nat B status for
+                the next half.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 sm:shrink-0 pl-10 sm:pl-0">
+            <Link
+              href="/register?next=%2Fsg%2Foptimist%2Fgold"
+              className="inline-flex rounded-full bg-orange-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-orange-500"
+            >
+              Create account
+            </Link>
+            <Link
+              href="/login?next=%2Fsg%2Foptimist%2Fgold"
+              className="text-xs font-semibold text-slate-400 hover:text-white"
+            >
+              Log in
+            </Link>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 no-print min-w-0">
         <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
           <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-600/10 text-orange-500 border border-orange-500/20">
@@ -629,6 +667,9 @@ export function FleetRankingsView({
                       {showSquad && squadFor(s)
                         ? ` · ${squadFor(s)}`
                         : ""}
+                      {showProjectedSquad && nextSquadFor(s)
+                        ? ` · proj. ${nextSquadFor(s)}`
+                        : ""}
                     </p>
                   </div>
                 </div>
@@ -713,7 +754,7 @@ export function FleetRankingsView({
                     {squadColumnLabel}
                   </th>
                 )}
-                {showSquad && (
+                {showProjectedSquad && (
                   <th
                     className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
                     title={`Projected Nat A / Nat B for the next half after ${periodLabelText} (Appendix I: top 8 M/F → age buckets). Live from this Gold ranking — not a locked admin stamp.`}
@@ -803,7 +844,7 @@ export function FleetRankingsView({
                         )}
                       </td>
                     )}
-                    {showSquad && (
+                    {showProjectedSquad && (
                       <td className="px-4 lg:px-5 py-3.5">
                         {nextSquadFor(s) ? (
                           <SquadBadge label={nextSquadFor(s)!} />
@@ -869,9 +910,9 @@ export function FleetRankingsView({
           (a 1st beats a 2nd, then next-best, and so on), then name. Uncheck events
           above for a what-if score. * = DNS (fleet size + 1). † = SSF overseas
           commitment. {squadColumnLabel} = official national squad for the selected
-          period. {nextSquadColumnLabel} = live projection for the following half
-          using Nat A (top 8 male + top 8 female) then Nat B age buckets (13 / 12 /
-          ≤11), max 16 each, age ≤15 in intake year.
+          period.{showProjectedSquad
+            ? ` ${nextSquadColumnLabel} = live projection for the following half using Nat A (top 8 male + top 8 female) then Nat B age buckets (13 / 12 / ≤11), max 16 each, age ≤15 in intake year.`
+            : ""}
         </p>
       </div>
     </div>

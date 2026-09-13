@@ -6,6 +6,7 @@ import {
   getPercentileBadge,
   natSquadFieldForPeriod,
   periodBounds,
+  stripProjectedNextSquadStatus,
   previousPeriod,
   rankingRegattasInPeriod,
   reRankWithExcluded,
@@ -203,6 +204,17 @@ describe("period helpers", () => {
         { year: 2024, half: "Jan-Jun" }
       )
     ).toBe("Nat B");
+  });
+
+  it("stripProjectedNextSquadStatus clears next-half projection only", () => {
+    const ranked = [
+      { id: "a", nextPeriodSquadStatus: "Nat A", periodSquadStatus: "Nat B" },
+      { id: "b", periodSquadStatus: "DS" },
+    ] as RankedSailor[];
+    const out = stripProjectedNextSquadStatus(ranked);
+    expect(out[0].nextPeriodSquadStatus).toBeNull();
+    expect(out[0].periodSquadStatus).toBe("Nat B");
+    expect(out[1]).toBe(ranked[1]);
   });
 });
 

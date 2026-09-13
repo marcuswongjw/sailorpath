@@ -1,5 +1,8 @@
 import { birthYear } from "@/lib/age";
-import type { RankedSailor } from "@/lib/ranking";
+import {
+  stripProjectedNextSquadStatus,
+  type RankedSailor,
+} from "@/lib/ranking";
 
 /**
  * Produces a ranking record safe to serialize to an anonymous browser.
@@ -18,5 +21,5 @@ export function toPublicRankedSailor(sailor: RankedSailor): RankedSailor {
 export function toPublicRankedSailors(
   sailors: RankedSailor[]
 ): RankedSailor[] {
-  return sailors.map(toPublicRankedSailor);
+  return stripProjectedNextSquadStatus(sailors.map(toPublicRankedSailor));
 }

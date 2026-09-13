@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { toPublicRankedSailor } from "@/lib/publicRankings";
+import { toPublicRankedSailor, toPublicRankedSailors } from "@/lib/publicRankings";
 import type { RankedSailor } from "@/lib/ranking";
 
 const rankedSailor: RankedSailor = {
@@ -30,5 +30,14 @@ describe("toPublicRankedSailor", () => {
 
   it("preserves a missing date of birth as null", () => {
     expect(toPublicRankedSailor({ ...rankedSailor, dob: null }).dob).toBeNull();
+  });
+});
+
+describe("toPublicRankedSailors", () => {
+  it("strips next-half projected squad status", () => {
+    const publicSailors = toPublicRankedSailors([
+      { ...rankedSailor, nextPeriodSquadStatus: "Nat A" },
+    ]);
+    expect(publicSailors[0].nextPeriodSquadStatus).toBeNull();
   });
 });
