@@ -1,17 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
+import { shouldShowDemoNavigation } from "@/lib/adminHost";
 
 type OpenMenu = "optimist" | "ilca" | null;
+
+const subscribeToHost = () => () => {};
+const getBrowserHost = () => window.location.hostname;
+const getServerHost = () => "";
 
 export function SiteHeader() {
   const { email, role, isSuperadmin, owned, ready, signOut } = useAccount();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
+  const host = useSyncExternalStore(
+    subscribeToHost,
+    getBrowserHost,
+    getServerHost
+  );
   const navRef = useRef<HTMLElement>(null);
 
   const primaryProfile = owned[0] || null;
@@ -173,7 +183,7 @@ export function SiteHeader() {
       >
         Search
       </Link>
-      {owned.length === 0 && (
+      {host && shouldShowDemoNavigation(host, owned.length) && (
         <Link
           href="/sample"
           onClick={() => setMobileOpen(false)}

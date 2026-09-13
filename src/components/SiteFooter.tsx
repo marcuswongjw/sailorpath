@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useSyncExternalStore } from "react";
 import { useAccount } from "@/components/AccountProvider";
+import { shouldShowDemoNavigation } from "@/lib/adminHost";
+
+const subscribeToHost = () => () => {};
+const getBrowserHost = () => window.location.hostname;
+const getServerHost = () => "";
 
 /**
  * Footer links — hides the demo when an account already owns a claimed profile.
@@ -9,7 +15,14 @@ import { useAccount } from "@/components/AccountProvider";
  */
 export function SiteFooter() {
   const { owned, ready } = useAccount();
-  const hideDemo = ready && owned.length > 0;
+  const host = useSyncExternalStore(
+    subscribeToHost,
+    getBrowserHost,
+    getServerHost
+  );
+
+  const showDemo = Boolean(host) &&
+    (!ready || shouldShowDemoNavigation(host, owned.length));
 
   return (
     <footer className="border-t border-white/5 bg-[#07080c] py-6 sm:py-8 text-center text-xs text-slate-500">
@@ -34,7 +47,7 @@ export function SiteFooter() {
           >
             Terms
           </Link>
-          {!hideDemo && (
+          {showDemo && (
             <Link
               href="/sample"
               className="hover:text-slate-300 transition-colors"

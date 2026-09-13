@@ -4,6 +4,7 @@ import {
   adminReturnUrl,
   isAdminHost,
   publicSiteOrigin,
+  shouldShowDemoNavigation,
 } from "./adminHost";
 
 describe("isAdminHost", () => {
@@ -37,6 +38,14 @@ describe("adminLoginOrigin", () => {
     expect(adminLoginOrigin("admin.sailorpath.com")).toBe(
       "https://admin.sailorpath.com"
     );
+  });
+});
+
+describe("shouldShowDemoNavigation", () => {
+  it("hides the public demo link on the admin host even without owned sailors", () => {
+    expect(shouldShowDemoNavigation("admin.sailorpath.com", 0)).toBe(false);
+    expect(shouldShowDemoNavigation("sailorpath.com", 0)).toBe(true);
+    expect(shouldShowDemoNavigation("sailorpath.com", 1)).toBe(false);
   });
 });
 

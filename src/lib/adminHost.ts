@@ -10,6 +10,14 @@ export function isAdminHost(host: string): boolean {
   );
 }
 
+/** The public demo is not part of the authenticated admin workspace. */
+export function shouldShowDemoNavigation(
+  host: string,
+  ownedSailorCount: number
+): boolean {
+  return !isAdminHost(host) && ownedSailorCount === 0;
+}
+
 /** Public marketing/app origin (login lives here). */
 export function publicSiteOrigin(): string {
   const raw = process.env.NEXT_PUBLIC_SITE_URL?.trim();

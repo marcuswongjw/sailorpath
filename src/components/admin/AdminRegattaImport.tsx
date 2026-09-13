@@ -252,6 +252,7 @@ export function AdminRegattaImport({
     setNationalityFlags([]);
     setPendingReview(null);
     setPendingTargetSelection(null);
+    setFullImportRows([]);
     setPdfScreenshots([]);
     const reader = new FileReader();
     reader.onprogress = (ev) => {
@@ -362,7 +363,10 @@ export function AdminRegattaImport({
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) handleFile(e.target.files[0]);
+    const file = e.target.files?.[0];
+    // Allow selecting the same workbook again after correcting an error.
+    e.target.value = "";
+    if (file) handleFile(file);
   };
 
   const updateImportRow = (

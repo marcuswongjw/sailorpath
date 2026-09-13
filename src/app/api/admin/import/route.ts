@@ -48,7 +48,10 @@ import { asPositiveInteger, asRank } from "@/lib/validate";
 export type { ImportPossibleDuplicate };
 
 /** Allow long Optimist fleet imports on Vercel (default is often 10–15s). */
-export const maxDuration = 60;
+// Large Sailwave workbooks can update hundreds of race rows plus profile data
+// inside one atomic transaction. Allow the platform enough time to finish and
+// return the committed result instead of surfacing a misleading Failed to fetch.
+export const maxDuration = 300;
 
 const MAX_DUPLICATE_FLAGS = 40;
 const MAX_REVIEW_DETAILS = 500;
