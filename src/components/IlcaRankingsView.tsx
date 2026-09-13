@@ -3,7 +3,6 @@
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import {
-  ILCA_POLICY_NOTES,
   type IlcaIntakeKind,
   type IlcaRankedSailor,
 } from "@/lib/ilcaRanking";
@@ -18,12 +17,12 @@ const ILCA_INTAKE_OPTIONS: Array<{
   year: number;
   label: string;
 }> = [
-  { kind: "july", year: 2026, label: "July 2026 intake (as of 30 Jun 2026)" },
-  { kind: "january", year: 2026, label: "January 2026 intake (as of 20 Dec 2025)" },
-  { kind: "july", year: 2025, label: "July 2025 intake (as of 30 Jun 2025)" },
-  { kind: "january", year: 2025, label: "January 2025 intake (as of 20 Dec 2024)" },
-  { kind: "july", year: 2024, label: "July 2024 intake (as of 30 Jun 2024)" },
-  { kind: "january", year: 2024, label: "January 2024 intake (as of 20 Dec 2023)" },
+  { kind: "july", year: 2026, label: "Jul – Dec 2026" },
+  { kind: "january", year: 2026, label: "Jan – Jun 2026" },
+  { kind: "july", year: 2025, label: "Jul – Dec 2025" },
+  { kind: "january", year: 2025, label: "Jan – Jun 2025" },
+  { kind: "july", year: 2024, label: "Jul – Dec 2024" },
+  { kind: "january", year: 2024, label: "Jan – Jun 2024" },
 ];
 
 type Props = {
@@ -34,18 +33,9 @@ type Props = {
   initialAsOf: string;
 };
 
-function shortRegattaName(name: string | undefined | null, idx: number) {
+function regattaDisplayName(name: string | undefined | null, idx: number): string {
   if (!name || !String(name).trim()) return `R${idx + 1}`;
-  const n = String(name).trim();
-  if (n.length <= 18) return n;
-  const words = n.split(/\s+/);
-  let out = "";
-  for (const w of words) {
-    const next = out ? `${out} ${w}` : w;
-    if (next.length > 16) break;
-    out = next;
-  }
-  return (out || n.slice(0, 16)) + "…";
+  return String(name).trim();
 }
 
 function scoreCell(points: number | undefined, isDns?: boolean) {
@@ -62,7 +52,6 @@ export function IlcaRankingsView({
   initialRanked,
   initialIntakeKind,
   initialIntakeYear,
-  initialLabel,
   initialAsOf,
 }: Props) {
   const now = new Date();
@@ -70,7 +59,6 @@ export function IlcaRankingsView({
   const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(initialIntakeKind);
   const [intakeYear, setIntakeYear] = useState(initialIntakeYear);
   const [ranked, setRanked] = useState(initialRanked);
-  const [label, setLabel] = useState(initialLabel);
   const [asOf, setAsOf] = useState(initialAsOf);
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [loading, setLoading] = useState(false);
@@ -92,7 +80,6 @@ export function IlcaRankingsView({
       };
       if (!res.ok) throw new Error(data.error || "Could not load rankings");
       setRanked(Array.isArray(data.ranked) ? data.ranked : []);
-      if (data.label) setLabel(data.label);
       if (data.asOf) setAsOf(data.asOf);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not load rankings");
@@ -219,12 +206,12 @@ export function IlcaRankingsView({
         </div>
       </div>
 
-      <p className="text-[11px] text-sky-300/90 font-medium inline-flex items-center gap-2">
-        {loading && <RefreshCw className="h-3 w-3 animate-spin" />}
-        {label} · {displayRanked.length}
-        {genderFilter !== "all" ? ` of ${ranked.length}` : ""} ranked · scoring
-        window ≤ {asOf}
-      </p>
+      {loading && (
+        <p className="text-[11px] text-sky-300 font-medium inline-flex items-center gap-2">
+          <RefreshCw className="h-3 w-3 animate-spin" />
+          <span>Updating standings…</span>
+        </p>
+      )}
       {!loading && ranked.length > 0 && (
         <p className="text-[11px] font-medium text-slate-500">
           {latestResultDate ? `Results through ${latestResultDate} · ` : ""}
@@ -234,9 +221,6 @@ export function IlcaRankingsView({
       {error && (
         <p className="text-[11px] text-rose-300 font-medium">{error}</p>
       )}
-      <p className="text-[11px] text-slate-500 leading-relaxed max-w-3xl">
-        {ILCA_POLICY_NOTES.highPoints} {ILCA_POLICY_NOTES.nationalList}
-      </p>
 
       {genderFilter !== "all" && (
         <p className="text-[11px] text-amber-200/90 font-semibold no-print">
@@ -262,8 +246,8 @@ export function IlcaRankingsView({
                 <p className="text-[9px] sm:text-[10px] font-black text-sky-400">
                   R{idx + 1}
                 </p>
-                <p className="text-[7px] sm:text-[11px] font-semibold text-slate-200 leading-tight line-clamp-2 break-words">
-                  {shortRegattaName(ev.regattaName, idx)}
+                <p className="text-[7px] sm:text-[11px] font-semibold text-slate-200 leading-tight break-words">
+                  {regattaDisplayName(ev.regattaName, idx)}
                 </p>
                 <p className="text-[7px] sm:text-[9px] text-slate-500 mt-0.5 tabular-nums">
                   {ev.date.slice(5)} · n={ev.fleetSize}
@@ -440,7 +424,7 @@ export function IlcaRankingsView({
                   return (
                     <th
                       key={ev?.regattaId || `r${idx}`}
-                      className="sticky top-0 z-20 px-2 py-2 text-center bg-[#12141c] border-b border-white/10 max-w-[7.5rem]"
+                      className="sticky top-0 z-20 px-2.5 py-2.5 text-center bg-[#12141c] border-b border-white/10 min-w-[7.5rem] max-w-[12rem]"
                       title={
                         ev
                           ? `${ev.regattaName} · ${ev.date} · fleet ${ev.fleetSize}`
@@ -450,8 +434,8 @@ export function IlcaRankingsView({
                       <span className="block text-sky-400 font-black normal-case tracking-normal">
                         R{idx + 1}
                       </span>
-                      <span className="block text-[9px] font-semibold text-slate-400 normal-case tracking-normal leading-tight mt-0.5 line-clamp-2">
-                        {ev ? shortRegattaName(ev.regattaName, idx) : "—"}
+                      <span className="block text-[10px] font-semibold text-slate-300 normal-case tracking-normal leading-snug mt-0.5 whitespace-normal break-words">
+                        {ev ? regattaDisplayName(ev.regattaName, idx) : "—"}
                       </span>
                     </th>
                   );
@@ -538,11 +522,8 @@ export function IlcaRankingsView({
             </tbody>
           </table>
         </div>
-        <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5 bg-[#0c0d14]">
-          R1–R5 = last up to 5 ILCA 4 ranking regattas on or before the cutoff
-          (R1 oldest). Cell = High Ranking Points (1st = fleet size). Best 3 of
-          5 = sum of the three highest point scores. Highlighted cells are the
-          three selected scores. * = DNS (0). Higher total is better.
+        <p className="px-4 py-3 text-[11px] text-slate-400 border-t border-white/5 bg-[#0c0d14] leading-relaxed">
+          <strong className="text-slate-300">Scoring &amp; Selection:</strong> High Ranking Points apply: in a fleet of N, 1st earns N points, 2nd earns N−1, and * = DNS (0 pts). R1–R5 show up to the last 5 ranking regattas on or before the cutoff (R1 oldest). Best 3 of 5 is the sum of the three highest scores (highlighted in cyan; higher total is better). Only sailors on the official ILCA 4 national ranking list appear on this board.
         </p>
       </div>
     </div>

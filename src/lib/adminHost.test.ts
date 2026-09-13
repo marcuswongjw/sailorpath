@@ -47,6 +47,11 @@ describe("shouldShowDemoNavigation", () => {
     expect(shouldShowDemoNavigation("sailorpath.com", 0)).toBe(true);
     expect(shouldShowDemoNavigation("sailorpath.com", 1)).toBe(false);
   });
+
+  it("hides the demo link for any logged-in user", () => {
+    expect(shouldShowDemoNavigation("sailorpath.com", 0, true)).toBe(false);
+    expect(shouldShowDemoNavigation("sailorpath.com", 0, false)).toBe(true);
+  });
 });
 
 describe("publicSiteOrigin", () => {

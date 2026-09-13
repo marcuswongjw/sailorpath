@@ -10,12 +10,13 @@ export function isAdminHost(host: string): boolean {
   );
 }
 
-/** The public demo is not part of the authenticated admin workspace. */
+/** The public demo is not part of the authenticated admin workspace and is hidden for logged-in accounts. */
 export function shouldShowDemoNavigation(
   host: string,
-  ownedSailorCount: number
+  ownedSailorCount: number,
+  isLoggedIn = false
 ): boolean {
-  return !isAdminHost(host) && ownedSailorCount === 0;
+  return !isAdminHost(host) && !isLoggedIn && ownedSailorCount === 0;
 }
 
 /** Public marketing/app origin (login lives here). */

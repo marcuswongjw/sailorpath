@@ -204,7 +204,7 @@ export function SiteHeader() {
       >
         Search
       </Link>
-      {host && shouldShowDemoNavigation(host, owned.length) && (
+      {host && shouldShowDemoNavigation(host, owned.length, Boolean(email)) && (
         <Link
           href="/sample"
           onClick={() => setMobileOpen(false)}
@@ -439,7 +439,7 @@ export function SiteHeader() {
             >
               Search
             </Link>
-            {owned.length === 0 && (
+            {host && shouldShowDemoNavigation(host, owned.length, Boolean(email)) && (
               <Link
                 href="/sample"
                 onClick={() => setMobileOpen(false)}
