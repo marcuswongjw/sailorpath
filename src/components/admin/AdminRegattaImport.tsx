@@ -10,7 +10,7 @@ import {
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
 import { parseRegattaTitle } from "@/lib/excel/parseRegattaTitle";
-import { parseApi, apiErr, apiStr } from "@/components/admin/parseApi";
+import { parseApi, apiErr, apiStr, type AdminApiJson } from "@/components/admin/parseApi";
 import type {
   ImportPossibleDuplicate,
   RegattaImportReview,
@@ -94,7 +94,6 @@ type PendingImportTargetSelection = {
  */
 export function AdminRegattaImport({
   isSuperadmin,
-  onSailorsUpdated,
   onRegattaUpserted,
   onResultsUpdated,
   onImportComplete,
@@ -313,10 +312,10 @@ export function AdminRegattaImport({
         if (isCsv) {
           sheets = [{ sheet: file.name.replace(/\.csv$/i, "") || "CSV", data: parseCsv(new TextDecoder().decode(data)) }];
         } else {
-          const { default: readXlsxFile } = await import(
-            "read-excel-file/browser"
+          const { readExcelInWorker } = await import(
+            "@/lib/excel/readExcelInWorker"
           );
-          sheets = await readXlsxFile(data);
+          sheets = await readExcelInWorker(data);
         }
         const candidates = readResultsWorkbook(sheets);
         setSheetOptions(candidates);
@@ -378,22 +377,14 @@ export function AdminRegattaImport({
   const refreshListsAfterImport = async (regatta?: RegattaAdmin | null) => {
     if (regatta) onRegattaUpserted?.(regatta);
     try {
-      const list = await fetch("/api/admin/sailors?all=1", {
-        credentials: "include",
-      }).then((r) => r.json());
-      if (list.sailors) onSailorsUpdated?.(list.sailors);
-    } catch {
-      /* ignore */
-    }
-    try {
-      // Prefer the imported event only — avoids pulling every result row.
-      const resultsUrl = regatta?.id
-        ? `/api/admin/results?regattaId=${encodeURIComponent(regatta.id)}`
-        : "/api/admin/results?all=1";
-      const rRes = await fetch(resultsUrl, { credentials: "include" });
-      if (rRes.ok) {
-        const rData = await rRes.json();
-        if (rData.results) onResultsUpdated?.(rData.results);
+      // Prefer the imported event only — avoids pulling every result row or full sailor list.
+      if (regatta?.id) {
+        const resultsUrl = `/api/admin/results?regattaId=${encodeURIComponent(regatta.id)}`;
+        const rRes = await fetch(resultsUrl, { credentials: "include" });
+        if (rRes.ok) {
+          const rData = await rRes.json();
+          if (rData.results) onResultsUpdated?.(rData.results);
+        }
       }
     } catch {
       /* optional */
@@ -488,17 +479,14 @@ export function AdminRegattaImport({
       setPendingReview(null);
       setPendingTargetSelection(null);
     }
-    // Slow crawl while waiting on server (no real stream from API)
-    let tick = 8;
-    const pulse = window.setInterval(() => {
-      tick = Math.min(72, tick + 2);
-      setImportProgress(tick);
-    }, 400);
     try {
-      setImportProgress(15);
+      setImportProgress(10);
       const res = await fetch("/api/admin/import", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/x-ndjson, application/json",
+        },
         credentials: "include",
         body: JSON.stringify({
           regattaName: meta.name,
@@ -521,9 +509,52 @@ export function AdminRegattaImport({
               : null,
         }),
       });
-      setImportProgress(78);
-      setImportStatus("Processing server response…");
-      const data = await parseApi(res);
+
+      let data: AdminApiJson;
+      const contentType = res.headers.get("content-type") || "";
+
+      if (contentType.includes("application/x-ndjson") && res.body) {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let finalData: AdminApiJson | null = null;
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+          for (const line of lines) {
+            if (!line.trim()) continue;
+            try {
+              const msg = JSON.parse(line);
+              if (msg.type === "progress") {
+                if (typeof msg.progress === "number") setImportProgress(msg.progress);
+                if (typeof msg.message === "string") setImportStatus(msg.message);
+              } else if (msg.type === "result") {
+                finalData = msg;
+              } else if (msg.type === "error") {
+                throw new Error(msg.error || "Import failed");
+              }
+            } catch (err) {
+              if (err instanceof Error && err.message !== "Import failed") {
+                // not an explicit error thrown above
+              } else {
+                throw err;
+              }
+            }
+          }
+        }
+        if (!finalData) {
+          throw new Error("No response payload received from server.");
+        }
+        data = finalData;
+      } else {
+        setImportProgress(78);
+        setImportStatus("Processing server response…");
+        data = await parseApi(res);
+      }
       if (
         data.requiresTargetSelection === true &&
         Array.isArray(data.candidates)
@@ -654,7 +685,6 @@ export function AdminRegattaImport({
       setNationalityFlags([]);
       toast.error(msg);
     } finally {
-      window.clearInterval(pulse);
       setImportBusy(false);
       setTimeout(() => setImportProgress(0), 1200);
     }

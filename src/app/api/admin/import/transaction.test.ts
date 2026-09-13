@@ -35,8 +35,8 @@ beforeAll(async () => {
 beforeEach(async () => { await pg.exec("TRUNCATE regatta_race_results, regatta_results, sailor_aliases, sailors, regattas CASCADE"); });
 afterAll(async () => { await pg.close(); });
 
-function upload(extra: Record<string, unknown> = {}) {
-  return POST(new Request("http://localhost/api/admin/import", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ regattaName: "Harbour Cup", eventDate: "2026-01-01", division: "Gold", totalFleetSize: 1, rows: [{ name: "Alice Example", rank: 1, nett: 1, races: [{ raceNumber: 1, score: 1, rawValue: "1", discarded: false, scoringCode: null }] }], ...extra }) }));
+function upload(extra: Record<string, unknown> = {}, headers: Record<string, string> = {}) {
+  return POST(new Request("http://localhost/api/admin/import", { method: "POST", headers: { "Content-Type": "application/json", ...headers }, body: JSON.stringify({ regattaName: "Harbour Cup", eventDate: "2026-01-01", division: "Gold", totalFleetSize: 1, rows: [{ name: "Alice Example", rank: 1, nett: 1, races: [{ raceNumber: 1, score: 1, rawValue: "1", discarded: false, scoringCode: null }] }], ...extra }) }));
 }
 
 describe("import database transaction", () => {
@@ -72,5 +72,14 @@ describe("import database transaction", () => {
     expect(response.status).toBe(409);
     expect(await testDb.select().from(regattas)).toHaveLength(0);
     expect(await testDb.select().from(sailors)).toHaveLength(0);
+  });
+
+  it("streams NDJSON progress events when requested", async () => {
+    const response = await upload({}, { Accept: "application/x-ndjson" });
+    expect(response.headers.get("content-type")).toContain("application/x-ndjson");
+    const text = await response.text();
+    const lines = text.trim().split("\n").map((line) => JSON.parse(line));
+    expect(lines.some((l) => l.type === "progress" && l.stage === "matching")).toBe(true);
+    expect(lines.some((l) => l.type === "result" && l.matched === 1)).toBe(true);
   });
 });

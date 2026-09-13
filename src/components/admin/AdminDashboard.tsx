@@ -470,7 +470,11 @@ function AdminDashboardInner() {
             onSailorsUpdated={(sailorsList) => data.setSailorList(sailorsList)}
             onRegattaUpserted={data.patchRegattaUpsert}
             onResultsUpdated={data.patchResultsFromImport}
-            onImportComplete={data.invalidateAllLists}
+            onImportComplete={() => {
+              data.invalidateRegattas();
+              data.invalidateResults();
+              data.invalidateSailors();
+            }}
           />
         )}
 

@@ -24,6 +24,7 @@
 .DS_Store
 /public/vendor/
 *.pem
+/artifacts/
 
 # debug
 npm-debug.log*
