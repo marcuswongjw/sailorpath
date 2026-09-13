@@ -20,11 +20,11 @@ vi.mock("next/link", () => ({
 }));
 
 describe("WingfoilView", () => {
-  it("renders WingFoil hub header and event notice", () => {
+  it("renders WingFoil hub header and results", () => {
     render(<WingfoilView />);
 
     expect(screen.getByText("WingFoil Racing")).toBeInTheDocument();
-    expect(screen.getByText("Event-Based Sprint Slalom Format")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Regatta Standings/i })).toBeInTheDocument();
     expect(screen.getAllByText(/Kate En Rui Bateman/i).length).toBeGreaterThanOrEqual(1);
   });
 

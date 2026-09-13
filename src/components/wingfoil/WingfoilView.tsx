@@ -5,7 +5,6 @@ import {
   Wind,
   Calendar,
   MapPin,
-  Info,
   Clock,
   Gauge,
   ChevronRight,
@@ -42,26 +41,14 @@ export function WingfoilView() {
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-5 sm:space-y-6">
       {/* Hero Header */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-white/10 pb-5">
-        <div className="flex items-start gap-3">
+        <div className="flex items-center gap-3">
           <span className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-teal-500/15 text-teal-400 border border-teal-500/25">
             <Wind className="h-5 w-5 sm:h-6 sm:w-6" />
           </span>
           <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded border border-teal-500/20">
-                Singapore Class Hub
-              </span>
-              <span className="text-[10px] sm:text-xs font-semibold text-slate-400">
-                Sprint Slalom
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight mt-1">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
               WingFoil Racing
             </h1>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl leading-relaxed">
-              High-speed downwind sprint slalom regattas in Singapore. Real-time event standings,
-              heat breakdowns, and equipment specifications.
-            </p>
           </div>
         </div>
 
@@ -100,21 +87,6 @@ export function WingfoilView() {
           >
             Singapore Series
           </button>
-        </div>
-      </div>
-
-      {/* Domain Notice Banner: No Rolling Ranking */}
-      <div className="rounded-xl border border-teal-500/30 bg-teal-500/5 p-3.5 sm:p-4 flex items-start gap-3">
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-teal-500/20 text-teal-300">
-          <Info className="h-4 w-4" />
-        </span>
-        <div className="text-xs space-y-0.5">
-          <p className="font-bold text-white">Event-Based Sprint Slalom Format</p>
-          <p className="text-slate-300 leading-relaxed">
-            In Singapore, WingFoil is contested exclusively on an event-by-event Sprint Slalom basis
-            under RRS Appendix A / B8. There is currently no rolling cumulative national ranking series
-            (unlike Optimist Best-3-of-5 and ILCA 4 High Points).
-          </p>
         </div>
       </div>
 
@@ -260,7 +232,7 @@ export function WingfoilView() {
               </table>
             </div>
             <div className="border-t border-white/5 px-4 py-2 text-[10px] text-slate-500 flex items-center justify-between">
-              <span>Appendix A scoring: Low points win. 1 discard applied after 4+ races.</span>
+              <span>Scoring: Low points win. 1 discard applied after 4+ races.</span>
               <span>RDG = Redress · DNF = Did Not Finish · DSQ = Disqualified</span>
             </div>
           </div>

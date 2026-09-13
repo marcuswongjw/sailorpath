@@ -16,6 +16,7 @@ import {
   Eye,
   RefreshCw,
   Trophy,
+  Edit3,
 } from "lucide-react";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
@@ -59,6 +60,57 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     () => regattas.find((r) => r.id === selectedRegattaId) || regattas[0],
     [regattas, selectedRegattaId]
   );
+
+  const [isEditingRegatta, setIsEditingRegatta] = useState(false);
+  const [regattaEditForm, setRegattaEditForm] = useState({
+    name: "",
+    dates: "",
+    venue: "",
+    organizer: "",
+    format: "Sprint Slalom" as WingfoilRegatta["format"],
+    scoringSystem: "",
+  });
+
+  const startEditingRegatta = () => {
+    if (activeRegatta) {
+      setRegattaEditForm({
+        name: activeRegatta.name,
+        dates: activeRegatta.dates,
+        venue: activeRegatta.venue,
+        organizer: activeRegatta.organizer,
+        format: activeRegatta.format,
+        scoringSystem: activeRegatta.scoringSystem,
+      });
+    }
+    setIsEditingRegatta(true);
+  };
+
+  const handleSaveRegattaDetails = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isSuperadmin) {
+      toast.error("403 Forbidden. Only Superadmins can update WingFoil data.");
+      return;
+    }
+    if (!activeRegatta) return;
+    setRegattas((prev) =>
+      prev.map((r) =>
+        r.id === activeRegatta.id
+          ? {
+              ...r,
+              name: regattaEditForm.name.trim() || r.name,
+              dates: regattaEditForm.dates.trim() || r.dates,
+              venue: regattaEditForm.venue.trim() || r.venue,
+              organizer: regattaEditForm.organizer.trim() || r.organizer,
+              format: regattaEditForm.format,
+              scoringSystem:
+                regattaEditForm.scoringSystem.trim() || r.scoringSystem,
+            }
+          : r
+      )
+    );
+    setIsEditingRegatta(false);
+    toast.success("Updated regatta details");
+  };
 
   const results = useMemo(
     () => activeRegatta?.results || [],
@@ -117,7 +169,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
           organizer: "Singapore Sailing Federation",
           format: "Sprint Slalom",
           status: "Completed",
-          scoringSystem: "Appendix A (9 races, 1 discard)",
+          scoringSystem: "9 races, 1 discard",
           rulesNotes: "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
           results: [...(SINGAPORE_WINGFOIL_REGATTAS[0]?.results || [])],
         };
@@ -299,10 +351,6 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
               Sprint Slalom
             </span>
           </div>
-          <p className="mt-1 text-xs text-slate-400 max-w-2xl leading-relaxed">
-            Manage Singapore WingFoil sprint slalom regattas, entries, and heat finishes (R1–R9).
-            Automatic World Sailing RRS Appendix A discard scoring (1 discard after 4+ races).
-          </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -403,76 +451,208 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Event Details Card */}
         <div className="lg:col-span-4 glass-panel rounded-3xl p-6 border border-white/5 space-y-4">
-          <div>
+          <div className="flex items-center justify-between">
             <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
               Selected WingFoil Regatta
             </label>
-            <select
-              value={selectedRegattaId}
-              onChange={(e) => setSelectedRegattaId(e.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-slate-950 px-3.5 py-2.5 text-xs font-bold text-white focus:border-orange-500/40"
+            <button
+              type="button"
+              onClick={() =>
+                isEditingRegatta
+                  ? setIsEditingRegatta(false)
+                  : startEditingRegatta()
+              }
+              className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-400 hover:text-orange-300 bg-orange-500/10 hover:bg-orange-500/20 px-2.5 py-1 rounded-full border border-orange-500/20 transition-all"
             >
-              {regattas.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.name} ({r.dates})
-                </option>
-              ))}
-            </select>
+              <Edit3 className="h-3 w-3" />
+              {isEditingRegatta ? "Cancel" : "Edit Details"}
+            </button>
           </div>
 
-          {activeRegatta && (
-            <div className="space-y-3 pt-3 border-t border-white/5 text-xs">
-              <div className="flex items-start gap-2">
-                <Calendar className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" />
+          <select
+            value={selectedRegattaId}
+            onChange={(e) => {
+              setSelectedRegattaId(e.target.value);
+              setIsEditingRegatta(false);
+            }}
+            className="w-full rounded-xl border border-white/10 bg-slate-950 px-3.5 py-2.5 text-xs font-bold text-white focus:border-orange-500/40"
+          >
+            {regattas.map((r) => (
+              <option key={r.id} value={r.id}>
+                {r.name} ({r.dates})
+              </option>
+            ))}
+          </select>
+
+          {isEditingRegatta ? (
+            <form onSubmit={handleSaveRegattaDetails} className="space-y-3 pt-3 border-t border-white/5 text-xs">
+              <div>
+                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                  Regatta Name
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={regattaEditForm.name}
+                  onChange={(e) =>
+                    setRegattaEditForm({ ...regattaEditForm, name: e.target.value })
+                  }
+                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                  Date
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={regattaEditForm.dates}
+                  onChange={(e) =>
+                    setRegattaEditForm({ ...regattaEditForm, dates: e.target.value })
+                  }
+                  placeholder="e.g. 5–7 September 2026"
+                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                  Venue
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={regattaEditForm.venue}
+                  onChange={(e) =>
+                    setRegattaEditForm({ ...regattaEditForm, venue: e.target.value })
+                  }
+                  placeholder="e.g. National Sailing Centre (NSC), Singapore"
+                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white"
+                />
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                  Organiser
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={regattaEditForm.organizer}
+                  onChange={(e) =>
+                    setRegattaEditForm({ ...regattaEditForm, organizer: e.target.value })
+                  }
+                  placeholder="e.g. Singapore Sailing Federation (SSF)"
+                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                    Dates
-                  </span>
-                  <span className="font-semibold text-slate-200">
-                    {activeRegatta.dates}
-                  </span>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    Format
+                  </label>
+                  <select
+                    value={regattaEditForm.format}
+                    onChange={(e) =>
+                      setRegattaEditForm({
+                        ...regattaEditForm,
+                        format: e.target.value as WingfoilRegatta["format"],
+                      })
+                    }
+                    className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-2.5 py-2 text-white text-xs"
+                  >
+                    <option value="Sprint Slalom">Sprint Slalom</option>
+                    <option value="Course Race">Course Race</option>
+                    <option value="Marathon">Marathon</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    Scoring
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={regattaEditForm.scoringSystem}
+                    onChange={(e) =>
+                      setRegattaEditForm({
+                        ...regattaEditForm,
+                        scoringSystem: e.target.value,
+                      })
+                    }
+                    placeholder="e.g. 9 races, 1 discard"
+                    className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-2.5 py-2 text-white text-xs"
+                  />
                 </div>
               </div>
 
-              <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" />
-                <div>
-                  <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                    Venue & Organizer
-                  </span>
-                  <span className="font-semibold text-slate-200">
-                    {activeRegatta.venue}
-                  </span>
-                  <span className="text-[10px] text-slate-400 block mt-0.5">
-                    {activeRegatta.organizer}
-                  </span>
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsEditingRegatta(false)}
+                  className="rounded-full px-3 py-1.5 text-xs font-bold text-slate-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-1.5 text-xs font-bold text-white shadow-md shadow-orange-950/40"
+                >
+                  Save Details
+                </button>
+              </div>
+            </form>
+          ) : (
+            activeRegatta && (
+              <div className="space-y-3 pt-3 border-t border-white/5 text-xs">
+                <div className="flex items-start gap-2">
+                  <Calendar className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" />
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                      Dates
+                    </span>
+                    <span className="font-semibold text-slate-200">
+                      {activeRegatta.dates}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 text-slate-400 mt-0.5 shrink-0" />
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                      Venue &amp; Organiser
+                    </span>
+                    <span className="font-semibold text-slate-200">
+                      {activeRegatta.venue}
+                    </span>
+                    <span className="text-[10px] text-slate-400 block mt-0.5">
+                      {activeRegatta.organizer}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2">
+                  <Trophy className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-500 uppercase block">
+                      Format &amp; Scoring
+                    </span>
+                    <span className="font-semibold text-orange-300">
+                      {activeRegatta.format} · {activeRegatta.scoringSystem}
+                    </span>
+                    {activeRegatta.rulesNotes && (
+                      <p className="text-[10px] text-slate-400 mt-0.5 leading-snug">
+                        {activeRegatta.rulesNotes}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
-
-              <div className="flex items-start gap-2">
-                <Trophy className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
-                <div>
-                  <span className="text-[10px] font-bold text-slate-500 uppercase block">
-                    Format & Scoring
-                  </span>
-                  <span className="font-semibold text-orange-300">
-                    {activeRegatta.format} · {activeRegatta.scoringSystem}
-                  </span>
-                  <p className="text-[10px] text-slate-400 mt-0.5 leading-snug">
-                    {activeRegatta.rulesNotes}
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/5 space-y-1 mt-2">
-                <span className="text-[10px] font-bold text-slate-400 uppercase">
-                  Singapore WingFoil Rule
-                </span>
-                <p className="text-[10px] text-slate-400 leading-relaxed">
-                  Stand-alone event series with no rolling national ranking. Appendix A applies (1 discard when 4+ races completed).
-                </p>
-              </div>
-            </div>
+            )
           )}
 
           <button

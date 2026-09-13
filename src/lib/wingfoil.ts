@@ -55,7 +55,7 @@ export const SINGAPORE_WINGFOIL_REGATTAS: WingfoilRegatta[] = [
     organizer: "Singapore Sailing Federation (SSF)",
     format: "Sprint Slalom",
     status: "Completed",
-    scoringSystem: "Appendix A (9 races, 1 discard)",
+    scoringSystem: "9 races, 1 discard",
     rulesNotes: "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
     results: [
       {
