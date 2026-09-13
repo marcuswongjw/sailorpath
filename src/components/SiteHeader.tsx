@@ -77,6 +77,17 @@ export function SiteHeader() {
       >
         Optimist regattas
       </Link>
+      <Link
+        href="/sg/optimist/selection"
+        prefetch
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-orange-400 hover:bg-white/5 hover:text-orange-300"
+      >
+        Selection trials 2026
+      </Link>
       {isSuperadmin && (
         <Link
           href="/sg/optimist/goldsailors"

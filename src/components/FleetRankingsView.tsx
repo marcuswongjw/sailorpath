@@ -358,6 +358,18 @@ export function FleetRankingsView({
                 </span>
               )}
             </p>
+            {fleet === "Gold" && (
+              <div className="mt-2.5">
+                <Link
+                  href="/sg/optimist/selection"
+                  prefetch
+                  className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[11px] font-bold text-orange-300 hover:bg-orange-500/20 transition-colors"
+                >
+                  <Trophy className="h-3 w-3 text-orange-400" />
+                  <span>2026 Selection Trials (Asian & Perth) →</span>
+                </Link>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full lg:w-auto min-w-0">
@@ -453,9 +465,9 @@ export function FleetRankingsView({
         SG Optimist {fleet} Fleet Rankings — {periodLabelText}
       </p>
 
-      {/* Sticky event legend + exclude toggles (below site header on mobile) */}
+      {/* Scoring events legend + exclude toggles */}
       {!loading && ranked.length > 0 && (
-        <div className="sticky top-14 sm:top-16 z-30 w-full max-w-full min-w-0 no-print">
+        <div className="w-full max-w-full min-w-0 no-print">
           <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 backdrop-blur-md shadow-lg shadow-black/40 px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 min-w-0">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
