@@ -48,6 +48,17 @@ export type AdminResultsPanelProps = {
   resultForm: ResultFormState;
   setResultForm: Dispatch<SetStateAction<ResultFormState>>;
   handleSaveResult: () => void | Promise<void>;
+  handleQuickUpdateResult?: (
+    id: string,
+    patch: {
+      rank?: number;
+      nettScore?: number | null;
+      totalScore?: number | null;
+      isDns?: boolean;
+      isDNS?: boolean;
+      isOverseasCommitment?: boolean;
+    }
+  ) => Promise<void>;
   handleDeleteResult: (id: string) => void | Promise<void>;
   handleFillDnsForRegatta: (regattaId: string) => void | Promise<void>;
   handleFillDnsForPeriod: (
@@ -74,6 +85,7 @@ export function AdminResultsPanel({
   resultForm,
   setResultForm,
   handleSaveResult,
+  handleQuickUpdateResult,
   handleDeleteResult,
   handleFillDnsForRegatta,
   handleFillDnsForPeriod,
@@ -88,12 +100,32 @@ export function AdminResultsPanel({
   const [dnsAutomationOpen, setDnsAutomationOpen] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [sailorFilter, setSailorFilter] = useState("");
+  const [inlineEditing, setInlineEditing] = useState<{
+    id: string;
+    field: "rank" | "nettScore";
+    value: string;
+  } | null>(null);
   const pickerRef = useRef<HTMLDivElement>(null);
 
   const selectedRegatta = useMemo(
     () => regattaList.find((r) => r.id === selectedRegattaIdForResultEdit),
     [regattaList, selectedRegattaIdForResultEdit]
   );
+
+  const recentRegattas = useMemo(() => {
+    return [...regattaList]
+      .filter((r) => {
+        if (regattaClassFilter !== "all") {
+          const bc = (r.boatClass || "Optimist").toLowerCase();
+          if (regattaClassFilter === "optimist" && !bc.includes("optimist")) return false;
+          if (regattaClassFilter === "ilca" && !/ilca|laser/i.test(bc)) return false;
+          if (regattaClassFilter === "wingfoil" && !bc.includes("wingfoil")) return false;
+        }
+        return true;
+      })
+      .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))
+      .slice(0, 4);
+  }, [regattaList, regattaClassFilter]);
 
   const filteredRegattas = useMemo(() => {
     const q = regattaQuery.trim().toLowerCase();
@@ -352,6 +384,36 @@ export function AdminResultsPanel({
             </div>
           )}
         </div>
+
+        {recentRegattas.length > 0 && (
+          <div className="flex items-center gap-2 pt-1 flex-wrap">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 shrink-0">
+              Quick Select:
+            </span>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {recentRegattas.map((r) => {
+                const isSelected = r.id === selectedRegattaIdForResultEdit;
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => pickRegatta(r.id)}
+                    className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition-all ${
+                      isSelected
+                        ? "bg-orange-500/20 text-orange-300 border border-orange-500/40 shadow-sm"
+                        : "bg-white/5 hover:bg-white/10 text-slate-300 border border-white/5"
+                    }`}
+                  >
+                    <span>{r.name}</span>
+                    <span className="text-[10px] text-slate-500 ml-1.5">
+                      {regattaDateLabel(r.date)}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       {selectedRegatta && (
@@ -640,8 +702,12 @@ export function AdminResultsPanel({
             Non-starters: <strong className="text-slate-400">Fill DNS</strong>{" "}
             (fleet size + 1) or mark{" "}
             <strong className="text-sky-300">Overseas commitment</strong> and
-            set points to their standing before the trip (e.g. 2nd → 2 pts). Both
-            are editable.
+            set points to their standing before the trip (e.g. 2nd → 2 pts).
+            {isSuperadmin && handleQuickUpdateResult && (
+              <span className="text-orange-400/90 ml-1">
+                Tip: Double-click rank or nett to edit inline, or toggle Fin / DNS / OVS directly.
+              </span>
+            )}
           </p>
 
           <div className="overflow-x-auto max-w-full -mx-1 px-1">
@@ -682,11 +748,56 @@ export function AdminResultsPanel({
                       }`}
                     >
                       <td className="py-3 px-3 text-center">
-                        <RankMedalBadge
-                          rank={res.rank}
-                          suffix={overseas ? "†" : dns ? "*" : ""}
-                          nonPodiumClassName="font-bold text-orange-400 font-mono"
-                        />
+                        {inlineEditing?.id === res.id && inlineEditing?.field === "rank" ? (
+                          <input
+                            type="number"
+                            autoFocus
+                            className="w-16 rounded border border-orange-500/50 bg-slate-950 px-1.5 py-0.5 text-center text-xs font-mono text-white focus:outline-none shadow-lg"
+                            value={inlineEditing.value}
+                            onChange={(e) => setInlineEditing({ ...inlineEditing, value: e.target.value })}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                const val = parseInt(inlineEditing.value, 10);
+                                if (Number.isFinite(val) && val >= 1) {
+                                  void handleQuickUpdateResult?.(res.id, { rank: val });
+                                }
+                                setInlineEditing(null);
+                              } else if (e.key === "Escape") {
+                                setInlineEditing(null);
+                              }
+                            }}
+                            onBlur={() => {
+                              const val = parseInt(inlineEditing.value, 10);
+                              if (Number.isFinite(val) && val >= 1 && val !== res.rank) {
+                                void handleQuickUpdateResult?.(res.id, { rank: val });
+                              }
+                              setInlineEditing(null);
+                            }}
+                          />
+                        ) : (
+                          <div
+                            onDoubleClick={() => {
+                              if (isSuperadmin && handleQuickUpdateResult) {
+                                setInlineEditing({ id: res.id, field: "rank", value: String(res.rank ?? "") });
+                              }
+                            }}
+                            className={`inline-flex items-center justify-center gap-1 ${
+                              isSuperadmin && handleQuickUpdateResult
+                                ? "cursor-pointer group hover:bg-white/5 px-1.5 py-0.5 rounded transition-colors"
+                                : ""
+                            }`}
+                            title={isSuperadmin && handleQuickUpdateResult ? "Double-click to edit rank inline" : undefined}
+                          >
+                            <RankMedalBadge
+                              rank={res.rank}
+                              suffix={overseas ? "†" : dns ? "*" : ""}
+                              nonPodiumClassName="font-bold text-orange-400 font-mono"
+                            />
+                            {isSuperadmin && handleQuickUpdateResult && (
+                              <Edit3 className="w-2.5 h-2.5 text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            )}
+                          </div>
+                        )}
                       </td>
                       <td className="py-3 px-4 sm:px-6 min-w-[140px]">
                         <div className="font-bold text-white leading-tight">
@@ -710,21 +821,141 @@ export function AdminResultsPanel({
                       <td className="py-3 px-3 text-center font-mono text-slate-400">
                         {res.totalScore != null ? res.totalScore : "—"}
                       </td>
-                      <td className="py-3 px-3 text-center font-mono font-black text-orange-300">
-                        {res.nettScore != null ? res.nettScore : "—"}
+                      <td className="py-3 px-3 text-center">
+                        {inlineEditing?.id === res.id && inlineEditing?.field === "nettScore" ? (
+                          <input
+                            type="number"
+                            step="any"
+                            autoFocus
+                            className="w-16 rounded border border-orange-500/50 bg-slate-950 px-1.5 py-0.5 text-center text-xs font-mono text-white focus:outline-none shadow-lg"
+                            value={inlineEditing.value}
+                            onChange={(e) => setInlineEditing({ ...inlineEditing, value: e.target.value })}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                const val = parseFloat(inlineEditing.value);
+                                if (Number.isFinite(val)) {
+                                  void handleQuickUpdateResult?.(res.id, { nettScore: val });
+                                }
+                                setInlineEditing(null);
+                              } else if (e.key === "Escape") {
+                                setInlineEditing(null);
+                              }
+                            }}
+                            onBlur={() => {
+                              const val = parseFloat(inlineEditing.value);
+                              if (Number.isFinite(val) && val !== res.nettScore) {
+                                void handleQuickUpdateResult?.(res.id, { nettScore: val });
+                              }
+                              setInlineEditing(null);
+                            }}
+                          />
+                        ) : (
+                          <div
+                            onDoubleClick={() => {
+                              if (isSuperadmin && handleQuickUpdateResult) {
+                                setInlineEditing({
+                                  id: res.id,
+                                  field: "nettScore",
+                                  value: res.nettScore != null ? String(res.nettScore) : "",
+                                });
+                              }
+                            }}
+                            className={`inline-flex items-center justify-center gap-1 font-mono font-black text-orange-300 ${
+                              isSuperadmin && handleQuickUpdateResult
+                                ? "cursor-pointer group hover:bg-white/5 px-1.5 py-0.5 rounded transition-colors"
+                                : ""
+                            }`}
+                            title={isSuperadmin && handleQuickUpdateResult ? "Double-click to edit nett score inline" : undefined}
+                          >
+                            <span>{res.nettScore != null ? res.nettScore : "—"}</span>
+                            {isSuperadmin && handleQuickUpdateResult && (
+                              <Edit3 className="w-2.5 h-2.5 text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            )}
+                          </div>
+                        )}
                       </td>
                       <td className="py-3 px-3 text-center">
-                        <span
-                          className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
-                            overseas
-                              ? "bg-sky-500/15 text-sky-300 border border-sky-500/30"
-                              : dns
-                                ? "bg-rose-500/15 text-rose-400 border border-rose-500/30"
-                                : "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
-                          }`}
-                        >
-                          {overseas ? "Overseas" : dns ? "DNS" : "Finished"}
-                        </span>
+                        {isSuperadmin && handleQuickUpdateResult ? (
+                          <div
+                            className="inline-flex rounded-lg bg-black/40 p-0.5 border border-white/10"
+                            title="Click status to toggle immediately"
+                          >
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (overseas || dns) {
+                                  void handleQuickUpdateResult(res.id, {
+                                    isDns: false,
+                                    isDNS: false,
+                                    isOverseasCommitment: false,
+                                  });
+                                }
+                              }}
+                              className={`px-1.5 py-0.5 text-[9px] font-bold rounded transition-colors ${
+                                !overseas && !dns
+                                  ? "bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 shadow-sm"
+                                  : "text-slate-400 hover:text-white"
+                              }`}
+                              title="Mark as Finished"
+                            >
+                              Fin
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (!dns) {
+                                  const dnsPts = (selectedRegatta?.totalFleetSize || 50) + 1;
+                                  void handleQuickUpdateResult(res.id, {
+                                    isDns: true,
+                                    isDNS: true,
+                                    isOverseasCommitment: false,
+                                    rank: dnsPts,
+                                  });
+                                }
+                              }}
+                              className={`px-1.5 py-0.5 text-[9px] font-bold rounded transition-colors ${
+                                dns
+                                  ? "bg-rose-500/25 text-rose-300 border border-rose-500/40 shadow-sm"
+                                  : "text-slate-400 hover:text-white"
+                              }`}
+                              title={`Mark as DNS (${(selectedRegatta?.totalFleetSize || 50) + 1} pts)`}
+                            >
+                              DNS
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (!overseas) {
+                                  void handleQuickUpdateResult(res.id, {
+                                    isOverseasCommitment: true,
+                                    isDns: false,
+                                    isDNS: false,
+                                  });
+                                }
+                              }}
+                              className={`px-1.5 py-0.5 text-[9px] font-bold rounded transition-colors ${
+                                overseas
+                                  ? "bg-sky-500/25 text-sky-300 border border-sky-500/40 shadow-sm"
+                                  : "text-slate-400 hover:text-white"
+                              }`}
+                              title="Mark as Overseas Commitment"
+                            >
+                              OVS
+                            </button>
+                          </div>
+                        ) : (
+                          <span
+                            className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
+                              overseas
+                                ? "bg-sky-500/15 text-sky-300 border border-sky-500/30"
+                                : dns
+                                  ? "bg-rose-500/15 text-rose-400 border border-rose-500/30"
+                                  : "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
+                            }`}
+                          >
+                            {overseas ? "Overseas" : dns ? "DNS" : "Finished"}
+                          </span>
+                        )}
                       </td>
                       <td className="py-4 px-6 text-right">
                         <div className="flex justify-end items-center gap-2">

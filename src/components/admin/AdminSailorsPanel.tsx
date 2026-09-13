@@ -614,12 +614,29 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       id="sailor-edit-form"
                       className="relative z-10 w-full sm:max-w-3xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl border border-orange-500/30 bg-[#0c0d14] shadow-2xl p-5 sm:p-6 space-y-4"
                     >
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider sticky top-0 bg-[#0c0d14] pb-2 z-10">
-                      {editingSailorId === "new" ? "Add New Sailor Profile" : "Edit Sailor Profile"}
-                      <span className="block text-[11px] font-semibold text-slate-500 normal-case tracking-normal mt-0.5">
-                        {editingSailorId !== "new" ? sailorForm.name || "" : "Fill in details and save"}
-                      </span>
-                    </h3>
+                    <div className="flex flex-wrap items-center justify-between gap-3 sticky top-0 bg-[#0c0d14] pb-2 z-10 border-b border-white/5">
+                      <div>
+                        <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                          {editingSailorId === "new" ? "Add New Sailor Profile" : "Edit Sailor Profile"}
+                        </h3>
+                        <span className="block text-[11px] font-semibold text-slate-500 normal-case tracking-normal mt-0.5">
+                          {editingSailorId !== "new" ? sailorForm.name || "" : "Fill in details and save"}
+                        </span>
+                      </div>
+                      {editingSailorId !== "new" && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEditingSailorId(null);
+                            void openSailorResults(editingSailorId);
+                          }}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-500/10 hover:bg-orange-500/20 text-orange-300 border border-orange-500/30 text-xs font-semibold transition-colors"
+                        >
+                          <Medal className="w-3.5 h-3.5" />
+                          <span>View Regatta History & Results</span>
+                        </button>
+                      )}
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="md:col-span-2">
                         <label className="text-[10px] font-bold text-slate-500 uppercase">Full Name</label>

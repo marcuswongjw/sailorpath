@@ -17,6 +17,7 @@ import {
   Medal,
   ScrollText,
   Flame,
+  ChevronRight,
 } from "lucide-react";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
@@ -27,11 +28,23 @@ import { useAdminData } from "@/components/admin/useAdminData";
 import {
   ADMIN_DB_SUB_TABS,
   ADMIN_OPS_SUB_TABS,
+  ADMIN_TAB_GROUPS,
   parseAdminNav,
   serializeAdminNav,
   type AdminActiveTab,
   type AdminEditSubTab,
 } from "@/components/admin/adminNav";
+
+const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string }>> = {
+  edit: Database,
+  ilca: Medal,
+  wingfoil: Flame,
+  analysis: GitCompareArrows,
+  import: FileSpreadsheet,
+  ops: ClipboardList,
+  stats: Activity,
+  changelog: ScrollText,
+};
 import { useAdminNotifications } from "@/components/admin/useAdminNotifications";
 import { useAdminSailors } from "@/components/admin/useAdminSailors";
 import { useAdminRegattas } from "@/components/admin/useAdminRegattas";
@@ -296,6 +309,59 @@ function AdminDashboardInner() {
     [setEditingSailorId, setEditingRegattaId, setEditingResultId]
   );
 
+  const selectedRegatta = useMemo(
+    () =>
+      data.regattaList.find(
+        (r) => r.id === data.selectedRegattaIdForResultEdit
+      ),
+    [data.regattaList, data.selectedRegattaIdForResultEdit]
+  );
+
+  const breadcrumbContext = useMemo(() => {
+    const crumbs: { label: string; onClick?: () => void }[] = [
+      { label: "Admin Console", onClick: () => goTab("edit") },
+    ];
+
+    if (activeTab === "edit") {
+      crumbs.push({
+        label: "Optimist & Core",
+        onClick: () => goTab("edit"),
+      });
+      const subLabel =
+        ADMIN_DB_SUB_TABS.find((s) => s.id === editSubTab)?.label || editSubTab;
+      crumbs.push({ label: subLabel, onClick: () => goSub(editSubTab) });
+      if (editSubTab === "results" && selectedRegatta) {
+        crumbs.push({ label: selectedRegatta.name });
+      }
+    } else if (activeTab === "ilca") {
+      crumbs.push({ label: "ILCA 4 Hub" });
+      crumbs.push({ label: "National Ranking Roster" });
+    } else if (activeTab === "wingfoil") {
+      crumbs.push({ label: "WingFoil Hub" });
+      crumbs.push({ label: "Sprint Slalom Scoreboards" });
+    } else if (activeTab === "analysis") {
+      crumbs.push({ label: "Optimist" });
+      crumbs.push({ label: "Gold Fleet Drop Analysis" });
+    } else if (activeTab === "import") {
+      crumbs.push({ label: "Ingestion" });
+      crumbs.push({ label: "Excel Regatta Importer" });
+    } else if (activeTab === "ops") {
+      crumbs.push({ label: "Operations" });
+      const subLabel =
+        ADMIN_OPS_SUB_TABS.find((s) => s.id === editSubTab)?.label || editSubTab;
+      crumbs.push({ label: subLabel, onClick: () => goSub(editSubTab) });
+    } else if (activeTab === "stats") {
+      crumbs.push({ label: "Platform" });
+      crumbs.push({ label: "System & Usage Stats" });
+    } else if (activeTab === "changelog") {
+      crumbs.push({ label: "Platform" });
+      crumbs.push({ label: "Product Change Log" });
+    }
+
+    return crumbs;
+  }, [activeTab, editSubTab, selectedRegatta, goTab, goSub]);
+
+
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center min-h-[60vh]">
@@ -336,14 +402,46 @@ function AdminDashboardInner() {
 
   return (
     <div className="mx-auto max-w-7xl w-full min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 flex-1 flex flex-col gap-4 sm:gap-6 lg:gap-8 overflow-x-clip">
-      <div className="glass-panel rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-white/5 bg-slate-900/40">
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-300 min-w-0">
-          <Shield className="h-4 w-4 text-orange-500 shrink-0" />
-          <span className="truncate">
-            Logged in as: <span className="text-white">{user?.email}</span>
-          </span>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
+      {/* Context Breadcrumb & Quick Info Bar */}
+      <div className="glass-panel rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 border border-white/5 bg-slate-900/40">
+        <nav aria-label="Admin breadcrumb" className="flex items-center gap-1.5 text-xs flex-wrap min-w-0">
+          <div className="flex items-center gap-1.5 shrink-0">
+            <Shield className="h-4 w-4 text-orange-500" />
+            <button
+              type="button"
+              onClick={() => goTab("edit")}
+              className="font-bold text-slate-400 hover:text-white transition-colors"
+            >
+              Admin Console
+            </button>
+          </div>
+          {breadcrumbContext.slice(1).map((crumb, idx) => (
+            <div key={idx} className="flex items-center gap-1.5">
+              <ChevronRight className="h-3 w-3 text-slate-600 shrink-0" />
+              {crumb.onClick && idx < breadcrumbContext.length - 2 ? (
+                <button
+                  type="button"
+                  onClick={crumb.onClick}
+                  className="font-semibold text-slate-400 hover:text-white transition-colors"
+                >
+                  {crumb.label}
+                </button>
+              ) : (
+                <span
+                  className={`font-bold truncate max-w-[200px] sm:max-w-[320px] ${
+                    idx === breadcrumbContext.length - 2
+                      ? "text-orange-400"
+                      : "text-slate-300"
+                  }`}
+                >
+                  {crumb.label}
+                </span>
+              )}
+            </div>
+          ))}
+        </nav>
+
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
           {inboxNotifCount > 0 && (
             <button
               type="button"
@@ -393,51 +491,63 @@ function AdminDashboardInner() {
           <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[10px] font-black text-orange-400 capitalize">
             {adminRole}
           </span>
+          <span className="text-[11px] text-slate-500 hidden sm:inline truncate max-w-[180px]">
+            {user?.email}
+          </span>
         </div>
       </div>
 
-      {/* Primary tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-1 rounded-2xl border border-white/5 bg-[#131520] p-1">
-        {(
-          [
-            ["edit", "Database", "Database", Database],
-            ["wingfoil", "WingFoil", "WingFoil", Flame],
-            ["ilca", "ILCA", "ILCA ranking", Medal],
-            ["analysis", "Analysis", "Gold analysis", GitCompareArrows],
-            ["import", "Excel", "Regatta Excel", FileSpreadsheet],
-            ["ops", "Ops", "Claims & support", ClipboardList],
-            ["stats", "Stats", "Platform stats", Activity],
-            ["changelog", "Log", "Change log", ScrollText],
-          ] as const
-        ).map(([key, shortLabel, label, Icon]) => (
-          <button
-            key={key}
-            type="button"
-            onClick={() => goTab(key)}
-            className={`relative flex items-center justify-center gap-1.5 sm:gap-2 rounded-xl px-1.5 sm:px-2 py-2.5 sm:py-3 text-[11px] sm:text-sm font-bold transition-all min-h-[2.75rem] sm:min-h-[3rem] touch-manipulation ${
-              activeTab === key
-                ? "bg-orange-600 text-white shadow-md shadow-orange-950/30"
-                : "text-slate-400 hover:text-white hover:bg-white/5"
+      {/* Primary Workspaces Bar */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-2 w-full">
+        {ADMIN_TAB_GROUPS.map((grp) => (
+          <div
+            key={grp.groupTitle}
+            className={`rounded-2xl border border-white/5 bg-[#131520] p-1.5 flex flex-col justify-between ${
+              grp.groupTitle.startsWith("Class")
+                ? "md:col-span-6"
+                : grp.groupTitle.startsWith("Ingestion")
+                  ? "md:col-span-3"
+                  : "md:col-span-3"
             }`}
           >
-            <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
-            <span className="text-center leading-tight sm:hidden">
-              {shortLabel}
-            </span>
-            <span className="text-center leading-tight hidden sm:inline">
-              {label}
-            </span>
-            {key === "ops" && inboxNotifCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center">
-                {inboxNotifCount > 9 ? "9+" : inboxNotifCount}
+            <div className="px-2 py-0.5 mb-1 flex items-center justify-between">
+              <span className="text-[9px] font-black uppercase tracking-wider text-slate-500">
+                {grp.groupTitle}
               </span>
-            )}
-            {key === "changelog" && productChangelogUnread && (
-              <span className="absolute -top-1 -right-1 min-w-[1.15rem] h-[1.15rem] px-1 rounded-full bg-sky-500 text-[9px] font-black text-white flex items-center justify-center">
-                •
-              </span>
-            )}
-          </button>
+            </div>
+            <div className="grid grid-cols-2 gap-1 sm:flex sm:flex-wrap">
+              {grp.tabs.map((tab) => {
+                const Icon = TAB_ICONS[tab.key];
+                const isActive = activeTab === tab.key;
+                return (
+                  <button
+                    key={tab.key}
+                    type="button"
+                    onClick={() => goTab(tab.key)}
+                    className={`relative flex-1 flex items-center justify-center gap-1.5 rounded-xl px-2 sm:px-2.5 py-2 text-[11px] sm:text-xs font-bold transition-all min-h-[2.5rem] touch-manipulation ${
+                      isActive
+                        ? "bg-orange-600 text-white shadow-md shadow-orange-950/30"
+                        : "text-slate-400 hover:text-white hover:bg-white/5"
+                    }`}
+                    title={tab.sublabel}
+                  >
+                    {Icon && <Icon className="h-3.5 w-3.5 shrink-0" />}
+                    <span className="truncate">{tab.shortLabel}</span>
+                    {tab.key === "ops" && inboxNotifCount > 0 && (
+                      <span className="absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center">
+                        {inboxNotifCount > 9 ? "9+" : inboxNotifCount}
+                      </span>
+                    )}
+                    {tab.key === "changelog" && productChangelogUnread && (
+                      <span className="absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-sky-500 text-[9px] font-black text-white flex items-center justify-center">
+                        •
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         ))}
       </div>
 
@@ -479,6 +589,11 @@ function AdminDashboardInner() {
             onSailorsUpdated={(sailorsList) => data.setSailorList(sailorsList)}
             onRegattaUpserted={data.patchRegattaUpsert}
             onResultsUpdated={data.patchResultsFromImport}
+            onOpenResults={(regattaId) => {
+              setSelectedRegattaIdForResultEdit(regattaId);
+              setActiveTab("edit");
+              setEditSubTab("results");
+            }}
             onImportComplete={() => {
               data.invalidateRegattas();
               data.invalidateResults();
@@ -521,6 +636,11 @@ function AdminDashboardInner() {
               {editSubTab === "regattas" && (
                 <AdminRegattasPanel
                   isSuperadmin={isSuperadmin}
+                  onOpenResults={(regattaId) => {
+                    setSelectedRegattaIdForResultEdit(regattaId);
+                    setActiveTab("edit");
+                    setEditSubTab("results");
+                  }}
                   {...regattas.panelProps}
                 />
               )}

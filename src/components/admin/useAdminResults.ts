@@ -105,6 +105,42 @@ export function useAdminResults({
     }
   };
 
+  const handleQuickUpdateResult = async (
+    id: string,
+    patch: {
+      rank?: number;
+      nettScore?: number | null;
+      totalScore?: number | null;
+      isDns?: boolean;
+      isDNS?: boolean;
+      isOverseasCommitment?: boolean;
+    }
+  ) => {
+    if (!isSuperadmin) {
+      toast.error(
+        "Error: 403 Forbidden. Only Superadmins can write to the database."
+      );
+      return;
+    }
+    try {
+      const res = await fetch("/api/admin/results", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...patch, id }),
+      });
+      const data = await parseApi(res);
+      if (!res.ok) throw new Error(apiErr(data, "Update failed"));
+      const row = data.result as ResultAdmin;
+      setResultsList((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, ...row } : r))
+      );
+      invalidateResults?.();
+      toast.success("Score updated");
+    } catch (e: unknown) {
+      toast.error(errorMessage(e));
+    }
+  };
+
   const handleFillDnsForRegatta = async (regattaId: string) => {
     if (!isSuperadmin) {
       toast.error("Error: 403 Forbidden.");
@@ -252,6 +288,7 @@ export function useAdminResults({
     resultForm,
     setResultForm,
     handleSaveResult,
+    handleQuickUpdateResult,
     handleDeleteResult,
     handleFillDnsForRegatta,
     handleFillDnsForPeriod,
@@ -266,6 +303,7 @@ export function useAdminResults({
     resultForm,
     setResultForm,
     handleSaveResult,
+    handleQuickUpdateResult,
     handleDeleteResult,
   };
 }

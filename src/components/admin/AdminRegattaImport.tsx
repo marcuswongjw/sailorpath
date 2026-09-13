@@ -1,10 +1,13 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Link from "next/link";
 import {
   Upload,
   AlertTriangle,
   CheckCircle,
+  Trophy,
+  ExternalLink,
 } from "lucide-react";
 import {
   type RegattaImportRow,
@@ -40,6 +43,7 @@ type Props = {
   onResultsUpdated?: (results: ResultAdmin[]) => void;
   /** Refetch all admin lists after a successful import. */
   onImportComplete?: () => void;
+  onOpenResults?: (regattaId: string) => void;
 };
 
 const MAX_IMPORT_FILE_BYTES = 15 * 1024 * 1024;
@@ -97,6 +101,7 @@ export function AdminRegattaImport({
   onRegattaUpserted,
   onResultsUpdated,
   onImportComplete,
+  onOpenResults,
 }: Props) {
   const { toast } = useFeedback();
   const fileBusy = useRef(false);
@@ -105,6 +110,12 @@ export function AdminRegattaImport({
   const [selectedSheet, setSelectedSheet] = useState("");
   const [dragActive, setDragActive] = useState(false);
   const [importStatus, setImportStatus] = useState<string | null>(null);
+  const [lastImportedRegatta, setLastImportedRegatta] = useState<{
+    id?: string;
+    name: string;
+    slug?: string;
+    boatClass?: string;
+  } | null>(null);
   /** 0–100; shown while reading / importing */
   const [importProgress, setImportProgress] = useState(0);
   const [importBusy, setImportBusy] = useState(false);
@@ -638,8 +649,16 @@ export function AdminRegattaImport({
             detail: string;
           }>)
         : [];
-      setNationalityFlags(natFlags);
       const message = apiStr(data, "message") || "Import complete";
+      const reg = data.regatta as
+        | { id?: string; name?: string; slug?: string; boatClass?: string }
+        | undefined;
+      setLastImportedRegatta({
+        id: reg?.id,
+        name: reg?.name || meta.name || "Imported Regatta",
+        slug: reg?.slug,
+        boatClass: reg?.boatClass || meta.boatClass,
+      });
       setImportStatus(
         message +
           (unmatchedCount
@@ -775,6 +794,45 @@ export function AdminRegattaImport({
                   }`}
                 />
                 <span>{importStatus}</span>
+              </div>
+            )}
+
+            {!importBusy && lastImportedRegatta && (
+              <div className="pt-3 flex flex-wrap items-center justify-center gap-2">
+                {onOpenResults && lastImportedRegatta.id && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenResults(lastImportedRegatta.id!)}
+                    className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-orange-950/40 transition-all"
+                  >
+                    <Trophy className="h-3.5 w-3.5" />
+                    Review &amp; Edit Results
+                  </button>
+                )}
+                {lastImportedRegatta.slug && (
+                  <Link
+                    href={
+                      (lastImportedRegatta.boatClass || "").toLowerCase().includes("ilca")
+                        ? `/sg/ilca4/regattas/${lastImportedRegatta.slug}`
+                        : `/sg/optimist/regattas/${lastImportedRegatta.slug}`
+                    }
+                    target="_blank"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-2 text-xs font-bold text-slate-300 transition-all"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5 text-orange-400" />
+                    View Public Standings
+                  </Link>
+                )}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImportStatus(null);
+                    setLastImportedRegatta(null);
+                  }}
+                  className="rounded-full border border-white/10 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-white"
+                >
+                  Import another
+                </button>
               </div>
             )}
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
-import { Plus, Trash2, Calendar } from "lucide-react";
+import Link from "next/link";
+import { Plus, Trash2, Calendar, Trophy, ExternalLink } from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
@@ -29,6 +30,7 @@ export type AdminRegattasPanelProps = {
   setRegattaForm: React.Dispatch<React.SetStateAction<RegattaFormState>>;
   handleSaveRegatta: () => void | Promise<void>;
   handleDeleteRegatta: (id: string) => void | Promise<void>;
+  onOpenResults?: (regattaId: string) => void;
 };
 
 export function AdminRegattasPanel({
@@ -47,6 +49,7 @@ export function AdminRegattasPanel({
   setRegattaForm,
   handleSaveRegatta,
   handleDeleteRegatta,
+  onOpenResults,
 }: AdminRegattasPanelProps) {
   return (
               <div className="w-full min-w-0 space-y-4">
@@ -224,8 +227,36 @@ export function AdminRegattasPanel({
                                 : "Edit regatta"}
                             </h3>
                             <p className="text-[11px] text-slate-500 mt-0.5">
-                              Meta only — results stay under Results tab.
+                              Meta details &amp; scoring parameters.
                             </p>
+                            {editingRegattaId !== "new" && (
+                              <div className="flex flex-wrap items-center gap-2 mt-2">
+                                {onOpenResults && (
+                                  <button
+                                    type="button"
+                                    onClick={() => onOpenResults(editingRegattaId)}
+                                    className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 hover:bg-orange-500 px-3 py-1 text-xs font-bold text-white shadow-sm transition-all"
+                                  >
+                                    <Trophy className="h-3 w-3" />
+                                    Manage Results &amp; Scores
+                                  </button>
+                                )}
+                                {regattaForm.slug && (
+                                  <Link
+                                    href={
+                                      (regattaForm.boatClass || "").toLowerCase().includes("ilca")
+                                        ? `/sg/ilca4/regattas/${regattaForm.slug}`
+                                        : `/sg/optimist/regattas/${regattaForm.slug}`
+                                    }
+                                    target="_blank"
+                                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-slate-300 transition-all"
+                                  >
+                                    <ExternalLink className="h-3 w-3 text-orange-400" />
+                                    Public page
+                                  </Link>
+                                )}
+                              </div>
+                            )}
                           </div>
                           {editingRegattaId !== "new" && (
                             <button

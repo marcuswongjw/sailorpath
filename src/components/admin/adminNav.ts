@@ -166,3 +166,80 @@ export const ADMIN_OPS_SUB_TABS: { id: AdminOpsSubTab; label: string }[] = [
   { id: "support", label: "Support" },
   { id: "audit", label: "Audit" },
 ];
+
+export type AdminTabGroup = {
+  groupTitle: string;
+  tabs: {
+    key: AdminActiveTab;
+    shortLabel: string;
+    label: string;
+    sublabel: string;
+  }[];
+};
+
+export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
+  {
+    groupTitle: "Class Hubs & Database",
+    tabs: [
+      {
+        key: "edit",
+        shortLabel: "Optimist",
+        label: "Optimist & Database",
+        sublabel: "Regattas, results & selection",
+      },
+      {
+        key: "ilca",
+        shortLabel: "ILCA 4",
+        label: "ILCA 4",
+        sublabel: "National ranking roster",
+      },
+      {
+        key: "wingfoil",
+        shortLabel: "WingFoil",
+        label: "WingFoil",
+        sublabel: "Sprint slalom scoreboards",
+      },
+      {
+        key: "analysis",
+        shortLabel: "Analysis",
+        label: "Gold Analysis",
+        sublabel: "Fleet progression",
+      },
+    ],
+  },
+  {
+    groupTitle: "Ingestion & Ops",
+    tabs: [
+      {
+        key: "import",
+        shortLabel: "Import",
+        label: "Excel Import",
+        sublabel: "Workbook upload",
+      },
+      {
+        key: "ops",
+        shortLabel: "Ops",
+        label: "Claims & Ops",
+        sublabel: "Claims, coaches & support",
+      },
+    ],
+  },
+  {
+    groupTitle: "Platform",
+    tabs: [
+      {
+        key: "stats",
+        shortLabel: "Stats",
+        label: "Platform Stats",
+        sublabel: "Usage & health",
+      },
+      {
+        key: "changelog",
+        shortLabel: "Log",
+        label: "Change Log",
+        sublabel: "Updates & releases",
+      },
+    ],
+  },
+];
+
