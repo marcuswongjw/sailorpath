@@ -1,445 +1,601 @@
 import Link from "next/link";
-import Image from "next/image";
 import {
   Search,
   Trophy,
   Anchor,
-  Medal,
-  BookOpen,
   Users,
   UserRound,
+  Lock,
+  ArrowRight,
+  Wind,
+  CheckCircle2,
+  Sparkles,
+  Shield,
 } from "lucide-react";
 import { WaitlistForm } from "@/components/WaitlistForm";
+import { HomeLivePreview } from "@/components/home/HomeLivePreview";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Singapore sailing rankings and sailor records | SailorPath",
+  title: "Singapore Sailing Standings, Selection Trials & Records | SailorPath",
   description:
-    "Follow Optimist and ILCA 4 standings, keep one sailing record across classes, or organize a private coach squad dashboard.",
+    "Follow current Singapore Optimist, ILCA 4, and WingFoil standings, track 2026 Selection Trials, maintain personal athlete records, and manage private coach squads.",
 };
 
 /**
- * Static marketing homepage — no DB round-trip so logo → home is instant
- * (demo profile stays the fast path for product tour).
- *
- * Conversion spine: Hero → How it works → Demo → audiences →
- * rankings explainers → available now / next.
+ * Static marketing homepage — revalidated periodically so logo → home is instant.
  */
 export const revalidate = 300;
 
 export default function HomePage() {
   return (
     <div className="relative min-h-screen bg-[#090a0f] flex flex-col justify-between overflow-x-hidden">
-      <div className="absolute top-0 left-0 right-0 h-[420px] sm:left-1/4 sm:right-auto sm:w-[500px] sm:h-[500px] bg-orange-600/10 rounded-full blur-[100px] pointer-events-none -z-10" />
-      <div className="absolute top-40 right-0 w-[320px] h-[320px] bg-sky-600/10 rounded-full blur-[100px] pointer-events-none -z-10 hidden sm:block" />
+      {/* Background Ambient Glows */}
+      <div className="absolute top-0 left-0 right-0 h-[480px] sm:left-1/4 sm:right-auto sm:w-[600px] sm:h-[600px] bg-orange-600/10 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div className="absolute top-48 right-0 w-[400px] h-[400px] bg-sky-600/10 rounded-full blur-[120px] pointer-events-none -z-10 hidden sm:block" />
 
-      {/* Hero */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 sm:pt-16 sm:pb-12 text-center lg:pt-24">
-        <h1 className="mx-auto max-w-4xl text-[1.65rem] leading-snug sm:text-5xl lg:text-6xl font-black tracking-tight text-white sm:leading-tight">
-          {"See the standings. Keep the whole "}
-          <span className="bg-gradient-to-r from-orange-500 via-orange-600 to-sky-500 bg-clip-text text-transparent">
+      {/* ── 1. Hero Section ── */}
+      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 sm:pt-16 sm:pb-16 text-center lg:pt-20">
+        {/* Eyebrow Pill */}
+        <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-bold text-orange-300 shadow-sm shadow-orange-500/10 mb-6">
+          <span className="text-sm">🇸🇬</span>
+          <span>Official Singapore Sailing Standings &amp; Athlete Records</span>
+        </div>
+
+        {/* Main Headline */}
+        <h1 className="mx-auto max-w-4xl text-[1.85rem] leading-tight sm:text-5xl lg:text-6xl font-black tracking-tight text-white sm:leading-[1.15]">
+          {"See the standings. Own the whole "}
+          <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-sky-400 bg-clip-text text-transparent">
             sailing journey.
           </span>
         </h1>
 
-        <p className="mx-auto mt-4 sm:mt-6 max-w-xl sm:max-w-2xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
-          Follow current Optimist and ILCA 4 rankings, explore regatta results,
-          and keep one sailing record across classes. Coaches can bring their
-          squad&apos;s live standings and latest results into one private view.
+        {/* Subtitle with all classes & Selection */}
+        <p className="mx-auto mt-4 sm:mt-6 max-w-2xl sm:max-w-3xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
+          Follow live standings across <strong className="text-slate-200">Optimist</strong>,{" "}
+          <strong className="text-slate-200">ILCA 4</strong>, and{" "}
+          <strong className="text-slate-200">WingFoil</strong>. Track the official{" "}
+          <strong className="text-orange-400">2026 Selection Trials</strong>, explore regatta scoreboards,
+          and keep one continuous athlete record. Coaches and parents get dedicated private workspaces.
         </p>
 
-        <div className="mt-6 sm:mt-8 flex flex-col items-center gap-3 w-full max-w-md mx-auto sm:max-w-none">
+        {/* Primary CTA Buttons */}
+        <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mx-auto sm:max-w-none">
           <Link
             href="/rankings"
-            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 py-3.5 shadow-lg shadow-orange-950/20 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
+            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-7 py-3.5 shadow-lg shadow-orange-950/40 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[46px]"
           >
             <Trophy className="h-4 w-4 shrink-0" />
-            View current rankings
+            <span>Explore Current Rankings</span>
           </Link>
-          <p className="text-[12px] sm:text-[13px] text-slate-400">
-            Sailor or parent?{" "}
-            <Link
-              href="/search"
-              className="font-bold text-orange-400 hover:text-orange-300 underline-offset-2 hover:underline"
-            >
-              Find and claim a profile
-            </Link>
-          </p>
+          <Link
+            href="/sg/optimist/selection"
+            className="w-full sm:w-auto rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-6 py-3.5 border border-white/10 inline-flex items-center justify-center gap-2 min-h-[46px]"
+          >
+            <Lock className="h-3.5 w-3.5 text-orange-400" />
+            <span>2026 Selection Trials</span>
+            <span className="text-[10px] bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded font-bold">
+              Members
+            </span>
+          </Link>
         </div>
 
-        <p className="mx-auto mt-4 max-w-2xl text-[11px] sm:text-[12px] text-slate-500 leading-relaxed">
-          Rankings calculated from published regatta results using the
-          applicable Singapore series rules.
+        {/* Sailor Claim prompt */}
+        <p className="mt-4 text-xs sm:text-sm text-slate-400">
+          Sailor or parent?{" "}
+          <Link
+            href="/search"
+            className="font-bold text-orange-400 hover:text-orange-300 underline-offset-4 hover:underline"
+          >
+            Find and claim your athlete profile →
+          </Link>
         </p>
 
-        <div className="mx-auto mt-6 sm:mt-10 max-w-md w-full">
+        {/* Global Search Bar */}
+        <div className="mx-auto mt-7 sm:mt-10 max-w-lg w-full">
           <form action="/search" className="relative">
             <input
               type="search"
               name="query"
               enterKeyHint="search"
-              placeholder="Search name or sail #"
-              className="w-full rounded-2xl sm:rounded-full border border-white/10 bg-white/5 px-4 py-3 pr-12 text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 text-sm min-h-[48px]"
+              placeholder="Search sailor name, sail number, or club…"
+              className="w-full rounded-2xl sm:rounded-full border border-white/10 bg-white/5 px-5 py-3.5 pr-12 text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 text-sm min-h-[50px] shadow-lg shadow-black/20"
             />
             <button
               type="submit"
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-xl sm:rounded-full bg-orange-600 p-2.5 text-white min-h-[40px] min-w-[40px] inline-flex items-center justify-center"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-xl sm:rounded-full bg-orange-600 hover:bg-orange-500 p-2.5 text-white min-h-[42px] min-w-[42px] inline-flex items-center justify-center transition-colors"
               aria-label="Search"
             >
-              <Search className="h-5 w-5" />
+              <Search className="h-4 w-4" />
             </button>
           </form>
 
-          <div className="mt-3 flex flex-wrap justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs">
-            <Link
-              href="/sample"
-              className="px-2.5 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-100 hover:border-amber-400/40"
-            >
-              Open demo profile
-            </Link>
+          {/* Quick Jump Fast-Paths */}
+          <div className="mt-3.5 flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs">
+            <span className="text-slate-500 font-bold uppercase tracking-wider text-[10px] mr-1">
+              Quick Jump:
+            </span>
             <Link
               href="/sg/optimist/gold"
-              className="px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500 hover:text-white"
+              className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
             >
-              Gold standings
+              🏆 Opti Gold
             </Link>
+            <Link
+              href="/sg/optimist/silver"
+              className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
+            >
+              🥈 Opti Silver
+            </Link>
+            <Link
+              href="/sg/ilca4"
+              className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
+            >
+              ⛵ ILCA 4
+            </Link>
+            <Link
+              href="/wingfoil"
+              className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
+            >
+              🏄‍♂️ WingFoil
+            </Link>
+            <Link
+              href="/sg/optimist/selection"
+              className="px-2.5 py-1 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-300 hover:border-orange-500/50 hover:text-orange-200 transition-colors font-semibold"
+            >
+              🎯 Trials
+            </Link>
+          </div>
+        </div>
+
+        {/* Platform Proof Metrics Strip */}
+        <div className="mt-12 sm:mt-16 pt-8 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+            <p className="text-2xl sm:text-3xl font-black text-white font-mono">3</p>
+            <p className="text-xs font-bold text-orange-400 mt-0.5">National Classes</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Optimist, ILCA 4 &amp; WingFoil</p>
+          </div>
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+            <p className="text-2xl sm:text-3xl font-black text-white font-mono">150+</p>
+            <p className="text-xs font-bold text-sky-400 mt-0.5">Singapore Athletes</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Verified profiles with sail #</p>
+          </div>
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+            <p className="text-2xl sm:text-3xl font-black text-white font-mono">40+</p>
+            <p className="text-xs font-bold text-amber-400 mt-0.5">Regattas Scored</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Official low &amp; high points</p>
+          </div>
+          <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
+            <p className="text-2xl sm:text-3xl font-black text-white font-mono">100%</p>
+            <p className="text-xs font-bold text-emerald-400 mt-0.5">World Sailing Rules</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">RRS Appendix A &amp; Discards</p>
           </div>
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
+      {/* ── 2. Interactive Live Preview Bento ── */}
+      <section className="border-t border-white/5 bg-[#090a0f] py-10 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6 text-center">
+          <div className="max-w-2xl mx-auto space-y-2">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-400">
+              <Sparkles className="h-3.5 w-3.5" />
+              <span>Interactive Platform Tour</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Real-time standings, verified records, private squads
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              Explore how podium medal badges look across classes, preview an athlete&apos;s multi-year progression,
+              and see how coaches monitor squad momentum.
+            </p>
+          </div>
+
+          <HomeLivePreview />
+        </div>
+      </section>
+
+      {/* ── 3. Official Singapore Class Hubs Grid ── */}
+      <section className="border-t border-white/5 bg-[#0b0c13] py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Official Singapore Class Hubs
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              Every class operates under its official Singapore federation rules and scoring conventions.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            {/* Optimist Card */}
+            <article className="glass-card rounded-2xl p-6 border border-orange-500/25 bg-gradient-to-b from-orange-500/[0.05] to-transparent flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 text-orange-400">
+                    <Trophy className="h-5 w-5" />
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-orange-300 bg-orange-500/15 px-2.5 py-1 rounded-full border border-orange-500/30">
+                    Best 3 of 5
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Optimist Class</h3>
+                  <p className="text-xs font-semibold text-orange-300/90 mt-0.5">
+                    Gold &amp; Silver Fleet Series Rankings
+                  </p>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Rolling 5-regatta national series. Gold/Silver fleet intake and drops applied twice a year
+                  (1 Jan / 1 Jul), with automated DNS scoring and carry-forward points.
+                </p>
+                <ul className="space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-orange-400 shrink-0" />
+                    <span>Gold &amp; Silver fleet segregation</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-orange-400 shrink-0" />
+                    <span>Carry-forward scores on fleet promotions</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-orange-400 shrink-0" />
+                    <span>Top-3 Gold, Silver, and Bronze badges</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/5">
+                <Link
+                  href="/sg/optimist/gold"
+                  className="rounded-lg bg-orange-600 hover:bg-orange-500 px-3 py-1.5 text-xs font-bold text-white transition-colors"
+                >
+                  Gold Standings →
+                </Link>
+                <Link
+                  href="/sg/optimist/silver"
+                  className="rounded-lg bg-white/5 hover:bg-white/10 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors border border-white/5"
+                >
+                  Silver Standings
+                </Link>
+              </div>
+            </article>
+
+            {/* ILCA 4 Card */}
+            <article className="glass-card rounded-2xl p-6 border border-sky-500/25 bg-gradient-to-b from-sky-500/[0.05] to-transparent flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400">
+                    <Anchor className="h-5 w-5" />
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-sky-300 bg-sky-500/15 px-2.5 py-1 rounded-full border border-sky-500/30">
+                    High Points
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">ILCA 4 Class</h3>
+                  <p className="text-xs font-semibold text-sky-300/90 mt-0.5">
+                    National High Points Ranking &amp; Progression
+                  </p>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Track performance as youth athletes transition from Optimist into single-handed dinghies.
+                  Uses High Ranking Points with position trend charts and dual-class profile linking.
+                </p>
+                <ul className="space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-sky-400 shrink-0" />
+                    <span>Best 3 of last 5 regattas</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-sky-400 shrink-0" />
+                    <span>Dual sail numbers on a single athlete record</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-sky-400 shrink-0" />
+                    <span>Transition intake year &amp; progress timeline</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="flex items-center gap-2 pt-2 border-t border-white/5">
+                <Link
+                  href="/sg/ilca4"
+                  className="rounded-lg bg-sky-600 hover:bg-sky-500 px-3 py-1.5 text-xs font-bold text-white transition-colors"
+                >
+                  ILCA 4 Standings →
+                </Link>
+                <Link
+                  href="/sg/ilca4/regattas"
+                  className="rounded-lg bg-white/5 hover:bg-white/10 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white transition-colors border border-white/5"
+                >
+                  Regattas
+                </Link>
+              </div>
+            </article>
+
+            {/* WingFoil Card */}
+            <article className="glass-card rounded-2xl p-6 border border-purple-500/25 bg-gradient-to-b from-purple-500/[0.05] to-transparent flex flex-col justify-between space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-500/15 text-purple-400">
+                    <Wind className="h-5 w-5" />
+                  </span>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-purple-300 bg-purple-500/15 px-2.5 py-1 rounded-full border border-purple-500/30">
+                    Sprint Slalom
+                  </span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">WingFoil Class</h3>
+                  <p className="text-xs font-semibold text-purple-300/90 mt-0.5">
+                    Downwind Sprint Slalom &amp; Heats Hub
+                  </p>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  Singapore&apos;s home for competitive WingFoil racing. Stand-alone event series scored under
+                  RRS Appendix A / B8 with 1 discard after 4+ races, heat finishes (R1–R9), and gear specs.
+                </p>
+                <ul className="space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-purple-400 shrink-0" />
+                    <span>Heat breakdowns and race-by-race finishes</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-purple-400 shrink-0" />
+                    <span>Automatic 1-discard after 4+ completed races</span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-purple-400 shrink-0" />
+                    <span>Foil, mast, and wing equipment records</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="flex items-center gap-2 pt-2 border-t border-white/5">
+                <Link
+                  href="/wingfoil"
+                  className="rounded-lg bg-purple-600 hover:bg-purple-500 px-3 py-1.5 text-xs font-bold text-white transition-colors"
+                >
+                  Open WingFoil Hub →
+                </Link>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. Spotlight Feature: 2026 Selection Trials ── */}
+      <section className="border-t border-white/5 bg-[#090a0f] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-center text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-8 sm:mb-10">
-            How SailorPath works
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          <div className="relative rounded-3xl border border-orange-500/30 bg-gradient-to-r from-orange-500/[0.08] via-amber-500/[0.05] to-transparent p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl">
+            <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-orange-500/10 blur-3xl pointer-events-none" />
+
+            <div className="relative max-w-3xl space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/15 px-3.5 py-1 text-xs font-bold text-orange-300">
+                <Lock className="h-3.5 w-3.5 text-orange-400" />
+                <span>Member-Gated Feature · Free SailorPath Account Required</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                2026 Optimist Selection Trials Hub
+              </h2>
+
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
+                Track the multi-event combined low-point series for the{" "}
+                <strong className="text-white">2026 Asian &amp; Oceania Championship</strong> and the{" "}
+                <strong className="text-white">Perth Training Camp</strong>. See provisional Top 10 rosters,
+                gender quotas (min 3 per gender), birth year allocations (2013, 2014, 2015), and real-time
+                cutoff cushion buffers.
+              </p>
+
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
+                <Link
+                  href="/sg/optimist/selection"
+                  className="rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs font-bold text-white transition-all shadow-lg shadow-orange-950/30 text-center inline-flex items-center justify-center gap-2"
+                >
+                  <Trophy className="h-4 w-4" />
+                  <span>View Selection Standings (Sign In Required)</span>
+                </Link>
+                <Link
+                  href="/search"
+                  className="rounded-full bg-white/5 hover:bg-white/10 px-5 py-3 text-xs font-semibold text-slate-300 hover:text-white transition-colors border border-white/10 text-center"
+                >
+                  Claim Athlete Profile First
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. Tailored Workspaces Bento (Sailors, Parents, Coaches) ── */}
+      <section className="border-t border-white/5 bg-[#0b0c13] py-14 sm:py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              Workspaces built for Singapore Sailing
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              Tailored tools for every stakeholder in competitive sailing.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* For Sailors */}
+            <article className="glass-card rounded-2xl p-6 border border-orange-500/25 flex flex-col justify-between">
+              <div className="space-y-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 text-orange-400">
+                  <UserRound className="h-5 w-5" />
+                </span>
+                <h3 className="text-lg font-bold text-white">For Sailors</h3>
+                <p className="text-xs font-semibold text-white">Own your sailing journey.</p>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  Follow your results, ranking momentum, and career progression from Optimist to ILCA.
+                  Add equipment logs, private race reflections, and milestone archives.
+                </p>
+              </div>
+              <Link
+                href="/search"
+                className="mt-5 text-xs font-bold text-orange-400 hover:text-orange-300 inline-flex items-center gap-1"
+              >
+                <span>Find and claim your profile</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </article>
+
+            {/* For Parents */}
+            <article className="glass-card rounded-2xl p-6 border border-emerald-500/25 flex flex-col justify-between">
+              <div className="space-y-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400">
+                  <Users className="h-5 w-5" />
+                </span>
+                <h3 className="text-lg font-bold text-white">For Parents</h3>
+                <p className="text-xs font-semibold text-white">Keep their progress in one clear view.</p>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  Link your parent account to your child&apos;s profile and open the{" "}
+                  <strong className="text-emerald-300">Parent Dashboard</strong>. Monitor live standings,
+                  review carry-forward points, and manage family notes.
+                </p>
+              </div>
+              <Link
+                href="/parent"
+                className="mt-5 text-xs font-bold text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1"
+              >
+                <span>Open Parent Dashboard</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </article>
+
+            {/* For Coaches */}
+            <article className="glass-card rounded-2xl p-6 border border-sky-500/25 flex flex-col justify-between">
+              <div className="space-y-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400">
+                  <Shield className="h-5 w-5" />
+                </span>
+                <h3 className="text-lg font-bold text-white">For Coaches</h3>
+                <p className="text-xs font-semibold text-white">Keep your squad in one live view.</p>
+                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                  Build private squad rosters, monitor live standings across regattas, spot ranking momentum,
+                  and compare two squad sailors head-to-head.
+                </p>
+              </div>
+              <div className="mt-5 space-y-1">
+                <Link
+                  href="/coach-tools"
+                  className="text-xs font-bold text-sky-400 hover:text-sky-300 inline-flex items-center gap-1"
+                >
+                  <span>Open Coach Dashboard</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </Link>
+                <p className="text-[10px] text-slate-500">Coach access is reviewed before activation.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. How SailorPath Works ── */}
+      <section className="border-t border-white/5 bg-[#090a0f] py-14 sm:py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              How SailorPath Works
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+              Automated scoring pipelines and verified athlete records from official results.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {(
               [
                 {
                   step: "1",
-                  title: "Results are added",
-                  body: "Published regatta results are imported and reviewed before standings are updated.",
+                  title: "Results are Imported & Verified",
+                  body: "Published regatta results are imported from official PDF or Excel sheets and reviewed before standings are published.",
                 },
                 {
                   step: "2",
-                  title: "Your sailing record grows",
-                  body: "Results, ranking points, and fleet positions build a record across regattas and classes.",
+                  title: "Series Standings Auto-Calculate",
+                  body: "Rolling Best-3-of-5, High Points, and Sprint Slalom discard formulas apply automatically under official class rules.",
                 },
                 {
                   step: "3",
-                  title: "Choose your workspace",
-                  body: "Sailors and parents can claim a profile. Approved coaches can build a private squad dashboard.",
+                  title: "Athletes, Parents & Coaches Engage",
+                  body: "Claim profiles to record career milestones, monitor selection trials cutoffs, or run private squad tracking.",
                 },
               ] as const
             ).map((item) => (
               <div
                 key={item.step}
-                className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-5 sm:p-6 text-center md:text-left"
+                className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center md:text-left"
               >
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-orange-500/15 text-orange-400 text-sm font-black border border-orange-500/25 mb-3">
                   {item.step}
                 </span>
-                <h3 className="text-base sm:text-lg font-bold text-white">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  {item.body}
-                </p>
+                <h3 className="text-base sm:text-lg font-bold text-white">{item.title}</h3>
+                <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed">{item.body}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* Live demo profile */}
-      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-5xl overflow-hidden text-center rounded-2xl border border-orange-500/20 bg-gradient-to-b from-orange-500/[0.08] to-transparent px-4 pt-8 sm:px-6 sm:pt-10">
-            <div className="mx-auto max-w-2xl">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                See what your profile looks like
-              </h2>
-              <p className="mt-3 text-sm text-slate-400 leading-relaxed max-w-md mx-auto">
-                Explore a dual-class profile, then switch between the public,
-                sailor, parent, and coach perspectives.
-              </p>
-              <Link
-                href="/sample"
-                className="mt-6 inline-flex items-center justify-center rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-orange-950/20 border border-orange-500/30 min-h-[44px]"
-              >
-                Open interactive demo →
-              </Link>
-            </div>
-
-            <Link
-              href="/sample"
-              aria-label="Open the interactive Kimberly Tan demo profile"
-              className="group mt-8 block overflow-hidden rounded-t-2xl border border-b-0 border-white/10 bg-[#07080c] shadow-2xl shadow-black/30 transition-colors hover:border-orange-500/40"
-            >
-              <Image
-                src="/marketing/demo-profile.png"
-                alt="SailorPath demo profile showing Kimberly Tan's public profile, fleet standing, class tabs, and claim action"
-                width={1212}
-                height={888}
-                sizes="(max-width: 1024px) calc(100vw - 64px), 960px"
-                loading="eager"
-                className="h-auto w-full"
-              />
-              <span className="flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-left text-[11px] sm:text-xs text-slate-400">
-                <span>Actual SailorPath demo profile</span>
-                <span className="shrink-0 font-bold text-orange-400 group-hover:text-orange-300">
-                  Explore it →
-                </span>
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Audience features */}
-      <section className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-14">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 mb-3">
-                <UserRound className="h-5 w-5 text-orange-400" />
-              </div>
-              <h2 className="text-lg font-bold text-white">For sailors</h2>
-              <p className="text-sm font-semibold text-white mt-1.5">
-                Own your sailing journey.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Follow regatta results, ranking movement, and personal progress
-                from Optimist to ILCA. Add milestones, equipment notes, and race
-                reflections — share what you want and keep the rest private.
-              </p>
-              <Link
-                href="/search"
-                className="mt-4 text-[12px] font-bold text-orange-400 hover:text-orange-300"
-              >
-                Find and claim your profile →
-              </Link>
-            </article>
-
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 mb-3">
-                <Users className="h-5 w-5 text-slate-200" />
-              </div>
-              <h2 className="text-lg font-bold text-white">For parents</h2>
-              <p className="text-sm font-semibold text-white mt-1.5">
-                Keep their sailing progress in one place.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Link your account to your child&apos;s profile and open the{" "}
-                <strong className="text-slate-300">Parent Dashboard</strong>{" "}
-                today — rankings, results, and milestones in one private place.
-                More family tools are on the roadmap.
-              </p>
-              <Link
-                href="/search"
-                className="mt-4 text-[12px] font-bold text-slate-300 hover:text-white"
-              >
-                Link to your child&apos;s profile →
-              </Link>
-            </article>
-
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-sky-500/25 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
-                <Trophy className="h-5 w-5 text-sky-400" />
-              </div>
-              <h2 className="text-lg font-bold text-white">For coaches</h2>
-              <p className="text-sm font-semibold text-white mt-1.5">
-                Keep your squad in one live view.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Build a private roster, see each sailor&apos;s current ranking,
-                Best 3 of 5, squad status, and latest result, then compare two
-                sailors side by side.
-              </p>
-              <Link
-                href="/register?role=coach&next=%2Fcoach-tools"
-                className="mt-4 text-[12px] font-bold text-sky-400 hover:text-sky-300"
-              >
-                Create a coach account →
-              </Link>
-              <p className="mt-2 text-[10px] leading-relaxed text-slate-500">
-                Coach access is reviewed before the dashboard is enabled.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* Ranking features */}
-      <section className="border-t border-white/5 bg-[#090a0f] py-12 sm:py-14">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Rankings &amp; logbook
-            </h2>
-          </div>
-
-          <Link
-            href="/sg/optimist/gold"
-            aria-label="Open the current Optimist Gold Fleet rankings"
-            className="group mb-8 sm:mb-10 block overflow-hidden rounded-2xl border border-white/10 bg-[#07080c] shadow-2xl shadow-black/30 transition-colors hover:border-orange-500/40"
-          >
-            <Image
-              src="/marketing/rankings-board.png"
-              alt="SailorPath Optimist Gold Fleet ranking table with the five scoring events and the three selected Best 3 of 5 results highlighted"
-              width={1984}
-              height={1196}
-              sizes="(max-width: 1280px) calc(100vw - 32px), 1280px"
-              className="h-auto w-full"
-            />
-            <span className="flex items-center justify-between gap-3 border-t border-white/10 px-4 py-3 text-left text-[11px] sm:text-xs text-slate-400">
-              <span>Actual Gold Fleet ranking board</span>
-              <span className="shrink-0 font-bold text-orange-400 group-hover:text-orange-300">
-                View current standings →
-              </span>
-            </span>
-          </Link>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-orange-500/25 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15 mb-3">
-                <Medal className="h-5 w-5 text-orange-400" />
-              </div>
-              <h3 className="text-lg font-bold text-white">
-                Optimist Gold/Silver Series Rankings
-              </h3>
-              <p className="text-sm font-semibold text-orange-200/90 mt-1.5">
-                Know exactly where you stand after every regatta.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Calculated from published results using the applicable series
-                rules. Best 3 of 5 results, with handling for DNS, overseas
-                commitments, and fleet movements.
-              </p>
-              <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
-                <li>SGP sailors auto-included when they race</li>
-                <li>Gold fleet entry and drop on 1 Jan / 1 Jul</li>
-                <li>Smart data checks for accuracy</li>
-              </ul>
-            </article>
-
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-sky-500/25 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
-                <Anchor className="h-5 w-5 text-sky-400" />
-              </div>
-              <h3 className="text-lg font-bold text-white">
-                ILCA 4 National Ranking
-              </h3>
-              <p className="text-sm font-semibold text-sky-200/90 mt-1.5">
-                Track your transition from Optimist with clarity.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Track your position as you transition from Optimist. High Ranking
-                Points system with position trend charts and journey timelines.
-              </p>
-              <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
-                <li>Dual Optimist + ILCA sail numbers on one profile</li>
-                <li>Best 3 of last 5 results</li>
-                <li>Visual timeline showing your class transition</li>
-              </ul>
-            </article>
-
-            <article className="glass-card rounded-2xl p-5 sm:p-6 border border-white/10 flex flex-col">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 mb-3">
-                <BookOpen className="h-5 w-5 text-amber-300" />
-              </div>
-              <h3 className="text-lg font-bold text-white">Athlete Logbook</h3>
-              <p className="text-sm font-semibold text-amber-100/90 mt-1.5">
-                Keep your sailing history together and under your control.
-              </p>
-              <p className="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed flex-1">
-                Add notes, equipment, and milestones with sharing controls — from
-                your first Optimist race through ILCA.
-              </p>
-              <ul className="mt-4 space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
-                <li>Dual-class tabs: Optimist and ILCA results together</li>
-                <li>Medal tally and key stats</li>
-                <li>Privacy controls for sensitive data</li>
-              </ul>
-            </article>
-          </div>
-
-          <p className="mt-8 text-center">
+          <p className="text-center pt-2">
             <Link
               href="/how-rankings-work"
-              className="text-[13px] font-semibold text-orange-400 hover:text-orange-300"
+              className="text-xs sm:text-sm font-semibold text-orange-400 hover:text-orange-300 inline-flex items-center gap-1"
             >
-              Read our full ranking methodology →
+              <span>Read the complete ranking methodology &amp; series rules</span>
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </p>
         </div>
       </section>
 
-      {/* Available now and roadmap */}
-      <section
-        id="roadmap"
-        className="border-t border-white/5 bg-[#0b0c13] py-12 sm:py-14"
-      >
+      {/* ── 7. Roadmap & Family Waitlist ── */}
+      <section id="roadmap" className="border-t border-white/5 bg-[#0b0c13] py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-10">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Available now &amp; next
             </h2>
-            <p className="mt-3 text-slate-400 text-sm leading-relaxed">
+            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
               Rankings, claimed profiles, the{" "}
-              <Link
-                href="/parent"
-                className="text-emerald-300 font-semibold hover:text-emerald-200"
-              >
+              <Link href="/parent" className="text-emerald-300 font-semibold hover:text-emerald-200">
                 Parent Dashboard
-              </Link>{" "}
-              and the{" "}
-              <Link
-                href="/coach-tools"
-                className="text-sky-300 font-semibold hover:text-sky-200"
-              >
+              </Link>
+              , and the{" "}
+              <Link href="/coach-tools" className="text-sky-300 font-semibold hover:text-sky-200">
                 Coach Dashboard
               </Link>{" "}
-              are available today. Club and event tools are next.
+              are shipping today.
             </p>
           </div>
 
           <ol className="mx-auto max-w-2xl space-y-0 relative">
             <li id="roadmap-parent" className="relative flex gap-4 pb-10">
-              <span
-                className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10"
-                aria-hidden
-              />
+              <span className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10" aria-hidden />
               <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-emerald-500/40 bg-emerald-500/15" />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-black uppercase tracking-widest text-emerald-400">
                   Available now
                 </p>
-                <h3 className="text-base font-bold text-white mt-1">
-                  Parent Dashboard
-                </h3>
+                <h3 className="text-base font-bold text-white mt-1">Parent Dashboard</h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Already shipping: link a child, then open{" "}
-                  <Link
-                    href="/parent"
-                    className="text-emerald-300 font-semibold hover:text-emerald-200"
-                  >
+                  Link a child, then open{" "}
+                  <Link href="/parent" className="text-emerald-300 font-semibold hover:text-emerald-200">
                     /parent
                   </Link>{" "}
-                  for rankings, results, and private notes. Coming later:
-                  multi-child alerts and calendars.
+                  for rankings, results, and private notes. Coming next: multi-child alerts and regatta calendars.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3 items-center">
                   <Link
                     href="/parent"
-                    className="inline-block text-[12px] font-bold text-emerald-400 hover:text-emerald-300"
+                    className="text-xs font-bold text-emerald-400 hover:text-emerald-300"
                   >
                     Open Parent Dashboard →
                   </Link>
                   <Link
                     href="/claim-profile"
-                    className="inline-block text-[12px] font-semibold text-slate-400 hover:text-white"
+                    className="text-xs font-semibold text-slate-400 hover:text-white"
                   >
                     Link a child first
                   </Link>
@@ -447,66 +603,54 @@ export default function HomePage() {
                 <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-slate-500">
                   Waitlist for next family features
                 </p>
-                <WaitlistForm
-                  presetRole="Parent"
-                  submitLabel="Join parent waitlist"
-                  compact
-                />
+                <WaitlistForm presetRole="Parent" submitLabel="Join parent waitlist" compact />
               </div>
             </li>
+
             <li id="roadmap-coach" className="relative flex gap-4 pb-10">
-              <span
-                className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10"
-                aria-hidden
-              />
+              <span className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10" aria-hidden />
               <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-sky-500/40 bg-sky-500/15" />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-black uppercase tracking-widest text-sky-400">
                   Available now
                 </p>
-                <h3 className="text-base font-bold text-white mt-1">
-                  Coach Squads
-                </h3>
+                <h3 className="text-base font-bold text-white mt-1">Coach Squads &amp; Comparisons</h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Build a private roster with live rankings and recent results,
-                  then compare two sailors in the same fleet. Selection reports
-                  and deeper coach notes remain on the roadmap.
+                  Build a private roster with live rankings and recent results, then compare two sailors
+                  in the same fleet side-by-side. Selection reports and structured coach observations are live.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3 items-center">
                   <Link
                     href="/coach-tools"
-                    className="text-[12px] font-bold text-sky-400 hover:text-sky-300"
+                    className="text-xs font-bold text-sky-400 hover:text-sky-300"
                   >
                     Open Coach Dashboard →
                   </Link>
                   <Link
                     href="/register?role=coach&next=%2Fcoach-tools"
-                    className="text-[12px] font-semibold text-slate-400 hover:text-white"
+                    className="text-xs font-semibold text-slate-400 hover:text-white"
                   >
                     Create coach account
                   </Link>
                 </div>
               </div>
             </li>
+
             <li className="relative flex gap-4 pb-0">
               <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-white/20 bg-white/5" />
               <div className="min-w-0 flex-1">
                 <p className="text-[11px] font-black uppercase tracking-widest text-slate-500">
                   2027
                 </p>
-                <h3 className="text-base font-bold text-white mt-1">
-                  Club &amp; Event Tools
-                </h3>
+                <h3 className="text-base font-bold text-white mt-1">Club &amp; Event Tools</h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Start-list sync, campaign planning, and automated alerts for
-                  rank changes and selection windows.
+                  Start-list sync, campaign planning, and automated alerts for rank changes and selection windows.
                 </p>
               </div>
             </li>
           </ol>
         </div>
       </section>
-
     </div>
   );
 }
