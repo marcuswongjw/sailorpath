@@ -4,9 +4,9 @@ import { AdminMetricsGuide } from "@/components/admin/AdminMetricsGuide";
 import { AdminSignInGate } from "@/components/admin/AdminSignInGate";
 import { getAuthContext } from "@/lib/auth";
 import {
+  adminLoginOrigin,
   adminReturnUrl,
   isAdminHost,
-  publicSiteOrigin,
 } from "@/lib/adminHost";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +27,7 @@ export default async function AdminMetricsPage() {
       <AdminSignInGate
         reason="unsigned"
         nextUrl={adminReturnUrl(host, "/admin/metrics")}
-        siteOrigin={publicSiteOrigin()}
+        siteOrigin={adminLoginOrigin(host)}
       />
     );
   }

@@ -5,9 +5,9 @@ import { AdminSignInGate } from "@/components/admin/AdminSignInGate";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { getAuthContext } from "@/lib/auth";
 import {
+  adminLoginOrigin,
   adminReturnUrl,
   isAdminHost,
-  publicSiteOrigin,
 } from "@/lib/adminHost";
 
 export const dynamic = "force-dynamic";
@@ -23,7 +23,7 @@ export default async function AdminPage() {
       <AdminSignInGate
         reason="unsigned"
         nextUrl={adminReturnUrl(host, "/")}
-        siteOrigin={publicSiteOrigin()}
+        siteOrigin={adminLoginOrigin(host)}
       />
     );
   }

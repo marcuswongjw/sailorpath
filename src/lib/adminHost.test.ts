@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { adminReturnUrl, isAdminHost, publicSiteOrigin } from "./adminHost";
+import {
+  adminLoginOrigin,
+  adminReturnUrl,
+  isAdminHost,
+  publicSiteOrigin,
+} from "./adminHost";
 
 describe("isAdminHost", () => {
   it("allows admin subdomain and local", () => {
@@ -23,6 +28,14 @@ describe("adminReturnUrl", () => {
   it("keeps metrics path on admin host", () => {
     expect(adminReturnUrl("admin.sailorpath.com", "/admin/metrics")).toBe(
       "https://admin.sailorpath.com/admin/metrics"
+    );
+  });
+});
+
+describe("adminLoginOrigin", () => {
+  it("keeps the admin sign-in form on the canonical admin host", () => {
+    expect(adminLoginOrigin("admin.sailorpath.com")).toBe(
+      "https://admin.sailorpath.com"
     );
   });
 });

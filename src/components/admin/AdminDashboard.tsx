@@ -313,7 +313,7 @@ function AdminDashboardInner() {
             </p>
           </div>
           <a
-            href={`https://sailorpath.com/login?next=${encodeURIComponent("https://admin.sailorpath.com/")}`}
+            href="https://admin.sailorpath.com/login?next=%2F"
             className="block w-full rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs font-bold text-white transition-all shadow-lg shadow-orange-600/20 text-center"
           >
             Sign In to Admin Portal

@@ -18,6 +18,21 @@ export function publicSiteOrigin(): string {
   return "https://sailorpath.com";
 }
 
+/**
+ * The browser must authenticate on the same host that will receive the
+ * host-only admin session cookie. Never route an admin guest through the
+ * public app origin or a Vercel deployment alias.
+ */
+export function adminLoginOrigin(host: string): string {
+  if (host.includes("admin.sailorpath.com")) {
+    return "https://admin.sailorpath.com";
+  }
+  if (host.includes("localhost") || host.includes("127.0.0.1")) {
+    return `http://${host}`;
+  }
+  return publicSiteOrigin();
+}
+
 /** Where to send the browser after login (admin portal). */
 export function adminReturnUrl(host: string, path = "/"): string {
   const cleanPath = path.startsWith("/") ? path : `/${path}`;
