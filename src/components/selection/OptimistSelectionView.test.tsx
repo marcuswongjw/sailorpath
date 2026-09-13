@@ -207,6 +207,6 @@ describe("OptimistSelectionView", () => {
     render(<OptimistSelectionView initialData={mockPayload} />);
 
     expect(screen.getByText(/Your Claimed Sailor: Lucas Wong/)).toBeInTheDocument();
-    expect(screen.getByText("Safe Zone (Top 7)")).toBeInTheDocument();
+    expect(screen.getByText("Rank #1 of 2")).toBeInTheDocument();
   });
 });

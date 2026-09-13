@@ -10,6 +10,7 @@ import {
 import { Trophy, Calendar, RefreshCw } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
+import { mobileRegattaBadge } from "@/components/FleetRankingsView";
 
 type Props = {
   initialRanked: IlcaRankedSailor[];
@@ -129,7 +130,7 @@ export function IlcaRankingsView({
   };
 
   return (
-    <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 py-6 sm:py-12 space-y-4 sm:space-y-6 overflow-x-clip">
+    <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-4 sm:space-y-6 overflow-x-clip">
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 no-print min-w-0">
         <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
           <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-sky-600/15 text-sky-400 border border-sky-500/25">
@@ -313,41 +314,74 @@ export function IlcaRankingsView({
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-5 gap-1 w-full min-w-0">
+              <div className="grid grid-cols-5 gap-1.5 w-full min-w-0">
                 {Array.from({ length: 5 }).map((_, idx) => {
                   const ev = eventSlots[idx];
                   if (!ev) {
                     return (
                       <div
                         key={`pad-${idx}`}
-                        className="min-w-0 rounded-lg border border-white/5 bg-slate-950/30 px-0.5 py-1.5 text-center opacity-40"
+                        className="min-w-0 rounded-lg border border-white/5 bg-slate-950/30 px-1 py-1.5 flex flex-col justify-between text-center opacity-40"
                       >
-                        <p className="text-[9px] text-slate-600 font-black">
+                        <p className="text-[8px] text-slate-600 font-black">
                           R{idx + 1}
                         </p>
-                        <p className="text-[11px] text-slate-600">—</p>
+                        <p className="text-[13px] font-mono text-slate-600 my-0.5">—</p>
+                        <span className="text-[7.5px] text-slate-700 leading-none py-0.5">—</span>
                       </div>
                     );
                   }
                   const { points, isDns } = pointsFor(s, ev.regattaId);
                   const selected = selectedIndexes.has(idx);
+                  const badge = mobileRegattaBadge(ev.regattaName, idx);
+                  const hasScore = points != null && Number.isFinite(points);
+                  const isCounted = selected && hasScore;
+                  const isDropped = !selected && hasScore;
                   return (
                     <div
                       key={ev.regattaId}
                       data-best-three-selected={selected || undefined}
-                      className={`min-w-0 rounded-lg border px-0.5 py-1.5 text-center ${selected ? "border-sky-400/45 bg-sky-500/15 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.12)]" : "border-white/5 bg-white/5"}`}
+                      className={`min-w-0 rounded-lg border px-1 py-1.5 flex flex-col justify-between text-center transition-all ${
+                        isCounted
+                          ? "border-sky-400/60 bg-sky-500/20 ring-1 ring-sky-500/40 shadow-sm"
+                          : isDropped
+                            ? "border-white/5 bg-white/[0.02] opacity-70"
+                            : "border-white/5 bg-white/[0.03]"
+                      }`}
                       title={`${ev.regattaName}${selected ? " · counts toward Best 3 of 5" : ""}`}
                     >
-                      <p className="text-[9px] text-sky-400/90 font-black">
-                        R{idx + 1}
-                      </p>
-                      <p className="text-[7px] text-slate-500 leading-tight line-clamp-2 min-h-[1.4rem] break-words">
-                        {shortRegattaName(ev.regattaName, idx)}
-                      </p>
-                      <p className={`mt-0.5 font-mono text-[11px] tabular-nums ${selected ? "font-black text-sky-200" : "font-semibold text-slate-500"}`}>
+                      <div className="flex items-center justify-center gap-0.5 text-[8px] leading-tight font-bold truncate">
+                        <span className="text-sky-400/90 font-black">R{idx + 1}</span>
+                        <span className="text-slate-500">·</span>
+                        <span className="text-slate-300 truncate">{badge}</span>
+                      </div>
+
+                      <div className={`my-0.5 text-[13px] font-mono tabular-nums leading-tight ${
+                        isCounted
+                          ? "text-white font-black text-[14px]"
+                          : isDropped
+                            ? "text-slate-400 font-semibold line-through decoration-slate-500/60"
+                            : "text-slate-500 font-medium"
+                      }`}>
                         {selected && <span className="sr-only">Selected score: </span>}
                         {scoreCell(points, isDns)}
-                      </p>
+                      </div>
+
+                      <div>
+                        {isCounted ? (
+                          <span className="inline-flex items-center justify-center text-[7.5px] font-black uppercase tracking-wider text-sky-200 bg-sky-500/30 border border-sky-400/30 rounded px-1 py-0.5 leading-none w-full">
+                            ★ Count
+                          </span>
+                        ) : isDropped ? (
+                          <span className="inline-block text-[7.5px] font-medium uppercase tracking-wider text-slate-500 leading-none py-0.5">
+                            Drop
+                          </span>
+                        ) : (
+                          <span className="inline-block text-[7.5px] text-slate-600 leading-none py-0.5">
+                            —
+                          </span>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
@@ -358,7 +392,7 @@ export function IlcaRankingsView({
       </div>
 
       <div className="hidden md:block rounded-2xl border border-white/5 overflow-hidden w-full max-w-full min-w-0">
-        <div className="overflow-x-auto max-h-[min(75vh,900px)] overflow-y-auto max-w-full">
+        <div className="overflow-x-auto max-w-full">
           <table className="w-full text-left text-sm min-w-[720px] border-collapse">
             <thead className="text-[10px] text-slate-400 uppercase tracking-wider">
               <tr>

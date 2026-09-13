@@ -9,7 +9,6 @@ import {
   Compass,
   Lock,
   AlertCircle,
-  CheckCircle2,
   Calendar,
   MapPin,
   Sliders,
@@ -41,7 +40,6 @@ export function OptimistSelectionView({
     matched,
     selectionStatus,
     combinedScores,
-    asianTeam,
     perthCamp,
     campaigns,
   } = initialData;
@@ -219,25 +217,9 @@ export function OptimistSelectionView({
 
       {/* ── Claimed Sailor Spotlight Banner (Logged-In User) ── */}
       {mySailor && mySailorAsianRank && (
-        <div
-          className={`rounded-xl border p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-            mySailorAsianRank.isSafe
-              ? "border-emerald-500/30 bg-emerald-500/10"
-              : mySailorAsianRank.isBubble
-                ? "border-amber-500/30 bg-amber-500/10"
-                : "border-slate-700 bg-slate-800/40"
-          }`}
-        >
+        <div className="rounded-xl border border-orange-500/30 bg-orange-500/10 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3 min-w-0">
-            <div
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-black text-sm border ${
-                mySailorAsianRank.isSafe
-                  ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30"
-                  : mySailorAsianRank.isBubble
-                    ? "bg-amber-500/20 text-amber-300 border-amber-500/30"
-                    : "bg-slate-800 text-slate-400 border-slate-700"
-              }`}
-            >
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-black text-sm border bg-orange-500/20 text-orange-300 border-orange-500/30">
               #{mySailorAsianRank.rank}
             </div>
             <div className="min-w-0">
@@ -245,20 +227,8 @@ export function OptimistSelectionView({
                 <p className="text-sm font-bold text-white leading-tight">
                   Your Claimed Sailor: {mySailor.name}
                 </p>
-                <span
-                  className={`text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                    mySailorAsianRank.isSafe
-                      ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                      : mySailorAsianRank.isBubble
-                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                        : "bg-slate-700 text-slate-300"
-                  }`}
-                >
-                  {mySailorAsianRank.isSafe
-                    ? "Safe Zone (Top 7)"
-                    : mySailorAsianRank.isBubble
-                      ? "Bubble Zone (Slots 8–10)"
-                      : "Reserve Pool"}
+                <span className="text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider bg-orange-500/20 text-orange-300 border border-orange-500/30">
+                  Rank #{mySailorAsianRank.rank} of {combinedScores.length}
                 </span>
               </div>
               <p className="text-xs text-slate-300 mt-1">
@@ -269,8 +239,8 @@ export function OptimistSelectionView({
                 {mySailorAsianRank.pointsToCutoff !== null && (
                   <span className="ml-2 font-medium text-slate-400">
                     {mySailorAsianRank.rank <= 10
-                      ? `(+${mySailorAsianRank.pointsToCutoff} pts buffer ahead of #11)`
-                      : `(${mySailorAsianRank.pointsToCutoff} pts away from qualifying #10)`}
+                      ? `(+${mySailorAsianRank.pointsToCutoff} pts ahead of #11)`
+                      : `(${mySailorAsianRank.pointsToCutoff} pts behind #10)`}
                   </span>
                 )}
               </p>
@@ -538,20 +508,14 @@ export function OptimistSelectionView({
               </p>
             </div>
 
-            <div className="rounded-lg border border-white/5 bg-white/[0.02] p-3 text-xs space-y-1 sm:text-right shrink-0">
-              <p className="text-slate-400">Team Status Policy</p>
-              <p className="font-bold text-emerald-400">
-                {asianTeam.reason}
-              </p>
-              {cutoffBuffer !== null && (
-                <p className="text-[11px] text-slate-400">
-                  Cutoff margin (#10 vs #11):{" "}
-                  <span className="font-bold text-white font-mono">
-                    {cutoffBuffer} pts
-                  </span>
+            {cutoffBuffer !== null && (
+              <div className="rounded-lg border border-white/5 bg-white/[0.02] p-3 text-xs space-y-1 sm:text-right shrink-0">
+                <p className="text-slate-400">Cutoff margin (#10 vs #11)</p>
+                <p className="font-bold text-white font-mono text-sm">
+                  {cutoffBuffer} pts
                 </p>
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
           {/* Team Table */}
@@ -567,14 +531,11 @@ export function OptimistSelectionView({
                     <th className="px-3 py-3 text-center">Events</th>
                     <th className="px-3 py-3 text-right">Gross</th>
                     <th className="px-3 py-3 text-right">Nett (Best)</th>
-                    <th className="px-4 py-3">Selection Status</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5">
                   {displayAsianRows.map((sailor, idx) => {
                     const isQualifying = idx < 10;
-                    const isSafe = idx < 7;
-                    const isBubble = idx >= 7 && idx < 10;
                     const isMyAthlete = mySailor?.sailorId === sailor.sailorId;
 
                     // Hide rows past 5 for unauthenticated visitors
@@ -582,7 +543,7 @@ export function OptimistSelectionView({
                       if (idx === 5) {
                         return (
                           <tr key="gate-row" className="bg-white/[0.01]">
-                            <td colSpan={8} className="px-4 py-8 text-center">
+                            <td colSpan={7} className="px-4 py-8 text-center">
                               <div className="max-w-md mx-auto space-y-2">
                                 <Lock className="h-5 w-5 text-orange-400 mx-auto" />
                                 <p className="text-xs font-bold text-white">
@@ -609,7 +570,7 @@ export function OptimistSelectionView({
                       <Fragment key={sailor.sailorId}>
                         {idx === 10 && (
                           <tr key="cutoff-divider" className="bg-rose-500/10 border-y border-rose-500/30">
-                            <td colSpan={8} className="px-4 py-2 text-center text-[10px] font-black tracking-wider text-rose-300 uppercase">
+                            <td colSpan={7} className="px-4 py-2 text-center text-[10px] font-black tracking-wider text-rose-300 uppercase">
                               ═══ Qualifying Cutoff Line (Top 10 Slots) ═══
                             </td>
                           </tr>
@@ -625,9 +586,7 @@ export function OptimistSelectionView({
                             isMyAthlete
                               ? "bg-orange-500/10 font-semibold"
                               : isQualifying
-                                ? isSafe
-                                  ? "bg-emerald-500/[0.02]"
-                                  : "bg-amber-500/[0.02]"
+                                ? "bg-white/[0.02]"
                                 : ""
                           }`}
                         >
@@ -674,23 +633,6 @@ export function OptimistSelectionView({
                           <td className="px-3 py-3 text-right font-mono font-black text-sm text-white">
                             {sailor.combinedScore}
                           </td>
-                          <td className="px-4 py-3">
-                            {isSafe ? (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400">
-                                <CheckCircle2 className="h-3 w-3" />
-                                Safe Zone
-                              </span>
-                            ) : isBubble ? (
-                              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-400">
-                                <AlertCircle className="h-3 w-3" />
-                                Bubble Zone
-                              </span>
-                            ) : (
-                              <span className="text-[10px] font-bold text-slate-500">
-                                Reserve #{idx - 9}
-                              </span>
-                            )}
-                          </td>
                         </tr>
 
                         {/* Expanded race breakdown row */}
@@ -699,7 +641,7 @@ export function OptimistSelectionView({
                             key={`${sailor.sailorId}-expanded`}
                             className="bg-black/50 border-t border-b border-white/10"
                           >
-                            <td colSpan={8} className="px-4 py-3 space-y-2">
+                            <td colSpan={7} className="px-4 py-3 space-y-2">
                               <p className="text-[11px] font-bold text-slate-300">
                                 {sailor.name} · Complete Race Breakdown:
                               </p>
