@@ -21,11 +21,26 @@ function normalizeHost(host: string | null | undefined): string {
 export function getAuthCookieOptions(
   host?: string | null
 ): AuthCookieOptions | undefined {
-  if (process.env.VERCEL_ENV !== "production") return undefined;
+  const normalizedHost = normalizeHost(host);
+  const isCanonicalProductionHost =
+    normalizedHost === "sailorpath.com" ||
+    normalizedHost === "www.sailorpath.com" ||
+    normalizedHost === "admin.sailorpath.com";
+
+  // VERCEL_ENV is available to server code but is not a browser-safe public
+  // environment variable. The browser still has to use the same storage key
+  // as server-side auth on our canonical hosts, or a successful sign-in will
+  // be invisible to the admin request that follows it.
+  if (
+    process.env.VERCEL_ENV !== "production" &&
+    !isCanonicalProductionHost
+  ) {
+    return undefined;
+  }
 
   return {
     name:
-      normalizeHost(host) === "admin.sailorpath.com"
+      normalizedHost === "admin.sailorpath.com"
         ? "sailorpath-admin-auth"
         : "sailorpath-public-auth",
     path: "/",

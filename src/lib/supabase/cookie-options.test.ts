@@ -29,4 +29,22 @@ describe("getAuthCookieOptions", () => {
       secure: true,
     });
   });
+
+  it("uses the admin cookie name when browser builds cannot expose VERCEL_ENV", () => {
+    vi.stubEnv("VERCEL_ENV", "");
+
+    expect(getAuthCookieOptions("admin.sailorpath.com")).toMatchObject({
+      name: "sailorpath-admin-auth",
+      secure: true,
+    });
+  });
+
+  it("keeps the canonical public site on its separate cookie name", () => {
+    vi.stubEnv("VERCEL_ENV", "");
+
+    expect(getAuthCookieOptions("sailorpath.com")).toMatchObject({
+      name: "sailorpath-public-auth",
+      secure: true,
+    });
+  });
 });
