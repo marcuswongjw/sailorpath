@@ -6,7 +6,7 @@ import { SQL } from "drizzle-orm";
 import { sailors, sailorAliases, regattas, regattaResults, regattaRaceResults } from "@/db/schema";
 
 const state = vi.hoisted(() => ({ db: null as unknown }));
-vi.mock("@/db", () => ({ get db() { return state.db; } }));
+vi.mock("@/db", () => ({ get db() { return state.db; }, ensureCoreSchema: async () => {} }));
 vi.mock("@/lib/auth", () => ({ requireSuperadmin: async () => ({ role: "superadmin", userId: "test" }), jsonError: (e: Error) => Response.json({ error: e.message }, { status: 500 }) }));
 vi.mock("@/lib/usage", () => ({ trackUsage: vi.fn() }));
 vi.mock("@/lib/adminLog", () => ({ adminLog: vi.fn(), createAdminRequestId: () => "test" }));

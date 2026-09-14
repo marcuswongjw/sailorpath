@@ -58,7 +58,7 @@ export async function GET() {
       "Add DATABASE_URL (Supabase Transaction pooler :6543) on Vercel Production and Redeploy.";
   } else {
     try {
-      const { pgSql, getDatabaseUrlMeta } = await import("@/db");
+      const { pgSql, getDatabaseUrlMeta, ensureCoreSchema } = await import("@/db");
       urlMeta = getDatabaseUrlMeta();
 
       step = "select_1";
@@ -78,6 +78,13 @@ export async function GET() {
         hint =
           "Run src/db/migrations/000_wipe.sql then 001_init.sql in Supabase SQL Editor.";
       } else {
+        step = "ensure_schema";
+        try {
+          await ensureCoreSchema();
+        } catch (e) {
+          console.warn("[health] ensureCoreSchema:", e);
+        }
+
         step = "count_sailors";
         const countRows = await pgSql`select count(*)::int as n from sailors`;
         sailorCount = Number(countRows[0]?.n ?? 0);

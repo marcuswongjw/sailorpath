@@ -96,7 +96,18 @@ export function jsonError(error: unknown) {
   } else if (msg === "FORBIDDEN") {
     publicMsg = "You do not have access to this area";
   } else if (isProduction) {
-    publicMsg = "Internal error";
+    if (
+      msg.includes("Database unavailable") ||
+      msg.includes("does not exist") ||
+      msg.includes("No valid DATABASE_URL") ||
+      msg.includes("Race-score storage") ||
+      msg.includes("Same-day") ||
+      msg.includes("Too many rows")
+    ) {
+      publicMsg = msg.length < 280 ? msg : msg.slice(0, 240) + "…";
+    } else {
+      publicMsg = "Internal error";
+    }
   } else {
     // Development: surface full messages for debugging
     publicMsg = msg.length < 280 ? msg : msg.slice(0, 240) + "\u2026";

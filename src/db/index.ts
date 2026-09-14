@@ -6,3 +6,4 @@ export {
   formatDbError,
   DbUnavailableError,
 } from "./client";
+export { ensureCoreSchema } from "./ensureSchema";

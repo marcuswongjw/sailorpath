@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createHash, randomUUID } from "node:crypto";
 import { and, eq, inArray, max, notInArray, or, sql } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, ensureCoreSchema } from "@/db";
 import {
   regattaRaceResults,
   regattaResults,
@@ -401,6 +401,9 @@ export async function POST(req: Request) {
 
   try {
     const auth = await requireSuperadmin();
+    if (typeof ensureCoreSchema === "function") {
+      await ensureCoreSchema();
+    }
     const body = await req.json();
     const {
       regattaName,

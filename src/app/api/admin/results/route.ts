@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, ensureCoreSchema } from "@/db";
 import { regattaRaceResults, regattaResults, regattas, sailors } from "@/db/schema";
 import { asc, eq, inArray } from "drizzle-orm";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
@@ -102,6 +102,9 @@ function sailorEligibleForRegattaDns(
 export async function GET(req: Request) {
   try {
     await requireSuperadmin();
+    if (typeof ensureCoreSchema === "function") {
+      await ensureCoreSchema();
+    }
     const sp = new URL(req.url).searchParams;
     const regattaId = (sp.get("regattaId") || "").trim();
     const includeRaces = sp.get("includeRaces") === "1";
@@ -175,6 +178,9 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const auth = await requireSuperadmin();
+    if (typeof ensureCoreSchema === "function") {
+      await ensureCoreSchema();
+    }
     const body = await req.json();
 
     /**

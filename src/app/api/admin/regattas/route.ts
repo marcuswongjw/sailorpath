@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { db } from "@/db";
+import { db, ensureCoreSchema } from "@/db";
 import { regattas } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { slugifyWithDate } from "@/lib/slug";
@@ -16,6 +16,9 @@ import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
 export async function GET(req: Request) {
   try {
     await requireSuperadmin();
+    if (typeof ensureCoreSchema === "function") {
+      await ensureCoreSchema();
+    }
     const sp = new URL(req.url).searchParams;
     const all = sp.get("all") === "1" || !sp.has("limit");
     const limitRaw = Number(sp.get("limit"));
@@ -57,6 +60,9 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const auth = await requireSuperadmin();
+    if (typeof ensureCoreSchema === "function") {
+      await ensureCoreSchema();
+    }
     const body = await req.json();
 
     // 1-Click seed for 2026 Singapore Regatta Calendar
@@ -247,6 +253,9 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     const auth = await requireSuperadmin();
+    if (typeof ensureCoreSchema === "function") {
+      await ensureCoreSchema();
+    }
     const body = await req.json();
     if (!body.id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });

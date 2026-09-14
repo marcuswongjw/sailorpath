@@ -22,7 +22,7 @@ import {
   listSailorsFull,
   getResultsForRegatta,
 } from "@/lib/queries";
-import { DbUnavailableError } from "@/db";
+import { DbUnavailableError, ensureCoreSchema } from "@/db";
 import type { RegattaResultRecord, SailorRecord } from "@/lib/ranking";
 
 export type OptimistSelectionPayload = {
@@ -46,6 +46,9 @@ export type OptimistSelectionPayload = {
 
 export async function computeOptimistSelectionData(): Promise<OptimistSelectionPayload> {
   try {
+    if (typeof ensureCoreSchema === "function") {
+      await ensureCoreSchema();
+    }
     const allRegattas = await listRegattas();
     const matched = matchSelectionEvents(allRegattas, ASIAN_OCEANIA_2026.events);
 

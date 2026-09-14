@@ -4,7 +4,7 @@ import {
   CACHE_TAG_ILCA_RANKINGS,
   CACHE_TAG_PUBLIC_REGATTAS,
 } from "@/lib/cacheTags";
-import { db, DbUnavailableError, formatDbError } from "@/db";
+import { db, DbUnavailableError, formatDbError, ensureCoreSchema } from "@/db";
 import {
   sailors,
   regattas,
@@ -169,7 +169,22 @@ async function withDb<T>(fn: () => Promise<T>): Promise<T> {
   try {
     return await fn();
   } catch (e) {
-    throw new DbUnavailableError(formatDbError(e));
+    const errStr = formatDbError(e);
+    if (
+      /venue|end_date|nor_url|registration_url|is_selection_trial|organizer|schedule_notes|regatta_race_results|does not exist/i.test(
+        errStr
+      )
+    ) {
+      try {
+        if (typeof ensureCoreSchema === "function") {
+          await ensureCoreSchema();
+        }
+        return await fn();
+      } catch (retryErr) {
+        throw new DbUnavailableError(formatDbError(retryErr));
+      }
+    }
+    throw new DbUnavailableError(errStr);
   }
 }
 
