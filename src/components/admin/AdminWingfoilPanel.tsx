@@ -242,6 +242,13 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     }
   };
 
+  // Helper to get active discards count
+  const activeDiscardsCount = useMemo(() => {
+    if (!activeRegatta?.scoringSystem) return undefined;
+    const match = activeRegatta.scoringSystem.match(/(\d+)\s*discard/i);
+    return match ? parseInt(match[1], 10) : undefined;
+  }, [activeRegatta]);
+
   // Update a single heat score for a competitor
   const handleScoreChange = (
     sailorIndex: number,
@@ -266,7 +273,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     currentResults[sailorIndex] = sailor;
 
     // Recalculate scoreboard discards and rankings
-    const updatedScoreboard = recalculateScoreboard(currentResults);
+    const updatedScoreboard = recalculateScoreboard(currentResults, activeDiscardsCount);
 
     setRegattas((prev) =>
       prev.map((r) =>
@@ -341,6 +348,14 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       toast.error("No results to export");
       return;
     }
+
+    const maxRaces = Math.max(
+      results.reduce((max, s) => Math.max(max, s.races?.length || 0), 0),
+      9
+    );
+
+    const raceHeaders = Array.from({ length: maxRaces }, (_, i) => `R${i + 1}`);
+
     const headers = [
       "Rank",
       "Sail Number",
@@ -349,15 +364,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       "Category",
       "School",
       "Club",
-      "R1",
-      "R2",
-      "R3",
-      "R4",
-      "R5",
-      "R6",
-      "R7",
-      "R8",
-      "R9",
+      ...raceHeaders,
       "Gross",
       "Nett",
     ];
@@ -370,9 +377,11 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       `"${s.ageCategory}"`,
       `"${s.schoolName}"`,
       `"${s.club}"`,
-      ...s.races.map((r) =>
-        r.code ? `"${r.score} (${r.code})"` : r.score
-      ),
+      ...Array.from({ length: maxRaces }, (_, i) => {
+        const r = s.races[i];
+        if (!r) return "";
+        return r.code ? `"${r.score} (${r.code})"` : r.score;
+      }),
       s.grossScore,
       s.nettScore,
     ]);
@@ -772,182 +781,192 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
         </div>
 
         {/* Scoreboard Table */}
-        <div className="lg:col-span-8 glass-panel rounded-3xl border border-white/5 overflow-hidden flex flex-col">
-          <div className="p-4 sm:p-5 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/30">
-            <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                Heat Scoreboard (R1 – R9)
-                <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-bold text-slate-300">
-                  {results.length} Competitors
-                </span>
-              </h3>
-              <p className="text-[11px] text-slate-400 mt-0.5">
-                Strikethrough values indicate discarded worst races (Appendix A). Click any cell to adjust position or scoring code.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                const updated = recalculateScoreboard(results);
-                setRegattas((prev) =>
-                  prev.map((r) =>
-                    r.id === activeRegatta.id ? { ...r, results: updated } : r
-                  )
-                );
-                toast.success("Recalculated Appendix A discards & ranks!");
-              }}
-              className="inline-flex items-center gap-1 text-[11px] font-bold text-orange-400 hover:text-orange-300 bg-orange-500/10 px-3 py-1.5 rounded-full border border-orange-500/20 shrink-0"
-            >
-              <RefreshCw className="h-3 w-3" />
-              Recalculate Discards
-            </button>
-          </div>
+        {(() => {
+          const totalRacesCount = Math.max(
+            results.reduce((max, s) => Math.max(max, s.races?.length || 0), 0),
+            9
+          );
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-300">
-              <thead className="bg-[#11131c] text-[10px] font-black uppercase text-slate-400 border-b border-white/5">
-                <tr>
-                  <th className="px-3 py-3 w-10 text-center">Rank</th>
-                  <th className="px-3 py-3 w-16">Sail #</th>
-                  <th className="px-3 py-3">Competitor</th>
-                  <th className="px-2 py-3 w-16">Cat</th>
-                  {Array.from({ length: 9 }).map((_, i) => (
-                    <th key={i} className="px-1.5 py-3 w-12 text-center">
-                      R{i + 1}
-                    </th>
-                  ))}
-                  <th className="px-2.5 py-3 w-12 text-center font-bold">Gross</th>
-                  <th className="px-2.5 py-3 w-12 text-center font-black text-orange-400">Nett</th>
-                  <th className="px-2 py-3 w-10 text-center">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-white/5 font-medium text-xs">
-                {results.length === 0 ? (
-                  <tr>
-                    <td colSpan={16} className="px-6 py-12 text-center text-slate-500">
-                      No competitors entered yet. Click &ldquo;Add Competitor Entry&rdquo; or upload a results screenshot.
-                    </td>
-                  </tr>
-                ) : (
-                  results.map((sailor, sailorIdx) => (
-                    <tr
-                      key={`${sailor.name}-${sailor.sailNumber}`}
-                      className="hover:bg-white/[0.02] transition-colors"
-                    >
-                      <td className="px-3 py-3 text-center">
-                        <RankMedalBadge rank={sailor.rank} />
-                      </td>
-                      <td className="px-3 py-3 font-mono font-bold text-white">
-                        {sailor.sailNumber}
-                      </td>
-                      <td className="px-3 py-3 min-w-[140px]">
-                        <div className="font-bold text-white leading-tight">
-                          {sailor.name}
-                        </div>
-                        <div className="text-[10px] text-slate-400 truncate max-w-[180px]">
-                          {sailor.schoolName !== "—" ? sailor.schoolName : sailor.club}
-                        </div>
-                      </td>
-                      <td className="px-2 py-3 text-[10px] font-bold text-slate-400">
-                        {sailor.ageCategory}
-                      </td>
+          return (
+            <div className="lg:col-span-8 glass-panel rounded-3xl border border-white/5 overflow-hidden flex flex-col">
+              <div className="p-4 sm:p-5 border-b border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-900/30">
+                <div>
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    Heat Scoreboard (R1 – R{totalRacesCount})
+                    <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-bold text-slate-300">
+                      {results.length} Competitors
+                    </span>
+                  </h3>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    Strikethrough values indicate discarded worst races (Appendix A). Click any cell to adjust position or scoring code.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const updated = recalculateScoreboard(results, activeDiscardsCount);
+                    setRegattas((prev) =>
+                      prev.map((r) =>
+                        r.id === activeRegatta.id ? { ...r, results: updated } : r
+                      )
+                    );
+                    toast.success("Recalculated Appendix A discards & ranks!");
+                  }}
+                  className="inline-flex items-center gap-1 text-[11px] font-bold text-orange-400 hover:text-orange-300 bg-orange-500/10 px-3 py-1.5 rounded-full border border-orange-500/20 shrink-0 cursor-pointer"
+                >
+                  <RefreshCw className="h-3 w-3" />
+                  Recalculate Discards
+                </button>
+              </div>
 
-                      {/* R1 through R9 Heat Score Inputs */}
-                      {sailor.races.map((race, raceIdx) => {
-                        const isDiscarded = race.isDiscarded;
-                        const code = race.code;
-                        return (
-                          <td
-                            key={raceIdx}
-                            className={`px-1 py-2 text-center ${
-                              isDiscarded ? "opacity-50" : ""
-                            }`}
-                          >
-                            <div className="flex flex-col items-center">
-                              <input
-                                type="number"
-                                min={1}
-                                max={20}
-                                value={race.score ?? ""}
-                                onChange={(e) =>
-                                  handleScoreChange(
-                                    sailorIdx,
-                                    raceIdx,
-                                    e.target.value,
-                                    race.code
-                                  )
-                                }
-                                className={`w-9 text-center font-mono font-bold rounded p-0.5 text-xs border ${
-                                  isDiscarded
-                                    ? "line-through bg-slate-900 border-white/5 text-slate-500"
-                                    : race.score === 1
-                                    ? "bg-amber-400/20 border-amber-400/40 text-amber-300"
-                                    : race.score === 2
-                                    ? "bg-sky-400/20 border-sky-400/40 text-sky-200"
-                                    : race.score === 3
-                                    ? "bg-orange-500/20 border-orange-500/40 text-orange-200"
-                                    : "bg-slate-950 border-white/10 text-white"
-                                }`}
-                              />
-                              <select
-                                value={code || ""}
-                                onChange={(e) =>
-                                  handleScoreChange(
-                                    sailorIdx,
-                                    raceIdx,
-                                    String(race.score),
-                                    e.target.value
-                                  )
-                                }
-                                className="w-11 text-[9px] font-bold mt-0.5 bg-transparent border-0 text-slate-500 hover:text-slate-300 text-center"
-                              >
-                                <option value="" className="bg-slate-900 text-slate-300">
-                                  FIN
-                                </option>
-                                <option value="DNF" className="bg-slate-900 text-slate-300">
-                                  DNF
-                                </option>
-                                <option value="DNS" className="bg-slate-900 text-slate-300">
-                                  DNS
-                                </option>
-                                <option value="DSQ" className="bg-slate-900 text-slate-300">
-                                  DSQ
-                                </option>
-                                <option value="DNC" className="bg-slate-900 text-slate-300">
-                                  DNC
-                                </option>
-                                <option value="RDG" className="bg-slate-900 text-slate-300">
-                                  RDG
-                                </option>
-                              </select>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs text-slate-300">
+                  <thead className="bg-[#11131c] text-[10px] font-black uppercase text-slate-400 border-b border-white/5">
+                    <tr>
+                      <th className="px-3 py-3 w-10 text-center">Rank</th>
+                      <th className="px-3 py-3 w-16">Sail #</th>
+                      <th className="px-3 py-3">Competitor</th>
+                      <th className="px-2 py-3 w-16">Cat</th>
+                      {Array.from({ length: totalRacesCount }).map((_, i) => (
+                        <th key={i} className="px-1.5 py-3 w-12 text-center">
+                          R{i + 1}
+                        </th>
+                      ))}
+                      <th className="px-2.5 py-3 w-12 text-center font-bold">Gross</th>
+                      <th className="px-2.5 py-3 w-12 text-center font-black text-orange-400">Nett</th>
+                      <th className="px-2 py-3 w-10 text-center">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 font-medium text-xs">
+                    {results.length === 0 ? (
+                      <tr>
+                        <td colSpan={totalRacesCount + 7} className="px-6 py-12 text-center text-slate-500">
+                          No competitors entered yet. Click &ldquo;Add Competitor Entry&rdquo; or upload a results screenshot.
+                        </td>
+                      </tr>
+                    ) : (
+                      results.map((sailor, sailorIdx) => (
+                        <tr
+                          key={`${sailor.name}-${sailor.sailNumber}`}
+                          className="hover:bg-white/[0.02] transition-colors"
+                        >
+                          <td className="px-3 py-3 text-center">
+                            <RankMedalBadge rank={sailor.rank} />
+                          </td>
+                          <td className="px-3 py-3 font-mono font-bold text-white">
+                            {sailor.sailNumber}
+                          </td>
+                          <td className="px-3 py-3 min-w-[140px]">
+                            <div className="font-bold text-white leading-tight">
+                              {sailor.name}
+                            </div>
+                            <div className="text-[10px] text-slate-400 truncate max-w-[180px]">
+                              {sailor.schoolName !== "—" ? sailor.schoolName : sailor.club}
                             </div>
                           </td>
-                        );
-                      })}
+                          <td className="px-2 py-3 text-[10px] font-bold text-slate-400">
+                            {sailor.ageCategory}
+                          </td>
 
-                      <td className="px-2.5 py-3 text-center font-mono font-bold text-slate-400">
-                        {sailor.grossScore}
-                      </td>
-                      <td className="px-2.5 py-3 text-center font-mono font-black text-orange-400 text-sm">
-                        {sailor.nettScore}
-                      </td>
-                      <td className="px-2 py-3 text-center">
-                        <button
-                          type="button"
-                          onClick={() => handleDeleteCompetitor(sailor.name)}
-                          className="p-1 rounded text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
-                          title="Delete entry"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
+                          {/* R1 through RN Heat Score Inputs */}
+                          {Array.from({ length: totalRacesCount }).map((_, raceIdx) => {
+                            const race = sailor.races[raceIdx] || { score: results.length + 1, code: "DNC", isDiscarded: false };
+                            const isDiscarded = race.isDiscarded;
+                            const code = race.code;
+                            return (
+                              <td
+                                key={raceIdx}
+                                className={`px-1 py-2 text-center ${
+                                  isDiscarded ? "opacity-50" : ""
+                                }`}
+                              >
+                                <div className="flex flex-col items-center">
+                                  <input
+                                    type="number"
+                                    min={1}
+                                    max={100}
+                                    value={race.score ?? ""}
+                                    onChange={(e) =>
+                                      handleScoreChange(
+                                        sailorIdx,
+                                        raceIdx,
+                                        e.target.value,
+                                        race.code
+                                      )
+                                    }
+                                    className={`w-9 text-center font-mono font-bold rounded p-0.5 text-xs border ${
+                                      isDiscarded
+                                        ? "line-through bg-slate-900 border-white/5 text-slate-500"
+                                        : race.score === 1
+                                        ? "bg-amber-400/20 border-amber-400/40 text-amber-300"
+                                        : race.score === 2
+                                        ? "bg-sky-400/20 border-sky-400/40 text-sky-200"
+                                        : race.score === 3
+                                        ? "bg-orange-500/20 border-orange-500/40 text-orange-200"
+                                        : "bg-slate-950 border-white/10 text-white"
+                                    }`}
+                                  />
+                                  <select
+                                    value={code || ""}
+                                    onChange={(e) =>
+                                      handleScoreChange(
+                                        sailorIdx,
+                                        raceIdx,
+                                        String(race.score),
+                                        e.target.value
+                                      )
+                                    }
+                                    className="w-11 text-[9px] font-bold mt-0.5 bg-transparent border-0 text-slate-500 hover:text-slate-300 text-center"
+                                  >
+                                    <option value="" className="bg-slate-900 text-slate-300">
+                                      FIN
+                                    </option>
+                                    <option value="DNF" className="bg-slate-900 text-slate-300">
+                                      DNF
+                                    </option>
+                                    <option value="DNS" className="bg-slate-900 text-slate-300">
+                                      DNS
+                                    </option>
+                                    <option value="DSQ" className="bg-slate-900 text-slate-300">
+                                      DSQ
+                                    </option>
+                                    <option value="DNC" className="bg-slate-900 text-slate-300">
+                                      DNC
+                                    </option>
+                                    <option value="RDG" className="bg-slate-900 text-slate-300">
+                                      RDG
+                                    </option>
+                                  </select>
+                                </div>
+                              </td>
+                            );
+                          })}
+
+                          <td className="px-2.5 py-3 text-center font-mono font-bold text-slate-400">
+                            {sailor.grossScore}
+                          </td>
+                          <td className="px-2.5 py-3 text-center font-mono font-black text-orange-400 text-sm">
+                            {sailor.nettScore}
+                          </td>
+                          <td className="px-2 py-3 text-center">
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteCompetitor(sailor.name)}
+                              className="p-1 rounded text-slate-500 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                              title="Delete entry"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Add Competitor Modal */}

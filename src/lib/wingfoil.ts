@@ -248,24 +248,31 @@ export function parseWingfoilScreenshotFilename(fileName: string): {
   let startDate = "";
   let nameCandidate = base;
 
-  // 1. Check for YYYY-MM-DD or YYYY_MM_DD
-  const isoMatch = base.match(/(\d{4})[-_](\d{2})[-_](\d{2})/);
-  if (isoMatch) {
-    startDate = `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
-    nameCandidate = base.replace(isoMatch[0], " ").trim();
+  // 1. Check for YYYYMMDD (e.g. "20260110 NE Monsoon Series GP1")
+  const ymdMatch = base.match(/\b(20\d{2})(\d{2})(\d{2})\b/);
+  if (ymdMatch) {
+    startDate = `${ymdMatch[1]}-${ymdMatch[2]}-${ymdMatch[3]}`;
+    nameCandidate = base.replace(ymdMatch[0], " ").trim();
   } else {
-    // 2. Check for DD-MM-YYYY
-    const dmyMatch = base.match(/(\d{2})[-_](\d{2})[-_](\d{4})/);
-    if (dmyMatch) {
-      startDate = `${dmyMatch[3]}-${dmyMatch[2]}-${dmyMatch[1]}`;
-      nameCandidate = base.replace(dmyMatch[0], " ").trim();
+    // 2. Check for YYYY-MM-DD or YYYY_MM_DD
+    const isoMatch = base.match(/(\d{4})[-_](\d{2})[-_](\d{2})/);
+    if (isoMatch) {
+      startDate = `${isoMatch[1]}-${isoMatch[2]}-${isoMatch[3]}`;
+      nameCandidate = base.replace(isoMatch[0], " ").trim();
     } else {
-      // 3. Fallback: Check for YYYY
-      const yearMatch = base.match(/\b(20\d{2})\b/);
-      if (yearMatch) {
-        startDate = `${yearMatch[1]}-09-01`;
+      // 3. Check for DD-MM-YYYY
+      const dmyMatch = base.match(/(\d{2})[-_](\d{2})[-_](\d{4})/);
+      if (dmyMatch) {
+        startDate = `${dmyMatch[3]}-${dmyMatch[2]}-${dmyMatch[1]}`;
+        nameCandidate = base.replace(dmyMatch[0], " ").trim();
       } else {
-        startDate = new Date().toISOString().split("T")[0];
+        // 4. Fallback: Check for YYYY
+        const yearMatch = base.match(/\b(20\d{2})\b/);
+        if (yearMatch) {
+          startDate = `${yearMatch[1]}-09-01`;
+        } else {
+          startDate = new Date().toISOString().split("T")[0];
+        }
       }
     }
   }
@@ -295,30 +302,40 @@ export function parseWingfoilScreenshotFilename(fileName: string): {
  * Recalculate scores and discards for a single sailor's races according to
  * World Sailing RRS Appendix A (1 discard applied after 4+ completed races).
  */
-export function computeWingfoilNett(races: WingfoilRaceScore[]): {
+export function computeWingfoilNett(
+  races: WingfoilRaceScore[],
+  discardsCount?: number
+): {
   grossScore: number;
   nettScore: number;
   scoredRaces: WingfoilRaceScore[];
 } {
   const grossScore = races.reduce((sum, r) => sum + (Number(r.score) || 0), 0);
-
   const completedCount = races.filter((r) => r.score != null).length;
-  let worstIdx = -1;
-  let maxScore = -1;
 
-  if (completedCount >= 4) {
-    races.forEach((r, idx) => {
-      const s = Number(r.score) || 0;
-      if (s > maxScore) {
-        maxScore = s;
-        worstIdx = idx;
-      }
-    });
+  let numDiscards = discardsCount ?? 0;
+  if (discardsCount == null) {
+    if (completedCount >= 16) {
+      numDiscards = 2;
+    } else if (completedCount >= 4) {
+      numDiscards = 1;
+    } else {
+      numDiscards = 0;
+    }
   }
+
+  // Find the N worst races
+  const indicesWithScore = races
+    .map((r, idx) => ({ score: Number(r.score) || 0, idx }))
+    .sort((a, b) => b.score - a.score);
+
+  const discardedSet = new Set(
+    indicesWithScore.slice(0, numDiscards).map((item) => item.idx)
+  );
 
   const scoredRaces = races.map((r, idx) => ({
     ...r,
-    isDiscarded: idx === worstIdx,
+    isDiscarded: discardedSet.has(idx),
   }));
 
   const nettScore = scoredRaces.reduce(
@@ -333,11 +350,13 @@ export function computeWingfoilNett(races: WingfoilRaceScore[]): {
  * Recalculate and sort a full WingFoil scoreboard by nett points and tiebreaks.
  */
 export function recalculateScoreboard(
-  results: WingfoilSailorResult[]
+  results: WingfoilSailorResult[],
+  discardsCount?: number
 ): WingfoilSailorResult[] {
   const recalculated = results.map((sailor) => {
     const { grossScore, nettScore, scoredRaces } = computeWingfoilNett(
-      sailor.races
+      sailor.races,
+      discardsCount
     );
     return {
       ...sailor,

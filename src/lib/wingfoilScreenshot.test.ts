@@ -134,4 +134,50 @@ Sailed: 5, Discards: 1, To count: 4, Entries: 2
     expect(malo?.races.some((r) => r.code === "DSQ")).toBe(true);
     expect(malo?.races.some((r) => r.code === "DNS")).toBe(true);
   });
+
+  it("extracts Grand Prix Format B scorecards (20 races, 2 discards, division)", () => {
+    const formatBOcr = `Results are provisional as of 17:00 on January 10, 2026
+WingFoil Fleet
+Sailed: 20, Discards: 2, To count: 18, Entries: 3, Scoring system: Appendix A
+Rank Name SailNo Division R1 R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 R13 R14 R15 R16 R17 R18 R19 R20 Total Nett
+1st Jun Hao Lo 43 Open 1.0 1.0 1.0 (3.0) 1.0 1.0 1.0 1.0 1.0 1.0 1.0 (3.0) 1.0 1.0 1.0 1.0 1.0 1.0 1.0 1.0 24.0 18.0
+2nd Wearn Haw Tan 29 Masters 2.0 2.0 2.0 1.0 2.0 2.0 2.0 (3.0) 2.0 2.0 2.0 1.0 (3.0) 2.0 2.0 2.0 2.0 2.0 2.0 2.0 41.0 35.0
+3rd Ker Wan Chew 18 Grand Master (4.0) 3.0 3.0 3.0 3.0 3.0 3.0 2.0 3.0 (4.0) 3.0 3.0 2.0 3.0 3.0 3.0 3.0 3.0 3.0 3.0 64.0 56.0`;
+
+    const parsed = parseWingfoilOcrText(formatBOcr, {
+      fileName: "20260110 NE Monsoon Series GP1.png",
+    });
+
+    expect(parsed.regattaName).toBe("NE Monsoon Series GP1");
+    expect(parsed.startDate).toBe("2026-01-10");
+    expect(parsed.sailedCount).toBe(20);
+    expect(parsed.discardsCount).toBe(2);
+    expect(parsed.results).toHaveLength(3);
+
+    const lo = parsed.results[0];
+    expect(lo.name).toBe("Jun Hao Lo");
+    expect(lo.sailNumber).toBe("43");
+    expect(lo.races).toHaveLength(20);
+    expect(lo.grossScore).toBe(24);
+    expect(lo.nettScore).toBe(18);
+
+    // Exactly 2 races discarded
+    const loDiscards = lo.races.filter((r) => r.isDiscarded);
+    expect(loDiscards).toHaveLength(2);
+
+    const tan = parsed.results[1];
+    expect(tan.name).toBe("Wearn Haw Tan");
+    expect(tan.sailNumber).toBe("29");
+    expect(tan.ageCategory).toBe("Masters");
+    expect(tan.races).toHaveLength(20);
+    expect(tan.nettScore).toBe(34);
+
+    const chew = parsed.results[2];
+    expect(chew.name).toBe("Ker Wan Chew");
+    expect(chew.sailNumber).toBe("18");
+    expect(chew.ageCategory).toBe("Grand Masters");
+    expect(chew.races).toHaveLength(20);
+    expect(chew.grossScore).toBe(60);
+    expect(chew.nettScore).toBe(52);
+  });
 });

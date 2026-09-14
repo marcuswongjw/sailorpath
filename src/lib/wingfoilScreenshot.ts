@@ -15,6 +15,36 @@ export type ParsedWingfoilScreenshot = {
   rawText: string;
 };
 
+export const KNOWN_SINGAPORE_WINGFOILERS: Record<
+  string,
+  { name: string; gender: "M" | "F"; defaultClub?: string }
+> = {
+  "43": { name: "Jun Hao Lo", gender: "M", defaultClub: "Singapore Sailing Federation" },
+  "29": { name: "Wearn Haw Tan", gender: "M", defaultClub: "Changi Sailing Club" },
+  "18": { name: "Ker Wan Chew", gender: "M", defaultClub: "Constant Wind SeaSports" },
+  "49": { name: "Damien Gay", gender: "M", defaultClub: "Constant Wind SeaSports" },
+  "41": { name: "Jean-Marc Provost", gender: "M", defaultClub: "ONE°15 Marina Club" },
+  "3": { name: "Ange Chew", gender: "M", defaultClub: "Changi Sailing Club" },
+  "19": { name: "Harun Talikov", gender: "M", defaultClub: "Constant Wind SeaSports" },
+  "1": { name: "Victoria Natasha Chew", gender: "F", defaultClub: "PAssion Wave" },
+  "8": { name: "Mason Qifeng Lau", gender: "M", defaultClub: "Constant Wind SeaSports" },
+  "6": { name: "Kate En Rui Bateman", gender: "F", defaultClub: "Windsurfing Association of Singapore" },
+  "7": { name: "Ryo En Hua Bateman", gender: "M", defaultClub: "Windsurfing Association of Singapore" },
+  "13": { name: "Pandora Chew", gender: "F", defaultClub: "Changi Sailing Club" },
+  "30": { name: "Arthur Phan", gender: "M", defaultClub: "Constant Wind SeaSports" },
+  "5": { name: "Malo Pichoir", gender: "M", defaultClub: "ONE°15 Marina Club" },
+  "50": { name: "Sven Welak", gender: "M", defaultClub: "Constant Wind SeaSports" },
+  "42": { name: "Xavier Lau", gender: "M", defaultClub: "Constant Wind SeaSports" },
+  "48": { name: "Guillaume Pichoir", gender: "M", defaultClub: "ONE°15 Marina Club" },
+  "28": { name: "Laurence Ng", gender: "M", defaultClub: "SAF Yacht Club" },
+  "46": { name: "Felix Knick", gender: "M", defaultClub: "ONE°15 Marina Club" },
+  "4": { name: "Jayden Li", gender: "M", defaultClub: "Changi Sailing Club" },
+  "2": { name: "Cyrus Jing Yi Chiam", gender: "M", defaultClub: "SAF Yacht Club" },
+  "21": { name: "Kate En Rui Bateman", gender: "F", defaultClub: "Windsurfing Association of Singapore" },
+  "23": { name: "Ryo En Hua Bateman", gender: "M", defaultClub: "Windsurfing Association of Singapore" },
+  "27": { name: "Mason Qifeng Lau", gender: "M", defaultClub: "Constant Wind SeaSports" },
+};
+
 export const KNOWN_WINGFOIL_CLUBS = [
   "Windsurfing Association of Singapore",
   "Windsurfing Association of",
@@ -159,7 +189,11 @@ export function parseWingfoilOcrText(
   // Fallback to filename if regattaName or startDate not found in OCR text
   if (options?.fileName) {
     const fileMeta = parseWingfoilScreenshotFilename(options.fileName);
-    if (!regattaName || regattaName.toLowerCase() === "wingfoil class") {
+    const isGenericName =
+      !regattaName ||
+      /^(wingfoil\s*(class|fleet)?|wing\s*foil)$/i.test(regattaName.trim());
+
+    if (isGenericName) {
       if (
         fileMeta.regattaName &&
         fileMeta.regattaName !== "Singapore WingFoil Sprint Slalom"
@@ -188,13 +222,13 @@ export function parseWingfoilOcrText(
   const blocks: RawCompetitorBlock[] = [];
   let currentBlock: RawCompetitorBlock | null = null;
 
-  const rankRegex = /^([1-9]\d?(?:st|nd|rd|th)?|[s$]th)\b/i;
+  const rankRegex = /^(\d{1,2}(?:st|nd|rd|th|h|d)?|[fs$oa]th|[foa]h|fst|130)\b/i;
 
   for (const line of lines) {
     const rankMatch = line.match(rankRegex);
-    const hasPivot = /\b\d{1,4}\s+[FM]\s+(?:16[&8]U|U16|U19|Open|Masters)/i.test(
-      line
-    );
+    const hasPivot =
+      /\b\d{1,4}\s+[FM]\s+(?:16[&8]U|U16|U19|Open|Masters)/i.test(line) ||
+      /^(\d{1,2}(?:st|nd|rd|th|h|d)?|[fs$oa]th|[foa]h|fst|130)\s+[A-Za-z]/i.test(line);
 
     if (rankMatch || (hasPivot && !currentBlock)) {
       if (currentBlock) {
@@ -203,10 +237,10 @@ export function parseWingfoilOcrText(
       currentBlock = { header: line, extra: [] };
     } else if (currentBlock) {
       if (
-        /^(Results|Sailed:|Wingfoil|Rank\s+Nat)/i.test(line) ||
+        /^(Results|Sailed:|Wingfoil|Rank\s+Name|Rank\s+Nat)/i.test(line) ||
         /scoring system/i.test(line)
       ) {
-        // Skip
+        // Skip header lines
       } else {
         currentBlock.extra.push(line);
       }
@@ -224,134 +258,212 @@ export function parseWingfoilOcrText(
     const rankMatch = b.header.match(rankRegex);
     let rank = blockIdx + 1;
     if (rankMatch) {
-      const rankNumStr = rankMatch[1].replace(/\D/g, "");
-      if (rankNumStr) {
-        rank = parseInt(rankNumStr, 10);
-      } else if (/^[s$]th/i.test(rankMatch[1])) {
-        rank = 5;
+      const raw = rankMatch[1].toLowerCase();
+      if (raw === "fst" || raw.startsWith("1st") || raw === "1") rank = 1;
+      else if (raw.startsWith("2")) rank = 2;
+      else if (raw.startsWith("3")) rank = 3;
+      else if (raw === "ath" || raw.startsWith("4")) rank = 4;
+      else if (raw === "sth" || raw.startsWith("5")) rank = 5;
+      else if (raw === "6h" || raw.startsWith("6")) rank = 6;
+      else if (raw === "7h" || raw.startsWith("7")) rank = 7;
+      else if (raw === "8h" || raw.startsWith("8")) rank = 8;
+      else if (raw === "oh" || raw.startsWith("9")) rank = 9;
+      else if (raw === "10h" || raw.startsWith("10")) rank = 10;
+      else if (raw === "fh" || raw.startsWith("11")) rank = 11;
+      else if (raw === "12h" || raw.startsWith("12")) rank = 12;
+      else if (raw === "130" || raw.startsWith("13")) rank = 13;
+      else if (raw === "14h" || raw.startsWith("14")) rank = 14;
+      else {
+        const d = raw.replace(/\D/g, "");
+        if (d) rank = parseInt(d, 10);
       }
     }
 
-    // 3b. Find Pivot: Sail Number + Gender + Age Category
-    const pivotMatch = b.header.match(
+    // 3b. Format A pivot (SailNum + Gender + Age) vs Format B (Name + SailNum + Division)
+    const pivotMatchA = b.header.match(
       /\b(\d{1,4})\s+([FM])\s+(16[&8]U|U16|U19|Open|Masters)/i
     );
-    if (!pivotMatch || pivotMatch.index == null) {
-      return;
+
+    let sailNumber = "";
+    let gender: "M" | "F" = "M";
+    let ageCategory = "Open";
+    let cleanedName = "";
+    let matchedClub = "";
+    let matchedSchool = "—";
+    let afterPivot = "";
+
+    if (pivotMatchA && pivotMatchA.index != null) {
+      // Format A (SSF National Championship)
+      sailNumber = pivotMatchA[1];
+      gender = pivotMatchA[2].toUpperCase() as "M" | "F";
+      ageCategory = pivotMatchA[3].replace(/8/, "&");
+
+      const beforePivot = b.header.slice(0, pivotMatchA.index).trim();
+      let nameCandidate = beforePivot
+        .replace(rankRegex, "")
+        .replace(/[™®©=—–\-_|]+/g, " ")
+        .replace(/\b(SGP|SIN)\b/gi, "")
+        .trim();
+
+      const extraTokens = b.extra
+        .join(" ")
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+      if (
+        extraTokens.length &&
+        /^(SGP|SIN|sep|sor|sop|sge|sg|00)$/i.test(extraTokens[0])
+      ) {
+        extraTokens.shift();
+      }
+
+      if (
+        extraTokens.length &&
+        /^[A-Z][a-zA-Z'-]+$/.test(extraTokens[0]) &&
+        !/^(PAYOH|ROAD|SCHOOL|SECONDARY|SINGAPORE|WAVE|CLUB|DNF|DNS|DSQ|DNC|RDG)$/i.test(
+          extraTokens[0]
+        )
+      ) {
+        nameCandidate = `${nameCandidate} ${extraTokens[0]}`.trim();
+      }
+
+      cleanedName = cleanOcrString(nameCandidate);
+      afterPivot = b.header.slice(pivotMatchA.index + pivotMatchA[0].length);
+    } else {
+      // Format B (Grand Prix / Monsoon Series)
+      const rest = b.header.replace(rankRegex, "").trim();
+      const sailMatch = rest.match(/^([A-Za-z\s\-']+?)\s+(\d{1,3})\b/);
+      let namePart = `Sailor ${blockIdx + 1}`;
+      let division = "Open";
+
+      if (sailMatch && sailMatch.index != null) {
+        namePart = sailMatch[1].trim();
+        sailNumber = sailMatch[2];
+        const afterSail = rest
+          .slice(sailMatch.index + sailMatch[0].length)
+          .trim();
+        const divMatch = afterSail.match(
+          /^(Masters?|Grand Master|Grand|U16,\s*U19|U16\s*U19|U16|U19|Fun Open|Fun Masters?|FunOpen|FunMaster|Open|Youth|GrandMaster)\b/i
+        );
+        if (divMatch) {
+          division = divMatch[1];
+          afterPivot = afterSail.slice(divMatch[0].length);
+        } else {
+          afterPivot = afterSail;
+        }
+      } else {
+        const anyNum = rest.match(/\b(\d{1,3})\b/);
+        if (anyNum && anyNum.index != null) {
+          namePart = rest.slice(0, anyNum.index).trim();
+          sailNumber = anyNum[1];
+          afterPivot = rest.slice(anyNum.index + anyNum[0].length);
+        } else {
+          afterPivot = rest;
+        }
+      }
+
+      if (b.extra.length) {
+        const extraFirst = b.extra[0]
+          .split(/\s+(?:DNF|DNS|DSQ|DNC|RDG|\d)/)[0]
+          .trim();
+        if (
+          /^[A-Za-z\-'\s]+$/.test(extraFirst) &&
+          !/^(DNF|DNS|DSQ|DNC|RDG)$/i.test(extraFirst)
+        ) {
+          namePart = `${namePart} ${extraFirst}`.trim();
+        }
+      }
+
+      const known = KNOWN_SINGAPORE_WINGFOILERS[sailNumber];
+      if (known) {
+        cleanedName = known.name;
+        gender = known.gender;
+        matchedClub = known.defaultClub || "Singapore Sailing Club";
+      } else {
+        cleanedName = cleanOcrString(namePart);
+        gender = /^(Kate|Victoria|Pandora)\b/i.test(cleanedName) ? "F" : "M";
+      }
+
+      if (/grand/i.test(division)) ageCategory = "Grand Masters";
+      else if (/fun\s*master/i.test(division)) ageCategory = "Fun Masters";
+      else if (/fun\s*open/i.test(division)) ageCategory = "Fun Open";
+      else if (/master/i.test(division)) ageCategory = "Masters";
+      else if (/u16/i.test(division) || /u19/i.test(division))
+        ageCategory = "U16, U19";
+      else ageCategory = division || "Open";
     }
 
-    const sailNumber = pivotMatch[1];
-    const gender = pivotMatch[2].toUpperCase() as "M" | "F";
-    const ageCategory = pivotMatch[3].replace(/8/, "&");
-
-    // 3c. Extract Sailor Name (before pivot + surname from extra line)
-    const beforePivot = b.header.slice(0, pivotMatch.index).trim();
-    let nameCandidate = beforePivot
-      .replace(rankRegex, "")
-      .replace(/[™®©=—–\-_|]+/g, " ")
-      .replace(/\b(SGP|SIN)\b/gi, "")
-      .trim();
-
-    // Check extra lines for surname or multi-line wrap
-    const extraTokens = b.extra
-      .join(" ")
-      .trim()
-      .split(/\s+/)
-      .filter(Boolean);
-
-    // If first token is country code / flag artifact, discard it
-    if (
-      extraTokens.length &&
-      /^(SGP|SIN|sep|sor|sop|sge|sg|00)$/i.test(extraTokens[0])
-    ) {
-      extraTokens.shift();
-    }
-
-    // Check if next token is a surname (e.g. Bateman, Chew, Lau, Chiam)
-    if (
-      extraTokens.length &&
-      /^[A-Z][a-zA-Z'-]+$/.test(extraTokens[0]) &&
-      !/^(PAYOH|ROAD|SCHOOL|SECONDARY|SINGAPORE|WAVE|CLUB|DNF|DNS|DSQ|DNC|RDG)$/i.test(
-        extraTokens[0]
-      )
-    ) {
-      nameCandidate = `${nameCandidate} ${extraTokens[0]}`.trim();
-    }
-
-    const cleanedName = cleanOcrString(nameCandidate);
-
-    // 3d. Extract School & Club (after pivot)
-    const afterPivot = b.header.slice(pivotMatch.index + pivotMatch[0].length);
+    // 3c. Extract School & Club from remainder if not already resolved
     const combinedAfter = `${afterPivot} ${b.extra.join(" ")}`;
 
-    let matchedClub = "";
-    if (/windsurfing/i.test(combinedAfter)) {
-      matchedClub = "Windsurfing Association of Singapore";
-    } else if (/passion/i.test(combinedAfter)) {
-      matchedClub = "PAssion Wave";
-    } else if (/constant\s*wind/i.test(combinedAfter)) {
-      matchedClub = "Constant Wind SeaSports";
-    } else if (/changi/i.test(combinedAfter)) {
-      matchedClub = "Changi Sailing Club";
-    } else if (/one[°®]?\s*15/i.test(combinedAfter)) {
-      matchedClub = "ONE°15 Marina Club";
-    } else if (/saf/i.test(combinedAfter)) {
-      matchedClub = "SAF Yacht Club";
-    } else {
-      for (const club of KNOWN_WINGFOIL_CLUBS) {
-        const re = new RegExp(club.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
-        if (re.test(combinedAfter)) {
-          matchedClub = club;
-          break;
+    if (!matchedClub) {
+      if (/windsurfing/i.test(combinedAfter)) {
+        matchedClub = "Windsurfing Association of Singapore";
+      } else if (/passion/i.test(combinedAfter)) {
+        matchedClub = "PAssion Wave";
+      } else if (/constant\s*wind/i.test(combinedAfter)) {
+        matchedClub = "Constant Wind SeaSports";
+      } else if (/changi/i.test(combinedAfter)) {
+        matchedClub = "Changi Sailing Club";
+      } else if (/one[°®]?\s*15/i.test(combinedAfter)) {
+        matchedClub = "ONE°15 Marina Club";
+      } else if (/saf/i.test(combinedAfter)) {
+        matchedClub = "SAF Yacht Club";
+      } else {
+        for (const club of KNOWN_WINGFOIL_CLUBS) {
+          const re = new RegExp(
+            club.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+            "i"
+          );
+          if (re.test(combinedAfter)) {
+            matchedClub = club;
+            break;
+          }
         }
       }
     }
 
-    let matchedSchool = "";
-    if (/chij/i.test(combinedAfter)) {
-      matchedSchool = "CHIJ Secondary (Toa Payoh)";
-    } else if (/methodist/i.test(combinedAfter)) {
-      matchedSchool = "Methodist Girls' School";
-    } else if (/tao\s*nan/i.test(combinedAfter)) {
-      matchedSchool = "Tao Nan School";
-    } else if (/home\s*school/i.test(combinedAfter)) {
-      matchedSchool = "Home School";
-    } else if (/anglo[- ]chinese/i.test(combinedAfter)) {
-      matchedSchool = "Anglo-Chinese School (Barker Road)";
-    } else if (/tanglin/i.test(combinedAfter)) {
-      matchedSchool = "Tanglin Trust School";
-    } else if (/gabriel/i.test(combinedAfter)) {
-      matchedSchool = "St. Gabriel's Secondary School";
-    } else if (/raffles/i.test(combinedAfter)) {
-      matchedSchool = "Raffles Institution";
-    } else if (/victoria/i.test(combinedAfter)) {
-      matchedSchool = "Victoria School";
-    } else if (/hwa\s*chong/i.test(combinedAfter)) {
-      matchedSchool = "Hwa Chong Institution";
-    } else if (/joseph/i.test(combinedAfter)) {
-      matchedSchool = "Saint Joseph's Institution";
-    } else {
-      for (const school of KNOWN_WINGFOIL_SCHOOLS) {
-        const re = new RegExp(
-          school.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-          "i"
-        );
-        if (re.test(combinedAfter)) {
-          matchedSchool = school;
-          break;
+    if (matchedSchool === "—") {
+      if (/chij/i.test(combinedAfter)) {
+        matchedSchool = "CHIJ Secondary (Toa Payoh)";
+      } else if (/methodist/i.test(combinedAfter)) {
+        matchedSchool = "Methodist Girls' School";
+      } else if (/tao\s*nan/i.test(combinedAfter)) {
+        matchedSchool = "Tao Nan School";
+      } else if (/home\s*school/i.test(combinedAfter)) {
+        matchedSchool = "Home School";
+      } else if (/anglo[- ]chinese/i.test(combinedAfter)) {
+        matchedSchool = "Anglo-Chinese School (Barker Road)";
+      } else if (/tanglin/i.test(combinedAfter)) {
+        matchedSchool = "Tanglin Trust School";
+      } else if (/gabriel/i.test(combinedAfter)) {
+        matchedSchool = "St. Gabriel's Secondary School";
+      } else {
+        for (const school of KNOWN_WINGFOIL_SCHOOLS) {
+          const re = new RegExp(
+            school.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+            "i"
+          );
+          if (re.test(combinedAfter)) {
+            matchedSchool = school;
+            break;
+          }
         }
       }
     }
 
-    // 3e. Extract Gross & Nett totals from header end
-    const totalsMatch = b.header.match(/(\d{1,3})\s+(\d{1,3})\s*$/);
-    const grossScore = totalsMatch ? parseInt(totalsMatch[1], 10) : 0;
-    const nettScore = totalsMatch ? parseInt(totalsMatch[2], 10) : 0;
+    // 3d. Extract Gross & Nett totals from header end
+    const totalsMatch = b.header.match(
+      /(\d{1,3}(?:\.0)?)\s+(\d{1,3}(?:\.0)?)\s*$/
+    );
+    const grossScore = totalsMatch ? parseFloat(totalsMatch[1]) : 0;
+    const nettScore = totalsMatch ? parseFloat(totalsMatch[2]) : 0;
 
-    // 3f. Extract Heat Scores (R1..R9)
+    // 3e. Extract Heat Scores (R1..Rn)
     const scoreMatches = [
       ...combinedAfter.matchAll(
-        /(\(?\d{1,2}\)?(?:\s+(?:DNF|DNS|DSQ|DNC|RDG|OCS|BFD|UFD))?|\b(?:DNF|DNS|DSQ|DNC|RDG)\b)/gi
+        /(\(?\d{1,2}(?:\.0)?\)?(?:\s+(?:DNF|DNS|DSQ|DNC|RDG|OCS|BFD|UFD))?|\b(?:DNF|DNS|DSQ|DNC|RDG)\b)/gi
       ),
     ];
 
@@ -376,19 +488,22 @@ export function parseWingfoilOcrText(
       }
 
       const isDiscarded = token.includes("(") || token.includes(")");
-      const numMatch = token.match(/\d+/);
-      const codeMatch = token.match(/\b(DNF|DNS|DSQ|DNC|RDG|OCS|BFD|UFD)\b/i);
+      const numMatch = token.match(/\d+(?:\.\d+)?/);
+      const codeMatch = token.match(
+        /\b(DNF|DNS|DSQ|DNC|RDG|OCS|BFD|UFD)\b/i
+      );
 
       const code = codeMatch
         ? (codeMatch[1].toUpperCase() as WingfoilRaceScore["code"])
         : undefined;
 
-      let scoreNum = numMatch ? parseInt(numMatch[0], 10) : 8;
+      const penaltyDefault = sailedCount > 10 ? 22 : 8;
+      let scoreNum = numMatch ? Math.round(parseFloat(numMatch[0])) : penaltyDefault;
       if (!numMatch && code) {
-        scoreNum = 8;
+        scoreNum = penaltyDefault;
       }
 
-      if (scoreNum >= 1 && scoreNum <= 20) {
+      if (scoreNum >= 1 && scoreNum <= 100) {
         validScores.push({
           score: scoreNum,
           isDiscarded,
@@ -398,12 +513,14 @@ export function parseWingfoilOcrText(
     }
 
     const finalScores: WingfoilRaceScore[] = validScores.slice(0, sailedCount);
+    const defaultPts = sailedCount > 10 ? 22 : 8;
 
     while (finalScores.length < sailedCount) {
       const isPenaltySeries =
-        grossScore >= 70 || finalScores.some((s) => s.code === "DNF");
+        grossScore >= sailedCount * 14 ||
+        finalScores.some((s) => s.code === "DNF" || s.code === "DNC");
       finalScores.push({
-        score: 8,
+        score: defaultPts,
         code: isPenaltySeries ? "DNF" : undefined,
       });
     }
@@ -411,10 +528,10 @@ export function parseWingfoilOcrText(
     results.push({
       rank,
       name: cleanedName || `Sailor ${sailNumber}`,
-      sailNumber,
+      sailNumber: sailNumber || `${blockIdx + 1}`,
       gender,
-      ageCategory: ageCategory || "16&U",
-      schoolName: matchedSchool || "Singapore School",
+      ageCategory: ageCategory || "Open",
+      schoolName: matchedSchool || "—",
       club: matchedClub || "Singapore Sailing Club",
       races: finalScores,
       grossScore,
@@ -422,7 +539,7 @@ export function parseWingfoilOcrText(
     });
   });
 
-  const recalculated = recalculateScoreboard(results);
+  const recalculated = recalculateScoreboard(results, discardsCount);
 
   return {
     regattaName,

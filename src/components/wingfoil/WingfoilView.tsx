@@ -158,88 +158,98 @@ export function WingfoilView() {
           </div>
 
           {/* Results Table - Desktop */}
-          <div className="hidden md:block rounded-xl border border-white/10 bg-[#0c0d14] overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs">
-                <thead className="bg-white/[0.02] border-b border-white/10 text-[10px] uppercase tracking-wider text-slate-400 font-bold">
-                  <tr>
-                    <th className="px-4 py-3 w-12 text-center">#</th>
-                    <th className="px-4 py-3 min-w-[12rem]">Racer / Sailor</th>
-                    <th className="px-2 py-3 text-center">Sail #</th>
-                    <th className="px-2 py-3 text-center">Gender</th>
-                    <th className="px-3 py-3 min-w-[10rem]">School &amp; Club</th>
-                    {Array.from({ length: 9 }).map((_, i) => (
-                      <th key={i} className="px-2 py-3 text-center w-9">
-                        R{i + 1}
-                      </th>
-                    ))}
-                    <th className="px-3 py-3 text-right">Gross</th>
-                    <th className="px-4 py-3 text-right font-black text-teal-300">Nett</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5 font-sans">
-                  {displayResults.map((racer) => (
-                    <tr key={racer.rank + racer.name} className="hover:bg-white/[0.02] transition-colors">
-                      <td className="px-4 py-3 text-center">
-                        <RankMedalBadge
-                          rank={racer.rank}
-                          nonPodiumClassName="font-mono font-bold text-teal-400"
-                        />
-                      </td>
-                      <td className="px-4 py-3">
-                        <p className="font-bold text-white">{racer.name}</p>
-                        <p className="text-[10px] text-slate-500">{racer.ageCategory}</p>
-                      </td>
-                      <td className="px-2 py-3 text-center font-mono text-slate-300">
-                        {racer.sailNumber}
-                      </td>
-                      <td className="px-2 py-3 text-center font-semibold text-slate-400">
-                        {racer.gender}
-                      </td>
-                      <td className="px-3 py-3 min-w-[10rem]">
-                        <p className="text-slate-300 font-medium truncate">{racer.club}</p>
-                        <p className="text-[10px] text-slate-500 truncate">{racer.schoolName}</p>
-                      </td>
-                      {racer.races.map((r, i) => (
-                        <td
-                          key={i}
-                          className={`px-2 py-3 text-center font-mono text-xs ${
-                            r.isDiscarded
-                              ? "line-through text-slate-600 bg-white/[0.01]"
-                              : r.score === 1
-                                ? "font-black text-amber-300 bg-amber-500/10"
-                                : r.score <= 3
-                                  ? "font-bold text-teal-200"
-                                  : "text-slate-400"
-                          }`}
-                          title={r.code ? `Race ${i + 1}: ${r.code} (${r.score} pts)` : undefined}
-                        >
-                          {r.code && r.score !== 1 ? `${r.score}${r.code}` : r.score}
-                        </td>
+          {(() => {
+            const maxRaces = Math.max(
+              displayResults.reduce((max, r) => Math.max(max, r.races?.length || 0), 0),
+              activeRegatta.results?.reduce((max, r) => Math.max(max, r.races?.length || 0), 0) || 0,
+              9
+            );
+
+            return (
+              <div className="hidden md:block rounded-xl border border-white/10 bg-[#0c0d14] overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-xs">
+                    <thead className="bg-white/[0.02] border-b border-white/10 text-[10px] uppercase tracking-wider text-slate-400 font-bold">
+                      <tr>
+                        <th className="px-4 py-3 w-12 text-center">#</th>
+                        <th className="px-4 py-3 min-w-[12rem]">Racer / Sailor</th>
+                        <th className="px-2 py-3 text-center">Sail #</th>
+                        <th className="px-2 py-3 text-center">Gender</th>
+                        <th className="px-3 py-3 min-w-[10rem]">School &amp; Club</th>
+                        {Array.from({ length: maxRaces }).map((_, i) => (
+                          <th key={i} className="px-2 py-3 text-center w-9">
+                            R{i + 1}
+                          </th>
+                        ))}
+                        <th className="px-3 py-3 text-right">Gross</th>
+                        <th className="px-4 py-3 text-right font-black text-teal-300">Nett</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5 font-sans">
+                      {displayResults.map((racer) => (
+                        <tr key={racer.rank + racer.name} className="hover:bg-white/[0.02] transition-colors">
+                          <td className="px-4 py-3 text-center">
+                            <RankMedalBadge
+                              rank={racer.rank}
+                              nonPodiumClassName="font-mono font-bold text-teal-400"
+                            />
+                          </td>
+                          <td className="px-4 py-3">
+                            <p className="font-bold text-white">{racer.name}</p>
+                            <p className="text-[10px] text-slate-500">{racer.ageCategory}</p>
+                          </td>
+                          <td className="px-2 py-3 text-center font-mono text-slate-300">
+                            {racer.sailNumber}
+                          </td>
+                          <td className="px-2 py-3 text-center font-semibold text-slate-400">
+                            {racer.gender}
+                          </td>
+                          <td className="px-3 py-3 min-w-[10rem]">
+                            <p className="text-slate-300 font-medium truncate">{racer.club}</p>
+                            <p className="text-[10px] text-slate-500 truncate">{racer.schoolName}</p>
+                          </td>
+                          {racer.races.map((r, i) => (
+                            <td
+                              key={i}
+                              className={`px-2 py-3 text-center font-mono text-xs ${
+                                r.isDiscarded
+                                  ? "line-through text-slate-600 bg-white/[0.01]"
+                                  : r.score === 1
+                                    ? "font-black text-amber-300 bg-amber-500/10"
+                                    : r.score <= 3
+                                      ? "font-bold text-teal-200"
+                                      : "text-slate-400"
+                              }`}
+                              title={r.code ? `Race ${i + 1}: ${r.code} (${r.score} pts)` : undefined}
+                            >
+                              {r.code && r.score !== 1 ? `${r.score}${r.code}` : r.score}
+                            </td>
+                          ))}
+                          <td className="px-3 py-3 text-right font-mono text-slate-400">
+                            {racer.grossScore}
+                          </td>
+                          <td className="px-4 py-3 text-right font-mono font-black text-sm text-teal-300">
+                            {racer.nettScore}
+                          </td>
+                        </tr>
                       ))}
-                      <td className="px-3 py-3 text-right font-mono text-slate-400">
-                        {racer.grossScore}
-                      </td>
-                      <td className="px-4 py-3 text-right font-mono font-black text-sm text-teal-300">
-                        {racer.nettScore}
-                      </td>
-                    </tr>
-                  ))}
-                  {displayResults.length === 0 && (
-                    <tr>
-                      <td colSpan={16} className="px-4 py-8 text-center text-slate-500">
-                        No competitors match the selected filter.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-            <div className="border-t border-white/5 px-4 py-2 text-[10px] text-slate-500 flex items-center justify-between">
-              <span>Scoring: Low points win. 1 discard applied after 4+ races.</span>
-              <span>RDG = Redress · DNF = Did Not Finish · DSQ = Disqualified</span>
-            </div>
-          </div>
+                      {displayResults.length === 0 && (
+                        <tr>
+                          <td colSpan={maxRaces + 7} className="px-4 py-8 text-center text-slate-500">
+                            No competitors match the selected filter.
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="border-t border-white/5 px-4 py-2 text-[10px] text-slate-500 flex items-center justify-between">
+                  <span>Scoring: Low points win. {activeRegatta.scoringSystem || "Discards applied after 4+ races."}</span>
+                  <span>RDG = Redress · DNF = Did Not Finish · DSQ = Disqualified · DNC = Did Not Compete</span>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Results Cards - Mobile */}
           <div className="md:hidden space-y-2.5">
@@ -285,11 +295,11 @@ export function WingfoilView() {
                     <span>Heats R1–R{racer.races.length}</span>
                     <span>Gross: {racer.grossScore}</span>
                   </div>
-                  <div className="grid grid-cols-9 gap-1 text-center font-mono">
+                  <div className="flex flex-wrap gap-1 text-center font-mono">
                     {racer.races.map((r, i) => (
                       <div
                         key={i}
-                        className={`rounded py-1 text-[10px] border ${
+                        className={`min-w-[2rem] flex-1 rounded py-1 px-1 text-[10px] border ${
                           r.isDiscarded
                             ? "bg-slate-900 border-white/5 text-slate-600 line-through"
                             : r.score === 1
