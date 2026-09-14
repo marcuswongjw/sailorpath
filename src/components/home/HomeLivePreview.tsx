@@ -17,6 +17,8 @@ import {
   AlertTriangle,
   Target,
   CheckCircle2,
+  Plus,
+  GraduationCap,
 } from "lucide-react";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
@@ -193,12 +195,10 @@ export function HomeLivePreview() {
   const [selectedClass, setSelectedClass] = useState<StandingsClass>("optimist");
   const [parentDemoAthlete, setParentDemoAthlete] = useState<"kimberly" | "alex">("kimberly");
   const [demoChecklist, setDemoChecklist] = useState([
-    { id: "1", text: "Measurement certificate checked & onboard", done: true },
-    { id: "2", text: "Sailor official weigh-in completed (42 kg)", done: true },
-    { id: "3", text: "Tow rope (8m floating) & bailers secured", done: true },
-    { id: "4", text: "Red protest flag in lifejacket pocket", done: false },
-    { id: "5", text: "Spare battens & tell-tales packed", done: true },
+    { id: "1", text: "Official class measurement certificate verified & onboard", done: true },
+    { id: "2", text: "Spare battens, sail ties (2.5mm / 3.0mm) & wind indicator checked", done: true },
   ]);
+  const [newChecklistText, setNewChecklistText] = useState("");
 
   const standingsData = SAMPLE_STANDINGS[selectedClass];
 
@@ -582,6 +582,44 @@ export function HomeLivePreview() {
                     </button>
                   ))}
                 </div>
+
+                <div className="flex items-center gap-2 pt-1">
+                  <input
+                    type="text"
+                    value={newChecklistText}
+                    onChange={(e) => setNewChecklistText(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        const trimmed = newChecklistText.trim();
+                        if (!trimmed) return;
+                        setDemoChecklist((prev) => [
+                          ...prev,
+                          { id: String(Date.now()), text: trimmed, done: false },
+                        ]);
+                        setNewChecklistText("");
+                      }
+                    }}
+                    placeholder="Try adding custom item…"
+                    className="flex-1 rounded-xl bg-black/30 border border-white/10 px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const trimmed = newChecklistText.trim();
+                      if (!trimmed) return;
+                      setDemoChecklist((prev) => [
+                        ...prev,
+                        { id: String(Date.now()), text: trimmed, done: false },
+                      ]);
+                      setNewChecklistText("");
+                    }}
+                    className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white transition flex items-center gap-1 shrink-0"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>Add</span>
+                  </button>
+                </div>
               </div>
 
               {/* Card 3: Equipment Locker Alert */}
@@ -657,17 +695,30 @@ export function HomeLivePreview() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="rounded-xl border border-sky-500/20 bg-sky-500/5 p-4 space-y-1">
                 <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4 text-sky-400" />
-                  <p className="text-xs font-bold text-white">Live Squad Health</p>
+                  <p className="text-xs font-bold text-white">Squad Pulse Cards</p>
                 </div>
                 <p className="text-xs text-slate-300 font-semibold pt-1">
-                  3 Sailors in National Top 10
+                  Fleet Segregation &amp; Gear Condition
                 </p>
                 <p className="text-[11px] text-slate-400">
-                  Instant visibility into ranking movements and carry-forward points.
+                  Instant visibility into Gold/Silver squad splits, gear repair alerts, and carry-forward points.
+                </p>
+              </div>
+
+              <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4 space-y-1">
+                <div className="flex items-center gap-2">
+                  <GraduationCap className="h-4 w-4 text-blue-400" />
+                  <p className="text-xs font-bold text-white">Athlete Development Log</p>
+                </div>
+                <p className="text-xs text-slate-300 font-semibold pt-1">
+                  6 Structured Coaching Categories
+                </p>
+                <p className="text-[11px] text-slate-400">
+                  Log Technical, Tactical, Physical, Mental, Equipment, and Communication observations with sentiment tracking.
                 </p>
               </div>
 
@@ -677,23 +728,23 @@ export function HomeLivePreview() {
                   <p className="text-xs font-bold text-white">Selection Readiness</p>
                 </div>
                 <p className="text-xs text-slate-300 font-semibold pt-1">
-                  2 Sailors in Asian Trials Roster
+                  Asian Games &amp; Perth Trials Roster
                 </p>
                 <p className="text-[11px] text-slate-400">
-                  Automatic point cushion buffers against cutoff lines.
+                  Automatic point cushion buffers against cutoff lines with gender quotas and birth year allocations.
                 </p>
               </div>
 
               <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 space-y-1">
                 <div className="flex items-center gap-2">
                   <Compass className="h-4 w-4 text-emerald-400" />
-                  <p className="text-xs font-bold text-white">Head-to-Head Compare</p>
+                  <p className="text-xs font-bold text-white">Selective Debrief Sharing</p>
                 </div>
                 <p className="text-xs text-slate-300 font-semibold pt-1">
-                  1-Click Side-by-Side Analysis
+                  Coach-Only vs Family-Shared Notes
                 </p>
                 <p className="text-[11px] text-slate-400">
-                  Compare two squad members across all shared regattas.
+                  Control debrief visibility per athlete and run 1-click head-to-head comparison across shared regattas.
                 </p>
               </div>
             </div>

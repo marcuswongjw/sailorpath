@@ -34,6 +34,7 @@ import { useFeedback } from "@/components/ui/FeedbackProvider";
 import {
   YOUTH_EQUIPMENT_PRESETS,
   SIMPLIFIED_CONDITION_META,
+  toSimplifiedCondition,
   fromSimplifiedCondition,
   brandsForCategory,
   categoryLabel,
@@ -367,12 +368,14 @@ export function ParentDashboard() {
     gearId: string,
     currentCondition: string
   ) => {
-    const nextCondition =
-      currentCondition === "new" || currentCondition === "good"
-        ? "fair"
-        : currentCondition === "fair"
-        ? "worn"
-        : "good";
+    const currentSimplified = toSimplifiedCondition(currentCondition);
+    const nextSimplified: SimplifiedCondition =
+      currentSimplified === "race_ready"
+        ? "practice_only"
+        : currentSimplified === "practice_only"
+        ? "needs_attention"
+        : "race_ready";
+    const nextCondition = fromSimplifiedCondition(nextSimplified);
 
     setAthletes((prev) =>
       prev.map((ath) => {
@@ -395,9 +398,9 @@ export function ParentDashboard() {
       });
       if (!res.ok) throw new Error();
       toast.success(
-        nextCondition === "good"
+        nextSimplified === "race_ready"
           ? "Gear marked Race Ready 🟢"
-          : nextCondition === "fair"
+          : nextSimplified === "practice_only"
           ? "Gear marked Practice Only 🟡"
           : "Gear marked Needs Repair 🔴"
       );
@@ -1403,25 +1406,30 @@ export function ParentDashboard() {
                             </div>
 
                             <div className="flex items-center justify-between pt-1.5 border-t border-white/5">
-                              <button
-                                type="button"
-                                onClick={() => void handleToggleGearCondition(activeAthlete.id, g.id, g.condition)}
-                                title="Click to toggle condition (Race Ready / Practice Only / Needs Repair)"
-                                className={`text-[10px] font-bold capitalize px-2 py-0.5 rounded-md border transition flex items-center gap-1 touch-manipulation ${
-                                  g.condition === "new" || g.condition === "good"
-                                    ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/25"
-                                    : g.condition === "fair"
-                                    ? "bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25"
-                                    : "bg-rose-500/15 border-rose-500/30 text-rose-300 hover:bg-rose-500/25"
-                                }`}
-                              >
-                                <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
-                                {g.condition === "new" || g.condition === "good"
-                                  ? "Race Ready"
-                                  : g.condition === "fair"
-                                  ? "Practice Only"
-                                  : "Needs Repair"}
-                              </button>
+                              {(() => {
+                                const simplified = toSimplifiedCondition(g.condition);
+                                return (
+                                  <button
+                                    type="button"
+                                    onClick={() => void handleToggleGearCondition(activeAthlete.id, g.id, g.condition)}
+                                    title="Click to toggle condition (Race Ready / Practice Only / Needs Repair)"
+                                    className={`text-[10px] font-bold capitalize px-2 py-0.5 rounded-md border transition flex items-center gap-1 touch-manipulation ${
+                                      simplified === "race_ready"
+                                        ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/25"
+                                        : simplified === "practice_only"
+                                        ? "bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25"
+                                        : "bg-rose-500/15 border-rose-500/30 text-rose-300 hover:bg-rose-500/25"
+                                    }`}
+                                  >
+                                    <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
+                                    {simplified === "race_ready"
+                                      ? "Race Ready"
+                                      : simplified === "practice_only"
+                                      ? "Practice Only"
+                                      : "Needs Repair"}
+                                  </button>
+                                );
+                              })()}
                               <span className="text-[10px] text-slate-500 font-medium">
                                 Tap to toggle
                               </span>

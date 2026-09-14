@@ -36,6 +36,8 @@ import {
   Square,
   RotateCcw,
   ArrowRight,
+  Plus,
+  Trash2,
 } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 
@@ -127,6 +129,10 @@ export function SampleDemoShell() {
   const [parentNotes, setParentNotes] = useState(SAMPLE_PARENT_PANEL.parentNotes);
   const [selectedAthleteId, setSelectedAthleteId] = useState<string>("sample-kimberly");
   const [checklistItems, setChecklistItems] = useState(SAMPLE_PARENT_PANEL.morningChecklist);
+  const [newChecklistInput, setNewChecklistInput] = useState("");
+  const [coachDevRecords, setCoachDevRecords] = useState(
+    SAMPLE_COACH_PANEL.developmentRecords || []
+  );
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [compareTo, setCompareTo] = useState(
     SAMPLE_COACH_PANEL.compareOptions[0]?.name || ""
@@ -414,30 +420,37 @@ export function SampleDemoShell() {
                     </span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    {p.equipmentLocker.map((item) => (
-                      <div
-                        key={item.type}
-                        className="rounded-xl bg-black/25 border border-white/5 p-2.5"
-                      >
-                        <div className="flex items-center justify-between text-[10px]">
-                          <span className="font-bold text-slate-400 uppercase">
-                            {item.type}
-                          </span>
-                          <span
-                            className={`px-1.5 py-0.2 rounded font-bold uppercase text-[9px] ${
-                              item.condition === "good"
-                                ? "bg-emerald-500/15 text-emerald-300"
-                                : "bg-amber-500/15 text-amber-300"
-                            }`}
-                          >
-                            {item.condition}
-                          </span>
+                    {p.equipmentLocker.map((item) => {
+                      const cond = String(item.condition);
+                      const isReady = cond === "race_ready" || cond === "good";
+                      const isPractice = cond === "practice_only" || cond === "fair";
+                      return (
+                        <div
+                          key={item.type}
+                          className="rounded-xl bg-black/25 border border-white/5 p-2.5"
+                        >
+                          <div className="flex items-center justify-between text-[10px]">
+                            <span className="font-bold text-slate-400 uppercase">
+                              {item.type}
+                            </span>
+                            <span
+                              className={`px-1.5 py-0.5 rounded font-bold uppercase text-[9px] ${
+                                isReady
+                                  ? "bg-emerald-500/15 text-emerald-300"
+                                  : isPractice
+                                  ? "bg-amber-500/15 text-amber-300"
+                                  : "bg-rose-500/15 text-rose-300"
+                              }`}
+                            >
+                              {isReady ? "Race Ready" : isPractice ? "Practice Only" : "Needs Repair"}
+                            </span>
+                          </div>
+                          <p className="text-xs font-bold text-white mt-1 truncate">
+                            {item.brand}
+                          </p>
                         </div>
-                        <p className="text-xs font-bold text-white mt-1 truncate">
-                          {item.brand}
-                        </p>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                   <div className="rounded-xl bg-amber-500/10 border border-amber-500/25 p-3 flex items-start gap-2.5">
                     <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
@@ -503,36 +516,96 @@ export function SampleDemoShell() {
                   {/* Interactive Checklist toggles in demo */}
                   <div className="space-y-1.5">
                     {checklistItems.map((item) => (
-                      <button
+                      <div
                         key={item.id}
-                        type="button"
-                        onClick={() => {
-                          setChecklistItems((prev) =>
-                            prev.map((i) =>
-                              i.id === item.id ? { ...i, checked: !i.checked } : i
-                            )
-                          );
-                        }}
-                        className={`w-full text-left flex items-start gap-2.5 p-2 rounded-xl transition-colors ${
+                        className={`group flex items-center justify-between p-2 rounded-xl transition-colors ${
                           item.checked
                             ? "bg-emerald-500/10 border border-emerald-500/20 text-slate-200"
                             : "bg-black/20 border border-white/5 text-slate-400 hover:bg-white/5"
                         }`}
                       >
-                        {item.checked ? (
-                          <CheckSquare className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                        ) : (
-                          <Square className="h-4 w-4 text-slate-600 shrink-0 mt-0.5" />
-                        )}
-                        <span
-                          className={`text-xs ${
-                            item.checked ? "line-through opacity-80" : ""
-                          }`}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setChecklistItems((prev) =>
+                              prev.map((i) =>
+                                i.id === item.id ? { ...i, checked: !i.checked } : i
+                              )
+                            );
+                          }}
+                          className="w-full text-left flex items-start gap-2.5 min-w-0"
                         >
-                          {item.label}
-                        </span>
-                      </button>
+                          {item.checked ? (
+                            <CheckSquare className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                          ) : (
+                            <Square className="h-4 w-4 text-slate-600 shrink-0 mt-0.5" />
+                          )}
+                          <span
+                            className={`text-xs ${
+                              item.checked ? "line-through opacity-80" : ""
+                            }`}
+                          >
+                            {item.label}
+                          </span>
+                        </button>
+                        {item.id.startsWith("custom") && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setChecklistItems((prev) =>
+                                prev.filter((i) => i.id !== item.id)
+                              );
+                              flash("Checklist item removed");
+                            }}
+                            className="text-slate-500 hover:text-rose-400 p-1 opacity-70 group-hover:opacity-100 transition shrink-0 ml-2"
+                            title="Remove custom item"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        )}
+                      </div>
                     ))}
+                  </div>
+
+                  {/* Add Custom Item Input */}
+                  <div className="flex items-center gap-2 pt-1">
+                    <input
+                      type="text"
+                      value={newChecklistInput}
+                      onChange={(e) => setNewChecklistInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          const trimmed = newChecklistInput.trim();
+                          if (!trimmed) return;
+                          setChecklistItems((prev) => [
+                            ...prev,
+                            { id: `custom-${Date.now()}`, label: trimmed, checked: false },
+                          ]);
+                          setNewChecklistInput("");
+                          flash("Custom item added");
+                        }
+                      }}
+                      placeholder="Add custom prep item…"
+                      className="flex-1 rounded-xl bg-black/30 border border-white/10 px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const trimmed = newChecklistInput.trim();
+                        if (!trimmed) return;
+                        setChecklistItems((prev) => [
+                          ...prev,
+                          { id: `custom-${Date.now()}`, label: trimmed, checked: false },
+                        ]);
+                        setNewChecklistInput("");
+                        flash("Custom item added");
+                      }}
+                      className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white transition flex items-center gap-1 shrink-0"
+                    >
+                      <Plus className="h-3.5 w-3.5" />
+                      <span>Add</span>
+                    </button>
                   </div>
 
                   {/* Upcoming Calendar Hook */}
@@ -622,6 +695,26 @@ export function SampleDemoShell() {
     const c = SAMPLE_COACH_PANEL;
     return (
       <div className="mx-auto max-w-3xl px-4 sm:px-6 space-y-4 pb-2 pt-4">
+        {/* Squad Pulse Cards Strip */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Fleet split</p>
+            <p className="mt-1 text-sm font-black text-white">{c.squadPulse.goldCount} Gold · {c.squadPulse.silverCount} Silver</p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Gear health</p>
+            <p className="mt-1 text-sm font-black text-amber-400">{c.squadPulse.gearNeedingRepair} Needs repair</p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Selection trials</p>
+            <p className="mt-1 text-sm font-black text-emerald-400">{c.squadPulse.aocQualifiedCount} On AOC roster</p>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-black/20 p-3">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Squad actions</p>
+            <p className="mt-1 text-sm font-black text-orange-400">{c.squadPulse.actionsCount} To review</p>
+          </div>
+        </div>
+
         <div className="rounded-2xl border border-blue-500/25 bg-blue-500/[0.06] p-5 sm:p-6 space-y-5">
           <div className="flex items-start justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2">
@@ -763,6 +856,86 @@ export function SampleDemoShell() {
           </div>
         </div>
 
+        {/* Athlete Development & Coaching Log */}
+        <div className="rounded-2xl border border-blue-500/25 bg-blue-500/[0.06] p-5 sm:p-6 space-y-4">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div>
+              <h3 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-2">
+                <GraduationCap className="h-4 w-4 text-blue-400" />
+                Athlete Development Log
+              </h3>
+              <p className="text-[11px] text-slate-400 mt-0.5">
+                6 structured categories with selective athlete & parent sharing
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const newRec = {
+                  id: `dev-${Date.now()}`,
+                  category: "Technical",
+                  type: "observation" as const,
+                  title: "(Demo) Downwind wave pumping rhythm",
+                  detail: "Consistent roll-tack cadence and steady mast angle in chop.",
+                  recordDate: new Date().toISOString().slice(0, 10),
+                  sentiment: "strength" as const,
+                  visibility: "shared" as const,
+                };
+                setCoachDevRecords((prev) => [newRec, ...prev]);
+                flash("Demo development entry added");
+              }}
+              className="rounded-full bg-blue-600 hover:bg-blue-500 px-3 py-1.5 text-xs font-bold text-white transition flex items-center gap-1"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              <span>Log observation</span>
+            </button>
+          </div>
+
+          <div className="space-y-2">
+            {coachDevRecords.map((rec) => (
+              <div
+                key={rec.id}
+                className="rounded-xl border border-white/10 bg-black/25 p-3.5 space-y-1.5"
+              >
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-white">{rec.title}</span>
+                    <span className="rounded-md border border-blue-500/30 bg-blue-500/10 px-2 py-0.5 text-[10px] font-bold text-blue-300">
+                      {rec.category}
+                    </span>
+                    <span
+                      className={`rounded-md px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
+                        rec.sentiment === "strength"
+                          ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300"
+                          : rec.sentiment === "focus"
+                          ? "bg-amber-500/15 border-amber-500/30 text-amber-300"
+                          : "bg-white/10 border-white/15 text-slate-300"
+                      }`}
+                    >
+                      {rec.sentiment}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                        rec.visibility === "shared"
+                          ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
+                          : "bg-white/5 border-white/10 text-slate-400"
+                      }`}
+                    >
+                      {rec.visibility === "shared" ? "👥 Shared with Family" : "🔒 Coach Only"}
+                    </span>
+                    <span className="text-[10px] text-slate-500 font-mono">{rec.recordDate}</span>
+                  </div>
+                </div>
+                {rec.detail && (
+                  <p className="text-xs text-slate-300 leading-relaxed">{rec.detail}</p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 space-y-3">
           <div className="flex items-center justify-between gap-2">
             <div className="flex items-center gap-2">
@@ -900,6 +1073,8 @@ export function SampleDemoShell() {
     selectedCoachSailor,
     checklistItems,
     selectedAthleteId,
+    newChecklistInput,
+    coachDevRecords,
   ]);
 
   return (

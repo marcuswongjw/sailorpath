@@ -339,8 +339,9 @@ export type SimplifiedCondition = "race_ready" | "practice_only" | "needs_attent
 export function toSimplifiedCondition(
   condition: EquipmentCondition | string | null | undefined
 ): SimplifiedCondition {
-  if (condition === "new" || condition === "good") return "race_ready";
-  if (condition === "fair") return "practice_only";
+  const s = String(condition || "").trim().toLowerCase();
+  if (s === "new" || s === "good" || s === "race_ready" || s === "excellent") return "race_ready";
+  if (s === "fair" || s === "practice_only" || s === "practice") return "practice_only";
   return "needs_attention";
 }
 

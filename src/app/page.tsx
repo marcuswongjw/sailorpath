@@ -56,7 +56,7 @@ export default function HomePage() {
           Follow live standings across <strong className="text-slate-200">Optimist</strong>,{" "}
           <strong className="text-slate-200">ILCA 4</strong>, and{" "}
           <strong className="text-slate-200">WingFoil</strong>. Track official selection trials, explore the{" "}
-          <strong className="text-slate-200">2026 Racing Calendar</strong>, and keep one continuous athlete record. Coaches and parents get dedicated private workspaces.
+          <strong className="text-slate-200">2026 Racing Calendar</strong>, and keep one continuous athlete record with Hero Athlete Cards and segmented tabs (Overview, Regattas, Milestones). Coaches and parents get dedicated private workspaces.
         </p>
 
         {/* Primary CTA Buttons */}
@@ -431,8 +431,8 @@ export default function HomePage() {
                 <h3 className="text-lg font-bold text-white">For Sailors</h3>
                 <p className="text-xs font-semibold text-white">Own your sailing journey.</p>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Follow your results, ranking momentum, and career progression from Optimist to ILCA.
-                  Add equipment logs, private race reflections, and milestone archives.
+                  Follow your results, ranking momentum, and career progression from Optimist to ILCA with our{" "}
+                  <strong className="text-orange-300">Hero Athlete Card</strong> and segmented tabs (Overview, Regattas, Milestones, Equipment). Track boat locker gear with 3-tier condition audits (Race Ready, Practice Only, Needs Repair), private race reflections, and milestone archives.
                 </p>
               </div>
               <Link
@@ -454,7 +454,7 @@ export default function HomePage() {
                 <p className="text-xs font-semibold text-white">Keep their progress in one clear view.</p>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                   Link your parent account to your child&apos;s profile and open the{" "}
-                  <strong className="text-emerald-300">Parent Dashboard</strong>. Switch seamlessly between multiple children, track Asian Games &amp; World Championship selection cutoffs, monitor boat locker gear alerts, review coach debriefs, and manage pre-race morning checklists.
+                  <strong className="text-emerald-300">Parent Dashboard</strong>. Track simplified 3-column standings ((1) Selection Trial qualification, (2) National Ranking, (3) Recent Regatta Results). Switch seamlessly between multiple children, track Asian Games &amp; Perth Camp cutoffs, monitor boat locker gear alerts, review shared coach technical debriefs, and manage custom pre-race morning checklists.
                 </p>
               </div>
               <Link
@@ -475,8 +475,8 @@ export default function HomePage() {
                 <h3 className="text-lg font-bold text-white">For Coaches</h3>
                 <p className="text-xs font-semibold text-white">Keep your squad in one live view.</p>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Build private squad rosters, monitor live standings across regattas, spot ranking momentum,
-                  and compare two squad sailors head-to-head.
+                  Build private squad rosters and monitor your fleet with{" "}
+                  <strong className="text-sky-300">Squad Pulse Cards</strong> (fleet segregation, gear health alerts, selection tags). Log structured observations across 6 categories (Technical, Tactical, Physical, Mental, Equipment, Communication) with sentiment tracking and selective debrief sharing (<code className="text-sky-300">coach_only</code> vs shared with family), plus head-to-head comparisons.
                 </p>
               </div>
               <div className="mt-5 space-y-1">
@@ -628,10 +628,9 @@ export default function HomePage() {
                 <p className="text-[11px] font-black uppercase tracking-widest text-sky-400">
                   Available now
                 </p>
-                <h3 className="text-base font-bold text-white mt-1">Coach Squads &amp; Comparisons</h3>
+                <h3 className="text-base font-bold text-white mt-1">Coach Squad Pulse &amp; Development Log</h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Build a private roster with live rankings and recent results, then compare two sailors
-                  in the same fleet side-by-side. Selection reports and structured coach observations are live.
+                  Build a private roster with live rankings, Squad Pulse status indicators, and 6-category Athlete Development Logs. Compare two sailors side-by-side, manage action items, and selectively share technical debriefs with sailors and parents.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3 items-center">
                   <Link

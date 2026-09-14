@@ -674,10 +674,10 @@ export const SAMPLE_PARENT_PANEL = {
     selectionNote: "Provisional Asian Games & Perth Camp Qualifier · Min 3 gender quota met",
   },
   equipmentLocker: [
-    { type: "Hull", brand: "Winner Den 2024", condition: "good" as const, alert: null },
-    { type: "Sail", brand: "J-Sails Blue (2025)", condition: "fair" as const, alert: "Sail acquired Feb 2025 (~18 months). Consider measuring backup before Asian Champs." },
-    { type: "Spars", brand: "SuperSpar Black M2", condition: "good" as const, alert: "2° extra rake for medium air confirmed." },
-    { type: "Foils", brand: "DSK Flebi & Exas", condition: "good" as const, alert: null },
+    { type: "Hull", brand: "Winner Den 2024", condition: "race_ready" as const, alert: null },
+    { type: "Sail", brand: "J-Sails Blue (2025)", condition: "practice_only" as const, alert: "Sail acquired Feb 2025 (~18 months). Consider measuring backup before Asian Champs." },
+    { type: "Spars", brand: "SuperSpar Black M2", condition: "race_ready" as const, alert: "2° extra rake for medium air confirmed." },
+    { type: "Foils", brand: "DSK Flebi & Exas", condition: "race_ready" as const, alert: null },
   ],
   coachDebriefs: [
     {
@@ -694,11 +694,8 @@ export const SAMPLE_PARENT_PANEL = {
     },
   ],
   morningChecklist: [
-    { id: "c1", label: "Measurement certificate verified & onboard", checked: true },
-    { id: "c2", label: "Sailor official weigh-in completed (42 kg)", checked: true },
-    { id: "c3", label: "Safety tow rope (min 8m floating) & 2 bailers tied in", checked: true },
-    { id: "c4", label: "Red protest flag & emergency whistle attached to lifejacket", checked: false },
-    { id: "c5", label: "Spare battens, sail ties, and wind indicator packed", checked: true },
+    { id: "c1", label: "Official class measurement certificate verified & onboard", checked: true },
+    { id: "c2", label: "Spare battens, sail ties (2.5mm / 3.0mm) & wind indicator checked", checked: true },
   ],
   trainingSchedule: [
     { day: "Tue", time: "4:30–6:30pm", focus: "Starts & boat speed" },
@@ -771,6 +768,13 @@ export const SAMPLE_COACH_PANEL = {
   nationalRank: 3,
   nationalFleet: 100,
   squadRank: 1,
+  squadPulse: {
+    goldCount: 8,
+    silverCount: 4,
+    gearNeedingRepair: 1,
+    aocQualifiedCount: 2,
+    actionsCount: 3,
+  },
   selectionReadiness: {
     score: 82,
     label: "On track",
@@ -796,6 +800,38 @@ export const SAMPLE_COACH_PANEL = {
     {
       date: "2026-05-10",
       text: "CSC: downwind mode excellent. Focus next block on light-air height.",
+    },
+  ],
+  developmentRecords: [
+    {
+      id: "dev-1",
+      category: "Tactics",
+      type: "observation" as const,
+      title: "Mid-line acceleration in high-density fleets",
+      detail: "Clean jump at 10s gun without losing height. Held lane to layline.",
+      recordDate: "2026-06-20",
+      sentiment: "strength" as const,
+      visibility: "shared" as const,
+    },
+    {
+      id: "dev-2",
+      category: "Technical",
+      type: "observation" as const,
+      title: "Light-air upwind mode transitions",
+      detail: "Tends to pinch when breeze drops below 6 knots. Focus on flatter sail and early foot mode.",
+      recordDate: "2026-06-15",
+      sentiment: "focus" as const,
+      visibility: "coach_only" as const,
+    },
+    {
+      id: "dev-3",
+      category: "Equipment",
+      type: "goal" as const,
+      title: "Measure backup sail before AOC trials",
+      detail: "Primary race sail is ~18 months old. Confirm backup sail certification with SSF measurer.",
+      recordDate: "2026-06-08",
+      sentiment: "neutral" as const,
+      visibility: "shared" as const,
     },
   ],
   compareOptions: [

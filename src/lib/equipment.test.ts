@@ -244,8 +244,12 @@ describe("equipment helpers", () => {
   it("converts between simplified and internal equipment conditions", () => {
     expect(toSimplifiedCondition("new")).toBe("race_ready");
     expect(toSimplifiedCondition("good")).toBe("race_ready");
+    expect(toSimplifiedCondition("race_ready")).toBe("race_ready");
     expect(toSimplifiedCondition("fair")).toBe("practice_only");
+    expect(toSimplifiedCondition("practice_only")).toBe("practice_only");
     expect(toSimplifiedCondition("worn")).toBe("needs_attention");
+    expect(toSimplifiedCondition("needs_attention")).toBe("needs_attention");
+    expect(toSimplifiedCondition("needs_repair")).toBe("needs_attention");
     expect(toSimplifiedCondition("replace_soon")).toBe("needs_attention");
 
     expect(fromSimplifiedCondition("race_ready")).toBe("good");
