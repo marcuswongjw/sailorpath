@@ -170,55 +170,24 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
           `OCR Extracted: "${parsed.regattaName}" with ${extractedResults.length} competitors and ${heatCount} heats!`
         );
 
+        // Always create a new regatta entry per upload — never overwrite an existing one
         setRegattas((prev) => {
-          const currentActive = prev.find((r) => r.id === selectedRegattaId);
-          const nameMatches = prev.findIndex(
-            (r) =>
-              r.name.toLowerCase().includes(parsed.regattaName.toLowerCase()) ||
-              parsed.regattaName.toLowerCase().includes(r.name.toLowerCase())
-          );
-
-          if (currentActive) {
-            return prev.map((r) =>
-              r.id === currentActive.id
-                ? {
-                    ...r,
-                    name: parsed.regattaName || r.name,
-                    dates: parsed.startDate || r.dates,
-                    scoringSystem: `${heatCount} races, ${parsed.discardsCount} discard`,
-                    results: extractedResults,
-                  }
-                : r
-            );
-          } else if (nameMatches >= 0) {
-            const updated = [...prev];
-            updated[nameMatches] = {
-              ...updated[nameMatches],
-              name: parsed.regattaName,
-              dates: parsed.startDate,
-              scoringSystem: `${heatCount} races, ${parsed.discardsCount} discard`,
-              results: extractedResults,
-            };
-            setSelectedRegattaId(updated[nameMatches].id);
-            return updated;
-          } else {
-            const newRegatta: WingfoilRegatta = {
-              id: `wingfoil-${Date.now()}`,
-              name: parsed.regattaName,
-              shortName: parsed.regattaName.slice(0, 16),
-              dates: parsed.startDate,
-              venue: "National Sailing Centre (NSC), Singapore",
-              organizer: "Singapore Sailing Federation",
-              format: "Sprint Slalom",
-              status: "Completed",
-              scoringSystem: `${heatCount} races, ${parsed.discardsCount} discard`,
-              rulesNotes:
-                "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
-              results: extractedResults,
-            };
-            setSelectedRegattaId(newRegatta.id);
-            return [newRegatta, ...prev];
-          }
+          const newRegatta: WingfoilRegatta = {
+            id: `wingfoil-upload-${Date.now()}`,
+            name: parsed.regattaName || `WingFoil Regatta ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })}`,
+            shortName: (parsed.regattaName || "WingFoil").slice(0, 20),
+            dates: parsed.startDate || new Date().toLocaleDateString("en-SG", { day: "numeric", month: "long", year: "numeric" }),
+            venue: "National Sailing Centre (NSC), Singapore",
+            organizer: "Singapore Sailing Federation",
+            format: "Sprint Slalom",
+            status: "Completed",
+            scoringSystem: `${heatCount} races, ${parsed.discardsCount ?? 1} discard`,
+            rulesNotes:
+              "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
+            results: extractedResults,
+          };
+          setSelectedRegattaId(newRegatta.id);
+          return [newRegatta, ...prev];
         });
       } else {
         toast.info(
