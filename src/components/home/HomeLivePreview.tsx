@@ -9,10 +9,18 @@ import {
   Compass,
   ArrowRight,
   Shield,
+  Heart,
+  Calendar,
+  CheckSquare,
+  Square,
+  Wrench,
+  AlertTriangle,
+  Target,
+  CheckCircle2,
 } from "lucide-react";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
-type PreviewTab = "standings" | "profile" | "coach";
+type PreviewTab = "standings" | "profile" | "parent" | "coach";
 type StandingsClass = "optimist" | "ilca4" | "wingfoil";
 
 const SAMPLE_STANDINGS: Record<
@@ -183,6 +191,14 @@ const SAMPLE_STANDINGS: Record<
 export function HomeLivePreview() {
   const [activeTab, setActiveTab] = useState<PreviewTab>("standings");
   const [selectedClass, setSelectedClass] = useState<StandingsClass>("optimist");
+  const [parentDemoAthlete, setParentDemoAthlete] = useState<"kimberly" | "alex">("kimberly");
+  const [demoChecklist, setDemoChecklist] = useState([
+    { id: "1", text: "Measurement certificate checked & onboard", done: true },
+    { id: "2", text: "Sailor official weigh-in completed (42 kg)", done: true },
+    { id: "3", text: "Tow rope (8m floating) & bailers secured", done: true },
+    { id: "4", text: "Red protest flag in lifejacket pocket", done: false },
+    { id: "5", text: "Spare battens & tell-tales packed", done: true },
+  ]);
 
   const standingsData = SAMPLE_STANDINGS[selectedClass];
 
@@ -222,10 +238,22 @@ export function HomeLivePreview() {
             </button>
             <button
               type="button"
+              onClick={() => setActiveTab("parent")}
+              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+                activeTab === "parent"
+                  ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/30"
+                  : "text-slate-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <Heart className="h-3.5 w-3.5" />
+              <span>Parent Command Center</span>
+            </button>
+            <button
+              type="button"
               onClick={() => setActiveTab("coach")}
               className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
                 activeTab === "coach"
-                  ? "bg-orange-600 text-white shadow-md shadow-orange-600/30"
+                  ? "bg-sky-600 text-white shadow-md shadow-sky-600/30"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
@@ -425,7 +453,184 @@ export function HomeLivePreview() {
           </div>
         )}
 
-        {/* Tab 3: Coach Squad Workspace */}
+        {/* Tab 3: Parent Command Center Preview */}
+        {activeTab === "parent" && (
+          <div className="p-5 sm:p-7 space-y-5 text-left">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-4">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-bold text-white">
+                    Family Dashboard Command Center
+                  </h3>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
+                    Parent Verified
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400 mt-0.5">
+                  Multi-athlete tracking, Selection Trials qualification, boat locker, and pre-race prep.
+                </p>
+              </div>
+
+              {/* Child Switcher Pills */}
+              <div className="flex items-center gap-1.5 p-1 rounded-xl bg-black/40 border border-white/5 self-start sm:self-auto">
+                <button
+                  type="button"
+                  onClick={() => setParentDemoAthlete("kimberly")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                    parentDemoAthlete === "kimberly"
+                      ? "bg-emerald-600 text-white"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  Kimberly (Gold #3)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setParentDemoAthlete("alex")}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                    parentDemoAthlete === "alex"
+                      ? "bg-emerald-600 text-white"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  Alex (Silver #8)
+                </button>
+              </div>
+            </div>
+
+            {/* Bento Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Card 1: Selection Trials & Asian Games status */}
+              <div className="rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-4 sm:p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Target className="h-4 w-4 text-amber-400" />
+                    <p className="text-xs font-bold text-white uppercase tracking-wider">
+                      2026 Selection Trials
+                    </p>
+                  </div>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                    {parentDemoAthlete === "kimberly" ? "Trials Rank #3" : "Silver Pathway"}
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 text-center">
+                  <div className="rounded-xl bg-black/30 p-2 border border-white/5">
+                    <p className="text-[9px] uppercase font-bold text-slate-500">Combined</p>
+                    <p className="text-sm font-black text-white font-mono mt-0.5">
+                      {parentDemoAthlete === "kimberly" ? "18 pts" : "48 pts"}
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-black/30 p-2 border border-white/5">
+                    <p className="text-[9px] uppercase font-bold text-slate-500">Events</p>
+                    <p className="text-sm font-black text-white font-mono mt-0.5">3 Sailed</p>
+                  </div>
+                  <div className="rounded-xl bg-black/30 p-2 border border-white/5">
+                    <p className="text-[9px] uppercase font-bold text-slate-500">Buffer</p>
+                    <p className="text-sm font-black text-emerald-400 font-mono mt-0.5">
+                      {parentDemoAthlete === "kimberly" ? "+14 pts" : "On Track"}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-2.5 flex items-start gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <p className="text-[11px] text-emerald-200 leading-snug">
+                    {parentDemoAthlete === "kimberly"
+                      ? "Provisional Asian Games Qualifier (Top 5 qualify). Gender quota allocation satisfied."
+                      : "Silver fleet podium contender. Target top-5 in next 2 regattas for Gold promotion."}
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 2: Interactive Pre-Race Checklist */}
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 sm:p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <CheckSquare className="h-4 w-4 text-emerald-400" />
+                    <p className="text-xs font-bold text-white uppercase tracking-wider">
+                      Pre-Race Checklist
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-mono text-emerald-400 font-bold">
+                    {demoChecklist.filter((i) => i.done).length}/{demoChecklist.length} Ready
+                  </span>
+                </div>
+
+                <div className="space-y-1.5">
+                  {demoChecklist.map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() =>
+                        setDemoChecklist((prev) =>
+                          prev.map((i) => (i.id === item.id ? { ...i, done: !i.done } : i))
+                        )
+                      }
+                      className={`w-full text-left flex items-center gap-2 p-2 rounded-lg text-xs transition-colors ${
+                        item.done
+                          ? "bg-emerald-500/10 text-slate-300 line-through opacity-80"
+                          : "bg-black/20 text-white hover:bg-white/5"
+                      }`}
+                    >
+                      {item.done ? (
+                        <CheckSquare className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                      ) : (
+                        <Square className="h-3.5 w-3.5 text-slate-500 shrink-0" />
+                      )}
+                      <span className="truncate">{item.text}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Card 3: Equipment Locker Alert */}
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 space-y-2">
+                <div className="flex items-center gap-2">
+                  <Wrench className="h-4 w-4 text-orange-400" />
+                  <p className="text-xs font-bold text-white">Boat Locker Alert</p>
+                </div>
+                <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-2.5 flex items-start gap-2">
+                  <AlertTriangle className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
+                  <p className="text-[11px] text-amber-200 leading-snug">
+                    Sail: J-Sails Blue (2025) is ~18 months old. Measurement backup advised before Asian Championships.
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 4: Upcoming 2026 Racing Fixtures */}
+              <div className="rounded-2xl border border-sky-500/20 bg-sky-500/[0.04] p-4 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-sky-400" />
+                    <p className="text-xs font-bold text-white">2026 Racing Calendar</p>
+                  </div>
+                  <Link
+                    href="/calendar"
+                    className="text-[11px] font-bold text-sky-400 hover:text-sky-300"
+                  >
+                    Open Calendar →
+                  </Link>
+                </div>
+                <p className="text-xs text-slate-300 font-medium leading-relaxed">
+                  Singapore Youth Championships (20–23 Jun) · SSF Selection Trials (22–30 Aug) · NOR &amp; Entry links live.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-1 text-xs text-slate-400">
+              <span>Dedicated private workspaces for parents with athlete profile claiming.</span>
+              <Link
+                href="/parent"
+                className="font-bold text-emerald-400 hover:text-emerald-300"
+              >
+                Open Parent Dashboard →
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* Tab 4: Coach Squad Workspace */}
         {activeTab === "coach" && (
           <div className="p-5 sm:p-7 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-4">

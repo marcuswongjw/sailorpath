@@ -151,13 +151,6 @@ export function SiteHeader() {
   const navLinks = (
     <>
       <Link
-        href="/rankings"
-        prefetch
-        className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0"
-      >
-        Rankings
-      </Link>
-      <Link
         href="/calendar"
         prefetch
         className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0"
@@ -380,13 +373,6 @@ export function SiteHeader() {
 
         {mobileOpen && (
           <div className="md:hidden border-t border-white/5 py-3 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col gap-0.5 max-h-[min(70vh,32rem)] overflow-y-auto">
-            <Link
-              href="/rankings"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-orange-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Rankings
-            </Link>
             <Link
               href="/calendar"
               onClick={() => setMobileOpen(false)}

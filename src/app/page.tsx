@@ -11,15 +11,16 @@ import {
   CheckCircle2,
   Sparkles,
   Shield,
+  Calendar,
 } from "lucide-react";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { HomeLivePreview } from "@/components/home/HomeLivePreview";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Singapore Sailing Standings, Selection Trials & Records | SailorPath",
+  title: "Singapore Sailing Standings, Selection Trials, Calendar & Records | SailorPath",
   description:
-    "Follow current Singapore Optimist, ILCA 4, and WingFoil standings, track 2026 Selection Trials, maintain personal athlete records, and manage private coach squads.",
+    "Follow current Singapore Optimist, ILCA 4, and WingFoil standings, track 2026 Selection Trials, view the upcoming 2026 Racing Calendar, and manage dedicated parent and coach workspaces.",
 };
 
 /**
@@ -54,8 +55,8 @@ export default function HomePage() {
         <p className="mx-auto mt-4 sm:mt-6 max-w-2xl sm:max-w-3xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
           Follow live standings across <strong className="text-slate-200">Optimist</strong>,{" "}
           <strong className="text-slate-200">ILCA 4</strong>, and{" "}
-          <strong className="text-slate-200">WingFoil</strong>. Track all overseas training and competition selection,
-          explore regatta scoreboards, and keep one continuous athlete record. Coaches and parents get dedicated private workspaces.
+          <strong className="text-slate-200">WingFoil</strong>. Track official selection trials, explore the{" "}
+          <strong className="text-slate-200">2026 Racing Calendar</strong>, and keep one continuous athlete record. Coaches and parents get dedicated private workspaces.
         </p>
 
         {/* Primary CTA Buttons */}
@@ -65,14 +66,21 @@ export default function HomePage() {
             className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-7 py-3.5 shadow-lg shadow-orange-950/40 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[46px]"
           >
             <Trophy className="h-4 w-4 shrink-0" />
-            <span>Explore Current Rankings</span>
+            <span>Explore Standings</span>
+          </Link>
+          <Link
+            href="/calendar"
+            className="w-full sm:w-auto rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-6 py-3.5 border border-white/10 inline-flex items-center justify-center gap-2 min-h-[46px]"
+          >
+            <Calendar className="h-3.5 w-3.5 text-sky-400" />
+            <span>2026 Racing Calendar</span>
           </Link>
           <Link
             href="/sg/optimist/selection"
             className="w-full sm:w-auto rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-6 py-3.5 border border-white/10 inline-flex items-center justify-center gap-2 min-h-[46px]"
           >
             <Lock className="h-3.5 w-3.5 text-orange-400" />
-            <span>2026 Selection Trials</span>
+            <span>Selection Trials</span>
             <span className="text-[10px] bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded font-bold">
               Members
             </span>
@@ -114,6 +122,12 @@ export default function HomePage() {
             <span className="text-slate-500 font-bold uppercase tracking-wider text-[10px] mr-1">
               Quick Jump:
             </span>
+            <Link
+              href="/calendar"
+              className="px-2.5 py-1 rounded-lg bg-sky-500/10 border border-sky-500/20 text-sky-300 hover:border-sky-500/50 hover:text-sky-200 transition-colors font-semibold"
+            >
+              📅 2026 Calendar
+            </Link>
             <Link
               href="/sg/optimist/gold"
               className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/5 text-slate-300 hover:border-orange-500/40 hover:text-white transition-colors"
@@ -165,9 +179,9 @@ export default function HomePage() {
             <p className="text-[11px] text-slate-400 mt-0.5">Official low &amp; high points</p>
           </div>
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
-            <p className="text-2xl sm:text-3xl font-black text-white font-mono">Live</p>
-            <p className="text-xs font-bold text-emerald-400 mt-0.5">Dynamic Standings</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">Updated after every regatta</p>
+            <p className="text-2xl sm:text-3xl font-black text-white font-mono">2026</p>
+            <p className="text-xs font-bold text-emerald-400 mt-0.5">Race Calendar Live</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">NOR downloads &amp; entry links</p>
           </div>
         </div>
       </section>
@@ -440,8 +454,7 @@ export default function HomePage() {
                 <p className="text-xs font-semibold text-white">Keep their progress in one clear view.</p>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                   Link your parent account to your child&apos;s profile and open the{" "}
-                  <strong className="text-emerald-300">Parent Dashboard</strong>. Monitor live standings,
-                  review carry-forward points, and manage family notes.
+                  <strong className="text-emerald-300">Parent Dashboard</strong>. Switch seamlessly between multiple children, track Asian Games &amp; World Championship selection cutoffs, monitor boat locker gear alerts, review coach debriefs, and manage pre-race morning checklists.
                 </p>
               </div>
               <Link
@@ -550,11 +563,15 @@ export default function HomePage() {
               <Link href="/parent" className="text-emerald-300 font-semibold hover:text-emerald-200">
                 Parent Dashboard
               </Link>
+              , the{" "}
+              <Link href="/calendar" className="text-orange-300 font-semibold hover:text-orange-200">
+                2026 Racing Calendar
+              </Link>
               , and the{" "}
               <Link href="/coach-tools" className="text-sky-300 font-semibold hover:text-sky-200">
                 Coach Dashboard
               </Link>{" "}
-              are shipping today.
+              are live today.
             </p>
           </div>
 
@@ -566,13 +583,16 @@ export default function HomePage() {
                 <p className="text-[11px] font-black uppercase tracking-widest text-emerald-400">
                   Available now
                 </p>
-                <h3 className="text-base font-bold text-white mt-1">Parent Dashboard</h3>
+                <h3 className="text-base font-bold text-white mt-1">Parent Dashboard &amp; Racing Calendar</h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Link a child, then open{" "}
+                  Link your children, then open{" "}
                   <Link href="/parent" className="text-emerald-300 font-semibold hover:text-emerald-200">
                     /parent
                   </Link>{" "}
-                  for rankings, results, and private notes. Coming next: multi-child alerts and regatta calendars.
+                  for multi-athlete tracking, live 2026 Selection Trials qualification buffers, boat locker maintenance logs, coach debriefs, and interactive morning checklists. View the complete 2026 schedule on the{" "}
+                  <Link href="/calendar" className="text-emerald-300 font-semibold hover:text-emerald-200">
+                    Racing Calendar
+                  </Link>.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3 items-center">
                   <Link
@@ -580,6 +600,12 @@ export default function HomePage() {
                     className="text-xs font-bold text-emerald-400 hover:text-emerald-300"
                   >
                     Open Parent Dashboard →
+                  </Link>
+                  <Link
+                    href="/calendar"
+                    className="text-xs font-semibold text-slate-300 hover:text-white"
+                  >
+                    2026 Racing Calendar →
                   </Link>
                   <Link
                     href="/claim-profile"

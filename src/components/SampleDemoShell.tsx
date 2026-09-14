@@ -31,6 +31,11 @@ import {
   GraduationCap,
   UserPlus,
   ChevronRight,
+  Target,
+  CheckSquare,
+  Square,
+  RotateCcw,
+  ArrowRight,
 } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 
@@ -120,6 +125,8 @@ export function SampleDemoShell() {
   const [toast, setToast] = useState<string | null>(null);
   const [coachNotes, setCoachNotes] = useState(SAMPLE_COACH_PANEL.coachNotes);
   const [parentNotes, setParentNotes] = useState(SAMPLE_PARENT_PANEL.parentNotes);
+  const [selectedAthleteId, setSelectedAthleteId] = useState<string>("sample-kimberly");
+  const [checklistItems, setChecklistItems] = useState(SAMPLE_PARENT_PANEL.morningChecklist);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [compareTo, setCompareTo] = useState(
     SAMPLE_COACH_PANEL.compareOptions[0]?.name || ""
@@ -162,8 +169,6 @@ export function SampleDemoShell() {
     setTimeout(() => setToast(null), 2200);
   };
 
-  const standing = SAMPLE_SERIES_STANDING;
-
   const setRoleAndUrl = (r: DemoRole) => {
     if (r !== role) {
       trackClientUsage("demo_role_switch", "/sample", {
@@ -192,180 +197,423 @@ export function SampleDemoShell() {
 
     if (role === "parent") {
       const p = SAMPLE_PARENT_PANEL;
+      const currentAthlete =
+        p.athletes.find((a) => a.id === selectedAthleteId) || p.athletes[0];
+      const completedCount = checklistItems.filter((i) => i.checked).length;
+
       return (
-        <div className="mx-auto max-w-3xl px-4 sm:px-6 space-y-4 pb-2 pt-4">
-          <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.06] p-5 sm:p-6 space-y-5">
-            <div className="flex items-center justify-between gap-3 flex-wrap">
-              <div className="flex items-center gap-2">
-                <Heart className="h-5 w-5 text-emerald-400" />
-                <div>
-                  <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                    Parent dashboard
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 space-y-6 pb-6 pt-4">
+          {/* Header & Multi-Athlete Switcher */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                <Heart className="h-5 w-5" />
+              </span>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-black text-white tracking-tight">
+                    Parent Dashboard Command Center
                   </h3>
-                  <p className="text-[11px] text-emerald-300/90 font-semibold">
-                    {p.claimStatus}
+                  <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-black text-emerald-300">
+                    Live Demo
+                  </span>
+                </div>
+                <p className="text-xs text-slate-400">
+                  {p.claimStatus} · Linked to 2 athletes
+                </p>
+              </div>
+            </div>
+
+            {/* Athlete Switcher Pills */}
+            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-black/40 border border-white/10 self-start sm:self-auto">
+              {p.athletes.map((ath) => (
+                <button
+                  key={ath.id}
+                  type="button"
+                  onClick={() => setSelectedAthleteId(ath.id)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                    selectedAthleteId === ath.id
+                      ? "bg-emerald-600 text-white shadow-sm shadow-emerald-900/40"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <span>{ath.name}</span>
+                  <span className="ml-1.5 text-[10px] font-mono opacity-80 font-normal">
+                    ({ath.rankLabel})
+                  </span>
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => setSelectedAthleteId("all")}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  selectedAthleteId === "all"
+                    ? "bg-emerald-600 text-white shadow-sm shadow-emerald-900/40"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                All Athletes
+              </button>
+            </div>
+          </div>
+
+          {/* ALL ATHLETES VIEW */}
+          {selectedAthleteId === "all" ? (
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                <h4 className="text-sm font-bold text-white mb-1">
+                  Family Fleet Summary
+                </h4>
+                <p className="text-xs text-slate-400">
+                  Side-by-side progression tracking across Optimist Gold and Silver series.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {p.athletes.map((ath) => (
+                  <div
+                    key={ath.id}
+                    className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5 space-y-4"
+                  >
+                    <div className="flex items-start justify-between gap-3">
+                      <div>
+                        <h4 className="text-base font-black text-white">{ath.name}</h4>
+                        <p className="text-xs text-slate-400 font-mono mt-0.5">
+                          {ath.sailNumber}
+                          {ath.sailNumberIlca4 ? ` · ${ath.sailNumberIlca4}` : ""}
+                        </p>
+                        <p className="text-xs text-emerald-400 font-bold mt-1">
+                          {ath.boatClass} · {ath.rankLabel}
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 text-xs font-black text-emerald-300 font-mono">
+                        #{ath.rank}
+                      </span>
+                    </div>
+                    <div className="rounded-xl bg-black/30 border border-white/5 p-3 space-y-1">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                        Status / Pathway
+                      </p>
+                      <p className="text-xs font-medium text-slate-200">
+                        {ath.selectionStatus}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedAthleteId(ath.id)}
+                      className="w-full rounded-xl bg-white/10 hover:bg-white/15 py-2 text-xs font-bold text-white transition-colors"
+                    >
+                      Open {ath.name}&apos;s Workspace →
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            /* SINGLE ATHLETE BENTO WORKSPACE */
+            <div className="space-y-5">
+              {/* Athlete Hero Card */}
+              <div className="rounded-2xl border border-emerald-500/25 bg-gradient-to-r from-emerald-500/[0.08] via-teal-500/[0.04] to-transparent p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h4 className="text-xl font-black text-white">
+                      {currentAthlete.name}
+                    </h4>
+                    <span className="rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold">
+                      Verified Athlete
+                    </span>
+                    <span className="rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 text-[10px] font-mono font-bold">
+                      Opti {currentAthlete.sailNumber}
+                    </span>
+                    {currentAthlete.sailNumberIlca4 && (
+                      <span className="rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 text-[10px] font-mono font-bold">
+                        ILCA {currentAthlete.sailNumberIlca4}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400">
+                    {p.club} · {p.coachName} · {currentAthlete.selectionStatus}
                   </p>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <Link
+                    href="/calendar"
+                    className="rounded-xl border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 px-3.5 py-2 text-xs font-bold text-sky-300 transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <Calendar className="h-3.5 w-3.5" />
+                    Racing Calendar
+                  </Link>
+                </div>
+              </div>
+
+              {/* 5-Card Bento Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Card 1: 2026 Asian Games & Selection Trials Standings */}
+                <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.04] p-5 space-y-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                      <Target className="h-3.5 w-3.5" />
+                      2026 Selection Trials Standings
+                    </p>
+                    <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-300">
+                      Rank #{p.selectionTrials.trialsRank}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
+                      <p className="text-[10px] font-bold uppercase text-slate-500">
+                        Combined Score
+                      </p>
+                      <p className="text-lg font-black text-white font-mono mt-0.5">
+                        {p.selectionTrials.totalPoints}
+                      </p>
+                    </div>
+                    <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
+                      <p className="text-[10px] font-bold uppercase text-slate-500">
+                        Events Sailed
+                      </p>
+                      <p className="text-lg font-black text-white font-mono mt-0.5">
+                        {p.selectionTrials.eventsCount}
+                      </p>
+                    </div>
+                    <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
+                      <p className="text-[10px] font-bold uppercase text-slate-500">
+                        Cutoff Buffer
+                      </p>
+                      <p className="text-lg font-black text-emerald-400 font-mono mt-0.5">
+                        +{p.selectionTrials.gapToCutoff} pts
+                      </p>
+                    </div>
+                  </div>
+                  <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3 space-y-1">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-300">
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                      <span>Provisional Asian Games &amp; Perth Qualifier</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-snug">
+                      {p.selectionTrials.selectionNote}
+                    </p>
+                  </div>
+                  <Link
+                    href="/sg/optimist/selection"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-amber-400 hover:text-amber-300"
+                  >
+                    <span>View full 2026 Selection Board</span>
+                    <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+
+                {/* Card 2: Equipment Locker & Maintenance Alerts */}
+                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                      <Wrench className="h-3.5 w-3.5 text-orange-400" />
+                      Boat Locker &amp; Equipment
+                    </p>
+                    <span className="text-[10px] font-semibold text-slate-500">
+                      4 Registered Items
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    {p.equipmentLocker.map((item) => (
+                      <div
+                        key={item.type}
+                        className="rounded-xl bg-black/25 border border-white/5 p-2.5"
+                      >
+                        <div className="flex items-center justify-between text-[10px]">
+                          <span className="font-bold text-slate-400 uppercase">
+                            {item.type}
+                          </span>
+                          <span
+                            className={`px-1.5 py-0.2 rounded font-bold uppercase text-[9px] ${
+                              item.condition === "good"
+                                ? "bg-emerald-500/15 text-emerald-300"
+                                : "bg-amber-500/15 text-amber-300"
+                            }`}
+                          >
+                            {item.condition}
+                          </span>
+                        </div>
+                        <p className="text-xs font-bold text-white mt-1 truncate">
+                          {item.brand}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="rounded-xl bg-amber-500/10 border border-amber-500/25 p-3 flex items-start gap-2.5">
+                    <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+                    <p className="text-xs text-amber-200 leading-snug">
+                      Sail acquired Feb 2025 (~18 months). Consider measuring a backup sail before AOC trials.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Card 3: Coach Observations & Debriefs */}
+                <div className="rounded-2xl border border-blue-500/25 bg-blue-500/[0.04] p-5 space-y-3">
+                  <p className="text-[10px] font-black uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+                    <GraduationCap className="h-3.5 w-3.5" />
+                    Coach Technical Debriefs
+                  </p>
+                  <div className="space-y-2">
+                    {p.coachDebriefs.map((deb, idx) => (
+                      <div
+                        key={idx}
+                        className="rounded-xl bg-black/30 border border-white/5 p-3 space-y-1"
+                      >
+                        <div className="flex items-center justify-between text-[10px]">
+                          <span className="font-bold text-blue-300">{deb.coachName}</span>
+                          <span className="rounded bg-white/5 px-1.5 py-0.5 text-slate-400 font-mono">
+                            {deb.category} · {deb.date}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-300 leading-relaxed">
+                          {deb.note}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Card 4: Pre-Race Morning Checklist & Calendar */}
+                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-3.5">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                      <CheckSquare className="h-3.5 w-3.5 text-emerald-400" />
+                      Pre-Race Morning Checklist
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-mono text-emerald-400 font-bold">
+                        {completedCount}/{checklistItems.length} Ready
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setChecklistItems((prev) =>
+                            prev.map((i) => ({ ...i, checked: false }))
+                          );
+                          flash("Demo checklist reset");
+                        }}
+                        className="text-[10px] text-slate-500 hover:text-white p-1"
+                        title="Reset checklist"
+                      >
+                        <RotateCcw className="h-3 w-3" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Interactive Checklist toggles in demo */}
+                  <div className="space-y-1.5">
+                    {checklistItems.map((item) => (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => {
+                          setChecklistItems((prev) =>
+                            prev.map((i) =>
+                              i.id === item.id ? { ...i, checked: !i.checked } : i
+                            )
+                          );
+                        }}
+                        className={`w-full text-left flex items-start gap-2.5 p-2 rounded-xl transition-colors ${
+                          item.checked
+                            ? "bg-emerald-500/10 border border-emerald-500/20 text-slate-200"
+                            : "bg-black/20 border border-white/5 text-slate-400 hover:bg-white/5"
+                        }`}
+                      >
+                        {item.checked ? (
+                          <CheckSquare className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                        ) : (
+                          <Square className="h-4 w-4 text-slate-600 shrink-0 mt-0.5" />
+                        )}
+                        <span
+                          className={`text-xs ${
+                            item.checked ? "line-through opacity-80" : ""
+                          }`}
+                        >
+                          {item.label}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Upcoming Calendar Hook */}
+                  <div className="pt-2 border-t border-white/5">
+                    <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">
+                      Upcoming 2026 Fixtures
+                    </p>
+                    <div className="space-y-1.5">
+                      {p.nextEvents.slice(0, 2).map((ev) => (
+                        <div
+                          key={ev.name}
+                          className="flex items-center justify-between text-xs p-2 rounded-lg bg-black/20"
+                        >
+                          <div>
+                            <p className="font-bold text-white truncate max-w-[220px]">
+                              {ev.name}
+                            </p>
+                            <p className="text-[10px] text-slate-500">{ev.date} · {ev.venue}</p>
+                          </div>
+                          <span className="text-[10px] font-bold text-orange-400">
+                            {ev.deadline}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 5: Private Parent Journal */}
+              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-3">
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <h4 className="text-xs font-black text-white uppercase tracking-wider">
+                      Private Parent Journal
+                    </h4>
+                    <p className="text-[11px] text-slate-500">
+                      Encrypted notes visible only to the guardian — separate from public logs
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setParentNotes((prev) => [
+                        {
+                          date: new Date().toISOString().slice(0, 10),
+                          text: "(Demo) Extra fitness conditioning before Singapore Youth Championships.",
+                        },
+                        ...prev,
+                      ]);
+                      flash("Demo parent note added");
+                    }}
+                    className="rounded-full bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white transition-colors"
+                  >
+                    + Add Note
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {parentNotes.map((n, i) => (
+                    <div
+                      key={i}
+                      className="rounded-xl bg-black/25 border border-white/5 p-3 space-y-1"
+                    >
+                      <div className="flex items-center justify-between text-[10px]">
+                        <span className="font-mono text-emerald-400 font-bold">
+                          {n.date}
+                        </span>
+                        <span className="rounded bg-white/5 px-1.5 py-0.5 text-slate-500">
+                          Private
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed">
+                        {n.text}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-
-            {/* Squad info */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="rounded-xl border border-white/10 bg-black/20 p-4 space-y-2">
-                <p className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1.5">
-                  <GraduationCap className="h-3.5 w-3.5 text-emerald-400" />
-                  Squad
-                </p>
-                <p className="text-sm font-bold text-white">{p.coachName}</p>
-                <p className="text-[11px] text-slate-400">{p.club}</p>
-                <ul className="mt-2 space-y-1">
-                  {p.trainingSchedule.map((s) => (
-                    <li
-                      key={s.day}
-                      className="text-[11px] text-slate-300 flex gap-2"
-                    >
-                      <span className="font-bold text-emerald-300/90 w-8 shrink-0">
-                        {s.day}
-                      </span>
-                      <span className="text-slate-500">{s.time}</span>
-                      <span className="text-slate-400 truncate">{s.focus}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-xl border border-white/10 bg-black/20 p-4 space-y-2">
-                <p className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1.5">
-                  <Users className="h-3.5 w-3.5 text-emerald-400" />
-                  Squad mates
-                </p>
-                <ul className="space-y-1.5">
-                  {p.squadMates.map((m) => (
-                    <li
-                      key={m.name}
-                      className="flex justify-between gap-2 text-[12px]"
-                    >
-                      <span className="font-semibold text-white">{m.name}</span>
-                      <span className="text-slate-500 truncate">{m.note}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Upcoming events */}
-            <div>
-              <p className="text-[10px] font-bold text-slate-500 uppercase mb-2 flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-emerald-400" />
-                Upcoming events
-              </p>
-              <ul className="space-y-2">
-                {p.nextEvents.map((e) => (
-                  <li
-                    key={e.name}
-                    className="rounded-xl bg-black/25 border border-white/5 px-3 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-1"
-                  >
-                    <div>
-                      <p className="text-xs font-bold text-white">{e.name}</p>
-                      <p className="text-[11px] text-slate-500">
-                        {e.date} · {e.venue}
-                      </p>
-                    </div>
-                    <span className="text-[10px] font-semibold text-amber-300/90">
-                      {e.deadline}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Equipment alerts */}
-            <div>
-              <p className="text-[10px] font-bold text-slate-500 uppercase mb-2 flex items-center gap-1.5">
-                <Wrench className="h-3.5 w-3.5 text-amber-400" />
-                Equipment alerts
-              </p>
-              <ul className="space-y-1.5">
-                {p.equipmentAlerts.map((a) => (
-                  <li
-                    key={a.text}
-                    className={`flex gap-2 text-[12px] rounded-lg px-3 py-2 border ${
-                      a.level === "warn"
-                        ? "border-amber-500/25 bg-amber-500/10 text-amber-100"
-                        : "border-white/10 bg-white/[0.03] text-slate-300"
-                    }`}
-                  >
-                    <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                    {a.text}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Parent notes */}
-            <div>
-              <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">
-                Parent notes
-                <span className="ml-1.5 font-normal normal-case tracking-normal text-slate-600">
-                  (separate from sailor logbook)
-                </span>
-              </p>
-              <ul className="space-y-2">
-                {parentNotes.map((n, i) => (
-                  <li
-                    key={i}
-                    className="rounded-lg bg-black/20 border border-white/5 px-3 py-2"
-                  >
-                    <p className="text-[10px] text-slate-500 font-mono">
-                      {n.date}
-                    </p>
-                    <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">
-                      {n.text}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-              <button
-                type="button"
-                onClick={() => {
-                  setParentNotes((prev) => [
-                    {
-                      date: new Date().toISOString().slice(0, 10),
-                      text: "(Demo) New parent note — e.g. travel logistics for next regatta.",
-                    },
-                    ...prev,
-                  ]);
-                  flash("Demo parent note added");
-                }}
-                className="mt-2 rounded-full border border-emerald-500/30 px-3 py-1.5 text-[11px] font-bold text-emerald-200"
-              >
-                + Add parent note
-              </button>
-            </div>
-
-            <div className="flex flex-wrap gap-2 pt-1">
-              <Link
-                href="/sg/optimist/gold"
-                className="rounded-full border border-white/15 px-4 py-2 text-[11px] font-bold text-slate-300"
-              >
-                View current standings
-              </Link>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-            <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">
-              Series at a glance
-            </p>
-            <p className="text-sm text-white font-bold">
-              #{standing.overallRank} Gold · Best 3 of 5 = {standing.best3of5}
-            </p>
-            <p className="text-[11px] text-slate-500 mt-1">{standing.trendNote}</p>
-          </div>
-
-          <p className="text-[11px] text-slate-500 px-1">
-            Parent tip: use events and equipment alerts above — race logbook
-            notes stay in the sailor view.
-          </p>
+          )}
         </div>
       );
     }
@@ -647,10 +895,11 @@ export function SampleDemoShell() {
     role,
     coachNotes,
     parentNotes,
-    standing,
     compareTo,
     coachRoster,
     selectedCoachSailor,
+    checklistItems,
+    selectedAthleteId,
   ]);
 
   return (
