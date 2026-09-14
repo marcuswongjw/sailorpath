@@ -142,11 +142,10 @@ describe("RegattaCalendarClient", () => {
     expect(screen.getByText(/verifying member access/i)).toBeInTheDocument();
   });
 
-  it("renders calendar events, deadlines, and initial view when logged in", () => {
+  it("renders calendar events and initial view when logged in", () => {
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
     expect(screen.getByText("Singapore & International Regatta Calendar")).toBeInTheDocument();
-    expect(screen.getByText("Immediate Action Items & Key Deadlines")).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/search regattas or venues/i)).toBeInTheDocument();
     expect(screen.getByText("Singapore National Sailing Championships 2099")).toBeInTheDocument();
     expect(screen.getByText("ILCA Singapore Open 2099")).toBeInTheDocument();

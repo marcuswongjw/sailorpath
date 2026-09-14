@@ -23,7 +23,6 @@ import {
 } from "lucide-react";
 import type { RegattaRecord } from "@/lib/ranking";
 import { useAccount } from "@/components/AccountProvider";
-import { CALENDAR_ACTION_DEADLINES } from "@/lib/calendar/singaporeRegattas2026";
 
 export type RegattaCalendarClientProps = {
   regattas: RegattaRecord[];
@@ -344,42 +343,6 @@ export function RegattaCalendarClient({
         <AlertCircle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
         <div>
           <span className="font-bold">Private Preview:</span> This calendar is currently in active development for members. Featuring verified Singapore national regattas, Asian championships, and European winter campaigns with travel budget estimates from Singapore.
-        </div>
-      </div>
-
-      {/* Immediate Action Items & Deadlines Strip */}
-      <div className="rounded-2xl border border-orange-500/20 bg-gradient-to-r from-orange-950/40 via-[#161826] to-[#12141f] p-4 sm:p-5 space-y-3">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-orange-400" />
-            <h3 className="text-xs font-black uppercase tracking-wider text-orange-300">
-              Immediate Action Items &amp; Key Deadlines
-            </h3>
-          </div>
-          <span className="text-[10px] font-semibold text-slate-400">
-            {CALENDAR_ACTION_DEADLINES.length} upcoming deadlines
-          </span>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
-          {CALENDAR_ACTION_DEADLINES.map((d, i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-white/5 bg-black/40 p-3 flex flex-col justify-between gap-1.5"
-            >
-              <div className="flex items-center justify-between gap-1.5 text-[11px]">
-                <span className="font-black text-orange-400 flex items-center gap-1">
-                  <Clock className="h-3 w-3" />
-                  {d.date}
-                </span>
-                <span className="text-[10px] text-slate-400 font-medium truncate max-w-[130px]">
-                  {d.region}
-                </span>
-              </div>
-              <p className="text-xs text-slate-200 font-medium leading-snug">
-                {d.label}
-              </p>
-            </div>
-          ))}
         </div>
       </div>
 
@@ -725,8 +688,8 @@ export function RegattaCalendarClient({
                       </a>
                     ) : null}
 
-                    {/* Entry Registration Portal */}
-                    {regatta.registrationUrl ? (
+                    {/* Entry Registration Portal (Upcoming only) */}
+                    {regatta.registrationUrl && countdown.tone !== "past" ? (
                       <a
                         href={regatta.registrationUrl}
                         target="_blank"
@@ -749,8 +712,15 @@ export function RegattaCalendarClient({
                       Add to Calendar (.ics)
                     </button>
 
-                    {/* View scoreboard if results published */}
-                    {regatta.slug && (
+                    {/* View scoreboard if results published in SailorPath or WingFoil hub */}
+                    {regatta.boatClass?.toLowerCase() === "wingfoil" ? (
+                      <Link
+                        href="/sg/wingfoil"
+                        className="rounded-xl border border-white/10 bg-black/30 hover:bg-black/50 px-3.5 py-2 text-xs font-bold text-teal-400 hover:text-teal-300 inline-flex items-center justify-center gap-1 transition-colors"
+                      >
+                        WingFoil Hub →
+                      </Link>
+                    ) : regatta.hasResults && regatta.slug ? (
                       <Link
                         href={
                           regatta.boatClass?.toLowerCase().includes("ilca")
@@ -761,7 +731,7 @@ export function RegattaCalendarClient({
                       >
                         Event Scoreboard →
                       </Link>
-                    )}
+                    ) : null}
                   </div>
                 </div>
 

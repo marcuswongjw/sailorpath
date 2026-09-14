@@ -96,6 +96,8 @@ export interface RegattaRecord {
     lodgingLabel?: string;
     notes?: string;
   } | null;
+  /** Whether the regatta has published results in SailorPath DB */
+  hasResults?: boolean | null;
 }
 
 /** Default series class for SG Gold/Silver boards */

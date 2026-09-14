@@ -77,6 +77,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
       keyDeadlines: r.keyDeadlines || existing?.keyDeadlines,
       clinicDates: r.clinicDates || existing?.clinicDates,
       campaignBudget: r.campaignBudget || existing?.campaignBudget,
+      hasResults: true,
     });
   }
 
