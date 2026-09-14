@@ -20,12 +20,12 @@ import {
 } from "lucide-react";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
-  parseWingfoilScreenshotFilename,
   recalculateScoreboard,
   type WingfoilRegatta,
   type WingfoilSailorResult,
   type WingfoilRaceScore,
 } from "@/lib/wingfoil";
+import { readWingfoilScreenshot } from "@/lib/wingfoilScreenshot";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
@@ -40,10 +40,18 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     SINGAPORE_WINGFOIL_REGATTAS[0]?.id || ""
   );
 
-  // Uploaded screenshot preview state
+  // Uploaded screenshot preview & OCR scanning state
   const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
   const [screenshotFilename, setScreenshotFilename] = useState<string | null>(null);
   const [showScreenshotModal, setShowScreenshotModal] = useState<boolean>(false);
+  const [isScanningScreenshot, setIsScanningScreenshot] = useState<boolean>(false);
+  const [scanProgress, setScanProgress] = useState<number>(0);
+  const [scanStatus, setScanStatus] = useState<string>("");
+  const [lastScanSummary, setLastScanSummary] = useState<{
+    competitorCount: number;
+    heatCount: number;
+    regattaName: string;
+  } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // New competitor form state
@@ -119,7 +127,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
   );
 
   // Handle Screenshot Upload & Metadata Extraction
-  const handleScreenshotUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleScreenshotUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isSuperadmin) {
       toast.error("403 Forbidden. Only Superadmins can update WingFoil data.");
       return;
@@ -127,11 +135,9 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // 1. Extract Regatta Name and Start Date from Filename
-    const { regattaName, startDate } = parseWingfoilScreenshotFilename(file.name);
     setScreenshotFilename(file.name);
 
-    // 2. Read file as Data URL for visual preview
+    // 1. Read file as Data URL for visual preview
     const reader = new FileReader();
     reader.onload = (loadEvent) => {
       const url = loadEvent.target?.result as string;
@@ -139,48 +145,100 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     };
     reader.readAsDataURL(file);
 
-    // 3. Check if a regatta with this name already exists or update current
-    toast.success(
-      `Screenshot recognized! Extracted Name: "${regattaName}", Start Date: ${startDate}`
-    );
+    // 2. Run OCR & Parser
+    setIsScanningScreenshot(true);
+    setScanProgress(10);
+    setScanStatus("Analyzing scorecard with OCR…");
 
-    // Check if matching regatta exists, or prompt/update active
-    setRegattas((prev) => {
-      const existsIndex = prev.findIndex(
-        (r) =>
-          r.name.toLowerCase().includes(regattaName.toLowerCase()) ||
-          r.id === selectedRegattaId
-      );
+    try {
+      const parsed = await readWingfoilScreenshot(file, (p) => {
+        setScanStatus(p.status);
+        setScanProgress(Math.round(p.progress * 100));
+      });
 
-      if (existsIndex >= 0) {
-        const updated = [...prev];
-        updated[existsIndex] = {
-          ...updated[existsIndex],
-          name: updated[existsIndex].name || regattaName,
-          dates: updated[existsIndex].dates || startDate,
-        };
-        return updated;
+      const extractedResults = parsed.results;
+      const heatCount = extractedResults[0]?.races.length || parsed.sailedCount || 9;
+
+      setLastScanSummary({
+        competitorCount: extractedResults.length,
+        heatCount,
+        regattaName: parsed.regattaName,
+      });
+
+      if (extractedResults.length > 0) {
+        toast.success(
+          `OCR Extracted: "${parsed.regattaName}" with ${extractedResults.length} competitors and ${heatCount} heats!`
+        );
+
+        setRegattas((prev) => {
+          const currentActive = prev.find((r) => r.id === selectedRegattaId);
+          const nameMatches = prev.findIndex(
+            (r) =>
+              r.name.toLowerCase().includes(parsed.regattaName.toLowerCase()) ||
+              parsed.regattaName.toLowerCase().includes(r.name.toLowerCase())
+          );
+
+          if (currentActive) {
+            return prev.map((r) =>
+              r.id === currentActive.id
+                ? {
+                    ...r,
+                    name: parsed.regattaName || r.name,
+                    dates: parsed.startDate || r.dates,
+                    scoringSystem: `${heatCount} races, ${parsed.discardsCount} discard`,
+                    results: extractedResults,
+                  }
+                : r
+            );
+          } else if (nameMatches >= 0) {
+            const updated = [...prev];
+            updated[nameMatches] = {
+              ...updated[nameMatches],
+              name: parsed.regattaName,
+              dates: parsed.startDate,
+              scoringSystem: `${heatCount} races, ${parsed.discardsCount} discard`,
+              results: extractedResults,
+            };
+            setSelectedRegattaId(updated[nameMatches].id);
+            return updated;
+          } else {
+            const newRegatta: WingfoilRegatta = {
+              id: `wingfoil-${Date.now()}`,
+              name: parsed.regattaName,
+              shortName: parsed.regattaName.slice(0, 16),
+              dates: parsed.startDate,
+              venue: "National Sailing Centre (NSC), Singapore",
+              organizer: "Singapore Sailing Federation",
+              format: "Sprint Slalom",
+              status: "Completed",
+              scoringSystem: `${heatCount} races, ${parsed.discardsCount} discard`,
+              rulesNotes:
+                "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
+              results: extractedResults,
+            };
+            setSelectedRegattaId(newRegatta.id);
+            return [newRegatta, ...prev];
+          }
+        });
       } else {
-        const newRegatta: WingfoilRegatta = {
-          id: `wingfoil-${Date.now()}`,
-          name: regattaName,
-          shortName: regattaName.slice(0, 16),
-          dates: startDate,
-          venue: "National Sailing Centre (NSC), Singapore",
-          organizer: "Singapore Sailing Federation",
-          format: "Sprint Slalom",
-          status: "Completed",
-          scoringSystem: "9 races, 1 discard",
-          rulesNotes: "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
-          results: [...(SINGAPORE_WINGFOIL_REGATTAS[0]?.results || [])],
-        };
-        setSelectedRegattaId(newRegatta.id);
-        return [newRegatta, ...prev];
+        toast.info(
+          "OCR completed, but could not detect competitor score rows. You can enter competitors manually below."
+        );
       }
-    });
-
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+    } catch (err) {
+      console.error("Failed to read WingFoil screenshot OCR:", err);
+      toast.error(
+        err instanceof Error
+          ? err.message
+          : "Failed to parse scorecard image. Please ensure the screenshot is clear."
+      );
+    } finally {
+      setIsScanningScreenshot(false);
+      setScanProgress(0);
+      setScanStatus("");
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
@@ -365,11 +423,21 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
           />
           <button
             type="button"
+            disabled={isScanningScreenshot}
             onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 px-4 py-2 text-xs font-bold text-orange-300 transition-all shadow-sm"
+            className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 disabled:opacity-50 px-4 py-2 text-xs font-bold text-orange-300 transition-all shadow-sm cursor-pointer"
           >
-            <Upload className="h-3.5 w-3.5 text-orange-400" />
-            Upload Results Screenshot
+            {isScanningScreenshot ? (
+              <>
+                <RefreshCw className="h-3.5 w-3.5 animate-spin text-orange-400" />
+                Scanning Scorecard…
+              </>
+            ) : (
+              <>
+                <Upload className="h-3.5 w-3.5 text-orange-400" />
+                Upload Results Screenshot
+              </>
+            )}
           </button>
 
           {/* Export CSV */}
@@ -394,8 +462,30 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
         </div>
       </div>
 
+      {/* OCR Scanning Progress Card */}
+      {isScanningScreenshot && (
+        <div className="glass-panel rounded-2xl p-5 border border-orange-500/30 bg-orange-500/[0.08] space-y-2.5">
+          <div className="flex items-center justify-between text-xs font-bold text-orange-200">
+            <div className="flex items-center gap-2">
+              <RefreshCw className="h-4 w-4 animate-spin text-orange-400 shrink-0" />
+              <span>{scanStatus || "Analyzing screenshot with OCR…"}</span>
+            </div>
+            <span className="tabular-nums font-mono text-orange-300">{scanProgress}%</span>
+          </div>
+          <div className="h-2 w-full rounded-full bg-black/40 overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-300 rounded-full"
+              style={{ width: `${scanProgress}%` }}
+            />
+          </div>
+          <p className="text-[11px] text-orange-300/70">
+            Upscaling image, isolating podium heat score boxes, and parsing Sailwave table columns…
+          </p>
+        </div>
+      )}
+
       {/* Screenshot Preview Card (if uploaded) */}
-      {screenshotPreview && (
+      {screenshotPreview && !isScanningScreenshot && (
         <div className="glass-panel rounded-2xl p-4 border border-orange-500/20 bg-orange-500/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
             <div className="h-14 w-24 rounded-lg overflow-hidden border border-white/10 bg-black/40 shrink-0 relative group cursor-pointer" onClick={() => setShowScreenshotModal(true)}>
@@ -410,17 +500,23 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
               </div>
             </div>
             <div className="min-w-0">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <FileImage className="h-4 w-4 text-orange-400 shrink-0" />
-                <span className="text-xs font-bold text-white truncate">
+                <span className="text-xs font-bold text-white truncate max-w-[200px] sm:max-w-xs">
                   {screenshotFilename || "Uploaded Screenshot"}
                 </span>
-                <span className="rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5">
-                  Metadata Extracted
-                </span>
+                {lastScanSummary ? (
+                  <span className="rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5">
+                    OCR Extracted: {lastScanSummary.competitorCount} competitors, {lastScanSummary.heatCount} heats
+                  </span>
+                ) : (
+                  <span className="rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5">
+                    Scorecard Loaded
+                  </span>
+                )}
               </div>
               <p className="text-[11px] text-slate-400 mt-0.5">
-                Regatta name and start date successfully extracted from screenshot filename. Click thumbnail to view side-by-side.
+                Competitors, sail numbers, and race heats populated into the heat scoreboard below. Review or edit any score directly.
               </p>
             </div>
           </div>
@@ -435,9 +531,18 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
             </button>
             <button
               type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="px-3 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-xs font-semibold text-orange-300 hover:bg-orange-500/20 flex items-center gap-1.5"
+            >
+              <RefreshCw className="h-3 w-3" />
+              Re-upload
+            </button>
+            <button
+              type="button"
               onClick={() => {
                 setScreenshotPreview(null);
                 setScreenshotFilename(null);
+                setLastScanSummary(null);
               }}
               className="p-1.5 rounded-full text-slate-500 hover:text-rose-400 hover:bg-rose-500/10"
               title="Dismiss image preview"

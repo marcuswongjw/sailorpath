@@ -44,6 +44,7 @@ type Props = {
   /** Refetch all admin lists after a successful import. */
   onImportComplete?: () => void;
   onOpenResults?: (regattaId: string) => void;
+  onSwitchToWingfoil?: () => void;
 };
 
 const MAX_IMPORT_FILE_BYTES = 15 * 1024 * 1024;
@@ -102,6 +103,7 @@ export function AdminRegattaImport({
   onResultsUpdated,
   onImportComplete,
   onOpenResults,
+  onSwitchToWingfoil,
 }: Props) {
   const { toast } = useFeedback();
   const fileBusy = useRef(false);
@@ -288,10 +290,28 @@ export function AdminRegattaImport({
       void handlePdf(file).finally(() => { fileBusy.current = false; });
       return;
     }
+    const isImage =
+      file.type.startsWith("image/") ||
+      /\.(png|jpe?g|webp)$/i.test(file.name);
+    if (isImage) {
+      if (onSwitchToWingfoil) {
+        toast.info(
+          `Results scorecard image selected. Switching to the WingFoil Manager to analyze with OCR…`
+        );
+        onSwitchToWingfoil();
+      } else {
+        toast.info(
+          `Results scorecard image selected. Use the "WingFoil" tab in the admin navigation to run OCR on scorecard screenshots.`
+        );
+      }
+      return;
+    }
     const isCsv = /\.csv$/i.test(file.name);
     const isXlsx = /\.xlsx$/i.test(file.name);
     if (!isCsv && !isXlsx) {
-      toast.error("Unsupported file type. Select a .pdf, .xlsx, or .csv file.");
+      toast.error(
+        "Unsupported file type. Select a .pdf, .xlsx, or .csv file, or use the WingFoil tab for scorecard images."
+      );
       return;
     }
     fileBusy.current = true;
@@ -755,7 +775,7 @@ export function AdminRegattaImport({
               type="file"
               onChange={handleFileChange}
               className="hidden"
-              accept=".pdf,.xlsx,.csv,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"
+              accept=".pdf,.xlsx,.csv,.png,.jpg,.jpeg,.webp,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,image/*"
             />
           </label>
         </div>

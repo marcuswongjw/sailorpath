@@ -599,6 +599,7 @@ function AdminDashboardInner() {
               data.invalidateResults();
               data.invalidateSailors();
             }}
+            onSwitchToWingfoil={() => setActiveTab("wingfoil")}
           />
         )}
 
