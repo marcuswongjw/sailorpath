@@ -44,7 +44,47 @@ export async function GET() {
       return NextResponse.json({ error: "Sign in required" }, { status: 401 });
     }
 
-    const owned = await db
+    const [approvedClaims, claims] = await Promise.all([
+      db
+        .select({
+          sailorId: sailorClaims.sailorId,
+          relation: sailorClaims.relation,
+        })
+        .from(sailorClaims)
+        .where(
+          and(
+            eq(sailorClaims.requesterId, auth.userId),
+            eq(sailorClaims.status, "approved")
+          )
+        ),
+      db
+        .select({
+          id: sailorClaims.id,
+          status: sailorClaims.status,
+          relation: sailorClaims.relation,
+          note: sailorClaims.note,
+          createdAt: sailorClaims.createdAt,
+          sailorId: sailorClaims.sailorId,
+          sailorName: sailors.name,
+          sailorHandle: sailors.handle,
+        })
+        .from(sailorClaims)
+        .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
+        .where(eq(sailorClaims.requesterId, auth.userId))
+        .orderBy(desc(sailorClaims.createdAt)),
+    ]);
+
+    const claimMap = new Map(
+      approvedClaims.map((c) => [c.sailorId, c.relation])
+    );
+    const claimedIds = Array.from(claimMap.keys());
+
+    const conditions = [eq(sailors.parentId, auth.userId)];
+    if (claimedIds.length > 0) {
+      conditions.push(inArray(sailors.id, claimedIds));
+    }
+
+    const ownedRows = await db
       .select({
         id: sailors.id,
         name: sailors.name,
@@ -71,23 +111,12 @@ export async function GET() {
         natSquadStatusJul27: sailors.natSquadStatusJul27,
       })
       .from(sailors)
-      .where(eq(sailors.parentId, auth.userId));
+      .where(or(...conditions));
 
-    const claims = await db
-      .select({
-        id: sailorClaims.id,
-        status: sailorClaims.status,
-        relation: sailorClaims.relation,
-        note: sailorClaims.note,
-        createdAt: sailorClaims.createdAt,
-        sailorId: sailorClaims.sailorId,
-        sailorName: sailors.name,
-        sailorHandle: sailors.handle,
-      })
-      .from(sailorClaims)
-      .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
-      .where(eq(sailorClaims.requesterId, auth.userId))
-      .orderBy(desc(sailorClaims.createdAt));
+    const owned = ownedRows.map((s) => ({
+      ...s,
+      ownerRelation: claimMap.get(s.id) || s.ownerRelation || "parent",
+    }));
 
     const ids = owned.map((s) => s.id);
     const period = currentPeriodFromSgToday();

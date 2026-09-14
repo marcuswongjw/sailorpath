@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, desc, eq, inArray } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
+import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
 import {
   equipmentItems,
@@ -54,12 +55,17 @@ async function assertCanEdit(sailorId: string, userId: string, role: string) {
     .where(eq(sailors.id, sailorId))
     .limit(1);
   if (!sailor) return { error: "Sailor not found", status: 404 as const };
-  const ok = sailor.parentId === userId || role === "superadmin";
+  const ok = await canManageSailor(
+    sailorId,
+    userId,
+    role === "superadmin",
+    sailor.parentId
+  );
   if (!ok) return { error: "Not allowed", status: 403 as const };
   return { sailor };
 }
 
-/** Equipment is always private — owner or superadmin only (no public view). */
+/** Equipment is always private — owner, approved claimant, or superadmin only (no public view). */
 async function assertCanView(sailorId: string, userId: string | null, role: string | null) {
   const [sailor] = await db
     .select({
@@ -70,12 +76,16 @@ async function assertCanView(sailorId: string, userId: string | null, role: stri
     .where(eq(sailors.id, sailorId))
     .limit(1);
   if (!sailor) return { error: "Sailor not found", status: 404 as const };
-  const isOwner = Boolean(userId && sailor.parentId === userId);
-  const isAdmin = role === "superadmin";
-  if (!isOwner && !isAdmin) {
+  const isAllowed = await canManageSailor(
+    sailorId,
+    userId,
+    role === "superadmin",
+    sailor.parentId
+  );
+  if (!isAllowed) {
     return { error: "Equipment is private", status: 403 as const, sailor };
   }
-  return { sailor, isOwner: isOwner || isAdmin };
+  return { sailor, isOwner: isAllowed };
 }
 
 /** Sync primary optimist/ilca items → legacy sailor columns for old UI paths */

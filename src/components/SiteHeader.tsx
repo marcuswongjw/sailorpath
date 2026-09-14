@@ -88,16 +88,6 @@ export function SiteHeader() {
       >
         Selection trials 2026
       </Link>
-      <Link
-        href="/calendar?class=optimist"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
-      >
-        Upcoming calendar
-      </Link>
       {isSuperadmin && (
         <Link
           href="/sg/optimist/goldsailors"
@@ -134,16 +124,6 @@ export function SiteHeader() {
         className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
       >
         ILCA 4 regattas
-      </Link>
-      <Link
-        href="/calendar?class=ilca4"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
-      >
-        Upcoming calendar
       </Link>
     </>
   );
@@ -420,13 +400,6 @@ export function SiteHeader() {
             >
               Optimist regattas
             </Link>
-            <Link
-              href="/calendar?class=optimist"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Optimist calendar
-            </Link>
             {isSuperadmin && (
               <Link
                 href="/sg/optimist/goldsailors"
@@ -452,13 +425,6 @@ export function SiteHeader() {
               className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 4 regattas
-            </Link>
-            <Link
-              href="/calendar?class=ilca4"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA 4 calendar
             </Link>
             <p className="px-1 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
               WingFoil

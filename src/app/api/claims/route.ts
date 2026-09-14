@@ -71,9 +71,9 @@ export async function POST(req: Request) {
     if (!sailor) {
       return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
     }
-    if (sailor.parentId) {
+    if (sailor.parentId === auth.userId) {
       return NextResponse.json(
-        { error: "This profile is already claimed" },
+        { error: "You are already linked to this sailor profile" },
         { status: 400 }
       );
     }
@@ -84,16 +84,41 @@ export async function POST(req: Request) {
       .where(
         and(
           eq(sailorClaims.sailorId, sailorId),
-          eq(sailorClaims.requesterId, auth.userId),
-          eq(sailorClaims.status, "pending")
+          eq(sailorClaims.requesterId, auth.userId)
         )
       )
       .limit(1);
+
     if (existing[0]) {
+      if (existing[0].status === "approved") {
+        return NextResponse.json(
+          { error: "You already have an approved claim for this sailor profile" },
+          { status: 400 }
+        );
+      }
+      if (existing[0].status === "pending") {
+        return NextResponse.json({
+          ok: true,
+          claim: existing[0],
+          message: "Claim already pending",
+        });
+      }
+      // Re-open previously rejected claim
+      const [reopened] = await db
+        .update(sailorClaims)
+        .set({
+          status: "pending",
+          relation,
+          note: note || null,
+          updatedAt: new Date(),
+        })
+        .where(eq(sailorClaims.id, existing[0].id))
+        .returning();
+
       return NextResponse.json({
         ok: true,
-        claim: existing[0],
-        message: "Claim already pending",
+        claim: reopened,
+        message: `Claim submitted for ${sailor.name}. Please wait for confirmation.`,
       });
     }
 

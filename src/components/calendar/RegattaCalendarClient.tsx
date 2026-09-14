@@ -17,7 +17,6 @@ import {
   ShieldCheck,
   Lock,
   Globe,
-  DollarSign,
   ChevronDown,
   AlertCircle,
 } from "lucide-react";
@@ -168,7 +167,6 @@ export function RegattaCalendarClient({
   const [timelineTab, setTimelineTab] = useState<"upcoming" | "past">("upcoming");
   const [filterTrialOnly, setFilterTrialOnly] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [expandedBudgets, setExpandedBudgets] = useState<Record<string, boolean>>({});
 
   const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
@@ -272,7 +270,7 @@ export function RegattaCalendarClient({
               2026–2027 Regatta &amp; Campaign Calendar
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              The comprehensive regatta schedule, international campaigns (Asia &amp; Europe), training clinics, and budget breakdowns are currently in private preview while we finalize features. Sign in or create a free account to preview the calendar.
+              The comprehensive regatta schedule, international campaigns (Asia &amp; Europe), and training clinics are currently in private preview while we finalize features. Sign in or create a free account to preview the calendar.
             </p>
           </div>
 
@@ -293,7 +291,7 @@ export function RegattaCalendarClient({
           </div>
 
           {/* Feature Highlights Grid */}
-          <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-white/5 text-left">
+          <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/5 text-left">
             <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
               <div className="flex items-center gap-2">
                 <Trophy className="h-4 w-4 text-orange-400 shrink-0" />
@@ -321,15 +319,6 @@ export function RegattaCalendarClient({
                 Official clinic schedules, coaching blocks, and local boat charter arrangements.
               </p>
             </div>
-            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
-              <div className="flex items-center gap-2">
-                <DollarSign className="h-4 w-4 text-amber-400 shrink-0" />
-                <h2 className="text-xs font-bold text-white">Singapore Campaign Budgets</h2>
-              </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Itemized budget breakdowns for 1 sailor + 1 adult covering entries, charters, clinics, flights, and hotels.
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -342,7 +331,7 @@ export function RegattaCalendarClient({
       <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3.5 sm:p-4 text-amber-200 text-xs flex items-start gap-3">
         <AlertCircle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
         <div>
-          <span className="font-bold">Private Preview:</span> This calendar is currently in active development for members. Featuring verified Singapore national regattas, Asian championships, and European winter campaigns with travel budget estimates from Singapore.
+          <span className="font-bold">Private Preview:</span> This calendar is currently in active development for members. Featuring verified Singapore national regattas, Asian championships, and European winter campaigns.
         </div>
       </div>
 
@@ -530,7 +519,6 @@ export function RegattaCalendarClient({
             const countdown = getCountdownLabel(regatta.date, regatta.endDate);
             const dateRangeStr = formatDateRange(regatta.date, regatta.endDate);
             const cardKey = regatta.id || regatta.slug;
-            const isBudgetExpanded = Boolean(expandedBudgets[cardKey]);
 
             return (
               <div
@@ -734,105 +722,6 @@ export function RegattaCalendarClient({
                     ) : null}
                   </div>
                 </div>
-
-                {/* Campaign Budget Details (if present) */}
-                {regatta.campaignBudget && (
-                  <div className="pt-3 border-t border-white/5 w-full">
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setExpandedBudgets((prev) => ({
-                          ...prev,
-                          [cardKey]: !prev[cardKey],
-                        }))
-                      }
-                      className="w-full flex items-center justify-between rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 px-3.5 py-2.5 text-xs font-semibold text-slate-300 transition-colors"
-                    >
-                      <span className="inline-flex items-center gap-2">
-                        <DollarSign className="h-4 w-4 text-emerald-400" />
-                        <span>Estimated Campaign Budget (from Singapore):</span>
-                        <span className="font-black text-emerald-300">
-                          SGD ${regatta.campaignBudget.totalEstimatedSgd.toLocaleString()}
-                        </span>
-                      </span>
-                      <span className="inline-flex items-center gap-1 text-[11px] text-slate-400 font-medium">
-                        {isBudgetExpanded ? "Hide Breakdown" : "View Breakdown"}
-                        <ChevronDown
-                          className={`h-3.5 w-3.5 transition-transform ${
-                            isBudgetExpanded ? "rotate-180" : ""
-                          }`}
-                        />
-                      </span>
-                    </button>
-
-                    {isBudgetExpanded && (
-                      <div className="mt-3 rounded-xl border border-emerald-500/20 bg-black/40 p-4 space-y-3">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-white/10 text-xs">
-                          <div>
-                            <p className="font-bold text-white">
-                              Campaign Cost Breakdown (1 Youth Sailor + 1 Adult Guardian)
-                            </p>
-                            <p className="text-[11px] text-slate-400">
-                              Estimated from Singapore in SGD (including regatta entry, charters, clinics, flights &amp; accommodation)
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <span className="text-base font-black text-emerald-400">
-                              SGD ${regatta.campaignBudget.totalEstimatedSgd.toLocaleString()}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 text-xs">
-                          <div className="rounded-lg bg-white/5 p-2.5 space-y-0.5 sm:col-span-2">
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                              Regatta Entry &amp; Boat Charter
-                            </span>
-                            <p className="font-medium text-slate-200">
-                              {regatta.campaignBudget.regattaCostsLabel}
-                            </p>
-                          </div>
-                          {regatta.campaignBudget.clinicLabel && (
-                            <div className="rounded-lg bg-white/5 p-2.5 space-y-0.5">
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                Pre-Regatta Clinic / Camp
-                              </span>
-                              <p className="font-medium text-slate-200">
-                                {regatta.campaignBudget.clinicLabel}
-                              </p>
-                            </div>
-                          )}
-                          {regatta.campaignBudget.flightsLabel && (
-                            <div className="rounded-lg bg-white/5 p-2.5 space-y-0.5">
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                Return Flights (2 pax)
-                              </span>
-                              <p className="font-medium text-slate-200">
-                                {regatta.campaignBudget.flightsLabel}
-                              </p>
-                            </div>
-                          )}
-                          {regatta.campaignBudget.lodgingLabel && (
-                            <div className="rounded-lg bg-white/5 p-2.5 space-y-0.5 sm:col-span-2">
-                              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                                Accommodation &amp; Ground Logistics
-                              </span>
-                              <p className="font-medium text-slate-200">
-                                {regatta.campaignBudget.lodgingLabel}
-                              </p>
-                            </div>
-                          )}
-                        </div>
-
-                        {regatta.campaignBudget.notes && (
-                          <p className="text-[11px] text-slate-400 italic pt-1 border-t border-white/5">
-                            💡 {regatta.campaignBudget.notes}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )}
               </div>
             );
           })}

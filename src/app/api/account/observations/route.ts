@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, eq } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
+import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
 import { raceObservations, sailors } from "@/db/schema";
 
@@ -11,7 +12,13 @@ async function assertOwner(sailorId: string, userId: string, isAdmin: boolean) {
     .where(eq(sailors.id, sailorId))
     .limit(1);
   if (!sailor) return { error: "Sailor not found", status: 404 as const };
-  if (!isAdmin && sailor.parentId !== userId) {
+  const ok = await canManageSailor(
+    sailorId,
+    userId,
+    isAdmin,
+    sailor.parentId
+  );
+  if (!ok) {
     return {
       error: "You can only edit observations after claim is approved",
       status: 403 as const,

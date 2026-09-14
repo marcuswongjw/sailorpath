@@ -63,4 +63,29 @@ describe("resolveProfileAccess", () => {
     });
     expect(a.canClaim).toBe(true);
   });
+
+  it("approved secondary claimant has owner privileges and cannot re-claim", () => {
+    const a = resolveProfileAccess({
+      userId: "parent-2",
+      role: "parent",
+      sailorParentId: "parent-1", // primary parent on record is parent-1
+      hasApprovedClaim: true,
+    });
+    expect(a.isOwner).toBe(true);
+    expect(a.isLinkedOwner).toBe(true);
+    expect(a.canSeePrivate).toBe(true);
+    expect(a.canClaim).toBe(false);
+  });
+
+  it("another parent or athlete can claim an already claimed sailor", () => {
+    const a = resolveProfileAccess({
+      userId: "parent-2",
+      role: "parent",
+      sailorParentId: "parent-1", // primary parent on record is parent-1
+      hasApprovedClaim: false,
+    });
+    expect(a.isOwner).toBe(false);
+    expect(a.canSeePrivate).toBe(false);
+    expect(a.canClaim).toBe(true); // can still submit a claim!
+  });
 });

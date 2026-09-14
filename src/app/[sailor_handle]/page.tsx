@@ -17,6 +17,7 @@ import {
   toPublicSailorProps,
 } from "@/lib/publicSailor";
 import { resolveProfileAccess } from "@/lib/viewAs";
+import { canManageSailor } from "@/lib/claimAccess";
 
 export const dynamic = "force-dynamic";
 
@@ -49,10 +50,21 @@ export default async function SailorProfilePage({
     auth = authResult;
 
     if (sailor) {
+      let hasApprovedClaim = false;
+      if (auth?.userId && sailor.parentId !== auth.userId) {
+        hasApprovedClaim = await canManageSailor(
+          sailor.id,
+          auth.userId,
+          false,
+          sailor.parentId
+        ).catch(() => false);
+      }
+
       access = resolveProfileAccess({
         userId: auth?.userId,
         role: auth?.role,
         sailorParentId: sailor.parentId,
+        hasApprovedClaim,
       });
 
       const mayHaveIlca = Boolean(

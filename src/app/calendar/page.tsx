@@ -29,10 +29,9 @@ export default async function CalendarPage(props: CalendarPageProps) {
     dbRegattas = [];
   }
 
-  // Combine DB regattas with known 2026 master schedule so upcoming events are always populated
+  // Load 2026 master schedule events
   const combinedMap = new Map<string, RegattaRecord>();
 
-  // First load seed events
   for (const item of SINGAPORE_REGATTAS_2026) {
     combinedMap.set(item.slug, {
       id: item.slug,
@@ -50,7 +49,6 @@ export default async function CalendarPage(props: CalendarPageProps) {
       targetFleet: item.targetFleet,
       keyDeadlines: item.keyDeadlines,
       clinicDates: item.clinicDates,
-      campaignBudget: item.campaignBudget,
       norUrl: item.norUrl,
       registrationUrl: item.registrationUrl,
       scheduleNotes: item.scheduleNotes,
@@ -59,24 +57,23 @@ export default async function CalendarPage(props: CalendarPageProps) {
     });
   }
 
-  // Then overlay any database records
+  // Then overlay database metadata for matching schedule events ONLY (do not inject class-specific DB results)
   for (const r of dbRegattas) {
     const existing = combinedMap.get(r.slug);
+    if (!existing) continue;
     combinedMap.set(r.slug, {
       ...existing,
-      ...r,
-      venue: r.venue || existing?.venue,
-      endDate: r.endDate || existing?.endDate,
-      norUrl: r.norUrl || existing?.norUrl,
-      registrationUrl: r.registrationUrl || existing?.registrationUrl,
-      isSelectionTrial: r.isSelectionTrial ?? existing?.isSelectionTrial ?? false,
-      organizer: r.organizer || existing?.organizer,
-      scheduleNotes: r.scheduleNotes || existing?.scheduleNotes,
-      region: r.region || existing?.region,
-      targetFleet: r.targetFleet || existing?.targetFleet,
-      keyDeadlines: r.keyDeadlines || existing?.keyDeadlines,
-      clinicDates: r.clinicDates || existing?.clinicDates,
-      campaignBudget: r.campaignBudget || existing?.campaignBudget,
+      venue: r.venue || existing.venue,
+      endDate: r.endDate || existing.endDate,
+      norUrl: r.norUrl || existing.norUrl,
+      registrationUrl: r.registrationUrl || existing.registrationUrl,
+      isSelectionTrial: r.isSelectionTrial ?? existing.isSelectionTrial ?? false,
+      organizer: r.organizer || existing.organizer,
+      scheduleNotes: r.scheduleNotes || existing.scheduleNotes,
+      region: r.region || existing.region,
+      targetFleet: r.targetFleet || existing.targetFleet,
+      keyDeadlines: r.keyDeadlines || existing.keyDeadlines,
+      clinicDates: r.clinicDates || existing.clinicDates,
       hasResults: true,
     });
   }

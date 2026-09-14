@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { and, eq, ne } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
+import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
 import { equipmentLogs, sailorAliases, sailors } from "@/db/schema";
 import { validateHandle } from "@/lib/handles";
@@ -61,9 +62,13 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Sailor not found" }, { status: 404 });
     }
 
-    const isOwner = sailor.parentId === auth.userId;
-    const isAdmin = auth.role === "superadmin";
-    if (!isOwner && !isAdmin) {
+    const isAllowed = await canManageSailor(
+      sailorId,
+      auth.userId,
+      auth.role === "superadmin",
+      sailor.parentId
+    );
+    if (!isAllowed) {
       return NextResponse.json(
         { error: "You can only edit a profile after your claim is approved" },
         { status: 403 }
@@ -225,11 +230,7 @@ export async function PATCH(req: Request) {
     const [updated] = await db
       .update(sailors)
       .set(patch)
-      .where(
-        isAdmin
-          ? eq(sailors.id, sailorId)
-          : and(eq(sailors.id, sailorId), eq(sailors.parentId, auth.userId))
-      )
+      .where(eq(sailors.id, sailorId))
       .returning({
         id: sailors.id,
         handle: sailors.handle,

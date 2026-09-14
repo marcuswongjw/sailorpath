@@ -27,6 +27,7 @@ export function resolveProfileAccess(opts: {
   userId: string | null | undefined;
   role: string | null | undefined;
   sailorParentId: string | null | undefined;
+  hasApprovedClaim?: boolean;
 }): {
   isLinkedOwner: boolean;
   isSuperadmin: boolean;
@@ -36,7 +37,9 @@ export function resolveProfileAccess(opts: {
   canClaim: boolean;
 } {
   const isLinkedOwner = Boolean(
-    opts.userId && opts.sailorParentId && opts.sailorParentId === opts.userId
+    opts.userId &&
+      ((opts.sailorParentId && opts.sailorParentId === opts.userId) ||
+        opts.hasApprovedClaim)
   );
   const isSuperadmin = opts.role === "superadmin";
 
@@ -46,9 +49,9 @@ export function resolveProfileAccess(opts: {
   // Private logbook: own kids always; superadmin for support
   const canSeePrivate = isLinkedOwner || isSuperadmin;
 
-  // Claim: any signed-in non-superadmin on unclaimed; superadmin uses admin tools
+  // Claim: any signed-in non-superadmin who is not already a linked owner
   const canClaim = Boolean(
-    opts.userId && !opts.sailorParentId && !isSuperadmin
+    opts.userId && !isLinkedOwner && !isSuperadmin
   );
 
   return {

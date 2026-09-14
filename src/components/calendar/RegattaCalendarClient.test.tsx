@@ -214,19 +214,4 @@ describe("RegattaCalendarClient", () => {
     expect(screen.getByText("Past Regatta 2020")).toBeInTheDocument();
     expect(screen.queryByText("Singapore National Sailing Championships 2099")).not.toBeInTheDocument();
   });
-
-  it("toggles campaign budget breakdown drawer", () => {
-    render(<RegattaCalendarClient regattas={mockEvents} />);
-
-    const budgetToggleBtn = screen.getByRole("button", {
-      name: /view breakdown/i,
-    });
-    fireEvent.click(budgetToggleBtn);
-
-    expect(screen.getByText(/campaign cost breakdown \(1 youth sailor \+ 1 adult guardian\)/i)).toBeInTheDocument();
-    expect(screen.getByText("THB 12,500 (~SGD 486) — Entry THB 4.5k, Charter THB 8k")).toBeInTheDocument();
-    expect(screen.getByText("THB 6,000 (~SGD 233) — 3-day tuning clinic")).toBeInTheDocument();
-    expect(screen.getByText("SGD 550 — Return flights for 2 pax")).toBeInTheDocument();
-    expect(screen.getByText("THB 22,000 (~SGD 855) — 5 nights hotel")).toBeInTheDocument();
-  });
 });
