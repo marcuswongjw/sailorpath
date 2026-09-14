@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { AdminDashboard } from "@/components/AdminDashboard";
 import { AdminSignInGate } from "@/components/admin/AdminSignInGate";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -14,6 +14,15 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const host = (await headers()).get("host") || "";
+
+  // If accessed directly on public sailorpath.com domain, redirect to canonical admin subdomain
+  if (
+    host.includes("sailorpath.com") &&
+    !host.includes("admin.sailorpath.com")
+  ) {
+    redirect("https://admin.sailorpath.com/");
+  }
+
   if (!isAdminHost(host)) notFound();
 
   // Don't serialize admin data before auth — client dashboard fetches after gate.
@@ -28,8 +37,13 @@ export default async function AdminPage() {
     );
   }
   if (ctx.role !== "superadmin") {
-    // Signed in but not admin — stay quiet (no portal confirmation).
-    notFound();
+    return (
+      <AdminSignInGate
+        reason="forbidden"
+        nextUrl={adminReturnUrl(host, "/")}
+        siteOrigin={adminLoginOrigin(host)}
+      />
+    );
   }
 
   return (

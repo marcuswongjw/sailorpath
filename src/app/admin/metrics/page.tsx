@@ -1,5 +1,5 @@
 import { headers } from "next/headers";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { AdminMetricsGuide } from "@/components/admin/AdminMetricsGuide";
 import { AdminSignInGate } from "@/components/admin/AdminSignInGate";
 import { getAuthContext } from "@/lib/auth";
@@ -19,6 +19,14 @@ export const metadata = {
 
 export default async function AdminMetricsPage() {
   const host = (await headers()).get("host") || "";
+
+  if (
+    host.includes("sailorpath.com") &&
+    !host.includes("admin.sailorpath.com")
+  ) {
+    redirect("https://admin.sailorpath.com/admin/metrics");
+  }
+
   if (!isAdminHost(host)) notFound();
 
   const ctx = await getAuthContext();
@@ -32,7 +40,13 @@ export default async function AdminMetricsPage() {
     );
   }
   if (ctx.role !== "superadmin") {
-    notFound();
+    return (
+      <AdminSignInGate
+        reason="forbidden"
+        nextUrl={adminReturnUrl(host, "/admin/metrics")}
+        siteOrigin={adminLoginOrigin(host)}
+      />
+    );
   }
 
   return <AdminMetricsGuide />;

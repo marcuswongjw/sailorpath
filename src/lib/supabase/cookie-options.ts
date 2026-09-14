@@ -63,7 +63,9 @@ export function safeAuthNext(
       host === "sailorpath.com" ||
       host.endsWith(".sailorpath.com") ||
       host === "localhost" ||
-      host === "127.0.0.1"
+      host === "127.0.0.1" ||
+      host.endsWith(".vercel.app") ||
+      host === "vercel.app"
     ) {
       return u.toString();
     }

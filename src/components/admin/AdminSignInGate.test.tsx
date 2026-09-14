@@ -16,4 +16,17 @@ describe("AdminSignInGate", () => {
     );
     expect(html).not.toContain("vercel.app/login");
   });
+
+  it("renders forbidden message when signed in as non-superadmin", () => {
+    const html = renderToStaticMarkup(
+      <AdminSignInGate
+        nextUrl="https://admin.sailorpath.com/"
+        siteOrigin="https://admin.sailorpath.com"
+        reason="forbidden"
+      />
+    );
+
+    expect(html).toContain("Admin access required");
+    expect(html).toContain("This account is signed in but is not a superadmin");
+  });
 });

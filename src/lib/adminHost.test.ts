@@ -12,6 +12,7 @@ describe("isAdminHost", () => {
     expect(isAdminHost("admin.sailorpath.com")).toBe(true);
     expect(isAdminHost("localhost:3000")).toBe(true);
     expect(isAdminHost("127.0.0.1:3000")).toBe(true);
+    expect(isAdminHost("sailorpath-git-main.vercel.app")).toBe(true);
     expect(isAdminHost("sailorpath.com")).toBe(false);
   });
 });
@@ -31,12 +32,24 @@ describe("adminReturnUrl", () => {
       "https://admin.sailorpath.com/admin/metrics"
     );
   });
+
+  it("handles vercel preview hosts", () => {
+    expect(adminReturnUrl("preview.vercel.app", "/admin")).toBe(
+      "https://preview.vercel.app/admin"
+    );
+  });
 });
 
 describe("adminLoginOrigin", () => {
   it("keeps the admin sign-in form on the canonical admin host", () => {
     expect(adminLoginOrigin("admin.sailorpath.com")).toBe(
       "https://admin.sailorpath.com"
+    );
+  });
+
+  it("uses origin for vercel preview hosts", () => {
+    expect(adminLoginOrigin("preview.vercel.app")).toBe(
+      "https://preview.vercel.app"
     );
   });
 });

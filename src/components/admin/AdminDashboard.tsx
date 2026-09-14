@@ -34,6 +34,7 @@ import {
   type AdminActiveTab,
   type AdminEditSubTab,
 } from "@/components/admin/adminNav";
+import { adminLoginOrigin, adminReturnUrl } from "@/lib/adminHost";
 
 const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string }>> = {
   edit: Database,
@@ -148,7 +149,7 @@ const AdminWingfoilPanel = dynamic(
     import("@/components/admin/AdminWingfoilPanel").then(
       (m) => m.AdminWingfoilPanel
     ),
-  { loading: () => <PanelLoading /> }
+  { loading: () => <PanelLoading />, ssr: false }
 );
 
 export function AdminDashboard() {
@@ -371,6 +372,11 @@ function AdminDashboardInner() {
   }
 
   if (!user) {
+    const host = typeof window !== "undefined" ? window.location.host : "";
+    const loginHref = host
+      ? `${adminLoginOrigin(host)}/login?next=${encodeURIComponent(adminReturnUrl(host, "/"))}`
+      : "https://admin.sailorpath.com/login?next=%2F";
+
     return (
       <div className="mx-auto max-w-md w-full px-4 py-20 flex-1 flex flex-col justify-center">
         <div className="glass-card rounded-3xl p-8 border border-white/5 text-center space-y-6">
@@ -387,7 +393,7 @@ function AdminDashboardInner() {
             </p>
           </div>
           <a
-            href="https://admin.sailorpath.com/login?next=%2F"
+            href={loginHref}
             className="block w-full rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs font-bold text-white transition-all shadow-lg shadow-orange-600/20 text-center"
           >
             Sign In to Admin Portal

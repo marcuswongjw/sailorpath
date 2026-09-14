@@ -297,7 +297,14 @@ export function SiteHeader() {
       </Link>
       {isSuperadmin && (
         <a
-          href="https://admin.sailorpath.com/"
+          href={
+            host &&
+            (host.includes("localhost") ||
+              host.includes("127.0.0.1") ||
+              host.includes("vercel.app"))
+              ? "/admin"
+              : "https://admin.sailorpath.com/"
+          }
           className="text-xs font-bold text-slate-400 hover:text-white"
         >
           Admin console

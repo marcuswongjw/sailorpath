@@ -6,7 +6,8 @@ export function isAdminHost(host: string): boolean {
   return (
     host.includes("admin.sailorpath.com") ||
     host.includes("localhost") ||
-    host.includes("127.0.0.1")
+    host.includes("127.0.0.1") ||
+    host.includes("vercel.app")
   );
 }
 
@@ -16,7 +17,9 @@ export function shouldShowDemoNavigation(
   ownedSailorCount: number,
   isLoggedIn = false
 ): boolean {
-  return !isAdminHost(host) && !isLoggedIn && ownedSailorCount === 0;
+  const isDedicatedAdminSubdomain =
+    host.includes("admin.sailorpath.com") || host.startsWith("admin.");
+  return !isDedicatedAdminSubdomain && !isLoggedIn && ownedSailorCount === 0;
 }
 
 /** Public marketing/app origin (login lives here). */
@@ -39,6 +42,9 @@ export function adminLoginOrigin(host: string): string {
   if (host.includes("localhost") || host.includes("127.0.0.1")) {
     return `http://${host}`;
   }
+  if (host.includes("vercel.app")) {
+    return `https://${host}`;
+  }
   return publicSiteOrigin();
 }
 
@@ -51,6 +57,9 @@ export function adminReturnUrl(host: string, path = "/"): string {
   if (host.includes("localhost") || host.includes("127.0.0.1")) {
     const proto = "http";
     return `${proto}://${host}${cleanPath.startsWith("/admin") ? cleanPath : "/admin"}`;
+  }
+  if (host.includes("vercel.app")) {
+    return `https://${host}${cleanPath.startsWith("/admin") ? cleanPath : "/admin"}`;
   }
   return `${publicSiteOrigin()}/admin`;
 }
