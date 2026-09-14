@@ -31,6 +31,8 @@ export async function POST(request: Request) {
     const recordDate = String(body.recordDate || "").trim();
     const targetDate = String(body.targetDate || "").trim() || null;
     const status = String(body.status || "active").trim();
+    const visibility = body.visibility === "shared" ? "shared" : "coach_only";
+    const sentiment = body.sentiment === "strength" || body.sentiment === "focus" ? body.sentiment : "neutral";
     if (!sailorId || !TYPES.has(type) || !title || title.length > 160 || !isDate(recordDate) || (targetDate && !isDate(targetDate)) || !STATUSES.has(status) || (detail?.length || 0) > 4000) {
       return NextResponse.json({ error: "Check the record type, title, dates, and status" }, { status: 400 });
     }
@@ -38,6 +40,7 @@ export async function POST(request: Request) {
     await db.insert(coachDevelopmentRecords).values({
       coachId: auth.userId, sailorId, type: type as "observation" | "goal" | "attendance",
       category, title, detail, recordDate, status, targetDate,
+      visibility, sentiment,
     });
     return NextResponse.json(await getCoachSquadDashboard(auth.userId), { status: 201 });
   } catch (error) { return jsonError(error); }
@@ -48,9 +51,16 @@ export async function PATCH(request: Request) {
     const auth = await requireCoach();
     const body = await request.json();
     const id = String(body.id || "").trim();
-    const status = String(body.status || "").trim();
-    if (!id || !STATUSES.has(status)) return NextResponse.json({ error: "Valid record and status required" }, { status: 400 });
-    const changed = await db.update(coachDevelopmentRecords).set({ status, updatedAt: new Date() })
+    const status = body.status ? String(body.status).trim() : undefined;
+    const visibility = body.visibility === "shared" ? "shared" : body.visibility === "coach_only" ? "coach_only" : undefined;
+    if (!id || (!status && !visibility) || (status && !STATUSES.has(status))) {
+      return NextResponse.json({ error: "Valid record and updates required" }, { status: 400 });
+    }
+    const updatePayload: Record<string, unknown> = { updatedAt: new Date() };
+    if (status) updatePayload.status = status;
+    if (visibility) updatePayload.visibility = visibility;
+
+    const changed = await db.update(coachDevelopmentRecords).set(updatePayload)
       .where(and(eq(coachDevelopmentRecords.id, id), eq(coachDevelopmentRecords.coachId, auth.userId)))
       .returning({ id: coachDevelopmentRecords.id });
     if (!changed.length) return NextResponse.json({ error: "Record not found" }, { status: 404 });

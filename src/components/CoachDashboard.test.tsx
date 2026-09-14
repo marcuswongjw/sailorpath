@@ -31,6 +31,7 @@ const initialData: CoachSquadDashboard = {
       ],
       recentResults: [{ resultId: "result-1", regattaName: "Pesta Sukan", regattaSlug: "pesta-sukan", date: "2026-08-01", rank: 1, nettScore: 6, fleetSize: 77, races: [{ raceNumber: 1, score: 1, code: null, discarded: false, rawValue: "1" }] }],
       coachNote: "Work on starts",
+      coachNoteVisibility: "coach_only",
       developmentRecords: [],
       selectionReadiness: { tone: "ready", label: "Ranking record established", detail: "Gold Fleet criteria apply." },
       latestResult: {
@@ -57,6 +58,7 @@ const initialData: CoachSquadDashboard = {
       scoringEvents: [],
       recentResults: [],
       coachNote: "",
+      coachNoteVisibility: "coach_only",
       developmentRecords: [],
       selectionReadiness: { tone: "watch", label: "Building selection record", detail: "More events required." },
       latestResult: null,

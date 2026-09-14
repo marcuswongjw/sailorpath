@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, BarChart3, ChevronRight, GitCompareArrows, Plus, Search, Settings2, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
+import { ArrowRight, ChevronRight, GitCompareArrows, Plus, Search, Settings2, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
 import type { CoachSquadDashboard } from "@/lib/coachDashboard";
+import { SquadPulseCards, AthleteDevelopmentDrawer } from "@/components/coach";
 
 type SearchMatch = { id: string; name: string; handle: string; sailNumber: string; club: string };
 
@@ -22,16 +23,8 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   const [message, setMessage] = useState<string | null>(null);
   const [squadName, setSquadName] = useState(initialData.squad?.name || "My squad");
   const [activeSailorId, setActiveSailorId] = useState<string | null>(null);
-  const [noteDraft, setNoteDraft] = useState("");
   const [manageOpen, setManageOpen] = useState(false);
   const [sortKey, setSortKey] = useState<"ranking" | "name" | "movement" | "best3">("ranking");
-  const [recordType, setRecordType] = useState<"observation" | "goal" | "attendance">("observation");
-  const [recordTitle, setRecordTitle] = useState("");
-  const [recordDetail, setRecordDetail] = useState("");
-  const [recordCategory, setRecordCategory] = useState("Starts");
-  const [recordStatus, setRecordStatus] = useState("active");
-  const [recordDate, setRecordDate] = useState(() => new Date().toISOString().slice(0, 10));
-  const [targetDate, setTargetDate] = useState("");
 
   useEffect(() => {
     if (query.trim().length < 2) {
@@ -54,7 +47,6 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     };
   }, [query, data.members, data.following]);
 
-  const rankedCount = data.members.filter((member) => member.ranking != null).length;
   const averageBest = useMemo(() => {
     const scores = data.members.map((member) => member.bestThreeOfFive).filter((score): score is number => score != null);
     return scores.length ? (scores.reduce((sum, score) => sum + score, 0) / scores.length).toFixed(1) : "—";
@@ -154,35 +146,100 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   }
 
   function openSailor(sailorId: string) {
-    const sailor = [...data.members, ...data.following].find((member) => member.sailorId === sailorId);
-    setActiveSailorId(sailorId); setNoteDraft(sailor?.coachNote || "");
+    setActiveSailorId(sailorId);
   }
 
-  async function saveNote() {
+  async function handleSaveNote(note: string, visibility: "coach_only" | "shared") {
     if (!activeSailor) return;
     setBusyId("note"); setMessage(null);
     try {
-      const response = await fetch("/api/coach/notes", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ sailorId: activeSailor.sailorId, note: noteDraft }) });
-      const body = await readJson<{ note: string }>(response);
-      setData((current) => ({ ...current,
-        members: current.members.map((member) => member.sailorId === activeSailor.sailorId ? { ...member, coachNote: body.note } : member),
-        following: current.following.map((member) => member.sailorId === activeSailor.sailorId ? { ...member, coachNote: body.note } : member),
+      const response = await fetch("/api/coach/notes", {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ sailorId: activeSailor.sailorId, note, visibility }),
+      });
+      const body = await readJson<{ note: string; visibility: "coach_only" | "shared" }>(response);
+      setData((current) => ({
+        ...current,
+        members: current.members.map((member) =>
+          member.sailorId === activeSailor.sailorId
+            ? { ...member, coachNote: body.note, coachNoteVisibility: body.visibility }
+            : member
+        ),
+        following: current.following.map((member) =>
+          member.sailorId === activeSailor.sailorId
+            ? { ...member, coachNote: body.note, coachNoteVisibility: body.visibility }
+            : member
+        ),
       }));
       setMessage("Private coach note saved.");
-    } catch (error) { setMessage(error instanceof Error ? error.message : "Could not save note"); }
-    finally { setBusyId(null); }
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Could not save note");
+    } finally {
+      setBusyId(null);
+    }
   }
 
-  async function saveDevelopmentRecord() {
-    if (!activeSailor || !recordTitle.trim()) return;
+  async function handleAddRecord(payload: {
+    type: "observation" | "goal" | "attendance";
+    category: string | null;
+    title: string;
+    detail: string | null;
+    recordDate: string;
+    targetDate: string | null;
+    status: string;
+    visibility: "coach_only" | "shared";
+    sentiment: "strength" | "focus" | "neutral";
+  }) {
+    if (!activeSailor || !payload.title.trim()) return;
     setBusyId("development"); setMessage(null);
     try {
-      const response = await fetch("/api/coach/development", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ sailorId: activeSailor.sailorId, type: recordType, title: recordTitle, detail: recordDetail, category: recordType === "observation" ? recordCategory : null, recordDate, targetDate: recordType === "goal" ? targetDate : null, status: recordType === "attendance" ? recordStatus : "active" }) });
+      const response = await fetch("/api/coach/development", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ sailorId: activeSailor.sailorId, ...payload }),
+      });
       setData(await readJson<CoachSquadDashboard>(response));
-      setRecordTitle(""); setRecordDetail(""); setTargetDate("");
-      setMessage(`${recordType === "goal" ? "Goal" : recordType === "attendance" ? "Attendance" : "Observation"} saved.`);
-    } catch (error) { setMessage(error instanceof Error ? error.message : "Could not save coaching record"); }
-    finally { setBusyId(null); }
+      setMessage(
+        `${payload.type === "goal" ? "Goal" : payload.type === "attendance" ? "Attendance" : "Observation"} saved.`
+      );
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Could not save coaching record");
+    } finally {
+      setBusyId(null);
+    }
+  }
+
+  async function handleUpdateRecordStatus(id: string, status: string) {
+    setBusyId(id); setMessage(null);
+    try {
+      const response = await fetch("/api/coach/development", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id, status }),
+      });
+      setData(await readJson<CoachSquadDashboard>(response));
+      setMessage("Coaching record updated.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Could not update record");
+    } finally {
+      setBusyId(null);
+    }
+  }
+
+  async function handleDeleteRecord(id: string) {
+    setBusyId(id); setMessage(null);
+    try {
+      const response = await fetch(`/api/coach/development?id=${encodeURIComponent(id)}`, {
+        method: "DELETE",
+      });
+      setData(await readJson<CoachSquadDashboard>(response));
+      setMessage("Coaching record removed.");
+    } catch (error) {
+      setMessage(error instanceof Error ? error.message : "Could not delete record");
+    } finally {
+      setBusyId(null);
+    }
   }
 
   async function reviewAction(action: (typeof actions)[number], status: "reviewed" | "dismissed") {
@@ -207,20 +264,14 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
         <div className="flex gap-2"><button type="button" onClick={() => setManageOpen(true)} className="inline-flex items-center justify-center gap-2 rounded-full bg-orange-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-orange-500"><Settings2 className="h-3.5 w-3.5" /> Manage sailors</button><Link href="/rankings" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 text-xs font-bold text-white hover:border-orange-500/40">Rankings <ArrowRight className="h-3.5 w-3.5" /></Link></div>
       </header>
 
-      <section className="order-2 grid grid-cols-2 gap-3 lg:grid-cols-4" aria-label="Squad summary">
-        {[
-          ["Squad sailors", String(data.members.length), Users],
-          ["Ranked now", String(rankedCount), BarChart3],
-          ["Average Best 3", averageBest, BarChart3],
-          ["Ranking period", `${data.period.half} ${data.period.year}`, Users],
-        ].map(([label, value, Icon]) => (
-          <div key={String(label)} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <Icon className="h-4 w-4 text-orange-400" />
-            <p className="mt-3 text-xl font-black text-white">{String(value)}</p>
-            <p className="mt-0.5 text-[11px] font-semibold text-slate-500">{String(label)}</p>
-          </div>
-        ))}
-      </section>
+      <div className="order-2">
+        <SquadPulseCards
+          members={data.members}
+          actionsCount={actions.length}
+          rankingPeriod={`${data.period.half} ${data.period.year}`}
+          averageBest={averageBest}
+        />
+      </div>
 
       <section className="order-1 rounded-2xl border border-amber-500/20 bg-amber-500/[0.04] p-4" aria-labelledby="action-centre-title">
         <div className="flex items-center justify-between gap-4">
@@ -325,23 +376,18 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
 
       {message && <p role="status" className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-xs text-slate-300">{message}</p>}
 
-      {activeSailor && <div className="fixed inset-0 z-50 flex justify-end bg-black/70" role="dialog" aria-modal="true" aria-label={`${activeSailor.name} coach details`} onMouseDown={(event) => { if (event.target === event.currentTarget) setActiveSailorId(null); }}>
-        <div className="h-full w-full max-w-xl overflow-y-auto border-l border-white/10 bg-[#0b0c12] p-5 sm:p-7">
-          <div className="flex items-start justify-between gap-4"><div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-400">Coach view · private</p><h2 className="mt-1 text-2xl font-black text-white">{activeSailor.name}</h2><p className="mt-1 text-xs text-slate-500">{activeSailor.fleet || "Unranked"}{activeSailor.ranking ? ` #${activeSailor.ranking}` : ""} · {activeSailor.sailNumber} · {activeSailor.club}</p></div><button type="button" onClick={() => setActiveSailorId(null)} aria-label="Close sailor details" className="rounded-lg p-2 text-slate-400 hover:bg-white/5 hover:text-white"><X className="h-5 w-5" /></button></div>
-
-          <section className="mt-6"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Best 3 of 5</h3><div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">{activeSailor.scoringEvents.map((event) => <div key={event.regattaId} className={`rounded-xl border p-3 ${event.selected ? "border-orange-500/50 bg-orange-500/10" : "border-white/[0.07] bg-white/[0.02]"}`}><p className="truncate text-[10px] font-bold text-slate-400">{event.regattaName}</p><p className={`mt-1 text-xl font-black ${event.selected ? "text-orange-300" : "text-white"}`}>{event.score}{event.isDns ? "*" : event.isOverseas ? "†" : ""}</p>{event.selected && <p className="mt-1 text-[9px] font-bold uppercase text-orange-400">Counting</p>}</div>)}</div></section>
-
-          <section className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.025] p-4"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Selection readiness</h3><p className="mt-2 text-sm font-bold text-white">{activeSailor.selectionReadiness.label}</p><p className="mt-1 text-xs leading-relaxed text-slate-400">{activeSailor.selectionReadiness.detail}</p></section>
-
-          <section className="mt-6"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Recent regattas & race scores</h3><div className="mt-3 space-y-3">{activeSailor.recentResults.map((result) => <div key={result.resultId} className="rounded-xl border border-white/[0.08] p-4"><div className="flex justify-between gap-3"><div><Link href={`/regattas/${result.regattaSlug}`} className="text-sm font-bold text-white hover:text-orange-400">{result.regattaName}</Link><p className="mt-0.5 text-[10px] text-slate-500">{result.date}</p></div><p className="text-sm font-black text-white">#{result.rank}{result.nettScore != null ? <span className="ml-1 text-[10px] font-medium text-slate-500">· {result.nettScore} net</span> : null}</p></div>{result.races.length ? <div className="mt-3 flex flex-wrap gap-1.5">{result.races.map((race) => <span key={race.raceNumber} title={race.rawValue} className={`rounded-md border px-2 py-1 text-[10px] ${race.discarded ? "border-slate-700 text-slate-600 line-through" : "border-sky-500/20 bg-sky-500/5 text-sky-300"}`}>R{race.raceNumber}: {race.code || race.score}</span>)}</div> : <p className="mt-3 text-[10px] text-slate-600">No official race-by-race scores imported.</p>}</div>)}</div></section>
-
-          <section className="mt-6"><h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Coaching history</h3><div className="mt-3 space-y-2">{activeSailor.developmentRecords.length ? activeSailor.developmentRecords.map((record) => <div key={record.id} className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-3"><div className="flex items-center justify-between gap-3"><span className="rounded-full bg-white/5 px-2 py-0.5 text-[9px] font-bold uppercase text-slate-400">{record.type}</span><span className="text-[9px] text-slate-600">{record.recordDate}</span></div><p className="mt-2 text-xs font-bold text-white">{record.title}</p>{record.detail && <p className="mt-1 text-[11px] leading-relaxed text-slate-400">{record.detail}</p>}<p className="mt-1 text-[9px] font-semibold text-sky-400">{record.category || record.status}{record.targetDate ? ` · target ${record.targetDate}` : ""}</p></div>) : <p className="rounded-xl border border-dashed border-white/10 px-3 py-5 text-center text-[11px] text-slate-600">No structured coaching records yet.</p>}</div>
-            <div className="mt-3 rounded-xl border border-white/10 bg-black/20 p-3"><div className="grid grid-cols-2 gap-2"><select aria-label="Record type" value={recordType} onChange={(event) => setRecordType(event.target.value as typeof recordType)} className="rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white"><option value="observation">Observation</option><option value="goal">Development goal</option><option value="attendance">Attendance</option></select><input aria-label="Record date" type="date" value={recordDate} onChange={(event) => setRecordDate(event.target.value)} className="rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white" /></div>{recordType === "observation" && <select aria-label="Skill category" value={recordCategory} onChange={(event) => setRecordCategory(event.target.value)} className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white">{["Starts","Upwind speed","Tacking","Downwind speed","Gybing","Mark rounding","Tactics","Rules","Boat handling","Confidence"].map((category) => <option key={category}>{category}</option>)}</select>}{recordType === "attendance" && <select aria-label="Attendance status" value={recordStatus} onChange={(event) => setRecordStatus(event.target.value)} className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white"><option value="present">Present</option><option value="absent">Absent</option><option value="planned">Planned absence</option></select>}{recordType === "goal" && <input aria-label="Target date" type="date" value={targetDate} onChange={(event) => setTargetDate(event.target.value)} className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white" />}<input aria-label="Record title" value={recordTitle} onChange={(event) => setRecordTitle(event.target.value)} maxLength={160} placeholder={recordType === "attendance" ? "Session or reason" : recordType === "goal" ? "Measurable development goal" : "What did you observe?"} className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-xs text-white" /><textarea aria-label="Record detail" value={recordDetail} onChange={(event) => setRecordDetail(event.target.value)} maxLength={4000} rows={3} placeholder="Context, success measure, or follow-up" className="mt-2 w-full rounded-lg border border-white/10 bg-black/30 p-3 text-xs text-white" /><button type="button" onClick={saveDevelopmentRecord} disabled={!recordTitle.trim() || busyId === "development"} className="mt-2 w-full rounded-lg bg-sky-600 px-3 py-2 text-xs font-bold text-white disabled:opacity-40">{busyId === "development" ? "Saving…" : "Add coaching record"}</button></div>
-          </section>
-
-          <section className="mt-6"><label htmlFor="coach-note" className="text-xs font-bold uppercase tracking-wider text-slate-400">Private coach note</label><p className="mt-1 text-[10px] text-slate-600">Visible only in your coach account.</p><textarea id="coach-note" value={noteDraft} onChange={(event) => setNoteDraft(event.target.value)} maxLength={4000} rows={5} className="mt-3 w-full rounded-xl border border-white/10 bg-black/30 p-3 text-sm text-white outline-none focus:border-orange-500/50" placeholder="Focus areas, training observations, or follow-up…" /><div className="mt-2 flex items-center justify-between"><span className="text-[10px] text-slate-600">{noteDraft.length}/4000</span><button type="button" onClick={saveNote} disabled={busyId === "note"} className="rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-50">{busyId === "note" ? "Saving…" : "Save note"}</button></div></section>
-        </div>
-      </div>}
+      {activeSailor && (
+        <AthleteDevelopmentDrawer
+          key={activeSailor.sailorId}
+          sailor={activeSailor}
+          onClose={() => setActiveSailorId(null)}
+          onSaveNote={handleSaveNote}
+          onAddRecord={handleAddRecord}
+          onUpdateRecordStatus={handleUpdateRecordStatus}
+          onDeleteRecord={handleDeleteRecord}
+          busyId={busyId}
+        />
+      )}
     </div>
   );
 }

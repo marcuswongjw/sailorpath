@@ -38,9 +38,12 @@ export type CoachSquadMember = {
     races: Array<{ raceNumber: number; score: number; code: string | null; discarded: boolean; rawValue: string }>;
   }>;
   coachNote: string;
+  coachNoteVisibility: "coach_only" | "shared";
   developmentRecords: Array<{
     id: string; type: "observation" | "goal" | "attendance"; category: string | null;
     title: string; detail: string | null; recordDate: string; status: string; targetDate: string | null;
+    visibility: "coach_only" | "shared";
+    sentiment: "strength" | "focus" | "neutral";
   }>;
   selectionReadiness: { tone: "ready" | "watch" | "development"; label: string; detail: string };
   latestResult: {
@@ -126,7 +129,7 @@ export async function getCoachSquadDashboard(
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
       .where(inArray(regattaResults.sailorId, sailorIds))
       .orderBy(desc(regattas.date)),
-    db.select({ sailorId: coachSailorNotes.sailorId, note: coachSailorNotes.note })
+    db.select({ sailorId: coachSailorNotes.sailorId, note: coachSailorNotes.note, visibility: coachSailorNotes.visibility })
       .from(coachSailorNotes)
       .where(and(eq(coachSailorNotes.coachId, coachId), inArray(coachSailorNotes.sailorId, sailorIds))),
     db.select({
@@ -135,6 +138,8 @@ export async function getCoachSquadDashboard(
       title: coachDevelopmentRecords.title, detail: coachDevelopmentRecords.detail,
       recordDate: coachDevelopmentRecords.recordDate, status: coachDevelopmentRecords.status,
       targetDate: coachDevelopmentRecords.targetDate,
+      visibility: coachDevelopmentRecords.visibility,
+      sentiment: coachDevelopmentRecords.sentiment,
     }).from(coachDevelopmentRecords)
       .where(and(eq(coachDevelopmentRecords.coachId, coachId), inArray(coachDevelopmentRecords.sailorId, sailorIds)))
       .orderBy(desc(coachDevelopmentRecords.recordDate), desc(coachDevelopmentRecords.createdAt)),
@@ -160,7 +165,7 @@ export async function getCoachSquadDashboard(
     const list = racesByResult.get(race.regattaResultId) || [];
     list.push(race); racesByResult.set(race.regattaResultId, list);
   }
-  const noteBySailor = new Map(noteRows.map((row) => [row.sailorId, row.note]));
+  const noteBySailor = new Map(noteRows.map((row) => [row.sailorId, { note: row.note, visibility: (row.visibility as "coach_only" | "shared") || "coach_only" }]));
   const developmentBySailor = new Map<string, typeof developmentRows>();
   for (const record of developmentRows) {
     const list = developmentBySailor.get(record.sailorId) || [];
@@ -248,11 +253,14 @@ export async function getCoachSquadDashboard(
             discarded: race.discarded, rawValue: race.rawValue,
           })),
         })),
-        coachNote: noteBySailor.get(row.sailorId) || "",
+        coachNote: noteBySailor.get(row.sailorId)?.note || "",
+        coachNoteVisibility: noteBySailor.get(row.sailorId)?.visibility || "coach_only",
         developmentRecords: (developmentBySailor.get(row.sailorId) || []).map((record) => ({
           id: record.id, type: record.type, category: record.category, title: record.title,
           detail: record.detail, recordDate: record.recordDate, status: record.status,
           targetDate: record.targetDate,
+          visibility: (record.visibility as "coach_only" | "shared") || "coach_only",
+          sentiment: (record.sentiment as "strength" | "focus" | "neutral") || "neutral",
         })),
         selectionReadiness: standing?.fleet === "Gold"
           ? {

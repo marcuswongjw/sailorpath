@@ -10,6 +10,7 @@ export async function PUT(request: Request) {
     const body = await request.json();
     const sailorId = String(body.sailorId || "").trim();
     const note = String(body.note || "").trim();
+    const visibility = body.visibility === "shared" ? "shared" : "coach_only";
     if (!sailorId || note.length > 4000) {
       return NextResponse.json({ error: "Note must be 4,000 characters or fewer" }, { status: 400 });
     }
@@ -26,13 +27,13 @@ export async function PUT(request: Request) {
         eq(coachSailorNotes.coachId, auth.userId), eq(coachSailorNotes.sailorId, sailorId)
       ));
     } else {
-      await db.insert(coachSailorNotes).values({ coachId: auth.userId, sailorId, note })
+      await db.insert(coachSailorNotes).values({ coachId: auth.userId, sailorId, note, visibility })
         .onConflictDoUpdate({
           target: [coachSailorNotes.coachId, coachSailorNotes.sailorId],
-          set: { note, updatedAt: new Date() },
+          set: { note, visibility, updatedAt: new Date() },
         });
     }
-    return NextResponse.json({ note }, { headers: { "Cache-Control": "private, no-store" } });
+    return NextResponse.json({ note, visibility }, { headers: { "Cache-Control": "private, no-store" } });
   } catch (error) {
     return jsonError(error);
   }

@@ -161,7 +161,12 @@ export async function GET() {
               status: coachDevelopmentRecords.status,
             })
             .from(coachDevelopmentRecords)
-            .where(inArray(coachDevelopmentRecords.sailorId, ids))
+            .where(
+              and(
+                inArray(coachDevelopmentRecords.sailorId, ids),
+                eq(coachDevelopmentRecords.visibility, "shared")
+              )
+            )
             .orderBy(desc(coachDevelopmentRecords.recordDate))
             .limit(20)
             .catch(() => [])

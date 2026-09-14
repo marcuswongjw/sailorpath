@@ -234,7 +234,7 @@ export const coachFollowedSailors = pgTable(
   })
 );
 
-/** Private notes visible only to the coach who wrote them. */
+/** Notes written by coach with selective sharing (coach_only vs shared). */
 export const coachSailorNotes = pgTable(
   "coach_sailor_notes",
   {
@@ -246,6 +246,7 @@ export const coachSailorNotes = pgTable(
       .references(() => sailors.id, { onDelete: "cascade" })
       .notNull(),
     note: text("note").notNull(),
+    visibility: text("visibility", { enum: ["coach_only", "shared"] }).default("coach_only").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
   },
@@ -258,7 +259,7 @@ export const coachSailorNotes = pgTable(
   })
 );
 
-/** Structured, private coaching history: observations, goals, and attendance. */
+/** Structured coaching history: observations, goals, and attendance with selective sharing. */
 export const coachDevelopmentRecords = pgTable(
   "coach_development_records",
   {
@@ -272,6 +273,8 @@ export const coachDevelopmentRecords = pgTable(
     recordDate: date("record_date").notNull(),
     status: text("status").default("active").notNull(),
     targetDate: date("target_date"),
+    visibility: text("visibility", { enum: ["coach_only", "shared"] }).default("coach_only").notNull(),
+    sentiment: text("sentiment", { enum: ["strength", "focus", "neutral"] }).default("neutral").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
   },
