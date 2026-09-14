@@ -1163,7 +1163,10 @@ export function SailorProfileView({
     (demoMode ? canClaim || demoRole === "public" : true);
 
   return (
-    <div className="mx-auto max-w-3xl px-3 sm:px-6 py-5 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-[#090a0f] overflow-x-clip">
+    <div
+      id="profile-hero"
+      className="mx-auto max-w-3xl px-3 sm:px-6 py-5 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-[#090a0f] overflow-x-clip"
+    >
       {/* Claim banner — single primary CTA for unclaimed profiles (header repeats suppressed) */}
       {showUnclaimedBanner && (
           <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-r from-orange-500/15 to-amber-500/5 px-4 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -2620,17 +2623,19 @@ export function SailorProfileView({
         }`}
       >
         {!dualClass && (
-          <ProfileJourneyPanel
-            variant="card"
-            items={displayJourney}
-            isOwner={ownerView}
-            draft={journeyDraft}
-            setDraft={setJourneyDraft}
-            busy={journeyBusy}
-            message={journeyMsg}
-            onAdd={() => void addJourneyItem()}
-            onRemove={(id, isSystem) => void removeJourneyItem(id, isSystem)}
-          />
+          <div id="profile-journey" className="scroll-mt-28">
+            <ProfileJourneyPanel
+              variant="card"
+              items={displayJourney}
+              isOwner={ownerView}
+              draft={journeyDraft}
+              setDraft={setJourneyDraft}
+              busy={journeyBusy}
+              message={journeyMsg}
+              onAdd={() => void addJourneyItem()}
+              onRemove={(id, isSystem) => void removeJourneyItem(id, isSystem)}
+            />
+          </div>
         )}
 
         {showEquipmentSection ? (

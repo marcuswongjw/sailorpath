@@ -306,4 +306,39 @@ describe("ParentDashboard", () => {
     await user.click(resetBtn);
     expect(screen.getByText("0/3 ready")).toBeInTheDocument();
   });
+
+  it("supports in-place equipment management and opens preset modal in Card B", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <FeedbackProvider>
+        <ParentDashboard />
+      </FeedbackProvider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Boat Locker & Equipment")).toBeInTheDocument();
+    });
+
+    // Verify gear item and condition are rendered
+    expect(screen.getByText(/Hull #184491/i)).toBeInTheDocument();
+    expect(screen.getByText("Race Ready")).toBeInTheDocument();
+
+    // Click Add Equipment button
+    const addGearBtn = screen.getByRole("button", { name: /add equipment/i });
+    expect(addGearBtn).toBeInTheDocument();
+    await user.click(addGearBtn);
+
+    // Modal opens with youth gear presets
+    expect(screen.getByText("Add Equipment to Locker")).toBeInTheDocument();
+    expect(screen.getByText(/1-Click Popular Presets/i)).toBeInTheDocument();
+    expect(screen.getByText(/Optimax Mk3 Rig/i)).toBeInTheDocument();
+
+    // Switch to custom tab
+    const customTab = screen.getByRole("button", { name: /custom gear/i });
+    await user.click(customTab);
+    expect(screen.getByText("Equipment Category")).toBeInTheDocument();
+    expect(screen.getByText("Brand / Maker")).toBeInTheDocument();
+  });
 });
+

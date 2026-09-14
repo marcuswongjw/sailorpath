@@ -153,16 +153,234 @@ export const WIND_RANGES: { value: WindRange; label: string }[] = [
 ];
 
 export const BRAND_PRESETS: Partial<Record<EquipmentCategory, string[]>> = {
-  hull: ["Winner", "XSP", "Far East", "OnePlus", "Faccenda"],
-  sail: ["OneSail", "J-Sail", "Northsail", "CD Sails", "Olimpic Sail"],
-  daggerboard: ["DSK", "XSP", "Far East", "OnePlus"],
-  rudder: ["DSK", "XSP", "Far East", "OnePlus"],
-  mast: ["Optiparts", "Blackgold", "Selden"],
-  boom: ["Optiparts", "Blackgold"],
-  sprit: ["Optiparts", "Blackgold"],
+  hull: ["Winner", "Far East", "Devoti", "Blueblue", "Nautivela", "XSP", "OnePlus", "Faccenda"],
+  sail: ["OneSails", "OneSail", "J-Sail", "Northsail", "CD Sails", "Olimpic Sail", "Quantum"],
+  daggerboard: ["DSK", "TEB", "N1 Foils", "Far East", "Optiparts", "XSP", "OnePlus"],
+  rudder: ["DSK", "TEB", "N1 Foils", "Far East", "Optiparts", "XSP", "OnePlus"],
+  mast: ["Optimax", "Blackgold", "Optiparts", "Selden"],
+  boom: ["Optimax", "Blackgold", "Optiparts"],
+  sprit: ["Optimax", "Blackgold", "Optiparts"],
 };
 
 export const BRAND_OTHER = "Other";
+
+export type QuickEquipmentPreset = {
+  id: string;
+  name: string;
+  subtitle: string;
+  boatClass: EquipmentBoatClass;
+  category: EquipmentCategory;
+  brand: string;
+  model: string;
+  windRange?: WindRange;
+  isPrimary?: boolean;
+  bundleItems?: {
+    category: EquipmentCategory;
+    brand: string;
+    model: string;
+    label?: string;
+  }[];
+};
+
+export const YOUTH_EQUIPMENT_PRESETS: QuickEquipmentPreset[] = [
+  {
+    id: "optimax-mk3",
+    name: "Optimax Mk3 Rig (Flex)",
+    subtitle: "Complete set: Mast, Boom & Sprit for lighter sailors (<40kg)",
+    boatClass: "optimist",
+    category: "mast",
+    brand: "Optimax",
+    model: "Mk3 Flex",
+    bundleItems: [
+      { category: "mast", brand: "Optimax", model: "Mk3 Flex" },
+      { category: "boom", brand: "Optimax", model: "Mk3 (40mm)" },
+      { category: "sprit", brand: "Optimax", model: "Mk3 (27mm)" },
+    ],
+  },
+  {
+    id: "optimax-mk4",
+    name: "Optimax Mk4 Rig (Medium)",
+    subtitle: "Complete set: Mast, Boom & Sprit for standard sailors (40-48kg)",
+    boatClass: "optimist",
+    category: "mast",
+    brand: "Optimax",
+    model: "Mk4 Medium",
+    bundleItems: [
+      { category: "mast", brand: "Optimax", model: "Mk4 Medium" },
+      { category: "boom", brand: "Optimax", model: "Mk4 (45mm)" },
+      { category: "sprit", brand: "Optimax", model: "Mk4 (29mm)" },
+    ],
+  },
+  {
+    id: "blackgold-set",
+    name: "BlackGold Rig Set",
+    subtitle: "Complete set: BlackGold Racing Mast, Boom & Sprit",
+    boatClass: "optimist",
+    category: "mast",
+    brand: "Blackgold",
+    model: "Racing Medium",
+    bundleItems: [
+      { category: "mast", brand: "Blackgold", model: "Medium" },
+      { category: "boom", brand: "Blackgold", model: "40mm" },
+      { category: "sprit", brand: "Blackgold", model: "Racing" },
+    ],
+  },
+  {
+    id: "dsk-flexi",
+    name: "DSK FleXi Foil Set",
+    subtitle: "Daggerboard & Rudder set (Active flex for rough seas / chop)",
+    boatClass: "optimist",
+    category: "daggerboard",
+    brand: "DSK",
+    model: "FleXi",
+    bundleItems: [
+      { category: "daggerboard", brand: "DSK", model: "FleXi" },
+      { category: "rudder", brand: "DSK", model: "FleXi" },
+    ],
+  },
+  {
+    id: "dsk-exilis",
+    name: "DSK Exilis Foil Set",
+    subtitle: "Daggerboard & Rudder set (Stiff, high-lift flat water)",
+    boatClass: "optimist",
+    category: "daggerboard",
+    brand: "DSK",
+    model: "Exilis",
+    bundleItems: [
+      { category: "daggerboard", brand: "DSK", model: "Exilis" },
+      { category: "rudder", brand: "DSK", model: "Exilis" },
+    ],
+  },
+  {
+    id: "teb-foils",
+    name: "TEB Foil Set",
+    subtitle: "TEB Racing Daggerboard & Rudder combo",
+    boatClass: "optimist",
+    category: "daggerboard",
+    brand: "TEB",
+    model: "Racing",
+    bundleItems: [
+      { category: "daggerboard", brand: "TEB", model: "Racing" },
+      { category: "rudder", brand: "TEB", model: "Racing" },
+    ],
+  },
+  {
+    id: "onesails-cd",
+    name: "OneSails CD Cut",
+    subtitle: "Cross-cut radial racing sail (Heavy/Medium wind)",
+    boatClass: "optimist",
+    category: "sail",
+    brand: "OneSails",
+    model: "CD Cut Racing",
+    windRange: "medium",
+  },
+  {
+    id: "onesails-vx",
+    name: "OneSails VX Cut",
+    subtitle: "Power cut racing sail (Light to Medium wind)",
+    boatClass: "optimist",
+    category: "sail",
+    brand: "OneSails",
+    model: "VX Cut Racing",
+    windRange: "light",
+  },
+  {
+    id: "jsail-blue",
+    name: "J-Sail Blue",
+    subtitle: "Classic medium-heavy racing sail (Sailors 38-46kg)",
+    boatClass: "optimist",
+    category: "sail",
+    brand: "J-Sail",
+    model: "Blue 2.0",
+    windRange: "medium",
+  },
+  {
+    id: "jsail-red",
+    name: "J-Sail Red",
+    subtitle: "Power heavy air sail (Sailors 45kg+)",
+    boatClass: "optimist",
+    category: "sail",
+    brand: "J-Sail",
+    model: "Red Racing",
+    windRange: "heavy",
+  },
+  {
+    id: "north-v3",
+    name: "North Sails V-3",
+    subtitle: "Radial racing cut (Medium wind all-rounder)",
+    boatClass: "optimist",
+    category: "sail",
+    brand: "Northsail",
+    model: "V-3 Radial",
+    windRange: "medium",
+  },
+  {
+    id: "winner-hull",
+    name: "Winner Optimist Hull",
+    subtitle: "Winner 3D / Den hull",
+    boatClass: "optimist",
+    category: "hull",
+    brand: "Winner",
+    model: "3D Racing",
+  },
+  {
+    id: "fareast-hull",
+    name: "Far East Champion Hull",
+    subtitle: "Far East IODA approved racing hull",
+    boatClass: "optimist",
+    category: "hull",
+    brand: "Far East",
+    model: "Champion",
+  },
+];
+
+export type SimplifiedCondition = "race_ready" | "practice_only" | "needs_attention";
+
+export function toSimplifiedCondition(
+  condition: EquipmentCondition | string | null | undefined
+): SimplifiedCondition {
+  if (condition === "new" || condition === "good") return "race_ready";
+  if (condition === "fair") return "practice_only";
+  return "needs_attention";
+}
+
+export function fromSimplifiedCondition(
+  simplified: SimplifiedCondition
+): EquipmentCondition {
+  if (simplified === "race_ready") return "good";
+  if (simplified === "practice_only") return "fair";
+  return "worn";
+}
+
+export const SIMPLIFIED_CONDITION_META: Record<
+  SimplifiedCondition,
+  { label: string; shortLabel: string; bg: string; text: string; border: string; dot: string }
+> = {
+  race_ready: {
+    label: "Race Ready (Excellent / Good)",
+    shortLabel: "Race Ready",
+    bg: "bg-emerald-500/15",
+    text: "text-emerald-300",
+    border: "border-emerald-500/30",
+    dot: "bg-emerald-400",
+  },
+  practice_only: {
+    label: "Practice / Training Only",
+    shortLabel: "Practice Only",
+    bg: "bg-amber-500/15",
+    text: "text-amber-300",
+    border: "border-amber-500/30",
+    dot: "bg-amber-400",
+  },
+  needs_attention: {
+    label: "Needs Repair / Replacement",
+    shortLabel: "Needs Repair",
+    bg: "bg-rose-500/15",
+    text: "text-rose-300",
+    border: "border-rose-500/30",
+    dot: "bg-rose-400",
+  },
+};
 
 export function brandsForCategory(category: EquipmentCategory): string[] {
   return BRAND_PRESETS[category] || [];

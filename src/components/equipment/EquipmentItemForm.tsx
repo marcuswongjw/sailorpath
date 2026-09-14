@@ -1,16 +1,19 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Sparkles } from "lucide-react";
 import {
   BRAND_OTHER,
-  CONDITION_OPTIONS,
   EQUIPMENT_SECTIONS,
   EQUIPMENT_TAGS,
   WIND_RANGES,
+  YOUTH_EQUIPMENT_PRESETS,
+  toSimplifiedCondition,
+  fromSimplifiedCondition,
+  SIMPLIFIED_CONDITION_META,
+  type SimplifiedCondition,
   brandsForCategory,
   categoryLabel,
   isCustomBrand,
   isMastSetCategory,
   type EquipmentCategory,
-  type EquipmentCondition,
   type EquipmentStatus,
   type EquipmentTag,
   type WindRange,
@@ -57,37 +60,81 @@ export function EquipmentItemForm({
     });
   };
 
+  const applyPreset = (preset: (typeof YOUTH_EQUIPMENT_PRESETS)[number]) => {
+    onChange({
+      ...form,
+      category: preset.category,
+      brand: preset.brand,
+      brandCustom: "",
+      model: preset.model,
+      windRange: preset.windRange || form.windRange,
+      condition: "good",
+      isPrimary: true,
+      status: "active",
+    });
+  };
+
+  const currentSimplified = toSimplifiedCondition(form.condition);
+
   return (
     <>
       {modal === "quick" && (
-        <div>
-          <p className={`${labelClass} mb-1.5`}>Part</p>
-          <div className="flex flex-wrap gap-1.5">
-            {(
-              [
-                "hull",
-                "sail",
-                "mast",
-                "boom",
-                "sprit",
-                "daggerboard",
-                "rudder",
-                "other",
-              ] as EquipmentCategory[]
-            ).map((cat) => (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => setCategory(cat)}
-                className={`rounded-full px-2.5 py-1.5 text-[10px] font-bold border touch-manipulation ${
-                  form.category === cat
-                    ? "bg-orange-500/20 border-orange-500/40 text-orange-100"
-                    : "border-white/10 text-slate-400"
-                }`}
-              >
-                {categoryLabel(cat)}
-              </button>
-            ))}
+        <div className="space-y-3 pb-2 border-b border-white/5">
+          <div>
+            <div className="flex items-center gap-1.5 mb-1.5">
+              <Sparkles className="h-3.5 w-3.5 text-orange-400" />
+              <p className="text-[11px] font-bold text-slate-200">
+                1-Click Popular Gear Presets
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {YOUTH_EQUIPMENT_PRESETS.slice(0, 6).map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  onClick={() => applyPreset(p)}
+                  className={`rounded-lg px-2.5 py-1 text-[10px] font-bold border transition touch-manipulation ${
+                    form.brand.toLowerCase() === p.brand.toLowerCase() &&
+                    form.model.toLowerCase() === p.model.toLowerCase()
+                      ? "bg-orange-500/20 border-orange-500/50 text-orange-200 shadow-sm"
+                      : "border-white/10 bg-white/[0.03] text-slate-300 hover:border-orange-500/30 hover:text-white"
+                  }`}
+                >
+                  {p.name}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <p className={`${labelClass} mb-1.5`}>Or select part category</p>
+            <div className="flex flex-wrap gap-1.5">
+              {(
+                [
+                  "hull",
+                  "sail",
+                  "mast",
+                  "boom",
+                  "sprit",
+                  "daggerboard",
+                  "rudder",
+                  "other",
+                ] as EquipmentCategory[]
+              ).map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setCategory(cat)}
+                  className={`rounded-full px-2.5 py-1 text-[10px] font-bold border touch-manipulation ${
+                    form.category === cat
+                      ? "bg-orange-500/20 border-orange-500/40 text-orange-100"
+                      : "border-white/10 text-slate-400"
+                  }`}
+                >
+                  {categoryLabel(cat)}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       )}
@@ -244,6 +291,60 @@ export function EquipmentItemForm({
         </>
       )}
 
+      {/* Primary & Condition: First-class controls visible directly */}
+      <div className="space-y-2.5 pt-1">
+        <div>
+          <p className={`${labelClass} mb-1.5`}>Condition</p>
+          <div className="grid grid-cols-3 gap-1.5">
+            {(["race_ready", "practice_only", "needs_attention"] as SimplifiedCondition[]).map(
+              (key) => {
+                const meta = SIMPLIFIED_CONDITION_META[key];
+                const active = currentSimplified === key;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() =>
+                      onChange({
+                        ...form,
+                        condition: fromSimplifiedCondition(key),
+                      })
+                    }
+                    className={`rounded-xl px-2 py-2 text-center border transition touch-manipulation flex flex-col items-center gap-1 ${
+                      active
+                        ? `${meta.bg} ${meta.border} ${meta.text} ring-1 ring-white/20`
+                        : "border-white/10 bg-white/[0.02] text-slate-400 hover:border-white/20"
+                    }`}
+                  >
+                    <span className={`h-2 w-2 rounded-full ${meta.dot}`} />
+                    <span className="text-[10px] font-bold leading-tight">
+                      {meta.shortLabel}
+                    </span>
+                  </button>
+                );
+              }
+            )}
+          </div>
+        </div>
+
+        <label className="flex items-center gap-2.5 text-[12px] text-slate-300 rounded-xl border border-white/10 bg-black/20 px-3 py-2.5 cursor-pointer hover:border-white/20">
+          <input
+            type="checkbox"
+            checked={form.isPrimary}
+            onChange={(e) =>
+              onChange({ ...form, isPrimary: e.target.checked })
+            }
+            className="rounded border-white/20 text-orange-500 focus:ring-0"
+          />
+          <div>
+            <span className="font-semibold text-white">⭐ Primary Race-Day Gear</span>
+            <p className="text-[10px] text-slate-500">
+              Rigged for competition (used on race day)
+            </p>
+          </div>
+        </label>
+      </div>
+
       {(showMore || modal === "edit") && (
         <div className="space-y-3 border-t border-white/5 pt-3">
           <div className="grid grid-cols-2 gap-2.5">
@@ -265,36 +366,17 @@ export function EquipmentItemForm({
               </select>
             </label>
             <label className={labelClass}>
-              Condition
-              <select
-                value={form.condition}
+              Acquired
+              <input
+                type="date"
+                value={form.acquiredOn}
                 onChange={(e) =>
-                  onChange({
-                    ...form,
-                    condition: e.target.value as EquipmentCondition,
-                  })
+                  onChange({ ...form, acquiredOn: e.target.value })
                 }
                 className={fieldClass}
-              >
-                {CONDITION_OPTIONS.map((c) => (
-                  <option key={c.value} value={c.value}>
-                    {c.label}
-                  </option>
-                ))}
-              </select>
+              />
             </label>
           </div>
-          <label className={labelClass}>
-            Acquired
-            <input
-              type="date"
-              value={form.acquiredOn}
-              onChange={(e) =>
-                onChange({ ...form, acquiredOn: e.target.value })
-              }
-              className={fieldClass}
-            />
-          </label>
           <div>
             <p className={`${labelClass} mb-1.5`}>Tags</p>
             <div className="flex flex-wrap gap-1.5">
@@ -314,31 +396,13 @@ export function EquipmentItemForm({
               ))}
             </div>
           </div>
-          <label className="flex items-center gap-2.5 text-[12px] text-slate-300 rounded-xl border border-white/5 bg-black/20 px-3 py-2.5 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={form.isPrimary}
-              onChange={(e) =>
-                onChange({ ...form, isPrimary: e.target.checked })
-              }
-              className="rounded border-white/20"
-            />
-            <span>
-              <span className="font-semibold text-white">Primary</span>
-              <span className="text-slate-500">
-                {" "}
-                — main {categoryLabel(form.category).toLowerCase()} for race
-                day
-              </span>
-            </span>
-          </label>
           <label className={labelClass}>
             Notes
             <textarea
               value={form.notes}
               onChange={(e) => onChange({ ...form, notes: e.target.value })}
               rows={2}
-              placeholder="Optional"
+              placeholder="Optional maintenance notes or serial number"
               className={`${fieldClass} resize-none`}
             />
           </label>

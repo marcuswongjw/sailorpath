@@ -25,10 +25,22 @@ import {
   Award,
   Users,
   Compass,
+  Star,
+  X,
 } from "lucide-react";
 import { relationLabel, type ClaimRelation } from "@/lib/claimRelation";
 import { birthYear } from "@/lib/age";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import {
+  YOUTH_EQUIPMENT_PRESETS,
+  SIMPLIFIED_CONDITION_META,
+  fromSimplifiedCondition,
+  brandsForCategory,
+  categoryLabel,
+  type QuickEquipmentPreset,
+  type EquipmentCategory,
+  type SimplifiedCondition,
+} from "@/lib/equipment";
 
 type Standing = {
   periodLabel: string;
@@ -205,6 +217,17 @@ export function ParentDashboard() {
   });
   const [newChecklistText, setNewChecklistText] = useState("");
 
+  // Equipment in-place management state
+  const [showAddGearModal, setShowAddGearModal] = useState(false);
+  const [addGearTab, setAddGearTab] = useState<"presets" | "custom">("presets");
+  const [addGearBusy, setAddGearBusy] = useState(false);
+  const [customGearCategory, setCustomGearCategory] = useState<EquipmentCategory>("sail");
+  const [customGearBrand, setCustomGearBrand] = useState("");
+  const [customGearModel, setCustomGearModel] = useState("");
+  const [customGearLabel, setCustomGearLabel] = useState("");
+  const [customGearCondition, setCustomGearCondition] = useState<SimplifiedCondition>("race_ready");
+  const [customGearPrimary, setCustomGearPrimary] = useState(true);
+
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -337,6 +360,253 @@ export function ParentDashboard() {
       return updated;
     });
     toast.info("Checklist reset for next regatta.");
+  };
+
+  const handleToggleGearCondition = async (
+    athleteId: string,
+    gearId: string,
+    currentCondition: string
+  ) => {
+    const nextCondition =
+      currentCondition === "new" || currentCondition === "good"
+        ? "fair"
+        : currentCondition === "fair"
+        ? "worn"
+        : "good";
+
+    setAthletes((prev) =>
+      prev.map((ath) => {
+        if (ath.id !== athleteId) return ath;
+        return {
+          ...ath,
+          primaryGear: (ath.primaryGear || []).map((g) =>
+            g.id === gearId ? { ...g, condition: nextCondition } : g
+          ),
+        };
+      })
+    );
+
+    try {
+      const res = await fetch("/api/account/equipment", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: gearId, condition: nextCondition }),
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error();
+      toast.success(
+        nextCondition === "good"
+          ? "Gear marked Race Ready 🟢"
+          : nextCondition === "fair"
+          ? "Gear marked Practice Only 🟡"
+          : "Gear marked Needs Repair 🔴"
+      );
+    } catch {
+      toast.error("Failed to update equipment condition.");
+    }
+  };
+
+  const handleToggleGearPrimary = async (
+    athleteId: string,
+    gearId: string,
+    currentPrimary: boolean
+  ) => {
+    const nextPrimary = !currentPrimary;
+
+    setAthletes((prev) =>
+      prev.map((ath) => {
+        if (ath.id !== athleteId) return ath;
+        return {
+          ...ath,
+          primaryGear: (ath.primaryGear || []).map((g) =>
+            g.id === gearId ? { ...g, isPrimary: nextPrimary } : g
+          ),
+        };
+      })
+    );
+
+    try {
+      const res = await fetch("/api/account/equipment", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: gearId, isPrimary: nextPrimary }),
+        credentials: "include",
+      });
+      if (!res.ok) throw new Error();
+      toast.success(
+        nextPrimary ? "Set as primary race gear ⭐" : "Removed from primary gear."
+      );
+    } catch {
+      toast.error("Failed to update gear priority.");
+    }
+  };
+
+  const handleDeleteGear = async (athleteId: string, gearId: string) => {
+    const confirmed = await confirm({
+      title: "Remove Equipment",
+      message:
+        "Are you sure you want to remove this item from your equipment locker?",
+      confirmLabel: "Remove",
+      tone: "danger",
+    });
+    if (!confirmed) return;
+
+    setAthletes((prev) =>
+      prev.map((ath) => {
+        if (ath.id !== athleteId) return ath;
+        return {
+          ...ath,
+          primaryGear: (ath.primaryGear || []).filter((g) => g.id !== gearId),
+        };
+      })
+    );
+
+    try {
+      const res = await fetch(
+        `/api/account/equipment?id=${encodeURIComponent(gearId)}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+      if (!res.ok) throw new Error();
+      toast.success("Equipment item removed.");
+    } catch {
+      toast.error("Failed to remove equipment.");
+    }
+  };
+
+  const handleAddGearPreset = async (
+    athleteId: string,
+    preset: QuickEquipmentPreset
+  ) => {
+    setAddGearBusy(true);
+    try {
+      const itemsToAdd =
+        preset.bundleItems && preset.bundleItems.length > 0
+          ? preset.bundleItems.map((b) => ({
+              sailorId: athleteId,
+              boatClass: preset.boatClass,
+              category: b.category,
+              brand: b.brand,
+              model: b.model,
+              condition: "good",
+              status: "active",
+              isPrimary: true,
+            }))
+          : [
+              {
+                sailorId: athleteId,
+                boatClass: preset.boatClass,
+                category: preset.category,
+                brand: preset.brand,
+                model: preset.model,
+                windRange: preset.windRange,
+                condition: "good",
+                status: "active",
+                isPrimary: true,
+              },
+            ];
+
+      for (const item of itemsToAdd) {
+        const res = await fetch("/api/account/equipment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(item),
+          credentials: "include",
+        });
+        const data = await res.json();
+        if (data.item) {
+          setAthletes((prev) =>
+            prev.map((ath) => {
+              if (ath.id !== athleteId) return ath;
+              const existing = ath.primaryGear || [];
+              return {
+                ...ath,
+                primaryGear: [
+                  ...existing.filter((x) => x.id !== data.item.id),
+                  {
+                    id: data.item.id,
+                    category: data.item.category,
+                    brand: data.item.brand,
+                    model: data.item.model,
+                    label: data.item.label,
+                    condition: data.item.condition,
+                    status: data.item.status,
+                    isPrimary: data.item.isPrimary,
+                  },
+                ],
+              };
+            })
+          );
+        }
+      }
+      setShowAddGearModal(false);
+      toast.success(`Added ${preset.name} to locker!`);
+    } catch {
+      toast.error("Failed to add preset gear.");
+    } finally {
+      setAddGearBusy(false);
+    }
+  };
+
+  const handleCreateCustomGear = async (athleteId: string) => {
+    setAddGearBusy(true);
+    try {
+      const item = {
+        sailorId: athleteId,
+        boatClass: "optimist",
+        category: customGearCategory,
+        brand: customGearBrand.trim() || null,
+        model: customGearModel.trim() || null,
+        label: customGearLabel.trim() || null,
+        condition: fromSimplifiedCondition(customGearCondition),
+        status: "active",
+        isPrimary: customGearPrimary,
+      };
+
+      const res = await fetch("/api/account/equipment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(item),
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok || !data.item)
+        throw new Error(data.error || "Failed to add gear");
+
+      setAthletes((prev) =>
+        prev.map((ath) => {
+          if (ath.id !== athleteId) return ath;
+          const existing = ath.primaryGear || [];
+          return {
+            ...ath,
+            primaryGear: [
+              ...existing.filter((x) => x.id !== data.item.id),
+              {
+                id: data.item.id,
+                category: data.item.category,
+                brand: data.item.brand,
+                model: data.item.model,
+                label: data.item.label,
+                condition: data.item.condition,
+                status: data.item.status,
+                isPrimary: data.item.isPrimary,
+              },
+            ],
+          };
+        })
+      );
+      setShowAddGearModal(false);
+      setCustomGearBrand("");
+      setCustomGearModel("");
+      setCustomGearLabel("");
+      toast.success("Added item to equipment locker!");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed to add equipment.");
+    } finally {
+      setAddGearBusy(false);
+    }
   };
 
   const addNote = async (sailorId: string) => {
@@ -1040,22 +1310,32 @@ export function ParentDashboard() {
 
                   {/* CARD B: EQUIPMENT & BOAT LOCKER */}
                   <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 sm:p-6 space-y-4 shadow-sm">
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start justify-between gap-3 flex-wrap">
                       <div>
                         <h3 className="text-sm font-black uppercase tracking-wider text-sky-400 flex items-center gap-2">
                           <Sailboat className="h-4 w-4 text-sky-400" />
                           Boat Locker & Equipment
                         </h3>
                         <p className="text-xs text-slate-400 mt-0.5">
-                          Track hull condition, sails, spars, measurement certificates, and maintenance alerts.
+                          Track hull condition, sails, spars, measurement certificates, and race-day gear.
                         </p>
                       </div>
-                      <Link
-                        href={`/${activeAthlete.handle}`}
-                        className="text-[11px] font-bold text-sky-400 hover:text-sky-300 hover:underline flex items-center gap-1 shrink-0"
-                      >
-                        Manage Gear →
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setShowAddGearModal(true)}
+                          className="rounded-full bg-orange-600 hover:bg-orange-500 px-3.5 py-1.5 text-xs font-bold text-white inline-flex items-center gap-1.5 transition shadow-sm"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                          Add Equipment
+                        </button>
+                        <Link
+                          href={`/${activeAthlete.handle}#profile-equipment`}
+                          className="text-[11px] font-bold text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg border border-white/10 hover:border-white/20 transition flex items-center gap-1"
+                        >
+                          Full Profile →
+                        </Link>
+                      </div>
                     </div>
 
                     {/* Active alerts banner if any */}
@@ -1082,52 +1362,323 @@ export function ParentDashboard() {
                         {activeAthlete.primaryGear.map((g) => (
                           <div
                             key={g.id}
-                            className="rounded-xl border border-white/5 bg-black/25 p-3 flex flex-col justify-between gap-2"
+                            className="rounded-xl border border-white/5 bg-black/25 p-3 flex flex-col justify-between gap-2.5 hover:border-white/10 transition group"
                           >
-                            <div>
-                              <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-                                {g.category}
-                              </span>
-                              <p className="text-xs font-bold text-white mt-0.5">
-                                {g.label || [g.brand, g.model].filter(Boolean).join(" ") || "Equipment Item"}
-                              </p>
+                            <div className="flex items-start justify-between gap-1.5">
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center gap-1.5">
+                                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
+                                    {g.category}
+                                  </span>
+                                  {g.isPrimary && (
+                                    <span className="text-[9px] font-bold text-amber-300 bg-amber-500/15 border border-amber-500/25 px-1.5 py-0.2 rounded">
+                                      Primary
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-xs font-bold text-white mt-0.5 truncate">
+                                  {g.label || [g.brand, g.model].filter(Boolean).join(" ") || "Equipment Item"}
+                                </p>
+                              </div>
+                              <div className="flex items-center gap-1 shrink-0">
+                                <button
+                                  type="button"
+                                  title={g.isPrimary ? "Primary race gear (click to unset)" : "Make primary race gear"}
+                                  onClick={() => void handleToggleGearPrimary(activeAthlete.id, g.id, g.isPrimary)}
+                                  className={`p-1 rounded hover:bg-white/10 transition ${
+                                    g.isPrimary ? "text-amber-400" : "text-slate-600 hover:text-slate-400"
+                                  }`}
+                                >
+                                  <Star className={`h-3.5 w-3.5 ${g.isPrimary ? "fill-amber-400" : ""}`} />
+                                </button>
+                                <button
+                                  type="button"
+                                  title="Remove gear from locker"
+                                  onClick={() => void handleDeleteGear(activeAthlete.id, g.id)}
+                                  className="p-1 rounded text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 transition"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                              </div>
                             </div>
-                            <div className="flex items-center justify-between pt-1 border-t border-white/5">
-                              <span
-                                className={`text-[10px] font-bold capitalize px-2 py-0.5 rounded-md ${
+
+                            <div className="flex items-center justify-between pt-1.5 border-t border-white/5">
+                              <button
+                                type="button"
+                                onClick={() => void handleToggleGearCondition(activeAthlete.id, g.id, g.condition)}
+                                title="Click to toggle condition (Race Ready / Practice Only / Needs Repair)"
+                                className={`text-[10px] font-bold capitalize px-2 py-0.5 rounded-md border transition flex items-center gap-1 touch-manipulation ${
                                   g.condition === "new" || g.condition === "good"
-                                    ? "bg-emerald-500/15 text-emerald-300"
+                                    ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/25"
                                     : g.condition === "fair"
-                                    ? "bg-amber-500/15 text-amber-300"
-                                    : "bg-rose-500/15 text-rose-300"
+                                    ? "bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25"
+                                    : "bg-rose-500/15 border-rose-500/30 text-rose-300 hover:bg-rose-500/25"
                                 }`}
                               >
-                                {g.condition || "Good"}
+                                <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
+                                {g.condition === "new" || g.condition === "good"
+                                  ? "Race Ready"
+                                  : g.condition === "fair"
+                                  ? "Practice Only"
+                                  : "Needs Repair"}
+                              </button>
+                              <span className="text-[10px] text-slate-500 font-medium">
+                                Tap to toggle
                               </span>
-                              {g.isPrimary && (
-                                <span className="text-[10px] font-semibold text-slate-400">
-                                  Primary
-                                </span>
-                              )}
                             </div>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <div className="rounded-xl border border-dashed border-white/10 bg-black/15 p-5 text-center space-y-2">
-                        <p className="text-xs font-bold text-slate-300">No primary gear registered</p>
-                        <p className="text-[11px] text-slate-500 max-w-sm mx-auto">
-                          Add your child&apos;s hull number, spars, and primary sails on their profile to track safety checks and warranty windows.
-                        </p>
-                        <Link
-                          href={`/${activeAthlete.handle}`}
-                          className="inline-block text-xs font-bold text-orange-400 hover:text-orange-300 pt-1"
-                        >
-                          Add equipment on profile →
-                        </Link>
+                      <div className="rounded-xl border border-dashed border-white/10 bg-black/15 p-6 text-center space-y-3">
+                        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/10 border border-orange-500/20">
+                          <Sailboat className="h-5 w-5 text-orange-400" />
+                        </div>
+                        <div className="space-y-1">
+                          <p className="text-xs font-bold text-slate-200">No equipment registered yet</p>
+                          <p className="text-[11px] text-slate-400 max-w-sm mx-auto">
+                            Add your sailor&apos;s hull, spars, sails, and foils to track safety checks, condition, and race-day readiness.
+                          </p>
+                        </div>
+                        <div className="flex flex-wrap justify-center gap-2 pt-1">
+                          <button
+                            type="button"
+                            onClick={() => setShowAddGearModal(true)}
+                            className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-1.5 text-xs font-bold text-white transition shadow-sm inline-flex items-center gap-1.5"
+                          >
+                            <Plus className="h-3.5 w-3.5" />
+                            Add Equipment
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => void handleAddGearPreset(activeAthlete.id, YOUTH_EQUIPMENT_PRESETS[0])}
+                            className="rounded-full border border-white/10 bg-white/5 hover:border-white/20 px-3 py-1.5 text-xs font-bold text-slate-300 transition"
+                          >
+                            + Optimax Rig Set
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => void handleAddGearPreset(activeAthlete.id, YOUTH_EQUIPMENT_PRESETS[6])}
+                            className="rounded-full border border-white/10 bg-white/5 hover:border-white/20 px-3 py-1.5 text-xs font-bold text-slate-300 transition"
+                          >
+                            + OneSails Racing Sail
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>
+
+                  {/* Add Equipment Modal */}
+                  {showAddGearModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
+                      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#131520] p-5 sm:p-6 space-y-4 shadow-2xl relative my-8">
+                        <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                          <div>
+                            <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                              <Plus className="h-4 w-4 text-orange-400" />
+                              Add Equipment to Locker
+                            </h3>
+                            <p className="text-xs text-slate-400">
+                              For {activeAthlete.name} ({activeAthlete.currentFleet || "Optimist"} Fleet)
+                            </p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setShowAddGearModal(false)}
+                            className="rounded-lg p-1.5 text-slate-400 hover:text-white hover:bg-white/10 transition"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+
+                        {/* Tabs: Presets vs Custom */}
+                        <div className="flex rounded-xl bg-black/40 border border-white/10 p-1">
+                          <button
+                            type="button"
+                            onClick={() => setAddGearTab("presets")}
+                            className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+                              addGearTab === "presets"
+                                ? "bg-orange-500 text-white shadow-sm"
+                                : "text-slate-400 hover:text-white"
+                            }`}
+                          >
+                            ⭐ 1-Click Popular Presets
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setAddGearTab("custom")}
+                            className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
+                              addGearTab === "custom"
+                                ? "bg-orange-500 text-white shadow-sm"
+                                : "text-slate-400 hover:text-white"
+                            }`}
+                          >
+                            Custom Gear
+                          </button>
+                        </div>
+
+                        {addGearTab === "presets" ? (
+                          <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
+                            <p className="text-[11px] text-slate-400">
+                              Select standard youth equipment packages to add immediately:
+                            </p>
+                            <div className="grid grid-cols-1 gap-2">
+                              {YOUTH_EQUIPMENT_PRESETS.map((preset) => (
+                                <div
+                                  key={preset.id}
+                                  className="rounded-xl border border-white/10 bg-black/30 p-3 flex items-center justify-between gap-3 hover:border-orange-500/40 transition"
+                                >
+                                  <div className="min-w-0 flex-1">
+                                    <div className="flex items-center gap-2">
+                                      <span className="text-xs font-bold text-white">
+                                        {preset.name}
+                                      </span>
+                                      <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/5 text-slate-400">
+                                        {preset.category}
+                                      </span>
+                                    </div>
+                                    <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                                      {preset.subtitle}
+                                    </p>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    disabled={addGearBusy}
+                                    onClick={() => void handleAddGearPreset(activeAthlete.id, preset)}
+                                    className="shrink-0 rounded-lg bg-orange-500/20 hover:bg-orange-500 border border-orange-500/40 px-3 py-1.5 text-xs font-bold text-orange-200 hover:text-white transition disabled:opacity-50"
+                                  >
+                                    {addGearBusy ? "Adding…" : "+ Add"}
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="space-y-3">
+                            <div>
+                              <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                                Equipment Category
+                              </label>
+                              <select
+                                value={customGearCategory}
+                                onChange={(e) => {
+                                  const cat = e.target.value as EquipmentCategory;
+                                  setCustomGearCategory(cat);
+                                  const presets = brandsForCategory(cat);
+                                  setCustomGearBrand(presets[0] || "");
+                                }}
+                                className="w-full rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+                              >
+                                {(
+                                  [
+                                    "hull",
+                                    "sail",
+                                    "mast",
+                                    "boom",
+                                    "sprit",
+                                    "daggerboard",
+                                    "rudder",
+                                    "other",
+                                  ] as EquipmentCategory[]
+                                ).map((cat) => (
+                                  <option key={cat} value={cat}>
+                                    {categoryLabel(cat)}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-2">
+                              <div>
+                                <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                                  Brand / Maker
+                                </label>
+                                <input
+                                  value={customGearBrand}
+                                  onChange={(e) => setCustomGearBrand(e.target.value)}
+                                  placeholder="e.g. Winner, OneSails, Optimax"
+                                  className="w-full rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                                  Model / Cut
+                                </label>
+                                <input
+                                  value={customGearModel}
+                                  onChange={(e) => setCustomGearModel(e.target.value)}
+                                  placeholder="e.g. CD Cut, Mk3 Flex"
+                                  className="w-full rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                                Sail # / Serial / Identifier
+                              </label>
+                              <input
+                                value={customGearLabel}
+                                onChange={(e) => setCustomGearLabel(e.target.value)}
+                                placeholder="e.g. SIN 4639 or Hull #184491"
+                                className="w-full rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="text-[11px] font-bold text-slate-300 block mb-1.5">
+                                Condition
+                              </label>
+                              <div className="grid grid-cols-3 gap-1.5">
+                                {(["race_ready", "practice_only", "needs_attention"] as SimplifiedCondition[]).map(
+                                  (key) => {
+                                    const meta = SIMPLIFIED_CONDITION_META[key];
+                                    const active = customGearCondition === key;
+                                    return (
+                                      <button
+                                        key={key}
+                                        type="button"
+                                        onClick={() => setCustomGearCondition(key)}
+                                        className={`rounded-xl px-2 py-2 text-center border transition flex flex-col items-center gap-1 ${
+                                          active
+                                            ? `${meta.bg} ${meta.border} ${meta.text} ring-1 ring-white/20`
+                                            : "border-white/10 bg-white/[0.02] text-slate-400 hover:border-white/20"
+                                        }`}
+                                      >
+                                        <span className={`h-2 w-2 rounded-full ${meta.dot}`} />
+                                        <span className="text-[10px] font-bold leading-tight">
+                                          {meta.shortLabel}
+                                        </span>
+                                      </button>
+                                    );
+                                  }
+                                )}
+                              </div>
+                            </div>
+
+                            <label className="flex items-center gap-2.5 text-xs text-slate-300 rounded-xl border border-white/10 bg-black/20 px-3 py-2 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={customGearPrimary}
+                                onChange={(e) => setCustomGearPrimary(e.target.checked)}
+                                className="rounded border-white/20 text-orange-500 focus:ring-0"
+                              />
+                              <span className="font-semibold text-white">⭐ Set as Primary Race-Day Gear</span>
+                            </label>
+
+                            <button
+                              type="button"
+                              disabled={addGearBusy}
+                              onClick={() => void handleCreateCustomGear(activeAthlete.id)}
+                              className="w-full rounded-xl bg-orange-600 hover:bg-orange-500 py-2.5 text-xs font-bold text-white transition shadow-sm disabled:opacity-50"
+                            >
+                              {addGearBusy ? "Saving…" : "Save to Equipment Locker"}
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
 
                   {/* CARD C: COACH OBSERVATIONS & FEEDBACK */}
                   <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 sm:p-6 space-y-4 shadow-sm">

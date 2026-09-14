@@ -93,6 +93,12 @@ export function ProfileClassNavigation({
         aria-label="Profile sections"
         className="sticky top-14 sm:top-16 z-20 -mx-1 px-1 py-1.5 flex gap-1.5 overflow-x-auto scrollbar-thin bg-[#090a0f]/95 backdrop-blur-md border-b border-white/5"
       >
+        <a
+          href="#profile-hero"
+          className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40 touch-manipulation"
+        >
+          Overview
+        </a>
         {activeTab !== "journey" && showStanding && (
           <a
             href="#profile-standing"
@@ -113,6 +119,14 @@ export function ProfileClassNavigation({
             className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40 touch-manipulation"
           >
             Equipment
+          </a>
+        )}
+        {activeTab !== "journey" && journeyCount > 0 && (
+          <a
+            href="#profile-journey"
+            className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40 touch-manipulation"
+          >
+            Milestones
           </a>
         )}
       </nav>
