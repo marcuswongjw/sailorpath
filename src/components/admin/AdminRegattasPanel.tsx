@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Plus, Trash2, Calendar, Trophy, ExternalLink } from "lucide-react";
+import { Plus, Trash2, Calendar, Trophy, ExternalLink, Sparkles, Loader2 } from "lucide-react";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
@@ -10,6 +11,7 @@ import {
   type RegattaFormState,
 } from "@/components/admin/adminForms";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
+import { useFeedback } from "@/components/ui/FeedbackProvider";
 
 export type { RegattaFormState };
 
@@ -34,6 +36,7 @@ export type AdminRegattasPanelProps = {
 };
 
 export function AdminRegattasPanel({
+  isSuperadmin,
   filteredRegattaList,
   regattaSearch,
   setRegattaSearch,
@@ -51,6 +54,28 @@ export function AdminRegattasPanel({
   handleDeleteRegatta,
   onOpenResults,
 }: AdminRegattasPanelProps) {
+  const { toast } = useFeedback();
+  const [isSeeding, setIsSeeding] = useState(false);
+
+  const handleSeed2026 = async () => {
+    if (!isSuperadmin) return;
+    setIsSeeding(true);
+    try {
+      const res = await fetch("/api/admin/regattas", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "seed-2026" }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Seed failed");
+      toast.success(data.message || "2026 Calendar seeded successfully!");
+      window.location.reload();
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Failed to seed calendar");
+    } finally {
+      setIsSeeding(false);
+    }
+  };
   return (
               <div className="w-full min-w-0 space-y-4">
                 <div className="glass-panel rounded-2xl border border-white/5 p-4 flex flex-col sm:flex-row sm:items-end gap-3 w-full">
@@ -126,6 +151,22 @@ export function AdminRegattasPanel({
                     <Plus className="h-4 w-4" />
                     Add regatta
                   </button>
+                  {isSuperadmin && (
+                    <button
+                      type="button"
+                      disabled={isSeeding}
+                      onClick={handleSeed2026}
+                      className="rounded-full border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 px-3.5 py-2.5 text-xs font-bold text-sky-300 flex items-center justify-center gap-1.5 shrink-0 transition-colors disabled:opacity-50"
+                      title="Populate missing 2026 official Singapore regattas & Selection Trials into the database"
+                    >
+                      {isSeeding ? (
+                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                      ) : (
+                        <Sparkles className="h-3.5 w-3.5 text-sky-400" />
+                      )}
+                      Seed 2026 Calendar
+                    </button>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 w-full min-w-0 items-start">
@@ -173,6 +214,13 @@ export function AdminRegattasPanel({
                                   boatClass: r.boatClass || "Optimist",
                                   countsForRanking:
                                     r.countsForRanking !== false,
+                                  endDate: r.endDate ? String(r.endDate).slice(0, 10) : "",
+                                  venue: r.venue || "",
+                                  organizer: r.organizer || "",
+                                  norUrl: r.norUrl || "",
+                                  registrationUrl: r.registrationUrl || "",
+                                  isSelectionTrial: Boolean(r.isSelectionTrial),
+                                  scheduleNotes: r.scheduleNotes || "",
                                 });
                               }}
                               className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${
@@ -475,6 +523,132 @@ export function AdminRegattasPanel({
                               }
                               className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
                               placeholder="Optimist, ILCA 4, WingFoil..."
+                            />
+                          </div>
+
+                          {/* Calendar & Schedule metadata */}
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              End Date (optional)
+                            </label>
+                            <input
+                              type="date"
+                              value={String(regattaForm.endDate || "").slice(0, 10)}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  endDate: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Venue
+                            </label>
+                            <input
+                              type="text"
+                              value={regattaForm.venue || ""}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  venue: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              placeholder="e.g. National Sailing Centre / Changi Sailing Club"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Organizer / Host
+                            </label>
+                            <input
+                              type="text"
+                              value={regattaForm.organizer || ""}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  organizer: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              placeholder="e.g. Singapore Sailing Federation"
+                            />
+                          </div>
+                          <div className="sm:col-span-2">
+                            <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={Boolean(regattaForm.isSelectionTrial)}
+                                onChange={(e) =>
+                                  setRegattaForm({
+                                    ...regattaForm,
+                                    isSelectionTrial: e.target.checked,
+                                  })
+                                }
+                                className="rounded border-slate-600"
+                              />
+                              <span>
+                                <strong className="text-amber-300">
+                                  Official Selection Trial / Qualifier
+                                </strong>
+                                <span className="block text-[10px] text-slate-500 leading-snug">
+                                  Highlights this event on the upcoming calendar with a special Selection Trial badge.
+                                </span>
+                              </span>
+                            </label>
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Notice of Race (NOR) URL
+                            </label>
+                            <input
+                              type="url"
+                              value={regattaForm.norUrl || ""}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  norUrl: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              placeholder="https://.../nor.pdf"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Registration / Entry Portal URL
+                            </label>
+                            <input
+                              type="url"
+                              value={regattaForm.registrationUrl || ""}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  registrationUrl: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              placeholder="https://singaporesailing.org/..."
+                            />
+                          </div>
+                          <div className="sm:col-span-2">
+                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              Schedule Notes / Description
+                            </label>
+                            <input
+                              type="text"
+                              value={regattaForm.scheduleNotes || ""}
+                              onChange={(e) =>
+                                setRegattaForm({
+                                  ...regattaForm,
+                                  scheduleNotes: e.target.value,
+                                })
+                              }
+                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              placeholder="e.g. Official selection trial for 2026 Perth Camp and Asian Games"
                             />
                           </div>
                         </div>

@@ -11,6 +11,7 @@ import {
 import { asPositiveInteger } from "@/lib/validate";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
 
 export async function GET(req: Request) {
   try {
@@ -57,6 +58,64 @@ export async function POST(req: Request) {
   try {
     const auth = await requireSuperadmin();
     const body = await req.json();
+
+    // 1-Click seed for 2026 Singapore Regatta Calendar
+    if (body.action === "seed-2026") {
+      const seeded = [];
+      for (const item of SINGAPORE_REGATTAS_2026) {
+        const [row] = await db
+          .insert(regattas)
+          .values({
+            name: item.name,
+            slug: item.slug,
+            date: item.startDate,
+            totalFleetSize: item.totalFleetSize,
+            division: item.division,
+            venue: item.venue,
+            endDate: item.endDate || null,
+            norUrl: item.norUrl || null,
+            registrationUrl: item.registrationUrl || null,
+            isSelectionTrial: item.isSelectionTrial,
+            organizer: item.organizer,
+            scheduleNotes: item.scheduleNotes || null,
+            countsForRanking: item.countsForRanking,
+            boatClass: item.boatClass,
+            geography: "SG",
+          })
+          .onConflictDoUpdate({
+            target: regattas.slug,
+            set: {
+              name: item.name,
+              date: item.startDate,
+              totalFleetSize: item.totalFleetSize,
+              division: item.division,
+              venue: item.venue,
+              endDate: item.endDate || null,
+              norUrl: item.norUrl || null,
+              registrationUrl: item.registrationUrl || null,
+              isSelectionTrial: item.isSelectionTrial,
+              organizer: item.organizer,
+              scheduleNotes: item.scheduleNotes || null,
+              countsForRanking: item.countsForRanking,
+              boatClass: item.boatClass,
+              updatedAt: new Date(),
+            },
+          })
+          .returning();
+        seeded.push(row);
+      }
+      revalidatePublicRankings("regattas:seed:2026");
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "regattas_seed_2026",
+        entityType: "regatta",
+        summary: `Seeded ${seeded.length} regattas for 2026 schedule`,
+        details: { count: seeded.length },
+      });
+      return NextResponse.json({ ok: true, count: seeded.length, regattas: seeded });
+    }
+
     if (!body.name || !body.date) {
       return NextResponse.json(
         { error: "name and date are required" },
@@ -109,6 +168,14 @@ export async function POST(req: Request) {
       rankingNote = `ILCA event with ${raceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races for series).`;
     }
 
+    const venue = body.venue ? String(body.venue).trim() : null;
+    const endDate = body.endDate ? String(body.endDate).slice(0, 10) : null;
+    const norUrl = body.norUrl ? String(body.norUrl).trim() : null;
+    const registrationUrl = body.registrationUrl ? String(body.registrationUrl).trim() : null;
+    const isSelectionTrial = Boolean(body.isSelectionTrial);
+    const organizer = body.organizer ? String(body.organizer).trim() : null;
+    const scheduleNotes = body.scheduleNotes ? String(body.scheduleNotes).trim() : null;
+
     const [row] = await db
       .insert(regattas)
       .values({
@@ -121,6 +188,13 @@ export async function POST(req: Request) {
         geography,
         boatClass,
         countsForRanking,
+        venue,
+        endDate,
+        norUrl,
+        registrationUrl,
+        isSelectionTrial,
+        organizer,
+        scheduleNotes,
       })
       .onConflictDoUpdate({
         target: regattas.slug,
@@ -133,6 +207,13 @@ export async function POST(req: Request) {
           geography,
           boatClass,
           countsForRanking,
+          venue,
+          endDate,
+          norUrl,
+          registrationUrl,
+          isSelectionTrial,
+          organizer,
+          scheduleNotes,
           updatedAt: new Date(),
         },
       })
@@ -204,6 +285,27 @@ export async function PATCH(req: Request) {
       if (!body.countsForRanking && patch.division == null) {
         /* keep division unless promoting */
       }
+    }
+    if (body.venue !== undefined) {
+      patch.venue = body.venue === "" || body.venue == null ? null : String(body.venue).trim();
+    }
+    if (body.endDate !== undefined) {
+      patch.endDate = body.endDate === "" || body.endDate == null ? null : String(body.endDate).slice(0, 10);
+    }
+    if (body.norUrl !== undefined) {
+      patch.norUrl = body.norUrl === "" || body.norUrl == null ? null : String(body.norUrl).trim();
+    }
+    if (body.registrationUrl !== undefined) {
+      patch.registrationUrl = body.registrationUrl === "" || body.registrationUrl == null ? null : String(body.registrationUrl).trim();
+    }
+    if (body.isSelectionTrial !== undefined) {
+      patch.isSelectionTrial = Boolean(body.isSelectionTrial);
+    }
+    if (body.organizer !== undefined) {
+      patch.organizer = body.organizer === "" || body.organizer == null ? null : String(body.organizer).trim();
+    }
+    if (body.scheduleNotes !== undefined) {
+      patch.scheduleNotes = body.scheduleNotes === "" || body.scheduleNotes == null ? null : String(body.scheduleNotes).trim();
     }
     // Promote / dismiss suggestions
     if (body.action === "promote") {

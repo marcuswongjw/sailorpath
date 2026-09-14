@@ -82,6 +82,13 @@ export type RegattaFormState = {
   id: string;
   name: string;
   date: string;
+  endDate?: string;
+  venue?: string;
+  organizer?: string;
+  norUrl?: string;
+  registrationUrl?: string;
+  isSelectionTrial?: boolean;
+  scheduleNotes?: string;
   /** Controlled number input may hold string while editing */
   totalFleetSize: number | string;
   division: string;
@@ -97,6 +104,13 @@ export function emptyRegattaForm(): RegattaFormState {
     id: "",
     name: "",
     date: "",
+    endDate: "",
+    venue: "",
+    organizer: "",
+    norUrl: "",
+    registrationUrl: "",
+    isSelectionTrial: false,
+    scheduleNotes: "",
     totalFleetSize: 50,
     division: "Gold",
     raceCount: "",

@@ -324,6 +324,20 @@ export const regattas = pgTable("regattas", {
    * NULL + countsForRanking=false → still in admin Suggestions queue.
    */
   reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+  /** Host venue / sailing club (e.g. National Sailing Centre, Changi Sailing Club) */
+  venue: text("venue"),
+  /** Multi-day regatta conclusion date (YYYY-MM-DD) */
+  endDate: date("end_date"),
+  /** Notice of Race / Sailing Instructions PDF URL */
+  norUrl: text("nor_url"),
+  /** Official entry registration portal URL */
+  registrationUrl: text("registration_url"),
+  /** Highlights official Asian Games / Perth Camp / Worlds selection trials */
+  isSelectionTrial: boolean("is_selection_trial").default(false).notNull(),
+  /** Organizing authority (e.g. Singapore Sailing Federation) */
+  organizer: text("organizer"),
+  /** Schedule details, tide timings, or logistics notes */
+  scheduleNotes: text("schedule_notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

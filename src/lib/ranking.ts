@@ -65,6 +65,20 @@ export interface RegattaRecord {
   boatClass?: string | null;
   /** false = personal / overseas logbook only — not in Best 3 of 5 */
   countsForRanking?: boolean | null;
+  /** Host venue / club */
+  venue?: string | null;
+  /** Conclusion date for multi-day regattas */
+  endDate?: string | null;
+  /** Notice of Race / SI document URL */
+  norUrl?: string | null;
+  /** Entry portal registration URL */
+  registrationUrl?: string | null;
+  /** Highlights official Asian Games / Perth Camp trials */
+  isSelectionTrial?: boolean | null;
+  /** Organizing authority */
+  organizer?: string | null;
+  /** Schedule / tide / logistics notes */
+  scheduleNotes?: string | null;
 }
 
 /** Default series class for SG Gold/Silver boards */

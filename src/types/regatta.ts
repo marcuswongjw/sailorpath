@@ -11,6 +11,13 @@ export type RegattaAdmin = {
   geography?: string | null;
   boatClass?: string | null;
   countsForRanking?: boolean | null;
+  endDate?: string | Date | null;
+  venue?: string | null;
+  organizer?: string | null;
+  norUrl?: string | null;
+  registrationUrl?: string | null;
+  isSelectionTrial?: boolean | null;
+  scheduleNotes?: string | null;
   reviewedAt?: string | Date | null;
   createdAt?: string | Date | null;
   updatedAt?: string | Date | null;

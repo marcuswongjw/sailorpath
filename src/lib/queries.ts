@@ -313,6 +313,13 @@ export async function listRegattas() {
         geography: r.geography ?? "SG",
         boatClass: r.boatClass ?? "Optimist",
         countsForRanking: r.countsForRanking !== false,
+        venue: r.venue,
+        endDate: r.endDate,
+        norUrl: r.norUrl,
+        registrationUrl: r.registrationUrl,
+        isSelectionTrial: r.isSelectionTrial ?? false,
+        organizer: r.organizer,
+        scheduleNotes: r.scheduleNotes,
       })
     );
   });
@@ -337,6 +344,13 @@ export async function getRegattaBySlug(slug: string) {
       boatClass: row.boatClass ?? "Optimist",
       raceCount: row.raceCount,
       countsForRanking: row.countsForRanking !== false,
+      venue: row.venue,
+      endDate: row.endDate,
+      norUrl: row.norUrl,
+      registrationUrl: row.registrationUrl,
+      isSelectionTrial: row.isSelectionTrial ?? false,
+      organizer: row.organizer,
+      scheduleNotes: row.scheduleNotes,
     } satisfies RegattaRecord;
   });
 }
@@ -1024,6 +1038,20 @@ export const getCachedPublicRegattas = unstable_cache(
   ["public-regattas-list-v1"],
   { revalidate: 120, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
+
+export async function getUpcomingRegattas(
+  asOfDate?: string
+): Promise<RegattaRecord[]> {
+  const all = await getCachedPublicRegattas();
+  const today = asOfDate || todayYmdSg();
+  return all
+    .filter((r) => {
+      const start = String(r.date || "").slice(0, 10);
+      const end = r.endDate ? String(r.endDate).slice(0, 10) : start;
+      return end >= today;
+    })
+    .sort((a, b) => String(a.date).localeCompare(String(b.date)));
+}
 
 export async function ensureProfileForUser(user: {
   id: string;
