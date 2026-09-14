@@ -17,6 +17,7 @@ import {
   RefreshCw,
   Trophy,
   Edit3,
+  Images,
 } from "lucide-react";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
@@ -25,7 +26,7 @@ import {
   type WingfoilSailorResult,
   type WingfoilRaceScore,
 } from "@/lib/wingfoil";
-import { readWingfoilScreenshot } from "@/lib/wingfoilScreenshot";
+import { readWingfoilScreenshots } from "@/lib/wingfoilScreenshot";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
@@ -40,10 +41,11 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     SINGAPORE_WINGFOIL_REGATTAS[0]?.id || ""
   );
 
-  // Uploaded screenshot preview & OCR scanning state
-  const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
-  const [screenshotFilename, setScreenshotFilename] = useState<string | null>(null);
+  // Multi-image upload state
+  const [uploadedPreviews, setUploadedPreviews] = useState<string[]>([]);
+  const [uploadedFilenames, setUploadedFilenames] = useState<string[]>([]);
   const [showScreenshotModal, setShowScreenshotModal] = useState<boolean>(false);
+  const [modalPreviewIdx, setModalPreviewIdx] = useState<number>(0);
   const [isScanningScreenshot, setIsScanningScreenshot] = useState<boolean>(false);
   const [scanProgress, setScanProgress] = useState<number>(0);
   const [scanStatus, setScanStatus] = useState<string>("");
@@ -126,32 +128,42 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     [activeRegatta]
   );
 
-  // Handle Screenshot Upload & Metadata Extraction
+  // Handle Screenshot Upload & Metadata Extraction (supports multiple files)
   const handleScreenshotUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isSuperadmin) {
       toast.error("403 Forbidden. Only Superadmins can update WingFoil data.");
       return;
     }
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const fileList = e.target.files;
+    if (!fileList || fileList.length === 0) return;
 
-    setScreenshotFilename(file.name);
+    const files = Array.from(fileList);
 
-    // 1. Read file as Data URL for visual preview
-    const reader = new FileReader();
-    reader.onload = (loadEvent) => {
-      const url = loadEvent.target?.result as string;
-      setScreenshotPreview(url);
-    };
-    reader.readAsDataURL(file);
+    // 1. Generate Data URL previews for all files (for thumbnail strip)
+    const previewPromises = files.map(
+      (f) =>
+        new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = (ev) => resolve(ev.target?.result as string);
+          reader.readAsDataURL(f);
+        })
+    );
+    const previews = await Promise.all(previewPromises);
+    setUploadedPreviews(previews);
+    setUploadedFilenames(files.map((f) => f.name));
+    setModalPreviewIdx(0);
 
-    // 2. Run OCR & Parser
+    // 2. Run OCR & Parser on all files (stitched if >1)
     setIsScanningScreenshot(true);
-    setScanProgress(10);
-    setScanStatus("Analyzing scorecard with OCR…");
+    setScanProgress(5);
+    setScanStatus(
+      files.length > 1
+        ? `Preparing ${files.length} screenshots for OCR…`
+        : "Analyzing scorecard with OCR…"
+    );
 
     try {
-      const parsed = await readWingfoilScreenshot(file, (p) => {
+      const parsed = await readWingfoilScreenshots(files, (p) => {
         setScanStatus(p.status);
         setScanProgress(Math.round(p.progress * 100));
       });
@@ -167,7 +179,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
 
       if (extractedResults.length > 0) {
         toast.success(
-          `OCR Extracted: "${parsed.regattaName}" with ${extractedResults.length} competitors and ${heatCount} heats!`
+          `OCR Extracted: "${parsed.regattaName}" — ${extractedResults.length} competitors, ${heatCount} heats${files.length > 1 ? ` (from ${files.length} stitched screenshots)` : ""}!`
         );
 
         // Always create a new regatta entry per upload — never overwrite an existing one
@@ -199,7 +211,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       toast.error(
         err instanceof Error
           ? err.message
-          : "Failed to parse scorecard image. Please ensure the screenshot is clear."
+          : "Failed to parse scorecard image. Please ensure the screenshots are clear."
       );
     } finally {
       setIsScanningScreenshot(false);
@@ -210,6 +222,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       }
     }
   };
+
 
   // Helper to get active discards count
   const activeDiscardsCount = useMemo(() => {
@@ -396,6 +409,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
             ref={fileInputRef}
             type="file"
             accept="image/*"
+            multiple
             onChange={handleScreenshotUpload}
             className="hidden"
           />
@@ -412,8 +426,8 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
               </>
             ) : (
               <>
-                <Upload className="h-3.5 w-3.5 text-orange-400" />
-                Upload Results Screenshot
+                <Images className="h-3.5 w-3.5 text-orange-400" />
+                Upload Screenshots
               </>
             )}
           </button>
@@ -457,79 +471,143 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
             />
           </div>
           <p className="text-[11px] text-orange-300/70">
-            Upscaling image, isolating podium heat score boxes, and parsing Sailwave table columns…
+            {uploadedPreviews.length > 1
+              ? `Upscaling & stitching ${uploadedPreviews.length} screenshots, then running a single OCR pass…`
+              : "Upscaling image, isolating podium heat score boxes, and parsing Sailwave table columns…"}
           </p>
         </div>
       )}
 
-      {/* Screenshot Preview Card (if uploaded) */}
-      {screenshotPreview && !isScanningScreenshot && (
-        <div className="glass-panel rounded-2xl p-4 border border-orange-500/20 bg-orange-500/[0.04] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="h-14 w-24 rounded-lg overflow-hidden border border-white/10 bg-black/40 shrink-0 relative group cursor-pointer" onClick={() => setShowScreenshotModal(true)}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={screenshotPreview}
-                alt="Uploaded WingFoil Scorecard"
-                className="h-full w-full object-cover group-hover:scale-105 transition-transform"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                <Eye className="h-4 w-4 text-white" />
-              </div>
-            </div>
-            <div className="min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
-                <FileImage className="h-4 w-4 text-orange-400 shrink-0" />
-                <span className="text-xs font-bold text-white truncate max-w-[200px] sm:max-w-xs">
-                  {screenshotFilename || "Uploaded Screenshot"}
+      {/* Multi-image thumbnail strip (after upload, not scanning) */}
+      {uploadedPreviews.length > 0 && !isScanningScreenshot && (
+        <div className="glass-panel rounded-2xl p-4 border border-orange-500/20 bg-orange-500/[0.04] space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <FileImage className="h-4 w-4 text-orange-400 shrink-0" />
+              <span className="text-xs font-bold text-white">
+                {uploadedPreviews.length === 1
+                  ? uploadedFilenames[0] || "Uploaded Screenshot"
+                  : `${uploadedPreviews.length} screenshots uploaded`}
+              </span>
+              {lastScanSummary ? (
+                <span className="rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5">
+                  OCR: {lastScanSummary.competitorCount} competitors · {lastScanSummary.heatCount} heats
+                  {uploadedPreviews.length > 1 ? ` · ${uploadedPreviews.length} images stitched` : ""}
                 </span>
-                {lastScanSummary ? (
-                  <span className="rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5">
-                    OCR Extracted: {lastScanSummary.competitorCount} competitors, {lastScanSummary.heatCount} heats
-                  </span>
-                ) : (
-                  <span className="rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5">
-                    Scorecard Loaded
-                  </span>
-                )}
-              </div>
-              <p className="text-[11px] text-slate-400 mt-0.5">
-                Competitors, sail numbers, and race heats populated into the heat scoreboard below. Review or edit any score directly.
-              </p>
+              ) : (
+                <span className="rounded bg-emerald-500/20 text-emerald-300 text-[9px] font-bold px-1.5 py-0.5">
+                  Scorecard Loaded
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="px-3 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-xs font-semibold text-orange-300 hover:bg-orange-500/20 flex items-center gap-1.5"
+              >
+                <RefreshCw className="h-3 w-3" />
+                Re-upload
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setUploadedPreviews([]);
+                  setUploadedFilenames([]);
+                  setLastScanSummary(null);
+                }}
+                className="p-1.5 rounded-full text-slate-500 hover:text-rose-400 hover:bg-rose-500/10"
+                title="Dismiss previews"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            <button
-              type="button"
-              onClick={() => setShowScreenshotModal(true)}
-              className="px-3 py-1.5 rounded-full border border-white/10 text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5"
-            >
-              View Full Image
-            </button>
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 text-xs font-semibold text-orange-300 hover:bg-orange-500/20 flex items-center gap-1.5"
-            >
-              <RefreshCw className="h-3 w-3" />
-              Re-upload
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setScreenshotPreview(null);
-                setScreenshotFilename(null);
-                setLastScanSummary(null);
-              }}
-              className="p-1.5 rounded-full text-slate-500 hover:text-rose-400 hover:bg-rose-500/10"
-              title="Dismiss image preview"
-            >
-              <X className="h-4 w-4" />
-            </button>
+          {/* Thumbnail strip */}
+          <div className="flex gap-2 overflow-x-auto pb-1">
+            {uploadedPreviews.map((src, idx) => (
+              <div
+                key={idx}
+                onClick={() => { setModalPreviewIdx(idx); setShowScreenshotModal(true); }}
+                className="relative shrink-0 h-20 w-32 rounded-lg overflow-hidden border border-white/10 bg-black/40 cursor-pointer group"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt={`Screenshot ${idx + 1}`}
+                  className="h-full w-full object-cover group-hover:scale-105 transition-transform"
+                />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                  <Eye className="h-4 w-4 text-white" />
+                </div>
+                <span className="absolute bottom-1 right-1 rounded bg-black/70 px-1 py-0.5 text-[9px] font-bold text-white">
+                  {idx + 1}/{uploadedPreviews.length}
+                </span>
+              </div>
+            ))}
+          </div>
+          <p className="text-[11px] text-slate-400">
+            {uploadedPreviews.length > 1
+              ? "All screenshots were stitched vertically before OCR — no rows are cut off. Review or edit any score directly below."
+              : "Competitors, sail numbers, and race heats populated into the heat scoreboard below. Review or edit any score directly."}
+          </p>
+        </div>
+      )}
+
+      {/* Fullscreen screenshot modal with prev/next navigation */}
+      {showScreenshotModal && uploadedPreviews.length > 0 && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+          onClick={() => setShowScreenshotModal(false)}
+        >
+          <div
+            className="relative max-w-4xl w-full max-h-[90vh] flex flex-col items-center gap-3"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={uploadedPreviews[modalPreviewIdx]}
+              alt={`Screenshot ${modalPreviewIdx + 1}`}
+              className="max-h-[80vh] w-auto rounded-xl border border-white/10 object-contain"
+            />
+            <div className="flex items-center gap-3">
+              {uploadedPreviews.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setModalPreviewIdx((i) => Math.max(0, i - 1))}
+                  disabled={modalPreviewIdx === 0}
+                  className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-bold text-white disabled:opacity-30"
+                >
+                  ← Prev
+                </button>
+              )}
+              <span className="text-xs text-slate-400 font-semibold">
+                {uploadedFilenames[modalPreviewIdx] || `Image ${modalPreviewIdx + 1}`}
+                {uploadedPreviews.length > 1 && ` (${modalPreviewIdx + 1} of ${uploadedPreviews.length})`}
+              </span>
+              {uploadedPreviews.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => setModalPreviewIdx((i) => Math.min(uploadedPreviews.length - 1, i + 1))}
+                  disabled={modalPreviewIdx === uploadedPreviews.length - 1}
+                  className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-xs font-bold text-white disabled:opacity-30"
+                >
+                  Next →
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setShowScreenshotModal(false)}
+                className="px-3 py-1.5 rounded-full bg-rose-500/20 border border-rose-500/30 text-xs font-bold text-rose-300 hover:bg-rose-500/30"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
+
 
       {/* Regatta Selector & Event Metadata */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -1075,37 +1153,6 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
-
-      {/* Screenshot Full Image Modal */}
-      {showScreenshotModal && screenshotPreview && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
-          <div className="glass-panel w-full max-w-5xl rounded-3xl p-6 border border-white/10 bg-[#131520] shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-white/5 pb-3">
-              <div className="flex items-center gap-2">
-                <FileImage className="h-5 w-5 text-orange-400" />
-                <h3 className="text-sm font-bold text-white">
-                  Uploaded Scorecard Screenshot — {screenshotFilename}
-                </h3>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowScreenshotModal(false)}
-                className="rounded-full p-1.5 text-slate-400 hover:text-white bg-white/5"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="overflow-auto max-h-[75vh] flex items-center justify-center rounded-2xl bg-black/50 p-2 border border-white/5">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={screenshotPreview}
-                alt="WingFoil Results Full Screenshot"
-                className="max-w-full h-auto object-contain rounded-lg"
-              />
-            </div>
           </div>
         </div>
       )}

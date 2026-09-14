@@ -687,3 +687,124 @@ export async function readWingfoilScreenshot(
     await worker.terminate();
   }
 }
+
+/**
+ * Stitch multiple preprocessed canvases vertically into one tall canvas.
+ * A 4px dark separator row is inserted between images so OCR doesn't merge
+ * the last row of one screenshot with the first row of the next.
+ */
+export function stitchImagesVertically(
+  canvases: HTMLCanvasElement[]
+): HTMLCanvasElement {
+  if (canvases.length === 0) throw new Error("No canvases to stitch");
+  if (canvases.length === 1) return canvases[0];
+
+  const maxWidth = Math.max(...canvases.map((c) => c.width));
+  const separatorH = 4;
+  const totalHeight =
+    canvases.reduce((sum, c) => sum + c.height, 0) +
+    separatorH * (canvases.length - 1);
+
+  const out = document.createElement("canvas");
+  out.width = maxWidth;
+  out.height = totalHeight;
+
+  const ctx = out.getContext("2d");
+  if (!ctx) throw new Error("Could not acquire 2D canvas context for stitching");
+
+  // White background so separators are clearly distinct
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, maxWidth, totalHeight);
+
+  let y = 0;
+  for (let i = 0; i < canvases.length; i++) {
+    const c = canvases[i];
+    ctx.drawImage(c, 0, y, c.width, c.height);
+    y += c.height;
+    if (i < canvases.length - 1) {
+      // Draw dark separator so OCR can cleanly break between pages
+      ctx.fillStyle = "#111111";
+      ctx.fillRect(0, y, maxWidth, separatorH);
+      y += separatorH;
+    }
+  }
+
+  return out;
+}
+
+/**
+ * Multi-image OCR reader for WingFoil results screenshots.
+ *
+ * Accepts 1–N screenshots of the same scorecard (e.g. when the results table
+ * is taller than the screen and must be captured in multiple screenshots).
+ * All images are loaded and preprocessed in parallel, then stitched vertically
+ * into a single canvas before a single Tesseract pass — ensuring no competitor
+ * rows are cut off between images.
+ *
+ * The first file's name is used for filename-based metadata fallback.
+ */
+export async function readWingfoilScreenshots(
+  files: File[],
+  onProgress?: (progress: { status: string; progress: number }) => void
+): Promise<ParsedWingfoilScreenshot> {
+  if (files.length === 0) throw new Error("No files provided");
+
+  // Single-file fast-path
+  if (files.length === 1) {
+    return readWingfoilScreenshot(files[0], onProgress);
+  }
+
+  onProgress?.({ status: `Loading ${files.length} screenshots…`, progress: 0.05 });
+
+  // Load all images in parallel
+  const imgs = await Promise.all(files.map((f) => loadImageFromFile(f)));
+
+  onProgress?.({ status: "Enhancing contrast and upscaling all images…", progress: 0.2 });
+
+  // Preprocess each image in parallel
+  const canvases = await Promise.all(imgs.map((img) => preprocessWingfoilImage(img)));
+
+  onProgress?.({ status: `Stitching ${files.length} screenshots into one canvas…`, progress: 0.35 });
+
+  const stitched = stitchImagesVertically(canvases);
+
+  onProgress?.({ status: "Initializing OCR worker…", progress: 0.4 });
+
+  const { createWorker, OEM, PSM } = await import("tesseract.js");
+
+  const worker = await createWorker("eng", OEM.LSTM_ONLY, {
+    workerPath: "/vendor/tesseract/worker.min.js",
+    corePath: "/vendor/tesseract/core",
+    langPath: "/vendor/tesseract/lang",
+    logger(message) {
+      if (message.status === "recognizing text") {
+        const p = 0.4 + (message.progress || 0) * 0.5;
+        onProgress?.({ status: "Recognizing scores and competitors…", progress: p });
+      }
+    },
+  });
+
+  try {
+    await worker.setParameters({
+      tessedit_pageseg_mode: PSM.AUTO,
+      preserve_interword_spaces: "1",
+      user_defined_dpi: "300",
+    });
+
+    const ret = await worker.recognize(stitched);
+    const rawText = ret.data.text || "";
+
+    onProgress?.({ status: "Parsing scorecard scoreboard…", progress: 0.92 });
+
+    const parsed = parseWingfoilOcrText(rawText, { fileName: files[0].name });
+
+    onProgress?.({ status: "Complete", progress: 1.0 });
+
+    return {
+      ...parsed,
+      rawText,
+    };
+  } finally {
+    await worker.terminate();
+  }
+}
