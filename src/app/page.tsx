@@ -45,21 +45,22 @@ export default function HomePage() {
 
         {/* Main Headline */}
         <h1 className="mx-auto max-w-4xl text-[1.85rem] leading-tight sm:text-5xl lg:text-6xl font-black tracking-tight text-white sm:leading-[1.15]">
-          {"See the standings. Own the whole "}
+          Singapore sailing,{" "}
           <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-sky-400 bg-clip-text text-transparent">
-            sailing journey.
+            tracked race by race.
           </span>
         </h1>
 
-        {/* Subtitle with all classes & Selection */}
-        <p className="mx-auto mt-4 sm:mt-6 max-w-2xl sm:max-w-3xl text-[13px] sm:text-base md:text-lg text-slate-400 font-medium sm:font-semibold leading-relaxed">
-          Follow live standings across <strong className="text-slate-200">Optimist</strong>,{" "}
+        {/* Subtitle — short, three audiences */}
+        <p className="mx-auto mt-4 sm:mt-6 max-w-xl text-sm sm:text-base md:text-lg text-slate-400 font-medium leading-relaxed">
+          Live <strong className="text-slate-200">Optimist</strong>,{" "}
           <strong className="text-slate-200">ILCA 4</strong>, and{" "}
-          <strong className="text-slate-200">WingFoil</strong>. Track official selection trials, explore the{" "}
-          <strong className="text-slate-200">2026 Racing Calendar</strong>, and keep one continuous athlete record with Hero Athlete Cards and segmented tabs (Overview, Regattas, Milestones). Coaches and parents get dedicated private workspaces.
+          <strong className="text-slate-200">WingFoil</strong> standings.
+          Official 2026 regatta calendar. Private workspaces for sailors,
+          parents, and coaches.
         </p>
 
-        {/* Primary CTA Buttons */}
+        {/* Primary + Secondary CTAs */}
         <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mx-auto sm:max-w-none">
           <Link
             href="/rankings"
@@ -73,7 +74,7 @@ export default function HomePage() {
             className="w-full sm:w-auto rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-6 py-3.5 border border-white/10 inline-flex items-center justify-center gap-2 min-h-[46px]"
           >
             <Calendar className="h-3.5 w-3.5 text-sky-400" />
-            <span>2026 Racing Calendar</span>
+            <span>2026 Calendar</span>
           </Link>
           <Link
             href="/sg/optimist/selection"
@@ -81,22 +82,22 @@ export default function HomePage() {
           >
             <Lock className="h-3.5 w-3.5 text-orange-400" />
             <span>Selection Trials</span>
-            <span className="text-[10px] bg-orange-500/20 text-orange-300 px-1.5 py-0.5 rounded font-bold">
-              Members
-            </span>
           </Link>
         </div>
 
-        {/* Sailor Claim prompt */}
-        <p className="mt-4 text-xs sm:text-sm text-slate-400">
-          Sailor or parent?{" "}
-          <Link
-            href="/search"
-            className="font-bold text-orange-400 hover:text-orange-300 underline-offset-4 hover:underline"
-          >
-            Find and claim your athlete profile →
-          </Link>
-        </p>
+        {/* Claim profile — elevated to its own row */}
+        <div className="mt-6 inline-flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-5 py-3">
+          <UserRound className="h-4 w-4 text-orange-400 shrink-0" />
+          <p className="text-xs sm:text-sm text-slate-400">
+            Sailor or parent?{" "}
+            <Link
+              href="/search"
+              className="font-bold text-orange-400 hover:text-orange-300 underline-offset-4 hover:underline"
+            >
+              Find and claim your athlete profile →
+            </Link>
+          </p>
+        </div>
 
         {/* Global Search Bar */}
         <div className="mx-auto mt-7 sm:mt-10 max-w-lg w-full">
@@ -105,7 +106,7 @@ export default function HomePage() {
               type="search"
               name="query"
               enterKeyHint="search"
-              placeholder="Search sailor name, sail number, or club…"
+              placeholder="Search by name, sail number, or club…"
               className="w-full rounded-2xl sm:rounded-full border border-white/10 bg-white/5 px-5 py-3.5 pr-12 text-white placeholder-slate-500 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 text-sm min-h-[50px] shadow-lg shadow-black/20"
             />
             <button
@@ -166,12 +167,12 @@ export default function HomePage() {
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
             <p className="text-2xl sm:text-3xl font-black text-white font-mono">3</p>
             <p className="text-xs font-bold text-orange-400 mt-0.5">National Classes</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">Optimist, ILCA 4 &amp; WingFoil</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Optimist · ILCA 4 · WingFoil</p>
           </div>
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
             <p className="text-2xl sm:text-3xl font-black text-white font-mono">150+</p>
-            <p className="text-xs font-bold text-sky-400 mt-0.5">Singapore Athletes</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">Verified profiles with sail #</p>
+            <p className="text-xs font-bold text-sky-400 mt-0.5">Registered Athletes</p>
+            <p className="text-[11px] text-slate-400 mt-0.5">Verified with sail numbers</p>
           </div>
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
             <p className="text-2xl sm:text-3xl font-black text-white font-mono">40+</p>
@@ -179,8 +180,11 @@ export default function HomePage() {
             <p className="text-[11px] text-slate-400 mt-0.5">Official low &amp; high points</p>
           </div>
           <div className="rounded-2xl border border-white/5 bg-white/[0.02] p-4">
-            <p className="text-2xl sm:text-3xl font-black text-white font-mono">2026</p>
-            <p className="text-xs font-bold text-emerald-400 mt-0.5">Race Calendar Live</p>
+            <p className="text-2xl sm:text-3xl font-black text-white font-mono flex items-center gap-2">
+              Live
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.4)] animate-pulse inline-block" />
+            </p>
+            <p className="text-xs font-bold text-emerald-400 mt-0.5">2026 Calendar</p>
             <p className="text-[11px] text-slate-400 mt-0.5">NOR downloads &amp; entry links</p>
           </div>
         </div>
@@ -192,14 +196,15 @@ export default function HomePage() {
           <div className="max-w-2xl mx-auto space-y-2">
             <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-400">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Interactive Platform Tour</span>
+              <span>See it in action</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Real-time standings, verified records, private squads
+              Your sailing community, in one place.
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Explore how podium medal badges look across classes, preview an athlete&apos;s multi-year progression,
-              and see how coaches monitor squad momentum.
+              Browse live standings across all classes, step inside an
+              athlete&apos;s career timeline, or see how a coach monitors
+              the whole squad from one dashboard.
             </p>
           </div>
 
@@ -215,7 +220,7 @@ export default function HomePage() {
               Official Singapore Class Hubs
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Every class operates under its official Singapore federation rules and scoring conventions.
+              Every class runs under its official Singapore federation rules and scoring system.
             </p>
           </div>
 
@@ -235,20 +240,22 @@ export default function HomePage() {
                   </p>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Live national ranking based on 5-regatta national series every half-yearly. Gold/Silver fleet intake and drops applied twice a year (1 Jan / 1 Jul).
+                  National ranking updated after every scored regatta. Separate
+                  Gold and Silver fleets, with automatic promotion and
+                  carry-forward scoring twice a year.
                 </p>
                 <ul className="space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-orange-400 shrink-0" />
-                    <span>Gold &amp; Silver fleet segregation</span>
+                    <span>Gold &amp; Silver fleet tables</span>
                   </li>
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-orange-400 shrink-0" />
-                    <span>Carry-forward scores on fleet promotions</span>
+                    <span>Scores carry forward on fleet promotion</span>
                   </li>
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-orange-400 shrink-0" />
-                    <span>Top-3 Gold, Silver, and Bronze badges</span>
+                    <span>Gold, Silver &amp; Bronze medal badges</span>
                   </li>
                 </ul>
               </div>
@@ -284,21 +291,22 @@ export default function HomePage() {
                   </p>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Track performance as youth athletes transition from Optimist into single-handed dinghies.
-                  Uses High Ranking Points with position trend charts and dual-class profile linking.
+                  The next step after Optimist. Track performance as sailors
+                  transition into single-handed dinghies, with dual sail numbers
+                  and year-on-year progression charts.
                 </p>
                 <ul className="space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-sky-400 shrink-0" />
-                    <span>Best 3 of last 5 regattas</span>
+                    <span>Rolling Best 3 of 5 regatta scoring</span>
                   </li>
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-sky-400 shrink-0" />
-                    <span>Dual sail numbers on a single athlete record</span>
+                    <span>Dual sail numbers on one athlete record</span>
                   </li>
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-sky-400 shrink-0" />
-                    <span>Transition intake year &amp; progress timeline</span>
+                    <span>Transition timeline with intake year</span>
                   </li>
                 </ul>
               </div>
@@ -334,20 +342,22 @@ export default function HomePage() {
                   </p>
                 </div>
                 <p className="text-xs text-slate-400 leading-relaxed">
-                  Competitive WingFoil racing in Singapore. Track event standings, individual heat finishes (R1–R9), discard scoring, and equipment setups.
+                  Singapore&apos;s sprint slalom racing circuit. See every heat
+                  finish, discarded races, and equipment setups across the
+                  Grand Prix series.
                 </p>
                 <ul className="space-y-1.5 text-[11px] text-slate-400 border-t border-white/5 pt-3">
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-purple-400 shrink-0" />
-                    <span>Heat breakdowns and race-by-race finishes</span>
+                    <span>Race-by-race heat breakdowns</span>
                   </li>
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-purple-400 shrink-0" />
-                    <span>Automatic 1-discard after 4+ completed races</span>
+                    <span>Automatic discard after 4+ completed races</span>
                   </li>
                   <li className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-3.5 w-3.5 text-purple-400 shrink-0" />
-                    <span>Foil, mast, and wing equipment records</span>
+                    <span>Foil, mast &amp; wing equipment logs</span>
                   </li>
                 </ul>
               </div>
@@ -374,7 +384,7 @@ export default function HomePage() {
             <div className="relative max-w-3xl space-y-4">
               <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/15 px-3.5 py-1 text-xs font-bold text-orange-300">
                 <Lock className="h-3.5 w-3.5 text-orange-400" />
-                <span>Member-Gated Feature · Free SailorPath Account Required</span>
+                <span>Members-only · Free SailorPath account required</span>
               </div>
 
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
@@ -382,26 +392,32 @@ export default function HomePage() {
               </h2>
 
               <p className="text-sm sm:text-base text-slate-300 leading-relaxed">
-                Track the multi-event combined low-point series for the{" "}
+                Track the multi-event combined series for the{" "}
                 <strong className="text-white">2026 Asian &amp; Oceania Championship</strong> and the{" "}
-                <strong className="text-white">Perth Training Camp</strong>. See provisional Top 10 rosters,
-                gender quotas (min 3 per gender), birth year allocations (2013, 2014, 2015), and real-time
-                cutoff cushion buffers.
+                <strong className="text-white">Perth Training Camp</strong>. See provisional Top 10
+                rosters, gender quotas, birth year allocations (2013 – 2015), and live
+                cutoff cushion indicators.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
-                <Link
-                  href="/sg/optimist/selection"
-                  className="rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs font-bold text-white transition-all shadow-lg shadow-orange-950/30 text-center inline-flex items-center justify-center gap-2"
-                >
-                  <Trophy className="h-4 w-4" />
-                  <span>View Selection Standings (Sign In Required)</span>
-                </Link>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-start gap-3 pt-2">
+                <div className="flex flex-col items-start gap-1.5">
+                  <Link
+                    href="/sg/optimist/selection"
+                    className="rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs font-bold text-white transition-all shadow-lg shadow-orange-950/30 inline-flex items-center justify-center gap-2"
+                  >
+                    <Trophy className="h-4 w-4" />
+                    <span>View Selection Trials</span>
+                  </Link>
+                  <p className="text-[11px] text-slate-500 pl-1">
+                    Sign in or create a free account to access
+                  </p>
+                </div>
                 <Link
                   href="/search"
-                  className="rounded-full bg-white/5 hover:bg-white/10 px-5 py-3 text-xs font-semibold text-slate-300 hover:text-white transition-colors border border-white/10 text-center"
+                  className="rounded-full bg-white/5 hover:bg-white/10 px-5 py-3 text-xs font-semibold text-slate-300 hover:text-white transition-colors border border-white/10 text-center inline-flex items-center justify-center gap-1.5"
                 >
-                  Claim Athlete Profile First
+                  <UserRound className="h-3.5 w-3.5" />
+                  Find your athlete profile
                 </Link>
               </div>
             </div>
@@ -417,7 +433,7 @@ export default function HomePage() {
               Workspaces built for Singapore Sailing
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Tailored tools for every stakeholder in competitive sailing.
+              Tailored tools for every person in a sailor&apos;s journey.
             </p>
           </div>
 
@@ -431,8 +447,9 @@ export default function HomePage() {
                 <h3 className="text-lg font-bold text-white">For Sailors</h3>
                 <p className="text-xs font-semibold text-white">Own your sailing journey.</p>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Follow your results, ranking momentum, and career progression from Optimist to ILCA with our{" "}
-                  <strong className="text-orange-300">Hero Athlete Card</strong> and segmented tabs (Overview, Regattas, Milestones, Equipment). Track boat locker gear with 3-tier condition audits (Race Ready, Practice Only, Needs Repair), private race reflections, and milestone archives.
+                  One continuous record across your entire sailing career. See
+                  your ranking momentum, regatta history, equipment logs, and
+                  personal milestones — all in one place.
                 </p>
               </div>
               <Link
@@ -453,8 +470,9 @@ export default function HomePage() {
                 <h3 className="text-lg font-bold text-white">For Parents</h3>
                 <p className="text-xs font-semibold text-white">Keep their progress in one clear view.</p>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Link your parent account to your child&apos;s profile and open the{" "}
-                  <strong className="text-emerald-300">Parent Dashboard</strong>. Track simplified 3-column standings ((1) Selection Trial qualification, (2) National Ranking, (3) Recent Regatta Results). Switch seamlessly between multiple children, track Asian Games &amp; Perth Camp cutoffs, monitor boat locker gear alerts, review shared coach technical debriefs, and manage custom pre-race morning checklists.
+                  Link your account to your child&apos;s profile and see everything
+                  in one dashboard: selection trial standings, national ranking,
+                  upcoming races, gear condition alerts, and shared coach debriefs.
                 </p>
               </div>
               <Link
@@ -475,8 +493,10 @@ export default function HomePage() {
                 <h3 className="text-lg font-bold text-white">For Coaches</h3>
                 <p className="text-xs font-semibold text-white">Keep your squad in one live view.</p>
                 <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-                  Build private squad rosters and monitor your fleet with{" "}
-                  <strong className="text-sky-300">Squad Pulse Cards</strong> (fleet segregation, gear health alerts, selection tags). Log structured observations across 6 categories (Technical, Tactical, Physical, Mental, Equipment, Communication) with sentiment tracking and selective debrief sharing (<code className="text-sky-300">coach_only</code> vs shared with family), plus head-to-head comparisons.
+                  Build a private squad roster and track every athlete with
+                  pulse indicators, development logs across 6 categories, and
+                  side-by-side sailor comparisons. Share debriefs selectively
+                  with sailors and families.
                 </p>
               </div>
               <div className="mt-5 space-y-1">
@@ -499,7 +519,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              How SailorPath Works
+              How SailorPath works
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
               Automated scoring pipelines and verified athlete records from official results.
@@ -511,18 +531,18 @@ export default function HomePage() {
               [
                 {
                   step: "1",
-                  title: "Results are Imported & Verified",
+                  title: "Official results, imported and checked",
                   body: "Published regatta results are imported from official PDF or Excel sheets and reviewed before standings are published.",
                 },
                 {
                   step: "2",
-                  title: "Series Standings Auto-Calculate",
+                  title: "Standings update automatically",
                   body: "Rolling Best-3-of-5, High Points, and Sprint Slalom discard formulas apply automatically under official class rules.",
                 },
                 {
                   step: "3",
-                  title: "Athletes, Parents & Coaches Engage",
-                  body: "Claim profiles to record career milestones, monitor selection trials cutoffs, or run private squad tracking.",
+                  title: "Claim profiles, track trials, coach your squad",
+                  body: "Claim athlete profiles to record career milestones, follow selection trial cutoffs, or run private squad tracking.",
                 },
               ] as const
             ).map((item) => (
@@ -551,12 +571,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 7. Roadmap & Family Waitlist ── */}
+      {/* ── 7. What's Live Today & Roadmap ── */}
       <section id="roadmap" className="border-t border-white/5 bg-[#0b0c13] py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Available now &amp; next
+              What&apos;s live today
             </h2>
             <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
               Rankings, claimed profiles, the{" "}
@@ -571,7 +591,7 @@ export default function HomePage() {
               <Link href="/coach-tools" className="text-sky-300 font-semibold hover:text-sky-200">
                 Coach Dashboard
               </Link>{" "}
-              are live today.
+              are all available now.
             </p>
           </div>
 
@@ -589,35 +609,25 @@ export default function HomePage() {
                   <Link href="/parent" className="text-emerald-300 font-semibold hover:text-emerald-200">
                     /parent
                   </Link>{" "}
-                  for multi-athlete tracking, live 2026 Selection Trials qualification buffers, boat locker maintenance logs, coach debriefs, and interactive morning checklists. View the complete 2026 schedule on the{" "}
+                  for multi-athlete tracking, live 2026 Selection Trials
+                  qualification buffers, boat locker maintenance logs, coach
+                  debriefs, and morning checklists. View the full 2026 schedule on
+                  the{" "}
                   <Link href="/calendar" className="text-emerald-300 font-semibold hover:text-emerald-200">
                     Racing Calendar
                   </Link>.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3 items-center">
-                  <Link
-                    href="/parent"
-                    className="text-xs font-bold text-emerald-400 hover:text-emerald-300"
-                  >
+                  <Link href="/parent" className="text-xs font-bold text-emerald-400 hover:text-emerald-300">
                     Open Parent Dashboard →
                   </Link>
-                  <Link
-                    href="/calendar"
-                    className="text-xs font-semibold text-slate-300 hover:text-white"
-                  >
+                  <Link href="/calendar" className="text-xs font-semibold text-slate-300 hover:text-white">
                     2026 Racing Calendar →
                   </Link>
-                  <Link
-                    href="/claim-profile"
-                    className="text-xs font-semibold text-slate-400 hover:text-white"
-                  >
+                  <Link href="/claim-profile" className="text-xs font-semibold text-slate-400 hover:text-white">
                     Link a child first
                   </Link>
                 </div>
-                <p className="mt-4 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                  Waitlist for next family features
-                </p>
-                <WaitlistForm presetRole="Parent" submitLabel="Join parent waitlist" compact />
               </div>
             </li>
 
@@ -630,13 +640,13 @@ export default function HomePage() {
                 </p>
                 <h3 className="text-base font-bold text-white mt-1">Coach Squad Pulse &amp; Development Log</h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Build a private roster with live rankings, Squad Pulse status indicators, and 6-category Athlete Development Logs. Compare two sailors side-by-side, manage action items, and selectively share technical debriefs with sailors and parents.
+                  Build a private roster with live rankings, Squad Pulse status
+                  indicators, and 6-category Athlete Development Logs. Compare
+                  two sailors side-by-side and selectively share technical
+                  debriefs with sailors and parents.
                 </p>
                 <div className="mt-3 flex flex-wrap gap-3 items-center">
-                  <Link
-                    href="/coach-tools"
-                    className="text-xs font-bold text-sky-400 hover:text-sky-300"
-                  >
+                  <Link href="/coach-tools" className="text-xs font-bold text-sky-400 hover:text-sky-300">
                     Open Coach Dashboard →
                   </Link>
                   <Link
@@ -657,11 +667,23 @@ export default function HomePage() {
                 </p>
                 <h3 className="text-base font-bold text-white mt-1">Club &amp; Event Tools</h3>
                 <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Start-list sync, campaign planning, and automated alerts for rank changes and selection windows.
+                  Start-list sync, campaign planning, and automated alerts for
+                  rank changes and selection windows.
                 </p>
               </div>
             </li>
           </ol>
+
+          {/* Waitlist — separated from roadmap list */}
+          <div className="mt-12 pt-10 border-t border-white/5 max-w-2xl mx-auto text-center space-y-4">
+            <h3 className="text-base font-bold text-white">Get notified when new features ship</h3>
+            <p className="text-xs text-slate-400">
+              Join Singapore sailing families already on the waitlist.
+            </p>
+            <div className="flex justify-center">
+              <WaitlistForm presetRole="Parent" submitLabel="Join the waitlist" compact />
+            </div>
+          </div>
         </div>
       </section>
     </div>
