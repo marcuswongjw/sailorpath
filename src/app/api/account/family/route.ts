@@ -3,6 +3,7 @@ import { and, desc, eq, inArray } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import {
+  coachDevelopmentRecords,
   equipmentItems,
   parentNotes,
   regattaResults,
@@ -11,6 +12,7 @@ import {
   sailors,
 } from "@/db/schema";
 import { getCachedFleetRankings } from "@/lib/queries";
+import { computeOptimistSelectionData } from "@/lib/selectionQueries";
 import { parseClaimRelation, relationFromNote } from "@/lib/claimRelation";
 import { mapEquipmentRow } from "@/lib/equipment";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
@@ -89,54 +91,94 @@ export async function GET() {
     const ids = owned.map((s) => s.id);
     const period = currentPeriodFromSgToday();
 
-    const [goldBoard, silverBoard, allRecentResults, allGear, allNotes] =
-      await Promise.all([
-        ids.length
-          ? getCachedFleetRankings("Gold", period.year, period.half).catch(
-              () => []
-            )
-          : Promise.resolve([]),
-        ids.length
-          ? getCachedFleetRankings("Silver", period.year, period.half).catch(
-              () => []
-            )
-          : Promise.resolve([]),
-        ids.length
-          ? db
-              .select({
-                sailorId: regattaResults.sailorId,
-                regattaName: regattas.name,
-                regattaDate: regattas.date,
-                rank: regattaResults.rank,
-                boatClass: regattas.boatClass,
-              })
-              .from(regattaResults)
-              .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-              .where(inArray(regattaResults.sailorId, ids))
-              .orderBy(desc(regattas.date))
-              .catch(() => [])
-          : Promise.resolve([]),
-        ids.length
-          ? db
-              .select()
-              .from(equipmentItems)
-              .where(inArray(equipmentItems.sailorId, ids))
-              .catch(() => [])
-          : Promise.resolve([]),
-        ids.length
-          ? db
-              .select()
-              .from(parentNotes)
-              .where(
-                and(
-                  inArray(parentNotes.sailorId, ids),
-                  eq(parentNotes.authorUserId, auth.userId)
-                )
+    const [
+      goldBoard,
+      silverBoard,
+      allRecentResults,
+      allGear,
+      allNotes,
+      selectionData,
+      allCoachRecords,
+      upcomingRegattas,
+    ] = await Promise.all([
+      ids.length
+        ? getCachedFleetRankings("Gold", period.year, period.half).catch(
+            () => []
+          )
+        : Promise.resolve([]),
+      ids.length
+        ? getCachedFleetRankings("Silver", period.year, period.half).catch(
+            () => []
+          )
+        : Promise.resolve([]),
+      ids.length
+        ? db
+            .select({
+              sailorId: regattaResults.sailorId,
+              regattaName: regattas.name,
+              regattaDate: regattas.date,
+              rank: regattaResults.rank,
+              boatClass: regattas.boatClass,
+            })
+            .from(regattaResults)
+            .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+            .where(inArray(regattaResults.sailorId, ids))
+            .orderBy(desc(regattas.date))
+            .catch(() => [])
+        : Promise.resolve([]),
+      ids.length
+        ? db
+            .select()
+            .from(equipmentItems)
+            .where(inArray(equipmentItems.sailorId, ids))
+            .catch(() => [])
+        : Promise.resolve([]),
+      ids.length
+        ? db
+            .select()
+            .from(parentNotes)
+            .where(
+              and(
+                inArray(parentNotes.sailorId, ids),
+                eq(parentNotes.authorUserId, auth.userId)
               )
-              .orderBy(desc(parentNotes.createdAt))
-              .catch(() => [])
-          : Promise.resolve([]),
-      ]);
+            )
+            .orderBy(desc(parentNotes.createdAt))
+            .catch(() => [])
+        : Promise.resolve([]),
+      computeOptimistSelectionData().catch(() => null),
+      ids.length
+        ? db
+            .select({
+              id: coachDevelopmentRecords.id,
+              sailorId: coachDevelopmentRecords.sailorId,
+              type: coachDevelopmentRecords.type,
+              category: coachDevelopmentRecords.category,
+              title: coachDevelopmentRecords.title,
+              detail: coachDevelopmentRecords.detail,
+              recordDate: coachDevelopmentRecords.recordDate,
+              status: coachDevelopmentRecords.status,
+            })
+            .from(coachDevelopmentRecords)
+            .where(inArray(coachDevelopmentRecords.sailorId, ids))
+            .orderBy(desc(coachDevelopmentRecords.recordDate))
+            .limit(20)
+            .catch(() => [])
+        : Promise.resolve([]),
+      db
+        .select({
+          id: regattas.id,
+          name: regattas.name,
+          date: regattas.date,
+          boatClass: regattas.boatClass,
+          division: regattas.division,
+          slug: regattas.slug,
+        })
+        .from(regattas)
+        .orderBy(desc(regattas.date))
+        .limit(8)
+        .catch(() => []),
+    ]);
 
     // Top 3 recent results per sailor
     const recentBySailor = new Map<
@@ -160,10 +202,23 @@ export async function GET() {
       recentBySailor.set(r.sailorId, list);
     }
 
-    // Equipment alerts per sailor
-    const gearAlertsBySailor = new Map<
+    // Equipment summary & alerts per sailor
+    const gearBySailor = new Map<
       string,
-      { count: number; alerts: { label: string; reason: string }[] }
+      {
+        primaryItems: {
+          id: string;
+          category: string;
+          brand: string | null;
+          model: string | null;
+          label: string | null;
+          condition: string;
+          status: string;
+          isPrimary: boolean;
+        }[];
+        alertCount: number;
+        alerts: { label: string; reason: string }[];
+      }
     >();
     for (const g of allGear) {
       const mapped = mapEquipmentRow({
@@ -172,29 +227,72 @@ export async function GET() {
         retiredOn: g.retiredOn ? String(g.retiredOn) : null,
         lastUsedOn: g.lastUsedOn ? String(g.lastUsedOn) : null,
       });
-      if (!mapped.needsAttention || mapped.status === "retired") continue;
-      const cur = gearAlertsBySailor.get(g.sailorId) || {
-        count: 0,
+      const cur = gearBySailor.get(g.sailorId) || {
+        primaryItems: [],
+        alertCount: 0,
         alerts: [],
       };
-      cur.count += 1;
-      if (cur.alerts.length < 3) {
-        cur.alerts.push({
-          label: mapped.label || mapped.brand || mapped.category || "Gear",
-          reason: mapped.attentionReason || "Needs attention",
+      if (g.isPrimary || cur.primaryItems.length < 5) {
+        cur.primaryItems.push({
+          id: g.id,
+          category: g.category,
+          brand: g.brand,
+          model: g.model,
+          label: g.label,
+          condition: g.condition,
+          status: g.status,
+          isPrimary: g.isPrimary,
         });
       }
-      gearAlertsBySailor.set(g.sailorId, cur);
+      if (mapped.needsAttention && mapped.status !== "retired") {
+        cur.alertCount += 1;
+        if (cur.alerts.length < 4) {
+          cur.alerts.push({
+            label: mapped.label || mapped.brand || mapped.category || "Gear",
+            reason: mapped.attentionReason || "Needs attention",
+          });
+        }
+      }
+      gearBySailor.set(g.sailorId, cur);
     }
 
-    // Notes per sailor (already filtered to author; keep 5 each)
+    // Coach development observations per sailor
+    const coachFeedbackBySailor = new Map<
+      string,
+      {
+        id: string;
+        type: string;
+        category: string | null;
+        title: string;
+        detail: string | null;
+        recordDate: string;
+        status: string;
+      }[]
+    >();
+    for (const cr of allCoachRecords) {
+      const list = coachFeedbackBySailor.get(cr.sailorId) || [];
+      if (list.length < 10) {
+        list.push({
+          id: cr.id,
+          type: cr.type,
+          category: cr.category,
+          title: cr.title,
+          detail: cr.detail,
+          recordDate: String(cr.recordDate).slice(0, 10),
+          status: cr.status,
+        });
+      }
+      coachFeedbackBySailor.set(cr.sailorId, list);
+    }
+
+    // Notes per sailor (already filtered to author; keep 10 each)
     const notesBySailor = new Map<
       string,
       { id: string; body: string; createdAt: string }[]
     >();
     for (const n of allNotes) {
       const list = notesBySailor.get(n.sailorId) || [];
-      if (list.length >= 5) continue;
+      if (list.length >= 10) continue;
       list.push({
         id: n.id,
         body: n.body,
@@ -249,7 +347,47 @@ export async function GET() {
         standing = null;
       }
 
-      const gear = gearAlertsBySailor.get(s.id);
+      let selectionTrials: {
+        rank: number;
+        nettScore: number;
+        eventsSailed: number;
+        isQualifiedAsian: boolean;
+        isQualifiedPerth: boolean;
+        asianTeamRank?: number;
+        gapToCutoff?: number;
+      } | null = null;
+
+      if (selectionData?.combinedScores?.length) {
+        const rankIdx = selectionData.combinedScores.findIndex(
+          (c) => c.sailorId === s.id
+        );
+        if (rankIdx !== -1) {
+          const row = selectionData.combinedScores[rankIdx];
+          const asianIdx = selectionData.asianTeam.selected.findIndex(
+            (m) => m.sailorId === s.id
+          );
+          const isQualifiedAsian = asianIdx !== -1;
+          const isQualifiedPerth = selectionData.perthCamp.picks.some(
+            (p) => p.sailorId === s.id
+          );
+          const cutoffScore = selectionData.combinedScores[4]?.combinedScore;
+          let gapToCutoff: number | undefined = undefined;
+          if (cutoffScore != null && row.combinedScore != null) {
+            gapToCutoff = row.combinedScore - cutoffScore;
+          }
+          selectionTrials = {
+            rank: rankIdx + 1,
+            nettScore: row.combinedScore,
+            eventsSailed: row.eventsSailed,
+            isQualifiedAsian,
+            isQualifiedPerth,
+            asianTeamRank: isQualifiedAsian ? asianIdx + 1 : undefined,
+            gapToCutoff,
+          };
+        }
+      }
+
+      const gear = gearBySailor.get(s.id);
 
       return {
         id: s.id,
@@ -267,9 +405,12 @@ export async function GET() {
         dob: s.dob,
         ownerRelation: relation,
         standing,
+        selectionTrials,
         recentResults: recentBySailor.get(s.id) || [],
-        equipmentAlertCount: gear?.count || 0,
+        primaryGear: gear?.primaryItems || [],
+        equipmentAlertCount: gear?.alertCount || 0,
         equipmentAlerts: gear?.alerts || [],
+        coachFeedback: coachFeedbackBySailor.get(s.id) || [],
         notes: notesBySailor.get(s.id) || [],
       };
     });
@@ -287,6 +428,14 @@ export async function GET() {
       role: auth.role,
       athletes,
       pendingClaims,
+      upcomingRegattas: upcomingRegattas.map((r) => ({
+        id: r.id,
+        name: r.name,
+        date: String(r.date).slice(0, 10),
+        boatClass: r.boatClass,
+        division: r.division,
+        slug: r.slug,
+      })),
       isParentStyle:
         auth.role === "parent" ||
         athletes.some((a) => a.ownerRelation === "parent") ||
