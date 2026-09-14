@@ -14,6 +14,10 @@ import {
   type EquipmentTag,
   type SessionType,
   type WindRange,
+  toSimplifiedCondition,
+  fromSimplifiedCondition,
+  SIMPLIFIED_CONDITION_META,
+  type SimplifiedCondition,
 } from "@/lib/equipment";
 import {
   buildEquipmentSavePayload,
@@ -360,6 +364,45 @@ export function useEquipmentInventory({
     }
   };
 
+  const cycleCondition = async (item: EquipmentItemDto) => {
+    const currentSimplified = toSimplifiedCondition(item.condition);
+    const nextSimplified: SimplifiedCondition =
+      currentSimplified === "race_ready"
+        ? "practice_only"
+        : currentSimplified === "practice_only"
+          ? "needs_attention"
+          : "race_ready";
+    const nextCondition = fromSimplifiedCondition(nextSimplified);
+
+    // Optimistically update local state
+    setItems((prev) =>
+      prev.map((it) =>
+        it.id === item.id ? { ...it, condition: nextCondition } : it
+      )
+    );
+
+    try {
+      const res = await fetch("/api/account/equipment", {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: item.id, condition: nextCondition }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.error || "Failed to update condition");
+      }
+      flash(`Condition set to ${SIMPLIFIED_CONDITION_META[nextSimplified].shortLabel}`);
+    } catch (e) {
+      setItems((prev) =>
+        prev.map((it) =>
+          it.id === item.id ? { ...it, condition: item.condition } : it
+        )
+      );
+      feedbackToast.error(e instanceof Error ? e.message : "Error");
+    }
+  };
+
   const makePrimary = async (item: EquipmentItemDto) => {
     if (item.isPrimary) return;
     const ok = await confirm({
@@ -521,6 +564,7 @@ export function useEquipmentInventory({
     saveFullRig,
     logUses,
     makePrimary,
+    cycleCondition,
     bulkArchive,
     bulkTagApply,
     toggleSelect,

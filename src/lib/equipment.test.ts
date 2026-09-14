@@ -11,6 +11,9 @@ import {
   resolveBrand,
   BRAND_OTHER,
   parseWindRange,
+  normalizeEquipmentCondition,
+  toSimplifiedCondition,
+  fromSimplifiedCondition,
 } from "./equipment";
 
 describe("equipment helpers", () => {
@@ -221,4 +224,33 @@ describe("equipment helpers", () => {
       }).needsAttention
     ).toBe(false);
   });
+
+  it("normalizes equipment condition safely for all variants and invalid strings", () => {
+    expect(normalizeEquipmentCondition("new")).toBe("new");
+    expect(normalizeEquipmentCondition("excellent")).toBe("new");
+    expect(normalizeEquipmentCondition("good")).toBe("good");
+    expect(normalizeEquipmentCondition("race_ready")).toBe("good");
+    expect(normalizeEquipmentCondition("fair")).toBe("fair");
+    expect(normalizeEquipmentCondition("practice_only")).toBe("fair");
+    expect(normalizeEquipmentCondition("worn")).toBe("worn");
+    expect(normalizeEquipmentCondition("needs_attention")).toBe("worn");
+    expect(normalizeEquipmentCondition("needs_repair")).toBe("worn");
+    expect(normalizeEquipmentCondition("replace_soon")).toBe("replace_soon");
+    expect(normalizeEquipmentCondition(null)).toBe("good");
+    expect(normalizeEquipmentCondition(undefined)).toBe("good");
+    expect(normalizeEquipmentCondition("unknown_value")).toBe("good");
+  });
+
+  it("converts between simplified and internal equipment conditions", () => {
+    expect(toSimplifiedCondition("new")).toBe("race_ready");
+    expect(toSimplifiedCondition("good")).toBe("race_ready");
+    expect(toSimplifiedCondition("fair")).toBe("practice_only");
+    expect(toSimplifiedCondition("worn")).toBe("needs_attention");
+    expect(toSimplifiedCondition("replace_soon")).toBe("needs_attention");
+
+    expect(fromSimplifiedCondition("race_ready")).toBe("good");
+    expect(fromSimplifiedCondition("practice_only")).toBe("fair");
+    expect(fromSimplifiedCondition("needs_attention")).toBe("worn");
+  });
 });
+

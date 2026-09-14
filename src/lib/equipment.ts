@@ -352,6 +352,16 @@ export function fromSimplifiedCondition(
   return "worn";
 }
 
+export function normalizeEquipmentCondition(val: unknown): EquipmentCondition {
+  const s = String(val || "").trim().toLowerCase();
+  if (s === "new" || s === "excellent") return "new";
+  if (s === "good" || s === "race_ready") return "good";
+  if (s === "fair" || s === "practice_only" || s === "practice") return "fair";
+  if (s === "worn" || s === "needs_attention" || s === "needs_repair" || s === "repair") return "worn";
+  if (s === "replace_soon" || s === "replace") return "replace_soon";
+  return "good";
+}
+
 export const SIMPLIFIED_CONDITION_META: Record<
   SimplifiedCondition,
   { label: string; shortLabel: string; bg: string; text: string; border: string; dot: string }

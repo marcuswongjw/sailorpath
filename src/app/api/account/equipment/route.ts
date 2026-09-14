@@ -11,11 +11,11 @@ import {
 } from "@/db/schema";
 import {
   mapEquipmentRow,
+  normalizeEquipmentCondition,
   parseWindRange,
   serializeTags,
   type EquipmentBoatClass,
   type EquipmentCategory,
-  type EquipmentCondition,
   type EquipmentStatus,
   type EquipmentUsageHistory,
 } from "@/lib/equipment";
@@ -445,7 +445,7 @@ export async function POST(req: Request) {
         model: body.model != null ? String(body.model).slice(0, 120) : null,
         label: body.label != null ? String(body.label).slice(0, 120) : null,
         status: (body.status as EquipmentStatus) || "active",
-        condition: (body.condition as EquipmentCondition) || "good",
+        condition: normalizeEquipmentCondition(body.condition),
         isPrimary,
         tags: serializeTags(body.tags),
         windRange,
@@ -678,7 +678,8 @@ export async function PATCH(req: Request) {
     if (body.label !== undefined)
       patch.label = body.label ? String(body.label).slice(0, 120) : null;
     if (body.status !== undefined) patch.status = String(body.status);
-    if (body.condition !== undefined) patch.condition = String(body.condition);
+    if (body.condition !== undefined)
+      patch.condition = normalizeEquipmentCondition(body.condition);
     if (body.notes !== undefined)
       patch.notes = body.notes ? String(body.notes).slice(0, 1000) : null;
     if (body.acquiredOn !== undefined)
@@ -768,3 +769,5 @@ export async function DELETE(req: Request) {
     return jsonError(e);
   }
 }
+
+export { PATCH as PUT };

@@ -388,7 +388,7 @@ export function ParentDashboard() {
 
     try {
       const res = await fetch("/api/account/equipment", {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: gearId, condition: nextCondition }),
         credentials: "include",
@@ -427,7 +427,7 @@ export function ParentDashboard() {
 
     try {
       const res = await fetch("/api/account/equipment", {
-        method: "PUT",
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: gearId, isPrimary: nextPrimary }),
         credentials: "include",

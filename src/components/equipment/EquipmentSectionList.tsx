@@ -17,6 +17,7 @@ export function EquipmentSectionList({
   onLogUse,
   onEdit,
   onMakePrimary,
+  onCycleCondition,
   onQuickAdd,
   onOpenFullRig,
 }: {
@@ -27,6 +28,7 @@ export function EquipmentSectionList({
   onLogUse: (id: string) => void;
   onEdit: (item: EquipmentItemDto) => void;
   onMakePrimary: (item: EquipmentItemDto) => void;
+  onCycleCondition?: (item: EquipmentItemDto) => void;
   onQuickAdd: (cat: EquipmentCategory) => void;
   onOpenFullRig: () => void;
 }) {
@@ -119,6 +121,11 @@ export function EquipmentSectionList({
                             onLogUse={() => onLogUse(item.id)}
                             onEdit={() => onEdit(item)}
                             onMakePrimary={() => onMakePrimary(item)}
+                            onCycleCondition={
+                              onCycleCondition
+                                ? () => onCycleCondition(item)
+                                : undefined
+                            }
                           />
                         ))
                       )
@@ -132,6 +139,11 @@ export function EquipmentSectionList({
                         onLogUse={() => onLogUse(item.id)}
                         onEdit={() => onEdit(item)}
                         onMakePrimary={() => onMakePrimary(item)}
+                        onCycleCondition={
+                          onCycleCondition
+                            ? () => onCycleCondition(item)
+                            : undefined
+                        }
                       />
                     ))}
               </ul>

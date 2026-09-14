@@ -17,6 +17,7 @@ export function EquipmentCard({
   onLogUse,
   onEdit,
   onMakePrimary,
+  onCycleCondition,
 }: {
   item: EquipmentItemDto;
   partLabel?: string;
@@ -26,6 +27,7 @@ export function EquipmentCard({
   onLogUse: () => void;
   onEdit: () => void;
   onMakePrimary: () => void;
+  onCycleCondition?: () => void;
 }) {
   const tags = item.tags
     .map((t) => EQUIPMENT_TAGS.find((x) => x.value === t)?.label || t)
@@ -90,7 +92,11 @@ export function EquipmentCard({
           </div>
 
           <div className="mt-1.5 flex flex-wrap items-center gap-1">
-            <ConditionChip condition={item.condition} />
+            <ConditionChip
+              condition={item.condition}
+              interactive={isOwner && Boolean(onCycleCondition)}
+              onClick={onCycleCondition}
+            />
             <BadgeChip badge={item.badge} label={item.badgeLabel} />
             {item.windRange && (
               <span className="inline-flex rounded-full border border-sky-500/25 bg-sky-500/10 px-1.5 py-0.5 text-[9px] font-bold uppercase text-sky-300">

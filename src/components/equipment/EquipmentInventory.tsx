@@ -147,6 +147,7 @@ export function EquipmentInventory({
           onLogUse={(id) => eq.openLogUse([id])}
           onEdit={eq.openEdit}
           onMakePrimary={(item) => void eq.makePrimary(item)}
+          onCycleCondition={(item) => void eq.cycleCondition(item)}
           onQuickAdd={eq.openQuick}
           onOpenFullRig={eq.openFullRig}
         />
