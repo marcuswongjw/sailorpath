@@ -16,6 +16,11 @@ vi.mock("next/navigation", () => ({
   useSearchParams: () => new URLSearchParams(),
 }));
 
+const mockUseAccount = vi.fn();
+vi.mock("@/components/AccountProvider", () => ({
+  useAccount: () => mockUseAccount(),
+}));
+
 const mockEvents: RegattaRecord[] = [
   {
     id: "reg-1",
@@ -33,6 +38,7 @@ const mockEvents: RegattaRecord[] = [
     scheduleNotes: "Official selection trial for World Championship team",
     totalFleetSize: 85,
     countsForRanking: true,
+    region: "Singapore",
   },
   {
     id: "reg-2",
@@ -49,6 +55,7 @@ const mockEvents: RegattaRecord[] = [
     scheduleNotes: "Annual open ranking event",
     totalFleetSize: 42,
     countsForRanking: true,
+    region: "Singapore",
   },
   {
     id: "reg-3",
@@ -63,21 +70,87 @@ const mockEvents: RegattaRecord[] = [
     isSelectionTrial: false,
     totalFleetSize: 20,
     countsForRanking: true,
+    region: "Singapore",
+  },
+  {
+    id: "reg-4",
+    name: "Eastern Seaboard Regatta 2099",
+    slug: "eastern-seaboard-regatta-2099",
+    date: "2099-10-29",
+    endDate: "2099-10-31",
+    boatClass: "Optimist",
+    venue: "Royal Varuna Yacht Club, Pattaya, Thailand",
+    organizer: "RVYC",
+    isSelectionTrial: false,
+    region: "Asia",
+    campaignBudget: {
+      totalEstimatedSgd: 2736,
+      regattaCostsLabel: "THB 12,500 (~SGD 486) — Entry THB 4.5k, Charter THB 8k",
+      clinicLabel: "THB 6,000 (~SGD 233) — 3-day tuning clinic",
+      flightsLabel: "SGD 550 — Return flights for 2 pax",
+      lodgingLabel: "THB 22,000 (~SGD 855) — 5 nights hotel",
+      notes: "Drive time approx 1.5h from BKK airport.",
+    },
+    totalFleetSize: 90,
+    countsForRanking: false,
   },
 ];
 
 describe("RegattaCalendarClient", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockUseAccount.mockReturnValue({
+      email: "sailor@example.com",
+      ready: true,
+      role: "member",
+      isSuperadmin: false,
+      owned: [],
+      signOut: vi.fn(),
+    });
   });
 
-  it("renders calendar events and initial view", () => {
+  it("renders member access gate when user is not logged in", () => {
+    mockUseAccount.mockReturnValue({
+      email: null,
+      ready: true,
+      role: null,
+      isSuperadmin: false,
+      owned: [],
+      signOut: vi.fn(),
+    });
+
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
-    expect(screen.getByText("Singapore Regatta Calendar")).toBeInTheDocument();
+    expect(screen.getByText("2026–2027 Regatta & Campaign Calendar")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /sign in to view calendar/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /create free account/i })).toBeInTheDocument();
+    expect(screen.queryByPlaceholderText(/search regattas or venues/i)).not.toBeInTheDocument();
+  });
+
+  it("renders loading indicator while account auth is initializing", () => {
+    mockUseAccount.mockReturnValue({
+      email: null,
+      ready: false,
+      role: null,
+      isSuperadmin: false,
+      owned: [],
+      signOut: vi.fn(),
+    });
+
+    render(<RegattaCalendarClient regattas={mockEvents} />);
+
+    expect(screen.getByText(/verifying member access/i)).toBeInTheDocument();
+  });
+
+  it("renders calendar events, deadlines, and initial view when logged in", () => {
+    render(<RegattaCalendarClient regattas={mockEvents} />);
+
+    expect(screen.getByText("Singapore & International Regatta Calendar")).toBeInTheDocument();
+    expect(screen.getByText("Immediate Action Items & Key Deadlines")).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/search regattas or venues/i)).toBeInTheDocument();
     expect(screen.getByText("Singapore National Sailing Championships 2099")).toBeInTheDocument();
     expect(screen.getByText("ILCA Singapore Open 2099")).toBeInTheDocument();
+    expect(screen.getByText("Eastern Seaboard Regatta 2099")).toBeInTheDocument();
   });
 
   it("filters events when typing in search", () => {
@@ -100,6 +173,17 @@ describe("RegattaCalendarClient", () => {
     expect(screen.getByText("ILCA Singapore Open 2099")).toBeInTheDocument();
   });
 
+  it("filters events by region", () => {
+    render(<RegattaCalendarClient regattas={mockEvents} />);
+
+    const asiaButton = screen.getByRole("button", { name: /🌏 Asia/i });
+    fireEvent.click(asiaButton);
+
+    expect(screen.getByText("Eastern Seaboard Regatta 2099")).toBeInTheDocument();
+    expect(screen.queryByText("Singapore National Sailing Championships 2099")).not.toBeInTheDocument();
+    expect(screen.queryByText("ILCA Singapore Open 2099")).not.toBeInTheDocument();
+  });
+
   it("filters events by selection trial toggle", () => {
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
@@ -108,6 +192,7 @@ describe("RegattaCalendarClient", () => {
 
     expect(screen.getByText("Singapore National Sailing Championships 2099")).toBeInTheDocument();
     expect(screen.queryByText("ILCA Singapore Open 2099")).not.toBeInTheDocument();
+    expect(screen.queryByText("Eastern Seaboard Regatta 2099")).not.toBeInTheDocument();
   });
 
   it("renders Notice of Race and Registration action links", () => {
@@ -129,5 +214,20 @@ describe("RegattaCalendarClient", () => {
 
     expect(screen.getByText("Past Regatta 2020")).toBeInTheDocument();
     expect(screen.queryByText("Singapore National Sailing Championships 2099")).not.toBeInTheDocument();
+  });
+
+  it("toggles campaign budget breakdown drawer", () => {
+    render(<RegattaCalendarClient regattas={mockEvents} />);
+
+    const budgetToggleBtn = screen.getByRole("button", {
+      name: /view breakdown/i,
+    });
+    fireEvent.click(budgetToggleBtn);
+
+    expect(screen.getByText(/campaign cost breakdown \(1 youth sailor \+ 1 adult guardian\)/i)).toBeInTheDocument();
+    expect(screen.getByText("THB 12,500 (~SGD 486) — Entry THB 4.5k, Charter THB 8k")).toBeInTheDocument();
+    expect(screen.getByText("THB 6,000 (~SGD 233) — 3-day tuning clinic")).toBeInTheDocument();
+    expect(screen.getByText("SGD 550 — Return flights for 2 pax")).toBeInTheDocument();
+    expect(screen.getByText("THB 22,000 (~SGD 855) — 5 nights hotel")).toBeInTheDocument();
   });
 });

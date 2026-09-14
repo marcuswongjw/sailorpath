@@ -43,14 +43,19 @@ export default async function CalendarPage(props: CalendarPageProps) {
       totalFleetSize: item.totalFleetSize,
       division: item.division,
       venue: item.venue,
+      region: item.region,
       organizer: item.organizer,
       countsForRanking: item.countsForRanking,
       isSelectionTrial: item.isSelectionTrial,
+      targetFleet: item.targetFleet,
+      keyDeadlines: item.keyDeadlines,
+      clinicDates: item.clinicDates,
+      campaignBudget: item.campaignBudget,
       norUrl: item.norUrl,
       registrationUrl: item.registrationUrl,
       scheduleNotes: item.scheduleNotes,
       boatClass: item.boatClass,
-      geography: "SG",
+      geography: item.geography || "SG",
     });
   }
 
@@ -67,6 +72,11 @@ export default async function CalendarPage(props: CalendarPageProps) {
       isSelectionTrial: r.isSelectionTrial ?? existing?.isSelectionTrial ?? false,
       organizer: r.organizer || existing?.organizer,
       scheduleNotes: r.scheduleNotes || existing?.scheduleNotes,
+      region: r.region || existing?.region,
+      targetFleet: r.targetFleet || existing?.targetFleet,
+      keyDeadlines: r.keyDeadlines || existing?.keyDeadlines,
+      clinicDates: r.clinicDates || existing?.clinicDates,
+      campaignBudget: r.campaignBudget || existing?.campaignBudget,
     });
   }
 

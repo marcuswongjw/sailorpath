@@ -1,9 +1,27 @@
 /**
- * 2026 Singapore Sailing Regatta Master Calendar
+ * 2026 Singapore & International Youth Sailing Regatta Calendar
  *
  * Official and key youth regattas across Optimist, ILCA 4, ILCA 6, and WingFoil.
- * Includes Notice of Race (NOR), registration links, venues, and selection designations.
+ * Includes Notice of Race (NOR), registration links, venues, selection designations,
+ * international campaigns, and Singapore travel/campaign budget estimates.
  */
+
+export type CampaignBudgetBreakdown = {
+  totalEstimatedSgd: number;
+  regattaCostsLabel: string;
+  clinicLabel?: string;
+  flightsLabel?: string;
+  lodgingLabel?: string;
+  notes?: string;
+};
+
+export type CalendarActionDeadline = {
+  date: string; // YYYY-MM-DD
+  label: string;
+  eventSlug: string;
+  region: "Singapore" | "Asia" | "Europe" | "International";
+  urgent?: boolean;
+};
 
 export type RegattaCalendarEntry = {
   name: string;
@@ -13,6 +31,8 @@ export type RegattaCalendarEntry = {
   boatClass: string; // e.g. "Optimist", "ILCA 4", "ILCA 6", "WingFoil", "All"
   division: string;  // e.g. "National", "Gold", "Silver", "Open"
   venue: string;     // e.g. "National Sailing Centre"
+  region: "Singapore" | "Asia" | "Europe" | "International";
+  geography?: string;
   organizer: string; // e.g. "Singapore Sailing Federation"
   countsForRanking: boolean;
   isSelectionTrial: boolean;
@@ -20,7 +40,51 @@ export type RegattaCalendarEntry = {
   registrationUrl?: string | null;
   scheduleNotes?: string | null;
   totalFleetSize: number;
+  targetFleet?: string;
+  keyDeadlines?: string;
+  clinicDates?: string;
+  campaignBudget?: CampaignBudgetBreakdown;
 };
+
+export const CALENDAR_ACTION_DEADLINES: CalendarActionDeadline[] = [
+  {
+    date: "2026-10-01",
+    label: "Charter reservation deadline for Eastern Seaboard Regatta (RVYC allocations are limited)",
+    eventSlug: "eastern-seaboard-regatta-2026",
+    region: "Asia",
+    urgent: true,
+  },
+  {
+    date: "2026-10-10",
+    label: "Early bird entry closes for Trofeo Torboli (Lake Garda)",
+    eventSlug: "8th-autumn-meeting-48th-trofeo-torboli-2026",
+    region: "Europe",
+  },
+  {
+    date: "2026-10-31",
+    label: "Final registration & charter payment deadline for 2026 IODA Asians (Colombo)",
+    eventSlug: "2026-optimist-asian-oceania-championship",
+    region: "Asia",
+  },
+  {
+    date: "2026-11-01",
+    label: "Online entry opens for Torrevieja Euromarina Trophy (00:00 CET, 450 boat cap; sells out rapidly)",
+    eventSlug: "xix-euromarina-optimist-trophy-2027",
+    region: "Europe",
+  },
+  {
+    date: "2026-12-15",
+    label: "Boat charter cutoff for Palamós International Trophy",
+    eventSlug: "37th-international-palamos-optimist-trophy-2027",
+    region: "Europe",
+  },
+  {
+    date: "2026-12-31",
+    label: "Early bird registration discount cutoff for Hong Kong Race Week 2027",
+    eventSlug: "hong-kong-race-week-2027",
+    region: "Asia",
+  },
+];
 
 export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
   {
@@ -30,10 +94,13 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     endDate: "2026-06-23",
     boatClass: "Optimist",
     division: "National",
+    region: "Singapore",
+    geography: "SG",
     venue: "National Sailing Centre, East Coast",
     organizer: "Singapore Sailing Federation",
     countsForRanking: true,
     isSelectionTrial: true,
+    targetFleet: "Gold & Silver Fleets",
     norUrl: "https://singaporesailing.org.sg/events/sysc-2026-nor.pdf",
     registrationUrl: "https://singaporesailing.org.sg/events/sysc-2026",
     scheduleNotes: "Official Selection Trial #1 for Optimist Asian Games & Perth Camp squad. 4 days of fleet racing.",
@@ -46,10 +113,13 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     endDate: "2026-06-23",
     boatClass: "ILCA 4",
     division: "National",
+    region: "Singapore",
+    geography: "SG",
     venue: "National Sailing Centre, East Coast",
     organizer: "Singapore Sailing Federation",
     countsForRanking: true,
     isSelectionTrial: true,
+    targetFleet: "ILCA 4 Youth Fleet",
     norUrl: "https://singaporesailing.org.sg/events/sysc-2026-nor.pdf",
     registrationUrl: "https://singaporesailing.org.sg/events/sysc-2026",
     scheduleNotes: "National ranking series scoring event for ILCA 4 youth fleet.",
@@ -62,10 +132,13 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     endDate: "2026-07-19",
     boatClass: "Optimist",
     division: "Gold / Silver",
+    region: "Singapore",
+    geography: "SG",
     venue: "Changi Sailing Club",
     organizer: "Changi Sailing Club",
     countsForRanking: true,
     isSelectionTrial: false,
+    targetFleet: "Gold & Silver Fleets",
     norUrl: "https://csc.org.sg/sailing/youth-champ-2026-nor.pdf",
     registrationUrl: "https://csc.org.sg/regattas/youth-champ-2026",
     scheduleNotes: "Changi waters tidal racing. 6 races scheduled over 2 days.",
@@ -78,10 +151,13 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     endDate: "2026-08-03",
     boatClass: "Optimist",
     division: "Gold / Silver",
+    region: "Singapore",
+    geography: "SG",
     venue: "National Sailing Centre, East Coast",
     organizer: "Singapore Sailing Federation",
     countsForRanking: true,
     isSelectionTrial: false,
+    targetFleet: "Gold & Silver Fleets",
     norUrl: "https://singaporesailing.org.sg/events/pesta-sukan-2026-nor.pdf",
     registrationUrl: "https://singaporesailing.org.sg/events/pesta-sukan-2026",
     scheduleNotes: "Annual national community sports festival regatta. Optimist Gold and Silver series scoring.",
@@ -94,10 +170,13 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     endDate: "2026-08-09",
     boatClass: "ILCA 4",
     division: "National",
+    region: "Singapore",
+    geography: "SG",
     venue: "National Sailing Centre, East Coast",
     organizer: "Singapore Sailing Federation",
     countsForRanking: true,
     isSelectionTrial: false,
+    targetFleet: "ILCA 4, ILCA 6 & WingFoil",
     norUrl: "https://singaporesailing.org.sg/events/pesta-sukan-2026-ilca-nor.pdf",
     registrationUrl: "https://singaporesailing.org.sg/events/pesta-sukan-2026",
     scheduleNotes: "ILCA 4, ILCA 6, and WingFoil slalom/course racing weekend.",
@@ -110,10 +189,13 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     endDate: "2026-08-30",
     boatClass: "Optimist",
     division: "Gold",
+    region: "Singapore",
+    geography: "SG",
     venue: "National Sailing Centre, East Coast",
     organizer: "Singapore Sailing Federation",
     countsForRanking: true,
     isSelectionTrial: true,
+    targetFleet: "National Selection Squad",
     norUrl: "https://singaporesailing.org.sg/events/ssf-trials-2026-nor.pdf",
     registrationUrl: "https://singaporesailing.org.sg/events/selection-trials-2026",
     scheduleNotes: "High-intensity multi-weekend trials. Combined scores determine Asian Games & Perth Camp national squads.",
@@ -126,45 +208,201 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     endDate: "2026-09-13",
     boatClass: "Optimist",
     division: "National",
+    region: "Singapore",
+    geography: "SG",
     venue: "National Sailing Centre, East Coast",
     organizer: "Singapore Sailing Federation",
     countsForRanking: true,
     isSelectionTrial: true,
+    targetFleet: "National Championships Fleet",
     norUrl: "https://singaporesailing.org.sg/events/snsc-2026-nor.pdf",
     registrationUrl: "https://singaporesailing.org.sg/events/snsc-2026",
     scheduleNotes: "Final Optimist selection event. Determines final qualification cutoffs and national titles.",
     totalFleetSize: 130,
   },
   {
-    name: "SAF Yacht Club Open Regatta 2026",
-    slug: "safyc-open-regatta-2026",
-    startDate: "2026-10-17",
+    name: "2026 Optimist European Team Racing Championship",
+    slug: "2026-optimist-european-team-racing-championship",
+    startDate: "2026-10-13",
     endDate: "2026-10-18",
     boatClass: "Optimist",
-    division: "Gold / Silver",
-    venue: "SAF Yacht Club, Sembawang",
-    organizer: "SAF Yacht Club",
-    countsForRanking: true,
+    division: "Team Racing",
+    region: "Europe",
+    geography: "IT",
+    venue: "Campione del Garda, Italy",
+    organizer: "IODA / Univela Sailing",
+    countsForRanking: false,
     isSelectionTrial: false,
-    norUrl: "https://safyc.org.sg/events/open-regatta-2026-nor.pdf",
-    registrationUrl: "https://safyc.org.sg/events/open-regatta-2026",
-    scheduleNotes: "Straits of Johor coastal waters. Pre-intake ranking points for 1 Jan intake.",
-    totalFleetSize: 75,
+    targetFleet: "National Team Selections (U16)",
+    keyDeadlines: "Registration closes late Sept 2026",
+    norUrl: "https://www.optiworld.org/default/events/ioda?ini=1",
+    registrationUrl: "https://www.optiworld.org/default/events/ioda?ini=1",
+    scheduleNotes: "Premier European youth team racing championship on Lake Garda. Invitation-only for qualified national delegations.",
+    totalFleetSize: 64,
   },
   {
-    name: "2026 Optimist Asian & Oceania Championship",
+    name: "8th Autumn Meeting & 48th Trofeo Torboli",
+    slug: "8th-autumn-meeting-48th-trofeo-torboli-2026",
+    startDate: "2026-10-23",
+    endDate: "2026-10-25",
+    boatClass: "Optimist",
+    division: "Open",
+    region: "Europe",
+    geography: "IT",
+    venue: "Fraglia Vela Riva, Riva del Garda, Italy",
+    organizer: "Fraglia Vela Riva",
+    countsForRanking: false,
+    isSelectionTrial: false,
+    targetFleet: "Juniores & Cadetti (Open)",
+    keyDeadlines: "Early bird entry Oct 10, 2026",
+    norUrl: "https://fragliavelariva.it/regate/a2226187-e2ea-419a-a3f9-fb4f66570d47",
+    registrationUrl: "https://fragliavelariva.it/regate/a2226187-e2ea-419a-a3f9-fb4f66570d47",
+    scheduleNotes: "Iconic Lake Garda autumn youth regatta with over 350 junior sailors. Exceptional tactical cliff-line racing.",
+    totalFleetSize: 350,
+  },
+  {
+    name: "Eastern Seaboard Regatta 2026 & Pre-Event Clinic",
+    slug: "eastern-seaboard-regatta-2026",
+    startDate: "2026-10-29",
+    endDate: "2026-10-31",
+    boatClass: "Optimist",
+    division: "Open / Green",
+    region: "Asia",
+    geography: "TH",
+    venue: "Royal Varuna Yacht Club (RVYC), Pattaya, Thailand",
+    organizer: "Royal Varuna Yacht Club",
+    countsForRanking: false,
+    isSelectionTrial: false,
+    targetFleet: "Open & Green Fleet",
+    keyDeadlines: "Charter cutoff Oct 1; Entry closes Oct 15",
+    clinicDates: "Clinic Oct 26–28, 2026",
+    norUrl: "https://www.optiworld.org/default/events/event/text/eastern-seaboard-regatta/page/0",
+    registrationUrl: "https://www.optiworld.org/default/events/event/text/eastern-seaboard-regatta/page/0",
+    scheduleNotes: "6-day campaign (3-day high-performance clinic + 3-day regatta). RVYC warm coastal waters with steady breezes and moderate chop.",
+    totalFleetSize: 120,
+    campaignBudget: {
+      totalEstimatedSgd: 2736,
+      regattaCostsLabel: "THB 22,000 (~SGD 836) — Entry THB 6k, Charter THB 12k, Coach/RIB pool THB 4k",
+      clinicLabel: "THB 14,000 (~SGD 532) — 3-day high-performance training clinic",
+      flightsLabel: "SGD 608 — Scoot nonstop return for 2 pax (SIN–BKK)",
+      lodgingLabel: "THB 20,000 (~SGD 760) — 6 nights near RVYC + private airport van transfers",
+      notes: "Calculated for 1 youth sailor + 1 accompanying adult from Singapore.",
+    },
+  },
+  {
+    name: "2026 Optimist Asian & Oceanian Championship",
     slug: "2026-optimist-asian-oceania-championship",
     startDate: "2026-12-12",
     endDate: "2026-12-19",
     boatClass: "Optimist",
     division: "International",
-    venue: "Colombo, Sri Lanka",
+    region: "Asia",
+    geography: "LK",
+    venue: "Colombo Port City, Sri Lanka",
     organizer: "IODA / Yachting Association of Sri Lanka",
     countsForRanking: false,
     isSelectionTrial: false,
-    norUrl: "https://optiworld.org/events/asian-oceania-2026-nor.pdf",
-    registrationUrl: "https://optiworld.org/events/asian-oceania-2026",
-    scheduleNotes: "Official overseas campaign for the selected Singapore National Youth Team (Top 5 qualified).",
-    totalFleetSize: 140,
+    targetFleet: "National Squads (Fleet & Team Race)",
+    keyDeadlines: "Final registration & charter payment deadline Oct 31, 2026",
+    clinicDates: "Wave tuning clinic Dec 10–11, 2026",
+    norUrl: "https://www.optiworld.org/default/events/event/text/2026-optimist-asian-oceanian-championship",
+    registrationUrl: "https://www.optiworld.org/default/events/event/text/2026-optimist-asian-oceanian-championship",
+    scheduleNotes: "Official overseas campaign for Singapore National Team (Top 10 qualified + reserves). 2-day pre-event wave and current tuning camp.",
+    totalFleetSize: 160,
+    campaignBudget: {
+      totalEstimatedSgd: 5310,
+      regattaCostsLabel: "USD 1,150 (~SGD 1,457) — IODA Entry USD 450, Charter USD 550, Coach/RIB pool USD 150",
+      clinicLabel: "USD 500 (~SGD 634) — 2-day pre-event ocean tuning clinic",
+      flightsLabel: "SGD 1,698 — AirAsia return for 2 pax (SIN–CMB)",
+      lodgingLabel: "USD 1,200 (~SGD 1,521) — Official event hotel 9 nights + shuttle",
+      notes: "Calculated for 1 youth sailor + 1 accompanying adult from Singapore.",
+    },
+  },
+  {
+    name: "XIX Euromarina Optimist Trophy & Winter Clinic",
+    slug: "xix-euromarina-optimist-trophy-2027",
+    startDate: "2027-01-20",
+    endDate: "2027-01-24",
+    boatClass: "Optimist",
+    division: "International",
+    region: "Europe",
+    geography: "ES",
+    venue: "Real Club Náutico Torrevieja (RCNT), Torrevieja, Spain",
+    organizer: "Real Club Náutico Torrevieja / AECIO",
+    countsForRanking: false,
+    isSelectionTrial: false,
+    targetFleet: "Sub-16 & Sub-13 (Excellence Cup)",
+    keyDeadlines: "Registration opens Nov 1, 2026 (00:00 CET; 450 boat cap)",
+    clinicDates: "Winter clinic Jan 16–19, 2027",
+    norUrl: "https://www.optiworld.org/default/events?year=2026&month=0",
+    registrationUrl: "https://www.optiworld.org/default/events?year=2026&month=0",
+    scheduleNotes: "9-day campaign (4-day winter clinic + 4-day Optimist Excellence Cup). Elite European fleet capped at 450 sailors.",
+    totalFleetSize: 450,
+    campaignBudget: {
+      totalEstimatedSgd: 7418,
+      regattaCostsLabel: "EUR 1,050 (~SGD 1,544) — Entry €180, Charter €550, Safety tag €40, Coach/RIB share €280",
+      clinicLabel: "EUR 550 (~SGD 809) — 4-day winter racing camp",
+      flightsLabel: "SGD 3,300 — Return flights for 2 pax (SIN–ALC/MAD)",
+      lodgingLabel: "EUR 1,200 (~SGD 1,765) — Seaside apartment 9 nights €850 + car rental and fuel €350",
+      notes: "Calculated for 1 youth sailor + 1 accompanying adult from Singapore.",
+    },
+  },
+  {
+    name: "37th International Palamós Optimist Trophy & Nations Cup",
+    slug: "37th-international-palamos-optimist-trophy-2027",
+    startDate: "2027-02-11",
+    endDate: "2027-02-15",
+    boatClass: "Optimist",
+    division: "International",
+    region: "Europe",
+    geography: "ES",
+    venue: "Club de Vela Palamós, Costa Brava, Spain",
+    organizer: "Club de Vela Palamós / CV Costa Brava",
+    countsForRanking: false,
+    isSelectionTrial: false,
+    targetFleet: "Sub-16 & Sub-13 (550+ sailors)",
+    keyDeadlines: "Charter cutoff Dec 15, 2026; Entry closes Jan 15, 2027",
+    clinicDates: "Pre-regatta camp Feb 6–10, 2027",
+    norUrl: "https://www.optiworld.org/default/events/event/text/36-international-palamos-optimist-trophy",
+    registrationUrl: "https://www.optiworld.org/default/events/event/text/36-international-palamos-optimist-trophy",
+    scheduleNotes: "10-day campaign (5-day pre-regatta clinic + 4-day International Trophy). Premier European winter regatta with 550+ sailors from 30+ nations.",
+    totalFleetSize: 550,
+    campaignBudget: {
+      totalEstimatedSgd: 7883,
+      regattaCostsLabel: "EUR 1,150 (~SGD 1,691) — Entry €195, Charter €600, Measurement €45, Coach/RIB share €310",
+      clinicLabel: "EUR 650 (~SGD 956) — 5-day pre-regatta clinic",
+      flightsLabel: "SGD 3,250 — Return flights for 2 pax (SIN–BCN)",
+      lodgingLabel: "EUR 1,350 (~SGD 1,986) — 10 nights lodging €950 + car rental & tolls €400",
+      notes: "Calculated for 1 youth sailor + 1 accompanying adult from Singapore.",
+    },
+  },
+  {
+    name: "Hong Kong Race Week 2027 (ASAF Youth Cup)",
+    slug: "hong-kong-race-week-2027",
+    startDate: "2027-02-16",
+    endDate: "2027-02-21",
+    boatClass: "Optimist",
+    division: "International",
+    region: "Asia",
+    geography: "HK",
+    venue: "Middle Island & Repulse Bay, Hong Kong",
+    organizer: "Hong Kong Sailing Federation / RHKYC",
+    countsForRanking: false,
+    isSelectionTrial: false,
+    targetFleet: "Main Fleet (Gold/Silver) & Green",
+    keyDeadlines: "Early bird Dec 31, 2026; Registration closes Jan 25, 2027",
+    clinicDates: "Southside tactical clinic Feb 13–15, 2027",
+    norUrl: "https://www.hkoda.org/events",
+    registrationUrl: "https://www.hkoda.org/events",
+    scheduleNotes: "8-day campaign (3-day Southside tactical clinic + 4-day ASAF Youth Cup). Competitive international fleet in Hong Kong waters.",
+    totalFleetSize: 180,
+    campaignBudget: {
+      totalEstimatedSgd: 4667,
+      regattaCostsLabel: "HKD 7,200 (~SGD 1,174) — Entry HKD 2.2k, Charter HKD 3.8k, Coach/RIB pool HKD 1.2k",
+      clinicLabel: "HKD 3,800 (~SGD 619) — 3-day Southside tactical clinic",
+      flightsLabel: "SGD 1,000 — Singapore Airlines nonstop for 2 pax (SIN–HKG)",
+      lodgingLabel: "HKD 11,500 (~SGD 1,874) — Aberdeen/Wong Chuk Hang hotel 7 nights HKD 10k + transit HKD 1.5k",
+      notes: "Calculated for 1 youth sailor + 1 accompanying adult from Singapore.",
+    },
   },
 ];

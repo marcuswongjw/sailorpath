@@ -79,6 +79,23 @@ export interface RegattaRecord {
   organizer?: string | null;
   /** Schedule / tide / logistics notes */
   scheduleNotes?: string | null;
+  /** Geographic region: Singapore | Asia | Europe | International */
+  region?: string | null;
+  /** Target fleet / eligibility: e.g. National Squads, Juniores & Cadetti */
+  targetFleet?: string | null;
+  /** Critical deadlines: e.g. early bird, charter reservation, registration cutoffs */
+  keyDeadlines?: string | null;
+  /** Pre-event clinic / tuning camp dates */
+  clinicDates?: string | null;
+  /** Campaign estimate & budget breakdown from Singapore */
+  campaignBudget?: {
+    totalEstimatedSgd: number;
+    regattaCostsLabel: string;
+    clinicLabel?: string;
+    flightsLabel?: string;
+    lodgingLabel?: string;
+    notes?: string;
+  } | null;
 }
 
 /** Default series class for SG Gold/Silver boards */
