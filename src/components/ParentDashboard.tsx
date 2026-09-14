@@ -19,7 +19,6 @@ import {
   CheckSquare,
   Square,
   RotateCcw,
-  ShieldCheck,
   CheckCircle2,
   Lock,
   ExternalLink,
@@ -136,22 +135,10 @@ const NOTE_CATEGORIES = [
 ] as const;
 type NoteCategory = (typeof NOTE_CATEGORIES)[number];
 
-const RACE_CHECKLIST_ITEMS = [
+const DEFAULT_RACE_CHECKLIST_ITEMS = [
   {
     id: "measurement_cert",
     label: "Official class measurement certificate verified & onboard",
-  },
-  {
-    id: "weigh_in",
-    label: "Sailor weigh-in completed (within fleet target weight range)",
-  },
-  {
-    id: "safety_gear",
-    label: "Safety tow rope (min 8m floating line) & 2 hand bailers secured",
-  },
-  {
-    id: "protest_flag",
-    label: "Red protest flag packed in PFD / boat",
   },
   {
     id: "spares_rigging",
@@ -204,6 +191,19 @@ export function ParentDashboard() {
       return {};
     }
   });
+
+  const [customChecklistItems, setCustomChecklistItems] = useState<
+    Record<string, Array<{ id: string; label: string }>>
+  >(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const raw = localStorage.getItem("sailorpath_custom_checklist_items");
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  });
+  const [newChecklistText, setNewChecklistText] = useState("");
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -264,6 +264,63 @@ export function ParentDashboard() {
         localStorage.setItem("sailorpath_race_checklist", JSON.stringify(updated));
       } catch {
         // storage quota
+      }
+      return updated;
+    });
+  };
+
+  const addCustomChecklistItem = (athleteId: string) => {
+    const trimmed = newChecklistText.trim();
+    if (!trimmed) return;
+    const newItem = {
+      id: `custom_${Date.now()}`,
+      label: trimmed,
+    };
+    setCustomChecklistItems((prev) => {
+      const list = prev[athleteId] || [];
+      const updated = {
+        ...prev,
+        [athleteId]: [...list, newItem],
+      };
+      try {
+        localStorage.setItem(
+          "sailorpath_custom_checklist_items",
+          JSON.stringify(updated)
+        );
+      } catch {
+        // ignore
+      }
+      return updated;
+    });
+    setNewChecklistText("");
+    toast.success("Checklist item added.");
+  };
+
+  const removeCustomChecklistItem = (athleteId: string, itemId: string) => {
+    setCustomChecklistItems((prev) => {
+      const list = (prev[athleteId] || []).filter((it) => it.id !== itemId);
+      const updated = {
+        ...prev,
+        [athleteId]: list,
+      };
+      try {
+        localStorage.setItem(
+          "sailorpath_custom_checklist_items",
+          JSON.stringify(updated)
+        );
+      } catch {
+        // ignore
+      }
+      return updated;
+    });
+    setChecklistState((prev) => {
+      const athleteState = { ...(prev[athleteId] || {}) };
+      delete athleteState[itemId];
+      const updated = { ...prev, [athleteId]: athleteState };
+      try {
+        localStorage.setItem("sailorpath_race_checklist", JSON.stringify(updated));
+      } catch {
+        // ignore
       }
       return updated;
     });
@@ -757,155 +814,228 @@ export function ParentDashboard() {
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* COLUMN 1 & 2: LEFT TWO COLUMNS ON DESKTOP */}
                 <div className="lg:col-span-2 space-y-6">
-                  {/* CARD A: 2026 SELECTION TRIALS & SERIES STANDING */}
-                  <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 sm:p-6 space-y-4 shadow-sm">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h3 className="text-sm font-black uppercase tracking-wider text-orange-400 flex items-center gap-2">
-                          <Trophy className="h-4 w-4 text-orange-400" />
-                          2026 Selection Trials & Standings
-                        </h3>
-                        <p className="text-xs text-slate-400 mt-0.5">
-                          Official tracker for the Asian Games and Perth Training Camp squad selection.
-                        </p>
-                      </div>
-                      {activeAthlete.selectionTrials && (
-                        <Link
-                          href="/sg/optimist/selection"
-                          className="text-[11px] font-bold text-orange-400 hover:text-orange-300 hover:underline flex items-center gap-1 shrink-0"
-                        >
-                          View Trials Board →
-                        </Link>
-                      )}
-                    </div>
+                  {/* CARD A: 3-COLUMN SUMMARY (SELECTION TRIAL · NATIONAL RANKING · RECENT RESULTS) */}
+                  <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 sm:p-6 shadow-sm">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-white/10">
+                      {/* COLUMN 1: SELECTION TRIAL */}
+                      <div className="space-y-3 md:pr-4 flex flex-col justify-between">
+                        <div className="space-y-2.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-[11px] font-black uppercase tracking-wider text-orange-400 flex items-center gap-1.5">
+                              <Trophy className="h-3.5 w-3.5 text-orange-400" />
+                              Selection Trial
+                            </span>
+                            <Link
+                              href="/sg/optimist/selection"
+                              className="text-[10px] font-bold text-orange-400 hover:text-orange-300 hover:underline"
+                            >
+                              Board →
+                            </Link>
+                          </div>
 
-                    {/* Selection Trials Metric Highlight */}
-                    {activeAthlete.selectionTrials ? (
-                      <div className="rounded-xl border border-orange-500/25 bg-gradient-to-r from-orange-500/[0.08] to-amber-500/[0.04] p-4 space-y-3">
-                        <div className="grid grid-cols-3 gap-2 text-center sm:text-left">
-                          <div>
-                            <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                              Trials Rank
-                            </p>
-                            <p className="text-2xl font-black text-white tabular-nums mt-0.5">
-                              #{activeAthlete.selectionTrials.rank}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                              Nett Score
-                            </p>
-                            <p className="text-2xl font-black text-orange-300 tabular-nums mt-0.5">
-                              {activeAthlete.selectionTrials.nettScore}
-                              <span className="text-xs font-normal text-slate-400 ml-1">pts</span>
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                              Events Sailed
-                            </p>
-                            <p className="text-2xl font-black text-white tabular-nums mt-0.5">
-                              {activeAthlete.selectionTrials.eventsSailed} / 2
-                            </p>
-                          </div>
+                          {/* Only for Gold fleet sailors who took part in selection trial */}
+                          {(() => {
+                            const isGoldFleet =
+                              activeAthlete.standing?.fleet === "Gold" ||
+                              activeAthlete.currentFleet === "Gold" ||
+                              activeAthlete.currentFleet === "Series";
+                            const trials = activeAthlete.selectionTrials;
+                            const tookPart = Boolean(
+                              isGoldFleet && trials && (trials.eventsSailed > 0 || trials.rank > 0)
+                            );
+
+                            if (!tookPart) {
+                              return (
+                                <div className="space-y-1.5 pt-1">
+                                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-white/5 text-slate-400 border border-white/5">
+                                    Not Applicable
+                                  </span>
+                                  <p className="text-[11px] text-slate-500 leading-snug">
+                                    Only for Gold fleet sailors who took part in selection trial.
+                                  </p>
+                                </div>
+                              );
+                            }
+
+                            const isSelected = Boolean(
+                              trials?.isQualifiedAsian || trials?.isQualifiedPerth
+                            );
+
+                            if (isSelected) {
+                              const squadDetails =
+                                trials?.isQualifiedAsian && trials?.isQualifiedPerth
+                                  ? "Asian Games & Perth Camp"
+                                  : trials?.isQualifiedAsian
+                                  ? `Asian Games Squad (Rank #${trials.asianTeamRank})`
+                                  : "Selected for Perth Camp";
+
+                              return (
+                                <div className="space-y-2 pt-1">
+                                  <div>
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-500/20 border border-emerald-500/40 text-emerald-300">
+                                      <CheckCircle2 className="h-3.5 w-3.5" />
+                                      Selected
+                                    </span>
+                                  </div>
+                                  <p className="text-xs font-bold text-white leading-tight">
+                                    {squadDetails}
+                                  </p>
+                                  <p className="text-[11px] text-slate-400 font-mono">
+                                    Trials Rank #{trials?.rank} · {trials?.nettScore} pts ({trials?.eventsSailed}/2 events)
+                                  </p>
+                                </div>
+                              );
+                            }
+
+                            return (
+                              <div className="space-y-2 pt-1">
+                                <div>
+                                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-slate-800 border border-white/10 text-slate-300">
+                                    Not Selected
+                                  </span>
+                                </div>
+                                <p className="text-xs text-slate-300">
+                                  Trials Rank #{trials?.rank} ({trials?.eventsSailed}/2 events)
+                                </p>
+                                {trials?.gapToCutoff != null && (
+                                  <p className="text-[11px] text-slate-400 font-mono">
+                                    {trials.gapToCutoff > 0 ? `+${trials.gapToCutoff.toFixed(1)}` : trials.gapToCutoff.toFixed(1)} pts to cutoff
+                                  </p>
+                                )}
+                              </div>
+                            );
+                          })()}
                         </div>
 
-                        {/* Status badge pill */}
-                        <div className="pt-1 flex flex-wrap items-center gap-2">
-                          {activeAthlete.selectionTrials.isQualifiedAsian ? (
-                            <span className="rounded-full border border-emerald-500/40 bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-300 inline-flex items-center gap-1.5">
-                              <ShieldCheck className="h-3.5 w-3.5" />
-                              Asian Games Team Candidate (Rank #{activeAthlete.selectionTrials.asianTeamRank} of 5)
+                        <div className="pt-2">
+                          <Link
+                            href="/sg/optimist/selection"
+                            className="text-xs font-bold text-orange-400 hover:text-orange-300 inline-flex items-center gap-1"
+                          >
+                            View Trials Board →
+                          </Link>
+                        </div>
+                      </div>
+
+                      {/* COLUMN 2: NATIONAL RANKING */}
+                      <div className="space-y-3 pt-4 md:pt-0 md:px-4 flex flex-col justify-between">
+                        <div className="space-y-2.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-[11px] font-black uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
+                              <Award className="h-3.5 w-3.5 text-sky-400" />
+                              National Ranking
                             </span>
-                          ) : (
-                            <span className="rounded-full border border-amber-500/40 bg-amber-500/15 px-3 py-1 text-xs font-bold text-amber-200 inline-flex items-center gap-1.5">
-                              <AlertTriangle className="h-3.5 w-3.5" />
-                              In Contention{" "}
-                              {activeAthlete.selectionTrials.gapToCutoff != null && (
-                                <span className="opacity-90 font-mono">
-                                  ({activeAthlete.selectionTrials.gapToCutoff > 0 ? `+${activeAthlete.selectionTrials.gapToCutoff.toFixed(1)}` : activeAthlete.selectionTrials.gapToCutoff.toFixed(1)} pts to top 5 cutoff)
+                            <Link
+                              href={
+                                activeAthlete.standing?.fleet === "Gold"
+                                  ? "/sg/optimist/gold"
+                                  : "/sg/optimist/silver"
+                              }
+                              className="text-[10px] font-bold text-sky-400 hover:text-sky-300 hover:underline"
+                            >
+                              Board →
+                            </Link>
+                          </div>
+
+                          {activeAthlete.standing ? (
+                            <div className="space-y-1 pt-1">
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-3xl font-black text-white tabular-nums">
+                                  #{activeAthlete.standing.overallRank}
                                 </span>
-                              )}
-                            </span>
-                          )}
-
-                          {activeAthlete.selectionTrials.isQualifiedPerth && (
-                            <span className="rounded-full border border-sky-500/40 bg-sky-500/15 px-3 py-1 text-xs font-bold text-sky-200 inline-flex items-center gap-1.5">
-                              <CheckCircle2 className="h-3.5 w-3.5" />
-                              Selected for Perth Camp
-                            </span>
+                                <span className="text-xs font-semibold text-slate-300">
+                                  in {activeAthlete.standing.fleet} Fleet
+                                </span>
+                              </div>
+                              <p className="text-[11px] text-slate-400">
+                                {activeAthlete.standing.fleetSize} sailors · {activeAthlete.standing.periodLabel}
+                              </p>
+                              <p className="text-[11px] text-slate-400">
+                                Best 3 of 5:{" "}
+                                <span className="font-bold text-white">
+                                  {activeAthlete.standing.best3of5} pts
+                                </span>
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="pt-1">
+                              <span className="text-xs text-slate-500">
+                                No series ranking recorded for current half.
+                              </span>
+                            </div>
                           )}
                         </div>
-                      </div>
-                    ) : (
-                      <div className="rounded-xl border border-white/5 bg-black/20 p-3.5 text-xs text-slate-400">
-                        Selection trials tracking is enabled for Optimist Gold fleet sailors participating in the 2026 selection series.
-                      </div>
-                    )}
 
-                    {/* Series Standings Card */}
-                    {activeAthlete.standing ? (
-                      <div className="rounded-xl border border-white/5 bg-black/25 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div>
-                          <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">
-                            National Series Ranking ({activeAthlete.standing.periodLabel})
-                          </p>
-                          <p className="text-base font-black text-white mt-0.5">
-                            #{activeAthlete.standing.overallRank}{" "}
-                            <span className="text-xs font-normal text-slate-400">
-                              in {activeAthlete.standing.fleet} Fleet ({activeAthlete.standing.fleetSize} sailors)
-                            </span>
-                          </p>
-                          <p className="text-[11px] text-slate-400 mt-0.5">
-                            {activeAthlete.standing.trendNote} · Best 3 of 5:{" "}
-                            <span className="font-bold text-white">
-                              {activeAthlete.standing.best3of5} pts
-                            </span>
-                          </p>
-                        </div>
-                        <div className="shrink-0">
+                        <div className="pt-2">
                           <Link
                             href={
-                              activeAthlete.standing.fleet === "Gold"
+                              activeAthlete.standing?.fleet === "Gold"
                                 ? "/sg/optimist/gold"
                                 : "/sg/optimist/silver"
                             }
-                            className="text-xs font-bold text-orange-400 hover:text-orange-300"
+                            className="text-xs font-bold text-sky-400 hover:text-sky-300 inline-flex items-center gap-1"
                           >
                             Explore Fleet Board →
                           </Link>
                         </div>
                       </div>
-                    ) : null}
 
-                    {/* Recent Regatta Finishes */}
-                    {activeAthlete.recentResults && activeAthlete.recentResults.length > 0 && (
-                      <div className="space-y-2 pt-1">
-                        <p className="text-[11px] font-black uppercase tracking-wider text-slate-400">
-                          Recent Regatta Results
-                        </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                          {activeAthlete.recentResults.map((r, i) => (
-                            <div
-                              key={i}
-                              className="rounded-xl border border-white/5 bg-black/20 p-2.5 flex items-center justify-between gap-2"
+                      {/* COLUMN 3: RECENT REGATTA RESULTS */}
+                      <div className="space-y-3 pt-4 md:pt-0 md:pl-4 flex flex-col justify-between">
+                        <div className="space-y-2.5">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                              <Sailboat className="h-3.5 w-3.5 text-emerald-400" />
+                              Recent Results
+                            </span>
+                            <Link
+                              href={`/${activeAthlete.handle}`}
+                              className="text-[10px] font-bold text-emerald-400 hover:text-emerald-300 hover:underline"
                             >
-                              <div className="min-w-0">
-                                <p className="text-xs font-bold text-white truncate">
-                                  {r.regattaName}
-                                </p>
-                                <p className="text-[10px] text-slate-400 font-mono">
-                                  {r.regattaDate}
-                                </p>
-                              </div>
-                              <span className="text-xs font-black text-orange-300 tabular-nums px-2 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/20">
-                                #{r.rank}
+                              All →
+                            </Link>
+                          </div>
+
+                          {activeAthlete.recentResults && activeAthlete.recentResults.length > 0 ? (
+                            <div className="space-y-1.5 pt-1">
+                              {activeAthlete.recentResults.slice(0, 3).map((r, i) => (
+                                <div
+                                  key={i}
+                                  className="flex items-center justify-between gap-2 p-2 rounded-xl bg-black/25 border border-white/5 text-xs"
+                                >
+                                  <div className="min-w-0 flex-1">
+                                    <p className="font-bold text-white truncate text-xs">
+                                      {r.regattaName}
+                                    </p>
+                                    <p className="text-[10px] text-slate-400 font-mono">
+                                      {r.regattaDate}
+                                    </p>
+                                  </div>
+                                  <span className="text-xs font-black text-orange-300 tabular-nums px-2 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/20 shrink-0">
+                                    #{r.rank}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="pt-1">
+                              <span className="text-xs text-slate-500">
+                                No recent regatta finishes logged.
                               </span>
                             </div>
-                          ))}
+                          )}
+                        </div>
+
+                        <div className="pt-2">
+                          <Link
+                            href={`/${activeAthlete.handle}`}
+                            className="text-xs font-bold text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1"
+                          >
+                            View Full Profile →
+                          </Link>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
 
                   {/* CARD B: EQUIPMENT & BOAT LOCKER */}
@@ -1082,35 +1212,48 @@ export function ParentDashboard() {
                     {/* Upcoming regatta calendar list */}
                     {upcomingRegattas.length > 0 ? (
                       <div className="space-y-2">
-                        <p className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-                          Upcoming Regattas
-                        </p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-[10px] font-black uppercase tracking-wider text-slate-500">
+                            Upcoming Regattas
+                          </p>
+                          <Link
+                            href="/calendar"
+                            className="text-[11px] font-bold text-purple-400 hover:text-purple-300 hover:underline"
+                          >
+                            Full Calendar →
+                          </Link>
+                        </div>
                         <div className="space-y-1.5">
                           {upcomingRegattas.slice(0, 3).map((reg) => (
                             <div
                               key={reg.id}
                               className="rounded-xl border border-white/5 bg-black/25 p-2.5 text-xs flex justify-between items-center gap-2"
                             >
-                              <div className="min-w-0">
+                              <div className="min-w-0 flex-1">
                                 <p className="font-bold text-white truncate">{reg.name}</p>
                                 <p className="text-[10px] text-slate-400 font-mono mt-0.5">
                                   {reg.date}{" "}
                                   {reg.boatClass ? `· ${reg.boatClass}` : ""}
                                 </p>
                               </div>
-                              {reg.slug && (
-                                <Link
-                                  href={`/regattas/${reg.slug}`}
-                                  className="text-[11px] font-bold text-orange-400 hover:underline shrink-0"
-                                >
-                                  Details
-                                </Link>
-                              )}
+                              <Link
+                                href="/calendar"
+                                className="text-[11px] font-bold text-orange-400 hover:underline shrink-0"
+                              >
+                                Details
+                              </Link>
                             </div>
                           ))}
                         </div>
                       </div>
-                    ) : null}
+                    ) : (
+                      <div className="rounded-xl border border-white/5 bg-black/20 p-3 text-xs text-slate-400 text-center">
+                        No upcoming regattas scheduled.{" "}
+                        <Link href="/calendar" className="text-orange-400 hover:underline">
+                          View full calendar
+                        </Link>
+                      </div>
+                    )}
 
                     {/* Interactive Checklist */}
                     <div className="space-y-2.5 pt-2 border-t border-white/5">
@@ -1119,41 +1262,89 @@ export function ParentDashboard() {
                           Race Day Morning Checklist
                         </p>
                         {(() => {
+                          const athleteCustom = customChecklistItems[activeAthlete.id] || [];
+                          const allItems = [...DEFAULT_RACE_CHECKLIST_ITEMS, ...athleteCustom];
                           const state = checklistState[activeAthlete.id] || {};
-                          const doneCount = RACE_CHECKLIST_ITEMS.filter((item) => state[item.id]).length;
+                          const doneCount = allItems.filter((item) => state[item.id]).length;
                           return (
                             <span className="text-[11px] font-bold text-emerald-400">
-                              {doneCount}/{RACE_CHECKLIST_ITEMS.length} ready
+                              {doneCount}/{allItems.length} ready
                             </span>
                           );
                         })()}
                       </div>
 
                       <div className="space-y-1.5">
-                        {RACE_CHECKLIST_ITEMS.map((item) => {
+                        {[
+                          ...DEFAULT_RACE_CHECKLIST_ITEMS.map((item) => ({ ...item, isCustom: false })),
+                          ...(customChecklistItems[activeAthlete.id] || []).map((item) => ({ ...item, isCustom: true })),
+                        ].map((item) => {
                           const isDone = Boolean(checklistState[activeAthlete.id]?.[item.id]);
                           return (
-                            <button
+                            <div
                               key={item.id}
-                              type="button"
-                              onClick={() => toggleChecklistItem(activeAthlete.id, item.id)}
-                              className={`w-full text-left rounded-xl p-2.5 text-xs flex items-start gap-2.5 transition-colors ${
+                              className={`group w-full rounded-xl p-2.5 text-xs flex items-center justify-between gap-2.5 transition-colors ${
                                 isDone
                                   ? "bg-emerald-500/[0.08] border border-emerald-500/25 text-slate-300"
                                   : "bg-black/25 border border-white/5 text-slate-300 hover:border-white/15"
                               }`}
                             >
-                              {isDone ? (
-                                <CheckSquare className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                              ) : (
-                                <Square className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
+                              <button
+                                type="button"
+                                onClick={() => toggleChecklistItem(activeAthlete.id, item.id)}
+                                className="flex items-start gap-2.5 flex-1 text-left min-w-0"
+                              >
+                                {isDone ? (
+                                  <CheckSquare className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                                ) : (
+                                  <Square className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
+                                )}
+                                <span className={isDone ? "line-through opacity-75" : "font-normal"}>
+                                  {item.label}
+                                </span>
+                              </button>
+                              {item.isCustom && (
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    removeCustomChecklistItem(activeAthlete.id, item.id);
+                                  }}
+                                  className="opacity-60 group-hover:opacity-100 p-1 text-slate-500 hover:text-rose-400 transition-opacity shrink-0"
+                                  title="Remove item"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
                               )}
-                              <span className={isDone ? "line-through opacity-75" : "font-normal"}>
-                                {item.label}
-                              </span>
-                            </button>
+                            </div>
                           );
                         })}
+                      </div>
+
+                      {/* Add custom item form */}
+                      <div className="flex items-center gap-2 pt-1">
+                        <input
+                          type="text"
+                          value={newChecklistText}
+                          onChange={(e) => setNewChecklistText(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              addCustomChecklistItem(activeAthlete.id);
+                            }
+                          }}
+                          placeholder="Add race prep item…"
+                          className="flex-1 rounded-xl bg-black/40 border border-white/10 px-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-purple-500/50"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => addCustomChecklistItem(activeAthlete.id)}
+                          disabled={!newChecklistText.trim()}
+                          className="rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-40 text-white px-3 py-1.5 text-xs font-bold transition-all shrink-0 inline-flex items-center gap-1"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                          Add
+                        </button>
                       </div>
                     </div>
                   </div>

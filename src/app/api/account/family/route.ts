@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, desc, eq, gte, inArray, or } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import {
@@ -16,6 +16,7 @@ import { computeOptimistSelectionData } from "@/lib/selectionQueries";
 import { parseClaimRelation, relationFromNote } from "@/lib/claimRelation";
 import { mapEquipmentRow } from "@/lib/equipment";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
+import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
 import {
   periodLabel,
   resolveSailorFleet,
@@ -170,13 +171,20 @@ export async function GET() {
           id: regattas.id,
           name: regattas.name,
           date: regattas.date,
+          endDate: regattas.endDate,
           boatClass: regattas.boatClass,
           division: regattas.division,
           slug: regattas.slug,
         })
         .from(regattas)
-        .orderBy(desc(regattas.date))
-        .limit(8)
+        .where(
+          or(
+            gte(regattas.date, new Date().toISOString().slice(0, 10)),
+            gte(regattas.endDate, new Date().toISOString().slice(0, 10))
+          )
+        )
+        .orderBy(asc(regattas.date))
+        .limit(10)
         .catch(() => []),
     ]);
 
@@ -423,19 +431,54 @@ export async function GET() {
           parseClaimRelation(c.relation) || relationFromNote(c.note) || null,
       }));
 
-    return NextResponse.json({
-      email: auth.email,
-      role: auth.role,
-      athletes,
-      pendingClaims,
-      upcomingRegattas: upcomingRegattas.map((r) => ({
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const seenSlugs = new Set<string>();
+    const formattedUpcoming: Array<{
+      id: string;
+      name: string;
+      date: string;
+      boatClass: string | null;
+      division: string | null;
+      slug: string;
+    }> = [];
+
+    for (const r of upcomingRegattas) {
+      if (r.name.includes("SAF Yacht Club Open")) continue;
+      seenSlugs.add(r.slug);
+      formattedUpcoming.push({
         id: r.id,
         name: r.name,
         date: String(r.date).slice(0, 10),
         boatClass: r.boatClass,
         division: r.division,
         slug: r.slug,
-      })),
+      });
+    }
+
+    for (const r of SINGAPORE_REGATTAS_2026) {
+      if (r.name.includes("SAF Yacht Club Open")) continue;
+      const end = r.endDate || r.startDate;
+      if (end < todayStr) continue;
+      if (seenSlugs.has(r.slug)) continue;
+      seenSlugs.add(r.slug);
+      formattedUpcoming.push({
+        id: r.slug,
+        name: r.name,
+        date: r.startDate,
+        boatClass: r.boatClass,
+        division: r.division,
+        slug: r.slug,
+      });
+    }
+
+    formattedUpcoming.sort((a, b) => a.date.localeCompare(b.date));
+
+    return NextResponse.json({
+      email: auth.email,
+      role: auth.role,
+      athletes,
+      pendingClaims,
+      upcomingRegattas: formattedUpcoming.slice(0, 5),
       isParentStyle:
         auth.role === "parent" ||
         athletes.some((a) => a.ownerRelation === "parent") ||

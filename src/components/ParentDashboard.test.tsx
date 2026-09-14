@@ -211,11 +211,13 @@ describe("ParentDashboard", () => {
     expect(screen.getByText("ILCA 4 SIN 221088")).toBeInTheDocument();
     expect(screen.getByText("Gold Fleet")).toBeInTheDocument();
 
-    // Selection trials card
-    expect(screen.getByText("2026 Selection Trials & Standings")).toBeInTheDocument();
-    expect(screen.getAllByText("#3").length).toBeGreaterThanOrEqual(1); // trials rank & standing
-    expect(screen.getByText(/Asian Games Team Candidate/i)).toBeInTheDocument();
-    expect(screen.getByText(/Selected for Perth Camp/i)).toBeInTheDocument();
+    // 3-Column Summary Card (Selection Trial, National Ranking, Recent Results)
+    expect(screen.getByText("Selection Trial")).toBeInTheDocument();
+    expect(screen.getByText("Selected")).toBeInTheDocument();
+    expect(screen.getByText(/Asian Games & Perth Camp/i)).toBeInTheDocument();
+    expect(screen.getByText("National Ranking")).toBeInTheDocument();
+    expect(screen.getByText("Recent Results")).toBeInTheDocument();
+    expect(screen.getAllByText("#3").length).toBeGreaterThanOrEqual(1);
 
     // Equipment locker & alerts
     expect(screen.getByText("Boat Locker & Equipment")).toBeInTheDocument();
@@ -228,6 +230,7 @@ describe("ParentDashboard", () => {
 
     // Pre-race checklist items
     expect(screen.getByText("Official class measurement certificate verified & onboard")).toBeInTheDocument();
+    expect(screen.getByText("Spare battens, sail ties (2.5mm / 3.0mm) & wind indicator checked")).toBeInTheDocument();
 
     // Private notes
     expect(screen.getByText("Focused on roll tacks in light air.")).toBeInTheDocument();
@@ -262,7 +265,7 @@ describe("ParentDashboard", () => {
     expect(screen.queryByText("ILCA 4 SIN 221088")).not.toBeInTheDocument();
   });
 
-  it("interacts with the morning race-day checklist", async () => {
+  it("interacts with the morning race-day checklist and adds custom item", async () => {
     const user = userEvent.setup();
     render(
       <FeedbackProvider>
@@ -274,19 +277,33 @@ describe("ParentDashboard", () => {
       expect(screen.getByText("Official class measurement certificate verified & onboard")).toBeInTheDocument();
     });
 
-    // Initially 0/5 ready
-    expect(screen.getByText("0/5 ready")).toBeInTheDocument();
+    // Initially 0/2 ready (only 1st and 5th items kept by default)
+    expect(screen.getByText("0/2 ready")).toBeInTheDocument();
 
     // Click first checklist item
     const checkBtn = screen.getByText("Official class measurement certificate verified & onboard");
     await user.click(checkBtn);
 
-    // Now 1/5 ready
-    expect(screen.getByText("1/5 ready")).toBeInTheDocument();
+    // Now 1/2 ready
+    expect(screen.getByText("1/2 ready")).toBeInTheDocument();
+
+    // Add a custom checklist item
+    const customInput = screen.getByPlaceholderText(/add race prep item/i);
+    await user.type(customInput, "Extra electrolyte bottle");
+    const addBtn = screen.getByRole("button", { name: /^add$/i });
+    await user.click(addBtn);
+
+    expect(screen.getByText("Extra electrolyte bottle")).toBeInTheDocument();
+    expect(screen.getByText("1/3 ready")).toBeInTheDocument();
+
+    // Check off the newly added item
+    const customItemBtn = screen.getByText("Extra electrolyte bottle");
+    await user.click(customItemBtn);
+    expect(screen.getByText("2/3 ready")).toBeInTheDocument();
 
     // Reset checklist
     const resetBtn = screen.getByTitle("Reset checklist");
     await user.click(resetBtn);
-    expect(screen.getByText("0/5 ready")).toBeInTheDocument();
+    expect(screen.getByText("0/3 ready")).toBeInTheDocument();
   });
 });
