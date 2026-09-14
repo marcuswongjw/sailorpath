@@ -52,4 +52,35 @@ describe("ProfileClassNavigation", () => {
     expect(screen.queryByRole("link", { name: "Standing" })).toBeNull();
     expect(screen.queryByRole("link", { name: "Equipment" })).toBeNull();
   });
+
+  it("handles segmented tab navigation switching", async () => {
+    const onSectionTabChange = vi.fn();
+    render(
+      <ProfileClassNavigation
+        dualClass={false}
+        preferIlcaFirst={false}
+        activeTab="optimist"
+        sectionTab="overview"
+        optimistCount={15}
+        ilcaCount={0}
+        journeyCount={5}
+        showStanding={true}
+        showEquipment={true}
+        onTabChange={() => {}}
+        onSectionTabChange={onSectionTabChange}
+      />
+    );
+
+    const regattasBtn = screen.getByRole("button", { name: /Regattas.*15/ });
+    await userEvent.click(regattasBtn);
+    expect(onSectionTabChange).toHaveBeenCalledWith("results");
+
+    const milestonesBtn = screen.getByRole("button", { name: /Milestones.*5/ });
+    await userEvent.click(milestonesBtn);
+    expect(onSectionTabChange).toHaveBeenCalledWith("journey");
+
+    const equipmentBtn = screen.getByRole("button", { name: /Equipment/ });
+    await userEvent.click(equipmentBtn);
+    expect(onSectionTabChange).toHaveBeenCalledWith("equipment");
+  });
 });
