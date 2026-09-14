@@ -205,10 +205,10 @@ describe("RegattaCalendarClient", () => {
     expect(registerLink).toHaveAttribute("href", "https://singaporesailing.org/events/snsc-2099");
   });
 
-  it("toggles between upcoming schedule and past results", () => {
+  it("toggles between upcoming regattas and past regattas", () => {
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
-    const pastTab = screen.getByRole("button", { name: /past results/i });
+    const pastTab = screen.getByRole("button", { name: /past regattas/i });
     fireEvent.click(pastTab);
 
     expect(screen.getByText("Past Regatta 2020")).toBeInTheDocument();

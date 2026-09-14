@@ -136,6 +136,11 @@ export function WingfoilView() {
                 <span className="text-[10px] font-black uppercase tracking-wider text-teal-400 bg-teal-500/10 px-2 py-0.5 rounded border border-teal-500/20">
                   {activeRegatta.format}
                 </span>
+                {activeRegatta.seriesPart && (
+                  <span className="text-[10px] font-bold text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                    {activeRegatta.seriesPart}
+                  </span>
+                )}
                 <span className="text-xs font-bold text-slate-300">
                   {activeRegatta.name}
                 </span>
@@ -235,8 +240,16 @@ export function WingfoilView() {
                       ))}
                       {displayResults.length === 0 && (
                         <tr>
-                          <td colSpan={maxRaces + 7} className="px-4 py-8 text-center text-slate-500">
-                            No competitors match the selected filter.
+                          <td colSpan={maxRaces + 7} className="px-4 py-12 text-center text-slate-400">
+                            {activeRegatta.status === "Upcoming" ? (
+                              <div className="space-y-1.5 max-w-sm mx-auto">
+                                <p className="text-sm font-bold text-white">Upcoming Round</p>
+                                <p className="text-xs text-slate-400">{activeRegatta.rulesNotes}</p>
+                                <p className="text-[11px] text-teal-400 font-mono pt-1">Scheduled dates: {activeRegatta.dates}</p>
+                              </div>
+                            ) : (
+                              "No competitors match the selected filter."
+                            )}
                           </td>
                         </tr>
                       )}
@@ -321,6 +334,20 @@ export function WingfoilView() {
                 </div>
               </div>
             ))}
+
+            {displayResults.length === 0 && (
+              <div className="rounded-xl border border-white/10 bg-[#131520] p-6 text-center text-slate-400">
+                {activeRegatta.status === "Upcoming" ? (
+                  <div className="space-y-1.5 max-w-sm mx-auto">
+                    <p className="text-sm font-bold text-white">Upcoming Round</p>
+                    <p className="text-xs text-slate-400">{activeRegatta.rulesNotes}</p>
+                    <p className="text-[11px] text-teal-400 font-mono pt-1">Scheduled dates: {activeRegatta.dates}</p>
+                  </div>
+                ) : (
+                  "No competitors match the selected filter."
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -335,20 +335,24 @@ export function computeCombinedSelectionScores(
 
     const grossScore = raceScores.reduce((sum, race) => sum + race.score, 0);
     const combinedScore = raceScores.reduce((sum, race) => sum + (race.discarded ? 0 : race.score), 0);
-    rows.push({
-      sailorId,
-      name: sailor.name,
-      handle: sailor.handle,
-      gender: normalizeGender(sailor.gender),
-      birthYear: birthYear(sailor.dob),
-      nationality: sailor.nationality,
-      eventScores,
-      raceScores,
-      grossScore,
-      combinedScore,
-      discardCount,
-      eventsSailed,
-    });
+    
+    // Only sailors who actually participated in at least one selection event are included
+    if (eventsSailed > 0) {
+      rows.push({
+        sailorId,
+        name: sailor.name,
+        handle: sailor.handle,
+        gender: normalizeGender(sailor.gender),
+        birthYear: birthYear(sailor.dob),
+        nationality: sailor.nationality,
+        eventScores,
+        raceScores,
+        grossScore,
+        combinedScore,
+        discardCount,
+        eventsSailed,
+      });
+    }
   }
   return rows.sort(compareCombinedSelectionRows);
 }

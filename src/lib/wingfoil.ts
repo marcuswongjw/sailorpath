@@ -28,6 +28,8 @@ export type WingfoilRegatta = {
   status: "Completed" | "Upcoming";
   scoringSystem: string;
   rulesNotes: string;
+  seriesName?: string;
+  seriesPart?: string;
   results?: WingfoilSailorResult[];
 };
 
@@ -48,7 +50,7 @@ export const WINGFOIL_SPECIFICATIONS = {
 export const SINGAPORE_WINGFOIL_REGATTAS: WingfoilRegatta[] = [
   {
     id: "ne-monsoon-series-gp1-2026",
-    name: "2026 Northeast Monsoon Series GP1",
+    name: "2026 Northeast Monsoon Grand Prix 1 (Round 1 of 3)",
     shortName: "NE Monsoon GP1",
     dates: "10–11 January 2026",
     venue: "East Coast Park / Constant Wind, Singapore",
@@ -56,6 +58,8 @@ export const SINGAPORE_WINGFOIL_REGATTAS: WingfoilRegatta[] = [
     format: "Sprint Slalom",
     status: "Completed",
     scoringSystem: "20 races, 2 discards (Appendix A)",
+    seriesName: "2026 Northeast Monsoon Grand Prix Series",
+    seriesPart: "Round 1 of 3 (20 races completed)",
     rulesNotes:
       "Sailed: 20, Discards: 2, To count: 18, Entries: 21. Appendix A low point system across Open, U16/U19, Masters, Grand Masters, and Fun Open divisions.",
     results: [
@@ -753,6 +757,36 @@ export const SINGAPORE_WINGFOIL_REGATTAS: WingfoilRegatta[] = [
         nettScore: 396,
       },
     ],
+  },
+  {
+    id: "ne-monsoon-series-gp2-2026",
+    name: "2026 Northeast Monsoon Grand Prix 2 (Round 2 of 3)",
+    shortName: "NE Monsoon GP2",
+    dates: "31 Jan – 1 Feb & 7–8 Feb 2026",
+    venue: "Changi Coast / CSC, Singapore",
+    organizer: "Windsurfing Association of Singapore & Singapore Sailing Federation",
+    format: "Sprint Slalom",
+    status: "Upcoming",
+    scoringSystem: "Up to 24 races, Low Point System (Appendix A)",
+    seriesName: "2026 Northeast Monsoon Grand Prix Series",
+    seriesPart: "Round 2 of 3",
+    rulesNotes:
+      "Round 2 of the 2026 Northeast Monsoon Grand Prix Series. Sprint Slalom and Course racing across Open, Youth, and Masters categories.",
+  },
+  {
+    id: "ne-monsoon-series-gp3-2026",
+    name: "2026 Northeast Monsoon Grand Prix 3 (Round 3 of 3)",
+    shortName: "NE Monsoon GP3",
+    dates: "28 Feb – 1 Mar & 7–8 Mar 2026",
+    venue: "East Coast Park / Constant Wind, Singapore",
+    organizer: "Windsurfing Association of Singapore & Singapore Sailing Federation",
+    format: "Sprint Slalom",
+    status: "Upcoming",
+    scoringSystem: "Up to 24 races, Series Grand Finale (Appendix A)",
+    seriesName: "2026 Northeast Monsoon Grand Prix Series",
+    seriesPart: "Round 3 of 3 (Grand Finale)",
+    rulesNotes:
+      "Championship Grand Finale of the 2026 NE Monsoon Grand Prix Series. Overall series championship coronation across all divisions.",
   },
   {
     id: "sw-monsoon-gp-2026",

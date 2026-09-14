@@ -336,40 +336,10 @@ export function RegattaCalendarClient({
       </div>
 
       {/* Hero Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/10 pb-6">
-        <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-xs font-bold text-orange-400 mb-2">
-            <Calendar className="h-3.5 w-3.5" />
-            2026 Racing Season
-          </div>
-          <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Singapore &amp; International Regatta Calendar
-          </h1>
-          <p className="mt-2 text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed">
-            Official schedule of Singapore ranking regattas, Asian Games &amp; Perth selection trials, and regional youth championships across Asia and Europe.
-          </p>
-        </div>
-
-        {/* Quick status summary counter */}
-        <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-2xl px-4 py-3 shrink-0">
-          <div className="text-right">
-            <p className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-              Upcoming Events
-            </p>
-            <p className="text-xl font-black text-white tabular-nums">
-              {upcomingList.length}
-            </p>
-          </div>
-          <span className="h-8 w-px bg-white/10" />
-          <div className="text-right">
-            <p className="text-[10px] font-black uppercase tracking-wider text-slate-500">
-              Selection Trials
-            </p>
-            <p className="text-xl font-black text-orange-400 tabular-nums">
-              {upcomingList.filter((r) => r.isSelectionTrial).length}
-            </p>
-          </div>
-        </div>
+      <div className="border-b border-white/10 pb-6">
+        <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+          Singapore &amp; International Regatta Calendar
+        </h1>
       </div>
 
       {/* Control Bar: Timeline Switcher, Region Filter, Class Filter & Search */}
@@ -387,7 +357,7 @@ export function RegattaCalendarClient({
               }`}
             >
               <Clock className="h-3.5 w-3.5" />
-              Upcoming Schedule ({upcomingList.length})
+              Upcoming Regattas ({upcomingList.length})
             </button>
             <button
               type="button"
@@ -399,7 +369,7 @@ export function RegattaCalendarClient({
               }`}
             >
               <Trophy className="h-3.5 w-3.5" />
-              Past Results Archive ({pastList.length})
+              Past Regattas ({pastList.length})
             </button>
           </div>
 
