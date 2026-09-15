@@ -98,6 +98,7 @@ export type AdminSailorsPanelProps = {
   onCleanupEmptySeries?: () => void | Promise<void>;
   emptySeriesCount?: number;
   onBackfillNationalityFromSail?: () => void | Promise<void>;
+  onUpdateOptimistSailNumbers?: () => void | Promise<void>;
   onSailorsChange?: (sailors: SailorAdmin[]) => void;
 };
 
@@ -150,6 +151,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     onCleanupEmptySeries,
     emptySeriesCount = 0,
     onBackfillNationalityFromSail,
+    onUpdateOptimistSailNumbers,
     onSailorsChange,
   } = p;
 
@@ -201,6 +203,25 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       className="shrink-0 rounded-full bg-sky-600/90 hover:bg-sky-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
                     >
                       Fill nationality from sail #
+                    </button>
+                  </div>
+                )}
+                {onUpdateOptimistSailNumbers && (
+                  <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <p className="text-xs text-emerald-100/90">
+                        Official Optimist Ranking Sync: Update missing or placeholder (0 / SGP 0)
+                        sail numbers for 134 Optimist sailors based on the official ranking list.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin}
+                      onClick={() => void onUpdateOptimistSailNumbers()}
+                      className="shrink-0 rounded-full bg-emerald-600/90 hover:bg-emerald-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                    >
+                      Update 134 Optimist Sail #s
                     </button>
                   </div>
                 )}

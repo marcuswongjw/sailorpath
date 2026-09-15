@@ -245,6 +245,32 @@ export function useAdminSailors({
     }
   };
 
+  const handleUpdateOptimistSailNumbers = async () => {
+    const ok = await confirm({
+      title: "Update 134 Optimist sail numbers?",
+      message:
+        "Update missing, placeholder (0/SGP 0), or mismatched sail numbers for 134 Optimist sailors based on the official ranking list.",
+      confirmLabel: "Update Sail Numbers",
+    });
+    if (!ok) return;
+    try {
+      const res = await fetch("/api/admin/sailors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "applyOptimistSailNumberUpdates" }),
+      });
+      const data = await parseApi(res);
+      if (!res.ok) throw new Error(apiErr(data, "Update failed"));
+      invalidateSailors?.();
+      toast.success(
+        apiStr(data, "message") ||
+          `Updated ${apiNum(data, "sailorsUpdated") ?? 0} sailors and ${apiNum(data, "resultsUpdated") ?? 0} results`
+      );
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Update failed"));
+    }
+  };
+
   const handleCleanupEmptySeries = async () => {
     if (!isSuperadmin) {
       toast.error("Only Superadmins can run this.");
@@ -877,6 +903,7 @@ export function useAdminSailors({
     emptySeriesCount,
     onCleanupEmptySeries: handleCleanupEmptySeries,
     onBackfillNationalityFromSail: handleBackfillNationalityFromSail,
+    onUpdateOptimistSailNumbers: handleUpdateOptimistSailNumbers,
   };
 
   return {

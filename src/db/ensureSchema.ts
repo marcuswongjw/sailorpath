@@ -1,4 +1,5 @@
 import { pgSql, resolveConnectionString } from "./client";
+import { OPTIMIST_SAILOR_SAIL_NUMBERS } from "@/lib/optimistSailNumberMap";
 
 let schemaEnsured = false;
 let schemaPromise: Promise<void> | null = null;
@@ -101,6 +102,28 @@ export async function ensureCoreSchema(): Promise<void> {
             ON public.wingfoil_regattas (status);
         `;
       } catch {}
+
+      // 054_optimist_sail_number_updates.sql: Self-heal missing Optimist sail numbers
+      try {
+        for (const item of OPTIMIST_SAILOR_SAIL_NUMBERS) {
+          const cleanName = item.name.replace(/\.$/, "").trim().toLowerCase();
+          await pgSql`
+            UPDATE public.sailors
+            SET sail_number = ${item.sailNumber},
+                nationality = COALESCE(NULLIF(trim(nationality), ''), ${item.nationality}),
+                updated_at = now()
+            WHERE (trim(lower(name)) = ${item.name.toLowerCase()} OR trim(lower(name)) = ${cleanName})
+              AND (
+                sail_number IS NULL
+                OR trim(sail_number) = ''
+                OR sail_number ~* '^SGP[[:space:]]*0+$'
+                OR sail_number = '0'
+              );
+          `;
+        }
+      } catch (e) {
+        console.warn("[sailorpath] ensure Optimist sail numbers note:", e);
+      }
 
       schemaEnsured = true;
       console.info("[sailorpath] Core database schema verified & ensured.");

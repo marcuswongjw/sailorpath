@@ -29,6 +29,11 @@ import { normalizeNationality } from "@/lib/seriesMembership";
 import { deriveAllSilverEntryDates } from "@/lib/deriveFleetEntryDates";
 import { todayYmdSg } from "@/lib/datesSg";
 import { mergeSailors } from "@/lib/mergeSailors";
+import {
+  OPTIMIST_SAILOR_SAIL_NUMBERS,
+  cleanOptimistSailorName,
+} from "@/lib/optimistSailNumberMap";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 /**
  * Named admin actions for /api/admin/sailors POST.
@@ -943,6 +948,106 @@ async function recomputeSilverEntryDates(
 }
 
 /**
+ * Update missing or outdated Optimist sail numbers and nationalities
+ * based on the official rankings master list.
+ */
+async function applyOptimistSailNumberUpdates(
+  auth: AuthContext
+): Promise<NextResponse> {
+  const allSailors = await db
+    .select({
+      id: sailors.id,
+      name: sailors.name,
+      sailNumber: sailors.sailNumber,
+      nationality: sailors.nationality,
+    })
+    .from(sailors);
+
+  const sailorLookup = new Map<string, (typeof allSailors)[0]>();
+  for (const s of allSailors) {
+    sailorLookup.set(cleanOptimistSailorName(s.name), s);
+  }
+
+  const details: string[] = [];
+  let updatedCount = 0;
+  let alreadyCorrect = 0;
+  let notFound = 0;
+
+  for (const item of OPTIMIST_SAILOR_SAIL_NUMBERS) {
+    const cleanTarget = cleanOptimistSailorName(item.name);
+    let match = sailorLookup.get(cleanTarget);
+    if (!match && item.name.endsWith(".")) {
+      match = sailorLookup.get(cleanOptimistSailorName(item.name.slice(0, -1)));
+    }
+
+    if (!match) {
+      notFound++;
+      continue;
+    }
+
+    const currentSail = (match.sailNumber || "").trim();
+    const currentNat = (match.nationality || "").trim();
+    const isMissingOrPlaceholderSail =
+      !currentSail ||
+      currentSail === "0" ||
+      /^SGP\s*0+$/i.test(currentSail);
+
+    const isDifferentSail = currentSail !== item.sailNumber;
+    const needsNat = !currentNat && !!item.nationality;
+
+    if (isMissingOrPlaceholderSail || isDifferentSail || needsNat) {
+      await db
+        .update(sailors)
+        .set({
+          sailNumber: item.sailNumber,
+          ...(needsNat ? { nationality: item.nationality } : {}),
+          updatedAt: new Date(),
+        })
+        .where(eq(sailors.id, match.id));
+
+      updatedCount++;
+      details.push(
+        `${match.name}: sail ${currentSail || "none"} → ${item.sailNumber}${
+          needsNat ? ` (nat: ${item.nationality})` : ""
+        }`
+      );
+
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "sailor.update",
+        entityType: "sailor",
+        entityId: match.id,
+        entityLabel: match.name,
+        summary: `Updated Optimist sail number to ${item.sailNumber}${
+          needsNat ? ` (nat: ${item.nationality})` : ""
+        }`,
+        details: {
+          previousSail: currentSail,
+          newSail: item.sailNumber,
+          previousNat: currentNat,
+          newNat: item.nationality,
+        },
+        source: "/api/admin/sailors",
+      });
+    } else {
+      alreadyCorrect++;
+    }
+  }
+
+  void revalidatePublicRankings();
+
+  return NextResponse.json({
+    ok: true,
+    updatedCount,
+    alreadyCorrect,
+    notFound,
+    details: details.slice(0, 50),
+    message: `Updated ${updatedCount} Optimist sailor(s) with official sail numbers (${alreadyCorrect} already up-to-date, ${notFound} not yet in database).`,
+  });
+}
+
+/**
  * Dispatch a named action from POST body.
  * Returns the action's response, or null when body.action is absent/unknown
  * (the route then continues to its default create-sailor behavior).
@@ -977,6 +1082,8 @@ export async function runSailorAction(
       return backfillNationalityFromSail(auth);
     case "recomputeSilverEntryDates":
       return recomputeSilverEntryDates(auth);
+    case "applyOptimistSailNumberUpdates":
+      return applyOptimistSailNumberUpdates(auth);
     default:
       return null;
   }
