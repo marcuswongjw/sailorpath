@@ -12,6 +12,8 @@ import {
   Sparkles,
   Shield,
   Calendar,
+  CheckCheck,
+  Quote,
 } from "lucide-react";
 import { WaitlistForm } from "@/components/WaitlistForm";
 import { HomeLivePreview } from "@/components/home/HomeLivePreview";
@@ -51,56 +53,66 @@ export default function HomePage() {
           </span>
         </h1>
 
-        {/* Subtitle — short, three audiences */}
+        {/* Subtitle */}
         <p className="mx-auto mt-4 sm:mt-6 max-w-xl text-sm sm:text-base md:text-lg text-slate-400 font-medium leading-relaxed">
-          Live <strong className="text-slate-200">Optimist</strong>,{" "}
-          <strong className="text-slate-200">ILCA 4</strong>, and{" "}
-          <strong className="text-slate-200">WingFoil</strong> standings.
-          Official 2026 regatta calendar. Private workspaces for sailors,
-          parents, and coaches.
+          If your child races in Singapore — their standings, selection trial
+          status, and race calendar are already here.
         </p>
 
-        {/* Primary + Secondary CTAs */}
-        <div className="mt-7 sm:mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mx-auto sm:max-w-none">
+        {/* ── Primary CTA: Profile Claim ── */}
+        <div className="mt-8 sm:mt-10 flex flex-col items-center gap-3">
+          <Link
+            href="/search"
+            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-sm font-black uppercase tracking-wider text-white px-10 py-4 shadow-lg shadow-orange-950/40 border border-orange-500/30 inline-flex items-center justify-center gap-2.5 min-h-[52px]"
+          >
+            <UserRound className="h-4 w-4 shrink-0" />
+            <span>Find Your Child&apos;s Profile</span>
+          </Link>
+
+          {/* Trust line — Fix #4 */}
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] sm:text-xs text-slate-500">
+            <span className="inline-flex items-center gap-1">
+              <CheckCheck className="h-3 w-3 text-emerald-500" />
+              Free to use
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <CheckCheck className="h-3 w-3 text-emerald-500" />
+              No credit card
+            </span>
+            <span className="inline-flex items-center gap-1">
+              <CheckCheck className="h-3 w-3 text-emerald-500" />
+              Data from official SSF results
+            </span>
+          </div>
+        </div>
+
+        {/* ── Secondary CTAs ── */}
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5">
           <Link
             href="/rankings"
-            className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-7 py-3.5 shadow-lg shadow-orange-950/40 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[46px]"
+            className="rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-5 py-2.5 border border-white/10 inline-flex items-center justify-center gap-1.5 min-h-[38px]"
           >
-            <Trophy className="h-4 w-4 shrink-0" />
+            <Trophy className="h-3.5 w-3.5 text-amber-400 shrink-0" />
             <span>Explore Standings</span>
           </Link>
           <Link
             href="/calendar"
-            className="w-full sm:w-auto rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-6 py-3.5 border border-white/10 inline-flex items-center justify-center gap-2 min-h-[46px]"
+            className="rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-5 py-2.5 border border-white/10 inline-flex items-center justify-center gap-1.5 min-h-[38px]"
           >
-            <Calendar className="h-3.5 w-3.5 text-sky-400" />
+            <Calendar className="h-3.5 w-3.5 text-sky-400 shrink-0" />
             <span>2026 Calendar</span>
           </Link>
           <Link
             href="/sg/optimist/selection"
-            className="w-full sm:w-auto rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-6 py-3.5 border border-white/10 inline-flex items-center justify-center gap-2 min-h-[46px]"
+            className="rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-5 py-2.5 border border-white/10 inline-flex items-center justify-center gap-1.5 min-h-[38px]"
           >
-            <Lock className="h-3.5 w-3.5 text-orange-400" />
+            <Lock className="h-3.5 w-3.5 text-orange-400 shrink-0" />
             <span>Selection Trials</span>
           </Link>
         </div>
 
-        {/* Claim profile — elevated to its own row */}
-        <div className="mt-6 inline-flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.03] px-5 py-3">
-          <UserRound className="h-4 w-4 text-orange-400 shrink-0" />
-          <p className="text-xs sm:text-sm text-slate-400">
-            Sailor or parent?{" "}
-            <Link
-              href="/search"
-              className="font-bold text-orange-400 hover:text-orange-300 underline-offset-4 hover:underline"
-            >
-              Find and claim your athlete profile →
-            </Link>
-          </p>
-        </div>
-
         {/* Global Search Bar */}
-        <div className="mx-auto mt-7 sm:mt-10 max-w-lg w-full">
+        <div className="mx-auto mt-8 sm:mt-10 max-w-lg w-full">
           <form action="/search" className="relative">
             <input
               type="search"
@@ -190,7 +202,47 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 2. Interactive Live Preview Bento ── */}
+      {/* ── 2. Social Proof Strip ── */}
+      <section className="border-t border-white/5 bg-[#0b0c13] py-10 sm:py-12">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Clubs & Schools */}
+          <p className="text-center text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-6">
+            Athletes from across the Singapore sailing community
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-x-10">
+            {[
+              "Changi Sailing Club",
+              "SAF Yacht Club",
+              "Singapore Sailing Club",
+              "National Sailing Centre",
+              "Republic Polytechnic",
+              "Ngee Ann Polytechnic",
+            ].map((org) => (
+              <span
+                key={org}
+                className="text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-300 transition-colors whitespace-nowrap"
+              >
+                {org}
+              </span>
+            ))}
+          </div>
+
+          {/* Parent Quote */}
+          <div className="mt-10 max-w-2xl mx-auto rounded-2xl border border-white/8 bg-white/[0.025] p-6 sm:p-8 relative">
+            <Quote className="absolute top-4 left-5 h-5 w-5 text-orange-500/30" />
+            <blockquote className="text-sm sm:text-base text-slate-300 leading-relaxed italic pl-4">
+              "I used to chase my daughter&apos;s coach on WhatsApp after every
+              regatta just to find out where she placed. Now I open SailorPath and
+              I know exactly where she stands — and what she needs to qualify."
+            </blockquote>
+            <p className="mt-4 text-xs font-bold text-slate-500 pl-4">
+              — Parent, Optimist Gold Fleet · Changi Sailing Club
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. Interactive Live Preview Bento ── */}
       <section className="border-t border-white/5 bg-[#090a0f] py-10 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6 text-center">
           <div className="max-w-2xl mx-auto space-y-2">
@@ -212,7 +264,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 3. Official Singapore Class Hubs Grid ── */}
+      {/* ── 4. Official Singapore Class Hubs Grid ── */}
       <section className="border-t border-white/5 bg-[#0b0c13] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -375,7 +427,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 4. Spotlight Feature: 2026 Selection Trials ── */}
+      {/* ── 5. Spotlight Feature: 2026 Selection Trials ── */}
       <section className="border-t border-white/5 bg-[#090a0f] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="relative rounded-3xl border border-orange-500/30 bg-gradient-to-r from-orange-500/[0.08] via-amber-500/[0.05] to-transparent p-6 sm:p-10 lg:p-12 overflow-hidden shadow-2xl">
@@ -425,15 +477,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 5. Tailored Workspaces Bento (Sailors, Parents, Coaches) ── */}
+      {/* ── 6. Workspaces — renamed per Fix #3 ── */}
       <section className="border-t border-white/5 bg-[#0b0c13] py-14 sm:py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              Workspaces built for Singapore Sailing
+              Whether you race, parent, or coach —
             </h2>
             <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Tailored tools for every person in a sailor&apos;s journey.
+              There&apos;s a view built for you.
             </p>
           </div>
 
@@ -514,174 +566,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 6. How SailorPath Works ── */}
-      <section className="border-t border-white/5 bg-[#090a0f] py-14 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              How SailorPath works
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Automated scoring pipelines and verified athlete records from official results.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {(
-              [
-                {
-                  step: "1",
-                  title: "Official results, imported and checked",
-                  body: "Published regatta results are imported from official PDF or Excel sheets and reviewed before standings are published.",
-                },
-                {
-                  step: "2",
-                  title: "Standings update automatically",
-                  body: "Rolling Best-3-of-5, High Points, and Sprint Slalom discard formulas apply automatically under official class rules.",
-                },
-                {
-                  step: "3",
-                  title: "Claim profiles, track trials, coach your squad",
-                  body: "Claim athlete profiles to record career milestones, follow selection trial cutoffs, or run private squad tracking.",
-                },
-              ] as const
-            ).map((item) => (
-              <div
-                key={item.step}
-                className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center md:text-left"
-              >
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-orange-500/15 text-orange-400 text-sm font-black border border-orange-500/25 mb-3">
-                  {item.step}
-                </span>
-                <h3 className="text-base sm:text-lg font-bold text-white">{item.title}</h3>
-                <p className="mt-2 text-xs sm:text-sm text-slate-400 leading-relaxed">{item.body}</p>
-              </div>
-            ))}
-          </div>
-
-          <p className="text-center pt-2">
-            <Link
-              href="/how-rankings-work"
-              className="text-xs sm:text-sm font-semibold text-orange-400 hover:text-orange-300 inline-flex items-center gap-1"
-            >
-              <span>Read the complete ranking methodology &amp; series rules</span>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
+      {/* ── 7. Closing CTA — Fix #5 ── */}
+      <section className="border-t border-white/5 bg-[#090a0f] py-16 sm:py-24">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 text-center space-y-6">
+          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight leading-tight">
+            Your child&apos;s sailing career<br className="hidden sm:block" /> is already recorded here.
+          </h2>
+          <p className="text-sm sm:text-base text-slate-400">
+            All that&apos;s missing is you.
           </p>
-        </div>
-      </section>
-
-      {/* ── 7. What's Live Today & Roadmap ── */}
-      <section id="roadmap" className="border-t border-white/5 bg-[#0b0c13] py-14 sm:py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-              What&apos;s live today
-            </h2>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-              Rankings, claimed profiles, the{" "}
-              <Link href="/parent" className="text-emerald-300 font-semibold hover:text-emerald-200">
-                Parent Dashboard
-              </Link>
-              , the{" "}
-              <Link href="/calendar" className="text-orange-300 font-semibold hover:text-orange-200">
-                2026 Racing Calendar
-              </Link>
-              , and the{" "}
-              <Link href="/coach-tools" className="text-sky-300 font-semibold hover:text-sky-200">
-                Coach Dashboard
-              </Link>{" "}
-              are all available now.
-            </p>
+          <div className="flex flex-col items-center gap-3">
+            <Link
+              href="/search"
+              className="rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-sm font-black uppercase tracking-wider text-white px-10 py-4 shadow-lg shadow-orange-950/40 border border-orange-500/30 inline-flex items-center justify-center gap-2.5 min-h-[52px]"
+            >
+              <UserRound className="h-4 w-4 shrink-0" />
+              Find Your Child&apos;s Profile
+            </Link>
+            <p className="text-xs text-slate-500">Free to join · Takes 2 minutes</p>
           </div>
 
-          <ol className="mx-auto max-w-2xl space-y-0 relative">
-            <li id="roadmap-parent" className="relative flex gap-4 pb-10">
-              <span className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10" aria-hidden />
-              <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-emerald-500/40 bg-emerald-500/15" />
-              <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-black uppercase tracking-widest text-emerald-400">
-                  Available now
-                </p>
-                <h3 className="text-base font-bold text-white mt-1">Parent Dashboard &amp; Racing Calendar</h3>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Link your children, then open{" "}
-                  <Link href="/parent" className="text-emerald-300 font-semibold hover:text-emerald-200">
-                    /parent
-                  </Link>{" "}
-                  for multi-athlete tracking, live 2026 Selection Trials
-                  qualification buffers, boat locker maintenance logs, coach
-                  debriefs, and morning checklists. View the full 2026 schedule on
-                  the{" "}
-                  <Link href="/calendar" className="text-emerald-300 font-semibold hover:text-emerald-200">
-                    Racing Calendar
-                  </Link>.
-                </p>
-                <div className="mt-3 flex flex-wrap gap-3 items-center">
-                  <Link href="/parent" className="text-xs font-bold text-emerald-400 hover:text-emerald-300">
-                    Open Parent Dashboard →
-                  </Link>
-                  <Link href="/calendar" className="text-xs font-semibold text-slate-300 hover:text-white">
-                    2026 Racing Calendar →
-                  </Link>
-                  <Link href="/claim-profile" className="text-xs font-semibold text-slate-400 hover:text-white">
-                    Link a child first
-                  </Link>
-                </div>
-              </div>
-            </li>
-
-            <li id="roadmap-coach" className="relative flex gap-4 pb-10">
-              <span className="absolute left-[11px] top-7 bottom-0 w-px bg-white/10" aria-hidden />
-              <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-sky-500/40 bg-sky-500/15" />
-              <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-black uppercase tracking-widest text-sky-400">
-                  Available now
-                </p>
-                <h3 className="text-base font-bold text-white mt-1">Coach Squad Pulse &amp; Development Log</h3>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Build a private roster with live rankings, Squad Pulse status
-                  indicators, and 6-category Athlete Development Logs. Compare
-                  two sailors side-by-side and selectively share technical
-                  debriefs with sailors and parents.
-                </p>
-                <div className="mt-3 flex flex-wrap gap-3 items-center">
-                  <Link href="/coach-tools" className="text-xs font-bold text-sky-400 hover:text-sky-300">
-                    Open Coach Dashboard →
-                  </Link>
-                  <Link
-                    href="/register?role=coach&next=%2Fcoach-tools"
-                    className="text-xs font-semibold text-slate-400 hover:text-white"
-                  >
-                    Create coach account
-                  </Link>
-                </div>
-              </div>
-            </li>
-
-            <li className="relative flex gap-4 pb-0">
-              <span className="relative z-10 mt-1 h-6 w-6 shrink-0 rounded-full border border-white/20 bg-white/5" />
-              <div className="min-w-0 flex-1">
-                <p className="text-[11px] font-black uppercase tracking-widest text-slate-500">
-                  2027
-                </p>
-                <h3 className="text-base font-bold text-white mt-1">Club &amp; Event Tools</h3>
-                <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
-                  Start-list sync, campaign planning, and automated alerts for
-                  rank changes and selection windows.
-                </p>
-              </div>
-            </li>
-          </ol>
-
-          {/* Waitlist — separated from roadmap list */}
-          <div className="mt-12 pt-10 border-t border-white/5 max-w-2xl mx-auto text-center space-y-4">
-            <h3 className="text-base font-bold text-white">Get notified when new features ship</h3>
-            <p className="text-xs text-slate-400">
-              Join Singapore sailing families already on the waitlist.
+          {/* Quiet waitlist as secondary option */}
+          <div className="pt-8 border-t border-white/5 space-y-3">
+            <p className="text-xs text-slate-500">
+              Want updates when new features ship? Drop your email.
             </p>
             <div className="flex justify-center">
-              <WaitlistForm presetRole="Parent" submitLabel="Join the waitlist" compact />
+              <WaitlistForm presetRole="Parent" submitLabel="Stay in the loop" compact />
             </div>
           </div>
         </div>
