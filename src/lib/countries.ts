@@ -581,6 +581,32 @@ export function nationalityFromAnySailNumber(
   return null;
 }
 
+/**
+ * Extract nationality code (NOC) from a sail number.
+ * Supports prefixes ("SGP 3029", "SGP3029", "MAS-42") as well as embedded tokens ("3029 SGP").
+ */
+export function extractNationalityFromSailNumber(
+  sail: string | null | undefined
+): string | null {
+  if (!sail) return null;
+  const raw = String(sail).trim();
+  if (!raw) return null;
+
+  // 1. Standard prefix check
+  const fromPrefix = nationalityFromSailNumber(raw);
+  if (fromPrefix) return fromPrefix;
+
+  // 2. Check 2-3 letter word tokens anywhere in string
+  const tokens = raw.toUpperCase().match(/[A-Z]{2,3}/g);
+  if (tokens) {
+    for (const token of tokens) {
+      const noc = normalizeNationalityCode(token);
+      if (noc) return noc;
+    }
+  }
+  return null;
+}
+
 export function countryLabelForIso2(code: string | null | undefined): string {
   if (!code) return "—";
   const c = COUNTRIES.find((x) => x.code === code.toUpperCase());

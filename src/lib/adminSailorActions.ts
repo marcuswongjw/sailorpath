@@ -24,7 +24,10 @@ import {
   isOnIlca4NationalListByName,
   ILCA4_NATIONAL_RANKING_NAMES,
 } from "@/lib/ilca4NationalList";
-import { nationalityFromAnySailNumber } from "@/lib/countries";
+import {
+  nationalityFromAnySailNumber,
+  extractNationalityFromSailNumber,
+} from "@/lib/countries";
 import { normalizeNationality } from "@/lib/seriesMembership";
 import { deriveAllSilverEntryDates } from "@/lib/deriveFleetEntryDates";
 import { todayYmdSg } from "@/lib/datesSg";
@@ -33,6 +36,7 @@ import {
   OPTIMIST_SAILOR_SAIL_NUMBERS,
   cleanOptimistSailorName,
 } from "@/lib/optimistSailNumberMap";
+import { cleanOptimistSailNumber } from "@/lib/normalize";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 /**
@@ -1048,6 +1052,90 @@ async function applyOptimistSailNumberUpdates(
 }
 
 /**
+ * Scan ALL sailors in the database and ensure Optimist sail_number only contains numbers (digits).
+ * E.g. "SGP3029" -> "3029", "SGP 3029" -> "3029", "SGP-115" -> "115".
+ * Also extracts nationality from letter prefixes/tokens if the sailor has no nationality.
+ */
+async function cleanOptimistSailNumbers(
+  auth: AuthContext
+): Promise<NextResponse> {
+  const allSailors = await db
+    .select({
+      id: sailors.id,
+      name: sailors.name,
+      sailNumber: sailors.sailNumber,
+      nationality: sailors.nationality,
+    })
+    .from(sailors);
+
+  let updatedCount = 0;
+  let alreadyCleanCount = 0;
+  const details: string[] = [];
+
+  for (const s of allSailors) {
+    const rawSail = s.sailNumber || "";
+    const cleanSail = cleanOptimistSailNumber(rawSail);
+    const isSailDirty = cleanSail !== rawSail;
+
+    const currentNat = normalizeNationality(s.nationality);
+    const extractedNat = extractNationalityFromSailNumber(rawSail);
+    const needsNat = !currentNat && !!extractedNat;
+
+    if (isSailDirty || needsNat) {
+      const finalNat = needsNat ? extractedNat : currentNat;
+      await db
+        .update(sailors)
+        .set({
+          sailNumber: cleanSail,
+          ...(needsNat ? { nationality: finalNat, nationalityFromSail: true } : {}),
+          updatedAt: new Date(),
+        })
+        .where(eq(sailors.id, s.id));
+
+      updatedCount++;
+      if (details.length < 50) {
+        details.push(
+          `${s.name}: sail "${rawSail}" → "${cleanSail}"${
+            needsNat ? ` (nationality: ${finalNat})` : ""
+          }`
+        );
+      }
+
+      void logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "sailor.clean_optimist_sail",
+        entityType: "sailor",
+        entityId: s.id,
+        entityLabel: s.name,
+        summary: `Cleaned Optimist sail number to "${cleanSail}" (numeric only)${
+          needsNat ? ` and set nationality ${finalNat}` : ""
+        }`,
+        details: {
+          previousSail: rawSail,
+          newSail: cleanSail,
+          previousNat: currentNat,
+          newNat: finalNat,
+        },
+        source: "/api/admin/sailors",
+      });
+    } else {
+      alreadyCleanCount++;
+    }
+  }
+
+  void revalidatePublicRankings();
+
+  return NextResponse.json({
+    ok: true,
+    updatedCount,
+    alreadyCleanCount,
+    details,
+    message: `Checked ${allSailors.length} sailor(s): cleaned ${updatedCount} Optimist sail number(s) to digits only (${alreadyCleanCount} were already clean).`,
+  });
+}
+
+/**
  * Dispatch a named action from POST body.
  * Returns the action's response, or null when body.action is absent/unknown
  * (the route then continues to its default create-sailor behavior).
@@ -1084,6 +1172,8 @@ export async function runSailorAction(
       return recomputeSilverEntryDates(auth);
     case "applyOptimistSailNumberUpdates":
       return applyOptimistSailNumberUpdates(auth);
+    case "cleanOptimistSailNumbers":
+      return cleanOptimistSailNumbers(auth);
     default:
       return null;
   }

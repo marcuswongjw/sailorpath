@@ -77,7 +77,7 @@ describe("profileFromRegatta", () => {
       true
     );
     expect(changed).toContain("sailNumber");
-    expect(patch.sailNumber).toBe("SGP 99");
+    expect(patch.sailNumber).toBe("99");
     expect(patch.club).toBeUndefined();
   });
 

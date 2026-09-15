@@ -99,6 +99,7 @@ export type AdminSailorsPanelProps = {
   emptySeriesCount?: number;
   onBackfillNationalityFromSail?: () => void | Promise<void>;
   onUpdateOptimistSailNumbers?: () => void | Promise<void>;
+  onCleanOptimistSailNumbers?: () => void | Promise<void>;
   onSailorsChange?: (sailors: SailorAdmin[]) => void;
 };
 
@@ -152,6 +153,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     emptySeriesCount = 0,
     onBackfillNationalityFromSail,
     onUpdateOptimistSailNumbers,
+    onCleanOptimistSailNumbers,
     onSailorsChange,
   } = p;
 
@@ -222,6 +224,26 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       className="shrink-0 rounded-full bg-emerald-600/90 hover:bg-emerald-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
                     >
                       Update 134 Optimist Sail #s
+                    </button>
+                  </div>
+                )}
+                {onCleanOptimistSailNumbers && (
+                  <div className="rounded-2xl border border-indigo-500/25 bg-indigo-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-start gap-2">
+                      <CheckCircle className="h-4 w-4 text-indigo-400 shrink-0 mt-0.5" />
+                      <p className="text-xs text-indigo-100/90">
+                        Numeric Optimist Sail #s: Ensure all Optimist sail numbers contain only digits (e.g.{" "}
+                        <span className="font-mono text-indigo-200">SGP3029 → 3029</span>) and extract
+                        missing nationality from country prefixes.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={!isSuperadmin}
+                      onClick={() => void onCleanOptimistSailNumbers()}
+                      className="shrink-0 rounded-full bg-indigo-600/90 hover:bg-indigo-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                    >
+                      Clean Sail Numbers (Digits Only)
                     </button>
                   </div>
                 )}

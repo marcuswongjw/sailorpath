@@ -271,6 +271,32 @@ export function useAdminSailors({
     }
   };
 
+  const handleCleanOptimistSailNumbers = async () => {
+    const ok = await confirm({
+      title: "Clean Optimist sail numbers?",
+      message:
+        "Ensure all Optimist sail numbers contain only numbers (e.g. SGP3029 → 3029) and extract missing nationality from country prefixes.",
+      confirmLabel: "Clean Sail Numbers",
+    });
+    if (!ok) return;
+    try {
+      const res = await fetch("/api/admin/sailors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "cleanOptimistSailNumbers" }),
+      });
+      const data = await parseApi(res);
+      if (!res.ok) throw new Error(apiErr(data, "Clean failed"));
+      invalidateSailors?.();
+      toast.success(
+        apiStr(data, "message") ||
+          `Cleaned ${apiNum(data, "updatedCount") ?? 0} sail numbers`
+      );
+    } catch (e: unknown) {
+      toast.error(errorMessage(e, "Clean failed"));
+    }
+  };
+
   const handleCleanupEmptySeries = async () => {
     if (!isSuperadmin) {
       toast.error("Only Superadmins can run this.");
@@ -904,6 +930,7 @@ export function useAdminSailors({
     onCleanupEmptySeries: handleCleanupEmptySeries,
     onBackfillNationalityFromSail: handleBackfillNationalityFromSail,
     onUpdateOptimistSailNumbers: handleUpdateOptimistSailNumbers,
+    onCleanOptimistSailNumbers: handleCleanOptimistSailNumbers,
   };
 
   return {

@@ -10,6 +10,7 @@
 
 import { toYmd } from "@/lib/datesSg";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
+import { cleanOptimistSailNumber } from "@/lib/normalize";
 
 export type ProfileFieldSource = {
   sailNumber?: string | null;
@@ -83,11 +84,12 @@ export function buildProfilePatchFromRow(
           changed.push("sailNumberIlca4");
         }
       } else {
+        const cleanSail = cleanOptimistSailNumber(sail);
         const cur = (existing.sailNumber || "").trim();
         const isPlaceholder =
-          !cur || /^SGP\s*0+$/i.test(cur) || cur === "N/A";
-        if (isPlaceholder || cur.toLowerCase() !== sail.toLowerCase()) {
-          patch.sailNumber = sail;
+          !cur || /^SGP\s*0+$/i.test(cur) || cur === "N/A" || cur === "0";
+        if (isPlaceholder || cur !== cleanSail) {
+          patch.sailNumber = cleanSail;
           changed.push("sailNumber");
         }
       }

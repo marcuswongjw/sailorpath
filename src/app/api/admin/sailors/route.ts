@@ -16,6 +16,8 @@ import {
 } from "@/lib/datesSg";
 import { runSailorAction } from "@/lib/adminSailorActions";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
+import { cleanOptimistSailNumber } from "@/lib/normalize";
+import { extractNationalityFromSailNumber } from "@/lib/countries";
 
 const RANKING_SAILOR_FIELDS = new Set([
   "goldEntryDate",
@@ -175,10 +177,13 @@ export async function POST(req: Request) {
       silverEntryDate = todayYmdSg();
     }
 
+    const cleanSail = cleanOptimistSailNumber(body.sailNumber);
+    const fromSailNat = extractNationalityFromSailNumber(body.sailNumber as string);
+
     const values: Record<string, unknown> = {
       name: body.name,
       handle,
-      sailNumber: body.sailNumber || "SGP 000",
+      sailNumber: cleanSail,
       club: body.club || "N/A",
       school: body.school || null,
       gender: body.gender || null,
@@ -213,8 +218,13 @@ export async function POST(req: Request) {
     };
 
     // nationality only if provided (column may be missing until migration 005)
-    const nat = normalizeNationality(body.nationality);
-    if (nat) values.nationality = nat;
+    const nat = normalizeNationality(body.nationality) || fromSailNat;
+    if (nat) {
+      values.nationality = nat;
+      if (!body.nationality && fromSailNat) {
+        values.nationalityFromSail = true;
+      }
+    }
 
     try {
       const [row] = await db
@@ -295,6 +305,7 @@ export async function PATCH(req: Request) {
         goldEntryDate: sailors.goldEntryDate,
         silverEntryDate: sailors.silverEntryDate,
         dropDate: sailors.dropDate,
+        nationality: sailors.nationality,
       })
       .from(sailors)
       .where(eq(sailors.id, body.id))
@@ -347,6 +358,19 @@ export async function PATCH(req: Request) {
       "natSquadStatusJul27",
     ] as const) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
+    }
+    if (body.sailNumber !== undefined) {
+      const clean = cleanOptimistSailNumber(body.sailNumber);
+      patch.sailNumber = clean;
+      if (body.nationality === undefined && !existing.nationality) {
+        const fromSailNat = extractNationalityFromSailNumber(
+          body.sailNumber as string
+        );
+        if (fromSailNat) {
+          patch.nationality = fromSailNat;
+          patch.nationalityFromSail = true;
+        }
+      }
     }
     if (body.ilca4NationalList !== undefined) {
       patch.ilca4NationalList = Boolean(body.ilca4NationalList);

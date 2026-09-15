@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  extractNationalityFromSailNumber,
   isUnrecognizedCountry,
   nationalityFromSailNumber,
   normalizeGeography,
@@ -54,5 +55,24 @@ describe("nationalityFromSailNumber", () => {
     expect(nationalityFromSailNumber("115")).toBe(null);
     expect(nationalityFromSailNumber("")).toBe(null);
     expect(nationalityFromSailNumber(null)).toBe(null);
+  });
+});
+
+describe("extractNationalityFromSailNumber", () => {
+  it("extracts nationality from prefix, glued, and embedded tokens", () => {
+    expect(extractNationalityFromSailNumber("SGP3029")).toBe("SGP");
+    expect(extractNationalityFromSailNumber("SGP 3029")).toBe("SGP");
+    expect(extractNationalityFromSailNumber("SGP-3029")).toBe("SGP");
+    expect(extractNationalityFromSailNumber("SIN 4639")).toBe("SGP");
+    expect(extractNationalityFromSailNumber("HKG 123")).toBe("HKG");
+    expect(extractNationalityFromSailNumber("INA-456")).toBe("INA");
+    expect(extractNationalityFromSailNumber("3029 SGP")).toBe("SGP");
+  });
+
+  it("returns null for pure numbers", () => {
+    expect(extractNationalityFromSailNumber("3029")).toBe(null);
+    expect(extractNationalityFromSailNumber("0")).toBe(null);
+    expect(extractNationalityFromSailNumber("")).toBe(null);
+    expect(extractNationalityFromSailNumber(null)).toBe(null);
   });
 });

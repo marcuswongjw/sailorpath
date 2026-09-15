@@ -18,6 +18,7 @@ import {
   suggestSailorByName,
 } from "@/lib/nameMatch";
 import {
+  cleanOptimistSailNumber,
   normalizeDob,
   normalizeOptionalText,
   normalizeSailNumber,
@@ -1020,8 +1021,8 @@ export async function POST(req: Request) {
             name: row.name,
             handle,
             sailNumber: createIsIlca4
-              ? "SGP 000"
-              : row.sailNumber || "SGP 000",
+              ? "0"
+              : cleanOptimistSailNumber(row.sailNumber),
             ...(createIsIlca4 && row.sailNumber
               ? { sailNumberIlca4: row.sailNumber }
               : {}),

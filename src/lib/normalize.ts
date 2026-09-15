@@ -15,6 +15,21 @@ export function normalizeSailNumber(v: unknown): string | null {
   return s;
 }
 
+/**
+ * For Optimist sail numbers, ensure the value only contains numbers (digits).
+ * Strips country code letters/prefixes (e.g. "SGP3029" -> "3029", "SGP 3029" -> "3029", "SGP-115" -> "115").
+ * Drops non-numeric characters and strips leading zeros unless the number is purely 0.
+ * Returns "0" if empty or no digits found.
+ */
+export function cleanOptimistSailNumber(v: unknown): string {
+  if (v == null || v === "") return "0";
+  const str = String(v).trim();
+  const digits = str.replace(/\D/g, "");
+  if (!digits) return "0";
+  const withoutLeadingZeros = digits.replace(/^0+/, "");
+  return withoutLeadingZeros || "0";
+}
+
 /** Optional text fields (club, etc.). */
 export function normalizeOptionalText(v: unknown): string | null {
   if (v == null || v === "") return null;

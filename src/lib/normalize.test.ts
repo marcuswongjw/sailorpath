@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  cleanOptimistSailNumber,
   excelDateToIso,
   normalizeDob,
   normalizeOptionalText,
@@ -16,6 +17,23 @@ describe("normalize helpers", () => {
   it("normalizeSailNumber drops placeholders", () => {
     expect(normalizeSailNumber("SGP 123")).toBe("SGP 123");
     expect(normalizeSailNumber("N/A")).toBeNull();
+  });
+
+  it("cleanOptimistSailNumber strips letters and keeps only digits", () => {
+    expect(cleanOptimistSailNumber("SGP3029")).toBe("3029");
+    expect(cleanOptimistSailNumber("SGP 3029")).toBe("3029");
+    expect(cleanOptimistSailNumber("SGP-3029")).toBe("3029");
+    expect(cleanOptimistSailNumber("3029")).toBe("3029");
+    expect(cleanOptimistSailNumber("SIN 4639")).toBe("4639");
+    expect(cleanOptimistSailNumber("HKG 123")).toBe("123");
+    expect(cleanOptimistSailNumber("INA-456")).toBe("456");
+    expect(cleanOptimistSailNumber("SGP 07")).toBe("7");
+    expect(cleanOptimistSailNumber("SGP 000")).toBe("0");
+    expect(cleanOptimistSailNumber("SGP 0")).toBe("0");
+    expect(cleanOptimistSailNumber("0")).toBe("0");
+    expect(cleanOptimistSailNumber("")).toBe("0");
+    expect(cleanOptimistSailNumber(null)).toBe("0");
+    expect(cleanOptimistSailNumber("N/A")).toBe("0");
   });
 
   it("normalizeOptionalText", () => {

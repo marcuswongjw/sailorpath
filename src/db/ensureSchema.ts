@@ -125,6 +125,36 @@ export async function ensureCoreSchema(): Promise<void> {
         console.warn("[sailorpath] ensure Optimist sail numbers note:", e);
       }
 
+      // 055_clean_optimist_sail_numbers.sql: Ensure all Optimist sail numbers only contain numbers
+      try {
+        await pgSql`
+          UPDATE public.sailors
+          SET nationality = CASE
+                WHEN upper(substring(trim(sail_number) from '^[A-Za-z]{2,3}')) = 'SIN' THEN 'SGP'
+                WHEN upper(substring(trim(sail_number) from '^[A-Za-z]{2,3}')) = 'SG' THEN 'SGP'
+                ELSE upper(substring(trim(sail_number) from '^[A-Za-z]{2,3}'))
+              END,
+              nationality_from_sail = true,
+              updated_at = now()
+          WHERE (nationality IS NULL OR trim(nationality) = '')
+            AND trim(sail_number) ~* '^[A-Za-z]{2,3}';
+        `;
+
+        await pgSql`
+          UPDATE public.sailors
+          SET sail_number = CASE
+                WHEN regexp_replace(trim(sail_number), '[^0-9]', '', 'g') = '' THEN '0'
+                WHEN regexp_replace(trim(sail_number), '[^0-9]', '', 'g') ~ '^0+$' THEN '0'
+                ELSE ltrim(regexp_replace(trim(sail_number), '[^0-9]', '', 'g'), '0')
+              END,
+              updated_at = now()
+          WHERE sail_number ~ '[^0-9]'
+             OR sail_number ~ '^0+[1-9]';
+        `;
+      } catch (e) {
+        console.warn("[sailorpath] ensure clean Optimist sail numbers note:", e);
+      }
+
       schemaEnsured = true;
       console.info("[sailorpath] Core database schema verified & ensured.");
     } catch (e) {

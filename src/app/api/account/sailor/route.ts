@@ -5,7 +5,7 @@ import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
 import { equipmentLogs, sailorAliases, sailors } from "@/db/schema";
 import { validateHandle } from "@/lib/handles";
-import { normalizeDob } from "@/lib/normalize";
+import { normalizeDob, cleanOptimistSailNumber } from "@/lib/normalize";
 import {
   asHttpUrl,
   asOptionalNumber,
@@ -156,7 +156,7 @@ export async function PATCH(req: Request) {
           { status: 400 }
         );
       }
-      patch.sailNumber = sn;
+      patch.sailNumber = cleanOptimistSailNumber(sn);
     }
     if (body.sailNumberIlca4 !== undefined) {
       patch.sailNumberIlca4 = strOrNull(body.sailNumberIlca4, 40);
