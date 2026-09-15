@@ -6,6 +6,7 @@ export const BRAND = {
   name: "SailorPath",
   tagline: "A clear path through competitive sailing.",
   logo: "/brand/sailorpath-horizontal.png",
+  logoReversed: "/brand/sailorpath-horizontal-reversed.png",
   icon: "/brand/sailorpath-icon.png",
   colours: {
     harbour: "#0A5557",

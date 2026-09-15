@@ -1,0 +1,63 @@
+/**
+ * SailorPath Brand Design Tokens
+ * Implementation system for designers and developers (Brand Guide Refinement 02 - Balance)
+ * Source: sailorpath/tokens/sailorpath.tokens.css
+ */
+
+:root {
+  /* Core Brand Colors */
+  --sp-color-teal: #0A5557;
+  --sp-color-teal-deep: #073E40;
+  --sp-color-teal-mid: #197072;
+
+  --sp-color-orange: #D94C18;
+  --sp-color-orange-deep: #B83B10;
+  --sp-color-orange-mist: #F4C7B5;
+
+  --sp-color-aqua: #8FCCC8;
+  --sp-color-aqua-deep: #5EA8A4;
+  --sp-color-aqua-mist: #D4EDEC;
+
+  --sp-color-canvas: #F7F4EF;
+  --sp-color-card: #FFFCF8;
+  --sp-color-charcoal: #2B3233;
+  --sp-color-slate: #5C6566;
+  --sp-color-grey: #A7B0B0;
+  --sp-color-veil: #E2E6E6;
+
+  --sp-color-error: #9B2C12;
+
+  /* Typography */
+  --sp-font-display: "Montserrat", system-ui, sans-serif;
+  --sp-font-ui: "Inter", system-ui, sans-serif;
+
+  /* Spacing */
+  --sp-space-4: 4px;
+  --sp-space-8: 8px;
+  --sp-space-12: 12px;
+  --sp-space-16: 16px;
+  --sp-space-24: 24px;
+  --sp-space-32: 32px;
+  --sp-space-48: 48px;
+  --sp-space-64: 64px;
+
+  /* Radii */
+  --sp-radius-sm: 4px;
+  --sp-radius-md: 8px;
+  --sp-radius-lg: 12px;
+  --sp-radius-xl: 16px;
+
+  /* Controls */
+  --sp-control-md: 40px;
+
+  /* Shadows */
+  --sp-shadow-sm: 0 1px 2px rgba(43, 50, 51, 0.06);
+  --sp-shadow-md: 0 4px 16px rgba(43, 50, 51, 0.08);
+  --sp-shadow-focus: 0 0 0 3px rgba(10, 85, 87, 0.28);
+
+  /* Semantic Aliases */
+  --sp-color-cta: var(--sp-color-orange);
+  --sp-color-nav: var(--sp-color-teal);
+  --sp-color-selected: var(--sp-color-aqua-mist);
+  --sp-color-chart-1: var(--sp-color-teal);
+}

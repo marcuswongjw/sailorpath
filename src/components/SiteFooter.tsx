@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { useAccount } from "@/components/AccountProvider";
+import { BrandWordmark } from "@/components/BrandMark";
 import { shouldShowDemoNavigation } from "@/lib/adminHost";
 
 const subscribeToHost = () => () => {};
@@ -25,51 +26,55 @@ export function SiteFooter() {
     (!ready || shouldShowDemoNavigation(host, owned.length));
 
   return (
-    <footer className="sp-reversed border-t border-harbour-shadow bg-harbour-shadow py-7 sm:py-9 text-center text-xs text-soft-aqua">
-      <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p>© {new Date().getFullYear()} SailorPath</p>
-        <div className="flex flex-wrap items-center justify-center gap-4">
+    <footer className="border-t border-harbour-shadow bg-harbour-shadow py-8 sm:py-10 text-xs text-sailcloth">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <BrandWordmark reversed className="text-base sm:text-lg" />
+          <span className="text-soft-aqua/60">·</span>
+          <p className="text-soft-aqua text-xs">© {new Date().getFullYear()} SailorPath</p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sailcloth/90">
           <Link
             href="/support"
-            className="hover:text-orange-400 transition-colors"
+            className="hover:text-white hover:underline transition-colors"
           >
             Help &amp; support
           </Link>
           <Link
             href="/privacy"
-            className="hover:text-orange-400 transition-colors"
+            className="hover:text-white hover:underline transition-colors"
           >
             Privacy
           </Link>
           <Link
             href="/terms"
-            className="hover:text-orange-400 transition-colors"
+            className="hover:text-white hover:underline transition-colors"
           >
             Terms
           </Link>
           {showDemo && (
             <Link
               href="/sample"
-              className="hover:text-slate-300 transition-colors"
+              className="hover:text-white hover:underline transition-colors"
             >
               Explore demo
             </Link>
           )}
           <Link
             href="/sg/optimist/gold"
-            className="hover:text-slate-300 transition-colors"
+            className="hover:text-white hover:underline transition-colors"
           >
             Gold standings
           </Link>
           <Link
             href="/sg/wingfoil"
-            className="hover:text-teal-300 transition-colors"
+            className="hover:text-white hover:underline transition-colors"
           >
             WingFoil
           </Link>
           <Link
             href="/sg/techno293"
-            className="hover:text-cyan-300 transition-colors"
+            className="hover:text-white hover:underline transition-colors"
           >
             Techno 293
           </Link>

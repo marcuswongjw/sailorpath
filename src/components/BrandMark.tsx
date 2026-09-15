@@ -23,18 +23,31 @@ export function BrandMark({
 
 export function BrandWordmark({
   className = "",
+  reversed = false,
 }: {
   className?: string;
+  reversed?: boolean;
 }) {
-  return <span className={`font-display font-bold tracking-[-0.02em] text-harbour ${className}`}>{BRAND.name}</span>;
+  return (
+    <span
+      className={`font-display font-bold tracking-[-0.02em] ${
+        reversed ? "text-sailcloth" : "text-harbour"
+      } ${className}`}
+    >
+      {BRAND.name}
+    </span>
+  );
 }
 
-/** Header home link: mark + wordmark. */
+/** Header home link: mark + wordmark. Supports reversed for dark teal navbar. */
 export function BrandLogoLink({
   href = "/",
+  variant = "reversed",
 }: {
   href?: string;
+  variant?: "default" | "reversed";
 }) {
+  const isReversed = variant === "reversed";
   return (
     <Link
       href={href}
@@ -43,7 +56,7 @@ export function BrandLogoLink({
       aria-label="SailorPath home"
     >
       <Image
-        src={BRAND.logo}
+        src={isReversed ? BRAND.logoReversed : BRAND.logo}
         width={800}
         height={265}
         priority

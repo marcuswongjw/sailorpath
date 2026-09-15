@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
-import { regattas, regattaResults, wingfoilRegattas } from "@/db/schema";
+import { regattas, regattaResults, wingfoilRegattas, techno293Regattas } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auditAdminMutation } from "@/lib/adminChangeLog";
 import type { WingfoilRegatta } from "@/lib/wingfoil";
+import type { Techno293Regatta } from "@/lib/techno293";
 
 export async function POST(
   req: Request,
@@ -163,6 +164,71 @@ export async function POST(
         revalidatePath("/sg/wingfoil");
         revalidatePath("/");
         revalidateTag("public-wingfoil", "max");
+      } catch (e) {
+        console.warn("[publish] Cache revalidation warning:", e);
+      }
+
+      return NextResponse.json({
+        success: true,
+        id,
+        name: regData.name,
+        previousStatus: prevStatus,
+        status: targetStatus,
+        publishedAt: new Date().toISOString(),
+      });
+    }
+
+    // 3. Check if it's a Techno 293 regatta in `techno293_regattas` table
+    const [existingTechno] = await db
+      .select()
+      .from(techno293Regattas)
+      .where(eq(techno293Regattas.id, id))
+      .limit(1);
+
+    if (existingTechno) {
+      const regData = existingTechno.data as Techno293Regatta;
+      const prevStatus = existingTechno.status || "draft";
+
+      if (targetStatus === "published") {
+        if (!regData || !regData.name) {
+          return NextResponse.json(
+            { error: "Validation failed: Techno 293 regatta payload is incomplete." },
+            { status: 422 }
+          );
+        }
+      }
+
+      const updatedData: Techno293Regatta = {
+        ...regData,
+        status: targetStatus === "published" ? "Completed" : "Upcoming",
+      };
+
+      await db
+        .update(techno293Regattas)
+        .set({
+          status: targetStatus,
+          data: updatedData,
+          updatedAt: new Date(),
+        })
+        .where(eq(techno293Regattas.id, id));
+
+      await auditAdminMutation({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: targetStatus === "published" ? "publish_techno293_regatta" : "set_techno293_lifecycle",
+        targetTable: "techno293_regattas",
+        recordId: id,
+        entityLabel: regData.name || id,
+        beforeState: { status: prevStatus },
+        afterState: { status: targetStatus },
+        summary: `Changed Techno 293 regatta status from ${prevStatus} to ${targetStatus} for "${regData.name}"`,
+        source: "/api/admin/regattas/[id]/publish",
+      });
+
+      try {
+        revalidatePath("/sg/techno293");
+        revalidatePath("/");
+        revalidateTag("public-techno293", "max");
       } catch (e) {
         console.warn("[publish] Cache revalidation warning:", e);
       }

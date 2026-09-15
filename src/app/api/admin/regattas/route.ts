@@ -87,6 +87,7 @@ export async function POST(req: Request) {
             countsForRanking: item.countsForRanking,
             boatClass: item.boatClass,
             geography: "SG",
+            status: "published",
           })
           .onConflictDoUpdate({
             target: regattas.slug,
@@ -104,6 +105,7 @@ export async function POST(req: Request) {
               scheduleNotes: item.scheduleNotes || null,
               countsForRanking: item.countsForRanking,
               boatClass: item.boatClass,
+              status: "published",
               updatedAt: new Date(),
             },
           })
@@ -181,6 +183,7 @@ export async function POST(req: Request) {
     const isSelectionTrial = Boolean(body.isSelectionTrial);
     const organizer = body.organizer ? String(body.organizer).trim() : null;
     const scheduleNotes = body.scheduleNotes ? String(body.scheduleNotes).trim() : null;
+    const status = body.status || "published";
 
     const [row] = await db
       .insert(regattas)
@@ -201,6 +204,7 @@ export async function POST(req: Request) {
         isSelectionTrial,
         organizer,
         scheduleNotes,
+        status,
       })
       .onConflictDoUpdate({
         target: regattas.slug,
@@ -220,6 +224,7 @@ export async function POST(req: Request) {
           isSelectionTrial,
           organizer,
           scheduleNotes,
+          status,
           updatedAt: new Date(),
         },
       })
@@ -315,6 +320,9 @@ export async function PATCH(req: Request) {
     }
     if (body.scheduleNotes !== undefined) {
       patch.scheduleNotes = body.scheduleNotes === "" || body.scheduleNotes == null ? null : String(body.scheduleNotes).trim();
+    }
+    if (body.status !== undefined) {
+      patch.status = body.status;
     }
     // Promote / dismiss suggestions
     if (body.action === "promote") {

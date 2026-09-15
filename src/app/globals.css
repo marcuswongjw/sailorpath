@@ -1,33 +1,34 @@
 @import "tailwindcss";
+@import "../../tokens/sailorpath.tokens.css";
 
 :root {
-  --sp-harbour: #0a5557;
-  --sp-harbour-shadow: #073e40;
-  --sp-harbour-mid: #197072;
-  --sp-racing-orange: #d94c18;
-  --sp-racing-deep: #b83b10;
-  --sp-racing-mist: #f4c7b5;
-  --sp-soft-aqua: #8fccc8;
-  --sp-reef-line: #5ea8a4;
-  --sp-aqua-mist: #d4edec;
-  --sp-sailcloth: #f7f4ef;
-  --sp-warm-white: #fffcf8;
-  --sp-charcoal: #2b3233;
-  --sp-slate-soft: #5c6566;
-  --sp-cool-mist: #a7b0b0;
-  --sp-cool-veil: #e2e6e6;
-  --sp-error: #9b2c12;
-  --background: var(--sp-sailcloth);
-  --foreground: var(--sp-charcoal);
-  --card: var(--sp-warm-white);
-  --card-foreground: var(--sp-charcoal);
-  --primary: var(--sp-racing-orange);
+  --sp-harbour: var(--sp-color-teal);
+  --sp-harbour-shadow: var(--sp-color-teal-deep);
+  --sp-harbour-mid: var(--sp-color-teal-mid);
+  --sp-racing-orange: var(--sp-color-orange);
+  --sp-racing-deep: var(--sp-color-orange-deep);
+  --sp-racing-mist: var(--sp-color-orange-mist);
+  --sp-soft-aqua: var(--sp-color-aqua);
+  --sp-reef-line: var(--sp-color-aqua-deep);
+  --sp-aqua-mist: var(--sp-color-aqua-mist);
+  --sp-sailcloth: var(--sp-color-canvas);
+  --sp-warm-white: var(--sp-color-card);
+  --sp-charcoal: var(--sp-color-charcoal);
+  --sp-slate-soft: var(--sp-color-slate);
+  --sp-cool-mist: var(--sp-color-grey);
+  --sp-cool-veil: var(--sp-color-veil);
+  --sp-error: var(--sp-color-error);
+  --background: var(--sp-color-canvas);
+  --foreground: var(--sp-color-charcoal);
+  --card: var(--sp-color-card);
+  --card-foreground: var(--sp-color-charcoal);
+  --primary: var(--sp-color-orange);
   --primary-foreground: #fff;
-  --muted: var(--sp-aqua-mist);
-  --muted-foreground: var(--sp-slate-soft);
-  --border: var(--sp-cool-veil);
-  --input: var(--sp-cool-mist);
-  --ring: var(--sp-harbour);
+  --muted: var(--sp-color-aqua-mist);
+  --muted-foreground: var(--sp-color-slate);
+  --border: var(--sp-color-veil);
+  --input: var(--sp-color-grey);
+  --ring: var(--sp-color-teal);
   --radius: 0.75rem;
 }
 
@@ -155,8 +156,8 @@ body {
   padding-right: env(safe-area-inset-right, 0);
 }
 h1, .font-display { font-family: var(--font-montserrat), var(--font-inter), ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; }
-table, [data-numeric], .tabular-nums { font-variant-numeric: tabular-nums lining-nums; }
-:focus-visible { outline: 2px solid var(--sp-harbour); outline-offset: 3px; }
+table, [data-numeric], .tabular-nums, .sp-num { font-variant-numeric: tabular-nums lining-nums; }
+:focus-visible { outline: 2px solid var(--sp-color-teal); outline-offset: 2px; box-shadow: var(--sp-shadow-focus); }
 ::selection { background: var(--sp-racing-mist); color: var(--sp-charcoal); }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--sp-sailcloth); }
@@ -178,12 +179,36 @@ table, [data-numeric], .tabular-nums { font-variant-numeric: tabular-nums lining
   color: var(--sp-charcoal);
   transition: border-color 160ms ease, box-shadow 160ms ease;
 }
-.glass-input:focus { border-color: var(--sp-harbour); box-shadow: 0 0 0 3px rgb(143 204 200 / 0.45); outline: none; }
-.sp-primary { background: var(--sp-racing-orange); color: #fff; border-radius: 8px; }
-.sp-primary:hover { background: var(--sp-racing-deep); }
-.sp-secondary { border: 1px solid var(--sp-harbour); color: var(--sp-harbour-shadow); background: transparent; border-radius: 8px; }
-.sp-secondary:hover { background: var(--sp-aqua-mist); }
-.sp-card { background: var(--sp-warm-white); border: 1px solid var(--sp-cool-veil); border-radius: 12px; box-shadow: 0 8px 28px rgb(7 62 64 / 0.07); }
+.glass-input:focus { border-color: var(--sp-color-teal); box-shadow: var(--sp-shadow-focus); outline: none; }
+.sp-primary {
+  background: var(--sp-color-orange);
+  color: #fff;
+  border-radius: var(--sp-radius-md);
+  min-height: var(--sp-control-md);
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 140ms ease;
+}
+.sp-primary:hover { background: var(--sp-color-orange-deep); }
+.sp-primary:active { background: var(--sp-color-orange-deep); }
+.sp-secondary {
+  border: 1px solid var(--sp-color-teal);
+  color: var(--sp-color-teal);
+  background: var(--sp-color-card);
+  border-radius: var(--sp-radius-md);
+  min-height: var(--sp-control-md);
+  font-size: 15px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+.sp-secondary:hover { background: var(--sp-color-aqua-mist); border-color: var(--sp-color-teal-mid); }
+.sp-card { background: var(--sp-warm-white); border: 1px solid var(--sp-cool-veil); border-radius: var(--sp-radius-lg); box-shadow: var(--sp-shadow-md); }
 .sp-reversed { color: var(--sp-sailcloth); }
 .sp-reversed .text-white, .sp-reversed .text-slate-100, .sp-reversed .text-slate-200, .sp-reversed .text-slate-300 { color: var(--sp-sailcloth); }
 .sp-reversed .text-slate-400, .sp-reversed .text-slate-500 { color: var(--sp-soft-aqua); }

@@ -425,7 +425,7 @@ export function FleetRankingsView({
                 });
                 setPeriod(next);
               }}
-              className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-slate-950 border border-white/10 px-3 sm:px-4 py-2.5 text-sm text-white font-semibold"
+              className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-warm-white border border-cool-veil px-3 sm:px-4 py-2.5 text-sm text-charcoal font-semibold"
             >
               {PERIODS.map(({ period: p, label }) => (
                 <option key={`${p.year}-${p.half}`} value={`${p.year}|${p.half}`}>
@@ -442,7 +442,7 @@ export function FleetRankingsView({
                   e.target.value as "all" | "M" | "F" | "unknown"
                 )
               }
-              className="min-w-0 w-full rounded-xl bg-slate-950 border border-white/10 px-2.5 sm:px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
+              className="min-w-0 w-full rounded-xl bg-warm-white border border-cool-veil px-2.5 sm:px-3 py-2.5 text-xs sm:text-sm text-charcoal font-semibold"
               aria-label="Filter by gender"
             >
               <option value="all">All genders</option>
@@ -454,7 +454,7 @@ export function FleetRankingsView({
               <select
                 value={squadFilter}
                 onChange={(e) => setSquadFilter(e.target.value)}
-                className="min-w-0 w-full rounded-xl bg-slate-950 border border-white/10 px-2.5 sm:px-3 py-2.5 text-xs sm:text-sm text-white font-semibold"
+                className="min-w-0 w-full rounded-xl bg-warm-white border border-cool-veil px-2.5 sm:px-3 py-2.5 text-xs sm:text-sm text-charcoal font-semibold"
                 aria-label="Filter by squad"
               >
                 <option value="all">All squads</option>
@@ -503,7 +503,7 @@ export function FleetRankingsView({
       {/* Scoring events legend + exclude toggles */}
       {!loading && ranked.length > 0 && (
         <div className="w-full max-w-full min-w-0 no-print">
-          <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 backdrop-blur-md shadow-lg shadow-black/40 px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0">
+          <div className="rounded-xl border border-cool-veil bg-warm-white shadow-sm px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 min-w-0">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                 Scoring events — R1 oldest · R5 newest
@@ -607,7 +607,7 @@ export function FleetRankingsView({
                         ? "bg-slate-900/80 border-rose-500/40 opacity-60"
                         : ev.isCarryForward
                           ? "bg-sky-500/10 border-sky-500/25"
-                          : "bg-white/5 border-white/5"
+                            : "bg-sailcloth border-cool-veil"
                     } ${canToggle ? "cursor-pointer hover:border-orange-500/30" : ""}`}
                   >
                     <div className="flex items-start justify-between gap-1">
@@ -697,7 +697,7 @@ export function FleetRankingsView({
           return (
             <div
               key={s.id}
-              className="w-full max-w-full min-w-0 rounded-xl px-3 py-2.5 border border-white/5 bg-[#131520]/80"
+              className="w-full max-w-full min-w-0 rounded-xl px-3 py-2.5 border border-cool-veil bg-warm-white"
             >
               <div className="flex items-center justify-between gap-2 min-w-0">
                 <div className="min-w-0 flex-1 flex items-center gap-2">
@@ -710,7 +710,7 @@ export function FleetRankingsView({
                     <Link
                       href={`/${s.handle}`}
                       prefetch
-                      className="font-bold text-white hover:text-orange-400 text-[14px] leading-snug truncate block"
+                      className="font-bold text-charcoal hover:text-racing-orange text-[14px] leading-snug truncate block"
                     >
                       {s.name}
                     </Link>
@@ -732,7 +732,7 @@ export function FleetRankingsView({
                   <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wide">
                     Best 3
                   </p>
-                  <p className="font-black text-white text-base tabular-nums leading-none mt-0.5">
+                  <p className="font-black text-charcoal text-base tabular-nums leading-none mt-0.5">
                     {s.overallScore}
                   </p>
                 </div>
@@ -819,26 +819,26 @@ export function FleetRankingsView({
       </div>
 
       {/* Desktop table — horizontal scroll isolated inside container */}
-      <div className="hidden md:block rounded-2xl border border-white/5 overflow-hidden w-full max-w-full min-w-0">
+      <div className="hidden md:block rounded-2xl border border-cool-veil bg-warm-white overflow-hidden w-full max-w-full min-w-0">
         <div className="overflow-x-auto max-w-full">
           <table className="w-full text-left text-sm min-w-[720px] border-collapse">
             <thead className="text-[10px] text-slate-400 uppercase tracking-wider">
               <tr>
-                <th className="sticky top-0 left-0 z-30 px-4 lg:px-5 py-3 w-12 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
+                <th className="sticky top-0 left-0 z-30 px-4 lg:px-5 py-3 w-12 bg-aqua-mist border-b border-cool-veil">
                   #
                 </th>
-                <th className="sticky top-0 left-12 z-30 px-4 lg:px-5 py-3 min-w-[9rem] bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
+                <th className="sticky top-0 left-12 z-30 px-4 lg:px-5 py-3 min-w-[9rem] bg-aqua-mist border-b border-cool-veil">
                   Sailor
                 </th>
-                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
+                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-aqua-mist border-b border-cool-veil">
                   Gender
                 </th>
-                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
+                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-aqua-mist border-b border-cool-veil">
                   Birth year
                 </th>
                 {showSquad && (
                   <th
-                    className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-aqua-mist border-b border-cool-veil"
                     title={`National squad for ${periodLabelText}`}
                   >
                     {squadColumnLabel}
@@ -846,7 +846,7 @@ export function FleetRankingsView({
                 )}
                 {showProjectedSquad && (
                   <th
-                    className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]"
+                    className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-aqua-mist border-b border-cool-veil"
                     title={`Projected Nat A / Nat B for the next half after ${periodLabelText} (Appendix I: top 8 M/F → age buckets). Live from this Gold ranking — not a locked admin stamp.`}
                   >
                     {nextSquadColumnLabel}
@@ -859,10 +859,10 @@ export function FleetRankingsView({
                       key={ev.regattaId + idx}
                       className={`sticky top-0 z-20 px-2 py-2 text-center border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)] max-w-[7.5rem] ${
                         off
-                          ? "bg-[#1a1214]"
+                          ? "bg-racing-mist"
                           : ev.isCarryForward
-                            ? "bg-[#101820]"
-                            : "bg-[#12141c]"
+                            ? "bg-aqua-mist"
+                            : "bg-aqua-mist"
                       }`}
                       title={
                         (ev.regattaName || `R${idx + 1}`) +
@@ -885,7 +885,7 @@ export function FleetRankingsView({
                     </th>
                   );
                 })}
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 text-center bg-[#12141c] border-b border-white/10 shadow-[0_1px_0_0_rgba(255,255,255,0.06)]">
+                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 text-center bg-aqua-mist border-b border-cool-veil">
                   Best 3 of 5
                 </th>
               </tr>
@@ -907,25 +907,25 @@ export function FleetRankingsView({
                     key={s.id}
                     className="border-t border-white/5 hover:bg-white/[0.02]"
                   >
-                    <td className="sticky left-0 z-10 px-4 lg:px-5 py-3.5 bg-[#0e1018]">
+                    <td className="sticky left-0 z-10 px-4 lg:px-5 py-3.5 bg-warm-white">
                       <RankMedalBadge
                         rank={i + 1}
                         nonPodiumClassName="font-bold text-orange-400 font-mono"
                       />
                     </td>
-                    <td className="sticky left-12 z-10 px-4 lg:px-5 py-3.5 bg-[#0e1018]">
+                    <td className="sticky left-12 z-10 px-4 lg:px-5 py-3.5 bg-warm-white">
                       <Link
                         href={`/${s.handle}`}
                         prefetch
-                        className="font-bold text-white hover:text-orange-400"
+                        className="font-bold text-charcoal hover:text-racing-orange"
                       >
                         {s.name}
                       </Link>
                     </td>
-                    <td className="px-3 py-3.5 text-center text-slate-300">
+                    <td className="px-3 py-3.5 text-center text-slate-soft">
                       {formatGenderLabel(s.gender)}
                     </td>
-                    <td className="px-3 py-3.5 text-center font-mono text-slate-300">
+                    <td className="px-3 py-3.5 text-center font-mono text-slate-soft">
                       {birthYear(s.dob)}
                     </td>
                     {showSquad && (
@@ -933,7 +933,7 @@ export function FleetRankingsView({
                         {squadFor(s) ? (
                           <SquadBadge label={squadFor(s)!} />
                         ) : (
-                          <span className="text-slate-600">—</span>
+                          <span className="text-slate-soft/50">—</span>
                         )}
                       </td>
                     )}
@@ -942,7 +942,7 @@ export function FleetRankingsView({
                         {nextSquadFor(s) ? (
                           <SquadBadge label={nextSquadFor(s)!} />
                         ) : (
-                          <span className="text-slate-600">—</span>
+                          <span className="text-slate-soft/50">—</span>
                         )}
                       </td>
                     )}
@@ -955,10 +955,10 @@ export function FleetRankingsView({
                           data-best-three-selected={selected || undefined}
                           className={`px-3 py-3.5 text-center font-mono text-xs ${
                             off
-                              ? "text-slate-600 line-through"
+                              ? "text-slate-soft/40 line-through"
                               : selected
-                                ? "bg-orange-500/15 font-black text-orange-200 shadow-[inset_0_0_0_1px_rgba(251,146,60,0.18)]"
-                                : "font-medium text-slate-500"
+                                ? "bg-aqua-mist font-bold text-harbour shadow-[inset_0_0_0_1px_rgba(10,85,87,0.2)]"
+                                : "font-medium text-slate-soft"
                           }`}
                           title={
                             rs.regattaName || eventSlots[idx]?.regattaName
@@ -985,7 +985,7 @@ export function FleetRankingsView({
                         </td>
                       );
                     })}
-                    <td className="px-4 lg:px-5 py-3.5 text-center font-black text-white text-base">
+                    <td className="px-4 lg:px-5 py-3.5 text-center font-black text-charcoal text-base">
                       {s.overallScore}
                     </td>
                   </tr>
@@ -994,7 +994,7 @@ export function FleetRankingsView({
             </tbody>
           </table>
         </div>
-        <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5 bg-[#0c0d14]">
+        <p className="px-4 py-2 text-[10px] text-slate-soft border-t border-cool-veil bg-sailcloth">
           R1–R5 = scoring window for this fleet (R1 = oldest, R5 = newest). If the
           current half has fewer than 5 events, the most recent events from the
           previous half fill the window (sky “prev” / carry). Highlighted cells are

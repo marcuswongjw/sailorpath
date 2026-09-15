@@ -52,7 +52,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
       >
         Gold standings
       </Link>
@@ -63,7 +63,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
       >
         Silver standings
       </Link>
@@ -73,7 +73,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
       >
         Optimist regattas
       </Link>
@@ -84,7 +84,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-orange-400 hover:bg-white/5 hover:text-orange-300"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
       >
         Selection trials 2026
       </Link>
@@ -95,7 +95,7 @@ export function SiteHeader() {
             setMobileOpen(false);
             setOpenMenu(null);
           }}
-          className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+          className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-slate-soft hover:bg-sailcloth hover:text-harbour transition-colors"
         >
           All Gold Fleet sailors
         </Link>
@@ -111,7 +111,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
       >
         ILCA 4 standings
       </Link>
@@ -121,7 +121,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:bg-white/5 hover:text-white"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
       >
         ILCA 4 regattas
       </Link>
@@ -133,7 +133,7 @@ export function SiteHeader() {
       <Link
         href="/calendar"
         prefetch
-        className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0"
+        className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 transition-colors"
       >
         Calendar
       </Link>
@@ -145,19 +145,19 @@ export function SiteHeader() {
           onClick={() =>
             setOpenMenu((m) => (m === "optimist" ? null : "optimist"))
           }
-          className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none focus-visible:text-white"
+          className="text-sm font-medium text-sailcloth/90 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none focus-visible:text-white"
         >
           Optimist
           <ChevronDown
-            className={`h-4 w-4 text-slate-500 transition-transform ${
-              openMenu === "optimist" ? "rotate-180 text-slate-300" : ""
+            className={`h-4 w-4 text-soft-aqua transition-transform ${
+              openMenu === "optimist" ? "rotate-180 text-white" : ""
             }`}
           />
         </button>
         {openMenu === "optimist" && (
           <div
             role="menu"
-            className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-50"
+            className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-50 text-charcoal"
           >
             {optimistLinks}
           </div>
@@ -169,19 +169,19 @@ export function SiteHeader() {
           aria-expanded={openMenu === "ilca"}
           aria-haspopup="menu"
           onClick={() => setOpenMenu((m) => (m === "ilca" ? null : "ilca"))}
-          className="text-sm font-semibold text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none focus-visible:text-white"
+          className="text-sm font-medium text-sailcloth/90 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none focus-visible:text-white"
         >
           ILCA 4
           <ChevronDown
-            className={`h-4 w-4 text-slate-500 transition-transform ${
-              openMenu === "ilca" ? "rotate-180 text-slate-300" : ""
+            className={`h-4 w-4 text-soft-aqua transition-transform ${
+              openMenu === "ilca" ? "rotate-180 text-white" : ""
             }`}
           />
         </button>
         {openMenu === "ilca" && (
           <div
             role="menu"
-            className="absolute left-0 top-[52px] w-52 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-50"
+            className="absolute left-0 top-[52px] w-52 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-50 text-charcoal"
           >
             {ilcaLinks}
           </div>
@@ -190,27 +190,27 @@ export function SiteHeader() {
       <Link
         href="/sg/wingfoil"
         prefetch
-        className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0 flex items-center gap-1.5"
+        className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 flex items-center gap-1.5 transition-colors"
       >
         <span>WingFoil</span>
-        <span className="text-[9px] font-black uppercase text-teal-400 bg-teal-500/10 px-1.5 py-0.5 rounded border border-teal-500/20">
+        <span className="text-[9px] font-black uppercase text-soft-aqua bg-harbour-shadow/70 px-1.5 py-0.5 rounded border border-soft-aqua/30">
           New
         </span>
       </Link>
       <Link
         href="/sg/techno293"
         prefetch
-        className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0 flex items-center gap-1.5"
+        className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 flex items-center gap-1.5 transition-colors"
       >
         <span>Techno 293</span>
-        <span className="text-[9px] font-black uppercase text-cyan-400 bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20">
+        <span className="text-[9px] font-black uppercase text-soft-aqua bg-harbour-shadow/70 px-1.5 py-0.5 rounded border border-soft-aqua/30">
           New
         </span>
       </Link>
       <Link
         href="/search"
         onClick={() => setMobileOpen(false)}
-        className="text-sm font-semibold text-slate-400 hover:text-white py-2 md:py-0"
+        className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 transition-colors"
       >
         Search
       </Link>
@@ -218,7 +218,7 @@ export function SiteHeader() {
         <Link
           href="/sample"
           onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-amber-300/90 hover:text-amber-200 py-2 md:py-0"
+          className="text-sm font-medium text-racing-mist hover:text-white py-2 md:py-0 transition-colors"
         >
           Explore demo
         </Link>
@@ -227,17 +227,17 @@ export function SiteHeader() {
   );
 
   const authButtons = !ready ? (
-    <span className="text-xs text-slate-600">…</span>
+    <span className="text-xs text-soft-aqua">…</span>
   ) : email ? (
     <>
-      <span className="hidden xl:inline text-xs text-slate-300 max-w-[140px] truncate">
+      <span className="hidden xl:inline text-xs text-sailcloth/80 max-w-[140px] truncate">
         {email}
       </span>
       {owned.length > 0 && (
         <Link
           href="/parent"
           onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-emerald-400 hover:text-emerald-300"
+          className="text-sm font-semibold text-soft-aqua hover:text-white transition-colors"
         >
           {(() => {
             const rels = owned
@@ -262,7 +262,7 @@ export function SiteHeader() {
             owned.length === 1 ? `/${primaryProfile.handle}` : "/parent"
           }
           onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-white hover:text-orange-300"
+          className="text-sm font-semibold text-white hover:text-racing-mist transition-colors"
         >
           My profile
         </Link>
@@ -271,7 +271,7 @@ export function SiteHeader() {
         <Link
           href="/coach-tools"
           onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-orange-400 hover:text-orange-300"
+          className="text-sm font-semibold text-racing-mist hover:text-white transition-colors"
         >
           Coach Dashboard
         </Link>
@@ -279,9 +279,7 @@ export function SiteHeader() {
       <Link
         href="/account"
         onClick={() => setMobileOpen(false)}
-        className={`text-sm font-semibold hover:text-orange-300 ${
-          role === "coach" ? "text-slate-400" : "text-orange-400"
-        }`}
+        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
       >
         My account
       </Link>
@@ -295,7 +293,7 @@ export function SiteHeader() {
               ? "/admin"
               : "https://admin.sailorpath.com/"
           }
-          className="text-xs font-bold text-slate-400 hover:text-white"
+          className="text-xs font-bold text-soft-aqua hover:text-white transition-colors"
         >
           Admin console
         </a>
@@ -303,7 +301,7 @@ export function SiteHeader() {
       <button
         type="button"
         onClick={() => void signOut()}
-        className="text-sm font-semibold text-slate-400 hover:text-white"
+        className="text-sm font-semibold text-sailcloth/80 hover:text-white transition-colors"
       >
         Log out
       </button>
@@ -313,19 +311,19 @@ export function SiteHeader() {
       <Link
         href="/search"
         onClick={() => setMobileOpen(false)}
-        className="rounded-full bg-orange-600 px-4 py-1.5 text-xs font-bold text-white hover:bg-orange-500"
+        className="rounded-lg bg-racing-orange hover:bg-racing-deep px-4 py-2 text-[15px] font-semibold text-white min-h-[40px] inline-flex items-center justify-center transition-colors shadow-sm"
       >
         Find and claim a profile
       </Link>
       <Link
         href="/login"
-        className="text-sm font-semibold text-slate-400 hover:text-white"
+        className="text-sm font-semibold text-sailcloth/90 hover:text-white transition-colors"
       >
         Log in
       </Link>
       <Link
         href="/register"
-        className="text-sm font-semibold text-slate-400 hover:text-white"
+        className="text-sm font-semibold text-sailcloth/90 hover:text-white transition-colors"
       >
         Create account
       </Link>
@@ -333,11 +331,11 @@ export function SiteHeader() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full max-w-[100vw] border-b border-cool-veil bg-warm-white overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
+    <header className="sticky top-0 z-50 w-full max-w-[100vw] border-b border-harbour-shadow bg-harbour text-sailcloth overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
       <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
         <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
           <div className="flex items-center gap-3 lg:gap-8 min-w-0 flex-1">
-            <BrandLogoLink />
+            <BrandLogoLink variant="reversed" />
             <nav
               ref={navRef}
               className="hidden md:flex items-center gap-5 lg:gap-6"
@@ -352,7 +350,7 @@ export function SiteHeader() {
 
           <button
             type="button"
-            className="md:hidden rounded-lg border border-white/10 p-2.5 text-slate-300 touch-manipulation min-h-[2.5rem] min-w-[2.5rem] inline-flex items-center justify-center"
+            className="md:hidden rounded-lg border border-soft-aqua/30 p-2 text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.5rem] min-w-[2.5rem] inline-flex items-center justify-center"
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
             onClick={() => {
@@ -369,11 +367,11 @@ export function SiteHeader() {
         </div>
 
         {mobileOpen && (
-          <div className="md:hidden border-t border-white/5 py-3 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col gap-0.5 max-h-[min(70vh,32rem)] overflow-y-auto">
+          <div className="md:hidden border-t border-harbour-shadow bg-harbour py-3 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col gap-0.5 max-h-[min(70vh,32rem)] overflow-y-auto px-2">
             <Link
               href="/calendar"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-sky-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Race Calendar
             </Link>
@@ -381,32 +379,32 @@ export function SiteHeader() {
               <Link
                 href="/search"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm font-bold text-white bg-orange-600/90 hover:bg-orange-500 touch-manipulation min-h-[2.75rem] flex items-center justify-center"
+                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-white bg-racing-orange hover:bg-racing-deep touch-manipulation min-h-[2.75rem] flex items-center justify-center shadow-sm"
               >
                 Find and claim a profile
               </Link>
             )}
-            <p className="px-1 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            <p className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
               Optimist
             </p>
             <Link
               href="/sg/optimist/gold"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Gold standings
             </Link>
             <Link
               href="/sg/optimist/silver"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Silver standings
             </Link>
             <Link
               href="/sg/optimist/regattas"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Optimist regattas
             </Link>
@@ -414,58 +412,58 @@ export function SiteHeader() {
               <Link
                 href="/sg/optimist/goldsailors"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-soft-aqua hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
               >
                 All Gold Fleet sailors
               </Link>
             )}
-            <p className="px-1 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            <p className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
               ILCA 4
             </p>
             <Link
               href="/sg/ilca4"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 4 standings
             </Link>
             <Link
               href="/sg/ilca4/regattas"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 4 regattas
             </Link>
-            <p className="px-1 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            <p className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
               WingFoil
             </p>
             <Link
               href="/sg/wingfoil"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-teal-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center justify-between"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center justify-between"
             >
               <span>WingFoil Racing</span>
-              <span className="text-[9px] font-black uppercase text-teal-400 bg-teal-500/10 px-1.5 py-0.5 rounded border border-teal-500/20">
+              <span className="text-[9px] font-black uppercase text-soft-aqua bg-harbour-shadow/70 px-1.5 py-0.5 rounded border border-soft-aqua/30">
                 New
               </span>
             </Link>
-            <p className="px-1 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+            <p className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
               Techno 293
             </p>
             <Link
               href="/sg/techno293"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-cyan-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center justify-between"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center justify-between"
             >
               <span>Techno 293 Racing</span>
-              <span className="text-[9px] font-black uppercase text-cyan-400 bg-cyan-500/10 px-1.5 py-0.5 rounded border border-cyan-500/20">
+              <span className="text-[9px] font-black uppercase text-soft-aqua bg-harbour-shadow/70 px-1.5 py-0.5 rounded border border-soft-aqua/30">
                 New
               </span>
             </Link>
             <Link
               href="/search"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Search
             </Link>
@@ -473,7 +471,7 @@ export function SiteHeader() {
               <Link
                 href="/sample"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm font-semibold text-amber-200 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-racing-mist hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
               >
                 Explore demo
               </Link>
@@ -481,11 +479,11 @@ export function SiteHeader() {
             <Link
               href="/support"
               onClick={() => setMobileOpen(false)}
-              className="rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/5 touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Help &amp; support
             </Link>
-            <div className="mt-3 pt-3 border-t border-white/5 flex flex-col gap-1">
+            <div className="mt-3 pt-3 border-t border-harbour-shadow flex flex-col gap-1">
               {authButtons}
             </div>
           </div>

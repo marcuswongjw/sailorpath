@@ -168,14 +168,14 @@ export function IlcaRankingsView({
                 });
                 void loadBoard(nextKind, nextYear);
               }}
-              className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-slate-950/90 border border-white/10 pl-10 pr-8 py-2 text-xs sm:text-sm text-white font-semibold cursor-pointer hover:border-sky-500/40 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500/30 transition-all shadow-sm"
+              className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-warm-white border border-cool-veil pl-10 pr-8 py-2 text-xs sm:text-sm text-charcoal font-semibold cursor-pointer hover:border-harbour/40 focus:border-harbour focus:outline-none focus:ring-1 focus:ring-harbour/30 transition-all shadow-sm"
               aria-label="Select ILCA 4 intake period"
             >
               {ILCA_INTAKE_OPTIONS.map((opt) => (
                 <option
                   key={`${opt.kind}-${opt.year}`}
                   value={`${opt.kind}|${opt.year}`}
-                  className="bg-slate-900 text-white"
+                  className="bg-warm-white text-charcoal"
                 >
                   {opt.label}
                 </option>
@@ -189,16 +189,16 @@ export function IlcaRankingsView({
               onChange={(e) =>
                 setGenderFilter(e.target.value as "all" | "M" | "F")
               }
-              className="min-w-0 w-full sm:w-auto rounded-xl bg-slate-950/90 border border-white/10 pl-8 pr-8 py-2 text-xs sm:text-sm text-white font-semibold cursor-pointer hover:border-sky-500/40 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500/30 transition-all shadow-sm"
+              className="min-w-0 w-full sm:w-auto rounded-xl bg-warm-white border border-cool-veil pl-8 pr-8 py-2 text-xs sm:text-sm text-charcoal font-semibold cursor-pointer hover:border-harbour/40 focus:border-harbour focus:outline-none focus:ring-1 focus:ring-harbour/30 transition-all shadow-sm"
               aria-label="Filter by gender"
             >
-              <option value="all" className="bg-slate-900 text-white">
+              <option value="all" className="bg-warm-white text-charcoal">
                 All genders
               </option>
-              <option value="M" className="bg-slate-900 text-white">
+              <option value="M" className="bg-warm-white text-charcoal">
                 Male
               </option>
-              <option value="F" className="bg-slate-900 text-white">
+              <option value="F" className="bg-warm-white text-charcoal">
                 Female
               </option>
             </select>
@@ -231,7 +231,7 @@ export function IlcaRankingsView({
       )}
 
       {eventSlots.length > 0 && (
-        <div className="rounded-xl border border-white/10 bg-[#0c0d14]/95 px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0">
+        <div className="rounded-xl border border-cool-veil bg-warm-white px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0 shadow-sm">
           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
             Scoring events — R1 oldest · R{eventSlots.length} newest (last{" "}
             {eventSlots.length} ranking regattas)
@@ -240,7 +240,7 @@ export function IlcaRankingsView({
             {eventSlots.map((ev, idx) => (
               <div
                 key={ev.regattaId}
-                className="min-w-0 rounded-lg border border-white/5 bg-white/5 px-1 sm:px-2.5 py-1.5 sm:py-2 text-center"
+                className="min-w-0 rounded-lg border border-cool-veil bg-sailcloth px-1 sm:px-2.5 py-1.5 sm:py-2 text-center"
                 title={`${ev.regattaName} · ${ev.date} · fleet ${ev.fleetSize}`}
               >
                 <p className="text-[9px] sm:text-[10px] font-black text-sky-400">
@@ -258,7 +258,7 @@ export function IlcaRankingsView({
               (_, i) => (
                 <div
                   key={`empty-${i}`}
-                  className="min-w-0 rounded-lg border border-white/5 bg-slate-950/40 px-1 py-1.5 text-center opacity-40"
+                  className="min-w-0 rounded-lg border border-cool-veil bg-sailcloth px-1 py-1.5 text-center opacity-40"
                 >
                   <p className="text-[9px] font-black text-slate-600">
                     R{eventSlots.length + i + 1}
@@ -289,7 +289,7 @@ export function IlcaRankingsView({
           return (
             <div
               key={s.sailorId}
-              className="w-full max-w-full min-w-0 rounded-2xl p-3 border border-white/5 bg-[#131520]/80 space-y-2.5"
+              className="w-full max-w-full min-w-0 rounded-2xl p-3 border border-cool-veil bg-warm-white space-y-2.5"
             >
               <div className="flex items-start justify-between gap-2 min-w-0">
                 <div className="min-w-0 flex-1">
@@ -402,21 +402,21 @@ export function IlcaRankingsView({
         })}
       </div>
 
-      <div className="hidden md:block rounded-2xl border border-white/5 overflow-hidden w-full max-w-full min-w-0">
+      <div className="hidden md:block rounded-2xl border border-cool-veil bg-warm-white overflow-hidden w-full max-w-full min-w-0">
         <div className="overflow-x-auto max-w-full">
           <table className="w-full text-left text-sm min-w-[720px] border-collapse">
             <thead className="text-[10px] text-slate-400 uppercase tracking-wider">
               <tr>
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 w-12 bg-[#12141c] border-b border-white/10">
+                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 w-12 bg-aqua-mist border-b border-cool-veil">
                   #
                 </th>
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-[#12141c] border-b border-white/10">
+                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-aqua-mist border-b border-cool-veil">
                   Sailor
                 </th>
-                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-[#12141c] border-b border-white/10">
+                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-aqua-mist border-b border-cool-veil">
                   Gender
                 </th>
-                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-[#12141c] border-b border-white/10">
+                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-aqua-mist border-b border-cool-veil">
                   Birth year
                 </th>
                 {Array.from({ length: 5 }).map((_, idx) => {
@@ -424,7 +424,7 @@ export function IlcaRankingsView({
                   return (
                     <th
                       key={ev?.regattaId || `r${idx}`}
-                      className="sticky top-0 z-20 px-2.5 py-2.5 text-center bg-[#12141c] border-b border-white/10 min-w-[7.5rem] max-w-[12rem]"
+                      className="sticky top-0 z-20 px-2.5 py-2.5 text-center bg-aqua-mist border-b border-cool-veil min-w-[7.5rem] max-w-[12rem]"
                       title={
                         ev
                           ? `${ev.regattaName} · ${ev.date} · fleet ${ev.fleetSize}`
@@ -440,7 +440,7 @@ export function IlcaRankingsView({
                     </th>
                   );
                 })}
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 text-center bg-[#12141c] border-b border-white/10">
+                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 text-center bg-aqua-mist border-b border-cool-veil">
                   Best 3 of 5
                 </th>
               </tr>
@@ -469,18 +469,18 @@ export function IlcaRankingsView({
                       {handle ? (
                         <Link
                           href={`/${handle}`}
-                          className="font-bold text-white hover:text-sky-300"
+                          className="font-bold text-charcoal hover:text-harbour"
                         >
                           {s.name}
                         </Link>
                       ) : (
-                        <span className="font-bold text-white">{s.name}</span>
+                        <span className="font-bold text-charcoal">{s.name}</span>
                       )}
                     </td>
-                    <td className="px-3 py-3.5 text-center text-slate-300">
+                    <td className="px-3 py-3.5 text-center text-slate-soft">
                       {s.gender || "—"}
                     </td>
-                    <td className="px-3 py-3.5 text-center font-mono text-slate-300">
+                    <td className="px-3 py-3.5 text-center font-mono text-slate-soft">
                       {s.birthYear ?? "—"}
                     </td>
                     {Array.from({ length: 5 }).map((_, idx) => {
@@ -489,7 +489,7 @@ export function IlcaRankingsView({
                         return (
                           <td
                             key={`empty-${idx}`}
-                            className="px-3 py-3.5 text-center text-slate-600"
+                            className="px-3 py-3.5 text-center text-slate-soft/40"
                           >
                             —
                           </td>
@@ -501,7 +501,7 @@ export function IlcaRankingsView({
                         <td
                           key={ev.regattaId}
                           data-best-three-selected={selected || undefined}
-                          className={`px-3 py-3.5 text-center font-mono text-xs ${selected ? "bg-sky-500/15 font-black text-sky-200 shadow-[inset_0_0_0_1px_rgba(56,189,248,0.18)]" : "font-medium text-slate-500"}`}
+                          className={`px-3 py-3.5 text-center font-mono text-xs ${selected ? "bg-aqua-mist font-bold text-harbour shadow-[inset_0_0_0_1px_rgba(10,85,87,0.2)]" : "font-medium text-slate-soft"}`}
                           title={
                             isDns
                               ? `${ev.regattaName} · DNS${selected ? " · counts toward Best 3 of 5" : ""}`
@@ -513,7 +513,7 @@ export function IlcaRankingsView({
                         </td>
                       );
                     })}
-                    <td className="px-4 lg:px-5 py-3.5 text-center font-black text-white text-base">
+                    <td className="px-4 lg:px-5 py-3.5 text-center font-black text-charcoal text-base">
                       {s.totalPoints}
                     </td>
                   </tr>
@@ -522,8 +522,8 @@ export function IlcaRankingsView({
             </tbody>
           </table>
         </div>
-        <p className="px-4 py-3 text-[11px] text-slate-400 border-t border-white/5 bg-[#0c0d14] leading-relaxed">
-          <strong className="text-slate-300">Scoring &amp; Selection:</strong> High Ranking Points apply: in a fleet of N, 1st earns N points, 2nd earns N−1, and * = DNS (0 pts). R1–R5 show up to the last 5 ranking regattas on or before the cutoff (R1 oldest). Best 3 of 5 is the sum of the three highest scores (highlighted in cyan; higher total is better). Only sailors on the official ILCA 4 national ranking list appear on this board.
+        <p className="px-4 py-3 text-[11px] text-slate-soft border-t border-cool-veil bg-sailcloth leading-relaxed">
+          <strong className="text-charcoal">Scoring &amp; Selection:</strong> High Ranking Points apply: in a fleet of N, 1st earns N points, 2nd earns N−1, and * = DNS (0 pts). R1–R5 show up to the last 5 ranking regattas on or before the cutoff (R1 oldest). Best 3 of 5 is the sum of the three highest scores (highlighted in aqua; higher total is better). Only sailors on the official ILCA 4 national ranking list appear on this board.
         </p>
       </div>
     </div>

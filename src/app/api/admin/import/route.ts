@@ -1385,6 +1385,7 @@ export async function POST(req: Request) {
                 countsForRanking: ranking,
                 reviewedAt: ranking === false ? new Date() : target.reviewedAt,
                 raceCount,
+                status: target.status === "draft" ? "published" : (target.status || "published"),
                 updatedAt: new Date(),
               })
               .where(eq(regattas.id, target.id))
@@ -1405,6 +1406,7 @@ export async function POST(req: Request) {
                 countsForRanking: ranking,
                 reviewedAt: ranking === false ? new Date() : null,
                 raceCount,
+                status: "published",
               })
               .returning();
             reg = upserted;
