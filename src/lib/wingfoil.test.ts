@@ -8,6 +8,8 @@ import {
   buildHistoricalSailNumberMap,
   applyHistoricalSailNumbers,
   mergeWingfoilRegattaLists,
+  parseWingfoilRegattaDate,
+  sortWingfoilRegattas,
   type WingfoilRaceScore,
   type WingfoilSailorResult,
   type WingfoilRegatta,
@@ -255,6 +257,33 @@ describe("mergeWingfoilRegattaLists", () => {
     expect(merged).toHaveLength(1);
     expect(merged[0].results).toHaveLength(1);
     expect(merged[0].results![0].name).toBe("Sailor One");
+  });
+});
+
+describe("parseWingfoilRegattaDate and sortWingfoilRegattas", () => {
+  it("parses different date string formats into accurate timestamps", () => {
+    const oct = parseWingfoilRegattaDate("10 - 11 October 2026");
+    const sep = parseWingfoilRegattaDate("5–7 September 2026");
+    const aug = parseWingfoilRegattaDate("29 - 30 August 2026");
+    const jul = parseWingfoilRegattaDate("11 - 12 July 2026");
+    const jan = parseWingfoilRegattaDate("10–11 January 2026");
+
+    expect(oct).toBeGreaterThan(sep);
+    expect(sep).toBeGreaterThan(aug);
+    expect(aug).toBeGreaterThan(jul);
+    expect(jul).toBeGreaterThan(jan);
+  });
+
+  it("sorts wingfoil regattas in chronological order with latest at the top", () => {
+    const regattas: WingfoilRegatta[] = [
+      { id: "gp1", name: "GP1", dates: "10–11 January 2026" } as any,
+      { id: "gp3", name: "GP3", dates: "10 - 11 October 2026" } as any,
+      { id: "snsc", name: "SNSC", dates: "5–7 September 2026" } as any,
+      { id: "gp2", name: "GP2", dates: "11 - 12 July 2026" } as any,
+    ];
+
+    const sorted = sortWingfoilRegattas(regattas);
+    expect(sorted.map((r) => r.id)).toEqual(["gp3", "snsc", "gp2", "gp1"]);
   });
 });
 

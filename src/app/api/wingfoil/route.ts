@@ -7,6 +7,7 @@ import { eq, sql } from "drizzle-orm";
 import { auditAdminMutation } from "@/lib/adminChangeLog";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
+  sortWingfoilRegattas,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 
@@ -62,7 +63,7 @@ export async function GET(req: Request) {
       }
 
       return NextResponse.json({
-        regattas: merged,
+        regattas: sortWingfoilRegattas(merged),
         source: "database",
       });
     }
@@ -71,7 +72,7 @@ export async function GET(req: Request) {
   }
 
   return NextResponse.json({
-    regattas: SINGAPORE_WINGFOIL_REGATTAS,
+    regattas: sortWingfoilRegattas(SINGAPORE_WINGFOIL_REGATTAS),
     source: "default",
   });
 }

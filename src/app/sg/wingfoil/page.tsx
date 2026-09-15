@@ -4,6 +4,7 @@ import { db, ensureCoreSchema } from "@/db";
 import { wingfoilRegattas } from "@/db/schema";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
+  sortWingfoilRegattas,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 import type { Metadata } from "next";
@@ -47,12 +48,12 @@ async function getPublishedWingfoilRegattas(): Promise<WingfoilRegatta[]> {
           merged.push(row.data as WingfoilRegatta);
         }
       }
-      return merged;
+      return sortWingfoilRegattas(merged);
     }
   } catch (e) {
     console.warn("[WingfoilPage] DB fetch warning (falling back to static):", e);
   }
-  return SINGAPORE_WINGFOIL_REGATTAS;
+  return sortWingfoilRegattas(SINGAPORE_WINGFOIL_REGATTAS);
 }
 
 export default async function WingfoilPage() {

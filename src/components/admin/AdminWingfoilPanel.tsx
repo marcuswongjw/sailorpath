@@ -39,6 +39,7 @@ import {
   applyHistoricalSailNumbers,
   mergeWingfoilRegattaLists,
   deleteWingfoilFromServer,
+  sortWingfoilRegattas,
   type WingfoilRegatta,
   type WingfoilSailorResult,
   type WingfoilRaceScore,
@@ -1353,7 +1354,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
             }}
             className="w-full rounded-xl border border-white/10 bg-slate-950 px-3.5 py-2.5 text-xs font-bold text-white focus:border-orange-500/40"
           >
-            {regattas.map((r) => (
+            {sortWingfoilRegattas(regattas).map((r) => (
               <option key={r.id} value={r.id}>
                 {r.name} ({r.dates})
               </option>

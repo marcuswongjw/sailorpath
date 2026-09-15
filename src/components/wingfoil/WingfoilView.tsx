@@ -12,6 +12,7 @@ import {
   SINGAPORE_WINGFOIL_REGATTAS,
   loadWingfoilRegattas,
   fetchServerWingfoilRegattas,
+  sortWingfoilRegattas,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
@@ -24,13 +25,18 @@ export function WingfoilView({
 } = {}) {
   const [regattas, setRegattas] = useState<WingfoilRegatta[]>(
     initialRegattas && initialRegattas.length > 0
-      ? initialRegattas
-      : SINGAPORE_WINGFOIL_REGATTAS
+      ? sortWingfoilRegattas(initialRegattas)
+      : sortWingfoilRegattas(SINGAPORE_WINGFOIL_REGATTAS)
   );
-  const [selectedRegattaId, setSelectedRegattaId] = useState<string>(
-    (initialRegattas && initialRegattas[0]?.id) ||
-      SINGAPORE_WINGFOIL_REGATTAS[0].id
-  );
+  const [selectedRegattaId, setSelectedRegattaId] = useState<string>(() => {
+    const list = sortWingfoilRegattas(
+      initialRegattas && initialRegattas.length > 0
+        ? initialRegattas
+        : SINGAPORE_WINGFOIL_REGATTAS
+    );
+    const withResults = list.find((r) => r.results && r.results.length > 0);
+    return withResults ? withResults.id : list[0]?.id || SINGAPORE_WINGFOIL_REGATTAS[0].id;
+  });
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [activeTab, setActiveTab] = useState<
     "series" | "results" | "calendar"
@@ -60,10 +66,12 @@ export function WingfoilView({
     };
   }, [initialRegattas]);
 
-  // Public showcase only queries and displays verified, published regattas
+  // Public showcase only queries and displays verified, published regattas (latest first)
   const publishedRegattas = useMemo(() => {
-    return regattas.filter(
-      (r) => !r.lifecycleStatus || r.lifecycleStatus === "published"
+    return sortWingfoilRegattas(
+      regattas.filter(
+        (r) => !r.lifecycleStatus || r.lifecycleStatus === "published"
+      )
     );
   }, [regattas]);
 
