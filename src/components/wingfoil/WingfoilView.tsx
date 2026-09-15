@@ -8,6 +8,7 @@ import {
   Clock,
   Gauge,
   ChevronRight,
+  Trophy,
 } from "lucide-react";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
@@ -17,6 +18,7 @@ import {
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
+import { WingfoilSeriesView } from "./WingfoilSeriesView";
 
 export function WingfoilView({
   initialRegattas,
@@ -33,7 +35,9 @@ export function WingfoilView({
       SINGAPORE_WINGFOIL_REGATTAS[0].id
   );
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
-  const [activeTab, setActiveTab] = useState<"results" | "format" | "calendar">("results");
+  const [activeTab, setActiveTab] = useState<
+    "series" | "results" | "format" | "calendar"
+  >("series");
 
   // Re-hydrate from persistent storage and sync with server on mount
   useEffect(() => {
@@ -89,11 +93,23 @@ export function WingfoilView({
         </div>
 
         {/* View mode tabs */}
-        <div className="flex items-center gap-1.5 rounded-xl bg-white/[0.03] border border-white/10 p-1 self-start lg:self-auto">
+        <div className="flex items-center gap-1.5 rounded-xl bg-white/[0.03] border border-white/10 p-1 self-start lg:self-auto overflow-x-auto max-w-full">
+          <button
+            type="button"
+            onClick={() => setActiveTab("series")}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 ${
+              activeTab === "series"
+                ? "bg-amber-500 text-slate-950 shadow-sm font-black"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            <Trophy className="h-3.5 w-3.5" />
+            Overall Championship
+          </button>
           <button
             type="button"
             onClick={() => setActiveTab("results")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors shrink-0 ${
               activeTab === "results"
                 ? "bg-teal-500 text-slate-950 shadow-sm"
                 : "text-slate-400 hover:text-white"
@@ -104,7 +120,7 @@ export function WingfoilView({
           <button
             type="button"
             onClick={() => setActiveTab("format")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors shrink-0 ${
               activeTab === "format"
                 ? "bg-teal-500 text-slate-950 shadow-sm"
                 : "text-slate-400 hover:text-white"
@@ -115,7 +131,7 @@ export function WingfoilView({
           <button
             type="button"
             onClick={() => setActiveTab("calendar")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors shrink-0 ${
               activeTab === "calendar"
                 ? "bg-teal-500 text-slate-950 shadow-sm"
                 : "text-slate-400 hover:text-white"
@@ -126,9 +142,36 @@ export function WingfoilView({
         </div>
       </div>
 
+      {/* TAB 0: Overall Series Championship */}
+      {activeTab === "series" && (
+        <WingfoilSeriesView
+          regattas={publishedRegattas}
+          onSelectRound={(roundId) => {
+            setSelectedRegattaId(roundId);
+            setActiveTab("results");
+          }}
+        />
+      )}
+
       {/* TAB 1: Regatta Results & Scorecard */}
       {activeTab === "results" && (
         <div className="space-y-4">
+          {/* Series Link Banner */}
+          {activeRegatta.seriesName && (
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-amber-500/10 border border-amber-500/20 rounded-2xl px-4 py-2.5 text-xs">
+              <span className="text-amber-200">
+                Part of the <strong className="text-white">{activeRegatta.seriesName}</strong> ({activeRegatta.seriesPart || "Round of 3"}).
+              </span>
+              <button
+                type="button"
+                onClick={() => setActiveTab("series")}
+                className="inline-flex items-center gap-1 font-bold text-amber-400 hover:text-amber-300 shrink-0"
+              >
+                <Trophy className="h-3.5 w-3.5" /> View Overall Series Leaderboard →
+              </button>
+            </div>
+          )}
+
           {/* Controls row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#0c0d14] rounded-xl border border-white/10 p-3">
             <div className="flex flex-wrap items-center gap-2">
@@ -137,12 +180,21 @@ export function WingfoilView({
               </label>
               <select
                 value={selectedRegattaId}
-                onChange={(e) => setSelectedRegattaId(e.target.value)}
+                onChange={(e) => {
+                  if (e.target.value === "overall-series") {
+                    setActiveTab("series");
+                  } else {
+                    setSelectedRegattaId(e.target.value);
+                  }
+                }}
                 className="rounded-lg bg-slate-900 border border-white/10 px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:border-teal-500"
               >
+                <option value="overall-series">
+                  🏆 2026 NE Monsoon Series (Overall Championship)
+                </option>
                 {publishedRegattas.map((r) => (
                   <option key={r.id} value={r.id}>
-                    {r.shortName} · {r.dates}
+                    {r.shortName} · {r.dates} {r.results && r.results.length > 0 ? "✓" : "(Upcoming)"}
                   </option>
                 ))}
               </select>
