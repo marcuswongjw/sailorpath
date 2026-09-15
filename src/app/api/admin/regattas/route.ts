@@ -19,6 +19,15 @@ export async function GET(req: Request) {
     if (typeof ensureCoreSchema === "function") {
       await ensureCoreSchema();
     }
+    // Self-heal any legacy draft regattas to published
+    try {
+      await db
+        .update(regattas)
+        .set({ status: "published" })
+        .where(eq(regattas.status, "draft"));
+    } catch {
+      /* ignore if column doesn't exist yet */
+    }
     const sp = new URL(req.url).searchParams;
     const all = sp.get("all") === "1" || !sp.has("limit");
     const limitRaw = Number(sp.get("limit"));

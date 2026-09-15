@@ -49,6 +49,7 @@ import {
   asc,
   desc,
   eq,
+  ne,
   inArray,
   or,
   and,
@@ -318,7 +319,7 @@ export async function listRegattas(options?: { includeAll?: boolean }) {
       : await base
           .where(
             or(
-              eq(regattas.status, "published"),
+              ne(regattas.status, "archived"),
               sql`${regattas.status} IS NULL`
             )
           )
@@ -358,7 +359,7 @@ export async function getRegattaBySlug(slug: string, options?: { allowUnpublishe
             and(
               eq(regattas.slug, slug),
               or(
-                eq(regattas.status, "published"),
+                ne(regattas.status, "archived"),
                 sql`${regattas.status} IS NULL`
               )
             )
@@ -1068,7 +1069,7 @@ export const getCachedPublicRegattas = unstable_cache(
   async (): Promise<RegattaRecord[]> => {
     return listRegattas();
   },
-  ["public-regattas-list-v1"],
+  ["public-regattas-list-v2"],
   { revalidate: 120, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 
