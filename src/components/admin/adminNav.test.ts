@@ -10,11 +10,14 @@ describe("parseAdminNav", () => {
     });
   });
 
-  it("parses stats / import / ranking / wingfoil / changelog tabs", () => {
+  it("parses stats / import / ranking / wingfoil / techno293 / changelog tabs", () => {
     expect(parseAdminNav(new URLSearchParams("tab=stats")).tab).toBe("stats");
     expect(parseAdminNav(new URLSearchParams("tab=ilca")).tab).toBe("ilca");
     expect(parseAdminNav(new URLSearchParams("tab=wingfoil")).tab).toBe(
       "wingfoil"
+    );
+    expect(parseAdminNav(new URLSearchParams("tab=techno293")).tab).toBe(
+      "techno293"
     );
     expect(parseAdminNav(new URLSearchParams("tab=changelog")).tab).toBe(
       "changelog"

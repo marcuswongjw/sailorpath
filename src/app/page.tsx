@@ -167,6 +167,12 @@ export default function HomePage() {
               🏄‍♂️ WingFoil
             </Link>
             <Link
+              href="/sg/techno293"
+              className="px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 hover:border-cyan-500/50 hover:text-cyan-200 transition-colors font-semibold"
+            >
+              🧭 Techno 293
+            </Link>
+            <Link
               href="/sg/optimist/selection"
               className="px-2.5 py-1 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-300 hover:border-orange-500/50 hover:text-orange-200 transition-colors font-semibold"
             >

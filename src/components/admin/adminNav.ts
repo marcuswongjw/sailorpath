@@ -11,6 +11,7 @@ export type AdminActiveTab =
   | "analysis"
   | "ilca"
   | "wingfoil"
+  | "techno293"
   | "changelog";
 
 /** Database CRUD sub-tabs */
@@ -42,6 +43,7 @@ const PRIMARY_TABS: readonly AdminActiveTab[] = [
   "analysis",
   "ilca",
   "wingfoil",
+  "techno293",
   "changelog",
 ] as const;
 
@@ -198,6 +200,12 @@ export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
         shortLabel: "WingFoil",
         label: "WingFoil",
         sublabel: "Sprint slalom scoreboards",
+      },
+      {
+        key: "techno293",
+        shortLabel: "Techno 293",
+        label: "Techno 293",
+        sublabel: "One Design windsurfing scoreboards",
       },
       {
         key: "analysis",

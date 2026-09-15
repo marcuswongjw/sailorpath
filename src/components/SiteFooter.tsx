@@ -67,6 +67,12 @@ export function SiteFooter() {
           >
             WingFoil
           </Link>
+          <Link
+            href="/sg/techno293"
+            className="hover:text-cyan-300 transition-colors"
+          >
+            Techno 293
+          </Link>
         </div>
       </div>
     </footer>

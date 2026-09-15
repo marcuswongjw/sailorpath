@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Trophy, Anchor, Medal, Wind } from "lucide-react";
+import { Trophy, Anchor, Medal, Wind, Compass } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Current sailing rankings & race results | SailorPath",
-  description: "View current Singapore Optimist Gold, Optimist Silver, ILCA 4, and WingFoil standings.",
+  description:
+    "View current Singapore Optimist Gold, Optimist Silver, ILCA 4, WingFoil, and Techno 293 standings.",
 };
 
 export const revalidate = 300;
@@ -17,8 +18,7 @@ export default function RankingsHubPage() {
           Current rankings
         </h1>
         <p className="text-sm text-slate-400 max-w-lg mx-auto leading-relaxed">
-          Singapore youth dinghy series — pick a board to view current
-          standings.
+          Singapore youth dinghy and windsurfing series — pick a class to view current standings.
         </p>
       </div>
 
@@ -82,6 +82,23 @@ export default function RankingsHubPage() {
           </div>
           <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
             Event standings, heat finishes &amp; specifications.
+          </p>
+        </Link>
+
+        <Link
+          href="/sg/techno293"
+          className="group rounded-2xl border border-cyan-500/25 bg-cyan-500/5 p-5 hover:border-cyan-500/50 transition-colors sm:col-span-2"
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/15 mb-3">
+            <Compass className="h-5 w-5 text-cyan-400" />
+          </div>
+          <div>
+            <h2 className="text-base font-bold text-white group-hover:text-cyan-300">
+              Techno 293
+            </h2>
+          </div>
+          <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+            Southwest Monsoon Grand Prix series, race results &amp; class specifications.
           </p>
         </Link>
       </div>

@@ -685,3 +685,21 @@ export const wingfoilRegattas = pgTable("wingfoil_regattas", {
     .defaultNow()
     .notNull(),
 });
+
+/**
+ * Singapore Techno 293 Regatta events, rankings, and scorecards.
+ * Shared across admin.sailorpath.com and sailorpath.com.
+ */
+export const techno293Regattas = pgTable("techno293_regattas", {
+  id: text("id").primaryKey().notNull(),
+  /** Lifecycle state: draft | in_review | published | archived */
+  status: text("status", {
+    enum: ["draft", "in_review", "published", "archived"],
+  })
+    .default("published")
+    .notNull(),
+  data: jsonb("data").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
+});

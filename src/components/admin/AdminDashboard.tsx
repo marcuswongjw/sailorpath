@@ -18,6 +18,7 @@ import {
   ScrollText,
   Flame,
   ChevronRight,
+  Compass,
 } from "lucide-react";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
@@ -40,6 +41,7 @@ const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string
   edit: Database,
   ilca: Medal,
   wingfoil: Flame,
+  techno293: Compass,
   analysis: GitCompareArrows,
   import: FileSpreadsheet,
   ops: ClipboardList,
@@ -148,6 +150,13 @@ const AdminWingfoilPanel = dynamic(
   () =>
     import("@/components/admin/AdminWingfoilPanel").then(
       (m) => m.AdminWingfoilPanel
+    ),
+  { loading: () => <PanelLoading />, ssr: false }
+);
+const AdminTechno293Panel = dynamic(
+  () =>
+    import("@/components/admin/AdminTechno293Panel").then(
+      (m) => m.AdminTechno293Panel
     ),
   { loading: () => <PanelLoading />, ssr: false }
 );
@@ -805,6 +814,12 @@ function AdminDashboardInner() {
         {activeTab === "wingfoil" && (
           <div className="w-full min-w-0">
             <AdminWingfoilPanel isSuperadmin={isSuperadmin} />
+          </div>
+        )}
+
+        {activeTab === "techno293" && (
+          <div className="w-full min-w-0">
+            <AdminTechno293Panel isSuperadmin={isSuperadmin} />
           </div>
         )}
 
