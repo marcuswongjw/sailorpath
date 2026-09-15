@@ -38,6 +38,8 @@ import {
   areSailNumbersMatching,
   buildHistoricalSailNumberMap,
   applyHistoricalSailNumbers,
+  mergeWingfoilRegattaLists,
+  deleteWingfoilFromServer,
   type WingfoilRegatta,
   type WingfoilSailorResult,
   type WingfoilRaceScore,
@@ -76,8 +78,25 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     // Sync all events (including drafts and staged) from server database
     fetchServerWingfoilRegattas({ includeAll: true }).then((serverData) => {
       if (serverData && serverData.length > 0) {
-        setRegattas(serverData);
+        // Merge without losing any local scores
+        const merged = mergeWingfoilRegattaLists(serverData, loaded);
+        setRegattas(merged);
         setLastSyncedAt(new Date());
+
+        // If local had results that weren't on server yet, sync merged to server
+        const localHadExtra = loaded.some(
+          (l) =>
+            l.results &&
+            l.results.length > 0 &&
+            !serverData.some(
+              (s) => s.id === l.id && s.results && s.results.length > 0
+            )
+        );
+        if (localHadExtra) {
+          syncWingfoilToServer(merged).then((res) => {
+            if (res.success) setLastSyncedAt(new Date());
+          });
+        }
       } else if (loaded.length > 0) {
         // Auto-persist local events to server if server was unpopulated
         syncWingfoilToServer(loaded).then((res) => {
@@ -229,12 +248,13 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       : targetEvent.results || [];
 
     updateRegattas((prev) => {
-      // 1. Update target regatta with results & mark as Completed
+      // 1. Update target regatta with results, mark as Completed, and set lifecycleStatus to published
       const updated = prev.map((r) => {
         if (r.id === targetEventId) {
           return {
             ...r,
             status: "Completed" as const,
+            lifecycleStatus: "published" as const,
             results: resultsToApply,
             scoringSystem: activeRegatta.scoringSystem || r.scoringSystem,
           };
@@ -249,6 +269,10 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
 
       return cleaned;
     });
+
+    if (activeRegatta.id.startsWith("wingfoil-upload-")) {
+      deleteWingfoilFromServer(activeRegatta.id).catch(() => {});
+    }
 
     setSelectedRegattaId(targetEventId);
     setShowMergeModal(false);
@@ -561,6 +585,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                 ? {
                     ...r,
                     status: "Completed" as const,
+                    lifecycleStatus: "published" as const,
                     results: extractedResults,
                     scoringSystem: `${heatCount} races, ${parsed.discardsCount ?? 1} discard`,
                   }
@@ -581,6 +606,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
             organizer: "Singapore Sailing Federation",
             format: "Sprint Slalom",
             status: "Completed",
+            lifecycleStatus: "published",
             scoringSystem: `${heatCount} races, ${parsed.discardsCount ?? 1} discard`,
             rulesNotes:
               "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",

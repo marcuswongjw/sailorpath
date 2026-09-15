@@ -18,12 +18,19 @@ import {
 } from "@/lib/wingfoil";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
-export function WingfoilView() {
+export function WingfoilView({
+  initialRegattas,
+}: {
+  initialRegattas?: WingfoilRegatta[];
+} = {}) {
   const [regattas, setRegattas] = useState<WingfoilRegatta[]>(
-    SINGAPORE_WINGFOIL_REGATTAS
+    initialRegattas && initialRegattas.length > 0
+      ? initialRegattas
+      : SINGAPORE_WINGFOIL_REGATTAS
   );
   const [selectedRegattaId, setSelectedRegattaId] = useState<string>(
-    SINGAPORE_WINGFOIL_REGATTAS[0].id
+    (initialRegattas && initialRegattas[0]?.id) ||
+      SINGAPORE_WINGFOIL_REGATTAS[0].id
   );
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [activeTab, setActiveTab] = useState<"results" | "format" | "calendar">("results");
@@ -31,14 +38,16 @@ export function WingfoilView() {
   // Re-hydrate from persistent storage and sync with server on mount
   useEffect(() => {
     const loaded = loadWingfoilRegattas();
-    setRegattas(loaded);
+    if (!initialRegattas && loaded.length > 0) {
+      setRegattas(loaded);
+    }
 
     fetchServerWingfoilRegattas().then((serverData) => {
       if (serverData && serverData.length > 0) {
         setRegattas(serverData);
       }
     });
-  }, []);
+  }, [initialRegattas]);
 
   // Public showcase only queries and displays verified, published regattas
   const publishedRegattas = useMemo(() => {
@@ -437,7 +446,7 @@ export function WingfoilView() {
       {/* TAB 3: Singapore Regatta Series */}
       {activeTab === "calendar" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {SINGAPORE_WINGFOIL_REGATTAS.map((reg) => (
+          {publishedRegattas.map((reg) => (
             <div
               key={reg.id}
               className="rounded-xl border border-white/10 bg-[#131520] p-5 flex flex-col justify-between gap-4"

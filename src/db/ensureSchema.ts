@@ -50,29 +50,57 @@ export async function ensureCoreSchema(): Promise<void> {
       `;
 
       // 053_regatta_lifecycle_and_rls.sql: Store Singapore WingFoil regattas and lifecycle status
-      await pgSql`
-        CREATE TABLE IF NOT EXISTS public.wingfoil_regattas (
-          id text PRIMARY KEY,
-          status varchar(20) DEFAULT 'published' NOT NULL,
-          data jsonb NOT NULL,
-          updated_at timestamptz NOT NULL DEFAULT now()
-        );
+      try {
+        await pgSql`
+          CREATE TABLE IF NOT EXISTS public.wingfoil_regattas (
+            id text PRIMARY KEY,
+            status varchar(20) DEFAULT 'published' NOT NULL,
+            data jsonb NOT NULL,
+            updated_at timestamptz NOT NULL DEFAULT now()
+          );
+        `;
+      } catch (e) {
+        console.warn("[sailorpath] ensure wingfoil_regattas table note:", e);
+      }
 
-        ALTER TABLE public.wingfoil_regattas
-          ADD COLUMN IF NOT EXISTS status varchar(20) DEFAULT 'published' NOT NULL;
+      try {
+        await pgSql`
+          ALTER TABLE public.wingfoil_regattas
+            ADD COLUMN IF NOT EXISTS status varchar(20) DEFAULT 'published' NOT NULL;
+        `;
+      } catch (e) {
+        console.warn("[sailorpath] wingfoil_regattas status column note:", e);
+      }
 
-        ALTER TABLE public.regattas
-          ADD COLUMN IF NOT EXISTS status varchar(20) DEFAULT 'draft' NOT NULL;
+      try {
+        await pgSql`
+          ALTER TABLE public.regattas
+            ADD COLUMN IF NOT EXISTS status varchar(20) DEFAULT 'draft' NOT NULL;
+        `;
+      } catch (e) {
+        console.warn("[sailorpath] regattas status column note:", e);
+      }
 
-        CREATE INDEX IF NOT EXISTS regattas_status_date_idx
-          ON public.regattas (status, date DESC);
+      try {
+        await pgSql`
+          CREATE INDEX IF NOT EXISTS regattas_status_date_idx
+            ON public.regattas (status, date DESC);
+        `;
+      } catch {}
 
-        CREATE INDEX IF NOT EXISTS regattas_status_boat_class_date_idx
-          ON public.regattas (status, boat_class, date DESC);
+      try {
+        await pgSql`
+          CREATE INDEX IF NOT EXISTS regattas_status_boat_class_date_idx
+            ON public.regattas (status, boat_class, date DESC);
+        `;
+      } catch {}
 
-        CREATE INDEX IF NOT EXISTS wingfoil_regattas_status_idx
-          ON public.wingfoil_regattas (status);
-      `;
+      try {
+        await pgSql`
+          CREATE INDEX IF NOT EXISTS wingfoil_regattas_status_idx
+            ON public.wingfoil_regattas (status);
+        `;
+      } catch {}
 
       schemaEnsured = true;
       console.info("[sailorpath] Core database schema verified & ensured.");

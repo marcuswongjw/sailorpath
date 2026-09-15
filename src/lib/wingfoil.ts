@@ -1322,7 +1322,11 @@ export async function fetchServerWingfoilRegattas(options?: {
     if (!res.ok) return null;
     const data = await res.json();
     if (Array.isArray(data?.regattas) && data.regattas.length > 0) {
-      saveWingfoilRegattas(data.regattas);
+      // Only cache to localStorage if loaded from actual database, preventing
+      // static empty fallback lists from blowing away user uploads
+      if (data.source === "database") {
+        saveWingfoilRegattas(data.regattas);
+      }
       return data.regattas;
     }
   } catch (e) {
@@ -1360,4 +1364,63 @@ export async function syncWingfoilToServer(
       error: e instanceof Error ? e.message : "Network error",
     };
   }
+}
+
+/**
+ * Delete a custom/uploaded wingfoil regatta from the server database.
+ */
+export async function deleteWingfoilFromServer(
+  id: string
+): Promise<{ success: boolean; error?: string }> {
+  if (typeof window === "undefined" || !id) return { success: false };
+  try {
+    const endpoint = window.location?.origin
+      ? `${window.location.origin}/api/wingfoil`
+      : "/api/wingfoil";
+    const res = await fetch(endpoint, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      return { success: false, error: err?.error || `HTTP ${res.status}` };
+    }
+    return { success: true };
+  } catch (e) {
+    return {
+      success: false,
+      error: e instanceof Error ? e.message : "Network error",
+    };
+  }
+}
+
+/**
+ * Merge two wingfoil regatta lists without losing uploaded scorecard results.
+ */
+export function mergeWingfoilRegattaLists(
+  primary: WingfoilRegatta[],
+  secondary: WingfoilRegatta[]
+): WingfoilRegatta[] {
+  const map = new Map<string, WingfoilRegatta>();
+
+  for (const r of secondary) {
+    if (r && r.id) map.set(r.id, r);
+  }
+
+  for (const r of primary) {
+    if (!r || !r.id) continue;
+    const existing = map.get(r.id);
+    if (!existing) {
+      map.set(r.id, r);
+    } else {
+      const rHasResults = Array.isArray(r.results) && r.results.length > 0;
+      const existHasResults = Array.isArray(existing.results) && existing.results.length > 0;
+      if (rHasResults || !existHasResults) {
+        map.set(r.id, r);
+      }
+    }
+  }
+
+  return Array.from(map.values());
 }

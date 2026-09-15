@@ -161,7 +161,8 @@ export async function POST(
 
       try {
         revalidatePath("/sg/wingfoil");
-        revalidateTag("public-wingfoil", "max-age: 0");
+        revalidatePath("/");
+        revalidateTag("public-wingfoil", "max");
       } catch (e) {
         console.warn("[publish] Cache revalidation warning:", e);
       }

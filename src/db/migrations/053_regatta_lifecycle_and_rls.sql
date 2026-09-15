@@ -20,7 +20,14 @@ UPDATE public.regattas
   SET status = 'published'
   WHERE status = 'draft';
 
--- 2. Add lifecycle status to wingfoil_regattas
+-- 2. Ensure wingfoil_regattas table exists and add lifecycle status
+CREATE TABLE IF NOT EXISTS public.wingfoil_regattas (
+  id text PRIMARY KEY,
+  status VARCHAR(20) DEFAULT 'published' NOT NULL,
+  data jsonb NOT NULL,
+  updated_at timestamptz NOT NULL DEFAULT now()
+);
+
 ALTER TABLE public.wingfoil_regattas
   ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'draft' NOT NULL;
 
@@ -125,3 +132,19 @@ CREATE POLICY wingfoil_superadmin_mutate ON public.wingfoil_regattas
         AND profiles.role = 'superadmin'
     )
   );
+
+-- Service role has full unrestricted access to maintain background sync
+DROP POLICY IF EXISTS regattas_service_role ON public.regattas;
+CREATE POLICY regattas_service_role ON public.regattas
+  FOR ALL
+  TO service_role
+  USING (true)
+  WITH CHECK (true);
+
+DROP POLICY IF EXISTS wingfoil_service_role ON public.wingfoil_regattas;
+CREATE POLICY wingfoil_service_role ON public.wingfoil_regattas
+  FOR ALL
+  TO service_role
+  USING (true)
+  WITH CHECK (true);
+

@@ -70,6 +70,15 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/wingfoil",
+        destination: "/sg/wingfoil",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 export default withBundleAnalyzer(nextConfig);

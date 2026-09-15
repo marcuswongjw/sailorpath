@@ -17,6 +17,7 @@ const PUBLIC_SINGLE_SEGMENT_PATHS = new Set([
   "search",
   "support",
   "whats-new",
+  "wingfoil",
 ]);
 
 /** Routes whose server-rendered content depends on a refreshed auth cookie. */

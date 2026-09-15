@@ -7,6 +7,7 @@ import {
   areSailNumbersMatching,
   buildHistoricalSailNumberMap,
   applyHistoricalSailNumbers,
+  mergeWingfoilRegattaLists,
   type WingfoilRaceScore,
   type WingfoilSailorResult,
   type WingfoilRegatta,
@@ -199,6 +200,61 @@ describe("sail number matching and resolution", () => {
     const { results, autoAssignedCount } = applyHistoricalSailNumbers(newResults, map);
     expect(autoAssignedCount).toBe(1);
     expect(results[0].sailNumber).toBe("43");
+  });
+});
+
+describe("mergeWingfoilRegattaLists", () => {
+  it("preserves regattas with results over empty placeholders", () => {
+    const serverEmpty: WingfoilRegatta[] = [
+      {
+        id: "ne-monsoon-series-gp2-2026",
+        name: "GP2",
+        shortName: "GP2",
+        dates: "2026",
+        venue: "ECP",
+        organizer: "SSF",
+        format: "Sprint Slalom",
+        status: "Upcoming",
+        scoringSystem: "Low Point",
+        rulesNotes: "Notes",
+        results: [],
+      },
+    ];
+
+    const localWithResults: WingfoilRegatta[] = [
+      {
+        id: "ne-monsoon-series-gp2-2026",
+        name: "GP2",
+        shortName: "GP2",
+        dates: "2026",
+        venue: "ECP",
+        organizer: "SSF",
+        format: "Sprint Slalom",
+        status: "Completed",
+        lifecycleStatus: "published",
+        scoringSystem: "9 races, 1 discard",
+        rulesNotes: "Notes",
+        results: [
+          {
+            rank: 1,
+            name: "Sailor One",
+            sailNumber: "10",
+            gender: "M",
+            ageCategory: "Open",
+            schoolName: "",
+            club: "Constant Wind",
+            races: [{ score: 1 }],
+            grossScore: 1,
+            nettScore: 1,
+          },
+        ],
+      },
+    ];
+
+    const merged = mergeWingfoilRegattaLists(serverEmpty, localWithResults);
+    expect(merged).toHaveLength(1);
+    expect(merged[0].results).toHaveLength(1);
+    expect(merged[0].results![0].name).toBe("Sailor One");
   });
 });
 

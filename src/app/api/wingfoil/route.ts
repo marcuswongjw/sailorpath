@@ -68,7 +68,11 @@ export async function POST(req: Request) {
   try {
     const auth = await requireSuperadmin();
     if (typeof ensureCoreSchema === "function") {
-      await ensureCoreSchema();
+      try {
+        await ensureCoreSchema();
+      } catch (e) {
+        console.warn("[/api/wingfoil] ensureCoreSchema non-fatal note:", e);
+      }
     }
 
     const body = await req.json();
@@ -84,7 +88,9 @@ export async function POST(req: Request) {
     // Upsert regattas into PostgreSQL
     for (const r of list) {
       if (!r || !r.id) continue;
-      const status = (r as any).lifecycleStatus || (r as any).status === "Completed" ? "published" : "in_review";
+      const status =
+        r.lifecycleStatus ||
+        (r.status === "Completed" ? "published" : "in_review");
       await db
         .insert(wingfoilRegattas)
         .values({
@@ -114,7 +120,8 @@ export async function POST(req: Request) {
 
     try {
       revalidatePath("/sg/wingfoil");
-      revalidateTag("public-wingfoil", "max-age: 0");
+      revalidatePath("/");
+      revalidateTag("public-wingfoil", "max");
     } catch {
       // cache purge best-effort
     }
@@ -124,7 +131,15 @@ export async function POST(req: Request) {
       savedCount: list.length,
     });
   } catch (e) {
-    return jsonError(e);
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[/api/wingfoil] POST failure:", msg, e);
+    if (msg === "UNAUTHORIZED" || msg === "FORBIDDEN") {
+      return jsonError(e);
+    }
+    return NextResponse.json(
+      { error: msg || "Failed to persist WingFoil regatta data" },
+      { status: 500 }
+    );
   }
 }
 
@@ -132,7 +147,11 @@ export async function DELETE(req: Request) {
   try {
     const auth = await requireSuperadmin();
     if (typeof ensureCoreSchema === "function") {
-      await ensureCoreSchema();
+      try {
+        await ensureCoreSchema();
+      } catch (e) {
+        console.warn("[/api/wingfoil] ensureCoreSchema non-fatal note:", e);
+      }
     }
 
     const { id } = await req.json();
@@ -154,11 +173,20 @@ export async function DELETE(req: Request) {
 
     try {
       revalidatePath("/sg/wingfoil");
-      revalidateTag("public-wingfoil", "max-age: 0");
+      revalidatePath("/");
+      revalidateTag("public-wingfoil", "max");
     } catch {}
 
     return NextResponse.json({ success: true, deletedId: id });
   } catch (e) {
-    return jsonError(e);
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[/api/wingfoil] DELETE failure:", msg, e);
+    if (msg === "UNAUTHORIZED" || msg === "FORBIDDEN") {
+      return jsonError(e);
+    }
+    return NextResponse.json(
+      { error: msg || "Failed to delete WingFoil regatta" },
+      { status: 500 }
+    );
   }
 }
