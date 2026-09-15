@@ -34,6 +34,7 @@ import {
   fetchServerWingfoilRegattas,
   syncWingfoilToServer,
   WINGFOIL_CATEGORIES,
+  WINGFOIL_OFFICIAL_DIVISIONS,
   normalizeSailorName,
   areSailNumbersMatching,
   buildHistoricalSailNumberMap,
@@ -1612,11 +1613,20 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                               onChange={(e) => handleCategoryChange(sailorIdx, e.target.value)}
                               className="bg-slate-900 border border-white/15 text-slate-200 rounded px-2 py-1 text-xs font-medium focus:border-amber-400 focus:outline-none cursor-pointer hover:border-white/30 transition-colors"
                             >
-                              {WINGFOIL_CATEGORIES.map((cat) => (
-                                <option key={cat} value={cat} className="bg-slate-900 text-white">
-                                  {cat}
-                                </option>
-                              ))}
+                              <optgroup label="Official NoR Divisions">
+                                {WINGFOIL_OFFICIAL_DIVISIONS.map((cat) => (
+                                  <option key={cat} value={cat} className="bg-slate-900 text-white">
+                                    {cat}
+                                  </option>
+                                ))}
+                              </optgroup>
+                              <optgroup label="Shorthand / Standard">
+                                {["Open", "Women", "16&U", "U19", "Masters", "Grand Masters", "Fun Open"].map((cat) => (
+                                  <option key={cat} value={cat} className="bg-slate-900 text-white">
+                                    {cat}
+                                  </option>
+                                ))}
+                              </optgroup>
                               {sailor.ageCategory &&
                                 !WINGFOIL_CATEGORIES.includes(sailor.ageCategory as any) && (
                                   <option value={sailor.ageCategory} className="bg-slate-900 text-white">
@@ -1808,13 +1818,22 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                     onChange={(e) =>
                       setNewEntry({ ...newEntry, ageCategory: e.target.value })
                     }
-                    className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white"
+                    className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs"
                   >
-                    {WINGFOIL_CATEGORIES.map((cat) => (
-                      <option key={cat} value={cat}>
-                        {cat}
-                      </option>
-                    ))}
+                    <optgroup label="Official NoR Divisions">
+                      {WINGFOIL_OFFICIAL_DIVISIONS.map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
+                      ))}
+                    </optgroup>
+                    <optgroup label="Shorthand / Standard">
+                      {["Open", "Women", "16&U", "U19", "Masters", "Grand Masters", "Fun Open"].map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
+                      ))}
+                    </optgroup>
                   </select>
                 </div>
                 <div>

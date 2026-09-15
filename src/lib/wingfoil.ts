@@ -1218,15 +1218,36 @@ export function findMatchingWingfoilRegatta(
 }
 
 /**
- * Standard competitive divisions / categories recognized in Singapore WingFoil.
+ * Official 10 Wing Foil classes / divisions per NoR Clause 4.1 & 4.2.
+ * Minimum 3 competitors required to constitute a class and/or division.
+ */
+export const WINGFOIL_OFFICIAL_DIVISIONS = [
+  "Wing Foil Open division",
+  "Wing Foil Women division",
+  "Wing Foil U16 Boys division",
+  "Wing Foil U16 Girls division",
+  "Wing Foil U19 Boys division",
+  "Wing Foil U19 Girls division",
+  "Wing Foil Masters division",
+  "Wing Foil Fun Masters Division",
+  "Wing Foil Grand Masters division",
+  "Wing Foil Fun Open Division",
+] as const;
+
+export type WingfoilOfficialDivision = (typeof WINGFOIL_OFFICIAL_DIVISIONS)[number];
+
+/**
+ * Standard competitive divisions / categories recognized in Singapore WingFoil,
+ * including official NoR divisions and common abbreviations.
  */
 export const WINGFOIL_CATEGORIES = [
+  ...WINGFOIL_OFFICIAL_DIVISIONS,
   "Open",
+  "Women",
   "16&U",
   "U19",
   "Masters",
   "Grand Masters",
-  "Women",
   "Fun Open",
 ] as const;
 

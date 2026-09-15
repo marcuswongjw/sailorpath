@@ -157,12 +157,124 @@ describe("calculateWingfoilSeries", () => {
     expect(dncRaces?.[0].score).toBe(4);
   });
 
-  it("extracts division champions per NoR 16.1", () => {
+  it("extracts division champions only for constituted divisions with min 3 competitors per NoR 4.2", () => {
+    // In dummyGP1 + dummyGP2:
+    // Open: 3 competitors (Jun Hao, Wearn Haw, Alice) -> Constituted!
+    // Women: 1 competitor (Alice) -> Not constituted (<3)
+    // Masters: 1 competitor (Wearn Haw) -> Not constituted (<3)
     const series = calculateWingfoilSeries([dummyGP1, dummyGP2]);
 
     expect(series.divisionChampions.open?.name).toBe("Jun Hao Lo");
-    expect(series.divisionChampions.masters?.name).toBe("Wearn Haw Tan");
-    expect(series.divisionChampions.women?.name).toBe("Alice Lim");
-    expect(series.divisionChampions.youthU16?.name).toBe("Alice Lim");
+    // Under NoR 4.2, < 3 competitors does not constitute, so no champion trophy awarded
+    expect(series.divisionChampions.women).toBeUndefined();
+    expect(series.divisionChampions.masters).toBeUndefined();
+
+    const openDiv = series.divisions.find((d) => d.division.id === "open");
+    expect(openDiv?.isConstituted).toBe(true);
+    expect(openDiv?.champion?.name).toBe("Jun Hao Lo");
+
+    const womenDiv = series.divisions.find((d) => d.division.id === "women");
+    expect(womenDiv?.isConstituted).toBe(false);
+    expect(womenDiv?.competitorCount).toBe(1);
+
+    const mastersDiv = series.divisions.find((d) => d.division.id === "masters");
+    expect(mastersDiv?.isConstituted).toBe(false);
+    expect(mastersDiv?.competitorCount).toBe(1);
+  });
+
+  it("constitutes divisions when 3 or more competitors qualify per NoR 4.2", () => {
+    const multiSailorGP: WingfoilRegatta = {
+      ...dummyGP1,
+      results: [
+        {
+          rank: 1,
+          name: "Master Sailor A",
+          sailNumber: "10",
+          gender: "M",
+          ageCategory: "Wing Foil Masters division",
+          schoolName: "",
+          club: "",
+          races: [{ score: 1 }],
+          grossScore: 1,
+          nettScore: 1,
+        },
+        {
+          rank: 2,
+          name: "Master Sailor B",
+          sailNumber: "11",
+          gender: "M",
+          ageCategory: "Masters",
+          schoolName: "",
+          club: "",
+          races: [{ score: 2 }],
+          grossScore: 2,
+          nettScore: 2,
+        },
+        {
+          rank: 3,
+          name: "Grand Master C",
+          sailNumber: "12",
+          gender: "M",
+          ageCategory: "Grand Master",
+          schoolName: "",
+          club: "",
+          races: [{ score: 3 }],
+          grossScore: 3,
+          nettScore: 3,
+        },
+      ],
+    };
+
+    const series = calculateWingfoilSeries([multiSailorGP]);
+    const mastersDiv = series.divisions.find((d) => d.division.id === "masters");
+    expect(mastersDiv?.competitorCount).toBe(3);
+    expect(mastersDiv?.isConstituted).toBe(true);
+    expect(series.divisionChampions.masters?.name).toBe("Master Sailor A");
+  });
+});
+
+describe("isNEMonsoonSeriesRegatta", () => {
+  it("strictly includes GP1, GP2, and GP3 of Northeast Monsoon", () => {
+    expect(
+      isNEMonsoonSeriesRegatta({
+        id: "ne-monsoon-series-gp1-2026",
+        name: "2026 Northeast Monsoon Grand Prix 1 (Round 1 of 3)",
+        shortName: "NE Monsoon GP1",
+      } as any)
+    ).toBe(true);
+
+    expect(
+      isNEMonsoonSeriesRegatta({
+        id: "ne-monsoon-series-gp2-2026",
+        name: "2026 Northeast Monsoon Grand Prix 2 (Round 2 of 3)",
+        shortName: "NE Monsoon GP2",
+      } as any)
+    ).toBe(true);
+
+    expect(
+      isNEMonsoonSeriesRegatta({
+        id: "ne-monsoon-series-gp3-2026",
+        name: "2026 Northeast Monsoon Grand Prix 3 (Round 3 of 3)",
+        shortName: "NE Monsoon GP3",
+      } as any)
+    ).toBe(true);
+  });
+
+  it("strictly excludes Southwest Monsoon and non-NE regattas", () => {
+    expect(
+      isNEMonsoonSeriesRegatta({
+        id: "sw-monsoon-gp-2026",
+        name: "2026 Southwest Monsoon Grand Prix Series 1–3",
+        shortName: "SW Monsoon GP",
+      } as any)
+    ).toBe(false);
+
+    expect(
+      isNEMonsoonSeriesRegatta({
+        id: "snsc-2026-wingfoil",
+        name: "Singapore National Sailing Championships 2026",
+        shortName: "SNSC 2026",
+      } as any)
+    ).toBe(false);
   });
 });

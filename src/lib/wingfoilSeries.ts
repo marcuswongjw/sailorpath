@@ -58,12 +58,106 @@ export type RoundSummary = {
   status: "Completed" | "Upcoming";
 };
 
+export type SeriesDivisionId =
+  | "open"
+  | "women"
+  | "u16_boys"
+  | "u16_girls"
+  | "u19_boys"
+  | "u19_girls"
+  | "masters"
+  | "fun_masters"
+  | "grand_masters"
+  | "fun_open";
+
+export type SeriesDivisionConfig = {
+  id: SeriesDivisionId;
+  name: string;
+  shortLabel: string;
+  subTitle?: string;
+};
+
+/**
+ * 10 Official Wing Foil classes / divisions per NoR Clause 4.1.
+ */
+export const OFFICIAL_WINGFOIL_DIVISIONS: SeriesDivisionConfig[] = [
+  {
+    id: "open",
+    name: "Wing Foil Open division",
+    shortLabel: "Open",
+    subTitle: "Open to all competitors",
+  },
+  {
+    id: "women",
+    name: "Wing Foil Women division",
+    shortLabel: "Women",
+    subTitle: "Open to all female competitors",
+  },
+  {
+    id: "u16_boys",
+    name: "Wing Foil U16 Boys division",
+    shortLabel: "U16 Boys",
+    subTitle: "Under 16 in 2026 (Born after 31 Dec 2010)",
+  },
+  {
+    id: "u16_girls",
+    name: "Wing Foil U16 Girls division",
+    shortLabel: "U16 Girls",
+    subTitle: "Under 16 in 2026 (Born after 31 Dec 2010)",
+  },
+  {
+    id: "u19_boys",
+    name: "Wing Foil U19 Boys division",
+    shortLabel: "U19 Boys",
+    subTitle: "Under 19 in 2026 (Born after 31 Dec 2007)",
+  },
+  {
+    id: "u19_girls",
+    name: "Wing Foil U19 Girls division",
+    shortLabel: "U19 Girls",
+    subTitle: "Under 19 in 2026 (Born after 31 Dec 2007)",
+  },
+  {
+    id: "masters",
+    name: "Wing Foil Masters division",
+    shortLabel: "Masters (40+)",
+    subTitle: "40+ in 2026 (Born before 1 Jan 1987)",
+  },
+  {
+    id: "fun_masters",
+    name: "Wing Foil Fun Masters Division",
+    shortLabel: "Fun Masters",
+    subTitle: "Fun Fleet 40+ (Born before 1 Jan 1987)",
+  },
+  {
+    id: "grand_masters",
+    name: "Wing Foil Grand Masters division",
+    shortLabel: "Grand Masters (50+)",
+    subTitle: "50+ in 2026 (Born before 1 Jan 1977)",
+  },
+  {
+    id: "fun_open",
+    name: "Wing Foil Fun Open Division",
+    shortLabel: "Fun Open",
+    subTitle: "Fun Fleet Open",
+  },
+];
+
+export type SeriesDivisionStanding = {
+  division: SeriesDivisionConfig;
+  isConstituted: boolean;
+  competitorCount: number;
+  champion?: SeriesSailorResult;
+  competitors: SeriesSailorResult[];
+};
+
 export type WingfoilSeriesResult = {
   seriesName: string;
   rounds: RoundSummary[];
   totalRacesCompleted: number;
   discardsApplied: number;
   competitors: SeriesSailorResult[];
+  divisions: SeriesDivisionStanding[];
   divisionChampions: {
     open?: SeriesSailorResult;
     women?: SeriesSailorResult;
@@ -71,20 +165,132 @@ export type WingfoilSeriesResult = {
     grandMasters?: SeriesSailorResult;
     youthU19?: SeriesSailorResult;
     youthU16?: SeriesSailorResult;
+    u16Boys?: SeriesSailorResult;
+    u16Girls?: SeriesSailorResult;
+    u19Boys?: SeriesSailorResult;
+    u19Girls?: SeriesSailorResult;
+    funMasters?: SeriesSailorResult;
+    funOpen?: SeriesSailorResult;
   };
 };
 
 /**
- * Filter for Northeast Monsoon Grand Prix Series events.
+ * Checks if a sailor is eligible for a specific division.
+ * Follows NoR 4.1 & 5.2 eligibility rules.
+ */
+export function isSailorInDivision(
+  sailor: { gender?: string; ageCategory?: string; name?: string },
+  divisionId: SeriesDivisionId
+): boolean {
+  const gender = (sailor.gender || "").toUpperCase();
+  const rawCat = (sailor.ageCategory || "").toLowerCase().trim();
+
+  // Open: all competitors qualify
+  if (divisionId === "open") return true;
+
+  // Women: female competitors
+  if (divisionId === "women") {
+    return gender === "F" || rawCat.includes("women") || rawCat.includes("girl");
+  }
+
+  // Fun divisions:
+  if (rawCat.includes("fun open") || rawCat === "wing foil fun open division") {
+    return divisionId === "fun_open";
+  }
+  if (
+    rawCat.includes("fun master") ||
+    rawCat.includes("fun masters") ||
+    rawCat.includes("fun masters3")
+  ) {
+    return divisionId === "fun_masters";
+  }
+
+  const isU16 =
+    rawCat.includes("u16") ||
+    rawCat.includes("16&u") ||
+    rawCat.includes("16 & u") ||
+    rawCat.includes("under 16") ||
+    rawCat.includes("u161");
+
+  const isU19 =
+    isU16 || // Anyone under 16 is also eligible for under 19
+    rawCat.includes("u19") ||
+    rawCat.includes("19&u") ||
+    rawCat.includes("19 & u") ||
+    rawCat.includes("under 19") ||
+    rawCat.includes("u192");
+
+  const isGrandMaster =
+    rawCat.includes("grand master") ||
+    rawCat.includes("grandmaster") ||
+    rawCat.includes("grand masters") ||
+    rawCat.includes("grand masters4");
+
+  const isMaster =
+    (rawCat.includes("master") && !rawCat.includes("fun")) ||
+    isGrandMaster; // Grand Master (50+) is also Master (40+)
+
+  switch (divisionId) {
+    case "u16_boys":
+      return (gender === "M" || !gender) && isU16;
+    case "u16_girls":
+      return gender === "F" && isU16;
+    case "u19_boys":
+      return (gender === "M" || !gender) && isU19;
+    case "u19_girls":
+      return gender === "F" && isU19;
+    case "masters":
+      return isMaster;
+    case "fun_masters":
+      return rawCat.includes("fun") && rawCat.includes("master");
+    case "grand_masters":
+      return isGrandMaster;
+    case "fun_open":
+      return rawCat.includes("fun");
+    default:
+      return true;
+  }
+}
+
+/**
+ * Filter strictly for 2026 Northeast Monsoon Grand Prix Series events (GP1, GP2, GP3).
+ * Explicitly rejects Southwest Monsoon and non-series regattas.
  */
 export function isNEMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
   if (!regatta) return false;
-  if (regatta.seriesName && /monsoon/i.test(regatta.seriesName)) return true;
-  return (
-    /monsoon/i.test(regatta.name || "") ||
-    /monsoon/i.test(regatta.shortName || "") ||
-    /^ne-monsoon-series-gp\d/i.test(regatta.id)
-  );
+  const id = (regatta.id || "").toLowerCase();
+  const name = (regatta.name || "").toLowerCase();
+  const shortName = (regatta.shortName || "").toLowerCase();
+  const seriesName = (regatta.seriesName || "").toLowerCase();
+
+  // 1. Explicitly reject Southwest Monsoon or other non-NE events
+  if (
+    id.includes("sw-") ||
+    shortName.includes("sw ") ||
+    name.includes("southwest") ||
+    seriesName.includes("southwest")
+  ) {
+    return false;
+  }
+
+  // 2. Must specifically match Northeast Monsoon or NE Monsoon
+  const isNE =
+    seriesName.includes("northeast") ||
+    seriesName.includes("ne monsoon") ||
+    name.includes("northeast") ||
+    name.includes("ne monsoon") ||
+    shortName.includes("ne monsoon") ||
+    id.startsWith("ne-monsoon");
+
+  if (!isNE) return false;
+
+  // 3. Strictly limited to GP1, GP2, and GP3
+  const isGP123 =
+    /\b(gp\s*[123]|round\s*[123]|gp[123]|prix\s*[123])\b/i.test(name) ||
+    /\b(gp\s*[123]|gp[123])\b/i.test(shortName) ||
+    /gp[123]/i.test(id);
+
+  return isGP123;
 }
 
 /**
@@ -308,24 +514,30 @@ export function calculateWingfoilSeries(
     r.rank = idx + 1;
   });
 
-  // 5. Extract Division Champions per NoR 12.4.1 & 16.1
-  const openChamp = competitorRows[0];
-  const womenChamp = competitorRows.find((r) => r.gender === "F");
-  const mastersChamp = competitorRows.find(
-    (r) => /master/i.test(r.ageCategory) && !/grand/i.test(r.ageCategory)
+  // 5. Evaluate all 10 official classes / divisions per NoR Clause 4.1 & 4.2
+  // NoR 4.2: A minimum of 3 competitors is required to constitute a class and/or division.
+  const MIN_COMPETITORS_TO_CONSTITUTE = 3;
+
+  const divisionStandings: SeriesDivisionStanding[] = OFFICIAL_WINGFOIL_DIVISIONS.map(
+    (div) => {
+      const divisionCompetitors = competitorRows.filter((c) =>
+        isSailorInDivision(c, div.id)
+      );
+      const isConstituted = divisionCompetitors.length >= MIN_COMPETITORS_TO_CONSTITUTE;
+      const champion = isConstituted ? divisionCompetitors[0] : undefined;
+
+      return {
+        division: div,
+        isConstituted,
+        competitorCount: divisionCompetitors.length,
+        champion,
+        competitors: divisionCompetitors,
+      };
+    }
   );
-  const grandMastersChamp = competitorRows.find((r) =>
-    /grand\s*master/i.test(r.ageCategory)
-  );
-  const youthU19Champ = competitorRows.find(
-    (r) => /u19/i.test(r.ageCategory) || /19&u/i.test(r.ageCategory)
-  );
-  const youthU16Champ = competitorRows.find(
-    (r) =>
-      /u16/i.test(r.ageCategory) ||
-      /16&u/i.test(r.ageCategory) ||
-      /under\s*16/i.test(r.ageCategory)
-  );
+
+  const getDivChamp = (id: SeriesDivisionId) =>
+    divisionStandings.find((d) => d.division.id === id && d.isConstituted)?.champion;
 
   return {
     seriesName,
@@ -333,13 +545,20 @@ export function calculateWingfoilSeries(
     totalRacesCompleted,
     discardsApplied: discardsCount,
     competitors: competitorRows,
+    divisions: divisionStandings,
     divisionChampions: {
-      open: openChamp,
-      women: womenChamp,
-      masters: mastersChamp,
-      grandMasters: grandMastersChamp,
-      youthU19: youthU19Champ,
-      youthU16: youthU16Champ,
+      open: getDivChamp("open"),
+      women: getDivChamp("women"),
+      masters: getDivChamp("masters"),
+      grandMasters: getDivChamp("grand_masters"),
+      youthU19: getDivChamp("u19_boys") || getDivChamp("u19_girls"),
+      youthU16: getDivChamp("u16_boys") || getDivChamp("u16_girls"),
+      u16Boys: getDivChamp("u16_boys"),
+      u16Girls: getDivChamp("u16_girls"),
+      u19Boys: getDivChamp("u19_boys"),
+      u19Girls: getDivChamp("u19_girls"),
+      funMasters: getDivChamp("fun_masters"),
+      funOpen: getDivChamp("fun_open"),
     },
   };
 }

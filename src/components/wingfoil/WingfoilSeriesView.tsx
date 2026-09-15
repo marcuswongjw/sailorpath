@@ -13,14 +13,18 @@ import {
   Sparkles,
   Users,
   CheckCircle2,
+  AlertTriangle,
 } from "lucide-react";
 import {
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 import {
   calculateWingfoilSeries,
+  OFFICIAL_WINGFOIL_DIVISIONS,
+  isSailorInDivision,
   type WingfoilSeriesResult,
   type SeriesSailorResult,
+  type SeriesDivisionId,
   getNoRDiscardsCount,
 } from "@/lib/wingfoilSeries";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
@@ -41,28 +45,23 @@ export function WingfoilSeriesView({
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [expandedSailor, setExpandedSailor] = useState<string | null>(null);
 
+  const activeDivision = useMemo(() => {
+    if (divisionFilter === "all") return null;
+    return series.divisions.find((d) => d.division.id === divisionFilter) || null;
+  }, [series.divisions, divisionFilter]);
+
+  const roundsWithRaces = useMemo(
+    () => series.rounds.filter((rnd) => rnd.raceCount > 0),
+    [series.rounds]
+  );
+
   const filteredCompetitors = useMemo(() => {
     let list = series.competitors;
 
     if (divisionFilter !== "all") {
-      list = list.filter((c) => {
-        const cat = c.ageCategory.toLowerCase();
-        if (divisionFilter === "women") return c.gender === "F";
-        if (divisionFilter === "masters")
-          return cat.includes("master") && !cat.includes("grand");
-        if (divisionFilter === "grandmasters")
-          return cat.includes("grand master") || cat.includes("grandmaster");
-        if (divisionFilter === "youth")
-          return (
-            cat.includes("16&u") ||
-            cat.includes("u16") ||
-            cat.includes("u19") ||
-            cat.includes("19&u")
-          );
-        if (divisionFilter === "open")
-          return cat.includes("open") || !cat.includes("fun");
-        return true;
-      });
+      list = list.filter((c) =>
+        isSailorInDivision(c, divisionFilter as SeriesDivisionId)
+      );
     }
 
     if (searchQuery.trim()) {
@@ -230,111 +229,138 @@ export function WingfoilSeriesView({
         })}
       </div>
 
-      {/* Division Champions (NoR Clause 16.1) */}
+      {/* Division Champions (NoR Clause 16.1 & 4.2) */}
       <div className="rounded-2xl border border-white/10 bg-[#131520] p-4">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-          <Medal className="h-4 w-4 text-amber-400" />
-          <span>Official Division Champions (NoR 12.4.1 &amp; 16.1)</span>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+            <Medal className="h-4 w-4 text-amber-400" />
+            <span>Official Division Champions (NoR 12.4.1 &amp; 16.1)</span>
+          </div>
+          <span className="text-[10px] text-slate-500 font-medium">
+            Min. 3 competitors required to constitute a division (NoR Clause 4.2)
+          </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
-          <div className="rounded-xl bg-white/[0.03] border border-white/5 p-3">
-            <p className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">
-              Masters (40+) Champion
-            </p>
-            <p className="font-bold text-white text-sm mt-0.5 truncate">
-              {series.divisionChampions.masters?.name || "Pending"}
-            </p>
-            <p className="text-[11px] font-mono text-slate-400">
-              {series.divisionChampions.masters?.nettScore != null
-                ? `${series.divisionChampions.masters.nettScore} pts (Rank #${series.divisionChampions.masters.rank})`
-                : "—"}
-            </p>
-          </div>
-
-          <div className="rounded-xl bg-white/[0.03] border border-white/5 p-3">
-            <p className="text-[10px] font-bold text-amber-400 uppercase tracking-wider">
-              Grand Masters (50+)
-            </p>
-            <p className="font-bold text-white text-sm mt-0.5 truncate">
-              {series.divisionChampions.grandMasters?.name || "Pending"}
-            </p>
-            <p className="text-[11px] font-mono text-slate-400">
-              {series.divisionChampions.grandMasters?.nettScore != null
-                ? `${series.divisionChampions.grandMasters.nettScore} pts (Rank #${series.divisionChampions.grandMasters.rank})`
-                : "—"}
-            </p>
-          </div>
-
-          <div className="rounded-xl bg-white/[0.03] border border-white/5 p-3">
-            <p className="text-[10px] font-bold text-teal-400 uppercase tracking-wider">
-              Youth (16&amp;U / U19)
-            </p>
-            <p className="font-bold text-white text-sm mt-0.5 truncate">
-              {series.divisionChampions.youthU16?.name ||
-                series.divisionChampions.youthU19?.name ||
-                "Pending"}
-            </p>
-            <p className="text-[11px] font-mono text-slate-400">
-              {(series.divisionChampions.youthU16 || series.divisionChampions.youthU19)?.nettScore != null
-                ? `${(series.divisionChampions.youthU16 || series.divisionChampions.youthU19)!.nettScore} pts`
-                : "—"}
-            </p>
-          </div>
-
-          <div className="rounded-xl bg-white/[0.03] border border-white/5 p-3">
-            <p className="text-[10px] font-bold text-pink-400 uppercase tracking-wider">
-              Women&apos;s Division
-            </p>
-            <p className="font-bold text-white text-sm mt-0.5 truncate">
-              {series.divisionChampions.women?.name || "Pending"}
-            </p>
-            <p className="text-[11px] font-mono text-slate-400">
-              {series.divisionChampions.women?.nettScore != null
-                ? `${series.divisionChampions.women.nettScore} pts`
-                : "—"}
-            </p>
-          </div>
+        {/* Constituted Division Champions Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs">
+          {series.divisions
+            .filter((d) => d.isConstituted && d.champion)
+            .map((div) => (
+              <div
+                key={div.division.id}
+                className="rounded-xl bg-white/[0.03] border border-white/5 p-3 hover:border-amber-500/20 transition-colors flex flex-col justify-between gap-2"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-1">
+                    <p className="text-[10px] font-bold text-amber-400 uppercase tracking-wider truncate">
+                      {div.division.shortLabel}
+                    </p>
+                    <span className="text-[9px] font-mono text-teal-400 bg-teal-500/10 border border-teal-500/20 px-1.5 py-0.2 rounded shrink-0 font-bold">
+                      {div.competitorCount} entries
+                    </span>
+                  </div>
+                  <p className="font-bold text-white text-sm mt-1 truncate">
+                    {div.champion?.name || "Pending"}
+                  </p>
+                </div>
+                <p className="text-[11px] font-mono text-slate-400 border-t border-white/5 pt-1.5 flex items-center justify-between">
+                  <span>Rank #{div.champion?.rank}</span>
+                  <span className="font-bold text-amber-300">
+                    {div.champion?.nettScore} pts
+                  </span>
+                </p>
+              </div>
+            ))}
         </div>
+
+        {/* Unconstituted Notice */}
+        {series.divisions.some((d) => !d.isConstituted && d.division.id !== "open") && (
+          <div className="mt-3 pt-2.5 border-t border-white/5 flex flex-wrap items-center gap-1.5 text-[11px] text-slate-500">
+            <span className="font-medium text-slate-400">Did not constitute (&lt;3 entries per NoR 4.2):</span>
+            {series.divisions
+              .filter((d) => !d.isConstituted && d.division.id !== "open")
+              .map((d) => (
+                <span
+                  key={d.division.id}
+                  className="rounded bg-white/5 px-2 py-0.5 text-[10px] text-slate-400 border border-white/5"
+                >
+                  {d.division.shortLabel} ({d.competitorCount})
+                </span>
+              ))}
+          </div>
+        )}
       </div>
 
       {/* Filter & Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#0c0d14] p-3">
-        <div className="flex flex-wrap items-center gap-1.5">
-          {[
-            { id: "all", label: "All Fleet" },
-            { id: "open", label: "Open" },
-            { id: "masters", label: "Masters (40+)" },
-            { id: "grandmasters", label: "Grand Masters (50+)" },
-            { id: "youth", label: "Youth (U16/U19)" },
-            { id: "women", label: "Women" },
-          ].map((div) => (
+        <div className="flex flex-wrap items-center gap-1.5 overflow-x-auto max-w-full">
+          <button
+            type="button"
+            onClick={() => setDivisionFilter("all")}
+            className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all shrink-0 ${
+              divisionFilter === "all"
+                ? "bg-teal-500 text-slate-950 shadow-sm"
+                : "text-slate-400 hover:text-white hover:bg-white/5"
+            }`}
+          >
+            All Fleet
+          </button>
+          {OFFICIAL_WINGFOIL_DIVISIONS.map((div) => (
             <button
               key={div.id}
               type="button"
               onClick={() => setDivisionFilter(div.id)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${
+              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all shrink-0 ${
                 divisionFilter === div.id
                   ? "bg-teal-500 text-slate-950 shadow-sm"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
-              {div.label}
+              {div.shortLabel}
             </button>
           ))}
         </div>
 
-        <div className="relative">
+        <div className="relative shrink-0">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-500" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search racer, sail #, club…"
-            className="rounded-xl border border-white/10 bg-slate-900/80 pl-9 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500 w-full sm:w-64"
+            className="rounded-xl border border-white/10 bg-slate-900/80 pl-9 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-teal-500 w-full sm:w-56"
           />
         </div>
       </div>
+
+      {/* Division Constitution Status Banner (NoR Clause 4.2) */}
+      {activeDivision && (
+        <div
+          className={`flex items-start sm:items-center gap-2.5 rounded-xl px-3.5 py-2.5 text-xs ${
+            activeDivision.isConstituted
+              ? "bg-teal-500/10 border border-teal-500/20 text-teal-300"
+              : "bg-amber-500/10 border border-amber-500/25 text-amber-300"
+          }`}
+        >
+          {activeDivision.isConstituted ? (
+            <CheckCircle2 className="h-4 w-4 text-teal-400 shrink-0 mt-0.5 sm:mt-0" />
+          ) : (
+            <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5 sm:mt-0" />
+          )}
+          <span className="leading-snug">
+            <strong className="text-white font-bold">{activeDivision.division.name}</strong>:{" "}
+            {activeDivision.isConstituted ? (
+              <>
+                Constituted with <strong>{activeDivision.competitorCount} competitors</strong> (min. 3 required per NoR Clause 4.2). Division rankings are based on overall class positions per NoR 12.4.1.
+              </>
+            ) : (
+              <>
+                Did not constitute ({activeDivision.competitorCount} competitor{activeDivision.competitorCount === 1 ? "" : "s"}). A minimum of 3 competitors is required to constitute a class and/or division per NoR Clause 4.2.
+              </>
+            )}
+          </span>
+        </div>
+      )}
 
       {/* Series Master Scorecard Table (Desktop) */}
       <div className="hidden md:block rounded-2xl border border-white/10 bg-[#0c0d14] overflow-hidden shadow-xl">
@@ -346,15 +372,15 @@ export function WingfoilSeriesView({
                 <th colSpan={5} className="px-4 py-2.5 text-slate-400 border-r border-white/10">
                   Competitor Details
                 </th>
-                {series.rounds.map((rnd) => (
+                {roundsWithRaces.map((rnd) => (
                   <th
                     key={rnd.id}
-                    colSpan={rnd.raceCount || 1}
+                    colSpan={rnd.raceCount}
                     className="px-2 py-2.5 text-center border-r border-white/10 bg-white/[0.02]"
                   >
                     <span className="text-amber-300 font-black">{rnd.shortName}</span>
                     <span className="ml-1 text-slate-500 font-mono">
-                      ({rnd.raceCount > 0 ? `${rnd.raceCount} races` : "Upcoming"})
+                      ({rnd.raceCount} races)
                     </span>
                   </th>
                 ))}
@@ -370,24 +396,15 @@ export function WingfoilSeriesView({
                 <th className="px-2 py-2.5 text-center w-14">Sail #</th>
                 <th className="px-2 py-2.5 text-center w-16">Div</th>
                 <th className="px-3 py-2.5 min-w-[9rem] border-r border-white/10">Club</th>
-                {series.rounds.flatMap((rnd) =>
-                  rnd.raceCount > 0
-                    ? Array.from({ length: rnd.raceCount }).map((_, i) => (
-                        <th
-                          key={`${rnd.id}-r${i}`}
-                          className="px-1.5 py-2.5 text-center w-8 text-[10px] font-mono text-slate-500"
-                        >
-                          R{i + 1}
-                        </th>
-                      ))
-                    : [
-                        <th
-                          key={`${rnd.id}-empty`}
-                          className="px-3 py-2.5 text-center text-slate-600 font-normal italic"
-                        >
-                          Upcoming
-                        </th>,
-                      ]
+                {roundsWithRaces.flatMap((rnd) =>
+                  Array.from({ length: rnd.raceCount }).map((_, i) => (
+                    <th
+                      key={`${rnd.id}-r${i}`}
+                      className="px-1.5 py-2.5 text-center w-8 text-[10px] font-mono text-slate-500"
+                    >
+                      R{i + 1}
+                    </th>
+                  ))
                 )}
                 <th className="px-3 py-2.5 text-right w-16 text-slate-500 font-mono">Gross</th>
                 <th className="px-4 py-2.5 text-right w-20 font-black text-teal-300 font-mono">

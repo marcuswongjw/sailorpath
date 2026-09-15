@@ -5,14 +5,11 @@ import {
   Wind,
   Calendar,
   MapPin,
-  Clock,
-  Gauge,
   ChevronRight,
   Trophy,
 } from "lucide-react";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
-  WINGFOIL_SPECIFICATIONS,
   loadWingfoilRegattas,
   fetchServerWingfoilRegattas,
   type WingfoilRegatta,
@@ -36,7 +33,7 @@ export function WingfoilView({
   );
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [activeTab, setActiveTab] = useState<
-    "series" | "results" | "format" | "calendar"
+    "series" | "results" | "calendar"
   >("series");
 
   // Re-hydrate from persistent storage and sync with server on mount
@@ -116,17 +113,6 @@ export function WingfoilView({
             }`}
           >
             Regatta Standings
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("format")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors shrink-0 ${
-              activeTab === "format"
-                ? "bg-teal-500 text-slate-950 shadow-sm"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            Rules &amp; Format
           </button>
           <button
             type="button"
@@ -439,63 +425,7 @@ export function WingfoilView({
         </div>
       )}
 
-      {/* TAB 2: Rules & Sprint Slalom Format */}
-      {activeTab === "format" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-white/10 bg-[#0c0d14] p-5 space-y-4">
-            <div className="flex items-center gap-2 text-teal-400 font-bold text-sm">
-              <Clock className="h-4 w-4" />
-              <span>Singapore Sprint Slalom Targets</span>
-            </div>
-            <div className="divide-y divide-white/5 text-xs">
-              <div className="py-2.5 flex justify-between">
-                <span className="text-slate-400">Target Heat Duration</span>
-                <span className="font-bold text-white">{WINGFOIL_SPECIFICATIONS.targetTime}</span>
-              </div>
-              <div className="py-2.5 flex justify-between">
-                <span className="text-slate-400">Mark 1 Time Limit</span>
-                <span className="font-bold text-white">{WINGFOIL_SPECIFICATIONS.mark1TimeLimit}</span>
-              </div>
-              <div className="py-2.5 flex justify-between">
-                <span className="text-slate-400">Overall Race Time Limit</span>
-                <span className="font-bold text-white">{WINGFOIL_SPECIFICATIONS.raceTimeLimit}</span>
-              </div>
-              <div className="py-2.5 flex justify-between">
-                <span className="text-slate-400">Finishing Window</span>
-                <span className="font-bold text-white">{WINGFOIL_SPECIFICATIONS.finishingWindow}</span>
-              </div>
-              <div className="py-2.5 flex justify-between">
-                <span className="text-slate-400">Minimum Foiling Wind</span>
-                <span className="font-bold text-teal-300">{WINGFOIL_SPECIFICATIONS.windLimit}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-[#0c0d14] p-5 space-y-4">
-            <div className="flex items-center gap-2 text-teal-400 font-bold text-sm">
-              <Gauge className="h-4 w-4" />
-              <span>Course &amp; Equipment Rules</span>
-            </div>
-            <div className="space-y-3 text-xs leading-relaxed text-slate-300">
-              <p>
-                <strong className="text-white">Downwind Course:</strong> Delta cube buoys laid for
-                high-speed reach-to-reach gybing angles, terminating at a finishing vessel displaying a
-                blue flag Delta.
-              </p>
-              <p>
-                <strong className="text-white">Equipment Regulation:</strong> Open format. Any board,
-                sails/wings, foil mast, and foil wings can be used in Singapore regattas.
-              </p>
-              <p>
-                <strong className="text-white">Low Point Scoring:</strong> Scored under World Sailing
-                RRS Appendix A / B8. First finisher receives 1 pt, second 2 pts. Discard applies after 4 races.
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* TAB 3: Singapore Regatta Series */}
+      {/* TAB 2: Singapore Regatta Series */}
       {activeTab === "calendar" && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {publishedRegattas.map((reg) => (

@@ -28,14 +28,11 @@ describe("WingfoilView", () => {
     expect(screen.getAllByText(/Kate En Rui Bateman/i).length).toBeGreaterThanOrEqual(1);
   });
 
-  it("switches to Rules & Format tab", () => {
+  it("defaults to Overall Championship tab and verifies Rules & Format tab is removed", () => {
     render(<WingfoilView />);
 
-    const formatButton = screen.getByRole("button", { name: /Rules & Format/i });
-    fireEvent.click(formatButton);
-
-    expect(screen.getByText("Singapore Sprint Slalom Targets")).toBeInTheDocument();
-    expect(screen.getByText("Course & Equipment Rules")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Rules & Format/i })).toBeNull();
   });
 
   it("switches to Singapore Series calendar tab", () => {
