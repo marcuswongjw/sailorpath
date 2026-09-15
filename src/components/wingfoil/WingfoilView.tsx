@@ -13,6 +13,7 @@ import {
   loadWingfoilRegattas,
   fetchServerWingfoilRegattas,
   sortWingfoilRegattas,
+  normalizeWingfoilCategory,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
@@ -38,9 +39,7 @@ export function WingfoilView({
     return withResults ? withResults.id : list[0]?.id || SINGAPORE_WINGFOIL_REGATTAS[0].id;
   });
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
-  const [activeTab, setActiveTab] = useState<
-    "series" | "results" | "calendar"
-  >("series");
+  const [activeTab, setActiveTab] = useState<"series" | "results">("series");
 
   // Re-hydrate from persistent storage and sync with server on mount
   useEffect(() => {
@@ -132,17 +131,6 @@ export function WingfoilView({
           >
             Regatta Standings
           </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("calendar")}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors shrink-0 ${
-              activeTab === "calendar"
-                ? "bg-teal-500 text-slate-950 shadow-sm"
-                : "text-slate-400 hover:text-white"
-            }`}
-          >
-            Singapore Series
-          </button>
         </div>
       </div>
 
@@ -204,19 +192,22 @@ export function WingfoilView({
               </select>
             </div>
 
-            <div className="flex items-center gap-2">
-              <label className="text-xs font-semibold text-slate-400 shrink-0">
-                Gender:
-              </label>
-              <select
-                value={genderFilter}
-                onChange={(e) => setGenderFilter(e.target.value as "all" | "M" | "F")}
-                className="rounded-lg bg-slate-900 border border-white/10 px-2.5 py-1.5 text-xs font-semibold text-white focus:outline-none focus:border-teal-500"
-              >
-                <option value="all">All competitors</option>
-                <option value="F">Female only</option>
-                <option value="M">Male only</option>
-              </select>
+            {/* Gender Filter */}
+            <div className="flex items-center gap-1 bg-white/[0.04] border border-white/10 rounded-xl p-1 shrink-0 self-start sm:self-auto">
+              {(["all", "M", "F"] as const).map((g) => (
+                <button
+                  key={g}
+                  type="button"
+                  onClick={() => setGenderFilter(g)}
+                  className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
+                    genderFilter === g
+                      ? "bg-teal-500 text-slate-950 font-black shadow-sm"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  {g === "all" ? "All" : g === "M" ? "Men / Boys" : "Women / Girls"}
+                </button>
+              ))}
             </div>
           </div>
 
@@ -291,7 +282,7 @@ export function WingfoilView({
                           </td>
                           <td className="px-4 py-3">
                             <p className="font-bold text-white">{racer.name}</p>
-                            <p className="text-[10px] text-slate-500">{racer.ageCategory}</p>
+                            <p className="text-[10px] text-slate-500">{normalizeWingfoilCategory(racer.ageCategory)}</p>
                           </td>
                           <td className="px-2 py-3 text-center font-mono text-slate-300">
                             {racer.sailNumber}
@@ -383,7 +374,7 @@ export function WingfoilView({
                         {racer.name}
                       </p>
                       <p className="text-[10px] text-slate-400 mt-0.5">
-                        Sail #{racer.sailNumber} · {racer.gender === "M" ? "Male" : "Female"} · {racer.ageCategory}
+                        Sail #{racer.sailNumber} · {racer.gender === "M" ? "Male" : "Female"} · {normalizeWingfoilCategory(racer.ageCategory)}
                       </p>
                     </div>
                   </div>
@@ -449,59 +440,6 @@ export function WingfoilView({
               </div>
             )}
           </div>
-        </div>
-      )}
-
-      {/* TAB 2: Singapore Regatta Series */}
-      {activeTab === "calendar" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {publishedRegattas.map((reg) => (
-            <div
-              key={reg.id}
-              className="rounded-xl border border-white/10 bg-[#131520] p-5 flex flex-col justify-between gap-4"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-teal-400 bg-teal-500/15 px-2 py-0.5 rounded border border-teal-500/30">
-                    {reg.format}
-                  </span>
-                  <span className="text-xs font-semibold text-slate-400">
-                    {reg.status}
-                  </span>
-                </div>
-                <h3 className="text-base font-bold text-white">{reg.name}</h3>
-                <div className="space-y-1 text-xs text-slate-400 pt-1">
-                  <p className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 text-slate-500" />
-                    {reg.dates}
-                  </p>
-                  <p className="flex items-center gap-1.5">
-                    <MapPin className="h-3.5 w-3.5 text-slate-500" />
-                    {reg.venue}
-                  </p>
-                </div>
-                <p className="text-xs text-slate-400 leading-relaxed pt-2">
-                  {reg.rulesNotes}
-                </p>
-              </div>
-
-              <div className="pt-3 border-t border-white/5 flex items-center justify-between">
-                <span className="text-[11px] text-slate-500">{reg.organizer}</span>
-                {reg.results && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedRegattaId(reg.id);
-                      setActiveTab("results");
-                    }}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-teal-300 hover:text-teal-200"
-                  >
-                    View results <ChevronRight className="h-3.5 w-3.5" />
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
         </div>
       )}
     </div>

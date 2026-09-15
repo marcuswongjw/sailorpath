@@ -59,15 +59,10 @@ export type RoundSummary = {
 
 export type SeriesDivisionId =
   | "open"
-  | "women"
-  | "u16_boys"
-  | "u16_girls"
-  | "u19_boys"
-  | "u19_girls"
+  | "u16"
+  | "u19"
   | "masters"
-  | "fun_masters"
-  | "grand_masters"
-  | "fun_open";
+  | "grand_masters";
 
 export type SeriesDivisionConfig = {
   id: SeriesDivisionId;
@@ -77,7 +72,8 @@ export type SeriesDivisionConfig = {
 };
 
 /**
- * 10 Official Wing Foil classes / divisions per NoR Clause 4.1.
+ * Official Wing Foil classes / divisions:
+ * Open, U16, U19, Masters, Grand Masters.
  */
 export const OFFICIAL_WINGFOIL_DIVISIONS: SeriesDivisionConfig[] = [
   {
@@ -87,58 +83,28 @@ export const OFFICIAL_WINGFOIL_DIVISIONS: SeriesDivisionConfig[] = [
     subTitle: "Open to all competitors",
   },
   {
-    id: "women",
-    name: "Wing Foil Women division",
-    shortLabel: "Women",
-    subTitle: "Open to all female competitors",
+    id: "u16",
+    name: "Wing Foil U16 division",
+    shortLabel: "U16",
+    subTitle: "Under 16 competitors",
   },
   {
-    id: "u16_boys",
-    name: "Wing Foil U16 Boys division",
-    shortLabel: "U16 Boys",
-    subTitle: "Under 16 in 2026 (Born after 31 Dec 2010)",
-  },
-  {
-    id: "u16_girls",
-    name: "Wing Foil U16 Girls division",
-    shortLabel: "U16 Girls",
-    subTitle: "Under 16 in 2026 (Born after 31 Dec 2010)",
-  },
-  {
-    id: "u19_boys",
-    name: "Wing Foil U19 Boys division",
-    shortLabel: "U19 Boys",
-    subTitle: "Under 19 in 2026 (Born after 31 Dec 2007)",
-  },
-  {
-    id: "u19_girls",
-    name: "Wing Foil U19 Girls division",
-    shortLabel: "U19 Girls",
-    subTitle: "Under 19 in 2026 (Born after 31 Dec 2007)",
+    id: "u19",
+    name: "Wing Foil U19 division",
+    shortLabel: "U19",
+    subTitle: "Under 19 competitors",
   },
   {
     id: "masters",
     name: "Wing Foil Masters division",
-    shortLabel: "Masters (40+)",
-    subTitle: "40+ in 2026 (Born before 1 Jan 1987)",
-  },
-  {
-    id: "fun_masters",
-    name: "Wing Foil Fun Masters Division",
-    shortLabel: "Fun Masters",
-    subTitle: "Fun Fleet 40+ (Born before 1 Jan 1987)",
+    shortLabel: "Masters",
+    subTitle: "Masters (40+)",
   },
   {
     id: "grand_masters",
     name: "Wing Foil Grand Masters division",
-    shortLabel: "Grand Masters (50+)",
-    subTitle: "50+ in 2026 (Born before 1 Jan 1977)",
-  },
-  {
-    id: "fun_open",
-    name: "Wing Foil Fun Open Division",
-    shortLabel: "Fun Open",
-    subTitle: "Fun Fleet Open",
+    shortLabel: "Grand Masters",
+    subTitle: "Grand Masters (50+)",
   },
 ];
 
@@ -159,17 +125,13 @@ export type WingfoilSeriesResult = {
   divisions: SeriesDivisionStanding[];
   divisionChampions: {
     open?: SeriesSailorResult;
-    women?: SeriesSailorResult;
+    u16?: SeriesSailorResult;
+    u19?: SeriesSailorResult;
     masters?: SeriesSailorResult;
     grandMasters?: SeriesSailorResult;
+    women?: SeriesSailorResult;
     youthU19?: SeriesSailorResult;
     youthU16?: SeriesSailorResult;
-    u16Boys?: SeriesSailorResult;
-    u16Girls?: SeriesSailorResult;
-    u19Boys?: SeriesSailorResult;
-    u19Girls?: SeriesSailorResult;
-    funMasters?: SeriesSailorResult;
-    funOpen?: SeriesSailorResult;
   };
 };
 
@@ -178,31 +140,21 @@ export type WingfoilSeriesResult = {
  * Follows NoR 4.1 & 5.2 eligibility rules.
  */
 export function isSailorInDivision(
-  sailor: { gender?: string; ageCategory?: string; name?: string },
+  sailor: { gender?: string; ageCategory?: string; name?: string; division?: string },
   divisionId: SeriesDivisionId
 ): boolean {
-  const gender = (sailor.gender || "").toUpperCase();
-  const rawCat = (sailor.ageCategory || "").toLowerCase().trim();
-
-  // Open: all competitors qualify
   if (divisionId === "open") return true;
 
-  // Women: female competitors
-  if (divisionId === "women") {
-    return gender === "F" || rawCat.includes("women") || rawCat.includes("girl");
-  }
+  const rawCat = (sailor.ageCategory || sailor.division || "").toLowerCase().trim();
 
-  // Fun divisions:
-  if (rawCat.includes("fun open") || rawCat === "wing foil fun open division") {
-    return divisionId === "fun_open";
-  }
-  if (
-    rawCat.includes("fun master") ||
-    rawCat.includes("fun masters") ||
-    rawCat.includes("fun masters3")
-  ) {
-    return divisionId === "fun_masters";
-  }
+  const isGrandMaster =
+    rawCat.includes("grand master") ||
+    rawCat.includes("grandmaster") ||
+    rawCat.includes("grand masters") ||
+    rawCat.includes("grand masters4");
+
+  const isMaster =
+    rawCat.includes("master") || isGrandMaster;
 
   const isU16 =
     rawCat.includes("u16") ||
@@ -219,33 +171,15 @@ export function isSailorInDivision(
     rawCat.includes("under 19") ||
     rawCat.includes("u192");
 
-  const isGrandMaster =
-    rawCat.includes("grand master") ||
-    rawCat.includes("grandmaster") ||
-    rawCat.includes("grand masters") ||
-    rawCat.includes("grand masters4");
-
-  const isMaster =
-    (rawCat.includes("master") && !rawCat.includes("fun")) ||
-    isGrandMaster; // Grand Master (50+) is also Master (40+)
-
   switch (divisionId) {
-    case "u16_boys":
-      return (gender === "M" || !gender) && isU16;
-    case "u16_girls":
-      return gender === "F" && isU16;
-    case "u19_boys":
-      return (gender === "M" || !gender) && isU19;
-    case "u19_girls":
-      return gender === "F" && isU19;
+    case "u16":
+      return isU16;
+    case "u19":
+      return isU19;
     case "masters":
       return isMaster;
-    case "fun_masters":
-      return rawCat.includes("fun") && rawCat.includes("master");
     case "grand_masters":
       return isGrandMaster;
-    case "fun_open":
-      return rawCat.includes("fun");
     default:
       return true;
   }
@@ -628,17 +562,12 @@ export function calculateWingfoilSeries(
     divisions: divisionStandings,
     divisionChampions: {
       open: getDivChamp("open"),
-      women: getDivChamp("women"),
+      u16: getDivChamp("u16"),
+      u19: getDivChamp("u19"),
       masters: getDivChamp("masters"),
       grandMasters: getDivChamp("grand_masters"),
-      youthU19: getDivChamp("u19_boys") || getDivChamp("u19_girls"),
-      youthU16: getDivChamp("u16_boys") || getDivChamp("u16_girls"),
-      u16Boys: getDivChamp("u16_boys"),
-      u16Girls: getDivChamp("u16_girls"),
-      u19Boys: getDivChamp("u19_boys"),
-      u19Girls: getDivChamp("u19_girls"),
-      funMasters: getDivChamp("fun_masters"),
-      funOpen: getDivChamp("fun_open"),
+      youthU16: getDivChamp("u16"),
+      youthU19: getDivChamp("u19"),
     },
   };
 }

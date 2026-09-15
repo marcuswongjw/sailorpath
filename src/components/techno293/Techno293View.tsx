@@ -47,7 +47,7 @@ export function Techno293View({
 
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [activeTab, setActiveTab] = useState<
-    "series" | "results" | "calendar" | "specs"
+    "series" | "results" | "specs"
   >("series");
 
   useEffect(() => {
@@ -154,18 +154,6 @@ export function Techno293View({
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab("calendar")}
-            className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
-              activeTab === "calendar"
-                ? "bg-cyan-500 text-slate-950 font-black shadow-lg shadow-cyan-500/20"
-                : "text-slate-400 hover:text-white hover:bg-white/5"
-            }`}
-          >
-            <Calendar className="h-3.5 w-3.5" />
-            <span>Singapore Series</span>
-          </button>
-          <button
-            type="button"
             onClick={() => setActiveTab("specs")}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "specs"
@@ -195,37 +183,21 @@ export function Techno293View({
         <div className="space-y-6">
           {/* Regatta Selector */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/[0.02] border border-white/10 rounded-2xl p-3 sm:p-4">
-            <div className="flex items-center gap-3 overflow-x-auto pb-1 sm:pb-0">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 whitespace-nowrap">
-                Select Round:
-              </span>
-              <div className="flex items-center gap-2">
-                {publishedRegattas.map((r) => {
-                  const isSelected = r.id === activeRegatta.id;
-                  const hasResults = r.results && r.results.length > 0;
-                  return (
-                    <button
-                      key={r.id}
-                      type="button"
-                      onClick={() => setSelectedRegattaId(r.id)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${
-                        isSelected
-                          ? "bg-cyan-500 text-slate-950 font-black shadow-md shadow-cyan-500/20"
-                          : "bg-white/[0.04] text-slate-300 hover:text-white hover:bg-white/10 border border-white/5"
-                      }`}
-                    >
-                      <span>{r.shortName}</span>
-                      {hasResults && (
-                        <span
-                          className={`w-1.5 h-1.5 rounded-full ${
-                            isSelected ? "bg-slate-950" : "bg-emerald-400"
-                          }`}
-                        />
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
+            <div className="flex items-center gap-3">
+              <label className="text-xs font-bold uppercase tracking-wider text-slate-400 shrink-0">
+                Regatta:
+              </label>
+              <select
+                value={selectedRegattaId}
+                onChange={(e) => setSelectedRegattaId(e.target.value)}
+                className="rounded-xl bg-slate-900 border border-white/10 px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:border-cyan-500"
+              >
+                {publishedRegattas.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.shortName} · {r.dates} {r.results && r.results.length > 0 ? "✓" : "(Upcoming)"}
+                  </option>
+                ))}
+              </select>
             </div>
 
             {/* Gender Filter */}
@@ -413,93 +385,7 @@ export function Techno293View({
         </div>
       )}
 
-      {/* Tab 3: Singapore Series (Calendar) */}
-      {activeTab === "calendar" && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg sm:text-xl font-black text-white">
-              2026 Singapore Techno 293 Calendar
-            </h2>
-            <span className="text-xs text-slate-400">
-              Arranged in reverse chronological order
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {publishedRegattas.map((regatta) => {
-              const hasResults = regatta.results && regatta.results.length > 0;
-              return (
-                <div
-                  key={regatta.id}
-                  className="p-5 rounded-3xl border border-white/10 bg-slate-900/60 shadow-xl backdrop-blur-md flex flex-col justify-between space-y-4 hover:border-cyan-500/30 transition-all"
-                >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
-                        {regatta.shortName}
-                      </span>
-                      <span
-                        className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase ${
-                          regatta.status === "Completed"
-                            ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
-                            : "bg-blue-500/15 text-blue-300 border border-blue-500/30"
-                        }`}
-                      >
-                        {regatta.status}
-                      </span>
-                    </div>
-
-                    <h3 className="text-base sm:text-lg font-black text-white">
-                      {regatta.name}
-                    </h3>
-
-                    <div className="space-y-1.5 text-xs text-slate-300 pt-1">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
-                        <span>{regatta.dates}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
-                        <span>{regatta.venue}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Wind className="h-3.5 w-3.5 text-cyan-400 shrink-0" />
-                        <span>Organizer: {regatta.organizer}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-3 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-xs text-slate-400">
-                      {hasResults
-                        ? `${regatta.results!.length} competitors • ${
-                            regatta.results![0]?.races?.length || 0
-                          } races`
-                        : "Results upcoming"}
-                    </span>
-
-                    {hasResults && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedRegattaId(regatta.id);
-                          setActiveTab("results");
-                        }}
-                        className="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
-                      >
-                        <span>View Results</span>
-                        <ChevronRight className="h-3.5 w-3.5" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Tab 4: Class Specifications */}
+      {/* Tab 3: Class Specifications */}
       {activeTab === "specs" && (
         <div className="space-y-6">
           <div className="p-6 rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-md space-y-4">

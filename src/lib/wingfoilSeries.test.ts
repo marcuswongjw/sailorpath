@@ -177,22 +177,16 @@ describe("calculateWingfoilSeries", () => {
   it("extracts division champions only for constituted divisions with min 3 competitors per NoR 4.2", () => {
     // In dummyGP1 + dummyGP2:
     // Open: 3 competitors (Jun Hao, Wearn Haw, Alice) -> Constituted!
-    // Women: 1 competitor (Alice) -> Not constituted (<3)
     // Masters: 1 competitor (Wearn Haw) -> Not constituted (<3)
     const series = calculateWingfoilSeries([dummyGP1, dummyGP2]);
 
     expect(series.divisionChampions.open?.name).toBe("Jun Hao Lo");
     // Under NoR 4.2, < 3 competitors does not constitute, so no champion trophy awarded
-    expect(series.divisionChampions.women).toBeUndefined();
     expect(series.divisionChampions.masters).toBeUndefined();
 
     const openDiv = series.divisions.find((d) => d.division.id === "open");
     expect(openDiv?.isConstituted).toBe(true);
     expect(openDiv?.champion?.name).toBe("Jun Hao Lo");
-
-    const womenDiv = series.divisions.find((d) => d.division.id === "women");
-    expect(womenDiv?.isConstituted).toBe(false);
-    expect(womenDiv?.competitorCount).toBe(1);
 
     const mastersDiv = series.divisions.find((d) => d.division.id === "masters");
     expect(mastersDiv?.isConstituted).toBe(false);

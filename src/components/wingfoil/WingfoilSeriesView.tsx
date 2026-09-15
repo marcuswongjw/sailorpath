@@ -15,6 +15,7 @@ import {
   Flag,
 } from "lucide-react";
 import {
+  normalizeWingfoilCategory,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 import {
@@ -160,98 +161,93 @@ export function WingfoilSeriesView({
       </div>
 
       {/* Series Championship Banner */}
-      <div className="relative overflow-hidden rounded-3xl border border-amber-500/20 bg-gradient-to-br from-[#1b1710] via-[#12131c] to-[#0c0d14] p-6 sm:p-8 shadow-2xl">
-        <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-16 -left-16 h-64 w-64 rounded-full bg-teal-500/10 blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 px-3 py-1 text-xs font-black uppercase tracking-wider text-amber-300">
-                <Trophy className="h-3.5 w-3.5 text-amber-400" />
-                Overall Championship
-              </span>
-              <span className="rounded-full bg-teal-500/10 border border-teal-500/20 px-2.5 py-0.5 text-[11px] font-bold text-teal-400">
-                {selectedSeriesKey === "sw-monsoon"
-                  ? "World Sailing RRS B8 & NoR 12"
-                  : "World Sailing RRS App. A & NoR 12"}
-              </span>
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-950/70 via-slate-900/90 to-teal-950/80 border border-amber-500/20 p-5 sm:p-7 shadow-2xl backdrop-blur-md">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+          <div className="space-y-2">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30 tracking-wide uppercase">
+              <Sparkles className="h-3.5 w-3.5" />
+              Singapore Sailing Grand Prix Series
             </div>
-
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-              {series.seriesName}
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
+              <span>{series.seriesName}</span>
             </h2>
-
-            {seriesMeta.description ? (
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                {seriesMeta.description}
-              </p>
-            ) : null}
           </div>
 
-          {/* Series Metrics Stats Box */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 shrink-0 bg-white/[0.03] border border-white/10 rounded-2xl p-3.5 backdrop-blur-md">
-            <div className="space-y-0.5">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Races Sailed
-              </p>
-              <p className="text-xl font-black text-white">
-                {series.totalRacesCompleted} <span className="text-xs text-slate-400 font-normal">/ 72</span>
-              </p>
-              <p className="text-[10px] text-teal-400 flex items-center gap-1">
-                <CheckCircle2 className="h-3 w-3" />
-                {series.totalRacesCompleted >= 6
-                  ? "Valid Series (6+ min)"
-                  : "Target: 6+ min"}
-              </p>
+          <div className="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-3 text-center">
+              <div className="text-xs text-slate-400 font-medium">Completed</div>
+              <div className="text-xl sm:text-2xl font-black text-amber-400">
+                {series.totalRacesCompleted}
+              </div>
+              <div className="text-[10px] text-slate-400">Races Sailed</div>
             </div>
 
-            <div className="space-y-0.5">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Discards Applied
-              </p>
-              <p className="text-xl font-black text-amber-300">
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-3 text-center">
+              <div className="text-xs text-slate-400 font-medium">Discards</div>
+              <div className="text-xl sm:text-2xl font-black text-teal-400">
                 {series.discardsApplied}
-              </p>
-              <p className="text-[10px] text-slate-400">
-                NoR Clause 12.5.2
-              </p>
+              </div>
+              <div className="text-[10px] text-slate-400">Worst Dropped</div>
             </div>
 
-            <div className="col-span-2 sm:col-span-1 space-y-0.5">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                Competitors
-              </p>
-              <p className="text-xl font-black text-white">
+            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-3 text-center">
+              <div className="text-xs text-slate-400 font-medium">Fleet</div>
+              <div className="text-xl sm:text-2xl font-black text-emerald-400">
                 {series.competitors.length}
-              </p>
-              <p className="text-[10px] text-slate-400">
-                Across {series.rounds.length} Rounds
-              </p>
+              </div>
+              <div className="text-[10px] text-slate-400">Competitors</div>
             </div>
           </div>
         </div>
 
-        {/* Rounds Navigation Quick Chips */}
-        <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center gap-2 text-xs">
-          <span className="text-slate-400 font-semibold mr-1">Rounds included:</span>
-          {series.rounds.map((rnd, idx) => (
-            <button
-              key={rnd.id}
-              type="button"
-              onClick={() => onSelectRound?.(rnd.id)}
-              className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1.5 font-bold transition-all ${
-                rnd.raceCount > 0
-                  ? "border-amber-500/30 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20"
-                  : "border-white/10 bg-white/5 text-slate-400 hover:bg-white/10"
-              }`}
-            >
-              <span>Round {idx + 1}: {rnd.shortName}</span>
-              <span className="rounded-md bg-black/40 px-1.5 py-0.5 text-[10px] font-mono text-slate-300">
-                {rnd.raceCount > 0 ? `${rnd.raceCount} races` : rnd.dates || rnd.status}
-              </span>
-            </button>
-          ))}
+        {/* Grand Prix Rounds Navigation */}
+        <div className="mt-6 pt-5 border-t border-white/10">
+          <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+            <Calendar className="h-3.5 w-3.5 text-amber-400" />
+            <span>Grand Prix Series Rounds</span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {series.rounds.map((round, idx) => {
+              const hasRaces = round.raceCount > 0;
+              return (
+                <div
+                  key={round.id}
+                  onClick={() => onSelectRound && onSelectRound(round.id)}
+                  className={`group relative p-3.5 rounded-2xl border transition-all text-left ${
+                    onSelectRound ? "cursor-pointer" : ""
+                  } ${
+                    hasRaces
+                      ? "bg-white/[0.04] border-white/10 hover:border-amber-400/40 hover:bg-white/[0.07]"
+                      : "bg-white/[0.02] border-white/5 opacity-75"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-xs font-black text-amber-400">
+                      Round {idx + 1}
+                    </span>
+                    <span
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
+                        round.status === "Completed"
+                          ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                          : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                      }`}
+                    >
+                      {round.status}
+                    </span>
+                  </div>
+                  <h4 className="text-sm font-bold text-white group-hover:text-amber-300 transition-colors">
+                    {round.shortName}
+                  </h4>
+                  <div className="flex items-center justify-between mt-1 text-xs text-slate-400">
+                    <span>{round.dates}</span>
+                    <span className="font-mono text-amber-300 font-bold">
+                      {hasRaces ? `${round.raceCount} races` : "Upcoming"}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -571,6 +567,7 @@ export function WingfoilSeriesView({
                 <th className="px-4 py-2.5 w-12 text-center">Rank</th>
                 <th className="px-4 py-2.5 min-w-[12rem]">Racer / Sailor</th>
                 <th className="px-2 py-2.5 text-center w-14">Sail #</th>
+                <th className="px-2 py-2.5 text-center w-12">Gender</th>
                 <th className="px-2 py-2.5 text-center w-16">Div</th>
                 <th className="px-3 py-2.5 min-w-[9rem] border-r border-white/10">Club</th>
                 {roundsWithRaces.flatMap((rnd) =>
@@ -616,9 +613,13 @@ export function WingfoilSeriesView({
                     {sailor.sailNumber || "—"}
                   </td>
 
+                  <td className="px-2 py-3 text-center font-semibold text-slate-400">
+                    {sailor.gender || "—"}
+                  </td>
+
                   <td className="px-2 py-3 text-center">
                     <span className="rounded bg-white/5 border border-white/10 px-1.5 py-0.5 text-[10px] font-semibold text-slate-300">
-                      {sailor.ageCategory}
+                      {normalizeWingfoilCategory(sailor.ageCategory)}
                     </span>
                   </td>
 

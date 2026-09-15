@@ -26,34 +26,29 @@ describe("Techno293View", () => {
     expect(screen.getByText("Singapore Techno 293")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Regatta Standings/i })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Singapore Series/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Singapore Series/i })).toBeNull();
     expect(screen.getByRole("button", { name: /Class Specs/i })).toBeInTheDocument();
 
     // Trevor Ng is the series leader
     expect(screen.getAllByText(/Trevor Ng/i).length).toBeGreaterThanOrEqual(1);
   });
 
-  it("switches to Regatta Standings tab and renders round results", () => {
+  it("switches to Regatta Standings tab and renders regatta select dropdown & gender pills", () => {
     render(<Techno293View />);
 
     const resultsTab = screen.getByRole("button", { name: /Regatta Standings/i });
     fireEvent.click(resultsTab);
 
-    // Should show regatta round results and sailor names
+    // Regatta dropdown combobox
+    expect(screen.getByRole("combobox")).toBeInTheDocument();
+
+    // Gender pill buttons
+    expect(screen.getByRole("button", { name: /^All$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Men \/ Boys/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Women \/ Girls/i })).toBeInTheDocument();
+
+    // Should show sailor names
     expect(screen.getAllByText(/Trevor Ng/i).length).toBeGreaterThanOrEqual(1);
-    expect(screen.getAllByText(/Addy Armand Anuar/i).length).toBeGreaterThanOrEqual(1);
-  });
-
-  it("switches to Singapore Series calendar tab", () => {
-    render(<Techno293View />);
-
-    const calendarTab = screen.getByRole("button", { name: /Singapore Series/i });
-    fireEvent.click(calendarTab);
-
-    expect(screen.getByText(/2026 Singapore Techno 293 Calendar/i)).toBeInTheDocument();
-    expect(screen.getByText(/SW Monsoon GP1/i)).toBeInTheDocument();
-    expect(screen.getByText(/SW Monsoon GP2/i)).toBeInTheDocument();
-    expect(screen.getByText(/SW Monsoon GP3/i)).toBeInTheDocument();
   });
 
   it("switches to Class Specs tab", () => {

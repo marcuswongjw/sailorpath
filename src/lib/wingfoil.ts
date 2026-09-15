@@ -1761,41 +1761,35 @@ export function findMatchingWingfoilRegatta(
   });
 }
 
-/**
- * Official 10 Wing Foil classes / divisions per NoR Clause 4.1 & 4.2.
- * Minimum 3 competitors required to constitute a class and/or division.
- */
+export const WINGFOIL_CATEGORIES = [
+  "Open",
+  "U16",
+  "U19",
+  "Masters",
+  "Grand Masters",
+] as const;
+
+export type WingfoilCategory = (typeof WINGFOIL_CATEGORIES)[number];
+
 export const WINGFOIL_OFFICIAL_DIVISIONS = [
   "Wing Foil Open division",
-  "Wing Foil Women division",
-  "Wing Foil U16 Boys division",
-  "Wing Foil U16 Girls division",
-  "Wing Foil U19 Boys division",
-  "Wing Foil U19 Girls division",
+  "Wing Foil U16 division",
+  "Wing Foil U19 division",
   "Wing Foil Masters division",
-  "Wing Foil Fun Masters Division",
   "Wing Foil Grand Masters division",
-  "Wing Foil Fun Open Division",
 ] as const;
 
 export type WingfoilOfficialDivision = (typeof WINGFOIL_OFFICIAL_DIVISIONS)[number];
 
-/**
- * Standard competitive divisions / categories recognized in Singapore WingFoil,
- * including official NoR divisions and common abbreviations.
- */
-export const WINGFOIL_CATEGORIES = [
-  ...WINGFOIL_OFFICIAL_DIVISIONS,
-  "Open",
-  "Women",
-  "16&U",
-  "U19",
-  "Masters",
-  "Grand Masters",
-  "Fun Open",
-] as const;
-
-export type WingfoilCategory = (typeof WINGFOIL_CATEGORIES)[number];
+export function normalizeWingfoilCategory(raw: string | undefined | null): WingfoilCategory {
+  if (!raw) return "Open";
+  const s = raw.toLowerCase().trim();
+  if (s.includes("grand master")) return "Grand Masters";
+  if (s.includes("master")) return "Masters";
+  if (s.includes("16") || s.includes("u16") || s.includes("16&u")) return "U16";
+  if (s.includes("19") || s.includes("u19") || s.includes("19&u")) return "U19";
+  return "Open";
+}
 
 /**
  * Normalizes sailor name for cross-regatta matching.

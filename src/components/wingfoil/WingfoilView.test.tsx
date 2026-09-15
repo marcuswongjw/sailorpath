@@ -28,22 +28,13 @@ describe("WingfoilView", () => {
     expect(screen.getAllByText(/Kate En Rui Bateman/i).length).toBeGreaterThanOrEqual(1);
   });
 
-  it("defaults to Overall Championship tab and verifies Rules & Format tab is removed", () => {
+  it("verifies Singapore Series and Rules & Format tabs are dropped", () => {
     render(<WingfoilView />);
 
     expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Regatta Standings/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Singapore Series/i })).toBeNull();
     expect(screen.queryByRole("button", { name: /Rules & Format/i })).toBeNull();
-  });
-
-  it("switches to Singapore Series calendar tab", () => {
-    render(<WingfoilView />);
-
-    const seriesButton = screen.getByRole("button", { name: /Singapore Series/i });
-    fireEvent.click(seriesButton);
-
-    expect(
-      screen.getByText("2026 SW Monsoon Grand Prix 1 (Round 1 of 3)")
-    ).toBeInTheDocument();
   });
 
   it("switches between NE Monsoon and SW Monsoon series championships", () => {
@@ -65,18 +56,17 @@ describe("WingfoilView", () => {
     ).toBeGreaterThanOrEqual(1);
   });
 
-  it("arranges regattas in chronological order with latest at the top", () => {
+  it("switches to Regatta Standings tab and renders regatta select dropdown & gender pills", () => {
     render(<WingfoilView />);
 
-    // Switch to Singapore Series calendar tab
-    const seriesButton = screen.getByRole("button", { name: /Singapore Series/i });
-    fireEvent.click(seriesButton);
+    const resultsTab = screen.getByRole("button", { name: /Regatta Standings/i });
+    fireEvent.click(resultsTab);
 
-    const headings = screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent);
-    // Expect top heading to be the October event, followed by September, August, July, etc.
-    expect(headings[0]).toContain("2026 SW Monsoon Grand Prix 3");
-    expect(headings[1]).toContain("Singapore National Sailing Championships 2026");
-    expect(headings[2]).toContain("2026 SW Monsoon Grand Prix 2");
-    expect(headings[3]).toContain("2026 SW Monsoon Grand Prix 1");
+    // Regatta dropdown
+    expect(screen.getByRole("combobox")).toBeInTheDocument();
+    // Gender pill buttons
+    expect(screen.getByRole("button", { name: /^All$/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Men \/ Boys/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Women \/ Girls/i })).toBeInTheDocument();
   });
 });
