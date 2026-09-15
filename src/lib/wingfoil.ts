@@ -26,6 +26,7 @@ export type WingfoilRegatta = {
   organizer: string;
   format: "Sprint Slalom" | "Course Race" | "Marathon";
   status: "Completed" | "Upcoming";
+  lifecycleStatus?: "draft" | "in_review" | "published" | "archived";
   scoringSystem: string;
   rulesNotes: string;
   seriesName?: string;
@@ -1308,15 +1309,15 @@ export function applyHistoricalSailNumbers(
   return { results: updated, autoAssignedCount };
 }
 
-/**
- * Fetch wingfoil regattas from the server API (shared across admin.sailorpath.com and sailorpath.com).
- */
-export async function fetchServerWingfoilRegattas(): Promise<WingfoilRegatta[] | null> {
+export async function fetchServerWingfoilRegattas(options?: {
+  includeAll?: boolean;
+}): Promise<WingfoilRegatta[] | null> {
   if (typeof window === "undefined") return null;
   try {
+    const q = options?.includeAll ? "?all=1" : "";
     const endpoint = window.location?.origin
-      ? `${window.location.origin}/api/wingfoil`
-      : "/api/wingfoil";
+      ? `${window.location.origin}/api/wingfoil${q}`
+      : `/api/wingfoil${q}`;
     const res = await fetch(endpoint, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();

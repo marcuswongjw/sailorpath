@@ -310,12 +310,12 @@ export async function getSailorByHandle(handle: string) {
   });
 }
 
-export async function listRegattas() {
+export async function listRegattas(options?: { includeAll?: boolean }) {
   return withDb(async () => {
-    const rows = await db
-      .select()
-      .from(regattas)
-      .orderBy(desc(regattas.date));
+    const base = db.select().from(regattas);
+    const rows = options?.includeAll
+      ? await base.orderBy(desc(regattas.date))
+      : await base.where(eq(regattas.status, "published")).orderBy(desc(regattas.date));
     return rows.map(
       (r): RegattaRecord => ({
         id: r.id,
@@ -340,13 +340,12 @@ export async function listRegattas() {
   });
 }
 
-export async function getRegattaBySlug(slug: string) {
+export async function getRegattaBySlug(slug: string, options?: { allowUnpublished?: boolean }) {
   return withDb(async () => {
-    const [row] = await db
-      .select()
-      .from(regattas)
-      .where(eq(regattas.slug, slug))
-      .limit(1);
+    const query = options?.allowUnpublished
+      ? db.select().from(regattas).where(eq(regattas.slug, slug)).limit(1)
+      : db.select().from(regattas).where(and(eq(regattas.slug, slug), eq(regattas.status, "published"))).limit(1);
+    const [row] = await query;
     if (!row) return null;
     return {
       id: row.id,

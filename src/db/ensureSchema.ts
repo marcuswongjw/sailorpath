@@ -49,13 +49,29 @@ export async function ensureCoreSchema(): Promise<void> {
           ON public.regatta_race_results (regatta_result_id);
       `;
 
-      // 053_wingfoil_regattas.sql: Store Singapore WingFoil regattas and scorecards
+      // 053_regatta_lifecycle_and_rls.sql: Store Singapore WingFoil regattas and lifecycle status
       await pgSql`
         CREATE TABLE IF NOT EXISTS public.wingfoil_regattas (
           id text PRIMARY KEY,
+          status varchar(20) DEFAULT 'published' NOT NULL,
           data jsonb NOT NULL,
           updated_at timestamptz NOT NULL DEFAULT now()
         );
+
+        ALTER TABLE public.wingfoil_regattas
+          ADD COLUMN IF NOT EXISTS status varchar(20) DEFAULT 'published' NOT NULL;
+
+        ALTER TABLE public.regattas
+          ADD COLUMN IF NOT EXISTS status varchar(20) DEFAULT 'draft' NOT NULL;
+
+        CREATE INDEX IF NOT EXISTS regattas_status_date_idx
+          ON public.regattas (status, date DESC);
+
+        CREATE INDEX IF NOT EXISTS regattas_status_boat_class_date_idx
+          ON public.regattas (status, boat_class, date DESC);
+
+        CREATE INDEX IF NOT EXISTS wingfoil_regattas_status_idx
+          ON public.wingfoil_regattas (status);
       `;
 
       schemaEnsured = true;

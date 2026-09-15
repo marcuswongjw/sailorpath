@@ -1,23 +1,33 @@
 import { NextResponse } from "next/server";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import { wingfoilRegattas } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { auditAdminMutation } from "@/lib/adminChangeLog";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     if (typeof ensureCoreSchema === "function") {
       await ensureCoreSchema();
     }
+    const sp = new URL(req.url).searchParams;
+    const includeAll = sp.get("all") === "1" || sp.get("admin") === "1";
+
     const rows = await db.select().from(wingfoilRegattas);
 
     if (rows && rows.length > 0) {
+      // Filter published only for public showcase, unless admin requested all
+      const visibleRows = includeAll
+        ? rows
+        : rows.filter((r) => !r.status || r.status === "published");
+
       const rowMap = new Map(
-        rows.map((r) => [r.id, r.data as WingfoilRegatta])
+        visibleRows.map((r) => [r.id, r.data as WingfoilRegatta])
       );
       const merged: WingfoilRegatta[] = [];
       const visited = new Set<string>();
@@ -26,14 +36,14 @@ export async function GET() {
       for (const def of SINGAPORE_WINGFOIL_REGATTAS) {
         if (rowMap.has(def.id)) {
           merged.push(rowMap.get(def.id)!);
-        } else {
+        } else if (!includeAll) {
           merged.push(def);
         }
         visited.add(def.id);
       }
 
       // Add uploaded/custom regattas
-      for (const row of rows) {
+      for (const row of visibleRows) {
         if (!visited.has(row.id)) {
           merged.push(row.data as WingfoilRegatta);
         }
@@ -56,7 +66,7 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     if (typeof ensureCoreSchema === "function") {
       await ensureCoreSchema();
     }
@@ -74,20 +84,39 @@ export async function POST(req: Request) {
     // Upsert regattas into PostgreSQL
     for (const r of list) {
       if (!r || !r.id) continue;
+      const status = (r as any).lifecycleStatus || (r as any).status === "Completed" ? "published" : "in_review";
       await db
         .insert(wingfoilRegattas)
         .values({
           id: r.id,
+          status,
           data: r,
           updatedAt: new Date(),
         })
         .onConflictDoUpdate({
           target: wingfoilRegattas.id,
           set: {
+            status,
             data: r,
             updatedAt: new Date(),
           },
         });
+    }
+
+    await auditAdminMutation({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "upsert_wingfoil_regattas",
+      targetTable: "wingfoil_regattas",
+      summary: `Upserted ${list.length} WingFoil regattas and scorecards`,
+      source: "/api/wingfoil",
+    });
+
+    try {
+      revalidatePath("/sg/wingfoil");
+      revalidateTag("public-wingfoil", "max-age: 0");
+    } catch {
+      // cache purge best-effort
     }
 
     return NextResponse.json({
@@ -101,7 +130,7 @@ export async function POST(req: Request) {
 
 export async function DELETE(req: Request) {
   try {
-    await requireSuperadmin();
+    const auth = await requireSuperadmin();
     if (typeof ensureCoreSchema === "function") {
       await ensureCoreSchema();
     }
@@ -112,6 +141,21 @@ export async function DELETE(req: Request) {
     }
 
     await db.delete(wingfoilRegattas).where(eq(wingfoilRegattas.id, id));
+
+    await auditAdminMutation({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "delete_wingfoil_regatta",
+      targetTable: "wingfoil_regattas",
+      recordId: id,
+      summary: `Deleted WingFoil regatta ${id}`,
+      source: "/api/wingfoil",
+    });
+
+    try {
+      revalidatePath("/sg/wingfoil");
+      revalidateTag("public-wingfoil", "max-age: 0");
+    } catch {}
 
     return NextResponse.json({ success: true, deletedId: id });
   } catch (e) {

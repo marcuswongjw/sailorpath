@@ -342,6 +342,12 @@ export const regattas = pgTable("regattas", {
   organizer: text("organizer"),
   /** Schedule details, tide timings, or logistics notes */
   scheduleNotes: text("schedule_notes"),
+  /** Lifecycle state: draft | in_review | published | archived */
+  status: text("status", {
+    enum: ["draft", "in_review", "published", "archived"],
+  })
+    .default("draft")
+    .notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -668,6 +674,12 @@ export const adminChangeLog = pgTable("admin_change_log", {
  */
 export const wingfoilRegattas = pgTable("wingfoil_regattas", {
   id: text("id").primaryKey().notNull(),
+  /** Lifecycle state: draft | in_review | published | archived */
+  status: text("status", {
+    enum: ["draft", "in_review", "published", "archived"],
+  })
+    .default("published")
+    .notNull(),
   data: jsonb("data").notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true })
     .defaultNow()

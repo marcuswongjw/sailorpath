@@ -22,6 +22,44 @@ export type AdminChangeInput = {
   requestId?: string | null;
 };
 
+export type AuditMutationParams = {
+  actorUserId?: string | null;
+  actorEmail?: string | null;
+  action: string;
+  targetTable: string;
+  recordId?: string | null;
+  entityLabel?: string | null;
+  beforeState?: unknown;
+  afterState?: unknown;
+  summary: string;
+  source?: string | null;
+  requestId?: string | null;
+};
+
+/**
+ * High-level structured audit logger for administrative mutations.
+ * Captures before/after states, actor details, and writes to admin_change_log.
+ */
+export async function auditAdminMutation(
+  params: AuditMutationParams
+): Promise<{ ok: boolean; skipped?: string }> {
+  return logAdminChange({
+    actorUserId: params.actorUserId,
+    actorEmail: params.actorEmail,
+    action: params.action,
+    entityType: params.targetTable,
+    entityId: params.recordId,
+    entityLabel: params.entityLabel,
+    summary: params.summary,
+    details: {
+      before: params.beforeState,
+      after: params.afterState,
+    },
+    source: params.source,
+    requestId: params.requestId,
+  });
+}
+
 export async function logAdminChange(
   input: AdminChangeInput
 ): Promise<{ ok: boolean; skipped?: string }> {

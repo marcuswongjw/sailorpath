@@ -3,6 +3,8 @@ type AuthCookieOptions = {
   path: string;
   sameSite: "lax";
   secure: boolean;
+  httpOnly?: boolean;
+  domain?: string;
 };
 
 function normalizeHost(host: string | null | undefined): string {
@@ -14,9 +16,9 @@ function normalizeHost(host: string | null | undefined): string {
 
 /**
  * Production sessions use distinct host-only cookie names for the public and
- * admin applications. Do not set a Domain attribute: browser Supabase cookies
- * are script-readable, and a parent-domain credential would be exposed to every
- * sibling subdomain.
+ * admin applications. Do not set a parent Domain attribute: omitting the Domain
+ * attribute creates an RFC 6265 Host-Only cookie strictly tied to admin.sailorpath.com,
+ * preventing credentials from ever leaking to sailorpath.com or sibling origins.
  */
 export function getAuthCookieOptions(
   host?: string | null
@@ -27,10 +29,6 @@ export function getAuthCookieOptions(
     normalizedHost === "www.sailorpath.com" ||
     normalizedHost === "admin.sailorpath.com";
 
-  // VERCEL_ENV is available to server code but is not a browser-safe public
-  // environment variable. The browser still has to use the same storage key
-  // as server-side auth on our canonical hosts, or a successful sign-in will
-  // be invisible to the admin request that follows it.
   if (
     process.env.VERCEL_ENV !== "production" &&
     !isCanonicalProductionHost

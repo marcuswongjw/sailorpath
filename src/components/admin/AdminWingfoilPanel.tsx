@@ -73,8 +73,8 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       setSelectedRegattaId(loaded[0].id);
     }
 
-    // Sync from server database
-    fetchServerWingfoilRegattas().then((serverData) => {
+    // Sync all events (including drafts and staged) from server database
+    fetchServerWingfoilRegattas({ includeAll: true }).then((serverData) => {
       if (serverData && serverData.length > 0) {
         setRegattas(serverData);
         setLastSyncedAt(new Date());
@@ -348,6 +348,55 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       )
     );
     toast.success(`Resolved ${discrepancies.length} sail number discrepancies using prior regatta numbers.`);
+  };
+
+  const [isPublishing, setIsPublishing] = useState(false);
+
+  // Toggle regatta between In-Review and Published on live site
+  const handleTogglePublish = async (
+    regattaId: string,
+    targetStatus: "draft" | "in_review" | "published" | "archived"
+  ) => {
+    if (!isSuperadmin) {
+      toast.error("403 Forbidden. Only Superadmins can change publication status.");
+      return;
+    }
+    setIsPublishing(true);
+    try {
+      const res = await fetch(`/api/admin/regattas/${regattaId}/publish`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetStatus }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data?.error || "Failed to update regatta lifecycle state.");
+        return;
+      }
+
+      updateRegattas((prev) =>
+        prev.map((r) =>
+          r.id === regattaId
+            ? {
+                ...r,
+                lifecycleStatus: targetStatus,
+                status: targetStatus === "published" ? "Completed" : "Upcoming",
+              }
+            : r
+        )
+      );
+
+      if (targetStatus === "published") {
+        toast.success(`Published "${data.name || "Event"}" to live site (sailorpath.com)!`);
+      } else {
+        toast.info(`Moved "${data.name || "Event"}" to ${targetStatus}. Hidden from live public site.`);
+      }
+    } catch {
+      toast.error("Network error while updating lifecycle state.");
+    } finally {
+      setIsPublishing(false);
+    }
   };
 
   // Handle Screenshot Upload & Metadata Extraction (supports multiple files)
@@ -1019,6 +1068,98 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
         </div>
       )}
 
+
+      {/* Sticky Lifecycle Action Bar for Active Regatta */}
+      {activeRegatta && (
+        <div className="sticky top-4 z-20 flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 rounded-2xl border border-white/10 bg-[#141624]/95 backdrop-blur-md shadow-2xl">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-xs text-slate-400 font-semibold">Lifecycle Status:</span>
+            {(() => {
+              const status = (activeRegatta as any).lifecycleStatus || (activeRegatta.status === "Completed" ? "published" : "in_review");
+              const isPublished = status === "published";
+              const isInReview = status === "in_review";
+
+              return (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                      isPublished
+                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
+                        : isInReview
+                        ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                        : "bg-slate-500/20 text-slate-300 border border-slate-500/30"
+                    }`}
+                  >
+                    <span
+                      className={`h-2 w-2 rounded-full ${
+                        isPublished
+                          ? "bg-emerald-400 animate-pulse"
+                          : isInReview
+                          ? "bg-amber-400"
+                          : "bg-slate-400"
+                      }`}
+                    />
+                    {isPublished ? "Published" : isInReview ? "In Review" : "Draft"}
+                  </span>
+                  <span className="text-xs text-slate-400 font-medium">
+                    {isPublished
+                      ? "• Live on sailorpath.com for all public visitors"
+                      : "• Staged in Admin Cockpit only (hidden from public site)"}
+                  </span>
+                </div>
+              );
+            })()}
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            {(() => {
+              const isPublished = (activeRegatta as any).lifecycleStatus === "published" || activeRegatta.status === "Completed";
+              return (
+                <>
+                  <button
+                    type="button"
+                    disabled={isPublishing}
+                    onClick={() =>
+                      handleTogglePublish(
+                        activeRegatta.id,
+                        isPublished ? "in_review" : "published"
+                      )
+                    }
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-black tracking-wide transition-all cursor-pointer ${
+                      isPublished
+                        ? "bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                        : "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-950/50"
+                    }`}
+                  >
+                    {isPublishing ? (
+                      <>
+                        <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                        Updating Status…
+                      </>
+                    ) : isPublished ? (
+                      <>Unpublish to In-Review</>
+                    ) : (
+                      <>
+                        <CheckCircle2 className="h-3.5 w-3.5" />
+                        Publish to Live Site
+                      </>
+                    )}
+                  </button>
+
+                  <Link
+                    href="/sg/wingfoil"
+                    target="_blank"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-300 hover:text-white px-3.5 py-2 rounded-full border border-white/10 hover:border-white/20 bg-white/5 transition-all cursor-pointer"
+                  >
+                    <Eye className="h-3.5 w-3.5 text-slate-400" />
+                    Preview Live Hub
+                  </Link>
+                </>
+              );
+            })()}
+          </div>
+        </div>
+      )}
 
       {/* Regatta Selector & Event Metadata */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

@@ -40,12 +40,19 @@ export function WingfoilView() {
     });
   }, []);
 
+  // Public showcase only queries and displays verified, published regattas
+  const publishedRegattas = useMemo(() => {
+    return regattas.filter(
+      (r) => !r.lifecycleStatus || r.lifecycleStatus === "published"
+    );
+  }, [regattas]);
+
   const activeRegatta = useMemo(
     () =>
-      regattas.find((r) => r.id === selectedRegattaId) ||
-      regattas[0] ||
+      publishedRegattas.find((r) => r.id === selectedRegattaId) ||
+      publishedRegattas[0] ||
       SINGAPORE_WINGFOIL_REGATTAS[0],
-    [regattas, selectedRegattaId]
+    [publishedRegattas, selectedRegattaId]
   );
 
   const displayResults = useMemo(() => {
@@ -124,7 +131,7 @@ export function WingfoilView() {
                 onChange={(e) => setSelectedRegattaId(e.target.value)}
                 className="rounded-lg bg-slate-900 border border-white/10 px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:border-teal-500"
               >
-                {regattas.map((r) => (
+                {publishedRegattas.map((r) => (
                   <option key={r.id} value={r.id}>
                     {r.shortName} · {r.dates}
                   </option>
