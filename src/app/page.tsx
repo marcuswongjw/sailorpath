@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   Search,
   Trophy,
@@ -203,40 +204,75 @@ export default function HomePage() {
       </section>
 
       {/* ── 2. Social Proof Strip ── */}
-      <section className="border-t border-white/5 bg-[#0b0c13] py-10 sm:py-12">
+      <section className="border-t border-white/5 bg-[#0b0c13] py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Clubs & Schools */}
+          {/* Club & Partner Logos */}
           <p className="text-center text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-6">
             Athletes from across the Singapore sailing community
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 sm:gap-x-10">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8">
             {[
-              "Changi Sailing Club",
-              "SAF Yacht Club",
-              "Singapore Sailing Club",
-              "National Sailing Centre",
-              "Republic Polytechnic",
-              "Ngee Ann Polytechnic",
-            ].map((org) => (
-              <span
-                key={org}
-                className="text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-300 transition-colors whitespace-nowrap"
+              {
+                name: "Singapore Sailing",
+                src: "/logos/singapore-sailing.jpg",
+                width: 140,
+                height: 48,
+              },
+              {
+                name: "Changi Sailing Club",
+                src: "/logos/changi-sailing-club.png",
+                width: 70,
+                height: 48,
+              },
+              {
+                name: "SAF Yacht Club",
+                src: "/logos/saf-yacht-club.png",
+                width: 130,
+                height: 48,
+              },
+              {
+                name: "Constant Wind",
+                src: "/logos/constant-wind.jpg",
+                width: 140,
+                height: 48,
+              },
+              {
+                name: "ONE°15 Marina",
+                src: "/logos/one15-marina.jpg",
+                width: 75,
+                height: 48,
+              },
+              {
+                name: "PAssion Wave",
+                src: "/logos/passion-wave.jpg",
+                width: 110,
+                height: 48,
+              },
+            ].map((club) => (
+              <div
+                key={club.name}
+                className="flex items-center justify-center h-14 sm:h-16 px-4 py-2 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all shadow-sm"
+                title={club.name}
               >
-                {org}
-              </span>
+                <Image
+                  src={club.src}
+                  alt={club.name}
+                  width={club.width}
+                  height={club.height}
+                  className="max-h-9 sm:max-h-10 w-auto object-contain brightness-95 contrast-105 rounded"
+                />
+              </div>
             ))}
           </div>
 
           {/* Parent Quote */}
-          <div className="mt-10 max-w-2xl mx-auto rounded-2xl border border-white/8 bg-white/[0.025] p-6 sm:p-8 relative">
-            <Quote className="absolute top-4 left-5 h-5 w-5 text-orange-500/30" />
-            <blockquote className="text-sm sm:text-base text-slate-300 leading-relaxed italic pl-4">
-              "I used to chase my daughter&apos;s coach on WhatsApp after every
-              regatta just to find out where she placed. Now I open SailorPath and
-              I know exactly where she stands — and what she needs to qualify."
+          <div className="mt-8 sm:mt-10 max-w-2xl mx-auto rounded-2xl border border-white/8 bg-white/[0.025] p-5 sm:p-7 relative shadow-lg">
+            <Quote className="absolute top-4 left-4 sm:left-5 h-5 w-5 text-orange-500/30" />
+            <blockquote className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed italic pl-5 sm:pl-6">
+              &ldquo;I used to have to manually calculate my child&apos;s ranking after every regatta just to find out where he stands. Now I open SailorPath and I know exactly where he stands and what he needs to qualify.&rdquo;
             </blockquote>
-            <p className="mt-4 text-xs font-bold text-slate-500 pl-4">
-              — Parent, Optimist Gold Fleet · Changi Sailing Club
+            <p className="mt-3.5 text-xs font-bold text-slate-400 pl-5 sm:pl-6">
+              — Parent, Optimist Gold Fleet
             </p>
           </div>
         </div>
@@ -245,18 +281,16 @@ export default function HomePage() {
       {/* ── 3. Interactive Live Preview Bento ── */}
       <section className="border-t border-white/5 bg-[#090a0f] py-10 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6 text-center">
-          <div className="max-w-2xl mx-auto space-y-2">
+          <div className="max-w-2xl mx-auto space-y-2.5">
             <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-orange-400">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>See it in action</span>
+              <span>Interactive Platform Tour</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
               Your sailing community, in one place.
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
-              Browse live standings across all classes, step inside an
-              athlete&apos;s career timeline, or see how a coach monitors
-              the whole squad from one dashboard.
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-xl mx-auto">
+              Real-time standings, verified records, and private squad tracking — tested in live Singapore regattas. Click below to experience each view.
             </p>
           </div>
 

@@ -210,59 +210,59 @@ export function HomeLivePreview() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-3/4 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-sky-500/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Tab Navigation Bar */}
-        <div className="relative border-b border-white/10 p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 bg-white/[0.02]">
-          <div className="flex items-center gap-1 sm:gap-2">
+        <div className="relative border-b border-white/10 p-2.5 sm:p-4 flex items-center justify-between gap-3 bg-white/[0.02]">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-1 md:pb-0 scroll-smooth">
             <button
               type="button"
               onClick={() => setActiveTab("standings")}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
                 activeTab === "standings"
                   ? "bg-orange-600 text-white shadow-md shadow-orange-600/30"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
-              <Trophy className="h-3.5 w-3.5" />
-              <span>Live Standings &amp; Podiums</span>
+              <Trophy className="h-3.5 w-3.5 shrink-0" />
+              <span>Live Standings</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveTab("profile")}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
                 activeTab === "profile"
                   ? "bg-orange-600 text-white shadow-md shadow-orange-600/30"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
-              <User className="h-3.5 w-3.5" />
-              <span>Athlete Journey Profile</span>
+              <User className="h-3.5 w-3.5 shrink-0" />
+              <span>Athlete Profile</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveTab("parent")}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
                 activeTab === "parent"
                   ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/30"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
-              <Heart className="h-3.5 w-3.5" />
+              <Heart className="h-3.5 w-3.5 shrink-0" />
               <span>Parent Command Center</span>
             </button>
             <button
               type="button"
               onClick={() => setActiveTab("coach")}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
                 activeTab === "coach"
                   ? "bg-sky-600 text-white shadow-md shadow-sky-600/30"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
-              <Users className="h-3.5 w-3.5" />
+              <Users className="h-3.5 w-3.5 shrink-0" />
               <span>Coach Squad View</span>
             </button>
           </div>
 
-          <div className="hidden md:flex items-center gap-1 text-[11px] font-bold text-slate-500">
+          <div className="hidden md:flex items-center gap-1 text-[11px] font-bold text-slate-500 shrink-0">
             <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse mr-1" />
             Interactive Preview
           </div>
