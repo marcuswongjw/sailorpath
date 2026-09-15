@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Trophy, Anchor, Medal, Wind, Compass } from "lucide-react";
+import { Trophy, Sailboat, Medal, Wind, Waves } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -58,7 +58,7 @@ export default function RankingsHubPage() {
           className="group rounded-2xl border border-sky-500/25 bg-sky-500/5 p-5 hover:border-sky-500/50 transition-colors"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500/15 mb-3">
-            <Anchor className="h-5 w-5 text-sky-400" />
+            <Sailboat className="h-5 w-5 text-sky-400" />
           </div>
           <h2 className="text-base font-bold text-white group-hover:text-sky-300">
             ILCA 4
@@ -90,7 +90,7 @@ export default function RankingsHubPage() {
           className="group rounded-2xl border border-cyan-500/25 bg-cyan-500/5 p-5 hover:border-cyan-500/50 transition-colors sm:col-span-2"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/15 mb-3">
-            <Compass className="h-5 w-5 text-cyan-400" />
+            <Waves className="h-5 w-5 text-cyan-400" />
           </div>
           <div>
             <h2 className="text-base font-bold text-white group-hover:text-cyan-300">

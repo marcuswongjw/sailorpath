@@ -5,7 +5,6 @@ import {
   Wind,
   Calendar,
   MapPin,
-  ChevronRight,
   Trophy,
   ExternalLink,
   Sparkles,

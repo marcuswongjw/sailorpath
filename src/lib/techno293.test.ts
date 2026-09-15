@@ -5,7 +5,6 @@ import {
   normalizeTechno293SailorName,
   SINGAPORE_TECHNO293_REGATTAS,
   TECHNO293_SPECIFICATIONS,
-  type Techno293Regatta,
 } from "./techno293";
 
 describe("Techno 293 data and utilities", () => {

@@ -276,14 +276,13 @@ describe("parseWingfoilRegattaDate and sortWingfoilRegattas", () => {
 
   it("sorts wingfoil regattas in chronological order with latest at the top", () => {
     const regattas: WingfoilRegatta[] = [
-      { id: "gp1", name: "GP1", dates: "10–11 January 2026" } as any,
-      { id: "gp3", name: "GP3", dates: "10 - 11 October 2026" } as any,
-      { id: "snsc", name: "SNSC", dates: "5–7 September 2026" } as any,
-      { id: "gp2", name: "GP2", dates: "11 - 12 July 2026" } as any,
+      { id: "gp1", name: "GP1", shortName: "GP1", dates: "10–11 January 2026", venue: "Singapore", organizer: "Test", format: "Course Race", status: "Completed", scoringSystem: "Low Point", rulesNotes: "" },
+      { id: "gp3", name: "GP3", shortName: "GP3", dates: "10 - 11 October 2026", venue: "Singapore", organizer: "Test", format: "Course Race", status: "Completed", scoringSystem: "Low Point", rulesNotes: "" },
+      { id: "snsc", name: "SNSC", shortName: "SNSC", dates: "5–7 September 2026", venue: "Singapore", organizer: "Test", format: "Course Race", status: "Completed", scoringSystem: "Low Point", rulesNotes: "" },
+      { id: "gp2", name: "GP2", shortName: "GP2", dates: "11 - 12 July 2026", venue: "Singapore", organizer: "Test", format: "Course Race", status: "Completed", scoringSystem: "Low Point", rulesNotes: "" },
     ];
 
     const sorted = sortWingfoilRegattas(regattas);
     expect(sorted.map((r) => r.id)).toEqual(["gp3", "snsc", "gp2", "gp1"]);
   });
 });
-

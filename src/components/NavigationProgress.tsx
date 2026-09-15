@@ -111,7 +111,7 @@ export function NavigationProgress() {
       aria-valuenow={Math.round(width)}
     >
       <div
-        className="h-full bg-gradient-to-r from-orange-500 via-orange-400 to-amber-300 shadow-[0_0_8px_rgba(249,115,22,0.7)] transition-[width] duration-150 ease-out"
+        className="h-full bg-racing-orange transition-[width] duration-150 ease-out"
         style={{ width: `${width}%` }}
       />
     </div>

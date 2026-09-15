@@ -6,8 +6,6 @@ import {
   Plus,
   Trash2,
   ExternalLink,
-  Calendar,
-  MapPin,
   RefreshCw,
   Edit3,
   Flame,

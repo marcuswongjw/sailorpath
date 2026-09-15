@@ -1,29 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --background: #090a0f;
-  --foreground: #f8fafc;
-  --card: #131520;
-  --card-foreground: #f8fafc;
-  --popover: #090a0f;
-  --popover-foreground: #f8fafc;
-  --primary: #ff5a00; /* Strava Orange */
-  --primary-foreground: #ffffff;
-  --secondary: #1f2937;
-  --secondary-foreground: #f8fafc;
-  --muted: #64748b;
-  --muted-foreground: #94a3b8;
-  --accent: #2e303f;
-  --accent-foreground: #f8fafc;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #1f2235;
-  --input: #1f2235;
-  --ring: #ff5a00;
+  --sp-harbour: #0a5557;
+  --sp-harbour-shadow: #073e40;
+  --sp-harbour-mid: #197072;
+  --sp-racing-orange: #d94c18;
+  --sp-racing-deep: #b83b10;
+  --sp-racing-mist: #f4c7b5;
+  --sp-soft-aqua: #8fccc8;
+  --sp-reef-line: #5ea8a4;
+  --sp-aqua-mist: #d4edec;
+  --sp-sailcloth: #f7f4ef;
+  --sp-warm-white: #fffcf8;
+  --sp-charcoal: #2b3233;
+  --sp-slate-soft: #5c6566;
+  --sp-cool-mist: #a7b0b0;
+  --sp-cool-veil: #e2e6e6;
+  --sp-error: #9b2c12;
+  --background: var(--sp-sailcloth);
+  --foreground: var(--sp-charcoal);
+  --card: var(--sp-warm-white);
+  --card-foreground: var(--sp-charcoal);
+  --primary: var(--sp-racing-orange);
+  --primary-foreground: #fff;
+  --muted: var(--sp-aqua-mist);
+  --muted-foreground: var(--sp-slate-soft);
+  --border: var(--sp-cool-veil);
+  --input: var(--sp-cool-mist);
+  --ring: var(--sp-harbour);
   --radius: 0.75rem;
 }
 
 @theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -34,138 +45,172 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  
+  --color-sailcloth: var(--sp-sailcloth);
+  --color-warm-white: var(--sp-warm-white);
+  --color-harbour: var(--sp-harbour);
+  --color-harbour-shadow: var(--sp-harbour-shadow);
+  --color-harbour-mid: var(--sp-harbour-mid);
+  --color-racing-orange: var(--sp-racing-orange);
+  --color-racing-deep: var(--sp-racing-deep);
+  --color-racing-mist: var(--sp-racing-mist);
+  --color-soft-aqua: var(--sp-soft-aqua);
+  --color-reef-line: var(--sp-reef-line);
+  --color-aqua-mist: var(--sp-aqua-mist);
+  --color-charcoal: var(--sp-charcoal);
+  --color-slate-soft: var(--sp-slate-soft);
+  --color-cool-mist: var(--sp-cool-mist);
+  --color-cool-veil: var(--sp-cool-veil);
+  --color-orange-100: var(--sp-racing-mist);
+  --color-orange-200: var(--sp-racing-mist);
+  --color-orange-300: var(--sp-racing-deep);
+  --color-orange-400: var(--sp-racing-orange);
+  --color-orange-500: var(--sp-racing-orange);
+  --color-orange-600: var(--sp-racing-orange);
+  --color-orange-700: var(--sp-racing-deep);
+  --color-orange-800: var(--sp-racing-deep);
+  --color-orange-900: var(--sp-racing-deep);
+  --color-teal-100: var(--sp-aqua-mist);
+  --color-teal-200: var(--sp-soft-aqua);
+  --color-teal-300: var(--sp-reef-line);
+  --color-teal-400: var(--sp-harbour-mid);
+  --color-teal-500: var(--sp-harbour);
+  --color-teal-600: var(--sp-harbour);
+  --color-teal-700: var(--sp-harbour-shadow);
+  /* Legacy feature accents collapse into the approved brand families. */
+  --color-amber-50: #fff7f3;
+  --color-amber-100: var(--sp-racing-mist);
+  --color-amber-200: var(--sp-racing-mist);
+  --color-amber-300: var(--sp-racing-deep);
+  --color-amber-400: var(--sp-racing-orange);
+  --color-amber-500: var(--sp-racing-orange);
+  --color-amber-600: var(--sp-racing-deep);
+  --color-amber-700: var(--sp-racing-deep);
+  --color-amber-950: var(--sp-racing-mist);
+  --color-yellow-300: var(--sp-racing-deep);
+  --color-yellow-400: var(--sp-racing-orange);
+  --color-yellow-500: var(--sp-racing-orange);
+  --color-yellow-600: var(--sp-racing-deep);
+  --color-yellow-950: var(--sp-racing-mist);
+  --color-sky-100: var(--sp-aqua-mist);
+  --color-sky-200: var(--sp-soft-aqua);
+  --color-sky-300: var(--sp-harbour);
+  --color-sky-400: var(--sp-harbour-mid);
+  --color-sky-500: var(--sp-harbour);
+  --color-sky-600: var(--sp-harbour-shadow);
+  --color-sky-700: var(--sp-harbour-shadow);
+  --color-cyan-300: var(--sp-harbour);
+  --color-cyan-400: var(--sp-harbour-mid);
+  --color-cyan-500: var(--sp-harbour);
+  --color-cyan-950: var(--sp-aqua-mist);
+  --color-blue-200: var(--sp-soft-aqua);
+  --color-blue-300: var(--sp-harbour);
+  --color-blue-400: var(--sp-harbour-mid);
+  --color-blue-500: var(--sp-harbour);
+  --color-blue-600: var(--sp-harbour-shadow);
+  --color-blue-950: var(--sp-aqua-mist);
+  --color-emerald-100: var(--sp-aqua-mist);
+  --color-emerald-200: var(--sp-soft-aqua);
+  --color-emerald-300: var(--sp-harbour);
+  --color-emerald-400: var(--sp-harbour-mid);
+  --color-emerald-500: var(--sp-harbour);
+  --color-emerald-600: var(--sp-harbour-shadow);
+  --color-indigo-100: var(--sp-aqua-mist);
+  --color-indigo-200: var(--sp-soft-aqua);
+  --color-indigo-400: var(--sp-harbour-mid);
+  --color-indigo-500: var(--sp-harbour);
+  --color-indigo-600: var(--sp-harbour-shadow);
+  --color-purple-200: var(--sp-soft-aqua);
+  --color-purple-300: var(--sp-harbour);
+  --color-purple-400: var(--sp-harbour-mid);
+  --color-purple-500: var(--sp-harbour);
+  --color-purple-600: var(--sp-harbour-shadow);
+  --color-violet-200: var(--sp-soft-aqua);
+  --color-violet-300: var(--sp-harbour);
+  --color-violet-400: var(--sp-harbour-mid);
+  --color-violet-500: var(--sp-harbour);
+  --color-violet-600: var(--sp-harbour-shadow);
+  --color-rose-100: var(--sp-racing-mist);
+  --color-rose-200: var(--sp-racing-mist);
+  --color-rose-300: var(--sp-error);
+  --color-rose-400: var(--sp-error);
+  --color-rose-500: var(--sp-error);
+  --color-rose-600: var(--sp-error);
+  --color-rose-950: var(--sp-racing-mist);
+  --color-red-300: var(--sp-error);
+  --color-red-400: var(--sp-error);
+  --color-red-500: var(--sp-error);
   --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 8px);
 }
 
-html {
-  overflow-x: clip;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
-
+html { overflow-x: clip; color-scheme: light; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  background: var(--sp-sailcloth);
+  color: var(--sp-charcoal);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   overflow-x: clip;
   max-width: 100vw;
-  /* iOS safe areas (notched devices) */
   padding-left: env(safe-area-inset-left, 0);
   padding-right: env(safe-area-inset-right, 0);
 }
+h1, .font-display { font-family: var(--font-montserrat), var(--font-inter), ui-sans-serif, system-ui, sans-serif; letter-spacing: -0.02em; }
+table, [data-numeric], .tabular-nums { font-variant-numeric: tabular-nums lining-nums; }
+:focus-visible { outline: 2px solid var(--sp-harbour); outline-offset: 3px; }
+::selection { background: var(--sp-racing-mist); color: var(--sp-charcoal); }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--sp-sailcloth); }
+::-webkit-scrollbar-thumb { background: var(--sp-cool-mist); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--sp-harbour-mid); }
+.scrollbar-thin { scrollbar-width: thin; }
+.scrollbar-thin::-webkit-scrollbar { width: 4px; height: 4px; }
 
-/* Prefer thumb-friendly tap targets on coarse pointers */
-@media (pointer: coarse) {
-  button,
-  a,
-  [role="button"],
-  input,
-  select,
-  textarea {
-    min-height: 2.25rem;
-  }
+.glass-panel, .glass-card {
+  background: var(--sp-warm-white);
+  border: 1px solid var(--sp-cool-veil);
+  box-shadow: 0 8px 28px rgb(7 62 64 / 0.07);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
-
-/* Thin horizontal scrollbars for mobile tab strips */
-.scrollbar-thin {
-  scrollbar-width: thin;
-}
-.scrollbar-thin::-webkit-scrollbar {
-  height: 4px;
-  width: 4px;
-}
-
-/* Custom Scrollbar for premium dark theme */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #090a0f;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1f2235;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #ff5a00;
-}
-
-/* Glassmorphism Classes */
-.glass-panel {
-  background: rgba(19, 21, 32, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Print-friendly fleet rankings */
-@media print {
-  body {
-    background: white !important;
-    color: black !important;
-  }
-  header,
-  footer,
-  nav,
-  .no-print,
-  button:not(.print-keep) {
-    display: none !important;
-  }
-  .print-rankings {
-    max-width: none !important;
-    padding: 0 !important;
-  }
-  .print-rankings table {
-    color: black !important;
-  }
-  .print-rankings th,
-  .print-rankings td {
-    color: black !important;
-    border-color: #ccc !important;
-  }
-  .glass-panel,
-  .glass-card {
-    background: white !important;
-    border: 1px solid #ddd !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-  }
-}
-
-.glass-card {
-  background: linear-gradient(135deg, rgba(25, 28, 45, 0.4) 0%, rgba(15, 17, 28, 0.6) 100%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-}
-
 .glass-input {
-  background: rgba(9, 10, 15, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  transition: all 0.2s ease-in-out;
+  background: var(--sp-warm-white);
+  border: 1px solid var(--sp-cool-mist);
+  color: var(--sp-charcoal);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
 }
+.glass-input:focus { border-color: var(--sp-harbour); box-shadow: 0 0 0 3px rgb(143 204 200 / 0.45); outline: none; }
+.sp-primary { background: var(--sp-racing-orange); color: #fff; border-radius: 8px; }
+.sp-primary:hover { background: var(--sp-racing-deep); }
+.sp-secondary { border: 1px solid var(--sp-harbour); color: var(--sp-harbour-shadow); background: transparent; border-radius: 8px; }
+.sp-secondary:hover { background: var(--sp-aqua-mist); }
+.sp-card { background: var(--sp-warm-white); border: 1px solid var(--sp-cool-veil); border-radius: 12px; box-shadow: 0 8px 28px rgb(7 62 64 / 0.07); }
+.sp-reversed { color: var(--sp-sailcloth); }
+.sp-reversed .text-white, .sp-reversed .text-slate-100, .sp-reversed .text-slate-200, .sp-reversed .text-slate-300 { color: var(--sp-sailcloth); }
+.sp-reversed .text-slate-400, .sp-reversed .text-slate-500 { color: var(--sp-soft-aqua); }
 
-.glass-input:focus {
-  border-color: #ff5a00;
-  box-shadow: 0 0 0 2px rgba(255, 90, 0, 0.15);
-  outline: none;
+/* Compatibility bridge for existing feature pages while they adopt semantic tokens. */
+.bg-\[\#090a0f\], .bg-\[\#0b0c13\], .bg-\[\#07080c\], .bg-\[\#0c0d14\], .bg-\[\#0d0f18\], .bg-\[\#10121d\] { background-color: var(--sp-sailcloth) !important; }
+.bg-\[\#131520\], .bg-\[\#181a29\] { background-color: var(--sp-warm-white) !important; }
+body .text-white, body .text-slate-100, body .text-slate-200 { color: var(--sp-charcoal); }
+body .text-slate-300, body .text-slate-400, body .text-slate-500, body .text-slate-600 { color: var(--sp-slate-soft); }
+body .border-white\/5, body .border-white\/10, body .border-white\/\[0\.07\] { border-color: var(--sp-cool-veil); }
+[class*="bg-gradient-"] { background-image: none !important; }
+.bg-orange-600, .bg-orange-500, .bg-amber-500, .bg-amber-600,
+.bg-yellow-500, .bg-yellow-600, .bg-teal-500, .bg-teal-600,
+.bg-sky-500, .bg-sky-600, .bg-cyan-500, .bg-blue-500, .bg-blue-600,
+.bg-emerald-500, .bg-emerald-600, .sp-primary { color: #fff !important; }
+.sp-reversed .text-white, .sp-reversed .text-slate-100, .sp-reversed .text-slate-200, .sp-reversed .text-slate-300 { color: var(--sp-sailcloth) !important; }
+.sp-reversed .text-slate-400, .sp-reversed .text-slate-500, .sp-reversed .text-slate-600 { color: var(--sp-soft-aqua) !important; }
+.sp-reversed .border-white\/5, .sp-reversed .border-white\/10 { border-color: rgb(143 204 200 / 0.28) !important; }
+
+@media (pointer: coarse) {
+  button, a, [role="button"], input, select, textarea { min-height: 2.75rem; }
 }
-
-/* Custom Animation Utility */
-.animate-glow {
-  box-shadow: 0 0 20px rgba(255, 90, 0, 0.15);
-}
-
-.animate-glow-green {
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+@media print {
+  body { background: white !important; color: black !important; }
+  header, footer, nav, .no-print, button:not(.print-keep) { display: none !important; }
+  .print-rankings { max-width: none !important; padding: 0 !important; }
+  .print-rankings table, .print-rankings th, .print-rankings td { color: black !important; }
+  .print-rankings th, .print-rankings td { border-color: #ccc !important; }
+  .glass-panel, .glass-card { background: white !important; border: 1px solid #ddd !important; box-shadow: none !important; }
 }

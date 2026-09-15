@@ -71,7 +71,7 @@ export function WaitlistForm({
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@email.com"
-          className="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white placeholder:text-slate-600 focus:border-orange-500/50 focus:outline-none"
+          className="mt-1 w-full rounded-lg border border-cool-mist bg-warm-white px-3 py-2.5 text-sm text-charcoal placeholder:text-slate-soft focus:border-harbour focus:outline-none"
         />
       </label>
       {!presetRole && (
@@ -81,7 +81,7 @@ export function WaitlistForm({
             required
             value={role}
             onChange={(e) => setRole(e.target.value as Role | "")}
-            className="mt-1 w-full rounded-xl border border-white/10 bg-black/40 px-3 py-2.5 text-sm text-white focus:border-orange-500/50 focus:outline-none"
+            className="mt-1 w-full rounded-lg border border-cool-mist bg-warm-white px-3 py-2.5 text-sm text-charcoal focus:border-harbour focus:outline-none"
           >
             <option value="" disabled>
               Select…
@@ -97,17 +97,17 @@ export function WaitlistForm({
       <button
         type="submit"
         disabled={busy}
-        className="w-full rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-50 px-5 py-3 text-xs font-black uppercase tracking-wider text-white"
+        className="sp-primary w-full disabled:opacity-50 px-5 py-3 text-[15px] font-semibold text-white"
       >
         {busy ? "Submitting…" : submitLabel}
       </button>
       {msg && (
-        <p className="text-center text-[12px] text-emerald-400 font-medium">
+        <p className="text-center text-[12px] text-harbour font-medium">
           {msg}
         </p>
       )}
       {err && (
-        <p className="text-center text-[12px] text-rose-400 font-medium">
+        <p className="text-center text-[12px] text-[var(--sp-error)] font-medium">
           {err}
         </p>
       )}

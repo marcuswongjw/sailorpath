@@ -3,7 +3,6 @@ import {
   getNoRDiscardsCount,
   calculateTechno293SeriesResults,
   isTechno293SailorInDivision,
-  OFFICIAL_TECHNO293_DIVISIONS,
 } from "./techno293Series";
 import { SINGAPORE_TECHNO293_REGATTAS } from "./techno293";
 

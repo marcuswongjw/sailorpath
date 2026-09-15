@@ -1,15 +1,15 @@
 import Link from "next/link";
+import Image from "next/image";
 import { BRAND } from "@/lib/brand";
 
 const SIZE = {
-  sm: "h-7 w-7 text-sm rounded-md",
-  md: "h-8 w-8 text-lg rounded-lg",
-  lg: "h-10 w-10 text-xl rounded-xl",
+  sm: 28,
+  md: 32,
+  lg: 40,
 } as const;
 
 type MarkSize = keyof typeof SIZE;
 
-/** Orange rounded square with SP — matches favicon / apple-icon. */
 export function BrandMark({
   size = "md",
   className = "",
@@ -17,49 +17,39 @@ export function BrandMark({
   size?: MarkSize;
   className?: string;
 }) {
-  return (
-    <span
-      className={`flex shrink-0 items-center justify-center bg-orange-600 font-black text-white group-hover:bg-orange-500 ${SIZE[size]} ${className}`}
-      aria-hidden
-    >
-      {BRAND.markLetters}
-    </span>
-  );
+  const pixels = SIZE[size];
+  return <Image src={BRAND.icon} width={pixels} height={pixels} alt="" className={`shrink-0 ${className}`} aria-hidden />;
 }
 
-/** Sailor + orange Path wordmark. */
 export function BrandWordmark({
   className = "",
 }: {
   className?: string;
 }) {
-  return (
-    <span
-      className={`font-extrabold text-white tracking-tight ${className}`}
-    >
-      Sailor<span className="text-orange-500">Path</span>
-    </span>
-  );
+  return <span className={`font-display font-bold tracking-[-0.02em] text-harbour ${className}`}>{BRAND.name}</span>;
 }
 
 /** Header home link: mark + wordmark. */
 export function BrandLogoLink({
   href = "/",
-  markSize = "md",
-  wordmarkClassName = "text-base sm:text-xl truncate",
 }: {
   href?: string;
-  markSize?: MarkSize;
-  wordmarkClassName?: string;
 }) {
   return (
     <Link
       href={href}
       prefetch
-      className="flex items-center gap-2 group shrink-0 min-w-0"
+      className="flex shrink-0 items-center"
+      aria-label="SailorPath home"
     >
-      <BrandMark size={markSize} />
-      <BrandWordmark className={wordmarkClassName} />
+      <Image
+        src={BRAND.logo}
+        width={800}
+        height={265}
+        priority
+        alt="SailorPath"
+        className="h-8 w-auto sm:h-9"
+      />
     </Link>
   );
 }

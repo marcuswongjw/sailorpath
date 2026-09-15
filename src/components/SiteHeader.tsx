@@ -157,7 +157,7 @@ export function SiteHeader() {
         {openMenu === "optimist" && (
           <div
             role="menu"
-            className="absolute left-0 top-[52px] w-56 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50"
+            className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-50"
           >
             {optimistLinks}
           </div>
@@ -181,7 +181,7 @@ export function SiteHeader() {
         {openMenu === "ilca" && (
           <div
             role="menu"
-            className="absolute left-0 top-[52px] w-52 rounded-2xl bg-[#131520] border border-white/5 p-2 shadow-2xl z-50"
+            className="absolute left-0 top-[52px] w-52 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-50"
           >
             {ilcaLinks}
           </div>
@@ -333,7 +333,7 @@ export function SiteHeader() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full max-w-[100vw] border-b border-white/5 bg-[#090a0f]/95 backdrop-blur-md overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
+    <header className="sticky top-0 z-50 w-full max-w-[100vw] border-b border-cool-veil bg-warm-white overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
       <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
         <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
           <div className="flex items-center gap-3 lg:gap-8 min-w-0 flex-1">

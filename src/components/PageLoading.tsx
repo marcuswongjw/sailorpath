@@ -80,7 +80,7 @@ export function PageLoading({
         aria-live="polite"
         aria-label={label}
       >
-        <div className="h-full w-1/2 animate-pulse rounded-full bg-gradient-to-r from-orange-600 via-orange-400 to-amber-300" />
+        <div className="h-full w-1/2 animate-pulse rounded-full bg-harbour" />
       </div>
       <p className="text-sm font-semibold text-slate-500">{label}</p>
     </div>

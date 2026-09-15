@@ -25,7 +25,7 @@ export function SiteFooter() {
     (!ready || shouldShowDemoNavigation(host, owned.length));
 
   return (
-    <footer className="border-t border-white/5 bg-[#07080c] py-6 sm:py-8 text-center text-xs text-slate-500">
+    <footer className="sp-reversed border-t border-harbour-shadow bg-harbour-shadow py-7 sm:py-9 text-center text-xs text-soft-aqua">
       <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
         <p>© {new Date().getFullYear()} SailorPath</p>
         <div className="flex flex-wrap items-center justify-center gap-4">

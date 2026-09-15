@@ -8,11 +8,6 @@ import {
   Search,
   ChevronDown,
   Sparkles,
-  CheckCircle2,
-  AlertTriangle,
-  ExternalLink,
-  MapPin,
-  Flag,
 } from "lucide-react";
 import { type Techno293Regatta } from "@/lib/techno293";
 import {
