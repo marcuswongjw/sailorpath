@@ -18,6 +18,7 @@ import {
   Trophy,
   Edit3,
   Images,
+  FileSpreadsheet,
 } from "lucide-react";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
@@ -27,6 +28,7 @@ import {
   type WingfoilRaceScore,
 } from "@/lib/wingfoil";
 import { readWingfoilScreenshots } from "@/lib/wingfoilScreenshot";
+import { readWingfoilExcel } from "@/lib/wingfoilExcel";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
@@ -55,6 +57,10 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     regattaName: string;
   } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Excel upload state
+  const [isProcessingExcel, setIsProcessingExcel] = useState(false);
+  const excelInputRef = useRef<HTMLInputElement>(null);
 
   // New competitor form state
   const [showAddEntry, setShowAddEntry] = useState(false);
@@ -223,6 +229,78 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     }
   };
 
+  // Handle Excel / CSV upload
+  const handleExcelUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isSuperadmin) {
+      toast.error("403 Forbidden. Only Superadmins can update WingFoil data.");
+      return;
+    }
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsProcessingExcel(true);
+    setScanProgress(5);
+    setScanStatus(`Reading ${file.name}…`);
+
+    try {
+      const parsed = await readWingfoilExcel(file, (p) => {
+        setScanStatus(p.status);
+        setScanProgress(Math.round(p.progress * 100));
+      });
+
+      const extractedResults = parsed.results;
+      const heatCount = extractedResults[0]?.races.length || parsed.sailedCount || 9;
+
+      setLastScanSummary({
+        competitorCount: extractedResults.length,
+        heatCount,
+        regattaName: parsed.regattaName,
+      });
+
+      if (extractedResults.length > 0) {
+        toast.success(
+          `Excel Imported: "${parsed.regattaName}" — ${extractedResults.length} competitors, ${heatCount} races!`
+        );
+
+        setRegattas((prev) => {
+          const newRegatta: WingfoilRegatta = {
+            id: `wingfoil-upload-${Date.now()}`,
+            name: parsed.regattaName || `WingFoil Regatta ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })}`,
+            shortName: (parsed.regattaName || "WingFoil").slice(0, 20),
+            dates: parsed.startDate || new Date().toLocaleDateString("en-SG", { day: "numeric", month: "long", year: "numeric" }),
+            venue: "National Sailing Centre (NSC), Singapore",
+            organizer: "Singapore Sailing Federation",
+            format: "Sprint Slalom",
+            status: "Completed",
+            scoringSystem: `${heatCount} races, ${parsed.discardsCount ?? 1} discard`,
+            rulesNotes:
+              "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
+            results: extractedResults,
+          };
+          setSelectedRegattaId(newRegatta.id);
+          return [newRegatta, ...prev];
+        });
+      } else {
+        toast.info(
+          "Excel parsed, but no competitor rows found. Check that the file uses standard Sailwave export format."
+        );
+      }
+    } catch (err) {
+      console.error("Failed to parse WingFoil Excel:", err);
+      toast.error(
+        err instanceof Error
+          ? err.message
+          : "Failed to parse the spreadsheet. Ensure it is a standard Sailwave .xlsx or .csv export."
+      );
+    } finally {
+      setIsProcessingExcel(false);
+      setScanProgress(0);
+      setScanStatus("");
+      if (excelInputRef.current) {
+        excelInputRef.current.value = "";
+      }
+    }
+  };
 
   // Helper to get active discards count
   const activeDiscardsCount = useMemo(() => {
@@ -432,6 +510,33 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
             )}
           </button>
 
+          {/* Excel / CSV Upload */}
+          <input
+            ref={excelInputRef}
+            type="file"
+            accept=".xlsx,.xls,.csv"
+            onChange={handleExcelUpload}
+            className="hidden"
+          />
+          <button
+            type="button"
+            disabled={isProcessingExcel || isScanningScreenshot}
+            onClick={() => excelInputRef.current?.click()}
+            className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 disabled:opacity-50 px-4 py-2 text-xs font-bold text-emerald-300 transition-all shadow-sm cursor-pointer"
+          >
+            {isProcessingExcel ? (
+              <>
+                <RefreshCw className="h-3.5 w-3.5 animate-spin text-emerald-400" />
+                Importing Excel…
+              </>
+            ) : (
+              <>
+                <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-400" />
+                Import Excel / CSV
+              </>
+            )}
+          </button>
+
           {/* Export CSV */}
           <button
             type="button"
@@ -454,26 +559,42 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
         </div>
       </div>
 
-      {/* OCR Scanning Progress Card */}
-      {isScanningScreenshot && (
-        <div className="glass-panel rounded-2xl p-5 border border-orange-500/30 bg-orange-500/[0.08] space-y-2.5">
-          <div className="flex items-center justify-between text-xs font-bold text-orange-200">
+      {/* Progress Card — shown for both screenshot OCR and Excel import */}
+      {(isScanningScreenshot || isProcessingExcel) && (
+        <div className={`glass-panel rounded-2xl p-5 border space-y-2.5 ${
+          isProcessingExcel
+            ? "border-emerald-500/30 bg-emerald-500/[0.08]"
+            : "border-orange-500/30 bg-orange-500/[0.08]"
+        }`}>
+          <div className={`flex items-center justify-between text-xs font-bold ${
+            isProcessingExcel ? "text-emerald-200" : "text-orange-200"
+          }`}>
             <div className="flex items-center gap-2">
-              <RefreshCw className="h-4 w-4 animate-spin text-orange-400 shrink-0" />
-              <span>{scanStatus || "Analyzing screenshot with OCR…"}</span>
+              <RefreshCw className={`h-4 w-4 animate-spin shrink-0 ${
+                isProcessingExcel ? "text-emerald-400" : "text-orange-400"
+              }`} />
+              <span>{scanStatus || (isProcessingExcel ? "Parsing spreadsheet…" : "Analyzing screenshot with OCR…")}</span>
             </div>
-            <span className="tabular-nums font-mono text-orange-300">{scanProgress}%</span>
+            <span className={`tabular-nums font-mono ${isProcessingExcel ? "text-emerald-300" : "text-orange-300"}`}>
+              {scanProgress}%
+            </span>
           </div>
           <div className="h-2 w-full rounded-full bg-black/40 overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-orange-500 to-amber-400 transition-all duration-300 rounded-full"
+              className={`h-full transition-all duration-300 rounded-full bg-gradient-to-r ${
+                isProcessingExcel
+                  ? "from-emerald-500 to-teal-400"
+                  : "from-orange-500 to-amber-400"
+              }`}
               style={{ width: `${scanProgress}%` }}
             />
           </div>
-          <p className="text-[11px] text-orange-300/70">
-            {uploadedPreviews.length > 1
-              ? `Upscaling & stitching ${uploadedPreviews.length} screenshots, then running a single OCR pass…`
-              : "Upscaling image, isolating podium heat score boxes, and parsing Sailwave table columns…"}
+          <p className={`text-[11px] ${isProcessingExcel ? "text-emerald-300/70" : "text-orange-300/70"}`}>
+            {isProcessingExcel
+              ? "Reading Excel columns — Pos, HelmName, SailNo, R1…Rn, Total, Nett…"
+              : uploadedPreviews.length > 1
+                ? `Upscaling & stitching ${uploadedPreviews.length} screenshots, then running a single OCR pass…`
+                : "Upscaling image, isolating podium heat score boxes, and parsing Sailwave table columns…"}
           </p>
         </div>
       )}
