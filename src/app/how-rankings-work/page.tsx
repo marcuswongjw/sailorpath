@@ -15,14 +15,14 @@ export default function HowRankingsWorkPage() {
       <div className="space-y-3">
         <Link
           href="/"
-          className="text-[12px] font-semibold text-slate-500 hover:text-white"
+          className="text-xs font-semibold text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
         >
           ← Home
         </Link>
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
           How rankings work
         </h1>
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
           Technical notes on Singapore Optimist series scoring and ILCA 4
           national ranking used in SailorPath. For sailors and parents, the
           public boards show the same results — this page is for those who want
@@ -30,91 +30,91 @@ export default function HowRankingsWorkPage() {
         </p>
       </div>
 
-      <section className="space-y-3 rounded-2xl border border-orange-500/20 bg-orange-500/5 p-5 sm:p-6">
-        <h2 className="text-lg font-bold text-white">
+      <section className="space-y-3 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 shadow-xs">
+        <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">
           Optimist Gold / Silver series
         </h2>
-        <ul className="space-y-2 text-sm text-slate-400 leading-relaxed list-disc pl-5">
+        <ul className="space-y-2 text-sm text-[var(--sp-charcoal-slate)] leading-relaxed list-disc pl-5">
           <li>
-            <strong className="text-slate-200">Best 3 of 5</strong> — series
+            <strong className="text-[var(--sp-harbour-shadow)]">Best 3 of 5</strong> — series
             score is the sum of the best three place scores from the last five
             ranking regattas in the half (lower is better).
           </li>
           <li>
-            <strong className="text-slate-200">DNS padding</strong> — missing
+            <strong className="text-[var(--sp-harbour-shadow)]">DNS padding</strong> — missing
             ranking events for active series sailors are scored as fleet size +
             1 so the board stays comparable.
           </li>
           <li>
-            <strong className="text-slate-200">Overseas commitment</strong> —
+            <strong className="text-[var(--sp-harbour-shadow)]">Overseas commitment</strong> —
             SSF-supported absences can use a standing-based score instead of a
             full DNS.
           </li>
           <li>
-            <strong className="text-slate-200">SGP auto-include</strong> —
+            <strong className="text-[var(--sp-harbour-shadow)]">SGP auto-include</strong> —
             Singapore nationals with Optimist ranking results join the series
             unless marked Guest.
           </li>
           <li>
-            <strong className="text-slate-200">Gold entry &amp; drop</strong> —
+            <strong className="text-[var(--sp-harbour-shadow)]">Gold entry &amp; drop</strong> —
             half-year boundaries only (1 Jan / 1 Jul). Participation rule:
             sailors who do not complete enough ranking Gold events in a finished
             half may be flagged for auto-drop.
           </li>
           <li>
-            <strong className="text-slate-200">Nat A/B previews</strong> — admin
+            <strong className="text-[var(--sp-harbour-shadow)]">Nat A/B previews</strong> — admin
             tools estimate national squad shortlists from Gold standings and age
             buckets for selection planning.
           </li>
         </ul>
-        <p className="text-xs pt-1">
+        <p className="text-xs pt-2">
           <Link
             href="/sg/optimist/gold"
-            className="text-orange-400 font-semibold hover:text-orange-300"
+            className="text-[var(--sp-racing-orange)] font-semibold hover:underline"
           >
             View Gold standings →
           </Link>
         </p>
       </section>
 
-      <section className="space-y-3 rounded-2xl border border-sky-500/20 bg-sky-500/5 p-5 sm:p-6">
-        <h2 className="text-lg font-bold text-white">ILCA 4 national ranking</h2>
-        <ul className="space-y-2 text-sm text-slate-400 leading-relaxed list-disc pl-5">
+      <section className="space-y-3 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 shadow-xs">
+        <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">ILCA 4 national ranking</h2>
+        <ul className="space-y-2 text-sm text-[var(--sp-charcoal-slate)] leading-relaxed list-disc pl-5">
           <li>
-            <strong className="text-slate-200">High Ranking Points</strong> —
+            <strong className="text-[var(--sp-harbour-shadow)]">High Ranking Points</strong> —
             1st earns fleet size points, 2nd earns N−1, and so on.
           </li>
           <li>
-            <strong className="text-slate-200">Best 3 of last 5</strong> ranking
+            <strong className="text-[var(--sp-harbour-shadow)]">Best 3 of last 5</strong> ranking
             regattas (higher points better). Events with fewer than 3 completed
             races are non-ranking for series.
           </li>
           <li>
-            <strong className="text-slate-200">National list</strong> — squad
+            <strong className="text-[var(--sp-harbour-shadow)]">National list</strong> — squad
             selection draws from the official ILCA 4 national list roster.
           </li>
           <li>
-            <strong className="text-slate-200">Dual sail numbers</strong> —
+            <strong className="text-[var(--sp-harbour-shadow)]">Dual sail numbers</strong> —
             Optimist and ILCA 4 numbers can live on one profile for under-15
             dual-class sailors.
           </li>
         </ul>
-        <p className="text-xs pt-1">
+        <p className="text-xs pt-2">
           <Link
             href="/sg/ilca4"
-            className="text-sky-400 font-semibold hover:text-sky-300"
+            className="text-[var(--sp-harbour-teal)] font-semibold hover:underline"
           >
             View ILCA 4 standings →
           </Link>
         </p>
       </section>
 
-      <p className="text-center text-[12px] text-slate-600">
-        <Link href="/rankings" className="text-slate-500 hover:text-white">
+      <p className="text-center text-xs text-[var(--sp-slate-soft)]">
+        <Link href="/rankings" className="font-medium hover:text-[var(--sp-harbour-shadow)] transition-colors">
           Current rankings
         </Link>
         {" · "}
-        <Link href="/support" className="text-slate-500 hover:text-white">
+        <Link href="/support" className="font-medium hover:text-[var(--sp-harbour-shadow)] transition-colors">
           Questions? Contact us
         </Link>
       </p>

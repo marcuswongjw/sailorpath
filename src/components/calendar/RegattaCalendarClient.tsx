@@ -253,22 +253,20 @@ export function RegattaCalendarClient({
   if (!isLoggedIn) {
     return (
       <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:py-16 space-y-8">
-        <div className="glass-card relative overflow-hidden rounded-3xl border border-orange-500/25 bg-[#0c0d14] p-6 sm:p-10 text-center space-y-6">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-72 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-500/15 border border-orange-500/30 text-orange-400 shadow-lg shadow-orange-500/10">
+        <div className="relative overflow-hidden rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 sm:p-10 text-center space-y-6 shadow-xs">
+          <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/30 border border-[var(--sp-racing-orange)]/30 text-[var(--sp-racing-orange)] shadow-sm">
             <Lock className="h-8 w-8" />
           </div>
 
           <div className="relative space-y-2 max-w-xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-0.5 text-[11px] font-bold text-orange-400">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/30 px-3 py-0.5 text-[11px] font-bold text-[var(--sp-racing-orange)]">
               <Calendar className="h-3 w-3" />
               <span>Private Preview · In Development</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
               2026–2027 Regatta &amp; Campaign Calendar
             </h1>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
               The comprehensive regatta schedule, international campaigns (Asia &amp; Europe), and training clinics are currently in private preview while we finalize features. Sign in or create a free account to preview the calendar.
             </p>
           </div>
@@ -277,44 +275,44 @@ export function RegattaCalendarClient({
           <div className="relative flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto pt-2">
             <Link
               href="/login?next=%2Fcalendar"
-              className="w-full sm:w-auto rounded-full bg-orange-600 hover:bg-orange-500 active:scale-[0.98] transition-all text-xs font-black uppercase tracking-wider text-white px-6 py-3.5 shadow-lg shadow-orange-950/30 border border-orange-500/30 inline-flex items-center justify-center gap-2 min-h-[44px]"
+              className="w-full sm:w-auto sp-btn-primary text-xs font-black uppercase tracking-wider px-6 py-3.5 inline-flex items-center justify-center gap-2 min-h-[44px]"
             >
               Sign In to View Calendar
             </Link>
             <Link
               href="/register?next=%2Fcalendar"
-              className="w-full sm:w-auto rounded-full bg-white/5 hover:bg-white/10 active:scale-[0.98] transition-all text-xs font-bold text-slate-200 px-6 py-3.5 border border-white/10 inline-flex items-center justify-center min-h-[44px]"
+              className="w-full sm:w-auto rounded-full bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] active:scale-[0.98] transition-all text-xs font-bold text-[var(--sp-harbour-shadow)] px-6 py-3.5 border border-[var(--sp-cool-veil)] inline-flex items-center justify-center min-h-[44px]"
             >
               Create Free Account
             </Link>
           </div>
 
           {/* Feature Highlights Grid */}
-          <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/5 text-left">
-            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
+          <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-[var(--sp-cool-veil)] text-left">
+            <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 space-y-1">
               <div className="flex items-center gap-2">
-                <Trophy className="h-4 w-4 text-orange-400 shrink-0" />
-                <h2 className="text-xs font-bold text-white">Singapore National Series &amp; Trials</h2>
+                <Trophy className="h-4 w-4 text-[var(--sp-racing-orange)] shrink-0" />
+                <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Singapore National Series &amp; Trials</h2>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
                 Ranking events, Asian &amp; Oceania selection trials, and Perth camp qualifiers.
               </p>
             </div>
-            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
+            <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 space-y-1">
               <div className="flex items-center gap-2">
-                <Globe className="h-4 w-4 text-sky-400 shrink-0" />
-                <h2 className="text-xs font-bold text-white">Asian &amp; European Regattas</h2>
+                <Globe className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0" />
+                <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Asian &amp; European Regattas</h2>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
                 Eastern Seaboard, Torrevieja, Palamós, Hong Kong Race Week, and Trofeo Torboli.
               </p>
             </div>
-            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-4 space-y-1">
+            <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 space-y-1">
               <div className="flex items-center gap-2">
-                <Sailboat className="h-4 w-4 text-emerald-400 shrink-0" />
-                <h2 className="text-xs font-bold text-white">Pre-Event Clinics &amp; Camps</h2>
+                <Sailboat className="h-4 w-4 text-emerald-600 shrink-0" />
+                <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Pre-Event Clinics &amp; Camps</h2>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
                 Official clinic schedules, coaching blocks, and local boat charter arrangements.
               </p>
             </div>
@@ -327,16 +325,16 @@ export function RegattaCalendarClient({
   return (
     <div className="mx-auto max-w-5xl w-full px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
       {/* Private Preview Banner */}
-      <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-3.5 sm:p-4 text-amber-200 text-xs flex items-start gap-3">
-        <AlertCircle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+      <div className="rounded-2xl border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/20 p-3.5 sm:p-4 text-[var(--sp-harbour-shadow)] text-xs flex items-start gap-3">
+        <AlertCircle className="h-4 w-4 text-[var(--sp-racing-orange)] shrink-0 mt-0.5" />
         <div>
           <span className="font-bold">Private Preview:</span> This calendar is currently in active development for members. Featuring verified Singapore national regattas, Asian championships, and European winter campaigns.
         </div>
       </div>
 
       {/* Hero Header */}
-      <div className="border-b border-white/10 pb-6">
-        <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+      <div className="border-b border-[var(--sp-cool-veil)] pb-6">
+        <h1 className="text-2xl sm:text-4xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
           Singapore &amp; International Regatta Calendar
         </h1>
       </div>
@@ -345,14 +343,14 @@ export function RegattaCalendarClient({
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 flex-wrap">
           {/* Timeline Tab Toggle */}
-          <div className="flex items-center gap-1 rounded-xl bg-black/40 border border-white/10 p-1 w-fit">
+          <div className="flex items-center gap-1 rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-1 w-fit">
             <button
               type="button"
               onClick={() => setTimelineTab("upcoming")}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 timelineTab === "upcoming"
-                  ? "bg-orange-600 text-white shadow-sm"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+                  : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
               }`}
             >
               <Clock className="h-3.5 w-3.5" />
@@ -363,8 +361,8 @@ export function RegattaCalendarClient({
               onClick={() => setTimelineTab("past")}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 timelineTab === "past"
-                  ? "bg-orange-600 text-white shadow-sm"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+                  : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
               }`}
             >
               <Trophy className="h-3.5 w-3.5" />
@@ -378,19 +376,19 @@ export function RegattaCalendarClient({
             onClick={() => setFilterTrialOnly((prev) => !prev)}
             className={`rounded-xl px-3.5 py-2 text-xs font-bold border inline-flex items-center gap-1.5 transition-all ${
               filterTrialOnly
-                ? "bg-amber-500/20 border-amber-500/40 text-amber-300 shadow-sm"
-                : "bg-white/5 border-white/10 text-slate-400 hover:text-white"
+                ? "bg-[var(--sp-aqua-mist)] border-[var(--sp-harbour-teal)]/40 text-[var(--sp-harbour-teal)] shadow-xs"
+                : "bg-[var(--sp-warm-white)] border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
             }`}
           >
-            <ShieldCheck className="h-4 w-4 text-amber-400" />
+            <ShieldCheck className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
             Selection Trials Only
           </button>
         </div>
 
         {/* Region Filter Bar */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1">
-          <span className="text-[11px] font-black text-slate-400 uppercase tracking-wider shrink-0 flex items-center gap-1">
-            <Globe className="h-3.5 w-3.5 text-sky-400" />
+          <span className="text-[11px] font-black text-[var(--sp-slate-soft)] uppercase tracking-wider shrink-0 flex items-center gap-1">
+            <Globe className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
             Region:
           </span>
           {[
@@ -407,8 +405,8 @@ export function RegattaCalendarClient({
                 onClick={() => setSelectedRegion(reg.id)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   isSelected
-                    ? "bg-sky-600 text-white border border-sky-400 shadow-sm"
-                    : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5"
+                    ? "bg-[var(--sp-harbour-teal)] text-white border border-[var(--sp-harbour-teal)] shadow-xs"
+                    : "bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)]"
                 }`}
               >
                 {reg.label}
@@ -436,8 +434,8 @@ export function RegattaCalendarClient({
                   onClick={() => setSelectedClass(cat.id)}
                   className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                     isSelected
-                      ? "bg-white/20 text-white border border-white/30 shadow-sm"
-                      : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white border border-white/5"
+                      ? "bg-[var(--sp-harbour-teal)] text-white border border-[var(--sp-harbour-teal)] shadow-xs"
+                      : "bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)]"
                   }`}
                 >
                   {Icon && <Icon className="h-3 w-3" />}
@@ -449,13 +447,13 @@ export function RegattaCalendarClient({
 
           {/* Search bar */}
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-500" />
+            <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
             <input
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search regattas or venues…"
-              className="w-full rounded-xl bg-black/40 border border-white/10 pl-9 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-orange-500/50"
+              className="sp-input w-full pl-9 py-1.5 text-xs"
             />
           </div>
         </div>
@@ -463,10 +461,10 @@ export function RegattaCalendarClient({
 
       {/* Regatta Event List */}
       {filteredRegattas.length === 0 ? (
-        <div className="rounded-2xl border border-white/5 bg-[#131520]/80 p-8 sm:p-12 text-center space-y-3">
-          <Calendar className="h-10 w-10 text-slate-600 mx-auto" />
-          <p className="text-sm font-bold text-white">No regattas matching your filters</p>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto">
+        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 sm:p-12 text-center space-y-3 shadow-xs">
+          <Calendar className="h-10 w-10 text-[var(--sp-slate-soft)] mx-auto" />
+          <p className="text-sm font-bold text-[var(--sp-harbour-shadow)]">No regattas matching your filters</p>
+          <p className="text-xs text-[var(--sp-slate-soft)] max-w-sm mx-auto">
             Try clearing search keywords or selecting All Regions / All Classes to see the full racing schedule.
           </p>
           <button
@@ -477,7 +475,7 @@ export function RegattaCalendarClient({
               setFilterTrialOnly(false);
               setSearchQuery("");
             }}
-            className="rounded-full bg-white/10 hover:bg-white/15 px-4 py-2 text-xs font-bold text-white pt-1"
+            className="rounded-full bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] border border-[var(--sp-cool-veil)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] pt-1 transition-colors"
           >
             Clear Filters
           </button>
@@ -492,25 +490,25 @@ export function RegattaCalendarClient({
             return (
               <div
                 key={cardKey}
-                className={`rounded-2xl border transition-all p-5 sm:p-6 bg-gradient-to-br from-[#151725] to-[#10121d] hover:border-white/20 shadow-sm space-y-4 ${
+                className={`rounded-2xl border transition-all p-5 sm:p-6 bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] shadow-xs hover:shadow-md space-y-4 ${
                   regatta.isSelectionTrial
-                    ? "border-amber-500/30"
-                    : "border-white/10"
+                    ? "border-[var(--sp-racing-orange)]/40"
+                    : "border-[var(--sp-cool-veil)]"
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                   {/* Left: Date Badge + Main Details */}
                   <div className="flex items-start gap-4 flex-1 min-w-0">
                     {/* Date Block */}
-                    <div className="flex flex-col items-center justify-center rounded-2xl bg-black/40 border border-white/10 px-3.5 py-2.5 text-center min-w-[72px] shrink-0">
-                      <span className="text-[11px] font-black uppercase text-orange-400 tracking-wider">
+                    <div className="flex flex-col items-center justify-center rounded-2xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-center min-w-[72px] shrink-0">
+                      <span className="text-[11px] font-black uppercase text-[var(--sp-racing-orange)] tracking-wider">
                         {formatMonth(regatta.date)}
                       </span>
-                      <span className="text-xl sm:text-2xl font-black text-white tabular-nums leading-tight">
+                      <span className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] tabular-nums leading-tight">
                         {formatDay(regatta.date)}
                       </span>
                       {regatta.endDate && regatta.endDate !== regatta.date && (
-                        <span className="text-[10px] text-slate-400 font-mono">
+                        <span className="text-[10px] text-[var(--sp-slate-soft)] font-mono">
                           to {formatDay(regatta.endDate)}
                         </span>
                       )}
@@ -519,7 +517,7 @@ export function RegattaCalendarClient({
                     {/* Regatta Info */}
                     <div className="min-w-0 space-y-1.5 flex-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h2 className="text-base sm:text-lg font-black text-white tracking-tight">
+                        <h2 className="text-base sm:text-lg font-black text-[var(--sp-harbour-shadow)] tracking-tight">
                           {regatta.name}
                         </h2>
 
@@ -527,14 +525,14 @@ export function RegattaCalendarClient({
                         <span
                           className={`rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider ${
                             countdown.tone === "today"
-                              ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 animate-pulse"
+                              ? "bg-emerald-500/20 text-emerald-700 border border-emerald-500/40 animate-pulse"
                               : countdown.tone === "urgent"
-                              ? "bg-amber-500/20 text-amber-300 border border-amber-500/40"
+                              ? "bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/40"
                               : countdown.tone === "soon"
-                              ? "bg-sky-500/15 text-sky-300 border border-sky-500/30"
+                              ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/30"
                               : countdown.tone === "past"
-                              ? "bg-slate-800 text-slate-400 border border-white/5"
-                              : "bg-white/5 text-slate-300 border border-white/10"
+                              ? "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] border border-[var(--sp-cool-veil)]"
+                              : "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]"
                           }`}
                         >
                           {countdown.label}
@@ -545,7 +543,7 @@ export function RegattaCalendarClient({
                       <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
                         {/* Region badge */}
                         {regatta.region && (
-                          <span className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-semibold text-slate-300">
+                          <span className="rounded-md border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-semibold text-[var(--sp-slate-soft)]">
                             {regatta.region === "Europe"
                               ? "🇪🇺 Europe"
                               : regatta.region === "Asia"
@@ -554,39 +552,39 @@ export function RegattaCalendarClient({
                           </span>
                         )}
 
-                        <span className="rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-[10px] font-bold text-sky-300 inline-flex items-center gap-1">
+                        <span className="rounded-md border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)] inline-flex items-center gap-1">
                           <Sailboat className="h-3 w-3" />
                           {regatta.boatClass || "Optimist"}
                         </span>
 
                         {regatta.division && (
-                          <span className="rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[10px] font-semibold text-slate-300">
+                          <span className="rounded-md border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-semibold text-[var(--sp-slate-soft)]">
                             {regatta.division}
                           </span>
                         )}
 
                         {regatta.targetFleet && (
-                          <span className="rounded-md border border-purple-500/30 bg-purple-500/10 px-2 py-0.5 text-[10px] font-bold text-purple-300">
+                          <span className="rounded-md border border-purple-500/30 bg-purple-50 px-2 py-0.5 text-[10px] font-bold text-purple-700">
                             Fleet: {regatta.targetFleet}
                           </span>
                         )}
 
                         {regatta.clinicDates && (
-                          <span className="rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-[10px] font-bold text-sky-300 inline-flex items-center gap-1">
+                          <span className="rounded-md border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)] inline-flex items-center gap-1">
                             <Clock className="h-3 w-3" />
                             Clinic: {regatta.clinicDates}
                           </span>
                         )}
 
                         {regatta.isSelectionTrial && (
-                          <span className="rounded-md border border-amber-500/40 bg-amber-500/15 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-amber-200 inline-flex items-center gap-1">
-                            <ShieldCheck className="h-3 w-3 text-amber-400" />
+                          <span className="rounded-md border border-[var(--sp-racing-orange)]/40 bg-[var(--sp-racing-mist)]/30 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[var(--sp-racing-orange)] inline-flex items-center gap-1">
+                            <ShieldCheck className="h-3 w-3 text-[var(--sp-racing-orange)]" />
                             Official Selection Trial
                           </span>
                         )}
 
                         {regatta.countsForRanking && !regatta.isSelectionTrial && (
-                          <span className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-300 inline-flex items-center gap-1">
+                          <span className="rounded-md border border-emerald-500/30 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 inline-flex items-center gap-1">
                             <Award className="h-3 w-3" />
                             National Series Ranking
                           </span>
@@ -594,19 +592,19 @@ export function RegattaCalendarClient({
                       </div>
 
                       {/* Venue, Organizer & Schedule meta line */}
-                      <p className="text-xs text-slate-300 flex flex-wrap items-center gap-x-3 gap-y-1 pt-1">
-                        <span className="inline-flex items-center gap-1 text-slate-300">
-                          <Calendar className="h-3.5 w-3.5 text-slate-500" />
+                      <p className="text-xs text-[var(--sp-slate-soft)] flex flex-wrap items-center gap-x-3 gap-y-1 pt-1">
+                        <span className="inline-flex items-center gap-1 text-[var(--sp-charcoal-slate)] font-medium">
+                          <Calendar className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
                           {dateRangeStr}
                         </span>
                         {regatta.venue && (
-                          <span className="inline-flex items-center gap-1 text-slate-400">
-                            <MapPin className="h-3.5 w-3.5 text-slate-500" />
+                          <span className="inline-flex items-center gap-1 text-[var(--sp-slate-soft)]">
+                            <MapPin className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
                             {regatta.venue}
                           </span>
                         )}
                         {regatta.organizer && (
-                          <span className="text-slate-500 text-[11px]">
+                          <span className="text-[var(--sp-slate-soft)] text-[11px]">
                             by {regatta.organizer}
                           </span>
                         )}
@@ -614,15 +612,15 @@ export function RegattaCalendarClient({
 
                       {/* Key Deadlines indicator */}
                       {regatta.keyDeadlines && (
-                        <p className="text-[11px] font-semibold text-amber-300 flex items-center gap-1.5 pt-0.5">
-                          <AlertCircle className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+                        <p className="text-[11px] font-semibold text-[var(--sp-racing-orange)] flex items-center gap-1.5 pt-0.5">
+                          <AlertCircle className="h-3.5 w-3.5 text-[var(--sp-racing-orange)] shrink-0" />
                           <span>Status / Deadline: {regatta.keyDeadlines}</span>
                         </p>
                       )}
 
                       {/* Schedule notes */}
                       {regatta.scheduleNotes && (
-                        <p className="text-[11px] text-slate-400 leading-relaxed pt-0.5">
+                        <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed pt-0.5">
                           {regatta.scheduleNotes}
                         </p>
                       )}
@@ -637,11 +635,11 @@ export function RegattaCalendarClient({
                         href={regatta.norUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-2 text-xs font-bold text-slate-300 hover:text-white inline-flex items-center justify-center gap-1.5 transition-colors"
+                        className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] px-3.5 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] inline-flex items-center justify-center gap-1.5 transition-colors"
                       >
-                        <FileText className="h-3.5 w-3.5 text-orange-400" />
+                        <FileText className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
                         Notice of Race
-                        <ExternalLink className="h-3 w-3 text-slate-500" />
+                        <ExternalLink className="h-3 w-3 text-[var(--sp-slate-soft)]" />
                       </a>
                     ) : null}
 
@@ -651,7 +649,7 @@ export function RegattaCalendarClient({
                         href={regatta.registrationUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="rounded-xl bg-orange-600 hover:bg-orange-500 px-3.5 py-2 text-xs font-bold text-white inline-flex items-center justify-center gap-1.5 shadow-sm transition-all"
+                        className="sp-btn-primary px-3.5 py-2 text-xs font-bold inline-flex items-center justify-center gap-1.5 shadow-xs"
                       >
                         Register / Enter
                         <ExternalLink className="h-3.5 w-3.5" />
@@ -662,10 +660,10 @@ export function RegattaCalendarClient({
                     <button
                       type="button"
                       onClick={() => downloadIcs(regatta)}
-                      className="rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-2 text-xs font-bold text-slate-300 hover:text-white inline-flex items-center justify-center gap-1.5 transition-colors"
+                      className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] px-3.5 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] inline-flex items-center justify-center gap-1.5 transition-colors"
                       title="Add to Google Calendar, Apple Calendar, or Outlook"
                     >
-                      <Download className="h-3.5 w-3.5 text-sky-400" />
+                      <Download className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
                       Add to Calendar (.ics)
                     </button>
 
@@ -673,7 +671,7 @@ export function RegattaCalendarClient({
                     {regatta.boatClass?.toLowerCase() === "wingfoil" ? (
                       <Link
                         href="/sg/wingfoil"
-                        className="rounded-xl border border-white/10 bg-black/30 hover:bg-black/50 px-3.5 py-2 text-xs font-bold text-teal-400 hover:text-teal-300 inline-flex items-center justify-center gap-1 transition-colors"
+                        className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:bg-[var(--sp-sailcloth)] px-3.5 py-2 text-xs font-bold text-[var(--sp-harbour-teal)] inline-flex items-center justify-center gap-1 transition-colors"
                       >
                         WingFoil Hub →
                       </Link>
@@ -684,7 +682,7 @@ export function RegattaCalendarClient({
                             ? `/sg/ilca4/regattas/${regatta.slug}`
                             : `/sg/optimist/regattas/${regatta.slug}`
                         }
-                        className="rounded-xl border border-white/10 bg-black/30 hover:bg-black/50 px-3.5 py-2 text-xs font-bold text-orange-400 hover:text-orange-300 inline-flex items-center justify-center gap-1 transition-colors"
+                        className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:bg-[var(--sp-sailcloth)] px-3.5 py-2 text-xs font-bold text-[var(--sp-racing-orange)] inline-flex items-center justify-center gap-1 transition-colors"
                       >
                         Event Scoreboard →
                       </Link>
@@ -698,13 +696,13 @@ export function RegattaCalendarClient({
       )}
 
       {/* Footer information */}
-      <div className="rounded-2xl border border-white/5 bg-black/20 p-5 text-center space-y-2">
-        <p className="text-xs text-slate-400">
+      <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 text-center space-y-2 shadow-xs">
+        <p className="text-xs text-[var(--sp-charcoal-slate)]">
           Official regatta dates, Notices of Race (NOR), and Sailing Instructions are governed by the organizing authorities and national sailing bodies.
         </p>
-        <p className="text-[11px] text-slate-500">
+        <p className="text-[11px] text-[var(--sp-slate-soft)]">
           Want to submit or update an upcoming youth sailing regatta?{" "}
-          <Link href="/support" className="text-orange-400 hover:underline">
+          <Link href="/support" className="text-[var(--sp-racing-orange)] font-semibold hover:underline">
             Contact race office support
           </Link>
         </p>

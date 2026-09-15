@@ -690,10 +690,10 @@ export function ParentDashboard() {
             <Heart className="h-6 w-6" />
           </span>
           <div className="min-w-0">
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
               {title}
             </h1>
-            <p className="mt-1 text-sm text-slate-400 leading-relaxed max-w-2xl">
+            <p className="mt-1 text-sm text-[var(--sp-charcoal-slate)] leading-relaxed max-w-2xl">
               {subtitle}
             </p>
           </div>
@@ -701,14 +701,14 @@ export function ParentDashboard() {
         <div className="flex items-center gap-2">
           <Link
             href="/search"
-            className="rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-bold text-white hover:border-orange-500/40 inline-flex items-center gap-1.5 transition-colors"
+            className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] inline-flex items-center gap-1.5 transition-colors"
           >
             <Search className="h-3.5 w-3.5" />
             Find a sailor
           </Link>
           <Link
             href="/account"
-            className="rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-bold text-slate-300 hover:text-white transition-colors"
+            className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] px-4 py-2 text-xs font-bold text-[var(--sp-charcoal-slate)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
           >
             Settings
           </Link>
@@ -716,15 +716,15 @@ export function ParentDashboard() {
       </div>
 
       {error && (
-        <p className="text-sm font-bold text-rose-400 rounded-xl border border-rose-500/25 bg-rose-500/10 px-4 py-3">
+        <p className="text-sm font-bold text-rose-600 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3">
           {error}
         </p>
       )}
 
       {/* Pending claims section */}
       {pendingClaims.length > 0 && (
-        <section className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.06] p-5 space-y-3">
-          <h2 className="text-xs font-black text-amber-200 uppercase tracking-wider flex items-center gap-2">
+        <section className="rounded-2xl border border-amber-200 bg-amber-50/50 p-5 space-y-3">
+          <h2 className="text-xs font-black text-amber-800 uppercase tracking-wider flex items-center gap-2">
             <Clock className="h-4 w-4" />
             Claims awaiting approval ({pendingClaims.length})
           </h2>
@@ -732,21 +732,21 @@ export function ParentDashboard() {
             {pendingClaims.map((c) => (
               <li
                 key={c.id}
-                className="rounded-xl border border-white/5 bg-black/20 px-3.5 py-3 flex items-center justify-between gap-2"
+                className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-3.5 py-3 flex items-center justify-between gap-2 shadow-2xs"
               >
                 <div>
                   <Link
                     href={`/${c.sailorHandle}`}
-                    className="text-sm font-bold text-white hover:text-orange-400"
+                    className="text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]"
                   >
                     {c.sailorName}
                   </Link>
-                  <p className="text-[11px] text-slate-400">
+                  <p className="text-[11px] text-[var(--sp-slate-soft)]">
                     {relationLabel(c.relation)} · submitted{" "}
                     {c.createdAt ? new Date(c.createdAt).toLocaleDateString() : "—"}
                   </p>
                 </div>
-                <span className="text-[10px] font-black uppercase text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30 bg-amber-500/10">
+                <span className="text-[10px] font-black uppercase text-amber-800 px-2 py-0.5 rounded-full border border-amber-200 bg-amber-100">
                   Pending
                 </span>
               </li>
@@ -757,24 +757,24 @@ export function ParentDashboard() {
 
       {/* Empty state when no linked athletes */}
       {athletes.length === 0 ? (
-        <div className="rounded-2xl border border-white/5 bg-[#131520]/80 p-8 sm:p-12 text-center space-y-4">
-          <Sailboat className="h-10 w-10 text-slate-600 mx-auto" />
-          <h2 className="text-lg font-bold text-white">No linked sailor profiles yet</h2>
-          <p className="text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
+        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 sm:p-12 text-center space-y-4 shadow-xs">
+          <Sailboat className="h-10 w-10 text-[var(--sp-slate-soft)] mx-auto" />
+          <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">No linked sailor profiles yet</h2>
+          <p className="text-sm text-[var(--sp-charcoal-slate)] max-w-md mx-auto leading-relaxed">
             Search for your child (or yourself), open their profile, and submit a claim as{" "}
-            <strong className="text-slate-200">Parent</strong> or{" "}
-            <strong className="text-slate-200">Sailor</strong>. Once verified, their command center will appear here.
+            <strong className="text-[var(--sp-harbour-shadow)]">Parent</strong> or{" "}
+            <strong className="text-[var(--sp-harbour-shadow)]">Sailor</strong>. Once verified, their command center will appear here.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center pt-2">
             <Link
               href="/search"
-              className="rounded-full bg-orange-600 hover:bg-orange-500 px-5 py-2.5 text-xs font-bold text-white"
+              className="sp-btn-primary"
             >
               Search sailors
             </Link>
             <Link
               href="/claim-profile"
-              className="rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-5 py-2.5 text-xs font-bold text-white"
+              className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] px-5 py-2.5 text-xs font-bold text-[var(--sp-harbour-shadow)] transition-colors"
             >
               How claiming works
             </Link>

@@ -8,9 +8,9 @@ import {
 } from "@/lib/seriesMembership";
 import { nationalityLabelForCode } from "@/lib/countries";
 
-/** Cards match main page background (#090a0f); separation via border only */
+/** Cards match SailorPath Warm White with Cool Veil border */
 export const PROFILE_CARD_CLASS =
-  "rounded-2xl border border-white/[0.07] bg-[#090a0f]";
+  "rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
 
 /**
  * Profile fleet badge from Optimist series status.
@@ -41,37 +41,37 @@ export function resolveDisplayFleet(
     if (status === "gold" && !opts.preferIlca && !opts.optimistOnlyAbsent) {
       return {
         label: "Gold fleet",
-        className: "bg-yellow-400 text-yellow-950 border border-yellow-300/30",
+        className: "bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30",
       };
     }
     if (opts.preferIlca || opts.optimistOnlyAbsent || status === "dropped" || status === "guest") {
       return {
         label: "ILCA 4",
-        className: "bg-sky-500/20 text-sky-200 border border-sky-500/30",
+        className: "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/30",
       };
     }
   }
   if (status === "gold") {
     return {
       label: "Gold fleet",
-      className: "bg-yellow-400 text-yellow-950 border border-yellow-300/30",
+      className: "bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30",
     };
   }
   if (status === "silver" || status === "series") {
     return {
       label: "Silver fleet",
-      className: "bg-neutral-600/80 text-neutral-100 border border-neutral-500/30",
+      className: "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] border border-[var(--sp-cool-veil)]",
     };
   }
   if (status === "dropped") {
     return {
       label: "Dropped",
-      className: "bg-rose-500/15 text-rose-300 border border-rose-500/25",
+      className: "bg-rose-50 text-rose-700 border border-rose-200",
     };
   }
   return {
     label: "Guest",
-    className: "bg-white/10 text-neutral-300 border border-white/10",
+    className: "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] border border-[var(--sp-cool-veil)]",
   };
 }
 
@@ -79,15 +79,15 @@ export function fleetPillClass(
   fleet: "Gold" | "Silver" | "Open" | "—" | string
 ): string {
   if (fleet === "Gold") {
-    return "bg-yellow-400 text-yellow-950 border border-yellow-300/20";
+    return "bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30";
   }
   if (fleet === "Silver") {
-    return "bg-neutral-600 text-neutral-100 border border-neutral-500/30";
+    return "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] border border-[var(--sp-cool-veil)]";
   }
   if (fleet === "Open" || fleet === "ILCA 4") {
-    return "bg-sky-500/15 text-sky-300 border border-sky-500/25";
+    return "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/30";
   }
-  return "bg-white/5 text-neutral-500 border border-white/10";
+  return "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] border border-[var(--sp-cool-veil)]";
 }
 
 export function nationalityFlag(raw: unknown): string {

@@ -30,7 +30,7 @@ export function BrandWordmark({
 }) {
   return (
     <span
-      className={`font-display font-bold tracking-[-0.02em] ${
+      className={`font-display font-extrabold tracking-[-0.03em] ${
         reversed ? "text-sailcloth" : "text-harbour"
       } ${className}`}
     >
@@ -57,8 +57,8 @@ export function BrandLogoLink({
     >
       <Image
         src={isReversed ? BRAND.logoReversed : BRAND.logo}
-        width={800}
-        height={265}
+        width={1141}
+        height={261}
         priority
         alt="SailorPath"
         className="h-8 w-auto sm:h-9"

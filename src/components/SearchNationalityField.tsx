@@ -94,10 +94,10 @@ export function SearchNationalityField({
         <button
           type="button"
           onClick={clear}
-          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
+          className={`rounded-full px-2 py-0.5 text-[10px] font-bold transition-colors ${
             !value
-              ? "bg-orange-600 text-white"
-              : "bg-white/5 text-slate-400 hover:text-white"
+              ? "bg-racing-orange text-white"
+              : "border border-cool-veil bg-warm-white text-slate-soft hover:text-charcoal hover:border-harbour"
           }`}
         >
           Any
@@ -107,10 +107,10 @@ export function SearchNationalityField({
             key={code}
             type="button"
             onClick={() => pick(code)}
-            className={`rounded-full px-2 py-0.5 text-[10px] font-bold tabular-nums ${
+            className={`rounded-full px-2 py-0.5 text-[10px] font-bold tabular-nums transition-colors ${
               value === code
-                ? "bg-orange-600 text-white"
-                : "bg-white/5 text-slate-400 hover:text-white"
+                ? "bg-racing-orange text-white"
+                : "border border-cool-veil bg-warm-white text-slate-soft hover:text-charcoal hover:border-harbour"
             }`}
             title={byCode.get(code) || code}
           >
@@ -143,20 +143,20 @@ export function SearchNationalityField({
         onBlur={() => {
           blurTimer.current = setTimeout(() => setOpen(false), 150);
         }}
-        className="mt-0 w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white placeholder:text-slate-600"
+        className="mt-0 w-full rounded-lg bg-warm-white border border-cool-mist px-2 py-2 text-xs text-charcoal placeholder:text-slate-soft focus:border-harbour focus:outline-none"
       />
       {open && (
         <ul
           id={`${id}-list`}
           role="listbox"
-          className="absolute z-30 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-white/10 bg-slate-950 shadow-xl"
+          className="absolute z-30 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-cool-veil bg-warm-white shadow-xl"
         >
           <li>
             <button
               type="button"
               role="option"
               aria-selected={!value}
-              className="w-full px-3 py-2 text-left text-xs text-slate-400 hover:bg-white/5"
+              className="w-full px-3 py-2 text-left text-xs text-slate-soft hover:bg-aqua-mist/50 hover:text-charcoal"
               onMouseDown={(e) => e.preventDefault()}
               onClick={clear}
             >
@@ -169,10 +169,10 @@ export function SearchNationalityField({
                 type="button"
                 role="option"
                 aria-selected={value === o.code}
-                className={`w-full px-3 py-2 text-left text-xs hover:bg-white/5 ${
+                className={`w-full px-3 py-2 text-left text-xs hover:bg-aqua-mist/50 ${
                   value === o.code
-                    ? "bg-orange-500/15 text-orange-200"
-                    : "text-white"
+                    ? "bg-aqua-mist text-harbour font-bold"
+                    : "text-charcoal"
                 }`}
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => pick(o.code)}

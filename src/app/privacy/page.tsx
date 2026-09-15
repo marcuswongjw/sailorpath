@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
-      <article className="space-y-8 text-sm leading-relaxed text-slate-300">
-        <header className="space-y-3 border-b border-white/10 pb-6">
-          <p className="text-xs font-bold uppercase tracking-wider text-orange-400">
+      <article className="space-y-8 text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
+        <header className="space-y-3 border-b border-[var(--sp-cool-veil)] pb-6">
+          <p className="text-xs font-bold uppercase tracking-wider text-[var(--sp-racing-orange)]">
             SailorPath
           </p>
-          <h1 className="text-3xl font-black tracking-tight text-white">
+          <h1 className="text-3xl font-black tracking-tight text-[var(--sp-harbour-shadow)]">
             Privacy
           </h1>
-          <p className="text-slate-500">Effective 23 August 2026</p>
-          <p className="text-slate-400">
+          <p className="text-xs font-medium text-[var(--sp-slate-soft)]">Effective 23 August 2026</p>
+          <p className="text-[var(--sp-charcoal-slate)]">
             This page explains what information SailorPath uses, what may appear
             publicly, and how sailors and families can ask for help with their
             data.
@@ -76,7 +76,7 @@ export default function PrivacyPage() {
         </PolicySection>
 
         <PolicySection title="Why information is used">
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-2 pl-5 text-[var(--sp-charcoal-slate)]">
             <li>To publish regatta results and calculate standings.</li>
             <li>To create, secure, and manage accounts and profile claims.</li>
             <li>To provide private logbook, family, and equipment features.</li>
@@ -114,7 +114,7 @@ export default function PrivacyPage() {
           </p>
           <Link
             href="/support"
-            className="inline-flex rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white hover:bg-orange-500"
+            className="inline-flex sp-btn-primary px-5 py-2.5 text-xs font-bold"
           >
             Contact support
           </Link>
@@ -140,7 +140,7 @@ function PolicySection({
 }) {
   return (
     <section className="space-y-3">
-      <h2 className="text-lg font-bold text-white">{title}</h2>
+      <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">{title}</h2>
       {children}
     </section>
   );

@@ -30,6 +30,7 @@
   /* Typography */
   --sp-font-display: "Montserrat", system-ui, sans-serif;
   --sp-font-ui: "Inter", system-ui, sans-serif;
+  --sp-type-wordmark-weight: 800;
 
   /* Spacing */
   --sp-space-4: 4px;

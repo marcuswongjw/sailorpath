@@ -79,32 +79,32 @@ export function CompareSailorsView({
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 space-y-6">
       <div className="flex items-start gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-600/10 text-orange-500 border border-orange-500/20">
+        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-racing-orange)]/10 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/20">
           <GitCompareArrows className="h-5 w-5" />
         </span>
         <div>
-          <h1 className="text-2xl sm:text-3xl font-black text-white">
+          <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
             Compare sailors
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-[var(--sp-charcoal-slate)] mt-1">
             Side-by-side R1–R5 and Best 3 of 5 for a ranking period.
           </p>
         </div>
       </div>
 
-      <div className="glass-panel rounded-2xl border border-white/5 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        <label className="text-[10px] font-bold text-slate-500 uppercase">
+      <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shadow-xs">
+        <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase">
           Fleet
           <select
             value={fleet}
             onChange={(e) => setFleet(e.target.value as "Gold" | "Silver")}
-            className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white"
+            className="mt-1 w-full rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-harbour-shadow)] font-medium outline-none focus:border-[var(--sp-harbour-teal)]"
           >
             <option value="Gold">Gold</option>
             <option value="Silver">Silver</option>
           </select>
         </label>
-        <label className="text-[10px] font-bold text-slate-500 uppercase">
+        <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase">
           Period
           <select
             value={`${period.year}|${period.half}`}
@@ -112,7 +112,7 @@ export function CompareSailorsView({
               const [year, half] = e.target.value.split("|");
               setPeriod({ year: Number(year), half: half as Period["half"] });
             }}
-            className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white"
+            className="mt-1 w-full rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-harbour-shadow)] font-medium outline-none focus:border-[var(--sp-harbour-teal)]"
           >
             {PERIODS.map(({ period: p, label }) => (
               <option key={`${p.year}-${p.half}`} value={`${p.year}|${p.half}`}>
@@ -121,12 +121,12 @@ export function CompareSailorsView({
             ))}
           </select>
         </label>
-        <label className="text-[10px] font-bold text-slate-500 uppercase">
+        <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase">
           Sailor A
           <select
             value={aId}
             onChange={(e) => setAId(e.target.value)}
-            className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white"
+            className="mt-1 w-full rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-harbour-shadow)] font-medium outline-none focus:border-[var(--sp-harbour-teal)]"
           >
             <option value="">—</option>
             {ranked.map((s) => (
@@ -136,12 +136,12 @@ export function CompareSailorsView({
             ))}
           </select>
         </label>
-        <label className="text-[10px] font-bold text-slate-500 uppercase">
+        <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase">
           Sailor B
           <select
             value={bId}
             onChange={(e) => setBId(e.target.value)}
-            className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-3 py-2 text-xs text-white"
+            className="mt-1 w-full rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-harbour-shadow)] font-medium outline-none focus:border-[var(--sp-harbour-teal)]"
           >
             <option value="">—</option>
             {ranked.map((s) => (
@@ -153,44 +153,44 @@ export function CompareSailorsView({
         </label>
       </div>
 
-      {loading && <p className="text-sm text-slate-500">Loading…</p>}
-      {error && <p className="text-sm text-rose-400">{error}</p>}
+      {loading && <p className="text-sm text-[var(--sp-slate-soft)]">Loading…</p>}
+      {error && <p className="text-sm text-rose-600 font-medium">{error}</p>}
 
       {!loading && a && b && (
-        <div className="overflow-x-auto rounded-2xl border border-white/5">
+        <div className="overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
           <table className="w-full text-sm text-left min-w-[560px]">
-            <thead className="bg-white/5 text-[10px] uppercase text-slate-400">
+            <thead className="bg-[var(--sp-sailcloth)] text-[10px] uppercase text-[var(--sp-slate-soft)] font-semibold border-b border-[var(--sp-cool-veil)]">
               <tr>
                 <th className="px-4 py-3">Metric</th>
                 <th className="px-4 py-3">
-                  <Link href={`/${a.handle}`} className="text-white font-bold hover:text-orange-400 normal-case text-sm">
+                  <Link href={`/${a.handle}`} className="text-[var(--sp-harbour-shadow)] font-bold hover:text-[var(--sp-racing-orange)] normal-case text-sm">
                     {a.name}
                   </Link>
                 </th>
                 <th className="px-4 py-3">
-                  <Link href={`/${b.handle}`} className="text-white font-bold hover:text-orange-400 normal-case text-sm">
+                  <Link href={`/${b.handle}`} className="text-[var(--sp-harbour-shadow)] font-bold hover:text-[var(--sp-racing-orange)] normal-case text-sm">
                     {b.name}
                   </Link>
                 </th>
               </tr>
             </thead>
-            <tbody className="text-slate-300">
-              <tr className="border-t border-white/5">
-                <td className="px-4 py-3 text-slate-500 text-xs font-bold uppercase">Overall rank</td>
-                <td className="px-4 py-3 font-black text-orange-400">
+            <tbody className="text-[var(--sp-charcoal-slate)]">
+              <tr className="border-t border-[var(--sp-cool-veil)]">
+                <td className="px-4 py-3 text-[var(--sp-slate-soft)] text-xs font-bold uppercase">Overall rank</td>
+                <td className="px-4 py-3 font-black text-[var(--sp-racing-orange)]">
                   #{ranked.findIndex((s) => s.id === a.id) + 1}
                 </td>
-                <td className="px-4 py-3 font-black text-orange-400">
+                <td className="px-4 py-3 font-black text-[var(--sp-racing-orange)]">
                   #{ranked.findIndex((s) => s.id === b.id) + 1}
                 </td>
               </tr>
-              <tr className="border-t border-white/5">
-                <td className="px-4 py-3 text-slate-500 text-xs font-bold uppercase">Best 3 of 5</td>
-                <td className="px-4 py-3 font-black text-white text-lg">{a.overallScore}</td>
-                <td className="px-4 py-3 font-black text-white text-lg">{b.overallScore}</td>
+              <tr className="border-t border-[var(--sp-cool-veil)]">
+                <td className="px-4 py-3 text-[var(--sp-slate-soft)] text-xs font-bold uppercase">Best 3 of 5</td>
+                <td className="px-4 py-3 font-black text-[var(--sp-harbour-shadow)] text-lg">{a.overallScore}</td>
+                <td className="px-4 py-3 font-black text-[var(--sp-harbour-shadow)] text-lg">{b.overallScore}</td>
               </tr>
-              <tr className="border-t border-white/5">
-                <td className="px-4 py-3 text-slate-500 text-xs font-bold uppercase">Fleet / squad</td>
+              <tr className="border-t border-[var(--sp-cool-veil)]">
+                <td className="px-4 py-3 text-[var(--sp-slate-soft)] text-xs font-bold uppercase">Fleet / squad</td>
                 <td className="px-4 py-3">
                   {a.fleet}
                   {a.nationalSquadStatus ? ` · ${a.nationalSquadStatus}` : ""}
@@ -201,26 +201,26 @@ export function CompareSailorsView({
                 </td>
               </tr>
               {[0, 1, 2, 3, 4].map((i) => (
-                <tr key={i} className="border-t border-white/5">
-                  <td className="px-4 py-3 text-slate-500 text-xs font-bold uppercase">
+                <tr key={i} className="border-t border-[var(--sp-cool-veil)]">
+                  <td className="px-4 py-3 text-[var(--sp-slate-soft)] text-xs font-bold uppercase">
                     R{i + 1}
-                    <span className="block normal-case font-semibold text-[10px] text-slate-600 max-w-[10rem] truncate">
+                    <span className="block normal-case font-semibold text-[10px] text-[var(--sp-slate-soft)] max-w-[10rem] truncate">
                       {a.regattaScores?.[i]?.regattaName ||
                         b.regattaScores?.[i]?.regattaName ||
                         "—"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 font-mono">
+                  <td className="px-4 py-3 font-mono font-medium">
                     {scoreCell(a.regattaScores?.[i])}
                   </td>
-                  <td className="px-4 py-3 font-mono">
+                  <td className="px-4 py-3 font-mono font-medium">
                     {scoreCell(b.regattaScores?.[i])}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <p className="px-4 py-2 text-[10px] text-slate-600 border-t border-white/5">
+          <p className="px-4 py-2 text-[10px] text-[var(--sp-slate-soft)] border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30">
             * DNS · † Overseas commitment
           </p>
         </div>

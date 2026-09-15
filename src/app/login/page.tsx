@@ -71,21 +71,21 @@ function LoginForm() {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md glass-card rounded-3xl border border-white/5 p-8 space-y-6">
+      <div className="w-full max-w-md rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 space-y-6 shadow-xs">
         <div className="text-center">
-          <h1 className="text-2xl font-black text-white">Welcome back</h1>
-          <p className="text-xs text-slate-400 mt-2">Email + password login</p>
+          <h1 className="text-2xl font-black text-[var(--sp-harbour-shadow)]">Welcome back</h1>
+          <p className="text-xs text-[var(--sp-slate-soft)] mt-2">Email + password login</p>
         </div>
         {message && (
-          <p className="text-xs font-bold text-orange-400 text-center">{message}</p>
+          <p className="text-xs font-bold text-[var(--sp-racing-orange)] text-center">{message}</p>
         )}
         {error && (
-          <p className="text-xs font-bold text-rose-400 text-center leading-relaxed">
+          <p className="text-xs font-bold text-rose-600 text-center leading-relaxed">
             {error}
           </p>
         )}
         <form onSubmit={onSubmit} className="space-y-4">
-          <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+          <label className="block space-y-1.5 text-xs font-bold text-[var(--sp-slate-soft)]">
             Email
             <input
               type="email"
@@ -94,10 +94,10 @@ function LoginForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@email.com"
-              className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+              className="sp-input w-full text-sm font-normal"
             />
           </label>
-          <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+          <label className="block space-y-1.5 text-xs font-bold text-[var(--sp-slate-soft)]">
             Password
             <input
               type="password"
@@ -105,13 +105,13 @@ function LoginForm() {
               autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+              className="sp-input w-full text-sm font-normal"
             />
           </label>
           <div className="text-right">
             <Link
               href="/forgot-password"
-              className="text-xs font-semibold text-slate-400 hover:text-white"
+              className="text-xs font-semibold text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
             >
               Forgot password?
             </Link>
@@ -119,16 +119,16 @@ function LoginForm() {
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded-full bg-orange-600 py-3 text-sm font-bold text-white hover:bg-orange-500 disabled:opacity-50"
+            className="w-full sp-btn-primary py-3 text-sm font-bold disabled:opacity-50"
           >
             {busy ? "Signing in…" : "Log in"}
           </button>
         </form>
-        <p className="text-center text-xs text-slate-400">
+        <p className="text-center text-xs text-[var(--sp-slate-soft)]">
           No account?{" "}
           <Link
             href={`/register?next=${encodeURIComponent(nextTarget)}`}
-            className="text-orange-500 font-bold"
+            className="text-[var(--sp-racing-orange)] font-bold hover:underline"
           >
             Register
           </Link>

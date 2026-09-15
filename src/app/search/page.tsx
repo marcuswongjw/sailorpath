@@ -73,22 +73,22 @@ export default async function SearchPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 space-y-6">
-      <h1 className="text-2xl font-black text-white">Search sailors</h1>
+      <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">Search sailors</h1>
 
-      <form className="glass-panel rounded-2xl border border-white/5 p-4 space-y-3">
+      <form className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs space-y-4">
         <input
           name="query"
           defaultValue={query}
           placeholder="Name, sail number, club, school…"
-          className="w-full rounded-xl bg-slate-950 border border-white/10 px-4 py-3 text-sm text-white focus:border-orange-500 focus:outline-none"
+          className="sp-input w-full text-sm"
         />
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <label className="text-[10px] font-bold text-slate-500 uppercase">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <label className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Fleet
             <select
               name="fleet"
               defaultValue={fleet}
-              className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white"
+              className="mt-1.5 sp-select w-full text-xs"
             >
               <option value="all">All</option>
               <option value="gold">Gold (active now)</option>
@@ -96,12 +96,12 @@ export default async function SearchPage({
               <option value="guest">Not on current board</option>
             </select>
           </label>
-          <label className="text-[10px] font-bold text-slate-500 uppercase">
+          <label className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Squad
             <select
               name="squad"
               defaultValue={squad}
-              className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white"
+              className="mt-1.5 sp-select w-full text-xs"
             >
               <option value="all">All</option>
               <option value="Nat A">Nat A</option>
@@ -109,58 +109,58 @@ export default async function SearchPage({
               <option value="DS">DS</option>
             </select>
           </label>
-          <label className="text-[10px] font-bold text-slate-500 uppercase col-span-2 sm:col-span-1">
+          <label className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider col-span-2 sm:col-span-1">
             Nationality
-            <div className="mt-1">
+            <div className="mt-1.5">
               <SearchNationalityField defaultValue={nationality} />
             </div>
           </label>
-          <label className="text-[10px] font-bold text-slate-500 uppercase">
+          <label className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Club
             <input
               name="club"
               defaultValue={club}
-              className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white"
+              className="mt-1.5 sp-input w-full text-xs"
             />
           </label>
-          <label className="text-[10px] font-bold text-slate-500 uppercase">
+          <label className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             School
             <input
               name="school"
               defaultValue={school}
-              className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white"
+              className="mt-1.5 sp-input w-full text-xs"
             />
           </label>
-          <label className="text-[10px] font-bold text-slate-500 uppercase">
+          <label className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Birth year from–to
-            <div className="mt-1 flex gap-1">
+            <div className="mt-1.5 flex gap-1.5">
               <input
                 name="birthFrom"
                 type="number"
                 placeholder="2010"
                 defaultValue={sp.birthFrom || ""}
-                className="w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white font-mono"
+                className="sp-input w-full text-xs font-mono"
               />
               <input
                 name="birthTo"
                 type="number"
                 placeholder="2015"
                 defaultValue={sp.birthTo || ""}
-                className="w-full rounded-lg bg-slate-950 border border-white/10 px-2 py-2 text-xs text-white font-mono"
+                className="sp-input w-full text-xs font-mono"
               />
             </div>
           </label>
         </div>
         <button
           type="submit"
-          className="rounded-full bg-orange-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-orange-500"
+          className="sp-btn-primary px-6 py-2.5 text-xs font-bold"
         >
           Search
         </button>
       </form>
 
       {hasAny && (
-        <p className="text-xs text-slate-500">{results.length} result(s)</p>
+        <p className="text-xs font-medium text-[var(--sp-slate-soft)]">{results.length} result(s)</p>
       )}
       <ul className="space-y-2">
         {results.map((s) => {
@@ -169,14 +169,14 @@ export default async function SearchPage({
             <li key={s.id}>
               <Link
                 href={`/${s.handle}`}
-                className="block glass-card rounded-xl px-4 py-3 border border-white/5 hover:border-orange-500/30"
+                className="block rounded-xl px-4 py-3 border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs hover:border-[var(--sp-harbour-teal)] transition-colors"
               >
-                <span className="font-bold text-white">{s.name}</span>
-                <span className="text-xs text-slate-400 ml-2">
+                <span className="font-bold text-[var(--sp-harbour-shadow)]">{s.name}</span>
+                <span className="text-xs text-[var(--sp-slate-soft)] ml-2">
                   {s.sailNumber} · {s.club}
                   {s.nationality ? ` · ${s.nationality}` : ""}
                 </span>
-                <span className="ml-2 text-[10px] font-bold text-orange-400/90">
+                <span className="ml-2 text-[10px] font-bold text-[var(--sp-racing-orange)]">
                   {fleetLabel}
                   {s.nationalSquadStatus ? ` · ${s.nationalSquadStatus}` : ""}
                 </span>
@@ -186,7 +186,7 @@ export default async function SearchPage({
         })}
       </ul>
       {hasAny && results.length === 0 && (
-        <p className="text-sm text-slate-500">No sailors match these filters.</p>
+        <p className="text-sm text-[var(--sp-slate-soft)]">No sailors match these filters.</p>
       )}
     </div>
   );

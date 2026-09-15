@@ -54,7 +54,7 @@ export default async function Ilca4RegattaDetailPage({
         raceCount={regatta.raceCount}
         accent="sky"
       />
-      <p className="text-[10px] text-slate-600">
+      <p className="text-[11px] text-[var(--sp-slate-soft)]">
         Source: published regatta results reviewed before import · Parentheses indicate a discarded race score · * DNS · † Overseas commitment
       </p>
     </div>

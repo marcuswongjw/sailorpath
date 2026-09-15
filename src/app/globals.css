@@ -213,12 +213,39 @@ table, [data-numeric], .tabular-nums, .sp-num { font-variant-numeric: tabular-nu
 .sp-reversed .text-white, .sp-reversed .text-slate-100, .sp-reversed .text-slate-200, .sp-reversed .text-slate-300 { color: var(--sp-sailcloth); }
 .sp-reversed .text-slate-400, .sp-reversed .text-slate-500 { color: var(--sp-soft-aqua); }
 
+.sp-input, .sp-select {
+  background-color: var(--sp-warm-white);
+  border: 1px solid var(--sp-cool-mist);
+  color: var(--sp-charcoal);
+  border-radius: var(--sp-radius-md);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.sp-input:focus, .sp-select:focus {
+  border-color: var(--sp-color-teal);
+  outline: 2px solid var(--sp-color-teal);
+  outline-offset: 2px;
+  box-shadow: var(--sp-shadow-focus);
+}
+.sp-input::placeholder {
+  color: var(--sp-slate-soft);
+}
+.sp-filter-bar {
+  background-color: var(--sp-warm-white);
+  border: 1px solid var(--sp-cool-veil);
+  border-radius: var(--sp-radius-lg);
+  box-shadow: var(--sp-shadow-sm);
+  padding: 0.75rem;
+}
+
 /* Compatibility bridge for existing feature pages while they adopt semantic tokens. */
-.bg-\[\#090a0f\], .bg-\[\#0b0c13\], .bg-\[\#07080c\], .bg-\[\#0c0d14\], .bg-\[\#0d0f18\], .bg-\[\#10121d\] { background-color: var(--sp-sailcloth) !important; }
-.bg-\[\#131520\], .bg-\[\#181a29\] { background-color: var(--sp-warm-white) !important; }
+.bg-\[\#090a0f\], .bg-\[\#0b0c13\], .bg-\[\#07080c\], .bg-\[\#0c0d14\], .bg-\[\#0d0f18\], .bg-\[\#10121d\], .bg-\[\#0b0c12\], .bg-\[\#0A0F1D\], .bg-\[\#0a0f1d\] { background-color: var(--sp-sailcloth) !important; }
+.bg-\[\#131520\], .bg-\[\#181a29\], .bg-slate-900, .bg-slate-950, .bg-black\/20, .bg-black\/30, .bg-black\/40 { background-color: var(--sp-warm-white) !important; }
 body .text-white, body .text-slate-100, body .text-slate-200 { color: var(--sp-charcoal); }
 body .text-slate-300, body .text-slate-400, body .text-slate-500, body .text-slate-600 { color: var(--sp-slate-soft); }
-body .border-white\/5, body .border-white\/10, body .border-white\/\[0\.07\] { border-color: var(--sp-cool-veil); }
+body .border-white\/5, body .border-white\/10, body .border-white\/20, body .border-white\/\[0\.07\] { border-color: var(--sp-cool-veil); }
 [class*="bg-gradient-"] { background-image: none !important; }
 .bg-orange-600, .bg-orange-500, .bg-amber-500, .bg-amber-600,
 .bg-yellow-500, .bg-yellow-600, .bg-teal-500, .bg-teal-600,

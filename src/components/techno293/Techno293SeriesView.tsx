@@ -73,7 +73,7 @@ export function Techno293SeriesView({
     <div className="space-y-6">
       {/* Series Selection Switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-white/[0.04] border border-white/10">
+        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] shadow-xs">
           {TECHNO293_SERIES_OPTIONS.map((opt) => {
             const isSelected = selectedSeriesKey === opt.key;
             return (
@@ -87,13 +87,13 @@ export function Techno293SeriesView({
                 }}
                 className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
                   isSelected
-                    ? "bg-cyan-500 text-slate-950 font-black shadow-lg shadow-cyan-500/20"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
+                    : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
                 }`}
               >
                 <Trophy
                   className={`h-3.5 w-3.5 ${
-                    isSelected ? "text-slate-950" : "text-cyan-400"
+                    isSelected ? "text-white" : "text-amber-500"
                   }`}
                 />
                 <span>{opt.shortName}</span>
@@ -104,49 +104,49 @@ export function Techno293SeriesView({
       </div>
 
       {/* Series Header Card */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-cyan-950/70 via-slate-900/90 to-blue-950/80 border border-cyan-500/20 p-5 sm:p-7 shadow-2xl backdrop-blur-md">
+      <div className="relative overflow-hidden rounded-3xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] p-5 sm:p-7 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 tracking-wide uppercase">
-              <Sparkles className="h-3.5 w-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 tracking-wide uppercase">
+              <Sparkles className="h-3.5 w-3.5 text-amber-600" />
               Singapore Sailing Grand Prix Series
             </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
+            <h2 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight flex items-center gap-3">
               <span>{series.seriesName}</span>
             </h2>
           </div>
 
           <div className="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">
-            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-3 text-center">
-              <div className="text-xs text-slate-400 font-medium">Completed</div>
-              <div className="text-xl sm:text-2xl font-black text-cyan-400">
+            <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-3 text-center">
+              <div className="text-xs text-[var(--sp-slate-soft)] font-medium">Completed</div>
+              <div className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)]">
                 {series.totalRacesCompleted}
               </div>
-              <div className="text-[10px] text-slate-400">Races Sailed</div>
+              <div className="text-[10px] text-[var(--sp-slate-soft)]">Races Sailed</div>
             </div>
 
-            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-3 text-center">
-              <div className="text-xs text-slate-400 font-medium">Discards</div>
-              <div className="text-xl sm:text-2xl font-black text-amber-400">
+            <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-3 text-center">
+              <div className="text-xs text-[var(--sp-slate-soft)] font-medium">Discards</div>
+              <div className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-teal)]">
                 {series.discardsApplied}
               </div>
-              <div className="text-[10px] text-slate-400">Worst Dropped</div>
+              <div className="text-[10px] text-[var(--sp-slate-soft)]">Worst Dropped</div>
             </div>
 
-            <div className="bg-white/[0.04] border border-white/10 rounded-2xl p-3 text-center">
-              <div className="text-xs text-slate-400 font-medium">Fleet</div>
-              <div className="text-xl sm:text-2xl font-black text-emerald-400">
+            <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-3 text-center">
+              <div className="text-xs text-[var(--sp-slate-soft)] font-medium">Fleet</div>
+              <div className="text-xl sm:text-2xl font-black text-emerald-700">
                 {series.competitors.length}
               </div>
-              <div className="text-[10px] text-slate-400">Competitors</div>
+              <div className="text-[10px] text-[var(--sp-slate-soft)]">Competitors</div>
             </div>
           </div>
         </div>
 
         {/* Grand Prix Rounds Navigation */}
-        <div className="mt-6 pt-5 border-t border-white/10">
-          <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-            <Calendar className="h-3.5 w-3.5 text-cyan-400" />
+        <div className="mt-6 pt-5 border-t border-[var(--sp-cool-veil)]">
+          <div className="text-xs font-bold uppercase tracking-wider text-[var(--sp-slate-soft)] mb-3 flex items-center gap-2">
+            <Calendar className="h-3.5 w-3.5 text-amber-600" />
             <span>Grand Prix Series Rounds</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -160,30 +160,30 @@ export function Techno293SeriesView({
                     onSelectRound ? "cursor-pointer" : ""
                   } ${
                     hasRaces
-                      ? "bg-white/[0.04] border-white/10 hover:border-cyan-400/40 hover:bg-white/[0.07]"
-                      : "bg-white/[0.02] border-white/5 opacity-75"
+                      ? "bg-[var(--sp-warm-white)] border-[var(--sp-cool-veil)] hover:border-[var(--sp-harbour-teal)] hover:shadow-xs"
+                      : "bg-[var(--sp-sailcloth)]/50 border-[var(--sp-cool-veil)] opacity-75"
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2 mb-1">
-                    <span className="text-xs font-black text-cyan-400">
+                    <span className="text-xs font-black text-amber-700">
                       Round {idx + 1}
                     </span>
                     <span
                       className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
                         round.status === "Completed"
-                          ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                          : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                          ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                          : "bg-blue-50 text-blue-800 border border-blue-200"
                       }`}
                     >
                       {round.status}
                     </span>
                   </div>
-                  <div className="text-sm font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-1">
+                  <div className="text-sm font-bold text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-racing-orange)] transition-colors line-clamp-1">
                     {round.shortName}
                   </div>
-                  <div className="text-xs text-slate-400 mt-1 flex items-center justify-between">
+                  <div className="text-xs text-[var(--sp-charcoal-slate)] mt-1 flex items-center justify-between">
                     <span>{round.dates}</span>
-                    <span className="font-semibold text-slate-300">
+                    <span className="font-semibold text-[var(--sp-harbour-teal)] font-mono">
                       {hasRaces ? `${round.raceCount} races` : "Upcoming"}
                     </span>
                   </div>
@@ -198,11 +198,11 @@ export function Techno293SeriesView({
       {top3.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-base sm:text-lg font-black text-white flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-amber-400" />
+            <h3 className="text-base sm:text-lg font-black text-[var(--sp-harbour-shadow)] flex items-center gap-2">
+              <Trophy className="h-4 w-4 text-amber-500" />
               <span>Series Championship Leaders</span>
             </h3>
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-[var(--sp-slate-soft)]">
               Low point cumulative series
             </span>
           </div>
@@ -210,45 +210,50 @@ export function Techno293SeriesView({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
             {top3.map((sailor, idx) => {
               const isFirst = idx === 0;
-              const isSecond = idx === 1;
               const borderStyles = isFirst
-                ? "border-amber-400/50 bg-gradient-to-b from-amber-500/15 via-slate-900/90 to-slate-900/80 shadow-amber-500/10"
-                : isSecond
-                ? "border-slate-300/40 bg-gradient-to-b from-slate-300/10 via-slate-900/90 to-slate-900/80"
-                : "border-amber-700/40 bg-gradient-to-b from-amber-700/10 via-slate-900/90 to-slate-900/80";
+                ? "border-amber-300 bg-amber-50/70 shadow-xs"
+                : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
 
               return (
                 <div
                   key={sailor.name}
-                  className={`relative p-5 rounded-3xl border ${borderStyles} shadow-xl backdrop-blur-md flex flex-col justify-between`}
+                  className={`relative p-5 rounded-2xl border ${borderStyles} flex flex-col justify-between`}
                 >
+                  {isFirst && (
+                    <div className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
+                      <Sparkles className="h-3 w-3 text-amber-600" />
+                      Series Leader
+                    </div>
+                  )}
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="flex items-center gap-2.5">
                       <RankMedalBadge rank={sailor.rank} />
                       <div>
-                        <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
-                          {isFirst ? "Series Leader" : `Podium ${sailor.rank}`}
+                        <div className="text-xs font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
+                          {isFirst ? "Podium #1" : `Podium #${sailor.rank}`}
                         </div>
-                        <h4 className="text-lg sm:text-xl font-black text-white">
+                        <h4 className="text-lg sm:text-xl font-black text-[var(--sp-harbour-shadow)]">
                           {sailor.name}
                         </h4>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-white/10 mt-2">
+                  <div className="flex items-center justify-between text-xs text-[var(--sp-charcoal-slate)] pt-3 border-t border-[var(--sp-cool-veil)] mt-2">
                     <div>
-                      <span className="font-semibold text-slate-200">
+                      <span className="font-mono font-semibold text-[var(--sp-charcoal-slate)]">
                         {sailor.sailNumber || "—"}
                       </span>
-                      <span className="mx-1.5">•</span>
-                      <span>{sailor.ageCategory}</span>
+                      <span className="mx-1.5 text-[var(--sp-slate-soft)]">•</span>
+                      <span className="rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
+                        {sailor.ageCategory}
+                      </span>
                     </div>
-                    <div className="text-right">
-                      <span className="text-lg font-black text-cyan-400">
+                    <div className="text-right font-mono tabular-nums">
+                      <span className="text-lg font-black text-[var(--sp-harbour-shadow)]">
                         {sailor.nettScore}
                       </span>
-                      <span className="text-[10px] text-slate-400 ml-1">
+                      <span className="text-[10px] text-[var(--sp-slate-soft)] ml-1">
                         pts nett ({sailor.grossScore} gross)
                       </span>
                     </div>
@@ -268,28 +273,28 @@ export function Techno293SeriesView({
             return (
               <div
                 key={div.division.id}
-                className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 flex items-center justify-between gap-3"
+                className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-2xl p-4 flex items-center justify-between gap-3 shadow-xs"
               >
                 <div>
-                  <div className="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
-                    <Medal className="h-3.5 w-3.5 text-cyan-400" />
+                  <div className="text-xs font-bold text-amber-800 flex items-center gap-1.5">
+                    <Medal className="h-3.5 w-3.5 text-amber-600" />
                     <span>{div.division.shortLabel} Division</span>
                   </div>
-                  <div className="text-sm font-black text-white mt-1">
+                  <div className="text-sm font-black text-[var(--sp-harbour-shadow)] mt-1">
                     {div.champion ? div.champion.name : "To be decided"}
                   </div>
-                  <div className="text-[11px] text-slate-400">
+                  <div className="text-[11px] text-[var(--sp-slate-soft)]">
                     {div.champion
                       ? `${div.champion.nettScore} pts (${div.competitorCount} sailors)`
                       : `${div.competitorCount} competitors`}
                   </div>
                 </div>
                 {div.isConstituted ? (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                     Constituted
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
                     &lt;3 entries
                   </span>
                 )}
@@ -300,14 +305,14 @@ export function Techno293SeriesView({
 
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
-        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-white/[0.04] border border-white/10">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] shadow-xs">
           <button
             type="button"
             onClick={() => setDivisionFilter("all")}
             className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
               divisionFilter === "all"
-                ? "bg-cyan-500 text-slate-950 font-black shadow-md shadow-cyan-500/20"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
             }`}
           >
             All Competitors ({series.competitors.length})
@@ -325,8 +330,8 @@ export function Techno293SeriesView({
                 onClick={() => setDivisionFilter(div.id)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   isSelected
-                    ? "bg-cyan-500 text-slate-950 font-black shadow-md shadow-cyan-500/20"
-                    : "text-slate-400 hover:text-white"
+                    ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
+                    : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
                 }`}
               >
                 {div.shortLabel} ({count})
@@ -336,23 +341,23 @@ export function Techno293SeriesView({
         </div>
 
         <div className="relative min-w-[220px]">
-          <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--sp-slate-soft)]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search sailor or sail number..."
-            className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400"
+            className="w-full pl-9 pr-3 py-1.5 rounded-xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] text-xs text-[var(--sp-harbour-shadow)] placeholder:text-[var(--sp-slate-soft)] focus:outline-none focus:border-[var(--sp-harbour-teal)] shadow-xs"
           />
         </div>
       </div>
 
       {/* Master Series Standings Table */}
-      <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/60 shadow-xl backdrop-blur-md">
+      <div className="overflow-hidden rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-white/10 bg-white/[0.03] text-slate-400 uppercase tracking-wider font-semibold text-[11px]">
+              <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[11px]">
                 <th className="py-3 px-3 sm:px-4 w-12 text-center">Rank</th>
                 <th className="py-3 px-3 sm:px-4">Sailor</th>
                 <th className="py-3 px-2 sm:px-3 text-center">Sail #</th>
@@ -360,28 +365,28 @@ export function Techno293SeriesView({
                 {roundsWithRaces.map((rnd) => (
                   <th
                     key={rnd.id}
-                    className="py-3 px-2 text-center cursor-pointer hover:text-cyan-300 transition-colors"
+                    className="py-3 px-2 text-center cursor-pointer hover:text-[var(--sp-harbour-shadow)] transition-colors"
                     onClick={() => onSelectRound && onSelectRound(rnd.id)}
                     title={`Click to view ${rnd.name} round standings`}
                   >
                     <div className="font-bold">{rnd.shortName}</div>
-                    <div className="text-[10px] lowercase text-slate-400">
+                    <div className="text-[10px] lowercase text-[var(--sp-slate-soft)]">
                       {rnd.raceCount} races
                     </div>
                   </th>
                 ))}
-                <th className="py-3 px-3 text-right">Gross</th>
-                <th className="py-3 px-4 text-right font-black text-cyan-400">
+                <th className="py-3 px-3 text-right text-[var(--sp-slate-soft)]">Gross</th>
+                <th className="py-3 px-4 text-right font-black text-[var(--sp-harbour-teal)]">
                   Nett
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-[var(--sp-cool-veil)] font-sans">
               {filteredCompetitors.length === 0 ? (
                 <tr>
                   <td
                     colSpan={5 + roundsWithRaces.length}
-                    className="py-8 text-center text-slate-400 text-sm"
+                    className="py-8 text-center text-[var(--sp-slate-soft)] text-sm"
                   >
                     No competitors found matching your criteria.
                   </td>
@@ -396,9 +401,7 @@ export function Techno293SeriesView({
                       onClick={() =>
                         setExpandedSailor(isExpanded ? null : sailor.name)
                       }
-                      className={`group hover:bg-white/[0.04] transition-colors cursor-pointer ${
-                        sailor.rank <= 3 ? "bg-white/[0.01]" : ""
-                      }`}
+                      className="group hover:bg-[var(--sp-sailcloth)]/50 transition-colors cursor-pointer"
                     >
                       <td className="py-3.5 px-3 sm:px-4 text-center">
                         <div className="flex justify-center">
@@ -407,27 +410,27 @@ export function Techno293SeriesView({
                       </td>
 
                       <td className="py-3.5 px-3 sm:px-4">
-                        <div className="font-bold text-white group-hover:text-cyan-300 transition-colors flex items-center gap-2">
+                        <div className="font-bold text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-racing-orange)] transition-colors flex items-center gap-2">
                           <span>{sailor.name}</span>
                           <ChevronDown
-                            className={`h-3 w-3 text-slate-400 transition-transform ${
-                              isExpanded ? "rotate-180 text-cyan-400" : ""
+                            className={`h-3 w-3 text-[var(--sp-slate-soft)] transition-transform ${
+                              isExpanded ? "rotate-180 text-[var(--sp-harbour-teal)]" : ""
                             }`}
                           />
                         </div>
                         {sailor.club && (
-                          <div className="text-[11px] text-slate-400">
+                          <div className="text-[11px] text-[var(--sp-slate-soft)]">
                             {sailor.club}
                           </div>
                         )}
                       </td>
 
-                      <td className="py-3.5 px-2 sm:px-3 text-center font-mono font-medium text-slate-300">
+                      <td className="py-3.5 px-2 sm:px-3 text-center font-mono font-medium text-[var(--sp-charcoal-slate)] tabular-nums">
                         {sailor.sailNumber || "—"}
                       </td>
 
                       <td className="py-3.5 px-2 sm:px-3 text-center">
-                        <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-white/5 text-slate-300 border border-white/10">
+                        <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
                           {sailor.ageCategory}
                         </span>
                       </td>
@@ -446,29 +449,29 @@ export function Techno293SeriesView({
                         return (
                           <td
                             key={rnd.id}
-                            className="py-3.5 px-2 text-center font-mono"
+                            className="py-3.5 px-2 text-center font-mono tabular-nums"
                           >
                             {attended ? (
                               <div>
-                                <span className="font-bold text-slate-200">
+                                <span className="font-bold text-[var(--sp-charcoal-slate)]">
                                   {roundNett}
                                 </span>
-                                <div className="text-[9px] text-slate-400">
+                                <div className="text-[9px] text-[var(--sp-slate-soft)]">
                                   {roundRaces.length} races
                                 </div>
                               </div>
                             ) : (
-                              <span className="text-slate-400 italic">DNC</span>
+                              <span className="text-[var(--sp-slate-soft)] italic">DNC</span>
                             )}
                           </td>
                         );
                       })}
 
-                      <td className="py-3.5 px-3 text-right font-mono text-slate-400">
+                      <td className="py-3.5 px-3 text-right font-mono tabular-nums text-[var(--sp-slate-soft)]">
                         {sailor.grossScore}
                       </td>
 
-                      <td className="py-3.5 px-4 text-right font-mono text-sm font-black text-cyan-400">
+                      <td className="py-3.5 px-4 text-right font-mono tabular-nums text-sm font-black text-[var(--sp-harbour-teal)]">
                         {sailor.nettScore}
                       </td>
                     </tr>
@@ -482,7 +485,7 @@ export function Techno293SeriesView({
 
       {/* Expanded Sailor Race Breakdown Card */}
       {expandedSailor && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-cyan-500/20 space-y-3">
+        <div className="p-4 sm:p-5 rounded-2xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] shadow-xs space-y-3">
           {(() => {
             const s = series.competitors.find((c) => c.name === expandedSailor);
             if (!s) return null;
@@ -490,17 +493,17 @@ export function Techno293SeriesView({
               <>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-white">
+                    <span className="text-sm font-bold text-[var(--sp-harbour-shadow)]">
                       Race-by-Race Breakdown: {s.name} ({s.sailNumber})
                     </span>
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-[var(--sp-slate-soft)]">
                       • {s.ageCategory} • {s.nettScore} pts nett
                     </span>
                   </div>
                   <button
                     type="button"
                     onClick={() => setExpandedSailor(null)}
-                    className="text-xs text-slate-400 hover:text-white"
+                    className="text-xs text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
                   >
                     Close
                   </button>
@@ -510,16 +513,16 @@ export function Techno293SeriesView({
                   {s.races.map((r) => (
                     <div
                       key={`${r.roundId}-${r.raceInRound}`}
-                      className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono flex items-center gap-1.5 ${
+                      className={`px-2.5 py-1.5 rounded-lg border text-xs font-mono tabular-nums flex items-center gap-1.5 ${
                         r.isDiscarded
-                          ? "bg-red-500/10 border-red-500/20 text-slate-400 line-through"
-                          : "bg-white/5 border-white/10 text-white font-bold"
+                          ? "bg-red-50 border-red-200 text-[var(--sp-slate-soft)] line-through"
+                          : "bg-[var(--sp-sailcloth)] border-[var(--sp-cool-veil)] text-[var(--sp-charcoal-slate)] font-bold"
                       }`}
                       title={`${r.roundShortName} R${r.raceInRound}: ${r.score} pts ${
                         r.isDiscarded ? "(Discarded)" : ""
                       }`}
                     >
-                      <span className="text-[10px] text-slate-400">
+                      <span className="text-[10px] text-[var(--sp-slate-soft)]">
                         {r.roundShortName} R{r.raceInRound}:
                       </span>
                       <span>

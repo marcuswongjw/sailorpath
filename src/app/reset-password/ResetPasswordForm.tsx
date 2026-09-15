@@ -60,35 +60,35 @@ export function ResetPasswordForm() {
 
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md glass-card rounded-3xl border border-white/5 p-8 space-y-6">
+      <div className="w-full max-w-md rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 space-y-6 shadow-xs">
         <div className="text-center">
-          <h1 className="text-2xl font-black text-white">Choose a new password</h1>
-          <p className="mt-2 text-xs leading-relaxed text-slate-400">
+          <h1 className="text-2xl font-black text-[var(--sp-harbour-shadow)]">Choose a new password</h1>
+          <p className="mt-2 text-xs leading-relaxed text-[var(--sp-slate-soft)]">
             Your new password must contain at least 6 characters.
           </p>
         </div>
         {!ready ? (
-          <p className="text-center text-sm text-slate-500">Checking reset link…</p>
+          <p className="text-center text-sm text-[var(--sp-slate-soft)]">Checking reset link…</p>
         ) : done ? (
           <div className="space-y-4 text-center">
-            <p className="text-sm font-bold text-emerald-300">Password updated.</p>
-            <Link href="/account" className="inline-flex rounded-full bg-orange-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-orange-500">
+            <p className="text-sm font-bold text-emerald-700">Password updated.</p>
+            <Link href="/account" className="inline-flex sp-btn-primary px-5 py-2.5 text-sm font-bold">
               Open my account
             </Link>
           </div>
         ) : !hasSession ? (
           <div className="space-y-4 text-center">
-            <p className="text-sm leading-relaxed text-rose-300">
+            <p className="text-sm leading-relaxed text-rose-600">
               This reset link is invalid or has expired.
             </p>
-            <Link href="/forgot-password" className="font-bold text-orange-400 hover:text-orange-300">
+            <Link href="/forgot-password" className="font-bold text-[var(--sp-racing-orange)] hover:underline">
               Request a new reset link
             </Link>
           </div>
         ) : (
           <form onSubmit={onSubmit} className="space-y-4">
-            {error && <p className="text-center text-xs font-bold leading-relaxed text-rose-400">{error}</p>}
-            <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+            {error && <p className="text-center text-xs font-bold leading-relaxed text-rose-600">{error}</p>}
+            <label className="block space-y-1.5 text-xs font-bold text-[var(--sp-slate-soft)]">
               New password
               <input
                 type="password"
@@ -97,10 +97,10 @@ export function ResetPasswordForm() {
                 autoComplete="new-password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+                className="sp-input w-full text-sm font-normal"
               />
             </label>
-            <label className="block space-y-1.5 text-xs font-bold text-slate-300">
+            <label className="block space-y-1.5 text-xs font-bold text-[var(--sp-slate-soft)]">
               Confirm new password
               <input
                 type="password"
@@ -109,10 +109,10 @@ export function ResetPasswordForm() {
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(event) => setConfirmPassword(event.target.value)}
-                className="w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-sm font-normal text-white focus:border-orange-500 focus:outline-none"
+                className="sp-input w-full text-sm font-normal"
               />
             </label>
-            <button type="submit" disabled={busy} className="w-full rounded-full bg-orange-600 py-3 text-sm font-bold text-white hover:bg-orange-500 disabled:opacity-50">
+            <button type="submit" disabled={busy} className="w-full sp-btn-primary py-3 text-sm font-bold disabled:opacity-50">
               {busy ? "Updating…" : "Update password"}
             </button>
           </form>

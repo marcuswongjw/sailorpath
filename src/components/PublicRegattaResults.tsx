@@ -19,12 +19,12 @@ type Props = {
 
 const accentClasses = {
   orange: {
-    rank: "text-orange-400",
-    link: "hover:text-orange-400",
+    rank: "text-[var(--sp-racing-orange)]",
+    link: "hover:text-[var(--sp-racing-orange)]",
   },
   sky: {
-    rank: "text-sky-400",
-    link: "hover:text-sky-300",
+    rank: "text-[var(--sp-harbour-teal)]",
+    link: "hover:text-[var(--sp-harbour-teal)]",
   },
 } as const;
 
@@ -34,26 +34,26 @@ function raceValue(race: OfficialRaceResultInput | undefined) {
 }
 
 function raceValueClass(race: OfficialRaceResultInput | undefined) {
-  if (!race) return "text-slate-700";
-  if (race.discarded) return "text-slate-500";
-  if (race.scoringCode) return "text-amber-300";
-  return "text-slate-200";
+  if (!race) return "text-[var(--sp-slate-soft)]/50";
+  if (race.discarded) return "text-[var(--sp-slate-soft)] line-through";
+  if (race.scoringCode) return "text-amber-800 font-bold bg-amber-50 rounded px-1";
+  return "text-[var(--sp-charcoal-slate)]";
 }
 
 function MobileRaceScores({ races }: { races: OfficialRaceResultInput[] }) {
   if (races.length === 0) return null;
   return (
-    <details className="group rounded-xl border border-white/5 bg-black/15">
-      <summary className="cursor-pointer list-none px-3 py-2 text-[11px] font-semibold text-emerald-300 marker:content-none">
+    <details className="group rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
+      <summary className="cursor-pointer list-none px-3 py-2 text-[11px] font-semibold text-[var(--sp-harbour-teal)] marker:content-none">
         <span className="inline-flex items-center gap-1.5">
           <span aria-hidden className="transition-transform group-open:rotate-90">›</span>
           {races.length} published race score{races.length === 1 ? "" : "s"}
         </span>
       </summary>
-      <div className="grid grid-cols-3 gap-1.5 border-t border-white/5 p-2.5">
+      <div className="grid grid-cols-3 gap-1.5 border-t border-[var(--sp-cool-veil)] p-2.5">
         {races.map((race) => (
-          <div key={race.raceNumber} className="rounded-lg bg-black/25 px-2 py-1.5 text-center">
-            <p className="text-[9px] font-semibold uppercase text-slate-600">R{race.raceNumber}</p>
+          <div key={race.raceNumber} className="rounded-lg bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] px-2 py-1.5 text-center">
+            <p className="text-[9px] font-semibold uppercase text-[var(--sp-slate-soft)]">R{race.raceNumber}</p>
             <p className={`text-xs font-bold tabular-nums ${raceValueClass(race)}`}>
               {raceValue(race)}
             </p>
@@ -90,7 +90,7 @@ export function PublicRegattaResults({
           return (
             <article
               key={`${result.sailorId}-${result.regattaId}`}
-              className="rounded-2xl border border-white/5 bg-[#131520]/80 p-3.5 space-y-2"
+              className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-3.5 space-y-2 shadow-2xs"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0 flex-1">
@@ -103,12 +103,12 @@ export function PublicRegattaResults({
                     <Link
                       href={`/${result.handle}`}
                       prefetch
-                      className={`${colors.link} break-words text-[15px] font-bold leading-snug text-white`}
+                      className={`${colors.link} break-words text-[15px] font-bold leading-snug text-[var(--sp-harbour-shadow)]`}
                     >
                       {result.sailorName}
                     </Link>
                   </div>
-                  <p className="mt-1 text-[11px] text-slate-500">
+                  <p className="mt-1 text-[11px] text-[var(--sp-slate-soft)]">
                     {[
                       result.nationality,
                       formatGenderLabel(result.gender) !== "—"
@@ -128,9 +128,9 @@ export function PublicRegattaResults({
                   ["Total", result.totalScore],
                   ["Nett", result.nettScore],
                 ].map(([label, value]) => (
-                  <div key={String(label)} className="rounded-lg bg-black/25 px-2.5 py-2">
-                    <p className="text-[10px] font-semibold uppercase text-slate-500">{label}</p>
-                    <p className="font-mono font-bold tabular-nums text-white">{value ?? "—"}</p>
+                  <div key={String(label)} className="rounded-lg bg-[var(--sp-sailcloth)] px-2.5 py-2">
+                    <p className="text-[10px] font-semibold uppercase text-[var(--sp-slate-soft)]">{label}</p>
+                    <p className="font-mono font-bold tabular-nums text-[var(--sp-harbour-shadow)]">{value ?? "—"}</p>
                   </div>
                 ))}
               </div>
@@ -140,12 +140,12 @@ export function PublicRegattaResults({
               {(overseas || dns) && (
                 <div className="flex flex-wrap gap-1.5">
                   {overseas && (
-                    <span className="rounded-full border border-sky-500/25 bg-sky-500/10 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                    <span className="rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-bold text-sky-800">
                       Overseas
                     </span>
                   )}
                   {dns && (
-                    <span className="rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-bold text-rose-400">
+                    <span className="rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-800">
                       DNS
                     </span>
                   )}
@@ -156,9 +156,9 @@ export function PublicRegattaResults({
         })}
       </div>
 
-      <div className="hidden sm:block overflow-x-auto rounded-2xl border border-white/5">
+      <div className="hidden sm:block overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
         <table className="w-full min-w-[1120px] text-left text-sm">
-          <thead className="bg-white/5 text-xs uppercase text-slate-400">
+          <thead className="bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-slate-soft)] font-semibold border-b border-[var(--sp-cool-veil)]">
             <tr>
               <th className="px-3 py-3 text-center">Rank</th>
               <th className="px-3 py-3">Name</th>
@@ -169,7 +169,7 @@ export function PublicRegattaResults({
                 <th key={raceNumber} className="px-2 py-3 text-center">R{raceNumber}</th>
               ))}
               <th className="px-3 py-3 text-center">Total</th>
-              <th className="px-3 py-3 text-center">Nett</th>
+              <th className="px-3 py-3 text-center font-black text-[var(--sp-harbour-teal)]">Nett</th>
               <th className="px-3 py-3">Percentile</th>
             </tr>
           </thead>
@@ -180,7 +180,7 @@ export function PublicRegattaResults({
               const dns = Boolean(result.isDns) && !overseas;
               const races = new Map(result.raceResults.map((race) => [race.raceNumber, race]));
               return (
-                <tr key={`${result.sailorId}-${result.regattaId}`} className="border-t border-white/5 hover:bg-white/[0.02] transition-colors">
+                <tr key={`${result.sailorId}-${result.regattaId}`} className="border-t border-[var(--sp-cool-veil)] hover:bg-[var(--sp-sailcloth)]/50 transition-colors">
                   <td className="px-3 py-3 text-center">
                     <RankMedalBadge
                       rank={result.rank}
@@ -189,13 +189,13 @@ export function PublicRegattaResults({
                     />
                   </td>
                   <td className="px-3 py-3">
-                    <Link href={`/${result.handle}`} prefetch className={`${colors.link} font-bold text-white`}>
+                    <Link href={`/${result.handle}`} prefetch className={`${colors.link} font-bold text-[var(--sp-harbour-shadow)]`}>
                       {result.sailorName}
                     </Link>
                   </td>
-                  <td className="px-3 py-3 text-center font-mono text-slate-300">{result.nationality || "—"}</td>
-                  <td className="px-3 py-3 text-center text-slate-300">{formatGenderLabel(result.gender)}</td>
-                  <td className="px-3 py-3 text-center font-mono text-slate-300">
+                  <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">{result.nationality || "—"}</td>
+                  <td className="px-3 py-3 text-center text-[var(--sp-charcoal-slate)]">{formatGenderLabel(result.gender)}</td>
+                  <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
                     {result.birthYear ?? birthYear(result.dob) ?? "—"}
                   </td>
                   {raceNumbers.map((raceNumber) => {
@@ -210,12 +210,12 @@ export function PublicRegattaResults({
                       </td>
                     );
                   })}
-                  <td className="px-3 py-3 text-center font-mono text-slate-300">{result.totalScore ?? "—"}</td>
-                  <td className="px-3 py-3 text-center font-mono text-slate-300">{result.nettScore ?? "—"}</td>
+                  <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">{result.totalScore ?? "—"}</td>
+                  <td className="px-3 py-3 text-center font-mono font-bold text-[var(--sp-harbour-shadow)]">{result.nettScore ?? "—"}</td>
                   <td className="px-3 py-3">
                     <div className="flex flex-wrap items-center gap-1.5">
-                      {overseas && <span className="rounded-full border border-sky-500/25 bg-sky-500/10 px-2 py-0.5 text-[10px] font-bold text-sky-300">Overseas</span>}
-                      {dns && <span className="rounded-full border border-rose-500/20 bg-rose-500/10 px-2 py-0.5 text-[10px] font-bold text-rose-400">DNS</span>}
+                      {overseas && <span className="rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-bold text-sky-800">Overseas</span>}
+                      {dns && <span className="rounded-full border border-rose-200 bg-rose-50 px-2 py-0.5 text-[10px] font-bold text-rose-800">DNS</span>}
                       <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${badge.className}`}>{badge.label}</span>
                     </div>
                   </td>

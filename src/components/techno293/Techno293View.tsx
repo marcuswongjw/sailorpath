@@ -105,35 +105,35 @@ export function Techno293View({
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-5 sm:space-y-6">
       {/* Hero Header */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-white/10 pb-5">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-[var(--sp-cool-veil)] pb-5">
         <div className="flex items-center gap-3">
-          <span className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-cyan-500/15 text-cyan-400 border border-cyan-500/25 shadow-lg shadow-cyan-500/10">
+          <span className="flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)]/15 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/25 shadow-xs">
             <Compass className="h-5 w-5 sm:h-6 sm:w-6" />
           </span>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-widest text-cyan-400">
+              <span className="text-xs font-bold uppercase tracking-widest text-[var(--sp-harbour-teal)]">
                 World Sailing International Class
               </span>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20">
                 <Sparkles className="h-3 w-3" /> One Design
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
               Singapore Techno 293
             </h1>
           </div>
         </div>
 
         {/* View Tabs */}
-        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-white/[0.04] border border-white/10 shrink-0">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] shrink-0 shadow-xs">
           <button
             type="button"
             onClick={() => setActiveTab("series")}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "series"
-                ? "bg-cyan-500 text-slate-950 font-black shadow-lg shadow-cyan-500/20"
-                : "text-slate-400 hover:text-white hover:bg-white/5"
+                ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
             }`}
           >
             <Trophy className="h-3.5 w-3.5" />
@@ -144,8 +144,8 @@ export function Techno293View({
             onClick={() => setActiveTab("results")}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "results"
-                ? "bg-cyan-500 text-slate-950 font-black shadow-lg shadow-cyan-500/20"
-                : "text-slate-400 hover:text-white hover:bg-white/5"
+                ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
             }`}
           >
             <Layers className="h-3.5 w-3.5" />
@@ -156,8 +156,8 @@ export function Techno293View({
             onClick={() => setActiveTab("specs")}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "specs"
-                ? "bg-cyan-500 text-slate-950 font-black shadow-lg shadow-cyan-500/20"
-                : "text-slate-400 hover:text-white hover:bg-white/5"
+                ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
             }`}
           >
             <FileText className="h-3.5 w-3.5" />
@@ -181,15 +181,15 @@ export function Techno293View({
       {activeTab === "results" && (
         <div className="space-y-6">
           {/* Regatta Selector */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/[0.02] border border-white/10 rounded-2xl p-3 sm:p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-2xl p-3 sm:p-4 shadow-xs">
             <div className="flex items-center gap-3">
-              <label className="text-xs font-bold uppercase tracking-wider text-slate-400 shrink-0">
+              <label className="text-xs font-bold uppercase tracking-wider text-[var(--sp-slate-soft)] shrink-0">
                 Regatta:
               </label>
               <select
                 value={selectedRegattaId}
                 onChange={(e) => setSelectedRegattaId(e.target.value)}
-                className="rounded-xl bg-slate-900 border border-white/10 px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:border-cyan-500"
+                className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-3 py-1.5 text-xs font-bold text-[var(--sp-harbour-shadow)] focus:outline-none focus:border-[var(--sp-harbour-teal)]"
               >
                 {publishedRegattas.map((r) => (
                   <option key={r.id} value={r.id}>
@@ -200,7 +200,7 @@ export function Techno293View({
             </div>
 
             {/* Gender Filter */}
-            <div className="flex items-center gap-1 bg-white/[0.04] border border-white/10 rounded-xl p-1 shrink-0 self-start sm:self-auto">
+            <div className="flex items-center gap-1 bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-xl p-1 shrink-0 self-start sm:self-auto">
               {(["all", "M", "F"] as const).map((g) => (
                 <button
                   key={g}
@@ -208,8 +208,8 @@ export function Techno293View({
                   onClick={() => setGenderFilter(g)}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all ${
                     genderFilter === g
-                      ? "bg-cyan-500 text-slate-950"
-                      : "text-slate-400 hover:text-white"
+                      ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+                      : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
                   }`}
                 >
                   {g === "all" ? "All" : g === "M" ? "Men / Boys" : "Women / Girls"}
@@ -219,38 +219,38 @@ export function Techno293View({
           </div>
 
           {/* Active Regatta Header */}
-          <div className="bg-slate-900/60 border border-white/10 rounded-3xl p-5 sm:p-6 backdrop-blur-md space-y-3">
+          <div className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-3xl p-5 sm:p-6 shadow-xs space-y-3">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
-                <span className="text-xs font-bold text-cyan-400 uppercase tracking-wide">
+                <span className="text-xs font-bold text-[var(--sp-harbour-teal)] uppercase tracking-wide">
                   {activeRegatta.seriesName || "Singapore Techno 293 Event"}
                 </span>
-                <h2 className="text-xl sm:text-2xl font-black text-white mt-0.5">
+                <h2 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] mt-0.5">
                   {activeRegatta.name}
                 </h2>
               </div>
               <span
                 className={`self-start sm:self-auto px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${
                   activeRegatta.status === "Completed"
-                    ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
-                    : "bg-blue-500/15 text-blue-300 border border-blue-500/30"
+                    ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                    : "bg-blue-50 text-blue-800 border border-blue-200"
                 }`}
               >
                 {activeRegatta.status}
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs text-slate-300 pt-1">
+            <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--sp-charcoal-slate)] pt-1">
               <div className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-cyan-400" />
+                <Calendar className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
                 <span>{activeRegatta.dates}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5 text-cyan-400" />
+                <MapPin className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
                 <span>{activeRegatta.venue}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Wind className="h-3.5 w-3.5 text-cyan-400" />
+                <Wind className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
                 <span>Format: {activeRegatta.format}</span>
               </div>
               {activeRegatta.websiteUrl && (
@@ -258,7 +258,7 @@ export function Techno293View({
                   href={activeRegatta.websiteUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-cyan-400 hover:text-cyan-300 hover:underline"
+                  className="flex items-center gap-1 text-[var(--sp-harbour-teal)] hover:underline"
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
                   <span>Official Notice Board</span>
@@ -267,7 +267,7 @@ export function Techno293View({
             </div>
 
             {activeRegatta.rulesNotes && (
-              <p className="text-xs text-slate-400 pt-2 border-t border-white/10">
+              <p className="text-xs text-[var(--sp-slate-soft)] pt-2 border-t border-[var(--sp-cool-veil)]">
                 {activeRegatta.rulesNotes}
               </p>
             )}
@@ -275,21 +275,21 @@ export function Techno293View({
 
           {/* Regatta Scorecard Table */}
           {displayResults.length === 0 ? (
-            <div className="p-8 text-center rounded-3xl border border-white/10 bg-slate-900/40">
-              <Calendar className="h-8 w-8 text-slate-400 mx-auto mb-2" />
-              <div className="text-base font-bold text-white">
+            <div className="p-8 text-center rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
+              <Calendar className="h-8 w-8 text-[var(--sp-slate-soft)] mx-auto mb-2" />
+              <div className="text-base font-bold text-[var(--sp-harbour-shadow)]">
                 Standings will be published following the conclusion of racing.
               </div>
-              <p className="text-xs text-slate-400 mt-1 max-w-md mx-auto">
+              <p className="text-xs text-[var(--sp-slate-soft)] mt-1 max-w-md mx-auto">
                 {activeRegatta.name} is scheduled for {activeRegatta.dates} at {activeRegatta.venue}.
               </p>
             </div>
           ) : (
-            <div className="overflow-hidden rounded-3xl border border-white/10 bg-slate-900/60 shadow-xl backdrop-blur-md">
+            <div className="overflow-hidden rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-white/10 bg-white/[0.03] text-slate-400 uppercase tracking-wider font-semibold text-[11px]">
+                    <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[11px]">
                       <th className="py-3 px-3 sm:px-4 w-12 text-center">Rank</th>
                       <th className="py-3 px-3 sm:px-4">Sailor</th>
                       <th className="py-3 px-2 sm:px-3 text-center">Sail #</th>
@@ -297,24 +297,22 @@ export function Techno293View({
                       {Array.from({ length: maxRacesInActive }).map((_, i) => (
                         <th
                           key={i}
-                          className="py-3 px-2 text-center font-bold text-slate-300"
+                          className="py-3 px-2 text-center font-bold text-[var(--sp-harbour-shadow)]"
                         >
                           R{i + 1}
                         </th>
                       ))}
-                      <th className="py-3 px-3 text-right">Gross</th>
-                      <th className="py-3 px-4 text-right font-black text-cyan-400">
+                      <th className="py-3 px-3 text-right text-[var(--sp-slate-soft)]">Gross</th>
+                      <th className="py-3 px-4 text-right font-black text-[var(--sp-harbour-teal)]">
                         Nett
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-white/5">
+                  <tbody className="divide-y divide-[var(--sp-cool-veil)] font-sans">
                     {displayResults.map((s) => (
                       <tr
                         key={s.name}
-                        className={`hover:bg-white/[0.04] transition-colors ${
-                          s.rank <= 3 ? "bg-white/[0.01]" : ""
-                        }`}
+                        className="hover:bg-[var(--sp-sailcloth)]/50 transition-colors"
                       >
                         <td className="py-3.5 px-3 sm:px-4 text-center">
                           <div className="flex justify-center">
@@ -323,20 +321,20 @@ export function Techno293View({
                         </td>
 
                         <td className="py-3.5 px-3 sm:px-4">
-                          <div className="font-bold text-white">{s.name}</div>
+                          <div className="font-bold text-[var(--sp-harbour-shadow)]">{s.name}</div>
                           {s.club && (
-                            <div className="text-[11px] text-slate-400">
+                            <div className="text-[11px] text-[var(--sp-slate-soft)]">
                               {s.club}
                             </div>
                           )}
                         </td>
 
-                        <td className="py-3.5 px-2 sm:px-3 text-center font-mono font-medium text-slate-300">
+                        <td className="py-3.5 px-2 sm:px-3 text-center font-mono font-medium text-[var(--sp-charcoal-slate)] tabular-nums">
                           {s.sailNumber || "—"}
                         </td>
 
                         <td className="py-3.5 px-2 sm:px-3 text-center">
-                          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-white/5 text-slate-300 border border-white/10">
+                          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
                             {s.ageCategory || s.division || "Open"}
                           </span>
                         </td>
@@ -347,7 +345,7 @@ export function Techno293View({
                             return (
                               <td
                                 key={i}
-                                className="py-3.5 px-2 text-center text-slate-400"
+                                className="py-3.5 px-2 text-center text-[var(--sp-slate-soft)] font-mono tabular-nums"
                               >
                                 —
                               </td>
@@ -356,10 +354,10 @@ export function Techno293View({
                           return (
                             <td
                               key={i}
-                              className={`py-3.5 px-2 text-center font-mono ${
+                              className={`py-3.5 px-2 text-center font-mono tabular-nums ${
                                 r.isDiscarded
-                                  ? "text-slate-400 line-through bg-red-500/5"
-                                  : "text-slate-200 font-semibold"
+                                  ? "text-[var(--sp-slate-soft)] line-through bg-red-50 text-red-700/80"
+                                  : "text-[var(--sp-charcoal-slate)] font-semibold"
                               }`}
                             >
                               {r.code ? `${r.score} ${r.code}` : r.score}
@@ -367,11 +365,11 @@ export function Techno293View({
                           );
                         })}
 
-                        <td className="py-3.5 px-3 text-right font-mono text-slate-400">
+                        <td className="py-3.5 px-3 text-right font-mono tabular-nums text-[var(--sp-slate-soft)]">
                           {s.grossScore}
                         </td>
 
-                        <td className="py-3.5 px-4 text-right font-mono text-sm font-black text-cyan-400">
+                        <td className="py-3.5 px-4 text-right font-mono tabular-nums text-sm font-black text-[var(--sp-harbour-teal)]">
                           {s.nettScore}
                         </td>
                       </tr>
@@ -387,59 +385,59 @@ export function Techno293View({
       {/* Tab 3: Class Specifications */}
       {activeTab === "specs" && (
         <div className="space-y-6">
-          <div className="p-6 rounded-3xl border border-white/10 bg-slate-900/60 backdrop-blur-md space-y-4">
-            <h2 className="text-xl font-black text-white">
+          <div className="p-6 rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs space-y-4">
+            <h2 className="text-xl font-black text-[var(--sp-harbour-shadow)]">
               Techno 293 One Design Class Overview
             </h2>
-            <p className="text-sm text-slate-300 leading-relaxed max-w-3xl">
+            <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed max-w-3xl">
               The Bic Techno 293 is the World Sailing recognized international youth windsurfing class and former Youth Olympic Games equipment. Known for its strict one-design hull and progressive rig sizes, the class offers close tactical racing from light wind pumping up to 30 knots.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/10">
-              <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 space-y-1">
-                <div className="text-xs font-bold uppercase text-cyan-400">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[var(--sp-cool-veil)]">
+              <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-4 space-y-1">
+                <div className="text-xs font-bold uppercase text-[var(--sp-harbour-teal)]">
                   Board Specifications
                 </div>
-                <div className="text-sm font-semibold text-white">
+                <div className="text-sm font-semibold text-[var(--sp-harbour-shadow)]">
                   {TECHNO293_SPECIFICATIONS.boardSpec}
                 </div>
-                <div className="text-xs text-slate-400">
+                <div className="text-xs text-[var(--sp-slate-soft)]">
                   {TECHNO293_SPECIFICATIONS.daggerboardFin}
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 space-y-1">
-                <div className="text-xs font-bold uppercase text-cyan-400">
+              <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-4 space-y-1">
+                <div className="text-xs font-bold uppercase text-[var(--sp-harbour-teal)]">
                   Rig Categories
                 </div>
-                <div className="text-sm font-semibold text-white">
+                <div className="text-sm font-semibold text-[var(--sp-harbour-shadow)]">
                   {TECHNO293_SPECIFICATIONS.rigSizes}
                 </div>
-                <div className="text-xs text-slate-400">
+                <div className="text-xs text-[var(--sp-slate-soft)]">
                   Official World Sailing OD sail plans
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 space-y-1">
-                <div className="text-xs font-bold uppercase text-cyan-400">
+              <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-4 space-y-1">
+                <div className="text-xs font-bold uppercase text-[var(--sp-harbour-teal)]">
                   Racing Format & Wind Limits
                 </div>
-                <div className="text-sm font-semibold text-white">
+                <div className="text-sm font-semibold text-[var(--sp-harbour-shadow)]">
                   {TECHNO293_SPECIFICATIONS.formatName}
                 </div>
-                <div className="text-xs text-slate-400">
+                <div className="text-xs text-[var(--sp-slate-soft)]">
                   {TECHNO293_SPECIFICATIONS.windLimit}
                 </div>
               </div>
 
-              <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-4 space-y-1">
-                <div className="text-xs font-bold uppercase text-cyan-400">
+              <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-4 space-y-1">
+                <div className="text-xs font-bold uppercase text-[var(--sp-harbour-teal)]">
                   Scoring & Ranking Policy
                 </div>
-                <div className="text-sm font-semibold text-white">
+                <div className="text-sm font-semibold text-[var(--sp-harbour-shadow)]">
                   {TECHNO293_SPECIFICATIONS.scoringSystem}
                 </div>
-                <div className="text-xs text-slate-400">
+                <div className="text-xs text-[var(--sp-slate-soft)]">
                   {TECHNO293_SPECIFICATIONS.rankingPolicy}
                 </div>
               </div>

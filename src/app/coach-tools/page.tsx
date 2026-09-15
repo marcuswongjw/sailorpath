@@ -20,14 +20,18 @@ export default async function CoachToolsPage() {
 
   if (!auth) {
     return (
-      <div className="mx-auto max-w-lg px-4 py-20 text-center space-y-4">
-        <h1 className="text-3xl font-black text-white">Coach dashboard</h1>
-        <p className="text-sm leading-relaxed text-slate-400">
-          Sign in with an approved coach account to manage your squad roster.
-        </p>
-        <Link href="/login?next=%2Fcoach-tools" className="inline-flex rounded-full bg-orange-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-orange-500">
-          Sign in
-        </Link>
+      <div className="mx-auto max-w-lg px-4 py-20 text-center">
+        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 shadow-xs space-y-4">
+          <h1 className="text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">Coach dashboard</h1>
+          <p className="text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
+            Sign in with an approved coach account to manage your squad roster.
+          </p>
+          <div className="pt-2">
+            <Link href="/login?next=%2Fcoach-tools" className="sp-btn-primary">
+              Sign in
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
@@ -40,12 +44,16 @@ export default async function CoachToolsPage() {
       .limit(1)
       .catch(() => []);
     return (
-      <div className="mx-auto max-w-lg px-4 py-20 text-center space-y-4">
-        <h1 className="text-3xl font-black text-white">Coach access required</h1>
-        <p className="text-sm leading-relaxed text-slate-400">
-          Your account is active, but it has not been approved for coach tools yet.
-        </p>
-        <CoachAccessRequestButton initiallyPending={request?.status === "pending"} />
+      <div className="mx-auto max-w-lg px-4 py-20 text-center">
+        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 shadow-xs space-y-4">
+          <h1 className="text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">Coach access required</h1>
+          <p className="text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
+            Your account is active, but it has not been approved for coach tools yet.
+          </p>
+          <div className="pt-2">
+            <CoachAccessRequestButton initiallyPending={request?.status === "pending"} />
+          </div>
+        </div>
       </div>
     );
   }

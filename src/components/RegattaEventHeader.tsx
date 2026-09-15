@@ -38,23 +38,23 @@ export function RegattaEventHeader({
       >
         <Link
           href={rankingsHref}
-          className={isIlca ? "text-sky-400 hover:text-sky-300" : "text-orange-400 hover:text-orange-300"}
+          className="text-[var(--sp-harbour-teal)] hover:underline"
         >
           {isIlca ? "ILCA 4 rankings" : "Optimist rankings"}
         </Link>
-        <span className="text-slate-600" aria-hidden>
+        <span className="text-[var(--sp-slate-soft)]" aria-hidden>
           /
         </span>
         <Link
           href={listHref}
-          className="text-slate-400 hover:text-white"
+          className="text-[var(--sp-charcoal-slate)] hover:text-[var(--sp-harbour-teal)]"
         >
           Regattas
         </Link>
-        <span className="text-slate-600" aria-hidden>
+        <span className="text-[var(--sp-slate-soft)]" aria-hidden>
           /
         </span>
-        <span className="text-slate-500 truncate max-w-[12rem] sm:max-w-xs">
+        <span className="text-[var(--sp-slate-soft)] truncate max-w-[12rem] sm:max-w-xs font-medium">
           {name}
         </span>
       </nav>
@@ -62,29 +62,25 @@ export function RegattaEventHeader({
       <div className="min-w-0">
         <div className="flex flex-wrap items-center gap-2 mb-1.5">
           <span
-            className={`inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide border ${
-              isIlca
-                ? "bg-sky-500/15 text-sky-300 border-sky-500/30"
-                : "bg-orange-500/15 text-orange-300 border-orange-500/30"
-            }`}
+            className="inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)]"
           >
             {classLabel}
           </span>
           {!divisionIsNonRanking && (
-            <span className="inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold border bg-white/5 text-slate-300 border-white/10">
+            <span className="inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-charcoal-slate)]">
               {divLabel}
             </span>
           )}
           {!countsForRanking && (
-            <span className="inline-flex rounded-full px-2 py-0.5 text-[10px] font-bold border bg-sky-500/10 text-sky-300 border-sky-500/25">
+            <span className="inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]">
               Non-ranking
             </span>
           )}
         </div>
-        <h1 className="text-xl sm:text-2xl font-black text-white leading-snug break-words">
+        <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] leading-snug break-words tracking-tight">
           {name}
         </h1>
-        <p className="text-[12px] sm:text-xs text-slate-400 mt-1.5 leading-relaxed">
+        <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] mt-1.5 leading-relaxed">
           {date}
           {" · "}
           fleet {totalFleetSize}
@@ -92,7 +88,7 @@ export function RegattaEventHeader({
             ? ` · ${raceCount} race${raceCount === 1 ? "" : "s"}`
             : ""}
         </p>
-        <p className={`mt-2 text-[11px] font-semibold ${isIlca ? "text-sky-400/90" : "text-orange-400/90"}`}>
+        <p className="mt-2 text-[11px] font-semibold text-[var(--sp-slate-soft)]">
           * = DNS · † = overseas commitment
         </p>
       </div>

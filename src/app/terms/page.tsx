@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
-      <article className="space-y-8 text-sm leading-relaxed text-slate-300">
-        <header className="space-y-3 border-b border-white/10 pb-6">
-          <p className="text-xs font-bold uppercase tracking-wider text-orange-400">
+      <article className="space-y-8 text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
+        <header className="space-y-3 border-b border-[var(--sp-cool-veil)] pb-6">
+          <p className="text-xs font-bold uppercase tracking-wider text-[var(--sp-racing-orange)]">
             SailorPath
           </p>
-          <h1 className="text-3xl font-black tracking-tight text-white">
+          <h1 className="text-3xl font-black tracking-tight text-[var(--sp-harbour-shadow)]">
             Terms of use
           </h1>
-          <p className="text-slate-500">Effective 23 August 2026</p>
-          <p className="text-slate-400">
+          <p className="text-xs font-medium text-[var(--sp-slate-soft)]">Effective 23 August 2026</p>
+          <p className="text-[var(--sp-charcoal-slate)]">
             These terms describe the basic rules for using SailorPath. By using
             the service, you agree to use it responsibly and only for lawful
             purposes.
@@ -44,7 +44,7 @@ export default function TermsPage() {
         </TermsSection>
 
         <TermsSection title="Accounts and profile claims">
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-2 pl-5 text-[var(--sp-charcoal-slate)]">
             <li>Provide accurate account and claim information.</li>
             <li>Keep account credentials private and secure.</li>
             <li>Claim or manage only profiles you are authorized to manage.</li>
@@ -77,7 +77,7 @@ export default function TermsPage() {
 
         <TermsSection title="Acceptable use">
           <p>You must not:</p>
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-2 pl-5 text-[var(--sp-charcoal-slate)]">
             <li>Submit false profile claims or impersonate another person.</li>
             <li>Attempt to access accounts or private information without permission.</li>
             <li>Disrupt, probe, scrape excessively, or misuse the service.</li>
@@ -106,7 +106,7 @@ export default function TermsPage() {
 
         <TermsSection title="Privacy">
           <p>
-            The <Link href="/privacy" className="font-semibold text-orange-400 hover:text-orange-300">Privacy page</Link>{" "}
+            The <Link href="/privacy" className="font-semibold text-[var(--sp-racing-orange)] hover:underline">Privacy page</Link>{" "}
             explains how SailorPath handles public results, account information,
             private profile data, and support requests.
           </p>
@@ -119,7 +119,7 @@ export default function TermsPage() {
           </p>
           <Link
             href="/support"
-            className="inline-flex rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white hover:bg-orange-500"
+            className="inline-flex sp-btn-primary px-5 py-2.5 text-xs font-bold"
           >
             Contact support
           </Link>
@@ -138,7 +138,7 @@ function TermsSection({
 }) {
   return (
     <section className="space-y-3">
-      <h2 className="text-lg font-bold text-white">{title}</h2>
+      <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">{title}</h2>
       {children}
     </section>
   );

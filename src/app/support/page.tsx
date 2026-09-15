@@ -55,17 +55,17 @@ function SupportForm() {
   if (done) {
     return (
       <div className="mx-auto max-w-lg w-full px-4 py-12 sm:py-16 text-center space-y-4">
-        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/25">
+        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-600 border border-emerald-500/25">
           <LifeBuoy className="h-6 w-6" />
         </div>
-        <h1 className="text-2xl font-black text-white">Message received</h1>
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)]">Message received</h1>
+        <p className="text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
           Thanks for writing in. We&apos;ll reply to{" "}
-          <strong className="text-slate-200">{email}</strong> as soon as we can.
+          <strong className="text-[var(--sp-harbour-shadow)]">{email}</strong> as soon as we can.
         </p>
         <Link
           href="/"
-          className="inline-flex rounded-full bg-orange-600 px-5 py-2.5 text-xs font-bold text-white"
+          className="inline-flex sp-btn-primary px-6 py-2.5 text-xs font-bold"
         >
           Back to home
         </Link>
@@ -76,10 +76,10 @@ function SupportForm() {
   return (
     <div className="mx-auto max-w-lg w-full px-4 py-10 sm:py-14 space-y-6">
       <div className="text-center sm:text-left">
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
           Help &amp; support
         </h1>
-        <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+        <p className="mt-2 text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
           Having trouble claiming a profile, rankings, or your account? Send us a
           note — we read every message.
         </p>
@@ -87,24 +87,24 @@ function SupportForm() {
 
       <form
         onSubmit={onSubmit}
-        className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-4 w-full"
+        className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 w-full shadow-xs"
       >
         {error && (
-          <p className="text-xs font-bold text-rose-400 text-center">{error}</p>
+          <p className="text-xs font-bold text-rose-600 text-center">{error}</p>
         )}
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-500 uppercase">
+          <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Your name
           </span>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-sm text-white"
+            className="mt-1.5 sp-input w-full text-sm"
             placeholder="Optional"
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-500 uppercase">
+          <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Email *
           </span>
           <input
@@ -112,18 +112,18 @@ function SupportForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-sm text-white"
+            className="mt-1.5 sp-input w-full text-sm"
             placeholder="you@email.com"
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-500 uppercase">
+          <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Topic
           </span>
           <select
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-sm text-white"
+            className="mt-1.5 sp-select w-full text-sm"
           >
             <option value="account">Account / login</option>
             <option value="claim">Profile claim</option>
@@ -134,7 +134,7 @@ function SupportForm() {
           </select>
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-500 uppercase">
+          <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Message *
           </span>
           <textarea
@@ -142,14 +142,14 @@ function SupportForm() {
             rows={5}
             value={body}
             onChange={(e) => setBody(e.target.value)}
-            className="mt-1 w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-sm text-white"
+            className="mt-1.5 sp-input w-full text-sm"
             placeholder="What happened? What were you trying to do?"
           />
         </label>
         <button
           type="submit"
           disabled={busy}
-          className="w-full rounded-full bg-orange-600 py-3 text-sm font-bold text-white hover:bg-orange-500 disabled:opacity-50"
+          className="w-full sp-btn-primary py-3 text-sm font-bold disabled:opacity-50"
         >
           {busy ? "Sending…" : "Send message"}
         </button>
