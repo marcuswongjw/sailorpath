@@ -182,9 +182,11 @@ export function WingfoilSeriesView({
               {series.seriesName}
             </h2>
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              {seriesMeta.description}
-            </p>
+            {seriesMeta.description ? (
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                {seriesMeta.description}
+              </p>
+            ) : null}
           </div>
 
           {/* Series Metrics Stats Box */}

@@ -174,26 +174,73 @@ function breakSeriesTie(
   return 0;
 }
 
+export type Techno293SeriesKey = "sw-monsoon" | "ne-monsoon";
+
+export const TECHNO293_SERIES_OPTIONS: {
+  key: Techno293SeriesKey;
+  name: string;
+  shortName: string;
+  season: string;
+  websiteUrl: string;
+  noticeBoardUrl?: string;
+}[] = [
+  {
+    key: "sw-monsoon",
+    name: "2026 Southwest Monsoon Grand Prix Series",
+    shortName: "SW Monsoon GP (GP1 - GP3)",
+    season: "Jul – Oct 2026",
+    websiteUrl: "https://www.sailing.org.sg/events/357398",
+  },
+  {
+    key: "ne-monsoon",
+    name: "2026 Northeast Monsoon Grand Prix Series",
+    shortName: "NE Monsoon GP (GP1 - GP3)",
+    season: "Jan – Mar 2026",
+    websiteUrl: "https://www.sailing.org.sg/events/329256",
+  },
+];
+
+export function isTechnoNEMonsoonRegatta(regatta: Techno293Regatta): boolean {
+  if (!regatta) return false;
+  const s = `${regatta.id} ${regatta.name} ${regatta.shortName} ${regatta.seriesName || ""}`.toLowerCase();
+  if (s.includes("sw-") || s.includes("southwest") || s.includes("sw monsoon")) return false;
+  return s.includes("northeast") || s.includes("ne monsoon") || s.includes("ne-monsoon");
+}
+
+export function isTechnoSWMonsoonRegatta(regatta: Techno293Regatta): boolean {
+  if (!regatta) return false;
+  const s = `${regatta.id} ${regatta.name} ${regatta.shortName} ${regatta.seriesName || ""}`.toLowerCase();
+  if (s.includes("ne-") || s.includes("northeast") || s.includes("ne monsoon")) return false;
+  return s.includes("southwest") || s.includes("sw monsoon") || s.includes("sw-monsoon");
+}
+
 /**
- * Calculate cumulative Southwest Monsoon Grand Prix series results for Techno 293.
+ * Calculate cumulative Grand Prix series results for Techno 293 (SW or NE Monsoon).
  */
 export function calculateTechno293SeriesResults(
   regattas: Techno293Regatta[],
-  seriesName: string = "2026 Southwest Monsoon Grand Prix Series"
+  seriesKeyOrName: Techno293SeriesKey | string = "sw-monsoon"
 ): Techno293SeriesResult {
+  const isNE =
+    seriesKeyOrName === "ne-monsoon" ||
+    seriesKeyOrName.toLowerCase().includes("northeast") ||
+    seriesKeyOrName.toLowerCase().includes("ne monsoon");
+
+  const seriesName = isNE
+    ? "2026 Northeast Monsoon Grand Prix Series"
+    : "2026 Southwest Monsoon Grand Prix Series";
+
+  const filterFn = isNE ? isTechnoNEMonsoonRegatta : isTechnoSWMonsoonRegatta;
+
   // Filter regattas belonging to this series and sort in chronological order (GP1 -> GP2 -> GP3)
   const seriesRegattas = regattas
-    .filter(
-      (r) =>
-        r.seriesName?.toLowerCase().includes("southwest") ||
-        r.name.toLowerCase().includes("southwest") ||
-        r.name.toLowerCase().includes("sw monsoon") ||
-        r.shortName.toLowerCase().includes("sw monsoon")
-    )
+    .filter(filterFn)
     .sort((a, b) => {
-      const partA = a.seriesPart || a.shortName || a.name;
-      const partB = b.seriesPart || b.shortName || b.name;
-      return partA.localeCompare(partB);
+      const getNum = (r: Techno293Regatta) => {
+        const m = (r.seriesPart || r.shortName || r.name).match(/([123])/);
+        return m ? parseInt(m[1], 10) : 0;
+      };
+      return getNum(a) - getNum(b);
     });
 
   const rounds: Techno293RoundSummary[] = [];

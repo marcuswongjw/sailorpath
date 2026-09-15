@@ -348,8 +348,7 @@ export const WINGFOIL_SERIES_OPTIONS: {
     key: "ne-monsoon",
     name: "2026 Northeast Monsoon Grand Prix Series",
     shortName: "NE Monsoon GP (GP1 - GP3)",
-    description:
-      "Official Singapore Championship series uniting Round 1 (GP1 @ Constant Wind), Round 2 (GP2 @ CSC Changi), and Round 3 (GP3 @ National Sailing Centre). Up to 72 races under World Sailing RRS Appendix A & NoR 12.",
+    description: "",
     season: "Jan – Mar 2026",
     websiteUrl: "https://www.sailing.org.sg",
     noticeBoardUrl: "https://www.racingrulesofsailing.org",
@@ -358,8 +357,7 @@ export const WINGFOIL_SERIES_OPTIONS: {
     key: "sw-monsoon",
     name: "2026 SW Monsoon Grand Prix Series",
     shortName: "SW Monsoon GP (GP1 - GP3)",
-    description:
-      "Official Singapore Championship series uniting Series 1 (GP1 @ Constant Wind), Series 2 (GP2 @ PAssion Wave @ East Coast), and Series 3 (GP3 @ National Sailing Centre). Up to 72 races under World Sailing RRS B8 & NoR 12.",
+    description: "",
     season: "Jul – Oct 2026",
     websiteUrl: "https://www.sailing.org.sg/events/357398",
     noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14698/event",

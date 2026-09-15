@@ -257,8 +257,7 @@ export function WingfoilView({
           {(() => {
             const maxRaces = Math.max(
               displayResults.reduce((max, r) => Math.max(max, r.races?.length || 0), 0),
-              activeRegatta.results?.reduce((max, r) => Math.max(max, r.races?.length || 0), 0) || 0,
-              9
+              activeRegatta.results?.reduce((max, r) => Math.max(max, r.races?.length || 0), 0) || 0
             );
 
             return (
@@ -304,23 +303,33 @@ export function WingfoilView({
                             <p className="text-slate-300 font-medium truncate">{racer.club}</p>
                             <p className="text-[10px] text-slate-500 truncate">{racer.schoolName}</p>
                           </td>
-                          {racer.races.map((r, i) => (
-                            <td
-                              key={i}
-                              className={`px-2 py-3 text-center font-mono text-xs ${
-                                r.isDiscarded
-                                  ? "line-through text-slate-600 bg-white/[0.01]"
-                                  : r.score === 1
-                                    ? "font-black text-amber-300 bg-amber-500/10"
-                                    : r.score <= 3
-                                      ? "font-bold text-teal-200"
-                                      : "text-slate-400"
-                              }`}
-                              title={r.code ? `Race ${i + 1}: ${r.code} (${r.score} pts)` : undefined}
-                            >
-                              {r.code && r.score !== 1 ? `${r.score}${r.code}` : r.score}
-                            </td>
-                          ))}
+                          {Array.from({ length: maxRaces }).map((_, i) => {
+                            const r = racer.races[i];
+                            if (!r) {
+                              return (
+                                <td key={i} className="px-2 py-3 text-center text-slate-600">
+                                  —
+                                </td>
+                              );
+                            }
+                            return (
+                              <td
+                                key={i}
+                                className={`px-2 py-3 text-center font-mono text-xs ${
+                                  r.isDiscarded
+                                    ? "line-through text-slate-600 bg-white/[0.01]"
+                                    : r.score === 1
+                                      ? "font-black text-amber-300 bg-amber-500/10"
+                                      : r.score <= 3
+                                        ? "font-bold text-teal-200"
+                                        : "text-slate-400"
+                                }`}
+                                title={r.code ? `Race ${i + 1}: ${r.code} (${r.score} pts)` : undefined}
+                              >
+                                {r.code && r.score !== 1 ? `${r.score}${r.code}` : r.score}
+                              </td>
+                            );
+                          })}
                           <td className="px-3 py-3 text-right font-mono text-slate-400">
                             {racer.grossScore}
                           </td>

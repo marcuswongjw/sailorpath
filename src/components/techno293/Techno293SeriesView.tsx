@@ -19,8 +19,10 @@ import {
   calculateTechno293SeriesResults,
   OFFICIAL_TECHNO293_DIVISIONS,
   isTechno293SailorInDivision,
+  TECHNO293_SERIES_OPTIONS,
   type Techno293SeriesResult,
   type Techno293DivisionId,
+  type Techno293SeriesKey,
 } from "@/lib/techno293Series";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
@@ -31,9 +33,12 @@ export function Techno293SeriesView({
   regattas: Techno293Regatta[];
   onSelectRound?: (roundId: string) => void;
 }) {
+  const [selectedSeriesKey, setSelectedSeriesKey] =
+    useState<Techno293SeriesKey>("sw-monsoon");
+
   const series: Techno293SeriesResult = useMemo(
-    () => calculateTechno293SeriesResults(regattas),
-    [regattas]
+    () => calculateTechno293SeriesResults(regattas, selectedSeriesKey),
+    [regattas, selectedSeriesKey]
   );
 
   const [divisionFilter, setDivisionFilter] = useState<string>("all");
@@ -71,6 +76,38 @@ export function Techno293SeriesView({
 
   return (
     <div className="space-y-6">
+      {/* Series Selection Switcher */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-white/[0.04] border border-white/10">
+          {TECHNO293_SERIES_OPTIONS.map((opt) => {
+            const isSelected = selectedSeriesKey === opt.key;
+            return (
+              <button
+                key={opt.key}
+                type="button"
+                onClick={() => {
+                  setSelectedSeriesKey(opt.key);
+                  setDivisionFilter("all");
+                  setSearchQuery("");
+                }}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                  isSelected
+                    ? "bg-cyan-500 text-slate-950 font-black shadow-lg shadow-cyan-500/20"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <Trophy
+                  className={`h-3.5 w-3.5 ${
+                    isSelected ? "text-slate-950" : "text-cyan-400"
+                  }`}
+                />
+                <span>{opt.shortName}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Series Header Card */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-cyan-950/70 via-slate-900/90 to-blue-950/80 border border-cyan-500/20 p-5 sm:p-7 shadow-2xl backdrop-blur-md">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
@@ -82,9 +119,6 @@ export function Techno293SeriesView({
             <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-3">
               <span>{series.seriesName}</span>
             </h2>
-            <p className="text-sm text-slate-300 max-w-2xl leading-relaxed">
-              Cumulative ranking across Grand Prix 1, 2, and 3. Scored using RRS Appendix A with cumulative series discards per Notice of Race clause 12.5.2.
-            </p>
           </div>
 
           <div className="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">

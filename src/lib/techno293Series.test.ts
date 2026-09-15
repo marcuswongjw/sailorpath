@@ -92,4 +92,27 @@ describe("Techno 293 Series Scoring Engine", () => {
     expect(womenDiv?.competitorCount).toBe(3);
     expect(womenDiv?.isConstituted).toBe(true);
   });
+
+  it("calculates cumulative NE Monsoon series results across GP1, GP2, and GP3", () => {
+    const series = calculateTechno293SeriesResults(SINGAPORE_TECHNO293_REGATTAS, "ne-monsoon");
+
+    // GP1 (11) + GP2 (14) + GP3 (7) = 32 races
+    expect(series.totalRacesCompleted).toBe(32);
+    // 32 races -> 7 discards per NoR clause 12.5.2
+    expect(series.discardsApplied).toBe(7);
+    expect(series.competitors.length).toBe(8);
+
+    // Leader of NE series should be Axl Tan
+    const leader = series.competitors[0];
+    expect(leader.name).toBe("Axl Tan");
+    expect(leader.rank).toBe(1);
+
+    // Division champions
+    const openDiv = series.divisions.find((d) => d.division.id === "open");
+    expect(openDiv?.champion?.name).toBe("Axl Tan");
+
+    const u17Div = series.divisions.find((d) => d.division.id === "u17");
+    expect(u17Div?.isConstituted).toBe(true);
+    expect(u17Div?.champion?.name).toBe("Trevor Ng");
+  });
 });
