@@ -14,6 +14,9 @@ import {
   Users,
   CheckCircle2,
   AlertTriangle,
+  ExternalLink,
+  MapPin,
+  Flag,
 } from "lucide-react";
 import {
   type WingfoilRegatta,
@@ -25,20 +28,34 @@ import {
   type WingfoilSeriesResult,
   type SeriesSailorResult,
   type SeriesDivisionId,
+  type WingfoilSeriesKey,
+  WINGFOIL_SERIES_OPTIONS,
   getNoRDiscardsCount,
 } from "@/lib/wingfoilSeries";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
 export function WingfoilSeriesView({
   regattas,
+  initialSeriesKey = "ne-monsoon",
   onSelectRound,
 }: {
   regattas: WingfoilRegatta[];
+  initialSeriesKey?: WingfoilSeriesKey;
   onSelectRound?: (roundId: string) => void;
 }) {
+  const [selectedSeriesKey, setSelectedSeriesKey] =
+    useState<WingfoilSeriesKey>(initialSeriesKey);
+
+  const seriesMeta = useMemo(
+    () =>
+      WINGFOIL_SERIES_OPTIONS.find((s) => s.key === selectedSeriesKey) ||
+      WINGFOIL_SERIES_OPTIONS[0],
+    [selectedSeriesKey]
+  );
+
   const series: WingfoilSeriesResult = useMemo(
-    () => calculateWingfoilSeries(regattas),
-    [regattas]
+    () => calculateWingfoilSeries(regattas, selectedSeriesKey),
+    [regattas, selectedSeriesKey]
   );
 
   const [divisionFilter, setDivisionFilter] = useState<string>("all");
@@ -81,6 +98,73 @@ export function WingfoilSeriesView({
 
   return (
     <div className="space-y-6">
+      {/* Series Selection Toggle & Official Links */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-white/[0.04] border border-white/10">
+          {WINGFOIL_SERIES_OPTIONS.map((opt) => {
+            const isSelected = selectedSeriesKey === opt.key;
+            return (
+              <button
+                key={opt.key}
+                type="button"
+                onClick={() => {
+                  setSelectedSeriesKey(opt.key);
+                  setDivisionFilter("all");
+                  setSearchQuery("");
+                }}
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+                  isSelected
+                    ? "bg-amber-500 text-slate-950 font-black shadow-lg shadow-amber-500/10"
+                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <Trophy
+                  className={`h-3.5 w-3.5 ${
+                    isSelected ? "text-slate-950" : "text-amber-400"
+                  }`}
+                />
+                <span>{opt.shortName}</span>
+                <span
+                  className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
+                    isSelected
+                      ? "bg-black/20 text-slate-900 font-bold"
+                      : "bg-white/10 text-slate-400"
+                  }`}
+                >
+                  {opt.season}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Official Links */}
+        <div className="flex items-center gap-2 text-xs">
+          {seriesMeta.websiteUrl && (
+            <a
+              href={seriesMeta.websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-teal-500/30 bg-teal-500/10 px-3 py-1.5 font-bold text-teal-300 hover:bg-teal-500/20 transition-colors"
+            >
+              <span>SSF Event Hub</span>
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          )}
+          {seriesMeta.noticeBoardUrl && (
+            <a
+              href={seriesMeta.noticeBoardUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-1.5 font-bold text-amber-300 hover:bg-amber-500/20 transition-colors"
+            >
+              <span>Official Notice Board</span>
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          )}
+        </div>
+      </div>
+
       {/* Series Championship Banner */}
       <div className="relative overflow-hidden rounded-3xl border border-amber-500/20 bg-gradient-to-br from-[#1b1710] via-[#12131c] to-[#0c0d14] p-6 sm:p-8 shadow-2xl">
         <div className="absolute -top-16 -right-16 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
@@ -94,17 +178,18 @@ export function WingfoilSeriesView({
                 Overall Championship
               </span>
               <span className="rounded-full bg-teal-500/10 border border-teal-500/20 px-2.5 py-0.5 text-[11px] font-bold text-teal-400">
-                World Sailing RRS App. A &amp; NoR 12
+                {selectedSeriesKey === "sw-monsoon"
+                  ? "World Sailing RRS B8 & NoR 12"
+                  : "World Sailing RRS App. A & NoR 12"}
               </span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight">
-              2026 Northeast Monsoon Grand Prix Series
+              {series.seriesName}
             </h2>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Official Singapore Championship series uniting Round 1 (GP1), Round 2 (GP2), and Round 3 (GP3).
-              All individual heats pooled into a continuous series ranking of up to 72 races under World Sailing Low Point scoring with cumulative discards.
+              {seriesMeta.description}
             </p>
           </div>
 
@@ -118,7 +203,10 @@ export function WingfoilSeriesView({
                 {series.totalRacesCompleted} <span className="text-xs text-slate-400 font-normal">/ 72</span>
               </p>
               <p className="text-[10px] text-teal-400 flex items-center gap-1">
-                <CheckCircle2 className="h-3 w-3" /> Valid Series (6+ min)
+                <CheckCircle2 className="h-3 w-3" />
+                {series.totalRacesCompleted >= 6
+                  ? "Valid Series (6+ min)"
+                  : "Target: 6+ min"}
               </p>
             </div>
 
@@ -142,7 +230,7 @@ export function WingfoilSeriesView({
                 {series.competitors.length}
               </p>
               <p className="text-[10px] text-slate-400">
-                Across 3 Rounds
+                Across {series.rounds.length} Rounds
               </p>
             </div>
           </div>
@@ -164,15 +252,108 @@ export function WingfoilSeriesView({
             >
               <span>Round {idx + 1}: {rnd.shortName}</span>
               <span className="rounded-md bg-black/40 px-1.5 py-0.5 text-[10px] font-mono text-slate-300">
-                {rnd.raceCount > 0 ? `${rnd.raceCount} races` : rnd.status}
+                {rnd.raceCount > 0 ? `${rnd.raceCount} races` : rnd.dates || rnd.status}
               </span>
             </button>
           ))}
         </div>
       </div>
 
-      {/* Top 3 Podium Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      {/* If 0 races have been completed, show the upcoming championship schedule & specifications */}
+      {series.totalRacesCompleted === 0 ? (
+        <div className="rounded-3xl border border-white/10 bg-[#12131c] p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+            <div>
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-400">
+                <Calendar className="h-4 w-4" />
+                <span>Championship Schedule &amp; Race Structure</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black text-white mt-1">
+                {series.seriesName}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl">
+                Racing has not commenced for this series yet. Standings, discards, and division leaderboards will update live as heats conclude.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-teal-500/20 bg-teal-500/10 px-4 py-3 text-right shrink-0">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-teal-400">Series Target</p>
+              <p className="text-xl font-black text-white">Up to 72 Races</p>
+              <p className="text-[11px] text-slate-400">Min. 6 races to constitute series</p>
+            </div>
+          </div>
+
+          {/* 3 Scheduled Rounds Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {series.rounds.map((rnd, idx) => (
+              <div
+                key={rnd.id}
+                className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-3 hover:border-amber-500/30 transition-colors"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2.5 py-0.5 text-[10px] font-black text-amber-300 uppercase">
+                    Round {idx + 1} of 3
+                  </span>
+                  <span className="text-[11px] font-mono text-slate-400 font-semibold">
+                    {rnd.status}
+                  </span>
+                </div>
+
+                <div>
+                  <h4 className="font-black text-white text-base">{rnd.name}</h4>
+                  <p className="text-xs text-slate-400 mt-1 flex items-center gap-1.5">
+                    <Calendar className="h-3.5 w-3.5 text-teal-400 shrink-0" />
+                    <span>{rnd.dates}</span>
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-white/5 space-y-1.5 text-xs text-slate-400">
+                  <p className="flex items-start gap-1.5">
+                    <MapPin className="h-3.5 w-3.5 text-slate-500 shrink-0 mt-0.5" />
+                    <span>
+                      {rnd.id.includes("gp1")
+                        ? "Constant Wind Sea Sport Centre (Kite Foil: Marina Parade / ECP D1)"
+                        : rnd.id.includes("gp2")
+                        ? "PAssion Wave @ East Coast (Kite Foil: Marina Parade / ECP D1)"
+                        : "National Sailing Centre (Championship Grand Finale)"}
+                    </span>
+                  </p>
+                  <p className="flex items-center gap-1.5 text-[11px] text-slate-500">
+                    <Flag className="h-3 w-3 text-slate-500 shrink-0" />
+                    <span>Slalom / Course / Marathon · Up to 24 heats</span>
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Series Notice of Race Specifications */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5 space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Format</p>
+              <p className="text-sm font-bold text-white">Slalom / Course / Marathon</p>
+              <p className="text-[11px] text-slate-500">Fast-paced course racing &amp; endurance</p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5 space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Classes</p>
+              <p className="text-sm font-bold text-white">Wing Foil, Wind Foil, Techno 293, Kite Foil</p>
+              <p className="text-[11px] text-slate-500">Open &amp; age-group divisions</p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5 space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Constitution Rule</p>
+              <p className="text-sm font-bold text-white">Min. 3 Competitors</p>
+              <p className="text-[11px] text-slate-500">Required to constitute a division (NoR 4.2)</p>
+            </div>
+            <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5 space-y-1">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Scoring &amp; Discards</p>
+              <p className="text-sm font-bold text-white">Cumulative Discard Table</p>
+              <p className="text-[11px] text-slate-500">Per NoR 12.5.2 (1 at 5 races, up to 12 discards)</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <>
+          {/* Top 3 Podium Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {top3.map((sailor, idx) => {
           const isWinner = idx === 0;
           return (
@@ -588,6 +769,8 @@ export function WingfoilSeriesView({
           );
         })}
       </div>
+        </>
+      )}
     </div>
   );
 }

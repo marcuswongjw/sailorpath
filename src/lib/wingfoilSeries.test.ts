@@ -3,6 +3,7 @@ import {
   getNoRDiscardsCount,
   calculateWingfoilSeries,
   isNEMonsoonSeriesRegatta,
+  isSWMonsoonSeriesRegatta,
 } from "./wingfoilSeries";
 import type { WingfoilRegatta } from "./wingfoil";
 
@@ -276,5 +277,107 @@ describe("isNEMonsoonSeriesRegatta", () => {
         shortName: "SNSC 2026",
       } as any)
     ).toBe(false);
+  });
+});
+
+describe("isSWMonsoonSeriesRegatta", () => {
+  it("strictly includes GP1, GP2, and GP3 of Southwest Monsoon", () => {
+    expect(
+      isSWMonsoonSeriesRegatta({
+        id: "sw-monsoon-series-gp1-2026",
+        name: "2026 SW Monsoon Grand Prix 1 (Round 1 of 3)",
+        shortName: "SW Monsoon GP1",
+        seriesName: "2026 SW Monsoon Grand Prix Series",
+      } as any)
+    ).toBe(true);
+
+    expect(
+      isSWMonsoonSeriesRegatta({
+        id: "sw-monsoon-series-gp2-2026",
+        name: "2026 SW Monsoon Grand Prix 2 (Round 2 of 3)",
+        shortName: "SW Monsoon GP2",
+        seriesName: "2026 SW Monsoon Grand Prix Series",
+      } as any)
+    ).toBe(true);
+
+    expect(
+      isSWMonsoonSeriesRegatta({
+        id: "sw-monsoon-series-gp3-2026",
+        name: "2026 SW Monsoon Grand Prix 3 (Round 3 of 3)",
+        shortName: "SW Monsoon GP3",
+        seriesName: "2026 SW Monsoon Grand Prix Series",
+      } as any)
+    ).toBe(true);
+  });
+
+  it("strictly excludes Northeast Monsoon and non-SW regattas", () => {
+    expect(
+      isSWMonsoonSeriesRegatta({
+        id: "ne-monsoon-series-gp1-2026",
+        name: "2026 Northeast Monsoon Grand Prix 1 (Round 1 of 3)",
+        shortName: "NE Monsoon GP1",
+        seriesName: "2026 Northeast Monsoon Grand Prix Series",
+      } as any)
+    ).toBe(false);
+
+    expect(
+      isSWMonsoonSeriesRegatta({
+        id: "snsc-2026-wingfoil",
+        name: "Singapore National Sailing Championships 2026",
+        shortName: "SNSC 2026",
+      } as any)
+    ).toBe(false);
+  });
+});
+
+describe("calculateWingfoilSeries with sw-monsoon", () => {
+  it("calculates series results for SW Monsoon rounds and returns correct series title", () => {
+    const swGP1: WingfoilRegatta = {
+      id: "sw-monsoon-series-gp1-2026",
+      name: "2026 SW Monsoon Grand Prix 1 (Round 1 of 3)",
+      shortName: "SW Monsoon GP1",
+      dates: "11-12 Jul 2026",
+      venue: "Constant Wind",
+      organizer: "SSF & WAS",
+      format: "Slalom / Course / Marathon",
+      status: "Completed",
+      scoringSystem: "RRS B8",
+      rulesNotes: "Round 1",
+      seriesName: "2026 SW Monsoon Grand Prix Series",
+      results: [
+        {
+          rank: 1,
+          name: "Racer Alpha",
+          sailNumber: "101",
+          gender: "M",
+          ageCategory: "Open",
+          schoolName: "",
+          club: "Constant Wind",
+          races: [{ score: 1 }, { score: 1 }],
+          grossScore: 2,
+          nettScore: 2,
+        },
+        {
+          rank: 2,
+          name: "Racer Beta",
+          sailNumber: "102",
+          gender: "M",
+          ageCategory: "Master",
+          schoolName: "",
+          club: "Aloha",
+          races: [{ score: 2 }, { score: 2 }],
+          grossScore: 4,
+          nettScore: 4,
+        },
+      ],
+    };
+
+    const series = calculateWingfoilSeries([swGP1], "sw-monsoon");
+    expect(series.seriesName).toBe("2026 SW Monsoon Grand Prix Series");
+    expect(series.rounds).toHaveLength(1);
+    expect(series.rounds[0].shortName).toBe("SW Monsoon GP1");
+    expect(series.competitors).toHaveLength(2);
+    expect(series.competitors[0].name).toBe("Racer Alpha");
+    expect(series.competitors[0].nettScore).toBe(2);
   });
 });

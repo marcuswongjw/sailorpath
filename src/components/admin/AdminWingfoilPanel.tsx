@@ -1308,6 +1308,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                     <option value="Sprint Slalom">Sprint Slalom</option>
                     <option value="Course Race">Course Race</option>
                     <option value="Marathon">Marathon</option>
+                    <option value="Slalom / Course / Marathon">Slalom / Course / Marathon</option>
                   </select>
                 </div>
                 <div>

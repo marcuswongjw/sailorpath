@@ -42,7 +42,24 @@ describe("WingfoilView", () => {
     fireEvent.click(seriesButton);
 
     expect(
-      screen.getByText("2026 Southwest Monsoon Grand Prix Series 1–3")
+      screen.getByText("2026 SW Monsoon Grand Prix 1 (Round 1 of 3)")
     ).toBeInTheDocument();
+  });
+
+  it("switches between NE Monsoon and SW Monsoon series championships", () => {
+    render(<WingfoilView />);
+
+    // By default, NE Monsoon is selected
+    expect(screen.getByText("2026 Northeast Monsoon Grand Prix Series")).toBeInTheDocument();
+
+    // Click the SW Monsoon GP switcher button
+    const swButton = screen.getByRole("button", { name: /SW Monsoon GP/i });
+    fireEvent.click(swButton);
+
+    // Expect SW Monsoon series title and scheduled rounds to be displayed
+    expect(
+      screen.getAllByText("2026 SW Monsoon Grand Prix Series").length
+    ).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/Racing has not commenced for this series yet/i)).toBeInTheDocument();
   });
 });

@@ -24,13 +24,19 @@ export type WingfoilRegatta = {
   dates: string;
   venue: string;
   organizer: string;
-  format: "Sprint Slalom" | "Course Race" | "Marathon";
+  format:
+    | "Sprint Slalom"
+    | "Course Race"
+    | "Marathon"
+    | "Slalom / Course / Marathon";
   status: "Completed" | "Upcoming";
   lifecycleStatus?: "draft" | "in_review" | "published" | "archived";
   scoringSystem: string;
   rulesNotes: string;
   seriesName?: string;
   seriesPart?: string;
+  websiteUrl?: string;
+  noticeBoardUrl?: string;
   results?: WingfoilSailorResult[];
 };
 
@@ -790,17 +796,55 @@ export const SINGAPORE_WINGFOIL_REGATTAS: WingfoilRegatta[] = [
       "Championship Grand Finale of the 2026 NE Monsoon Grand Prix Series. Overall series championship coronation across all divisions.",
   },
   {
-    id: "sw-monsoon-gp-2026",
-    name: "2026 Southwest Monsoon Grand Prix Series 1–3",
-    shortName: "SW Monsoon GP",
-    dates: "July – September 2026",
-    venue: "Marine Parade / East Coast Park, Singapore",
+    id: "sw-monsoon-series-gp1-2026",
+    name: "2026 SW Monsoon Grand Prix 1 (Round 1 of 3)",
+    shortName: "SW Monsoon GP1",
+    dates: "11 - 12 July 2026",
+    venue: "Constant Wind Sea Sport Centre, Singapore",
     organizer: "Singapore Sailing Federation & Windsurfing Association Singapore",
-    format: "Sprint Slalom",
-    status: "Completed",
-    scoringSystem: "Series Points (Low Point System RRS B8)",
+    format: "Slalom / Course / Marathon",
+    status: "Upcoming",
+    scoringSystem: "Up to 24 races, Low Point System (RRS B8)",
+    seriesName: "2026 SW Monsoon Grand Prix Series",
+    seriesPart: "Round 1 of 3",
+    websiteUrl: "https://www.sailing.org.sg/events/357398",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14698/event",
     rulesNotes:
-      "Slalom, Course, Marathon and GPS Speed challenges across Open, U19, U16, Masters and Women divisions.",
+      "Round 1 of the 2026 SW Monsoon Grand Prix Series held at Constant Wind Sea Sport Centre (Kite Foil at Marina Parade / ECP D1). Slalom, Course, and Marathon racing across Wind Foil, Wing Foil, Techno 293, and Kite Foil classes.",
+  },
+  {
+    id: "sw-monsoon-series-gp2-2026",
+    name: "2026 SW Monsoon Grand Prix 2 (Round 2 of 3)",
+    shortName: "SW Monsoon GP2",
+    dates: "29 - 30 August 2026",
+    venue: "PAssion Wave @ East Coast, Singapore",
+    organizer: "Singapore Sailing Federation & Windsurfing Association Singapore",
+    format: "Slalom / Course / Marathon",
+    status: "Upcoming",
+    scoringSystem: "Up to 24 races, Low Point System (RRS B8)",
+    seriesName: "2026 SW Monsoon Grand Prix Series",
+    seriesPart: "Round 2 of 3",
+    websiteUrl: "https://www.sailing.org.sg/events/357398",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14698/event",
+    rulesNotes:
+      "Round 2 of the 2026 SW Monsoon Grand Prix Series held at PAssion Wave @ East Coast (Kite Foil at Marina Parade / ECP D1). Slalom, Course, and Marathon racing across Wind Foil, Wing Foil, Techno 293, and Kite Foil classes.",
+  },
+  {
+    id: "sw-monsoon-series-gp3-2026",
+    name: "2026 SW Monsoon Grand Prix 3 (Round 3 of 3)",
+    shortName: "SW Monsoon GP3",
+    dates: "10 - 11 October 2026",
+    venue: "National Sailing Centre, Singapore",
+    organizer: "Singapore Sailing Federation & Windsurfing Association Singapore",
+    format: "Slalom / Course / Marathon",
+    status: "Upcoming",
+    scoringSystem: "Up to 24 races, Series Grand Finale (RRS B8)",
+    seriesName: "2026 SW Monsoon Grand Prix Series",
+    seriesPart: "Round 3 of 3 (Grand Finale)",
+    websiteUrl: "https://www.sailing.org.sg/events/357398",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14698/event",
+    rulesNotes:
+      "Championship Grand Finale of the 2026 SW Monsoon Grand Prix Series held at National Sailing Centre. Series coronation across all divisions.",
   },
   {
     id: "snsc-2026-wingfoil",

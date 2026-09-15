@@ -294,19 +294,102 @@ export function isNEMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
 }
 
 /**
+ * Filter strictly for 2026 Southwest Monsoon Grand Prix Series events (GP1, GP2, GP3).
+ * Explicitly rejects Northeast Monsoon and non-series regattas.
+ */
+export function isSWMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
+  if (!regatta) return false;
+  const id = (regatta.id || "").toLowerCase();
+  const name = (regatta.name || "").toLowerCase();
+  const shortName = (regatta.shortName || "").toLowerCase();
+  const seriesName = (regatta.seriesName || "").toLowerCase();
+
+  // 1. Explicitly reject Northeast Monsoon or other non-SW events
+  if (
+    id.includes("ne-") ||
+    shortName.includes("ne ") ||
+    name.includes("northeast") ||
+    seriesName.includes("northeast")
+  ) {
+    return false;
+  }
+
+  // 2. Must specifically match Southwest Monsoon or SW Monsoon
+  const isSW =
+    seriesName.includes("southwest") ||
+    seriesName.includes("sw monsoon") ||
+    name.includes("southwest") ||
+    name.includes("sw monsoon") ||
+    shortName.includes("sw monsoon") ||
+    id.startsWith("sw-monsoon");
+
+  if (!isSW) return false;
+
+  // 3. Strictly limited to GP1, GP2, and GP3 (or Series 1, 2, 3)
+  const isGP123 =
+    /\b(gp\s*[123]|round\s*[123]|gp[123]|series\s*[123]|prix\s*[123])\b/i.test(name) ||
+    /\b(gp\s*[123]|gp[123])\b/i.test(shortName) ||
+    /gp[123]/i.test(id);
+
+  return isGP123;
+}
+
+export type WingfoilSeriesKey = "ne-monsoon" | "sw-monsoon";
+
+export const WINGFOIL_SERIES_OPTIONS: {
+  key: WingfoilSeriesKey;
+  name: string;
+  shortName: string;
+  description: string;
+  season: string;
+  websiteUrl: string;
+  noticeBoardUrl: string;
+}[] = [
+  {
+    key: "ne-monsoon",
+    name: "2026 Northeast Monsoon Grand Prix Series",
+    shortName: "NE Monsoon GP (GP1 - GP3)",
+    description:
+      "Official Singapore Championship series uniting Round 1 (GP1 @ Constant Wind), Round 2 (GP2 @ CSC Changi), and Round 3 (GP3 @ National Sailing Centre). Up to 72 races under World Sailing RRS Appendix A & NoR 12.",
+    season: "Jan – Mar 2026",
+    websiteUrl: "https://www.sailing.org.sg",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org",
+  },
+  {
+    key: "sw-monsoon",
+    name: "2026 SW Monsoon Grand Prix Series",
+    shortName: "SW Monsoon GP (GP1 - GP3)",
+    description:
+      "Official Singapore Championship series uniting Series 1 (GP1 @ Constant Wind), Series 2 (GP2 @ PAssion Wave @ East Coast), and Series 3 (GP3 @ National Sailing Centre). Up to 72 races under World Sailing RRS B8 & NoR 12.",
+    season: "Jul – Oct 2026",
+    websiteUrl: "https://www.sailing.org.sg/events/357398",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14698/event",
+  },
+];
+
+/**
  * Calculate overall series results across all Grand Prix rounds per official NoR 12.
  */
 export function calculateWingfoilSeries(
-  allRegattas: WingfoilRegatta[]
+  allRegattas: WingfoilRegatta[],
+  seriesKey: WingfoilSeriesKey = "ne-monsoon"
 ): WingfoilSeriesResult {
-  const seriesName = "2026 Northeast Monsoon Grand Prix Series";
+  const isSW = seriesKey === "sw-monsoon";
+  const seriesName = isSW
+    ? "2026 SW Monsoon Grand Prix Series"
+    : "2026 Northeast Monsoon Grand Prix Series";
 
-  // 1. Identify and order the NE Monsoon Grand Prix rounds (GP1 -> GP2 -> GP3)
+  const filterFn = isSW ? isSWMonsoonSeriesRegatta : isNEMonsoonSeriesRegatta;
+
+  // 1. Identify and order the Grand Prix rounds (GP1 -> GP2 -> GP3)
   const seriesRounds = allRegattas
-    .filter(isNEMonsoonSeriesRegatta)
+    .filter(filterFn)
     .sort((a, b) => {
       const getNum = (str: string) => {
-        const m = str.match(/gp\s*(\d)/i) || str.match(/round\s*(\d)/i);
+        const m =
+          str.match(/gp\s*(\d)/i) ||
+          str.match(/round\s*(\d)/i) ||
+          str.match(/series\s*(\d)/i);
         return m ? parseInt(m[1], 10) : 99;
       };
       return getNum(a.id || a.shortName) - getNum(b.id || b.shortName);

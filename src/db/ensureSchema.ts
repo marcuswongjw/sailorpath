@@ -155,6 +155,15 @@ export async function ensureCoreSchema(): Promise<void> {
         console.warn("[sailorpath] ensure clean Optimist sail numbers note:", e);
       }
 
+      // 056_sw_monsoon_grand_prix_series.sql: Clean up legacy Southwest Monsoon placeholder
+      try {
+        await pgSql`
+          DELETE FROM public.wingfoil_regattas WHERE id = 'sw-monsoon-gp-2026';
+        `;
+      } catch (e) {
+        console.warn("[sailorpath] cleanup legacy sw-monsoon-gp-2026 note:", e);
+      }
+
       schemaEnsured = true;
       console.info("[sailorpath] Core database schema verified & ensured.");
     } catch (e) {
