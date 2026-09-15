@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
-import { regattas, regattaResults, wingfoilRegattas, sailors } from "@/db/schema";
+import { regattas, regattaResults, wingfoilRegattas } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auditAdminMutation } from "@/lib/adminChangeLog";
 import type { WingfoilRegatta } from "@/lib/wingfoil";

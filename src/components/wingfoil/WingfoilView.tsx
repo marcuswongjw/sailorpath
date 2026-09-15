@@ -38,16 +38,26 @@ export function WingfoilView({
 
   // Re-hydrate from persistent storage and sync with server on mount
   useEffect(() => {
-    const loaded = loadWingfoilRegattas();
-    if (!initialRegattas && loaded.length > 0) {
-      setRegattas(loaded);
-    }
+    let cancelled = false;
+    const hydrate = async () => {
+      const loaded = loadWingfoilRegattas();
+      await Promise.resolve();
+      if (cancelled) return;
+      if (!initialRegattas && loaded.length > 0) {
+        setRegattas(loaded);
+      }
 
-    fetchServerWingfoilRegattas().then((serverData) => {
+      const serverData = await fetchServerWingfoilRegattas();
+      if (cancelled) return;
       if (serverData && serverData.length > 0) {
         setRegattas(serverData);
       }
-    });
+    };
+
+    void hydrate();
+    return () => {
+      cancelled = true;
+    };
   }, [initialRegattas]);
 
   // Public showcase only queries and displays verified, published regattas

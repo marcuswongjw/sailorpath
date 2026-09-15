@@ -1,9 +1,8 @@
 "use client";
 
-import { useMemo, useState, useRef, useEffect } from "react";
+import { useCallback, useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import {
-  Upload,
   Plus,
   Trash2,
   ExternalLink,
@@ -19,7 +18,6 @@ import {
   Edit3,
   Images,
   FileSpreadsheet,
-  Tag,
   GitMerge,
   AlertTriangle,
   Globe,
@@ -57,6 +55,11 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
   const [regattas, setRegattas] = useState<WingfoilRegatta[]>(
     SINGAPORE_WINGFOIL_REGATTAS
   );
+  const regattasRef = useRef(regattas);
+  const shouldPersistRegattasRef = useRef(false);
+  const serverSyncChainRef = useRef<Promise<void>>(Promise.resolve());
+  const serverSyncTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingServerSyncRef = useRef(new Map<string, WingfoilRegatta>());
   const [selectedRegattaId, setSelectedRegattaId] = useState<string>(
     SINGAPORE_WINGFOIL_REGATTAS[0]?.id || ""
   );
@@ -68,24 +71,81 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
   // Re-hydrate from persistent storage on mount, then sync with server database
   const [isSyncingServer, setIsSyncingServer] = useState(false);
   const [lastSyncedAt, setLastSyncedAt] = useState<Date | null>(null);
+  const [pendingRecovery, setPendingRecovery] = useState<WingfoilRegatta[]>([]);
+
+  const enqueueServerSync = useCallback((snapshot: WingfoilRegatta[]) => {
+    const queued = serverSyncChainRef.current
+      .catch(() => undefined)
+      .then(() => syncWingfoilToServer(snapshot));
+
+    serverSyncChainRef.current = queued.then(
+      () => undefined,
+      () => undefined
+    );
+    return queued;
+  }, []);
+
+  const enqueueServerDelete = useCallback((id: string) => {
+    const queued = serverSyncChainRef.current
+      .catch(() => undefined)
+      .then(() => deleteWingfoilFromServer(id));
+
+    serverSyncChainRef.current = queued.then(
+      () => undefined,
+      () => undefined
+    );
+    return queued;
+  }, []);
+
+  const scheduleServerSync = useCallback(
+    (snapshot: WingfoilRegatta[]) => {
+      for (const regatta of snapshot) {
+        pendingServerSyncRef.current.set(regatta.id, regatta);
+      }
+      if (serverSyncTimerRef.current) {
+        clearTimeout(serverSyncTimerRef.current);
+      }
+      serverSyncTimerRef.current = setTimeout(() => {
+        serverSyncTimerRef.current = null;
+        const pending = [...pendingServerSyncRef.current.values()];
+        pendingServerSyncRef.current.clear();
+        if (!pending.length) return;
+        void enqueueServerSync(pending).then((res) => {
+          if (res.success) setLastSyncedAt(new Date());
+        });
+      }, 350);
+    },
+    [enqueueServerSync]
+  );
 
   useEffect(() => {
-    const loaded = loadWingfoilRegattas();
-    setRegattas(loaded);
-    if (loaded.length > 0 && !loaded.some((r) => r.id === selectedRegattaId)) {
-      setSelectedRegattaId(loaded[0].id);
-    }
+    let cancelled = false;
+    const pendingServerSync = pendingServerSyncRef.current;
 
-    // Sync all events (including drafts and staged) from server database
-    fetchServerWingfoilRegattas({ includeAll: true }).then((serverData) => {
+    const hydrate = async () => {
+      const loaded = loadWingfoilRegattas();
+      await Promise.resolve();
+      if (cancelled) return;
+      regattasRef.current = loaded;
+      setRegattas(loaded);
+      setSelectedRegattaId((current) =>
+        loaded.length > 0 && !loaded.some((r) => r.id === current)
+          ? loaded[0].id
+          : current
+      );
+
+      // Sync all events (including drafts and staged) from server database
+      const serverData = await fetchServerWingfoilRegattas({ includeAll: true });
+      if (cancelled) return;
       if (serverData && serverData.length > 0) {
-        // Merge without losing any local scores
-        const merged = mergeWingfoilRegattaLists(serverData, loaded);
-        setRegattas(merged);
+        // The server remains authoritative. Local-only scores require an
+        // explicit recovery action before they are written back.
+        const localSnapshot = regattasRef.current;
+        regattasRef.current = serverData;
+        setRegattas(serverData);
         setLastSyncedAt(new Date());
 
-        // If local had results that weren't on server yet, sync merged to server
-        const localHadExtra = loaded.some(
+        const recoveryCandidates = localSnapshot.filter(
           (l) =>
             l.results &&
             l.results.length > 0 &&
@@ -93,33 +153,46 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
               (s) => s.id === l.id && s.results && s.results.length > 0
             )
         );
-        if (localHadExtra) {
-          syncWingfoilToServer(merged).then((res) => {
-            if (res.success) setLastSyncedAt(new Date());
-          });
-        }
-      } else if (loaded.length > 0) {
-        // Auto-persist local events to server if server was unpopulated
-        syncWingfoilToServer(loaded).then((res) => {
-          if (res.success) setLastSyncedAt(new Date());
-        });
+        setPendingRecovery(recoveryCandidates);
+      } else if (regattasRef.current.length > 0) {
+        setPendingRecovery(regattasRef.current);
       }
-    });
-  }, []);
+    };
+
+    void hydrate();
+
+    return () => {
+      cancelled = true;
+      if (serverSyncTimerRef.current) {
+        clearTimeout(serverSyncTimerRef.current);
+        serverSyncTimerRef.current = null;
+        const pending = [...pendingServerSync.values()];
+        pendingServerSync.clear();
+        if (pending.length) void enqueueServerSync(pending);
+      }
+    };
+  }, [enqueueServerSync]);
+
+  useEffect(() => {
+    const previous = regattasRef.current;
+    regattasRef.current = regattas;
+    if (!shouldPersistRegattasRef.current) return;
+    shouldPersistRegattasRef.current = false;
+    saveWingfoilRegattas(regattas);
+    const previousById = new Map(previous.map((item) => [item.id, item]));
+    const changed = regattas.filter(
+      (item) => previousById.get(item.id) !== item
+    );
+    if (changed.length) scheduleServerSync(changed);
+  }, [regattas, scheduleServerSync]);
 
   // Helper to update regattas, persist to localStorage, and push to central server database
-  const updateRegattas = (
+  const updateRegattas = useCallback((
     updater: WingfoilRegatta[] | ((prev: WingfoilRegatta[]) => WingfoilRegatta[])
   ) => {
-    setRegattas((prev) => {
-      const next = typeof updater === "function" ? updater(prev) : updater;
-      saveWingfoilRegattas(next);
-      syncWingfoilToServer(next).then((res) => {
-        if (res.success) setLastSyncedAt(new Date());
-      });
-      return next;
-    });
-  };
+    shouldPersistRegattasRef.current = true;
+    setRegattas(updater);
+  }, []);
 
   // Manual trigger to sync current regattas to server for sailorpath.com
   const handleSyncToLiveSite = async () => {
@@ -129,7 +202,12 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     }
     setIsSyncingServer(true);
     try {
-      const res = await syncWingfoilToServer(regattas);
+      if (serverSyncTimerRef.current) {
+        clearTimeout(serverSyncTimerRef.current);
+        serverSyncTimerRef.current = null;
+      }
+      pendingServerSyncRef.current.clear();
+      const res = await enqueueServerSync(regattasRef.current);
       if (res.success) {
         setLastSyncedAt(new Date());
         toast.success("Successfully synchronized all WingFoil events & scores to sailorpath.com!");
@@ -138,6 +216,30 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       }
     } catch {
       toast.error("Network error during sync to live site");
+    } finally {
+      setIsSyncingServer(false);
+    }
+  };
+
+  const handleRecoverLocalEvents = async () => {
+    if (!pendingRecovery.length || isSyncingServer) return;
+    setIsSyncingServer(true);
+    try {
+      const res = await enqueueServerSync(pendingRecovery);
+      if (!res.success) {
+        toast.error(`Recovery failed: ${res.error || "Unable to save"}`);
+        return;
+      }
+      const recovered = mergeWingfoilRegattaLists(
+        pendingRecovery,
+        regattasRef.current
+      );
+      regattasRef.current = recovered;
+      setRegattas(recovered);
+      saveWingfoilRegattas(recovered);
+      setPendingRecovery([]);
+      setLastSyncedAt(new Date());
+      toast.success(`Recovered ${pendingRecovery.length} cached event(s).`);
     } finally {
       setIsSyncingServer(false);
     }
@@ -294,8 +396,8 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
 
   // Detected sail number discrepancies for active regatta
   const discrepancies = useMemo(() => {
-    if (!activeRegatta?.results) return [];
-    return activeRegatta.results
+    if (!results.length) return [];
+    return results
       .map((sailor, idx) => {
         const norm = normalizeSailorName(sailor.name);
         const prior = priorSailNumbersMap.get(norm);
@@ -310,7 +412,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
         return { sailorIdx: idx, sailor, prior, isMismatch };
       })
       .filter((d) => d.isMismatch);
-  }, [activeRegatta?.results, priorSailNumbersMap]);
+  }, [results, priorSailNumbersMap]);
 
   // Handle Category / Division change
   const handleCategoryChange = (sailorIdx: number, newCategory: string) => {
@@ -465,7 +567,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       });
 
       let extractedResults = parsed.results;
-      const { results: populatedResults, autoAssignedCount } = applyHistoricalSailNumbers(
+      const { results: populatedResults } = applyHistoricalSailNumbers(
         extractedResults,
         buildHistoricalSailNumberMap(regattas)
       );
@@ -562,7 +664,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       });
 
       let extractedResults = parsed.results;
-      const { results: populatedResults, autoAssignedCount } = applyHistoricalSailNumbers(
+      const { results: populatedResults } = applyHistoricalSailNumbers(
         extractedResults,
         buildHistoricalSailNumberMap(regattas)
       );
@@ -804,6 +906,39 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
 
   return (
     <div className="w-full min-w-0 space-y-6">
+      {pendingRecovery.length > 0 && (
+        <div className="flex flex-col gap-3 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-300" />
+            <div>
+              <p className="text-sm font-bold text-amber-100">
+                Cached WingFoil results found
+              </p>
+              <p className="text-xs text-amber-200/80">
+                {pendingRecovery.length} local event(s) are not on the server.
+                Review the source before restoring them; nothing is uploaded automatically.
+              </p>
+            </div>
+          </div>
+          <div className="flex shrink-0 gap-2">
+            <button
+              type="button"
+              onClick={() => setPendingRecovery([])}
+              className="rounded-full border border-white/10 px-3 py-1.5 text-xs font-bold text-slate-300 hover:bg-white/5"
+            >
+              Dismiss
+            </button>
+            <button
+              type="button"
+              disabled={isSyncingServer}
+              onClick={handleRecoverLocalEvents}
+              className="rounded-full bg-amber-400 px-3 py-1.5 text-xs font-black text-slate-950 hover:bg-amber-300 disabled:opacity-50"
+            >
+              Restore cached events
+            </button>
+          </div>
+        </div>
+      )}
       {/* Top Header & Fast Actions */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 glass-panel rounded-3xl p-6 border border-white/5 bg-[#131520]">
         <div>
@@ -859,7 +994,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
           <input
             ref={excelInputRef}
             type="file"
-            accept=".xlsx,.xls,.csv"
+            accept=".xlsx,.csv"
             onChange={handleExcelUpload}
             className="hidden"
           />
@@ -1102,7 +1237,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
           <div className="flex flex-wrap items-center gap-3">
             <span className="text-xs text-slate-400 font-semibold">Lifecycle Status:</span>
             {(() => {
-              const status = (activeRegatta as any).lifecycleStatus || (activeRegatta.status === "Completed" ? "published" : "in_review");
+              const status = activeRegatta.lifecycleStatus || (activeRegatta.status === "Completed" ? "published" : "in_review");
               const isPublished = status === "published";
               const isInReview = status === "in_review";
 
@@ -1140,7 +1275,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
 
           <div className="flex items-center gap-2.5">
             {(() => {
-              const isPublished = (activeRegatta as any).lifecycleStatus === "published" || activeRegatta.status === "Completed";
+              const isPublished = activeRegatta.lifecycleStatus === "published" || activeRegatta.status === "Completed";
               return (
                 <>
                   <button
@@ -1428,8 +1563,23 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
           {activeRegatta && activeRegatta.id.startsWith("wingfoil-upload-") && (
             <button
               type="button"
-              onClick={() => {
+              onClick={async () => {
                 if (!confirm(`Delete uploaded event "${activeRegatta.name}"?`)) return;
+                pendingServerSyncRef.current.delete(activeRegatta.id);
+                if (
+                  serverSyncTimerRef.current &&
+                  pendingServerSyncRef.current.size === 0
+                ) {
+                  clearTimeout(serverSyncTimerRef.current);
+                  serverSyncTimerRef.current = null;
+                }
+                const deleted = await enqueueServerDelete(activeRegatta.id);
+                if (!deleted.success) {
+                  toast.error(
+                    `Could not delete event: ${deleted.error || "server error"}`
+                  );
+                  return;
+                }
                 updateRegattas((prev) => prev.filter((r) => r.id !== activeRegatta.id));
                 setSelectedRegattaId(regattas.find((r) => r.id !== activeRegatta.id)?.id || "");
                 toast.success("Event removed");
@@ -1629,7 +1779,9 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                                 ))}
                               </optgroup>
                               {sailor.ageCategory &&
-                                !WINGFOIL_CATEGORIES.includes(sailor.ageCategory as any) && (
+                                !WINGFOIL_CATEGORIES.some(
+                                  (category) => category === sailor.ageCategory
+                                ) && (
                                   <option value={sailor.ageCategory} className="bg-slate-900 text-white">
                                     {sailor.ageCategory}
                                   </option>

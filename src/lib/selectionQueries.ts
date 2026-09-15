@@ -156,13 +156,15 @@ export async function computeOptimistSelectionData(): Promise<OptimistSelectionP
   }
 }
 
+const cachedOptimistSelectionData = unstable_cache(
+  computeOptimistSelectionData,
+  ["optimist-selection-2026"],
+  {
+    tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],
+    revalidate: 60,
+  }
+);
+
 export async function getCachedOptimistSelectionData(): Promise<OptimistSelectionPayload> {
-  return unstable_cache(
-    async () => computeOptimistSelectionData(),
-    ["optimist-selection-2026"],
-    {
-      tags: [CACHE_TAG_FLEET_RANKINGS, CACHE_TAG_PUBLIC_REGATTAS],
-      revalidate: 60,
-    }
-  )();
+  return cachedOptimistSelectionData();
 }

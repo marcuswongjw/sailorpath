@@ -3,7 +3,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import { wingfoilRegattas } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { auditAdminMutation } from "@/lib/adminChangeLog";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
@@ -11,20 +11,32 @@ import {
 } from "@/lib/wingfoil";
 
 export async function GET(req: Request) {
+  const sp = new URL(req.url).searchParams;
+  const includeAll = sp.get("all") === "1" || sp.get("admin") === "1";
+
+  if (includeAll) {
+    try {
+      await requireSuperadmin();
+    } catch (error) {
+      return jsonError(error);
+    }
+  }
+
   try {
     if (typeof ensureCoreSchema === "function") {
       await ensureCoreSchema();
     }
-    const sp = new URL(req.url).searchParams;
-    const includeAll = sp.get("all") === "1" || sp.get("admin") === "1";
 
-    const rows = await db.select().from(wingfoilRegattas);
+    const rows = includeAll
+      ? await db.select().from(wingfoilRegattas)
+      : await db
+          .select()
+          .from(wingfoilRegattas)
+          .where(eq(wingfoilRegattas.status, "published"));
 
     if (rows && rows.length > 0) {
       // Filter published only for public showcase, unless admin requested all
-      const visibleRows = includeAll
-        ? rows
-        : rows.filter((r) => !r.status || r.status === "published");
+      const visibleRows = rows;
 
       const rowMap = new Map(
         visibleRows.map((r) => [r.id, r.data as WingfoilRegatta])
@@ -85,36 +97,68 @@ export async function POST(req: Request) {
       );
     }
 
-    // Upsert regattas into PostgreSQL
-    for (const r of list) {
-      if (!r || !r.id) continue;
+    if (list.length > 100) {
+      return NextResponse.json(
+        { error: "Too many regattas in one request" },
+        { status: 413 }
+      );
+    }
+
+    const allowedLifecycleStatuses = new Set([
+      "draft",
+      "in_review",
+      "published",
+      "archived",
+    ]);
+    for (const regatta of list) {
+      if (
+        !regatta ||
+        typeof regatta.id !== "string" ||
+        !regatta.id.trim() ||
+        regatta.id.length > 160 ||
+        typeof regatta.name !== "string" ||
+        !regatta.name.trim() ||
+        (regatta.lifecycleStatus &&
+          !allowedLifecycleStatuses.has(regatta.lifecycleStatus))
+      ) {
+        return NextResponse.json(
+          { error: "Invalid WingFoil regatta payload" },
+          { status: 400 }
+        );
+      }
+    }
+
+    const values = list.map((r) => {
       const status =
         r.lifecycleStatus ||
         (r.status === "Completed" ? "published" : "in_review");
-      await db
-        .insert(wingfoilRegattas)
-        .values({
-          id: r.id,
-          status,
-          data: r,
-          updatedAt: new Date(),
-        })
-        .onConflictDoUpdate({
-          target: wingfoilRegattas.id,
-          set: {
-            status,
-            data: r,
-            updatedAt: new Date(),
-          },
-        });
-    }
+      return {
+        id: r.id,
+        status,
+        data: r,
+        updatedAt: new Date(),
+      };
+    });
+
+    // One bulk upsert avoids a database round trip for every event.
+    await db
+      .insert(wingfoilRegattas)
+      .values(values)
+      .onConflictDoUpdate({
+        target: wingfoilRegattas.id,
+        set: {
+          status: sql`excluded.status`,
+          data: sql`excluded.data`,
+          updatedAt: sql`excluded.updated_at`,
+        },
+      });
 
     await auditAdminMutation({
       actorUserId: auth.userId,
       actorEmail: auth.email,
       action: "upsert_wingfoil_regattas",
       targetTable: "wingfoil_regattas",
-      summary: `Upserted ${list.length} WingFoil regattas and scorecards`,
+      summary: `Upserted ${values.length} WingFoil regattas and scorecards`,
       source: "/api/wingfoil",
     });
 
@@ -128,7 +172,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      savedCount: list.length,
+      savedCount: values.length,
     });
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);

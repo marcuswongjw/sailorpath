@@ -3,7 +3,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { crawlAndUpdateRegattas } from "@/lib/calendar/crawlRegattas";
 import { logAdminChange } from "@/lib/adminChangeLog";
 
-export async function POST(req: Request) {
+export async function POST() {
   try {
     const auth = await requireSuperadmin();
     const result = await crawlAndUpdateRegattas();

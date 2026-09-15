@@ -5,13 +5,9 @@ import {
   Trophy,
   Medal,
   Calendar,
-  Flame,
   Search,
-  Filter,
-  Info,
   ChevronDown,
   Sparkles,
-  Users,
   CheckCircle2,
   AlertTriangle,
   ExternalLink,
@@ -26,11 +22,9 @@ import {
   OFFICIAL_WINGFOIL_DIVISIONS,
   isSailorInDivision,
   type WingfoilSeriesResult,
-  type SeriesSailorResult,
   type SeriesDivisionId,
   type WingfoilSeriesKey,
   WINGFOIL_SERIES_OPTIONS,
-  getNoRDiscardsCount,
 } from "@/lib/wingfoilSeries";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 

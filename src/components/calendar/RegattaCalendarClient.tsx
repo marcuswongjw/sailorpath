@@ -17,7 +17,6 @@ import {
   ShieldCheck,
   Lock,
   Globe,
-  ChevronDown,
   AlertCircle,
 } from "lucide-react";
 import type { RegattaRecord } from "@/lib/ranking";

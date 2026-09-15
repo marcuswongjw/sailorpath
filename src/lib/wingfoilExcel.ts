@@ -2,7 +2,7 @@
  * wingfoilExcel.ts
  *
  * Browser-safe parser for Sailwave Excel / CSV exports of WingFoil results.
- * Accepts .xlsx, .xls, and .csv files.
+ * Accepts .xlsx and .csv files.
  *
  * Sailwave's typical export layout:
  *   Row 1-N:  Header metadata  (Event name, Date, Sailed, Discards, …)
@@ -21,6 +21,9 @@ import {
   type WingfoilRaceScore,
 } from "./wingfoil";
 import { KNOWN_SINGAPORE_WINGFOILERS } from "./wingfoilScreenshot";
+import { parseCsv } from "./excel/parseTabularFile";
+import { readExcelInWorker } from "./excel/readExcelInWorker";
+import type { ResultsSheet } from "./excel/readResultsWorkbook";
 
 // ── helpers ──────────────────────────────────────────────────────────────────
 
@@ -63,7 +66,7 @@ function parseScoreCell(raw: unknown): WingfoilRaceScore | null {
   const mixed = inner.match(/^(\d+(?:\.\d+)?)\s+(DNF|DNS|DSQ|DNC|RDG|OCS|BFD|UFD)$/i);
   if (mixed) {
     return {
-      score: Math.round(parseFloat(mixed[1])),
+      score: parseFloat(mixed[1]),
       isDiscarded,
       code: toPenaltyCode(mixed[2]),
     };
@@ -72,7 +75,7 @@ function parseScoreCell(raw: unknown): WingfoilRaceScore | null {
   // Plain number
   const num = parseFloat(inner);
   if (!isNaN(num)) {
-    return { score: Math.round(num), isDiscarded };
+    return { score: num, isDiscarded };
   }
 
   return null;
@@ -128,7 +131,7 @@ function normaliseHeader(h: string): string {
 // ── main export ───────────────────────────────────────────────────────────────
 
 /**
- * Parse a Sailwave Excel (.xlsx/.xls) or CSV file into a ParsedWingfoilScreenshot.
+ * Parse a Sailwave Excel (.xlsx) or CSV file into a ParsedWingfoilScreenshot.
  * Runs entirely in the browser — no server round-trip.
  *
  * @param file  The File object from an <input type="file"> element
@@ -140,27 +143,33 @@ export async function readWingfoilExcel(
 ): Promise<ParsedWingfoilScreenshot> {
   onProgress?.({ status: "Reading file…", progress: 0.05 });
 
-  // Dynamically import xlsx (SheetJS) — keeps it out of the initial bundle
-  const XLSX = await import("xlsx");
-
   onProgress?.({ status: "Parsing spreadsheet…", progress: 0.2 });
 
   const buffer = await file.arrayBuffer();
-  const workbook = XLSX.read(buffer, { type: "array", cellDates: true });
+  const lowerName = file.name.toLowerCase();
+  if (lowerName.endsWith(".xls")) {
+    throw new Error(
+      "Legacy .xls files are not supported for security reasons. Save the workbook as .xlsx or export it as CSV, then try again."
+    );
+  }
 
-  // Use the first sheet
-  const sheetName = workbook.SheetNames[0];
-  if (!sheetName) throw new Error("No sheets found in the uploaded file.");
+  let sheets: ResultsSheet[];
+  if (lowerName.endsWith(".csv")) {
+    sheets = [
+      {
+        sheet: file.name.replace(/\.csv$/i, "") || "CSV",
+        data: parseCsv(new TextDecoder().decode(buffer)),
+      },
+    ];
+  } else if (lowerName.endsWith(".xlsx")) {
+    sheets = await readExcelInWorker(buffer);
+  } else {
+    throw new Error("Unsupported file type. Upload an .xlsx or .csv file.");
+  }
 
-  const sheet = workbook.Sheets[sheetName];
-
-  // Convert to row-of-arrays (raw, preserving dates as Date objects)
-  const rows: unknown[][] = XLSX.utils.sheet_to_json(sheet, {
-    header: 1,
-    defval: "",
-    raw: false,   // keep text as text (codes stay as "DNF" not numbers)
-    dateNF: "yyyy-mm-dd",
-  });
+  const firstSheet = sheets[0];
+  if (!firstSheet) throw new Error("No sheets found in the uploaded file.");
+  const rows: readonly (readonly unknown[])[] = firstSheet.data;
 
   onProgress?.({ status: "Scanning header rows…", progress: 0.35 });
 
@@ -197,7 +206,11 @@ export async function readWingfoilExcel(
   }
 
   if (!regattaName) regattaName = file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ");
-  if (!startDate) startDate = new Date().toISOString().split("T")[0];
+  if (!startDate) {
+    throw new Error(
+      "Could not determine the event date. Add a date to the workbook header, then upload it again."
+    );
+  }
 
   // ── 2. Find the header row (contains "Pos" or "HelmName" or "R1") ──────────
   onProgress?.({ status: "Finding column headers…", progress: 0.45 });

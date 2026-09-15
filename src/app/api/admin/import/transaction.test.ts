@@ -57,6 +57,33 @@ describe("import database transaction", () => {
     } finally { await pg.exec("ALTER TABLE regatta_race_results DROP CONSTRAINT test_failure"); }
   });
 
+  it("rolls back core results when derived demographic updates fail", async () => {
+    await pg.exec(`
+      CREATE FUNCTION fail_result_update() RETURNS trigger AS $$
+      BEGIN
+        RAISE EXCEPTION 'forced demographic update failure';
+      END;
+      $$ LANGUAGE plpgsql;
+      CREATE TRIGGER fail_result_update_trigger
+      BEFORE UPDATE ON regatta_results
+      FOR EACH ROW EXECUTE FUNCTION fail_result_update();
+    `);
+    try {
+      const response = await upload({
+        rows: [{ name: "Alice Example", rank: 1, nett: 1, gender: "F" }],
+      });
+      expect(response.status).toBe(500);
+      expect(await testDb.select().from(regattas)).toHaveLength(0);
+      expect(await testDb.select().from(sailors)).toHaveLength(0);
+      expect(await testDb.select().from(regattaResults)).toHaveLength(0);
+    } finally {
+      await pg.exec(`
+        DROP TRIGGER fail_result_update_trigger ON regatta_results;
+        DROP FUNCTION fail_result_update();
+      `);
+    }
+  });
+
   it("requires a choice even when only one different event shares the date", async () => {
     await upload();
     const response = await upload({ regattaName: "Other Cup" });

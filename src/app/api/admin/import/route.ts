@@ -1595,14 +1595,150 @@ export async function POST(req: Request) {
             }
           }
 
+          // Keep historical demographic propagation and derived fleet dates in
+          // the same transaction as the imported results. If either step
+          // fails, the uploaded regatta is rolled back as one atomic unit.
+          let resultsDemographicsUpdated = 0;
+          let silverUpdated = 0;
+          const affectedIds = [...affectedSailorIds];
+          const sailorById = new Map(sailorList.map((s) => [s.id, s]));
+
+          if (affectedIds.length) {
+            const patches: {
+              sid: string;
+              gender: string | null;
+              birthYear: number | null;
+              nationality: string | null;
+            }[] = [];
+            for (const sid of affectedIds) {
+              const sailor = sailorById.get(sid);
+              if (!sailor) continue;
+              const rawGender = String(sailor.gender || "")
+                .trim()
+                .toUpperCase()
+                .slice(0, 1);
+              const gender =
+                rawGender === "M" || rawGender === "F" ? rawGender : null;
+              const birthYear = birthYearFromDob(sailor.dob);
+              const nationality = normalizeNationalityCode(sailor.nationality);
+              if (!gender && birthYear == null && !nationality) continue;
+              patches.push({
+                sid,
+                gender,
+                birthYear: birthYear ?? null,
+                nationality: nationality || null,
+              });
+            }
+
+            const BATCH_SIZE = 50;
+            for (let i = 0; i < patches.length; i += BATCH_SIZE) {
+              const batch = patches.slice(i, i + BATCH_SIZE);
+              const batchIds = batch.map((patch) => patch.sid);
+              const genderCases = batch
+                .filter((patch) => patch.gender)
+                .map(
+                  (patch) =>
+                    sql`WHEN ${regattaResults.sailorId} = ${patch.sid} THEN ${patch.gender}`
+                );
+              const birthYearCases = batch
+                .filter((patch) => patch.birthYear != null)
+                .map(
+                  (patch) =>
+                    sql`WHEN ${regattaResults.sailorId} = ${patch.sid} THEN ${patch.birthYear}`
+                );
+              const nationalityCases = batch
+                .filter((patch) => patch.nationality)
+                .map(
+                  (patch) =>
+                    sql`WHEN ${regattaResults.sailorId} = ${patch.sid} THEN ${patch.nationality}`
+                );
+
+              const setFields: Record<string, unknown> = {
+                updatedAt: sql`now()`,
+              };
+              if (genderCases.length) {
+                setFields.gender = sql`CASE ${sql.join(
+                  genderCases,
+                  sql` `
+                )} ELSE ${regattaResults.gender} END`;
+              }
+              if (birthYearCases.length) {
+                setFields.birthYear = sql`CASE ${sql.join(
+                  birthYearCases,
+                  sql` `
+                )} ELSE ${regattaResults.birthYear} END`;
+              }
+              if (nationalityCases.length) {
+                setFields.nationality = sql`CASE ${sql.join(
+                  nationalityCases,
+                  sql` `
+                )} ELSE ${regattaResults.nationality} END`;
+              }
+
+              const updated = await tx
+                .update(regattaResults)
+                .set(setFields)
+                .where(inArray(regattaResults.sailorId, batchIds))
+                .returning({ id: regattaResults.id });
+              resultsDemographicsUpdated += updated.length;
+            }
+
+            const silverLinks = await tx
+              .select({
+                sailorId: regattaResults.sailorId,
+                regattaDate: regattas.date,
+                division: regattas.division,
+                countsForRanking: regattas.countsForRanking,
+                boatClass: regattas.boatClass,
+              })
+              .from(regattaResults)
+              .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
+              .where(inArray(regattaResults.sailorId, affectedIds));
+            const derived = deriveAllSilverEntryDates(
+              silverLinks.map((link) => ({
+                sailorId: link.sailorId,
+                regattaDate: link.regattaDate,
+                division: link.division,
+                countsForRanking: link.countsForRanking,
+                boatClass: link.boatClass,
+              }))
+            );
+            const silverUpdates: { sid: string; next: string }[] = [];
+            for (const sid of affectedIds) {
+              const next = derived.get(sid);
+              if (!next) continue;
+              const current = sailorById.get(sid)?.silverEntryDate;
+              const previous = current ? String(current).slice(0, 10) : null;
+              if (previous !== next) silverUpdates.push({ sid, next });
+            }
+
+            for (let i = 0; i < silverUpdates.length; i += BATCH_SIZE) {
+              const batch = silverUpdates.slice(i, i + BATCH_SIZE);
+              const cases = batch.map(
+                (update) =>
+                  sql`WHEN ${sailors.id} = ${update.sid} THEN ${update.next}::date`
+              );
+              await tx
+                .update(sailors)
+                .set({
+                  silverEntryDate: sql`CASE ${sql.join(cases, sql` `)} ELSE ${
+                    sailors.silverEntryDate
+                  } END`,
+                  updatedAt: sql`now()`,
+                })
+                .where(inArray(sailors.id, batch.map((update) => update.sid)));
+              silverUpdated += batch.length;
+            }
+          }
+
           return {
             reg,
             matched,
             created,
             updatedProfiles,
             nationalityUpdated,
-            resultsDemographicsUpdated: 0,
-            silverUpdated: 0,
+            resultsDemographicsUpdated,
+            silverUpdated,
             rowErrors,
             unmatched,
             possibleDuplicates,
@@ -1618,154 +1754,11 @@ export async function POST(req: Request) {
       );
 
       recordStage("atomicWrite");
-      await onProgress?.("demographics", 88, "Updating competitor demographics and fleet dates…");
-
-      // 3. Post-transaction bulk historical demographic propagation
-      let resultsDemographicsUpdated = 0;
-      const affectedIds = [...affectedSailorIds];
-      if (affectedIds.length) {
-        const patches: {
-          sid: string;
-          gender: string | null;
-          birthYear: number | null;
-          nationality: string | null;
-        }[] = [];
-        for (const sid of affectedIds) {
-          const s = sailorList.find((x) => x.id === sid);
-          if (!s) continue;
-          const g = String(s.gender || "")
-            .trim()
-            .toUpperCase()
-            .slice(0, 1);
-          const gender = g === "M" || g === "F" ? g : null;
-          const by = birthYearFromDob(s.dob);
-          const nat = normalizeNationalityCode(s.nationality);
-          if (!gender && by == null && !nat) continue;
-          patches.push({
-            sid,
-            gender,
-            birthYear: by ?? null,
-            nationality: nat || null,
-          });
-        }
-
-        if (patches.length > 0) {
-          const BATCH = 50;
-          for (let i = 0; i < patches.length; i += BATCH) {
-            const batch = patches.slice(i, i + BATCH);
-            const batchIds = batch.map((p) => p.sid);
-            const genderCases = batch
-              .filter((p) => p.gender)
-              .map(
-                (p) =>
-                  sql`WHEN ${regattaResults.sailorId} = ${p.sid} THEN ${p.gender}`
-              );
-            const byCases = batch
-              .filter((p) => p.birthYear != null)
-              .map(
-                (p) =>
-                  sql`WHEN ${regattaResults.sailorId} = ${p.sid} THEN ${p.birthYear}`
-              );
-            const natCases = batch
-              .filter((p) => p.nationality)
-              .map(
-                (p) =>
-                  sql`WHEN ${regattaResults.sailorId} = ${p.sid} THEN ${p.nationality}`
-              );
-
-            const setFields: Record<string, unknown> = {
-              updatedAt: sql`now()`,
-            };
-            if (genderCases.length > 0) {
-              setFields.gender = sql`CASE ${sql.join(
-                genderCases,
-                sql` `
-              )} ELSE ${regattaResults.gender} END`;
-            }
-            if (byCases.length > 0) {
-              setFields.birthYear = sql`CASE ${sql.join(
-                byCases,
-                sql` `
-              )} ELSE ${regattaResults.birthYear} END`;
-            }
-            if (natCases.length > 0) {
-              setFields.nationality = sql`CASE ${sql.join(
-                natCases,
-                sql` `
-              )} ELSE ${regattaResults.nationality} END`;
-            }
-
-            const updated = await db
-              .update(regattaResults)
-              .set(setFields)
-              .where(inArray(regattaResults.sailorId, batchIds))
-              .returning({ id: regattaResults.id });
-            resultsDemographicsUpdated += updated.length;
-          }
-        }
-      }
-
-      recordStage("demographics");
-
-      // 4. Post-transaction bulk silver entry dates recalculation
-      let silverUpdated = 0;
-      if (affectedIds.length) {
-        const silverLinks = await db
-          .select({
-            sailorId: regattaResults.sailorId,
-            regattaDate: regattas.date,
-            division: regattas.division,
-            countsForRanking: regattas.countsForRanking,
-            boatClass: regattas.boatClass,
-          })
-          .from(regattaResults)
-          .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
-          .where(inArray(regattaResults.sailorId, affectedIds));
-        const derived = deriveAllSilverEntryDates(
-          silverLinks.map((l) => ({
-            sailorId: l.sailorId,
-            regattaDate: l.regattaDate,
-            division: l.division,
-            countsForRanking: l.countsForRanking,
-            boatClass: l.boatClass,
-          }))
-        );
-        const silverUpdates: { sid: string; next: string }[] = [];
-        for (const sid of affectedIds) {
-          const next = derived.get(sid);
-          if (!next) continue;
-          const cur = sailorList.find((s) => s.id === sid);
-          const prev = cur?.silverEntryDate
-            ? String(cur.silverEntryDate).slice(0, 10)
-            : null;
-          if (prev === next) continue;
-          silverUpdates.push({ sid, next });
-        }
-
-        if (silverUpdates.length > 0) {
-          const BATCH = 50;
-          for (let i = 0; i < silverUpdates.length; i += BATCH) {
-            const batch = silverUpdates.slice(i, i + BATCH);
-            const cases = batch.map(
-              (u) => sql`WHEN ${sailors.id} = ${u.sid} THEN ${u.next}::date`
-            );
-            const ids = batch.map((u) => u.sid);
-            await db
-              .update(sailors)
-              .set({
-                silverEntryDate: sql`CASE ${sql.join(cases, sql` `)} ELSE ${
-                  sailors.silverEntryDate
-                } END`,
-                updatedAt: sql`now()`,
-              })
-              .where(inArray(sailors.id, ids));
-            silverUpdated += batch.length;
-          }
-        }
-      }
-
-      recordStage("silverDates");
-      await onProgress?.("finalizing", 96, "Finalizing import and public rankings…");
+      await onProgress?.(
+        "finalizing",
+        96,
+        "Imported results and derived competitor data atomically. Finalizing rankings…"
+      );
 
       const {
         reg,
@@ -1775,6 +1768,8 @@ export async function POST(req: Request) {
         removedResultRows,
         removedRaceRows,
         possibleDuplicates: finalDupeList,
+        resultsDemographicsUpdated,
+        silverUpdated,
       } = outcome;
 
       if (matched > 0 || finalCreated > 0 || finalUpdatedProfiles > 0) {

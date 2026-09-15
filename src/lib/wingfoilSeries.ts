@@ -1,6 +1,5 @@
 import {
   type WingfoilRegatta,
-  type WingfoilSailorResult,
   normalizeSailorName,
 } from "./wingfoil";
 

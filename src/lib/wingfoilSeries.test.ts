@@ -7,6 +7,22 @@ import {
 } from "./wingfoilSeries";
 import type { WingfoilRegatta } from "./wingfoil";
 
+function testRegatta(
+  input: Pick<WingfoilRegatta, "id" | "name" | "shortName"> &
+    Partial<WingfoilRegatta>
+): WingfoilRegatta {
+  return {
+    dates: "2026",
+    venue: "Singapore",
+    organizer: "SSF",
+    format: "Sprint Slalom",
+    status: "Completed",
+    scoringSystem: "RRS B8",
+    rulesNotes: "",
+    ...input,
+  };
+}
+
 describe("getNoRDiscardsCount", () => {
   it("matches the official Singapore Sailing NoR Clause 12.5.2 discard table", () => {
     expect(getNoRDiscardsCount(1)).toBe(0);
@@ -237,45 +253,45 @@ describe("calculateWingfoilSeries", () => {
 describe("isNEMonsoonSeriesRegatta", () => {
   it("strictly includes GP1, GP2, and GP3 of Northeast Monsoon", () => {
     expect(
-      isNEMonsoonSeriesRegatta({
+      isNEMonsoonSeriesRegatta(testRegatta({
         id: "ne-monsoon-series-gp1-2026",
         name: "2026 Northeast Monsoon Grand Prix 1 (Round 1 of 3)",
         shortName: "NE Monsoon GP1",
-      } as any)
+      }))
     ).toBe(true);
 
     expect(
-      isNEMonsoonSeriesRegatta({
+      isNEMonsoonSeriesRegatta(testRegatta({
         id: "ne-monsoon-series-gp2-2026",
         name: "2026 Northeast Monsoon Grand Prix 2 (Round 2 of 3)",
         shortName: "NE Monsoon GP2",
-      } as any)
+      }))
     ).toBe(true);
 
     expect(
-      isNEMonsoonSeriesRegatta({
+      isNEMonsoonSeriesRegatta(testRegatta({
         id: "ne-monsoon-series-gp3-2026",
         name: "2026 Northeast Monsoon Grand Prix 3 (Round 3 of 3)",
         shortName: "NE Monsoon GP3",
-      } as any)
+      }))
     ).toBe(true);
   });
 
   it("strictly excludes Southwest Monsoon and non-NE regattas", () => {
     expect(
-      isNEMonsoonSeriesRegatta({
+      isNEMonsoonSeriesRegatta(testRegatta({
         id: "sw-monsoon-gp-2026",
         name: "2026 Southwest Monsoon Grand Prix Series 1–3",
         shortName: "SW Monsoon GP",
-      } as any)
+      }))
     ).toBe(false);
 
     expect(
-      isNEMonsoonSeriesRegatta({
+      isNEMonsoonSeriesRegatta(testRegatta({
         id: "snsc-2026-wingfoil",
         name: "Singapore National Sailing Championships 2026",
         shortName: "SNSC 2026",
-      } as any)
+      }))
     ).toBe(false);
   });
 });
@@ -283,49 +299,49 @@ describe("isNEMonsoonSeriesRegatta", () => {
 describe("isSWMonsoonSeriesRegatta", () => {
   it("strictly includes GP1, GP2, and GP3 of Southwest Monsoon", () => {
     expect(
-      isSWMonsoonSeriesRegatta({
+      isSWMonsoonSeriesRegatta(testRegatta({
         id: "sw-monsoon-series-gp1-2026",
         name: "2026 SW Monsoon Grand Prix 1 (Round 1 of 3)",
         shortName: "SW Monsoon GP1",
         seriesName: "2026 SW Monsoon Grand Prix Series",
-      } as any)
+      }))
     ).toBe(true);
 
     expect(
-      isSWMonsoonSeriesRegatta({
+      isSWMonsoonSeriesRegatta(testRegatta({
         id: "sw-monsoon-series-gp2-2026",
         name: "2026 SW Monsoon Grand Prix 2 (Round 2 of 3)",
         shortName: "SW Monsoon GP2",
         seriesName: "2026 SW Monsoon Grand Prix Series",
-      } as any)
+      }))
     ).toBe(true);
 
     expect(
-      isSWMonsoonSeriesRegatta({
+      isSWMonsoonSeriesRegatta(testRegatta({
         id: "sw-monsoon-series-gp3-2026",
         name: "2026 SW Monsoon Grand Prix 3 (Round 3 of 3)",
         shortName: "SW Monsoon GP3",
         seriesName: "2026 SW Monsoon Grand Prix Series",
-      } as any)
+      }))
     ).toBe(true);
   });
 
   it("strictly excludes Northeast Monsoon and non-SW regattas", () => {
     expect(
-      isSWMonsoonSeriesRegatta({
+      isSWMonsoonSeriesRegatta(testRegatta({
         id: "ne-monsoon-series-gp1-2026",
         name: "2026 Northeast Monsoon Grand Prix 1 (Round 1 of 3)",
         shortName: "NE Monsoon GP1",
         seriesName: "2026 Northeast Monsoon Grand Prix Series",
-      } as any)
+      }))
     ).toBe(false);
 
     expect(
-      isSWMonsoonSeriesRegatta({
+      isSWMonsoonSeriesRegatta(testRegatta({
         id: "snsc-2026-wingfoil",
         name: "Singapore National Sailing Championships 2026",
         shortName: "SNSC 2026",
-      } as any)
+      }))
     ).toBe(false);
   });
 });

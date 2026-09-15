@@ -3,7 +3,6 @@ import {
   OPTIMIST_SAILOR_SAIL_NUMBERS,
   getOptimistSailNumber,
   getOptimistNationality,
-  cleanOptimistSailorName,
 } from "./optimistSailNumberMap";
 
 describe("optimistSailNumberMap", () => {

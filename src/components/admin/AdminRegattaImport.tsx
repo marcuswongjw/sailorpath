@@ -33,6 +33,7 @@ import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
 import { parseCsv } from "@/lib/excel/parseTabularFile";
+import { readNdjsonStream } from "@/lib/readNdjsonStream";
 import { readResultsWorkbook, type ResultsSheet } from "@/lib/excel/readResultsWorkbook";
 import { NEW_IMPORT_TARGET } from "@/lib/importTarget";
 
@@ -545,38 +546,24 @@ export function AdminRegattaImport({
       const contentType = res.headers.get("content-type") || "";
 
       if (contentType.includes("application/x-ndjson") && res.body) {
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
         let finalData: AdminApiJson | null = null;
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
-          for (const line of lines) {
-            if (!line.trim()) continue;
-            try {
-              const msg = JSON.parse(line);
-              if (msg.type === "progress") {
-                if (typeof msg.progress === "number") setImportProgress(msg.progress);
-                if (typeof msg.message === "string") setImportStatus(msg.message);
-              } else if (msg.type === "result") {
-                finalData = msg;
-              } else if (msg.type === "error") {
-                throw new Error(msg.error || "Import failed");
-              }
-            } catch (err) {
-              if (err instanceof Error && err.message !== "Import failed") {
-                // not an explicit error thrown above
-              } else {
-                throw err;
-              }
-            }
+        await readNdjsonStream(res.body, (message) => {
+          const msg = message as {
+            type?: string;
+            progress?: number;
+            message?: string;
+            error?: string;
+          } & AdminApiJson;
+          if (msg.type === "progress") {
+            if (typeof msg.progress === "number") setImportProgress(msg.progress);
+            if (typeof msg.message === "string") setImportStatus(msg.message);
+          } else if (msg.type === "result") {
+            finalData = msg;
+          } else if (msg.type === "error") {
+            throw new Error(msg.error || "Import failed");
           }
-        }
+        });
         if (!finalData) {
           throw new Error("No response payload received from server.");
         }
