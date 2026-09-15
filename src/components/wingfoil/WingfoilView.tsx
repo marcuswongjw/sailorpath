@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Wind,
   Calendar,
@@ -12,21 +12,33 @@ import {
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
   WINGFOIL_SPECIFICATIONS,
+  loadWingfoilRegattas,
+  type WingfoilRegatta,
 } from "@/lib/wingfoil";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
 export function WingfoilView() {
+  const [regattas, setRegattas] = useState<WingfoilRegatta[]>(
+    SINGAPORE_WINGFOIL_REGATTAS
+  );
   const [selectedRegattaId, setSelectedRegattaId] = useState<string>(
     SINGAPORE_WINGFOIL_REGATTAS[0].id
   );
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [activeTab, setActiveTab] = useState<"results" | "format" | "calendar">("results");
 
+  // Re-hydrate from persistent storage on mount
+  useEffect(() => {
+    const loaded = loadWingfoilRegattas();
+    setRegattas(loaded);
+  }, []);
+
   const activeRegatta = useMemo(
     () =>
-      SINGAPORE_WINGFOIL_REGATTAS.find((r) => r.id === selectedRegattaId) ||
+      regattas.find((r) => r.id === selectedRegattaId) ||
+      regattas[0] ||
       SINGAPORE_WINGFOIL_REGATTAS[0],
-    [selectedRegattaId]
+    [regattas, selectedRegattaId]
   );
 
   const displayResults = useMemo(() => {
@@ -105,7 +117,7 @@ export function WingfoilView() {
                 onChange={(e) => setSelectedRegattaId(e.target.value)}
                 className="rounded-lg bg-slate-900 border border-white/10 px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:border-teal-500"
               >
-                {SINGAPORE_WINGFOIL_REGATTAS.map((r) => (
+                {regattas.map((r) => (
                   <option key={r.id} value={r.id}>
                     {r.shortName} · {r.dates}
                   </option>

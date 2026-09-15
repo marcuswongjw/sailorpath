@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import {
   Upload,
@@ -19,10 +19,15 @@ import {
   Edit3,
   Images,
   FileSpreadsheet,
+  Tag,
+  GitMerge,
 } from "lucide-react";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
   recalculateScoreboard,
+  loadWingfoilRegattas,
+  saveWingfoilRegattas,
+  findMatchingWingfoilRegatta,
   type WingfoilRegatta,
   type WingfoilSailorResult,
   type WingfoilRaceScore,
@@ -42,6 +47,30 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
   const [selectedRegattaId, setSelectedRegattaId] = useState<string>(
     SINGAPORE_WINGFOIL_REGATTAS[0]?.id || ""
   );
+
+  // Merge/tag modal state
+  const [showMergeModal, setShowMergeModal] = useState(false);
+  const [mergeTargetId, setMergeTargetId] = useState<string>("");
+
+  // Re-hydrate from persistent storage on mount
+  useEffect(() => {
+    const loaded = loadWingfoilRegattas();
+    setRegattas(loaded);
+    if (loaded.length > 0 && !loaded.some((r) => r.id === selectedRegattaId)) {
+      setSelectedRegattaId(loaded[0].id);
+    }
+  }, []);
+
+  // Helper to update regattas and persist to localStorage
+  const updateRegattas = (
+    updater: WingfoilRegatta[] | ((prev: WingfoilRegatta[]) => WingfoilRegatta[])
+  ) => {
+    setRegattas((prev) => {
+      const next = typeof updater === "function" ? updater(prev) : updater;
+      saveWingfoilRegattas(next);
+      return next;
+    });
+  };
 
   // Multi-image upload state
   const [uploadedPreviews, setUploadedPreviews] = useState<string[]>([]);
@@ -109,7 +138,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       return;
     }
     if (!activeRegatta) return;
-    setRegattas((prev) =>
+    updateRegattas((prev) =>
       prev.map((r) =>
         r.id === activeRegatta.id
           ? {
@@ -127,6 +156,54 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     );
     setIsEditingRegatta(false);
     toast.success("Updated regatta details");
+  };
+
+  // Merge/Tag active regatta results into an existing official regatta
+  const handleMergeIntoEvent = (targetEventId: string) => {
+    if (!isSuperadmin) {
+      toast.error("403 Forbidden. Only Superadmins can update WingFoil data.");
+      return;
+    }
+    if (!activeRegatta || !targetEventId || targetEventId === activeRegatta.id) return;
+
+    const targetEvent = regattas.find((r) => r.id === targetEventId);
+    if (!targetEvent) {
+      toast.error("Target regatta not found");
+      return;
+    }
+
+    // Results to attach: if activeRegatta has results, transfer/replace into target
+    const resultsToApply = activeRegatta.results && activeRegatta.results.length > 0
+      ? activeRegatta.results
+      : targetEvent.results || [];
+
+    updateRegattas((prev) => {
+      // 1. Update target regatta with results & mark as Completed
+      const updated = prev.map((r) => {
+        if (r.id === targetEventId) {
+          return {
+            ...r,
+            status: "Completed" as const,
+            results: resultsToApply,
+            scoringSystem: activeRegatta.scoringSystem || r.scoringSystem,
+          };
+        }
+        return r;
+      });
+
+      // 2. Remove the temporary uploaded regatta if it was a dynamically uploaded one
+      const cleaned = activeRegatta.id.startsWith("wingfoil-upload-")
+        ? updated.filter((r) => r.id !== activeRegatta.id)
+        : updated;
+
+      return cleaned;
+    });
+
+    setSelectedRegattaId(targetEventId);
+    setShowMergeModal(false);
+    toast.success(
+      `Successfully tagged results to "${targetEvent.name}" (${resultsToApply.length} competitor scores saved)!`
+    );
   };
 
   const results = useMemo(
@@ -184,12 +261,27 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       });
 
       if (extractedResults.length > 0) {
-        toast.success(
-          `OCR Extracted: "${parsed.regattaName}" — ${extractedResults.length} competitors, ${heatCount} heats${files.length > 1 ? ` (from ${files.length} stitched screenshots)` : ""}!`
-        );
+        // Check if there is an existing matching official regatta (e.g. "NE Monsoon Series GP2" -> GP2)
+        const matched = findMatchingWingfoilRegatta(parsed.regattaName, regattas);
 
-        // Always create a new regatta entry per upload — never overwrite an existing one
-        setRegattas((prev) => {
+        if (matched) {
+          updateRegattas((prev) =>
+            prev.map((r) =>
+              r.id === matched.id
+                ? {
+                    ...r,
+                    status: "Completed" as const,
+                    results: extractedResults,
+                    scoringSystem: `${heatCount} races, ${parsed.discardsCount ?? 1} discard`,
+                  }
+                : r
+            )
+          );
+          setSelectedRegattaId(matched.id);
+          toast.success(
+            `OCR Results tagged & saved to official event: "${matched.name}" (${extractedResults.length} competitors, ${heatCount} heats)!`
+          );
+        } else {
           const newRegatta: WingfoilRegatta = {
             id: `wingfoil-upload-${Date.now()}`,
             name: parsed.regattaName || `WingFoil Regatta ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })}`,
@@ -204,9 +296,12 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
               "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
             results: extractedResults,
           };
+          updateRegattas((prev) => [newRegatta, ...prev]);
           setSelectedRegattaId(newRegatta.id);
-          return [newRegatta, ...prev];
-        });
+          toast.success(
+            `OCR Extracted: "${parsed.regattaName}" — ${extractedResults.length} competitors, ${heatCount} heats${files.length > 1 ? ` (from ${files.length} stitched screenshots)` : ""}!`
+          );
+        }
       } else {
         toast.info(
           "OCR completed, but could not detect competitor score rows. You can enter competitors manually below."
@@ -258,11 +353,27 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
       });
 
       if (extractedResults.length > 0) {
-        toast.success(
-          `Excel Imported: "${parsed.regattaName}" — ${extractedResults.length} competitors, ${heatCount} races!`
-        );
+        // Check if there is an existing matching official regatta (e.g. "NE Monsoon Series GP2" matches "2026 Northeast Monsoon Grand Prix 2")
+        const matched = findMatchingWingfoilRegatta(parsed.regattaName, regattas);
 
-        setRegattas((prev) => {
+        if (matched) {
+          updateRegattas((prev) =>
+            prev.map((r) =>
+              r.id === matched.id
+                ? {
+                    ...r,
+                    status: "Completed" as const,
+                    results: extractedResults,
+                    scoringSystem: `${heatCount} races, ${parsed.discardsCount ?? 1} discard`,
+                  }
+                : r
+            )
+          );
+          setSelectedRegattaId(matched.id);
+          toast.success(
+            `Excel Results tagged & saved to official event: "${matched.name}" (${extractedResults.length} competitors, ${heatCount} races)!`
+          );
+        } else {
           const newRegatta: WingfoilRegatta = {
             id: `wingfoil-upload-${Date.now()}`,
             name: parsed.regattaName || `WingFoil Regatta ${new Date().toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })}`,
@@ -277,9 +388,12 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
               "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
             results: extractedResults,
           };
+          updateRegattas((prev) => [newRegatta, ...prev]);
           setSelectedRegattaId(newRegatta.id);
-          return [newRegatta, ...prev];
-        });
+          toast.success(
+            `Excel Imported & Saved: "${parsed.regattaName}" — ${extractedResults.length} competitors, ${heatCount} races!`
+          );
+        }
       } else {
         toast.info(
           "Excel parsed, but no competitor rows found. Check that the file uses standard Sailwave export format."
@@ -335,7 +449,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     // Recalculate scoreboard discards and rankings
     const updatedScoreboard = recalculateScoreboard(currentResults, activeDiscardsCount);
 
-    setRegattas((prev) =>
+    updateRegattas((prev) =>
       prev.map((r) =>
         r.id === activeRegatta.id ? { ...r, results: updatedScoreboard } : r
       )
@@ -370,7 +484,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
 
     const updatedScoreboard = recalculateScoreboard([...results, competitor]);
 
-    setRegattas((prev) =>
+    updateRegattas((prev) =>
       prev.map((r) =>
         r.id === activeRegatta.id ? { ...r, results: updatedScoreboard } : r
       )
@@ -394,7 +508,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     const filtered = results.filter((s) => s.name !== name);
     const updated = recalculateScoreboard(filtered);
 
-    setRegattas((prev) =>
+    updateRegattas((prev) =>
       prev.map((r) =>
         r.id === activeRegatta.id ? { ...r, results: updated } : r
       )
@@ -946,6 +1060,41 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
             <Plus className="h-4 w-4" />
             Add Competitor Entry
           </button>
+
+          {/* Merge or Tag into Official Event */}
+          <button
+            type="button"
+            onClick={() => {
+              // Pre-select closest matching regatta or first other regatta
+              const match = findMatchingWingfoilRegatta(
+                activeRegatta?.name || "",
+                regattas.filter((r) => r.id !== activeRegatta?.id)
+              );
+              setMergeTargetId(match?.id || regattas.find((r) => r.id !== activeRegatta?.id)?.id || "");
+              setShowMergeModal(true);
+            }}
+            className="w-full flex items-center justify-center gap-2 rounded-xl border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 px-4 py-2 text-xs font-bold text-sky-300 transition-all shadow-sm"
+          >
+            <GitMerge className="h-3.5 w-3.5" />
+            Tag / Merge to Another Event
+          </button>
+
+          {/* If custom or uploaded event, allow deleting */}
+          {activeRegatta && activeRegatta.id.startsWith("wingfoil-upload-") && (
+            <button
+              type="button"
+              onClick={() => {
+                if (!confirm(`Delete uploaded event "${activeRegatta.name}"?`)) return;
+                updateRegattas((prev) => prev.filter((r) => r.id !== activeRegatta.id));
+                setSelectedRegattaId(regattas.find((r) => r.id !== activeRegatta.id)?.id || "");
+                toast.success("Event removed");
+              }}
+              className="w-full flex items-center justify-center gap-1.5 rounded-xl border border-rose-500/20 bg-rose-500/5 hover:bg-rose-500/15 px-3 py-1.5 text-[11px] font-semibold text-rose-400 transition-colors"
+            >
+              <Trash2 className="h-3 w-3" />
+              Delete Uploaded Event
+            </button>
+          )}
         </div>
 
         {/* Scoreboard Table */}
@@ -973,7 +1122,7 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                   type="button"
                   onClick={() => {
                     const updated = recalculateScoreboard(results, activeDiscardsCount);
-                    setRegattas((prev) =>
+                    updateRegattas((prev) =>
                       prev.map((r) =>
                         r.id === activeRegatta.id ? { ...r, results: updated } : r
                       )
@@ -1274,6 +1423,97 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Tag / Merge Event Modal */}
+      {showMergeModal && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 backdrop-blur-sm"
+          onClick={() => setShowMergeModal(false)}
+        >
+          <div
+            className="relative max-w-lg w-full rounded-3xl border border-sky-500/30 bg-[#0f111c] p-6 shadow-2xl space-y-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-xl bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400">
+                  <GitMerge className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white">
+                    Tag / Merge Results to Event
+                  </h3>
+                  <p className="text-[11px] text-slate-400">
+                    Attach results from this regatta to another existing official event.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowMergeModal(false)}
+                className="rounded-full p-1.5 text-slate-400 hover:text-white hover:bg-white/10"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3 space-y-1">
+                <span className="text-[10px] uppercase font-bold text-slate-500">
+                  Source Regatta (Current View):
+                </span>
+                <p className="font-bold text-white">{activeRegatta?.name}</p>
+                <p className="text-[11px] text-orange-400">
+                  {results.length} competitor scores · {activeRegatta?.dates}
+                </p>
+              </div>
+
+              <div>
+                <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
+                  Select Target Event to Merge / Tag Into:
+                </label>
+                <select
+                  value={mergeTargetId}
+                  onChange={(e) => setMergeTargetId(e.target.value)}
+                  className="w-full rounded-xl border border-white/10 bg-slate-950 px-3.5 py-2.5 text-xs font-bold text-white focus:border-sky-500/50"
+                >
+                  {regattas
+                    .filter((r) => r.id !== activeRegatta?.id)
+                    .map((r) => (
+                      <option key={r.id} value={r.id}>
+                        {r.name} ({r.dates})
+                      </option>
+                    ))}
+                </select>
+                <p className="text-[10px] text-slate-400 mt-1.5">
+                  💡 Tip: If you uploaded a spreadsheet with a variation like{" "}
+                  <code className="text-sky-300 font-mono">NE Monsoon Series GP2</code>,
+                  select <strong className="text-white">2026 Northeast Monsoon Grand Prix 2</strong> to merge its scores into that official event and remove the duplicate entry.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2 pt-3 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => setShowMergeModal(false)}
+                className="rounded-full px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={!mergeTargetId}
+                onClick={() => handleMergeIntoEvent(mergeTargetId)}
+                className="rounded-full bg-sky-600 hover:bg-sky-500 disabled:opacity-50 px-5 py-2 text-xs font-bold text-white shadow-lg shadow-sky-950/40 inline-flex items-center gap-1.5 cursor-pointer"
+              >
+                <GitMerge className="h-3.5 w-3.5" />
+                Confirm Merge &amp; Save
+              </button>
+            </div>
           </div>
         </div>
       )}

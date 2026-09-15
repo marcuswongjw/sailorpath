@@ -1125,3 +1125,93 @@ export function recalculateScoreboard(
     rank: idx + 1,
   }));
 }
+
+export const WINGFOIL_STORAGE_KEY = "sailorpath_wingfoil_regattas_v1";
+
+/**
+ * Load wingfoil regattas with persistent local overrides/uploads.
+ * In browser environment, merges default master list with any uploaded/edited regattas in localStorage.
+ */
+export function loadWingfoilRegattas(): WingfoilRegatta[] {
+  if (typeof window === "undefined") {
+    return SINGAPORE_WINGFOIL_REGATTAS;
+  }
+  try {
+    const raw = window.localStorage.getItem(WINGFOIL_STORAGE_KEY);
+    if (!raw) return SINGAPORE_WINGFOIL_REGATTAS;
+    const stored = JSON.parse(raw) as WingfoilRegatta[];
+    if (Array.isArray(stored) && stored.length > 0) {
+      // Create a map by id to merge any newly added default regattas while preserving user updates
+      const storedMap = new Map(stored.map((r) => [r.id, r]));
+      // Ensure all official default regattas exist
+      const merged: WingfoilRegatta[] = [];
+      const visited = new Set<string>();
+
+      for (const def of SINGAPORE_WINGFOIL_REGATTAS) {
+        if (storedMap.has(def.id)) {
+          merged.push(storedMap.get(def.id)!);
+        } else {
+          merged.push(def);
+        }
+        visited.add(def.id);
+      }
+      // Add custom uploaded events not in default list
+      for (const r of stored) {
+        if (!visited.has(r.id)) {
+          merged.push(r);
+        }
+      }
+      return merged;
+    }
+  } catch (e) {
+    console.warn("[wingfoil] Failed to load from localStorage:", e);
+  }
+  return SINGAPORE_WINGFOIL_REGATTAS;
+}
+
+/**
+ * Persist wingfoil regattas to localStorage so uploads and edits survive page refreshes.
+ */
+export function saveWingfoilRegattas(regattas: WingfoilRegatta[]): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(WINGFOIL_STORAGE_KEY, JSON.stringify(regattas));
+  } catch (e) {
+    console.warn("[wingfoil] Failed to save to localStorage:", e);
+  }
+}
+
+/**
+ * Find closest matching official regatta by name for auto-merging / tagging.
+ * e.g. "NE Monsoon Series GP2" or "Northeast Monsoon GP 2" matches "ne-monsoon-series-gp2-2026".
+ */
+export function findMatchingWingfoilRegatta(
+  query: string,
+  regattas: WingfoilRegatta[] = SINGAPORE_WINGFOIL_REGATTAS
+): WingfoilRegatta | undefined {
+  if (!query) return undefined;
+  const q = query.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+  // 1. Exact or normalized contains match
+  for (const r of regattas) {
+    const rNameNorm = r.name.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const rShortNorm = r.shortName.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (rNameNorm === q || rShortNorm === q) return r;
+  }
+
+  // 2. Specific heuristics for NE Monsoon GP 1, 2, 3
+  const gpMatch = query.match(/(?:gp|grand\s*prix|round)\s*([123])/i);
+  if (gpMatch && /monsoon/i.test(query)) {
+    const roundNum = gpMatch[1];
+    const targetId = `ne-monsoon-series-gp${roundNum}-2026`;
+    const found = regattas.find((r) => r.id === targetId);
+    if (found) return found;
+  }
+
+  // 3. Fallback partial match
+  return regattas.find((r) => {
+    const rName = r.name.toLowerCase();
+    const rShort = r.shortName.toLowerCase();
+    return q.includes(rShort.replace(/[^a-z0-9]/g, "")) || rName.includes(query.toLowerCase());
+  });
+}
