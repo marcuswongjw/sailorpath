@@ -1215,3 +1215,148 @@ export function findMatchingWingfoilRegatta(
     return q.includes(rShort.replace(/[^a-z0-9]/g, "")) || rName.includes(query.toLowerCase());
   });
 }
+
+/**
+ * Standard competitive divisions / categories recognized in Singapore WingFoil.
+ */
+export const WINGFOIL_CATEGORIES = [
+  "Open",
+  "16&U",
+  "U19",
+  "Masters",
+  "Grand Masters",
+  "Women",
+  "Fun Open",
+] as const;
+
+export type WingfoilCategory = (typeof WINGFOIL_CATEGORIES)[number];
+
+/**
+ * Normalizes sailor name for cross-regatta matching.
+ */
+export function normalizeSailorName(name: string): string {
+  if (!name) return "";
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]/g, "")
+    .trim();
+}
+
+export type HistoricalSailNumber = {
+  sailNumber: string;
+  regattaId: string;
+  regattaName: string;
+};
+
+/**
+ * Compares two sail numbers, normalizing away prefix 'SGP', spaces, and symbols.
+ */
+export function areSailNumbersMatching(a?: string, b?: string): boolean {
+  if (!a || !b) return false;
+  const cleanA = a.toLowerCase().replace(/[^a-z0-9]/g, "").replace(/^sgp/, "");
+  const cleanB = b.toLowerCase().replace(/[^a-z0-9]/g, "").replace(/^sgp/, "");
+  return cleanA === cleanB;
+}
+
+/**
+ * Builds a lookup of known prior sail numbers across regattas.
+ */
+export function buildHistoricalSailNumberMap(
+  regattas: WingfoilRegatta[],
+  excludeRegattaId?: string
+): Map<string, HistoricalSailNumber> {
+  const map = new Map<string, HistoricalSailNumber>();
+  for (const r of regattas) {
+    if (excludeRegattaId && r.id === excludeRegattaId) continue;
+    for (const s of r.results || []) {
+      const norm = normalizeSailorName(s.name);
+      const sn = s.sailNumber?.trim();
+      if (norm && sn && sn !== "-" && sn !== "—") {
+        map.set(norm, {
+          sailNumber: sn,
+          regattaId: r.id,
+          regattaName: r.shortName || r.name,
+        });
+      }
+    }
+  }
+  return map;
+}
+
+/**
+ * Auto-populates missing sail numbers using historical regatta records.
+ */
+export function applyHistoricalSailNumbers(
+  results: WingfoilSailorResult[],
+  historicalMap: Map<string, HistoricalSailNumber>
+): { results: WingfoilSailorResult[]; autoAssignedCount: number } {
+  let autoAssignedCount = 0;
+  const updated = results.map((sailor) => {
+    const norm = normalizeSailorName(sailor.name);
+    const prior = historicalMap.get(norm);
+    if (prior) {
+      const currentSn = sailor.sailNumber?.trim();
+      if (!currentSn || currentSn === "-" || currentSn === "—") {
+        autoAssignedCount++;
+        return { ...sailor, sailNumber: prior.sailNumber };
+      }
+    }
+    return sailor;
+  });
+  return { results: updated, autoAssignedCount };
+}
+
+/**
+ * Fetch wingfoil regattas from the server API (shared across admin.sailorpath.com and sailorpath.com).
+ */
+export async function fetchServerWingfoilRegattas(): Promise<WingfoilRegatta[] | null> {
+  if (typeof window === "undefined") return null;
+  try {
+    const endpoint = window.location?.origin
+      ? `${window.location.origin}/api/wingfoil`
+      : "/api/wingfoil";
+    const res = await fetch(endpoint, { cache: "no-store" });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (Array.isArray(data?.regattas) && data.regattas.length > 0) {
+      saveWingfoilRegattas(data.regattas);
+      return data.regattas;
+    }
+  } catch (e) {
+    if (process.env.NODE_ENV !== "test") {
+      console.warn("[wingfoil] Failed to fetch from /api/wingfoil:", e);
+    }
+  }
+  return null;
+}
+
+/**
+ * Push updated wingfoil regattas to the server database for public persistence.
+ */
+export async function syncWingfoilToServer(
+  regattas: WingfoilRegatta[]
+): Promise<{ success: boolean; error?: string }> {
+  if (typeof window === "undefined") return { success: false };
+  try {
+    const endpoint = window.location?.origin
+      ? `${window.location.origin}/api/wingfoil`
+      : "/api/wingfoil";
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ regattas }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      return { success: false, error: err?.error || `HTTP ${res.status}` };
+    }
+    return { success: true };
+  } catch (e) {
+    return {
+      success: false,
+      error: e instanceof Error ? e.message : "Network error",
+    };
+  }
+}

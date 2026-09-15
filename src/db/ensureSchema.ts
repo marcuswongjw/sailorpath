@@ -49,6 +49,15 @@ export async function ensureCoreSchema(): Promise<void> {
           ON public.regatta_race_results (regatta_result_id);
       `;
 
+      // 053_wingfoil_regattas.sql: Store Singapore WingFoil regattas and scorecards
+      await pgSql`
+        CREATE TABLE IF NOT EXISTS public.wingfoil_regattas (
+          id text PRIMARY KEY,
+          data jsonb NOT NULL,
+          updated_at timestamptz NOT NULL DEFAULT now()
+        );
+      `;
+
       schemaEnsured = true;
       console.info("[sailorpath] Core database schema verified & ensured.");
     } catch (e) {

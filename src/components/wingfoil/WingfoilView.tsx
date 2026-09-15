@@ -13,6 +13,7 @@ import {
   SINGAPORE_WINGFOIL_REGATTAS,
   WINGFOIL_SPECIFICATIONS,
   loadWingfoilRegattas,
+  fetchServerWingfoilRegattas,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
@@ -27,10 +28,16 @@ export function WingfoilView() {
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [activeTab, setActiveTab] = useState<"results" | "format" | "calendar">("results");
 
-  // Re-hydrate from persistent storage on mount
+  // Re-hydrate from persistent storage and sync with server on mount
   useEffect(() => {
     const loaded = loadWingfoilRegattas();
     setRegattas(loaded);
+
+    fetchServerWingfoilRegattas().then((serverData) => {
+      if (serverData && serverData.length > 0) {
+        setRegattas(serverData);
+      }
+    });
   }, []);
 
   const activeRegatta = useMemo(
@@ -188,7 +195,7 @@ export function WingfoilView() {
                   <table className="w-full text-left text-xs">
                     <thead className="bg-white/[0.02] border-b border-white/10 text-[10px] uppercase tracking-wider text-slate-400 font-bold">
                       <tr>
-                        <th className="px-4 py-3 w-12 text-center">#</th>
+                        <th className="px-4 py-3 w-12 text-center">Rank</th>
                         <th className="px-4 py-3 min-w-[12rem]">Racer / Sailor</th>
                         <th className="px-2 py-3 text-center">Sail #</th>
                         <th className="px-2 py-3 text-center">Gender</th>

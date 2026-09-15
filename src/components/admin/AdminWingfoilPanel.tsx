@@ -21,6 +21,9 @@ import {
   FileSpreadsheet,
   Tag,
   GitMerge,
+  AlertTriangle,
+  Globe,
+  CheckCircle2,
 } from "lucide-react";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
@@ -28,6 +31,13 @@ import {
   loadWingfoilRegattas,
   saveWingfoilRegattas,
   findMatchingWingfoilRegatta,
+  fetchServerWingfoilRegattas,
+  syncWingfoilToServer,
+  WINGFOIL_CATEGORIES,
+  normalizeSailorName,
+  areSailNumbersMatching,
+  buildHistoricalSailNumberMap,
+  applyHistoricalSailNumbers,
   type WingfoilRegatta,
   type WingfoilSailorResult,
   type WingfoilRaceScore,
@@ -52,24 +62,65 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
   const [showMergeModal, setShowMergeModal] = useState(false);
   const [mergeTargetId, setMergeTargetId] = useState<string>("");
 
-  // Re-hydrate from persistent storage on mount
+  // Re-hydrate from persistent storage on mount, then sync with server database
+  const [isSyncingServer, setIsSyncingServer] = useState(false);
+  const [lastSyncedAt, setLastSyncedAt] = useState<Date | null>(null);
+
   useEffect(() => {
     const loaded = loadWingfoilRegattas();
     setRegattas(loaded);
     if (loaded.length > 0 && !loaded.some((r) => r.id === selectedRegattaId)) {
       setSelectedRegattaId(loaded[0].id);
     }
+
+    // Sync from server database
+    fetchServerWingfoilRegattas().then((serverData) => {
+      if (serverData && serverData.length > 0) {
+        setRegattas(serverData);
+        setLastSyncedAt(new Date());
+      } else if (loaded.length > 0) {
+        // Auto-persist local events to server if server was unpopulated
+        syncWingfoilToServer(loaded).then((res) => {
+          if (res.success) setLastSyncedAt(new Date());
+        });
+      }
+    });
   }, []);
 
-  // Helper to update regattas and persist to localStorage
+  // Helper to update regattas, persist to localStorage, and push to central server database
   const updateRegattas = (
     updater: WingfoilRegatta[] | ((prev: WingfoilRegatta[]) => WingfoilRegatta[])
   ) => {
     setRegattas((prev) => {
       const next = typeof updater === "function" ? updater(prev) : updater;
       saveWingfoilRegattas(next);
+      syncWingfoilToServer(next).then((res) => {
+        if (res.success) setLastSyncedAt(new Date());
+      });
       return next;
     });
+  };
+
+  // Manual trigger to sync current regattas to server for sailorpath.com
+  const handleSyncToLiveSite = async () => {
+    if (!isSuperadmin) {
+      toast.error("403 Forbidden. Only Superadmins can sync WingFoil data.");
+      return;
+    }
+    setIsSyncingServer(true);
+    try {
+      const res = await syncWingfoilToServer(regattas);
+      if (res.success) {
+        setLastSyncedAt(new Date());
+        toast.success("Successfully synchronized all WingFoil events & scores to sailorpath.com!");
+      } else {
+        toast.error(`Sync warning: ${res.error || "Unable to save to database"}`);
+      }
+    } catch {
+      toast.error("Network error during sync to live site");
+    } finally {
+      setIsSyncingServer(false);
+    }
   };
 
   // Multi-image upload state
@@ -211,6 +262,94 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
     [activeRegatta]
   );
 
+  // Map of sailor name to historical sail numbers across other regattas
+  const priorSailNumbersMap = useMemo(() => {
+    return buildHistoricalSailNumberMap(regattas, activeRegatta?.id);
+  }, [regattas, activeRegatta?.id]);
+
+  // Detected sail number discrepancies for active regatta
+  const discrepancies = useMemo(() => {
+    if (!activeRegatta?.results) return [];
+    return activeRegatta.results
+      .map((sailor, idx) => {
+        const norm = normalizeSailorName(sailor.name);
+        const prior = priorSailNumbersMap.get(norm);
+        const currentSn = sailor.sailNumber?.trim();
+        const isMismatch = Boolean(
+          prior &&
+          currentSn &&
+          currentSn !== "-" &&
+          currentSn !== "—" &&
+          !areSailNumbersMatching(currentSn, prior.sailNumber)
+        );
+        return { sailorIdx: idx, sailor, prior, isMismatch };
+      })
+      .filter((d) => d.isMismatch);
+  }, [activeRegatta?.results, priorSailNumbersMap]);
+
+  // Handle Category / Division change
+  const handleCategoryChange = (sailorIdx: number, newCategory: string) => {
+    if (!isSuperadmin) {
+      toast.error("403 Forbidden. Only Superadmins can update WingFoil data.");
+      return;
+    }
+    if (!activeRegatta) return;
+    const updated = [...results];
+    updated[sailorIdx] = {
+      ...updated[sailorIdx],
+      ageCategory: newCategory,
+    };
+    updateRegattas((prev) =>
+      prev.map((r) =>
+        r.id === activeRegatta.id ? { ...r, results: updated } : r
+      )
+    );
+    toast.success(`Updated division for ${updated[sailorIdx].name} to "${newCategory}"`);
+  };
+
+  // Handle Sail Number change
+  const handleSailNumberChange = (sailorIdx: number, newSailNumber: string) => {
+    if (!isSuperadmin) {
+      toast.error("403 Forbidden. Only Superadmins can update WingFoil data.");
+      return;
+    }
+    if (!activeRegatta) return;
+    const updated = [...results];
+    updated[sailorIdx] = {
+      ...updated[sailorIdx],
+      sailNumber: newSailNumber.trim(),
+    };
+    updateRegattas((prev) =>
+      prev.map((r) =>
+        r.id === activeRegatta.id ? { ...r, results: updated } : r
+      )
+    );
+  };
+
+  // Bulk resolve all discrepancies by adopting prior sail numbers
+  const handleResolveAllDiscrepancies = () => {
+    if (!isSuperadmin) {
+      toast.error("403 Forbidden. Only Superadmins can update WingFoil data.");
+      return;
+    }
+    if (!activeRegatta || discrepancies.length === 0) return;
+    const updated = [...results];
+    for (const d of discrepancies) {
+      if (d.prior) {
+        updated[d.sailorIdx] = {
+          ...updated[d.sailorIdx],
+          sailNumber: d.prior.sailNumber,
+        };
+      }
+    }
+    updateRegattas((prev) =>
+      prev.map((r) =>
+        r.id === activeRegatta.id ? { ...r, results: updated } : r
+      )
+    );
+    toast.success(`Resolved ${discrepancies.length} sail number discrepancies using prior regatta numbers.`);
+  };
+
   // Handle Screenshot Upload & Metadata Extraction (supports multiple files)
   const handleScreenshotUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!isSuperadmin) {
@@ -251,7 +390,12 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
         setScanProgress(Math.round(p.progress * 100));
       });
 
-      const extractedResults = parsed.results;
+      let extractedResults = parsed.results;
+      const { results: populatedResults, autoAssignedCount } = applyHistoricalSailNumbers(
+        extractedResults,
+        buildHistoricalSailNumberMap(regattas)
+      );
+      extractedResults = populatedResults;
       const heatCount = extractedResults[0]?.races.length || parsed.sailedCount || 9;
 
       setLastScanSummary({
@@ -343,7 +487,12 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
         setScanProgress(Math.round(p.progress * 100));
       });
 
-      const extractedResults = parsed.results;
+      let extractedResults = parsed.results;
+      const { results: populatedResults, autoAssignedCount } = applyHistoricalSailNumbers(
+        extractedResults,
+        buildHistoricalSailNumberMap(regattas)
+      );
+      extractedResults = populatedResults;
       const heatCount = extractedResults[0]?.races.length || parsed.sailedCount || 9;
 
       setLastScanSummary({
@@ -592,6 +741,12 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
             <span className="rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 text-[10px] font-bold text-emerald-400">
               Sprint Slalom
             </span>
+            {lastSyncedAt && (
+              <span className="hidden sm:inline-flex items-center gap-1 text-[10px] text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2.5 py-0.5 rounded-full font-semibold">
+                <CheckCircle2 className="w-3 h-3 text-sky-400" />
+                Live Sync Active
+              </span>
+            )}
           </div>
         </div>
 
@@ -659,6 +814,27 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
           >
             <Download className="h-3.5 w-3.5 text-slate-400" />
             Export CSV
+          </button>
+
+          {/* Sync to Live Site (sailorpath.com) */}
+          <button
+            type="button"
+            disabled={isSyncingServer}
+            onClick={handleSyncToLiveSite}
+            className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 disabled:opacity-50 px-4 py-2 text-xs font-bold text-sky-300 transition-all cursor-pointer"
+            title="Persist all WingFoil regattas and scores to server database so they immediately appear on sailorpath.com"
+          >
+            {isSyncingServer ? (
+              <>
+                <RefreshCw className="h-3.5 w-3.5 animate-spin text-sky-400" />
+                Syncing…
+              </>
+            ) : (
+              <>
+                <Globe className="h-3.5 w-3.5 text-sky-400" />
+                Sync to Live Site
+              </>
+            )}
           </button>
 
           {/* View Live Public Page */}
@@ -1136,14 +1312,36 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                 </button>
               </div>
 
+              {/* Sail Number Discrepancy Banner */}
+              {discrepancies.length > 0 && (
+                <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs">
+                  <div className="flex items-center gap-2 font-medium">
+                    <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+                    <span>
+                      <strong>{discrepancies.length} Sail Number {discrepancies.length === 1 ? "Discrepancy" : "Discrepancies"} Flagged:</strong>{" "}
+                      {discrepancies.length === 1
+                        ? "1 competitor has a different sail number than in prior regattas. Review highlighted row below."
+                        : `${discrepancies.length} competitors have different sail numbers than in prior regattas. Review highlighted rows below.`}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleResolveAllDiscrepancies}
+                    className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors shadow-sm cursor-pointer"
+                  >
+                    Resolve All with Prior Sail #s ({discrepancies.length})
+                  </button>
+                </div>
+              )}
+
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs text-slate-300">
                   <thead className="bg-[#11131c] text-[10px] font-black uppercase text-slate-400 border-b border-white/5">
                     <tr>
                       <th className="px-3 py-3 w-10 text-center">Rank</th>
-                      <th className="px-3 py-3 w-16">Sail #</th>
+                      <th className="px-3 py-3 min-w-[110px]">Sail #</th>
                       <th className="px-3 py-3">Competitor</th>
-                      <th className="px-2 py-3 w-16">Cat</th>
+                      <th className="px-2 py-3 min-w-[110px]">Cat</th>
                       {Array.from({ length: totalRacesCount }).map((_, i) => (
                         <th key={i} className="px-1.5 py-3 w-12 text-center">
                           R{i + 1}
@@ -1170,8 +1368,68 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                           <td className="px-3 py-3 text-center">
                             <RankMedalBadge rank={sailor.rank} />
                           </td>
-                          <td className="px-3 py-3 font-mono font-bold text-white">
-                            {sailor.sailNumber}
+                          <td className="px-3 py-2.5">
+                            {(() => {
+                              const normName = normalizeSailorName(sailor.name);
+                              const prior = priorSailNumbersMap.get(normName);
+                              const currentSn = sailor.sailNumber?.trim();
+                              const isMismatch = Boolean(
+                                prior &&
+                                currentSn &&
+                                currentSn !== "-" &&
+                                currentSn !== "—" &&
+                                !areSailNumbersMatching(currentSn, prior.sailNumber)
+                              );
+
+                              return (
+                                <div className="flex flex-col gap-1">
+                                  <input
+                                    type="text"
+                                    value={sailor.sailNumber}
+                                    onChange={(e) =>
+                                      handleSailNumberChange(sailorIdx, e.target.value)
+                                    }
+                                    className={`w-20 bg-slate-950 border px-2 py-1 rounded font-mono text-xs font-bold text-white transition-colors ${
+                                      isMismatch
+                                        ? "border-amber-500 bg-amber-500/10 text-amber-200 focus:border-amber-400"
+                                        : "border-white/10 hover:border-white/25 focus:border-cyan-400"
+                                    }`}
+                                    placeholder="Sail #"
+                                  />
+                                  {isMismatch && prior && (
+                                    <div className="flex items-center gap-1">
+                                      <span
+                                        className="text-[10px] text-amber-400 font-semibold truncate max-w-[110px]"
+                                        title={`Prior regatta (${prior.regattaName}): ${prior.sailNumber}`}
+                                      >
+                                        Prior: #{prior.sailNumber}
+                                      </span>
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          handleSailNumberChange(sailorIdx, prior.sailNumber)
+                                        }
+                                        className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 hover:bg-amber-500/40 text-amber-300 border border-amber-500/40 transition-colors cursor-pointer"
+                                        title={`Update to prior sail number ${prior.sailNumber}`}
+                                      >
+                                        Use
+                                      </button>
+                                    </div>
+                                  )}
+                                  {(!currentSn || currentSn === "-" || currentSn === "—") && prior && (
+                                    <button
+                                      type="button"
+                                      onClick={() =>
+                                        handleSailNumberChange(sailorIdx, prior.sailNumber)
+                                      }
+                                      className="text-[10px] text-sky-400 hover:text-sky-300 text-left underline cursor-pointer"
+                                    >
+                                      Auto: #{prior.sailNumber}
+                                    </button>
+                                  )}
+                                </div>
+                              );
+                            })()}
                           </td>
                           <td className="px-3 py-3 min-w-[140px]">
                             <div className="font-bold text-white leading-tight">
@@ -1181,8 +1439,24 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                               {sailor.schoolName !== "—" ? sailor.schoolName : sailor.club}
                             </div>
                           </td>
-                          <td className="px-2 py-3 text-[10px] font-bold text-slate-400">
-                            {sailor.ageCategory}
+                          <td className="px-2 py-2.5">
+                            <select
+                              value={sailor.ageCategory || "Open"}
+                              onChange={(e) => handleCategoryChange(sailorIdx, e.target.value)}
+                              className="bg-slate-900 border border-white/15 text-slate-200 rounded px-2 py-1 text-xs font-medium focus:border-amber-400 focus:outline-none cursor-pointer hover:border-white/30 transition-colors"
+                            >
+                              {WINGFOIL_CATEGORIES.map((cat) => (
+                                <option key={cat} value={cat} className="bg-slate-900 text-white">
+                                  {cat}
+                                </option>
+                              ))}
+                              {sailor.ageCategory &&
+                                !WINGFOIL_CATEGORIES.includes(sailor.ageCategory as any) && (
+                                  <option value={sailor.ageCategory} className="bg-slate-900 text-white">
+                                    {sailor.ageCategory}
+                                  </option>
+                                )}
+                            </select>
                           </td>
 
                           {/* R1 through RN Heat Score Inputs */}
@@ -1363,17 +1637,17 @@ export function AdminWingfoilPanel({ isSuperadmin = true }: { isSuperadmin?: boo
                     Age Category
                   </label>
                   <select
-                    value={newEntry.ageCategory || "16&U"}
+                    value={newEntry.ageCategory || "Open"}
                     onChange={(e) =>
                       setNewEntry({ ...newEntry, ageCategory: e.target.value })
                     }
                     className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white"
                   >
-                    <option value="16&U">16&U (Under 16)</option>
-                    <option value="U19">U19 (Youth)</option>
-                    <option value="Open">Open</option>
-                    <option value="Masters">Masters</option>
-                    <option value="Women">Women</option>
+                    {WINGFOIL_CATEGORIES.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {cat}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div>

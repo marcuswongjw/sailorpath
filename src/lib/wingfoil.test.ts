@@ -3,8 +3,13 @@ import {
   parseWingfoilScreenshotFilename,
   computeWingfoilNett,
   recalculateScoreboard,
+  normalizeSailorName,
+  areSailNumbersMatching,
+  buildHistoricalSailNumberMap,
+  applyHistoricalSailNumbers,
   type WingfoilRaceScore,
   type WingfoilSailorResult,
+  type WingfoilRegatta,
 } from "./wingfoil";
 
 describe("parseWingfoilScreenshotFilename", () => {
@@ -127,3 +132,73 @@ describe("recalculateScoreboard", () => {
     expect(updated[1].nettScore).toBe(15);
   });
 });
+
+describe("sail number matching and resolution", () => {
+  it("normalizes sailor names ignoring case, spaces, and punctuation", () => {
+    expect(normalizeSailorName("Jun Hao Lo")).toBe("junhaolo");
+    expect(normalizeSailorName("LO, Jun-Hao")).toBe("lojunhao");
+    expect(normalizeSailorName("  Gaston  Fischer  ")).toBe("gastonfischer");
+  });
+
+  it("checks sail number matching with SGP prefixes and formatting", () => {
+    expect(areSailNumbersMatching("43", "43")).toBe(true);
+    expect(areSailNumbersMatching("SGP 43", "43")).toBe(true);
+    expect(areSailNumbersMatching("SGP-43", "43")).toBe(true);
+    expect(areSailNumbersMatching("43", "99")).toBe(false);
+  });
+
+  it("builds historical sail number map and applies to competitors with missing sail numbers", () => {
+    const sampleRegattas: WingfoilRegatta[] = [
+      {
+        id: "regatta-1",
+        name: "GP 1",
+        shortName: "GP1",
+        dates: "Jan 2026",
+        venue: "ECP",
+        organizer: "SSF",
+        format: "Sprint Slalom",
+        status: "Completed",
+        scoringSystem: "Low point",
+        rulesNotes: "",
+        results: [
+          {
+            rank: 1,
+            name: "Jun Hao Lo",
+            sailNumber: "43",
+            gender: "M",
+            ageCategory: "Open",
+            schoolName: "",
+            club: "",
+            races: [],
+            grossScore: 0,
+            nettScore: 0,
+          },
+        ],
+      },
+    ];
+
+    const map = buildHistoricalSailNumberMap(sampleRegattas);
+    expect(map.get("junhaolo")?.sailNumber).toBe("43");
+
+    // Competitor in new regatta has missing sailNumber
+    const newResults: WingfoilSailorResult[] = [
+      {
+        rank: 1,
+        name: "Jun Hao Lo",
+        sailNumber: "",
+        gender: "M",
+        ageCategory: "Open",
+        schoolName: "",
+        club: "",
+        races: [],
+        grossScore: 0,
+        nettScore: 0,
+      },
+    ];
+
+    const { results, autoAssignedCount } = applyHistoricalSailNumbers(newResults, map);
+    expect(autoAssignedCount).toBe(1);
+    expect(results[0].sailNumber).toBe("43");
+  });
+});
+

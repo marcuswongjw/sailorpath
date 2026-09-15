@@ -9,6 +9,7 @@ import {
   real,
   unique,
   index,
+  jsonb,
 } from "drizzle-orm/pg-core";
 
 export const profiles = pgTable("profiles", {
@@ -659,4 +660,16 @@ export const adminChangeLog = pgTable("admin_change_log", {
   summary: text("summary").notNull(),
   details: text("details"), // JSON string for portability
   source: text("source"),
+});
+
+/**
+ * Singapore WingFoil Regatta events, rankings, and scorecards.
+ * Shared across admin.sailorpath.com and sailorpath.com.
+ */
+export const wingfoilRegattas = pgTable("wingfoil_regattas", {
+  id: text("id").primaryKey().notNull(),
+  data: jsonb("data").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .notNull(),
 });
