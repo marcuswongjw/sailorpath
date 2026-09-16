@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  Heart,
   Trophy,
   User,
   Search,
@@ -30,6 +29,7 @@ import {
 } from "lucide-react";
 import { relationLabel, type ClaimRelation } from "@/lib/claimRelation";
 import { birthYear } from "@/lib/age";
+import { fleetPillClass } from "@/components/sailor-profile/helpers";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import {
   YOUTH_EQUIPMENT_PRESETS,
@@ -159,6 +159,23 @@ const DEFAULT_RACE_CHECKLIST_ITEMS = [
   },
 ] as const;
 
+const CARD =
+  "rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
+const NESTED =
+  "rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]";
+const SECONDARY_BTN =
+  "inline-flex items-center justify-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors";
+const PRIMARY_BTN = "sp-btn-primary";
+const SECTION_KICKER =
+  "text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]";
+const SECTION_TITLE =
+  "mt-1 text-base font-black text-[var(--sp-harbour-shadow)]";
+const MUTED = "text-[var(--sp-slate-soft)]";
+const INK = "text-[var(--sp-harbour-shadow)]";
+const BODY = "text-[var(--sp-charcoal-slate)]";
+const LINK_TEAL =
+  "text-[11px] font-bold text-[var(--sp-harbour-teal)] hover:underline";
+
 function formatAgeCategory(dob?: string | null) {
   const by = birthYear(dob);
   if (!by) return null;
@@ -273,6 +290,20 @@ export function ParentDashboard() {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void load();
   }, [load]);
+
+  useEffect(() => {
+    if (!showAddGearModal) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowAddGearModal(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [showAddGearModal]);
 
   const toggleChecklistItem = (athleteId: string, itemId: string) => {
     setChecklistState((prev) => {
@@ -399,10 +430,10 @@ export function ParentDashboard() {
       if (!res.ok) throw new Error();
       toast.success(
         nextSimplified === "race_ready"
-          ? "Gear marked Race Ready 🟢"
+          ? "Gear marked Race Ready"
           : nextSimplified === "practice_only"
-          ? "Gear marked Practice Only 🟡"
-          : "Gear marked Needs Repair 🔴"
+          ? "Gear marked Practice Only"
+          : "Gear marked Needs Repair"
       );
     } catch {
       toast.error("Failed to update equipment condition.");
@@ -437,7 +468,7 @@ export function ParentDashboard() {
       });
       if (!res.ok) throw new Error();
       toast.success(
-        nextPrimary ? "Set as primary race gear ⭐" : "Removed from primary gear."
+        nextPrimary ? "Set as primary race gear" : "Removed from primary gear."
       );
     } catch {
       toast.error("Failed to update gear priority.");
@@ -665,8 +696,16 @@ export function ParentDashboard() {
 
   if (loading) {
     return (
-      <div className="flex-1 flex items-center justify-center py-24 text-sm text-slate-500">
-        Loading dashboard…
+      <div className="flex-1 flex flex-col items-center justify-center gap-3 py-24 px-4">
+        <div
+          className="h-1 w-40 max-w-[60vw] overflow-hidden rounded-full bg-[var(--sp-cool-veil)]"
+          role="status"
+          aria-live="polite"
+          aria-label="Loading dashboard"
+        >
+          <div className="h-full w-1/2 animate-pulse rounded-full bg-[var(--sp-harbour-teal)]" />
+        </div>
+        <p className="text-sm font-semibold text-[var(--sp-slate-soft)]">Loading dashboard…</p>
       </div>
     );
   }
@@ -678,53 +717,41 @@ export function ParentDashboard() {
 
   const title = isParentStyle ? "Parent Dashboard" : "Sailor Dashboard";
   const subtitle = isParentStyle
-    ? "Manage linked athletes, selection standing, boat locker, coach logs, and race preparation."
+    ? "Linked athletes, series standing, boat locker, coach logs, and race-day prep."
     : "Your series ranking, selection trials, boat locker, and private notes.";
 
   return (
     <div className="mx-auto max-w-6xl w-full px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
-      {/* Header section */}
-      <div className="flex items-start justify-between gap-4 flex-wrap">
-        <div className="flex items-start gap-3 min-w-0">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 border border-emerald-500/30 text-emerald-400 shadow-sm">
-            <Heart className="h-6 w-6" />
-          </span>
-          <div className="min-w-0">
-            <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
-              {title}
-            </h1>
-            <p className="mt-1 text-sm text-[var(--sp-charcoal-slate)] leading-relaxed max-w-2xl">
-              {subtitle}
-            </p>
-          </div>
+      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="min-w-0">
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--sp-racing-orange)]">
+            {isParentStyle ? "Parent workspace" : "Sailor workspace"}
+          </p>
+          <h1 className="mt-1 text-3xl font-black tracking-tight text-[var(--sp-harbour-shadow)] sm:text-4xl">
+            {title}
+          </h1>
+          <p className={`mt-2 text-sm ${BODY} max-w-2xl`}>{subtitle}</p>
         </div>
         <div className="flex items-center gap-2">
-          <Link
-            href="/search"
-            className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] inline-flex items-center gap-1.5 transition-colors"
-          >
+          <Link href="/search" className={SECONDARY_BTN}>
             <Search className="h-3.5 w-3.5" />
             Find a sailor
           </Link>
-          <Link
-            href="/account"
-            className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] px-4 py-2 text-xs font-bold text-[var(--sp-charcoal-slate)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
-          >
+          <Link href="/account" className={SECONDARY_BTN}>
             Settings
           </Link>
         </div>
-      </div>
+      </header>
 
       {error && (
-        <p className="text-sm font-bold text-rose-600 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3">
+        <p className="text-sm font-bold text-rose-700 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3">
           {error}
         </p>
       )}
 
-      {/* Pending claims section */}
       {pendingClaims.length > 0 && (
-        <section className="rounded-2xl border border-amber-200 bg-amber-50/50 p-5 space-y-3">
-          <h2 className="text-xs font-black text-amber-800 uppercase tracking-wider flex items-center gap-2">
+        <section className="rounded-2xl border border-[var(--sp-racing-orange)]/25 bg-[var(--sp-racing-mist)]/40 p-5 space-y-3">
+          <h2 className="text-xs font-black text-[var(--sp-racing-deep)] uppercase tracking-wider flex items-center gap-2">
             <Clock className="h-4 w-4" />
             Claims awaiting approval ({pendingClaims.length})
           </h2>
@@ -732,21 +759,21 @@ export function ParentDashboard() {
             {pendingClaims.map((c) => (
               <li
                 key={c.id}
-                className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-3.5 py-3 flex items-center justify-between gap-2 shadow-2xs"
+                className={`${NESTED} bg-[var(--sp-warm-white)] px-3.5 py-3 flex items-center justify-between gap-2`}
               >
                 <div>
                   <Link
                     href={`/${c.sailorHandle}`}
-                    className="text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]"
+                    className={`text-sm font-bold ${INK} hover:text-[var(--sp-racing-orange)]`}
                   >
                     {c.sailorName}
                   </Link>
-                  <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                  <p className={`text-[11px] ${MUTED}`}>
                     {relationLabel(c.relation)} · submitted{" "}
                     {c.createdAt ? new Date(c.createdAt).toLocaleDateString() : "—"}
                   </p>
                 </div>
-                <span className="text-[10px] font-black uppercase text-amber-800 px-2 py-0.5 rounded-full border border-amber-200 bg-amber-100">
+                <span className="text-[10px] font-black uppercase text-[var(--sp-racing-deep)] px-2 py-0.5 rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]">
                   Pending
                 </span>
               </li>
@@ -755,44 +782,42 @@ export function ParentDashboard() {
         </section>
       )}
 
-      {/* Empty state when no linked athletes */}
       {athletes.length === 0 ? (
-        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 sm:p-12 text-center space-y-4 shadow-xs">
-          <Sailboat className="h-10 w-10 text-[var(--sp-slate-soft)] mx-auto" />
-          <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">No linked sailor profiles yet</h2>
-          <p className="text-sm text-[var(--sp-charcoal-slate)] max-w-md mx-auto leading-relaxed">
+        <div className={`${CARD} p-8 sm:p-12 text-center space-y-4`}>
+          <Sailboat className={`h-10 w-10 ${MUTED} mx-auto`} />
+          <h2 className={`text-lg font-bold ${INK}`}>No linked sailor profiles yet</h2>
+          <p className={`text-sm ${BODY} max-w-md mx-auto leading-relaxed`}>
             Search for your child (or yourself), open their profile, and submit a claim as{" "}
-            <strong className="text-[var(--sp-harbour-shadow)]">Parent</strong> or{" "}
-            <strong className="text-[var(--sp-harbour-shadow)]">Sailor</strong>. Once verified, their command center will appear here.
+            <strong className={INK}>Parent</strong> or{" "}
+            <strong className={INK}>Sailor</strong>. Once verified, their dashboard will appear here.
           </p>
           <div className="flex flex-col sm:flex-row gap-2 justify-center pt-2">
-            <Link
-              href="/search"
-              className="sp-btn-primary"
-            >
+            <Link href="/search" className="sp-btn-primary">
               Search sailors
             </Link>
-            <Link
-              href="/claim-profile"
-              className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] px-5 py-2.5 text-xs font-bold text-[var(--sp-harbour-shadow)] transition-colors"
-            >
+            <Link href="/claim-profile" className={SECONDARY_BTN}>
               How claiming works
             </Link>
           </div>
         </div>
       ) : (
         <>
-          {/* Multi-Athlete Switcher Navigation */}
           {athletes.length > 1 && (
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-white/10">
+            <div
+              className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-[var(--sp-cool-veil)]"
+              role="tablist"
+              aria-label="Linked athletes"
+            >
               <button
                 type="button"
+                role="tab"
+                aria-selected={selectedAthleteId === "all"}
                 data-testid="tab-all-summary"
                 onClick={() => setSelectedAthleteId("all")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap ${
                   selectedAthleteId === "all"
-                    ? "bg-orange-600 text-white shadow-sm"
-                    : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
+                    ? "bg-harbour text-sailcloth shadow-xs"
+                    : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`
                 }`}
               >
                 <Users className="h-3.5 w-3.5" />
@@ -805,11 +830,13 @@ export function ParentDashboard() {
                   <button
                     key={a.id}
                     type="button"
+                    role="tab"
+                    aria-selected={isSelected}
                     onClick={() => setSelectedAthleteId(a.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap ${
                       isSelected
-                        ? "bg-white/15 text-white border border-white/20 shadow-sm"
-                        : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
+                        ? "bg-harbour text-sailcloth shadow-xs"
+                        : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`
                     }`}
                   >
                     {a.avatarUrl ? (
@@ -820,22 +847,22 @@ export function ParentDashboard() {
                         className="h-4 w-4 rounded-full object-cover"
                       />
                     ) : (
-                      <User className="h-3.5 w-3.5 text-slate-400" />
+                      <User className="h-3.5 w-3.5" />
                     )}
                     <span>{a.name}</span>
                     {a.standing?.fleet && (
                       <span
-                        className={`text-[10px] px-1.5 py-0.2 rounded font-black ${
-                          a.standing.fleet === "Gold"
-                            ? "bg-amber-500/20 text-amber-300"
-                            : "bg-sky-500/20 text-sky-300"
+                        className={`text-[10px] px-1.5 py-0.5 rounded-full font-black border ${
+                          isSelected
+                            ? "border-sailcloth/30 bg-white/15 text-sailcloth"
+                            : fleetPillClass(a.standing.fleet)
                         }`}
                       >
                         {a.standing.fleet} #{a.standing.overallRank}
                       </span>
                     )}
                     {(a.equipmentAlertCount ?? 0) > 0 && (
-                      <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
+                      <span className="h-2 w-2 rounded-full bg-rose-500" aria-label="Equipment alert" />
                     )}
                   </button>
                 );
@@ -843,136 +870,130 @@ export function ParentDashboard() {
             </div>
           )}
 
-          {/* VIEW MODE 1: ALL ATHLETES SUMMARY */}
           {selectedAthleteId === "all" && athletes.length > 1 && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {athletes.map((a) => (
-                  <div
-                    key={a.id}
-                    className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 space-y-4 hover:border-white/20 transition-all shadow-sm"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-center gap-3">
-                        {a.avatarUrl ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={a.avatarUrl}
-                            alt=""
-                            className="h-12 w-12 rounded-2xl object-cover border border-white/10 shrink-0"
-                          />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {athletes.map((a) => (
+                <article
+                  key={a.id}
+                  className={`${CARD} p-5 space-y-4 hover:border-[var(--sp-harbour-teal)] transition-colors`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      {a.avatarUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={a.avatarUrl}
+                          alt=""
+                          className="h-12 w-12 rounded-2xl object-cover border border-[var(--sp-cool-veil)] shrink-0"
+                        />
+                      ) : (
+                        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)] text-[var(--sp-sailcloth)] border border-[var(--sp-harbour-teal)]">
+                          <User className="h-6 w-6" />
+                        </span>
+                      )}
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <h3 className={`text-base font-black ${INK}`}>{a.name}</h3>
+                          {a.ownerRelation && (
+                            <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)]">
+                              {relationLabel(a.ownerRelation)}
+                            </span>
+                          )}
+                        </div>
+                        <p className={`text-xs ${MUTED} mt-0.5`}>
+                          {[a.club, a.sailNumber, formatAgeCategory(a.dob)]
+                            .filter(Boolean)
+                            .join(" · ")}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedAthleteId(a.id)}
+                      className={`${PRIMARY_BTN} px-3 py-1.5 text-[11px] shrink-0`}
+                    >
+                      Open Dashboard
+                      <ChevronRight className="h-3 w-3" />
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                    <div className={`${NESTED} p-2.5`}>
+                      <p className={`text-[10px] font-bold ${MUTED} uppercase`}>
+                        Series Rank
+                      </p>
+                      <p className={`text-sm font-black ${INK} mt-0.5`}>
+                        {a.standing ? (
+                          <>
+                            #{a.standing.overallRank}{" "}
+                            <span className={`text-[11px] font-normal ${MUTED}`}>
+                              ({a.standing.fleet})
+                            </span>
+                          </>
                         ) : (
-                          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-orange-500/15 border border-orange-500/20 text-orange-400">
-                            <User className="h-6 w-6" />
+                          <span className={`${MUTED} text-xs font-normal`}>—</span>
+                        )}
+                      </p>
+                    </div>
+
+                    <div className={`${NESTED} p-2.5`}>
+                      <p className={`text-[10px] font-bold ${MUTED} uppercase`}>
+                        Selection Trials
+                      </p>
+                      <p className={`text-sm font-black ${INK} mt-0.5`}>
+                        {a.selectionTrials ? (
+                          <>
+                            #{a.selectionTrials.rank}{" "}
+                            <span className="text-[11px] font-normal text-[var(--sp-harbour-teal)]">
+                              ({a.selectionTrials.nettScore} pts)
+                            </span>
+                          </>
+                        ) : (
+                          <span className={`${MUTED} text-xs font-normal`}>N/A</span>
+                        )}
+                      </p>
+                    </div>
+
+                    <div className={`${NESTED} p-2.5 col-span-2 sm:col-span-1`}>
+                      <p className={`text-[10px] font-bold ${MUTED} uppercase`}>
+                        Locker Alerts
+                      </p>
+                      <p className="text-sm font-black mt-0.5">
+                        {(a.equipmentAlertCount ?? 0) > 0 ? (
+                          <span className="text-rose-700 font-bold">
+                            {a.equipmentAlertCount} alert
+                            {a.equipmentAlertCount === 1 ? "" : "s"}
+                          </span>
+                        ) : (
+                          <span className="text-[var(--sp-harbour-teal)] font-semibold text-xs flex items-center gap-1">
+                            <CheckCircle2 className="h-3 w-3" /> All good
                           </span>
                         )}
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h3 className="text-base font-black text-white">{a.name}</h3>
-                            {a.ownerRelation && (
-                              <span className="rounded-full border border-emerald-500/25 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
-                                {relationLabel(a.ownerRelation)}
-                              </span>
-                            )}
-                          </div>
-                          <p className="text-xs text-slate-400 mt-0.5">
-                            {[a.club, a.sailNumber, formatAgeCategory(a.dob)]
-                              .filter(Boolean)
-                              .join(" · ")}
-                          </p>
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedAthleteId(a.id)}
-                        className="rounded-full bg-orange-600/90 hover:bg-orange-500 px-3 py-1.5 text-[11px] font-bold text-white inline-flex items-center gap-1 transition-colors"
-                      >
-                        Open Dashboard
-                        <ChevronRight className="h-3 w-3" />
-                      </button>
+                      </p>
                     </div>
-
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
-                      <div className="rounded-xl border border-white/5 bg-black/25 p-2.5">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase">
-                          Series Rank
-                        </p>
-                        <p className="text-sm font-black text-white mt-0.5">
-                          {a.standing ? (
-                            <>
-                              #{a.standing.overallRank}{" "}
-                              <span className="text-[11px] font-normal text-slate-400">
-                                ({a.standing.fleet})
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-slate-500 text-xs font-normal">—</span>
-                          )}
-                        </p>
-                      </div>
-
-                      <div className="rounded-xl border border-white/5 bg-black/25 p-2.5">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase">
-                          Selection Trials
-                        </p>
-                        <p className="text-sm font-black text-white mt-0.5">
-                          {a.selectionTrials ? (
-                            <>
-                              #{a.selectionTrials.rank}{" "}
-                              <span className="text-[11px] font-normal text-emerald-400">
-                                ({a.selectionTrials.nettScore} pts)
-                              </span>
-                            </>
-                          ) : (
-                            <span className="text-slate-500 text-xs font-normal">N/A</span>
-                          )}
-                        </p>
-                      </div>
-
-                      <div className="rounded-xl border border-white/5 bg-black/25 p-2.5 col-span-2 sm:col-span-1">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase">
-                          Locker Alerts
-                        </p>
-                        <p className="text-sm font-black mt-0.5">
-                          {(a.equipmentAlertCount ?? 0) > 0 ? (
-                            <span className="text-rose-400 font-bold">
-                              {a.equipmentAlertCount} alert
-                              {a.equipmentAlertCount === 1 ? "" : "s"}
-                            </span>
-                          ) : (
-                            <span className="text-emerald-400 font-semibold text-xs flex items-center gap-1">
-                              <CheckCircle2 className="h-3 w-3" /> All good
-                            </span>
-                          )}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Latest coach log or private note snippet */}
-                    {a.coachFeedback && a.coachFeedback.length > 0 && (
-                      <div className="rounded-xl border border-sky-500/20 bg-sky-500/[0.05] p-2.5 text-xs text-sky-200/90 flex items-start gap-2">
-                        <Award className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
-                        <div className="min-w-0 flex-1">
-                          <p className="font-bold text-[11px] text-sky-300 truncate">
-                            Latest Coach Feedback: {a.coachFeedback[0].title}
-                          </p>
-                          <p className="text-slate-300 text-[11px] line-clamp-1 mt-0.5">
-                            {a.coachFeedback[0].detail}
-                          </p>
-                        </div>
-                      </div>
-                    )}
                   </div>
-                ))}
-              </div>
+
+                  {a.coachFeedback && a.coachFeedback.length > 0 && (
+                    <div className="rounded-xl border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)]/60 p-2.5 text-xs flex items-start gap-2">
+                      <Award className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
+                      <div className="min-w-0 flex-1">
+                        <p className="font-bold text-[11px] text-[var(--sp-harbour-teal)] truncate">
+                          Latest Coach Feedback: {a.coachFeedback[0].title}
+                        </p>
+                        <p className={`${BODY} text-[11px] line-clamp-1 mt-0.5`}>
+                          {a.coachFeedback[0].detail}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </article>
+              ))}
             </div>
           )}
 
-          {/* VIEW MODE 2: ACTIVE ATHLETE DEEP COMMAND CENTER */}
           {activeAthlete && (
             <div className="space-y-6 sm:space-y-8">
-              {/* HERO ATHLETE CARD */}
-              <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#181a29] to-[#10121d] p-5 sm:p-7 shadow-xl space-y-5">
+              <section className={`${CARD} p-5 sm:p-7`}>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex items-start gap-4">
                     {activeAthlete.avatarUrl ? (
@@ -980,70 +1001,64 @@ export function ParentDashboard() {
                       <img
                         src={activeAthlete.avatarUrl}
                         alt=""
-                        className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-cover border-2 border-white/15 shrink-0 shadow-md"
+                        className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-cover border-2 border-[var(--sp-cool-veil)] shrink-0"
                       />
                     ) : (
-                      <span className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-2xl bg-orange-500/15 border-2 border-orange-500/25 text-orange-400 shadow-md">
+                      <span className="flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)] text-[var(--sp-sailcloth)] border-2 border-[var(--sp-harbour-teal)]">
                         <User className="h-8 w-8" />
                       </span>
                     )}
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                        <h2 className={`text-xl sm:text-2xl font-black ${INK} tracking-tight`}>
                           {activeAthlete.name}
                         </h2>
                         {activeAthlete.ownerRelation && (
-                          <span className="rounded-full border border-emerald-500/30 bg-emerald-500/15 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-emerald-300">
+                          <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
                             {relationLabel(activeAthlete.ownerRelation)}
                           </span>
                         )}
                         {activeAthlete.nationalSquadStatus && (
-                          <span className="rounded-full border border-amber-500/30 bg-amber-500/15 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-amber-300">
+                          <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[var(--sp-charcoal-slate)]">
                             {activeAthlete.nationalSquadStatus}
                           </span>
                         )}
                       </div>
 
-                      {/* Club, school, and birth year / age category */}
-                      <p className="text-xs sm:text-sm text-slate-300 mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
-                        <span className="font-semibold text-white">{activeAthlete.club}</span>
+                      <p className={`text-xs sm:text-sm ${MUTED} mt-1 flex flex-wrap items-center gap-x-2 gap-y-1`}>
+                        <span className={`font-semibold ${INK}`}>{activeAthlete.club}</span>
                         {activeAthlete.school && (
                           <>
-                            <span className="text-slate-600">·</span>
+                            <span aria-hidden>·</span>
                             <span>{activeAthlete.school}</span>
                           </>
                         )}
                         {activeAthlete.dob && (
                           <>
-                            <span className="text-slate-600">·</span>
-                            <span className="text-slate-400 font-mono text-xs">
+                            <span aria-hidden>·</span>
+                            <span className="font-mono text-xs">
                               {formatAgeCategory(activeAthlete.dob)}
                             </span>
                           </>
                         )}
                       </p>
 
-                      {/* Dual Sail numbers */}
                       <div className="flex flex-wrap items-center gap-2 mt-2.5">
-                        <span className="rounded-lg border border-sky-500/30 bg-sky-500/10 px-2.5 py-1 text-xs font-mono font-bold text-sky-200 inline-flex items-center gap-1.5">
-                          <Sailboat className="h-3.5 w-3.5 text-sky-400" />
+                        <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2.5 py-1 text-xs font-mono font-bold text-[var(--sp-harbour-teal)] inline-flex items-center gap-1.5">
+                          <Sailboat className="h-3.5 w-3.5" />
                           Opti {activeAthlete.sailNumber}
                         </span>
 
                         {activeAthlete.sailNumberIlca4 && (
-                          <span className="rounded-lg border border-purple-500/30 bg-purple-500/10 px-2.5 py-1 text-xs font-mono font-bold text-purple-200 inline-flex items-center gap-1.5">
-                            <Compass className="h-3.5 w-3.5 text-purple-400" />
+                          <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2.5 py-1 text-xs font-mono font-bold text-[var(--sp-harbour-shadow)] inline-flex items-center gap-1.5">
+                            <Compass className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
                             ILCA 4 {activeAthlete.sailNumberIlca4}
                           </span>
                         )}
 
                         {activeAthlete.standing?.fleet && (
                           <span
-                            className={`rounded-lg border px-2.5 py-1 text-xs font-black uppercase tracking-wider ${
-                              activeAthlete.standing.fleet === "Gold"
-                                ? "border-amber-500/30 bg-amber-500/15 text-amber-200"
-                                : "border-slate-600 bg-slate-800/60 text-slate-300"
-                            }`}
+                            className={`rounded-full border px-2.5 py-1 text-xs font-black uppercase tracking-wider ${fleetPillClass(activeAthlete.standing.fleet)}`}
                           >
                             {activeAthlete.standing.fleet} Fleet
                           </span>
@@ -1052,61 +1067,43 @@ export function ParentDashboard() {
                     </div>
                   </div>
 
-                  {/* Right quick actions */}
                   <div className="flex flex-wrap sm:flex-col gap-2 shrink-0">
-                    <Link
-                      href={`/${activeAthlete.handle}`}
-                      className="rounded-xl bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white inline-flex items-center justify-center gap-1.5 shadow-sm transition-all"
-                    >
+                    <Link href={`/${activeAthlete.handle}`} className={PRIMARY_BTN}>
                       Public Profile
                       <ExternalLink className="h-3.5 w-3.5" />
                     </Link>
                     {activeAthlete.standing?.fleet === "Gold" && (
-                      <Link
-                        href="/sg/optimist/gold"
-                        className="rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-bold text-slate-300 hover:text-white inline-flex items-center justify-center gap-1.5 transition-colors"
-                      >
-                        <Trophy className="h-3.5 w-3.5 text-amber-400" />
+                      <Link href="/sg/optimist/gold" className={SECONDARY_BTN}>
+                        <Trophy className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
                         Gold Leaderboard
                       </Link>
                     )}
                     {activeAthlete.standing?.fleet === "Silver" && (
-                      <Link
-                        href="/sg/optimist/silver"
-                        className="rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-bold text-slate-300 hover:text-white inline-flex items-center justify-center gap-1.5 transition-colors"
-                      >
-                        <Trophy className="h-3.5 w-3.5 text-sky-400" />
+                      <Link href="/sg/optimist/silver" className={SECONDARY_BTN}>
+                        <Trophy className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
                         Silver Leaderboard
                       </Link>
                     )}
                   </div>
                 </div>
-              </div>
+              </section>
 
-              {/* BENTO GRID OF 5 CORE WORKSPACE PANELS */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* COLUMN 1 & 2: LEFT TWO COLUMNS ON DESKTOP */}
                 <div className="lg:col-span-2 space-y-6">
-                  {/* CARD A: 3-COLUMN SUMMARY (SELECTION TRIAL · NATIONAL RANKING · RECENT RESULTS) */}
-                  <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 sm:p-6 shadow-sm">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-white/10">
-                      {/* COLUMN 1: SELECTION TRIAL */}
+                  <section className={`${CARD} p-5 sm:p-6`}>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 divide-y md:divide-y-0 md:divide-x divide-[var(--sp-cool-veil)]">
                       <div className="space-y-3 md:pr-4 flex flex-col justify-between">
                         <div className="space-y-2.5">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[11px] font-black uppercase tracking-wider text-orange-400 flex items-center gap-1.5">
-                              <Trophy className="h-3.5 w-3.5 text-orange-400" />
+                            <span className={`${SECTION_KICKER} flex items-center gap-1.5`}>
+                              <Trophy className="h-3.5 w-3.5" />
                               Selection Trial
                             </span>
-                            <Link
-                              href="/sg/optimist/selection"
-                              className="text-[10px] font-bold text-orange-400 hover:text-orange-300 hover:underline"
-                            >
+                            <Link href="/sg/optimist/selection" className={LINK_TEAL}>
                               Board →
                             </Link>
                           </div>
 
-                          {/* Only for Gold fleet sailors who took part in selection trial */}
                           {(() => {
                             const isGoldFleet =
                               activeAthlete.standing?.fleet === "Gold" ||
@@ -1120,10 +1117,10 @@ export function ParentDashboard() {
                             if (!tookPart) {
                               return (
                                 <div className="space-y-1.5 pt-1">
-                                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-white/5 text-slate-400 border border-white/5">
+                                  <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${NESTED} ${MUTED}`}>
                                     Not Applicable
                                   </span>
-                                  <p className="text-[11px] text-slate-500 leading-snug">
+                                  <p className={`text-[11px] ${MUTED} leading-snug`}>
                                     Only for Gold fleet sailors who took part in selection trial.
                                   </p>
                                 </div>
@@ -1145,15 +1142,15 @@ export function ParentDashboard() {
                               return (
                                 <div className="space-y-2 pt-1">
                                   <div>
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-500/20 border border-emerald-500/40 text-emerald-300">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-[var(--sp-aqua-mist)] border border-[var(--sp-harbour-teal)]/30 text-[var(--sp-harbour-teal)]">
                                       <CheckCircle2 className="h-3.5 w-3.5" />
                                       Selected
                                     </span>
                                   </div>
-                                  <p className="text-xs font-bold text-white leading-tight">
+                                  <p className={`text-xs font-bold ${INK} leading-tight`}>
                                     {squadDetails}
                                   </p>
-                                  <p className="text-[11px] text-slate-400 font-mono">
+                                  <p className={`text-[11px] ${MUTED} font-mono`}>
                                     Trials Rank #{trials?.rank} · {trials?.nettScore} pts ({trials?.eventsSailed}/2 events)
                                   </p>
                                 </div>
@@ -1163,15 +1160,15 @@ export function ParentDashboard() {
                             return (
                               <div className="space-y-2 pt-1">
                                 <div>
-                                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-slate-800 border border-white/10 text-slate-300">
+                                  <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold ${NESTED} ${BODY}`}>
                                     Not Selected
                                   </span>
                                 </div>
-                                <p className="text-xs text-slate-300">
+                                <p className={`text-xs ${BODY}`}>
                                   Trials Rank #{trials?.rank} ({trials?.eventsSailed}/2 events)
                                 </p>
                                 {trials?.gapToCutoff != null && (
-                                  <p className="text-[11px] text-slate-400 font-mono">
+                                  <p className={`text-[11px] ${MUTED} font-mono`}>
                                     {trials.gapToCutoff > 0 ? `+${trials.gapToCutoff.toFixed(1)}` : trials.gapToCutoff.toFixed(1)} pts to cutoff
                                   </p>
                                 )}
@@ -1183,19 +1180,18 @@ export function ParentDashboard() {
                         <div className="pt-2">
                           <Link
                             href="/sg/optimist/selection"
-                            className="text-xs font-bold text-orange-400 hover:text-orange-300 inline-flex items-center gap-1"
+                            className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline inline-flex items-center gap-1"
                           >
                             View Trials Board →
                           </Link>
                         </div>
                       </div>
 
-                      {/* COLUMN 2: NATIONAL RANKING */}
                       <div className="space-y-3 pt-4 md:pt-0 md:px-4 flex flex-col justify-between">
                         <div className="space-y-2.5">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[11px] font-black uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
-                              <Award className="h-3.5 w-3.5 text-sky-400" />
+                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
+                              <Award className="h-3.5 w-3.5" />
                               National Ranking
                             </span>
                             <Link
@@ -1204,7 +1200,7 @@ export function ParentDashboard() {
                                   ? "/sg/optimist/gold"
                                   : "/sg/optimist/silver"
                               }
-                              className="text-[10px] font-bold text-sky-400 hover:text-sky-300 hover:underline"
+                              className={LINK_TEAL}
                             >
                               Board →
                             </Link>
@@ -1213,26 +1209,26 @@ export function ParentDashboard() {
                           {activeAthlete.standing ? (
                             <div className="space-y-1 pt-1">
                               <div className="flex items-baseline gap-2">
-                                <span className="text-3xl font-black text-white tabular-nums">
+                                <span className={`text-3xl font-black ${INK} tabular-nums`}>
                                   #{activeAthlete.standing.overallRank}
                                 </span>
-                                <span className="text-xs font-semibold text-slate-300">
+                                <span className={`text-xs font-semibold ${BODY}`}>
                                   in {activeAthlete.standing.fleet} Fleet
                                 </span>
                               </div>
-                              <p className="text-[11px] text-slate-400">
+                              <p className={`text-[11px] ${MUTED}`}>
                                 {activeAthlete.standing.fleetSize} sailors · {activeAthlete.standing.periodLabel}
                               </p>
-                              <p className="text-[11px] text-slate-400">
+                              <p className={`text-[11px] ${MUTED}`}>
                                 Best 3 of 5:{" "}
-                                <span className="font-bold text-white">
+                                <span className={`font-bold ${INK}`}>
                                   {activeAthlete.standing.best3of5} pts
                                 </span>
                               </p>
                             </div>
                           ) : (
                             <div className="pt-1">
-                              <span className="text-xs text-slate-500">
+                              <span className={`text-xs ${MUTED}`}>
                                 No series ranking recorded for current half.
                               </span>
                             </div>
@@ -1246,25 +1242,21 @@ export function ParentDashboard() {
                                 ? "/sg/optimist/gold"
                                 : "/sg/optimist/silver"
                             }
-                            className="text-xs font-bold text-sky-400 hover:text-sky-300 inline-flex items-center gap-1"
+                            className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline inline-flex items-center gap-1"
                           >
                             Explore Fleet Board →
                           </Link>
                         </div>
                       </div>
 
-                      {/* COLUMN 3: RECENT REGATTA RESULTS */}
                       <div className="space-y-3 pt-4 md:pt-0 md:pl-4 flex flex-col justify-between">
                         <div className="space-y-2.5">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                              <Sailboat className="h-3.5 w-3.5 text-emerald-400" />
+                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
+                              <Sailboat className="h-3.5 w-3.5" />
                               Recent Results
                             </span>
-                            <Link
-                              href={`/${activeAthlete.handle}`}
-                              className="text-[10px] font-bold text-emerald-400 hover:text-emerald-300 hover:underline"
-                            >
+                            <Link href={`/${activeAthlete.handle}`} className={LINK_TEAL}>
                               All →
                             </Link>
                           </div>
@@ -1274,17 +1266,17 @@ export function ParentDashboard() {
                               {activeAthlete.recentResults.slice(0, 3).map((r, i) => (
                                 <div
                                   key={i}
-                                  className="flex items-center justify-between gap-2 p-2 rounded-xl bg-black/25 border border-white/5 text-xs"
+                                  className={`flex items-center justify-between gap-2 p-2 ${NESTED} text-xs`}
                                 >
                                   <div className="min-w-0 flex-1">
-                                    <p className="font-bold text-white truncate text-xs">
+                                    <p className={`font-bold ${INK} truncate text-xs`}>
                                       {r.regattaName}
                                     </p>
-                                    <p className="text-[10px] text-slate-400 font-mono">
+                                    <p className={`text-[10px] ${MUTED} font-mono`}>
                                       {r.regattaDate}
                                     </p>
                                   </div>
-                                  <span className="text-xs font-black text-orange-300 tabular-nums px-2 py-0.5 rounded-md bg-orange-500/10 border border-orange-500/20 shrink-0">
+                                  <span className="text-xs font-black text-[var(--sp-racing-orange)] tabular-nums px-2 py-0.5 rounded-md bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/20 shrink-0">
                                     #{r.rank}
                                   </span>
                                 </div>
@@ -1292,7 +1284,7 @@ export function ParentDashboard() {
                             </div>
                           ) : (
                             <div className="pt-1">
-                              <span className="text-xs text-slate-500">
+                              <span className={`text-xs ${MUTED}`}>
                                 No recent regatta finishes logged.
                               </span>
                             </div>
@@ -1302,24 +1294,24 @@ export function ParentDashboard() {
                         <div className="pt-2">
                           <Link
                             href={`/${activeAthlete.handle}`}
-                            className="text-xs font-bold text-emerald-400 hover:text-emerald-300 inline-flex items-center gap-1"
+                            className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline inline-flex items-center gap-1"
                           >
                             View Full Profile →
                           </Link>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </section>
 
-                  {/* CARD B: EQUIPMENT & BOAT LOCKER */}
-                  <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 sm:p-6 space-y-4 shadow-sm">
+                  <section className={`${CARD} p-5 sm:p-6 space-y-4`}>
                     <div className="flex items-start justify-between gap-3 flex-wrap">
                       <div>
-                        <h3 className="text-sm font-black uppercase tracking-wider text-sky-400 flex items-center gap-2">
-                          <Sailboat className="h-4 w-4 text-sky-400" />
+                        <p className={SECTION_KICKER}>Boat locker</p>
+                        <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
+                          <Sailboat className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
                           Boat Locker & Equipment
                         </h3>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className={`text-xs ${MUTED} mt-0.5`}>
                           Track hull condition, sails, spars, measurement certificates, and race-day gear.
                         </p>
                       </div>
@@ -1327,31 +1319,30 @@ export function ParentDashboard() {
                         <button
                           type="button"
                           onClick={() => setShowAddGearModal(true)}
-                          className="rounded-full bg-orange-600 hover:bg-orange-500 px-3.5 py-1.5 text-xs font-bold text-white inline-flex items-center gap-1.5 transition shadow-sm"
+                          className={PRIMARY_BTN}
                         >
                           <Plus className="h-3.5 w-3.5" />
                           Add Equipment
                         </button>
                         <Link
                           href={`/${activeAthlete.handle}#profile-equipment`}
-                          className="text-[11px] font-bold text-slate-400 hover:text-white px-2.5 py-1.5 rounded-lg border border-white/10 hover:border-white/20 transition flex items-center gap-1"
+                          className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
                         >
                           Full Profile →
                         </Link>
                       </div>
                     </div>
 
-                    {/* Active alerts banner if any */}
                     {(activeAthlete.equipmentAlertCount ?? 0) > 0 && (
-                      <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-3.5 space-y-2">
-                        <p className="text-xs font-bold text-rose-300 flex items-center gap-1.5">
-                          <AlertTriangle className="h-4 w-4 text-rose-400 shrink-0" />
+                      <div className="rounded-xl border border-rose-200 bg-rose-50 p-3.5 space-y-2">
+                        <p className="text-xs font-bold text-rose-800 flex items-center gap-1.5">
+                          <AlertTriangle className="h-4 w-4 text-rose-600 shrink-0" />
                           {activeAthlete.equipmentAlertCount} Equipment Alert
                           {activeAthlete.equipmentAlertCount === 1 ? "" : "s"} Require Action
                         </p>
                         <div className="space-y-1 pl-5">
                           {(activeAthlete.equipmentAlerts || []).map((al, idx) => (
-                            <p key={idx} className="text-xs text-rose-200/90">
+                            <p key={idx} className="text-xs text-rose-800">
                               <span className="font-bold">{al.label}:</span> {al.reason}
                             </p>
                           ))}
@@ -1359,27 +1350,26 @@ export function ParentDashboard() {
                       </div>
                     )}
 
-                    {/* Equipment grid */}
                     {activeAthlete.primaryGear && activeAthlete.primaryGear.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                         {activeAthlete.primaryGear.map((g) => (
                           <div
                             key={g.id}
-                            className="rounded-xl border border-white/5 bg-black/25 p-3 flex flex-col justify-between gap-2.5 hover:border-white/10 transition group"
+                            className={`${NESTED} p-3 flex flex-col justify-between gap-2.5 hover:border-[var(--sp-harbour-teal)] transition group`}
                           >
                             <div className="flex items-start justify-between gap-1.5">
                               <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-1.5">
-                                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-500">
+                                  <span className={`text-[10px] font-black uppercase tracking-wider ${MUTED}`}>
                                     {g.category}
                                   </span>
                                   {g.isPrimary && (
-                                    <span className="text-[9px] font-bold text-amber-300 bg-amber-500/15 border border-amber-500/25 px-1.5 py-0.2 rounded">
+                                    <span className="text-[9px] font-bold text-[var(--sp-racing-orange)] bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/25 px-1.5 py-0.5 rounded-full">
                                       Primary
                                     </span>
                                   )}
                                 </div>
-                                <p className="text-xs font-bold text-white mt-0.5 truncate">
+                                <p className={`text-xs font-bold ${INK} mt-0.5 truncate`}>
                                   {g.label || [g.brand, g.model].filter(Boolean).join(" ") || "Equipment Item"}
                                 </p>
                               </div>
@@ -1388,24 +1378,24 @@ export function ParentDashboard() {
                                   type="button"
                                   title={g.isPrimary ? "Primary race gear (click to unset)" : "Make primary race gear"}
                                   onClick={() => void handleToggleGearPrimary(activeAthlete.id, g.id, g.isPrimary)}
-                                  className={`p-1 rounded hover:bg-white/10 transition ${
-                                    g.isPrimary ? "text-amber-400" : "text-slate-600 hover:text-slate-400"
+                                  className={`p-1 rounded-lg hover:bg-[var(--sp-warm-white)] transition ${
+                                    g.isPrimary ? "text-[var(--sp-racing-orange)]" : `${MUTED} hover:text-[var(--sp-racing-orange)]`
                                   }`}
                                 >
-                                  <Star className={`h-3.5 w-3.5 ${g.isPrimary ? "fill-amber-400" : ""}`} />
+                                  <Star className={`h-3.5 w-3.5 ${g.isPrimary ? "fill-[var(--sp-racing-orange)]" : ""}`} />
                                 </button>
                                 <button
                                   type="button"
                                   title="Remove gear from locker"
                                   onClick={() => void handleDeleteGear(activeAthlete.id, g.id)}
-                                  className="p-1 rounded text-slate-600 hover:text-rose-400 hover:bg-rose-500/10 transition"
+                                  className={`p-1 rounded-lg ${MUTED} hover:text-rose-600 hover:bg-rose-50 transition`}
                                 >
                                   <Trash2 className="h-3.5 w-3.5" />
                                 </button>
                               </div>
                             </div>
 
-                            <div className="flex items-center justify-between pt-1.5 border-t border-white/5">
+                            <div className="flex items-center justify-between pt-1.5 border-t border-[var(--sp-cool-veil)]">
                               {(() => {
                                 const simplified = toSimplifiedCondition(g.condition);
                                 return (
@@ -1413,12 +1403,12 @@ export function ParentDashboard() {
                                     type="button"
                                     onClick={() => void handleToggleGearCondition(activeAthlete.id, g.id, g.condition)}
                                     title="Click to toggle condition (Race Ready / Practice Only / Needs Repair)"
-                                    className={`text-[10px] font-bold capitalize px-2 py-0.5 rounded-md border transition flex items-center gap-1 touch-manipulation ${
+                                    className={`text-[10px] font-bold capitalize px-2 py-0.5 rounded-full border transition flex items-center gap-1 touch-manipulation ${
                                       simplified === "race_ready"
-                                        ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/25"
+                                        ? "bg-[var(--sp-aqua-mist)] border-[var(--sp-harbour-teal)]/30 text-[var(--sp-harbour-teal)]"
                                         : simplified === "practice_only"
-                                        ? "bg-amber-500/15 border-amber-500/30 text-amber-300 hover:bg-amber-500/25"
-                                        : "bg-rose-500/15 border-rose-500/30 text-rose-300 hover:bg-rose-500/25"
+                                        ? "bg-[var(--sp-racing-mist)]/50 border-[var(--sp-racing-orange)]/30 text-[var(--sp-racing-deep)]"
+                                        : "bg-rose-50 border-rose-200 text-rose-700"
                                     }`}
                                   >
                                     <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
@@ -1430,7 +1420,7 @@ export function ParentDashboard() {
                                   </button>
                                 );
                               })()}
-                              <span className="text-[10px] text-slate-500 font-medium">
+                              <span className={`text-[10px] ${MUTED} font-medium`}>
                                 Tap to toggle
                               </span>
                             </div>
@@ -1438,13 +1428,13 @@ export function ParentDashboard() {
                         ))}
                       </div>
                     ) : (
-                      <div className="rounded-xl border border-dashed border-white/10 bg-black/15 p-6 text-center space-y-3">
-                        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/10 border border-orange-500/20">
-                          <Sailboat className="h-5 w-5 text-orange-400" />
+                      <div className="rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-6 text-center space-y-3">
+                        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/20">
+                          <Sailboat className="h-5 w-5 text-[var(--sp-racing-orange)]" />
                         </div>
                         <div className="space-y-1">
-                          <p className="text-xs font-bold text-slate-200">No equipment registered yet</p>
-                          <p className="text-[11px] text-slate-400 max-w-sm mx-auto">
+                          <p className={`text-xs font-bold ${INK}`}>No equipment registered yet</p>
+                          <p className={`text-[11px] ${MUTED} max-w-sm mx-auto`}>
                             Add your sailor&apos;s hull, spars, sails, and foils to track safety checks, condition, and race-day readiness.
                           </p>
                         </div>
@@ -1452,7 +1442,7 @@ export function ParentDashboard() {
                           <button
                             type="button"
                             onClick={() => setShowAddGearModal(true)}
-                            className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-1.5 text-xs font-bold text-white transition shadow-sm inline-flex items-center gap-1.5"
+                            className={PRIMARY_BTN}
                           >
                             <Plus className="h-3.5 w-3.5" />
                             Add Equipment
@@ -1460,65 +1450,72 @@ export function ParentDashboard() {
                           <button
                             type="button"
                             onClick={() => void handleAddGearPreset(activeAthlete.id, YOUTH_EQUIPMENT_PRESETS[0])}
-                            className="rounded-full border border-white/10 bg-white/5 hover:border-white/20 px-3 py-1.5 text-xs font-bold text-slate-300 transition"
+                            className={SECONDARY_BTN}
                           >
                             + Optimax Rig Set
                           </button>
                           <button
                             type="button"
                             onClick={() => void handleAddGearPreset(activeAthlete.id, YOUTH_EQUIPMENT_PRESETS[6])}
-                            className="rounded-full border border-white/10 bg-white/5 hover:border-white/20 px-3 py-1.5 text-xs font-bold text-slate-300 transition"
+                            className={SECONDARY_BTN}
                           >
                             + OneSails Racing Sail
                           </button>
                         </div>
                       </div>
                     )}
-                  </div>
+                  </section>
 
-                  {/* Add Equipment Modal */}
                   {showAddGearModal && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 overflow-y-auto">
-                      <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#131520] p-5 sm:p-6 space-y-4 shadow-2xl relative my-8">
-                        <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                    <div
+                      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 backdrop-blur-xs p-4 sm:pt-20"
+                      role="dialog"
+                      aria-modal="true"
+                      aria-labelledby="add-gear-title"
+                      onMouseDown={(event) => {
+                        if (event.target === event.currentTarget) setShowAddGearModal(false);
+                      }}
+                    >
+                      <div className="w-full max-w-lg rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 shadow-2xl relative my-8">
+                        <div className="flex items-center justify-between pb-2 border-b border-[var(--sp-cool-veil)]">
                           <div>
-                            <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
-                              <Plus className="h-4 w-4 text-orange-400" />
+                            <h3 id="add-gear-title" className={`text-sm font-bold ${INK} flex items-center gap-1.5`}>
+                              <Plus className="h-4 w-4 text-[var(--sp-racing-orange)]" />
                               Add Equipment to Locker
                             </h3>
-                            <p className="text-xs text-slate-400">
+                            <p className={`text-xs ${MUTED}`}>
                               For {activeAthlete.name} ({activeAthlete.currentFleet || "Optimist"} Fleet)
                             </p>
                           </div>
                           <button
                             type="button"
                             onClick={() => setShowAddGearModal(false)}
-                            className="rounded-lg p-1.5 text-slate-400 hover:text-white hover:bg-white/10 transition"
+                            aria-label="Close add equipment"
+                            className={`rounded-lg p-1.5 ${MUTED} hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] transition`}
                           >
                             <X className="h-4 w-4" />
                           </button>
                         </div>
 
-                        {/* Tabs: Presets vs Custom */}
-                        <div className="flex rounded-xl bg-black/40 border border-white/10 p-1">
+                        <div className={`flex rounded-xl ${NESTED} p-1`}>
                           <button
                             type="button"
                             onClick={() => setAddGearTab("presets")}
                             className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                               addGearTab === "presets"
-                                ? "bg-orange-500 text-white shadow-sm"
-                                : "text-slate-400 hover:text-white"
+                                ? "bg-racing-orange text-sailcloth shadow-xs"
+                                : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
                             }`}
                           >
-                            ⭐ 1-Click Popular Presets
+                            1-Click Popular Presets
                           </button>
                           <button
                             type="button"
                             onClick={() => setAddGearTab("custom")}
                             className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                               addGearTab === "custom"
-                                ? "bg-orange-500 text-white shadow-sm"
-                                : "text-slate-400 hover:text-white"
+                                ? "bg-racing-orange text-sailcloth shadow-xs"
+                                : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
                             }`}
                           >
                             Custom Gear
@@ -1527,25 +1524,25 @@ export function ParentDashboard() {
 
                         {addGearTab === "presets" ? (
                           <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
-                            <p className="text-[11px] text-slate-400">
+                            <p className={`text-[11px] ${MUTED}`}>
                               Select standard youth equipment packages to add immediately:
                             </p>
                             <div className="grid grid-cols-1 gap-2">
                               {YOUTH_EQUIPMENT_PRESETS.map((preset) => (
                                 <div
                                   key={preset.id}
-                                  className="rounded-xl border border-white/10 bg-black/30 p-3 flex items-center justify-between gap-3 hover:border-orange-500/40 transition"
+                                  className={`${NESTED} p-3 flex items-center justify-between gap-3 hover:border-[var(--sp-racing-orange)]/40 transition`}
                                 >
                                   <div className="min-w-0 flex-1">
                                     <div className="flex items-center gap-2">
-                                      <span className="text-xs font-bold text-white">
+                                      <span className={`text-xs font-bold ${INK}`}>
                                         {preset.name}
                                       </span>
-                                      <span className="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-white/5 text-slate-400">
+                                      <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] ${MUTED}`}>
                                         {preset.category}
                                       </span>
                                     </div>
-                                    <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">
+                                    <p className={`text-[11px] ${MUTED} mt-0.5 leading-snug`}>
                                       {preset.subtitle}
                                     </p>
                                   </div>
@@ -1553,7 +1550,7 @@ export function ParentDashboard() {
                                     type="button"
                                     disabled={addGearBusy}
                                     onClick={() => void handleAddGearPreset(activeAthlete.id, preset)}
-                                    className="shrink-0 rounded-lg bg-orange-500/20 hover:bg-orange-500 border border-orange-500/40 px-3 py-1.5 text-xs font-bold text-orange-200 hover:text-white transition disabled:opacity-50"
+                                    className="shrink-0 sp-btn-primary px-3 py-1.5 disabled:opacity-50"
                                   >
                                     {addGearBusy ? "Adding…" : "+ Add"}
                                   </button>
@@ -1564,7 +1561,7 @@ export function ParentDashboard() {
                         ) : (
                           <div className="space-y-3">
                             <div>
-                              <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                              <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
                                 Equipment Category
                               </label>
                               <select
@@ -1575,7 +1572,7 @@ export function ParentDashboard() {
                                   const presets = brandsForCategory(cat);
                                   setCustomGearBrand(presets[0] || "");
                                 }}
-                                className="w-full rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+                                className="sp-select w-full text-xs"
                               >
                                 {(
                                   [
@@ -1598,43 +1595,43 @@ export function ParentDashboard() {
 
                             <div className="grid grid-cols-2 gap-2">
                               <div>
-                                <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                                <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
                                   Brand / Maker
                                 </label>
                                 <input
                                   value={customGearBrand}
                                   onChange={(e) => setCustomGearBrand(e.target.value)}
                                   placeholder="e.g. Winner, OneSails, Optimax"
-                                  className="w-full rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+                                  className="sp-input w-full text-xs"
                                 />
                               </div>
                               <div>
-                                <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                                <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
                                   Model / Cut
                                 </label>
                                 <input
                                   value={customGearModel}
                                   onChange={(e) => setCustomGearModel(e.target.value)}
                                   placeholder="e.g. CD Cut, Mk3 Flex"
-                                  className="w-full rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+                                  className="sp-input w-full text-xs"
                                 />
                               </div>
                             </div>
 
                             <div>
-                              <label className="text-[11px] font-bold text-slate-300 block mb-1">
+                              <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
                                 Sail # / Serial / Identifier
                               </label>
                               <input
                                 value={customGearLabel}
                                 onChange={(e) => setCustomGearLabel(e.target.value)}
                                 placeholder="e.g. SIN 4639 or Hull #184491"
-                                className="w-full rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+                                className="sp-input w-full text-xs"
                               />
                             </div>
 
                             <div>
-                              <label className="text-[11px] font-bold text-slate-300 block mb-1.5">
+                              <label className={`text-[11px] font-bold ${BODY} block mb-1.5`}>
                                 Condition
                               </label>
                               <div className="grid grid-cols-3 gap-1.5">
@@ -1642,6 +1639,12 @@ export function ParentDashboard() {
                                   (key) => {
                                     const meta = SIMPLIFIED_CONDITION_META[key];
                                     const active = customGearCondition === key;
+                                    const lightActive =
+                                      key === "race_ready"
+                                        ? "bg-[var(--sp-aqua-mist)] border-[var(--sp-harbour-teal)]/40 text-[var(--sp-harbour-teal)]"
+                                        : key === "practice_only"
+                                        ? "bg-[var(--sp-racing-mist)]/50 border-[var(--sp-racing-orange)]/40 text-[var(--sp-racing-deep)]"
+                                        : "bg-rose-50 border-rose-200 text-rose-700";
                                     return (
                                       <button
                                         key={key}
@@ -1649,11 +1652,17 @@ export function ParentDashboard() {
                                         onClick={() => setCustomGearCondition(key)}
                                         className={`rounded-xl px-2 py-2 text-center border transition flex flex-col items-center gap-1 ${
                                           active
-                                            ? `${meta.bg} ${meta.border} ${meta.text} ring-1 ring-white/20`
-                                            : "border-white/10 bg-white/[0.02] text-slate-400 hover:border-white/20"
+                                            ? lightActive
+                                            : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)]`
                                         }`}
                                       >
-                                        <span className={`h-2 w-2 rounded-full ${meta.dot}`} />
+                                        <span className={`h-2 w-2 rounded-full ${
+                                          key === "race_ready"
+                                            ? "bg-[var(--sp-harbour-teal)]"
+                                            : key === "practice_only"
+                                            ? "bg-[var(--sp-racing-orange)]"
+                                            : "bg-rose-600"
+                                        }`} />
                                         <span className="text-[10px] font-bold leading-tight">
                                           {meta.shortLabel}
                                         </span>
@@ -1664,21 +1673,21 @@ export function ParentDashboard() {
                               </div>
                             </div>
 
-                            <label className="flex items-center gap-2.5 text-xs text-slate-300 rounded-xl border border-white/10 bg-black/20 px-3 py-2 cursor-pointer">
+                            <label className={`flex items-center gap-2.5 text-xs ${BODY} ${NESTED} px-3 py-2 cursor-pointer`}>
                               <input
                                 type="checkbox"
                                 checked={customGearPrimary}
                                 onChange={(e) => setCustomGearPrimary(e.target.checked)}
-                                className="rounded border-white/20 text-orange-500 focus:ring-0"
+                                className="rounded border-[var(--sp-cool-veil)] accent-[var(--sp-racing-orange)]"
                               />
-                              <span className="font-semibold text-white">⭐ Set as Primary Race-Day Gear</span>
+                              <span className={`font-semibold ${INK}`}>Set as Primary Race-Day Gear</span>
                             </label>
 
                             <button
                               type="button"
                               disabled={addGearBusy}
                               onClick={() => void handleCreateCustomGear(activeAthlete.id)}
-                              className="w-full rounded-xl bg-orange-600 hover:bg-orange-500 py-2.5 text-xs font-bold text-white transition shadow-sm disabled:opacity-50"
+                              className="w-full sp-btn-primary py-2.5 disabled:opacity-50"
                             >
                               {addGearBusy ? "Saving…" : "Save to Equipment Locker"}
                             </button>
@@ -1688,19 +1697,19 @@ export function ParentDashboard() {
                     </div>
                   )}
 
-                  {/* CARD C: COACH OBSERVATIONS & FEEDBACK */}
-                  <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 sm:p-6 space-y-4 shadow-sm">
+                  <section className={`${CARD} p-5 sm:p-6 space-y-4`}>
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <h3 className="text-sm font-black uppercase tracking-wider text-emerald-400 flex items-center gap-2">
-                          <Award className="h-4 w-4 text-emerald-400" />
+                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Coach feed</p>
+                        <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
+                          <Award className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
                           Coach Observations & Development Records
                         </h3>
-                        <p className="text-xs text-slate-400 mt-0.5">
+                        <p className={`text-xs ${MUTED} mt-0.5`}>
                           Technical debriefs, starts, tactics, and boat speed observations logged by accredited coaches.
                         </p>
                       </div>
-                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      <span className={`text-[10px] font-bold ${MUTED} uppercase tracking-wider`}>
                         Read-Only Feed
                       </span>
                     </div>
@@ -1710,25 +1719,25 @@ export function ParentDashboard() {
                         {activeAthlete.coachFeedback.map((cf) => (
                           <div
                             key={cf.id}
-                            className="rounded-xl border border-white/5 bg-black/25 p-3.5 space-y-1.5"
+                            className={`${NESTED} p-3.5 space-y-1.5`}
                           >
                             <div className="flex flex-wrap items-center justify-between gap-2">
                               <div className="flex items-center gap-2">
-                                <span className="text-xs font-bold text-white">
+                                <span className={`text-xs font-bold ${INK}`}>
                                   {cf.title}
                                 </span>
                                 {cf.category && (
-                                  <span className="rounded-md border border-emerald-500/25 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-300 capitalize">
+                                  <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)] capitalize">
                                     {cf.category}
                                   </span>
                                 )}
                               </div>
-                              <span className="text-[10px] text-slate-500 font-mono">
+                              <span className={`text-[10px] ${MUTED} font-mono`}>
                                 {cf.recordDate}
                               </span>
                             </div>
                             {cf.detail && (
-                              <p className="text-xs text-slate-300 leading-relaxed">
+                              <p className={`text-xs ${BODY} leading-relaxed`}>
                                 {cf.detail}
                               </p>
                             )}
@@ -1736,31 +1745,30 @@ export function ParentDashboard() {
                         ))}
                       </div>
                     ) : (
-                      <div className="rounded-xl border border-white/5 bg-black/15 p-4 text-center text-xs text-slate-500">
+                      <div className={`rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 text-center text-xs ${MUTED}`}>
                         No coach observations logged yet for this period. Entries recorded by your child&apos;s coaches will automatically show here.
                       </div>
                     )}
-                  </div>
+                  </section>
                 </div>
 
-                {/* COLUMN 3: RIGHT COLUMN ON DESKTOP */}
                 <div className="space-y-6">
-                  {/* CARD D: UPCOMING REGATTAS & INTERACTIVE PRE-RACE CHECKLIST */}
-                  <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 space-y-4 shadow-sm">
+                  <section className={`${CARD} p-5 space-y-4`}>
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h3 className="text-sm font-black uppercase tracking-wider text-purple-400 flex items-center gap-2">
-                          <Calendar className="h-4 w-4 text-purple-400" />
+                        <p className={SECTION_KICKER}>Race day</p>
+                        <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
+                          <Calendar className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
                           Regatta Prep & Checklist
                         </h3>
-                        <p className="text-[11px] text-slate-400 mt-0.5">
+                        <p className={`text-[11px] ${MUTED} mt-0.5`}>
                           Upcoming calendar & race-day verification items.
                         </p>
                       </div>
                       <button
                         type="button"
                         onClick={() => resetChecklist(activeAthlete.id)}
-                        className="text-[11px] font-semibold text-slate-400 hover:text-white inline-flex items-center gap-1 p-1"
+                        className={`text-[11px] font-semibold ${MUTED} hover:text-[var(--sp-harbour-shadow)] inline-flex items-center gap-1 p-1`}
                         title="Reset checklist"
                       >
                         <RotateCcw className="h-3 w-3" />
@@ -1768,17 +1776,13 @@ export function ParentDashboard() {
                       </button>
                     </div>
 
-                    {/* Upcoming regatta calendar list */}
                     {upcomingRegattas.length > 0 ? (
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <p className="text-[10px] font-black uppercase tracking-wider text-slate-500">
+                          <p className={`text-[10px] font-black uppercase tracking-wider ${MUTED}`}>
                             Upcoming Regattas
                           </p>
-                          <Link
-                            href="/calendar"
-                            className="text-[11px] font-bold text-purple-400 hover:text-purple-300 hover:underline"
-                          >
+                          <Link href="/calendar" className={LINK_TEAL}>
                             Full Calendar →
                           </Link>
                         </div>
@@ -1786,18 +1790,18 @@ export function ParentDashboard() {
                           {upcomingRegattas.slice(0, 3).map((reg) => (
                             <div
                               key={reg.id}
-                              className="rounded-xl border border-white/5 bg-black/25 p-2.5 text-xs flex justify-between items-center gap-2"
+                              className={`${NESTED} p-2.5 text-xs flex justify-between items-center gap-2`}
                             >
                               <div className="min-w-0 flex-1">
-                                <p className="font-bold text-white truncate">{reg.name}</p>
-                                <p className="text-[10px] text-slate-400 font-mono mt-0.5">
+                                <p className={`font-bold ${INK} truncate`}>{reg.name}</p>
+                                <p className={`text-[10px] ${MUTED} font-mono mt-0.5`}>
                                   {reg.date}{" "}
                                   {reg.boatClass ? `· ${reg.boatClass}` : ""}
                                 </p>
                               </div>
                               <Link
                                 href="/calendar"
-                                className="text-[11px] font-bold text-orange-400 hover:underline shrink-0"
+                                className="text-[11px] font-bold text-[var(--sp-racing-orange)] hover:underline shrink-0"
                               >
                                 Details
                               </Link>
@@ -1806,18 +1810,17 @@ export function ParentDashboard() {
                         </div>
                       </div>
                     ) : (
-                      <div className="rounded-xl border border-white/5 bg-black/20 p-3 text-xs text-slate-400 text-center">
+                      <div className={`rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3 text-xs ${MUTED} text-center`}>
                         No upcoming regattas scheduled.{" "}
-                        <Link href="/calendar" className="text-orange-400 hover:underline">
+                        <Link href="/calendar" className="text-[var(--sp-racing-orange)] font-bold hover:underline">
                           View full calendar
                         </Link>
                       </div>
                     )}
 
-                    {/* Interactive Checklist */}
-                    <div className="space-y-2.5 pt-2 border-t border-white/5">
+                    <div className="space-y-2.5 pt-2 border-t border-[var(--sp-cool-veil)]">
                       <div className="flex items-center justify-between">
-                        <p className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+                        <p className={`text-[10px] font-black uppercase tracking-wider ${MUTED}`}>
                           Race Day Morning Checklist
                         </p>
                         {(() => {
@@ -1826,7 +1829,7 @@ export function ParentDashboard() {
                           const state = checklistState[activeAthlete.id] || {};
                           const doneCount = allItems.filter((item) => state[item.id]).length;
                           return (
-                            <span className="text-[11px] font-bold text-emerald-400">
+                            <span className="text-[11px] font-bold text-[var(--sp-harbour-teal)]">
                               {doneCount}/{allItems.length} ready
                             </span>
                           );
@@ -1844,8 +1847,8 @@ export function ParentDashboard() {
                               key={item.id}
                               className={`group w-full rounded-xl p-2.5 text-xs flex items-center justify-between gap-2.5 transition-colors ${
                                 isDone
-                                  ? "bg-emerald-500/[0.08] border border-emerald-500/25 text-slate-300"
-                                  : "bg-black/25 border border-white/5 text-slate-300 hover:border-white/15"
+                                  ? "bg-[var(--sp-aqua-mist)]/70 border border-[var(--sp-harbour-teal)]/25 text-[var(--sp-harbour-shadow)]"
+                                  : `${NESTED} ${BODY} hover:border-[var(--sp-harbour-teal)]`
                               }`}
                             >
                               <button
@@ -1854,9 +1857,9 @@ export function ParentDashboard() {
                                 className="flex items-start gap-2.5 flex-1 text-left min-w-0"
                               >
                                 {isDone ? (
-                                  <CheckSquare className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                                  <CheckSquare className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
                                 ) : (
-                                  <Square className="h-4 w-4 text-slate-500 shrink-0 mt-0.5" />
+                                  <Square className={`h-4 w-4 ${MUTED} shrink-0 mt-0.5`} />
                                 )}
                                 <span className={isDone ? "line-through opacity-75" : "font-normal"}>
                                   {item.label}
@@ -1869,7 +1872,7 @@ export function ParentDashboard() {
                                     e.stopPropagation();
                                     removeCustomChecklistItem(activeAthlete.id, item.id);
                                   }}
-                                  className="opacity-60 group-hover:opacity-100 p-1 text-slate-500 hover:text-rose-400 transition-opacity shrink-0"
+                                  className={`opacity-60 group-hover:opacity-100 p-1 ${MUTED} hover:text-rose-600 transition-opacity shrink-0`}
                                   title="Remove item"
                                 >
                                   <Trash2 className="h-3.5 w-3.5" />
@@ -1880,7 +1883,6 @@ export function ParentDashboard() {
                         })}
                       </div>
 
-                      {/* Add custom item form */}
                       <div className="flex items-center gap-2 pt-1">
                         <input
                           type="text"
@@ -1893,49 +1895,45 @@ export function ParentDashboard() {
                             }
                           }}
                           placeholder="Add race prep item…"
-                          className="flex-1 rounded-xl bg-black/40 border border-white/10 px-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-purple-500/50"
+                          className="sp-input flex-1 text-xs"
                         />
                         <button
                           type="button"
                           onClick={() => addCustomChecklistItem(activeAthlete.id)}
                           disabled={!newChecklistText.trim()}
-                          className="rounded-xl bg-purple-600 hover:bg-purple-500 disabled:opacity-40 text-white px-3 py-1.5 text-xs font-bold transition-all shrink-0 inline-flex items-center gap-1"
+                          className={`${PRIMARY_BTN} px-3 py-1.5 disabled:opacity-40 shrink-0`}
                         >
                           <Plus className="h-3.5 w-3.5" />
                           Add
                         </button>
                       </div>
                     </div>
-                  </div>
+                  </section>
 
-                  {/* CARD E: PRIVATE PARENT JOURNAL & LOG */}
-                  <div className="rounded-2xl border border-white/10 bg-[#131520]/90 p-5 space-y-4 shadow-sm">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <h3 className="text-sm font-black uppercase tracking-wider text-emerald-400 flex items-center gap-2">
-                          <StickyNote className="h-4 w-4 text-emerald-400" />
-                          Private Parent Journal
-                        </h3>
-                        <p className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1">
-                          <Lock className="h-3 w-3 text-slate-500" />
-                          100% private to your parent account.
-                        </p>
-                      </div>
+                  <section className={`${CARD} p-5 space-y-4`}>
+                    <div>
+                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Private notes</p>
+                      <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
+                        <StickyNote className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
+                        Private Parent Journal
+                      </h3>
+                      <p className={`text-[11px] ${MUTED} mt-0.5 flex items-center gap-1`}>
+                        <Lock className="h-3 w-3" />
+                        100% private to your parent account.
+                      </p>
                     </div>
 
-                    {/* Note creator */}
                     <div className="space-y-2">
-                      {/* Tag selector */}
                       <div className="flex flex-wrap gap-1.5">
                         {NOTE_CATEGORIES.map((cat) => (
                           <button
                             key={cat}
                             type="button"
                             onClick={() => setSelectedCategory(cat)}
-                            className={`px-2 py-0.5 rounded-md text-[10px] font-bold transition-all ${
+                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold transition-colors border ${
                               selectedCategory === cat
-                                ? "bg-emerald-500/25 text-emerald-300 border border-emerald-500/40"
-                                : "bg-black/40 text-slate-400 border border-white/5 hover:text-white"
+                                ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border-[var(--sp-harbour-teal)]/30"
+                                : `${NESTED} ${MUTED} hover:text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)]`
                             }`}
                           >
                             {cat}
@@ -1953,7 +1951,7 @@ export function ParentDashboard() {
                             }))
                           }
                           placeholder={`Add a private ${selectedCategory.toLowerCase()} note…`}
-                          className="flex-1 min-w-0 rounded-xl bg-black/40 border border-white/10 px-3 py-2 text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-emerald-500/50"
+                          className="sp-input flex-1 min-w-0 text-xs"
                           onKeyDown={(e) => {
                             if (e.key === "Enter") void addNote(activeAthlete.id);
                           }}
@@ -1965,7 +1963,7 @@ export function ParentDashboard() {
                             !(noteDraft[activeAthlete.id] || "").trim()
                           }
                           onClick={() => void addNote(activeAthlete.id)}
-                          className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-3 py-2 text-white font-bold text-xs disabled:opacity-40 transition-colors shrink-0 inline-flex items-center gap-1"
+                          className={`${PRIMARY_BTN} px-3 py-2 disabled:opacity-40 shrink-0`}
                         >
                           <Plus className="h-4 w-4" />
                           Save
@@ -1973,9 +1971,8 @@ export function ParentDashboard() {
                       </div>
                     </div>
 
-                    {/* Existing notes list */}
                     {(activeAthlete.notes?.length ?? 0) === 0 ? (
-                      <p className="text-[11px] text-slate-500 text-center py-3">
+                      <p className={`text-[11px] ${MUTED} text-center py-3`}>
                         No private notes yet. Log training thoughts, regatta debriefs, logistics, or equipment orders.
                       </p>
                     ) : (
@@ -1985,20 +1982,20 @@ export function ParentDashboard() {
                           return (
                             <div
                               key={n.id}
-                              className="rounded-xl border border-white/5 bg-black/25 p-2.5 flex items-start justify-between gap-2"
+                              className={`${NESTED} p-2.5 flex items-start justify-between gap-2`}
                             >
                               <div className="min-w-0 flex-1 space-y-1">
                                 <div className="flex items-center gap-2">
                                   {parsed.category && (
-                                    <span className="rounded px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/25">
+                                    <span className="rounded-full px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/25">
                                       {parsed.category}
                                     </span>
                                   )}
-                                  <span className="text-[10px] text-slate-500 font-mono">
+                                  <span className={`text-[10px] ${MUTED} font-mono`}>
                                     {n.createdAt ? n.createdAt.slice(0, 10) : ""}
                                   </span>
                                 </div>
-                                <p className="text-xs text-slate-200 leading-relaxed whitespace-pre-wrap">
+                                <p className={`text-xs ${BODY} leading-relaxed whitespace-pre-wrap`}>
                                   {parsed.text}
                                 </p>
                               </div>
@@ -2006,7 +2003,7 @@ export function ParentDashboard() {
                                 type="button"
                                 disabled={noteBusy === n.id}
                                 onClick={() => void deleteNote(n.id)}
-                                className="text-slate-600 hover:text-rose-400 p-1 shrink-0 transition-colors"
+                                className={`${MUTED} hover:text-rose-600 p-1 shrink-0 transition-colors`}
                                 aria-label="Delete note"
                               >
                                 <Trash2 className="h-3.5 w-3.5" />
@@ -2016,7 +2013,7 @@ export function ParentDashboard() {
                         })}
                       </div>
                     )}
-                  </div>
+                  </section>
                 </div>
               </div>
             </div>
@@ -2024,17 +2021,16 @@ export function ParentDashboard() {
         </>
       )}
 
-      {/* Footer support links */}
-      <p className="text-center text-xs text-slate-500 pt-4">
-        <Link href="/account" className="text-slate-400 hover:text-white transition-colors">
+      <p className={`text-center text-xs ${MUTED} pt-4`}>
+        <Link href="/account" className={`${MUTED} hover:text-[var(--sp-harbour-teal)] transition-colors`}>
           Account Settings
         </Link>
         {" · "}
-        <Link href="/search" className="text-slate-400 hover:text-white transition-colors">
+        <Link href="/search" className={`${MUTED} hover:text-[var(--sp-harbour-teal)] transition-colors`}>
           Find Sailors
         </Link>
         {" · "}
-        <Link href="/support" className="text-slate-400 hover:text-white transition-colors">
+        <Link href="/support" className={`${MUTED} hover:text-[var(--sp-harbour-teal)] transition-colors`}>
           Support & Feedback
         </Link>
       </p>
