@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
-import { shouldShowDemoNavigation } from "@/lib/adminHost";
+import { shouldShowDemoNavigation, isAdminHost } from "@/lib/adminHost";
 
 type OpenMenu = "optimist" | "classes" | null;
 
@@ -162,13 +162,15 @@ export function SiteHeader() {
 
   const navLinks = (
     <>
-      <Link
-        href="/calendar"
-        prefetch
-        className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 transition-colors"
-      >
-        Calendar
-      </Link>
+      {isAdminHost(host) && (
+        <Link
+          href="/calendar"
+          prefetch
+          className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 transition-colors"
+        >
+          Calendar
+        </Link>
+      )}
       <div className="relative">
         <button
           type="button"
@@ -220,13 +222,15 @@ export function SiteHeader() {
         )}
       </div>
 
-      <Link
-        href="/search"
-        onClick={() => setMobileOpen(false)}
-        className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 transition-colors"
-      >
-        Search
-      </Link>
+      {isAdminHost(host) && (
+        <Link
+          href="/search"
+          onClick={() => setMobileOpen(false)}
+          className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 transition-colors"
+        >
+          Search
+        </Link>
+      )}
       {host && shouldShowDemoNavigation(host, owned.length, Boolean(email)) && (
         <Link
           href="/sample"
@@ -381,13 +385,15 @@ export function SiteHeader() {
 
         {mobileOpen && (
           <div className="md:hidden border-t border-harbour-shadow bg-harbour py-3 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col gap-0.5 max-h-[min(70vh,32rem)] overflow-y-auto px-2">
-            <Link
-              href="/calendar"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Race Calendar
-            </Link>
+            {isAdminHost(host) && (
+              <Link
+                href="/calendar"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              >
+                Race Calendar
+              </Link>
+            )}
             {showClaimCta && (
               <Link
                 href="/search"
@@ -467,13 +473,15 @@ export function SiteHeader() {
             >
               Techno 293 Racing
             </Link>
-            <Link
-              href="/search"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Search
-            </Link>
+            {isAdminHost(host) && (
+              <Link
+                href="/search"
+                onClick={() => setMobileOpen(false)}
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              >
+                Search
+              </Link>
+            )}
             {host && shouldShowDemoNavigation(host, owned.length, Boolean(email)) && (
               <Link
                 href="/sample"

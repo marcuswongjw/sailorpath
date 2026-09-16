@@ -48,10 +48,10 @@ const classHubs = [
 ] as const;
 
 const stats = [
-  { value: "5", label: "Classes live" },
+  { value: "3", label: "National classes live" },
   { value: "150+", label: "Athletes tracked" },
-  { value: "40+", label: "Regattas this season" },
-  { value: "Live", label: "After every scored race" },
+  { value: "40+", label: "Regattas on the calendar" },
+  { value: "Live", label: "Standings after each scored race" },
 ] as const;
 
 export default function HomePage() {
@@ -60,110 +60,64 @@ export default function HomePage() {
 
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="border-b border-cool-veil">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16 lg:px-8 lg:py-24">
-
-          {/* Left: copy */}
-          <div>
-            <div className="mb-5 inline-flex items-center rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-harbour-shadow shadow-xs">
-              Official Singapore Sailing standings &amp; athlete records
-            </div>
-
-            <h1 className="max-w-3xl text-[2.25rem] font-bold leading-[1.08] text-harbour-shadow sm:text-5xl lg:text-[3.5rem]">
-              Singapore sailing,{" "}
-              <span className="whitespace-nowrap">
-                tracked{" "}
-                <span className="text-racing-orange">race by race.</span>
-              </span>
-            </h1>
-
-            <p className="mt-6 max-w-xl text-base leading-6 text-slate-soft sm:text-lg sm:leading-7">
-              If your child races in Singapore &mdash; their standings, selection
-              trial status, and race calendar are already here.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/search"
-                className="sp-primary inline-flex min-h-12 items-center justify-center gap-2 px-6 text-[15px] font-semibold"
-              >
-                <UserRound className="h-5 w-5" aria-hidden />
-                Find your child&apos;s profile
-              </Link>
-              <Link
-                href="/rankings"
-                className="sp-secondary inline-flex min-h-12 items-center justify-center gap-2 px-6 text-[15px] font-semibold"
-              >
-                Explore standings
-                <ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-slate-soft">
-              {["Free to use", "No credit card", "Data from official SSF results"].map(
-                (item) => (
-                  <span key={item} className="inline-flex items-center gap-1.5">
-                    <Check className="h-4 w-4 text-harbour" aria-hidden />
-                    {item}
-                  </span>
-                )
-              )}
-            </div>
+        <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-20 lg:py-24">
+          <div className="mb-6 inline-flex items-center rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-harbour-shadow shadow-xs">
+            Official Singapore Sailing standings &amp; athlete records
           </div>
 
-          {/* Right: standings preview widget */}
-          <div className="sp-card overflow-hidden">
-            <div className="flex items-center justify-between border-b border-cool-veil bg-harbour px-5 py-4 text-sailcloth">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-[0.04em] text-soft-aqua">
-                  Standings preview
-                </p>
-                <h2 className="mt-1 text-lg font-semibold">Optimist Gold Fleet</h2>
-              </div>
-              <span className="rounded bg-racing-mist px-2 py-1 text-xs font-semibold text-racing-deep">
-                2026
-              </span>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full min-w-[420px] text-left text-sm">
-                <thead className="border-b border-cool-veil bg-sailcloth text-xs font-medium uppercase tracking-[0.04em] text-slate-soft">
-                  <tr>
-                    <th className="px-5 py-3">Rank</th>
-                    <th className="px-3 py-3">Sailor</th>
-                    <th className="px-3 py-3">Club</th>
-                    <th className="px-5 py-3 text-right">Points</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-cool-veil bg-warm-white">
-                  {[
-                    ["1", "Sailor profile", "Singapore", "18"],
-                    ["2", "Sailor profile", "Singapore", "24"],
-                    ["3", "Sailor profile", "Singapore", "31"],
-                    ["4", "Sailor profile", "Singapore", "37"],
-                  ].map((row, index) => (
-                    <tr key={row[0]} className={index === 0 ? "bg-aqua-mist" : ""}>
-                      <td className="px-5 py-3 font-semibold text-harbour">{row[0]}</td>
-                      <td className="px-3 py-3 font-medium">{row[1]}</td>
-                      <td className="px-3 py-3 text-slate-soft">{row[2]}</td>
-                      <td className="px-5 py-3 text-right font-semibold tabular-nums">
-                        {row[3]}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="border-t border-cool-veil bg-warm-white px-5 py-3">
-              <Link
-                href="/sg/optimist/gold"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-harbour hover:text-harbour-shadow"
-              >
-                View full standings <ArrowRight className="h-4 w-4" aria-hidden />
-              </Link>
-            </div>
+          <h1 className="text-[2.5rem] font-bold leading-[1.08] text-harbour-shadow sm:text-5xl lg:text-[3.75rem]">
+            Singapore sailing,{" "}
+            <span className="whitespace-nowrap">
+              tracked{" "}
+              <span className="text-racing-orange">race by race.</span>
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-6 max-w-xl text-base leading-6 text-slate-soft sm:text-lg sm:leading-7">
+            If your child races in Singapore &mdash; their standings, selection
+            trial status, and race calendar are already here.
+          </p>
+
+          <div className="mt-8">
+            <Link
+              href="/search"
+              className="sp-primary inline-flex min-h-12 items-center justify-center gap-2 px-8 text-[15px] font-semibold"
+            >
+              Find your child&apos;s profile
+            </Link>
           </div>
 
+          <div className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-slate-soft">
+            {["Free to use", "No credit card", "Data from official SSF results"].map(
+              (item) => (
+                <span key={item} className="inline-flex items-center gap-1.5">
+                  <Check className="h-4 w-4 text-harbour" aria-hidden />
+                  {item}
+                </span>
+              )
+            )}
+          </div>
+
+          <form action="/search" className="relative mx-auto mt-6 max-w-lg">
+            <input
+              type="search"
+              name="query"
+              enterKeyHint="search"
+              aria-label="Search sailors"
+              placeholder="Search by name, sail number, or club..."
+              className="w-full rounded-full border border-cool-veil bg-warm-white py-3.5 pl-6 pr-14 text-base text-charcoal shadow-sm placeholder:text-slate-soft focus:border-harbour focus:outline-none"
+            />
+            <button
+              type="submit"
+              aria-label="Search"
+              className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-racing-orange text-white transition-colors hover:bg-racing-deep"
+            >
+              <Search className="h-4 w-4" aria-hidden />
+            </button>
+          </form>
         </div>
       </section>
+
 
       {/* ── Stats bar ───────────────────────────────────────────────────── */}
       <section className="border-b border-cool-veil bg-warm-white">
