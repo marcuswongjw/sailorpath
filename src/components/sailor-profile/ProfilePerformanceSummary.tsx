@@ -60,26 +60,34 @@ export function ProfilePerformanceSummary({
       {showSummary && (
         <section className={`${cardClass} overflow-hidden`}>
           <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-1">
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
               {keyStatsTitle}
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-white/[0.06]">
+          <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-cool-veil">
             {statCells.map((stat) => (
               <div
                 key={stat.label}
                 className="px-2.5 sm:px-3 py-4 sm:py-5 text-center"
               >
                 <p
-                  className={`text-[1.65rem] sm:text-3xl font-semibold tabular-nums tracking-tight leading-none ${stat.color}`}
+                  className={`text-[1.65rem] sm:text-3xl font-black tabular-nums tracking-tight leading-none ${
+                    stat.color.includes("text-emerald")
+                      ? "text-harbour"
+                      : stat.color.includes("text-sky") || stat.color.includes("text-blue")
+                        ? "text-harbour-shadow"
+                        : stat.color.includes("text-amber")
+                          ? "text-racing-orange"
+                          : "text-charcoal"
+                  }`}
                 >
                   {stat.value}
                 </p>
-                <p className="mt-1.5 text-[9px] sm:text-[10px] font-medium uppercase tracking-[0.1em] text-neutral-500 leading-tight">
+                <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-slate-soft leading-tight">
                   {stat.label}
                 </p>
                 {stat.hint && (
-                  <p className="mt-0.5 text-[9px] sm:text-[10px] font-medium text-neutral-600 leading-tight normal-case tracking-normal">
+                  <p className="mt-0.5 text-[10px] font-medium text-slate-soft leading-tight normal-case tracking-normal">
                     {stat.hint}
                   </p>
                 )}
@@ -91,7 +99,7 @@ export function ProfilePerformanceSummary({
 
       {showMedals && (
         <section className={`${cardClass} p-4 sm:p-5`}>
-          <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 mb-3">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft mb-3">
             {medalTallyTitle}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -105,15 +113,15 @@ export function ProfilePerformanceSummary({
             ).map((medal) => (
               <div
                 key={medal.label}
-                className="rounded-xl border border-white/[0.05] bg-black/20 px-3 py-4 text-center"
+                className="rounded-xl border border-cool-veil bg-sailcloth/50 px-3 py-4 text-center"
               >
-                <p className="text-lg" aria-hidden>
+                <p className="text-xl" aria-hidden>
                   {medal.icon}
                 </p>
-                <p className="mt-1 text-2xl font-semibold text-white tabular-nums">
+                <p className="mt-1 text-2xl font-black text-harbour-shadow tabular-nums">
                   {medal.value}
                 </p>
-                <p className="mt-0.5 text-[11px] text-neutral-500">
+                <p className="mt-0.5 text-[11px] font-semibold text-slate-soft">
                   {medal.label}
                 </p>
               </div>
@@ -124,10 +132,10 @@ export function ProfilePerformanceSummary({
 
       {showSummary && (
         <section className={`${cardClass} p-4 sm:p-5`}>
-          <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+          <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
             Position trend
           </h2>
-          <p className="text-[12px] text-neutral-400 mt-0.5 mb-4">
+          <p className="text-[12px] text-slate-soft mt-0.5 mb-4 font-medium">
             Finishing position by regatta (lower is better)
             {trendCaption}
           </p>

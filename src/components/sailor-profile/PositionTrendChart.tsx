@@ -125,15 +125,16 @@ export function PositionTrendChart({
               x2={trendSvg.w - trendSvg.padR}
               y1={trendSvg.yFor(r)}
               y2={trendSvg.yFor(r)}
-              stroke="rgba(255,255,255,0.05)"
+              stroke="#E2E6E6"
               strokeDasharray="4 4"
             />
             <text
               x={trendSvg.padL - 8}
               y={trendSvg.yFor(r) + 3}
               textAnchor="end"
-              fill="#6b7280"
+              fill="#627273"
               fontSize="10"
+              fontWeight="600"
             >
               {r}
             </text>
@@ -146,15 +147,17 @@ export function PositionTrendChart({
               x2={trendSvg.promoX}
               y1={trendSvg.padT - 4}
               y2={trendSvg.h - trendSvg.padB}
-              stroke="rgba(255,255,255,0.22)"
+              stroke="#0A5557"
               strokeDasharray="3 4"
+              strokeOpacity="0.4"
             />
             <text
               x={trendSvg.promoX}
               y={trendSvg.h - 10}
               textAnchor="middle"
-              fill="#6b7280"
+              fill="#627273"
               fontSize="9"
+              fontWeight="600"
             >
               Promotion
             </text>
@@ -162,8 +165,9 @@ export function PositionTrendChart({
               x={trendSvg.promoX - 12}
               y={16}
               textAnchor="end"
-              fill="#9ca3af"
+              fill="#627273"
               fontSize="10"
+              fontWeight="600"
             >
               Silver fleet
             </text>
@@ -171,8 +175,9 @@ export function PositionTrendChart({
               x={trendSvg.promoX + 12}
               y={16}
               textAnchor="start"
-              fill="#fbbf24"
+              fill="#D94C18"
               fontSize="10"
+              fontWeight="bold"
             >
               Gold fleet
             </text>
@@ -185,12 +190,13 @@ export function PositionTrendChart({
             textAnchor="middle"
             fill={
               trendSvg.pts.every((p) => p.fleet === "Open")
-                ? "#38bdf8"
+                ? "#0A5557"
                 : trendSvg.pts.every((p) => p.fleet !== "Gold")
-                  ? "#9ca3af"
-                  : "#fbbf24"
+                  ? "#627273"
+                  : "#D94C18"
             }
             fontSize="10"
+            fontWeight="bold"
           >
             {trendSvg.pts.every((p) => p.fleet === "Open")
               ? "ILCA 4"
@@ -205,10 +211,10 @@ export function PositionTrendChart({
             fill="none"
             stroke={
               trendSvg.pts.every((p) => p.fleet === "Open")
-                ? "rgba(56,189,248,0.9)"
-                : "rgba(229,231,235,0.85)"
+                ? "#0A5557"
+                : "#627273"
             }
-            strokeWidth="2"
+            strokeWidth="2.5"
             strokeLinejoin="round"
             strokeLinecap="round"
           />
@@ -217,8 +223,8 @@ export function PositionTrendChart({
           <path
             d={trendSvg.goldPath}
             fill="none"
-            stroke="#f59e0b"
-            strokeWidth="2"
+            stroke="#D94C18"
+            strokeWidth="2.5"
             strokeLinejoin="round"
             strokeLinecap="round"
           />
@@ -230,10 +236,10 @@ export function PositionTrendChart({
           const labelY = labelAbove ? cy - 12 : cy + 16;
           const fill =
             p.fleet === "Gold"
-              ? "#f59e0b"
+              ? "#D94C18"
               : p.fleet === "Open"
-                ? "#38bdf8"
-                : "#e5e7eb";
+                ? "#0A5557"
+                : "#4B5563";
           const dns = Boolean(p.isDns);
           return (
             <g key={i}>
@@ -241,9 +247,9 @@ export function PositionTrendChart({
                 cx={cx}
                 cy={cy}
                 r={5}
-                fill={dns ? "transparent" : fill}
+                fill={dns ? "#FFFCF8" : fill}
                 stroke={fill}
-                strokeWidth={dns ? 2 : 2}
+                strokeWidth={2}
                 strokeDasharray={dns ? "2 2" : undefined}
               >
                 <title>
@@ -258,9 +264,9 @@ export function PositionTrendChart({
                 textAnchor="middle"
                 fill={fill}
                 fontSize="11"
-                fontWeight="600"
+                fontWeight="700"
               >
-                {dns ? `${p.rank}*` : p.rank}
+                {dns ? "DNS" : p.rank}
               </text>
             </g>
           );

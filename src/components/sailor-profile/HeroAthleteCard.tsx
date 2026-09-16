@@ -135,20 +135,14 @@ export function HeroAthleteCard({
   );
 
   return (
-    <header className={`${cardClass} p-5 sm:p-6 overflow-hidden relative shadow-xl`}>
-      {/* Background ambient gradient glow */}
-      <div
-        className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-transparent blur-3xl"
-        aria-hidden
-      />
-
+    <header className={`${cardClass} p-5 sm:p-6 overflow-hidden relative shadow-xs`}>
       <div className="relative z-10 flex flex-col gap-5">
         {/* Top identity row: Avatar + Name/Badges + Class Switcher */}
         <div className="flex flex-col sm:flex-row items-start justify-between gap-4">
           <div className="flex items-start gap-3.5 sm:gap-4.5 min-w-0">
             {/* Avatar */}
             <div className="relative shrink-0">
-              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-gradient-to-br from-orange-500/90 via-amber-600/80 to-sky-700/70 border-2 border-white/20 text-white flex items-center justify-center overflow-hidden shadow-lg shadow-black/40">
+              <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-gradient-to-br from-harbour to-harbour-shadow border-2 border-cool-veil text-sailcloth flex items-center justify-center overflow-hidden shadow-sm">
                 {displaySailor.avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -159,10 +153,10 @@ export function HeroAthleteCard({
                 ) : (
                   <span className="flex flex-col items-center justify-center leading-none">
                     <Anchor
-                      className="h-5 w-5 sm:h-6 sm:w-6 opacity-90 mb-0.5"
+                      className="h-5 w-5 sm:h-6 sm:w-6 opacity-90 mb-0.5 text-soft-aqua"
                       aria-hidden
                     />
-                    <span className="text-xs sm:text-sm font-black tracking-wide">
+                    <span className="text-xs sm:text-sm font-black tracking-wide text-sailcloth">
                       {initials(displaySailor.name)}
                     </span>
                   </span>
@@ -175,7 +169,7 @@ export function HeroAthleteCard({
                     type="button"
                     disabled={avatarBusy}
                     onClick={() => fileInputRef.current?.click()}
-                    className="absolute inset-0 rounded-2xl bg-black/60 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex items-center justify-center text-white"
+                    className="absolute inset-0 rounded-2xl bg-charcoal/60 opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity flex items-center justify-center text-sailcloth"
                     title="Upload athlete photo"
                   >
                     <Camera className="h-5 w-5" />
@@ -198,7 +192,7 @@ export function HeroAthleteCard({
             {/* Name + Badges + Passport Metadata */}
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-black text-harbour-shadow tracking-tight">
                   {displaySailor.name}
                 </h1>
 
@@ -209,20 +203,20 @@ export function HeroAthleteCard({
                 </span>
 
                 {profileClaimed || profileVerified ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
-                    <BadgeCheck className="h-3 w-3" />
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                    <BadgeCheck className="h-3 w-3 text-emerald-600" />
                     Claimed
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 border border-amber-500/25 px-2 py-0.5 text-[10px] font-bold text-amber-200/90">
-                    <ShieldAlert className="h-3 w-3" />
+                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                    <ShieldAlert className="h-3 w-3 text-amber-600" />
                     Unclaimed
                   </span>
                 )}
               </div>
 
               {/* Identity passport: sail numbers · club · nation · age · weight */}
-              <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] sm:text-[13px] text-neutral-400">
+              <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[12px] sm:text-[13px] text-slate-soft">
                 {(() => {
                   const parts: ReactNode[] = [];
                   const push = (node: ReactNode, key: string) => {
@@ -248,7 +242,7 @@ export function HeroAthleteCard({
                     !/^SGP\s*0+$/i.test(sailDisplay)
                   ) {
                     push(
-                      <span className="tabular-nums font-bold text-neutral-200">
+                      <span className="tabular-nums font-bold text-harbour-shadow">
                         {sailDisplay.includes(" ")
                           ? sailDisplay
                           : `${noc} ${sailDisplay}`}
@@ -260,7 +254,7 @@ export function HeroAthleteCard({
                   // ILCA Sail Number
                   if (sailIlca4) {
                     push(
-                      <span className="tabular-nums font-bold text-sky-300">
+                      <span className="tabular-nums font-bold text-harbour">
                         ILCA{" "}
                         {sailIlca4.includes(" ")
                           ? sailIlca4
@@ -273,7 +267,7 @@ export function HeroAthleteCard({
                   // Club
                   if (displaySailor.club) {
                     push(
-                      <span className="text-neutral-300 font-medium">
+                      <span className="text-charcoal font-semibold">
                         {String(displaySailor.club)}
                       </span>,
                       "club"
@@ -283,7 +277,7 @@ export function HeroAthleteCard({
                   // School
                   if (displaySailor.school) {
                     push(
-                      <span className="text-neutral-400">
+                      <span className="text-slate-soft">
                         {String(displaySailor.school)}
                       </span>,
                       "school"
@@ -292,7 +286,7 @@ export function HeroAthleteCard({
 
                   // Nationality
                   push(
-                    <span className="inline-flex items-center gap-1 text-neutral-300">
+                    <span className="inline-flex items-center gap-1 text-charcoal">
                       <span aria-hidden>
                         {nationalityFlag(displaySailor.nationality)}
                       </span>
@@ -307,14 +301,14 @@ export function HeroAthleteCard({
                       showFullDob && fullDobLabel ? (
                         <>
                           Born{" "}
-                          <span className="text-neutral-300 font-medium">
+                          <span className="text-charcoal font-semibold">
                             {fullDobLabel}
                           </span>
                         </>
                       ) : (
                         <>
                           Born{" "}
-                          <span className="text-neutral-300 font-medium">
+                          <span className="text-charcoal font-semibold">
                             {bornYear}
                           </span>
                         </>
@@ -327,7 +321,7 @@ export function HeroAthleteCard({
                   if (showWeight && displaySailor.weight != null) {
                     push(
                       <>
-                        <span className="text-neutral-300 font-medium">
+                        <span className="text-charcoal font-semibold">
                           {displaySailor.weight} kg
                         </span>
                       </>,
@@ -355,7 +349,7 @@ export function HeroAthleteCard({
                       }
                     })();
                     push(
-                      <span className="text-amber-200/90 font-medium">
+                      <span className="text-racing-orange font-semibold">
                         Left series {dropLabel}
                       </span>,
                       "drop"
@@ -372,7 +366,7 @@ export function HeroAthleteCard({
           {dualClass && onSelectBoatClass && (
             <div className="w-full sm:w-auto shrink-0 flex sm:flex-col items-end gap-1.5 pt-1 sm:pt-0">
               <div
-                className="inline-flex rounded-xl bg-black/40 border border-white/10 p-1 w-full sm:w-auto"
+                className="inline-flex rounded-xl bg-sailcloth border border-cool-veil p-1 w-full sm:w-auto"
                 role="tablist"
                 aria-label="Boat Class Switcher"
               >
@@ -381,8 +375,8 @@ export function HeroAthleteCard({
                   onClick={() => onSelectBoatClass("optimist")}
                   className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-bold transition ${
                     selectedBoatClass === "optimist"
-                      ? "bg-orange-500 text-white shadow-sm"
-                      : "text-neutral-400 hover:text-white"
+                      ? "bg-harbour text-sailcloth shadow-xs"
+                      : "text-slate-soft hover:text-charcoal"
                   }`}
                 >
                   <Sailboat className="h-3 w-3" />
@@ -393,15 +387,15 @@ export function HeroAthleteCard({
                   onClick={() => onSelectBoatClass("ilca4")}
                   className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-bold transition ${
                     selectedBoatClass === "ilca4"
-                      ? "bg-sky-600 text-white shadow-sm"
-                      : "text-neutral-400 hover:text-white"
+                      ? "bg-harbour text-sailcloth shadow-xs"
+                      : "text-slate-soft hover:text-charcoal"
                   }`}
                 >
                   <Sailboat className="h-3 w-3" />
                   ILCA 4
                 </button>
               </div>
-              <span className="text-[10px] text-neutral-500 hidden sm:inline">
+              <span className="text-[10px] text-slate-soft hidden sm:inline">
                 Dual-class athlete
               </span>
             </div>
@@ -410,7 +404,7 @@ export function HeroAthleteCard({
 
         {/* Bio */}
         {displaySailor.bio && (
-          <p className="text-[13px] sm:text-sm leading-relaxed text-neutral-300 max-w-2xl bg-white/[0.02] border-l-2 border-orange-500/50 pl-3 py-0.5 rounded-r-lg">
+          <p className="text-[13px] sm:text-sm leading-relaxed text-charcoal max-w-2xl bg-sailcloth/60 border-l-2 border-harbour pl-3 py-1 rounded-r-lg">
             {displaySailor.bio}
           </p>
         )}
@@ -418,12 +412,12 @@ export function HeroAthleteCard({
         {/* Hero Athlete Metrics Strip */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1">
           {/* Metric 1: National Ranking */}
-          <div className="rounded-xl border border-white/[0.08] bg-black/30 p-3 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-neutral-400 text-[10px] font-bold uppercase tracking-wider">
+          <div className="rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
+            <div className="flex items-center justify-between text-slate-soft text-[10px] font-bold uppercase tracking-wider">
               <span>{standingIsIlca ? "ILCA 4 Rank" : "National Rank"}</span>
               <Trophy
                 className={`h-3.5 w-3.5 ${
-                  standingIsIlca ? "text-sky-400" : "text-orange-400"
+                  standingIsIlca ? "text-harbour" : "text-racing-orange"
                 }`}
               />
             </div>
@@ -432,9 +426,9 @@ export function HeroAthleteCard({
                 className={`text-2xl sm:text-3xl font-black tabular-nums tracking-tight ${
                   activeStanding?.overallRank != null
                     ? standingIsIlca
-                      ? "text-sky-300"
-                      : "text-orange-400"
-                    : "text-neutral-400"
+                      ? "text-harbour"
+                      : "text-racing-orange"
+                    : "text-slate-soft"
                 }`}
               >
                 {activeStanding?.overallRank != null
@@ -442,12 +436,12 @@ export function HeroAthleteCard({
                   : "—"}
               </span>
               {activeStanding?.fleetSize ? (
-                <span className="text-[11px] text-neutral-500 tabular-nums">
+                <span className="text-[11px] text-slate-soft tabular-nums font-medium">
                   of {activeStanding.fleetSize}
                 </span>
               ) : null}
             </div>
-            <p className="text-[10px] text-neutral-400 mt-1 truncate">
+            <p className="text-[11px] text-slate-soft mt-1 truncate">
               {activeStanding?.best3of5 != null
                 ? `Best 3 of 5: ${activeStanding.best3of5} pts`
                 : activeStanding?.periodLabel || "2026 Series"}
@@ -455,19 +449,19 @@ export function HeroAthleteCard({
           </div>
 
           {/* Metric 2: Fleet Qualification / Standing */}
-          <div className="rounded-xl border border-white/[0.08] bg-black/30 p-3 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-neutral-400 text-[10px] font-bold uppercase tracking-wider">
+          <div className="rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
+            <div className="flex items-center justify-between text-slate-soft text-[10px] font-bold uppercase tracking-wider">
               <span>Status</span>
-              <BadgeCheck className="h-3.5 w-3.5 text-emerald-400" />
+              <BadgeCheck className="h-3.5 w-3.5 text-harbour" />
             </div>
             <div className="mt-1.5 flex items-baseline gap-1.5">
-              <span className="text-base sm:text-lg font-black text-white truncate">
+              <span className="text-base sm:text-lg font-black text-harbour-shadow truncate">
                 {standingIsIlca
                   ? activeStanding?.fleet || "Open Fleet"
                   : fleetBadge.label}
               </span>
             </div>
-            <p className="text-[10px] text-emerald-300/90 mt-1 truncate font-medium">
+            <p className="text-[11px] text-harbour mt-1 truncate font-medium">
               {activeStanding?.trendNote ||
                 (fleetBadge.label === "Gold fleet"
                   ? "Selection Trial Eligible"
@@ -476,29 +470,29 @@ export function HeroAthleteCard({
           </div>
 
           {/* Metric 3: Medals or Regatta Experience */}
-          <div className="col-span-2 sm:col-span-1 rounded-xl border border-white/[0.08] bg-black/30 p-3 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-neutral-400 text-[10px] font-bold uppercase tracking-wider">
+          <div className="col-span-2 sm:col-span-1 rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
+            <div className="flex items-center justify-between text-slate-soft text-[10px] font-bold uppercase tracking-wider">
               <span>{hasMedals ? "Career Medals" : "Regatta Record"}</span>
               {hasMedals ? (
-                <Medal className="h-3.5 w-3.5 text-amber-400" />
+                <Medal className="h-3.5 w-3.5 text-amber-500" />
               ) : (
-                <Sailboat className="h-3.5 w-3.5 text-neutral-400" />
+                <Sailboat className="h-3.5 w-3.5 text-slate-soft" />
               )}
             </div>
             <div className="mt-1.5 flex items-baseline gap-2">
               {hasMedals && medals ? (
-                <div className="flex items-center gap-2 text-base sm:text-lg font-black tabular-nums text-white">
+                <div className="flex items-center gap-2 text-base sm:text-lg font-black tabular-nums text-harbour-shadow">
                   {medals.gold > 0 && <span>🥇 {medals.gold}</span>}
                   {medals.silver > 0 && <span>🥈 {medals.silver}</span>}
                   {medals.bronze > 0 && <span>🥉 {medals.bronze}</span>}
                 </div>
               ) : (
-                <span className="text-2xl sm:text-3xl font-black tabular-nums text-white">
+                <span className="text-2xl sm:text-3xl font-black tabular-nums text-harbour-shadow">
                   {totalRegattasCount}
                 </span>
               )}
             </div>
-            <p className="text-[10px] text-neutral-400 mt-1 truncate">
+            <p className="text-[11px] text-slate-soft mt-1 truncate">
               {hasMedals
                 ? `${totalRegattasCount} logged regattas`
                 : "Official registered regattas"}
@@ -507,22 +501,22 @@ export function HeroAthleteCard({
         </div>
 
         {/* Action Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1 border-t border-white/[0.05]">
+        <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-cool-veil">
           <div className="flex flex-wrap items-center gap-2">
             {/* Share Profile button */}
             <button
               type="button"
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[11px] font-bold text-neutral-300 hover:text-white hover:bg-white/[0.08] transition touch-manipulation cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-cool-veil bg-warm-white px-3 py-1.5 text-[11px] font-bold text-charcoal hover:bg-sailcloth transition touch-manipulation cursor-pointer shadow-2xs"
             >
               {copied ? (
                 <>
-                  <Check className="h-3.5 w-3.5 text-emerald-400" />
-                  <span className="text-emerald-300">Copied link</span>
+                  <Check className="h-3.5 w-3.5 text-emerald-600" />
+                  <span className="text-emerald-700">Copied link</span>
                 </>
               ) : (
                 <>
-                  <Share2 className="h-3.5 w-3.5 text-orange-400" />
+                  <Share2 className="h-3.5 w-3.5 text-harbour" />
                   <span>Share profile</span>
                 </>
               )}
@@ -537,9 +531,9 @@ export function HeroAthleteCard({
                   href={`/login?next=${encodeURIComponent(
                     `/${displaySailor.handle || ""}`
                   )}`}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-white text-neutral-900 px-3 py-1.5 text-[11px] font-bold hover:bg-neutral-100 transition touch-manipulation"
+                  className="sp-primary inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-white shadow-xs"
                 >
-                  <UserPlus className="h-3.5 w-3.5 text-orange-600" />
+                  <UserPlus className="h-3.5 w-3.5" />
                   Claim this profile
                 </Link>
               )}
@@ -558,9 +552,9 @@ export function HeroAthleteCard({
                     }
                     onToggleClaimPanel();
                   }}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-white text-neutral-900 px-3 py-1.5 text-[11px] font-bold disabled:opacity-50 hover:bg-neutral-100 transition touch-manipulation cursor-pointer"
+                  className="sp-primary inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-bold text-white shadow-xs disabled:opacity-50 cursor-pointer"
                 >
-                  <UserPlus className="h-3.5 w-3.5 text-orange-600" />
+                  <UserPlus className="h-3.5 w-3.5" />
                   {demoMode
                     ? "Claim profile (demo)"
                     : claimPanelOpen
@@ -570,7 +564,7 @@ export function HeroAthleteCard({
               )}
 
             {canClaim && claimStatus === "pending" && (
-              <span className="text-[11px] font-semibold text-amber-300/90 px-2 py-1 bg-amber-500/10 rounded-lg border border-amber-500/20">
+              <span className="text-[11px] font-semibold text-amber-800 px-2 py-1 bg-amber-50 rounded-lg border border-amber-200">
                 Claim pending review
               </span>
             )}
@@ -585,14 +579,14 @@ export function HeroAthleteCard({
                   onClick={onTogglePreviewPublic}
                   className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[11px] font-bold transition touch-manipulation cursor-pointer ${
                     previewPublic
-                      ? "border-sky-500/40 bg-sky-500/15 text-sky-200"
-                      : "border-white/10 bg-white/[0.03] text-neutral-300 hover:text-white"
+                      ? "border-harbour/40 bg-aqua-mist text-harbour"
+                      : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
                   }`}
                 >
                   {previewPublic ? (
-                    <EyeOff className="h-3.5 w-3.5 text-sky-300" />
+                    <EyeOff className="h-3.5 w-3.5 text-harbour" />
                   ) : (
-                    <Eye className="h-3.5 w-3.5 text-neutral-400" />
+                    <Eye className="h-3.5 w-3.5 text-slate-soft" />
                   )}
                   {previewPublic ? "Exit preview" : "Preview public"}
                 </button>
@@ -604,11 +598,11 @@ export function HeroAthleteCard({
                   onClick={onToggleEditing}
                   className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[11px] font-bold transition touch-manipulation cursor-pointer ${
                     editing
-                      ? "border-orange-500/40 bg-orange-500/15 text-orange-200"
-                      : "border-white/10 bg-white/[0.03] text-neutral-300 hover:text-white"
+                      ? "border-harbour/40 bg-aqua-mist text-harbour"
+                      : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
                   }`}
                 >
-                  <Pencil className="h-3.5 w-3.5 text-orange-400" />
+                  <Pencil className="h-3.5 w-3.5 text-harbour" />
                   {editing ? "Close editor" : "Edit profile"}
                 </button>
               )}
@@ -618,17 +612,17 @@ export function HeroAthleteCard({
 
         {/* Feedback messages */}
         {avatarMsg && (
-          <p className="text-[11px] font-medium text-emerald-400">{avatarMsg}</p>
+          <p className="text-[11px] font-medium text-emerald-600">{avatarMsg}</p>
         )}
         {claimMsg && (
           <p
             className={`text-[11px] font-medium ${
-              claimStatus === "error" ? "text-rose-300" : "text-emerald-300"
+              claimStatus === "error" ? "text-rose-600" : "text-emerald-600"
             }`}
           >
             {claimMsg}{" "}
             {claimStatus === "pending" && !demoMode && (
-              <Link href="/account" className="underline font-bold">
+              <Link href="/account" className="underline font-bold text-harbour">
                 My account
               </Link>
             )}

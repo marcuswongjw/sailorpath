@@ -55,29 +55,29 @@ export function ProfileOwnerEditor({
   onSave,
 }: Props) {
   return (
-    <div className={`${PROFILE_CARD_CLASS} p-5 space-y-3`}>
-      <h2 className="text-sm font-semibold text-white flex items-center gap-2">
-        <Pencil className="h-3.5 w-3.5 text-neutral-400" />
-        Edit profile
+    <div className={`${PROFILE_CARD_CLASS} p-5 space-y-4`}>
+      <h2 className="text-sm font-bold text-harbour-shadow flex items-center gap-2">
+        <Pencil className="h-3.5 w-3.5 text-harbour" />
+        Edit athlete profile
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label className="block sm:col-span-2">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             Bio
           </span>
           <textarea
             value={form.bio}
             onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
             rows={3}
-            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
         </label>
         <label className="block sm:col-span-2">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             Profile URL
           </span>
-          <div className="mt-1 flex rounded-lg bg-black/40 border border-white/10 overflow-hidden">
-            <span className="pl-3 self-center text-[11px] text-neutral-600 shrink-0">
+          <div className="mt-1 flex rounded-lg bg-sailcloth border border-cool-veil overflow-hidden focus-within:border-harbour">
+            <span className="pl-3 self-center text-[12px] font-medium text-slate-soft shrink-0">
               sailorpath.com/
             </span>
             <input
@@ -90,12 +90,12 @@ export function ProfileOwnerEditor({
                     .replace(/[^a-z0-9-]/g, ""),
                 }))
               }
-              className="w-full bg-transparent py-2 px-2 text-sm text-white font-mono focus:outline-none"
+              className="w-full bg-transparent py-2 px-2 text-sm text-charcoal font-mono focus:outline-none"
             />
           </div>
         </label>
         <label className="block">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             School
           </span>
           <input
@@ -103,11 +103,11 @@ export function ProfileOwnerEditor({
             onChange={(e) =>
               setForm((f) => ({ ...f, school: e.target.value }))
             }
-            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             Date of birth
           </span>
           <input
@@ -116,16 +116,16 @@ export function ProfileOwnerEditor({
             onChange={(e) =>
               setForm((f) => ({ ...f, dob: e.target.value }))
             }
-            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
-          <p className="mt-1 text-[10px] text-neutral-600 leading-snug">
+          <p className="mt-1 text-[11px] text-slate-soft leading-snug">
             Public profiles show the birth year only (e.g. Born 2013). Turn on
             “Also share month &amp; day” under Privacy if you want the full date
             visible.
           </p>
         </label>
         <label className="block">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             Sailing club
           </span>
           <input
@@ -133,11 +133,11 @@ export function ProfileOwnerEditor({
             onChange={(e) =>
               setForm((f) => ({ ...f, club: e.target.value }))
             }
-            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             Optimist sail #
           </span>
           <input
@@ -145,11 +145,11 @@ export function ProfileOwnerEditor({
             onChange={(e) =>
               setForm((f) => ({ ...f, sailNumber: e.target.value }))
             }
-            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white font-mono"
+            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal font-mono focus:border-harbour focus:outline-none"
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             ILCA 4 sail #
           </span>
           <input
@@ -158,11 +158,11 @@ export function ProfileOwnerEditor({
               setForm((f) => ({ ...f, sailNumberIlca4: e.target.value }))
             }
             placeholder="Optional"
-            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white font-mono"
+            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal font-mono focus:border-harbour focus:outline-none"
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             Weight (kg)
           </span>
           <input
@@ -173,11 +173,11 @@ export function ProfileOwnerEditor({
             onChange={(e) =>
               setForm((f) => ({ ...f, weight: e.target.value }))
             }
-            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-medium text-neutral-500 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
             Instagram
           </span>
           <input
@@ -185,19 +185,20 @@ export function ProfileOwnerEditor({
             onChange={(e) =>
               setForm((f) => ({ ...f, instagram: e.target.value }))
             }
-            className="mt-1 w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-sm text-white"
+            placeholder="@handle"
+            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
         </label>
-        <div className="sm:col-span-2 rounded-xl border border-white/[0.07] p-3 space-y-2">
-          <p className="text-[10px] font-bold uppercase tracking-wide text-neutral-500">
-            Privacy
+        <div className="sm:col-span-2 rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 space-y-2">
+          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-soft">
+            Privacy controls
           </p>
-          <p className="text-[10px] text-neutral-600 leading-snug">
+          <p className="text-[11px] text-slate-soft leading-snug">
             Birth year is always shown on the public profile when set. Month and
             day stay private unless you share them. Weight stays private unless
             shared. Equipment is always private (sailor and linked parents only).
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
             {(
               [
                 {
@@ -214,33 +215,35 @@ export function ProfileOwnerEditor({
             ).map((row) => (
               <label
                 key={row.label}
-                className="flex items-center justify-between gap-2 rounded-lg border border-white/[0.06] px-2.5 py-2 cursor-pointer"
+                className="flex items-center justify-between gap-2 rounded-lg border border-cool-veil bg-warm-white px-3 py-2 cursor-pointer shadow-2xs"
               >
-                <span className="text-[11px] font-medium text-neutral-200">
+                <span className="text-xs font-bold text-charcoal">
                   {row.label}
                 </span>
                 <input
                   type="checkbox"
                   checked={row.checked}
                   onChange={(e) => row.set(e.target.checked)}
-                  className="rounded border-neutral-600"
+                  className="rounded border-cool-veil text-harbour focus:ring-harbour"
                 />
               </label>
             ))}
           </div>
         </div>
       </div>
-      <button
-        type="button"
-        disabled={saveBusy}
-        onClick={onSave}
-        className="rounded-lg bg-orange-500 text-white px-4 py-2 text-xs font-semibold disabled:opacity-50"
-      >
-        {saveBusy ? "Saving…" : "Save changes"}
-      </button>
-      {saveMsg && (
-        <p className="text-[11px] text-emerald-400">{saveMsg}</p>
-      )}
+      <div className="flex items-center gap-3 pt-2">
+        <button
+          type="button"
+          disabled={saveBusy}
+          onClick={onSave}
+          className="sp-primary rounded-lg px-4 py-2 text-xs font-bold text-white shadow-xs disabled:opacity-50 cursor-pointer"
+        >
+          {saveBusy ? "Saving…" : "Save changes"}
+        </button>
+        {saveMsg && (
+          <p className="text-xs font-bold text-harbour">{saveMsg}</p>
+        )}
+      </div>
     </div>
   );
 }

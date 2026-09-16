@@ -1187,58 +1187,58 @@ export function SailorProfileView({
   return (
     <div
       id="profile-hero"
-      className="mx-auto max-w-3xl px-3 sm:px-6 py-5 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-[#090a0f] overflow-x-clip"
+      className="mx-auto max-w-3xl px-3 sm:px-6 py-6 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-sailcloth text-charcoal overflow-x-clip"
     >
       {/* Claim banner — single primary CTA for unclaimed profiles (header repeats suppressed) */}
       {showUnclaimedBanner && (
-          <div className="rounded-2xl border border-orange-500/30 bg-gradient-to-r from-orange-500/15 to-amber-500/5 px-4 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="min-w-0">
-              <p className="text-sm font-semibold text-white">
-                Is this you? Claim your profile
-              </p>
-              <p className="text-[12px] text-neutral-400 mt-0.5">
-                Link as sailor or parent to unlock logbook, privacy, notes, and
-                equipment.
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                if (demoMode) {
-                  onDemoClaim?.();
-                  return;
-                }
-                if (!isLoggedIn) {
-                  router.push(
-                    `/login?next=${encodeURIComponent(
-                      `/${displaySailor.handle || ""}`
-                    )}`
-                  );
-                  return;
-                }
-                setClaimPanelOpen(true);
-              }}
-              className="shrink-0 inline-flex items-center gap-1.5 rounded-full bg-orange-500 px-4 py-2 text-[12px] font-bold text-white hover:bg-orange-400"
-            >
-              <UserPlus className="h-3.5 w-3.5" />
-              Claim this profile
-            </button>
+        <div className="rounded-2xl border border-racing-orange/30 bg-warm-white p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-harbour-shadow flex items-center gap-1.5">
+              <span className="h-2 w-2 rounded-full bg-racing-orange" />
+              Is this you? Claim your profile
+            </p>
+            <p className="text-[13px] text-slate-soft mt-1 leading-snug">
+              Link as sailor or parent to unlock logbook, privacy controls, race notes, and equipment tracking.
+            </p>
           </div>
+          <button
+            type="button"
+            onClick={() => {
+              if (demoMode) {
+                onDemoClaim?.();
+                return;
+              }
+              if (!isLoggedIn) {
+                router.push(
+                  `/login?next=${encodeURIComponent(
+                    `/${displaySailor.handle || ""}`
+                  )}`
+                );
+                return;
+              }
+              setClaimPanelOpen(true);
+            }}
+            className="shrink-0 sp-primary inline-flex items-center gap-1.5 px-4 py-2.5 text-xs font-bold text-white shadow-sm"
+          >
+            <UserPlus className="h-3.5 w-3.5" />
+            Claim this profile
+          </button>
+        </div>
       )}
 
       {/* Coach squad context strip (demo) */}
       {demoMode && demoRole === "coach" && (
-        <div className="rounded-2xl border border-blue-500/25 bg-blue-500/[0.07] px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px]">
-          <span className="font-semibold text-blue-200">Squad context</span>
-          <span className="text-neutral-300">
+        <div className="rounded-2xl border border-harbour/25 bg-aqua-mist/50 px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-charcoal shadow-xs">
+          <span className="font-bold text-harbour">Squad context</span>
+          <span className="text-slate-soft">
             Avg. finish:{" "}
-            <span className="font-semibold text-white">3.6</span>
-            <span className="text-neutral-500"> · Squad avg: 5.2</span>
+            <span className="font-semibold text-charcoal">3.6</span>
+            <span className="text-slate-soft"> · Squad avg: 5.2</span>
           </span>
-          <span className="text-neutral-300">
-            <span className="font-semibold text-white">#3</span> of 100 nationally
-            <span className="text-neutral-500"> · </span>
-            <span className="font-semibold text-sky-300">#1 of 12</span> in squad
+          <span className="text-slate-soft">
+            <span className="font-semibold text-charcoal">#3</span> of 100 nationally
+            <span className="text-slate-soft"> · </span>
+            <span className="font-semibold text-harbour">#1 of 12</span> in squad
           </span>
         </div>
       )}
@@ -1360,29 +1360,25 @@ export function SailorProfileView({
             <div className="flex items-start gap-2.5 min-w-0">
               <div
                 className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
-                  standingIsIlca ? "bg-sky-500/15" : "bg-orange-500/15"
+                  standingIsIlca ? "bg-aqua-mist text-harbour" : "bg-racing-mist/30 text-racing-orange"
                 }`}
               >
-                <Trophy
-                  className={`h-3.5 w-3.5 ${
-                    standingIsIlca ? "text-sky-400" : "text-orange-400"
-                  }`}
-                />
+                <Trophy className="h-3.5 w-3.5" />
               </div>
               <div>
-                <p className="text-[13px] font-semibold text-white">
+                <p className="text-[13px] font-bold text-harbour-shadow">
                   {standingIsIlca
                     ? "ILCA 4 national ranking"
                     : "Series standing"}
                 </p>
-                <p className="text-[11px] text-neutral-500">
+                <p className="text-[11px] text-slate-soft">
                   {activeStanding.periodLabel}
-                  <span className="text-neutral-600"> · </span>
+                  <span className="text-cool-veil"> · </span>
                   <span
-                    className={`font-medium ${
+                    className={`font-semibold ${
                       standingIsIlca
-                        ? "text-sky-300/90"
-                        : "text-yellow-400/90"
+                        ? "text-harbour"
+                        : "text-racing-orange"
                     }`}
                   >
                     {standingIsIlca
@@ -1393,29 +1389,29 @@ export function SailorProfileView({
               </div>
             </div>
             <div className="text-right">
-              <p className="text-[9px] font-semibold uppercase tracking-[0.12em] text-neutral-500">
-                {standingIsIlca ? "National rank" : "National rank"}
+              <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-soft">
+                National rank
               </p>
               <p
                 className={`text-3xl sm:text-4xl font-black tabular-nums leading-none ${
-                  standingIsIlca ? "text-sky-300" : "text-orange-400"
+                  standingIsIlca ? "text-harbour" : "text-racing-orange"
                 }`}
               >
                 #{activeStanding.overallRank}
               </p>
-              <p className="text-[12px] text-neutral-400 mt-1 tabular-nums">
+              <p className="text-[12px] text-slate-soft mt-1 tabular-nums font-medium">
                 of {activeStanding.fleetSize}
                 {standingIsIlca ? "" : ` · ${activeStanding.fleet}`}
               </p>
-              <p className="text-[11px] text-neutral-400 mt-1.5 tabular-nums">
+              <p className="text-[11px] text-slate-soft mt-1.5 tabular-nums">
                 Best 3 of 5{" "}
-                <span className="font-semibold text-neutral-200">
+                <span className="font-bold text-charcoal">
                   {activeStanding.best3of5}
                   {standingIsIlca ? " pts" : ""}
                 </span>
               </p>
               {!standingIsIlca && (
-                <p className="text-[10px] text-neutral-500 mt-0.5">
+                <p className="text-[10px] text-slate-soft mt-0.5">
                   Sum of best three places (lower is better)
                 </p>
               )}
@@ -1446,32 +1442,32 @@ export function SailorProfileView({
               return (
                 <div
                   key={i}
-                  className="rounded-xl border border-white/[0.07] bg-black/30 px-2 py-3 text-center min-h-[5.5rem] flex flex-col"
+                  className="rounded-xl border border-cool-veil bg-sailcloth/60 px-2 py-3 text-center min-h-[5.5rem] flex flex-col"
                   title={r?.regattaName}
                 >
                   <p
                     className={`text-[11px] font-bold tracking-wide ${
-                      standingIsIlca ? "text-sky-400" : "text-orange-400"
+                      standingIsIlca ? "text-harbour" : "text-racing-orange"
                     }`}
                   >
                     R{i + 1}
                   </p>
-                  <p className="text-[12px] sm:text-[13px] font-medium text-neutral-300 leading-snug mt-1.5 line-clamp-2 flex-1 px-0.5">
+                  <p className="text-[12px] sm:text-[13px] font-medium text-charcoal leading-snug mt-1.5 line-clamp-2 flex-1 px-0.5">
                     {empty && !showIlcaScore ? "—" : shortName || "—"}
                   </p>
                   {showIlcaScore ? (
                     <div className="mt-2 space-y-0.5">
-                      <p className="text-lg font-bold text-white tabular-nums leading-none">
+                      <p className="text-lg font-black text-harbour-shadow tabular-nums leading-none">
                         {r!.finishPlace != null && r!.finishPlace > 0
                           ? `#${r!.finishPlace}`
                           : "DNC"}
                       </p>
-                      <p className="text-[11px] font-semibold text-sky-300/90 tabular-nums">
+                      <p className="text-[11px] font-bold text-harbour tabular-nums">
                         {r!.score} pts
                       </p>
                     </div>
                   ) : (
-                    <p className="text-xl font-bold text-white tabular-nums mt-2">
+                    <p className="text-xl font-black text-charcoal tabular-nums mt-2">
                       {empty
                         ? "—"
                         : `${r!.score}${r!.isOverseasCommitment ? "†" : r!.isDNS ? "*" : ""}${r!.isCarryForward ? " CF" : ""}`}
@@ -1481,7 +1477,7 @@ export function SailorProfileView({
               );
             })}
           </div>
-          <ul className="mt-4 sm:hidden divide-y divide-white/[0.06] rounded-xl border border-white/[0.07] bg-black/25 overflow-hidden">
+          <ul className="mt-4 sm:hidden divide-y divide-cool-veil rounded-xl border border-cool-veil bg-sailcloth/40 overflow-hidden">
             {Array.from({ length: 5 }).map((_, i) => {
               const r = activeStanding.rScores[i];
               const empty =
@@ -1501,12 +1497,12 @@ export function SailorProfileView({
                   <div className="min-w-0 flex items-center gap-2.5">
                     <span
                       className={`shrink-0 text-[11px] font-bold w-6 ${
-                        standingIsIlca ? "text-sky-400" : "text-orange-400"
+                        standingIsIlca ? "text-harbour" : "text-racing-orange"
                       }`}
                     >
                       R{i + 1}
                     </span>
-                    <span className="text-[13px] font-medium text-neutral-200 truncate">
+                    <span className="text-[13px] font-medium text-charcoal truncate">
                       {empty && !standingIsIlca
                         ? "—"
                         : r?.regattaName && r.regattaName !== "—"
@@ -1516,19 +1512,19 @@ export function SailorProfileView({
                   </div>
                   {standingIsIlca && r && r.regattaName !== "—" ? (
                     <span className="shrink-0 text-right">
-                      <span className="block text-base font-bold text-white tabular-nums leading-none">
+                      <span className="block text-base font-black text-harbour-shadow tabular-nums leading-none">
                         {r.finishPlace != null && r.finishPlace > 0
                           ? `#${r.finishPlace}`
                           : ilcaMiss || r.isDNS
                             ? "DNC"
                             : "—"}
                       </span>
-                      <span className="block text-[11px] font-semibold text-sky-300/90 tabular-nums mt-0.5">
+                      <span className="block text-[11px] font-bold text-harbour tabular-nums mt-0.5">
                         {r.score} pts
                       </span>
                     </span>
                   ) : (
-                    <span className="shrink-0 text-lg font-bold text-white tabular-nums">
+                    <span className="shrink-0 text-lg font-black text-charcoal tabular-nums">
                       {empty
                         ? "—"
                         : `${r!.score}${r!.isOverseasCommitment ? "†" : r!.isDNS ? "*" : ""}${r!.isCarryForward ? " CF" : ""}`}
@@ -1539,27 +1535,23 @@ export function SailorProfileView({
             })}
           </ul>
           {!standingIsIlca && (
-            <p className="mt-3 text-[10px] sm:text-[11px] text-slate-400 leading-relaxed">
-              <span className="font-semibold text-slate-300">Key: </span>
-              <span className="tabular-nums">CF</span> = carry-forward ·{" "}
-              <span className="tabular-nums">*</span> = DNS (did not start;
+            <p className="mt-3 text-[11px] text-slate-soft leading-relaxed">
+              <span className="font-bold text-charcoal">Key: </span>
+              <span className="tabular-nums font-medium">CF</span> = carry-forward ·{" "}
+              <span className="tabular-nums font-medium">*</span> = DNS (did not start;
               series score = fleet size + 1) ·{" "}
-              <span className="tabular-nums">†</span> = overseas commitment
+              <span className="tabular-nums font-medium">†</span> = overseas commitment
             </p>
           )}
           {!standingIsIlca && seriesDnsCount > 0 && (
-            <p className="mt-1.5 text-[11px] text-neutral-500 leading-relaxed">
+            <p className="mt-1.5 text-[11px] text-slate-soft leading-relaxed">
               {seriesDnsCount} missed ranking{" "}
               {seriesDnsCount === 1 ? "event" : "events"} in this window
               (DNS) — listed under Results below and on the position trend.
             </p>
           )}
           {activeStanding.trendNote && (
-            <p
-              className={`mt-2 text-[11px] font-medium ${
-                standingIsIlca ? "text-sky-300/90" : "text-emerald-400/90"
-              }`}
-            >
+            <p className="mt-2 text-[11px] font-bold text-harbour">
               {activeStanding.trendNote}
             </p>
           )}
@@ -1569,11 +1561,7 @@ export function SailorProfileView({
                 ? "/sg/ilca4"
                 : `/sg/optimist/${String(activeStanding.fleet).toLowerCase()}`
             }
-            className={`inline-block mt-2 text-[12px] font-medium ${
-              standingIsIlca
-                ? "text-sky-400 hover:text-sky-300"
-                : "text-orange-400 hover:text-orange-300"
-            }`}
+            className="inline-flex items-center gap-1 mt-2 text-[12px] font-bold text-harbour hover:text-harbour-shadow"
           >
             {standingIsIlca
               ? "View full ILCA 4 standings →"
@@ -1600,17 +1588,17 @@ export function SailorProfileView({
             <section className={`${cardClass} p-4 sm:p-5 space-y-3`}>
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+                  <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
                     Recent Regattas
                   </h2>
-                  <p className="text-xs text-neutral-400 mt-0.5">
+                  <p className="text-xs text-slate-soft mt-0.5 font-medium">
                     Latest competition finishes
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setSectionTab("results")}
-                  className="text-[11px] font-bold text-orange-400 hover:text-orange-300 transition cursor-pointer"
+                  className="text-[11px] font-bold text-harbour hover:text-harbour-shadow transition cursor-pointer"
                 >
                   View all {activeResultsList.length} results →
                 </button>
@@ -1629,14 +1617,14 @@ export function SailorProfileView({
                   return (
                     <div
                       key={String(res.id || idx)}
-                      className="rounded-xl border border-white/[0.07] bg-black/25 p-3 flex flex-col justify-between"
+                      className="rounded-xl border border-cool-veil bg-sailcloth/60 p-3.5 flex flex-col justify-between"
                     >
                       <div>
-                        <p className="text-[11px] text-neutral-500 truncate">
+                        <p className="text-[11px] text-slate-soft truncate font-medium">
                           {dateStr}
                         </p>
                         <p
-                          className="text-[13px] font-semibold text-white line-clamp-1 mt-0.5"
+                          className="text-[13px] font-bold text-harbour-shadow line-clamp-1 mt-0.5"
                           title={res.regattaName}
                         >
                           {res.regattaName}
@@ -1646,16 +1634,16 @@ export function SailorProfileView({
                         <span
                           className={`text-xl font-black tabular-nums ${
                             dns
-                              ? "text-rose-400"
+                              ? "text-racing-orange"
                               : isIlcaRow
-                                ? "text-sky-300"
-                                : "text-white"
+                                ? "text-harbour"
+                                : "text-charcoal"
                           }`}
                         >
                           {dns ? "DNS" : rank != null ? `#${rank}` : "—"}
                         </span>
                         {fleetSize ? (
-                          <span className="text-[11px] text-neutral-500 tabular-nums font-medium">
+                          <span className="text-[11px] text-slate-soft tabular-nums font-medium">
                             of {fleetSize} boats
                           </span>
                         ) : null}
@@ -1672,17 +1660,17 @@ export function SailorProfileView({
             <section className={`${cardClass} p-4 sm:p-5 space-y-3`}>
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+                  <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
                     Career Milestones
                   </h2>
-                  <p className="text-xs text-neutral-400 mt-0.5">
+                  <p className="text-xs text-slate-soft mt-0.5 font-medium">
                     Key pathway achievements
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={() => setSectionTab("journey")}
-                  className="text-[11px] font-bold text-orange-400 hover:text-orange-300 transition cursor-pointer"
+                  className="text-[11px] font-bold text-harbour hover:text-harbour-shadow transition cursor-pointer"
                 >
                   View all {displayJourney.length} milestones →
                 </button>
@@ -1691,24 +1679,24 @@ export function SailorProfileView({
                 {displayJourney.slice(0, 2).map((m) => (
                   <div
                     key={m.id}
-                    className="flex items-start gap-3 rounded-xl border border-white/[0.06] bg-black/20 px-3.5 py-2.5"
+                    className="flex items-start gap-3 rounded-xl border border-cool-veil bg-sailcloth/50 px-3.5 py-2.5"
                   >
-                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-orange-500/10 text-orange-400 font-bold text-xs">
+                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-aqua-mist text-harbour font-bold text-xs">
                       ★
                     </span>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-[13px] font-bold text-white truncate">
+                        <p className="text-[13px] font-bold text-harbour-shadow truncate">
                           {m.title}
                         </p>
                         {m.when && (
-                          <span className="text-[11px] text-neutral-500 shrink-0">
+                          <span className="text-[11px] text-slate-soft font-medium shrink-0">
                             {m.when}
                           </span>
                         )}
                       </div>
                       {m.detail && (
-                        <p className="text-[12px] text-neutral-400 mt-0.5 line-clamp-2">
+                        <p className="text-[12px] text-slate-soft mt-0.5 line-clamp-2 leading-relaxed">
                           {m.detail}
                         </p>
                       )}
@@ -1725,14 +1713,14 @@ export function SailorProfileView({
               className={`${cardClass} p-4 sm:p-5 flex items-center justify-between gap-3`}
             >
               <div className="flex items-center gap-3 min-w-0">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-aqua-mist border border-harbour/20 text-harbour">
                   <Anchor className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="text-[13px] font-bold text-white">
+                  <h2 className="text-[13px] font-bold text-harbour-shadow">
                     Boat Locker & Equipment
                   </h2>
-                  <p className="text-[11px] text-neutral-400 mt-0.5">
+                  <p className="text-[11px] text-slate-soft mt-0.5 font-medium">
                     Private gear inventory, condition statuses & use logs
                   </p>
                 </div>
@@ -1740,7 +1728,7 @@ export function SailorProfileView({
               <button
                 type="button"
                 onClick={() => setSectionTab("equipment")}
-                className="shrink-0 rounded-xl border border-orange-500/30 bg-orange-500/10 px-3.5 py-2 text-xs font-bold text-orange-200 hover:bg-orange-500/20 transition touch-manipulation cursor-pointer"
+                className="shrink-0 sp-secondary inline-flex items-center px-3.5 py-2 text-xs font-bold transition touch-manipulation cursor-pointer"
               >
                 Open Locker →
               </button>
@@ -1755,7 +1743,7 @@ export function SailorProfileView({
       <section className={`${cardClass} overflow-hidden`}>
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex flex-wrap items-end justify-between gap-2">
           <div className="min-w-0 flex-1">
-            <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
               {resultsTab === "journey"
                 ? "Sailing journey"
                 : dualClass && resultsTab === "ilca4"
@@ -1765,7 +1753,7 @@ export function SailorProfileView({
                     : "Regatta results"}
             </h2>
             {resultsTab !== "journey" && (
-            <p className="text-[11px] text-neutral-400 mt-1.5">
+            <p className="text-[11px] text-slate-soft mt-1 font-medium">
               {(() => {
                 const list = activeResultsList;
                 const n = list.length;
@@ -1786,7 +1774,7 @@ export function SailorProfileView({
             )}
             {showOptimistScopeFilter && (
               <div
-                className="mt-2 inline-flex rounded-full border border-white/10 bg-black/30 p-0.5 gap-0.5"
+                className="mt-2 inline-flex rounded-full border border-cool-veil bg-sailcloth p-0.5 gap-0.5"
                 role="group"
                 aria-label="Optimist results filter"
               >
@@ -1796,10 +1784,10 @@ export function SailorProfileView({
                     setOptimistScope("gold");
                     setShowAllResults(false);
                   }}
-                  className={`rounded-full px-3 py-1.5 text-[10px] font-bold touch-manipulation min-h-[2rem] ${
+                  className={`rounded-full px-3 py-1 text-[10px] font-bold touch-manipulation min-h-[1.75rem] cursor-pointer ${
                     optimistScope === "gold"
-                      ? "bg-orange-600 text-white"
-                      : "text-slate-400 hover:text-white"
+                      ? "bg-harbour text-sailcloth shadow-2xs"
+                      : "text-slate-soft hover:text-charcoal"
                   }`}
                 >
                   Gold only
@@ -1810,10 +1798,10 @@ export function SailorProfileView({
                     setOptimistScope("all");
                     setShowAllResults(false);
                   }}
-                  className={`rounded-full px-3 py-1.5 text-[10px] font-bold touch-manipulation min-h-[2rem] ${
+                  className={`rounded-full px-3 py-1 text-[10px] font-bold touch-manipulation min-h-[1.75rem] cursor-pointer ${
                     optimistScope === "all"
-                      ? "bg-orange-600 text-white"
-                      : "text-slate-400 hover:text-white"
+                      ? "bg-harbour text-sailcloth shadow-2xs"
+                      : "text-slate-soft hover:text-charcoal"
                   }`}
                 >
                   All Optimist
@@ -1822,8 +1810,8 @@ export function SailorProfileView({
             )}
           </div>
           {ownerView && resultsTab !== "journey" && (
-            <p className="text-[11px] text-neutral-500 inline-flex items-center gap-1">
-              <StickyNote className="h-3 w-3 text-orange-400" />
+            <p className="text-[11px] text-slate-soft inline-flex items-center gap-1 font-medium">
+              <StickyNote className="h-3 w-3 text-harbour" />
               Expand a row for race notes
             </p>
           )}
@@ -1833,18 +1821,18 @@ export function SailorProfileView({
           !dismissSailorTip &&
           resultsTab !== "journey" &&
           (demoMode ? demoRole === "sailor" : true) && (
-            <div className="mx-4 sm:mx-5 mb-3 flex items-start gap-2 rounded-xl border border-orange-500/25 bg-orange-500/[0.08] px-3 py-2.5">
-              <p className="flex-1 text-[12px] text-neutral-300 leading-relaxed">
-                <span className="font-semibold text-orange-300">Tip: </span>
+            <div className="mx-4 sm:mx-5 mb-3 flex items-start gap-2 rounded-xl border border-harbour/20 bg-aqua-mist/50 px-3.5 py-2.5 shadow-2xs">
+              <p className="flex-1 text-[12px] text-charcoal leading-relaxed">
+                <span className="font-bold text-harbour">Tip: </span>
                 Expand any regatta to add race observations (place, wind, notes).
                 Use the{" "}
-                <span className="font-medium text-white">📝 Add note</span>{" "}
+                <span className="font-bold text-harbour-shadow">📝 Add note</span>{" "}
                 control on each row.
               </p>
               <button
                 type="button"
                 onClick={() => setDismissSailorTip(true)}
-                className="shrink-0 rounded-md p-1 text-neutral-500 hover:text-white"
+                className="shrink-0 rounded-md p-1 text-slate-soft hover:text-charcoal cursor-pointer"
                 aria-label="Dismiss tip"
               >
                 <X className="h-3.5 w-3.5" />
@@ -1867,8 +1855,8 @@ export function SailorProfileView({
         ) : null}
 
         {resultsTab !== "journey" && ownerView && !demoMode && (
-          <div className="mx-4 sm:mx-5 mb-3 rounded-xl border border-white/[0.06] bg-black/20 p-3 space-y-2">
-            <p className="text-[10px] font-medium uppercase tracking-wide text-neutral-500">
+          <div className="mx-4 sm:mx-5 mb-3 rounded-xl border border-cool-veil bg-sailcloth/50 p-3 space-y-2">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-soft">
               Add non-ranking result
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -1878,7 +1866,7 @@ export function SailorProfileView({
                   setPersonalForm((f) => ({ ...f, name: e.target.value }))
                 }
                 placeholder="Event name"
-                className="col-span-2 sm:col-span-3 rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="col-span-2 sm:col-span-3 rounded-lg bg-warm-white border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
               />
               <input
                 type="date"
@@ -1886,7 +1874,7 @@ export function SailorProfileView({
                 onChange={(e) =>
                   setPersonalForm((f) => ({ ...f, date: e.target.value }))
                 }
-                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="rounded-lg bg-warm-white border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
               />
               <input
                 type="number"
@@ -1896,7 +1884,7 @@ export function SailorProfileView({
                   setPersonalForm((f) => ({ ...f, rank: e.target.value }))
                 }
                 placeholder="Place"
-                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="rounded-lg bg-warm-white border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
               />
               <input
                 type="number"
@@ -1906,31 +1894,31 @@ export function SailorProfileView({
                   setPersonalForm((f) => ({ ...f, fleetSize: e.target.value }))
                 }
                 placeholder="Fleet size"
-                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+                className="rounded-lg bg-warm-white border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
               />
             </div>
             <button
               type="button"
               disabled={personalBusy}
               onClick={() => void savePersonalResult()}
-              className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-semibold text-white disabled:opacity-50"
+              className="sp-secondary rounded-lg px-3 py-1.5 text-[11px] font-bold disabled:opacity-50 cursor-pointer"
             >
               {personalBusy ? "Saving…" : "Add to logbook"}
             </button>
             {personalMsg && (
-              <p className="text-[11px] text-emerald-400">{personalMsg}</p>
+              <p className="text-[11px] font-bold text-harbour">{personalMsg}</p>
             )}
           </div>
         )}
 
         {resultsTab !== "journey" && visibleResults.length === 0 ? (
-          <p className="px-5 pb-5 text-sm text-neutral-600">
+          <p className="px-5 pb-5 text-sm text-slate-soft font-medium">
             No regatta results yet.
           </p>
         ) : resultsTab !== "journey" ? (
           <>
             <div
-              className={`hidden sm:grid gap-2 px-4 sm:px-5 py-2 border-t border-white/[0.05] text-[10px] font-medium uppercase tracking-wide text-neutral-600 ${
+              className={`hidden sm:grid gap-2 px-4 sm:px-5 py-2.5 border-t border-cool-veil text-[10px] font-bold uppercase tracking-wider text-slate-soft ${
                 primaryIsIlca
                   ? "grid-cols-[1.25rem_2.75rem_1fr_2.5rem_4.25rem]"
                   : "grid-cols-[1.25rem_2.75rem_1fr_4.5rem_4.25rem]"
@@ -1946,7 +1934,7 @@ export function SailorProfileView({
                 {primaryIsIlca ? "Class" : "Fleet"}
               </span>
             </div>
-            <div className="divide-y divide-white/[0.04]">
+            <div className="divide-y divide-cool-veil">
               {visibleResults.map((res, idx) => {
                 const regattaId = String(res.regattaId || res.id || idx);
                 const rank = res.rank != null ? Number(res.rank) : null;
@@ -2036,7 +2024,7 @@ export function SailorProfileView({
                       }
                       className={`grid gap-2 items-start px-4 sm:px-5 py-3.5 grid-cols-[1.25rem_2.75rem_1fr_auto] ${
                         canExpand
-                          ? "cursor-pointer hover:bg-white/[0.02]"
+                          ? "cursor-pointer hover:bg-sailcloth/60 transition-colors"
                           : "cursor-default"
                       } ${
                         isIlcaRow
@@ -2046,7 +2034,7 @@ export function SailorProfileView({
                     >
                       <span
                         className={`pt-1 ${
-                          canExpand ? "text-neutral-500" : "text-transparent"
+                          canExpand ? "text-slate-soft" : "text-transparent"
                         }`}
                         aria-hidden
                       >
@@ -2063,10 +2051,10 @@ export function SailorProfileView({
                       <span
                         className={`tabular-nums pt-0.5 flex flex-col items-start leading-tight ${
                           dns && !isIlcaRow
-                            ? "text-rose-400"
+                            ? "text-racing-orange font-black"
                             : isIlcaRow
-                              ? "text-sky-300"
-                              : "text-neutral-200"
+                              ? "text-harbour font-black"
+                              : "text-harbour-shadow font-black"
                         }`}
                         title={
                           isIlcaRow
@@ -2076,11 +2064,11 @@ export function SailorProfileView({
                               : "Finishing place"
                         }
                       >
-                        <span className="text-[15px] font-semibold">
+                        <span className="text-[15px] font-black">
                           {isIlcaRow ? leftValue : leftValue === "DNS" ? "DNS" : leftValue === "—" ? "—" : `#${leftValue}`}
                         </span>
                         {showFleetSizeUnderPlace && (
-                            <span className="text-[10px] font-medium text-neutral-500 mt-0.5">
+                            <span className="text-[10px] font-medium text-slate-soft mt-0.5">
                               /{fleetSize}
                             </span>
                           )}
@@ -2090,16 +2078,16 @@ export function SailorProfileView({
                           <Link
                             href={`/sg/optimist/regattas/${slug}`}
                             onClick={(e) => e.stopPropagation()}
-                            className="text-[13px] font-medium text-white truncate block hover:text-neutral-300"
+                            className="text-[13px] font-bold text-harbour-shadow truncate block hover:text-harbour"
                           >
                             {res.regattaName}
                           </Link>
                         ) : (
-                          <p className="text-[13px] font-medium text-white truncate">
+                          <p className="text-[13px] font-bold text-harbour-shadow truncate">
                             {res.regattaName}
                           </p>
                         )}
-                        <p className="text-[11px] text-neutral-500 truncate mt-0.5">
+                        <p className="text-[11px] text-slate-soft truncate mt-0.5 font-medium">
                           {[
                             res.geography,
                             formatEventWhen(res.regattaDate as string),
@@ -2121,7 +2109,7 @@ export function SailorProfileView({
                                 : null
                             : `Nett ${midValue}`;
                           return mobileSecondary ? (
-                            <p className="sm:hidden text-[11px] text-neutral-400 mt-1 tabular-nums">
+                            <p className="sm:hidden text-[11px] text-slate-soft mt-1 tabular-nums font-semibold">
                               {mobileSecondary}
                             </p>
                           ) : null;
@@ -2131,7 +2119,7 @@ export function SailorProfileView({
                             {tags.map((t) => (
                               <span
                                 key={t.label}
-                                className={`rounded-md px-1.5 py-px text-[9px] font-semibold border ${t.className}`}
+                                className={`rounded-md px-1.5 py-px text-[9px] font-bold border ${t.className}`}
                               >
                                 {t.label}
                               </span>
@@ -2150,7 +2138,7 @@ export function SailorProfileView({
                           if (!compact.length) return null;
                           return (
                             <p
-                              className="mt-1.5 text-[10px] text-slate-400 flex flex-wrap items-center gap-x-2 gap-y-0.5"
+                              className="mt-1.5 text-[10px] text-slate-soft flex flex-wrap items-center gap-x-2 gap-y-0.5 font-medium"
                               title="Equipment used at this regatta"
                             >
                               {compact.map((g, i) => {
@@ -2177,15 +2165,15 @@ export function SailorProfileView({
                           );
                         })()}
                         {raceNotes.length > 0 && (
-                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-sky-500/30 bg-sky-500/10 px-2 py-0.5 text-[10px] font-semibold text-sky-200">
+                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-harbour/30 bg-aqua-mist px-2 py-0.5 text-[10px] font-bold text-harbour">
                             <StickyNote className="h-3 w-3" />
                             {raceNotes.length} note
                             {raceNotes.length === 1 ? "" : "s"}
                           </span>
                         )}
                         {officialRaces.length > 0 && (
-                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-200">
-                            <Trophy className="h-3 w-3" />
+                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                            <Trophy className="h-3 w-3 text-emerald-600" />
                             {officialRaces.length} race score
                             {officialRaces.length === 1 ? "" : "s"}
                           </span>
@@ -2197,10 +2185,10 @@ export function SailorProfileView({
                               e.stopPropagation();
                               setExpandedRegattaId(regattaId);
                             }}
-                            className={`mt-1.5 inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[10px] font-semibold ${
+                            className={`mt-1.5 inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[10px] font-bold cursor-pointer ${
                               raceNotes.length > 0
-                                ? "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10"
-                                : "border-orange-500/25 bg-orange-500/10 text-orange-200 hover:bg-orange-500/20"
+                                ? "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
+                                : "border-racing-orange/30 bg-racing-mist/30 text-racing-orange hover:bg-racing-mist/50"
                             }`}
                           >
                             <StickyNote className="h-3 w-3" />
@@ -2210,7 +2198,7 @@ export function SailorProfileView({
                       </div>
                       <span
                         className={`hidden sm:flex flex-col items-end text-right tabular-nums pt-0.5 leading-tight ${
-                          isIlcaRow ? "text-neutral-200" : "text-neutral-400"
+                          isIlcaRow ? "text-charcoal font-bold" : "text-slate-soft font-semibold"
                         }`}
                       >
                         <span className="text-[13px]">
@@ -2222,14 +2210,14 @@ export function SailorProfileView({
                           fleetSize != null &&
                           Number(fleetSize) > 0 &&
                           midValue !== "—" && (
-                            <span className="text-[10px] font-medium text-neutral-500 mt-0.5">
+                            <span className="text-[10px] font-medium text-slate-soft mt-0.5">
                               /{fleetSize}
                             </span>
                           )}
                       </span>
                       <span className="flex items-center justify-end pt-0.5">
                         <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${fleetPillClass(fleet)}`}
+                          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${fleetPillClass(fleet)}`}
                         >
                           {fleet === "—" ? "—" : fleet}
                         </span>
@@ -2241,32 +2229,32 @@ export function SailorProfileView({
                           type="button"
                           disabled={personalBusy}
                           onClick={() => void deletePersonalResult(res)}
-                          className="ml-14 mb-2 text-[10px] font-medium text-rose-400/90"
+                          className="ml-14 mb-2 text-[10px] font-medium text-rose-600"
                         >
                           Remove
                         </button>
                       )}
 
                     {expanded && canExpand && (
-                      <div className="px-4 sm:px-5 pb-4 space-y-3 border-t border-white/[0.04] bg-black/15">
+                      <div className="px-4 sm:px-5 pb-4 space-y-3 border-t border-cool-veil bg-sailcloth/50">
                         {officialRaces.length > 0 && (
                           <div className="pt-3 space-y-2">
-                            <div className="flex items-center gap-2 text-[11px] font-medium text-neutral-500 uppercase tracking-wide">
-                              <Trophy className="h-3.5 w-3.5 text-emerald-400" />
+                            <div className="flex items-center gap-2 text-[11px] font-bold text-slate-soft uppercase tracking-wider">
+                              <Trophy className="h-3.5 w-3.5 text-harbour" />
                               Published race scores
                             </div>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                               {officialRaces.map((race) => (
                                 <div
                                   key={race.raceNumber}
-                                  className="rounded-lg border border-white/[0.06] bg-black/20 px-3 py-2"
+                                  className="rounded-lg border border-cool-veil bg-warm-white px-3 py-2 shadow-2xs"
                                 >
-                                  <p className="text-[10px] text-neutral-500">Race {race.raceNumber}</p>
-                                  <p className="text-sm font-semibold text-neutral-100 tabular-nums">
+                                  <p className="text-[10px] text-slate-soft font-medium">Race {race.raceNumber}</p>
+                                  <p className="text-sm font-black text-harbour-shadow tabular-nums">
                                     {race.rawValue || race.score}
                                   </p>
                                   {race.scoringCode && (
-                                    <p className="text-[10px] font-medium text-amber-300">
+                                    <p className="text-[10px] font-bold text-racing-orange">
                                       {race.scoringCode}
                                     </p>
                                   )}
@@ -2275,12 +2263,12 @@ export function SailorProfileView({
                             </div>
                           </div>
                         )}
-                        <div className="flex items-center gap-2 pt-3 text-[11px] font-medium text-neutral-500 uppercase tracking-wide">
-                          <BookOpen className="h-3.5 w-3.5 text-orange-400" />
+                        <div className="flex items-center gap-2 pt-3 text-[11px] font-bold text-slate-soft uppercase tracking-wider">
+                          <BookOpen className="h-3.5 w-3.5 text-racing-orange" />
                           Race observations
                         </div>
                         {raceNotes.length === 0 ? (
-                          <p className="text-xs text-neutral-600">
+                          <p className="text-xs text-slate-soft font-medium">
                             {ownerView
                               ? "No notes yet — add wind, place, and takeaways below."
                               : "No public race notes for this event."}
@@ -2292,13 +2280,13 @@ export function SailorProfileView({
                                 key={String(
                                   o.id || `${o.regattaId}-${o.raceNumber}`
                                 )}
-                                className="rounded-lg border border-white/[0.06] bg-black/20 px-3 py-2"
+                                className="rounded-lg border border-cool-veil bg-warm-white px-3 py-2 shadow-2xs"
                               >
                                 <div className="flex items-center justify-between gap-2">
-                                  <span className="text-xs font-semibold text-neutral-200">
+                                  <span className="text-xs font-bold text-harbour-shadow">
                                     Race {String(o.raceNumber)}
                                   </span>
-                                  <span className="text-[11px] font-mono text-neutral-500">
+                                  <span className="text-[11px] font-mono text-slate-soft">
                                     {o.position != null
                                       ? `Score ${o.position}`
                                       : "—"}
@@ -2307,7 +2295,7 @@ export function SailorProfileView({
                                   </span>
                                 </div>
                                 {o.note ? (
-                                  <p className="text-xs text-neutral-400 mt-1">
+                                  <p className="text-xs text-charcoal mt-1 leading-relaxed">
                                     {String(o.note)}
                                   </p>
                                 ) : null}
@@ -2318,7 +2306,7 @@ export function SailorProfileView({
                                       onClick={() =>
                                         startEditObservation(o, regattaId)
                                       }
-                                      className="text-[10px] font-medium text-neutral-400 hover:text-white"
+                                      className="text-[10px] font-bold text-harbour hover:underline"
                                     >
                                       Edit
                                     </button>
@@ -2342,7 +2330,7 @@ export function SailorProfileView({
                                           }
                                           void deleteObservation(o);
                                         }}
-                                        className="text-[10px] font-medium text-rose-400/90"
+                                        className="text-[10px] font-bold text-rose-600 hover:underline"
                                       >
                                         Delete
                                       </button>
@@ -2354,8 +2342,8 @@ export function SailorProfileView({
                           </ul>
                         )}
                         {ownerView && (
-                          <div className="rounded-lg border border-orange-500/20 bg-orange-500/[0.06] p-3 space-y-2">
-                            <p className="text-[10px] font-medium uppercase text-orange-300/90">
+                          <div className="rounded-lg border border-cool-veil bg-warm-white p-3 space-y-2">
+                            <p className="text-[10px] font-bold uppercase tracking-wider text-harbour">
                               {editingObsId
                                 ? "Edit observation"
                                 : "Add observation"}
@@ -2363,8 +2351,6 @@ export function SailorProfileView({
                             </p>
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                               <input
-                                type="number"
-                                min={1}
                                 value={obsForm.raceNumber}
                                 onChange={(e) =>
                                   setObsForm((f) => ({
@@ -2373,11 +2359,11 @@ export function SailorProfileView({
                                   }))
                                 }
                                 placeholder="Race #"
-                                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
-                              />
-                              <input
                                 type="number"
                                 min={1}
+                                className="rounded-lg bg-sailcloth border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
+                              />
+                              <input
                                 value={obsForm.position}
                                 onChange={(e) =>
                                   setObsForm((f) => ({
@@ -2385,8 +2371,10 @@ export function SailorProfileView({
                                     position: e.target.value,
                                   }))
                                 }
-                                placeholder="Score"
-                                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white"
+                                placeholder="Score / Place"
+                                type="number"
+                                min={1}
+                                className="rounded-lg bg-sailcloth border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
                               />
                               <input
                                 value={obsForm.wind}
@@ -2396,10 +2384,10 @@ export function SailorProfileView({
                                     wind: e.target.value,
                                   }))
                                 }
-                                placeholder="Wind"
-                                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white sm:col-span-2"
+                                placeholder="Wind (e.g. 12kt E)"
+                                className="col-span-2 rounded-lg bg-sailcloth border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
                               />
-                              <input
+                              <textarea
                                 value={obsForm.note}
                                 onChange={(e) =>
                                   setObsForm((f) => ({
@@ -2407,10 +2395,13 @@ export function SailorProfileView({
                                     note: e.target.value,
                                   }))
                                 }
-                                placeholder="Notes"
-                                className="rounded-lg bg-black/40 border border-white/10 px-2 py-1.5 text-xs text-white col-span-2 sm:col-span-3"
+                                placeholder="Notes, starts, tactics, gear observations..."
+                                rows={2}
+                                className="col-span-2 sm:col-span-4 rounded-lg bg-sailcloth border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
                               />
-                              <label className="flex items-center gap-1.5 text-[10px] text-neutral-500">
+                            </div>
+                            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                              <label className="flex items-center gap-1.5 text-xs text-slate-soft font-medium cursor-pointer">
                                 <input
                                   type="checkbox"
                                   checked={obsForm.isPrivate}
@@ -2420,36 +2411,36 @@ export function SailorProfileView({
                                       isPrivate: e.target.checked,
                                     }))
                                   }
-                                  className="rounded border-neutral-600"
+                                  className="rounded border-cool-veil text-harbour focus:ring-harbour"
                                 />
-                                Private
+                                Private (only you & coach can see)
                               </label>
-                            </div>
-                            <div className="flex gap-2">
-                              <button
-                                type="button"
-                                disabled={obsBusy}
-                                onClick={() => void saveObservation(regattaId)}
-                                className="rounded-lg bg-orange-500 text-white px-3 py-1.5 text-[11px] font-semibold disabled:opacity-50"
-                              >
-                                {obsBusy
-                                  ? "Saving…"
-                                  : editingObsId
-                                    ? "Update"
-                                    : "Save"}
-                              </button>
-                              <button
-                                type="button"
-                                onClick={resetObsForm}
-                                className="text-[11px] text-neutral-500 hover:text-white"
-                              >
-                                Clear
-                              </button>
+                              <div className="flex items-center gap-2">
+                                {editingObsId && (
+                                  <button
+                                    type="button"
+                                    onClick={resetObsForm}
+                                    className="text-xs text-slate-soft hover:text-charcoal font-medium"
+                                  >
+                                    Cancel
+                                  </button>
+                                )}
+                                <button
+                                  type="button"
+                                  disabled={obsBusy}
+                                  onClick={() => void saveObservation(regattaId)}
+                                  className="sp-primary rounded-lg px-3 py-1.5 text-xs font-bold text-white shadow-xs disabled:opacity-50"
+                                >
+                                  {obsBusy
+                                    ? "Saving…"
+                                    : editingObsId
+                                      ? "Update observation"
+                                      : "Save note"}
+                                </button>
+                              </div>
                             </div>
                             {obsMsg && (
-                              <p className="text-[11px] text-emerald-400">
-                                {obsMsg}
-                              </p>
+                              <p className="text-[11px] font-bold text-harbour">{obsMsg}</p>
                             )}
                           </div>
                         )}
@@ -2460,19 +2451,15 @@ export function SailorProfileView({
               })}
             </div>
             {hasMoreResults && (
-              <div className="border-t border-white/[0.05] px-4 sm:px-5 py-3 text-center">
+              <div className="border-t border-cool-veil px-4 sm:px-5 py-3 text-center bg-sailcloth/30">
                 <button
                   type="button"
                   onClick={() => setShowAllResults((v) => !v)}
-                  className={`text-[12px] font-semibold ${
-                    primaryIsIlca
-                      ? "text-sky-400 hover:text-sky-300"
-                      : "text-orange-400 hover:text-orange-300"
-                  }`}
+                  className="text-[12px] font-bold text-harbour hover:text-harbour-shadow transition cursor-pointer"
                 >
                   {showAllResults
-                    ? "Show fewer"
-                    : `View all ${activeResultsList.length} results`}
+                    ? "Show fewer results"
+                    : `View all ${activeResultsList.length} results →`}
                 </button>
               </div>
             )}
