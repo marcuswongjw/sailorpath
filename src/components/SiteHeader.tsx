@@ -498,8 +498,27 @@ export function SiteHeader() {
             >
               Help &amp; support
             </Link>
-            <div className="mt-3 pt-3 border-t border-harbour-shadow flex flex-col gap-1">
-              {authButtons}
+            <div className="mt-3 pt-3 border-t border-harbour-shadow flex flex-col gap-1.5">
+              {email ? (
+                authButtons
+              ) : (
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="rounded-lg border border-soft-aqua/40 px-3 py-2.5 text-center text-sm font-semibold text-sailcloth hover:bg-harbour-mid touch-manipulation flex items-center justify-center min-h-[2.75rem]"
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setMobileOpen(false)}
+                    className="rounded-lg bg-soft-aqua/20 border border-soft-aqua/40 px-3 py-2.5 text-center text-sm font-semibold text-white hover:bg-soft-aqua/30 touch-manipulation flex items-center justify-center min-h-[2.75rem]"
+                  >
+                    Create account
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         )}

@@ -65,52 +65,52 @@ export default function HomePage() {
             Official Singapore Sailing standings &amp; athlete records
           </div>
 
-          <h1 className="text-[2.5rem] font-bold leading-[1.08] text-harbour-shadow sm:text-5xl lg:text-[3.75rem]">
+          <h1 className="text-[2rem] sm:text-4xl md:text-5xl lg:text-[3.75rem] font-bold leading-[1.12] text-harbour-shadow tracking-tight">
             Singapore sailing,{" "}
-            <span className="whitespace-nowrap">
+            <span className="sm:whitespace-nowrap inline-block">
               tracked{" "}
               <span className="text-racing-orange">race by race.</span>
             </span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-xl text-base leading-6 text-slate-soft sm:text-lg sm:leading-7">
+          <p className="mx-auto mt-5 max-w-xl text-[15px] sm:text-lg leading-relaxed text-slate-soft">
             If you or your child sails in Singapore &mdash; get the latest
             results, standings, selection trial status, and relevant tools here.
           </p>
 
-          <div className="mt-8">
+          <div className="mt-8 flex justify-center">
             <Link
               href="/search"
-              className="sp-primary inline-flex min-h-12 items-center justify-center gap-2 px-8 text-[15px] font-semibold"
+              className="sp-primary inline-flex min-h-12 w-full sm:w-auto items-center justify-center gap-2 px-8 text-[15px] font-semibold"
             >
               Find your profile
             </Link>
           </div>
 
-          <div className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-slate-soft">
+          <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs sm:text-sm text-slate-soft">
             {["Free to use", "No credit card", "Data from official SSF results"].map(
               (item) => (
                 <span key={item} className="inline-flex items-center gap-1.5">
-                  <Check className="h-4 w-4 text-harbour" aria-hidden />
+                  <Check className="h-4 w-4 text-harbour shrink-0" aria-hidden />
                   {item}
                 </span>
               )
             )}
           </div>
 
-          <form action="/search" className="relative mx-auto mt-6 max-w-lg">
+          <form action="/search" className="relative mx-auto mt-6 max-w-lg w-full">
             <input
               type="search"
               name="query"
               enterKeyHint="search"
               aria-label="Search sailors"
               placeholder="Search by name, sail number, or club..."
-              className="w-full rounded-full border border-cool-veil bg-warm-white py-3.5 pl-6 pr-14 text-base text-charcoal shadow-sm placeholder:text-slate-soft focus:border-harbour focus:outline-none"
+              className="w-full rounded-full border border-cool-veil bg-warm-white py-3 sm:py-3.5 pl-4 sm:pl-6 pr-14 text-sm sm:text-base text-charcoal shadow-sm placeholder:text-slate-soft focus:border-harbour focus:outline-none"
             />
             <button
               type="submit"
               aria-label="Search"
-              className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-racing-orange text-white transition-colors hover:bg-racing-deep"
+              className="absolute right-1.5 sm:right-2 top-1/2 flex h-9 w-9 sm:h-10 sm:w-10 -translate-y-1/2 items-center justify-center rounded-full bg-racing-orange text-white transition-colors hover:bg-racing-deep cursor-pointer"
             >
               <Search className="h-4 w-4" aria-hidden />
             </button>
@@ -122,13 +122,13 @@ export default function HomePage() {
       {/* ── Stats ───────────────────────────────────────────────────────── */}
       <section className="bg-sailcloth py-8 sm:py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
             {stats.map(({ value, label }) => (
-              <div key={label} className="sp-card px-6 py-6 sm:px-8">
-                <dt className="text-3xl font-bold tabular-nums text-harbour-shadow sm:text-4xl">
+              <div key={label} className="sp-card px-4 py-5 sm:px-6 sm:py-6 lg:px-8">
+                <dt className="text-2xl font-bold tabular-nums text-harbour-shadow sm:text-3xl lg:text-4xl">
                   {value}
                 </dt>
-                <dd className="mt-2 text-sm text-slate-soft">{label}</dd>
+                <dd className="mt-1.5 text-xs sm:text-sm text-slate-soft leading-snug">{label}</dd>
               </div>
             ))}
           </dl>
