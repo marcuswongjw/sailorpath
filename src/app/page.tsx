@@ -74,8 +74,8 @@ export default function HomePage() {
           </h1>
 
           <p className="mx-auto mt-6 max-w-xl text-base leading-6 text-slate-soft sm:text-lg sm:leading-7">
-            If your child races in Singapore &mdash; their standings, selection
-            trial status, and race calendar are already here.
+            If you or your child sails in Singapore &mdash; get the latest
+            results, standings, selection trial status, and relevant tools here.
           </p>
 
           <div className="mt-8">
@@ -83,7 +83,7 @@ export default function HomePage() {
               href="/search"
               className="sp-primary inline-flex min-h-12 items-center justify-center gap-2 px-8 text-[15px] font-semibold"
             >
-              Find your child&apos;s profile
+              Find your profile
             </Link>
           </div>
 
@@ -119,21 +119,22 @@ export default function HomePage() {
       </section>
 
 
-      {/* ── Stats bar ───────────────────────────────────────────────────── */}
-      <section className="border-b border-cool-veil bg-warm-white">
+      {/* ── Stats ───────────────────────────────────────────────────────── */}
+      <section className="bg-sailcloth py-8 sm:py-10">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <dl className="grid grid-cols-2 divide-x divide-y divide-cool-veil lg:grid-cols-4 lg:divide-y-0">
+          <dl className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {stats.map(({ value, label }) => (
-              <div key={label} className="px-6 py-7 sm:px-8">
+              <div key={label} className="sp-card px-6 py-6 sm:px-8">
                 <dt className="text-3xl font-bold tabular-nums text-harbour-shadow sm:text-4xl">
                   {value}
                 </dt>
-                <dd className="mt-1.5 text-sm text-slate-soft">{label}</dd>
+                <dd className="mt-2 text-sm text-slate-soft">{label}</dd>
               </div>
             ))}
           </dl>
         </div>
       </section>
+
 
       {/* ── Class hubs ──────────────────────────────────────────────────── */}
       <section className="bg-warm-white py-12 sm:py-16">
@@ -143,10 +144,10 @@ export default function HomePage() {
               Jump to your class
             </p>
             <h2 className="mt-3 text-2xl font-semibold leading-8 text-charcoal">
-              Official Singapore class hubs
+              Official sailing class
             </h2>
             <p className="mt-3 text-base leading-6 text-slate-soft">
-              Every class follows its federation rules and scoring system.
+              Every class follows its rules and scoring system.
             </p>
           </div>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -161,7 +162,6 @@ export default function HomePage() {
                   {item.name}
                 </h3>
                 <p className="mt-1 text-sm font-medium text-harbour">{item.tagline}</p>
-                <p className="mt-1.5 text-sm leading-5 text-slate-soft">{item.note}</p>
                 <ArrowRight
                   className="mt-4 h-4 w-4 text-harbour transition-transform group-hover:translate-x-1"
                   aria-hidden
