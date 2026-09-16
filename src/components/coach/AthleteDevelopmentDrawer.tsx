@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   X,
   Lock,
@@ -15,6 +15,7 @@ import {
   Trophy,
 } from "lucide-react";
 import type { CoachSquadMember } from "@/lib/coachDashboard";
+import { fleetPillClass } from "@/components/sailor-profile/helpers";
 
 type AthleteDevelopmentDrawerProps = {
   sailor: CoachSquadMember;
@@ -50,6 +51,51 @@ const OBSERVATION_CATEGORIES = [
   "Mental focus",
 ];
 
+const NESTED =
+  "rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]";
+const MUTED = "text-[var(--sp-slate-soft)]";
+const INK = "text-[var(--sp-harbour-shadow)]";
+const BODY = "text-[var(--sp-charcoal-slate)]";
+const JUMP_PILL =
+  "inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-1.5 text-[11px] font-semibold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition whitespace-nowrap";
+
+function VisibilityToggle({
+  value,
+  onChange,
+}: {
+  value: "coach_only" | "shared";
+  onChange: (next: "coach_only" | "shared") => void;
+}) {
+  return (
+    <div className={`flex items-center gap-1 ${NESTED} p-0.5`}>
+      <button
+        type="button"
+        onClick={() => onChange("coach_only")}
+        className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] font-bold transition ${
+          value === "coach_only"
+            ? "bg-harbour text-sailcloth shadow-xs"
+            : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
+        }`}
+      >
+        <Lock className="h-3 w-3" />
+        <span>Coach Only</span>
+      </button>
+      <button
+        type="button"
+        onClick={() => onChange("shared")}
+        className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] font-bold transition ${
+          value === "shared"
+            ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] shadow-xs"
+            : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
+        }`}
+      >
+        <Globe2 className="h-3 w-3" />
+        <span>Share with Family</span>
+      </button>
+    </div>
+  );
+}
+
 export function AthleteDevelopmentDrawer({
   sailor,
   onClose,
@@ -59,13 +105,11 @@ export function AthleteDevelopmentDrawer({
   onDeleteRecord,
   busyId,
 }: AthleteDevelopmentDrawerProps) {
-  // Private note state
   const [noteDraft, setNoteDraft] = useState(sailor.coachNote || "");
   const [noteVisibility, setNoteVisibility] = useState<"coach_only" | "shared">(
     sailor.coachNoteVisibility || "coach_only"
   );
 
-  // New development record state
   const [recordType, setRecordType] = useState<"observation" | "goal" | "attendance">("observation");
   const [recordCategory, setRecordCategory] = useState("Starts");
   const [recordSentiment, setRecordSentiment] = useState<"strength" | "focus" | "neutral">("strength");
@@ -75,6 +119,19 @@ export function AthleteDevelopmentDrawer({
   const [recordDate, setRecordDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [targetDate, setTargetDate] = useState("");
   const [recordStatus, setRecordStatus] = useState("active");
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
 
   async function handleAddRecord(e: React.FormEvent) {
     e.preventDefault();
@@ -111,7 +168,7 @@ export function AthleteDevelopmentDrawer({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex justify-end bg-black/75 backdrop-blur-sm transition-opacity"
+      className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs transition-opacity"
       role="dialog"
       aria-modal="true"
       aria-label={`${sailor.name} coach details`}
@@ -119,27 +176,28 @@ export function AthleteDevelopmentDrawer({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="flex h-full w-full max-w-xl flex-col border-l border-white/10 bg-[#0c0d14] text-white shadow-2xl">
-        {/* Drawer Header (Sticky) */}
-        <div className="flex items-start justify-between border-b border-white/10 p-5 sm:p-6 bg-[#0c0d14]/95 backdrop-blur shrink-0">
+      <div className="flex h-full w-full max-w-xl flex-col border-l border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-harbour-shadow)] shadow-2xl">
+        <div className="flex items-start justify-between border-b border-[var(--sp-cool-veil)] p-5 sm:p-6 bg-[var(--sp-warm-white)] shrink-0">
           <div className="min-w-0 pr-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-orange-400">
+              <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">
                 Coach Workspace
               </span>
               {sailor.fleet && (
-                <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2 py-0.5 text-[10px] font-bold text-orange-300">
+                <span
+                  className={`rounded-full border px-2 py-0.5 text-[10px] font-bold ${fleetPillClass(sailor.fleet)}`}
+                >
                   {sailor.fleet} #{sailor.ranking}
                 </span>
               )}
               {sailor.squadStatus && (
-                <span className="rounded-full border border-sky-500/25 bg-sky-500/10 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-charcoal-slate)]">
                   {sailor.squadStatus}
                 </span>
               )}
             </div>
-            <h2 className="mt-1 truncate text-2xl font-black text-white">{sailor.name}</h2>
-            <p className="mt-0.5 truncate text-xs text-slate-400">
+            <h2 className={`mt-1 truncate text-2xl font-black ${INK}`}>{sailor.name}</h2>
+            <p className={`mt-0.5 truncate text-xs ${MUTED}`}>
               {sailor.sailNumber} · {sailor.club}
             </p>
           </div>
@@ -148,62 +206,45 @@ export function AthleteDevelopmentDrawer({
             type="button"
             onClick={onClose}
             aria-label="Close sailor details"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white transition"
+            className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition`}
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        {/* Quick Jump Bar */}
-        <div className="flex items-center gap-2 border-b border-white/10 bg-black/40 px-4 py-2.5 sm:px-6 overflow-x-auto shrink-0">
-          <button
-            type="button"
-            onClick={() => scrollToSection("drawer-scores")}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-slate-300 hover:bg-white/10 hover:text-white transition whitespace-nowrap"
-          >
-            <Trophy className="h-3 w-3 text-orange-400" /> Scores & Races
+        <div className="flex items-center gap-2 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2.5 sm:px-6 overflow-x-auto shrink-0">
+          <button type="button" onClick={() => scrollToSection("drawer-scores")} className={JUMP_PILL}>
+            <Trophy className="h-3 w-3 text-[var(--sp-racing-orange)]" /> Scores & Races
           </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection("drawer-coaching-log")}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-slate-300 hover:bg-white/10 hover:text-white transition whitespace-nowrap"
-          >
-            <Target className="h-3 w-3 text-sky-400" /> Coaching Log ({sailor.developmentRecords.length})
+          <button type="button" onClick={() => scrollToSection("drawer-coaching-log")} className={JUMP_PILL}>
+            <Target className="h-3 w-3 text-[var(--sp-harbour-teal)]" /> Coaching Log ({sailor.developmentRecords.length})
           </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection("drawer-note")}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-semibold text-slate-300 hover:bg-white/10 hover:text-white transition whitespace-nowrap"
-          >
-            <FileText className="h-3 w-3 text-emerald-400" /> Coach Note
+          <button type="button" onClick={() => scrollToSection("drawer-note")} className={JUMP_PILL}>
+            <FileText className="h-3 w-3 text-[var(--sp-harbour-teal)]" /> Coach Note
           </button>
         </div>
 
-        {/* Drawer Scrollable Body */}
         <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-8">
-          {/* SECTION 1: SCORES & REGATTAS */}
           <div id="drawer-scores" className="space-y-6">
-            {/* Selection Readiness Banner */}
-            <div className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-4">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <div className={`${NESTED} p-4`}>
+              <h3 className={`text-xs font-bold uppercase tracking-wider ${MUTED}`}>
                 Selection readiness
               </h3>
-              <p className="mt-2 text-sm font-bold text-white">
+              <p className={`mt-2 text-sm font-bold ${INK}`}>
                 {sailor.selectionReadiness.label}
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-slate-400">
+              <p className={`mt-1 text-xs leading-relaxed ${MUTED}`}>
                 {sailor.selectionReadiness.detail}
               </p>
             </div>
 
-            {/* Best 3 of 5 Cards */}
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                <h3 className={`text-xs font-bold uppercase tracking-wider ${MUTED}`}>
                   Best 3 of 5
                 </h3>
                 {sailor.bestThreeOfFive != null && (
-                  <span className="text-[11px] font-semibold text-orange-400">
+                  <span className="text-[11px] font-semibold text-[var(--sp-racing-orange)]">
                     Total: {sailor.bestThreeOfFive} pts
                   </span>
                 )}
@@ -214,23 +255,23 @@ export function AthleteDevelopmentDrawer({
                     key={event.regattaId}
                     className={`rounded-xl border p-3 ${
                       event.selected
-                        ? "border-orange-500/50 bg-orange-500/10"
-                        : "border-white/[0.07] bg-white/[0.02]"
+                        ? "border-[var(--sp-racing-orange)]/40 bg-[var(--sp-racing-mist)]/40"
+                        : NESTED
                     }`}
                   >
-                    <p className="truncate text-[10px] font-bold text-slate-400">
+                    <p className={`truncate text-[10px] font-bold ${MUTED}`}>
                       {event.regattaName}
                     </p>
                     <p
                       className={`mt-1 text-xl font-black ${
-                        event.selected ? "text-orange-300" : "text-white"
+                        event.selected ? "text-[var(--sp-racing-orange)]" : INK
                       }`}
                     >
                       {event.score}
                       {event.isDns ? "*" : event.isOverseas ? "†" : ""}
                     </p>
                     {event.selected && (
-                      <p className="mt-1 text-[9px] font-bold uppercase text-orange-400">
+                      <p className="mt-1 text-[9px] font-bold uppercase text-[var(--sp-racing-orange)]">
                         Counting
                       </p>
                     )}
@@ -239,31 +280,27 @@ export function AthleteDevelopmentDrawer({
               </div>
             </div>
 
-            {/* Recent Regattas & Race Breakdown */}
             <div>
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
+              <h3 className={`text-xs font-bold uppercase tracking-wider ${MUTED} mb-3`}>
                 Recent regattas & race scores
               </h3>
               <div className="space-y-3">
                 {sailor.recentResults.map((result) => (
-                  <div
-                    key={result.resultId}
-                    className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4"
-                  >
+                  <div key={result.resultId} className={`${NESTED} p-4`}>
                     <div className="flex justify-between gap-3">
                       <div>
                         <Link
                           href={`/regattas/${result.regattaSlug}`}
-                          className="text-sm font-bold text-white hover:text-orange-400 transition"
+                          className={`text-sm font-bold ${INK} hover:text-[var(--sp-racing-orange)] transition`}
                         >
                           {result.regattaName}
                         </Link>
-                        <p className="mt-0.5 text-[10px] text-slate-500">{result.date}</p>
+                        <p className={`mt-0.5 text-[10px] ${MUTED}`}>{result.date}</p>
                       </div>
-                      <p className="text-sm font-black text-white">
+                      <p className={`text-sm font-black ${INK}`}>
                         #{result.rank}
                         {result.nettScore != null ? (
-                          <span className="ml-1 text-[10px] font-medium text-slate-500">
+                          <span className={`ml-1 text-[10px] font-medium ${MUTED}`}>
                             · {result.nettScore} net
                           </span>
                         ) : null}
@@ -278,8 +315,8 @@ export function AthleteDevelopmentDrawer({
                             title={race.rawValue}
                             className={`rounded-md border px-2 py-1 text-[10px] ${
                               race.discarded
-                                ? "border-slate-700 text-slate-600 line-through"
-                                : "border-sky-500/20 bg-sky-500/5 text-sky-300"
+                                ? "border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] line-through"
+                                : "border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
                             }`}
                           >
                             R{race.raceNumber}: {race.code || race.score}
@@ -287,7 +324,7 @@ export function AthleteDevelopmentDrawer({
                         ))}
                       </div>
                     ) : (
-                      <p className="mt-3 text-[10px] text-slate-600">
+                      <p className={`mt-3 text-[10px] ${MUTED}`}>
                         No official race-by-race scores imported.
                       </p>
                     )}
@@ -297,25 +334,23 @@ export function AthleteDevelopmentDrawer({
             </div>
           </div>
 
-          <hr className="border-white/10" />
+          <hr className="border-[var(--sp-cool-veil)]" />
 
-          {/* SECTION 2: COACHING LOG & OBSERVATIONS */}
           <div id="drawer-coaching-log" className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                <h3 className={`text-xs font-bold uppercase tracking-wider ${MUTED}`}>
                   Coaching history
                 </h3>
-                <p className="mt-0.5 text-[11px] text-slate-500">
+                <p className={`mt-0.5 text-[11px] ${MUTED}`}>
                   Track observations, goals, and training milestones.
                 </p>
               </div>
-              <span className="text-[11px] font-semibold text-slate-500">
+              <span className={`text-[11px] font-semibold ${MUTED}`}>
                 {sailor.developmentRecords.length} records
               </span>
             </div>
 
-            {/* Existing Records List */}
             {sailor.developmentRecords.length ? (
               <div className="space-y-3">
                 {sailor.developmentRecords.map((record) => {
@@ -326,20 +361,19 @@ export function AthleteDevelopmentDrawer({
                   return (
                     <div
                       key={record.id}
-                      className="group relative rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 transition hover:border-white/15"
+                      className={`group relative ${NESTED} p-4 transition hover:border-[var(--sp-harbour-teal)]`}
                     >
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="rounded-full bg-white/10 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wide text-slate-300">
+                          <span className="rounded-full bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wide text-[var(--sp-charcoal-slate)]">
                             {record.type}
                           </span>
 
-                          {/* Visibility Badge */}
                           <span
-                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold ${
+                            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold border ${
                               isShared
-                                ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/25"
-                                : "bg-white/5 text-slate-400 border border-white/10"
+                                ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border-[var(--sp-harbour-teal)]/25"
+                                : "bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] border-[var(--sp-cool-veil)]"
                             }`}
                           >
                             {isShared ? (
@@ -353,9 +387,8 @@ export function AthleteDevelopmentDrawer({
                             )}
                           </span>
 
-                          {/* Category / Sentiment */}
                           {isObservation && record.category && (
-                            <span className="rounded-full border border-sky-500/20 bg-sky-500/10 px-2 py-0.5 text-[9px] font-bold text-sky-300">
+                            <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[9px] font-bold text-[var(--sp-harbour-teal)]">
                               {record.category}
                             </span>
                           )}
@@ -364,8 +397,8 @@ export function AthleteDevelopmentDrawer({
                             <span
                               className={`rounded-full px-2 py-0.5 text-[9px] font-bold ${
                                 record.sentiment === "strength"
-                                  ? "bg-emerald-500/10 text-emerald-400"
-                                  : "bg-amber-500/10 text-amber-400"
+                                  ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
+                                  : "bg-[var(--sp-racing-mist)]/50 text-[var(--sp-racing-deep)]"
                               }`}
                             >
                               {record.sentiment === "strength" ? "Strength" : "Focus Area"}
@@ -373,7 +406,7 @@ export function AthleteDevelopmentDrawer({
                           )}
                         </div>
 
-                        <div className="flex items-center gap-2 text-[10px] text-slate-500 shrink-0">
+                        <div className={`flex items-center gap-2 text-[10px] ${MUTED} shrink-0`}>
                           <Calendar className="h-3 w-3" />
                           <span>{record.recordDate}</span>
                           {onDeleteRecord && (
@@ -381,7 +414,7 @@ export function AthleteDevelopmentDrawer({
                               type="button"
                               onClick={() => onDeleteRecord(record.id)}
                               title="Delete record"
-                              className="opacity-0 group-hover:opacity-100 rounded p-1 text-slate-500 hover:text-rose-400 transition"
+                              className={`opacity-0 group-hover:opacity-100 rounded p-1 ${MUTED} hover:text-rose-600 transition`}
                             >
                               <Trash2 className="h-3 w-3" />
                             </button>
@@ -389,18 +422,18 @@ export function AthleteDevelopmentDrawer({
                         </div>
                       </div>
 
-                      <p className="mt-2 text-xs font-bold text-white">{record.title}</p>
+                      <p className={`mt-2 text-xs font-bold ${INK}`}>{record.title}</p>
 
                       {record.detail && (
-                        <p className="mt-1 text-[11px] leading-relaxed text-slate-300">
+                        <p className={`mt-1 text-[11px] leading-relaxed ${BODY}`}>
                           {record.detail}
                         </p>
                       )}
 
                       {isGoal && (
-                        <div className="mt-3 flex items-center justify-between border-t border-white/[0.06] pt-2">
-                          <span className="inline-flex items-center gap-1 text-[11px] text-slate-400">
-                            <Clock className="h-3 w-3 text-orange-400" />
+                        <div className="mt-3 flex items-center justify-between border-t border-[var(--sp-cool-veil)] pt-2">
+                          <span className={`inline-flex items-center gap-1 text-[11px] ${MUTED}`}>
+                            <Clock className="h-3 w-3 text-[var(--sp-racing-orange)]" />
                             Target: {record.targetDate || "Ongoing"}
                           </span>
                           {onUpdateRecordStatus && (
@@ -414,8 +447,8 @@ export function AthleteDevelopmentDrawer({
                               }
                               className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold transition ${
                                 record.status === "completed"
-                                  ? "bg-emerald-500/20 text-emerald-300"
-                                  : "bg-white/5 text-slate-400 hover:bg-white/10"
+                                  ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
+                                  : "bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
                               }`}
                             >
                               <CheckCircle2 className="h-3 w-3" />
@@ -429,54 +462,26 @@ export function AthleteDevelopmentDrawer({
                 })}
               </div>
             ) : (
-              <p className="rounded-xl border border-dashed border-white/10 px-3 py-5 text-center text-[11px] text-slate-600">
+              <p className={`rounded-xl border border-dashed border-[var(--sp-cool-veil)] px-3 py-5 text-center text-[11px] ${MUTED}`}>
                 No structured coaching records yet.
               </p>
             )}
 
-            {/* Add New Record Form Card */}
-            <div className="rounded-2xl border border-white/10 bg-black/20 p-4 sm:p-5">
-              <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+            <div className={`${NESTED} p-4 sm:p-5`}>
+              <div className="flex items-center justify-between pb-3 border-b border-[var(--sp-cool-veil)]">
+                <h4 className={`text-xs font-bold uppercase tracking-wider ${INK}`}>
                   New Coaching Record
                 </h4>
-                {/* Selective Sharing Switch */}
-                <div className="flex items-center gap-1 rounded-lg border border-white/10 bg-black/40 p-0.5">
-                  <button
-                    type="button"
-                    onClick={() => setRecordVisibility("coach_only")}
-                    className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] font-bold transition ${
-                      recordVisibility === "coach_only"
-                        ? "bg-white/15 text-white shadow-sm"
-                        : "text-slate-400 hover:text-slate-200"
-                    }`}
-                  >
-                    <Lock className="h-3 w-3" />
-                    <span>Coach Only</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setRecordVisibility("shared")}
-                    className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] font-bold transition ${
-                      recordVisibility === "shared"
-                        ? "bg-emerald-500/20 text-emerald-300 shadow-sm"
-                        : "text-slate-400 hover:text-slate-200"
-                    }`}
-                  >
-                    <Globe2 className="h-3 w-3" />
-                    <span>Share with Family</span>
-                  </button>
-                </div>
+                <VisibilityToggle value={recordVisibility} onChange={setRecordVisibility} />
               </div>
 
               <form onSubmit={handleAddRecord} className="mt-4 space-y-3">
-                {/* Type and Date Row */}
                 <div className="grid grid-cols-2 gap-2">
                   <select
                     aria-label="Record type"
                     value={recordType}
                     onChange={(e) => setRecordType(e.target.value as typeof recordType)}
-                    className="rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white outline-none focus:border-orange-500/50"
+                    className="sp-select text-xs"
                   >
                     <option value="observation">Observation</option>
                     <option value="goal">Development goal</option>
@@ -488,18 +493,17 @@ export function AthleteDevelopmentDrawer({
                     type="date"
                     value={recordDate}
                     onChange={(e) => setRecordDate(e.target.value)}
-                    className="rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white outline-none focus:border-orange-500/50"
+                    className="sp-input text-xs"
                   />
                 </div>
 
-                {/* Observation Category and Sentiment */}
                 {recordType === "observation" && (
                   <div className="space-y-2">
                     <select
                       aria-label="Skill category"
                       value={recordCategory}
                       onChange={(e) => setRecordCategory(e.target.value)}
-                      className="w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white outline-none focus:border-orange-500/50"
+                      className="sp-select w-full text-xs"
                     >
                       {OBSERVATION_CATEGORIES.map((c) => (
                         <option key={c} value={c}>
@@ -514,45 +518,43 @@ export function AthleteDevelopmentDrawer({
                         onClick={() => setRecordSentiment("strength")}
                         className={`flex-1 rounded-lg border py-1.5 text-[10px] font-bold transition ${
                           recordSentiment === "strength"
-                            ? "border-emerald-500/40 bg-emerald-500/15 text-emerald-300"
-                            : "border-white/10 bg-black/30 text-slate-400 hover:text-white"
+                            ? "border-[var(--sp-harbour-teal)]/40 bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
+                            : `${NESTED} ${MUTED} hover:text-[var(--sp-harbour-shadow)]`
                         }`}
                       >
-                        🟢 Strength
+                        Strength
                       </button>
                       <button
                         type="button"
                         onClick={() => setRecordSentiment("focus")}
                         className={`flex-1 rounded-lg border py-1.5 text-[10px] font-bold transition ${
                           recordSentiment === "focus"
-                            ? "border-amber-500/40 bg-amber-500/15 text-amber-300"
-                            : "border-white/10 bg-black/30 text-slate-400 hover:text-white"
+                            ? "border-[var(--sp-racing-orange)]/40 bg-[var(--sp-racing-mist)]/50 text-[var(--sp-racing-deep)]"
+                            : `${NESTED} ${MUTED} hover:text-[var(--sp-harbour-shadow)]`
                         }`}
                       >
-                        🟠 Focus Area
+                        Focus Area
                       </button>
                     </div>
                   </div>
                 )}
 
-                {/* Goal Target Date */}
                 {recordType === "goal" && (
                   <input
                     aria-label="Target date"
                     type="date"
                     value={targetDate}
                     onChange={(e) => setTargetDate(e.target.value)}
-                    className="w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white outline-none focus:border-orange-500/50"
+                    className="sp-input w-full text-xs"
                   />
                 )}
 
-                {/* Attendance Status */}
                 {recordType === "attendance" && (
                   <select
                     aria-label="Attendance status"
                     value={recordStatus}
                     onChange={(e) => setRecordStatus(e.target.value)}
-                    className="w-full rounded-lg border border-white/10 bg-black/30 px-2 py-2 text-xs text-white outline-none focus:border-orange-500/50"
+                    className="sp-select w-full text-xs"
                   >
                     <option value="present">Present</option>
                     <option value="absent">Absent</option>
@@ -560,7 +562,6 @@ export function AthleteDevelopmentDrawer({
                   </select>
                 )}
 
-                {/* Title */}
                 <input
                   aria-label="Record title"
                   value={recordTitle}
@@ -573,10 +574,9 @@ export function AthleteDevelopmentDrawer({
                       ? "Measurable development goal"
                       : "What did you observe?"
                   }
-                  className="w-full rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-xs text-white outline-none focus:border-orange-500/50"
+                  className="sp-input w-full text-xs"
                 />
 
-                {/* Detail */}
                 <textarea
                   aria-label="Record detail"
                   value={recordDetail}
@@ -584,13 +584,13 @@ export function AthleteDevelopmentDrawer({
                   maxLength={4000}
                   rows={3}
                   placeholder="Context, success measure, or follow-up"
-                  className="w-full rounded-lg border border-white/10 bg-black/30 p-3 text-xs text-white outline-none focus:border-orange-500/50"
+                  className="sp-input w-full text-xs"
                 />
 
                 <button
                   type="submit"
                   disabled={!recordTitle.trim() || busyId === "development"}
-                  className="w-full rounded-lg bg-sky-600 px-3 py-2 text-xs font-bold text-white hover:bg-sky-500 disabled:opacity-40 transition"
+                  className="w-full sp-btn-primary py-2.5 disabled:opacity-40"
                 >
                   {busyId === "development" ? "Saving…" : "Add coaching record"}
                 </button>
@@ -598,50 +598,23 @@ export function AthleteDevelopmentDrawer({
             </div>
           </div>
 
-          <hr className="border-white/10" />
+          <hr className="border-[var(--sp-cool-veil)]" />
 
-          {/* SECTION 3: COACH NOTE */}
           <div id="drawer-note" className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
                 <label
                   htmlFor="coach-note"
-                  className="text-xs font-bold uppercase tracking-wider text-slate-400"
+                  className={`text-xs font-bold uppercase tracking-wider ${MUTED}`}
                 >
                   Private coach note
                 </label>
-                <p className="mt-0.5 text-[10px] text-slate-600">
+                <p className={`mt-0.5 text-[10px] ${MUTED}`}>
                   Visible only in your coach account unless shared.
                 </p>
               </div>
 
-              {/* Selective Sharing Switch for Coach Note */}
-              <div className="flex items-center gap-1 rounded-lg border border-white/10 bg-black/40 p-0.5">
-                <button
-                  type="button"
-                  onClick={() => setNoteVisibility("coach_only")}
-                  className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] font-bold transition ${
-                    noteVisibility === "coach_only"
-                      ? "bg-white/15 text-white shadow-sm"
-                      : "text-slate-400 hover:text-slate-200"
-                  }`}
-                >
-                  <Lock className="h-3 w-3" />
-                  <span>Coach Only</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setNoteVisibility("shared")}
-                  className={`flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] font-bold transition ${
-                    noteVisibility === "shared"
-                      ? "bg-emerald-500/20 text-emerald-300 shadow-sm"
-                      : "text-slate-400 hover:text-slate-200"
-                  }`}
-                >
-                  <Globe2 className="h-3 w-3" />
-                  <span>Share with Family</span>
-                </button>
-              </div>
+              <VisibilityToggle value={noteVisibility} onChange={setNoteVisibility} />
             </div>
 
             <textarea
@@ -652,18 +625,18 @@ export function AthleteDevelopmentDrawer({
               maxLength={4000}
               rows={5}
               placeholder="Focus areas, training observations, or follow-up…"
-              className="w-full rounded-xl border border-white/10 bg-black/30 p-3 text-sm text-white outline-none focus:border-orange-500/50"
+              className="sp-input w-full text-sm"
             />
 
             <div className="flex items-center justify-between">
-              <span className="text-[10px] text-slate-600">
+              <span className={`text-[10px] ${MUTED}`}>
                 {noteDraft.length}/4000
               </span>
               <button
                 type="button"
                 onClick={handleSaveNote}
                 disabled={busyId === "note"}
-                className="rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-50 transition"
+                className="sp-btn-primary disabled:opacity-50"
               >
                 {busyId === "note" ? "Saving…" : "Save note"}
               </button>

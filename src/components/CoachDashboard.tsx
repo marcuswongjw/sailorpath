@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ChevronRight, GitCompareArrows, Plus, Search, Settings2, Trash2, TrendingDown, TrendingUp, Users, X } from "lucide-react";
 import type { CoachSquadDashboard } from "@/lib/coachDashboard";
 import { SquadPulseCards, AthleteDevelopmentDrawer } from "@/components/coach";
+import { fleetPillClass } from "@/components/sailor-profile/helpers";
 
 type SearchMatch = { id: string; name: string; handle: string; sailNumber: string; club: string };
 
@@ -46,6 +47,20 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
       window.clearTimeout(timer);
     };
   }, [query, data.members, data.following]);
+
+  useEffect(() => {
+    if (!manageOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setManageOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [manageOpen]);
 
   const averageBest = useMemo(() => {
     const scores = data.members.map((member) => member.bestThreeOfFive).filter((score): score is number => score != null);
@@ -283,7 +298,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
       <section className="order-1 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 shadow-xs" aria-labelledby="action-centre-title">
         <div className="flex items-center justify-between gap-4">
           <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">Today</p><h2 id="action-centre-title" className="mt-1 text-base font-black text-[var(--sp-harbour-shadow)]">Squad action centre</h2></div>
-          <span className="rounded-full bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-700">{actions.length} to review</span>
+          <span className="rounded-full bg-[var(--sp-racing-mist)]/50 px-2.5 py-1 text-[10px] font-bold text-[var(--sp-racing-deep)]">{actions.length} to review</span>
         </div>
         {actions.length ? (
           <div className="mt-3 grid gap-2 md:grid-cols-2">
@@ -297,7 +312,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                   <ChevronRight className="h-4 w-4 text-[var(--sp-slate-soft)]" />
                 </button>
                 <div className="mt-2 flex gap-2">
-                  <button type="button" onClick={() => reviewAction(action, "reviewed")} disabled={busyId === action.key} className="rounded-md bg-amber-500/15 px-2 py-1 text-[9px] font-bold text-amber-800 disabled:opacity-50">
+                  <button type="button" onClick={() => reviewAction(action, "reviewed")} disabled={busyId === action.key} className="rounded-md bg-[var(--sp-racing-mist)]/50 px-2 py-1 text-[9px] font-bold text-[var(--sp-racing-deep)] disabled:opacity-50">
                     Mark reviewed
                   </button>
                   <button type="button" onClick={() => reviewAction(action, "dismissed")} disabled={busyId === action.key} className="rounded-md px-2 py-1 text-[9px] font-bold text-[var(--sp-slate-soft)] hover:bg-[var(--sp-warm-white)]">
@@ -317,7 +332,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
           <div className="flex flex-col gap-3 border-b border-[var(--sp-cool-veil)] p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-wrap items-center gap-2">
               <label htmlFor="squad-sort" className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Sort</label>
-              <select id="squad-sort" value={sortKey} onChange={(event) => setSortKey(event.target.value as typeof sortKey)} className="rounded-lg border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-1.5 text-[11px] font-bold text-[var(--sp-harbour-shadow)]">
+              <select id="squad-sort" value={sortKey} onChange={(event) => setSortKey(event.target.value as typeof sortKey)} className="sp-select text-[11px] font-bold">
                 <option value="ranking">Fleet rank</option>
                 <option value="name">Name</option>
                 <option value="movement">Movement</option>
@@ -332,7 +347,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
             <div className="flex items-center gap-2">
               <span className="text-[11px] text-[var(--sp-slate-soft)]">Select two sailors</span>
               {compareHref ? (
-                <Link href={compareHref} className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] px-3 py-2 text-[11px] font-bold text-white hover:opacity-95">
+                <Link href={compareHref} className="sp-btn-primary px-3 py-2 text-[11px]">
                   <GitCompareArrows className="h-3.5 w-3.5" /> Compare
                 </Link>
               ) : (
@@ -356,7 +371,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                   <button type="button" onClick={() => openSailor(member.sailorId)} className="min-w-0 text-left" aria-label={`Open ${member.name} details`}>
                     <div className="flex flex-wrap items-center gap-2">
                       <Link href={`/${member.handle}`} className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">{member.name}</Link>
-                      {member.fleet && <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-harbour-teal)]/10 px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)]">{member.fleet} #{member.ranking}</span>}
+                      {member.fleet && <span className={`rounded-full border px-2 py-0.5 text-[10px] font-bold ${fleetPillClass(member.fleet)}`}>{member.fleet} #{member.ranking}</span>}
                       {member.squadStatus && <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-charcoal-slate)]">{member.squadStatus}</span>}
                     </div>
                     <p className="mt-1 text-[11px] text-[var(--sp-slate-soft)]">{member.sailNumber} · {member.club}{member.bestThreeOfFive != null ? ` · Best 3: ${member.bestThreeOfFive}` : ""}</p>
@@ -390,7 +405,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                   setQuery(value);
                   if (value.trim().length < 2) setMatches([]);
                 }} placeholder="Type at least 2 characters"
-                  aria-label="Search sailors to add" className="w-full rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] py-2.5 pl-9 pr-3 text-sm text-[var(--sp-harbour-shadow)] outline-none placeholder:text-[var(--sp-slate-soft)] focus:border-[var(--sp-harbour-teal)]" />
+                  aria-label="Search sailors to add" className="sp-input w-full py-2.5 pl-9 pr-3 text-sm" />
               </div>
               <div className="mt-3 space-y-1.5" aria-live="polite">
                 {matches.map((sailor) => (
@@ -402,7 +417,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                       <span className="min-w-0 flex-1"><span className="block truncate text-xs font-bold text-[var(--sp-harbour-shadow)]">{sailor.name}</span><span className="block truncate text-[10px] text-[var(--sp-slate-soft)]">{sailor.sailNumber} · {sailor.club}</span></span>
                     </div>
                     <div className="mt-2 grid grid-cols-2 gap-2">
-                      <button type="button" onClick={() => addSailor(sailor.id)} disabled={busyId === sailor.id} className="rounded-lg bg-[var(--sp-racing-orange)] px-2 py-1.5 text-[10px] font-bold text-white hover:opacity-95 disabled:opacity-50"><Plus className="mr-1 inline h-3 w-3" />Squad</button>
+                      <button type="button" onClick={() => addSailor(sailor.id)} disabled={busyId === sailor.id} className="sp-btn-primary rounded-lg px-2 py-1.5 text-[10px] disabled:opacity-50"><Plus className="mr-1 inline h-3 w-3" />Squad</button>
                       <button type="button" onClick={() => followSailor(sailor.id)} disabled={busyId === sailor.id} className="rounded-lg border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-2 py-1.5 text-[10px] font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] disabled:opacity-50">Follow</button>
                     </div>
                   </div>

@@ -28,7 +28,7 @@ export function CoachAccessRequestButton({
 
   if (state === "sent") {
     return (
-      <p className="inline-flex rounded-full border border-emerald-500/25 bg-emerald-500/10 px-5 py-2.5 text-xs font-bold text-emerald-300">
+      <p className="inline-flex rounded-full border border-[var(--sp-harbour-teal)]/25 bg-[var(--sp-aqua-mist)] px-5 py-2.5 text-xs font-bold text-[var(--sp-harbour-teal)]">
         Request sent — an admin will review it
       </p>
     );
@@ -40,11 +40,11 @@ export function CoachAccessRequestButton({
         type="button"
         disabled={state === "busy"}
         onClick={() => void requestAccess()}
-        className="inline-flex rounded-full bg-orange-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-50"
+        className="sp-btn-primary disabled:opacity-50"
       >
         {state === "busy" ? "Sending…" : "Request coach access"}
       </button>
-      {error && <p className="text-xs text-rose-400">{error}</p>}
+      {error && <p className="text-xs font-bold text-rose-700">{error}</p>}
     </div>
   );
 }
