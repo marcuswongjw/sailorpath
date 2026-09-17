@@ -64,46 +64,67 @@ export type CoachSquadDashboard = {
   period: { year: number; half: "Jan-Jun" | "Jul-Dec" };
 };
 
+export async function canAccessCoachSailor(
+  coachId: string,
+  sailorId: string
+): Promise<boolean> {
+  if (!coachId?.trim() || !sailorId?.trim()) return false;
+  const [squadMember] = await db
+    .select({ id: coachSquadMembers.id })
+    .from(coachSquadMembers)
+    .innerJoin(coachSquads, eq(coachSquadMembers.squadId, coachSquads.id))
+    .where(and(eq(coachSquads.coachId, coachId), eq(coachSquadMembers.sailorId, sailorId)))
+    .limit(1);
+
+  if (squadMember) return true;
+
+  const [followed] = await db
+    .select({ id: coachFollowedSailors.id })
+    .from(coachFollowedSailors)
+    .where(and(eq(coachFollowedSailors.coachId, coachId), eq(coachFollowedSailors.sailorId, sailorId)))
+    .limit(1);
+
+  return Boolean(followed);
+}
+
 export async function getCoachSquadDashboard(
   coachId: string
 ): Promise<CoachSquadDashboard> {
   const period = currentPeriodFromSgToday();
-  const [squad] = await db
-    .select({ id: coachSquads.id, name: coachSquads.name })
-    .from(coachSquads)
-    .where(eq(coachSquads.coachId, coachId))
-    .orderBy(asc(coachSquads.createdAt))
-    .limit(1);
+  const squad = await ensureCoachSquad(coachId).catch(() => null);
 
-  if (!squad) return { squad: null, members: [], following: [], updatedThrough: null, actionReviews: [], period };
-
-  const [rows, followedRows] = await Promise.all([db
-    .select({
-      memberId: coachSquadMembers.id,
-      sailorId: sailors.id,
-      name: sailors.name,
-      handle: sailors.handle,
-      sailNumber: sailors.sailNumber,
-      club: sailors.club,
-      avatarUrl: sailors.avatarUrl,
-    })
-    .from(coachSquadMembers)
-    .innerJoin(sailors, eq(coachSquadMembers.sailorId, sailors.id))
-    .where(eq(coachSquadMembers.squadId, squad.id))
-    .orderBy(asc(sailors.name)),
-  db.select({
-      memberId: coachFollowedSailors.id,
-      sailorId: sailors.id,
-      name: sailors.name,
-      handle: sailors.handle,
-      sailNumber: sailors.sailNumber,
-      club: sailors.club,
-      avatarUrl: sailors.avatarUrl,
-    })
-    .from(coachFollowedSailors)
-    .innerJoin(sailors, eq(coachFollowedSailors.sailorId, sailors.id))
-    .where(eq(coachFollowedSailors.coachId, coachId))
-    .orderBy(asc(sailors.name))]);
+  const [rows, followedRows] = await Promise.all([
+    squad
+      ? db
+          .select({
+            memberId: coachSquadMembers.id,
+            sailorId: sailors.id,
+            name: sailors.name,
+            handle: sailors.handle,
+            sailNumber: sailors.sailNumber,
+            club: sailors.club,
+            avatarUrl: sailors.avatarUrl,
+          })
+          .from(coachSquadMembers)
+          .innerJoin(sailors, eq(coachSquadMembers.sailorId, sailors.id))
+          .where(eq(coachSquadMembers.squadId, squad.id))
+          .orderBy(asc(sailors.name))
+      : Promise.resolve([]),
+    db
+      .select({
+        memberId: coachFollowedSailors.id,
+        sailorId: sailors.id,
+        name: sailors.name,
+        handle: sailors.handle,
+        sailNumber: sailors.sailNumber,
+        club: sailors.club,
+        avatarUrl: sailors.avatarUrl,
+      })
+      .from(coachFollowedSailors)
+      .innerJoin(sailors, eq(coachFollowedSailors.sailorId, sailors.id))
+      .where(eq(coachFollowedSailors.coachId, coachId))
+      .orderBy(asc(sailors.name)),
+  ]);
 
   if (!rows.length && !followedRows.length) return { squad, members: [], following: [], updatedThrough: null, actionReviews: [], period };
 

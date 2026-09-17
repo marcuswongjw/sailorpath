@@ -58,6 +58,30 @@ export default async function CoachToolsPage() {
     );
   }
 
-  const data = await getCoachSquadDashboard(auth.userId);
+  let data: Awaited<ReturnType<typeof getCoachSquadDashboard>> | null = null;
+  try {
+    data = await getCoachSquadDashboard(auth.userId);
+  } catch (error) {
+    console.error("Failed to load coach dashboard:", error);
+  }
+
+  if (!data) {
+    return (
+      <div className="mx-auto max-w-lg px-4 py-20 text-center">
+        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 shadow-xs space-y-4">
+          <h1 className="text-2xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">Unable to load squad</h1>
+          <p className="text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
+            We couldn&apos;t load your coach dashboard right now. Please refresh or try again in a few moments.
+          </p>
+          <div className="pt-2">
+            <Link href="/coach-tools" className="sp-btn-primary">
+              Retry
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return <CoachDashboard initialData={data} />;
 }

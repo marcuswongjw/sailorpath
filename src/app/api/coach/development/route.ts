@@ -1,23 +1,13 @@
 import { NextResponse } from "next/server";
-import { and, eq, or } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { db } from "@/db";
-import { coachDevelopmentRecords, coachFollowedSailors, coachSquadMembers, coachSquads } from "@/db/schema";
+import { coachDevelopmentRecords } from "@/db/schema";
 import { jsonError, requireCoach } from "@/lib/auth";
-import { getCoachSquadDashboard } from "@/lib/coachDashboard";
+import { canAccessCoachSailor, getCoachSquadDashboard } from "@/lib/coachDashboard";
 
 const TYPES = new Set(["observation", "goal", "attendance"]);
 const STATUSES = new Set(["active", "completed", "present", "absent", "planned"]);
 const isDate = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value);
-
-async function canAccess(coachId: string, sailorId: string) {
-  const [row] = await db.select({ squadId: coachSquadMembers.id, followedId: coachFollowedSailors.id })
-    .from(coachSquads)
-    .leftJoin(coachSquadMembers, and(eq(coachSquadMembers.squadId, coachSquads.id), eq(coachSquadMembers.sailorId, sailorId)))
-    .leftJoin(coachFollowedSailors, and(eq(coachFollowedSailors.coachId, coachId), eq(coachFollowedSailors.sailorId, sailorId)))
-    .where(and(eq(coachSquads.coachId, coachId), or(eq(coachSquadMembers.sailorId, sailorId), eq(coachFollowedSailors.sailorId, sailorId))))
-    .limit(1);
-  return Boolean(row?.squadId || row?.followedId);
-}
 
 export async function POST(request: Request) {
   try {
@@ -36,7 +26,7 @@ export async function POST(request: Request) {
     if (!sailorId || !TYPES.has(type) || !title || title.length > 160 || !isDate(recordDate) || (targetDate && !isDate(targetDate)) || !STATUSES.has(status) || (detail?.length || 0) > 4000) {
       return NextResponse.json({ error: "Check the record type, title, dates, and status" }, { status: 400 });
     }
-    if (!(await canAccess(auth.userId, sailorId))) return NextResponse.json({ error: "Sailor is not in your coach workspace" }, { status: 404 });
+    if (!(await canAccessCoachSailor(auth.userId, sailorId))) return NextResponse.json({ error: "Sailor is not in your coach workspace" }, { status: 404 });
     await db.insert(coachDevelopmentRecords).values({
       coachId: auth.userId, sailorId, type: type as "observation" | "goal" | "attendance",
       category, title, detail, recordDate, status, targetDate,

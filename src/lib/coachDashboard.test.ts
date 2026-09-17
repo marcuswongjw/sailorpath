@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { selectedScoreIndexes, silverProgressionSignal } from "@/lib/coachDashboard";
+import { canAccessCoachSailor, selectedScoreIndexes, silverProgressionSignal } from "@/lib/coachDashboard";
 
 describe("selectedScoreIndexes", () => {
   it("highlights exactly three occurrences when Best 3 contains duplicate scores", () => {
@@ -12,5 +12,13 @@ describe("silverProgressionSignal", () => {
     const signal = silverProgressionSignal(10, 100);
     expect(signal.label).toContain("Strong Gold progression");
     expect(signal.detail).toContain("not official");
+  });
+});
+
+describe("canAccessCoachSailor", () => {
+  it("rejects empty or whitespace-only IDs without querying the database", async () => {
+    expect(await canAccessCoachSailor("", "sailor-1")).toBe(false);
+    expect(await canAccessCoachSailor("coach-1", "")).toBe(false);
+    expect(await canAccessCoachSailor("   ", "sailor-1")).toBe(false);
   });
 });

@@ -368,16 +368,20 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                 <article key={member.id} className="grid gap-3 p-4 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-center">
                   <input type="checkbox" checked={selected.includes(member.sailorId)} onChange={() => toggleCompare(member.sailorId)}
                     aria-label={`Select ${member.name} for comparison`} className="h-4 w-4 accent-[var(--sp-racing-orange)]" />
-                  <button type="button" onClick={() => openSailor(member.sailorId)} className="min-w-0 text-left" aria-label={`Open ${member.name} details`}>
+                  <div className="min-w-0 text-left">
                     <div className="flex flex-wrap items-center gap-2">
-                      <Link href={`/${member.handle}`} className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">{member.name}</Link>
+                      <Link href={`/${member.handle}`} className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">
+                        {member.name}
+                      </Link>
                       {member.fleet && <span className={`rounded-full border px-2 py-0.5 text-[10px] font-bold ${fleetPillClass(member.fleet)}`}>{member.fleet} #{member.ranking}</span>}
                       {member.squadStatus && <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-charcoal-slate)]">{member.squadStatus}</span>}
                     </div>
-                    <p className="mt-1 text-[11px] text-[var(--sp-slate-soft)]">{member.sailNumber} · {member.club}{member.bestThreeOfFive != null ? ` · Best 3: ${member.bestThreeOfFive}` : ""}</p>
-                    {member.latestResult && <p className="mt-1 text-[11px] text-[var(--sp-charcoal-slate)]">Latest: {member.latestResult.regattaName} · #{member.latestResult.rank} of {member.latestResult.fleetSize}</p>}
-                    {member.recentMovement != null && <span className={`mt-1 inline-flex items-center gap-1 text-[10px] font-bold ${member.recentMovement > 0 ? "text-emerald-600" : member.recentMovement < 0 ? "text-rose-600" : "text-[var(--sp-slate-soft)]"}`}>{member.recentMovement > 0 ? <TrendingUp className="h-3 w-3" /> : member.recentMovement < 0 ? <TrendingDown className="h-3 w-3" /> : null}{member.recentMovement === 0 ? "Series rank unchanged" : `Series rank ${member.recentMovement > 0 ? "up" : "down"} ${Math.abs(member.recentMovement)}`}</span>}
-                  </button>
+                    <button type="button" onClick={() => openSailor(member.sailorId)} className="mt-1 block w-full text-left" aria-label={`Open ${member.name} details`}>
+                      <p className="text-[11px] text-[var(--sp-slate-soft)]">{member.sailNumber} · {member.club}{member.bestThreeOfFive != null ? ` · Best 3: ${member.bestThreeOfFive}` : ""}</p>
+                      {member.latestResult && <p className="mt-1 text-[11px] text-[var(--sp-charcoal-slate)]">Latest: {member.latestResult.regattaName} · #{member.latestResult.rank} of {member.latestResult.fleetSize}</p>}
+                      {member.recentMovement != null && <span className={`mt-1 inline-flex items-center gap-1 text-[10px] font-bold ${member.recentMovement > 0 ? "text-emerald-600" : member.recentMovement < 0 ? "text-rose-600" : "text-[var(--sp-slate-soft)]"}`}>{member.recentMovement > 0 ? <TrendingUp className="h-3 w-3" /> : member.recentMovement < 0 ? <TrendingDown className="h-3 w-3" /> : null}{member.recentMovement === 0 ? "Series rank unchanged" : `Series rank ${member.recentMovement > 0 ? "up" : "down"} ${Math.abs(member.recentMovement)}`}</span>}
+                    </button>
+                  </div>
                   <button type="button" onClick={() => removeSailor(member.sailorId)} disabled={busyId === member.sailorId}
                     aria-label={`Remove ${member.name} from squad`} className="justify-self-end rounded-lg p-2 text-[var(--sp-slate-soft)] hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50">
                     <Trash2 className="h-4 w-4" />
