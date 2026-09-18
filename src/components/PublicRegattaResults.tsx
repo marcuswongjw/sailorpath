@@ -43,12 +43,13 @@ function raceValueClass(race: OfficialRaceResultInput | undefined) {
 function MobileRaceScores({ races }: { races: OfficialRaceResultInput[] }) {
   if (races.length === 0) return null;
   return (
-    <details className="group rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
-      <summary className="cursor-pointer list-none px-3 py-2 text-[11px] font-semibold text-[var(--sp-harbour-teal)] marker:content-none">
+    <details open={races.length <= 8} className="group rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
+      <summary className="cursor-pointer list-none px-3 py-2 text-[11px] font-semibold text-[var(--sp-harbour-teal)] marker:content-none flex items-center justify-between">
         <span className="inline-flex items-center gap-1.5">
           <span aria-hidden className="transition-transform group-open:rotate-90">›</span>
-          {races.length} published race score{races.length === 1 ? "" : "s"}
+          <span>{races.length} published race score{races.length === 1 ? "" : "s"}</span>
         </span>
+        <span className="text-[10px] text-[var(--sp-slate-soft)] font-normal group-open:hidden">Tap to expand</span>
       </summary>
       <div className="grid grid-cols-3 gap-1.5 border-t border-[var(--sp-cool-veil)] p-2.5">
         {races.map((race) => (
@@ -67,7 +68,6 @@ function MobileRaceScores({ races }: { races: OfficialRaceResultInput[] }) {
 export function PublicRegattaResults({
   results,
   totalFleetSize,
-  raceCount,
   accent,
 }: Props) {
   const colors = accentClasses[accent];
@@ -76,8 +76,10 @@ export function PublicRegattaResults({
       Math.max(max, ...result.raceResults.map((race) => race.raceNumber), 0),
     0
   );
-  const visibleRaceCount = Math.max(Number(raceCount) || 0, importedRaceCount);
-  const raceNumbers = Array.from({ length: visibleRaceCount }, (_, index) => index + 1);
+  const hasRaceResults = importedRaceCount > 0;
+  const raceNumbers = hasRaceResults
+    ? Array.from({ length: importedRaceCount }, (_, index) => index + 1)
+    : [];
 
   return (
     <>
@@ -157,7 +159,7 @@ export function PublicRegattaResults({
       </div>
 
       <div className="hidden sm:block overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
-        <table className="w-full min-w-[1120px] text-left text-sm">
+        <table className={`w-full ${hasRaceResults ? "min-w-[1050px]" : "min-w-[680px]"} text-left text-sm`}>
           <thead className="bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-slate-soft)] font-semibold border-b border-[var(--sp-cool-veil)]">
             <tr>
               <th className="px-3 py-3 text-center">Rank</th>

@@ -1177,7 +1177,7 @@ export async function fetchServerTechno293Regattas(options?: {
     const endpoint = window.location?.origin
       ? `${window.location.origin}/api/techno293${q}`
       : `/api/techno293${q}`;
-    const res = await fetch(endpoint, { cache: "no-store" });
+    const res = await fetch(endpoint, { cache: "no-store", credentials: "include" });
     if (!res.ok) return null;
     const data = await res.json();
     if (Array.isArray(data?.regattas) && data.regattas.length > 0) {
@@ -1205,6 +1205,7 @@ export async function syncTechno293ToServer(
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ regattas }),
     });
     if (!res.ok) {
@@ -1231,6 +1232,7 @@ export async function deleteTechno293FromServer(
     const res = await fetch(endpoint, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ id }),
     });
     if (!res.ok) {

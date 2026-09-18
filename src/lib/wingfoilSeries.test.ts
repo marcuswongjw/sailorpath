@@ -390,4 +390,78 @@ describe("calculateWingfoilSeries with sw-monsoon", () => {
     expect(series.competitors[0].name).toBe("Racer Alpha");
     expect(series.competitors[0].nettScore).toBe(2);
   });
+
+  it("evaluates women division and awards women champion when constituted (>= 3 sailors)", () => {
+    const regattaWithWomen: WingfoilRegatta = {
+      id: "ne-monsoon-series-gp1-2026",
+      name: "2026 Northeast Monsoon Grand Prix 1 (Round 1 of 3)",
+      shortName: "NE Monsoon GP1",
+      dates: "10-11 Jan 2026",
+      venue: "ECP",
+      organizer: "SSF & WAS",
+      format: "Sprint Slalom",
+      status: "Completed",
+      scoringSystem: "Appendix A",
+      rulesNotes: "Round 1",
+      seriesName: "2026 Northeast Monsoon Grand Prix Series",
+      results: [
+        {
+          rank: 1,
+          name: "Male Champ",
+          sailNumber: "1",
+          gender: "M",
+          ageCategory: "Open",
+          schoolName: "",
+          club: "",
+          races: [{ score: 1 }, { score: 1 }],
+          grossScore: 2,
+          nettScore: 2,
+        },
+        {
+          rank: 2,
+          name: "Victoria Natasha Chew",
+          sailNumber: "2",
+          gender: "F",
+          ageCategory: "Open",
+          schoolName: "",
+          club: "",
+          races: [{ score: 2 }, { score: 2 }],
+          grossScore: 4,
+          nettScore: 4,
+        },
+        {
+          rank: 3,
+          name: "Kate En Rui Bateman",
+          sailNumber: "3",
+          gender: "F",
+          ageCategory: "U19",
+          schoolName: "",
+          club: "",
+          races: [{ score: 3 }, { score: 3 }],
+          grossScore: 6,
+          nettScore: 6,
+        },
+        {
+          rank: 4,
+          name: "Pandora Chew",
+          sailNumber: "4",
+          gender: "F",
+          ageCategory: "Master",
+          schoolName: "",
+          club: "",
+          races: [{ score: 4 }, { score: 4 }],
+          grossScore: 8,
+          nettScore: 8,
+        },
+      ],
+    };
+
+    const res = calculateWingfoilSeries([regattaWithWomen], "ne-monsoon");
+    const womenDiv = res.divisions.find((d) => d.division.id === "women");
+    expect(womenDiv).toBeDefined();
+    expect(womenDiv?.isConstituted).toBe(true);
+    expect(womenDiv?.competitorCount).toBe(3);
+    expect(womenDiv?.champion?.name).toBe("Victoria Natasha Chew");
+    expect(res.divisionChampions.women?.name).toBe("Victoria Natasha Chew");
+  });
 });

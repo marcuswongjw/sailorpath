@@ -57,4 +57,43 @@ describe("PublicRegattaResults", () => {
     expect(html).toContain("(78 DSQ)");
     expect(html).toContain('title="Discarded score"');
   });
+
+  it("does not render phantom race columns when no race-by-race results have been imported yet", () => {
+    const html = renderToStaticMarkup(
+      <PublicRegattaResults
+        accent="sky"
+        totalFleetSize={50}
+        raceCount={6}
+        results={[
+          {
+            resultId: "res-only-totals",
+            sailorId: "sailor-totals",
+            regattaId: "regatta-totals",
+            rank: 1,
+            nettScore: 10,
+            totalScore: 10,
+            isDns: false,
+            isOverseasCommitment: false,
+            sailorName: "Total Only Sailor",
+            sailNumber: "SGP 99",
+            handle: "total-only",
+            gender: "male",
+            sailorGender: "male",
+            birthYear: 2011,
+            dob: null,
+            nationality: "SGP",
+            sailorNationality: "SGP",
+            raceResults: [],
+          },
+        ]}
+      />
+    );
+
+    expect(html).not.toContain(">R1<");
+    expect(html).not.toContain(">R6<");
+    expect(html).not.toContain("published race score");
+    expect(html).toContain("Total Only Sailor");
+    expect(html).toContain("Total");
+    expect(html).toContain("Nett");
+  });
 });

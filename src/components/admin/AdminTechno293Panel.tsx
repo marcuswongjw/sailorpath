@@ -22,6 +22,7 @@ import {
   syncTechno293ToServer,
   deleteTechno293FromServer,
   sortTechno293Regattas,
+  mergeTechno293RegattaLists,
   type Techno293Regatta,
   type Techno293SailorResult,
   type Techno293RaceScore,
@@ -86,7 +87,11 @@ export function AdminTechno293Panel({
       if (!cancelled) {
         setIsSyncingServer(false);
         if (serverData && serverData.length > 0) {
-          setRegattas(sortTechno293Regattas(serverData));
+          const merged = mergeTechno293RegattaLists(
+            serverData,
+            loaded.length > 0 ? loaded : SINGAPORE_TECHNO293_REGATTAS
+          );
+          setRegattas(sortTechno293Regattas(merged));
           setLastSyncedAt(new Date());
         }
       }

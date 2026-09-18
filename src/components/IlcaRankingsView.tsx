@@ -202,7 +202,7 @@ export function IlcaRankingsView({
               </Link>
               {isLoggedIn && projectedSquad.length > 0 && (
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[11px] font-bold text-amber-300">
-                  <span>{projectedSquad.length} Projected NJTS</span>
+                  <span>{projectedSquad.length} Projected Nat Squad</span>
                 </span>
               )}
             </div>
@@ -568,7 +568,7 @@ export function IlcaRankingsView({
               {/* Projected Squad Footer in mobile card */}
               <div className="pt-2 border-t border-cool-veil flex items-center justify-between text-[11px]">
                 <span className="text-slate-soft text-[10px] font-bold uppercase tracking-wider">
-                  Proj. NJTS:
+                  Proj. Nat:
                 </span>
                 {isLoggedIn ? (
                   squadPick ? (

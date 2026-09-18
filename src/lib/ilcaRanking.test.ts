@@ -302,10 +302,10 @@ describe("computeIlcaRankings + squad", () => {
   });
 
   it("formats squadReasonLabel correctly", () => {
-    expect(squadReasonLabel("top2_overall")).toBe("NJTS (Overall)");
-    expect(squadReasonLabel("age16")).toBe("NJTS (Age 16)");
-    expect(squadReasonLabel("age15_or_under")).toBe("NJTS (≤15)");
-    expect(squadReasonLabel("fill_same_gender")).toBe("NJTS (Invited)");
+    expect(squadReasonLabel("top2_overall")).toBe("Nat (Overall)");
+    expect(squadReasonLabel("age16")).toBe("Nat (Age 16)");
+    expect(squadReasonLabel("age15_or_under")).toBe("Nat (≤15)");
+    expect(squadReasonLabel("fill_same_gender")).toBe("Nat (Invited)");
   });
 });
 

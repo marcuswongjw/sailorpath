@@ -35,6 +35,10 @@ export default async function OptimistRegattasPage() {
     );
   }
 
+  if (!all || all.length === 0) {
+    return <DbOffline message="Database temporarily offline or connecting" />;
+  }
+
   const regattas = all.filter((r) => isOptimistClass(r.boatClass));
   return (
     <RegattasListClient

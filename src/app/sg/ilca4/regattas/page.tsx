@@ -18,7 +18,11 @@ export default async function Ilca4RegattasPage() {
 
   try {
     const all = await getCachedPublicRegattas();
-    regattas = all.filter((r) => isIlcaSeriesClass(r.boatClass, "ILCA 4"));
+    if (!all || all.length === 0) {
+      errorMsg = "Database temporarily offline or connecting";
+    } else {
+      regattas = all.filter((r) => isIlcaSeriesClass(r.boatClass, "ILCA 4"));
+    }
   } catch (e) {
     errorMsg = e instanceof DbUnavailableError ? e.message : "DB error";
   }

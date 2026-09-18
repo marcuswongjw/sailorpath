@@ -52,7 +52,7 @@ export async function GET(req: Request) {
       for (const def of SINGAPORE_TECHNO293_REGATTAS) {
         if (rowMap.has(def.id)) {
           merged.push(rowMap.get(def.id)!);
-        } else if (!includeAll) {
+        } else {
           merged.push(def);
         }
         visited.add(def.id);

@@ -23,6 +23,7 @@ import {
   deleteWingfoilFromServer,
   sortWingfoilRegattas,
   recalculateScoreboard,
+  mergeWingfoilRegattaLists,
   WINGFOIL_CATEGORIES,
   normalizeWingfoilCategory,
   type WingfoilRegatta,
@@ -92,7 +93,11 @@ export function AdminWingfoilPanel({
       if (!cancelled) {
         setIsSyncingServer(false);
         if (serverData && serverData.length > 0) {
-          setRegattas(sortWingfoilRegattas(serverData));
+          const merged = mergeWingfoilRegattaLists(
+            serverData,
+            loaded.length > 0 ? loaded : SINGAPORE_WINGFOIL_REGATTAS
+          );
+          setRegattas(sortWingfoilRegattas(merged));
           setLastSyncedAt(new Date());
         }
       }

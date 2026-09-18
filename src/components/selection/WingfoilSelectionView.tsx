@@ -11,7 +11,6 @@ import {
   FileText,
   DollarSign,
   Award,
-  ChevronRight,
 } from "lucide-react";
 import { WINGFOIL_FUNDING_POLICY } from "@/lib/wingfoilSelection";
 

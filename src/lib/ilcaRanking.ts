@@ -396,15 +396,15 @@ export function reRankIlcaWithExcluded(
 export function squadReasonLabel(reason: SquadPickReason): string {
   switch (reason) {
     case "top2_overall":
-      return "NJTS (Overall)";
+      return "Nat (Overall)";
     case "age16":
-      return "NJTS (Age 16)";
+      return "Nat (Age 16)";
     case "age15_or_under":
-      return "NJTS (≤15)";
+      return "Nat (≤15)";
     case "fill_same_gender":
-      return "NJTS (Invited)";
+      return "Nat (Invited)";
     default:
-      return "NJTS";
+      return "Nat";
   }
 }
 

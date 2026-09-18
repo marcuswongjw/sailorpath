@@ -1877,7 +1877,7 @@ export async function fetchServerWingfoilRegattas(options?: {
     const endpoint = window.location?.origin
       ? `${window.location.origin}/api/wingfoil${q}`
       : `/api/wingfoil${q}`;
-    const res = await fetch(endpoint, { cache: "no-store" });
+    const res = await fetch(endpoint, { cache: "no-store", credentials: "include" });
     if (!res.ok) return null;
     const data = await res.json();
     if (Array.isArray(data?.regattas) && data.regattas.length > 0) {
@@ -1910,6 +1910,7 @@ export async function syncWingfoilToServer(
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ regattas }),
     });
     if (!res.ok) {
@@ -1939,6 +1940,7 @@ export async function deleteWingfoilFromServer(
     const res = await fetch(endpoint, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ id }),
     });
     if (!res.ok) {

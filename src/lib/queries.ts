@@ -1067,7 +1067,14 @@ export function latestRankingRegattaIdForFleet(
   */
 export const getCachedPublicRegattas = unstable_cache(
   async (): Promise<RegattaRecord[]> => {
-    return listRegattas();
+    try {
+      return await listRegattas();
+    } catch (e) {
+      if (process.env.NODE_ENV !== "test") {
+        console.warn("[getCachedPublicRegattas] DB unavailable, returning empty list:", e);
+      }
+      return [];
+    }
   },
   ["public-regattas-list-v2"],
   { revalidate: 120, tags: [CACHE_TAG_PUBLIC_REGATTAS] }

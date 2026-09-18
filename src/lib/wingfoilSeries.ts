@@ -59,6 +59,7 @@ export type RoundSummary = {
 
 export type SeriesDivisionId =
   | "open"
+  | "women"
   | "u16"
   | "u19"
   | "masters"
@@ -73,7 +74,7 @@ export type SeriesDivisionConfig = {
 
 /**
  * Official Wing Foil classes / divisions:
- * Open, U16, U19, Masters, Grand Masters.
+ * Open, Women, U16, U19, Masters, Grand Masters.
  */
 export const OFFICIAL_WINGFOIL_DIVISIONS: SeriesDivisionConfig[] = [
   {
@@ -81,6 +82,12 @@ export const OFFICIAL_WINGFOIL_DIVISIONS: SeriesDivisionConfig[] = [
     name: "Wing Foil Open division",
     shortLabel: "Open",
     subTitle: "Open to all competitors",
+  },
+  {
+    id: "women",
+    name: "Wing Foil Women division",
+    shortLabel: "Women",
+    subTitle: "Female competitors",
   },
   {
     id: "u16",
@@ -172,6 +179,15 @@ export function isSailorInDivision(
     rawCat.includes("u192");
 
   switch (divisionId) {
+    case "women": {
+      const g = (sailor.gender || "").toUpperCase().trim();
+      return (
+        g === "F" ||
+        g === "FEMALE" ||
+        rawCat.includes("women") ||
+        rawCat.includes("female")
+      );
+    }
     case "u16":
       return isU16;
     case "u19":
@@ -562,6 +578,7 @@ export function calculateWingfoilSeries(
     divisions: divisionStandings,
     divisionChampions: {
       open: getDivChamp("open"),
+      women: getDivChamp("women"),
       u16: getDivChamp("u16"),
       u19: getDivChamp("u19"),
       masters: getDivChamp("masters"),

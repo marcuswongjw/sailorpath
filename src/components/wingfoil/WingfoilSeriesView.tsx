@@ -591,11 +591,6 @@ export function WingfoilSeriesView({
 
                   <td className="px-4 py-3">
                     <p className="font-bold text-[var(--sp-harbour-shadow)]">{sailor.name}</p>
-                    <p className="text-[10px] text-[var(--sp-slate-soft)] truncate">
-                      {sailor.roundsAttended.length === series.rounds.length
-                        ? "All rounds attended"
-                        : `${sailor.roundsAttended.length} of ${series.rounds.length} rounds`}
-                    </p>
                   </td>
 
                   <td className="px-2 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
@@ -707,11 +702,7 @@ export function WingfoilSeriesView({
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-[var(--sp-cool-veil)] flex items-center justify-between">
-                <span className="text-[11px] text-[var(--sp-slate-soft)]">
-                  {sailor.roundsAttended.length} of {series.rounds.length} rounds attended
-                </span>
-
+              <div className="pt-2 border-t border-[var(--sp-cool-veil)] flex items-center justify-end">
                 <button
                   type="button"
                   onClick={() => setExpandedSailor(isExpanded ? null : sailor.name)}
