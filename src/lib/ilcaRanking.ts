@@ -354,6 +354,60 @@ export function computeIlcaRankings(
   return ranked.map((r, i) => ({ ...r, rank: i + 1 }));
 }
 
+/**
+ * Re-ranks ILCA sailors with specified regattas excluded (what-if scenario).
+ * Keeps eventScores intact for display, but re-evaluates Best 3 high points
+ * and re-sorts according to standard ILCA tie-break rules.
+ */
+export function reRankIlcaWithExcluded(
+  ranked: IlcaRankedSailor[],
+  excludedRegattaIds: Set<string>
+): IlcaRankedSailor[] {
+  if (excludedRegattaIds.size === 0) return ranked;
+
+  const next = ranked.map((s) => {
+    const keptScores = (s.eventScores || []).filter(
+      (ev) => !excludedRegattaIds.has(ev.regattaId)
+    );
+    const { bestThree, total } = bestThreeHighPoints(
+      keptScores.map((ev) => ev.points)
+    );
+    return {
+      ...s,
+      bestThreePoints: bestThree,
+      totalPoints: total,
+    };
+  });
+
+  next.sort((a, b) => {
+    if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
+    // Tie-break: better best-three sequence
+    for (let i = 0; i < 3; i++) {
+      const da = a.bestThreePoints[i] ?? 0;
+      const db = b.bestThreePoints[i] ?? 0;
+      if (db !== da) return db - da;
+    }
+    return a.name.localeCompare(b.name);
+  });
+
+  return next.map((r, i) => ({ ...r, rank: i + 1 }));
+}
+
+export function squadReasonLabel(reason: SquadPickReason): string {
+  switch (reason) {
+    case "top2_overall":
+      return "NJTS (Overall)";
+    case "age16":
+      return "NJTS (Age 16)";
+    case "age15_or_under":
+      return "NJTS (≤15)";
+    case "fill_same_gender":
+      return "NJTS (Invited)";
+    default:
+      return "NJTS";
+  }
+}
+
 export type IlcaIntakeKind = "july" | "january";
 
 /** Ranking cutoff + intake year for squad selection. */

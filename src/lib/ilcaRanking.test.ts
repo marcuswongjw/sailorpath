@@ -9,6 +9,8 @@ import {
   ilcaRankingRegattas,
   ilcaSquadCutoff,
   selectIlca4NationalSquad,
+  reRankIlcaWithExcluded,
+  squadReasonLabel,
   ILCA_MIN_RACES_FOR_RANKING,
 } from "./ilcaRanking";
 
@@ -280,4 +282,30 @@ describe("computeIlcaRankings + squad", () => {
       true
     );
   });
+
+  it("re-ranks correctly when a regatta is excluded", () => {
+    const ranked = computeIlcaRankings(
+      "ILCA 4",
+      "2026-06-30",
+      sailors,
+      regattas,
+      results,
+      { intakeYear: 2026, restrictToNationalList: false }
+    );
+    // Exclude r1 (where m1 got 10 points)
+    const reranked = reRankIlcaWithExcluded(ranked, new Set(["r1"]));
+    expect(reranked).toBeDefined();
+    const m1 = reranked.find((r) => r.sailorId === "m1");
+    // m1 had r1=10, r2=10, r3=10 (total 30). Excluding r1 leaves r2=10, r3=10 (total 20)
+    expect(m1?.totalPoints).toBe(20);
+    expect(m1?.bestThreePoints).toEqual([10, 10, 0]);
+  });
+
+  it("formats squadReasonLabel correctly", () => {
+    expect(squadReasonLabel("top2_overall")).toBe("NJTS (Overall)");
+    expect(squadReasonLabel("age16")).toBe("NJTS (Age 16)");
+    expect(squadReasonLabel("age15_or_under")).toBe("NJTS (≤15)");
+    expect(squadReasonLabel("fill_same_gender")).toBe("NJTS (Invited)");
+  });
 });
+

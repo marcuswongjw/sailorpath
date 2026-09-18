@@ -119,6 +119,16 @@ export function SiteHeader() {
         ILCA 4 standings
       </Link>
       <Link
+        href="/sg/ilca4/selection"
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-sky-600 dark:text-sky-400 hover:bg-sailcloth hover:text-harbour transition-colors"
+      >
+        Selection trials &amp; policies
+      </Link>
+      <Link
         href="/sg/ilca4/regattas"
         onClick={() => {
           setMobileOpen(false);
@@ -141,6 +151,16 @@ export function SiteHeader() {
         className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
       >
         WingFoil standings
+      </Link>
+      <Link
+        href="/sg/wingfoil/selection"
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-teal-700 dark:text-teal-400 hover:bg-sailcloth hover:text-harbour transition-colors"
+      >
+        Funding &amp; selection policy
       </Link>
       <hr className="my-1.5 border-cool-veil" />
       <p className="px-3.5 pb-1 text-[9px] font-bold uppercase tracking-wider text-slate-soft">
@@ -447,6 +467,13 @@ export function SiteHeader() {
               ILCA 4 standings
             </Link>
             <Link
+              href="/sg/ilca4/selection"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-racing-mist hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              Selection trials &amp; policies
+            </Link>
+            <Link
               href="/sg/ilca4/regattas"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
@@ -461,7 +488,14 @@ export function SiteHeader() {
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
-              WingFoil Racing
+              WingFoil standings
+            </Link>
+            <Link
+              href="/sg/wingfoil/selection"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-racing-mist hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              Funding &amp; selection policy
             </Link>
             <p className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
               Techno 293

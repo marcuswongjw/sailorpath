@@ -5,12 +5,16 @@ import Link from "next/link";
 import {
   type IlcaIntakeKind,
   type IlcaRankedSailor,
+  reRankIlcaWithExcluded,
+  selectIlca4NationalSquad,
+  squadReasonLabel,
 } from "@/lib/ilcaRanking";
-import { Trophy, Calendar, RefreshCw, Filter } from "lucide-react";
+import { Trophy, Calendar, RefreshCw, Filter, RotateCcw, Lock } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 import { bestThreeSelectedIndexes } from "@/lib/bestThreeSelection";
 import { mobileRegattaBadge } from "@/components/FleetRankingsView";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
+import { useAccountOptional } from "@/components/AccountProvider";
 
 const ILCA_INTAKE_OPTIONS: Array<{
   kind: IlcaIntakeKind;
@@ -56,6 +60,9 @@ export function IlcaRankingsView({
 }: Props) {
   const now = new Date();
   const y = now.getFullYear();
+  const acct = useAccountOptional();
+  const isLoggedIn = Boolean(acct?.email);
+
   const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(initialIntakeKind);
   const [intakeYear, setIntakeYear] = useState(initialIntakeYear);
   const [ranked, setRanked] = useState(initialRanked);
@@ -63,6 +70,16 @@ export function IlcaRankingsView({
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [excluded, setExcluded] = useState<Set<string>>(new Set());
+
+  const toggleExclude = (regattaId: string) => {
+    setExcluded((prev) => {
+      const next = new Set(prev);
+      if (next.has(regattaId)) next.delete(regattaId);
+      else next.add(regattaId);
+      return next;
+    });
+  };
 
   const loadBoard = useCallback(async (kind: IlcaIntakeKind, year: number) => {
     setLoading(true);
@@ -80,6 +97,7 @@ export function IlcaRankingsView({
       };
       if (!res.ok) throw new Error(data.error || "Could not load rankings");
       setRanked(Array.isArray(data.ranked) ? data.ranked : []);
+      setExcluded(new Set());
       if (data.asOf) setAsOf(data.asOf);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not load rankings");
@@ -88,10 +106,23 @@ export function IlcaRankingsView({
     }
   }, []);
 
+  const rankingBase = useMemo(() => {
+    if (excluded.size === 0) return ranked;
+    return reRankIlcaWithExcluded(ranked, excluded);
+  }, [ranked, excluded]);
+
+  const projectedSquad = useMemo(() => {
+    return selectIlca4NationalSquad(rankingBase);
+  }, [rankingBase]);
+
+  const projectedSquadMap = useMemo(() => {
+    return new Map(projectedSquad.map((s) => [s.sailorId, s]));
+  }, [projectedSquad]);
+
   const filtered = useMemo(() => {
-    if (genderFilter === "all") return ranked;
-    return ranked.filter((r) => r.gender === genderFilter);
-  }, [ranked, genderFilter]);
+    if (genderFilter === "all") return rankingBase;
+    return rankingBase.filter((r) => r.gender === genderFilter);
+  }, [rankingBase, genderFilter]);
 
   const displayRanked = useMemo(() => {
     return filtered.map((r, i) => ({ ...r, displayRank: i + 1 }));
@@ -114,6 +145,17 @@ export function IlcaRankingsView({
       idx,
     }));
   }, [ranked]);
+
+  const excludedIndexes = useMemo(() => {
+    const set = new Set<number>();
+    eventSlots.forEach((slot, idx) => {
+      if (excluded.has(slot.regattaId)) {
+        set.add(idx);
+      }
+    });
+    return set;
+  }, [eventSlots, excluded]);
+
   const latestResultDate = useMemo(
     () =>
       eventSlots
@@ -148,6 +190,22 @@ export function IlcaRankingsView({
               Best 3 of last 5 · highlighted scores are selected · 1st = fleet
               size pts · * = DNS (0 pts)
             </p>
+            <div className="mt-2.5 flex flex-wrap items-center gap-2">
+              <Link
+                href="/sg/ilca4/selection"
+                prefetch
+                className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-[11px] font-bold text-sky-300 hover:bg-sky-500/20 transition-colors"
+              >
+                <Trophy className="h-3 w-3 text-sky-400" />
+                <span>Selection trials &amp; NJTS policy</span>
+                <span>→</span>
+              </Link>
+              {isLoggedIn && projectedSquad.length > 0 && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[11px] font-bold text-amber-300">
+                  <span>{projectedSquad.length} Projected NJTS</span>
+                </span>
+              )}
+            </div>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 w-full lg:w-auto min-w-0">
@@ -224,48 +282,146 @@ export function IlcaRankingsView({
 
       {genderFilter !== "all" && (
         <p className="text-[11px] text-amber-200/90 font-semibold no-print">
-          Showing {displayRanked.length} of {ranked.length} sailors ·{" "}
+          Showing {displayRanked.length} of {rankingBase.length} sailors ·{" "}
           {genderFilter === "M" ? "Male" : "Female"}. Rank # restarts within
           this filter.
         </p>
       )}
 
+      {/* Scoring events & what-if regatta exclusion toggles */}
       {eventSlots.length > 0 && (
-        <div className="rounded-xl border border-cool-veil bg-warm-white px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0 shadow-sm">
-          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-            Scoring events — R1 oldest · R{eventSlots.length} newest (last{" "}
-            {eventSlots.length} ranking regattas)
-          </p>
-          <div className="grid grid-cols-5 gap-1 sm:gap-2 w-full min-w-0">
-            {eventSlots.map((ev, idx) => (
-              <div
-                key={ev.regattaId}
-                className="min-w-0 rounded-lg border border-cool-veil bg-sailcloth px-1 sm:px-2.5 py-1.5 sm:py-2 text-center"
-                title={`${ev.regattaName} · ${ev.date} · fleet ${ev.fleetSize}`}
-              >
-                <p className="text-[9px] sm:text-[10px] font-black text-sky-400">
-                  R{idx + 1}
+        <div className="w-full max-w-full min-w-0 no-print">
+          <div className="rounded-xl border border-cool-veil bg-warm-white px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 min-w-0">
+              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                Scoring events — R1 oldest · R{eventSlots.length} newest (last{" "}
+                {eventSlots.length} ranking regattas)
+              </p>
+              <div className="flex items-center gap-2 min-w-0 flex-wrap">
+                <p className="text-[10px] text-slate-500 font-semibold hidden md:block">
+                  Uncheck a regatta to exclude it from Best 3 of 5
                 </p>
-                <p className="text-[7px] sm:text-[11px] font-semibold text-slate-200 leading-tight break-words">
-                  {regattaDisplayName(ev.regattaName, idx)}
-                </p>
-                <p className="text-[7px] sm:text-[9px] text-slate-500 mt-0.5 tabular-nums">
-                  {ev.date.slice(5)} · n={ev.fleetSize}
-                </p>
+                {excluded.size > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setExcluded(new Set())}
+                    className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-200 shrink-0 cursor-pointer hover:bg-amber-500/20 transition-colors"
+                  >
+                    <RotateCcw className="h-3 w-3" />
+                    Reset ({excluded.size})
+                  </button>
+                )}
               </div>
-            ))}
-            {Array.from({ length: Math.max(0, 5 - eventSlots.length) }).map(
-              (_, i) => (
-                <div
-                  key={`empty-${i}`}
-                  className="min-w-0 rounded-lg border border-cool-veil bg-sailcloth px-1 py-1.5 text-center opacity-40"
-                >
-                  <p className="text-[9px] font-black text-slate-600">
-                    R{eventSlots.length + i + 1}
-                  </p>
-                  <p className="text-[8px] text-slate-600">—</p>
-                </div>
-              )
+            </div>
+
+            {/* Mobile: Tap button strip */}
+            <div className="md:hidden w-full min-w-0 space-y-1.5">
+              <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">
+                  Tap event to include/exclude
+                </span>
+                {excluded.size > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setExcluded(new Set())}
+                    className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-300 hover:text-amber-200"
+                  >
+                    <RotateCcw className="h-2.5 w-2.5" />
+                    Reset ({excluded.size})
+                  </button>
+                )}
+              </div>
+              <div className="grid grid-cols-5 gap-1 w-full min-w-0">
+                {eventSlots.map((ev, idx) => {
+                  const off = excluded.has(ev.regattaId);
+                  const badge = mobileRegattaBadge(ev.regattaName, idx);
+                  return (
+                    <button
+                      key={ev.regattaId}
+                      type="button"
+                      onClick={() => toggleExclude(ev.regattaId)}
+                      className={`min-w-0 w-full rounded-lg border px-1 py-1.5 text-center transition-all cursor-pointer active:scale-95 ${
+                        off
+                          ? "bg-rose-950/30 border-rose-500/40 text-rose-300 opacity-60 line-through"
+                          : "bg-sailcloth border-cool-veil text-charcoal"
+                      }`}
+                      title={`${off ? "Include" : "Exclude"} ${ev.regattaName}`}
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        <span className="text-[9px] font-black text-sky-400">
+                          R{idx + 1}
+                        </span>
+                      </div>
+                      <p className="text-[10px] font-bold truncate leading-tight mt-0.5">
+                        {badge}
+                      </p>
+                      {off && (
+                        <p className="text-[8px] font-extrabold text-rose-400 uppercase tracking-tighter mt-0.5 no-underline">
+                          EXCL
+                        </p>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Desktop: Checkbox grid */}
+            <div className="hidden md:grid grid-cols-5 gap-2">
+              {eventSlots.map((ev, idx) => {
+                const off = excluded.has(ev.regattaId);
+                return (
+                  <label
+                    key={ev.regattaId}
+                    className={`rounded-lg border px-2.5 py-2 min-h-[3.25rem] flex flex-col gap-1 transition-all cursor-pointer hover:border-sky-500/30 ${
+                      off
+                        ? "bg-slate-900/80 border-rose-500/40 opacity-60"
+                        : "bg-sailcloth border-cool-veil"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-1">
+                      <p className="text-[10px] font-black text-sky-400">R{idx + 1}</p>
+                      <input
+                        type="checkbox"
+                        checked={!off}
+                        onChange={() => toggleExclude(ev.regattaId)}
+                        className="mt-0.5 h-3.5 w-3.5 rounded border-slate-600 bg-slate-900 text-sky-600 focus:ring-sky-500 cursor-pointer"
+                        title={off ? "Include in Best 3 of 5" : "Exclude from Best 3 of 5"}
+                      />
+                    </div>
+                    <p
+                      className="text-[11px] font-semibold text-charcoal leading-snug line-clamp-2"
+                      title={`${ev.regattaName} · ${ev.date} · fleet ${ev.fleetSize}`}
+                    >
+                      {regattaDisplayName(ev.regattaName, idx)}
+                    </p>
+                    <p className="text-[9px] text-slate-soft tabular-nums">
+                      {ev.date.slice(5)} · n={ev.fleetSize}
+                    </p>
+                  </label>
+                );
+              })}
+              {Array.from({ length: Math.max(0, 5 - eventSlots.length) }).map(
+                (_, i) => (
+                  <div
+                    key={`empty-${i}`}
+                    className="min-w-0 rounded-lg border border-cool-veil bg-sailcloth px-1 py-1.5 text-center opacity-40"
+                  >
+                    <p className="text-[9px] font-black text-slate-600">
+                      R{eventSlots.length + i + 1}
+                    </p>
+                    <p className="text-[8px] text-slate-600">—</p>
+                  </div>
+                )
+              )}
+            </div>
+
+            {excluded.size > 0 && (
+              <p className="text-[11px] text-amber-700 dark:text-amber-200/90 font-semibold">
+                Viewing what-if ranking: {excluded.size} regatta
+                {excluded.size === 1 ? "" : "s"} excluded · Best 3 of remaining
+                scores. Current standings return when you reset.
+              </p>
             )}
           </div>
         </div>
@@ -279,13 +435,15 @@ export function IlcaRankingsView({
         </p>
       )}
 
+      {/* Mobile Card List */}
       <div className="md:hidden space-y-2.5 no-print w-full max-w-full min-w-0">
         {displayRanked.map((s) => {
           const handle = s.handle;
           const selectedIndexes = bestThreeSelectedIndexes(
             eventSlots.map((event) => pointsFor(s, event.regattaId).points),
-            { higherIsBetter: true }
+            { higherIsBetter: true, excludedIndexes }
           );
+          const squadPick = projectedSquadMap.get(s.sailorId);
           return (
             <div
               key={s.sailorId}
@@ -302,29 +460,31 @@ export function IlcaRankingsView({
                     {handle ? (
                       <Link
                         href={`/${handle}`}
-                        className="font-bold text-white hover:text-sky-300 text-[15px] leading-snug break-words min-w-0"
+                        className="font-bold text-charcoal hover:text-harbour text-[15px] leading-snug break-words min-w-0"
                       >
                         {s.name}
                       </Link>
                     ) : (
-                      <span className="font-bold text-white text-[15px]">
+                      <span className="font-bold text-charcoal text-[15px]">
                         {s.name}
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-slate-500 mt-1">
+                  <p className="text-[11px] text-slate-soft mt-1">
                     {s.gender || "—"} · Born {s.birthYear ?? "—"}
                   </p>
                 </div>
                 <div className="text-right shrink-0 pl-1">
-                  <p className="text-[9px] text-slate-500 uppercase font-bold tracking-wide">
+                  <p className="text-[9px] text-slate-soft uppercase font-bold tracking-wide">
                     Best 3
                   </p>
-                  <p className="font-black text-white text-lg tabular-nums leading-none mt-0.5">
+                  <p className="font-black text-charcoal text-lg tabular-nums leading-none mt-0.5">
                     {s.totalPoints}
                   </p>
                 </div>
               </div>
+
+              {/* Regatta Scores Strip */}
               <div className="grid grid-cols-5 gap-1.5 w-full min-w-0">
                 {Array.from({ length: 5 }).map((_, idx) => {
                   const ev = eventSlots[idx];
@@ -332,7 +492,7 @@ export function IlcaRankingsView({
                     return (
                       <div
                         key={`pad-${idx}`}
-                        className="min-w-0 rounded-lg border border-white/5 bg-slate-950/30 px-1 py-1.5 flex flex-col justify-between text-center opacity-40"
+                        className="min-w-0 rounded-lg border border-cool-veil bg-sailcloth/30 px-1 py-1.5 flex flex-col justify-between text-center opacity-40"
                       >
                         <p className="text-[8px] text-slate-600 font-black">
                           R{idx + 1}
@@ -342,34 +502,37 @@ export function IlcaRankingsView({
                       </div>
                     );
                   }
+                  const isRegattaExcluded = excluded.has(ev.regattaId);
                   const { points, isDns } = pointsFor(s, ev.regattaId);
                   const selected = selectedIndexes.has(idx);
                   const badge = mobileRegattaBadge(ev.regattaName, idx);
                   const hasScore = points != null && Number.isFinite(points);
-                  const isCounted = selected && hasScore;
-                  const isDropped = !selected && hasScore;
+                  const isCounted = selected && hasScore && !isRegattaExcluded;
+                  const isDropped = (!selected || isRegattaExcluded) && hasScore;
                   return (
                     <div
                       key={ev.regattaId}
                       data-best-three-selected={selected || undefined}
                       className={`min-w-0 rounded-lg border px-1 py-1.5 flex flex-col justify-between text-center transition-all ${
-                        isCounted
-                          ? "border-sky-400/60 bg-sky-500/20 ring-1 ring-sky-500/40 shadow-sm"
-                          : isDropped
-                            ? "border-white/5 bg-white/[0.02] opacity-70"
-                            : "border-white/5 bg-white/[0.03]"
+                        isRegattaExcluded
+                          ? "border-rose-500/20 bg-rose-500/5 opacity-50"
+                          : isCounted
+                            ? "border-sky-400/60 bg-sky-500/20 ring-1 ring-sky-500/40 shadow-sm"
+                            : isDropped
+                              ? "border-cool-veil bg-sailcloth/40 opacity-70"
+                              : "border-cool-veil bg-sailcloth"
                       }`}
-                      title={`${ev.regattaName}${selected ? " · counts toward Best 3 of 5" : ""}`}
+                      title={`${ev.regattaName}${selected ? " · counts toward Best 3 of 5" : ""}${isRegattaExcluded ? " (regatta excluded)" : ""}`}
                     >
                       <div className="flex items-center justify-center gap-0.5 text-[8px] leading-tight font-bold truncate">
                         <span className="text-sky-400/90 font-black">R{idx + 1}</span>
                         <span className="text-slate-500">·</span>
-                        <span className="text-slate-300 truncate">{badge}</span>
+                        <span className="text-slate-soft truncate">{badge}</span>
                       </div>
 
                       <div className={`my-0.5 text-[13px] font-mono tabular-nums leading-tight ${
                         isCounted
-                          ? "text-white font-black text-[14px]"
+                          ? "text-charcoal font-black text-[14px]"
                           : isDropped
                             ? "text-slate-400 font-semibold line-through decoration-slate-500/60"
                             : "text-slate-500 font-medium"
@@ -379,8 +542,12 @@ export function IlcaRankingsView({
                       </div>
 
                       <div>
-                        {isCounted ? (
-                          <span className="inline-flex items-center justify-center text-[7.5px] font-black uppercase tracking-wider text-sky-200 bg-sky-500/30 border border-sky-400/30 rounded px-1 py-0.5 leading-none w-full">
+                        {isRegattaExcluded ? (
+                          <span className="inline-block text-[7.5px] font-bold uppercase tracking-wider text-rose-500 leading-none py-0.5">
+                            Excl
+                          </span>
+                        ) : isCounted ? (
+                          <span className="inline-flex items-center justify-center text-[7.5px] font-black uppercase tracking-wider text-sky-700 dark:text-sky-200 bg-sky-500/30 border border-sky-400/30 rounded px-1 py-0.5 leading-none w-full">
                             ★ Count
                           </span>
                         ) : isDropped ? (
@@ -397,14 +564,39 @@ export function IlcaRankingsView({
                   );
                 })}
               </div>
+
+              {/* Projected Squad Footer in mobile card */}
+              <div className="pt-2 border-t border-cool-veil flex items-center justify-between text-[11px]">
+                <span className="text-slate-soft text-[10px] font-bold uppercase tracking-wider">
+                  Proj. NJTS:
+                </span>
+                {isLoggedIn ? (
+                  squadPick ? (
+                    <span className="inline-flex items-center rounded-full bg-amber-500/15 border border-amber-400/30 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-300">
+                      {squadReasonLabel(squadPick.reason)}
+                    </span>
+                  ) : (
+                    <span className="text-slate-soft/60 text-[11px]">—</span>
+                  )
+                ) : (
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-1 text-[10px] text-sky-600 dark:text-sky-400 font-semibold hover:underline"
+                  >
+                    <Lock className="h-2.5 w-2.5" />
+                    Sign in to view
+                  </Link>
+                )}
+              </div>
             </div>
           );
         })}
       </div>
 
+      {/* Desktop Table View */}
       <div className="hidden md:block rounded-2xl border border-cool-veil bg-warm-white overflow-hidden w-full max-w-full min-w-0">
         <div className="overflow-x-auto max-w-full">
-          <table className="w-full text-left text-sm min-w-[720px] border-collapse">
+          <table className="w-full text-left text-sm min-w-[760px] border-collapse">
             <thead className="text-[10px] text-slate-400 uppercase tracking-wider">
               <tr>
                 <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 w-12 bg-aqua-mist border-b border-cool-veil">
@@ -421,20 +613,21 @@ export function IlcaRankingsView({
                 </th>
                 {Array.from({ length: 5 }).map((_, idx) => {
                   const ev = eventSlots[idx];
+                  const off = ev ? excluded.has(ev.regattaId) : false;
                   return (
                     <th
                       key={ev?.regattaId || `r${idx}`}
-                      className="sticky top-0 z-20 px-2.5 py-2.5 text-center bg-aqua-mist border-b border-cool-veil min-w-[7.5rem] max-w-[12rem]"
+                      className={`sticky top-0 z-20 px-2.5 py-2.5 text-center bg-aqua-mist border-b border-cool-veil min-w-[7.5rem] max-w-[12rem] ${off ? "opacity-50" : ""}`}
                       title={
                         ev
-                          ? `${ev.regattaName} · ${ev.date} · fleet ${ev.fleetSize}`
+                          ? `${ev.regattaName} · ${ev.date} · fleet ${ev.fleetSize}${off ? " (Excluded)" : ""}`
                           : `R${idx + 1}`
                       }
                     >
                       <span className="block text-sky-400 font-black normal-case tracking-normal">
-                        R{idx + 1}
+                        R{idx + 1} {off && <span className="text-[9px] text-rose-400 uppercase tracking-tight">(Excl)</span>}
                       </span>
-                      <span className="block text-[10px] font-semibold text-slate-300 normal-case tracking-normal leading-snug mt-0.5 whitespace-normal break-words">
+                      <span className="block text-[10px] font-semibold text-charcoal normal-case tracking-normal leading-snug mt-0.5 whitespace-normal break-words">
                         {ev ? regattaDisplayName(ev.regattaName, idx) : "—"}
                       </span>
                     </th>
@@ -442,6 +635,18 @@ export function IlcaRankingsView({
                 })}
                 <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 text-center bg-aqua-mist border-b border-cool-veil">
                   Best 3 of 5
+                </th>
+                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-aqua-mist border-b border-cool-veil">
+                  {isLoggedIn ? (
+                    <span title="Projected National Junior Training Squad selection based on current ranking and eligibility criteria">
+                      Proj. Squad
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center justify-center gap-1 text-slate-soft" title="Sign in to view projected squad status">
+                      <Lock className="h-3 w-3" />
+                      <span>Proj. Squad</span>
+                    </span>
+                  )}
                 </th>
               </tr>
             </thead>
@@ -452,12 +657,13 @@ export function IlcaRankingsView({
                   eventSlots.map((event) =>
                     pointsFor(s, event.regattaId).points
                   ),
-                  { higherIsBetter: true }
+                  { higherIsBetter: true, excludedIndexes }
                 );
+                const squadPick = projectedSquadMap.get(s.sailorId);
                 return (
                   <tr
                     key={s.sailorId}
-                    className="border-t border-white/5 hover:bg-white/[0.02]"
+                    className="border-t border-cool-veil hover:bg-sailcloth/30"
                   >
                     <td className="px-4 lg:px-5 py-3.5">
                       <RankMedalBadge
@@ -495,26 +701,58 @@ export function IlcaRankingsView({
                           </td>
                         );
                       }
+                      const isRegattaExcluded = excluded.has(ev.regattaId);
                       const { points, isDns } = pointsFor(s, ev.regattaId);
                       const selected = selectedIndexes.has(idx);
                       return (
                         <td
                           key={ev.regattaId}
                           data-best-three-selected={selected || undefined}
-                          className={`px-3 py-3.5 text-center font-mono text-xs ${selected ? "bg-aqua-mist font-bold text-harbour shadow-[inset_0_0_0_1px_rgba(10,85,87,0.2)]" : "font-medium text-slate-soft"}`}
+                          className={`px-3 py-3.5 text-center font-mono text-xs ${
+                            isRegattaExcluded
+                              ? "opacity-40 line-through text-slate-400 bg-rose-500/5"
+                              : selected
+                                ? "bg-aqua-mist font-bold text-harbour shadow-[inset_0_0_0_1px_rgba(10,85,87,0.2)]"
+                                : "font-medium text-slate-soft"
+                          }`}
                           title={
-                            isDns
-                              ? `${ev.regattaName} · DNS${selected ? " · counts toward Best 3 of 5" : ""}`
-                              : `${ev.regattaName} · ${points} pts${selected ? " · counts toward Best 3 of 5" : ""}`
+                            isRegattaExcluded
+                              ? `${ev.regattaName} · (Excluded from ranking)`
+                              : isDns
+                                ? `${ev.regattaName} · DNS${selected ? " · counts toward Best 3 of 5" : ""}`
+                                : `${ev.regattaName} · ${points} pts${selected ? " · counts toward Best 3 of 5" : ""}`
                           }
                         >
-                          {selected && <span className="sr-only">Selected score: </span>}
+                          {selected && !isRegattaExcluded && <span className="sr-only">Selected score: </span>}
                           {scoreCell(points, isDns)}
                         </td>
                       );
                     })}
                     <td className="px-4 lg:px-5 py-3.5 text-center font-black text-charcoal text-base">
                       {s.totalPoints}
+                    </td>
+                    <td className="px-3 py-3.5 text-center">
+                      {isLoggedIn ? (
+                        squadPick ? (
+                          <span
+                            className="inline-flex items-center rounded-full bg-amber-500/15 border border-amber-400/30 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-300 whitespace-nowrap"
+                            title={`Rank #${squadPick.rankingPosition} · ${squadReasonLabel(squadPick.reason)}`}
+                          >
+                            {squadReasonLabel(squadPick.reason)}
+                          </span>
+                        ) : (
+                          <span className="text-slate-soft/50 text-xs">—</span>
+                        )
+                      ) : (
+                        <Link
+                          href="/login"
+                          className="inline-flex items-center gap-1 text-[10px] text-slate-soft hover:text-sky-500 transition-colors"
+                          title="Sign in to view projected squad status"
+                        >
+                          <Lock className="h-2.5 w-2.5" />
+                          <span>Sign in</span>
+                        </Link>
+                      )}
                     </td>
                   </tr>
                 );
@@ -523,7 +761,7 @@ export function IlcaRankingsView({
           </table>
         </div>
         <p className="px-4 py-3 text-[11px] text-slate-soft border-t border-cool-veil bg-sailcloth leading-relaxed">
-          <strong className="text-charcoal">Scoring &amp; Selection:</strong> High Ranking Points apply: in a fleet of N, 1st earns N points, 2nd earns N−1, and * = DNS (0 pts). R1–R5 show up to the last 5 ranking regattas on or before the cutoff (R1 oldest). Best 3 of 5 is the sum of the three highest scores (highlighted in aqua; higher total is better). Only sailors on the official ILCA 4 national ranking list appear on this board.
+          <strong className="text-charcoal">Scoring &amp; Selection:</strong> High Ranking Points apply: in a fleet of N, 1st earns N points, 2nd earns N−1, and * = DNS (0 pts). R1–R5 show up to the last 5 ranking regattas on or before the cutoff (R1 oldest). Best 3 of 5 is the sum of the three highest scores (highlighted in aqua; higher total is better). Projected National Junior Training Squad (NJTS) status is computed according to the Singapore ILCA 4 Ranking System criteria (top 25 overall, age ≤ 17, gender/age quotas).
         </p>
       </div>
     </div>

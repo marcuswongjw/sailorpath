@@ -344,123 +344,114 @@ export function WingfoilSeriesView({
         </div>
       ) : (
         <>
-          {/* Top 3 Podium Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {top3.map((sailor, idx) => {
-          const isWinner = idx === 0;
-          return (
-            <div
-              key={sailor.name}
-              className={`relative overflow-hidden rounded-2xl p-5 border transition-all ${
-                isWinner
-                  ? "border-amber-300 bg-amber-50/70 shadow-xs"
-                  : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs"
-              }`}
-            >
-              {isWinner && (
-                <div className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
-                  <Sparkles className="h-3 w-3 text-amber-600" />
-                  Series Champion
-                </div>
-              )}
-
-              <div className="flex items-start gap-3">
-                <RankMedalBadge
-                  rank={idx + 1}
-                  className="h-9 w-9 text-base"
-                />
-                <div className="space-y-1 min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold text-[var(--sp-slate-soft)]">
-                      #{sailor.sailNumber || "—"}
-                    </span>
-                    <span className="rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
-                      {sailor.ageCategory}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg font-black text-[var(--sp-harbour-shadow)] truncate">
-                    {sailor.name}
-                  </h3>
-                  <p className="text-xs text-[var(--sp-slate-soft)] truncate">
-                    {sailor.club || sailor.schoolName || "Singapore"}
-                  </p>
-                </div>
+          {/* Series Podium */}
+          {top3.length > 0 && (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="text-base sm:text-lg font-black text-[var(--sp-harbour-shadow)] flex items-center gap-2">
+                  <Trophy className="h-4 w-4 text-amber-500" />
+                  <span>Series Championship Leaders</span>
+                </h3>
+                <span className="text-xs text-[var(--sp-slate-soft)]">
+                  Low point cumulative series
+                </span>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[var(--sp-cool-veil)] flex items-center justify-between text-xs font-mono">
-                <span className="text-[var(--sp-slate-soft)]">
-                  {sailor.roundsAttended.length} of {series.rounds.length} rounds sailed
-                </span>
-                <span className="font-black text-base text-[var(--sp-harbour-shadow)]">
-                  {sailor.nettScore} <span className="text-[10px] font-normal text-[var(--sp-slate-soft)]">pts</span>
-                </span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-4">
+                {top3.map((sailor, idx) => {
+                  const isFirst = idx === 0;
+                  const borderStyles = isFirst
+                    ? "border-amber-300 bg-amber-50/70 shadow-xs"
+                    : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
+
+                  return (
+                    <div
+                      key={sailor.name}
+                      className={`relative p-5 rounded-2xl border ${borderStyles} flex flex-col justify-between`}
+                    >
+                      {isFirst && (
+                        <div className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
+                          <Sparkles className="h-3 w-3 text-amber-600" />
+                          Series Leader
+                        </div>
+                      )}
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <div className="flex items-center gap-2.5">
+                          <RankMedalBadge rank={sailor.rank} />
+                          <div>
+                            <div className="text-xs font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
+                              {isFirst ? "Podium #1" : `Podium #${sailor.rank}`}
+                            </div>
+                            <h4 className="text-lg sm:text-xl font-black text-[var(--sp-harbour-shadow)]">
+                              {sailor.name}
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between text-xs text-[var(--sp-charcoal-slate)] pt-3 border-t border-[var(--sp-cool-veil)] mt-2">
+                        <div>
+                          <span className="font-mono font-semibold text-[var(--sp-charcoal-slate)]">
+                            {sailor.sailNumber || "—"}
+                          </span>
+                          <span className="mx-1.5 text-[var(--sp-slate-soft)]">•</span>
+                          <span className="rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
+                            {normalizeWingfoilCategory(sailor.ageCategory)}
+                          </span>
+                        </div>
+                        <div className="text-right font-mono tabular-nums">
+                          <span className="text-lg font-black text-[var(--sp-harbour-shadow)]">
+                            {sailor.nettScore}
+                          </span>
+                          <span className="text-[10px] text-[var(--sp-slate-soft)] ml-1">
+                            pts nett ({sailor.grossScore} gross)
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-          );
-        })}
-      </div>
+          )}
 
-      {/* Division Champions (NoR Clause 16.1 & 4.2) */}
-      <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
-            <Medal className="h-4 w-4 text-amber-600" />
-            <span>Official Division Champions (NoR 12.4.1 &amp; 16.1)</span>
-          </div>
-          <span className="text-[10px] text-[var(--sp-slate-soft)] font-medium">
-            Min. 3 competitors required to constitute a division (NoR Clause 4.2)
-          </span>
-        </div>
-
-        {/* Constituted Division Champions Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 text-xs">
-          {series.divisions
-            .filter((d) => d.isConstituted && d.champion)
-            .map((div) => (
-              <div
-                key={div.division.id}
-                className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 hover:border-[var(--sp-harbour-teal)] transition-colors flex flex-col justify-between gap-2"
-              >
-                <div>
-                  <div className="flex items-center justify-between gap-1">
-                    <p className="text-[10px] font-bold text-amber-800 uppercase tracking-wider truncate">
-                      {div.division.shortLabel}
-                    </p>
-                    <span className="text-[9px] font-mono text-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)]/10 border border-[var(--sp-harbour-teal)]/20 px-1.5 py-0.2 rounded shrink-0 font-bold">
-                      {div.competitorCount} entries
-                    </span>
-                  </div>
-                  <p className="font-bold text-[var(--sp-harbour-shadow)] text-sm mt-1 truncate">
-                    {div.champion?.name || "Pending"}
-                  </p>
-                </div>
-                <p className="text-[11px] font-mono text-[var(--sp-slate-soft)] border-t border-[var(--sp-cool-veil)] pt-1.5 flex items-center justify-between">
-                  <span>Rank #{div.champion?.rank}</span>
-                  <span className="font-bold text-[var(--sp-harbour-shadow)]">
-                    {div.champion?.nettScore} pts
-                  </span>
-                </p>
-              </div>
-            ))}
-        </div>
-
-        {/* Unconstituted Notice */}
-        {series.divisions.some((d) => !d.isConstituted && d.division.id !== "open") && (
-          <div className="mt-3 pt-2.5 border-t border-[var(--sp-cool-veil)] flex flex-wrap items-center gap-1.5 text-[11px] text-[var(--sp-slate-soft)]">
-            <span className="font-medium text-[var(--sp-charcoal-slate)]">Did not constitute (&lt;3 entries per NoR 4.2):</span>
+          {/* Division Champions Summary */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {series.divisions
-              .filter((d) => !d.isConstituted && d.division.id !== "open")
-              .map((d) => (
-                <span
-                  key={d.division.id}
-                  className="rounded bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] text-[var(--sp-slate-soft)] border border-[var(--sp-cool-veil)]"
-                >
-                  {d.division.shortLabel} ({d.competitorCount})
-                </span>
-              ))}
+              .filter((d) => d.division.id === "open" || d.isConstituted || d.champion)
+              .map((div) => {
+                return (
+                  <div
+                    key={div.division.id}
+                    className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-2xl p-4 flex items-center justify-between gap-3 shadow-xs"
+                  >
+                    <div>
+                      <div className="text-xs font-bold text-amber-800 flex items-center gap-1.5">
+                        <Medal className="h-3.5 w-3.5 text-amber-600" />
+                        <span>{div.division.shortLabel} Division</span>
+                      </div>
+                      <div className="text-sm font-black text-[var(--sp-harbour-shadow)] mt-1">
+                        {div.champion ? div.champion.name : "To be decided"}
+                      </div>
+                      <div className="text-[11px] text-[var(--sp-slate-soft)]">
+                        {div.champion
+                          ? `${div.champion.nettScore} pts (${div.competitorCount} sailors)`
+                          : `${div.competitorCount} competitors`}
+                      </div>
+                    </div>
+                    {div.isConstituted ? (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                        Constituted
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                        &lt;3 entries
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
           </div>
-        )}
-      </div>
 
       {/* Filter & Search Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-3 shadow-xs">

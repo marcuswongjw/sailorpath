@@ -357,26 +357,48 @@ export function Techno293SeriesView({
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[11px]">
-                <th className="py-3 px-3 sm:px-4 w-12 text-center">Rank</th>
-                <th className="py-3 px-3 sm:px-4">Sailor</th>
-                <th className="py-3 px-2 sm:px-3 text-center">Sail #</th>
-                <th className="py-3 px-2 sm:px-3 text-center">Category</th>
+              {/* Top Tier Header: Grouped by Round */}
+              <tr className="bg-[var(--sp-sailcloth)] border-b border-[var(--sp-cool-veil)] text-[10px] uppercase tracking-wider font-bold">
+                <th colSpan={4} className="px-4 py-2.5 text-[var(--sp-slate-soft)] border-r border-[var(--sp-cool-veil)]">
+                  Competitor Details
+                </th>
                 {roundsWithRaces.map((rnd) => (
                   <th
                     key={rnd.id}
-                    className="py-3 px-2 text-center cursor-pointer hover:text-[var(--sp-harbour-shadow)] transition-colors"
+                    colSpan={rnd.raceCount}
+                    className="px-2 py-2.5 text-center border-r border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 cursor-pointer hover:bg-[var(--sp-sailcloth)] transition-colors"
                     onClick={() => onSelectRound && onSelectRound(rnd.id)}
                     title={`Click to view ${rnd.name} round standings`}
                   >
-                    <div className="font-bold">{rnd.shortName}</div>
-                    <div className="text-[10px] lowercase text-[var(--sp-slate-soft)]">
-                      {rnd.raceCount} races
-                    </div>
+                    <span className="text-amber-800 font-black">{rnd.shortName}</span>
+                    <span className="ml-1 text-[var(--sp-slate-soft)] font-mono">
+                      ({rnd.raceCount} races)
+                    </span>
                   </th>
                 ))}
-                <th className="py-3 px-3 text-right text-[var(--sp-slate-soft)]">Gross</th>
-                <th className="py-3 px-4 text-right font-black text-[var(--sp-harbour-teal)]">
+                <th colSpan={2} className="px-4 py-2.5 text-right text-[var(--sp-harbour-teal)]">
+                  Cumulative Points
+                </th>
+              </tr>
+
+              {/* Second Tier Header: Columns */}
+              <tr className="border-b border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] bg-[var(--sp-sailcloth)]/30 text-[10px] uppercase tracking-wider">
+                <th className="px-4 py-2.5 w-12 text-center">Rank</th>
+                <th className="px-4 py-2.5 min-w-[12rem]">Sailor</th>
+                <th className="px-2 py-2.5 text-center w-14">Sail #</th>
+                <th className="px-2 py-2.5 text-center w-16 border-r border-[var(--sp-cool-veil)]">Category</th>
+                {roundsWithRaces.flatMap((rnd) =>
+                  Array.from({ length: rnd.raceCount }).map((_, i) => (
+                    <th
+                      key={`${rnd.id}-r${i}`}
+                      className="px-1.5 py-2.5 text-center w-8 text-[10px] font-mono text-[var(--sp-slate-soft)]"
+                    >
+                      R{i + 1}
+                    </th>
+                  ))
+                )}
+                <th className="px-3 py-2.5 text-right w-16 text-[var(--sp-slate-soft)] font-mono">Gross</th>
+                <th className="px-4 py-2.5 text-right w-20 font-black text-[var(--sp-harbour-teal)] font-mono">
                   Nett
                 </th>
               </tr>
@@ -385,7 +407,7 @@ export function Techno293SeriesView({
               {filteredCompetitors.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={5 + roundsWithRaces.length}
+                    colSpan={6 + roundsWithRaces.reduce((sum, r) => sum + r.raceCount, 0)}
                     className="py-8 text-center text-[var(--sp-slate-soft)] text-sm"
                   >
                     No competitors found matching your criteria.
@@ -403,13 +425,13 @@ export function Techno293SeriesView({
                       }
                       className="group hover:bg-[var(--sp-sailcloth)]/50 transition-colors cursor-pointer"
                     >
-                      <td className="py-3.5 px-3 sm:px-4 text-center">
+                      <td className="py-3 px-3 sm:px-4 text-center">
                         <div className="flex justify-center">
                           <RankMedalBadge rank={sailor.rank} />
                         </div>
                       </td>
 
-                      <td className="py-3.5 px-3 sm:px-4">
+                      <td className="py-3 px-3 sm:px-4">
                         <div className="font-bold text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-racing-orange)] transition-colors flex items-center gap-2">
                           <span>{sailor.name}</span>
                           <ChevronDown
@@ -425,53 +447,70 @@ export function Techno293SeriesView({
                         )}
                       </td>
 
-                      <td className="py-3.5 px-2 sm:px-3 text-center font-mono font-medium text-[var(--sp-charcoal-slate)] tabular-nums">
+                      <td className="py-3 px-2 sm:px-3 text-center font-mono font-medium text-[var(--sp-charcoal-slate)] tabular-nums">
                         {sailor.sailNumber || "—"}
                       </td>
 
-                      <td className="py-3.5 px-2 sm:px-3 text-center">
+                      <td className="py-3 px-2 sm:px-3 text-center border-r border-[var(--sp-cool-veil)]">
                         <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
                           {sailor.ageCategory}
                         </span>
                       </td>
 
-                      {/* Round Scores */}
-                      {roundsWithRaces.map((rnd) => {
-                        const roundRaces = sailor.races.filter(
-                          (r) => r.roundId === rnd.id
-                        );
-                        const roundNett = roundRaces.reduce(
-                          (acc, r) => acc + (r.isDiscarded ? 0 : r.score),
-                          0
-                        );
-                        const attended = sailor.roundsAttended.includes(rnd.id);
+                      {/* All Race Scores across Grand Prix Rounds */}
+                      {roundsWithRaces.flatMap((rnd) =>
+                        Array.from({ length: rnd.raceCount }).map((_, i) => {
+                          const raceNum = i + 1;
+                          const race = sailor.races.find(
+                            (r) => r.roundId === rnd.id && r.raceInRound === raceNum
+                          );
 
-                        return (
-                          <td
-                            key={rnd.id}
-                            className="py-3.5 px-2 text-center font-mono tabular-nums"
-                          >
-                            {attended ? (
-                              <div>
-                                <span className="font-bold text-[var(--sp-charcoal-slate)]">
-                                  {roundNett}
-                                </span>
-                                <div className="text-[9px] text-[var(--sp-slate-soft)]">
-                                  {roundRaces.length} races
-                                </div>
-                              </div>
-                            ) : (
-                              <span className="text-[var(--sp-slate-soft)] italic">DNC</span>
-                            )}
-                          </td>
-                        );
-                      })}
+                          if (!race) {
+                            return (
+                              <td
+                                key={`${rnd.id}-r${i}`}
+                                className="px-1.5 py-3 text-center font-mono text-xs text-[var(--sp-slate-soft)] italic bg-[var(--sp-sailcloth)]/20"
+                              >
+                                DNC
+                              </td>
+                            );
+                          }
 
-                      <td className="py-3.5 px-3 text-right font-mono tabular-nums text-[var(--sp-slate-soft)]">
+                          return (
+                            <td
+                              key={`${rnd.id}-r${i}`}
+                              className={`px-1.5 py-3 text-center font-mono text-xs ${
+                                race.isDiscarded
+                                  ? "line-through text-[var(--sp-slate-soft)] bg-[var(--sp-sailcloth)]/30"
+                                  : race.score === 1
+                                  ? "font-black text-amber-900 bg-amber-100"
+                                  : race.score <= 3
+                                  ? "font-bold text-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)]/10"
+                                  : race.code === "DNC"
+                                  ? "text-rose-700 bg-rose-50"
+                                  : "text-[var(--sp-charcoal-slate)]"
+                              }`}
+                              title={
+                                race.code
+                                  ? `${rnd.shortName} Race ${raceNum}: ${race.code} (${race.score} pts)`
+                                  : `${rnd.shortName} Race ${raceNum}: ${race.score} pts`
+                              }
+                            >
+                              {race.isDiscarded ? (
+                                <span>({race.code || race.score})</span>
+                              ) : (
+                                <span>{race.code || race.score}</span>
+                              )}
+                            </td>
+                          );
+                        })
+                      )}
+
+                      <td className="py-3 px-3 text-right font-mono tabular-nums text-[var(--sp-slate-soft)]">
                         {sailor.grossScore}
                       </td>
 
-                      <td className="py-3.5 px-4 text-right font-mono tabular-nums text-sm font-black text-[var(--sp-harbour-teal)]">
+                      <td className="py-3 px-4 text-right font-mono tabular-nums text-sm font-black text-[var(--sp-harbour-teal)]">
                         {sailor.nettScore}
                       </td>
                     </tr>
