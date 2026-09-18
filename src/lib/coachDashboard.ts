@@ -10,6 +10,7 @@ import {
   regattaResults,
   regattas,
   sailors,
+  profiles,
 } from "@/db/schema";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
 import { getCachedFleetRankings, getCachedPreviousFleetRankings } from "@/lib/queries";
@@ -33,7 +34,7 @@ export type CoachSquadMember = {
     selected: boolean; isDns: boolean; isOverseas: boolean;
   }>;
   recentResults: Array<{
-    resultId: string; regattaName: string; regattaSlug: string; date: string;
+    resultId: string; regattaName: string; regattaSlug: string; boatClass: string; date: string;
     rank: number; nettScore: number | null; fleetSize: number;
     races: Array<{ raceNumber: number; score: number; code: string | null; discarded: boolean; rawValue: string }>;
   }>;
@@ -131,10 +132,10 @@ export async function getCoachSquadDashboard(
   const allRows = [...rows, ...followedRows];
   const sailorIds = [...new Set(allRows.map((row) => row.sailorId))];
   const [gold, silver, previousGold, previousSilver, resultRows, noteRows, developmentRows, actionReviewRows] = await Promise.all([
-    getCachedFleetRankings("Gold", period.year, period.half),
-    getCachedFleetRankings("Silver", period.year, period.half),
-    getCachedPreviousFleetRankings("Gold", period.year, period.half),
-    getCachedPreviousFleetRankings("Silver", period.year, period.half),
+    getCachedFleetRankings("Gold", period.year, period.half).catch(() => []),
+    getCachedFleetRankings("Silver", period.year, period.half).catch(() => []),
+    getCachedPreviousFleetRankings("Gold", period.year, period.half).catch(() => []),
+    getCachedPreviousFleetRankings("Silver", period.year, period.half).catch(() => []),
     db
       .select({
         resultId: regattaResults.id,
@@ -143,16 +144,19 @@ export async function getCoachSquadDashboard(
         nettScore: regattaResults.nettScore,
         regattaName: regattas.name,
         regattaSlug: regattas.slug,
+        boatClass: regattas.boatClass,
         date: regattas.date,
         fleetSize: regattas.totalFleetSize,
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))
       .where(inArray(regattaResults.sailorId, sailorIds))
-      .orderBy(desc(regattas.date)),
+      .orderBy(desc(regattas.date))
+      .catch(() => []),
     db.select({ sailorId: coachSailorNotes.sailorId, note: coachSailorNotes.note, visibility: coachSailorNotes.visibility })
       .from(coachSailorNotes)
-      .where(and(eq(coachSailorNotes.coachId, coachId), inArray(coachSailorNotes.sailorId, sailorIds))),
+      .where(and(eq(coachSailorNotes.coachId, coachId), inArray(coachSailorNotes.sailorId, sailorIds)))
+      .catch(() => []),
     db.select({
       id: coachDevelopmentRecords.id, sailorId: coachDevelopmentRecords.sailorId,
       type: coachDevelopmentRecords.type, category: coachDevelopmentRecords.category,
@@ -163,9 +167,11 @@ export async function getCoachSquadDashboard(
       sentiment: coachDevelopmentRecords.sentiment,
     }).from(coachDevelopmentRecords)
       .where(and(eq(coachDevelopmentRecords.coachId, coachId), inArray(coachDevelopmentRecords.sailorId, sailorIds)))
-      .orderBy(desc(coachDevelopmentRecords.recordDate), desc(coachDevelopmentRecords.createdAt)),
+      .orderBy(desc(coachDevelopmentRecords.recordDate), desc(coachDevelopmentRecords.createdAt))
+      .catch(() => []),
     db.select({ actionKey: coachActionReviews.actionKey, status: coachActionReviews.status })
-      .from(coachActionReviews).where(eq(coachActionReviews.coachId, coachId)),
+      .from(coachActionReviews).where(eq(coachActionReviews.coachId, coachId))
+      .catch(() => []),
   ]);
 
   const resultIds = resultRows.map((row) => row.resultId);
@@ -180,7 +186,8 @@ export async function getCoachSquadDashboard(
     })
     .from(regattaRaceResults)
     .where(inArray(regattaRaceResults.regattaResultId, resultIds))
-    .orderBy(asc(regattaRaceResults.raceNumber)) : [];
+    .orderBy(asc(regattaRaceResults.raceNumber))
+    .catch(() => []) : [];
   const racesByResult = new Map<string, typeof raceRows>();
   for (const race of raceRows) {
     const list = racesByResult.get(race.regattaResultId) || [];
@@ -267,7 +274,7 @@ export async function getCoachSquadDashboard(
         scoringEvents: standing?.scoringEvents || [],
         recentResults: (resultsBySailor.get(row.sailorId) || []).map((result) => ({
           resultId: result.resultId, regattaName: result.regattaName,
-          regattaSlug: result.regattaSlug, date: result.date, rank: result.rank,
+          regattaSlug: result.regattaSlug, boatClass: result.boatClass || "Optimist", date: result.date, rank: result.rank,
           nettScore: result.nettScore, fleetSize: result.fleetSize,
           races: (racesByResult.get(result.resultId) || []).map((race) => ({
             raceNumber: race.raceNumber, score: race.score, code: race.code,
@@ -323,9 +330,9 @@ export function silverProgressionSignal(rank: number, fleetSize: number): CoachS
 
 /** Match duplicate scores by occurrence so exactly the calculated Best 3 are highlighted. */
 export function selectedScoreIndexes(scores: number[], selectedScores: number[]): Set<number> {
-  const remaining = [...selectedScores];
+  const remaining = [...(selectedScores || [])];
   const selected = new Set<number>();
-  scores.forEach((score, index) => {
+  (scores || []).forEach((score, index) => {
     const match = remaining.indexOf(score);
     if (match >= 0) { selected.add(index); remaining.splice(match, 1); }
   });
@@ -341,15 +348,35 @@ export async function ensureCoachSquad(coachId: string) {
     .limit(1);
   if (existing) return existing;
 
-  await db
+  // Ensure coach profile exists before squad insert to satisfy foreign key
+  const [profile] = await db
+    .select({ id: profiles.id })
+    .from(profiles)
+    .where(eq(profiles.id, coachId))
+    .limit(1);
+
+  if (!profile) {
+    await db
+      .insert(profiles)
+      .values({ id: coachId, email: "", fullName: "Coach", role: "coach" })
+      .onConflictDoNothing();
+  }
+
+  const [inserted] = await db
     .insert(coachSquads)
     .values({ coachId, name: "My squad" })
-    .onConflictDoNothing();
-  const [created] = await db
+    .onConflictDoNothing()
+    .returning({ id: coachSquads.id, name: coachSquads.name });
+
+  if (inserted) return inserted;
+
+  const [fallback] = await db
     .select({ id: coachSquads.id, name: coachSquads.name })
     .from(coachSquads)
-    .where(and(eq(coachSquads.coachId, coachId), eq(coachSquads.name, "My squad")))
+    .where(eq(coachSquads.coachId, coachId))
+    .orderBy(asc(coachSquads.createdAt))
     .limit(1);
-  if (!created) throw new Error("Unable to create squad");
-  return created;
+
+  if (!fallback) throw new Error("Unable to create squad");
+  return fallback;
 }

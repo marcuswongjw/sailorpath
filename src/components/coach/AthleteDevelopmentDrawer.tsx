@@ -109,6 +109,7 @@ export function AthleteDevelopmentDrawer({
   const [noteVisibility, setNoteVisibility] = useState<"coach_only" | "shared">(
     sailor.coachNoteVisibility || "coach_only"
   );
+  const [feedback, setFeedback] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const [recordType, setRecordType] = useState<"observation" | "goal" | "attendance">("observation");
   const [recordCategory, setRecordCategory] = useState("Starts");
@@ -118,7 +119,16 @@ export function AthleteDevelopmentDrawer({
   const [recordDetail, setRecordDetail] = useState("");
   const [recordDate, setRecordDate] = useState(() => new Date().toISOString().slice(0, 10));
   const [targetDate, setTargetDate] = useState("");
-  const [recordStatus, setRecordStatus] = useState("active");
+  const [recordStatus, setRecordStatus] = useState("present");
+
+  const [prevNote, setPrevNote] = useState(sailor.coachNote);
+  const [prevVisibility, setPrevVisibility] = useState(sailor.coachNoteVisibility);
+  if (sailor.coachNote !== prevNote || sailor.coachNoteVisibility !== prevVisibility) {
+    setPrevNote(sailor.coachNote);
+    setPrevVisibility(sailor.coachNoteVisibility);
+    setNoteDraft(sailor.coachNote || "");
+    setNoteVisibility(sailor.coachNoteVisibility || "coach_only");
+  }
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -136,27 +146,51 @@ export function AthleteDevelopmentDrawer({
   async function handleAddRecord(e: React.FormEvent) {
     e.preventDefault();
     if (!recordTitle.trim()) return;
+    setFeedback(null);
 
-    await onAddRecord({
-      type: recordType,
-      category: recordType === "observation" ? recordCategory : null,
-      title: recordTitle.trim(),
-      detail: recordDetail.trim() || null,
-      recordDate,
-      targetDate: recordType === "goal" && targetDate ? targetDate : null,
-      status: recordType === "attendance" ? recordStatus : "active",
-      visibility: recordVisibility,
-      sentiment: recordType === "observation" ? recordSentiment : "neutral",
-    });
+    try {
+      await onAddRecord({
+        type: recordType,
+        category: recordType === "observation" ? recordCategory : null,
+        title: recordTitle.trim(),
+        detail: recordDetail.trim() || null,
+        recordDate,
+        targetDate: recordType === "goal" && targetDate ? targetDate : null,
+        status: recordType === "attendance" ? recordStatus : "active",
+        visibility: recordVisibility,
+        sentiment: recordType === "observation" ? recordSentiment : "neutral",
+      });
 
-    setRecordTitle("");
-    setRecordDetail("");
-    setTargetDate("");
+      setRecordTitle("");
+      setRecordDetail("");
+      setTargetDate("");
+      setFeedback({
+        type: "success",
+        text: `${recordType === "goal" ? "Goal" : recordType === "attendance" ? "Attendance" : "Observation"} saved successfully.`,
+      });
+    } catch (err) {
+      setFeedback({
+        type: "error",
+        text: err instanceof Error ? err.message : "Could not add coaching record.",
+      });
+    }
   }
 
   async function handleSaveNote(e: React.FormEvent) {
     e.preventDefault();
-    await onSaveNote(noteDraft, noteVisibility);
+    setFeedback(null);
+    try {
+      await onSaveNote(noteDraft, noteVisibility);
+      setFeedback({
+        type: "success",
+        text: noteVisibility === "shared" ? "Coach note shared with family." : "Private coach note saved.",
+      });
+    } catch (err) {
+      setFeedback({
+        type: "error",
+        text: err instanceof Error ? err.message : "Could not save coach note.",
+      });
+    }
   }
 
   function scrollToSection(id: string) {
@@ -200,6 +234,12 @@ export function AthleteDevelopmentDrawer({
             <p className={`mt-0.5 truncate text-xs ${MUTED}`}>
               {sailor.sailNumber} · {sailor.club}
             </p>
+            <Link
+              href={`/${sailor.handle}`}
+              className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-racing-orange)] transition"
+            >
+              View public profile &rarr;
+            </Link>
           </div>
 
           <button
@@ -211,6 +251,27 @@ export function AthleteDevelopmentDrawer({
             <X className="h-5 w-5" />
           </button>
         </div>
+
+        {feedback && (
+          <div
+            aria-live="polite"
+            className={`mx-5 sm:mx-6 mt-4 flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-semibold ${
+              feedback.type === "success"
+                ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20"
+                : "bg-rose-50 text-rose-700 border border-rose-200"
+            }`}
+          >
+            <span>{feedback.text}</span>
+            <button
+              type="button"
+              onClick={() => setFeedback(null)}
+              className="ml-2 text-current opacity-70 hover:opacity-100"
+              aria-label="Dismiss message"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        )}
 
         <div className="flex items-center gap-2 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2.5 sm:px-6 overflow-x-auto shrink-0">
           <button type="button" onClick={() => scrollToSection("drawer-scores")} className={JUMP_PILL}>
@@ -249,88 +310,107 @@ export function AthleteDevelopmentDrawer({
                   </span>
                 )}
               </div>
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {sailor.scoringEvents.map((event) => (
-                  <div
-                    key={event.regattaId}
-                    className={`rounded-xl border p-3 ${
-                      event.selected
-                        ? "border-[var(--sp-racing-orange)]/40 bg-[var(--sp-racing-mist)]/40"
-                        : NESTED
-                    }`}
-                  >
-                    <p className={`truncate text-[10px] font-bold ${MUTED}`}>
-                      {event.regattaName}
-                    </p>
-                    <p
-                      className={`mt-1 text-xl font-black ${
-                        event.selected ? "text-[var(--sp-racing-orange)]" : INK
+              {sailor.scoringEvents.length > 0 ? (
+                <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {sailor.scoringEvents.map((event) => (
+                    <div
+                      key={event.regattaId}
+                      className={`rounded-xl border p-3 ${
+                        event.selected
+                          ? "border-[var(--sp-racing-orange)]/40 bg-[var(--sp-racing-mist)]/40"
+                          : NESTED
                       }`}
                     >
-                      {event.score}
-                      {event.isDns ? "*" : event.isOverseas ? "†" : ""}
-                    </p>
-                    {event.selected && (
-                      <p className="mt-1 text-[9px] font-bold uppercase text-[var(--sp-racing-orange)]">
-                        Counting
+                      <p className={`truncate text-[10px] font-bold ${MUTED}`}>
+                        {event.regattaName}
                       </p>
-                    )}
-                  </div>
-                ))}
-              </div>
+                      <p
+                        className={`mt-1 text-xl font-black ${
+                          event.selected ? "text-[var(--sp-racing-orange)]" : INK
+                        }`}
+                      >
+                        {event.score}
+                        {event.isDns ? "*" : event.isOverseas ? "†" : ""}
+                      </p>
+                      {event.selected && (
+                        <p className="mt-1 text-[9px] font-bold uppercase text-[var(--sp-racing-orange)]">
+                          Counting
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className={`rounded-xl border border-dashed border-[var(--sp-cool-veil)] px-3 py-4 text-center text-[11px] ${MUTED}`}>
+                  No ranking scoring events recorded yet.
+                </p>
+              )}
             </div>
 
             <div>
               <h3 className={`text-xs font-bold uppercase tracking-wider ${MUTED} mb-3`}>
                 Recent regattas & race scores
               </h3>
-              <div className="space-y-3">
-                {sailor.recentResults.map((result) => (
-                  <div key={result.resultId} className={`${NESTED} p-4`}>
-                    <div className="flex justify-between gap-3">
-                      <div>
-                        <Link
-                          href={`/regattas/${result.regattaSlug}`}
-                          className={`text-sm font-bold ${INK} hover:text-[var(--sp-racing-orange)] transition`}
-                        >
-                          {result.regattaName}
-                        </Link>
-                        <p className={`mt-0.5 text-[10px] ${MUTED}`}>{result.date}</p>
-                      </div>
-                      <p className={`text-sm font-black ${INK}`}>
-                        #{result.rank}
-                        {result.nettScore != null ? (
-                          <span className={`ml-1 text-[10px] font-medium ${MUTED}`}>
-                            · {result.nettScore} net
-                          </span>
-                        ) : null}
-                      </p>
-                    </div>
+              {sailor.recentResults.length > 0 ? (
+                <div className="space-y-3">
+                  {sailor.recentResults.map((result) => {
+                    const regattaHref =
+                      result.boatClass === "ILCA 4"
+                        ? `/sg/ilca4/regattas/${result.regattaSlug}`
+                        : `/sg/optimist/regattas/${result.regattaSlug}`;
 
-                    {result.races.length ? (
-                      <div className="mt-3 flex flex-wrap gap-1.5">
-                        {result.races.map((race) => (
-                          <span
-                            key={race.raceNumber}
-                            title={race.rawValue}
-                            className={`rounded-md border px-2 py-1 text-[10px] ${
-                              race.discarded
-                                ? "border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] line-through"
-                                : "border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
-                            }`}
-                          >
-                            R{race.raceNumber}: {race.code || race.score}
-                          </span>
-                        ))}
+                    return (
+                      <div key={result.resultId} className={`${NESTED} p-4`}>
+                        <div className="flex justify-between gap-3">
+                          <div>
+                            <Link
+                              href={regattaHref}
+                              className={`text-sm font-bold ${INK} hover:text-[var(--sp-racing-orange)] transition`}
+                            >
+                              {result.regattaName}
+                            </Link>
+                            <p className={`mt-0.5 text-[10px] ${MUTED}`}>{result.date}</p>
+                          </div>
+                          <p className={`text-sm font-black ${INK}`}>
+                            #{result.rank}
+                            {result.nettScore != null ? (
+                              <span className={`ml-1 text-[10px] font-medium ${MUTED}`}>
+                                · {result.nettScore} net
+                              </span>
+                            ) : null}
+                          </p>
+                        </div>
+
+                        {result.races.length ? (
+                          <div className="mt-3 flex flex-wrap gap-1.5">
+                            {result.races.map((race) => (
+                              <span
+                                key={race.raceNumber}
+                                title={race.rawValue}
+                                className={`rounded-md border px-2 py-1 text-[10px] ${
+                                  race.discarded
+                                    ? "border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] line-through"
+                                    : "border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
+                                }`}
+                              >
+                                R{race.raceNumber}: {race.code || race.score}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className={`mt-3 text-[10px] ${MUTED}`}>
+                            No official race-by-race scores imported.
+                          </p>
+                        )}
                       </div>
-                    ) : (
-                      <p className={`mt-3 text-[10px] ${MUTED}`}>
-                        No official race-by-race scores imported.
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className={`rounded-xl border border-dashed border-[var(--sp-cool-veil)] px-3 py-4 text-center text-[11px] ${MUTED}`}>
+                  No regatta results on file yet.
+                </p>
+              )}
             </div>
           </div>
 
@@ -357,6 +437,7 @@ export function AthleteDevelopmentDrawer({
                   const isShared = record.visibility === "shared";
                   const isGoal = record.type === "goal";
                   const isObservation = record.type === "observation";
+                  const isAttendance = record.type === "attendance";
 
                   return (
                     <div
@@ -368,6 +449,24 @@ export function AthleteDevelopmentDrawer({
                           <span className="rounded-full bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wide text-[var(--sp-charcoal-slate)]">
                             {record.type}
                           </span>
+
+                          {isAttendance && (
+                            <span
+                              className={`rounded-full px-2 py-0.5 text-[9px] font-bold ${
+                                record.status === "present"
+                                  ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
+                                  : record.status === "absent"
+                                  ? "bg-rose-50 text-rose-700 border border-rose-200"
+                                  : "bg-amber-50 text-amber-700 border border-amber-200"
+                              }`}
+                            >
+                              {record.status === "present"
+                                ? "Present"
+                                : record.status === "absent"
+                                ? "Absent"
+                                : "Planned absence"}
+                            </span>
+                          )}
 
                           <span
                             className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-bold border ${
@@ -414,7 +513,7 @@ export function AthleteDevelopmentDrawer({
                               type="button"
                               onClick={() => onDeleteRecord(record.id)}
                               title="Delete record"
-                              className={`opacity-0 group-hover:opacity-100 rounded p-1 ${MUTED} hover:text-rose-600 transition`}
+                              className={`opacity-80 sm:opacity-0 sm:group-hover:opacity-100 rounded p-1.5 ${MUTED} hover:text-rose-600 transition`}
                             >
                               <Trash2 className="h-3 w-3" />
                             </button>

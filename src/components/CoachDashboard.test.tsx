@@ -29,7 +29,7 @@ const initialData: CoachSquadDashboard = {
         { regattaId: "r1", regattaName: "SAFYC", date: "2026-07-01", score: 1, selected: true, isDns: false, isOverseas: false },
         { regattaId: "r2", regattaName: "Pesta Sukan", date: "2026-08-01", score: 3, selected: true, isDns: false, isOverseas: false },
       ],
-      recentResults: [{ resultId: "result-1", regattaName: "Pesta Sukan", regattaSlug: "pesta-sukan", date: "2026-08-01", rank: 1, nettScore: 6, fleetSize: 77, races: [{ raceNumber: 1, score: 1, code: null, discarded: false, rawValue: "1" }] }],
+      recentResults: [{ resultId: "result-1", regattaName: "Pesta Sukan", regattaSlug: "pesta-sukan", boatClass: "Optimist", date: "2026-08-01", rank: 1, nettScore: 6, fleetSize: 77, races: [{ raceNumber: 1, score: 1, code: null, discarded: false, rawValue: "1" }] }],
       coachNote: "Work on starts",
       coachNoteVisibility: "coach_only",
       developmentRecords: [],

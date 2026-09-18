@@ -40,7 +40,24 @@ export async function getAuthContext(): Promise<AuthContext | null> {
       .from(profiles)
       .where(eq(profiles.id, user.id))
       .limit(1);
-    if (rows[0]?.role) role = rows[0].role as AppRole;
+    if (rows[0]?.role) {
+      role = rows[0].role as AppRole;
+    } else {
+      const fullName =
+        (user.user_metadata?.full_name as string) ||
+        (user.user_metadata?.handle as string) ||
+        user.email?.split("@")[0] ||
+        "User";
+      await db
+        .insert(profiles)
+        .values({
+          id: user.id,
+          email: user.email || "",
+          fullName,
+          role: "sailor",
+        })
+        .onConflictDoNothing();
+    }
   } catch {
     /* DB offline — still allow bootstrap */
   }

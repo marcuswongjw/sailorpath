@@ -330,37 +330,75 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
       <section className="order-3">
         <div className="overflow-hidden rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
           <div className="flex flex-col gap-3 border-b border-[var(--sp-cool-veil)] p-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-wrap items-center gap-2">
-              <label htmlFor="squad-sort" className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Sort</label>
-              <select id="squad-sort" value={sortKey} onChange={(event) => setSortKey(event.target.value as typeof sortKey)} className="sp-select text-[11px] font-bold">
-                <option value="ranking">Fleet rank</option>
-                <option value="name">Name</option>
-                <option value="movement">Movement</option>
-                <option value="best3">Best 3</option>
-              </select>
-              <input value={squadName} onChange={(event) => setSquadName(event.target.value)} onBlur={renameSquad}
-                onKeyDown={(event) => { if (event.key === "Enter") event.currentTarget.blur(); }}
-                aria-label="Squad name" maxLength={80}
-                className="min-w-0 rounded-lg border border-transparent bg-transparent px-2 py-1 text-lg font-black text-[var(--sp-harbour-shadow)] outline-none hover:border-[var(--sp-cool-veil)] focus:border-[var(--sp-harbour-teal)]" />
-              <span className="text-[10px] text-[var(--sp-slate-soft)]">{busyId === "rename" ? "Saving…" : "Edit name"}</span>
+            <div className="flex items-center gap-2 min-w-0">
+              <input
+                value={squadName}
+                onChange={(event) => setSquadName(event.target.value)}
+                onBlur={renameSquad}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") event.currentTarget.blur();
+                }}
+                aria-label="Squad name"
+                maxLength={80}
+                className="min-w-0 rounded-lg border border-transparent bg-transparent px-2 py-1 text-lg font-black text-[var(--sp-harbour-shadow)] outline-none hover:border-[var(--sp-cool-veil)] focus:border-[var(--sp-harbour-teal)]"
+              />
+              <span className="text-[10px] text-[var(--sp-slate-soft)] shrink-0">
+                {busyId === "rename" ? "Saving…" : "Edit name"}
+              </span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] text-[var(--sp-slate-soft)]">Select two sailors</span>
-              {compareHref ? (
-                <Link href={compareHref} className="sp-btn-primary px-3 py-2 text-[11px]">
-                  <GitCompareArrows className="h-3.5 w-3.5" /> Compare
-                </Link>
-              ) : (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-sailcloth)] px-3 py-2 text-[11px] font-bold text-[var(--sp-slate-soft)]"><GitCompareArrows className="h-3.5 w-3.5" /> Compare</span>
-              )}
+
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="flex items-center gap-2">
+                <label
+                  htmlFor="squad-sort"
+                  className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]"
+                >
+                  Sort
+                </label>
+                <select
+                  id="squad-sort"
+                  value={sortKey}
+                  onChange={(event) => setSortKey(event.target.value as typeof sortKey)}
+                  className="sp-select text-[11px] font-bold"
+                >
+                  <option value="ranking">Fleet rank</option>
+                  <option value="name">Name</option>
+                  <option value="movement">Movement</option>
+                  <option value="best3">Best 3</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] text-[var(--sp-slate-soft)] hidden sm:inline">
+                  Select two sailors
+                </span>
+                {compareHref ? (
+                  <Link href={compareHref} className="sp-btn-primary px-3 py-1.5 text-[11px]">
+                    <GitCompareArrows className="h-3.5 w-3.5" /> Compare
+                  </Link>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-sailcloth)] px-3 py-1.5 text-[11px] font-bold text-[var(--sp-slate-soft)]">
+                    <GitCompareArrows className="h-3.5 w-3.5" /> Compare
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
           {data.members.length === 0 ? (
             <div className="px-6 py-16 text-center">
               <Users className="mx-auto h-9 w-9 text-[var(--sp-slate-soft)]" />
-              <h2 className="mt-4 text-base font-bold text-[var(--sp-harbour-shadow)]">Build your first squad</h2>
-              <p className="mx-auto mt-1 max-w-sm text-xs leading-relaxed text-[var(--sp-slate-soft)]">Search for a sailor on the right. Their live ranking and latest result will appear here.</p>
+              <h2 className="mt-4 text-base font-bold text-[var(--sp-harbour-shadow)]">Build your squad roster</h2>
+              <p className="mx-auto mt-1 max-w-sm text-xs leading-relaxed text-[var(--sp-slate-soft)]">
+                Add sailors to your squad to track live rankings, regatta results, and developmental priorities.
+              </p>
+              <button
+                type="button"
+                onClick={() => setManageOpen(true)}
+                className="sp-btn-primary mt-4 inline-flex items-center gap-1.5 px-4 py-2 text-xs"
+              >
+                <Plus className="h-3.5 w-3.5" /> Add sailors to squad
+              </button>
             </div>
           ) : (
             <div className="divide-y divide-[var(--sp-cool-veil)]">
@@ -402,6 +440,24 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
                 </div>
                 <button type="button" onClick={() => setManageOpen(false)} aria-label="Close manage sailors" className="rounded-lg p-2 text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] hover:text-[var(--sp-harbour-shadow)]"><X className="h-4 w-4" /></button>
               </div>
+
+              {message && (
+                <div
+                  aria-live="polite"
+                  className="mt-3 flex items-center justify-between rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2 text-xs font-semibold text-[var(--sp-charcoal-slate)]"
+                >
+                  <span>{message}</span>
+                  <button
+                    type="button"
+                    onClick={() => setMessage(null)}
+                    className="text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+                    aria-label="Dismiss notification"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              )}
+
               <div className="relative mt-4">
                 <Search className="absolute left-3 top-3 h-4 w-4 text-[var(--sp-slate-soft)]" />
                 <input value={query} onChange={(event) => {
@@ -435,10 +491,50 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
 
       <section className="order-4 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 sm:p-5 shadow-xs" aria-labelledby="following-title">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Watchlist</p><h2 id="following-title" className="mt-1 text-lg font-black text-[var(--sp-harbour-shadow)]">Following</h2><p className="mt-1 text-[11px] text-[var(--sp-slate-soft)]">Track sailors of personal interest or keep watching their progress after they move fleets.</p></div><span className="text-[11px] font-bold text-[var(--sp-slate-soft)]">{data.following.length} sailor{data.following.length === 1 ? "" : "s"}</span></div>
-        {data.following.length ? <div className="mt-4 grid gap-2 md:grid-cols-2">{data.following.map((member) => <article key={member.id} className="flex items-center gap-3 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3"><button type="button" onClick={() => openSailor(member.sailorId)} aria-label={`Open ${member.name} details`} className="min-w-0 flex-1 text-left"><span className="block truncate text-xs font-bold text-[var(--sp-harbour-shadow)]">{member.name}</span><span className="mt-0.5 block truncate text-[10px] text-[var(--sp-slate-soft)]">{member.fleet ? `${member.fleet} #${member.ranking}` : "Not on current ranking"} · {member.club}</span></button><button type="button" onClick={() => unfollowSailor(member.sailorId)} disabled={busyId === member.sailorId} aria-label={`Stop following ${member.name}`} className="rounded-lg p-2 text-[var(--sp-slate-soft)] hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50"><Trash2 className="h-4 w-4" /></button></article>)}</div> : <p className="mt-4 rounded-xl border border-dashed border-[var(--sp-cool-veil)] px-4 py-7 text-center text-xs text-[var(--sp-slate-soft)]">Use sailor search above and choose Follow.</p>}
+        {data.following.length ? (
+          <div className="mt-4 grid gap-2 md:grid-cols-2">
+            {data.following.map((member) => (
+              <article key={member.id} className="flex items-center gap-3 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3">
+                <button type="button" onClick={() => openSailor(member.sailorId)} aria-label={`Open ${member.name} details`} className="min-w-0 flex-1 text-left">
+                  <span className="block truncate text-xs font-bold text-[var(--sp-harbour-shadow)]">{member.name}</span>
+                  <span className="mt-0.5 block truncate text-[10px] text-[var(--sp-slate-soft)]">{member.fleet ? `${member.fleet} #${member.ranking}` : "Not on current ranking"} · {member.club}</span>
+                </button>
+                <button type="button" onClick={() => unfollowSailor(member.sailorId)} disabled={busyId === member.sailorId} aria-label={`Stop following ${member.name}`} className="rounded-lg p-2 text-[var(--sp-slate-soft)] hover:bg-rose-50 hover:text-rose-600 disabled:opacity-50">
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-4 rounded-xl border border-dashed border-[var(--sp-cool-veil)] px-4 py-7 text-center text-xs text-[var(--sp-slate-soft)]">
+            <p>You are not following any sailors outside your squad.</p>
+            <button
+              type="button"
+              onClick={() => setManageOpen(true)}
+              className="mt-2 text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline"
+            >
+              Search sailors to follow &rarr;
+            </button>
+          </div>
+        )}
       </section>
 
-      {message && <p role="status" className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 text-xs text-[var(--sp-charcoal-slate)]">{message}</p>}
+      {message && (
+        <div
+          role="status"
+          className="flex items-center justify-between rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 text-xs text-[var(--sp-charcoal-slate)]"
+        >
+          <span>{message}</span>
+          <button
+            type="button"
+            onClick={() => setMessage(null)}
+            className="text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+            aria-label="Dismiss message"
+          >
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
 
       {activeSailor && (
         <AthleteDevelopmentDrawer

@@ -27,6 +27,7 @@ const mockSailor: CoachSquadMember = {
       resultId: "res1",
       regattaName: "CSC Regatta",
       regattaSlug: "csc-regatta",
+      boatClass: "Optimist",
       date: "2026-06-01",
       rank: 2,
       nettScore: 12,
