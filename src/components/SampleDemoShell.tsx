@@ -42,7 +42,7 @@ function PrivacySettingsBody({
 
   return (
     <div className="space-y-4">
-      <p className="text-[12px] text-neutral-400 leading-relaxed">
+      <p className="text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
         {childLabel
           ? `Manage ${childLabel}'s privacy. Birth year is always public when set; month and day stay private unless shared. Equipment is always private to the family.`
           : "Birth year is always public when set. Month/day and weight stay private unless shared. Equipment is always private to the sailor and linked parents."}
@@ -66,27 +66,27 @@ function PrivacySettingsBody({
         ).map((row) => (
           <label
             key={row.label}
-            className="flex flex-col gap-1.5 rounded-xl border border-white/[0.08] px-3 py-2.5 cursor-pointer hover:bg-white/[0.02]"
+            className="flex flex-col gap-1.5 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3 py-2.5 cursor-pointer hover:border-[var(--sp-harbour-teal)] transition-colors"
           >
             <span className="flex items-center justify-between gap-3">
-              <span className="text-xs font-medium text-neutral-200">
+              <span className="text-xs font-semibold text-[var(--sp-harbour-shadow)]">
                 {row.label}
               </span>
               <input
                 type="checkbox"
                 checked={row.checked}
                 onChange={(e) => row.set(e.target.checked)}
-                className="rounded border-neutral-600 shrink-0"
+                className="rounded accent-[var(--sp-racing-orange)] shrink-0"
               />
             </span>
-            <span className="text-[10px] text-neutral-500">{row.hint}</span>
+            <span className="text-[10px] text-[var(--sp-slate-soft)]">{row.hint}</span>
           </label>
         ))}
       </div>
       <button
         type="button"
         onClick={onSave}
-        className="w-full rounded-xl bg-orange-600 py-2.5 text-[12px] font-bold text-white hover:bg-orange-500"
+        className="w-full sp-btn-primary py-2.5 text-xs font-bold"
       >
         Save privacy (demo)
       </button>
@@ -145,7 +145,7 @@ export function SampleDemoShell() {
   };
 
   return (
-    <div className="flex-1 flex flex-col bg-[#0d1017]">
+    <div className="flex-1 flex flex-col bg-[var(--sp-sailcloth)]">
       {/* Top Demo Navigation Bar */}
       <DemoNavHeader
         activeDemo="sailor"
@@ -153,25 +153,25 @@ export function SampleDemoShell() {
         onSailorViewChange={setRoleAndUrl}
       />
 
-      {/* Relocation Cross-Promotion Banner */}
-      <div className="bg-gradient-to-r from-emerald-950/40 via-sky-950/30 to-amber-950/30 border-b border-white/10 px-4 py-2.5">
+      {/* Cross-Promotion Ribbon */}
+      <div className="bg-[var(--sp-warm-white)] border-b border-[var(--sp-cool-veil)] px-4 py-2.5">
         <div className="mx-auto max-w-5xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-          <p className="text-slate-300">
-            Looking for multi-athlete management or squad tools?
+          <p className="text-[var(--sp-charcoal-slate)] font-medium">
+            Looking for multi-athlete family tools or squad coach management?
           </p>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 shrink-0">
             <Link
               href="/demo/parent"
-              className="inline-flex items-center gap-1 font-bold text-emerald-400 hover:text-emerald-300"
+              className="inline-flex items-center gap-1 font-bold text-[var(--sp-harbour-teal)] hover:underline"
             >
               <Heart className="h-3.5 w-3.5" />
               <span>Parent Hub Demo</span>
               <ArrowRight className="h-3 w-3" />
             </Link>
-            <span className="text-white/20">·</span>
+            <span className="text-[var(--sp-cool-veil)]">·</span>
             <Link
               href="/demo/coach"
-              className="inline-flex items-center gap-1 font-bold text-sky-400 hover:text-sky-300"
+              className="inline-flex items-center gap-1 font-bold text-[var(--sp-racing-orange)] hover:underline"
             >
               <ClipboardList className="h-3.5 w-3.5" />
               <span>Coach Hub Demo</span>
@@ -181,38 +181,37 @@ export function SampleDemoShell() {
         </div>
       </div>
 
-      {/* Demo chrome: profile title + view tabs */}
-      <div className="border-b border-amber-500/20 bg-[#12100a]/90 backdrop-blur-md">
-        <div className="mx-auto max-w-3xl px-3 sm:px-4 py-3 space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      {/* Clean Branded Profile Chrome: title + view tabs */}
+      <div className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] py-4">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-amber-400/90">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">
                 Athlete Profile Demo
               </p>
-              <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-black font-display text-[var(--sp-harbour-shadow)] tracking-tight">
                 Kimberly Tan · SGP 115 · SailorPath Profile
               </h1>
-              <p className="text-[11px] text-slate-400 mt-0.5">
-                b. {SAMPLE_SAILOR.dob.slice(0, 4)} · dual-class Optimist + ILCA 4 ·
-                switch views below
+              <p className="text-xs text-[var(--sp-charcoal-slate)] mt-0.5">
+                b. {SAMPLE_SAILOR.dob.slice(0, 4)} · dual-class Optimist Gold &amp; ILCA 4 · Changi Sailing Club
               </p>
             </div>
             {canManagePrivacy && (
               <button
                 type="button"
                 onClick={() => setSettingsOpen(true)}
-                className="rounded-full border border-white/15 px-3 py-2 min-h-[40px] inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-300 hover:bg-white/5 self-start sm:self-center"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-3.5 py-1.5 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors self-start sm:self-center shadow-xs"
                 title="Privacy settings"
               >
-                <Settings className="h-3.5 w-3.5" />
+                <Settings className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
                 Settings
               </button>
             )}
           </div>
 
-          {/* Focused View Tabs (Public vs Sailor) */}
+          {/* Focused View Tabs (Public vs Sailor Private View) */}
           <div
-            className="flex gap-1 p-1.5 rounded-2xl bg-black/50 border border-white/15"
+            className="flex gap-1.5 p-1 rounded-2xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] max-w-md"
             role="tablist"
             aria-label="Profile view"
           >
@@ -228,27 +227,28 @@ export function SampleDemoShell() {
                   role="tab"
                   aria-selected={active}
                   onClick={() => setRoleAndUrl(r)}
-                  className={`flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl px-2 sm:px-3 py-2.5 min-h-[44px] text-[12px] sm:text-[13px] font-bold transition-all ${
+                  className={`flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2 text-xs font-bold transition-all ${
                     active
-                      ? "bg-orange-600 text-white shadow-lg shadow-orange-950/40 ring-2 ring-orange-400/40"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                      ? "bg-[var(--sp-racing-orange)] text-white shadow-sm"
+                      : "text-[var(--sp-charcoal-slate)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-warm-white)]"
                   }`}
                 >
-                  <Icon className="h-4 w-4 shrink-0" />
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
                   <span>{label}</span>
                 </button>
               );
             })}
           </div>
-          <p className="text-[11px] text-slate-400 leading-snug px-0.5">
-            <span className="font-bold text-white">{copy.who}.</span>{" "}
+
+          <p className="text-xs text-[var(--sp-slate-soft)] leading-snug">
+            <span className="font-bold text-[var(--sp-harbour-shadow)]">{copy.who}.</span>{" "}
             {copy.value}
           </p>
         </div>
       </div>
 
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-full bg-slate-900 border border-orange-500/40 px-5 py-2.5 text-xs font-bold text-white shadow-xl">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-full bg-[var(--sp-harbour-shadow)] text-white border border-[var(--sp-racing-orange)]/40 px-5 py-2.5 text-xs font-bold shadow-xl">
           {toast}
         </div>
       )}
@@ -256,23 +256,23 @@ export function SampleDemoShell() {
       {/* Settings modal — privacy for sailor only */}
       {settingsOpen && canManagePrivacy && (
         <div
-          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-xs"
           role="dialog"
           aria-modal="true"
           aria-label="Privacy settings"
         >
-          <div className="w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl border border-white/10 bg-[#12141c] p-5 shadow-2xl">
+          <div className="w-full sm:max-w-md rounded-t-3xl sm:rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 shadow-2xl">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Settings className="h-4 w-4 text-orange-400" />
-                <h2 className="text-sm font-bold text-white">
+                <Settings className="h-4 w-4 text-[var(--sp-racing-orange)]" />
+                <h2 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
                   Privacy settings
                 </h2>
               </div>
               <button
                 type="button"
                 onClick={() => setSettingsOpen(false)}
-                className="rounded-lg p-1.5 text-slate-500 hover:text-white"
+                className="rounded-lg p-1.5 text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
                 aria-label="Close"
               >
                 <X className="h-4 w-4" />

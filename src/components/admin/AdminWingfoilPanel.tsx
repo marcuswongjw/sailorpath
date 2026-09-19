@@ -149,104 +149,91 @@ export function AdminWingfoilPanel({
     e.preventDefault();
     if (!regattaFormData.name || !regattaFormData.id) return;
 
-    const exists = regattas.some((r) => r.id === regattaFormData.id);
+    const isNew = !regattas.some((r) => r.id === regattaFormData.id);
     let next: WingfoilRegatta[];
 
-    if (exists) {
-      next = regattas.map((r) =>
-        r.id === regattaFormData.id ? ({ ...r, ...regattaFormData } as WingfoilRegatta) : r
-      );
-    } else {
+    if (isNew) {
       const newRegatta: WingfoilRegatta = {
         id: regattaFormData.id,
-        name: regattaFormData.name || "",
-        shortName: regattaFormData.shortName || regattaFormData.name || "",
-        dates: regattaFormData.dates || "",
-        venue: regattaFormData.venue || "",
-        organizer: regattaFormData.organizer || "Singapore Sailing Federation",
+        name: regattaFormData.name,
+        shortName: regattaFormData.shortName || regattaFormData.name,
+        dates: regattaFormData.dates || "TBD",
+        venue: regattaFormData.venue || "Singapore Waters",
+        organizer: regattaFormData.organizer || "Singapore Sailing",
         format: regattaFormData.format || "Sprint Slalom",
-        status: regattaFormData.status || "Upcoming",
-        lifecycleStatus: "published",
-        scoringSystem:
-          regattaFormData.scoringSystem || "World Sailing RRS Appendix A / B8 (Low Point)",
+        status: (regattaFormData.status as "Completed" | "Upcoming") || "Upcoming",
+        lifecycleStatus: (regattaFormData.lifecycleStatus as "published" | "draft") || "published",
+        scoringSystem: regattaFormData.scoringSystem || "World Sailing RRS Appendix A (Low Point)",
         rulesNotes: regattaFormData.rulesNotes || "",
-        seriesName: regattaFormData.seriesName || "2026 Southwest Monsoon Grand Prix Series",
-        seriesPart: regattaFormData.seriesPart || "",
-        websiteUrl: regattaFormData.websiteUrl || "",
         results: [],
+        seriesName: regattaFormData.seriesName,
       };
       next = [...regattas, newRegatta];
       setSelectedRegattaId(newRegatta.id);
+    } else {
+      next = regattas.map((r) =>
+        r.id === regattaFormData.id ? ({ ...r, ...regattaFormData } as WingfoilRegatta) : r
+      );
     }
 
     void persistChanges(next);
     setIsEditingRegatta(false);
-    setRegattaFormData({});
   };
 
   const handleDeleteRegatta = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this Wingfoil regatta?")) {
-      return;
-    }
+    if (!window.confirm("Are you sure you want to delete this wingfoil regatta?")) return;
     const next = regattas.filter((r) => r.id !== id);
     setRegattas(next);
     saveWingfoilRegattas(next);
-    if (selectedRegattaId === id && next.length > 0) {
-      setSelectedRegattaId(next[0].id);
-    }
+
     if (isSuperadmin) {
+      setIsSyncingServer(true);
       await deleteWingfoilFromServer(id);
+      setIsSyncingServer(false);
     }
-    toast.info("Regatta deleted");
+
+    if (selectedRegattaId === id) {
+      setSelectedRegattaId(next[0]?.id || "");
+    }
+    toast.success("Regatta deleted");
   };
 
-  // ── Excel Import Handler ───────────────────────────────────────────────────
   const handleExcelUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     try {
-      toast.info(`Importing ${file.name}…`);
+      toast.info(`Parsing ${file.name}…`);
       const parsed = await readWingfoilExcel(file);
       if (!parsed || !parsed.results || parsed.results.length === 0) {
-        toast.error("Could not find valid scorecard results in file");
+        toast.error("No valid sailor results found in Excel file.");
         return;
       }
 
-      // Recalculate and normalize results
       const recalculated = recalculateScoreboard(parsed.results);
-      const normalizedResults: WingfoilSailorResult[] = recalculated.map((r) => ({
-        ...r,
-        ageCategory: normalizeWingfoilCategory(r.ageCategory),
-        gender: r.gender || "M",
-      }));
-
       const updatedRegatta: WingfoilRegatta = {
         ...activeRegatta,
         status: "Completed",
-        lifecycleStatus: "published",
-        results: normalizedResults,
+        results: recalculated,
       };
 
       const next = regattas.map((r) => (r.id === activeRegatta.id ? updatedRegatta : r));
       await persistChanges(next);
-      toast.success(`Successfully imported ${normalizedResults.length} competitors!`);
+      toast.success(`Imported ${parsed.results.length} sailor results into ${activeRegatta.shortName}!`);
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Excel import failed");
+      console.error(err);
+      toast.error("Failed to parse Excel file. Check format.");
     } finally {
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
-  // ── Sailor Add / Edit / Delete ─────────────────────────────────────────────
   const handleOpenAddSailor = () => {
-    const currentResults = activeRegatta.results || [];
-    const raceCount = currentResults[0]?.races?.length || 5;
-    const defaultScores = Array.from({ length: raceCount }, (_, i) => `${i + 1}`).join(", ");
-
     setEditingSailorIndex(null);
+    const currentResults = activeRegatta.results || [];
+    const maxR = currentResults.length > 0 ? Math.max(...currentResults.map((r) => r.races.length)) : 3;
+    const defaultScores = Array.from({ length: maxR }, (_, i) => `${i + 1}`).join(", ");
+
     setSailorFormData({
       rank: currentResults.length + 1,
       name: "",
@@ -369,22 +356,22 @@ export function AdminWingfoilPanel({
       />
 
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/60 border border-white/10 rounded-3xl p-5 backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-2xl sm:rounded-3xl p-5 shadow-xs">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-2xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center text-amber-400">
+          <div className="h-10 w-10 rounded-2xl bg-[var(--sp-harbour-teal)]/10 border border-[var(--sp-harbour-teal)]/20 flex items-center justify-center text-[var(--sp-harbour-teal)]">
             <Flame className="h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-xl font-black text-white flex items-center gap-2">
+            <h2 className="text-xl font-black font-display text-[var(--sp-harbour-shadow)] flex items-center gap-2">
               <span>Wingfoil Regattas &amp; Results Manager</span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
               Manage Northeast &amp; Southwest Monsoon Grand Prix rounds, scores, and published status.
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5 flex-wrap">
           <button
             type="button"
             onClick={() => {
@@ -402,7 +389,7 @@ export function AdminWingfoilPanel({
               });
               setIsEditingRegatta(true);
             }}
-            className="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 flex items-center gap-1.5 transition-all shadow-md shadow-amber-500/20"
+            className="sp-btn-primary px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 shadow-xs"
           >
             <Plus className="h-3.5 w-3.5" />
             <span>New Regatta</span>
@@ -412,18 +399,18 @@ export function AdminWingfoilPanel({
             type="button"
             onClick={() => void persistChanges(regattas)}
             disabled={isSyncingServer}
-            className="px-3.5 py-2 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 flex items-center gap-1.5 transition-all"
+            className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-cool-veil)]/50 text-[var(--sp-harbour-shadow)] px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs"
           >
             <RefreshCw
-              className={`h-3.5 w-3.5 ${isSyncingServer ? "animate-spin text-amber-400" : ""}`}
+              className={`h-3.5 w-3.5 ${isSyncingServer ? "animate-spin text-[var(--sp-racing-orange)]" : ""}`}
             />
-            <span>{isSyncingServer ? "Syncing..." : "Sync DB"}</span>
+            <span>{isSyncingServer ? "Syncing…" : "Sync DB"}</span>
           </button>
 
           <Link
             href="/sg/wingfoil"
             target="_blank"
-            className="px-3.5 py-2 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 text-amber-300 border border-amber-500/20 flex items-center gap-1.5 transition-all"
+            className="rounded-xl border border-[var(--sp-harbour-teal)]/30 bg-[var(--sp-harbour-teal)]/10 hover:bg-[var(--sp-harbour-teal)]/20 text-[var(--sp-harbour-teal)] px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs"
           >
             <span>Live View</span>
             <ExternalLink className="h-3.5 w-3.5" />
@@ -443,8 +430,8 @@ export function AdminWingfoilPanel({
               onClick={() => setSelectedRegattaId(regatta.id)}
               className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
                 isSelected
-                  ? "bg-amber-500/10 border-amber-400/50 shadow-lg shadow-amber-500/10"
-                  : "bg-slate-900/40 border-white/5 hover:bg-white/[0.04] hover:border-white/10"
+                  ? "border-2 border-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)]/5 shadow-sm"
+                  : "bg-[var(--sp-warm-white)] border-[var(--sp-cool-veil)] hover:border-[var(--sp-harbour-teal)]/40 hover:bg-[var(--sp-sailcloth)]/30 shadow-xs"
               }`}
             >
               <div>
@@ -452,26 +439,26 @@ export function AdminWingfoilPanel({
                   <span
                     className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
                       regatta.status === "Completed"
-                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                        : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                        ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
+                        : "bg-[var(--sp-harbour-teal)]/15 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/30"
                     }`}
                   >
                     {regatta.status}
                   </span>
-                  <span className="text-[11px] text-slate-400 font-mono">
+                  <span className="text-[11px] text-[var(--sp-slate-soft)] font-mono">
                     {count} sailors
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-white line-clamp-1">
+                <h3 className="text-sm font-bold text-[var(--sp-harbour-shadow)] line-clamp-1">
                   {regatta.name}
                 </h3>
-                <div className="text-xs text-slate-400 mt-1">
+                <div className="text-xs text-[var(--sp-slate-soft)] mt-1">
                   {regatta.dates} • {regatta.venue}
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/5 text-xs">
-                <span className="text-slate-400 font-mono text-[10px]">
+              <div className="flex items-center justify-between pt-2 border-t border-[var(--sp-cool-veil)] text-xs">
+                <span className="text-[var(--sp-slate-soft)] font-mono text-[10px]">
                   {regatta.shortName}
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -482,7 +469,7 @@ export function AdminWingfoilPanel({
                       setRegattaFormData({ ...regatta });
                       setIsEditingRegatta(true);
                     }}
-                    className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white"
+                    className="p-1 rounded-lg hover:bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
                     title="Edit regatta details"
                   >
                     <Edit3 className="h-3.5 w-3.5" />
@@ -493,7 +480,7 @@ export function AdminWingfoilPanel({
                       e.stopPropagation();
                       void handleDeleteRegatta(regatta.id);
                     }}
-                    className="p-1 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400"
+                    className="p-1 rounded-lg hover:bg-rose-50 text-[var(--sp-slate-soft)] hover:text-rose-600"
                     title="Delete regatta"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -506,13 +493,13 @@ export function AdminWingfoilPanel({
       </div>
 
       {/* Regatta Results Scorecard Manager */}
-      <div className="bg-slate-900/60 border border-white/10 rounded-3xl p-5 sm:p-6 backdrop-blur-md space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+      <div className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--sp-cool-veil)]">
           <div>
-            <span className="text-xs font-bold text-amber-400 uppercase tracking-wide">
+            <span className="text-xs font-bold text-[var(--sp-racing-orange)] uppercase tracking-wide">
               Scorecard Manager
             </span>
-            <h3 className="text-lg sm:text-xl font-black text-white">
+            <h3 className="text-lg sm:text-xl font-black font-display text-[var(--sp-harbour-shadow)]">
               {activeRegatta.name} ({activeRegatta.results?.length || 0} competitors)
             </h3>
           </div>
@@ -521,16 +508,16 @@ export function AdminWingfoilPanel({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5 transition-all"
+              className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 transition-all"
             >
-              <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-400" />
+              <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
               <span>Import Excel</span>
             </button>
 
             <button
               type="button"
               onClick={handleOpenAddSailor}
-              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 flex items-center gap-1.5 transition-all shadow-sm"
+              className="sp-btn-primary px-3 py-1.5 text-xs font-bold flex items-center gap-1.5"
             >
               <UserPlus className="h-3.5 w-3.5" />
               <span>Add Sailor</span>
@@ -540,13 +527,13 @@ export function AdminWingfoilPanel({
 
         {/* Scorecard Table */}
         {!activeRegatta.results || activeRegatta.results.length === 0 ? (
-          <div className="py-12 text-center text-slate-400 text-sm space-y-3">
+          <div className="py-12 text-center text-[var(--sp-slate-soft)] text-sm space-y-3">
             <p>No sailor results recorded for this event yet.</p>
             <div className="flex items-center justify-center gap-3">
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-all flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all flex items-center gap-1.5"
               >
                 <FileSpreadsheet className="h-4 w-4" />
                 <span>Upload Excel Results (.xlsx)</span>
@@ -554,7 +541,7 @@ export function AdminWingfoilPanel({
               <button
                 type="button"
                 onClick={handleOpenAddSailor}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white/5 text-slate-300 border border-white/10 hover:bg-white/10 transition-all flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl text-xs font-bold border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-cool-veil)]/50 transition-all flex items-center gap-1.5"
               >
                 <UserPlus className="h-4 w-4" />
                 <span>Add First Competitor</span>
@@ -562,10 +549,10 @@ export function AdminWingfoilPanel({
             </div>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)]">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-white/10 text-slate-400 uppercase tracking-wider font-semibold text-[11px]">
+                <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[11px]">
                   <th className="py-2.5 px-3 text-center w-12">Rank</th>
                   <th className="py-2.5 px-3">Sailor</th>
                   <th className="py-2.5 px-3 text-center">Sail #</th>
@@ -573,48 +560,48 @@ export function AdminWingfoilPanel({
                   <th className="py-2.5 px-3 text-center">Category</th>
                   <th className="py-2.5 px-3">Club / School</th>
                   {Array.from({ length: maxRaces }).map((_, i) => (
-                    <th key={i} className="py-2.5 px-2 text-center font-bold text-slate-300">
+                    <th key={i} className="py-2.5 px-2 text-center font-bold text-[var(--sp-charcoal-slate)]">
                       R{i + 1}
                     </th>
                   ))}
                   <th className="py-2.5 px-3 text-right">Gross</th>
-                  <th className="py-2.5 px-4 text-right font-black text-amber-400">Nett</th>
+                  <th className="py-2.5 px-4 text-right font-black text-[var(--sp-racing-orange)]">Nett</th>
                   <th className="py-2.5 px-3 text-center w-20">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[var(--sp-cool-veil)]">
                 {activeRegatta.results.map((sailor, idx) => (
-                  <tr key={sailor.name + idx} className="hover:bg-white/[0.03]">
+                  <tr key={sailor.name + idx} className="hover:bg-[var(--sp-sailcloth)]/50 transition-colors">
                     <td className="py-3 px-3 text-center">
                       <div className="flex justify-center">
                         <RankMedalBadge rank={sailor.rank} />
                       </div>
                     </td>
-                    <td className="py-3 px-3 font-bold text-white">
+                    <td className="py-3 px-3 font-bold text-[var(--sp-harbour-shadow)]">
                       {sailor.name}
                     </td>
-                    <td className="py-3 px-3 text-center font-mono text-slate-300">
+                    <td className="py-3 px-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
                       {sailor.sailNumber}
                     </td>
-                    <td className="py-3 px-3 text-center font-bold text-slate-300">
+                    <td className="py-3 px-3 text-center font-bold text-[var(--sp-charcoal-slate)]">
                       {sailor.gender || "M"}
                     </td>
                     <td className="py-3 px-3 text-center">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20">
                         {normalizeWingfoilCategory(sailor.ageCategory)}
                       </span>
                     </td>
-                    <td className="py-3 px-3 text-slate-400">
-                      <p className="font-medium text-slate-300 truncate max-w-[8rem]">{sailor.club || "—"}</p>
+                    <td className="py-3 px-3 text-[var(--sp-slate-soft)]">
+                      <p className="font-medium text-[var(--sp-charcoal-slate)] truncate max-w-[8rem]">{sailor.club || "—"}</p>
                       {sailor.schoolName && (
-                        <p className="text-[10px] text-slate-500 truncate max-w-[8rem]">{sailor.schoolName}</p>
+                        <p className="text-[10px] text-[var(--sp-slate-soft)] truncate max-w-[8rem]">{sailor.schoolName}</p>
                       )}
                     </td>
                     {Array.from({ length: maxRaces }).map((_, i) => {
                       const r = sailor.races[i];
                       if (!r) {
                         return (
-                          <td key={i} className="py-3 px-2 text-center text-slate-500">
+                          <td key={i} className="py-3 px-2 text-center text-[var(--sp-slate-soft)]">
                             —
                           </td>
                         );
@@ -624,18 +611,18 @@ export function AdminWingfoilPanel({
                           key={i}
                           className={`py-3 px-2 text-center font-mono ${
                             r.isDiscarded
-                              ? "text-slate-500 line-through bg-red-500/5"
-                              : "text-slate-200 font-semibold"
+                              ? "text-[var(--sp-slate-soft)] line-through bg-rose-500/5"
+                              : "text-[var(--sp-charcoal-slate)] font-semibold"
                           }`}
                         >
                           {r.code ? `${r.score} ${r.code}` : r.score}
                         </td>
                       );
                     })}
-                    <td className="py-3 px-3 text-right font-mono text-slate-400">
+                    <td className="py-3 px-3 text-right font-mono text-[var(--sp-slate-soft)]">
                       {sailor.grossScore}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono text-sm font-black text-amber-400">
+                    <td className="py-3 px-4 text-right font-mono text-sm font-black text-[var(--sp-racing-orange)]">
                       {sailor.nettScore}
                     </td>
                     <td className="py-3 px-3 text-center">
@@ -643,7 +630,7 @@ export function AdminWingfoilPanel({
                         <button
                           type="button"
                           onClick={() => handleOpenEditSailor(sailor, idx)}
-                          className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-white"
+                          className="p-1 rounded hover:bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
                           title="Edit sailor"
                         >
                           <Edit3 className="h-3.5 w-3.5" />
@@ -651,7 +638,7 @@ export function AdminWingfoilPanel({
                         <button
                           type="button"
                           onClick={() => handleDeleteSailor(idx)}
-                          className="p-1 rounded hover:bg-red-500/10 text-slate-400 hover:text-red-400"
+                          className="p-1 rounded hover:bg-rose-50 text-[var(--sp-slate-soft)] hover:text-rose-600"
                           title="Delete sailor"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -668,16 +655,16 @@ export function AdminWingfoilPanel({
 
       {/* Edit / Add Sailor Modal */}
       {isEditingSailor && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-white/10 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="text-base font-black text-white">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] pb-3">
+              <h3 className="text-base font-black font-display text-[var(--sp-harbour-shadow)]">
                 {editingSailorIndex !== null ? "Edit Competitor" : "Add Competitor"}
               </h3>
               <button
                 type="button"
                 onClick={() => setIsEditingSailor(false)}
-                className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white"
+                className="p-1 rounded-lg text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -686,44 +673,44 @@ export function AdminWingfoilPanel({
             <form onSubmit={handleSaveSailor} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Name</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Name</label>
                   <input
                     type="text"
                     required
                     value={sailorFormData.name}
                     onChange={(e) => setSailorFormData({ ...sailorFormData, name: e.target.value })}
                     placeholder="e.g. Samuel Tan"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Sail Number</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Sail Number</label>
                   <input
                     type="text"
                     value={sailorFormData.sailNumber}
                     onChange={(e) => setSailorFormData({ ...sailorFormData, sailNumber: e.target.value })}
                     placeholder="e.g. 11"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Gender</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Gender</label>
                   <select
                     value={sailorFormData.gender}
                     onChange={(e) =>
                       setSailorFormData({ ...sailorFormData, gender: e.target.value as "M" | "F" })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-select py-2"
                   >
                     <option value="M">Male (M)</option>
                     <option value="F">Female (F)</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Category</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Category</label>
                   <select
                     value={sailorFormData.ageCategory}
                     onChange={(e) =>
@@ -732,7 +719,7 @@ export function AdminWingfoilPanel({
                         ageCategory: e.target.value as WingfoilCategory,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-select py-2"
                   >
                     {WINGFOIL_CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -745,29 +732,29 @@ export function AdminWingfoilPanel({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Club</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Club</label>
                   <input
                     type="text"
                     value={sailorFormData.club}
                     onChange={(e) => setSailorFormData({ ...sailorFormData, club: e.target.value })}
                     placeholder="e.g. Constant Wind"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">School (optional)</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">School (optional)</label>
                   <input
                     type="text"
                     value={sailorFormData.schoolName}
                     onChange={(e) => setSailorFormData({ ...sailorFormData, schoolName: e.target.value })}
                     placeholder="e.g. RI"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-400 mb-1">
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
                   Race Scores (comma-separated, wrap discards in parentheses)
                 </label>
                 <input
@@ -776,24 +763,24 @@ export function AdminWingfoilPanel({
                   value={sailorFormData.racesStr}
                   onChange={(e) => setSailorFormData({ ...sailorFormData, racesStr: e.target.value })}
                   placeholder="e.g. 1, 2, 1, (4), 2, 1"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white font-mono focus:outline-none focus:border-amber-500"
+                  className="w-full sp-input py-2 font-mono"
                 />
-                <p className="text-[10px] text-slate-500 mt-1">
+                <p className="text-[10px] text-[var(--sp-slate-soft)] mt-1">
                   Example: 1, 2, (9 DNF), 3, 1 (parentheses mark discarded scores)
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
+              <div className="pt-3 border-t border-[var(--sp-cool-veil)] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setIsEditingSailor(false)}
-                  className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300"
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-bold text-[var(--sp-charcoal-slate)] hover:bg-[var(--sp-cool-veil)]/50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold flex items-center gap-1.5 shadow-md shadow-amber-500/20"
+                  className="sp-btn-primary px-4 py-2 text-xs font-bold flex items-center gap-1.5 shadow-xs"
                 >
                   <Check className="h-4 w-4" />
                   <span>Save Sailor</span>
@@ -806,9 +793,9 @@ export function AdminWingfoilPanel({
 
       {/* Edit Regatta Modal */}
       {isEditingRegatta && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-white/10 rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl">
-            <h3 className="text-lg font-black text-white">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl">
+            <h3 className="text-lg font-black font-display text-[var(--sp-harbour-shadow)]">
               {regattas.some((r) => r.id === regattaFormData.id)
                 ? "Edit Regatta Details"
                 : "Create Wingfoil Regatta"}
@@ -816,30 +803,30 @@ export function AdminWingfoilPanel({
 
             <form onSubmit={handleUpdateRegatta} className="space-y-3 text-xs">
               <div>
-                <label className="block font-semibold text-slate-400 mb-1">Regatta ID</label>
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Regatta ID</label>
                 <input
                   type="text"
                   required
                   disabled={regattas.some((r) => r.id === regattaFormData.id)}
                   value={regattaFormData.id || ""}
                   onChange={(e) => setRegattaFormData({ ...regattaFormData, id: e.target.value })}
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white font-mono focus:outline-none focus:border-amber-500"
+                  className="w-full sp-input py-2 font-mono disabled:opacity-60"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Full Name</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Full Name</label>
                   <input
                     type="text"
                     required
                     value={regattaFormData.name || ""}
                     onChange={(e) => setRegattaFormData({ ...regattaFormData, name: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Short Name</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Short Name</label>
                   <input
                     type="text"
                     required
@@ -847,48 +834,48 @@ export function AdminWingfoilPanel({
                     onChange={(e) =>
                       setRegattaFormData({ ...regattaFormData, shortName: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Dates</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Dates</label>
                   <input
                     type="text"
                     required
                     value={regattaFormData.dates || ""}
                     onChange={(e) => setRegattaFormData({ ...regattaFormData, dates: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Venue</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Venue</label>
                   <input
                     type="text"
                     required
                     value={regattaFormData.venue || ""}
                     onChange={(e) => setRegattaFormData({ ...regattaFormData, venue: e.target.value })}
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Series Name</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Series Name</label>
                   <input
                     type="text"
                     value={regattaFormData.seriesName || ""}
                     onChange={(e) =>
                       setRegattaFormData({ ...regattaFormData, seriesName: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Status</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Status</label>
                   <select
                     value={regattaFormData.status || "Upcoming"}
                     onChange={(e) =>
@@ -897,7 +884,7 @@ export function AdminWingfoilPanel({
                         status: e.target.value as "Completed" | "Upcoming",
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-amber-500"
+                    className="w-full sp-select py-2"
                   >
                     <option value="Completed">Completed</option>
                     <option value="Upcoming">Upcoming</option>
@@ -905,17 +892,17 @@ export function AdminWingfoilPanel({
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
+              <div className="pt-3 border-t border-[var(--sp-cool-veil)] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setIsEditingRegatta(false)}
-                  className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300"
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-bold text-[var(--sp-charcoal-slate)] hover:bg-[var(--sp-cool-veil)]/50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold"
+                  className="sp-btn-primary px-4 py-2 text-xs font-bold shadow-xs"
                 >
                   Save Regatta
                 </button>

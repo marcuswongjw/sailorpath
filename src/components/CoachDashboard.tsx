@@ -9,13 +9,27 @@ import { fleetPillClass } from "@/components/sailor-profile/helpers";
 
 type SearchMatch = { id: string; name: string; handle: string; sailNumber: string; club: string };
 
+const DEMO_SEARCH_SAILORS: SearchMatch[] = [
+  { id: "demo-s1", name: "Lucas Wong", handle: "lucas-w", sailNumber: "SGP 4658", club: "SAF Yacht Club" },
+  { id: "demo-s2", name: "Chloe Tan", handle: "chloe-t", sailNumber: "SGP 4612", club: "Singapore Sailing Club" },
+  { id: "demo-s3", name: "Ethan Lee", handle: "ethan-l", sailNumber: "SGP 4589", club: "Changi Sailing Club" },
+  { id: "demo-s4", name: "Sarah Chen", handle: "sarah-c", sailNumber: "SGP 4701", club: "National Sailing Centre" },
+  { id: "demo-s5", name: "Marcus Koh", handle: "marcus-k", sailNumber: "SGP 2184", club: "Changi Sailing Club" },
+];
+
 async function readJson<T>(response: Response): Promise<T> {
   const body = await response.json();
   if (!response.ok) throw new Error(body.error || "Something went wrong");
   return body as T;
 }
 
-export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboard }) {
+export function CoachDashboard({
+  initialData,
+  demoMode = false,
+}: {
+  initialData: CoachSquadDashboard;
+  demoMode?: boolean;
+}) {
   const [data, setData] = useState(initialData);
   const [query, setQuery] = useState("");
   const [matches, setMatches] = useState<SearchMatch[]>([]);
@@ -28,13 +42,31 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   const [sortKey, setSortKey] = useState<"ranking" | "name" | "movement" | "best3">("ranking");
 
   useEffect(() => {
-    if (query.trim().length < 2) {
-      return;
+    const trimmed = query.trim();
+    if (trimmed.length < 2) {
+      const timer = window.setTimeout(() => setMatches([]), 0);
+      return () => window.clearTimeout(timer);
+    }
+    if (demoMode) {
+      const timer = window.setTimeout(() => {
+        const term = trimmed.toLowerCase();
+        const memberIds = new Set([...data.members, ...data.following].map((m) => m.sailorId));
+        setMatches(
+          DEMO_SEARCH_SAILORS.filter(
+            (s) =>
+              !memberIds.has(s.id) &&
+              (s.name.toLowerCase().includes(term) ||
+                s.sailNumber.toLowerCase().includes(term) ||
+                s.club.toLowerCase().includes(term))
+          )
+        );
+      }, 100);
+      return () => window.clearTimeout(timer);
     }
     const controller = new AbortController();
     const timer = window.setTimeout(async () => {
       try {
-        const response = await fetch(`/api/coach/sailors?q=${encodeURIComponent(query.trim())}`, { signal: controller.signal });
+        const response = await fetch(`/api/coach/sailors?q=${encodeURIComponent(trimmed)}`, { signal: controller.signal });
         const body = await readJson<{ sailors: SearchMatch[] }>(response);
         const memberIds = new Set([...data.members, ...data.following].map((member) => member.sailorId));
         setMatches(body.sailors.filter((sailor) => !memberIds.has(sailor.id)));
@@ -46,7 +78,7 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [query, data.members, data.following]);
+  }, [query, data.members, data.following, demoMode]);
 
   useEffect(() => {
     if (!manageOpen) return;
@@ -88,6 +120,16 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     : null;
 
   async function mutate(method: "POST" | "PATCH" | "DELETE", payload: { sailorId?: string; name?: string }) {
+    if (demoMode) {
+      if (payload.name) {
+        setData((prev) => ({
+          ...prev,
+          squad: { id: prev.squad?.id || "demo-squad", name: payload.name! },
+        }));
+        setSquadName(payload.name);
+      }
+      return;
+    }
     const queryString = method === "DELETE" ? `?sailorId=${encodeURIComponent(payload.sailorId || "")}` : "";
     const response = await fetch(`/api/coach/squad${queryString}`, {
       method,
@@ -101,6 +143,49 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   async function addSailor(sailorId: string) {
     setBusyId(sailorId); setMessage(null);
     try {
+      if (demoMode) {
+        const s = DEMO_SEARCH_SAILORS.find((x) => x.id === sailorId) || {
+          id: sailorId,
+          name: "Lucas Wong",
+          handle: "lucas-w",
+          sailNumber: "SGP 4658",
+          club: "SAF Yacht Club",
+        };
+        setData((prev) => ({
+          ...prev,
+          members: [
+            {
+              id: `m-${Date.now()}`,
+              sailorId: s.id,
+              name: s.name,
+              handle: s.handle,
+              sailNumber: s.sailNumber,
+              club: s.club,
+              avatarUrl: null,
+              fleet: "Gold",
+              ranking: prev.members.length + 1,
+              bestThreeOfFive: 6.0,
+              squadStatus: "National Squad",
+              recentMovement: 1,
+              scoringEvents: [
+                { regattaId: "demo-r1", regattaName: "Singapore Nationals 2026", date: "2026-06-20", score: 2, selected: true, isDns: false, isOverseas: false },
+                { regattaId: "demo-r2", regattaName: "CSC Youth Championship 2026", date: "2026-03-15", score: 4, selected: true, isDns: false, isOverseas: false },
+              ],
+              recentResults: [],
+              coachNote: "Consistently sharp on start acceleration. Working on downwind speed in chop.",
+              coachNoteVisibility: "coach_only",
+              developmentRecords: [
+                { id: `rec-${Date.now()}`, type: "observation", category: "Technical", title: "Clean roll-tacks", detail: "Fast exit angles in 12-14kt breeze", recordDate: new Date().toISOString().slice(0, 10), status: "active", targetDate: null, visibility: "shared", sentiment: "strength" }
+              ],
+              selectionReadiness: { tone: "ready", label: "On track", detail: "Ranked inside qualifying quota" },
+              latestResult: { regattaName: "Singapore Nationals 2026", regattaSlug: "sn-2026", date: "2026-06-20", rank: 2, fleetSize: 48 },
+            },
+            ...prev.members,
+          ],
+        }));
+        setQuery(""); setMatches([]); setMessage(`${s.name} added to squad (demo).`);
+        return;
+      }
       await mutate("POST", { sailorId });
       setQuery(""); setMatches([]); setMessage("Sailor added to your squad.");
     } catch (error) { setMessage(error instanceof Error ? error.message : "Could not add sailor"); }
@@ -110,6 +195,15 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   async function removeSailor(sailorId: string) {
     setBusyId(sailorId); setMessage(null);
     try {
+      if (demoMode) {
+        setData((prev) => ({
+          ...prev,
+          members: prev.members.filter((m) => m.sailorId !== sailorId),
+        }));
+        setSelected((current) => current.filter((id) => id !== sailorId));
+        setMessage("Sailor removed from squad (demo).");
+        return;
+      }
       await mutate("DELETE", { sailorId });
       setSelected((current) => current.filter((id) => id !== sailorId));
       setMessage("Sailor removed from your squad.");
@@ -118,6 +212,50 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   }
 
   async function mutateFollowing(method: "POST" | "DELETE", sailorId: string) {
+    if (demoMode) {
+      if (method === "POST") {
+        const s = DEMO_SEARCH_SAILORS.find((x) => x.id === sailorId) || {
+          id: sailorId,
+          name: "Ethan Lee",
+          handle: "ethan-l",
+          sailNumber: "SGP 4589",
+          club: "Changi Sailing Club",
+        };
+        setData((prev) => ({
+          ...prev,
+          following: [
+            {
+              id: `f-${Date.now()}`,
+              sailorId: s.id,
+              name: s.name,
+              handle: s.handle,
+              sailNumber: s.sailNumber,
+              club: s.club,
+              avatarUrl: null,
+              fleet: "Gold",
+              ranking: 12,
+              bestThreeOfFive: 18.0,
+              squadStatus: null,
+              recentMovement: 0,
+              scoringEvents: [],
+              recentResults: [],
+              coachNote: "",
+              coachNoteVisibility: "coach_only",
+              developmentRecords: [],
+              selectionReadiness: { tone: "watch", label: "Watchlist", detail: "Monitoring progress" },
+              latestResult: null,
+            },
+            ...prev.following,
+          ],
+        }));
+      } else {
+        setData((prev) => ({
+          ...prev,
+          following: prev.following.filter((m) => m.sailorId !== sailorId),
+        }));
+      }
+      return;
+    }
     const queryString = method === "DELETE" ? `?sailorId=${encodeURIComponent(sailorId)}` : "";
     const response = await fetch(`/api/coach/following${queryString}`, {
       method,
@@ -168,6 +306,23 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     if (!activeSailor) return;
     setBusyId("note"); setMessage(null);
     try {
+      if (demoMode) {
+        setData((current) => ({
+          ...current,
+          members: current.members.map((member) =>
+            member.sailorId === activeSailor.sailorId
+              ? { ...member, coachNote: note, coachNoteVisibility: visibility }
+              : member
+          ),
+          following: current.following.map((member) =>
+            member.sailorId === activeSailor.sailorId
+              ? { ...member, coachNote: note, coachNoteVisibility: visibility }
+              : member
+          ),
+        }));
+        setMessage("Private coach note saved (demo).");
+        return;
+      }
       const response = await fetch("/api/coach/notes", {
         method: "PUT",
         headers: { "content-type": "application/json" },
@@ -209,6 +364,29 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
     if (!activeSailor || !payload.title.trim()) return;
     setBusyId("development"); setMessage(null);
     try {
+      if (demoMode) {
+        const newRecord = {
+          id: `dev-${Date.now()}`,
+          ...payload,
+        };
+        setData((current) => ({
+          ...current,
+          members: current.members.map((member) =>
+            member.sailorId === activeSailor.sailorId
+              ? { ...member, developmentRecords: [newRecord, ...member.developmentRecords] }
+              : member
+          ),
+          following: current.following.map((member) =>
+            member.sailorId === activeSailor.sailorId
+              ? { ...member, developmentRecords: [newRecord, ...member.developmentRecords] }
+              : member
+          ),
+        }));
+        setMessage(
+          `${payload.type === "goal" ? "Goal" : payload.type === "attendance" ? "Attendance" : "Observation"} saved (demo).`
+        );
+        return;
+      }
       const response = await fetch("/api/coach/development", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -228,6 +406,25 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   async function handleUpdateRecordStatus(id: string, status: string) {
     setBusyId(id); setMessage(null);
     try {
+      if (demoMode) {
+        setData((current) => ({
+          ...current,
+          members: current.members.map((member) => ({
+            ...member,
+            developmentRecords: member.developmentRecords.map((r) =>
+              r.id === id ? { ...r, status } : r
+            ),
+          })),
+          following: current.following.map((member) => ({
+            ...member,
+            developmentRecords: member.developmentRecords.map((r) =>
+              r.id === id ? { ...r, status } : r
+            ),
+          })),
+        }));
+        setMessage("Coaching record updated (demo).");
+        return;
+      }
       const response = await fetch("/api/coach/development", {
         method: "PATCH",
         headers: { "content-type": "application/json" },
@@ -245,6 +442,21 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   async function handleDeleteRecord(id: string) {
     setBusyId(id); setMessage(null);
     try {
+      if (demoMode) {
+        setData((current) => ({
+          ...current,
+          members: current.members.map((member) => ({
+            ...member,
+            developmentRecords: member.developmentRecords.filter((r) => r.id !== id),
+          })),
+          following: current.following.map((member) => ({
+            ...member,
+            developmentRecords: member.developmentRecords.filter((r) => r.id !== id),
+          })),
+        }));
+        setMessage("Coaching record removed (demo).");
+        return;
+      }
       const response = await fetch(`/api/coach/development?id=${encodeURIComponent(id)}`, {
         method: "DELETE",
       });
@@ -260,6 +472,14 @@ export function CoachDashboard({ initialData }: { initialData: CoachSquadDashboa
   async function reviewAction(action: (typeof actions)[number], status: "reviewed" | "dismissed") {
     setBusyId(action.key); setMessage(null);
     try {
+      if (demoMode) {
+        setData((current) => ({
+          ...current,
+          actionReviews: [...current.actionReviews, { actionKey: action.key, status }],
+        }));
+        setMessage(status === "reviewed" ? "Action marked reviewed (demo)." : "Action dismissed (demo).");
+        return;
+      }
       const response = await fetch("/api/coach/action-reviews", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ sailorId: action.sailorId, actionKey: action.key, status }) });
       setData(await readJson<CoachSquadDashboard>(response));
       setMessage(status === "reviewed" ? "Action marked reviewed." : "Action dismissed for this ranking update.");

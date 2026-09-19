@@ -5,14 +5,7 @@ import Link from "next/link";
 import { DemoNavHeader } from "@/components/demo/DemoNavHeader";
 import {
   SAMPLE_PARENT_PANEL,
-  SAMPLE_SAILOR,
-  SAMPLE_RESULTS,
-  SAMPLE_EQUIPMENT,
-  SAMPLE_SERIES_STANDING,
-  SAMPLE_ILCA_STANDING,
-  SAMPLE_OBSERVATIONS,
 } from "@/lib/sampleProfile";
-import { SailorProfileView } from "@/components/SailorProfileView";
 import {
   Heart,
   Calendar,
@@ -28,8 +21,6 @@ import {
   Plus,
   Trash2,
   ShieldCheck,
-  ChevronDown,
-  ChevronUp,
 } from "lucide-react";
 
 export function SampleParentDemo() {
@@ -38,7 +29,6 @@ export function SampleParentDemo() {
   const [checklistItems, setChecklistItems] = useState(p.morningChecklist);
   const [newChecklistInput, setNewChecklistInput] = useState("");
   const [parentNotes, setParentNotes] = useState(p.parentNotes);
-  const [showFullProfile, setShowFullProfile] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   const flash = (msg: string) => {
@@ -51,40 +41,40 @@ export function SampleParentDemo() {
   const completedCount = checklistItems.filter((i) => i.checked).length;
 
   return (
-    <div className="min-h-screen bg-[#0d1017] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] flex flex-col">
       <DemoNavHeader activeDemo="parent" />
 
       {toast && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-full bg-slate-900 border border-emerald-500/40 px-5 py-2.5 text-xs font-bold text-white shadow-xl animate-fade-in">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 rounded-full bg-[var(--sp-harbour-shadow)] border border-[var(--sp-harbour-teal)] text-white px-5 py-2.5 text-xs font-bold shadow-xl animate-fade-in">
           {toast}
         </div>
       )}
 
       {/* Hero Banner for Parent Command Center Demo */}
-      <div className="border-b border-emerald-500/20 bg-gradient-to-b from-emerald-950/30 via-[#0d1017] to-[#0d1017]">
+      <div className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 pt-6 pb-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center gap-3.5">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shadow-lg shadow-emerald-950/50">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20 shadow-xs">
                 <Heart className="h-6 w-6" />
               </span>
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  <h1 className="text-xl sm:text-2xl font-black font-display text-[var(--sp-harbour-shadow)] tracking-tight">
                     Parent Command Center
                   </h1>
-                  <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-emerald-300">
+                  <span className="rounded-full bg-[var(--sp-harbour-teal)]/15 border border-[var(--sp-harbour-teal)]/30 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
                     Live Demo
                   </span>
                 </div>
-                <p className="text-xs text-slate-400 mt-1">
+                <p className="text-xs text-[var(--sp-slate-soft)] mt-1">
                   Multi-athlete tracking · 2026 Selection Trials · Morning race checklist · Equipment lockers
                 </p>
               </div>
             </div>
 
             {/* Athlete Switcher Pills */}
-            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-black/60 border border-white/10 self-start sm:self-auto">
+            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] self-start sm:self-auto">
               {p.athletes.map((ath) => (
                 <button
                   key={ath.id}
@@ -92,8 +82,8 @@ export function SampleParentDemo() {
                   onClick={() => setSelectedAthleteId(ath.id)}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                     selectedAthleteId === ath.id
-                      ? "bg-emerald-600 text-white shadow-sm shadow-emerald-900/40"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                      ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+                      : "text-[var(--sp-charcoal-slate)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-warm-white)]"
                   }`}
                 >
                   <span>{ath.name}</span>
@@ -107,8 +97,8 @@ export function SampleParentDemo() {
                 onClick={() => setSelectedAthleteId("all")}
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   selectedAthleteId === "all"
-                    ? "bg-emerald-600 text-white shadow-sm shadow-emerald-900/40"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
+                    ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+                    : "text-[var(--sp-charcoal-slate)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-warm-white)]"
                 }`}
               >
                 All Athletes
@@ -123,11 +113,11 @@ export function SampleParentDemo() {
         {/* ALL ATHLETES VIEW */}
         {selectedAthleteId === "all" ? (
           <div className="space-y-4">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-              <h2 className="text-sm font-bold text-white mb-1">
+            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs">
+              <h2 className="text-sm font-bold text-[var(--sp-harbour-shadow)] mb-1">
                 Family Fleet Summary
               </h2>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-[var(--sp-slate-soft)]">
                 Side-by-side progression tracking across Optimist Gold and Silver series.
               </p>
             </div>
@@ -135,35 +125,35 @@ export function SampleParentDemo() {
               {p.athletes.map((ath) => (
                 <div
                   key={ath.id}
-                  className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5 space-y-4"
+                  className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 space-y-4 shadow-xs"
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <h3 className="text-base font-black text-white">{ath.name}</h3>
-                      <p className="text-xs text-slate-400 font-mono mt-0.5">
+                      <h3 className="text-base font-black text-[var(--sp-harbour-shadow)]">{ath.name}</h3>
+                      <p className="text-xs text-[var(--sp-slate-soft)] font-mono mt-0.5">
                         {ath.sailNumber}
                         {ath.sailNumberIlca4 ? ` · ${ath.sailNumberIlca4}` : ""}
                       </p>
-                      <p className="text-xs text-emerald-400 font-bold mt-1">
+                      <p className="text-xs text-[var(--sp-harbour-teal)] font-bold mt-1">
                         {ath.boatClass} · {ath.rankLabel}
                       </p>
                     </div>
-                    <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 text-xs font-black text-emerald-300 font-mono">
+                    <span className="rounded-full bg-[var(--sp-harbour-teal)]/10 border border-[var(--sp-harbour-teal)]/25 px-2.5 py-1 text-xs font-black text-[var(--sp-harbour-teal)] font-mono">
                       #{ath.rank}
                     </span>
                   </div>
-                  <div className="rounded-xl bg-black/30 border border-white/5 p-3 space-y-1">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                  <div className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 space-y-1">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
                       Status / Pathway
                     </p>
-                    <p className="text-xs font-medium text-slate-200">
+                    <p className="text-xs font-medium text-[var(--sp-harbour-shadow)]">
                       {ath.selectionStatus}
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setSelectedAthleteId(ath.id)}
-                    className="w-full rounded-xl bg-white/10 hover:bg-white/15 py-2 text-xs font-bold text-white transition-colors"
+                    className="w-full rounded-xl bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-cool-veil)]/60 border border-[var(--sp-cool-veil)] py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] transition-colors"
                   >
                     Open {ath.name}&apos;s Workspace →
                   </button>
@@ -175,35 +165,35 @@ export function SampleParentDemo() {
           /* SINGLE ATHLETE BENTO WORKSPACE */
           <div className="space-y-5">
             {/* Athlete Hero Card */}
-            <div className="rounded-2xl border border-emerald-500/25 bg-gradient-to-r from-emerald-500/[0.08] via-teal-500/[0.04] to-transparent p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h2 className="text-xl font-black text-white">
+                  <h2 className="text-xl font-black font-display text-[var(--sp-harbour-shadow)]">
                     {currentAthlete.name}
                   </h2>
-                  <span className="rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold inline-flex items-center gap-1">
+                  <span className="rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-bold inline-flex items-center gap-1">
                     <ShieldCheck className="h-3 w-3" />
                     Verified Athlete
                   </span>
-                  <span className="rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 text-[10px] font-mono font-bold">
+                  <span className="rounded-full bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20 px-2 py-0.5 text-[10px] font-mono font-bold">
                     Opti {currentAthlete.sailNumber}
                   </span>
                   {currentAthlete.sailNumberIlca4 && (
-                    <span className="rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 text-[10px] font-mono font-bold">
+                    <span className="rounded-full bg-purple-500/10 text-purple-700 border border-purple-500/20 px-2 py-0.5 text-[10px] font-mono font-bold">
                       ILCA {currentAthlete.sailNumberIlca4}
                     </span>
                   )}
                 </div>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-[var(--sp-slate-soft)]">
                   {p.club} · {p.coachName} · {currentAthlete.selectionStatus}
                 </p>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <Link
                   href="/calendar"
-                  className="rounded-xl border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 px-3.5 py-2 text-xs font-bold text-sky-300 transition-colors inline-flex items-center gap-1.5"
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-cool-veil)]/50 px-3.5 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] transition-colors inline-flex items-center gap-1.5 shadow-xs"
                 >
-                  <Calendar className="h-3.5 w-3.5" />
+                  <Calendar className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
                   Racing Calendar
                 </Link>
               </div>
@@ -212,54 +202,54 @@ export function SampleParentDemo() {
             {/* Bento Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Card 1: 2026 Asian Games & Selection Trials Standings */}
-              <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.04] p-5 space-y-4">
+              <div className="rounded-2xl border border-[var(--sp-racing-orange)]/25 bg-[var(--sp-warm-white)] p-5 space-y-4 shadow-xs">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                  <p className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-racing-orange)] flex items-center gap-1.5">
                     <Target className="h-3.5 w-3.5" />
                     2026 Selection Trials Standings
                   </p>
-                  <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-300">
+                  <span className="rounded-full bg-[var(--sp-racing-orange)]/15 border border-[var(--sp-racing-orange)]/30 px-2 py-0.5 text-[10px] font-bold text-[var(--sp-racing-deep)]">
                     Rank #{p.selectionTrials.trialsRank}
                   </span>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
-                  <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
-                    <p className="text-[10px] font-bold uppercase text-slate-500">
+                  <div className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 text-center">
+                    <p className="text-[10px] font-bold uppercase text-[var(--sp-slate-soft)]">
                       Combined Score
                     </p>
-                    <p className="text-lg font-black text-white font-mono mt-0.5">
+                    <p className="text-lg font-black text-[var(--sp-harbour-shadow)] font-mono mt-0.5">
                       {p.selectionTrials.totalPoints}
                     </p>
                   </div>
-                  <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
-                    <p className="text-[10px] font-bold uppercase text-slate-500">
+                  <div className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 text-center">
+                    <p className="text-[10px] font-bold uppercase text-[var(--sp-slate-soft)]">
                       Events Sailed
                     </p>
-                    <p className="text-lg font-black text-white font-mono mt-0.5">
+                    <p className="text-lg font-black text-[var(--sp-harbour-shadow)] font-mono mt-0.5">
                       {p.selectionTrials.eventsCount}
                     </p>
                   </div>
-                  <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
-                    <p className="text-[10px] font-bold uppercase text-slate-500">
+                  <div className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 text-center">
+                    <p className="text-[10px] font-bold uppercase text-[var(--sp-slate-soft)]">
                       Cutoff Buffer
                     </p>
-                    <p className="text-lg font-black text-emerald-400 font-mono mt-0.5">
+                    <p className="text-lg font-black text-emerald-600 font-mono mt-0.5">
                       +{p.selectionTrials.gapToCutoff} pts
                     </p>
                   </div>
                 </div>
                 <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3 space-y-1">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-300">
-                    <CheckCircle2 className="h-3.5 w-3.5" />
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-300">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                     <span>Provisional Asian Games &amp; Perth Qualifier</span>
                   </div>
-                  <p className="text-[11px] text-slate-300 leading-snug">
+                  <p className="text-[11px] text-[var(--sp-charcoal-slate)] leading-snug">
                     {p.selectionTrials.selectionNote}
                   </p>
                 </div>
                 <Link
                   href="/sg/optimist/selection"
-                  className="inline-flex items-center gap-1 text-xs font-bold text-amber-400 hover:text-amber-300"
+                  className="inline-flex items-center gap-1 text-xs font-bold text-[var(--sp-racing-orange)] hover:underline"
                 >
                   <span>View full 2026 Selection Board</span>
                   <ArrowRight className="h-3 w-3" />
@@ -267,13 +257,13 @@ export function SampleParentDemo() {
               </div>
 
               {/* Card 2: Equipment Locker & Maintenance Alerts */}
-              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-4">
+              <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 space-y-4 shadow-xs">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                    <Wrench className="h-3.5 w-3.5 text-orange-400" />
+                  <p className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-slate-soft)] flex items-center gap-1.5">
+                    <Wrench className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
                     Boat Locker &amp; Equipment
                   </p>
-                  <span className="text-[10px] font-semibold text-slate-500">
+                  <span className="text-[10px] font-semibold text-[var(--sp-slate-soft)]">
                     4 Registered Items
                   </span>
                 </div>
@@ -285,25 +275,25 @@ export function SampleParentDemo() {
                     return (
                       <div
                         key={item.type}
-                        className="rounded-xl bg-black/25 border border-white/5 p-2.5"
+                        className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-2.5"
                       >
                         <div className="flex items-center justify-between text-[10px]">
-                          <span className="font-bold text-slate-400 uppercase">
+                          <span className="font-bold text-[var(--sp-slate-soft)] uppercase">
                             {item.type}
                           </span>
                           <span
                             className={`px-1.5 py-0.5 rounded font-bold uppercase text-[9px] ${
                               isReady
-                                ? "bg-emerald-500/15 text-emerald-300"
+                                ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300"
                                 : isPractice
-                                ? "bg-amber-500/15 text-amber-300"
-                                : "bg-rose-500/15 text-rose-300"
+                                ? "bg-amber-500/15 text-amber-700"
+                                : "bg-rose-500/15 text-rose-700"
                             }`}
                           >
                             {isReady ? "Race Ready" : isPractice ? "Practice Only" : "Needs Repair"}
                           </span>
                         </div>
-                        <p className="text-xs font-bold text-white mt-1 truncate">
+                        <p className="text-xs font-bold text-[var(--sp-harbour-shadow)] mt-1 truncate">
                           {item.brand}
                         </p>
                       </div>
@@ -311,16 +301,16 @@ export function SampleParentDemo() {
                   })}
                 </div>
                 <div className="rounded-xl bg-amber-500/10 border border-amber-500/25 p-3 flex items-start gap-2.5">
-                  <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                  <p className="text-xs text-amber-200 leading-snug">
+                  <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                  <p className="text-xs text-amber-800 leading-snug">
                     Sail acquired Feb 2025 (~18 months). Consider measuring a backup sail before AOC trials.
                   </p>
                 </div>
               </div>
 
               {/* Card 3: Coach Observations & Debriefs */}
-              <div className="rounded-2xl border border-blue-500/25 bg-blue-500/[0.04] p-5 space-y-3">
-                <p className="text-[10px] font-black uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
+              <div className="rounded-2xl border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-warm-white)] p-5 space-y-3 shadow-xs">
+                <p className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
                   <GraduationCap className="h-3.5 w-3.5" />
                   Coach Technical Debriefs
                 </p>
@@ -328,15 +318,15 @@ export function SampleParentDemo() {
                   {p.coachDebriefs.map((deb, idx) => (
                     <div
                       key={idx}
-                      className="rounded-xl bg-black/30 border border-white/5 p-3 space-y-1"
+                      className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 space-y-1"
                     >
                       <div className="flex items-center justify-between text-[10px]">
-                        <span className="font-bold text-blue-300">{deb.coachName}</span>
-                        <span className="rounded bg-white/5 px-1.5 py-0.5 text-slate-400 font-mono">
+                        <span className="font-bold text-[var(--sp-harbour-teal)]">{deb.coachName}</span>
+                        <span className="rounded bg-[var(--sp-cool-veil)]/50 px-1.5 py-0.5 text-[var(--sp-slate-soft)] font-mono">
                           {deb.category} · {deb.date}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
                         {deb.note}
                       </p>
                     </div>
@@ -344,15 +334,15 @@ export function SampleParentDemo() {
                 </div>
               </div>
 
-              {/* Card 4: Pre-Race Morning Checklist & Calendar */}
-              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-3.5">
+              {/* Card 4: Pre-Race Morning Checklist */}
+              <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 space-y-3.5 shadow-xs">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                    <CheckSquare className="h-3.5 w-3.5 text-emerald-400" />
+                  <p className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-slate-soft)] flex items-center gap-1.5">
+                    <CheckSquare className="h-3.5 w-3.5 text-emerald-600" />
                     Pre-Race Morning Checklist
                   </p>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono text-emerald-400 font-bold">
+                    <span className="text-[10px] font-mono text-emerald-600 font-bold">
                       {completedCount}/{checklistItems.length} Ready
                     </span>
                     <button
@@ -363,7 +353,7 @@ export function SampleParentDemo() {
                         );
                         flash("Demo checklist reset");
                       }}
-                      className="text-[10px] text-slate-500 hover:text-white p-1"
+                      className="text-[10px] text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] p-1"
                       title="Reset checklist"
                     >
                       <RotateCcw className="h-3 w-3" />
@@ -371,15 +361,15 @@ export function SampleParentDemo() {
                   </div>
                 </div>
 
-                {/* Interactive Checklist toggles in demo */}
+                {/* Interactive Checklist toggles */}
                 <div className="space-y-1.5">
                   {checklistItems.map((item) => (
                     <div
                       key={item.id}
                       className={`group flex items-center justify-between p-2 rounded-xl transition-colors ${
                         item.checked
-                          ? "bg-emerald-500/10 border border-emerald-500/20 text-slate-200"
-                          : "bg-black/20 border border-white/5 text-slate-400 hover:bg-white/5"
+                          ? "bg-emerald-500/10 border border-emerald-500/20 text-[var(--sp-harbour-shadow)]"
+                          : "bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal-slate)] hover:bg-[var(--sp-cool-veil)]/40"
                       }`}
                     >
                       <button
@@ -394,13 +384,13 @@ export function SampleParentDemo() {
                         className="w-full text-left flex items-start gap-2.5 min-w-0"
                       >
                         {item.checked ? (
-                          <CheckSquare className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+                          <CheckSquare className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
                         ) : (
-                          <Square className="h-4 w-4 text-slate-600 shrink-0 mt-0.5" />
+                          <Square className="h-4 w-4 text-[var(--sp-slate-soft)] shrink-0 mt-0.5" />
                         )}
                         <span
                           className={`text-xs ${
-                            item.checked ? "line-through opacity-80" : ""
+                            item.checked ? "line-through opacity-70" : ""
                           }`}
                         >
                           {item.label}
@@ -415,7 +405,7 @@ export function SampleParentDemo() {
                             );
                             flash("Checklist item removed");
                           }}
-                          className="text-slate-500 hover:text-rose-400 p-1 opacity-70 group-hover:opacity-100 transition shrink-0 ml-2"
+                          className="text-[var(--sp-slate-soft)] hover:text-rose-600 p-1 opacity-70 group-hover:opacity-100 transition shrink-0 ml-2"
                           title="Remove custom item"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -445,7 +435,7 @@ export function SampleParentDemo() {
                       }
                     }}
                     placeholder="Add custom prep item…"
-                    className="flex-1 rounded-xl bg-black/30 border border-white/10 px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                    className="flex-1 sp-input py-1.5 px-3 text-xs"
                   />
                   <button
                     type="button"
@@ -459,7 +449,7 @@ export function SampleParentDemo() {
                       setNewChecklistInput("");
                       flash("Custom item added");
                     }}
-                    className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white transition flex items-center gap-1 shrink-0"
+                    className="sp-btn-primary px-3 py-1.5 text-xs font-bold flex items-center gap-1 shrink-0"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     <span>Add</span>
@@ -467,23 +457,23 @@ export function SampleParentDemo() {
                 </div>
 
                 {/* Upcoming Calendar Hook */}
-                <div className="pt-2 border-t border-white/5">
-                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">
+                <div className="pt-2 border-t border-[var(--sp-cool-veil)]">
+                  <p className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase mb-2">
                     Upcoming 2026 Fixtures
                   </p>
                   <div className="space-y-1.5">
                     {p.nextEvents.slice(0, 2).map((ev) => (
                       <div
                         key={ev.name}
-                        className="flex items-center justify-between text-xs p-2 rounded-lg bg-black/20"
+                        className="flex items-center justify-between text-xs p-2 rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)]"
                       >
                         <div>
-                          <p className="font-bold text-white truncate max-w-[220px]">
+                          <p className="font-bold text-[var(--sp-harbour-shadow)] truncate max-w-[220px]">
                             {ev.name}
                           </p>
-                          <p className="text-[10px] text-slate-500">{ev.date} · {ev.venue}</p>
+                          <p className="text-[10px] text-[var(--sp-slate-soft)]">{ev.date} · {ev.venue}</p>
                         </div>
-                        <span className="text-[10px] font-bold text-orange-400">
+                        <span className="text-[10px] font-bold text-[var(--sp-racing-orange)]">
                           {ev.deadline}
                         </span>
                       </div>
@@ -494,13 +484,13 @@ export function SampleParentDemo() {
             </div>
 
             {/* Card 5: Private Parent Journal */}
-            <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-3">
+            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 space-y-3 shadow-xs">
               <div className="flex items-center justify-between gap-2 flex-wrap">
                 <div>
-                  <h3 className="text-xs font-black text-white uppercase tracking-wider">
+                  <h3 className="text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-shadow)]">
                     Private Parent Journal
                   </h3>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-[var(--sp-slate-soft)]">
                     Encrypted notes visible only to the guardian — separate from public logs
                   </p>
                 </div>
@@ -516,7 +506,7 @@ export function SampleParentDemo() {
                     ]);
                     flash("Demo parent note added");
                   }}
-                  className="rounded-full bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white transition-colors"
+                  className="sp-btn-primary px-3 py-1.5 text-xs font-bold"
                 >
                   + Add Note
                 </button>
@@ -526,92 +516,46 @@ export function SampleParentDemo() {
                 {parentNotes.map((n, i) => (
                   <div
                     key={i}
-                    className="rounded-xl bg-black/25 border border-white/5 p-3 space-y-1"
+                    className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 space-y-1"
                   >
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-mono text-emerald-400 font-bold">
+                      <span className="font-mono text-[var(--sp-harbour-teal)] font-bold">
                         {n.date}
                       </span>
-                      <span className="rounded bg-white/5 px-1.5 py-0.5 text-slate-500">
+                      <span className="rounded bg-[var(--sp-cool-veil)]/50 px-1.5 py-0.5 text-[var(--sp-slate-soft)]">
                         Private
                       </span>
                     </div>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <p className="text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
                       {n.text}
                     </p>
                   </div>
                 ))}
               </div>
             </div>
-
-            {/* Collapsible Sailor Profile Inspection */}
-            <div className="border border-white/10 rounded-2xl bg-white/[0.01] overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setShowFullProfile(!showFullProfile)}
-                className="w-full flex items-center justify-between p-4 hover:bg-white/[0.02] transition-colors text-left"
-              >
-                <div>
-                  <h4 className="text-sm font-bold text-white">
-                    {showFullProfile ? "Hide" : "Inspect"} Kimberly&apos;s Full Sailor Profile
-                  </h4>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    Preview how race results, rankings, and dual-class cards appear alongside your parent dashboard.
-                  </p>
-                </div>
-                <span className="rounded-xl bg-white/10 p-2 text-slate-300">
-                  {showFullProfile ? (
-                    <ChevronUp className="h-4 w-4" />
-                  ) : (
-                    <ChevronDown className="h-4 w-4" />
-                  )}
-                </span>
-              </button>
-
-              {showFullProfile && (
-                <div className="border-t border-white/10 p-4 sm:p-6 bg-black/40">
-                  <SailorProfileView
-                    initialSailor={SAMPLE_SAILOR}
-                    initialResults={SAMPLE_RESULTS}
-                    initialEquipment={SAMPLE_EQUIPMENT}
-                    initialSeriesStanding={SAMPLE_SERIES_STANDING}
-                    initialIlcaStanding={SAMPLE_ILCA_STANDING}
-                    initialObservations={SAMPLE_OBSERVATIONS}
-                    canSeePrivate={true}
-                    canClaim={false}
-                    isOwner={false}
-                    isLoggedIn={true}
-                    demoMode={true}
-                    demoRole="parent"
-                    hidePrivacySection={true}
-                    profileVerified={true}
-                  />
-                </div>
-              )}
-            </div>
           </div>
         )}
 
         {/* Bottom CTA Banner */}
-        <div className="rounded-3xl border border-emerald-500/30 bg-gradient-to-r from-emerald-950/40 via-black to-emerald-950/20 p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+        <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 shadow-sm">
           <div className="space-y-1.5 max-w-xl">
-            <h3 className="text-lg font-black text-white">
+            <h3 className="text-lg font-black font-display text-[var(--sp-harbour-shadow)]">
               Ready to manage your sailor&apos;s pathway?
             </h3>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="text-xs sm:text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
               Claim your child&apos;s verified SailorPath profile to track selection trials, log gear maintenance, and organize pre-race morning checklists.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
             <Link
               href="/claim-profile"
-              className="w-full sm:w-auto text-center rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-black px-5 py-3 text-xs font-black shadow-lg shadow-emerald-500/20 transition-all"
+              className="w-full sm:w-auto text-center sp-btn-primary px-5 py-3 text-xs font-bold"
             >
               Claim Sailor Profile
             </Link>
             <Link
               href="/parent"
-              className="w-full sm:w-auto text-center rounded-2xl bg-white/10 hover:bg-white/15 text-white border border-white/15 px-5 py-3 text-xs font-bold transition-all"
+              className="w-full sm:w-auto text-center rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-cool-veil)]/50 text-[var(--sp-harbour-shadow)] px-5 py-3 text-xs font-bold transition-colors"
             >
               Sign In to Parent Hub
             </Link>

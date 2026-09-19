@@ -380,22 +380,22 @@ export function AdminTechno293Panel({
       />
 
       {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/60 border border-white/10 rounded-3xl p-5 backdrop-blur-md">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs text-[var(--sp-harbour-shadow)]">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-2xl bg-cyan-500/15 border border-cyan-500/25 flex items-center justify-center text-cyan-400">
+          <div className="h-10 w-10 rounded-2xl bg-[var(--sp-harbour-teal)]/10 border border-[var(--sp-harbour-teal)]/20 flex items-center justify-center text-[var(--sp-harbour-teal)]">
             <Compass className="h-5 w-5" />
           </div>
           <div>
-            <h2 className="text-xl font-black text-white flex items-center gap-2">
+            <h2 className="text-xl font-black font-display text-[var(--sp-harbour-shadow)] flex items-center gap-2">
               <span>Techno 293 Regattas &amp; Results Manager</span>
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
               Manage Northeast &amp; Southwest Monsoon Grand Prix rounds, scores, and published status.
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5 flex-wrap">
           <button
             type="button"
             onClick={() => {
@@ -413,7 +413,7 @@ export function AdminTechno293Panel({
               });
               setIsEditingRegatta(true);
             }}
-            className="px-3.5 py-2 rounded-xl text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 flex items-center gap-1.5 transition-all shadow-md shadow-cyan-500/20"
+            className="sp-btn-primary px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 shadow-xs"
           >
             <Plus className="h-3.5 w-3.5" />
             <span>New Regatta</span>
@@ -423,18 +423,18 @@ export function AdminTechno293Panel({
             type="button"
             onClick={() => void persistChanges(regattas)}
             disabled={isSyncingServer}
-            className="px-3.5 py-2 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 flex items-center gap-1.5 transition-all"
+            className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-cool-veil)]/50 text-[var(--sp-harbour-shadow)] px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs"
           >
             <RefreshCw
-              className={`h-3.5 w-3.5 ${isSyncingServer ? "animate-spin text-cyan-400" : ""}`}
+              className={`h-3.5 w-3.5 ${isSyncingServer ? "animate-spin text-[var(--sp-racing-orange)]" : ""}`}
             />
-            <span>{isSyncingServer ? "Syncing..." : "Sync DB"}</span>
+            <span>{isSyncingServer ? "Syncing…" : "Sync DB"}</span>
           </button>
 
           <Link
             href="/sg/techno293"
             target="_blank"
-            className="px-3.5 py-2 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 text-cyan-300 border border-cyan-500/20 flex items-center gap-1.5 transition-all"
+            className="rounded-xl border border-[var(--sp-harbour-teal)]/30 bg-[var(--sp-harbour-teal)]/10 hover:bg-[var(--sp-harbour-teal)]/20 text-[var(--sp-harbour-teal)] px-3.5 py-2 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs"
           >
             <span>Live View</span>
             <ExternalLink className="h-3.5 w-3.5" />
@@ -454,8 +454,8 @@ export function AdminTechno293Panel({
               onClick={() => setSelectedRegattaId(regatta.id)}
               className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between space-y-3 ${
                 isSelected
-                  ? "bg-cyan-500/10 border-cyan-400/50 shadow-lg shadow-cyan-500/10"
-                  : "bg-slate-900/40 border-white/5 hover:bg-white/[0.04] hover:border-white/10"
+                  ? "border-2 border-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)]/5 shadow-sm"
+                  : "bg-[var(--sp-warm-white)] border-[var(--sp-cool-veil)] hover:border-[var(--sp-harbour-teal)]/40 hover:bg-[var(--sp-sailcloth)]/30 shadow-xs"
               }`}
             >
               <div>
@@ -463,26 +463,26 @@ export function AdminTechno293Panel({
                   <span
                     className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
                       regatta.status === "Completed"
-                        ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                        : "bg-blue-500/20 text-blue-300 border border-blue-500/30"
+                        ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
+                        : "bg-[var(--sp-harbour-teal)]/15 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/30"
                     }`}
                   >
                     {regatta.status}
                   </span>
-                  <span className="text-[11px] text-slate-400 font-mono">
+                  <span className="text-[11px] text-[var(--sp-slate-soft)] font-mono">
                     {count} sailors
                   </span>
                 </div>
-                <h3 className="text-sm font-bold text-white line-clamp-1">
+                <h3 className="text-sm font-bold text-[var(--sp-harbour-shadow)] line-clamp-1">
                   {regatta.name}
                 </h3>
-                <div className="text-xs text-slate-400 mt-1">
+                <div className="text-xs text-[var(--sp-slate-soft)] mt-1">
                   {regatta.dates} • {regatta.venue}
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/5 text-xs">
-                <span className="text-slate-400 font-mono text-[10px]">
+              <div className="flex items-center justify-between pt-2 border-t border-[var(--sp-cool-veil)] text-xs">
+                <span className="text-[var(--sp-slate-soft)] font-mono text-[10px]">
                   {regatta.shortName}
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -493,7 +493,7 @@ export function AdminTechno293Panel({
                       setRegattaFormData({ ...regatta });
                       setIsEditingRegatta(true);
                     }}
-                    className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white"
+                    className="p-1 rounded-lg hover:bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
                     title="Edit regatta details"
                   >
                     <Edit3 className="h-3.5 w-3.5" />
@@ -504,7 +504,7 @@ export function AdminTechno293Panel({
                       e.stopPropagation();
                       void handleDeleteRegatta(regatta.id);
                     }}
-                    className="p-1 rounded-lg hover:bg-red-500/10 text-slate-400 hover:text-red-400"
+                    className="p-1 rounded-lg hover:bg-rose-50 text-[var(--sp-slate-soft)] hover:text-rose-600"
                     title="Delete regatta"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
@@ -517,13 +517,13 @@ export function AdminTechno293Panel({
       </div>
 
       {/* Regatta Results Manager */}
-      <div className="bg-slate-900/60 border border-white/10 rounded-3xl p-5 sm:p-6 backdrop-blur-md space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+      <div className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[var(--sp-cool-veil)]">
           <div>
-            <span className="text-xs font-bold text-cyan-400 uppercase tracking-wide">
+            <span className="text-xs font-bold text-[var(--sp-racing-orange)] uppercase tracking-wide">
               Scorecard Manager
             </span>
-            <h3 className="text-lg sm:text-xl font-black text-white">
+            <h3 className="text-lg sm:text-xl font-black font-display text-[var(--sp-harbour-shadow)]">
               {activeRegatta.name} ({activeRegatta.results?.length || 0} competitors)
             </h3>
           </div>
@@ -532,16 +532,16 @@ export function AdminTechno293Panel({
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-white/5 hover:bg-white/10 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5 transition-all"
+              className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs"
             >
-              <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-400" />
+              <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
               <span>Import Excel</span>
             </button>
 
             <button
               type="button"
               onClick={handleOpenAddSailor}
-              className="px-3 py-1.5 rounded-xl text-xs font-bold bg-cyan-500 hover:bg-cyan-400 text-slate-950 flex items-center gap-1.5 transition-all shadow-sm"
+              className="sp-btn-primary px-3 py-1.5 text-xs font-bold flex items-center gap-1.5 shadow-xs"
             >
               <UserPlus className="h-3.5 w-3.5" />
               <span>Add Sailor</span>
@@ -551,13 +551,13 @@ export function AdminTechno293Panel({
 
         {/* Scorecard Table */}
         {!activeRegatta.results || activeRegatta.results.length === 0 ? (
-          <div className="py-12 text-center text-slate-400 text-sm space-y-3">
+          <div className="py-12 text-center text-[var(--sp-slate-soft)] text-sm space-y-3">
             <p>No sailor results recorded for this event yet.</p>
             <div className="flex items-center justify-center gap-3">
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-all flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/20 transition-all flex items-center gap-1.5"
               >
                 <FileSpreadsheet className="h-4 w-4" />
                 <span>Upload Excel Results (.xlsx)</span>
@@ -565,7 +565,7 @@ export function AdminTechno293Panel({
               <button
                 type="button"
                 onClick={handleOpenAddSailor}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-white/5 text-slate-300 border border-white/10 hover:bg-white/10 transition-all flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl text-xs font-bold border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-cool-veil)]/50 transition-all flex items-center gap-1.5"
               >
                 <UserPlus className="h-4 w-4" />
                 <span>Add First Competitor</span>
@@ -573,10 +573,10 @@ export function AdminTechno293Panel({
             </div>
           </div>
         ) : (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)]">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-white/10 text-slate-400 uppercase tracking-wider font-semibold text-[11px]">
+                <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[11px]">
                   <th className="py-2.5 px-3 text-center w-12">Rank</th>
                   <th className="py-2.5 px-3">Sailor</th>
                   <th className="py-2.5 px-3 text-center">Sail #</th>
@@ -584,45 +584,45 @@ export function AdminTechno293Panel({
                   <th className="py-2.5 px-3 text-center">Division</th>
                   <th className="py-2.5 px-3">Club</th>
                   {Array.from({ length: maxRaces }).map((_, i) => (
-                    <th key={i} className="py-2.5 px-2 text-center font-bold text-slate-300">
+                    <th key={i} className="py-2.5 px-2 text-center font-bold text-[var(--sp-charcoal-slate)]">
                       R{i + 1}
                     </th>
                   ))}
                   <th className="py-2.5 px-3 text-right">Gross</th>
-                  <th className="py-2.5 px-4 text-right font-black text-cyan-400">Nett</th>
+                  <th className="py-2.5 px-4 text-right font-black text-[var(--sp-racing-orange)]">Nett</th>
                   <th className="py-2.5 px-3 text-center w-20">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-[var(--sp-cool-veil)]">
                 {activeRegatta.results.map((sailor, idx) => (
-                  <tr key={sailor.name + idx} className="hover:bg-white/[0.03]">
+                  <tr key={sailor.name + idx} className="hover:bg-[var(--sp-sailcloth)]/50 transition-colors">
                     <td className="py-3 px-3 text-center">
                       <div className="flex justify-center">
                         <RankMedalBadge rank={sailor.rank} />
                       </div>
                     </td>
-                    <td className="py-3 px-3 font-bold text-white">
+                    <td className="py-3 px-3 font-bold text-[var(--sp-harbour-shadow)]">
                       {sailor.name}
                     </td>
-                    <td className="py-3 px-3 text-center font-mono text-slate-300">
+                    <td className="py-3 px-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
                       {sailor.sailNumber}
                     </td>
-                    <td className="py-3 px-3 text-center font-bold text-slate-300">
+                    <td className="py-3 px-3 text-center font-bold text-[var(--sp-charcoal-slate)]">
                       {sailor.gender || "M"}
                     </td>
                     <td className="py-3 px-3 text-center">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20">
                         {sailor.ageCategory || sailor.division || "Open"}
                       </span>
                     </td>
-                    <td className="py-3 px-3 text-slate-400 truncate max-w-[8rem]">
+                    <td className="py-3 px-3 text-[var(--sp-slate-soft)] truncate max-w-[8rem]">
                       {sailor.club || "—"}
                     </td>
                     {Array.from({ length: maxRaces }).map((_, i) => {
                       const r = sailor.races[i];
                       if (!r) {
                         return (
-                          <td key={i} className="py-3 px-2 text-center text-slate-500">
+                          <td key={i} className="py-3 px-2 text-center text-[var(--sp-slate-soft)]">
                             —
                           </td>
                         );
@@ -632,18 +632,18 @@ export function AdminTechno293Panel({
                           key={i}
                           className={`py-3 px-2 text-center font-mono ${
                             r.isDiscarded
-                              ? "text-slate-500 line-through bg-red-500/5"
-                              : "text-slate-200 font-semibold"
+                              ? "text-[var(--sp-slate-soft)] line-through bg-rose-500/5"
+                              : "text-[var(--sp-charcoal-slate)] font-semibold"
                           }`}
                         >
                           {r.code ? `${r.score} ${r.code}` : r.score}
                         </td>
                       );
                     })}
-                    <td className="py-3 px-3 text-right font-mono text-slate-400">
+                    <td className="py-3 px-3 text-right font-mono text-[var(--sp-slate-soft)]">
                       {sailor.grossScore}
                     </td>
-                    <td className="py-3 px-4 text-right font-mono text-sm font-black text-cyan-400">
+                    <td className="py-3 px-4 text-right font-mono text-sm font-black text-[var(--sp-racing-orange)]">
                       {sailor.nettScore}
                     </td>
                     <td className="py-3 px-3 text-center">
@@ -651,7 +651,7 @@ export function AdminTechno293Panel({
                         <button
                           type="button"
                           onClick={() => handleOpenEditSailor(sailor, idx)}
-                          className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-white"
+                          className="p-1 rounded hover:bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
                           title="Edit sailor"
                         >
                           <Edit3 className="h-3.5 w-3.5" />
@@ -659,7 +659,7 @@ export function AdminTechno293Panel({
                         <button
                           type="button"
                           onClick={() => handleDeleteSailor(idx)}
-                          className="p-1 rounded hover:bg-red-500/10 text-slate-400 hover:text-red-400"
+                          className="p-1 rounded hover:bg-rose-50 text-[var(--sp-slate-soft)] hover:text-rose-600"
                           title="Delete sailor"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -676,16 +676,16 @@ export function AdminTechno293Panel({
 
       {/* Edit / Add Sailor Modal */}
       {isEditingSailor && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-white/10 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h3 className="text-base font-black text-white">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] pb-3">
+              <h3 className="text-base font-black font-display text-[var(--sp-harbour-shadow)]">
                 {editingSailorIndex !== null ? "Edit Techno 293 Competitor" : "Add Competitor"}
               </h3>
               <button
                 type="button"
                 onClick={() => setIsEditingSailor(false)}
-                className="p-1 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white"
+                className="p-1 rounded-lg text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -694,44 +694,44 @@ export function AdminTechno293Panel({
             <form onSubmit={handleSaveSailor} className="space-y-3 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Name</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Name</label>
                   <input
                     type="text"
                     required
                     value={sailorFormData.name}
                     onChange={(e) => setSailorFormData({ ...sailorFormData, name: e.target.value })}
                     placeholder="e.g. Trevor Ng"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Sail Number</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Sail Number</label>
                   <input
                     type="text"
                     value={sailorFormData.sailNumber}
                     onChange={(e) => setSailorFormData({ ...sailorFormData, sailNumber: e.target.value })}
                     placeholder="e.g. SGP 45"
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full sp-input py-2"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Gender</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Gender</label>
                   <select
                     value={sailorFormData.gender}
                     onChange={(e) =>
                       setSailorFormData({ ...sailorFormData, gender: e.target.value as "M" | "F" })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full sp-select py-2"
                   >
                     <option value="M">Male (M)</option>
                     <option value="F">Female (F)</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-400 mb-1">Division / Category</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Division / Category</label>
                   <select
                     value={sailorFormData.ageCategory}
                     onChange={(e) =>
@@ -740,7 +740,7 @@ export function AdminTechno293Panel({
                         ageCategory: e.target.value,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-cyan-500"
+                    className="w-full sp-select py-2"
                   >
                     <option value="Open">Open</option>
                     <option value="U17">U17 (Techno 7.8m)</option>
@@ -750,18 +750,18 @@ export function AdminTechno293Panel({
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-400 mb-1">Club / Affiliation</label>
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Club / Affiliation</label>
                 <input
                   type="text"
                   value={sailorFormData.club}
                   onChange={(e) => setSailorFormData({ ...sailorFormData, club: e.target.value })}
                   placeholder="e.g. Constant Wind"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full sp-input py-2"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-400 mb-1">
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
                   Race Scores (comma-separated, wrap discards in parentheses)
                 </label>
                 <input
@@ -770,24 +770,24 @@ export function AdminTechno293Panel({
                   value={sailorFormData.racesStr}
                   onChange={(e) => setSailorFormData({ ...sailorFormData, racesStr: e.target.value })}
                   placeholder="e.g. 1, 2, 1, (4), 2, 1, 1"
-                  className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white font-mono focus:outline-none focus:border-cyan-500"
+                  className="w-full sp-input py-2 font-mono"
                 />
-                <p className="text-[10px] text-slate-500 mt-1">
+                <p className="text-[10px] text-[var(--sp-slate-soft)] mt-1">
                   Example: 1, 2, (9 DNF), 3, 1 (parentheses mark discarded scores)
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-white/10 flex justify-end gap-2">
+              <div className="pt-3 border-t border-[var(--sp-cool-veil)] flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setIsEditingSailor(false)}
-                  className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300"
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-bold text-[var(--sp-charcoal-slate)] hover:bg-[var(--sp-cool-veil)]/50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-1.5 shadow-md shadow-cyan-500/20"
+                  className="sp-btn-primary px-4 py-2 text-xs font-bold flex items-center gap-1.5 shadow-xs"
                 >
                   <Check className="h-4 w-4" />
                   <span>Save Sailor</span>
@@ -800,9 +800,9 @@ export function AdminTechno293Panel({
 
       {/* Edit Regatta Modal */}
       {isEditingRegatta && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-white/10 rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl">
-            <h3 className="text-lg font-black text-white">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl">
+            <h3 className="text-lg font-black font-display text-[var(--sp-harbour-shadow)]">
               {regattas.some((r) => r.id === regattaFormData.id)
                 ? "Edit Regatta Details"
                 : "Create Techno 293 Regatta"}
@@ -810,7 +810,7 @@ export function AdminTechno293Panel({
 
             <form onSubmit={handleUpdateRegatta} className="space-y-3 text-xs">
               <div>
-                <label className="block text-slate-400 font-bold mb-1">
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
                   Regatta ID (unique)
                 </label>
                 <input
@@ -821,12 +821,12 @@ export function AdminTechno293Panel({
                   onChange={(e) =>
                     setRegattaFormData({ ...regattaFormData, id: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white"
+                  className="w-full sp-input py-2 font-mono disabled:opacity-60"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-400 font-bold mb-1">
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
                   Full Regatta Name
                 </label>
                 <input
@@ -836,13 +836,13 @@ export function AdminTechno293Panel({
                   onChange={(e) =>
                     setRegattaFormData({ ...regattaFormData, name: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white"
+                  className="w-full sp-input py-2"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-400 font-bold mb-1">
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
                     Short Name
                   </label>
                   <input
@@ -855,11 +855,11 @@ export function AdminTechno293Panel({
                         shortName: e.target.value,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white"
+                    className="w-full sp-input py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 font-bold mb-1">
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
                     Series Part (e.g. GP1)
                   </label>
                   <input
@@ -871,14 +871,14 @@ export function AdminTechno293Panel({
                         seriesPart: e.target.value,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white"
+                    className="w-full sp-input py-2"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-400 font-bold mb-1">Dates</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Dates</label>
                   <input
                     type="text"
                     required
@@ -889,11 +889,11 @@ export function AdminTechno293Panel({
                         dates: e.target.value,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white"
+                    className="w-full sp-input py-2"
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-400 font-bold mb-1">Venue</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Venue</label>
                   <input
                     type="text"
                     required
@@ -904,14 +904,14 @@ export function AdminTechno293Panel({
                         venue: e.target.value,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white"
+                    className="w-full sp-input py-2"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-400 font-bold mb-1">Status</label>
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">Status</label>
                   <select
                     value={regattaFormData.status || "Upcoming"}
                     onChange={(e) =>
@@ -920,14 +920,14 @@ export function AdminTechno293Panel({
                         status: e.target.value as "Completed" | "Upcoming",
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-slate-800 border border-white/10 text-white"
+                    className="w-full sp-select py-2"
                   >
                     <option value="Completed">Completed</option>
                     <option value="Upcoming">Upcoming</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-400 font-bold mb-1">
+                  <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
                     Scoring System
                   </label>
                   <input
@@ -939,22 +939,22 @@ export function AdminTechno293Panel({
                         scoringSystem: e.target.value,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-xl bg-white/5 border border-white/10 text-white"
+                    className="w-full sp-input py-2"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-4 border-t border-white/10">
+              <div className="flex items-center justify-end gap-2 pt-4 border-t border-[var(--sp-cool-veil)]">
                 <button
                   type="button"
                   onClick={() => setIsEditingRegatta(false)}
-                  className="px-4 py-2 rounded-xl text-slate-400 hover:text-white"
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-bold text-[var(--sp-charcoal-slate)] hover:bg-[var(--sp-cool-veil)]/50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold"
+                  className="sp-btn-primary px-4 py-2 text-xs font-bold shadow-xs"
                 >
                   Save Changes
                 </button>
