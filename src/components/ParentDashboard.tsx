@@ -408,8 +408,10 @@ export function ParentDashboard() {
         : "race_ready";
     const nextCondition = fromSimplifiedCondition(nextSimplified);
 
-    setAthletes((prev) =>
-      prev.map((ath) => {
+    let previousAthletes: Athlete[] = athletes;
+    setAthletes((prev) => {
+      previousAthletes = prev;
+      return prev.map((ath) => {
         if (ath.id !== athleteId) return ath;
         return {
           ...ath,
@@ -417,8 +419,8 @@ export function ParentDashboard() {
             g.id === gearId ? { ...g, condition: nextCondition } : g
           ),
         };
-      })
-    );
+      });
+    });
 
     try {
       const res = await fetch("/api/account/equipment", {
@@ -436,6 +438,7 @@ export function ParentDashboard() {
           : "Gear marked Needs Repair"
       );
     } catch {
+      setAthletes(previousAthletes);
       toast.error("Failed to update equipment condition.");
     }
   };
@@ -447,8 +450,10 @@ export function ParentDashboard() {
   ) => {
     const nextPrimary = !currentPrimary;
 
-    setAthletes((prev) =>
-      prev.map((ath) => {
+    let previousAthletes: Athlete[] = athletes;
+    setAthletes((prev) => {
+      previousAthletes = prev;
+      return prev.map((ath) => {
         if (ath.id !== athleteId) return ath;
         return {
           ...ath,
@@ -456,8 +461,8 @@ export function ParentDashboard() {
             g.id === gearId ? { ...g, isPrimary: nextPrimary } : g
           ),
         };
-      })
-    );
+      });
+    });
 
     try {
       const res = await fetch("/api/account/equipment", {
@@ -471,6 +476,7 @@ export function ParentDashboard() {
         nextPrimary ? "Set as primary race gear" : "Removed from primary gear."
       );
     } catch {
+      setAthletes(previousAthletes);
       toast.error("Failed to update gear priority.");
     }
   };
@@ -485,15 +491,17 @@ export function ParentDashboard() {
     });
     if (!confirmed) return;
 
-    setAthletes((prev) =>
-      prev.map((ath) => {
+    let previousAthletes: Athlete[] = athletes;
+    setAthletes((prev) => {
+      previousAthletes = prev;
+      return prev.map((ath) => {
         if (ath.id !== athleteId) return ath;
         return {
           ...ath,
           primaryGear: (ath.primaryGear || []).filter((g) => g.id !== gearId),
         };
-      })
-    );
+      });
+    });
 
     try {
       const res = await fetch(
@@ -506,6 +514,7 @@ export function ParentDashboard() {
       if (!res.ok) throw new Error();
       toast.success("Equipment item removed.");
     } catch {
+      setAthletes(previousAthletes);
       toast.error("Failed to remove equipment.");
     }
   };
@@ -549,7 +558,10 @@ export function ParentDashboard() {
           body: JSON.stringify(item),
           credentials: "include",
         });
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          throw new Error(data.error || "Failed to add preset gear");
+        }
         if (data.item) {
           setAthletes((prev) =>
             prev.map((ath) => {
@@ -907,14 +919,22 @@ export function ParentDashboard() {
                         </p>
                       </div>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedAthleteId(a.id)}
-                      className={`${PRIMARY_BTN} px-3 py-1.5 text-[11px] shrink-0`}
-                    >
-                      Open Dashboard
-                      <ChevronRight className="h-3 w-3" />
-                    </button>
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      <Link
+                        href={`/athlete?id=${a.id}`}
+                        className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
+                      >
+                        Athlete Hub ↗
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => setSelectedAthleteId(a.id)}
+                        className={`${PRIMARY_BTN} px-3 py-1.5 text-[11px]`}
+                      >
+                        Open Dashboard
+                        <ChevronRight className="h-3 w-3" />
+                      </button>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
@@ -1068,6 +1088,13 @@ export function ParentDashboard() {
                   </div>
 
                   <div className="flex flex-wrap sm:flex-col gap-2 shrink-0">
+                    <Link
+                      href={`/athlete?id=${activeAthlete.id}&tab=results&action=new`}
+                      className={`${SECONDARY_BTN} border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 font-bold`}
+                    >
+                      <Trophy className="h-3.5 w-3.5 text-orange-500" />
+                      Log Score & Evidence ↗
+                    </Link>
                     <Link href={`/${activeAthlete.handle}`} className={PRIMARY_BTN}>
                       Public Profile
                       <ExternalLink className="h-3.5 w-3.5" />

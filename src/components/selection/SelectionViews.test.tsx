@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { IlcaSelectionView } from "./IlcaSelectionView";
 import { WingfoilSelectionView } from "./WingfoilSelectionView";
+import { ILCA4_SELECTION_SAILORS } from "@/lib/ilcaSelectionData";
 
 vi.mock("next/link", () => ({
   default: ({
@@ -33,7 +34,7 @@ describe("IlcaSelectionView", () => {
       owned: [],
       ready: true,
     });
-    render(<IlcaSelectionView />);
+    render(<IlcaSelectionView initialSailors={[]} isAuthenticated={false} />);
 
     expect(
       screen.getByText("Sign In to View Selection")
@@ -49,7 +50,12 @@ describe("IlcaSelectionView", () => {
       owned: [],
       ready: true,
     });
-    render(<IlcaSelectionView />);
+    render(
+      <IlcaSelectionView
+        initialSailors={ILCA4_SELECTION_SAILORS}
+        isAuthenticated={true}
+      />
+    );
 
     expect(
       screen.getByText("ILCA 4 Selection Trials & Squad Policies")

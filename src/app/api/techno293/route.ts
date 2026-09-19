@@ -3,7 +3,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import { techno293Regattas } from "@/db/schema";
-import { eq, ne, or, sql } from "drizzle-orm";
+import { eq, or, sql } from "drizzle-orm";
 import { auditAdminMutation } from "@/lib/adminChangeLog";
 import {
   SINGAPORE_TECHNO293_REGATTAS,
@@ -35,13 +35,15 @@ export async function GET(req: Request) {
           .from(techno293Regattas)
           .where(
             or(
-              ne(techno293Regattas.status, "archived"),
+              eq(techno293Regattas.status, "published"),
               sql`${techno293Regattas.status} IS NULL`
             )
           );
 
     if (rows && rows.length > 0) {
-      const visibleRows = rows;
+      const visibleRows = includeAll
+        ? rows
+        : rows.filter((r) => !r.status || r.status === "published");
       const rowMap = new Map(
         visibleRows.map((r) => [r.id, r.data as Techno293Regatta])
       );

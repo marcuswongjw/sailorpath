@@ -203,7 +203,7 @@ export function SiteHeader() {
         >
           Optimist
           <ChevronDown
-            className={`h-4 w-4 text-soft-aqua transition-transform ${
+            className={`h-4 w-4 text-sailcloth/70 transition-transform ${
               openMenu === "optimist" ? "rotate-180 text-white" : ""
             }`}
           />
@@ -227,7 +227,7 @@ export function SiteHeader() {
         >
           Classes
           <ChevronDown
-            className={`h-4 w-4 text-soft-aqua transition-transform ${
+            className={`h-4 w-4 text-sailcloth/70 transition-transform ${
               openMenu === "classes" ? "rotate-180 text-white" : ""
             }`}
           />
@@ -264,39 +264,40 @@ export function SiteHeader() {
   );
 
   const authButtons = !ready ? (
-    <span className="text-xs text-soft-aqua">…</span>
+    <span className="text-xs text-sailcloth/70">…</span>
   ) : email ? (
     <>
       <span className="hidden xl:inline text-xs text-sailcloth/80 max-w-[140px] truncate">
         {email}
       </span>
       {owned.length > 0 && (
-        <Link
-          href="/parent"
-          onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-soft-aqua hover:text-white transition-colors"
-        >
-          {(() => {
-            const rels = owned
-              .map((o) => String(o.ownerRelation || "").toLowerCase())
-              .filter(Boolean);
-            const anyParent = rels.includes("parent");
-            const allSailor =
-              rels.length > 0 && rels.every((r) => r === "sailor");
-            if (allSailor) return "Sailor Dashboard";
-            if (anyParent) return "Parent Dashboard";
-            if (String(role || "").toLowerCase() === "sailor")
-              return "Sailor Dashboard";
-            if (String(role || "").toLowerCase() === "parent")
-              return "Parent Dashboard";
-            return "Parent Dashboard";
-          })()}
-        </Link>
+        <>
+          <Link
+            href="/athlete"
+            onClick={() => setMobileOpen(false)}
+            className="text-sm font-semibold text-sailcloth/90 hover:text-white transition-colors"
+          >
+            Athlete Hub
+          </Link>
+          {owned.some(
+            (o) =>
+              String(o.ownerRelation || "").toLowerCase() === "parent" ||
+              String(role || "").toLowerCase() === "parent"
+          ) && (
+            <Link
+              href="/parent"
+              onClick={() => setMobileOpen(false)}
+              className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
+            >
+              Parent Dashboard
+            </Link>
+          )}
+        </>
       )}
       {primaryProfile && (
         <Link
           href={
-            owned.length === 1 ? `/${primaryProfile.handle}` : "/parent"
+            owned.length === 1 ? `/${primaryProfile.handle}` : "/athlete"
           }
           onClick={() => setMobileOpen(false)}
           className="text-sm font-semibold text-white hover:text-racing-mist transition-colors"
@@ -330,7 +331,7 @@ export function SiteHeader() {
               ? "/admin"
               : "https://admin.sailorpath.com/"
           }
-          className="text-xs font-bold text-soft-aqua hover:text-white transition-colors"
+          className="text-xs font-bold text-sailcloth/80 hover:text-white transition-colors"
         >
           Admin console
         </a>
@@ -423,7 +424,7 @@ export function SiteHeader() {
                 Find and claim a profile
               </Link>
             )}
-            <p className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
+            <p className="px-3 pt-2 pb-1 text-xs font-bold uppercase tracking-wider text-sailcloth/70">
               Optimist
             </p>
             <Link
@@ -456,7 +457,7 @@ export function SiteHeader() {
                 All Gold Fleet sailors
               </Link>
             )}
-            <p className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
+            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-sailcloth/70">
               ILCA 4
             </p>
             <Link
@@ -480,7 +481,7 @@ export function SiteHeader() {
             >
               ILCA 4 regattas
             </Link>
-            <p className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
+            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-sailcloth/70">
               WingFoil
             </p>
             <Link
@@ -497,7 +498,7 @@ export function SiteHeader() {
             >
               Funding &amp; selection policy
             </Link>
-            <p className="px-3 pt-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-soft-aqua">
+            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-sailcloth/70">
               Techno 293
             </p>
             <Link

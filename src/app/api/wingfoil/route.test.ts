@@ -16,29 +16,42 @@ vi.mock("@/lib/auth", () => ({
   },
 }));
 
-vi.mock("@/db", () => ({
-  ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
-  db: {
-    select: () => ({
-      from: () =>
-        Promise.resolve([
-          {
-            id: "draft-event",
-            status: "draft",
-            data: { id: "draft-event", name: "Draft event" },
-          },
-        ]),
-    }),
-    insert: () => ({
-      values: (values: unknown) => {
-        mocks.insertValues(values);
-        return {
-          onConflictDoUpdate: vi.fn().mockResolvedValue(undefined),
-        };
-      },
-    }),
-  },
-}));
+vi.mock("@/db", () => {
+  const fakeRows = [
+    {
+      id: "draft-event",
+      status: "draft",
+      data: { id: "draft-event", name: "Draft event" },
+    },
+    {
+      id: "published-event",
+      status: "published",
+      data: { id: "published-event", name: "Published event" },
+    },
+  ];
+  return {
+    ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
+    db: {
+      select: () => ({
+        from: () => ({
+          then: (resolve: (v: typeof fakeRows) => unknown, reject?: (reason: unknown) => unknown) =>
+            Promise.resolve(fakeRows).then(resolve, reject),
+          where: vi.fn().mockImplementation(() =>
+            Promise.resolve(fakeRows.filter((r) => r.status === "published"))
+          ),
+        }),
+      }),
+      insert: () => ({
+        values: (values: unknown) => {
+          mocks.insertValues(values);
+          return {
+            onConflictDoUpdate: vi.fn().mockResolvedValue(undefined),
+          };
+        },
+      }),
+    },
+  };
+});
 
 vi.mock("@/lib/adminChangeLog", () => ({
   auditAdminMutation: vi.fn(),
@@ -114,6 +127,9 @@ describe("GET /api/wingfoil", () => {
     const body = await response.json();
     expect(body.regattas).not.toContainEqual(
       expect.objectContaining({ id: "draft-event" })
+    );
+    expect(body.regattas).toContainEqual(
+      expect.objectContaining({ id: "published-event" })
     );
   });
 

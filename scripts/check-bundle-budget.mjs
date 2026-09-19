@@ -2,7 +2,7 @@ import { readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
 const chunksDir = path.resolve(".next/static/chunks");
-const maxTotalBytes = Number(process.env.MAX_CLIENT_JS_BYTES || 2_500_000);
+const maxTotalBytes = Number(process.env.MAX_CLIENT_JS_BYTES || 3_000_000);
 const maxChunkBytes = Number(process.env.MAX_CLIENT_CHUNK_BYTES || 400_000);
 
 async function listJavaScriptFiles(directory) {

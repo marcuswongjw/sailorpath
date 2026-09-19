@@ -16,34 +16,45 @@ vi.mock("@/lib/auth", () => ({
   },
 }));
 
-vi.mock("@/db", () => ({
-  ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
-  db: {
-    select: () => ({
-      from: () => ({
-        where: () =>
-          Promise.resolve([
-            {
-              id: "techno-sw-gp1-2026",
-              status: "published",
-              data: { id: "techno-sw-gp1-2026", name: "GP1 published" },
-            },
-          ]),
+vi.mock("@/db", () => {
+  const fakeRows = [
+    {
+      id: "draft-techno-event",
+      status: "draft",
+      data: { id: "draft-techno-event", name: "Draft Techno" },
+    },
+    {
+      id: "techno-sw-gp1-2026",
+      status: "published",
+      data: { id: "techno-sw-gp1-2026", name: "GP1 published" },
+    },
+  ];
+  return {
+    ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
+    db: {
+      select: () => ({
+        from: () => ({
+          then: (resolve: (v: typeof fakeRows) => unknown, reject?: (reason: unknown) => unknown) =>
+            Promise.resolve(fakeRows).then(resolve, reject),
+          where: vi.fn().mockImplementation(() =>
+            Promise.resolve(fakeRows.filter((r) => r.status === "published"))
+          ),
+        }),
       }),
-    }),
-    insert: () => ({
-      values: (values: unknown) => {
-        mocks.insertValues(values);
-        return {
-          onConflictDoUpdate: vi.fn().mockResolvedValue(undefined),
-        };
-      },
-    }),
-    delete: () => ({
-      where: vi.fn().mockResolvedValue(undefined),
-    }),
-  },
-}));
+      insert: () => ({
+        values: (values: unknown) => {
+          mocks.insertValues(values);
+          return {
+            onConflictDoUpdate: vi.fn().mockResolvedValue(undefined),
+          };
+        },
+      }),
+      delete: () => ({
+        where: vi.fn().mockResolvedValue(undefined),
+      }),
+    },
+  };
+});
 
 vi.mock("@/lib/adminChangeLog", () => ({
   auditAdminMutation: vi.fn(),
@@ -62,11 +73,17 @@ describe("Techno 293 API (/api/techno293)", () => {
     mocks.insertValues.mockReset();
   });
 
-  it("does not require authentication for public GET requests", async () => {
+  it("does not require authentication for public GET requests and filters drafts", async () => {
     const response = await GET(new Request("https://sailorpath.com/api/techno293"));
     expect(response.status).toBe(200);
     const body = await response.json();
     expect(Array.isArray(body.regattas)).toBe(true);
+    expect(body.regattas).not.toContainEqual(
+      expect.objectContaining({ id: "draft-techno-event" })
+    );
+    expect(body.regattas).toContainEqual(
+      expect.objectContaining({ id: "techno-sw-gp1-2026" })
+    );
   });
 
   it("requires superadmin for POST mutation", async () => {

@@ -3,7 +3,8 @@ import { and, eq, ne } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { canManageSailor } from "@/lib/claimAccess";
 import { db } from "@/db";
-import { equipmentLogs, sailorAliases, sailors } from "@/db/schema";
+import { equipmentLogs, regattaResults, sailorAliases, sailors } from "@/db/schema";
+import { birthYear } from "@/lib/age";
 import { validateHandle } from "@/lib/handles";
 import { normalizeDob, cleanOptimistSailNumber } from "@/lib/normalize";
 import {
@@ -258,6 +259,18 @@ export async function PATCH(req: Request) {
         mastIlca4: sailors.mastIlca4,
         equipmentNotesIlca4: sailors.equipmentNotesIlca4,
       });
+
+    if (body.dob !== undefined && updated) {
+      try {
+        const by = birthYear(updated.dob);
+        await db
+          .update(regattaResults)
+          .set({ birthYear: by, updatedAt: new Date() })
+          .where(eq(regattaResults.sailorId, sailorId));
+      } catch (stampErr) {
+        console.warn("result demographics stamp after account sailor PATCH", stampErr);
+      }
+    }
 
     if (previousHandle && updated) {
       try {

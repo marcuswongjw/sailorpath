@@ -13,4 +13,5 @@ export const adminQueryKeys = {
   coachAccess: () => ["admin", "coach-access"] as const,
   promote: () => ["admin", "promote"] as const,
   support: (status: string) => ["admin", "support", status] as const,
+  regattaSuggestions: () => ["admin", "regatta-suggestions"] as const,
 };

@@ -1,91 +1,17 @@
 // Official Singapore ILCA 4 Selection Data & Standings
 // Derived from official SSF ranking documents and selection policies
 
-export type IlcaTrialEvent = {
-  id: string;
-  name: string;
-  shortName: string;
-  dateStr: string;
-  venue: string;
-  fleetSize: number;
-  completed: boolean;
-};
+import {
+  type IlcaTrialEvent,
+  type IlcaTrialSailor,
+  ILCA4_SELECTION_EVENTS,
+  getEasternQualifiedTeam as computeEastern,
+  getAsianProvisionalLeaders as computeAsian,
+  getNjtsProjectedSquad as computeNjts,
+} from "./ilcaSelection";
 
-export type IlcaTrialSailor = {
-  sailorId: string;
-  name: string;
-  gender: "M" | "F";
-  birthYear: number | null;
-  handle: string | null;
-  nationalRank: number;
-  cscPoints: number;
-  syscPoints: number;
-  temasekPoints: number;
-  pestaPoints: number;
-  pestaPlace: number | null;
-  snscPoints: number;
-  snscPlace: number | null;
-  trialPts: number;
-  finishPos: number;
-  bestThreePoints: number;
-  isU14: boolean;
-  isU17: boolean;
-  easternStatus:
-    | "Qualified (Slot 1)"
-    | "Qualified (Slot 2)"
-    | "Qualified (Slot 3)"
-    | "1st Reserve"
-    | "2nd Reserve"
-    | "3rd Reserve"
-    | "Eligible (U14)"
-    | "Ineligible (Over U14 Age)";
-  easternRankGender: number | null;
-  asianProvisionalStatus:
-    | "Provisional Leader (Slot 1)"
-    | "Provisional Leader (Slot 2)"
-    | "Provisional Leader (Slot 3)"
-    | "Provisional Leader (Slot 4)"
-    | "Provisional Reserve"
-    | "Eligible (U17)"
-    | "Ineligible (Over U17 Age)";
-  asianRankGender: number | null;
-  njtsStatus:
-    | "Top 2 Overall"
-    | "Age 16 Bucket"
-    | "Age ≤ 15 Bucket"
-    | "Top 25 Contender"
-    | "Ranked Contender";
-};
-
-export const ILCA4_SELECTION_EVENTS: IlcaTrialEvent[] = [
-  {
-    id: "pesta-sukan-2026",
-    name: "Pesta Sukan Regatta 2026",
-    shortName: "Pesta Sukan",
-    dateStr: "1 – 2 August 2026",
-    venue: "National Sailing Centre, Singapore",
-    fleetSize: 41,
-    completed: true,
-  },
-  {
-    id: "snsc-2026",
-    name: "Singapore National Sailing Championships 2026",
-    shortName: "SNSC 2026",
-    dateStr: "11 – 13 September 2026",
-    venue: "National Sailing Centre, Singapore",
-    fleetSize: 45,
-    completed: true,
-  },
-  {
-    id: "selection-trials-2026",
-    name: "Asian Open Selection Trials 2026",
-    shortName: "Trials Event 2",
-    dateStr: "10, 11, 17, 18 October 2026",
-    venue: "National Sailing Centre, Singapore",
-    fleetSize: 0,
-    completed: false,
-  },
-];
+export type { IlcaTrialEvent, IlcaTrialSailor };
+export { ILCA4_SELECTION_EVENTS };
 
 // Helper to assign statuses
 const rawSailors = [
@@ -1839,49 +1765,21 @@ top25.forEach((s) => {
   }
 });
 
-export function getEasternQualifiedTeam() {
-  const qualifiedBoys = ILCA4_SELECTION_SAILORS.filter((s) =>
-    s.easternStatus.startsWith("Qualified") && s.gender === "M"
-  ).sort((a, b) => (a.easternRankGender ?? 99) - (b.easternRankGender ?? 99));
-
-  const reserveBoys = ILCA4_SELECTION_SAILORS.filter((s) =>
-    s.easternStatus.includes("Reserve") && s.gender === "M"
-  ).sort((a, b) => (a.easternRankGender ?? 99) - (b.easternRankGender ?? 99));
-
-  const qualifiedGirls = ILCA4_SELECTION_SAILORS.filter((s) =>
-    s.easternStatus.startsWith("Qualified") && s.gender === "F"
-  ).sort((a, b) => (a.easternRankGender ?? 99) - (b.easternRankGender ?? 99));
-
-  const reserveGirls = ILCA4_SELECTION_SAILORS.filter((s) =>
-    s.easternStatus.includes("Reserve") && s.gender === "F"
-  ).sort((a, b) => (a.easternRankGender ?? 99) - (b.easternRankGender ?? 99));
-
-  return {
-    qualifiedBoys,
-    reserveBoys,
-    qualifiedGirls,
-    reserveGirls,
-  };
+export function getEasternQualifiedTeam(
+  sailors: IlcaTrialSailor[] = ILCA4_SELECTION_SAILORS
+) {
+  return computeEastern(sailors);
 }
 
-export function getAsianProvisionalLeaders() {
-  const leaderBoys = ILCA4_SELECTION_SAILORS.filter((s) =>
-    s.asianProvisionalStatus.startsWith("Provisional Leader") && s.gender === "M"
-  ).sort((a, b) => (a.asianRankGender ?? 99) - (b.asianRankGender ?? 99));
-
-  const leaderGirls = ILCA4_SELECTION_SAILORS.filter((s) =>
-    s.asianProvisionalStatus.startsWith("Provisional Leader") && s.gender === "F"
-  ).sort((a, b) => (a.asianRankGender ?? 99) - (b.asianRankGender ?? 99));
-
-  return {
-    leaderBoys,
-    leaderGirls,
-  };
+export function getAsianProvisionalLeaders(
+  sailors: IlcaTrialSailor[] = ILCA4_SELECTION_SAILORS
+) {
+  return computeAsian(sailors);
 }
 
-export function getNjtsProjectedSquad() {
-  return ILCA4_SELECTION_SAILORS.filter((s) =>
-    ["Top 2 Overall", "Age 16 Bucket", "Age ≤ 15 Bucket"].includes(s.njtsStatus)
-  ).sort((a, b) => a.nationalRank - b.nationalRank);
+export function getNjtsProjectedSquad(
+  sailors: IlcaTrialSailor[] = ILCA4_SELECTION_SAILORS
+) {
+  return computeNjts(sailors);
 }
 

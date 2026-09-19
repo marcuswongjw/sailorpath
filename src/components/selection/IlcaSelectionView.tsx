@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Trophy,
@@ -18,23 +18,52 @@ import { useAccountOptional } from "@/components/AccountProvider";
 import {
   ILCA4_INTERNATIONAL_CAMPAIGNS,
   ILCA4_NJTS_POLICY,
-} from "@/lib/ilcaSelection";
-import {
   ILCA4_SELECTION_EVENTS,
-  ILCA4_SELECTION_SAILORS,
+  type IlcaTrialSailor,
   getEasternQualifiedTeam,
   getAsianProvisionalLeaders,
   getNjtsProjectedSquad,
-} from "@/lib/ilcaSelectionData";
+} from "@/lib/ilcaSelection";
 
 type SelectionTab = "eastern" | "asian" | "njts" | "scoreboard" | "policy";
 
-export function IlcaSelectionView() {
+export interface IlcaSelectionViewProps {
+  initialSailors?: IlcaTrialSailor[];
+  isAuthenticated?: boolean;
+}
+
+export function IlcaSelectionView({
+  initialSailors = [],
+  isAuthenticated: initialIsAuthenticated,
+}: IlcaSelectionViewProps = {}) {
   const account = useAccountOptional();
   const email = account?.email;
   const owned = account?.owned;
   const accountReady = account?.ready ?? false;
-  const isLoggedIn = Boolean(email);
+  const isLoggedIn =
+    initialIsAuthenticated !== undefined
+      ? initialIsAuthenticated || Boolean(email)
+      : Boolean(email);
+
+  const [clientSailors, setClientSailors] = useState<IlcaTrialSailor[] | null>(null);
+  const sailorList = clientSailors ?? initialSailors;
+
+  useEffect(() => {
+    if (isLoggedIn && sailorList.length === 0) {
+      let cancelled = false;
+      fetch("/api/selection/ilca4")
+        .then((res) => (res.ok ? res.json() : null))
+        .then((data) => {
+          if (!cancelled && Array.isArray(data?.sailors)) {
+            setClientSailors(data.sailors);
+          }
+        })
+        .catch(() => {});
+      return () => {
+        cancelled = true;
+      };
+    }
+  }, [isLoggedIn, sailorList.length]);
 
   const [activeTab, setActiveTab] = useState<SelectionTab>("eastern");
   const [selectedSailorId, setSelectedSailorId] = useState<string | null>(null);
@@ -50,14 +79,14 @@ export function IlcaSelectionView() {
   )!;
 
   const { qualifiedBoys, reserveBoys, qualifiedGirls, reserveGirls } = useMemo(
-    () => getEasternQualifiedTeam(),
-    []
+    () => getEasternQualifiedTeam(sailorList),
+    [sailorList]
   );
   const { leaderBoys, leaderGirls } = useMemo(
-    () => getAsianProvisionalLeaders(),
-    []
+    () => getAsianProvisionalLeaders(sailorList),
+    [sailorList]
   );
-  const njtsSquad = useMemo(() => getNjtsProjectedSquad(), []);
+  const njtsSquad = useMemo(() => getNjtsProjectedSquad(sailorList), [sailorList]);
 
   // Claimed athlete detection for logged-in user
   const mySailor = useMemo(() => {
@@ -66,16 +95,16 @@ export function IlcaSelectionView() {
     const ownedIds = new Set(ownedList.map((o) => o.id));
     const ownedHandles = new Set(ownedList.map((o) => o.handle).filter(Boolean));
     return (
-      ILCA4_SELECTION_SAILORS.find(
+      sailorList.find(
         (s) => ownedIds.has(s.sailorId) || (s.handle && ownedHandles.has(s.handle))
       ) || null
     );
-  }, [isLoggedIn, owned]);
+  }, [isLoggedIn, owned, sailorList]);
 
   // Points cushion to Eastern Seaboard cutoff (Slot 3 vs Slot 4)
   const mySailorEasternStatus = useMemo(() => {
     if (!mySailor || !mySailor.isU14) return null;
-    const sameGenderU14 = ILCA4_SELECTION_SAILORS.filter(
+    const sameGenderU14 = sailorList.filter(
       (s) => s.gender === mySailor.gender && s.isU14 && s.trialPts > 0
     ).sort((a, b) => b.trialPts - a.trialPts || a.finishPos - b.finishPos);
 
@@ -101,11 +130,11 @@ export function IlcaSelectionView() {
     }
 
     return { rank, total: sameGenderU14.length, cushionText };
-  }, [mySailor]);
+  }, [mySailor, sailorList]);
 
   // Filtered rows for Eastern Seaboard Table
   const filteredEasternRows = useMemo(() => {
-    let rows = [...ILCA4_SELECTION_SAILORS];
+    let rows = [...sailorList];
 
     // Eligibility filter
     if (eligibilityFilter === "u14") {
@@ -145,9 +174,9 @@ export function IlcaSelectionView() {
     }
 
     return rows;
-  }, [genderFilter, eligibilityFilter, searchQuery]);
+  }, [genderFilter, eligibilityFilter, searchQuery, sailorList]);
 
-  if (!accountReady) {
+  if (!accountReady && initialIsAuthenticated === undefined) {
     return (
       <div className="mx-auto w-full max-w-4xl px-4 py-20 flex flex-col items-center justify-center space-y-3">
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-sky-500 border-t-transparent" />
@@ -1210,7 +1239,7 @@ export function IlcaSelectionView() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-cool-veil">
-                  {ILCA4_SELECTION_SAILORS.filter((s) => {
+                  {sailorList.filter((s) => {
                     if (!searchQuery.trim()) return true;
                     return s.name.toLowerCase().includes(searchQuery.toLowerCase().trim());
                   }).map((s) => (

@@ -166,8 +166,8 @@ export async function PATCH(req: Request) {
             .from(profiles)
             .where(eq(profiles.id, claim.requesterId))
             .limit(1);
-          // Never demote superadmin
-          if (prof && prof.role !== "superadmin") {
+          // Never demote superadmin or coach
+          if (prof && prof.role !== "superadmin" && prof.role !== "coach") {
             await db
               .update(profiles)
               .set({ role, updatedAt: new Date() })
@@ -205,7 +205,7 @@ export async function PATCH(req: Request) {
             .from(profiles)
             .where(eq(profiles.id, claim.requesterId))
             .limit(1);
-          if (prof && prof.role !== "superadmin") {
+          if (prof && prof.role !== "superadmin" && prof.role !== "coach") {
             await db
               .update(profiles)
               .set({ role, updatedAt: new Date() })

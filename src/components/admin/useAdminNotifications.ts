@@ -45,6 +45,18 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     },
   });
 
+  const suggestionsQuery = useQuery({
+    queryKey: adminQueryKeys.regattaSuggestions(),
+    enabled: isSuperadmin,
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      const res = await fetch("/api/admin/regatta-suggestions");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to load suggestions");
+      return data;
+    },
+  });
+
   const claimsPendingCount = (claimsQuery.data ?? []).filter(
     (claim) => claim.status === "pending"
   ).length;
@@ -52,13 +64,16 @@ export function useAdminNotifications(isSuperadmin: boolean) {
   const coachPendingCount = (coachAccessQuery.data ?? []).filter(
     (request) => request.status === "pending"
   ).length;
+  const suggestionsCount = Number(suggestionsQuery.data?.count ?? 0);
 
-  const inboxNotifCount = claimsPendingCount + supportNewCount + coachPendingCount;
+  const inboxNotifCount =
+    claimsPendingCount + supportNewCount + coachPendingCount + suggestionsCount;
 
   return {
     claimsPendingCount,
     supportNewCount,
     coachPendingCount,
+    suggestionsCount,
     inboxNotifCount,
   };
 }

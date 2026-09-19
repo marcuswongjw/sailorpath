@@ -19,6 +19,10 @@ import {
   ChevronRight,
   StickyNote,
   X,
+  FileText,
+  ImageIcon,
+  CheckCircle2,
+  ExternalLink,
 } from "lucide-react";
 import { formatEventWhen } from "@/lib/profileUi";
 import {
@@ -1950,9 +1954,12 @@ export function SailorProfileView({
                 );
                 const fleetSize = res.totalFleetSize ?? res.fleetSize;
                 const nonRanking = res.countsForRanking === false;
-                /** Public: expand only when there are visible notes; owners always can. */
+                /** Public: expand when there are visible notes, official races, or evidence; owners always can. */
                 const canExpand =
-                  officialRaces.length > 0 || raceNotes.length > 0 || ownerView;
+                  officialRaces.length > 0 ||
+                  raceNotes.length > 0 ||
+                  Boolean(res.evidenceUrl || res.officialUrl || res.evidenceNotes) ||
+                  ownerView;
                 const canLink =
                   !nonRanking &&
                   !isIlcaRow &&
@@ -2232,6 +2239,68 @@ export function SailorProfileView({
 
                     {expanded && canExpand && (
                       <div className="px-4 sm:px-5 pb-4 space-y-3 border-t border-cool-veil bg-sailcloth/50">
+                        {/* Official Evidence & Results Document Block */}
+                        {(res.evidenceUrl || res.officialUrl || res.evidenceNotes) && (
+                          <div className="mt-3 rounded-xl border border-cool-veil bg-warm-white p-3.5 space-y-2 shadow-2xs">
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                              <span className="text-[11px] font-bold text-slate-soft uppercase tracking-wider flex items-center gap-1.5">
+                                <FileText className="h-3.5 w-3.5 text-harbour" />
+                                Official Evidence & Score Verification
+                              </span>
+                              {res.verificationStatus === "verified" ? (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
+                                  <CheckCircle2 className="h-3 w-3" />
+                                  Verified Score
+                                </span>
+                              ) : res.verificationStatus === "pending_review" ? (
+                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded-full px-2 py-0.5">
+                                  <FileText className="h-3 w-3" />
+                                  Evidence Attached · Awaiting Review
+                                </span>
+                              ) : (
+                                <span className="text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2 py-0.5">
+                                  Self-Reported Score
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="flex flex-wrap items-center gap-3 text-xs pt-1">
+                              {res.evidenceUrl && (
+                                <a
+                                  href={res.evidenceUrl}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="inline-flex items-center gap-1.5 text-harbour hover:underline font-bold text-[11px]"
+                                >
+                                  {res.evidenceType === "image" ? (
+                                    <ImageIcon className="h-3.5 w-3.5" />
+                                  ) : (
+                                    <FileText className="h-3.5 w-3.5" />
+                                  )}
+                                  <span>{res.evidenceName || "View Uploaded Evidence"}</span>
+                                </a>
+                              )}
+                              {res.officialUrl && (
+                                <a
+                                  href={res.officialUrl}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="inline-flex items-center gap-1.5 text-indigo-600 hover:underline font-bold text-[11px]"
+                                >
+                                  <ExternalLink className="h-3.5 w-3.5" />
+                                  <span>Official Results Webpage</span>
+                                </a>
+                              )}
+                            </div>
+
+                            {res.evidenceNotes && (
+                              <p className="text-xs text-charcoal italic border-t border-cool-veil pt-1.5 mt-1">
+                                “{res.evidenceNotes}”
+                              </p>
+                            )}
+                          </div>
+                        )}
+
                         {officialRaces.length > 0 && (
                           <div className="pt-3 space-y-2">
                             <div className="flex items-center gap-2 text-[11px] font-bold text-slate-soft uppercase tracking-wider">

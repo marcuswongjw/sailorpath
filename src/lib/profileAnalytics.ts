@@ -22,6 +22,13 @@ export type ProfileResult = {
   raceCount?: number | null;
   countsForRanking?: boolean;
   boatClass?: string | null;
+  evidenceUrl?: string | null;
+  evidenceName?: string | null;
+  evidenceType?: "pdf" | "image" | "link" | null;
+  officialUrl?: string | null;
+  evidenceNotes?: string | null;
+  verificationStatus?: "self_reported" | "pending_review" | "verified" | "rejected" | null;
+  verifiedAt?: string | Date | null;
   raceResults?: Array<{
     raceNumber: number;
     score: number;
@@ -241,6 +248,23 @@ export function buildResultTags(
         className: "bg-neutral-500/15 text-neutral-300 border border-neutral-500/25",
       });
     }
+  }
+
+  if (r.verificationStatus === "verified") {
+    tags.push({
+      label: "Verified ✓",
+      className: "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
+    });
+  } else if (r.verificationStatus === "pending_review") {
+    tags.push({
+      label: "Evidence attached 📄",
+      className: "bg-sky-500/15 text-sky-400 border border-sky-500/30",
+    });
+  } else if (r.verificationStatus === "self_reported") {
+    tags.push({
+      label: "Self-reported",
+      className: "bg-amber-500/15 text-amber-400 border border-amber-500/30",
+    });
   }
 
   if (nonRanking) {

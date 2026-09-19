@@ -3,7 +3,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import { wingfoilRegattas } from "@/db/schema";
-import { eq, ne, or, sql } from "drizzle-orm";
+import { eq, or, sql } from "drizzle-orm";
 import { auditAdminMutation } from "@/lib/adminChangeLog";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
@@ -35,14 +35,16 @@ export async function GET(req: Request) {
           .from(wingfoilRegattas)
           .where(
             or(
-              ne(wingfoilRegattas.status, "archived"),
+              eq(wingfoilRegattas.status, "published"),
               sql`${wingfoilRegattas.status} IS NULL`
             )
           );
 
     if (rows && rows.length > 0) {
       // Filter published only for public showcase, unless admin requested all
-      const visibleRows = rows;
+      const visibleRows = includeAll
+        ? rows
+        : rows.filter((r) => !r.status || r.status === "published");
 
       const rowMap = new Map(
         visibleRows.map((r) => [r.id, r.data as WingfoilRegatta])

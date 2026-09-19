@@ -61,6 +61,11 @@ export function EquipmentModalShell({
   const titleId = useId();
   const descId = useId();
 
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     const previouslyFocused = document.activeElement as HTMLElement | null;
     const root = panelRef.current;
@@ -72,12 +77,14 @@ export function EquipmentModalShell({
       );
 
     const focusables = getFocusable();
-    (focusables[0] || root).focus();
+    if (!root.contains(document.activeElement)) {
+      (focusables[0] || root).focus();
+    }
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        onClose();
+        onCloseRef.current();
         return;
       }
       if (e.key !== "Tab") return;
@@ -110,7 +117,7 @@ export function EquipmentModalShell({
       document.body.style.overflow = prevOverflow;
       previouslyFocused?.focus?.();
     };
-  }, [modal, onClose]);
+  }, [modal]);
 
   return (
     <div className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center p-0 sm:p-4">

@@ -521,6 +521,13 @@ export async function getResultsForSailor(sailorId: string) {
         geography: regattas.geography,
         countsForRanking: regattas.countsForRanking,
         boatClass: regattas.boatClass,
+        evidenceUrl: regattaResults.evidenceUrl,
+        evidenceName: regattaResults.evidenceName,
+        evidenceType: regattaResults.evidenceType,
+        officialUrl: regattaResults.officialUrl,
+        evidenceNotes: regattaResults.evidenceNotes,
+        verificationStatus: regattaResults.verificationStatus,
+        verifiedAt: regattaResults.verifiedAt,
       })
       .from(regattaResults)
       .innerJoin(regattas, eq(regattaResults.regattaId, regattas.id))

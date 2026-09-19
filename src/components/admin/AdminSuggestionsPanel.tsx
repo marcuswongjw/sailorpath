@@ -1,7 +1,17 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { AlertTriangle, CheckCircle, RefreshCw, Sparkles } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle,
+  RefreshCw,
+  Sparkles,
+  FileText,
+  ExternalLink,
+  ShieldCheck,
+  XCircle,
+  ImageIcon,
+} from "lucide-react";
 import { regattaDateLabel } from "@/types/regatta";
 import type { RegattaAdmin } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
@@ -21,11 +31,33 @@ type Suggestion = {
     resultId: string;
     rank: number;
     nettScore?: number | null;
+    totalScore?: number | null;
     sailorId: string;
     sailorName: string;
     sailorHandle: string;
+    evidenceUrl?: string | null;
+    evidenceName?: string | null;
+    evidenceType?: "pdf" | "image" | "link" | null;
+    officialUrl?: string | null;
+    evidenceNotes?: string | null;
+    verificationStatus?: "self_reported" | "pending_review" | "verified" | "rejected" | null;
+    verifiedAt?: string | Date | null;
   }[];
 };
+
+/** Render user-supplied links only when http(s) or site-relative — blocks javascript: etc. */
+function safeHref(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const s = url.trim();
+  if (s.startsWith("/") && !s.startsWith("//")) return s;
+  try {
+    const u = new URL(s);
+    if (u.protocol === "http:" || u.protocol === "https:") return s;
+  } catch {
+    /* fall through */
+  }
+  return null;
+}
 
 export function AdminSuggestionsPanel({
   onRegattaUpdated,
@@ -130,6 +162,44 @@ export function AdminSuggestionsPanel({
     }
   };
 
+  const verifyResult = async (
+    resultId: string,
+    action: "verify" | "reject"
+  ) => {
+    setActionId(resultId);
+    try {
+      const res = await fetch("/api/admin/regatta-suggestions", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ action, resultId }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Action failed");
+      toast.success(
+        action === "verify" ? "Result stamped verified!" : "Result rejected"
+      );
+      setItems((prev) =>
+        prev.map((s) => ({
+          ...s,
+          results: s.results.map((r) =>
+            r.resultId === resultId
+              ? {
+                  ...r,
+                  verificationStatus:
+                    action === "verify" ? "verified" : "rejected",
+                }
+              : r
+          ),
+        }))
+      );
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed");
+    } finally {
+      setActionId(null);
+    }
+  };
+
   return (
     <div className="w-full min-w-0 space-y-4">
       <div className="glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3">
@@ -137,14 +207,13 @@ export function AdminSuggestionsPanel({
           <div>
             <h2 className="text-lg font-bold text-white flex items-center gap-2">
               <Sparkles className="h-5 w-5 text-sky-400" />
-              Non-ranking suggestions
+              Non-ranking suggestions & Evidence Review
             </h2>
             <p className="text-xs text-slate-500 mt-1 max-w-2xl">
-              When a claimed sailor adds an overseas / other logbook event, it
-              appears here. <strong className="text-slate-300">Promote</strong>{" "}
-              to put it on the ranking regatta list (eligible for Best 3 of 5),
-              or <strong className="text-slate-300">Dismiss</strong> to keep it
-              logbook-only.
+              When a claimed sailor or parent logs an overseas / non-ranking event,
+              it appears here. Review attached evidence (PDF, scorecard photos, official links),
+              stamp <strong className="text-emerald-400">Verified ✓</strong>, or{" "}
+              <strong className="text-slate-300">Promote</strong> to the national ranking series.
             </p>
           </div>
           <button
@@ -203,26 +272,123 @@ export function AdminSuggestionsPanel({
 
                   <div className="rounded-xl border border-white/5 bg-slate-950/50 overflow-hidden">
                     <p className="text-[10px] font-bold text-slate-500 uppercase px-3 py-1.5 bg-white/5">
-                      Sailor results on this event
+                      Sailor results & attached evidence
                     </p>
                     <ul className="divide-y divide-white/5 text-xs">
                       {s.results.length === 0 ? (
                         <li className="px-3 py-2 text-slate-600">No results</li>
                       ) : (
-                        s.results.map((r) => (
+                        s.results.map((r) => {
+                          const evHref = safeHref(r.evidenceUrl);
+                          const offHref = safeHref(r.officialUrl);
+                          return (
                           <li
                             key={r.resultId}
-                            className="px-3 py-2 flex justify-between gap-2"
+                            className="p-3 space-y-2"
                           >
-                            <span className="text-slate-200 font-semibold">
-                              {r.sailorName}
-                            </span>
-                            <span className="font-mono text-slate-400">
-                              Place {r.rank}
-                              {r.nettScore != null ? ` · nett ${r.nettScore}` : ""}
-                            </span>
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <span className="text-slate-200 font-bold">
+                                  {r.sailorName}
+                                </span>
+                                <span className="font-mono text-slate-400 text-xs">
+                                  Place {r.rank} / {s.totalFleetSize || "—"}
+                                  {r.nettScore != null ? ` · nett ${r.nettScore}` : ""}
+                                </span>
+                              </div>
+
+                              {/* Status Badge */}
+                              <div>
+                                {r.verificationStatus === "verified" ? (
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
+                                    <ShieldCheck className="h-3 w-3" />
+                                    Verified ✓
+                                  </span>
+                                ) : r.verificationStatus === "pending_review" ? (
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-sky-500/15 border border-sky-500/30 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                                    <FileText className="h-3 w-3" />
+                                    Evidence Submitted
+                                  </span>
+                                ) : r.verificationStatus === "rejected" ? (
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 border border-rose-500/30 px-2 py-0.5 text-[10px] font-bold text-rose-300">
+                                    <XCircle className="h-3 w-3" />
+                                    Rejected
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-300">
+                                    Self-Reported
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Evidence Links & Details */}
+                            {(r.evidenceUrl || r.officialUrl || r.evidenceNotes) && (
+                              <div className="flex flex-wrap items-center gap-3 text-[11px] bg-white/[0.03] p-2 rounded-lg border border-white/5">
+                                {r.evidenceUrl && evHref && (
+                                  <a
+                                    href={evHref}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 font-semibold underline underline-offset-2"
+                                  >
+                                    {r.evidenceType === "image" ? (
+                                      <ImageIcon className="h-3.5 w-3.5" />
+                                    ) : (
+                                      <FileText className="h-3.5 w-3.5" />
+                                    )}
+                                    <span>
+                                      {r.evidenceName || "View Document / Photo"}
+                                    </span>
+                                  </a>
+                                )}
+                                {r.officialUrl && offHref && (
+                                  <a
+                                    href={offHref}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 font-semibold underline underline-offset-2"
+                                  >
+                                    <ExternalLink className="h-3.5 w-3.5" />
+                                    <span>Official Online Results</span>
+                                  </a>
+                                )}
+                                {r.evidenceNotes && (
+                                  <span className="text-slate-400 italic">
+                                    “{r.evidenceNotes}”
+                                  </span>
+                                )}
+                              </div>
+                            )}
+
+                            {/* Verify / Reject Actions */}
+                            <div className="flex items-center gap-2 pt-1">
+                              {r.verificationStatus !== "verified" && (
+                                <button
+                                  type="button"
+                                  disabled={actionId === r.resultId}
+                                  onClick={() => void verifyResult(r.resultId, "verify")}
+                                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 px-2.5 py-1 text-[11px] font-bold text-white transition-colors disabled:opacity-50"
+                                >
+                                  <ShieldCheck className="h-3 w-3" />
+                                  Verify Result
+                                </button>
+                              )}
+                              {r.verificationStatus !== "rejected" && (
+                                <button
+                                  type="button"
+                                  disabled={actionId === r.resultId}
+                                  onClick={() => void verifyResult(r.resultId, "reject")}
+                                  className="inline-flex items-center gap-1 rounded-lg border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 px-2.5 py-1 text-[11px] font-bold text-rose-300 transition-colors disabled:opacity-50"
+                                >
+                                  <XCircle className="h-3 w-3" />
+                                  Reject Evidence
+                                </button>
+                              )}
+                            </div>
                           </li>
-                        ))
+                          );
+                        })
                       )}
                     </ul>
                   </div>

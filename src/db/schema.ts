@@ -397,12 +397,41 @@ export const regattaResults = pgTable(
      * Source of truth remains sailors.nationality.
      */
     nationality: text("nationality"),
+    /** Official evidence file URL (PDF or photo in Supabase Storage) */
+    evidenceUrl: text("evidence_url"),
+    /** Original filename of uploaded evidence document */
+    evidenceName: text("evidence_name"),
+    /** Type of evidence attached: pdf | image | link */
+    evidenceType: text("evidence_type", { enum: ["pdf", "image", "link"] }),
+    /** Official online results URL (e.g. Manage2Sail, HalSail, club website) */
+    officialUrl: text("official_url"),
+    /** Optional notes or division context submitted with evidence */
+    evidenceNotes: text("evidence_notes"),
+    /**
+     * Verification status:
+     * - self_reported: logged without official evidence file/link
+     * - pending_review: evidence attached, awaiting admin verification
+     * - verified: confirmed by platform admin or verified club feed
+     * - rejected: rejected upon review
+     */
+    verificationStatus: text("verification_status", {
+      enum: ["self_reported", "pending_review", "verified", "rejected"],
+    })
+      .default("self_reported")
+      .notNull(),
+    verifiedAt: timestamp("verified_at", { withTimezone: true }),
+    verifiedBy: uuid("verified_by").references(() => profiles.id, {
+      onDelete: "set null",
+    }),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
   },
   (table) => ({
     unq: unique().on(table.sailorId, table.regattaId),
     regattaIdIdx: index("regatta_results_regatta_id_idx").on(table.regattaId),
+    verificationStatusIdx: index("regatta_results_verification_status_idx").on(
+      table.verificationStatus
+    ),
   })
 );
 

@@ -29,13 +29,13 @@ export function BrandWordmark({
   reversed?: boolean;
 }) {
   return (
-    <span
-      className={`font-display font-extrabold tracking-[-0.03em] ${
-        reversed ? "text-sailcloth" : "text-harbour"
-      } ${className}`}
-    >
-      {BRAND.name}
-    </span>
+    <Image
+      src={reversed ? BRAND.logoReversed : BRAND.logo}
+      width={1141}
+      height={261}
+      alt={BRAND.name}
+      className={`h-5 w-auto shrink-0 ${className}`}
+    />
   );
 }
 

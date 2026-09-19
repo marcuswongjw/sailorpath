@@ -505,10 +505,10 @@ export function useEquipmentInventory({
     }));
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModal(null);
     setMsg(null);
-  };
+  }, []);
 
   const unlockIlca = () => {
     setIlcaUnlocked(true);

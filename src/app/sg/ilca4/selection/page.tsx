@@ -8,10 +8,20 @@ export const metadata: Metadata = {
     "Official Singapore ILCA 4 selection policies, international trial criteria (Eastern Seaboard, Asian Open 2026), and National Junior Training Squad (NJTS) regulations.",
 };
 
-export default function IlcaSelectionPage() {
+import { getAuthContext } from "@/lib/auth";
+import { ILCA4_SELECTION_SAILORS } from "@/lib/ilcaSelectionData";
+
+export default async function IlcaSelectionPage() {
+  const auth = await getAuthContext().catch(() => null);
+  const isAuthenticated = Boolean(auth);
+
   return (
     <ErrorBoundary>
-      <IlcaSelectionView />
+      <IlcaSelectionView
+        isAuthenticated={isAuthenticated}
+        initialSailors={isAuthenticated ? ILCA4_SELECTION_SAILORS : []}
+      />
     </ErrorBoundary>
   );
 }
+
