@@ -44,7 +44,7 @@ export function LogSessionForm({
     <>
       <div>
         <p className={`${labelClass} mb-1.5`}>Gear used</p>
-        <ul className="space-y-1.5 max-h-36 overflow-y-auto rounded-xl border border-white/5 bg-black/20 p-1.5">
+        <ul className="space-y-1.5 max-h-36 overflow-y-auto rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 p-1.5">
           {classItems
             .filter((i) => i.status === "active")
             .map((i) => {
@@ -54,20 +54,20 @@ export function LogSessionForm({
                   key={i.id}
                   className={`flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[12px] cursor-pointer transition ${
                     on
-                      ? "bg-sky-500/15 border border-sky-500/25 text-white"
-                      : "border border-transparent text-slate-300 hover:bg-white/[0.03]"
+                      ? "bg-[var(--sp-harbour-teal)]/10 border border-[var(--sp-harbour-teal)]/40 text-[var(--sp-charcoal)] font-semibold"
+                      : "border border-transparent text-[var(--sp-charcoal)] hover:bg-white"
                   }`}
                 >
                   <input
                     type="checkbox"
                     checked={on}
                     onChange={(e) => onToggleItem(i.id, e.target.checked)}
-                    className="rounded border-white/20"
+                    className="rounded border-[var(--sp-cool-veil)] text-[var(--sp-harbour-teal)] focus:ring-[var(--sp-harbour-teal)]"
                   />
                   <span className="min-w-0 flex-1 truncate font-semibold">
                     {displayName(i)}
                   </span>
-                  <span className="text-[10px] text-slate-500 shrink-0">
+                  <span className="text-[10px] text-[var(--sp-slate-soft)] shrink-0">
                     {categoryLabel(i.category)}
                   </span>
                 </label>
@@ -78,7 +78,7 @@ export function LogSessionForm({
 
       <div>
         <p className={`${labelClass} mb-1.5`}>Type</p>
-        <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-white/10 bg-black/25 p-1">
+        <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-1">
           {(
             [
               ["regatta", "Regatta"],
@@ -92,9 +92,9 @@ export function LogSessionForm({
               className={`rounded-lg py-2 text-[12px] font-bold transition touch-manipulation ${
                 useSessionType === val
                   ? val === "regatta"
-                    ? "bg-sky-600 text-white"
-                    : "bg-emerald-600 text-white"
-                  : "text-slate-400 hover:text-white"
+                    ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+                    : "bg-emerald-600 text-white shadow-xs"
+                  : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)]"
               }`}
             >
               {lab}
@@ -150,8 +150,8 @@ export function LogSessionForm({
               onClick={() => onWind(val as WindRange | "")}
               className={`rounded-full px-3 py-1.5 text-[11px] font-bold border touch-manipulation ${
                 useWind === val
-                  ? "bg-white/10 border-white/25 text-white"
-                  : "border-white/10 text-slate-400"
+                  ? "bg-[var(--sp-harbour-teal)] text-white border-[var(--sp-harbour-teal)] shadow-xs"
+                  : "border-[var(--sp-cool-veil)] bg-white text-[var(--sp-slate-soft)] hover:border-[var(--sp-charcoal)]/30"
               }`}
             >
               {lab}
@@ -164,7 +164,7 @@ export function LogSessionForm({
         type="button"
         disabled={busy || !useItemIds.length}
         onClick={onSave}
-        className="w-full rounded-full bg-sky-600 py-3 text-xs font-bold text-white disabled:opacity-50 touch-manipulation"
+        className="w-full rounded-full bg-[var(--sp-racing-orange)] py-3 text-xs font-bold text-white shadow-sm hover:brightness-105 disabled:opacity-50 touch-manipulation"
       >
         {busy ? "Saving…" : "Save session"}
       </button>

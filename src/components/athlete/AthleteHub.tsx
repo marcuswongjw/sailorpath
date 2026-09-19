@@ -215,19 +215,35 @@ function AthleteWorkspace({
     }
   };
 
-  const verifiedCount = results.filter((r) => r.verificationStatus === "verified").length;
-  const underReviewCount = results.filter((r) => r.verificationStatus === "pending_review").length;
-  const selfCount = results.filter(
-    (r) => r.verificationStatus === "self_reported" || !r.verificationStatus
+  const isResultVerified = (r: RegattaResultItem) =>
+    r.verificationStatus === "verified" ||
+    Boolean(r.countsForRanking) ||
+    (r.regattaSlug ? !r.regattaSlug.startsWith("log-") : false);
+
+  const verifiedCount = results.filter(isResultVerified).length;
+  const underReviewCount = results.filter(
+    (r) => !isResultVerified(r) && r.verificationStatus === "pending_review"
   ).length;
-  const rejectedCount = results.filter((r) => r.verificationStatus === "rejected").length;
+  const selfCount = results.filter(
+    (r) =>
+      !isResultVerified(r) &&
+      (r.verificationStatus === "self_reported" || !r.verificationStatus)
+  ).length;
+  const rejectedCount = results.filter(
+    (r) => !isResultVerified(r) && r.verificationStatus === "rejected"
+  ).length;
 
   const filteredResults = results.filter((r) => {
-    if (resultFilter === "verified") return r.verificationStatus === "verified";
-    if (resultFilter === "under_review") return r.verificationStatus === "pending_review";
+    if (resultFilter === "verified") return isResultVerified(r);
+    if (resultFilter === "under_review")
+      return !isResultVerified(r) && r.verificationStatus === "pending_review";
     if (resultFilter === "self")
-      return r.verificationStatus === "self_reported" || !r.verificationStatus;
-    if (resultFilter === "rejected") return r.verificationStatus === "rejected";
+      return (
+        !isResultVerified(r) &&
+        (r.verificationStatus === "self_reported" || !r.verificationStatus)
+      );
+    if (resultFilter === "rejected")
+      return !isResultVerified(r) && r.verificationStatus === "rejected";
     return true;
   });
 
@@ -548,7 +564,7 @@ function AthleteWorkspace({
 
                       {/* Verification Status Badge */}
                       <div>
-                        {r.verificationStatus === "verified" ? (
+                        {isResultVerified(r) ? (
                           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800">
                             <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
                             Verified ✓
@@ -637,8 +653,18 @@ function AthleteWorkspace({
                     </div>
                   )}
 
-                  {/* Actions on non-ranking / editable results */}
-                  {!r.countsForRanking && (
+                  {/* Actions on unverified / self-logged results vs Official regatta notice */}
+                  {isResultVerified(r) ? (
+                    <div className="flex items-center justify-between gap-2 pt-2.5 border-t border-[var(--sp-cool-veil)] text-xs text-[var(--sp-slate-soft)]">
+                      <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-800">
+                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
+                        Verified Official Result
+                      </span>
+                      <span className="text-[11px] text-[var(--sp-slate-soft)] font-medium">
+                        {r.countsForRanking ? "National Ranking Series" : "Official Event Record"}
+                      </span>
+                    </div>
+                  ) : (
                     <div className="flex items-center justify-end gap-2 pt-2 border-t border-[var(--sp-cool-veil)]">
                       <button
                         type="button"
@@ -899,6 +925,24 @@ function AthleteWorkspace({
               </div>
             </div>
           </div>
+
+          <div className="pt-4 border-t border-[var(--sp-cool-veil)] flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-2xl bg-[var(--sp-sailcloth)]/70 border border-[var(--sp-cool-veil)]">
+            <div>
+              <h4 className="text-xs font-bold text-[var(--sp-charcoal)]">
+                Career Milestones &amp; Sailing Journey
+              </h4>
+              <p className="text-[11px] text-[var(--sp-slate-soft)] mt-0.5">
+                Key moments, breakthroughs, and campaigns. Athletes and parents can add, edit, or customize any milestone.
+              </p>
+            </div>
+            <Link
+              href={`/sailor/${athlete.id}#profile-journey`}
+              className="inline-flex items-center gap-1.5 shrink-0 rounded-xl border border-[var(--sp-harbour-teal)]/40 bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-teal)] transition-all shadow-2xs"
+            >
+              <span>Edit Milestones</span>
+              <ExternalLink className="h-3.5 w-3.5" />
+            </Link>
+          </div>
         </form>
       )}
 
@@ -951,7 +995,7 @@ function AthleteWorkspace({
                         </p>
                       </div>
                       <div>
-                        {r.verificationStatus === "verified" ? (
+                        {isResultVerified(r) ? (
                           <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800">
                             Verified ✓
                           </span>

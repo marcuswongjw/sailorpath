@@ -25,7 +25,7 @@ export function EquipmentInventory({
   mayHaveIlca,
   preferredBoatClass = null,
   regattaOptions = [],
-  cardClass = "rounded-2xl border border-white/5 bg-[#131520]/80",
+  cardClass = "rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs",
   onGearByRegatta,
 }: EquipmentInventoryProps) {
   const eq = useEquipmentInventory({
@@ -38,14 +38,14 @@ export function EquipmentInventory({
 
   if (eq.loading) {
     return (
-      <section className={`${cardClass} p-4 sm:p-5`}>
+      <section className={`${cardClass} p-5 sm:p-6`}>
         <div className="flex items-center gap-2 mb-4">
-          <div className="h-3.5 w-3.5 rounded bg-white/10 animate-pulse" />
-          <div className="h-3 w-20 rounded bg-white/10 animate-pulse" />
+          <div className="h-3.5 w-3.5 rounded bg-[var(--sp-cool-veil)] animate-pulse" />
+          <div className="h-3 w-20 rounded bg-[var(--sp-cool-veil)] animate-pulse" />
         </div>
         <div className="space-y-2">
-          <div className="h-16 rounded-xl bg-white/[0.04] animate-pulse" />
-          <div className="h-16 rounded-xl bg-white/[0.04] animate-pulse" />
+          <div className="h-16 rounded-xl bg-[var(--sp-sailcloth)] animate-pulse" />
+          <div className="h-16 rounded-xl bg-[var(--sp-sailcloth)] animate-pulse" />
         </div>
       </section>
     );
@@ -55,21 +55,21 @@ export function EquipmentInventory({
     return (
       <section
         id="profile-equipment"
-        className={`${cardClass} p-4 sm:p-5 scroll-mt-24`}
+        className={`${cardClass} p-5 sm:p-6 scroll-mt-24`}
       >
         <div className="flex items-center gap-2 mb-3">
-          <Settings className="h-3.5 w-3.5 text-orange-400/90" />
-          <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+          <Settings className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
+          <h2 className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--sp-slate-soft)]">
             Equipment
           </h2>
         </div>
-        <div className="rounded-2xl border border-dashed border-white/10 bg-black/20 py-10 px-4 text-center space-y-3">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/10 border border-orange-500/20">
-            <Lock className="h-5 w-5 text-orange-400/90" />
+        <div className="rounded-2xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 py-10 px-4 text-center space-y-3">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/30 border border-[var(--sp-racing-orange)]/25 text-[var(--sp-racing-orange)]">
+            <Lock className="h-5 w-5" />
           </div>
           <div className="space-y-1">
-            <p className="text-sm font-bold text-white">Equipment is private</p>
-            <p className="text-[11px] text-slate-500 leading-relaxed max-w-xs mx-auto">
+            <p className="text-sm font-bold text-[var(--sp-charcoal)]">Equipment is private</p>
+            <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed max-w-xs mx-auto">
               Gear details are only visible to the sailor and linked parents —
               not shown on the public profile.
             </p>
@@ -77,7 +77,7 @@ export function EquipmentInventory({
           {!isOwner && (
             <Link
               href="/claim-profile"
-              className="inline-flex rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-[11px] font-bold text-orange-200 hover:bg-orange-500/20"
+              className="inline-flex rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/20 px-4 py-2 text-xs font-bold text-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-mist)]/35 shadow-2xs"
             >
               Claim this profile to manage gear
             </Link>
@@ -90,7 +90,7 @@ export function EquipmentInventory({
   return (
     <section
       id="profile-equipment"
-      className={`${cardClass} p-4 sm:p-5 space-y-4 min-w-0 overflow-x-clip relative scroll-mt-24`}
+      className={`${cardClass} p-5 sm:p-6 space-y-5 min-w-0 overflow-x-clip relative scroll-mt-24`}
     >
       <EquipmentToast toast={eq.toast} />
 

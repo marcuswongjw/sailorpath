@@ -17,7 +17,7 @@ export function EquipmentClassTabs({
     <div
       role="tablist"
       aria-label="Equipment boat class"
-      className="inline-flex rounded-full border border-white/10 bg-black/25 p-0.5 gap-0.5"
+      className="inline-flex rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-1 gap-1 shadow-2xs"
     >
       <button
         type="button"
@@ -25,10 +25,10 @@ export function EquipmentClassTabs({
         aria-selected={classTab === "optimist"}
         id="equipment-tab-optimist"
         onClick={() => onSelectClass("optimist")}
-        className={`rounded-full px-3.5 py-2 text-[11px] font-bold transition touch-manipulation min-h-[2.25rem] ${
+        className={`rounded-full px-4 py-1.5 text-xs font-bold transition touch-manipulation min-h-[2.25rem] ${
           classTab === "optimist"
-            ? "bg-orange-600 text-white shadow-sm"
-            : "text-slate-400 hover:text-white"
+            ? "bg-[var(--sp-racing-orange)] text-white shadow-xs"
+            : "text-[var(--sp-charcoal)] hover:text-[var(--sp-harbour-teal)]"
         }`}
       >
         Optimist
@@ -40,10 +40,10 @@ export function EquipmentClassTabs({
           aria-selected={classTab === "ilca4"}
           id="equipment-tab-ilca4"
           onClick={() => onSelectClass("ilca4")}
-          className={`rounded-full px-3.5 py-2 text-[11px] font-bold transition touch-manipulation min-h-[2.25rem] ${
+          className={`rounded-full px-4 py-1.5 text-xs font-bold transition touch-manipulation min-h-[2.25rem] ${
             classTab === "ilca4"
-              ? "bg-sky-600 text-white shadow-sm"
-              : "text-slate-400 hover:text-white"
+              ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+              : "text-[var(--sp-charcoal)] hover:text-[var(--sp-harbour-teal)]"
           }`}
         >
           ILCA 4
@@ -52,7 +52,7 @@ export function EquipmentClassTabs({
         <button
           type="button"
           onClick={onUnlockIlca}
-          className="rounded-full px-3.5 py-2 text-[11px] font-bold text-sky-300/90 hover:text-sky-200 touch-manipulation min-h-[2.25rem]"
+          className="rounded-full px-3.5 py-1.5 text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline touch-manipulation min-h-[2.25rem]"
         >
           + ILCA 4
         </button>

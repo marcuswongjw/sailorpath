@@ -217,6 +217,14 @@ export async function POST(req: Request) {
       seaGames: normalizeYearsList(body.seaGames),
     };
 
+    if (body.sailingJourney) {
+      const { parseSailingJourney, serializeSailingJourney } = await import(
+        "@/lib/sailingJourney"
+      );
+      const items = parseSailingJourney(body.sailingJourney);
+      values.sailingJourney = serializeSailingJourney(items);
+    }
+
     // nationality only if provided (column may be missing until migration 005)
     const nat = normalizeNationality(body.nationality) || fromSailNat;
     if (nat) {
@@ -440,6 +448,18 @@ export async function PATCH(req: Request) {
     ] as const) {
       if (body[f] !== undefined) {
         patch[f] = num(body[f]);
+      }
+    }
+
+    if (body.sailingJourney !== undefined) {
+      const { parseSailingJourney, serializeSailingJourney } = await import(
+        "@/lib/sailingJourney"
+      );
+      if (body.sailingJourney === null || body.sailingJourney === "") {
+        patch.sailingJourney = null;
+      } else {
+        const items = parseSailingJourney(body.sailingJourney);
+        patch.sailingJourney = serializeSailingJourney(items);
       }
     }
 

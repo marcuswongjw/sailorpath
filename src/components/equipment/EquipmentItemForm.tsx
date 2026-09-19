@@ -93,11 +93,11 @@ export function EquipmentItemForm({
                   key={p.id}
                   type="button"
                   onClick={() => applyPreset(p)}
-                  className={`rounded-lg px-2.5 py-1 text-[10px] font-bold border transition touch-manipulation ${
+                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold border transition touch-manipulation ${
                     form.brand.toLowerCase() === p.brand.toLowerCase() &&
                     form.model.toLowerCase() === p.model.toLowerCase()
-                      ? "bg-orange-500/20 border-orange-500/50 text-orange-200 shadow-sm"
-                      : "border-white/10 bg-white/[0.03] text-slate-300 hover:border-orange-500/30 hover:text-white"
+                      ? "bg-[var(--sp-racing-mist)]/30 border-[var(--sp-racing-orange)] text-[var(--sp-racing-orange)] shadow-xs"
+                      : "border-[var(--sp-cool-veil)] bg-white text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)] shadow-2xs"
                   }`}
                 >
                   {p.name}
@@ -125,10 +125,10 @@ export function EquipmentItemForm({
                   key={cat}
                   type="button"
                   onClick={() => setCategory(cat)}
-                  className={`rounded-full px-2.5 py-1 text-[10px] font-bold border touch-manipulation ${
+                  className={`rounded-full px-2.5 py-1 text-[11px] font-bold border touch-manipulation transition-colors ${
                     form.category === cat
-                      ? "bg-orange-500/20 border-orange-500/40 text-orange-100"
-                      : "border-white/10 text-slate-400"
+                      ? "bg-[var(--sp-racing-mist)]/30 border-[var(--sp-racing-orange)] text-[var(--sp-racing-orange)] shadow-xs"
+                      : "border-[var(--sp-cool-veil)] bg-white text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)] shadow-2xs"
                   }`}
                 >
                   {categoryLabel(cat)}
@@ -279,8 +279,8 @@ export function EquipmentItemForm({
                   }
                   className={`rounded-full px-3 py-1.5 text-[11px] font-bold border touch-manipulation ${
                     form.windRange === val
-                      ? "bg-sky-500/20 border-sky-500/40 text-sky-100"
-                      : "border-white/10 text-slate-400"
+                      ? "bg-sky-50 border-sky-300 text-sky-900"
+                      : "border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] bg-white hover:border-[var(--sp-charcoal)]/30"
                   }`}
                 >
                   {lab}
@@ -312,8 +312,8 @@ export function EquipmentItemForm({
                     }
                     className={`rounded-xl px-2 py-2 text-center border transition touch-manipulation flex flex-col items-center gap-1 ${
                       active
-                        ? `${meta.bg} ${meta.border} ${meta.text} ring-1 ring-white/20`
-                        : "border-white/10 bg-white/[0.02] text-slate-400 hover:border-white/20"
+                        ? `${meta.bg} ${meta.border} ${meta.text} ring-2 ring-[var(--sp-harbour-teal)]/30`
+                        : "border-[var(--sp-cool-veil)] bg-white text-[var(--sp-slate-soft)] hover:border-[var(--sp-charcoal)]/30"
                     }`}
                   >
                     <span className={`h-2 w-2 rounded-full ${meta.dot}`} />
@@ -327,18 +327,18 @@ export function EquipmentItemForm({
           </div>
         </div>
 
-        <label className="flex items-center gap-2.5 text-[12px] text-slate-300 rounded-xl border border-white/10 bg-black/20 px-3 py-2.5 cursor-pointer hover:border-white/20">
+        <label className="flex items-center gap-2.5 text-[12px] text-[var(--sp-charcoal)] rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2.5 cursor-pointer hover:border-[var(--sp-charcoal)]/30">
           <input
             type="checkbox"
             checked={form.isPrimary}
             onChange={(e) =>
               onChange({ ...form, isPrimary: e.target.checked })
             }
-            className="rounded border-white/20 text-orange-500 focus:ring-0"
+            className="rounded border-[var(--sp-cool-veil)] text-[var(--sp-racing-orange)] focus:ring-[var(--sp-racing-orange)]"
           />
           <div>
-            <span className="font-semibold text-white">⭐ Primary Race-Day Gear</span>
-            <p className="text-[10px] text-slate-500">
+            <span className="font-semibold text-[var(--sp-charcoal)]">⭐ Primary Race-Day Gear</span>
+            <p className="text-[10px] text-[var(--sp-slate-soft)]">
               Rigged for competition (used on race day)
             </p>
           </div>
@@ -346,7 +346,7 @@ export function EquipmentItemForm({
       </div>
 
       {(showMore || modal === "edit") && (
-        <div className="space-y-3 border-t border-white/5 pt-3">
+        <div className="space-y-3 border-t border-[var(--sp-cool-veil)] pt-3">
           <div className="grid grid-cols-2 gap-2.5">
             <label className={labelClass}>
               Status
@@ -387,8 +387,8 @@ export function EquipmentItemForm({
                   onClick={() => onToggleTag(t.value)}
                   className={`rounded-full px-2.5 py-1.5 text-[10px] font-bold border touch-manipulation ${
                     form.tags.includes(t.value)
-                      ? "bg-orange-500/20 border-orange-500/40 text-orange-200"
-                      : "border-white/10 text-slate-400"
+                      ? "bg-orange-50 border-orange-300 text-orange-900"
+                      : "border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] bg-white hover:border-[var(--sp-charcoal)]/30"
                   }`}
                 >
                   {t.label}
@@ -413,7 +413,7 @@ export function EquipmentItemForm({
         <button
           type="button"
           onClick={() => onShowMore(true)}
-          className="flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-slate-200 touch-manipulation"
+          className="flex items-center gap-1 text-[11px] font-bold text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] touch-manipulation"
         >
           <ChevronDown className="h-3.5 w-3.5" />
           More details
@@ -423,7 +423,7 @@ export function EquipmentItemForm({
         <button
           type="button"
           onClick={() => onShowMore(false)}
-          className="flex items-center gap-1 text-[11px] font-bold text-slate-400 hover:text-slate-200 touch-manipulation"
+          className="flex items-center gap-1 text-[11px] font-bold text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] touch-manipulation"
         >
           <ChevronUp className="h-3.5 w-3.5" />
           Fewer details

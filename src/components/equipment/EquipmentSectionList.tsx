@@ -40,26 +40,26 @@ export function EquipmentSectionList({
         return (
           <div
             key={sec.id}
-            className="rounded-2xl border border-white/[0.06] bg-black/20 overflow-hidden"
+            className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 overflow-hidden shadow-2xs"
           >
             <div className="flex items-start justify-between gap-2 px-3.5 pt-3 pb-2">
               <div className="min-w-0 flex items-start gap-2.5">
                 <span
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.06] text-base leading-none"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-white border border-[var(--sp-cool-veil)] text-base leading-none text-[var(--sp-harbour-teal)] shadow-2xs"
                   aria-hidden
                 >
                   {sectionIcon(sec.id)}
                 </span>
                 <div className="min-w-0 pt-0.5">
-                  <p className="text-[12px] font-black text-white tracking-tight flex items-center gap-2">
+                  <p className="text-[13px] font-bold text-[var(--sp-charcoal)] tracking-tight flex items-center gap-2">
                     {sec.label}
                     {!sec.isEmpty && (
-                      <span className="text-[10px] font-bold text-slate-500 tabular-nums">
+                      <span className="text-[10px] font-bold text-[var(--sp-slate-soft)] bg-white border border-[var(--sp-cool-veil)] px-1.5 py-0.5 rounded-full tabular-nums">
                         {sec.items.length}
                       </span>
                     )}
                   </p>
-                  <p className="text-[10px] text-slate-400 mt-0.5 leading-snug">
+                  <p className="text-[11px] text-[var(--sp-slate-soft)] mt-0.5 leading-snug">
                     {sec.hint}
                   </p>
                 </div>
@@ -68,7 +68,7 @@ export function EquipmentSectionList({
                 <button
                   type="button"
                   onClick={() => onQuickAdd(sec.categories[0])}
-                  className="shrink-0 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold text-orange-300 hover:border-orange-500/40 touch-manipulation"
+                  className="shrink-0 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-3 py-1 text-[11px] font-bold text-[var(--sp-harbour-teal)] transition-colors shadow-2xs touch-manipulation"
                 >
                   + Add
                 </button>
@@ -82,7 +82,7 @@ export function EquipmentSectionList({
                     key={cat}
                     type="button"
                     onClick={() => onQuickAdd(cat)}
-                    className="rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 text-[10px] font-bold text-slate-300 hover:border-orange-500/35 touch-manipulation"
+                    className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-[11px] font-bold text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-teal)] transition-colors touch-manipulation shadow-2xs"
                   >
                     + {categoryLabel(cat)}
                   </button>
@@ -91,7 +91,7 @@ export function EquipmentSectionList({
                   <button
                     type="button"
                     onClick={onOpenFullRig}
-                    className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 text-[10px] font-bold text-orange-200 touch-manipulation"
+                    className="rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/20 px-2.5 py-1 text-[11px] font-bold text-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-mist)]/30 transition-colors touch-manipulation shadow-2xs"
                   >
                     + Full rig set
                   </button>
@@ -100,7 +100,7 @@ export function EquipmentSectionList({
             )}
 
             {sec.isEmpty ? (
-              <p className="text-[11px] text-slate-400 px-3.5 pb-3.5 pt-0.5">
+              <p className="text-xs text-[var(--sp-slate-soft)] px-3.5 pb-3.5 pt-0.5">
                 Nothing here yet
                 {isOwner ? " — tap + to add." : "."}
               </p>

@@ -60,6 +60,7 @@ export type SailorAdmin = {
   parentId?: string | null;
   /** parent | sailor | other — how the linked account relates */
   ownerRelation?: string | null;
+  sailingJourney?: string | null;
   createdAt?: Date | string | null;
   updatedAt?: Date | string | null;
 };

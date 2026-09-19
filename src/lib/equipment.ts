@@ -126,23 +126,23 @@ export const CONDITION_STYLES: Record<
 > = {
   new: {
     label: "New / Excellent",
-    className: "bg-emerald-500/15 border-emerald-500/30 text-emerald-300",
+    className: "bg-emerald-50 border-emerald-300 text-emerald-800",
   },
   good: {
     label: "Good",
-    className: "bg-sky-500/15 border-sky-500/30 text-sky-300",
+    className: "bg-teal-50 border-teal-300 text-teal-800",
   },
   fair: {
     label: "Fair",
-    className: "bg-amber-500/15 border-amber-500/30 text-amber-200",
+    className: "bg-amber-50 border-amber-300 text-amber-800",
   },
   worn: {
     label: "Needs repair",
-    className: "bg-rose-500/15 border-rose-500/35 text-rose-300",
+    className: "bg-rose-50 border-rose-300 text-rose-800",
   },
   replace_soon: {
     label: "Replace soon",
-    className: "bg-rose-500/15 border-rose-500/35 text-rose-300",
+    className: "bg-rose-50 border-rose-300 text-rose-800",
   },
 };
 
@@ -370,26 +370,26 @@ export const SIMPLIFIED_CONDITION_META: Record<
   race_ready: {
     label: "Race Ready (Excellent / Good)",
     shortLabel: "Race Ready",
-    bg: "bg-emerald-500/15",
-    text: "text-emerald-300",
-    border: "border-emerald-500/30",
-    dot: "bg-emerald-400",
+    bg: "bg-emerald-50",
+    text: "text-emerald-800",
+    border: "border-emerald-300",
+    dot: "bg-emerald-500",
   },
   practice_only: {
     label: "Practice / Training Only",
     shortLabel: "Practice Only",
-    bg: "bg-amber-500/15",
-    text: "text-amber-300",
-    border: "border-amber-500/30",
-    dot: "bg-amber-400",
+    bg: "bg-amber-50",
+    text: "text-amber-800",
+    border: "border-amber-300",
+    dot: "bg-amber-500",
   },
   needs_attention: {
     label: "Needs Repair / Replacement",
     shortLabel: "Needs Repair",
-    bg: "bg-rose-500/15",
-    text: "text-rose-300",
-    border: "border-rose-500/30",
-    dot: "bg-rose-400",
+    bg: "bg-rose-50",
+    text: "text-rose-800",
+    border: "border-rose-300",
+    dot: "bg-rose-500",
   },
 };
 
@@ -664,20 +664,19 @@ export const BADGE_STYLES: Record<
   { className: string }
 > = {
   new: {
-    className:
-      "bg-emerald-500/15 border-emerald-500/30 text-emerald-300",
+    className: "bg-emerald-50 border-emerald-300 text-emerald-800",
   },
   good: {
-    className: "bg-white/5 border-white/10 text-slate-400",
+    className: "bg-slate-100 border-slate-200 text-slate-700",
   },
   check_condition: {
-    className: "bg-amber-500/15 border-amber-500/30 text-amber-200",
+    className: "bg-amber-50 border-amber-300 text-amber-800",
   },
   consider_replacement: {
-    className: "bg-orange-500/15 border-orange-500/35 text-orange-300",
+    className: "bg-orange-50 border-orange-300 text-orange-800",
   },
   replace_soon: {
-    className: "bg-rose-500/15 border-rose-500/35 text-rose-300",
+    className: "bg-rose-50 border-rose-300 text-rose-800",
   },
 };
 

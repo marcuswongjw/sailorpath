@@ -202,25 +202,25 @@ export function AdminSuggestionsPanel({
 
   return (
     <div className="w-full min-w-0 space-y-4">
-      <div className="glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3">
+      <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-sky-400" />
+            <h2 className="text-lg font-bold text-[var(--sp-charcoal)] flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
               Non-ranking suggestions & Evidence Review
             </h2>
-            <p className="text-xs text-slate-500 mt-1 max-w-2xl">
+            <p className="text-xs text-[var(--sp-slate-soft)] mt-1 max-w-2xl">
               When a claimed sailor or parent logs an overseas / non-ranking event,
               it appears here. Review attached evidence (PDF, scorecard photos, official links),
-              stamp <strong className="text-emerald-400">Verified ✓</strong>, or{" "}
-              <strong className="text-slate-300">Promote</strong> to the national ranking series.
+              stamp <strong className="text-emerald-700">Verified ✓</strong>, or{" "}
+              <strong className="text-[var(--sp-charcoal)]">Promote</strong> to the national ranking series.
             </p>
           </div>
           <button
             type="button"
             onClick={() => void load()}
             disabled={busy}
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-bold text-slate-200 hover:bg-white/10 disabled:opacity-50 flex items-center gap-1.5"
+            className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-xs font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] disabled:opacity-50 flex items-center gap-1.5 shadow-xs"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${busy ? "animate-spin" : ""}`} />
             Refresh
@@ -228,24 +228,26 @@ export function AdminSuggestionsPanel({
         </div>
 
         {err && (
-          <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-xs text-rose-200 flex gap-2">
-            <AlertTriangle className="h-4 w-4 shrink-0" />
-            {err}
-            {/reviewed_at|column/i.test(err) && (
-              <span className="block mt-1 text-rose-100/80">
-                This feature needs platform maintenance before it can be used.
-              </span>
-            )}
+          <div className="rounded-xl border border-rose-300 bg-rose-50 px-3 py-2 text-xs text-rose-800 flex gap-2">
+            <AlertTriangle className="h-4 w-4 shrink-0 text-rose-600" />
+            <div>
+              {err}
+              {/reviewed_at|column/i.test(err) && (
+                <span className="block mt-1 text-rose-700">
+                  This feature needs platform maintenance before it can be used.
+                </span>
+              )}
+            </div>
           </div>
         )}
 
         {items.length === 0 && !busy && !err ? (
-          <div className="rounded-xl border border-white/5 bg-slate-950/40 px-4 py-8 text-center text-sm text-slate-500 flex flex-col items-center gap-2">
-            <CheckCircle className="h-6 w-6 text-emerald-500/80" />
+          <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 px-4 py-8 text-center text-sm text-[var(--sp-slate-soft)] flex flex-col items-center gap-2">
+            <CheckCircle className="h-6 w-6 text-emerald-600" />
             No pending suggestions — queue is clear.
           </div>
         ) : (
-          <ul className="space-y-3">
+          <ul className="space-y-4">
             {items.map((s) => {
               const form = promoteForm[s.id] || {
                 division: "Gold",
@@ -255,28 +257,28 @@ export function AdminSuggestionsPanel({
               return (
                 <li
                   key={s.id}
-                  className="rounded-2xl border border-sky-500/20 bg-sky-500/5 p-4 space-y-3"
+                  className="rounded-2xl border border-[var(--sp-cool-veil)] bg-white p-4 sm:p-5 space-y-3.5 shadow-xs"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div>
-                      <p className="text-sm font-bold text-white">{s.name}</p>
-                      <p className="text-[11px] text-slate-400 font-mono mt-0.5">
+                      <p className="text-sm font-bold text-[var(--sp-charcoal)]">{s.name}</p>
+                      <p className="text-[11px] text-[var(--sp-slate-soft)] font-mono mt-0.5">
                         {regattaDateLabel(s.date)} · {s.geography || "—"} · fleet{" "}
                         {s.totalFleetSize}
                       </p>
-                      <span className="inline-block mt-1.5 rounded-full bg-sky-500/15 border border-sky-500/30 px-2 py-0.5 text-[9px] font-black text-sky-300 uppercase">
+                      <span className="inline-block mt-1.5 rounded-full bg-sky-50 border border-sky-300 px-2 py-0.5 text-[9px] font-black text-sky-800 uppercase tracking-wide">
                         Non-ranking · needs review
                       </span>
                     </div>
                   </div>
 
-                  <div className="rounded-xl border border-white/5 bg-slate-950/50 overflow-hidden">
-                    <p className="text-[10px] font-bold text-slate-500 uppercase px-3 py-1.5 bg-white/5">
+                  <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 overflow-hidden">
+                    <p className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider px-3 py-2 bg-[var(--sp-warm-white)] border-b border-[var(--sp-cool-veil)]">
                       Sailor results & attached evidence
                     </p>
-                    <ul className="divide-y divide-white/5 text-xs">
+                    <ul className="divide-y divide-[var(--sp-cool-veil)] text-xs">
                       {s.results.length === 0 ? (
-                        <li className="px-3 py-2 text-slate-600">No results</li>
+                        <li className="px-3 py-2 text-[var(--sp-slate-soft)]">No results</li>
                       ) : (
                         s.results.map((r) => {
                           const evHref = safeHref(r.evidenceUrl);
@@ -284,14 +286,14 @@ export function AdminSuggestionsPanel({
                           return (
                           <li
                             key={r.resultId}
-                            className="p-3 space-y-2"
+                            className="p-3 space-y-2.5"
                           >
                             <div className="flex flex-wrap items-center justify-between gap-2">
                               <div className="flex items-center gap-2">
-                                <span className="text-slate-200 font-bold">
+                                <span className="text-[var(--sp-charcoal)] font-bold text-sm">
                                   {r.sailorName}
                                 </span>
-                                <span className="font-mono text-slate-400 text-xs">
+                                <span className="font-mono text-[var(--sp-slate-soft)] text-xs">
                                   Place {r.rank} / {s.totalFleetSize || "—"}
                                   {r.nettScore != null ? ` · nett ${r.nettScore}` : ""}
                                 </span>
@@ -300,22 +302,22 @@ export function AdminSuggestionsPanel({
                               {/* Status Badge */}
                               <div>
                                 {r.verificationStatus === "verified" ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-300">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-300 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
                                     <ShieldCheck className="h-3 w-3" />
                                     Verified ✓
                                   </span>
                                 ) : r.verificationStatus === "pending_review" ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-sky-500/15 border border-sky-500/30 px-2 py-0.5 text-[10px] font-bold text-sky-300">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-300 px-2 py-0.5 text-[10px] font-bold text-sky-800">
                                     <FileText className="h-3 w-3" />
                                     Evidence Submitted
                                   </span>
                                 ) : r.verificationStatus === "rejected" ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 border border-rose-500/30 px-2 py-0.5 text-[10px] font-bold text-rose-300">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-300 px-2 py-0.5 text-[10px] font-bold text-rose-800">
                                     <XCircle className="h-3 w-3" />
                                     Rejected
                                   </span>
                                 ) : (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-300">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-300 px-2 py-0.5 text-[10px] font-bold text-amber-900">
                                     Self-Reported
                                   </span>
                                 )}
@@ -324,13 +326,13 @@ export function AdminSuggestionsPanel({
 
                             {/* Evidence Links & Details */}
                             {(r.evidenceUrl || r.officialUrl || r.evidenceNotes) && (
-                              <div className="flex flex-wrap items-center gap-3 text-[11px] bg-white/[0.03] p-2 rounded-lg border border-white/5">
+                              <div className="flex flex-wrap items-center gap-3 text-[11px] bg-white p-2.5 rounded-lg border border-[var(--sp-cool-veil)] shadow-2xs">
                                 {r.evidenceUrl && evHref && (
                                   <a
                                     href={evHref}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 font-semibold underline underline-offset-2"
+                                    className="inline-flex items-center gap-1.5 text-[var(--sp-harbour-teal)] hover:underline font-semibold"
                                   >
                                     {r.evidenceType === "image" ? (
                                       <ImageIcon className="h-3.5 w-3.5" />
@@ -347,14 +349,14 @@ export function AdminSuggestionsPanel({
                                     href={offHref}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 font-semibold underline underline-offset-2"
+                                    className="inline-flex items-center gap-1.5 text-indigo-600 hover:underline font-semibold"
                                   >
                                     <ExternalLink className="h-3.5 w-3.5" />
                                     <span>Official Online Results</span>
                                   </a>
                                 )}
                                 {r.evidenceNotes && (
-                                  <span className="text-slate-400 italic">
+                                  <span className="text-[var(--sp-slate-soft)] italic">
                                     “{r.evidenceNotes}”
                                   </span>
                                 )}
@@ -368,7 +370,7 @@ export function AdminSuggestionsPanel({
                                   type="button"
                                   disabled={actionId === r.resultId}
                                   onClick={() => void verifyResult(r.resultId, "verify")}
-                                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 px-2.5 py-1 text-[11px] font-bold text-white transition-colors disabled:opacity-50"
+                                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 px-2.5 py-1 text-[11px] font-bold text-white transition-colors disabled:opacity-50 shadow-xs"
                                 >
                                   <ShieldCheck className="h-3 w-3" />
                                   Verify Result
@@ -379,7 +381,7 @@ export function AdminSuggestionsPanel({
                                   type="button"
                                   disabled={actionId === r.resultId}
                                   onClick={() => void verifyResult(r.resultId, "reject")}
-                                  className="inline-flex items-center gap-1 rounded-lg border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 px-2.5 py-1 text-[11px] font-bold text-rose-300 transition-colors disabled:opacity-50"
+                                  className="inline-flex items-center gap-1 rounded-lg border border-rose-300 bg-rose-50 hover:bg-rose-100 px-2.5 py-1 text-[11px] font-bold text-rose-800 transition-colors disabled:opacity-50 shadow-xs"
                                 >
                                   <XCircle className="h-3 w-3" />
                                   Reject Evidence
@@ -393,8 +395,8 @@ export function AdminSuggestionsPanel({
                     </ul>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                       Division (on promote)
                       <select
                         value={form.division}
@@ -404,14 +406,14 @@ export function AdminSuggestionsPanel({
                             [s.id]: { ...form, division: e.target.value },
                           }))
                         }
-                        className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 text-white text-xs px-2 py-1.5"
+                        className="mt-1 w-full rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] text-xs px-2.5 py-2 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                       >
                         <option value="Gold">Gold</option>
                         <option value="Silver">Silver</option>
                         <option value="Both">Both</option>
                       </select>
                     </label>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                       Geography
                       <GeographySelect
                         value={form.geography}
@@ -424,10 +426,10 @@ export function AdminSuggestionsPanel({
                             },
                           }))
                         }
-                        className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 text-white text-xs px-2 py-1.5"
+                        className="mt-1 w-full rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] text-xs px-2.5 py-2 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                       />
                     </label>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                       Fleet size
                       <input
                         type="number"
@@ -441,12 +443,12 @@ export function AdminSuggestionsPanel({
                             },
                           }))
                         }
-                        className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 text-white text-xs px-2 py-1.5 font-mono"
+                        className="mt-1 w-full rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] text-xs px-2.5 py-2 font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                       />
                     </label>
                   </div>
 
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 pt-1">
                     <button
                       type="button"
                       disabled={actionId === s.id}
@@ -458,7 +460,7 @@ export function AdminSuggestionsPanel({
                           totalFleetSize: Number(form.totalFleetSize) || 50,
                         })
                       }
-                      className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-1.5 text-[11px] font-bold text-white disabled:opacity-50"
+                      className="rounded-full bg-[var(--sp-racing-orange)] hover:brightness-105 px-4 py-1.5 text-[11px] font-bold text-white disabled:opacity-50 shadow-sm"
                     >
                       Promote to series list
                     </button>
@@ -466,7 +468,7 @@ export function AdminSuggestionsPanel({
                       type="button"
                       disabled={actionId === s.id}
                       onClick={() => void patch(s.id, { action: "dismiss" })}
-                      className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white disabled:opacity-50"
+                      className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-4 py-1.5 text-[11px] font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] disabled:opacity-50 shadow-xs"
                     >
                       Dismiss (keep non-ranking)
                     </button>

@@ -797,6 +797,7 @@ export function useAdminSailors({
       european: sailorForm.european || null,
       asian: sailorForm.asian || null,
       seaGames: sailorForm.seaGames || null,
+      sailingJourney: sailorForm.sailingJourney || null,
     };
     try {
       if (editingSailorId === "new") {

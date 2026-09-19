@@ -1,6 +1,6 @@
 "use client";
 
-import type { Dispatch, SetStateAction } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 import {
   Columns3,
   ArrowUpDown,
@@ -9,6 +9,9 @@ import {
   Plus,
   Trash2,
   Edit3,
+  Edit2,
+  Check,
+  X,
   Medal,
   Copy,
   AlertTriangle,
@@ -18,6 +21,12 @@ import {
   UserCheck,
   Users,
 } from "lucide-react";
+import {
+  parseSailingJourney,
+  serializeSailingJourney,
+  newJourneyId,
+  type JourneyHighlight,
+} from "@/lib/sailingJourney";
 import { birthYear } from "@/lib/age";
 import {
   halfBoundaryOptions,
@@ -102,6 +111,209 @@ export type AdminSailorsPanelProps = {
   onCleanOptimistSailNumbers?: () => void | Promise<void>;
   onSailorsChange?: (sailors: SailorAdmin[]) => void;
 };
+
+function AdminMilestonesEditor({
+  journeyRaw,
+  onChange,
+}: {
+  journeyRaw: string;
+  onChange: (nextRaw: string) => void;
+}) {
+  const items = parseSailingJourney(journeyRaw);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editWhen, setEditWhen] = useState("");
+  const [editTitle, setEditTitle] = useState("");
+  const [editDetail, setEditDetail] = useState("");
+
+  const [newWhen, setNewWhen] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [newDetail, setNewDetail] = useState("");
+
+  const handleSaveEdit = (id: string) => {
+    if (!editTitle.trim()) return;
+    const next = items.map((it) =>
+      it.id === id
+        ? {
+            ...it,
+            when: editWhen.trim(),
+            title: editTitle.trim(),
+            detail: editDetail.trim(),
+          }
+        : it
+    );
+    onChange(serializeSailingJourney(next) || "");
+    setEditingId(null);
+  };
+
+  const handleDelete = (id: string) => {
+    const next = items.filter((it) => it.id !== id);
+    onChange(serializeSailingJourney(next) || "");
+  };
+
+  const handleAdd = () => {
+    if (!newTitle.trim()) return;
+    const item: JourneyHighlight = {
+      id: newJourneyId(),
+      when: newWhen.trim(),
+      title: newTitle.trim(),
+      detail: newDetail.trim(),
+    };
+    const next = [item, ...items];
+    onChange(serializeSailingJourney(next) || "");
+    setNewWhen("");
+    setNewTitle("");
+    setNewDetail("");
+  };
+
+  return (
+    <div className="space-y-3 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 p-3.5">
+      {items.length === 0 ? (
+        <p className="text-xs text-[var(--sp-slate-soft)] italic">
+          No custom milestones recorded yet. Add one below.
+        </p>
+      ) : (
+        <ul className="space-y-2 max-h-56 overflow-y-auto">
+          {items.map((it) => (
+            <li
+              key={it.id}
+              className="rounded-lg border border-[var(--sp-cool-veil)] bg-white p-2.5 text-xs space-y-1.5 shadow-2xs"
+            >
+              {editingId === it.id ? (
+                <div className="space-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div>
+                      <label className="text-[9px] font-bold text-[var(--sp-charcoal)] uppercase">When</label>
+                      <input
+                        value={editWhen}
+                        onChange={(e) => setEditWhen(e.target.value)}
+                        placeholder="e.g. Oct 2025"
+                        className="mt-0.5 w-full rounded border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-1 text-xs text-[var(--sp-charcoal)]"
+                      />
+                    </div>
+                    <div className="sm:col-span-2">
+                      <label className="text-[9px] font-bold text-[var(--sp-charcoal)] uppercase">Title</label>
+                      <input
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        placeholder="Milestone title"
+                        className="mt-0.5 w-full rounded border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-1 text-xs text-[var(--sp-charcoal)]"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="text-[9px] font-bold text-[var(--sp-charcoal)] uppercase">Details</label>
+                    <textarea
+                      value={editDetail}
+                      onChange={(e) => setEditDetail(e.target.value)}
+                      placeholder="Details, boat class, takeaways"
+                      rows={2}
+                      className="mt-0.5 w-full rounded border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-1 text-xs text-[var(--sp-charcoal)]"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      onClick={() => handleSaveEdit(it.id)}
+                      className="inline-flex items-center gap-1 rounded bg-[var(--sp-racing-orange)] px-2.5 py-1 text-[11px] font-bold text-white shadow-2xs"
+                    >
+                      <Check className="h-3 w-3" />
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditingId(null)}
+                      className="inline-flex items-center gap-1 rounded border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-[11px] font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
+                    >
+                      <X className="h-3 w-3" />
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      {it.when && (
+                        <span className="font-bold text-[var(--sp-harbour-teal)] text-[10px] uppercase tracking-wide">
+                          {it.when} ·
+                        </span>
+                      )}
+                      <span className="font-bold text-[var(--sp-charcoal)]">{it.title}</span>
+                    </div>
+                    {it.detail && (
+                      <p className="text-[11px] text-[var(--sp-slate-soft)] mt-0.5 leading-snug">
+                        {it.detail}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setEditingId(it.id);
+                        setEditWhen(it.when || "");
+                        setEditTitle(it.title || "");
+                        setEditDetail(it.detail || "");
+                      }}
+                      className="inline-flex items-center gap-1 text-[10px] font-bold text-[var(--sp-harbour-teal)] hover:underline"
+                    >
+                      <Edit2 className="h-3 w-3" />
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(it.id)}
+                      className="text-[10px] font-bold text-rose-600 hover:underline ml-1.5"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {/* Add new milestone inline */}
+      <div className="border-t border-[var(--sp-cool-veil)] pt-2.5 space-y-2">
+        <p className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+          Add New Milestone
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <input
+            value={newWhen}
+            onChange={(e) => setNewWhen(e.target.value)}
+            placeholder="When (e.g. Oct 2025)"
+            className="rounded-lg border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-xs text-[var(--sp-charcoal)]"
+          />
+          <input
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
+            placeholder="Milestone title"
+            className="sm:col-span-2 rounded-lg border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-xs text-[var(--sp-charcoal)]"
+          />
+        </div>
+        <textarea
+          value={newDetail}
+          onChange={(e) => setNewDetail(e.target.value)}
+          placeholder="Details, boat class, takeaways"
+          rows={2}
+          className="w-full rounded-lg border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-xs text-[var(--sp-charcoal)]"
+        />
+        <button
+          type="button"
+          disabled={!newTitle.trim()}
+          onClick={handleAdd}
+          className="inline-flex items-center gap-1 rounded-lg bg-[var(--sp-harbour-teal)] px-3 py-1 text-xs font-bold text-white shadow-2xs disabled:opacity-50"
+        >
+          <Plus className="h-3.5 w-3.5" />
+          Add Milestone
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
   const {
@@ -248,25 +460,25 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                   </div>
                 )}
                 {/* Filters */}
-                <div className="glass-panel rounded-2xl border border-white/5 p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 shadow-xs">
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Search</label>
+                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Search</label>
                     <input
                       type="search"
                       placeholder="Name, sail #, club, school…"
                       value={dbSearch}
                       onChange={(e) => setDbSearch(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                       Class / Series
                     </label>
                     <select
                       value={dbFleetFilter}
                       onChange={(e) => setDbFleetFilter(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                     >
                       <option value="all">All sailors</option>
                       <option value="series">Optimist · In SG Fleet</option>
@@ -278,11 +490,11 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">Squad Jul 26</label>
+                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Squad Jul 26</label>
                     <select
                       value={dbSquadFilter}
                       onChange={(e) => setDbSquadFilter(e.target.value)}
-                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                     >
                       <option value="all">All squads</option>
                       <option value="Nat A">Nat A</option>
@@ -290,13 +502,13 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       <option value="DS">DS</option>
                     </select>
                   </div>
-                  <p className="sm:col-span-2 lg:col-span-4 text-[11px] text-slate-500">
-                    Showing <strong className="text-white">{filteredDbSailors.length}</strong> of{" "}
+                  <p className="sm:col-span-2 lg:col-span-4 text-[11px] text-[var(--sp-slate-soft)]">
+                    Showing <strong className="text-[var(--sp-charcoal)]">{filteredDbSailors.length}</strong> of{" "}
                     {sailorList.length} sailors
                     {selectedSailors.length > 0 && (
                       <>
                         {" "}
-                        · <strong className="text-orange-400">{selectedSailors.length}</strong> selected
+                        · <strong className="text-[var(--sp-racing-orange)]">{selectedSailors.length}</strong> selected
                         for bulk edit
                       </>
                     )}
@@ -317,12 +529,12 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                   <button
                     type="button"
                     onClick={() => setShowDuplicateFinder((v) => !v)}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:text-white flex items-center gap-1.5"
+                    className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[11px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)] flex items-center gap-1.5"
                   >
-                    <Copy className="h-3.5 w-3.5 text-orange-400" />
+                    <Copy className="h-3.5 w-3.5 text-orange-500" />
                     Find similar names
                     {duplicatePairs.length > 0 && (
-                      <span className="rounded-full bg-orange-600/20 text-orange-300 px-1.5 py-0.5 text-[10px]">
+                      <span className="rounded-full bg-orange-100 border border-orange-200 text-orange-800 px-1.5 py-0.5 text-[10px]">
                         {duplicatePairs.length}
                       </span>
                     )}
@@ -331,27 +543,27 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
 
                 {/* Bulk edit toolbar — only when at least one row is selected */}
                 {selectedSailors.length > 0 && (
-                <div className="glass-panel rounded-2xl border border-orange-500/20 bg-orange-500/[0.03] p-4 space-y-3">
+                <div className="rounded-2xl border border-orange-200 bg-orange-50/40 p-4 space-y-3">
                   <div className="flex items-center gap-2">
-                    <Grid className="h-4 w-4 text-orange-500" />
-                    <h3 className="text-sm font-bold text-white">
+                    <Grid className="h-4 w-4 text-orange-600" />
+                    <h3 className="text-sm font-bold text-[var(--sp-charcoal)]">
                       Bulk edit · {selectedSailors.length} selected
                     </h3>
                   </div>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-[var(--sp-slate)]">
                     Choose a property and value, then apply. Use Columns to show historical /
                     overseas fields in the same overview.
                   </p>
                   <div className="flex flex-wrap items-end gap-4">
                     <div className="flex flex-col gap-1 min-w-[180px]">
-                      <label className="text-[10px] font-bold text-slate-400 uppercase">Property</label>
+                      <label className="text-[10px] font-bold text-[var(--sp-slate)] uppercase">Property</label>
                       <select
                         value={bulkField}
                         onChange={(e) => {
                           setBulkField(e.target.value);
                           setBulkValue("");
                         }}
-                        className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                        className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
                       >
                         <option value="">-- Select property --</option>
                         <optgroup label="SG Series & Dates">
@@ -399,12 +611,12 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       </select>
                     </div>
                     <div className="flex flex-col gap-1 min-w-[140px]">
-                      <label className="text-[10px] font-bold text-slate-400 uppercase">Value</label>
+                      <label className="text-[10px] font-bold text-[var(--sp-slate)] uppercase">Value</label>
                       {bulkField === "goldEntryDate" || bulkField === "dropDate" ? (
                         <select
                           value={bulkValue}
                           onChange={(e) => setBulkValue(e.target.value)}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
                         >
                           <option value="">— clear / none —</option>
                           {HALF_BOUNDARY_OPTS.map((o) => (
@@ -418,13 +630,13 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           type="date"
                           value={bulkValue}
                           onChange={(e) => setBulkValue(e.target.value)}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
                         />
                       ) : bulkField === "gender" ? (
                         <select
                           value={bulkValue}
                           onChange={(e) => setBulkValue(e.target.value)}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
                         >
                           <option value="">—</option>
                           <option value="M">M</option>
@@ -434,7 +646,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         <select
                           value={bulkValue}
                           onChange={(e) => setBulkValue(e.target.value)}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
                         >
                           <option value="Guest">Guest</option>
                           <option value="Series">In SG Fleet</option>
@@ -443,7 +655,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         <select
                           value={bulkValue}
                           onChange={(e) => setBulkValue(e.target.value)}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
                         >
                           <option value="true">On list (true)</option>
                           <option value="false">Off list (false)</option>
@@ -459,7 +671,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         <select
                           value={bulkValue}
                           onChange={(e) => setBulkValue(e.target.value)}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
                         >
                           <option value="">—</option>
                           <option value="Nat A">Nat A</option>
@@ -479,14 +691,14 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           type="number"
                           value={bulkValue}
                           onChange={(e) => setBulkValue(e.target.value)}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs font-mono"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs font-mono"
                           placeholder="Number"
                         />
                       ) : bulkField === "nationality" ? (
                         <NationalitySelect
                           value={bulkValue}
                           onChange={setBulkValue}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
                           emptyLabel="— Clear / select —"
                         />
                       ) : (
@@ -495,7 +707,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           value={bulkValue}
                           onChange={(e) => setBulkValue(e.target.value)}
                           disabled={!bulkField}
-                          className="rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs disabled:opacity-40"
+                          className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs disabled:opacity-40"
                           placeholder={bulkField ? "Value" : "Select property first"}
                         />
                       )}
@@ -504,7 +716,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       type="button"
                       disabled={!isSuperadmin || selectedSailors.length === 0 || !bulkField}
                       onClick={handleApplyBulk}
-                      className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40 flex items-center gap-1.5"
+                      className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40 flex items-center gap-1.5 shadow-sm"
                     >
                       <Save className="h-4 w-4" />
                       Apply to {selectedSailors.length || 0}
@@ -514,7 +726,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       disabled={!isSuperadmin || selectedSailors.length !== 2}
                       onClick={handleMergeSailors}
                       title="Select exactly 2 sailors to merge duplicates"
-                      className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500 disabled:opacity-40 flex items-center gap-1.5"
+                      className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500 disabled:opacity-40 flex items-center gap-1.5 shadow-sm"
                     >
                       <UserCheck className="h-4 w-4" />
                       Merge 2 selected
@@ -524,45 +736,45 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       type="button"
                       disabled={!isSuperadmin || selectedSailors.length === 0}
                       onClick={handleBulkDelete}
-                      className="rounded-full bg-rose-600/90 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500 disabled:opacity-40 flex items-center gap-1.5"
+                      className="rounded-full bg-rose-600/90 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500 disabled:opacity-40 flex items-center gap-1.5 shadow-sm"
                     >
                       <Trash2 className="h-4 w-4" />
                       Delete selected
                     </button>
                   </div>
-                  <p className="text-[10px] text-slate-500">
-                    <strong className="text-slate-400">Merge:</strong> tick exactly two rows →{" "}
-                    <strong className="text-emerald-400">Merge 2 selected</strong>. The more
+                  <p className="text-[10px] text-[var(--sp-muted)]">
+                    <strong className="text-[var(--sp-slate)]">Merge:</strong> tick exactly two rows →{" "}
+                    <strong className="text-emerald-700">Merge 2 selected</strong>. The more
                     complete profile is kept; results/aliases move over.
                   </p>
                 </div>
                 )}
 
                   {showDuplicateFinder && (
-                    <div className="rounded-xl border border-white/10 bg-slate-950/60 p-4 space-y-3">
+                    <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 p-4 space-y-3">
                       <div className="flex items-start justify-between gap-3">
                         <div>
-                          <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                          <h4 className="text-xs font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                             Possible duplicate sailors
                           </h4>
-                          <p className="text-[11px] text-slate-500 mt-1">
+                          <p className="text-[11px] text-[var(--sp-slate)] mt-1">
                             Shows pairs with ≥60% match (jumbled names, partial names, same sail #).
-                            <span className="text-rose-300/90 font-semibold"> High ≥80%</span>
+                            <span className="text-rose-700 font-semibold"> High ≥80%</span>
                             {" · "}
-                            <span className="text-amber-300/90 font-semibold">Medium 60–79%</span>
+                            <span className="text-amber-700 font-semibold">Medium 60–79%</span>
                             . Select both → Merge 2 selected.
                           </p>
                         </div>
                         <button
                           type="button"
                           onClick={() => setShowDuplicateFinder(false)}
-                          className="text-[11px] font-bold text-slate-500 hover:text-white"
+                          className="text-[11px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
                         >
                           Hide
                         </button>
                       </div>
                       {duplicatePairs.length === 0 ? (
-                        <p className="text-xs text-slate-500 py-4 text-center">
+                        <p className="text-xs text-[var(--sp-muted)] py-4 text-center">
                           No pairs at 60%+ similarity.
                         </p>
                       ) : (
@@ -575,34 +787,34 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                 key={`${p.a.id}-${p.b.id}`}
                                 className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-lg border px-3 py-2 text-xs ${
                                   high
-                                    ? "border-rose-500/40 bg-rose-500/10"
-                                    : "border-amber-500/35 bg-amber-500/10"
+                                    ? "border-rose-200 bg-rose-50/60"
+                                    : "border-amber-200 bg-amber-50/60"
                                 }`}
                               >
                                 <div className="min-w-0">
                                   <div className="flex flex-wrap items-center gap-2 mb-1">
                                     <span
-                                      className={`rounded-full px-2 py-0.5 text-[10px] font-black ${
+                                      className={`rounded-full px-2 py-0.5 text-[10px] font-bold border ${
                                         high
-                                          ? "bg-rose-500/20 text-rose-200 border border-rose-500/30"
-                                          : "bg-amber-500/20 text-amber-100 border border-amber-500/30"
+                                          ? "bg-rose-100 text-rose-800 border-rose-300"
+                                          : "bg-amber-100 text-amber-800 border-amber-300"
                                       }`}
                                     >
                                       {pct}% · {high ? "High" : "Medium"}
                                     </span>
-                                    <span className="text-[10px] text-slate-500">
+                                    <span className="text-[10px] text-[var(--sp-muted)]">
                                       {p.how}
                                     </span>
                                   </div>
-                                  <p className="text-white font-semibold truncate">
+                                  <p className="text-[var(--sp-charcoal)] font-semibold truncate">
                                     {p.a.name}
-                                    <span className="text-slate-500 font-mono text-[10px] ml-2">
+                                    <span className="text-[var(--sp-slate)] font-mono text-[10px] ml-2">
                                       {p.a.sailNumber || "—"}
                                     </span>
                                   </p>
-                                  <p className="text-slate-300 font-semibold truncate">
+                                  <p className="text-[var(--sp-charcoal)] font-semibold truncate">
                                     {p.b.name}
-                                    <span className="text-slate-500 font-mono text-[10px] ml-2">
+                                    <span className="text-[var(--sp-slate)] font-mono text-[10px] ml-2">
                                       {p.b.sailNumber || "—"}
                                     </span>
                                   </p>
@@ -615,7 +827,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                       setDbSearch("");
                                       setShowDuplicateFinder(true);
                                     }}
-                                    className="rounded-full bg-emerald-600/90 hover:bg-emerald-500 px-3 py-1.5 text-[10px] font-bold text-white"
+                                    className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 text-[10px] font-bold text-white shadow-sm"
                                   >
                                     Select pair
                                   </button>
@@ -624,7 +836,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                     onClick={() =>
                                       ignoreDuplicatePair(p.a.id, p.b.id)
                                     }
-                                    className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[10px] font-bold text-slate-400 hover:text-white"
+                                    className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[10px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
                                   >
                                     Ignore
                                   </button>
@@ -638,7 +850,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                   )}
 
                   {bulkStatus && (
-                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
+                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-700">
                       <CheckCircle className="h-4 w-4" />
                       {bulkStatus}
                     </div>
@@ -655,14 +867,14 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     />
                     <div
                       id="sailor-edit-form"
-                      className="relative z-10 w-full sm:max-w-3xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl border border-orange-500/30 bg-[#0c0d14] shadow-2xl p-5 sm:p-6 space-y-4"
+                      className="relative z-10 w-full sm:max-w-3xl max-h-[92vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-2xl p-5 sm:p-6 space-y-4"
                     >
-                    <div className="flex flex-wrap items-center justify-between gap-3 sticky top-0 bg-[#0c0d14] pb-2 z-10 border-b border-white/5">
+                    <div className="flex flex-wrap items-center justify-between gap-3 sticky top-0 bg-[var(--sp-warm-white)] pb-3 z-10 border-b border-[var(--sp-cool-veil)]">
                       <div>
-                        <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                        <h3 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                           {editingSailorId === "new" ? "Add New Sailor Profile" : "Edit Sailor Profile"}
                         </h3>
-                        <span className="block text-[11px] font-semibold text-slate-500 normal-case tracking-normal mt-0.5">
+                        <span className="block text-[11px] font-semibold text-[var(--sp-slate-soft)] normal-case tracking-normal mt-0.5">
                           {editingSailorId !== "new" ? sailorForm.name || "" : "Fill in details and save"}
                         </span>
                       </div>
@@ -673,7 +885,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             setEditingSailorId(null);
                             void openSailorResults(editingSailorId);
                           }}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-500/10 hover:bg-orange-500/20 text-orange-300 border border-orange-500/30 text-xs font-semibold transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-orange-50 hover:bg-orange-100 text-orange-900 border border-orange-300 text-xs font-semibold shadow-2xs transition-colors"
                         >
                           <Medal className="w-3.5 h-3.5" />
                           <span>View Regatta History & Results</span>
@@ -682,27 +894,27 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="md:col-span-2">
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Full Name</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Full Name</label>
                         <input
                           type="text"
                           value={sailorForm.name}
                           onChange={(e) => setSailorForm({ ...sailorForm, name: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                           Optimist sail #
                         </label>
                         <input
                           type="text"
                           value={sailorForm.sailNumber}
                           onChange={(e) => setSailorForm({ ...sailorForm, sailNumber: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs text-slate-300 font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                           ILCA 4 sail #
                         </label>
                         <input
@@ -714,33 +926,33 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                               sailNumberIlca4: e.target.value,
                             })
                           }
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs text-sky-200/90 font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                           placeholder="e.g. SGP 2115"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Club</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Club</label>
                         <input
                           type="text"
                           value={sailorForm.club}
                           onChange={(e) => setSailorForm({ ...sailorForm, club: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">School</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">School</label>
                         <input
                           type="text"
                           value={sailorForm.school || ""}
                           onChange={(e) =>
                             setSailorForm({ ...sailorForm, school: e.target.value })
                           }
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                           placeholder="e.g. Raffles Institution"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Nationality</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Nationality</label>
                         <NationalitySelect
                           value={sailorForm.nationality || ""}
                           onChange={(v) =>
@@ -749,19 +961,19 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Gender (M/F)</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Gender (M/F)</label>
                         <select
                           value={sailorForm.gender || ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, gender: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         >
                           <option value="">Unknown</option>
                           <option value="M">Male (M)</option>
                           <option value="F">Female (F)</option>
                         </select>
                       </div>
-                      <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-t border-white/5 pt-4">
-                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] font-bold text-orange-400/90 uppercase tracking-wider">
+                      <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-t border-[var(--sp-cool-veil)] pt-4">
+                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                           Nat squad by period (fixed for the whole half-year)
                         </p>
                         {(
@@ -775,7 +987,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           ] as const
                         ).map(([key, label]) => (
                           <div key={key}>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
                               {label}
                             </label>
                             <select
@@ -793,7 +1005,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                     : {}),
                                 });
                               }}
-                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
+                              className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                             >
                               <option value="">None</option>
                               <option value="Nat A">National A (Nat A)</option>
@@ -802,115 +1014,115 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             </select>
                           </div>
                         ))}
-                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] text-slate-600 leading-relaxed">
+                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] text-[var(--sp-slate-soft)] leading-relaxed">
                           Rankings boards show the squad for the period selected.
                           Jul–Dec 2026 also updates the live “current squad” field.
                           History is visible on Gold register and each sailor profile.
                         </p>
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">DOB (YYYY-MM-DD)</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">DOB (YYYY-MM-DD)</label>
                         <input
                           type="date"
                           value={sailorForm.dob || ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, dob: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Weight (kg)</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Weight (kg)</label>
                         <input
                           type="number"
                           value={sailorForm.weight ?? ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, weight: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Handle (URL Parameter)</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Handle (URL Parameter)</label>
                         <input
                           type="text"
                           value={sailorForm.handle}
                           onChange={(e) => setSailorForm({ ...sailorForm, handle: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                           placeholder="e.g. ashlyn-t"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Instagram Handle</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Instagram Handle</label>
                         <input
                           type="text"
                           value={sailorForm.instagram || ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, instagram: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                           placeholder="e.g. @username"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Avatar URL</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Avatar URL</label>
                         <input
                           type="url"
                           value={sailorForm.avatarUrl || ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, avatarUrl: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                           placeholder="https://… (public image URL)"
                         />
                       </div>
-                      <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-t border-white/5 pt-4">
-                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] font-bold text-emerald-400/90 uppercase tracking-wider">
+                      <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 border-t border-[var(--sp-cool-veil)] pt-4">
+                        <p className="sm:col-span-2 lg:col-span-4 text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                           Overseas Representation — multiple years allowed (e.g. 2023, 2025)
                         </p>
                         <div>
-                          <label className="text-[10px] font-bold text-slate-500 uppercase">Worlds years</label>
+                          <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">Worlds years</label>
                           <input
                             type="text"
                             value={sailorForm.worlds || ""}
                             onChange={(e) => setSailorForm({ ...sailorForm, worlds: e.target.value })}
-                            className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                             placeholder="2023, 2025"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] font-bold text-slate-500 uppercase">European years</label>
+                          <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">European years</label>
                           <input
                             type="text"
                             value={sailorForm.european || ""}
                             onChange={(e) => setSailorForm({ ...sailorForm, european: e.target.value })}
-                            className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                             placeholder="2024"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] font-bold text-slate-500 uppercase">Asian years</label>
+                          <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">Asian years</label>
                           <input
                             type="text"
                             value={sailorForm.asian || ""}
                             onChange={(e) => setSailorForm({ ...sailorForm, asian: e.target.value })}
-                            className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                             placeholder="2022, 2024"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] font-bold text-slate-500 uppercase">SEA Games years</label>
+                          <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">SEA Games years</label>
                           <input
                             type="text"
                             value={sailorForm.seaGames || ""}
                             onChange={(e) => setSailorForm({ ...sailorForm, seaGames: e.target.value })}
-                            className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                            className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                             placeholder="2023"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Biography</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Biography</label>
                         <textarea
                           value={sailorForm.bio || ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, bio: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs h-10"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs h-10 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                           SG Series Fleet
                         </label>
                         <select
@@ -937,12 +1149,12 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             }
                             setSailorForm(next);
                           }}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         >
                           <option value="Guest">Guest (not ranked)</option>
                           <option value="Series">In SG Fleet</option>
                         </select>
-                        <p className="mt-1 text-[10px] text-slate-500 leading-snug">
+                        <p className="mt-1 text-[10px] text-[var(--sp-slate-soft)] leading-snug">
                           Guest = never ranked. In SG Fleet needs a Silver or
                           Gold entry date to appear on boards (empty Series is
                           not ranked). Silver until Gold entry, then Gold until
@@ -950,7 +1162,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         </p>
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Gold Fleet Entry Date</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Gold Fleet Entry Date</label>
                         <select
                           value={sailorForm.goldEntryDate || ""}
                           onChange={(e) =>
@@ -959,7 +1171,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                               goldEntryDate: e.target.value,
                             })
                           }
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         >
                           <option value="">— none —</option>
                           {/* Preserve legacy non-boundary values so admin can fix them */}
@@ -978,21 +1190,21 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             </option>
                           ))}
                         </select>
-                        <p className="mt-1 text-[10px] text-slate-500">
+                        <p className="mt-1 text-[10px] text-[var(--sp-slate-soft)]">
                           Only 1 Jan or 1 Jul — applies for the whole half-year.
                         </p>
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Silver Fleet Entry Date</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Silver Fleet Entry Date</label>
                         <input
                           type="date"
                           value={sailorForm.silverEntryDate || ""}
                           onChange={(e) => setSailorForm({ ...sailorForm, silverEntryDate: e.target.value })}
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         />
                       </div>
                       <div>
-                        <label className="text-[10px] font-bold text-slate-500 uppercase">Optimist Drop Date</label>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Optimist Drop Date</label>
                         <select
                           value={sailorForm.dropDate || ""}
                           onChange={(e) =>
@@ -1001,7 +1213,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                               dropDate: e.target.value,
                             })
                           }
-                          className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         >
                           <option value="">— none —</option>
                           {sailorForm.dropDate &&
@@ -1019,13 +1231,13 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             </option>
                           ))}
                         </select>
-                        <p className="mt-1 text-[10px] text-slate-500">
+                        <p className="mt-1 text-[10px] text-[var(--sp-slate-soft)]">
                           Only 1 Jan or 1 Jul. Drop on that day removes the
                           sailor from that half and later.
                         </p>
                       </div>
-                      <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 border-t border-white/5 pt-4">
-                        <p className="col-span-2 sm:col-span-3 lg:col-span-5 text-[10px] font-bold text-blue-400/90 uppercase tracking-wider">
+                      <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 border-t border-[var(--sp-cool-veil)] pt-4">
+                        <p className="col-span-2 sm:col-span-3 lg:col-span-5 text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                           Historical rankings (shown on All Gold Fleet Sailors)
                         </p>
                         {(
@@ -1038,7 +1250,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           ] as const
                         ).map(([key, label]) => (
                           <div key={key}>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
                               {label}
                             </label>
                             <input
@@ -1051,26 +1263,42 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                   [key]: e.target.value,
                                 })
                               }
-                              className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                              className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                               placeholder="—"
                             />
                           </div>
                         ))}
                       </div>
+
+                      {/* Milestones & Sailing Journey Highlights */}
+                      <div className="md:col-span-3 border-t border-[var(--sp-cool-veil)] pt-4 space-y-2">
+                        <p className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+                          Career Milestones &amp; Sailing Journey Highlights
+                        </p>
+                        <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                          Key moments, breakthroughs, and campaigns displayed on the sailor profile timeline.
+                        </p>
+                        <AdminMilestonesEditor
+                          journeyRaw={sailorForm.sailingJourney}
+                          onChange={(nextRaw) =>
+                            setSailorForm({ ...sailorForm, sailingJourney: nextRaw })
+                          }
+                        />
+                      </div>
                     </div>
 
-                    <div className="flex justify-end gap-2 border-t border-white/5 pt-4 sticky bottom-0 bg-[#0c0d14] pb-1">
+                    <div className="flex justify-end gap-2 border-t border-[var(--sp-cool-veil)] pt-4 sticky bottom-0 bg-[var(--sp-warm-white)] pb-1">
                       <button
                         type="button"
                         onClick={() => setEditingSailorId(null)}
-                        className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
+                        className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-4 py-2 text-xs font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] shadow-xs"
                       >
                         Cancel
                       </button>
                       <button
                         type="button"
                         onClick={handleSaveSailor}
-                        className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500"
+                        className="rounded-full bg-[var(--sp-racing-orange)] px-5 py-2 text-xs font-bold text-white hover:brightness-105 shadow-sm"
                       >
                         Save Sailor
                       </button>
@@ -1093,20 +1321,20 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         <button
                           type="button"
                           onClick={() => setDbColPickerOpen((o) => !o)}
-                          className="rounded-full bg-slate-800 border border-white/10 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 flex items-center gap-1.5"
+                          className="rounded-full bg-white border border-[var(--sp-cool-veil)] px-4 py-2 text-xs font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] flex items-center gap-1.5 shadow-sm"
                         >
-                          <Columns3 className="h-4 w-4 text-orange-400" />
+                          <Columns3 className="h-4 w-4 text-[var(--sp-racing-orange)]" />
                           Columns
                         </button>
                         {dbColPickerOpen && (
-                          <div className="absolute right-0 top-full mt-2 z-30 w-56 rounded-xl border border-white/10 bg-slate-950 shadow-xl p-3 space-y-1.5">
-                            <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">
+                          <div className="absolute right-0 top-full mt-2 z-30 w-56 rounded-xl border border-[var(--sp-cool-veil)] bg-white shadow-xl p-3 space-y-1.5">
+                            <p className="text-[10px] font-bold text-[var(--sp-slate)] uppercase mb-2">
                               Visible columns
                             </p>
                             {DB_SAILOR_COLUMNS.map((c) => (
                               <label
                                 key={c.key}
-                                className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer hover:text-white"
+                                className="flex items-center gap-2 text-xs text-[var(--sp-charcoal)] cursor-pointer hover:text-[var(--sp-racing-orange)]"
                               >
                                 <input
                                   type="checkbox"
@@ -1118,18 +1346,18 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                       [c.key]: !colOn(c.key),
                                     }))
                                   }
-                                  className="rounded border-slate-700 bg-slate-900 text-orange-600 h-3.5 w-3.5"
+                                  className="rounded border-[var(--sp-cool-veil)] text-orange-600 h-3.5 w-3.5"
                                 />
                                 {c.label}
                                 {!c.defaultOn && (
-                                  <span className="text-[9px] text-slate-600">optional</span>
+                                  <span className="text-[9px] text-[var(--sp-muted)]">optional</span>
                                 )}
                               </label>
                             ))}
                             <button
                               type="button"
                               onClick={() => setDbColVisible(defaultDbColVisible())}
-                              className="mt-2 w-full text-[10px] font-bold text-orange-400 hover:text-orange-300"
+                              className="mt-2 w-full text-[10px] font-bold text-orange-600 hover:text-orange-700"
                             >
                               Reset defaults
                             </button>
@@ -1156,7 +1384,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse text-xs min-w-[720px]">
                       <thead>
-                        <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[10px] font-bold text-[var(--sp-slate)] uppercase tracking-wider">
                           <th className="py-3 px-3 w-10 text-center">
                             <input
                               type="checkbox"
@@ -1167,7 +1395,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                 )
                               }
                               onChange={toggleSelectAllVisible}
-                              className="rounded border-slate-700 bg-slate-900 text-orange-600 h-3.5 w-3.5"
+                              className="rounded border-[var(--sp-cool-veil)] text-orange-600 h-3.5 w-3.5"
                               title="Select all visible"
                             />
                           </th>
@@ -1374,11 +1602,11 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           return (
                             <tr
                               key={s.id}
-                              className={`hover:bg-white/5 transition-colors ${
+                              className={`hover:bg-[var(--sp-sailcloth)]/50 transition-colors ${
                                 isChecked
-                                  ? "bg-orange-500/5"
+                                  ? "bg-orange-500/10"
                                   : competitionsSailorId === s.id
-                                    ? "bg-orange-500/[0.03]"
+                                    ? "bg-orange-500/5"
                                     : ""
                               }`}
                             >
@@ -1387,7 +1615,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                   type="checkbox"
                                   checked={isChecked}
                                   onChange={() => toggleSelectSailor(s.id)}
-                                  className="rounded border-slate-700 bg-slate-900 text-orange-600 h-3.5 w-3.5"
+                                  className="rounded border-[var(--sp-cool-veil)] text-orange-600 h-3.5 w-3.5"
                                 />
                               </td>
                               {DB_SAILOR_COLUMNS.filter((c) => colOn(c.key)).map(
@@ -1424,9 +1652,9 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                       e.stopPropagation();
                                       void openSailorResults(s.id);
                                     }}
-                                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold text-orange-300 hover:border-orange-500/40 hover:text-orange-200"
+                                    className="inline-flex items-center gap-1 rounded-full border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-[10px] font-bold text-[var(--sp-charcoal)] hover:border-orange-300 hover:text-orange-600 shadow-sm"
                                   >
-                                    <Medal className="h-3.5 w-3.5" />
+                                    <Medal className="h-3.5 w-3.5 text-orange-500" />
                                     Results
                                   </button>
                                   <button
@@ -1516,19 +1744,22 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                           s.seaGames != null
                                             ? String(s.seaGames)
                                             : "",
+                                        sailingJourney: s.sailingJourney
+                                          ? String(s.sailingJourney)
+                                          : "",
                                       });
                                       setEditingSailorId(s.id);
                                     }}
-                                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[10px] font-bold text-slate-300 hover:text-white hover:border-orange-500/40"
+                                    className="inline-flex items-center gap-1 rounded-full border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-[10px] font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] shadow-2xs"
                                   >
-                                    <Edit3 className="h-3.5 w-3.5" />
+                                    <Edit3 className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
                                     Edit
                                   </button>
                                   <button
                                     type="button"
                                     title="Delete sailor"
                                     onClick={() => handleDeleteSailor(s.id)}
-                                    className="text-slate-500 hover:text-red-400"
+                                    className="text-[var(--sp-slate-soft)] hover:text-rose-600"
                                   >
                                     <Trash2 className="h-4 w-4" />
                                   </button>

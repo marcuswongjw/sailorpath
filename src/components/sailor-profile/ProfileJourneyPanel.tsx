@@ -1,7 +1,6 @@
-"use client";
-
+import { useState } from "react";
 import type React from "react";
-import { Anchor } from "lucide-react";
+import { Anchor, Edit2, Check, X } from "lucide-react";
 import type { JourneyHighlight } from "@/lib/sailingJourney";
 import { PROFILE_CARD_CLASS } from "@/components/sailor-profile/helpers";
 
@@ -20,6 +19,11 @@ type Props = {
   busy: boolean;
   message: string | null;
   onAdd: () => void;
+  onUpdate?: (
+    id: string,
+    updated: { when: string; title: string; detail: string },
+    isSystem?: boolean
+  ) => void | Promise<void>;
   onRemove: (id: string, isSystem?: boolean) => void;
 };
 
@@ -36,10 +40,46 @@ export function ProfileJourneyPanel({
   busy,
   message,
   onAdd,
+  onUpdate,
   onRemove,
 }: Props) {
   const isTab = variant === "tab";
   const hasSystem = items.some((j) => j.system);
+
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editWhen, setEditWhen] = useState("");
+  const [editTitle, setEditTitle] = useState("");
+  const [editDetail, setEditDetail] = useState("");
+
+  const startEditing = (it: JourneyHighlight) => {
+    setEditingId(it.id);
+    setEditWhen(it.when || "");
+    setEditTitle(it.title || "");
+    setEditDetail(it.detail || "");
+  };
+
+  const cancelEditing = () => {
+    setEditingId(null);
+    setEditWhen("");
+    setEditTitle("");
+    setEditDetail("");
+  };
+
+  const saveEditing = async (it: JourneyHighlight) => {
+    if (!editTitle.trim()) return;
+    if (onUpdate) {
+      await onUpdate(
+        it.id,
+        {
+          when: editWhen,
+          title: editTitle,
+          detail: editDetail,
+        },
+        it.system
+      );
+    }
+    setEditingId(null);
+  };
 
   const body = (
     <>
@@ -84,33 +124,104 @@ export function ProfileJourneyPanel({
                     : "bg-harbour"
                 }`}
               />
-              {it.when && (
-                <p className="text-[11px] font-bold uppercase tracking-wide text-harbour">
-                  {it.when}
-                </p>
-              )}
-              <p className="text-sm font-bold text-harbour-shadow mt-0.5 inline-flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
-                <span>{it.title}</span>
-                {it.system ? (
-                  <span className="rounded px-1.5 py-px text-[9px] font-bold uppercase tracking-wide text-racing-orange bg-racing-mist/40 border border-racing-orange/30">
-                    milestone
-                  </span>
-                ) : null}
-              </p>
-              {it.detail && (
-                <p className="text-xs text-slate-soft mt-0.5 leading-relaxed font-medium">
-                  {it.detail}
-                </p>
-              )}
-              {isOwner && (
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={() => onRemove(it.id, it.system)}
-                  className="mt-1 text-[10px] font-bold text-rose-600 hover:underline cursor-pointer"
-                >
-                  Remove
-                </button>
+              {editingId === it.id ? (
+                <div className="mt-1 space-y-2 rounded-xl border border-harbour/30 bg-warm-white p-3 shadow-xs">
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
+                      When
+                    </label>
+                    <input
+                      value={editWhen}
+                      onChange={(e) => setEditWhen(e.target.value)}
+                      placeholder="e.g. Oct 2025"
+                      className="w-full rounded-lg bg-sailcloth border border-cool-veil px-2.5 py-1 text-xs text-charcoal focus:border-harbour focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
+                      Title
+                    </label>
+                    <input
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                      placeholder="Milestone title"
+                      className="w-full rounded-lg bg-sailcloth border border-cool-veil px-2.5 py-1 text-xs text-charcoal focus:border-harbour focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
+                      Details
+                    </label>
+                    <textarea
+                      value={editDetail}
+                      onChange={(e) => setEditDetail(e.target.value)}
+                      placeholder="Details, boat class, takeaways"
+                      rows={2}
+                      className="w-full rounded-lg bg-sailcloth border border-cool-veil px-2.5 py-1 text-xs text-charcoal focus:border-harbour focus:outline-none"
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 pt-1">
+                    <button
+                      type="button"
+                      disabled={busy || !editTitle.trim()}
+                      onClick={() => void saveEditing(it)}
+                      className="inline-flex items-center gap-1 sp-primary rounded-lg px-2.5 py-1 text-xs font-bold text-white shadow-xs disabled:opacity-50 cursor-pointer"
+                    >
+                      <Check className="h-3 w-3" />
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={cancelEditing}
+                      className="inline-flex items-center gap-1 rounded-lg border border-cool-veil bg-white px-2.5 py-1 text-xs font-bold text-charcoal hover:bg-sailcloth cursor-pointer"
+                    >
+                      <X className="h-3 w-3" />
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {it.when && (
+                    <p className="text-[11px] font-bold uppercase tracking-wide text-harbour">
+                      {it.when}
+                    </p>
+                  )}
+                  <p className="text-sm font-bold text-harbour-shadow mt-0.5 inline-flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
+                    <span>{it.title}</span>
+                    {it.system ? (
+                      <span className="rounded px-1.5 py-px text-[9px] font-bold uppercase tracking-wide text-racing-orange bg-racing-mist/40 border border-racing-orange/30">
+                        milestone
+                      </span>
+                    ) : null}
+                  </p>
+                  {it.detail && (
+                    <p className="text-xs text-slate-soft mt-0.5 leading-relaxed font-medium">
+                      {it.detail}
+                    </p>
+                  )}
+                  {isOwner && (
+                    <div className="flex items-center gap-3 mt-1.5">
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={() => startEditing(it)}
+                        className="inline-flex items-center gap-1 text-[10px] font-bold text-harbour hover:underline cursor-pointer"
+                      >
+                        <Edit2 className="h-3 w-3" />
+                        Edit
+                      </button>
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={() => onRemove(it.id, it.system)}
+                        className="text-[10px] font-bold text-rose-600 hover:underline cursor-pointer"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </li>
           ))}

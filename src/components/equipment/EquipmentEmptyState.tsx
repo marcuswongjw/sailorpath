@@ -11,15 +11,15 @@ export function EquipmentEmptyState({
   onOpenFullRig: () => void;
 }) {
   return (
-    <div className="rounded-2xl border border-dashed border-white/10 bg-black/20 py-10 px-4 text-center space-y-4">
-      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-500/10 border border-orange-500/20">
-        <Wrench className="h-6 w-6 text-orange-400/90" />
+    <div className="rounded-2xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 py-10 px-4 text-center space-y-4">
+      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-50 border border-orange-200">
+        <Wrench className="h-6 w-6 text-[var(--sp-racing-orange)]" />
       </div>
       <div>
-        <p className="text-sm font-bold text-white">
+        <p className="text-sm font-bold text-[var(--sp-charcoal)]">
           {isOwner ? "Build your gear bag" : "No gear logged yet"}
         </p>
-        <p className="text-[11px] text-slate-500 mt-1 max-w-xs mx-auto leading-relaxed">
+        <p className="text-[11px] text-[var(--sp-slate-soft)] mt-1 max-w-xs mx-auto leading-relaxed">
           {isOwner
             ? "Hull, sail, and foils stay private — only you and linked parents can see them. Start with what you race most."
             : "Only the sailor can add equipment from their profile. Gear stays private to the family."}
@@ -38,7 +38,7 @@ export function EquipmentEmptyState({
               key={cat}
               type="button"
               onClick={() => onQuickAdd(cat)}
-              className="rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-[11px] font-bold text-slate-200 hover:border-orange-500/40 touch-manipulation"
+              className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3.5 py-2 text-[11px] font-bold text-[var(--sp-charcoal)] hover:border-[var(--sp-charcoal)]/40 shadow-xs touch-manipulation"
             >
               + {label}
             </button>
@@ -46,7 +46,7 @@ export function EquipmentEmptyState({
           <button
             type="button"
             onClick={onOpenFullRig}
-            className="rounded-full border border-orange-500/30 bg-orange-500/10 px-3.5 py-2 text-[11px] font-bold text-orange-200 touch-manipulation"
+            className="rounded-full border border-orange-300 bg-orange-50 px-3.5 py-2 text-[11px] font-bold text-orange-900 hover:bg-orange-100 shadow-xs touch-manipulation"
           >
             + Full rig set
           </button>

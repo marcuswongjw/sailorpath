@@ -38,6 +38,7 @@ export type SailorFormState = {
   european: string;
   asian: string;
   seaGames: string;
+  sailingJourney: string;
 };
 
 export function emptySailorForm(): SailorFormState {
@@ -75,6 +76,7 @@ export function emptySailorForm(): SailorFormState {
     european: "",
     asian: "",
     seaGames: "",
+    sailingJourney: "",
   };
 }
 

@@ -18,13 +18,13 @@ export const emptyForm: EquipmentFormState = {
 };
 
 export const fieldClass =
-  "mt-1 w-full rounded-xl bg-black/35 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-slate-600 focus:border-orange-500/40 focus:outline-none focus:ring-1 focus:ring-orange-500/20";
+  "mt-1 w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder:text-slate-400 focus:border-[var(--sp-harbour-teal)] focus:outline-none focus:ring-1 focus:ring-[var(--sp-harbour-teal)]/20 shadow-2xs";
 
 export const labelClass =
-  "block text-[10px] font-bold uppercase tracking-wide text-slate-500";
+  "block text-[10px] font-bold uppercase tracking-wide text-[var(--sp-slate-soft)]";
 
 export const primaryBtn =
-  "w-full rounded-full bg-orange-600 py-3 text-xs font-bold text-white disabled:opacity-50 touch-manipulation active:scale-[0.99] transition";
+  "w-full rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] py-3 text-xs font-bold text-white disabled:opacity-50 touch-manipulation active:scale-[0.99] transition shadow-xs";
 
 export const secondaryBtn =
-  "rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[11px] font-bold text-white touch-manipulation disabled:opacity-40";
+  "rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-3.5 py-2 text-[11px] font-bold text-[var(--sp-harbour-teal)] touch-manipulation disabled:opacity-40 shadow-2xs transition-colors";

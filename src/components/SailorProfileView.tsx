@@ -622,6 +622,36 @@ export function SailorProfileView({
     await persistJourney(journey.filter((j) => j.id !== id));
   };
 
+  const updateJourneyItem = async (
+    id: string,
+    updated: { when: string; title: string; detail: string },
+    isSystem?: boolean
+  ) => {
+    let next: JourneyHighlight[];
+    if (isSystem) {
+      const dismissed = dismissSystemMilestone(journey, id);
+      const customItem: JourneyHighlight = {
+        id: newJourneyId(),
+        when: updated.when.trim(),
+        title: updated.title.trim(),
+        detail: updated.detail.trim(),
+      };
+      next = [customItem, ...dismissed];
+    } else {
+      next = journey.map((j) =>
+        j.id === id
+          ? {
+              ...j,
+              when: updated.when.trim(),
+              title: updated.title.trim(),
+              detail: updated.detail.trim(),
+            }
+          : j
+      );
+    }
+    await persistJourney(next);
+  };
+
   const savePersonalResult = async () => {
     if (demoMode) {
       setPersonalMsg("Demo only — not saved");
@@ -1849,6 +1879,9 @@ export function SailorProfileView({
             busy={journeyBusy}
             message={journeyMsg}
             onAdd={() => void addJourneyItem()}
+            onUpdate={(id, updated, isSystem) =>
+              void updateJourneyItem(id, updated, isSystem)
+            }
             onRemove={(id, isSystem) => void removeJourneyItem(id, isSystem)}
           />
         ) : null}
@@ -2545,6 +2578,9 @@ export function SailorProfileView({
             busy={journeyBusy}
             message={journeyMsg}
             onAdd={() => void addJourneyItem()}
+            onUpdate={(id, updated, isSystem) =>
+              void updateJourneyItem(id, updated, isSystem)
+            }
             onRemove={(id, isSystem) => void removeJourneyItem(id, isSystem)}
           />
         </div>
