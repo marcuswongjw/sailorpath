@@ -26,10 +26,16 @@ const PUBLIC_RANKING_PATHS = [
 export function revalidatePublicRankings(reason?: string): void {
   try {
     for (const tag of PUBLIC_RANKING_CACHE_TAGS) {
-      revalidateTag(tag, "max");
+      try {
+        revalidateTag(tag, { expire: 0 });
+      } catch {
+        revalidateTag(tag, "max");
+      }
     }
     for (const path of PUBLIC_RANKING_PATHS) {
       revalidatePath(path);
+      revalidatePath(path, "page");
+      revalidatePath(path, "layout");
     }
     if (reason && process.env.NODE_ENV !== "production") {
       console.info("[revalidatePublicRankings]", reason);

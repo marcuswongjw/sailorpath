@@ -70,6 +70,8 @@ type RegattasListProps = {
   detailBasePath?: string;
   /** Hide boat-class filter (list is already class-filtered) */
   hideBoatClassFilter?: boolean;
+  /** Hide division filter (for single-fleet classes like ILCA 4) */
+  hideDivisionFilter?: boolean;
   /** Accent: orange (Optimist) or sky (ILCA) */
   accent?: "orange" | "sky";
 };
@@ -80,6 +82,7 @@ export function RegattasListClient({
   description = "Explore published Singapore Optimist ranking series results and local events.",
   badgeLabel = "Regatta Directory",
   detailBasePath = "/sg/optimist/regattas",
+  hideDivisionFilter,
   accent = "orange",
 }: RegattasListProps) {
   const [query, setQuery] = useState("");
@@ -342,16 +345,19 @@ export function RegattasListClient({
             ))}
           </select>
 
-          <select
-            value={division}
-            onChange={(e) => setDivision(e.target.value)}
-            className="sp-select text-xs sm:text-sm font-semibold"
-          >
-            <option value="all">All divisions</option>
-            <option value="Gold">Gold</option>
-            <option value="Silver">Silver</option>
-            <option value="Both">Both</option>
-          </select>
+          {!hideDivisionFilter && (
+            <select
+              value={division}
+              onChange={(e) => setDivision(e.target.value)}
+              className="sp-select text-xs sm:text-sm font-semibold"
+            >
+              <option value="all">All divisions</option>
+              <option value="Gold">Gold</option>
+              <option value="Silver">Silver</option>
+              <option value="Both">Both</option>
+              <option value="Open">Open</option>
+            </select>
+          )}
 
           <select
             value={period}

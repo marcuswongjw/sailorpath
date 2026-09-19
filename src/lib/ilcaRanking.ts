@@ -265,14 +265,8 @@ export function computeIlcaRankings(
   const useNationalList =
     boatClass === "ILCA 4" && opts?.restrictToNationalList !== false;
 
-  /** Once any sailor is flagged in DB, only flags count; otherwise seed names. */
-  const anyDbFlagged =
-    useNationalList &&
-    sailors.some((s) => s.ilca4NationalList === true);
-
   const onNationalList = (s: IlcaSailor): boolean => {
     if (!useNationalList) return false;
-    if (anyDbFlagged) return s.ilca4NationalList === true;
     return isSailorOnIlca4NationalList(s);
   };
 
@@ -409,6 +403,20 @@ export function squadReasonLabel(reason: SquadPickReason): string {
 }
 
 export type IlcaIntakeKind = "july" | "january";
+
+/** Default intake for a reference date (Singapore ILCA policy). */
+export function defaultIlcaIntake(now = new Date()): {
+  kind: IlcaIntakeKind;
+  year: number;
+} {
+  const y = now.getFullYear();
+  // In Jan–Jun (months 0–5), competition leads to the July intake of current year (cutoff: 30 June Y).
+  // In Jul–Dec (months 6–11), competition leads to the January intake of next year (cutoff: 20 Dec Y).
+  if (now.getMonth() < 6) {
+    return { kind: "july", year: y };
+  }
+  return { kind: "january", year: y + 1 };
+}
 
 /** Ranking cutoff + intake year for squad selection. */
 export function ilcaSquadCutoff(

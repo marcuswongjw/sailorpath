@@ -4,6 +4,7 @@ import { useMemo, useState, useCallback } from "react";
 import Link from "next/link";
 import {
   computeIlcaRankings,
+  defaultIlcaIntake,
   ilcaSquadCutoff,
   selectIlca4NationalSquad,
   ILCA_POLICY_NOTES,
@@ -68,12 +69,9 @@ export function AdminIlcaRankingPanel({
   const y = now.getFullYear();
   /** ILCA 6 not active — rankings are ILCA 4 only for now */
   const boatClass: IlcaBoatClass = "ILCA 4";
-  const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(
-    now.getMonth() < 6 ? "january" : "july"
-  );
-  const [intakeYear, setIntakeYear] = useState(
-    intakeKind === "january" && now.getMonth() === 11 ? y + 1 : y
-  );
+  const defaultIntake = defaultIlcaIntake(now);
+  const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(defaultIntake.kind);
+  const [intakeYear, setIntakeYear] = useState(defaultIntake.year);
   const [rosterFilter, setRosterFilter] = useState<
     "all" | "on_list" | "off_list" | "with_results" | "no_results"
   >("all");

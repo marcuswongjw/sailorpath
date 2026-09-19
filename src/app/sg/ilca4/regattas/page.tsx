@@ -38,6 +38,7 @@ export default async function Ilca4RegattasPage() {
       description="Published Singapore ILCA 4 ranking and local event results. Optimist events are listed under Optimist regattas."
       detailBasePath="/sg/ilca4/regattas"
       hideBoatClassFilter
+      hideDivisionFilter
       accent="sky"
       regattas={regattas.map((r) => ({
         id: r.id,

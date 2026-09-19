@@ -670,16 +670,7 @@ export const getCachedIlcaRankings = unstable_cache(
   { revalidate: 60, tags: [CACHE_TAG_ILCA_RANKINGS] }
 );
 
-/** Default intake for "now" (same rules as the public ILCA UI). */
-export function defaultIlcaIntake(now = new Date()): {
-  kind: IlcaIntakeKind;
-  year: number;
-} {
-  const y = now.getFullYear();
-  const kind: IlcaIntakeKind = now.getMonth() < 6 ? "january" : "july";
-  const year = kind === "january" && now.getMonth() === 11 ? y + 1 : y;
-  return { kind, year };
-}
+export { defaultIlcaIntake } from "@/lib/ilcaRanking";
 
 async function computeIlcaRankingsBoard(
   boatClass: IlcaBoatClass = "ILCA 4",
@@ -706,7 +697,17 @@ async function computeIlcaRankingsBoard(
         .where(
           or(
             eq(sailors.ilca4NationalList, true),
-            sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIlca4} <> ''`
+            sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIlca4} <> ''`,
+            sql`exists (
+              select 1 from ${regattaResults} rr
+              join ${regattas} r on rr.regatta_id = r.id
+              where rr.sailor_id = ${sailors.id}
+                and (
+                  r.boat_class = 'ILCA 4'
+                  or r.boat_class = 'ILCA4'
+                  or lower(coalesce(r.boat_class, '')) like '%ilca%'
+                )
+            )`
           )
         ),
       db

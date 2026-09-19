@@ -26,11 +26,13 @@ import {
 } from "@/lib/normalize";
 import { makeGuestHandle, slugify } from "@/lib/slug";
 import {
+  isSingleFleetClass,
   isUnrecognizedCountry,
   nationalityFromAnySailNumber,
   normalizeGeography,
   normalizeNationalityCode,
 } from "@/lib/countries";
+import { isOnIlca4NationalListByName } from "@/lib/ilca4NationalList";
 import { trackUsage } from "@/lib/usage";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { adminLog, createAdminRequestId } from "@/lib/adminLog";
@@ -1026,6 +1028,9 @@ export async function POST(req: Request) {
             ...(createIsIlca4 && row.sailNumber
               ? { sailNumberIlca4: row.sailNumber }
               : {}),
+            ...(createIsIlca4 && isOnIlca4NationalListByName(row.name)
+              ? { ilca4NationalList: true }
+              : {}),
             club: row.club || "N/A",
             ...(row.school ? { school: row.school } : {}),
             ...(row.nationality
@@ -1115,6 +1120,16 @@ export async function POST(req: Request) {
           );
         const profilePatch: Record<string, unknown> = { ...sourcePatch };
         let profileChanged = fieldChanged.length > 0;
+
+        if (
+          isIlcaImport &&
+          isOnIlca4NationalListByName(row.name) &&
+          existing?.ilca4NationalList == null
+        ) {
+          profilePatch.ilca4NationalList = true;
+          fieldChanged.push("ilca4NationalList");
+          profileChanged = true;
+        }
 
         if (row.nationalityRaw || row.sailNumber) {
           const curNat = existing?.nationality;
@@ -1237,6 +1252,9 @@ export async function POST(req: Request) {
                   nationality:
                     (profilePatch.nationality as string) ?? s.nationality,
                   gender: (profilePatch.gender as string) ?? s.gender,
+                  ilca4NationalList:
+                    (profilePatch.ilca4NationalList as boolean) ??
+                    s.ilca4NationalList,
                 }
               : s
           );
@@ -1863,6 +1881,30 @@ export async function POST(req: Request) {
 
       recordStage("finalizing");
 
+      const isOptimist =
+        !isSingleFleetClass(boat) &&
+        (boat.toLowerCase() === "optimist" || boat.toLowerCase().includes("opti"));
+
+      const successMessage = isOptimist
+        ? `Imported ${reg.name}: ${matched}/${
+            cleanRows.length
+          } results saved (${finalCreated} guests auto-created, ${finalUpdatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, gender/birth year stamped on ${resultsDemographicsUpdated} result row(s), ${silverUpdated} silver entry dates recomputed${
+            authoritativeReplace
+              ? `, ${removedResultRows} obsolete result row(s) removed`
+              : ""
+          }). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${
+            unmatched.filter((u) => !u.error).length
+          } unmatched.${dupeNote}${natNote}`
+        : `Imported ${reg.name}: ${matched}/${
+            cleanRows.length
+          } results saved (${finalCreated} guests auto-created, ${finalUpdatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, gender/birth year stamped on ${resultsDemographicsUpdated} result row(s)${
+            authoritativeReplace
+              ? `, ${removedResultRows} obsolete result row(s) removed`
+              : ""
+          }). ${rowErrors} row errors, ${
+            unmatched.filter((u) => !u.error).length
+          } unmatched.${dupeNote}${natNote}`;
+
       return {
         message:
           matched === 0 && rowErrors > 0
@@ -1871,15 +1913,7 @@ export async function POST(req: Request) {
                   ? "Score storage needs maintenance before decimal nett values can be saved."
                   : "See errors below."
               }`
-            : `Imported ${reg.name}: ${matched}/${
-                cleanRows.length
-              } results saved (${finalCreated} guests auto-created, ${finalUpdatedProfiles} profiles updated when event is latest, ${nationalityUpdated} nationality from latest results, gender/birth year stamped on ${resultsDemographicsUpdated} result row(s), ${silverUpdated} silver entry dates recomputed${
-                authoritativeReplace
-                  ? `, ${removedResultRows} obsolete result row(s) removed`
-                  : ""
-              }). Fleet tags unchanged — admit series members as Silver (then Gold) in Database. ${rowErrors} row errors, ${
-                unmatched.filter((u) => !u.error).length
-              } unmatched.${dupeNote}${natNote}`,
+            : successMessage,
         regatta: reg,
         matched,
         created: finalCreated,

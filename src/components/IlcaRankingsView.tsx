@@ -16,18 +16,36 @@ import { mobileRegattaBadge } from "@/components/FleetRankingsView";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { useAccountOptional } from "@/components/AccountProvider";
 
-const ILCA_INTAKE_OPTIONS: Array<{
+export function getIlcaIntakeOptions(activeYear?: number): Array<{
   kind: IlcaIntakeKind;
   year: number;
   label: string;
-}> = [
-  { kind: "july", year: 2026, label: "Jul – Dec 2026" },
-  { kind: "january", year: 2026, label: "Jan – Jun 2026" },
-  { kind: "july", year: 2025, label: "Jul – Dec 2025" },
-  { kind: "january", year: 2025, label: "Jan – Jun 2025" },
-  { kind: "july", year: 2024, label: "Jul – Dec 2024" },
-  { kind: "january", year: 2024, label: "Jan – Jun 2024" },
-];
+}> {
+  const currentYear = new Date().getFullYear();
+  const maxYear = Math.max(currentYear + 1, (activeYear || 0) + 1);
+  const minYear = 2024;
+  const list: Array<{ kind: IlcaIntakeKind; year: number; label: string }> = [];
+
+  for (let yr = maxYear; yr >= minYear; yr--) {
+    // January intake of year yr corresponds to squad term Jan – Jun yr (ranking as of 20 Dec yr-1)
+    list.push({
+      kind: "january",
+      year: yr,
+      label: `Jan – Jun ${yr}`,
+    });
+    // July intake of previous year corresponds to squad term Jul – Dec yr-1 (ranking as of 30 Jun yr-1)
+    if (yr - 1 >= minYear) {
+      list.push({
+        kind: "july",
+        year: yr - 1,
+        label: `Jul – Dec ${yr - 1}`,
+      });
+    }
+  }
+  return list;
+}
+
+export const ILCA_INTAKE_OPTIONS = getIlcaIntakeOptions();
 
 type Props = {
   initialRanked: IlcaRankedSailor[];
@@ -70,6 +88,10 @@ export function IlcaRankingsView({
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const intakeOptions = useMemo(
+    () => getIlcaIntakeOptions(Math.max(initialIntakeYear, intakeYear)),
+    [initialIntakeYear, intakeYear]
+  );
   const [excluded, setExcluded] = useState<Set<string>>(new Set());
 
   const toggleExclude = (regattaId: string) => {
@@ -229,7 +251,7 @@ export function IlcaRankingsView({
               className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-warm-white border border-cool-veil pl-10 pr-8 py-2 text-xs sm:text-sm text-charcoal font-semibold cursor-pointer hover:border-harbour/40 focus:border-harbour focus:outline-none focus:ring-1 focus:ring-harbour/30 transition-all shadow-sm"
               aria-label="Select ILCA 4 intake period"
             >
-              {ILCA_INTAKE_OPTIONS.map((opt) => (
+              {intakeOptions.map((opt) => (
                 <option
                   key={`${opt.kind}-${opt.year}`}
                   value={`${opt.kind}|${opt.year}`}

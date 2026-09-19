@@ -8,6 +8,7 @@ import {
   ilcaRegattaCountsForRanking,
   ilcaRankingRegattas,
   ilcaSquadCutoff,
+  defaultIlcaIntake,
   selectIlca4NationalSquad,
   reRankIlcaWithExcluded,
   squadReasonLabel,
@@ -31,6 +32,37 @@ describe("bestThreeHighPoints", () => {
     const r = bestThreeHighPoints([10, 30, 5, 28, 20]);
     expect(r.bestThree).toEqual([30, 28, 20]);
     expect(r.total).toBe(78);
+  });
+});
+
+describe("defaultIlcaIntake", () => {
+  it("selects July intake of current year during Jan-Jun", () => {
+    const march = new Date("2026-03-15T00:00:00Z");
+    expect(defaultIlcaIntake(march)).toEqual({ kind: "july", year: 2026 });
+    expect(ilcaSquadCutoff("july", 2026).asOf).toBe("2026-06-30");
+  });
+
+  it("selects January intake of next year during Jul-Dec", () => {
+    const september = new Date("2026-09-19T00:00:00Z");
+    expect(defaultIlcaIntake(september)).toEqual({ kind: "january", year: 2027 });
+    const cutoff = ilcaSquadCutoff("january", 2027);
+    expect(cutoff.asOf).toBe("2026-12-20");
+
+    // Regatta held in September 2026 is included in the ranking window
+    const regattas = [
+      {
+        id: "snsc-ilca4",
+        name: "SNSC ILCA 4 (Sep 26)",
+        date: "2026-09-15",
+        totalFleetSize: 46,
+        boatClass: "ILCA 4",
+        countsForRanking: true,
+        raceCount: 6,
+      },
+    ];
+    const window = ilcaRankingRegattas(regattas, "ILCA 4", cutoff.asOf);
+    expect(window).toHaveLength(1);
+    expect(window[0].id).toBe("snsc-ilca4");
   });
 });
 
