@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Singapore Sailing Standings, Calendar & Athlete Records | SailorPath",
+  title: "Singapore Sailing Standings & Athlete Records | SailorPath",
   description:
     "Official Singapore Optimist, ILCA 4, WingFoil and Techno 293 standings, selection trials and athlete records — updated from SSF results after every scored race.",
 };

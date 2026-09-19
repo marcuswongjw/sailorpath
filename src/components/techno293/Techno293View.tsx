@@ -322,9 +322,9 @@ export function Techno293View({
 
                         <td className="py-3.5 px-3 sm:px-4">
                           <div className="font-bold text-[var(--sp-harbour-shadow)]">{s.name}</div>
-                          {s.club && (
+                          {(s.schoolName || s.club) && (
                             <div className="text-[11px] text-[var(--sp-slate-soft)]">
-                              {s.club}
+                              {[s.schoolName, s.club].filter(Boolean).join(" · ")}
                             </div>
                           )}
                         </td>

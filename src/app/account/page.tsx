@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { User, Mail, Calendar, Edit2, Check, Lock } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
 
@@ -22,6 +23,14 @@ type Claim = {
   createdAt: string;
 };
 
+type UserProfileData = {
+  id: string;
+  fullName: string;
+  email: string;
+  role: string;
+  createdAt: string | null;
+};
+
 function AccountInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -29,6 +38,16 @@ function AccountInner() {
   const isCoach = role === "coach";
   const welcome = searchParams.get("welcome") === "1";
   const [email, setEmail] = useState<string | null>(null);
+  const [userProfile, setUserProfile] = useState<UserProfileData | null>(null);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [editName, setEditName] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+  const [profileMsg, setProfileMsg] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+  const [profileSaving, setProfileSaving] = useState(false);
+
   const [owned, setOwned] = useState<Owned[]>([]);
   const [claims, setClaims] = useState<Claim[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -69,6 +88,21 @@ function AccountInner() {
         setOwned(data.owned || []);
         setClaims(data.claims || []);
         if (data.email) setEmail(data.email);
+
+        const prof: UserProfileData = data.user || data.profile || {
+          id: session.user.id,
+          fullName:
+            (session.user.user_metadata?.full_name as string) ||
+            (session.user.user_metadata?.handle as string) ||
+            data.fullName ||
+            "",
+          email: session.user.email || data.email || "",
+          role: data.role || "sailor",
+          createdAt: session.user.created_at || null,
+        };
+        setUserProfile(prof);
+        setEditName(prof.fullName || "");
+        setEditEmail(prof.email || session.user.email || "");
       } catch (e) {
         setError(e instanceof Error ? e.message : "Error loading account");
       } finally {
@@ -76,6 +110,74 @@ function AccountInner() {
       }
     })();
   }, [router]);
+
+  const saveProfileDetails = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setProfileMsg(null);
+    if (!editName.trim()) {
+      setProfileMsg({ type: "error", text: "Please enter your name" });
+      return;
+    }
+    if (!editEmail.trim() || !editEmail.includes("@")) {
+      setProfileMsg({
+        type: "error",
+        text: "Please enter a valid email address",
+      });
+      return;
+    }
+
+    setProfileSaving(true);
+    try {
+      const res = await fetch("/api/account", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          fullName: editName.trim(),
+          email: editEmail.trim(),
+        }),
+      });
+      const resData = await res.json();
+      if (!res.ok) {
+        throw new Error(resData.error || "Failed to update profile");
+      }
+
+      const supabase = createBrowserSupabase();
+      const updatePayload: { data: { full_name: string }; email?: string } = {
+        data: { full_name: editName.trim() },
+      };
+      if (editEmail.trim().toLowerCase() !== email?.toLowerCase()) {
+        updatePayload.email = editEmail.trim().toLowerCase();
+      }
+      const { error: sbErr } = await supabase.auth.updateUser(updatePayload);
+      if (sbErr) {
+        console.warn("[account] Supabase auth notice:", sbErr.message);
+      }
+
+      const updated: UserProfileData = resData.user || {
+        id: userProfile?.id || "",
+        fullName: editName.trim(),
+        email: editEmail.trim(),
+        role: userProfile?.role || "sailor",
+        createdAt: userProfile?.createdAt || null,
+      };
+      setUserProfile(updated);
+      setEmail(updated.email);
+      setIsEditingProfile(false);
+
+      const emailNotice = updatePayload.email
+        ? "Profile updated! A confirmation link may have been sent to your new email to verify the address change."
+        : "Profile details updated successfully!";
+      setProfileMsg({ type: "success", text: emailNotice });
+    } catch (err) {
+      setProfileMsg({
+        type: "error",
+        text: err instanceof Error ? err.message : "Failed to update profile",
+      });
+    } finally {
+      setProfileSaving(false);
+    }
+  };
 
   const changePassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,7 +221,12 @@ function AccountInner() {
         </h1>
         <p className="mt-2 text-sm text-slate-400 break-all">
           Signed in as{" "}
-          <span className="font-semibold text-slate-200">{email}</span>
+          <span className="font-semibold text-slate-200">
+            {userProfile?.fullName || email}
+          </span>
+          {userProfile?.fullName && email ? (
+            <span className="text-slate-400"> ({email})</span>
+          ) : null}
         </p>
       </div>
 
@@ -139,6 +246,166 @@ function AccountInner() {
       )}
 
       {error && <p className="text-sm font-bold text-rose-400">{error}</p>}
+
+      {/* User Account Profile Card (distinct from athlete sailor profile) */}
+      <section className="glass-card rounded-3xl border border-white/10 bg-slate-900/60 p-5 sm:p-7 shadow-lg space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+          <div className="flex items-center gap-3.5">
+            <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500/20 to-teal-500/20 border border-white/15 text-orange-400 shadow-inner shrink-0">
+              <User className="h-6 w-6 sm:h-7 sm:w-7" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">
+                  User Account Profile
+                </span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-white/10 text-slate-300 border border-white/10">
+                  {userProfile?.role === "superadmin"
+                    ? "Admin"
+                    : userProfile?.role === "coach"
+                    ? "Coach"
+                    : userProfile?.role === "parent"
+                    ? "Parent / Guardian"
+                    : "Registered User"}
+                </span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight mt-0.5">
+                {userProfile?.fullName || "User Profile"}
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Your personal login account details — distinct from public athlete ranking profiles.
+              </p>
+            </div>
+          </div>
+
+          {!isEditingProfile && (
+            <button
+              type="button"
+              onClick={() => {
+                setEditName(userProfile?.fullName || "");
+                setEditEmail(userProfile?.email || email || "");
+                setProfileMsg(null);
+                setIsEditingProfile(true);
+              }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 hover:bg-white/15 px-4 py-2 text-xs font-bold text-white transition-colors self-start sm:self-center shadow-xs"
+            >
+              <Edit2 className="h-3.5 w-3.5 text-orange-400" />
+              <span>Edit Details</span>
+            </button>
+          )}
+        </div>
+
+        {profileMsg && (
+          <div
+            className={`rounded-2xl p-4 text-xs font-medium border leading-relaxed ${
+              profileMsg.type === "success"
+                ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-200"
+                : "bg-rose-500/15 border-rose-500/30 text-rose-200"
+            }`}
+          >
+            {profileMsg.text}
+          </div>
+        )}
+
+        {isEditingProfile ? (
+          <form onSubmit={saveProfileDetails} className="space-y-4 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  Full Name / Display Name
+                </label>
+                <div className="relative">
+                  <User className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                  <input
+                    type="text"
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                    placeholder="Enter your name"
+                    required
+                    className="w-full rounded-xl bg-slate-950 border border-white/15 pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-600 focus:border-orange-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                  <input
+                    type="email"
+                    value={editEmail}
+                    onChange={(e) => setEditEmail(e.target.value)}
+                    placeholder="name@example.com"
+                    required
+                    className="w-full rounded-xl bg-slate-950 border border-white/15 pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-600 focus:border-orange-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 pt-2">
+              <button
+                type="submit"
+                disabled={profileSaving}
+                className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 hover:bg-orange-500 px-5 py-2 text-xs font-bold text-white transition-colors disabled:opacity-50 shadow-sm"
+              >
+                <Check className="h-3.5 w-3.5" />
+                <span>{profileSaving ? "Saving changes…" : "Save changes"}</span>
+              </button>
+              <button
+                type="button"
+                disabled={profileSaving}
+                onClick={() => {
+                  setIsEditingProfile(false);
+                  setProfileMsg(null);
+                }}
+                className="rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-bold text-slate-300 transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
+            <div className="rounded-2xl border border-white/5 bg-slate-950/50 p-4 space-y-1">
+              <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                <User className="h-3 w-3 text-orange-400" />
+                <span>Full Name</span>
+              </div>
+              <p className="text-sm font-black text-white">
+                {userProfile?.fullName || "Not set"}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/5 bg-slate-950/50 p-4 space-y-1 min-w-0">
+              <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                <Mail className="h-3 w-3 text-teal-400" />
+                <span>Email Address</span>
+              </div>
+              <p className="text-sm font-bold text-slate-200 truncate">
+                {userProfile?.email || email}
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-white/5 bg-slate-950/50 p-4 space-y-1">
+              <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
+                <Calendar className="h-3 w-3 text-sky-400" />
+                <span>Member Since</span>
+              </div>
+              <p className="text-sm font-bold text-slate-300">
+                {userProfile?.createdAt
+                  ? new Date(userProfile.createdAt).toLocaleDateString("en-SG", {
+                      month: "short",
+                      year: "numeric",
+                    })
+                  : "Active Member"}
+              </p>
+            </div>
+          </div>
+        )}
+      </section>
 
       {isCoach && (
         <section className="rounded-2xl border border-orange-500/25 bg-orange-500/[0.07] p-5 sm:p-6 space-y-3 w-full">
@@ -254,16 +521,15 @@ function AccountInner() {
       </section>
       )}
 
-      {/* Account settings */}
+      {/* Account security */}
       <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-4 w-full">
-        <h2 className="text-sm font-black text-white uppercase tracking-wider">
-          Account settings
-        </h2>
-        <div>
-          <p className="text-[10px] font-bold text-slate-500 uppercase">Email</p>
-          <p className="text-sm text-slate-200 mt-1 break-all">{email}</p>
+        <div className="flex items-center gap-2">
+          <Lock className="h-4 w-4 text-orange-400" />
+          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+            Account Security &amp; Password
+          </h2>
         </div>
-        <form onSubmit={changePassword} className="space-y-3 border-t border-white/5 pt-4">
+        <form onSubmit={changePassword} className="space-y-3">
           <p className="text-[10px] font-bold text-slate-500 uppercase">
             Change password
           </p>
