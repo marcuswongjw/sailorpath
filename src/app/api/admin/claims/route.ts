@@ -352,3 +352,139 @@ export async function PATCH(req: Request) {
     return jsonError(e);
   }
 }
+
+/**
+ * POST /api/admin/claims
+ * Body: { userId: string, sailorId: string, relation?: "parent" | "sailor" | "other", note?: string }
+ * Superadmin assigns a registered user account to a sailor profile directly.
+ */
+export async function POST(req: Request) {
+  try {
+    const auth = await requireSuperadmin();
+    const body = await req.json();
+    const userId = String(body.userId || "").trim();
+    const sailorId = String(body.sailorId || "").trim();
+    const relation: ClaimRelation = parseClaimRelation(body.relation) || "parent";
+    const note = String(body.note || "Assigned directly by admin").trim();
+
+    if (!userId || !sailorId) {
+      return NextResponse.json(
+        { error: "Both userId and sailorId are required" },
+        { status: 400 }
+      );
+    }
+
+    const [user] = await db
+      .select()
+      .from(profiles)
+      .where(eq(profiles.id, userId))
+      .limit(1);
+    if (!user) {
+      return NextResponse.json({ error: "User account not found" }, { status: 404 });
+    }
+
+    const [sailor] = await db
+      .select()
+      .from(sailors)
+      .where(eq(sailors.id, sailorId))
+      .limit(1);
+    if (!sailor) {
+      return NextResponse.json({ error: "Sailor profile not found" }, { status: 404 });
+    }
+
+    // Check if an existing claim exists for this user + sailor
+    const [existingClaim] = await db
+      .select()
+      .from(sailorClaims)
+      .where(
+        and(eq(sailorClaims.sailorId, sailorId), eq(sailorClaims.requesterId, userId))
+      )
+      .limit(1);
+
+    let claimRecord;
+    if (existingClaim) {
+      const [updated] = await db
+        .update(sailorClaims)
+        .set({
+          status: "approved",
+          relation,
+          note,
+          updatedAt: new Date(),
+        })
+        .where(eq(sailorClaims.id, existingClaim.id))
+        .returning();
+      claimRecord = updated;
+    } else {
+      const [created] = await db
+        .insert(sailorClaims)
+        .values({
+          sailorId,
+          requesterId: userId,
+          status: "approved",
+          relation,
+          note,
+        })
+        .returning();
+      claimRecord = created;
+    }
+
+    // Set primary parentId on sailor if empty or already this user
+    if (!sailor.parentId || sailor.parentId === userId) {
+      await db
+        .update(sailors)
+        .set({
+          parentId: userId,
+          ownerRelation: relation,
+          updatedAt: new Date(),
+        })
+        .where(eq(sailors.id, sailorId));
+    }
+
+    // Promote profile role if currently 'sailor' and assigned as 'parent'
+    if (user.role !== "superadmin" && user.role !== "coach") {
+      const targetRole = profileRoleFromRelation(relation);
+      if (targetRole && user.role !== targetRole) {
+        await db
+          .update(profiles)
+          .set({ role: targetRole, updatedAt: new Date() })
+          .where(eq(profiles.id, userId));
+      }
+    }
+
+    await logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "claim_approved",
+      entityType: "claim",
+      entityId: claimRecord.id,
+      entityLabel: `${sailor.name} ← ${user.email}`,
+      summary: `Admin assigned ${user.email} as ${relation} to sailor ${sailor.name}`,
+      details: {
+        assignedByAdmin: true,
+        sailorId,
+        sailorName: sailor.name,
+        userId,
+        userEmail: user.email,
+        relation,
+      },
+      source: "/api/admin/claims",
+    });
+
+    void trackUsage({
+      eventType: "claim_approved",
+      path: "/admin",
+      role: "superadmin",
+      meta: {
+        assignedByAdmin: "true",
+        targetUserId: userId.slice(0, 36),
+        sailorId: sailorId.slice(0, 36),
+        relation,
+      },
+    });
+
+    return NextResponse.json({ ok: true, claim: claimRecord });
+  } catch (e) {
+    console.error("claims admin POST assign", e);
+    return jsonError(e);
+  }
+}

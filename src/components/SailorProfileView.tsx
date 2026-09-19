@@ -1410,11 +1410,6 @@ export function SailorProfileView({
                   {standingIsIlca ? " pts" : ""}
                 </span>
               </p>
-              {!standingIsIlca && (
-                <p className="text-[10px] text-slate-soft mt-0.5">
-                  Sum of best three places (lower is better)
-                </p>
-              )}
             </div>
           </div>
           <div className="mt-4 hidden sm:grid grid-cols-5 gap-2">

@@ -370,18 +370,13 @@ export async function GET() {
           const me = board.find((x) => x.id === s.id);
           if (me) {
             const overallRank = board.findIndex((x) => x.id === s.id) + 1;
-            const carry = me.regattaScores.filter((rs) => rs.isCarryForward)
-              .length;
             standing = {
               periodLabel: periodLabel(period),
               fleet: me.fleet,
               overallRank,
               fleetSize: board.length,
               best3of5: me.overallScore,
-              trendNote:
-                carry > 0
-                  ? `Includes ${carry} carry-forward score${carry === 1 ? "" : "s"} from previous half`
-                  : `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
+              trendNote: `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
             };
           }
         }

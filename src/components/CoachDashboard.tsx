@@ -103,12 +103,13 @@ export function CoachDashboard({
   const actions = useMemo(() => data.members.flatMap((member) => {
     const items: Array<{ key: string; sailorId: string; sailor: string; text: string; priority: number }> = [];
     const periodKey = `${data.period.year}-${data.period.half}`;
-    if (member.scoringEvents.some((event) => event.isDns)) items.push({ key: `${member.sailorId}:dns:${periodKey}`, sailorId: member.sailorId, sailor: member.name, text: "DNS appears in the current ranking series", priority: 1 });
     if (member.scoringEvents.filter((event) => event.selected && !event.isDns).length < 3) items.push({ key: `${member.sailorId}:incomplete:${periodKey}`, sailorId: member.sailorId, sailor: member.name, text: "Fewer than 3 completed counting events", priority: 2 });
     if (member.recentMovement != null && member.recentMovement < 0) items.push({ key: `${member.sailorId}:rank-drop:${data.updatedThrough}`, sailorId: member.sailorId, sailor: member.name, text: `Series rank moved down ${Math.abs(member.recentMovement)} place${Math.abs(member.recentMovement) === 1 ? "" : "s"} after the latest event`, priority: 3 });
     return items;
   }).filter((action) => !data.actionReviews.some((review) => review.actionKey === action.key)).sort((a, b) => a.priority - b.priority).slice(0, 6), [data.members, data.actionReviews, data.period, data.updatedThrough]);
-  const compareFleet = selectedMembers[0]?.fleet;
+  const compareFleet = selectedMembers.length === 2 && selectedMembers[0]?.fleet === selectedMembers[1]?.fleet
+    ? selectedMembers[0]?.fleet
+    : null;
   const sortedMembers = useMemo(() => [...data.members].sort((a, b) => {
     if (sortKey === "name") return a.name.localeCompare(b.name);
     if (sortKey === "movement") return (b.recentMovement ?? -999) - (a.recentMovement ?? -999) || a.name.localeCompare(b.name);
@@ -119,7 +120,7 @@ export function CoachDashboard({
     ? `/sg/optimist/compare?fleet=${compareFleet}&year=${data.period.year}&half=${encodeURIComponent(data.period.half)}&a=${selected[0]}&b=${selected[1]}`
     : null;
 
-  async function mutate(method: "POST" | "PATCH" | "DELETE", payload: { sailorId?: string; name?: string }) {
+  async function mutate(method: "POST" | "PATCH" | "DELETE", payload: { sailorId?: string; sailorIds?: string[]; name?: string }) {
     if (demoMode) {
       if (payload.name) {
         setData((prev) => ({
@@ -130,7 +131,14 @@ export function CoachDashboard({
       }
       return;
     }
-    const queryString = method === "DELETE" ? `?sailorId=${encodeURIComponent(payload.sailorId || "")}` : "";
+    let queryString = "";
+    if (method === "DELETE") {
+      if (payload.sailorIds && payload.sailorIds.length > 0) {
+        queryString = `?sailorIds=${encodeURIComponent(payload.sailorIds.join(","))}`;
+      } else if (payload.sailorId) {
+        queryString = `?sailorId=${encodeURIComponent(payload.sailorId)}`;
+      }
+    }
     const response = await fetch(`/api/coach/squad${queryString}`, {
       method,
       ...(method !== "DELETE" ? { headers: { "content-type": "application/json" }, body: JSON.stringify(payload) } : {}),
@@ -211,6 +219,26 @@ export function CoachDashboard({
     finally { setBusyId(null); }
   }
 
+  async function removeMultipleSailors(sailorIds: string[]) {
+    if (sailorIds.length === 0) return;
+    setBusyId("bulk-delete"); setMessage(null);
+    try {
+      if (demoMode) {
+        setData((prev) => ({
+          ...prev,
+          members: prev.members.filter((m) => !sailorIds.includes(m.sailorId)),
+        }));
+        setSelected([]);
+        setMessage(`${sailorIds.length} sailor${sailorIds.length === 1 ? "" : "s"} removed from squad (demo).`);
+        return;
+      }
+      await mutate("DELETE", { sailorIds });
+      setSelected([]);
+      setMessage(`${sailorIds.length} sailor${sailorIds.length === 1 ? "" : "s"} removed from your squad.`);
+    } catch (error) { setMessage(error instanceof Error ? error.message : "Could not remove sailors"); }
+    finally { setBusyId(null); }
+  }
+
   async function mutateFollowing(method: "POST" | "DELETE", sailorId: string) {
     if (demoMode) {
       if (method === "POST") {
@@ -287,14 +315,17 @@ export function CoachDashboard({
   }
 
   function toggleCompare(sailorId: string) {
+    setSelected((current) =>
+      current.includes(sailorId) ? current.filter((id) => id !== sailorId) : [...current, sailorId]
+    );
+  }
+
+  function toggleSelectAll() {
     setSelected((current) => {
-      if (current.includes(sailorId)) return current.filter((id) => id !== sailorId);
-      const nextMember = data.members.find((member) => member.sailorId === sailorId);
-      const currentMember = data.members.find((member) => member.sailorId === current[0]);
-      if (!nextMember?.fleet || (currentMember?.fleet && currentMember.fleet !== nextMember.fleet)) {
-        return [sailorId];
+      if (data.members.length > 0 && current.length === data.members.length) {
+        return [];
       }
-      return current.length === 2 ? [current[1], sailorId] : [...current, sailorId];
+      return data.members.map((m) => m.sailorId);
     });
   }
 
@@ -604,6 +635,48 @@ export function CoachDashboard({
               </div>
             </div>
           </div>
+
+          {data.members.length > 0 && (
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 px-4 py-2 text-xs">
+              <div className="flex items-center gap-3">
+                <label className="flex items-center gap-2 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    checked={data.members.length > 0 && selected.length === data.members.length}
+                    onChange={toggleSelectAll}
+                    aria-label="Select all sailors"
+                    className="h-4 w-4 rounded border-[var(--sp-cool-veil)] text-[var(--sp-racing-orange)] accent-[var(--sp-racing-orange)]"
+                  />
+                  <span className="text-[11px] font-bold text-[var(--sp-charcoal-slate)]">
+                    {selected.length > 0 ? `${selected.length} of ${data.members.length} selected` : "Select all"}
+                  </span>
+                </label>
+                {selected.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setSelected([])}
+                    className="text-[10px] font-semibold text-[var(--sp-slate-soft)] underline hover:text-[var(--sp-harbour-shadow)]"
+                  >
+                    Clear selection
+                  </button>
+                )}
+              </div>
+
+              {selected.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => removeMultipleSailors(selected)}
+                    disabled={busyId === "bulk-delete"}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1 text-[11px] font-bold text-rose-700 hover:bg-rose-100 disabled:opacity-50 transition-colors"
+                  >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    {busyId === "bulk-delete" ? "Removing…" : `Delete selected (${selected.length})`}
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
 
           {data.members.length === 0 ? (
             <div className="px-6 py-16 text-center">

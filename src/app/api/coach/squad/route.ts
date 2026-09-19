@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import { coachFollowedSailors, coachSquadMembers, coachSquads, sailors } from "@/db/schema";
 import { jsonError, requireCoach } from "@/lib/auth";
@@ -75,9 +75,26 @@ export async function PATCH(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const auth = await requireCoach();
-    const sailorId = new URL(request.url).searchParams.get("sailorId")?.trim();
-    if (!sailorId) {
-      return NextResponse.json({ error: "sailorId required" }, { status: 400 });
+    const url = new URL(request.url);
+    let sailorIds: string[] = [];
+    const queryParam = url.searchParams.get("sailorIds") || url.searchParams.get("sailorId");
+    if (queryParam) {
+      sailorIds = queryParam.split(",").map((s) => s.trim()).filter(Boolean);
+    }
+    if (sailorIds.length === 0) {
+      try {
+        const body = await request.json();
+        if (Array.isArray(body.sailorIds)) {
+          sailorIds = body.sailorIds.map((s: unknown) => String(s).trim()).filter(Boolean);
+        } else if (body.sailorId) {
+          sailorIds = [String(body.sailorId).trim()];
+        }
+      } catch {
+        // no json body
+      }
+    }
+    if (sailorIds.length === 0) {
+      return NextResponse.json({ error: "sailorId or sailorIds required" }, { status: 400 });
     }
     const squad = await ensureCoachSquad(auth.userId);
     await db
@@ -85,7 +102,7 @@ export async function DELETE(request: Request) {
       .where(
         and(
           eq(coachSquadMembers.squadId, squad.id),
-          eq(coachSquadMembers.sailorId, sailorId)
+          inArray(coachSquadMembers.sailorId, sailorIds)
         )
       );
     return NextResponse.json(await getCoachSquadDashboard(auth.userId));

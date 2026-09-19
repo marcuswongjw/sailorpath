@@ -189,4 +189,50 @@ describe("CoachDashboard", () => {
     await waitFor(() => expect(screen.getAllByRole("button", { name: "Mark reviewed" })).toHaveLength(before - 1));
     expect(screen.getByRole("status")).toHaveTextContent("marked reviewed");
   });
+
+  it("does not generate action review for DNS", () => {
+    const withDns: CoachSquadDashboard = {
+      ...initialData,
+      members: [
+        {
+          ...initialData.members[0],
+          scoringEvents: [
+            { regattaId: "r1", regattaName: "SAFYC", date: "2026-07-01", score: 1, selected: true, isDns: true, isOverseas: false },
+            { regattaId: "r2", regattaName: "Pesta Sukan", date: "2026-08-01", score: 3, selected: true, isDns: true, isOverseas: false },
+            { regattaId: "r3", regattaName: "CSC", date: "2026-09-01", score: 2, selected: true, isDns: true, isOverseas: false },
+          ],
+          recentMovement: 0,
+        },
+      ],
+    };
+    render(<CoachDashboard initialData={withDns} />);
+    expect(screen.queryByText(/DNS appears in the current ranking series/i)).not.toBeInTheDocument();
+  });
+
+  it("supports bulk selection and bulk deletion of sailors", async () => {
+    const afterDelete = {
+      ...initialData,
+      members: [],
+    } satisfies CoachSquadDashboard;
+
+    const fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(
+      new Response(JSON.stringify(afterDelete), { status: 200 })
+    );
+
+    const user = userEvent.setup();
+    render(<CoachDashboard initialData={initialData} />);
+
+    // Check select all
+    await user.click(screen.getByLabelText("Select all sailors"));
+    expect(screen.getByText("2 of 2 selected")).toBeInTheDocument();
+
+    // Click delete selected
+    await user.click(screen.getByRole("button", { name: "Delete selected (2)" }));
+
+    await waitFor(() => expect(fetchSpy).toHaveBeenCalledWith(
+      expect.stringContaining("sailorIds=sailor-1%2Csailor-2"),
+      expect.objectContaining({ method: "DELETE" })
+    ));
+    expect(screen.getByRole("status")).toHaveTextContent("2 sailors removed from your squad");
+  });
 });

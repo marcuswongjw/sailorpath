@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -11,6 +11,9 @@ import {
   ShieldQuestion,
   Save,
   Unlink,
+  UserPlus,
+  X,
+  Search,
 } from "lucide-react";
 import {
   relationLabel,
@@ -51,6 +54,125 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
     Record<string, ClaimRelation>
   >({});
   const [busyId, setBusyId] = useState<string | null>(null);
+
+  // Assign user to sailor state
+  const [isAssignOpen, setIsAssignOpen] = useState(false);
+  const [assignUserId, setAssignUserId] = useState("");
+  const [assignUserQuery, setAssignUserQuery] = useState("");
+  const [assignUsers, setAssignUsers] = useState<
+    Array<{ id: string; email: string; fullName: string; role: string }>
+  >([]);
+  const [assignUserLoading, setAssignUserLoading] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<{
+    id: string;
+    email: string;
+    fullName: string;
+  } | null>(null);
+
+  const [assignSailorId, setAssignSailorId] = useState("");
+  const [assignSailorQuery, setAssignSailorQuery] = useState("");
+  const [assignSailors, setAssignSailors] = useState<
+    Array<{ id: string; name: string; sailNumber: string | null; club: string | null }>
+  >([]);
+  const [assignSailorLoading, setAssignSailorLoading] = useState(false);
+  const [selectedSailor, setSelectedSailor] = useState<{
+    id: string;
+    name: string;
+    sailNumber: string | null;
+    club: string | null;
+  } | null>(null);
+
+  const [assignRelation, setAssignRelation] = useState<ClaimRelation>("parent");
+  const [assignNote, setAssignNote] = useState("");
+  const [isSubmittingAssign, setIsSubmittingAssign] = useState(false);
+
+  useEffect(() => {
+    const trimmed = assignUserQuery.trim();
+    if (trimmed.length < 2) {
+      const timer = window.setTimeout(() => setAssignUsers([]), 0);
+      return () => window.clearTimeout(timer);
+    }
+    const timer = window.setTimeout(async () => {
+      setAssignUserLoading(true);
+      try {
+        const res = await fetch(`/api/admin/users?q=${encodeURIComponent(trimmed)}`);
+        const data = await res.json();
+        setAssignUsers(data.users || []);
+      } catch {
+        setAssignUsers([]);
+      } finally {
+        setAssignUserLoading(false);
+      }
+    }, 250);
+    return () => window.clearTimeout(timer);
+  }, [assignUserQuery]);
+
+  useEffect(() => {
+    const trimmed = assignSailorQuery.trim();
+    if (trimmed.length < 2) {
+      const timer = window.setTimeout(() => setAssignSailors([]), 0);
+      return () => window.clearTimeout(timer);
+    }
+    const timer = window.setTimeout(async () => {
+      setAssignSailorLoading(true);
+      try {
+        const res = await fetch(`/api/admin/sailors?q=${encodeURIComponent(trimmed)}&limit=15`);
+        const data = await res.json();
+        setAssignSailors(data.sailors || []);
+      } catch {
+        setAssignSailors([]);
+      } finally {
+        setAssignSailorLoading(false);
+      }
+    }, 250);
+    return () => window.clearTimeout(timer);
+  }, [assignSailorQuery]);
+
+  const resetAssignForm = () => {
+    setSelectedUser(null);
+    setSelectedSailor(null);
+    setAssignUserId("");
+    setAssignSailorId("");
+    setAssignUserQuery("");
+    setAssignSailorQuery("");
+    setAssignUsers([]);
+    setAssignSailors([]);
+    setAssignNote("");
+    setAssignRelation("parent");
+  };
+
+  const handleAssignSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!assignUserId || !assignSailorId) {
+      toast.error("Please select both a user account and a sailor profile.");
+      return;
+    }
+    setIsSubmittingAssign(true);
+    try {
+      const res = await fetch("/api/admin/claims", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: assignUserId,
+          sailorId: assignSailorId,
+          relation: assignRelation,
+          note: assignNote || "Assigned directly by admin",
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to assign user to sailor");
+      toast.success(
+        `Assigned ${selectedUser?.email || "user"} to ${selectedSailor?.name || "sailor"} as ${assignRelation}!`
+      );
+      setIsAssignOpen(false);
+      resetAssignForm();
+      await claimsQuery.refetch();
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Assignment failed");
+    } finally {
+      setIsSubmittingAssign(false);
+    }
+  };
 
   const claimsQuery = useQuery({
     queryKey: adminQueryKeys.claims(),
@@ -139,26 +261,39 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
         </ul>
       </div>
 
-      <div className="flex flex-wrap gap-2">
-        {(["pending", "approved", "rejected", "all"] as const).map((f) => (
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {(["pending", "approved", "rejected", "all"] as const).map((f) => (
+            <button
+              key={f}
+              type="button"
+              onClick={() => setFilter(f)}
+              className={`rounded-full px-3 py-1.5 text-[11px] font-bold capitalize ${
+                filter === f
+                  ? "bg-orange-600 text-white"
+                  : "bg-white/5 text-slate-400 border border-white/10"
+              }`}
+            >
+              {f}
+              {f !== "all" && (
+                <span className="ml-1 opacity-70">
+                  ({claims.filter((c) => c.status === f).length})
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {isSuperadmin && (
           <button
-            key={f}
             type="button"
-            onClick={() => setFilter(f)}
-            className={`rounded-full px-3 py-1.5 text-[11px] font-bold capitalize ${
-              filter === f
-                ? "bg-orange-600 text-white"
-                : "bg-white/5 text-slate-400 border border-white/10"
-            }`}
+            onClick={() => setIsAssignOpen(true)}
+            className="sp-btn-primary px-3.5 py-1.5 text-xs font-bold flex items-center gap-1.5 shadow-xs"
           >
-            {f}
-            {f !== "all" && (
-              <span className="ml-1 opacity-70">
-                ({claims.filter((c) => c.status === f).length})
-              </span>
-            )}
+            <UserPlus className="h-3.5 w-3.5" />
+            <span>Assign User to Sailor</span>
           </button>
-        ))}
+        )}
       </div>
 
       {loading && <p className="text-xs text-slate-500">Loading…</p>}
@@ -369,6 +504,211 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
           </div>
         )}
       </div>
+      {/* Assign User to Sailor Modal */}
+      {isAssignOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] rounded-3xl p-6 max-w-lg w-full space-y-4 shadow-2xl text-[var(--sp-harbour-shadow)]">
+            <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] pb-3">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-xl bg-[var(--sp-racing-mist)]/40 flex items-center justify-center text-[var(--sp-racing-deep)]">
+                  <UserPlus className="h-4 w-4" />
+                </div>
+                <div>
+                  <h3 className="text-base font-black font-display text-[var(--sp-harbour-shadow)]">
+                    Assign User to Sailor
+                  </h3>
+                  <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                    Link a registered account directly to an athlete profile.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setIsAssignOpen(false);
+                  resetAssignForm();
+                }}
+                className="p-1 rounded-lg text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAssignSubmit} className="space-y-3.5 text-xs">
+              {/* User Selection */}
+              <div>
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
+                  1. Select User Account <span className="text-rose-500">*</span>
+                </label>
+                {selectedUser ? (
+                  <div className="flex items-center justify-between p-2.5 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
+                    <div>
+                      <p className="font-bold text-[var(--sp-harbour-shadow)]">{selectedUser.fullName || "User"}</p>
+                      <p className="text-[11px] text-[var(--sp-slate-soft)] font-mono">{selectedUser.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedUser(null);
+                        setAssignUserId("");
+                      }}
+                      className="text-xs text-[var(--sp-racing-orange)] hover:underline font-bold"
+                    >
+                      Change
+                    </button>
+                  </div>
+                ) : (
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search user by email or name…"
+                      value={assignUserQuery}
+                      onChange={(e) => setAssignUserQuery(e.target.value)}
+                      className="w-full sp-input py-2 pl-8"
+                    />
+                    <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
+                    {assignUserLoading && (
+                      <span className="absolute right-3 top-2.5 text-[10px] text-[var(--sp-slate-soft)]">Searching…</span>
+                    )}
+                    {assignUsers.length > 0 && (
+                      <div className="absolute z-10 top-full left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-lg divide-y divide-[var(--sp-cool-veil)]">
+                        {assignUsers.map((u) => (
+                          <div
+                            key={u.id}
+                            onClick={() => {
+                              setSelectedUser(u);
+                              setAssignUserId(u.id);
+                              setAssignUsers([]);
+                              setAssignUserQuery("");
+                            }}
+                            className="p-2.5 hover:bg-[var(--sp-sailcloth)] cursor-pointer text-left transition-colors"
+                          >
+                            <p className="font-bold text-[var(--sp-harbour-shadow)]">{u.fullName || "Unnamed User"}</p>
+                            <p className="text-[11px] text-[var(--sp-slate-soft)] font-mono">{u.email} ({u.role})</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Sailor Selection */}
+              <div>
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
+                  2. Select Sailor Profile <span className="text-rose-500">*</span>
+                </label>
+                {selectedSailor ? (
+                  <div className="flex items-center justify-between p-2.5 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
+                    <div>
+                      <p className="font-bold text-[var(--sp-harbour-shadow)]">{selectedSailor.name}</p>
+                      <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                        {selectedSailor.sailNumber ? `Sail #${selectedSailor.sailNumber}` : "No sail #"} {selectedSailor.club ? `· ${selectedSailor.club}` : ""}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedSailor(null);
+                        setAssignSailorId("");
+                      }}
+                      className="text-xs text-[var(--sp-racing-orange)] hover:underline font-bold"
+                    >
+                      Change
+                    </button>
+                  </div>
+                ) : (
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search sailor by name or sail number…"
+                      value={assignSailorQuery}
+                      onChange={(e) => setAssignSailorQuery(e.target.value)}
+                      className="w-full sp-input py-2 pl-8"
+                    />
+                    <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
+                    {assignSailorLoading && (
+                      <span className="absolute right-3 top-2.5 text-[10px] text-[var(--sp-slate-soft)]">Searching…</span>
+                    )}
+                    {assignSailors.length > 0 && (
+                      <div className="absolute z-10 top-full left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-lg divide-y divide-[var(--sp-cool-veil)]">
+                        {assignSailors.map((s) => (
+                          <div
+                            key={s.id}
+                            onClick={() => {
+                              setSelectedSailor(s);
+                              setAssignSailorId(s.id);
+                              setAssignSailors([]);
+                              setAssignSailorQuery("");
+                            }}
+                            className="p-2.5 hover:bg-[var(--sp-sailcloth)] cursor-pointer text-left transition-colors"
+                          >
+                            <p className="font-bold text-[var(--sp-harbour-shadow)]">{s.name}</p>
+                            <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                              {s.sailNumber ? `Sail #${s.sailNumber}` : "No sail #"} {s.club ? `· ${s.club}` : ""}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Relation */}
+              <div>
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
+                  3. Account Relationship
+                </label>
+                <select
+                  value={assignRelation}
+                  onChange={(e) => setAssignRelation(e.target.value as ClaimRelation)}
+                  className="w-full sp-select py-2"
+                >
+                  <option value="parent">Parent / Guardian</option>
+                  <option value="sailor">Sailor (Athlete Direct)</option>
+                  <option value="other">Other / Support</option>
+                </select>
+              </div>
+
+              {/* Note */}
+              <div>
+                <label className="block font-semibold text-[var(--sp-charcoal-slate)] mb-1">
+                  Note (optional)
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. Assigned by admin via support request"
+                  value={assignNote}
+                  onChange={(e) => setAssignNote(e.target.value)}
+                  className="w-full sp-input py-2"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-2 pt-3 border-t border-[var(--sp-cool-veil)]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAssignOpen(false);
+                    resetAssignForm();
+                  }}
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-bold text-[var(--sp-charcoal-slate)] hover:bg-[var(--sp-cool-veil)]/50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={!assignUserId || !assignSailorId || isSubmittingAssign}
+                  className="sp-btn-primary px-4 py-2 text-xs font-bold flex items-center gap-1.5 shadow-xs disabled:opacity-50"
+                >
+                  <UserPlus className="h-3.5 w-3.5" />
+                  <span>{isSubmittingAssign ? "Assigning…" : "Assign User"}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

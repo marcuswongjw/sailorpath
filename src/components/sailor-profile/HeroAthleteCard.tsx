@@ -63,6 +63,21 @@ export interface HeroAthleteCardProps {
   sailIlca4?: string | null;
   noc?: string;
   totalRegattasCount?: number;
+  currentNatSquad?: string | null;
+}
+
+function natSquadBadgeClass(label: string): string {
+  const s = label.trim().toLowerCase();
+  if (s === "nat a" || s === "national a" || s === "a") {
+    return "bg-amber-50 border border-amber-200 text-amber-900";
+  }
+  if (s === "nat b" || s === "national b" || s === "b") {
+    return "bg-sky-50 border border-sky-200 text-sky-900";
+  }
+  if (s.includes("dev") || s === "ds") {
+    return "bg-violet-50 border border-violet-200 text-violet-900";
+  }
+  return "bg-blue-50 border border-blue-200 text-blue-900";
 }
 
 export function HeroAthleteCard({
@@ -103,9 +118,24 @@ export function HeroAthleteCard({
   sailIlca4,
   noc = "SGP",
   totalRegattasCount = 0,
+  currentNatSquad,
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState(false);
+
+  const resolvedNatSquad =
+    currentNatSquad ||
+    (() => {
+      const raw =
+        displaySailor.natSquadStatusJul26 ||
+        displaySailor.natSquadStatusJan26 ||
+        displaySailor.nationalSquadStatus ||
+        displaySailor.natSquadStatusJul25 ||
+        displaySailor.natSquadStatusJan25;
+      if (!raw || typeof raw !== "string") return null;
+      const trimmed = raw.trim();
+      return trimmed || null;
+    })();
 
   const handleShare = async () => {
     const url = typeof window !== "undefined" ? window.location.href : "";
@@ -201,6 +231,16 @@ export function HeroAthleteCard({
                 >
                   {fleetBadge.label}
                 </span>
+
+                {resolvedNatSquad && (
+                  <span
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold ${natSquadBadgeClass(
+                      resolvedNatSquad
+                    )}`}
+                  >
+                    {resolvedNatSquad}
+                  </span>
+                )}
 
                 {profileClaimed || profileVerified ? (
                   <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
@@ -462,10 +502,11 @@ export function HeroAthleteCard({
               </span>
             </div>
             <p className="text-[11px] text-harbour mt-1 truncate font-medium">
-              {activeStanding?.trendNote ||
-                (fleetBadge.label === "Gold fleet"
+              {activeStanding?.trendNote && !activeStanding.trendNote.toLowerCase().includes("carry-forward")
+                ? activeStanding.trendNote
+                : fleetBadge.label === "Gold fleet"
                   ? "Selection Trial Eligible"
-                  : "Active National Competitor")}
+                  : "Active National Competitor"}
             </p>
           </div>
 
@@ -492,11 +533,11 @@ export function HeroAthleteCard({
                 </span>
               )}
             </div>
-            <p className="text-[11px] text-slate-soft mt-1 truncate">
-              {hasMedals
-                ? `${totalRegattasCount} logged regattas`
-                : "Official registered regattas"}
-            </p>
+            {hasMedals && (
+              <p className="text-[11px] text-slate-soft mt-1 truncate">
+                {totalRegattasCount} logged regattas
+              </p>
+            )}
           </div>
         </div>
 

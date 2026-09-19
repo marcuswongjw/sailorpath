@@ -614,7 +614,6 @@ export async function getSailorSeriesStanding(
   const me = all.find((x) => x.id === sailorId);
   if (!me) return null;
   const overallRank = all.findIndex((x) => x.id === sailorId) + 1;
-  const carry = me.regattaScores.filter((rs) => rs.isCarryForward).length;
   return {
     period,
     periodLabel: periodLabel(period),
@@ -623,10 +622,7 @@ export async function getSailorSeriesStanding(
     fleetSize: all.length,
     best3of5: me.overallScore,
     rScores: me.regattaScores,
-    trendNote:
-      carry > 0
-        ? `Includes ${carry} carry-forward score${carry === 1 ? "" : "s"} from previous half`
-        : `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
+    trendNote: `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
   };
 }
 
