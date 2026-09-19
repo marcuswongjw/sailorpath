@@ -4,8 +4,9 @@
  * High Ranking Points: in a fleet of N, 1st = N pts, 2nd = N−1, … last = 1.
  * Series: Best 3 of last 5 ranking regattas (higher sum wins).
  *
- * ILCA 4 national squad (up to 16, age ≤ 17 in intake year), ranked top 25 only:
- * Cutoffs: 30 Jun → July intake; 20 Dec → January intake (next calendar year).
+ * ILCA 4 national squad (up to 16, age ≤ 17 in intake year), ranked top 25 only.
+ * Squad selection cutoffs (SSF policy): 30 Jun → July intake; 20 Dec → January intake.
+ * Ranking table windows follow the half each intake serves: Jul–Dec Y (July Y) / Jan–Jun Y (January Y).
  * Selection order:
  *  1. Top 2 males + top 2 females (overall)
  *  2. Top 2 males + top 2 females aged 16 in intake year
@@ -418,7 +419,13 @@ export function defaultIlcaIntake(now = new Date()): {
   return { kind: "january", year: y + 1 };
 }
 
-/** Ranking cutoff + intake year for squad selection. */
+/**
+ * Ranking window + intake year for a squad intake.
+ * The selector labels each intake by the half the squad serves, so the
+ * ranking window covers that same half:
+ *   July Y intake (serves Jul–Dec Y)  → regattas through 31 Dec Y
+ *   January Y intake (serves Jan–Jun Y) → regattas through 30 Jun Y
+ */
 export function ilcaSquadCutoff(
   kind: IlcaIntakeKind,
   /** Calendar year of the intake (July Y or January Y) */
@@ -426,17 +433,15 @@ export function ilcaSquadCutoff(
 ): { asOf: string; intakeYear: number; label: string } {
   if (kind === "july") {
     return {
-      asOf: `${intakeYear}-06-30`,
+      asOf: `${intakeYear}-12-31`,
       intakeYear,
-      label: `July ${intakeYear} intake · ranking as of 30 Jun ${intakeYear}`,
+      label: `July ${intakeYear} intake · Jul – Dec ${intakeYear} results`,
     };
   }
-  // January intake year Y uses ranking as of 20 Dec of previous year
-  const asOfYear = intakeYear - 1;
   return {
-    asOf: `${asOfYear}-12-20`,
+    asOf: `${intakeYear}-06-30`,
     intakeYear,
-    label: `January ${intakeYear} intake · ranking as of 20 Dec ${asOfYear}`,
+    label: `January ${intakeYear} intake · Jan – Jun ${intakeYear} results`,
   };
 }
 
@@ -525,7 +530,7 @@ export const ILCA_POLICY_NOTES = {
   nationalList:
     "Only sailors marked on the ILCA 4 national ranking list (admin-managed) appear on the public board.",
   squad:
-    "ILCA 4 national squad (≤16, SGP nationality only, verified birth year and age ≤17 in intake year): ranking as of 30 Jun (July intake) or 20 Dec (January intake). From top 25: top 2 M/F overall, then top 2 M/F in the intake-year-16 bucket, then top 4 M/F in ≤15 bucket; fill remaining with next highest same gender.",
+    "ILCA 4 national squad (≤16, SGP nationality only, verified birth year and age ≤17 in intake year). SSF selects from the ranking as of 30 Jun (July intake) or 20 Dec (January intake); the table window follows the half each intake serves. From top 25: top 2 M/F overall, then top 2 M/F in the intake-year-16 bucket, then top 4 M/F in ≤15 bucket; fill remaining with next highest same gender.",
 } as const;
 
 // Re-export helper used by import notes

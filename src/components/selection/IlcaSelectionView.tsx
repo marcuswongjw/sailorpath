@@ -12,6 +12,7 @@ import {
   Search,
   CheckCircle2,
   FileText,
+  Lock,
 } from "lucide-react";
 import { useAccountOptional } from "@/components/AccountProvider";
 import {
@@ -32,6 +33,7 @@ export function IlcaSelectionView() {
   const account = useAccountOptional();
   const email = account?.email;
   const owned = account?.owned;
+  const accountReady = account?.ready ?? false;
   const isLoggedIn = Boolean(email);
 
   const [activeTab, setActiveTab] = useState<SelectionTab>("eastern");
@@ -144,6 +146,115 @@ export function IlcaSelectionView() {
 
     return rows;
   }, [genderFilter, eligibilityFilter, searchQuery]);
+
+  if (!accountReady) {
+    return (
+      <div className="mx-auto w-full max-w-4xl px-4 py-20 flex flex-col items-center justify-center space-y-3">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-sky-500 border-t-transparent" />
+        <p className="text-xs text-slate-500 font-medium">Verifying member access…</p>
+      </div>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:py-16 space-y-8">
+        {/* Breadcrumb back */}
+        <div>
+          <Link
+            href="/sg/ilca4"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-soft hover:text-charcoal transition-colors"
+          >
+            <span>← Back to ILCA 4 National Standings</span>
+          </Link>
+        </div>
+
+        {/* Member Access Gate Card */}
+        <div className="relative overflow-hidden rounded-3xl border border-cool-veil bg-warm-white p-6 sm:p-10 text-center space-y-6 shadow-xs">
+          <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-sky-500/10 border border-sky-500/20 text-sky-500 shadow-sm">
+            <Lock className="h-8 w-8" />
+          </div>
+
+          <div className="relative space-y-2 max-w-xl mx-auto">
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/20 bg-sky-500/10 px-3 py-0.5 text-[11px] font-bold text-sky-600">
+              <Trophy className="h-3 w-3" />
+              <span>Singapore ILCA 4 Pathway</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-charcoal tracking-tight">
+              2026 Selection Trials &amp; Squad Policies
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-soft leading-relaxed">
+              Official trial outcomes, combined low-point finishes, and squad rosters for the{" "}
+              <strong className="text-charcoal">Eastern Seaboard Regatta 2026</strong>,{" "}
+              <strong className="text-charcoal">Asian Open Championships 2026</strong>, and the{" "}
+              <strong className="text-charcoal">National Junior Training Squad (NJTS)</strong> are
+              exclusive to registered members.
+            </p>
+          </div>
+
+          {/* Action buttons */}
+          <div className="relative flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto pt-2">
+            <Link
+              href="/login?next=%2Fsg%2Filca4%2Fselection"
+              className="w-full sm:w-auto sp-btn-primary text-xs font-black uppercase tracking-wider px-6 py-3.5 inline-flex items-center justify-center gap-2 min-h-[44px]"
+            >
+              Sign In to View Selection
+            </Link>
+            <Link
+              href="/register?next=%2Fsg%2Filca4%2Fselection"
+              className="w-full sm:w-auto rounded-full bg-sailcloth hover:bg-cool-veil active:scale-[0.98] transition-all text-xs font-bold text-charcoal px-6 py-3.5 border border-cool-veil inline-flex items-center justify-center min-h-[44px]"
+            >
+              Create Free Account
+            </Link>
+          </div>
+
+          {/* Feature Highlights Grid */}
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-cool-veil text-left">
+            <div className="rounded-xl border border-cool-veil bg-sailcloth p-4 space-y-1">
+              <div className="flex items-center gap-2">
+                <Trophy className="h-4 w-4 text-sky-500 shrink-0" />
+                <h2 className="text-xs font-bold text-charcoal">Eastern Seaboard Qualified Team</h2>
+              </div>
+              <p className="text-[11px] text-slate-soft leading-relaxed">
+                Top 3 U14 qualifying standings per gender, reserve slots, and points cushions.
+              </p>
+            </div>
+            <div className="rounded-xl border border-cool-veil bg-sailcloth p-4 space-y-1">
+              <div className="flex items-center gap-2">
+                <Award className="h-4 w-4 text-emerald-600 shrink-0" />
+                <h2 className="text-xs font-bold text-charcoal">Asian Open Provisional Leaders</h2>
+              </div>
+              <p className="text-[11px] text-slate-soft leading-relaxed">
+                Gender-quota leaderboards tracking the 2026 Asian Open Championships team.
+              </p>
+            </div>
+            <div className="rounded-xl border border-cool-veil bg-sailcloth p-4 space-y-1">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4 text-sky-500 shrink-0" />
+                <h2 className="text-xs font-bold text-charcoal">NJTS Projected Squad</h2>
+              </div>
+              <p className="text-[11px] text-slate-soft leading-relaxed">
+                National Junior Training Squad projection from the top 25 national ranking.
+              </p>
+            </div>
+            <div className="rounded-xl border border-cool-veil bg-sailcloth p-4 space-y-1">
+              <div className="flex items-center gap-2">
+                <Compass className="h-4 w-4 text-emerald-600 shrink-0" />
+                <h2 className="text-xs font-bold text-charcoal">Trial Scoreboard &amp; Policies</h2>
+              </div>
+              <p className="text-[11px] text-slate-soft leading-relaxed">
+                Race-by-race trial results, U14 eligibility filters, and SSF squad regulations.
+              </p>
+            </div>
+          </div>
+
+          <p className="text-[11px] text-slate-soft">
+            Free access for Singapore sailors, sailing parents, and registered coaches.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-12 sm:pt-6 sm:pb-16 space-y-6">

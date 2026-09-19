@@ -62,7 +62,11 @@ export async function GET(req: Request) {
     );
   } catch (e) {
     if (e instanceof DbUnavailableError) {
-      return NextResponse.json({ error: e.message }, { status: 503 });
+      console.error("[api/rankings] DB unavailable:", e.message);
+      return NextResponse.json(
+        { error: "Database unavailable" },
+        { status: 503 }
+      );
     }
     console.error(e);
     return NextResponse.json({ error: "Server error" }, { status: 500 });

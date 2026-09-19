@@ -20,8 +20,35 @@ vi.mock("next/link", () => ({
   ),
 }));
 
+const useAccountOptionalMock = vi.fn();
+
+vi.mock("@/components/AccountProvider", () => ({
+  useAccountOptional: () => useAccountOptionalMock(),
+}));
+
 describe("IlcaSelectionView", () => {
+  it("renders member access gate when user is not logged in", () => {
+    useAccountOptionalMock.mockReturnValue({
+      email: null,
+      owned: [],
+      ready: true,
+    });
+    render(<IlcaSelectionView />);
+
+    expect(
+      screen.getByText("Sign In to View Selection")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Create Free Account")).toBeInTheDocument();
+    // Trial details stay hidden for signed-out visitors
+    expect(screen.queryByText("Eastern Seaboard 2026")).not.toBeInTheDocument();
+  });
+
   it("renders overview, campaigns, and switches tabs", () => {
+    useAccountOptionalMock.mockReturnValue({
+      email: "parent@example.com",
+      owned: [],
+      ready: true,
+    });
     render(<IlcaSelectionView />);
 
     expect(

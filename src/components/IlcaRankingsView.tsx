@@ -27,13 +27,13 @@ export function getIlcaIntakeOptions(activeYear?: number): Array<{
   const list: Array<{ kind: IlcaIntakeKind; year: number; label: string }> = [];
 
   for (let yr = maxYear; yr >= minYear; yr--) {
-    // January intake of year yr corresponds to squad term Jan – Jun yr (ranking as of 20 Dec yr-1)
+    // January intake of year yr serves Jan – Jun yr (table shows Jan – Jun yr regattas)
     list.push({
       kind: "january",
       year: yr,
       label: `Jan – Jun ${yr}`,
     });
-    // July intake of previous year corresponds to squad term Jul – Dec yr-1 (ranking as of 30 Jun yr-1)
+    // July intake of previous year serves Jul – Dec yr-1 (table shows Jul – Dec yr-1 regattas)
     if (yr - 1 >= minYear) {
       list.push({
         kind: "july",
