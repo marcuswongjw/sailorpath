@@ -56,8 +56,14 @@ export function asYmd(
   if (!s || !/^\d{4}-\d{2}-\d{2}$/.test(s)) {
     return { ok: false, error: `${field} must be YYYY-MM-DD` };
   }
-  const t = Date.parse(`${s}T12:00:00Z`);
-  if (Number.isNaN(t)) {
+  const [y, m, d] = s.split("-").map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d, 12, 0, 0));
+  if (
+    Number.isNaN(dt.getTime()) ||
+    dt.getUTCFullYear() !== y ||
+    dt.getUTCMonth() + 1 !== m ||
+    dt.getUTCDate() !== d
+  ) {
     return { ok: false, error: `${field} is not a valid calendar date` };
   }
   return { ok: true, value: s };

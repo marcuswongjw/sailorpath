@@ -13,8 +13,6 @@ interface DemoNavHeaderProps {
 
 export function DemoNavHeader({
   activeDemo,
-  sailorViewMode,
-  onSailorViewChange,
 }: DemoNavHeaderProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[var(--sp-harbour-shadow)] text-[var(--sp-sailcloth)] shadow-md">
@@ -100,47 +98,6 @@ export function DemoNavHeader({
             </Link>
           </div>
         </div>
-
-        {/* Sub-view toggle for Sailor Demo (Public vs Sailor Private View) */}
-        {activeDemo === "sailor" && onSailorViewChange && (
-          <div className="mt-2.5 pt-2.5 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold text-[var(--sp-soft-aqua)] uppercase tracking-wider">
-                Profile View:
-              </span>
-              <div className="flex items-center gap-1 bg-black/30 border border-white/10 p-0.5 rounded-lg">
-                <button
-                  type="button"
-                  onClick={() => onSailorViewChange("public")}
-                  className={`px-3 py-1 rounded-md text-[11px] font-bold transition-all ${
-                    sailorViewMode === "public"
-                      ? "bg-[var(--sp-racing-orange)] text-white shadow-xs"
-                      : "text-[var(--sp-sailcloth)]/80 hover:text-white"
-                  }`}
-                >
-                  Public View
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onSailorViewChange("sailor")}
-                  className={`px-3 py-1 rounded-md text-[11px] font-bold transition-all ${
-                    sailorViewMode === "sailor"
-                      ? "bg-[var(--sp-racing-orange)] text-white shadow-xs"
-                      : "text-[var(--sp-sailcloth)]/80 hover:text-white"
-                  }`}
-                >
-                  Sailor Private View
-                </button>
-              </div>
-            </div>
-
-            <p className="text-[11px] text-[var(--sp-sailcloth)]/75">
-              {sailorViewMode === "public"
-                ? "Public view: what scouts, clubs, and competitors see (no private gear locker or personal notes)."
-                : "Sailor private view: athlete logbook, private equipment locker, and private race notes."}
-            </p>
-          </div>
-        )}
       </div>
     </header>
   );

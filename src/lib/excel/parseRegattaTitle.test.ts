@@ -34,4 +34,19 @@ describe("parseRegattaTitle", () => {
     expect(p.boatClass).toBe("ILCA 4");
     expect(p.name).toBe("National ILCA 4 (Jun 24)");
   });
+
+  it("preserves 'Laser 4.7' with dot in sheet title and does not treat it as file extension", () => {
+    const p = parseRegattaTitle("Laser 4.7 Nationals 20240615");
+    expect(p.date).toBe("2024-06-15");
+    expect(p.boatClass).toBe("ILCA 4");
+    expect(p.name).toBe("Laser 4.7 Nationals (Jun 24)");
+  });
+
+  it("handles 'Laser 4.7' inside an actual .xlsx file name", () => {
+    const p = parseRegattaTitle("20240615 Laser 4.7 Open Championship.xlsx");
+    expect(p.date).toBe("2024-06-15");
+    expect(p.boatClass).toBe("ILCA 4");
+    expect(p.division).toBe("Open");
+    expect(p.name).toBe("Laser 4.7 Open Championship (Jun 24)");
+  });
 });

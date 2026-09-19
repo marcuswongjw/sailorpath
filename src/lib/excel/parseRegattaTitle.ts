@@ -38,7 +38,7 @@ export type ParsedRegattaTitle = {
 function stripExtension(filename: string): string {
   return String(filename || "")
     .trim()
-    .replace(/\.[^.\\/]+$/i, "")
+    .replace(/\.(xlsx?|xlsm|csv|pdf|ods|tsv|txt|html?)$/i, "")
     .replace(/[_]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();

@@ -34,6 +34,10 @@ describe("validate", () => {
   it("asYmd", () => {
     expect(asYmd("2026-08-15").ok).toBe(true);
     expect(asYmd("15/08/2026").ok).toBe(false);
+    expect(asYmd("2026-02-31").ok).toBe(false);
+    expect(asYmd("2025-02-29").ok).toBe(false);
+    expect(asYmd("2024-02-29").ok).toBe(true);
+    expect(asYmd("2026-04-31").ok).toBe(false);
   });
 
   it("asEmail", () => {

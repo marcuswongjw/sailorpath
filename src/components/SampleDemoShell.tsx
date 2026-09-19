@@ -147,11 +147,7 @@ export function SampleDemoShell() {
   return (
     <div className="flex-1 flex flex-col bg-[var(--sp-sailcloth)]">
       {/* Top Demo Navigation Bar */}
-      <DemoNavHeader
-        activeDemo="sailor"
-        sailorViewMode={role}
-        onSailorViewChange={setRoleAndUrl}
-      />
+      <DemoNavHeader activeDemo="sailor" />
 
       {/* Cross-Promotion Ribbon */}
       <div className="bg-[var(--sp-warm-white)] border-b border-[var(--sp-cool-veil)] px-4 py-2.5">
