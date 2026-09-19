@@ -670,7 +670,9 @@ export const getCachedIlcaRankings = unstable_cache(
   { revalidate: 60, tags: [CACHE_TAG_ILCA_RANKINGS] }
 );
 
-export { defaultIlcaIntake } from "@/lib/ilcaRanking";
+import { defaultIlcaIntake } from "@/lib/ilcaRanking";
+
+export { defaultIlcaIntake };
 
 async function computeIlcaRankingsBoard(
   boatClass: IlcaBoatClass = "ILCA 4",

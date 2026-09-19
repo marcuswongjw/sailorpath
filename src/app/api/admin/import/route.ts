@@ -810,6 +810,7 @@ export async function POST(req: Request) {
                 school: sailors.school,
                 nationality: sailors.nationality,
                 nationalityFromSail: sailors.nationalityFromSail,
+                ilca4NationalList: sailors.ilca4NationalList,
                 silverEntryDate: sailors.silverEntryDate,
                 goldEntryDate: sailors.goldEntryDate,
               })
@@ -1071,6 +1072,7 @@ export async function POST(req: Request) {
             school: guestRecord.school || null,
             nationality: guestRecord.nationality || null,
             nationalityFromSail: guestRecord.nationalityFromSail ?? false,
+            ilca4NationalList: false,
             silverEntryDate: null,
             goldEntryDate: null,
           };
@@ -1124,7 +1126,7 @@ export async function POST(req: Request) {
         if (
           isIlcaImport &&
           isOnIlca4NationalListByName(row.name) &&
-          existing?.ilca4NationalList == null
+          existing?.ilca4NationalList !== true
         ) {
           profilePatch.ilca4NationalList = true;
           fieldChanged.push("ilca4NationalList");
