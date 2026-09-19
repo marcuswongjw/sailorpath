@@ -11,6 +11,7 @@ import {
   Trash2,
   Loader2,
   Trophy,
+  ShieldCheck,
 } from "lucide-react";
 import { GeographySelect } from "@/components/CountrySelect";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
@@ -28,6 +29,7 @@ export type RegattaResultItem = {
   verificationStatus?: "self_reported" | "pending_review" | "verified" | "rejected" | null;
   regattaId: string;
   regattaName: string;
+  regattaSlug?: string | null;
   regattaDate: string | Date;
   regattaEndDate?: string | Date | null;
   venue?: string | null;
@@ -71,14 +73,28 @@ type FieldErrors = {
   fleet?: string;
 };
 
+type UploadState = {
+  isUploading: boolean;
+  progress: number;
+  fileName: string | null;
+  fileSize: number | null;
+  error: string | null;
+};
+
 function RegattaEvidenceForm({
   onClose,
   sailorId,
   initialResult,
   onSuccess,
 }: RegattaEvidenceFormProps) {
-  const { toast } = useFeedback();
+  const { toast, confirm } = useFeedback();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const uploadXhrRef = useRef<XMLHttpRequest | null>(null);
+
+  // Check if editing a shared/official regatta managed centrally
+  const isSharedRegatta = Boolean(
+    initialResult?.regattaSlug && !initialResult.regattaSlug.startsWith("log-")
+  );
 
   const [name, setName] = useState(initialResult?.regattaName || "");
   const [date, setDate] = useState(
@@ -110,8 +126,7 @@ function RegattaEvidenceForm({
   const [officialUrl, setOfficialUrl] = useState(initialResult?.officialUrl || "");
   const [evidenceNotes, setEvidenceNotes] = useState(initialResult?.evidenceNotes || "");
 
-  // Evidence file upload state
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  // Evidence state (pre-uploaded or existing)
   const [existingEvidenceUrl, setExistingEvidenceUrl] = useState<string | null>(
     initialResult?.evidenceUrl || null
   );
@@ -122,8 +137,16 @@ function RegattaEvidenceForm({
     "pdf" | "image" | "link" | null
   >(initialResult?.evidenceType || null);
 
+  // Decoupled asynchronous background upload state
+  const [uploadState, setUploadState] = useState<UploadState>({
+    isUploading: false,
+    progress: 0,
+    fileName: null,
+    fileSize: null,
+    error: null,
+  });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
 
@@ -136,19 +159,21 @@ function RegattaEvidenceForm({
     });
   };
 
-  const inputCls = (hasError?: string) =>
-    `w-full rounded-xl bg-slate-900/80 border px-3.5 py-2.5 text-xs text-white placeholder:text-slate-600 focus:outline-none ${
-      hasError
-        ? "border-rose-500/60 focus:border-rose-500"
-        : "border-white/10 focus:border-orange-500"
+  const inputCls = (hasError?: string, disabled?: boolean) =>
+    `w-full rounded-xl border px-3.5 py-2 text-xs transition-colors focus:outline-none ${
+      disabled
+        ? "bg-slate-100/90 border-[var(--sp-cool-veil)] text-slate-500 cursor-not-allowed"
+        : hasError
+        ? "bg-white border-rose-500 focus:border-rose-600 focus:ring-1 focus:ring-rose-500 text-[var(--sp-charcoal)]"
+        : "bg-white border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] placeholder:text-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)]"
     }`;
 
-  // Preserve a pre-existing division that isn't one of the standard options
   const divisionOptions = DIVISION_OPTIONS.includes(division)
     ? DIVISION_OPTIONS
     : [...DIVISION_OPTIONS, division];
 
-  const handleFileSelect = (file: File) => {
+  // Background upload via XMLHttpRequest with real-time percentage progress
+  const startUpload = (file: File) => {
     if (file.size > 10 * 1024 * 1024) {
       toast.error("File size cannot exceed 10MB");
       return;
@@ -158,21 +183,136 @@ function RegattaEvidenceForm({
       toast.error("Please upload a PDF document or JPG/PNG/WebP image");
       return;
     }
-    setSelectedFile(file);
+
+    if (uploadXhrRef.current) {
+      uploadXhrRef.current.abort();
+    }
+
+    setUploadState({
+      isUploading: true,
+      progress: 0,
+      fileName: file.name,
+      fileSize: file.size,
+      error: null,
+    });
+
+    const xhr = new XMLHttpRequest();
+    uploadXhrRef.current = xhr;
+
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable) {
+        const pct = Math.round((e.loaded / e.total) * 100);
+        setUploadState((prev) => ({ ...prev, progress: pct }));
+      }
+    };
+
+    xhr.onload = () => {
+      uploadXhrRef.current = null;
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          setExistingEvidenceUrl(data.url);
+          setExistingEvidenceName(data.name || file.name);
+          setExistingEvidenceType(data.type as "pdf" | "image");
+          setUploadState({
+            isUploading: false,
+            progress: 100,
+            fileName: file.name,
+            fileSize: file.size,
+            error: null,
+          });
+          toast.success("Evidence document uploaded successfully!");
+        } catch {
+          setUploadState((prev) => ({
+            ...prev,
+            isUploading: false,
+            error: "Failed to parse upload response",
+          }));
+          toast.error("Failed to parse server upload response");
+        }
+      } else {
+        let msg = "Upload failed";
+        try {
+          const errData = JSON.parse(xhr.responseText);
+          if (errData.error) msg = errData.error;
+        } catch {}
+        setUploadState((prev) => ({ ...prev, isUploading: false, error: msg }));
+        toast.error(msg);
+      }
+    };
+
+    xhr.onerror = () => {
+      uploadXhrRef.current = null;
+      setUploadState((prev) => ({
+        ...prev,
+        isUploading: false,
+        error: "Network error during upload",
+      }));
+      toast.error("Network error while uploading evidence");
+    };
+
+    xhr.onabort = () => {
+      uploadXhrRef.current = null;
+      setUploadState({
+        isUploading: false,
+        progress: 0,
+        fileName: null,
+        fileSize: null,
+        error: null,
+      });
+    };
+
+    const formData = new FormData();
+    formData.append("file", file);
+    xhr.open("POST", "/api/account/evidence/upload");
+    xhr.send(formData);
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setDragOver(false);
     if (e.dataTransfer.files?.[0]) {
-      handleFileSelect(e.dataTransfer.files[0]);
+      startUpload(e.dataTransfer.files[0]);
     }
+  };
+
+  const handleRemoveEvidence = async () => {
+    // If removing evidence from a verified result, warn user
+    if (initialResult?.verificationStatus === "verified") {
+      const ok = await confirm({
+        title: "Remove Verified Document?",
+        message:
+          "Removing this document will remove your Verified ✓ badge and revert this result to Self-Reported. Continue?",
+        confirmLabel: "Remove Document",
+        tone: "danger",
+      });
+      if (!ok) return;
+    }
+
+    if (uploadXhrRef.current) {
+      uploadXhrRef.current.abort();
+    }
+    setExistingEvidenceUrl(null);
+    setExistingEvidenceName(null);
+    setExistingEvidenceType(null);
+    setUploadState({
+      isUploading: false,
+      progress: 0,
+      fileName: null,
+      fileSize: null,
+      error: null,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Inline validation — collect all errors, then scroll to the first one
+    if (uploadState.isUploading) {
+      toast.error("Please wait for the evidence file upload to complete.");
+      return;
+    }
+
+    // Inline validation
     const errors: FieldErrors = {};
     if (!name.trim()) {
       errors.name = "Please enter the regatta name";
@@ -189,7 +329,6 @@ function RegattaEvidenceForm({
     if (isNaN(rankNum) || rankNum < 1) {
       errors.rank = "Enter a valid finish rank (1 or higher)";
     }
-    // Fleet size is optional — but when given it must cover the rank
     const fleetNum = totalFleetSize.trim() ? parseInt(totalFleetSize, 10) : null;
     if (fleetNum != null) {
       if (isNaN(fleetNum) || fleetNum < 1) {
@@ -214,32 +353,8 @@ function RegattaEvidenceForm({
 
     setIsSubmitting(true);
     try {
-      let finalEvidenceUrl = existingEvidenceUrl;
-      let finalEvidenceName = existingEvidenceName;
       let finalEvidenceType = existingEvidenceType;
-
-      // 1. If user selected a new file, upload it to storage
-      if (selectedFile) {
-        setUploadProgress(true);
-        const uploadForm = new FormData();
-        uploadForm.append("file", selectedFile);
-
-        const upRes = await fetch("/api/account/evidence/upload", {
-          method: "POST",
-          body: uploadForm,
-        });
-        const upData = await upRes.json();
-        if (!upRes.ok) {
-          throw new Error(upData.error || "Failed to upload evidence document");
-        }
-        finalEvidenceUrl = upData.url;
-        finalEvidenceName = upData.name;
-        finalEvidenceType = upData.type as "pdf" | "image";
-        setUploadProgress(false);
-      }
-
-      // If user supplied official URL without a file, evidenceType is link
-      if (!finalEvidenceUrl && officialUrl.trim()) {
+      if (!existingEvidenceUrl && officialUrl.trim()) {
         finalEvidenceType = "link";
       }
 
@@ -253,12 +368,12 @@ function RegattaEvidenceForm({
         boatClass,
         division: division.trim() || "Open",
         rank: rankNum,
-        totalFleetSize: fleetNum, // null when left blank — server defaults to rank
+        totalFleetSize: fleetNum,
         nettScore: nettScore.trim() ? parseFloat(nettScore) : null,
         totalScore: totalScore.trim() ? parseFloat(totalScore) : null,
         officialUrl: officialUrl.trim() || null,
-        evidenceUrl: finalEvidenceUrl || null,
-        evidenceName: finalEvidenceName || null,
+        evidenceUrl: existingEvidenceUrl || null,
+        evidenceName: existingEvidenceName || null,
         evidenceType: finalEvidenceType || null,
         evidenceNotes: evidenceNotes.trim() || null,
       };
@@ -277,8 +392,8 @@ function RegattaEvidenceForm({
         if (!res.ok) throw new Error(data.error || "Failed to update regatta result");
 
         toast.success(
-          finalEvidenceUrl || officialUrl.trim()
-            ? "Result updated! Attached evidence is now queued for verification."
+          existingEvidenceUrl || officialUrl.trim()
+            ? "Result updated! Attached evidence is now Under Review."
             : "Regatta result updated."
         );
       } else {
@@ -292,8 +407,8 @@ function RegattaEvidenceForm({
         if (!res.ok) throw new Error(data.error || "Failed to log regatta result");
 
         toast.success(
-          finalEvidenceUrl || officialUrl.trim()
-            ? "Result logged! It appears on your profile and has been sent for verification."
+          existingEvidenceUrl || officialUrl.trim()
+            ? "Result logged! Attached evidence is now Under Review."
             : "Regatta result saved to athlete logbook."
         );
       }
@@ -304,383 +419,442 @@ function RegattaEvidenceForm({
       toast.error(err instanceof Error ? err.message : "Submission failed");
     } finally {
       setIsSubmitting(false);
-      setUploadProgress(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex max-h-[80vh] flex-col">
-      <div className="flex-1 space-y-6 overflow-y-auto p-6">
-      {/* Section 1: Event Information */}
-      <div className="space-y-4">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-          Event Details
-        </h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="sm:col-span-2">
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Regatta Name <span className="text-rose-400">*</span>
-            </label>
-            <input
-              id="regatta-field-name"
-              type="text"
-              required
-              placeholder="e.g. Pattaya International Regatta 2026"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                clearFieldError("name");
-              }}
-              className={inputCls(fieldErrors.name)}
-            />
-            {fieldErrors.name && (
-              <p className="mt-1 text-[11px] text-rose-400">{fieldErrors.name}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Start Date <span className="text-rose-400">*</span>
-            </label>
-            <input
-              id="regatta-field-date"
-              type="date"
-              required
-              max={localTodayStr()}
-              value={date}
-              onChange={(e) => {
-                setDate(e.target.value);
-                clearFieldError("date");
-              }}
-              className={inputCls(fieldErrors.date)}
-            />
-            {fieldErrors.date && (
-              <p className="mt-1 text-[11px] text-rose-400">{fieldErrors.date}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              End Date (Optional)
-            </label>
-            <input
-              id="regatta-field-endDate"
-              type="date"
-              min={date || undefined}
-              max={localTodayStr()}
-              value={endDate}
-              onChange={(e) => {
-                setEndDate(e.target.value);
-                clearFieldError("endDate");
-              }}
-              className={inputCls(fieldErrors.endDate)}
-            />
-            {fieldErrors.endDate && (
-              <p className="mt-1 text-[11px] text-rose-400">{fieldErrors.endDate}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Boat Class
-            </label>
-            <select
-              value={boatClass}
-              onChange={(e) => setBoatClass(e.target.value)}
-              className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
-            >
-              <option value="Optimist">Optimist</option>
-              <option value="ILCA 4">ILCA 4</option>
-              <option value="ILCA 6">ILCA 6</option>
-              <option value="ILCA 7">ILCA 7</option>
-              <option value="WingFoil">WingFoil</option>
-              <option value="Techno 293">Techno 293</option>
-              <option value="iQFOiL">iQFOiL</option>
-              <option value="29er">29er</option>
-              <option value="420">420</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Country / Region
-            </label>
-            <GeographySelect
-              value={geography}
-              onChange={(val) => setGeography(val || "SGP")}
-              className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
-            />
-          </div>
-
-          <div className="sm:col-span-2">
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Venue / Host Club (Optional)
-            </label>
-            <input
-              type="text"
-              placeholder="e.g. Royal Varuna Yacht Club, Chonburi"
-              value={venue}
-              onChange={(e) => setVenue(e.target.value)}
-              className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white placeholder:text-slate-600 focus:border-orange-500 focus:outline-none"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Section 2: Sailor Score & Finish Position */}
-      <div className="space-y-4 pt-2 border-t border-white/10">
-        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-          Results & Scoring
-        </h4>
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Final Rank <span className="text-rose-400">*</span>
-            </label>
-            <input
-              id="regatta-field-rank"
-              type="number"
-              min="1"
-              required
-              placeholder="e.g. 3"
-              value={rank}
-              onChange={(e) => {
-                setRank(e.target.value);
-                clearFieldError("rank");
-              }}
-              className={inputCls(fieldErrors.rank)}
-            />
-            {fieldErrors.rank && (
-              <p className="mt-1 text-[11px] text-rose-400">{fieldErrors.rank}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Fleet Size <span className="text-slate-500 font-normal">(Optional)</span>
-            </label>
-            <input
-              id="regatta-field-fleet"
-              type="number"
-              min="1"
-              placeholder="e.g. 65"
-              value={totalFleetSize}
-              onChange={(e) => {
-                setTotalFleetSize(e.target.value);
-                clearFieldError("fleet");
-              }}
-              className={inputCls(fieldErrors.fleet)}
-            />
-            {fieldErrors.fleet ? (
-              <p className="mt-1 text-[11px] text-rose-400">{fieldErrors.fleet}</p>
-            ) : (
-              <p className="mt-1 text-[10px] text-slate-500">
-                Total boats — leave blank if unsure
+    <form onSubmit={handleSubmit} className="flex max-h-[85vh] flex-col bg-[var(--sp-warm-white)] text-[var(--sp-charcoal)]">
+      <div className="flex-1 space-y-6 overflow-y-auto p-5 sm:p-7">
+        {/* Shared / Official Regatta Notice */}
+        {isSharedRegatta && (
+          <div className="rounded-2xl border border-sky-200 bg-sky-50/80 p-3.5 text-xs text-sky-950 flex items-start gap-3">
+            <ShieldCheck className="h-5 w-5 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
+            <div>
+              <p className="font-bold text-[var(--sp-harbour-shadow)]">Official SailorPath Event</p>
+              <p className="text-[var(--sp-slate-soft)] text-xs leading-relaxed mt-0.5">
+                Event details (name, dates, class, venue) are managed centrally by SailorPath. You can edit your personal finish rank, fleet size, division, scores, and official evidence.
               </p>
+            </div>
+          </div>
+        )}
+
+        {/* Section 1: Event Information */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] pb-2">
+            <h4 className="text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
+              Event Details
+            </h4>
+            {isSharedRegatta && (
+              <span className="text-[11px] font-semibold text-slate-500">
+                Managed by SailorPath
+              </span>
             )}
           </div>
 
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Nett Score
-            </label>
-            <input
-              type="number"
-              step="any"
-              placeholder="e.g. 18.0"
-              value={nettScore}
-              onChange={(e) => setNettScore(e.target.value)}
-              className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3 py-2.5 text-xs text-white font-mono focus:border-orange-500 focus:outline-none"
-            />
-          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Regatta Name <span className="text-rose-500">*</span>
+              </label>
+              <input
+                id="regatta-field-name"
+                type="text"
+                disabled={isSharedRegatta}
+                required
+                placeholder="e.g. Pattaya International Regatta 2026"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  clearFieldError("name");
+                }}
+                className={inputCls(fieldErrors.name, isSharedRegatta)}
+              />
+              {fieldErrors.name && (
+                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.name}</p>
+              )}
+            </div>
 
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Total Score
-            </label>
-            <input
-              type="number"
-              step="any"
-              placeholder="e.g. 24.0"
-              value={totalScore}
-              onChange={(e) => setTotalScore(e.target.value)}
-              className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3 py-2.5 text-xs text-white font-mono focus:border-orange-500 focus:outline-none"
-            />
-          </div>
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Start Date <span className="text-rose-500">*</span>
+              </label>
+              <input
+                id="regatta-field-date"
+                type="date"
+                disabled={isSharedRegatta}
+                required
+                max={localTodayStr()}
+                value={date}
+                onChange={(e) => {
+                  setDate(e.target.value);
+                  clearFieldError("date");
+                }}
+                className={inputCls(fieldErrors.date, isSharedRegatta)}
+              />
+              {fieldErrors.date && (
+                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.date}</p>
+              )}
+            </div>
 
-          <div>
-            <label className="block text-xs font-medium text-slate-300 mb-1">
-              Division / Fleet
-            </label>
-            <select
-              value={division}
-              onChange={(e) => setDivision(e.target.value)}
-              className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
-            >
-              {divisionOptions.map((opt) => (
-                <option key={opt} value={opt}>
-                  {opt}
-                </option>
-              ))}
-            </select>
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                End Date <span className="text-slate-400 font-normal">(Optional)</span>
+              </label>
+              <input
+                id="regatta-field-endDate"
+                type="date"
+                disabled={isSharedRegatta}
+                min={date || undefined}
+                value={endDate}
+                onChange={(e) => {
+                  setEndDate(e.target.value);
+                  clearFieldError("endDate");
+                }}
+                className={inputCls(fieldErrors.endDate, isSharedRegatta)}
+              />
+              {fieldErrors.endDate && (
+                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.endDate}</p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Boat Class
+              </label>
+              <select
+                disabled={isSharedRegatta}
+                value={boatClass}
+                onChange={(e) => setBoatClass(e.target.value)}
+                className={inputCls(undefined, isSharedRegatta)}
+              >
+                <option value="Optimist">Optimist</option>
+                <option value="ILCA 4">ILCA 4</option>
+                <option value="ILCA 6">ILCA 6</option>
+                <option value="ILCA 7">ILCA 7</option>
+                <option value="WingFoil">WingFoil</option>
+                <option value="Techno 293">Techno 293</option>
+                <option value="iQFOiL">iQFOiL</option>
+                <option value="29er">29er</option>
+                <option value="420">420</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Country / Region
+              </label>
+              {isSharedRegatta ? (
+                <input
+                  type="text"
+                  disabled
+                  value={geography}
+                  className={inputCls(undefined, true)}
+                />
+              ) : (
+                <GeographySelect
+                  value={geography}
+                  onChange={(val) => setGeography(val || "SGP")}
+                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+                />
+              )}
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Venue / Host Club <span className="text-slate-400 font-normal">(Optional)</span>
+              </label>
+              <input
+                type="text"
+                disabled={isSharedRegatta}
+                placeholder="e.g. Royal Varuna Yacht Club, Chonburi"
+                value={venue}
+                onChange={(e) => setVenue(e.target.value)}
+                className={inputCls(undefined, isSharedRegatta)}
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Section 3: Official Verification Evidence */}
-      <div className="space-y-4 pt-2 border-t border-white/10">
-        <div className="flex items-center justify-between">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
-            Official Evidence for Verification
+        {/* Section 2: Sailor Score & Finish Position */}
+        <div className="space-y-4 pt-2 border-t border-[var(--sp-cool-veil)]">
+          <h4 className="text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
+            Results &amp; Scoring
           </h4>
-          <span className="text-[11px] text-sky-400 font-medium">
-            Enables Verified ✓ badge
-          </span>
-        </div>
-        <p className="text-xs text-slate-400">
-          Attach official race documentation (PDF results sheet, scorecard photo, or official results link). You can provide any or all of these.
-        </p>
+          {/* Responsive grid: single column on mobile, 3 cols on sm, 5 cols on lg */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Final Rank <span className="text-rose-500">*</span>
+              </label>
+              <input
+                id="regatta-field-rank"
+                type="number"
+                min="1"
+                required
+                placeholder="e.g. 3"
+                value={rank}
+                onChange={(e) => {
+                  setRank(e.target.value);
+                  clearFieldError("rank");
+                }}
+                className={inputCls(fieldErrors.rank)}
+              />
+              {fieldErrors.rank && (
+                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.rank}</p>
+              )}
+            </div>
 
-        {/* Official Online Link */}
-        <div>
-          <label className="block text-xs font-medium text-slate-300 mb-1">
-            Official Results Link (Manage2Sail / HalSail / Club URL)
-          </label>
-          <div className="relative">
-            <input
-              type="url"
-              placeholder="https://www.manage2sail.com/en-US/event/..."
-              value={officialUrl}
-              onChange={(e) => setOfficialUrl(e.target.value)}
-              className="w-full rounded-xl bg-slate-900/80 border border-white/10 pl-9 pr-3.5 py-2.5 text-xs text-white placeholder:text-slate-600 focus:border-orange-500 focus:outline-none"
-            />
-            <ExternalLink className="absolute left-3 top-3 h-4 w-4 text-slate-500" />
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Fleet Size <span className="text-slate-400 font-normal">(Optional)</span>
+              </label>
+              <input
+                id="regatta-field-fleet"
+                type="number"
+                min="1"
+                placeholder="e.g. 65"
+                value={totalFleetSize}
+                onChange={(e) => {
+                  setTotalFleetSize(e.target.value);
+                  clearFieldError("fleet");
+                }}
+                className={inputCls(fieldErrors.fleet)}
+              />
+              {fieldErrors.fleet ? (
+                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.fleet}</p>
+              ) : (
+                <p className="mt-1 text-[10px] text-[var(--sp-slate-soft)]">
+                  Total boats in fleet
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Division / Fleet
+              </label>
+              <select
+                value={division}
+                onChange={(e) => setDivision(e.target.value)}
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+              >
+                {divisionOptions.map((opt) => (
+                  <option key={opt} value={opt}>
+                    {opt}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Nett Score <span className="text-slate-400 font-normal">(Pts)</span>
+              </label>
+              <input
+                type="number"
+                step="any"
+                placeholder="e.g. 18.0"
+                value={nettScore}
+                onChange={(e) => setNettScore(e.target.value)}
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                Total Score <span className="text-slate-400 font-normal">(Pts)</span>
+              </label>
+              <input
+                type="number"
+                step="any"
+                placeholder="e.g. 24.0"
+                value={totalScore}
+                onChange={(e) => setTotalScore(e.target.value)}
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+              />
+            </div>
           </div>
         </div>
 
-        {/* File Upload Dropzone */}
-        <div>
-          <label className="block text-xs font-medium text-slate-300 mb-1">
-            Upload Official Document or Scorecard Photo (PDF, PNG, JPG)
-          </label>
+        {/* Section 3: Official Verification Evidence */}
+        <div className="space-y-4 pt-2 border-t border-[var(--sp-cool-veil)]">
+          <div className="flex items-center justify-between">
+            <h4 className="text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
+              Official Evidence for Verification
+            </h4>
+            <span className="text-[11px] text-[var(--sp-harbour-teal)] font-bold">
+              Enables Verified ✓ badge
+            </span>
+          </div>
+          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
+            Attach official race documentation (PDF results sheet, scorecard snapshot, or official regatta URL). Results with evidence are marked <strong>Under Review</strong> until stamped verified by SailorPath.
+          </p>
 
-          {/* Already uploaded / selected file */}
-          {selectedFile || existingEvidenceUrl ? (
-            <div className="flex items-center justify-between p-3 rounded-2xl border border-sky-500/30 bg-sky-500/10 text-xs text-slate-200">
-              <div className="flex items-center gap-2.5 min-w-0">
-                {selectedFile?.type === "application/pdf" || existingEvidenceType === "pdf" ? (
-                  <FileText className="h-5 w-5 text-sky-400 shrink-0" />
-                ) : (
-                  <ImageIcon className="h-5 w-5 text-sky-400 shrink-0" />
-                )}
-                <div className="min-w-0">
-                  <p className="font-semibold text-white truncate">
-                    {selectedFile?.name || existingEvidenceName || "Attached Evidence"}
-                  </p>
-                  <p className="text-[10px] text-slate-400">
-                    {selectedFile
-                      ? `${(selectedFile.size / 1024).toFixed(0)} KB · Ready to upload`
-                      : "Stored on SailorPath Cloud · Click replace to change"}
-                  </p>
+          {/* Official Online Link */}
+          <div>
+            <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+              Official Results Link (Manage2Sail / HalSail / Host Club URL)
+            </label>
+            <div className="relative">
+              <input
+                type="url"
+                placeholder="https://www.manage2sail.com/en-US/event/..."
+                value={officialUrl}
+                onChange={(e) => setOfficialUrl(e.target.value)}
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] pl-9 pr-3.5 py-2 text-xs text-[var(--sp-charcoal)] placeholder:text-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
+              />
+              <ExternalLink className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--sp-slate-soft)]" />
+            </div>
+          </div>
+
+          {/* File Upload Dropzone */}
+          <div className="space-y-2">
+            <label className="block text-xs font-semibold text-[var(--sp-slate-soft)]">
+              Upload Official Document or Scorecard Photo (PDF, PNG, JPG, WebP)
+            </label>
+
+            {/* In-flight upload progress bar */}
+            {uploadState.isUploading && (
+              <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2 text-[var(--sp-charcoal)] font-semibold">
+                    <Loader2 className="h-4 w-4 animate-spin text-[var(--sp-racing-orange)]" />
+                    <span>Uploading {uploadState.fileName}...</span>
+                  </div>
+                  <span className="font-mono font-bold text-[var(--sp-racing-orange)]">
+                    {uploadState.progress}%
+                  </span>
+                </div>
+                <div className="w-full bg-slate-200 rounded-full h-2 overflow-hidden">
+                  <div
+                    className="bg-[var(--sp-racing-orange)] h-2 rounded-full transition-all duration-200"
+                    style={{ width: `${uploadState.progress}%` }}
+                  />
                 </div>
               </div>
+            )}
 
-              <div className="flex items-center gap-2 shrink-0">
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="text-[11px] font-bold text-sky-400 hover:text-sky-300 hover:underline"
-                >
-                  Replace
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSelectedFile(null);
-                    setExistingEvidenceUrl(null);
-                    setExistingEvidenceName(null);
-                    setExistingEvidenceType(null);
-                  }}
-                  className="p-1 text-slate-400 hover:text-rose-400"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
+            {/* Attached file summary card */}
+            {!uploadState.isUploading && (existingEvidenceUrl || existingEvidenceName) ? (
+              <div className="flex items-center justify-between p-3.5 rounded-2xl border border-emerald-200 bg-emerald-50/70 text-xs text-emerald-950">
+                <div className="flex items-center gap-3 min-w-0">
+                  {existingEvidenceType === "pdf" ? (
+                    <FileText className="h-5 w-5 text-emerald-700 shrink-0" />
+                  ) : (
+                    <ImageIcon className="h-5 w-5 text-emerald-700 shrink-0" />
+                  )}
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-[var(--sp-charcoal)] truncate">
+                        {existingEvidenceName || "Attached Evidence Document"}
+                      </p>
+                      <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800">
+                        Uploaded ✓
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[var(--sp-slate-soft)] mt-0.5">
+                      Stored securely on SailorPath Cloud · Ready for verification
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0 ml-3">
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline"
+                  >
+                    Replace
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void handleRemoveEvidence()}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                    title="Remove evidence"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
-            </div>
-          ) : (
-            <div
-              onDragOver={(e) => {
-                e.preventDefault();
-                setDragOver(true);
+            ) : !uploadState.isUploading ? (
+              <div
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  setDragOver(true);
+                }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={handleDrop}
+                onClick={() => fileInputRef.current?.click()}
+                className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all ${
+                  dragOver
+                    ? "border-[var(--sp-racing-orange)] bg-[var(--sp-racing-mist)]/20"
+                    : "border-[var(--sp-cool-veil)] hover:border-[var(--sp-harbour-teal)] bg-[var(--sp-sailcloth)]/70 hover:bg-[var(--sp-sailcloth)]"
+                }`}
+              >
+                <UploadCloud className="mx-auto h-8 w-8 text-[var(--sp-harbour-teal)] mb-2" />
+                <p className="text-xs font-bold text-[var(--sp-charcoal)]">
+                  Click to select file or drag &amp; drop
+                </p>
+                <p className="text-[11px] text-[var(--sp-slate-soft)] mt-1">
+                  Official PDF results document, race sheet photo, or noticeboard image (max 10MB)
+                </p>
+              </div>
+            ) : null}
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf,image/png,image/jpeg,image/webp"
+              className="hidden"
+              onChange={(e) => {
+                if (e.target.files?.[0]) {
+                  startUpload(e.target.files[0]);
+                }
               }}
-              onDragLeave={() => setDragOver(false)}
-              onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all ${
-                dragOver
-                  ? "border-orange-500 bg-orange-500/5"
-                  : "border-white/10 hover:border-white/20 bg-slate-900/40"
-              }`}
-            >
-              <UploadCloud className="mx-auto h-8 w-8 text-slate-400 mb-2" />
-              <p className="text-xs font-semibold text-slate-200">
-                Click to choose file or drag and drop
-              </p>
-              <p className="text-[11px] text-slate-500 mt-1">
-                Official results PDF, scorecard snapshot, or noticeboard photo (max 10MB)
-              </p>
-            </div>
-          )}
+            />
+          </div>
 
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".pdf,image/png,image/jpeg,image/webp"
-            className="hidden"
-            onChange={(e) => {
-              if (e.target.files?.[0]) {
-                handleFileSelect(e.target.files[0]);
-              }
-            }}
-          />
-        </div>
-
-        {/* Notes / Comments */}
-        <div>
-          <label className="block text-xs font-medium text-slate-300 mb-1">
-            Evidence Notes or Division Context (Optional)
-          </label>
-          <textarea
-            rows={2}
-            placeholder="e.g. Competed in U15 category; finished 2nd overall girl; tied on discard."
-            value={evidenceNotes}
-            onChange={(e) => setEvidenceNotes(e.target.value)}
-            className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2 text-xs text-white placeholder:text-slate-600 focus:border-orange-500 focus:outline-none resize-none"
-          />
+          {/* Notes / Comments */}
+          <div>
+            <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+              Evidence Notes or Race Context <span className="text-slate-400 font-normal">(Optional)</span>
+            </label>
+            <textarea
+              rows={2}
+              placeholder="e.g. Competed in U15 division; tied on countback for 2nd girl; discard race 4."
+              value={evidenceNotes}
+              onChange={(e) => setEvidenceNotes(e.target.value)}
+              className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] placeholder:text-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none resize-none"
+            />
+          </div>
         </div>
       </div>
-      </div>
 
-      {/* Footer Actions — pinned below the scroll area so Save is always reachable */}
-      <div className="flex shrink-0 items-center justify-end gap-3 border-t border-white/10 bg-[#0e111a] px-6 py-4">
+      {/* Footer Actions */}
+      <div className="flex shrink-0 items-center justify-end gap-3 border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-6 py-4">
         <button
           type="button"
           onClick={onClose}
           disabled={isSubmitting}
-          className="rounded-xl px-4 py-2.5 text-xs font-bold text-slate-400 hover:text-white transition-colors"
+          className="rounded-xl border border-[var(--sp-cool-veil)] bg-white px-4 py-2 text-xs font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] transition-colors shadow-2xs"
         >
           Cancel
         </button>
         <button
           type="submit"
-          disabled={isSubmitting}
-          className="inline-flex items-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-500 px-5 py-2.5 text-xs font-bold text-white transition-colors disabled:opacity-50 shadow-lg shadow-orange-600/20"
+          disabled={isSubmitting || uploadState.isUploading}
+          className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-5 py-2 text-xs font-bold text-white transition-all disabled:opacity-50 shadow-xs"
         >
           {isSubmitting ? (
             <>
               <Loader2 className="h-4 w-4 animate-spin" />
-              <span>{uploadProgress ? "Uploading Evidence..." : "Saving..."}</span>
+              <span>Saving...</span>
+            </>
+          ) : uploadState.isUploading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Uploading ({uploadState.progress}%)...</span>
             </>
           ) : (
             <>
@@ -705,27 +879,27 @@ export function RegattaEvidenceModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl rounded-3xl border border-white/10 bg-[#0e111a] shadow-2xl my-8 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="relative w-full max-w-2xl rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-2xl my-8 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-5 bg-[#131722]">
+        <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] px-6 py-4 sm:py-5 bg-[var(--sp-sailcloth)]">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-orange-500/15 text-orange-400 border border-orange-500/30">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30 shadow-2xs">
               <Trophy className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
                 {initialResult ? "Edit Regatta Score & Evidence" : "Log Regatta Score & Evidence"}
               </h3>
-              <p className="text-xs text-slate-400">
-                Athlete: <span className="text-slate-200 font-semibold">{sailorName}</span>
+              <p className="text-xs text-[var(--sp-slate-soft)]">
+                Athlete: <span className="text-[var(--sp-charcoal)] font-bold">{sailorName}</span>
               </p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full p-2 text-slate-400 hover:bg-white/10 hover:text-white transition-colors"
+            className="rounded-full p-2 text-[var(--sp-slate-soft)] hover:bg-[var(--sp-warm-white)] hover:text-[var(--sp-charcoal)] transition-colors"
           >
             <X className="h-5 w-5" />
           </button>

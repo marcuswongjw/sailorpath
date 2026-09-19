@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { User, Mail, Calendar, Edit2, Check, Lock } from "lucide-react";
+import { User, Mail, Calendar, Edit2, Check, Lock, Trophy, ArrowRight, ExternalLink } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
 
@@ -207,37 +207,37 @@ function AccountInner() {
 
   if (loading) {
     return (
-      <div className="min-h-[50vh] flex items-center justify-center text-sm text-slate-500 px-4">
+      <div className="min-h-[50vh] flex items-center justify-center text-sm text-[var(--sp-slate-soft)] px-4">
         Loading account…
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-3xl w-full px-4 py-8 sm:py-14 space-y-6 sm:space-y-8">
+    <div className="mx-auto max-w-3xl w-full px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+        <h1 className="font-display text-2xl sm:text-3xl font-bold text-[var(--sp-harbour-teal)] tracking-tight">
           My account
         </h1>
-        <p className="mt-2 text-sm text-slate-400 break-all">
+        <p className="mt-1 text-sm text-[var(--sp-slate-soft)] break-all">
           Signed in as{" "}
-          <span className="font-semibold text-slate-200">
+          <span className="font-semibold text-[var(--sp-charcoal)]">
             {userProfile?.fullName || email}
           </span>
           {userProfile?.fullName && email ? (
-            <span className="text-slate-400"> ({email})</span>
+            <span className="text-[var(--sp-slate-soft)]"> ({email})</span>
           ) : null}
         </p>
       </div>
 
       {welcome && (
-        <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/10 px-4 sm:px-5 py-4">
-          <p className="text-sm font-bold text-emerald-200">
+        <div className="rounded-2xl border border-emerald-300 bg-emerald-50/90 px-4 sm:px-5 py-4">
+          <p className="text-sm font-bold text-emerald-950">
             {isCoach
               ? "Coach account approved — your dashboard is ready"
               : "Account created — next, claim your sailor profile"}
           </p>
-          <p className="text-xs text-emerald-100/80 mt-1 leading-relaxed">
+          <p className="text-xs text-emerald-900/80 mt-1 leading-relaxed">
             {isCoach
               ? "Open the Coach Dashboard to create a squad and add sailors."
               : "Creating an account does not link a ranking profile yet. Search for your name, open the profile, and submit a claim."}
@@ -245,21 +245,25 @@ function AccountInner() {
         </div>
       )}
 
-      {error && <p className="text-sm font-bold text-rose-400">{error}</p>}
+      {error && (
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 p-4 text-xs font-semibold text-rose-800">
+          {error}
+        </div>
+      )}
 
       {/* User Account Profile Card (distinct from athlete sailor profile) */}
-      <section className="glass-card rounded-3xl border border-white/10 bg-slate-900/60 p-5 sm:p-7 shadow-lg space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-5">
+      <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-7 shadow-xs space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--sp-cool-veil)] pb-5">
           <div className="flex items-center gap-3.5">
-            <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500/20 to-teal-500/20 border border-white/15 text-orange-400 shadow-inner shrink-0">
+            <div className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/30 border border-[var(--sp-racing-orange)]/25 text-[var(--sp-racing-orange)] shadow-2xs shrink-0">
               <User className="h-6 w-6 sm:h-7 sm:w-7" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-black uppercase tracking-widest text-orange-400">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[var(--sp-racing-orange)]">
                   User Account Profile
                 </span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-white/10 text-slate-300 border border-white/10">
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]">
                   {userProfile?.role === "superadmin"
                     ? "Admin"
                     : userProfile?.role === "coach"
@@ -269,10 +273,10 @@ function AccountInner() {
                     : "Registered User"}
                 </span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight mt-0.5">
+              <h2 className="text-xl sm:text-2xl font-bold text-[var(--sp-charcoal)] tracking-tight mt-0.5">
                 {userProfile?.fullName || "User Profile"}
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-xs text-[var(--sp-slate-soft)] mt-0.5">
                 Your personal login account details — distinct from public athlete ranking profiles.
               </p>
             </div>
@@ -287,9 +291,9 @@ function AccountInner() {
                 setProfileMsg(null);
                 setIsEditingProfile(true);
               }}
-              className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 hover:bg-white/15 px-4 py-2 text-xs font-bold text-white transition-colors self-start sm:self-center shadow-xs"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-teal)] transition-colors self-start sm:self-center shadow-2xs"
             >
-              <Edit2 className="h-3.5 w-3.5 text-orange-400" />
+              <Edit2 className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
               <span>Edit Details</span>
             </button>
           )}
@@ -297,10 +301,10 @@ function AccountInner() {
 
         {profileMsg && (
           <div
-            className={`rounded-2xl p-4 text-xs font-medium border leading-relaxed ${
+            className={`rounded-2xl p-4 text-xs font-semibold border leading-relaxed ${
               profileMsg.type === "success"
-                ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-200"
-                : "bg-rose-500/15 border-rose-500/30 text-rose-200"
+                ? "bg-emerald-50 border-emerald-200 text-emerald-900"
+                : "bg-rose-50 border-rose-200 text-rose-900"
             }`}
           >
             {profileMsg.text}
@@ -311,35 +315,35 @@ function AccountInner() {
           <form onSubmit={saveProfileDetails} className="space-y-4 pt-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
                   Full Name / Display Name
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                  <User className="absolute left-3.5 top-3 h-4 w-4 text-[var(--sp-slate-soft)]" />
                   <input
                     type="text"
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
                     placeholder="Enter your name"
                     required
-                    className="w-full rounded-xl bg-slate-950 border border-white/15 pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-600 focus:border-orange-500 focus:outline-none"
+                    className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] pl-10 pr-3 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                <label className="text-[11px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
                   Email Address
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
+                  <Mail className="absolute left-3.5 top-3 h-4 w-4 text-[var(--sp-slate-soft)]" />
                   <input
                     type="email"
                     value={editEmail}
                     onChange={(e) => setEditEmail(e.target.value)}
                     placeholder="name@example.com"
                     required
-                    className="w-full rounded-xl bg-slate-950 border border-white/15 pl-10 pr-3 py-2.5 text-sm text-white placeholder-slate-600 focus:border-orange-500 focus:outline-none"
+                    className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] pl-10 pr-3 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
                   />
                 </div>
               </div>
@@ -349,7 +353,7 @@ function AccountInner() {
               <button
                 type="submit"
                 disabled={profileSaving}
-                className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 hover:bg-orange-500 px-5 py-2 text-xs font-bold text-white transition-colors disabled:opacity-50 shadow-sm"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-xs font-semibold text-white transition-colors disabled:opacity-50 shadow-xs"
               >
                 <Check className="h-3.5 w-3.5" />
                 <span>{profileSaving ? "Saving changes…" : "Save changes"}</span>
@@ -361,7 +365,7 @@ function AccountInner() {
                   setIsEditingProfile(false);
                   setProfileMsg(null);
                 }}
-                className="rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-bold text-slate-300 transition-colors"
+                className="rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-slate-soft)] transition-colors shadow-2xs"
               >
                 Cancel
               </button>
@@ -369,32 +373,32 @@ function AccountInner() {
           </form>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
-            <div className="rounded-2xl border border-white/5 bg-slate-950/50 p-4 space-y-1">
-              <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
-                <User className="h-3 w-3 text-orange-400" />
+            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1">
+              <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
+                <User className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
                 <span>Full Name</span>
               </div>
-              <p className="text-sm font-black text-white">
+              <p className="text-sm font-bold text-[var(--sp-charcoal)]">
                 {userProfile?.fullName || "Not set"}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/5 bg-slate-950/50 p-4 space-y-1 min-w-0">
-              <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
-                <Mail className="h-3 w-3 text-teal-400" />
+            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1 min-w-0">
+              <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
+                <Mail className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
                 <span>Email Address</span>
               </div>
-              <p className="text-sm font-bold text-slate-200 truncate">
+              <p className="text-sm font-bold text-[var(--sp-charcoal)] truncate">
                 {userProfile?.email || email}
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/5 bg-slate-950/50 p-4 space-y-1">
-              <div className="flex items-center gap-1.5 text-slate-500 text-[10px] font-bold uppercase tracking-wider">
-                <Calendar className="h-3 w-3 text-sky-400" />
+            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/70 p-4 space-y-1">
+              <div className="flex items-center gap-1.5 text-[var(--sp-slate-soft)] text-[10px] font-bold uppercase tracking-wider">
+                <Calendar className="h-3.5 w-3.5 text-[var(--sp-harbour-mid)]" />
                 <span>Member Since</span>
               </div>
-              <p className="text-sm font-bold text-slate-300">
+              <p className="text-sm font-bold text-[var(--sp-charcoal)]">
                 {userProfile?.createdAt
                   ? new Date(userProfile.createdAt).toLocaleDateString("en-SG", {
                       month: "short",
@@ -407,241 +411,283 @@ function AccountInner() {
         )}
       </section>
 
+      {/* Athlete Hub & Logbook Card */}
+      <section className="rounded-3xl border border-[var(--sp-racing-orange)]/25 bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <Trophy className="h-4 w-4 text-[var(--sp-racing-orange)]" />
+            <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+              Athlete Hub &amp; Logbook
+            </h2>
+          </div>
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide bg-[var(--sp-racing-mist)]/30 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30">
+            Sailor Tools
+          </span>
+        </div>
+        <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
+          Log non-ranking &amp; overseas regatta results, attach official evidence documents, and manage your equipment locker.
+        </p>
+        <div>
+          <Link
+            href="/athlete"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-xs font-semibold text-white transition-colors shadow-xs"
+          >
+            <span>Open Athlete Hub</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+      </section>
+
       {isCoach && (
-        <section className="rounded-2xl border border-orange-500/25 bg-orange-500/[0.07] p-5 sm:p-6 space-y-3 w-full">
-          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+        <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
             Coach dashboard
           </h2>
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
             Manage your private squad roster and review live rankings and regatta results.
           </p>
           <Link
             href="/coach-tools"
-            className="inline-flex rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-[11px] font-bold text-white"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-5 py-2.5 text-xs font-semibold text-white transition-colors shadow-xs"
           >
-            Open Coach Dashboard
+            <span>Open Coach Dashboard</span>
+            <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </section>
       )}
 
       {!isCoach && !isSuperadmin && (
-        <section className="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 sm:p-6 space-y-3 w-full">
-          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+        <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
             Are you a coach?
           </h2>
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
             Request coach access for this account. An admin will review it before
             the private squad dashboard is enabled.
           </p>
           <Link
             href="/coach-tools"
-            className="inline-flex rounded-full bg-sky-600 hover:bg-sky-500 px-4 py-2 text-[11px] font-bold text-white"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-teal)] transition-colors shadow-2xs"
           >
-            Request coach access
+            <span>Request coach access</span>
           </Link>
         </section>
       )}
 
       {isSuperadmin && (
-        <section className="glass-card rounded-2xl border border-orange-500/20 bg-orange-500/5 p-5 sm:p-6 space-y-3 w-full">
-          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+        <section className="rounded-3xl border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+          <h2 className="text-sm font-bold text-[var(--sp-racing-orange)] uppercase tracking-wider">
             Superadmin
           </h2>
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
             Full console access. Owner tools only apply on profiles linked to
             this account — not every athlete.
           </p>
           <a
             href="https://admin.sailorpath.com/"
-            className="inline-flex rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white hover:bg-orange-500"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-xs font-semibold text-white transition-colors shadow-xs"
           >
-            Open admin console
+            <span>Open admin console</span>
+            <ExternalLink className="h-3.5 w-3.5" />
           </a>
         </section>
       )}
 
       {!isCoach && (
-      <section className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-5 sm:p-6 space-y-3 w-full">
-        <h2 className="text-sm font-black text-white uppercase tracking-wider">
-          Parent / family dashboard
-        </h2>
-        <p className="text-xs text-slate-400 leading-relaxed">
-          Rankings snapshot, linked athletes, and claim status in one place.
-        </p>
-        <Link
-          href="/parent"
-          className="inline-flex rounded-full bg-emerald-600 hover:bg-emerald-500 px-4 py-2 text-[11px] font-bold text-white"
-        >
-          Open dashboard
-        </Link>
-      </section>
+        <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+            Parent / family dashboard
+          </h2>
+          <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
+            Rankings snapshot, linked athletes, and claim status in one place.
+          </p>
+          <Link
+            href="/parent"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-5 py-2.5 text-xs font-semibold text-white transition-colors shadow-xs"
+          >
+            <span>Open parent dashboard</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
+        </section>
       )}
 
       {/* Managed profiles */}
       {!isCoach && (
-      <section
-        id="profiles"
-        className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full"
-      >
-        <h2 className="text-sm font-black text-white uppercase tracking-wider">
-          Profiles you manage
-        </h2>
-        {owned.length === 0 ? (
-          <p className="text-xs text-slate-500 leading-relaxed">
-            None yet. After a claim is approved, your sailor profile appears
-            here. Use{" "}
-            <Link href="/search" className="text-orange-400 font-bold">
-              Search
-            </Link>{" "}
-            to find yourself and claim.
-          </p>
-        ) : (
-          <ul className="divide-y divide-white/5">
-            {owned.map((s) => (
-              <li
-                key={s.id}
-                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
-              >
-                <div className="min-w-0">
-                  <p className="text-sm font-bold text-white">{s.name}</p>
-                  <p className="text-[11px] text-slate-500 truncate">
-                    {s.sailNumber} · {s.club} · /{s.handle}
-                  </p>
-                </div>
-                <Link
-                  href={`/${s.handle}`}
-                  className="rounded-full bg-orange-600/90 px-4 py-2 text-[11px] font-bold text-white text-center hover:bg-orange-500 shrink-0"
+        <section
+          id="profiles"
+          className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs"
+        >
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+            Profiles you manage
+          </h2>
+          {owned.length === 0 ? (
+            <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
+              None yet. After a claim is approved, your sailor profile appears
+              here. Use{" "}
+              <Link href="/search" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
+                Search
+              </Link>{" "}
+              to find yourself and claim.
+            </p>
+          ) : (
+            <ul className="divide-y divide-[var(--sp-cool-veil)]">
+              {owned.map((s) => (
+                <li
+                  key={s.id}
+                  className="py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
                 >
-                  Open profile
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold text-[var(--sp-charcoal)]">{s.name}</p>
+                    <p className="text-[11px] text-[var(--sp-slate-soft)] truncate">
+                      {s.sailNumber} · {s.club} · /{s.handle}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/athlete?id=${s.id}`}
+                      className="rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-3.5 py-1.5 text-xs font-semibold text-[var(--sp-harbour-teal)] text-center transition-colors shadow-2xs shrink-0"
+                    >
+                      Manage &amp; Log
+                    </Link>
+                    <Link
+                      href={`/${s.handle}`}
+                      className="rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-3.5 py-1.5 text-xs font-semibold text-white text-center transition-colors shadow-2xs shrink-0"
+                    >
+                      Public profile
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       )}
 
       {/* Account security */}
-      <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-4 w-full">
+      <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 w-full shadow-xs">
         <div className="flex items-center gap-2">
-          <Lock className="h-4 w-4 text-orange-400" />
-          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+          <Lock className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
             Account Security &amp; Password
           </h2>
         </div>
         <form onSubmit={changePassword} className="space-y-3">
-          <p className="text-[10px] font-bold text-slate-500 uppercase">
+          <p className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Change password
           </p>
-          <input
-            type="password"
-            value={pw}
-            onChange={(e) => setPw(e.target.value)}
-            placeholder="New password (min 6)"
-            autoComplete="new-password"
-            className="w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-sm text-white"
-          />
-          <input
-            type="password"
-            value={pw2}
-            onChange={(e) => setPw2(e.target.value)}
-            placeholder="Confirm password"
-            autoComplete="new-password"
-            className="w-full rounded-xl bg-slate-950 border border-white/10 px-3 py-2.5 text-sm text-white"
-          />
-          <button
-            type="submit"
-            disabled={pwBusy}
-            className="rounded-full bg-white/5 border border-white/10 px-4 py-2 text-[11px] font-bold text-slate-200 hover:text-white disabled:opacity-50"
-          >
-            {pwBusy ? "Updating…" : "Update password"}
-          </button>
-          {pwMsg && (
-            <p className="text-[11px] text-emerald-300 font-semibold">{pwMsg}</p>
-          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <input
+              type="password"
+              value={pw}
+              onChange={(e) => setPw(e.target.value)}
+              placeholder="New password (min 6)"
+              autoComplete="new-password"
+              className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
+            />
+            <input
+              type="password"
+              value={pw2}
+              onChange={(e) => setPw2(e.target.value)}
+              placeholder="Confirm password"
+              autoComplete="new-password"
+              className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2.5 text-sm text-[var(--sp-charcoal)] placeholder-slate-400 focus:border-[var(--sp-harbour-teal)] focus:ring-2 focus:ring-[var(--sp-harbour-teal)]/20 focus:outline-none"
+            />
+          </div>
+          <div className="flex items-center gap-3 pt-1">
+            <button
+              type="submit"
+              disabled={pwBusy}
+              className="rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-4 py-2 text-xs font-semibold text-[var(--sp-harbour-teal)] transition-colors disabled:opacity-50 shadow-2xs"
+            >
+              {pwBusy ? "Updating…" : "Update password"}
+            </button>
+            {pwMsg && (
+              <p className="text-xs text-emerald-800 font-semibold">{pwMsg}</p>
+            )}
+          </div>
         </form>
       </section>
 
       {/* Claims */}
       {!isCoach && (
-      <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full">
-        <h2 className="text-sm font-black text-white uppercase tracking-wider">
-          Claim requests
-        </h2>
-        {claims.length === 0 ? (
-          <p className="text-xs text-slate-500">
-            No claim requests yet.{" "}
-            <Link href="/search" className="text-orange-400 font-bold">
-              Search for your profile
-            </Link>
-            .
-          </p>
-        ) : (
-          <ul className="divide-y divide-white/5">
-            {claims.map((c) => (
-              <li
-                key={c.id}
-                className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
-              >
-                <div>
-                  <p className="font-bold text-white">{c.sailorName}</p>
-                  <Link
-                    href={`/${c.sailorHandle}`}
-                    className="text-slate-500 hover:text-orange-400"
-                  >
-                    /{c.sailorHandle}
-                  </Link>
-                </div>
-                <span
-                  className={`self-start rounded-full px-2.5 py-0.5 text-[10px] font-black uppercase ${
-                    c.status === "approved"
-                      ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/25"
-                      : c.status === "rejected"
-                        ? "bg-rose-500/15 text-rose-300 border border-rose-500/25"
-                        : "bg-amber-500/15 text-amber-200 border border-amber-500/25"
-                  }`}
+        <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+            Claim requests
+          </h2>
+          {claims.length === 0 ? (
+            <p className="text-xs text-[var(--sp-slate-soft)]">
+              No claim requests yet.{" "}
+              <Link href="/search" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
+                Search for your profile
+              </Link>
+              .
+            </p>
+          ) : (
+            <ul className="divide-y divide-[var(--sp-cool-veil)]">
+              {claims.map((c) => (
+                <li
+                  key={c.id}
+                  className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
                 >
-                  {c.status}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+                  <div>
+                    <p className="font-bold text-[var(--sp-charcoal)]">{c.sailorName}</p>
+                    <Link
+                      href={`/${c.sailorHandle}`}
+                      className="text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-teal)]"
+                    >
+                      /{c.sailorHandle}
+                    </Link>
+                  </div>
+                  <span
+                    className={`self-start rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                      c.status === "approved"
+                        ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                        : c.status === "rejected"
+                          ? "bg-rose-50 text-rose-800 border border-rose-200"
+                          : "bg-amber-50 text-amber-800 border border-amber-200"
+                    }`}
+                  >
+                    {c.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       )}
 
       {/* How to claim — only if no owned */}
       {!isCoach && owned.length === 0 && (
-        <section className="glass-card rounded-2xl border border-white/5 p-5 sm:p-6 space-y-3 w-full">
-          <h2 className="text-sm font-black text-white uppercase tracking-wider">
+        <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
             How to claim a profile
           </h2>
-          <ol className="space-y-2 text-xs text-slate-300 font-medium list-decimal list-inside leading-relaxed">
+          <ol className="space-y-2 text-xs text-[var(--sp-slate-soft)] font-medium list-decimal list-inside leading-relaxed">
             <li>
               Find yourself on{" "}
-              <Link href="/search" className="text-orange-400 font-bold">
+              <Link href="/search" className="text-[var(--sp-harbour-teal)] font-semibold hover:underline">
                 Search
               </Link>
               .
             </li>
             <li>Open your public sailor page.</li>
             <li>
-              Click <strong className="text-white">Claim this profile</strong>{" "}
+              Click <strong className="text-[var(--sp-charcoal)] font-bold">Claim this profile</strong>{" "}
               and add a short note to help us review the claim.
             </li>
-            <li>Wait for admin approval — then use Edit profile.</li>
+            <li>Wait for admin approval — then use your Athlete Hub to manage results.</li>
           </ol>
         </section>
       )}
 
-      <section className="rounded-2xl border border-sky-500/20 bg-sky-500/[0.06] p-5 w-full">
-        <p className="text-sm font-bold text-sky-200">Need help?</p>
-        <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+      <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 p-5 sm:p-6 w-full space-y-2">
+        <p className="text-sm font-bold text-[var(--sp-harbour-teal)]">Need help?</p>
+        <p className="text-xs text-[var(--sp-slate-soft)] leading-relaxed">
           Login issues, claim stuck, wrong data — message us anytime.
         </p>
         <Link
           href="/support"
-          className="inline-flex mt-3 rounded-full bg-sky-600/90 px-4 py-2 text-[11px] font-bold text-white"
+          className="inline-flex mt-2 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-4 py-2 text-xs font-semibold text-white transition-colors shadow-xs"
         >
           Contact support
         </Link>

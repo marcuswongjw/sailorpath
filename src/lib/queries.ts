@@ -561,14 +561,33 @@ export async function getResultsForSailor(sailorId: string) {
         list.push(race);
         racesByResult.set(race.regattaResultId, list);
       }
-      return results.map((result) => ({
-        ...result,
-        raceResults: racesByResult.get(result.resultId) || [],
-      }));
+      return results.map((result) => {
+        const isOfficial =
+          (result.regattaSlug && !result.regattaSlug.startsWith("log-")) ||
+          Boolean(result.countsForRanking);
+        return {
+          ...result,
+          verificationStatus: isOfficial
+            ? "verified"
+            : result.verificationStatus || "self_reported",
+          raceResults: racesByResult.get(result.resultId) || [],
+        };
+      });
     } catch (error) {
       // Keep profiles available during rollout before migration 044 is applied.
       if (/regatta_race_results|does not exist|relation/i.test(formatDbError(error))) {
-        return results.map((result) => ({ ...result, raceResults: [] }));
+        return results.map((result) => {
+          const isOfficial =
+            (result.regattaSlug && !result.regattaSlug.startsWith("log-")) ||
+            Boolean(result.countsForRanking);
+          return {
+            ...result,
+            verificationStatus: isOfficial
+              ? "verified"
+              : result.verificationStatus || "self_reported",
+            raceResults: [],
+          };
+        });
       }
       throw error;
     }

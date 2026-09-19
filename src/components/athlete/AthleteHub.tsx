@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import {
   Trophy,
   User,
@@ -18,6 +19,7 @@ import {
   ImageIcon,
   Save,
   Loader2,
+  Clock,
 } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import {
@@ -57,11 +59,15 @@ interface AthleteWorkspaceProps {
 }
 
 function AthleteWorkspace({
-  athlete,
+  athlete: initialAthlete,
   initialTab = "results",
   initialAction,
 }: AthleteWorkspaceProps) {
+  const router = useRouter();
   const { toast, confirm } = useFeedback();
+
+  // Local athlete state so profile saves instantly refresh the header card
+  const [athlete, setAthlete] = useState<AthleteProfile>(initialAthlete);
 
   // Active tab: "results" | "profile" | "equipment" | "documents"
   const [activeTab, setActiveTab] = useState<
@@ -80,7 +86,7 @@ function AthleteWorkspace({
   const [results, setResults] = useState<RegattaResultItem[]>([]);
   const [loadingResults, setLoadingResults] = useState(true);
   const [resultFilter, setResultFilter] = useState<
-    "all" | "verified" | "pending" | "self"
+    "all" | "verified" | "under_review" | "self" | "rejected"
   >("all");
 
   // Profile edit form state
@@ -157,7 +163,27 @@ function AthleteWorkspace({
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to update profile");
+
+      // Synchronize local athlete state immediately
+      setAthlete((prev) => ({
+        ...prev,
+        sailNumber: profileForm.sailNumber,
+        sailNumberIlca4: profileForm.sailNumberIlca4,
+        club: profileForm.club,
+        school: profileForm.school,
+        gender: profileForm.gender,
+        nationality: profileForm.nationality,
+        dob: profileForm.dob,
+        instagram: profileForm.instagram,
+        hullBrand: profileForm.hullBrand,
+        sailMake: profileForm.sailMake,
+        foilBrand: profileForm.foilBrand,
+        mast: profileForm.mast,
+        equipmentNotes: profileForm.equipmentNotes,
+      }));
+
       toast.success("Athlete profile details updated!");
+      router.refresh();
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Update failed");
     } finally {
@@ -189,22 +215,30 @@ function AthleteWorkspace({
     }
   };
 
+  const verifiedCount = results.filter((r) => r.verificationStatus === "verified").length;
+  const underReviewCount = results.filter((r) => r.verificationStatus === "pending_review").length;
+  const selfCount = results.filter(
+    (r) => r.verificationStatus === "self_reported" || !r.verificationStatus
+  ).length;
+  const rejectedCount = results.filter((r) => r.verificationStatus === "rejected").length;
+
   const filteredResults = results.filter((r) => {
     if (resultFilter === "verified") return r.verificationStatus === "verified";
-    if (resultFilter === "pending") return r.verificationStatus === "pending_review";
+    if (resultFilter === "under_review") return r.verificationStatus === "pending_review";
     if (resultFilter === "self")
       return r.verificationStatus === "self_reported" || !r.verificationStatus;
+    if (resultFilter === "rejected") return r.verificationStatus === "rejected";
     return true;
   });
 
   return (
     <div className="space-y-6">
       {/* Athlete Header Card */}
-      <div className="glass-panel rounded-3xl border border-white/10 p-6 sm:p-8 relative overflow-hidden bg-gradient-to-br from-[#121622] via-[#0d1017] to-[#090b10]">
+      <div className="rounded-3xl border border-[var(--sp-cool-veil)] p-6 sm:p-8 bg-[var(--sp-warm-white)] shadow-xs relative overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             {/* Avatar */}
-            <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden bg-slate-800 border border-white/10 shrink-0">
+            <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-2xl overflow-hidden bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] shrink-0 shadow-2xs">
               {athlete.avatarUrl ? (
                 <Image
                   src={athlete.avatarUrl}
@@ -213,7 +247,7 @@ function AthleteWorkspace({
                   className="object-cover"
                 />
               ) : (
-                <div className="h-full w-full flex items-center justify-center text-slate-400">
+                <div className="h-full w-full flex items-center justify-center text-[var(--sp-slate-soft)]">
                   <User className="h-8 w-8" />
                 </div>
               )}
@@ -222,25 +256,25 @@ function AthleteWorkspace({
             {/* Identity Info */}
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-charcoal)] tracking-tight">
                   {athlete.name}
                 </h1>
                 {athlete.currentFleet && (
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200">
                     {athlete.currentFleet} Fleet
                   </span>
                 )}
                 {athlete.nationalSquadStatus && (
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-500/15 text-rose-300 border border-rose-500/30">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200">
                     National Squad
                   </span>
                 )}
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
+              <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--sp-slate-soft)]">
                 {athlete.sailNumber && (
-                  <span className="font-mono font-semibold text-slate-300">
-                    Sail: SIN {athlete.sailNumber}
+                  <span className="font-mono font-bold text-[var(--sp-charcoal)]">
+                    Sail: {athlete.nationality || "SIN"} {athlete.sailNumber}
                   </span>
                 )}
                 {athlete.club && <span>· Club: {athlete.club}</span>}
@@ -255,10 +289,10 @@ function AthleteWorkspace({
               href={`/${athlete.handle}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-slate-200 px-3.5 py-2 text-xs font-bold transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-3.5 py-2 text-xs font-bold transition-all shadow-2xs"
             >
               <span>View Public Profile</span>
-              <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
+              <ExternalLink className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
             </Link>
             <button
               type="button"
@@ -266,7 +300,7 @@ function AthleteWorkspace({
                 setEditingResult(null);
                 setEvidenceModalOpen(true);
               }}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white px-4 py-2 text-xs font-bold transition-colors shadow-lg shadow-orange-600/20"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-4 py-2 text-xs font-bold transition-all shadow-xs"
             >
               <Plus className="h-4 w-4" />
               <span>Log Score</span>
@@ -275,19 +309,21 @@ function AthleteWorkspace({
         </div>
 
         {/* Tab Navigation */}
-        <div className="mt-8 pt-4 border-t border-white/10 flex gap-2 overflow-x-auto scrollbar-thin">
+        <div className="mt-8 pt-4 border-t border-[var(--sp-cool-veil)] flex gap-2 overflow-x-auto scrollbar-thin">
           <button
             type="button"
             onClick={() => setActiveTab("results")}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors whitespace-nowrap ${
+            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "results"
-                ? "bg-white/10 text-white border border-white/10"
-                : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
             }`}
           >
-            <Trophy className="h-4 w-4 text-orange-400" />
-            <span>Regattas & Evidence Logbook</span>
-            <span className="ml-1 rounded-full bg-white/10 px-1.5 py-0.2 text-[10px] text-slate-300">
+            <Trophy className="h-4 w-4 text-[var(--sp-racing-orange)]" />
+            <span>Regattas &amp; Evidence Logbook</span>
+            <span className={`ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+              activeTab === "results" ? "bg-white/20 text-white" : "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]"
+            }`}>
               {results.length}
             </span>
           </button>
@@ -295,57 +331,62 @@ function AthleteWorkspace({
           <button
             type="button"
             onClick={() => setActiveTab("profile")}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors whitespace-nowrap ${
+            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "profile"
-                ? "bg-white/10 text-white border border-white/10"
-                : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
             }`}
           >
-            <User className="h-4 w-4 text-sky-400" />
+            <User className="h-4 w-4" />
             <span>Athlete Profile</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab("equipment")}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors whitespace-nowrap ${
+            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "equipment"
-                ? "bg-white/10 text-white border border-white/10"
-                : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
             }`}
           >
-            <Sailboat className="h-4 w-4 text-emerald-400" />
+            <Sailboat className="h-4 w-4" />
             <span>Equipment Locker</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab("documents")}
-            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-colors whitespace-nowrap ${
+            className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "documents"
-                ? "bg-white/10 text-white border border-white/10"
-                : "text-slate-400 hover:text-slate-200 hover:bg-white/5"
+                ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]"
             }`}
           >
-            <FileText className="h-4 w-4 text-violet-400" />
+            <FileText className="h-4 w-4" />
             <span>Evidence Documents</span>
+            <span className={`ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+              activeTab === "documents" ? "bg-white/20 text-white" : "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]"
+            }`}>
+              {results.filter((r) => r.evidenceUrl || r.officialUrl).length}
+            </span>
           </button>
         </div>
       </div>
 
-      {/* Tab 1: Regattas & Evidence Logbook */}
+      {/* Tab 1: Regattas & Results Logbook */}
       {activeTab === "results" && (
         <div className="space-y-4">
-          {/* Action & Filter Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#11141e] border border-white/5 p-4 rounded-2xl">
-            <div className="flex flex-wrap items-center gap-2">
+          {/* Filter Bar */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-2 rounded-2xl">
+            <div className="flex flex-wrap items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => setResultFilter("all")}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-colors ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   resultFilter === "all"
-                    ? "bg-white/15 text-white"
-                    : "text-slate-400 hover:text-white"
+                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                    : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-charcoal)] hover:bg-white"
                 }`}
               >
                 All ({results.length})
@@ -353,51 +394,49 @@ function AthleteWorkspace({
               <button
                 type="button"
                 onClick={() => setResultFilter("verified")}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-colors ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   resultFilter === "verified"
-                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                    : "text-slate-400 hover:text-emerald-400"
+                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                    : "text-[var(--sp-slate-soft)] hover:text-emerald-700 hover:bg-emerald-50"
                 }`}
               >
-                Verified ✓ (
-                {results.filter((r) => r.verificationStatus === "verified").length}
-                )
+                Verified ✓ ({verifiedCount})
               </button>
               <button
                 type="button"
-                onClick={() => setResultFilter("pending")}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-colors ${
-                  resultFilter === "pending"
-                    ? "bg-sky-500/20 text-sky-300 border border-sky-500/30"
-                    : "text-slate-400 hover:text-sky-400"
+                onClick={() => setResultFilter("under_review")}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  resultFilter === "under_review"
+                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                    : "text-[var(--sp-slate-soft)] hover:text-sky-700 hover:bg-sky-50"
                 }`}
               >
-                Evidence Pending (
-                {
-                  results.filter((r) => r.verificationStatus === "pending_review")
-                    .length
-                }
-                )
+                Under Review ({underReviewCount})
               </button>
               <button
                 type="button"
                 onClick={() => setResultFilter("self")}
-                className={`px-3 py-1 rounded-xl text-xs font-bold transition-colors ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
                   resultFilter === "self"
-                    ? "bg-amber-500/20 text-amber-300 border border-amber-500/30"
-                    : "text-slate-400 hover:text-amber-400"
+                    ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                    : "text-[var(--sp-slate-soft)] hover:text-amber-800 hover:bg-amber-50"
                 }`}
               >
-                Self-Reported (
-                {
-                  results.filter(
-                    (r) =>
-                      r.verificationStatus === "self_reported" ||
-                      !r.verificationStatus
-                  ).length
-                }
-                )
+                Self-Reported ({selfCount})
               </button>
+              {rejectedCount > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setResultFilter("rejected")}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                    resultFilter === "rejected"
+                      ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                      : "text-[var(--sp-slate-soft)] hover:text-rose-700 hover:bg-rose-50"
+                  }`}
+                >
+                  Rejected ✕ ({rejectedCount})
+                </button>
+              )}
             </div>
 
             <button
@@ -406,31 +445,30 @@ function AthleteWorkspace({
                 setEditingResult(null);
                 setEvidenceModalOpen(true);
               }}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white transition-colors shadow-sm"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-4 py-2 text-xs font-bold text-white transition-all shadow-xs"
             >
               <Plus className="h-4 w-4" />
-              <span>Log Regatta Score & Evidence</span>
+              <span>Log Regatta Score &amp; Evidence</span>
             </button>
           </div>
 
           {/* Results List */}
           {loadingResults ? (
-            <div className="p-12 text-center text-slate-400 flex items-center justify-center gap-2">
-              <Loader2 className="h-5 w-5 animate-spin text-orange-500" />
+            <div className="p-12 text-center text-[var(--sp-slate-soft)] flex items-center justify-center gap-2">
+              <Loader2 className="h-5 w-5 animate-spin text-[var(--sp-racing-orange)]" />
               <span>Loading regatta logbook...</span>
             </div>
           ) : filteredResults.length === 0 ? (
             results.length === 0 ? (
-              /* First-run: logbook is completely empty */
-              <div className="rounded-3xl border border-white/5 bg-[#11141e] p-12 text-center space-y-4">
-                <div className="mx-auto h-12 w-12 rounded-2xl bg-orange-500/10 text-orange-400 flex items-center justify-center border border-orange-500/20">
+              <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-12 text-center space-y-4 shadow-xs">
+                <div className="mx-auto h-12 w-12 rounded-2xl bg-[var(--sp-racing-mist)]/30 text-[var(--sp-racing-orange)] flex items-center justify-center border border-[var(--sp-racing-orange)]/30">
                   <Trophy className="h-6 w-6" />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-base font-bold text-white">
+                  <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)]">
                     Log your first regatta
                   </h3>
-                  <p className="text-xs text-slate-400 max-w-sm mx-auto">
+                  <p className="text-xs text-[var(--sp-slate-soft)] max-w-sm mx-auto">
                     Log personal, club, or overseas regattas to track performance — attach official evidence to earn a Verified ✓ badge.
                   </p>
                 </div>
@@ -440,33 +478,15 @@ function AthleteWorkspace({
                     setEditingResult(null);
                     setEvidenceModalOpen(true);
                   }}
-                  className="inline-flex items-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-500 text-white px-5 py-2.5 text-xs font-bold transition-colors"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-5 py-2.5 text-xs font-bold transition-all shadow-xs"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Log Regatta Score</span>
                 </button>
               </div>
             ) : (
-              /* Logbook has results, but the active filter hides them all */
-              <div className="rounded-3xl border border-white/5 bg-[#11141e] p-12 text-center space-y-4">
-                <div className="mx-auto h-12 w-12 rounded-2xl bg-sky-500/10 text-sky-400 flex items-center justify-center border border-sky-500/20">
-                  <Trophy className="h-6 w-6" />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-base font-bold text-white">
-                    No regatta scores match this filter
-                  </h3>
-                  <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                    You have {results.length} logged {results.length === 1 ? "result" : "results"} — try a different filter to see them.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setResultFilter("all")}
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-white px-5 py-2.5 text-xs font-bold transition-colors"
-                >
-                  <span>Show All Results</span>
-                </button>
+              <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-8 text-center text-xs text-[var(--sp-slate-soft)] shadow-xs">
+                No regattas match the selected filter.
               </div>
             )
           ) : (
@@ -474,26 +494,26 @@ function AthleteWorkspace({
               {filteredResults.map((r) => (
                 <div
                   key={r.id}
-                  className="rounded-2xl border border-white/5 bg-[#121520] p-4 sm:p-5 hover:border-white/10 transition-colors space-y-3"
+                  className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs transition-all hover:border-[var(--sp-aqua-deep)]/40 hover:shadow-sm space-y-3"
                 >
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="space-y-1">
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="font-bold text-white text-sm sm:text-base">
+                        <h4 className="text-base font-bold text-[var(--sp-charcoal)]">
                           {r.regattaName}
-                        </span>
+                        </h4>
                         {r.countsForRanking ? (
-                          <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[9px] font-black uppercase text-emerald-300">
+                          <span className="rounded-full bg-teal-50 border border-teal-200 px-2.5 py-0.5 text-[9px] font-black uppercase text-[var(--sp-harbour-teal)]">
                             Singapore Series Ranking
                           </span>
                         ) : (
-                          <span className="rounded-full bg-sky-500/15 border border-sky-500/30 px-2 py-0.5 text-[9px] font-black uppercase text-sky-300">
+                          <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2.5 py-0.5 text-[9px] font-black uppercase text-[var(--sp-slate-soft)]">
                             Non-Ranking / Overseas Logbook
                           </span>
                         )}
                       </div>
 
-                      <p className="text-xs text-slate-400">
+                      <p className="text-xs text-[var(--sp-slate-soft)] font-medium">
                         {String(r.regattaDate).slice(0, 10)}
                         {r.regattaEndDate
                           ? ` to ${String(r.regattaEndDate).slice(0, 10)}`
@@ -507,17 +527,20 @@ function AthleteWorkspace({
                     {/* Finish Position & Badges */}
                     <div className="flex items-center gap-3 self-start sm:self-center">
                       <div className="text-right">
-                        <div className="font-mono text-base font-black text-white">
-                          Place {r.rank}
+                        <div className="text-sm font-semibold text-[var(--sp-charcoal)]">
+                          Place{" "}
+                          <span className="font-mono text-lg font-black text-[var(--sp-harbour-shadow)]">
+                            {r.rank}
+                          </span>
                           {r.totalFleetSize ? (
-                            <span className="text-xs font-normal text-slate-400">
+                            <span className="text-xs font-normal text-[var(--sp-slate-soft)]">
                               {" "}
                               / {r.totalFleetSize}
                             </span>
                           ) : null}
                         </div>
                         {r.nettScore != null && (
-                          <div className="text-[11px] font-mono text-slate-400">
+                          <div className="text-[11px] font-mono text-[var(--sp-slate-soft)]">
                             nett {r.nettScore} pts
                           </div>
                         )}
@@ -526,22 +549,22 @@ function AthleteWorkspace({
                       {/* Verification Status Badge */}
                       <div>
                         {r.verificationStatus === "verified" ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 text-[11px] font-bold text-emerald-300">
-                            <ShieldCheck className="h-3.5 w-3.5" />
+                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800">
+                            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
                             Verified ✓
                           </span>
                         ) : r.verificationStatus === "pending_review" ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-500/15 border border-sky-500/30 px-2.5 py-1 text-[11px] font-bold text-sky-300">
-                            <FileText className="h-3.5 w-3.5" />
-                            Evidence Attached
+                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-200 px-3 py-1 text-xs font-bold text-sky-800">
+                            <Clock className="h-3.5 w-3.5 text-sky-600" />
+                            Under Review
                           </span>
                         ) : r.verificationStatus === "rejected" ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-rose-500/15 border border-rose-500/30 px-2.5 py-1 text-[11px] font-bold text-rose-300">
-                            <AlertCircle className="h-3.5 w-3.5" />
-                            Rejected
+                          <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-200 px-3 py-1 text-xs font-bold text-rose-800">
+                            <AlertCircle className="h-3.5 w-3.5 text-rose-600" />
+                            Rejected ✕
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 border border-amber-500/30 px-2.5 py-1 text-[11px] font-bold text-amber-300">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-3 py-1 text-xs font-bold text-amber-800">
                             Self-Reported
                           </span>
                         )}
@@ -549,15 +572,41 @@ function AthleteWorkspace({
                     </div>
                   </div>
 
+                  {/* Rejected Alert Notice with Re-submit callout */}
+                  {r.verificationStatus === "rejected" && (
+                    <div className="rounded-xl border border-rose-200 bg-rose-50/90 p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-rose-950">
+                      <div className="flex items-start gap-2">
+                        <AlertCircle className="h-4 w-4 text-rose-600 shrink-0 mt-0.5" />
+                        <div>
+                          <span className="font-bold text-rose-950">Review Note: </span>
+                          <span className="text-rose-800">
+                            {r.evidenceNotes || "Official score documentation or official results URL is required for verification."}
+                          </span>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingResult(r);
+                          setEvidenceModalOpen(true);
+                        }}
+                        className="shrink-0 inline-flex items-center gap-1 font-bold text-rose-700 hover:text-rose-900 hover:underline text-[11px]"
+                      >
+                        <span>Why? / Re-submit evidence</span>
+                        <ExternalLink className="h-3 w-3" />
+                      </button>
+                    </div>
+                  )}
+
                   {/* Evidence Row */}
                   {(r.evidenceUrl || r.officialUrl || r.evidenceNotes) && (
-                    <div className="flex flex-wrap items-center gap-3 p-2.5 rounded-xl bg-white/[0.02] border border-white/5 text-xs">
+                    <div className="flex flex-wrap items-center gap-3 p-3 rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] text-xs text-[var(--sp-charcoal)]">
                       {r.evidenceUrl && (
                         <a
                           href={r.evidenceUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 text-sky-400 hover:text-sky-300 font-semibold underline underline-offset-2"
+                          className="inline-flex items-center gap-1.5 text-[var(--sp-harbour-teal)] hover:underline font-bold"
                         >
                           {r.evidenceType === "image" ? (
                             <ImageIcon className="h-3.5 w-3.5" />
@@ -565,7 +614,7 @@ function AthleteWorkspace({
                             <FileText className="h-3.5 w-3.5" />
                           )}
                           <span>
-                            {r.evidenceName || "View Uploaded Evidence"}
+                            {r.evidenceName || "View Evidence Document"}
                           </span>
                         </a>
                       )}
@@ -574,38 +623,38 @@ function AthleteWorkspace({
                           href={r.officialUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 text-indigo-400 hover:text-indigo-300 font-semibold underline underline-offset-2"
+                          className="inline-flex items-center gap-1.5 text-[var(--sp-harbour-teal)] hover:underline font-bold"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
                           <span>Official Online Results</span>
                         </a>
                       )}
-                      {r.evidenceNotes && (
-                        <span className="text-slate-400 italic">
+                      {r.evidenceNotes && r.verificationStatus !== "rejected" && (
+                        <span className="text-[var(--sp-slate-soft)] italic">
                           “{r.evidenceNotes}”
                         </span>
                       )}
                     </div>
                   )}
 
-                  {/* Actions on non-ranking results */}
+                  {/* Actions on non-ranking / editable results */}
                   {!r.countsForRanking && (
-                    <div className="flex items-center justify-end gap-2 pt-1 border-t border-white/5">
+                    <div className="flex items-center justify-end gap-2 pt-2 border-t border-[var(--sp-cool-veil)]">
                       <button
                         type="button"
                         onClick={() => {
                           setEditingResult(r);
                           setEvidenceModalOpen(true);
                         }}
-                        className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 px-2.5 py-1 text-[11px] font-bold text-slate-300 hover:text-white transition-colors"
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-3 py-1.5 text-xs font-bold text-[var(--sp-charcoal)] transition-all shadow-2xs"
                       >
-                        <Edit2 className="h-3 w-3" />
+                        <Edit2 className="h-3 w-3 text-[var(--sp-slate-soft)]" />
                         <span>Edit / Attach Evidence</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => handleDeleteResult(r.id, r.regattaName)}
-                        className="inline-flex items-center gap-1 rounded-lg border border-rose-500/20 bg-rose-500/5 hover:bg-rose-500/15 px-2.5 py-1 text-[11px] font-bold text-rose-400 transition-colors"
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-100 px-3 py-1.5 text-xs font-bold text-rose-700 transition-all"
                       >
                         <Trash2 className="h-3 w-3" />
                         <span>Delete</span>
@@ -623,17 +672,17 @@ function AthleteWorkspace({
       {activeTab === "profile" && (
         <form
           onSubmit={handleSaveProfile}
-          className="glass-panel rounded-3xl border border-white/10 p-6 sm:p-8 space-y-6 bg-[#121520]"
+          className="rounded-3xl border border-[var(--sp-cool-veil)] p-6 sm:p-8 space-y-6 bg-[var(--sp-warm-white)] shadow-xs"
         >
-          <div className="flex items-center justify-between">
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <User className="h-5 w-5 text-sky-400" />
-              Athlete Personal & Equipment Details
+          <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] pb-4">
+            <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)] flex items-center gap-2">
+              <User className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
+              Athlete Personal &amp; Equipment Details
             </h3>
             <button
               type="submit"
               disabled={savingProfile}
-              className="inline-flex items-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-5 py-2 text-xs font-bold text-white transition-all disabled:opacity-50 shadow-xs"
             >
               {savingProfile ? (
                 <>
@@ -651,7 +700,7 @@ function AthleteWorkspace({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 Optimist Sail Number
               </label>
               <input
@@ -661,12 +710,12 @@ function AthleteWorkspace({
                   setProfileForm({ ...profileForm, sailNumber: e.target.value })
                 }
                 placeholder="e.g. 711"
-                className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white font-mono focus:border-orange-500 focus:outline-none"
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 ILCA 4 Sail Number
               </label>
               <input
@@ -679,12 +728,12 @@ function AthleteWorkspace({
                   })
                 }
                 placeholder="e.g. 219111"
-                className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white font-mono focus:border-orange-500 focus:outline-none"
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 Sailing Club
               </label>
               <input
@@ -694,12 +743,12 @@ function AthleteWorkspace({
                   setProfileForm({ ...profileForm, club: e.target.value })
                 }
                 placeholder="e.g. Changi Sailing Club (CSC)"
-                className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 School
               </label>
               <input
@@ -709,12 +758,12 @@ function AthleteWorkspace({
                   setProfileForm({ ...profileForm, school: e.target.value })
                 }
                 placeholder="e.g. Raffles Institution"
-                className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 Gender
               </label>
               <select
@@ -722,15 +771,15 @@ function AthleteWorkspace({
                 onChange={(e) =>
                   setProfileForm({ ...profileForm, gender: e.target.value })
                 }
-                className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               >
-                <option value="M">Male (M)</option>
-                <option value="F">Female (F)</option>
+                <option value="M">Male (Boy)</option>
+                <option value="F">Female (Girl)</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 Nationality (NOC)
               </label>
               <GeographySelect
@@ -741,12 +790,12 @@ function AthleteWorkspace({
                     nationality: val || "SGP",
                   })
                 }
-                className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 Date of Birth
               </label>
               <input
@@ -755,12 +804,12 @@ function AthleteWorkspace({
                 onChange={(e) =>
                   setProfileForm({ ...profileForm, dob: e.target.value })
                 }
-                className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                 Instagram Handle
               </label>
               <input
@@ -770,18 +819,18 @@ function AthleteWorkspace({
                   setProfileForm({ ...profileForm, instagram: e.target.value })
                 }
                 placeholder="e.g. sailor_alex"
-                className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
           </div>
 
-          <div className="pt-4 border-t border-white/10">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">
-              Standard Boat Gear & Rig Configuration
+          <div className="pt-4 border-t border-[var(--sp-cool-veil)]">
+            <h4 className="text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] mb-3">
+              Standard Boat Gear &amp; Rig Configuration
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                   Hull Brand
                 </label>
                 <input
@@ -794,13 +843,13 @@ function AthleteWorkspace({
                     })
                   }
                   placeholder="e.g. Winner 3D Star, Devoti, Far East"
-                  className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
-                  Sail Make & Model
+                <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
+                  Sail Make &amp; Model
                 </label>
                 <input
                   type="text"
@@ -812,12 +861,12 @@ function AthleteWorkspace({
                     })
                   }
                   placeholder="e.g. North Sails P-5, Olimpic, J-Sails"
-                  className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                   Foils (Daggerboard / Rudder)
                 </label>
                 <input
@@ -830,12 +879,12 @@ function AthleteWorkspace({
                     })
                   }
                   placeholder="e.g. DSK Flashtep, Optiparts"
-                  className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">
+                <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
                   Spar / Mast System
                 </label>
                 <input
@@ -845,30 +894,10 @@ function AthleteWorkspace({
                     setProfileForm({ ...profileForm, mast: e.target.value })
                   }
                   placeholder="e.g. Optimax MK4, Blackgold"
-                  className="w-full rounded-xl bg-slate-900/80 border border-white/10 px-3.5 py-2.5 text-xs text-white focus:border-orange-500 focus:outline-none"
+                  className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
                 />
               </div>
             </div>
-          </div>
-
-          <div className="flex justify-end pt-2">
-            <button
-              type="submit"
-              disabled={savingProfile}
-              className="inline-flex items-center gap-2 rounded-xl bg-orange-600 hover:bg-orange-500 px-5 py-2.5 text-xs font-bold text-white transition-colors disabled:opacity-50"
-            >
-              {savingProfile ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Saving...</span>
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  <span>Save Athlete Profile</span>
-                </>
-              )}
-            </button>
           </div>
         </form>
       )}
@@ -887,19 +916,19 @@ function AthleteWorkspace({
 
       {/* Tab 4: Verified Documents & Evidence Library */}
       {activeTab === "documents" && (
-        <div className="glass-panel rounded-3xl border border-white/10 p-6 sm:p-8 space-y-6 bg-[#121520]">
+        <div className="rounded-3xl border border-[var(--sp-cool-veil)] p-6 sm:p-8 space-y-6 bg-[var(--sp-warm-white)] shadow-xs">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center gap-2">
-              <FileText className="h-5 w-5 text-violet-400" />
-              Evidence Documents & Official Results Sheets
+            <h3 className="text-base font-bold text-[var(--sp-harbour-shadow)] flex items-center gap-2">
+              <FileText className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
+              Evidence Documents &amp; Official Results Sheets
             </h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-[var(--sp-slate-soft)] mt-1">
               Official scorecards, noticeboards, and race committee results sheets attached to {athlete.name}&apos;s profile.
             </p>
           </div>
 
           {results.filter((r) => r.evidenceUrl || r.officialUrl).length === 0 ? (
-            <div className="rounded-2xl border border-white/5 bg-slate-950/40 p-8 text-center text-xs text-slate-500">
+            <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-8 text-center text-xs text-[var(--sp-slate-soft)]">
               No evidence documents uploaded yet. When you log non-ranking regattas and attach PDFs or photos, they appear in this library.
             </div>
           ) : (
@@ -909,25 +938,29 @@ function AthleteWorkspace({
                 .map((r) => (
                   <div
                     key={r.id}
-                    className="rounded-2xl border border-white/10 bg-slate-900/60 p-4 space-y-2 hover:border-white/20 transition-colors"
+                    className="rounded-2xl border border-[var(--sp-cool-veil)] bg-white p-4 space-y-2 hover:border-[var(--sp-aqua-deep)]/50 transition-all shadow-2xs"
                   >
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="font-bold text-white text-xs">
+                        <p className="font-bold text-[var(--sp-charcoal)] text-xs">
                           {r.regattaName}
                         </p>
-                        <p className="text-[11px] text-slate-400">
+                        <p className="text-[11px] text-[var(--sp-slate-soft)]">
                           {String(r.regattaDate).slice(0, 10)} · Place {r.rank}
                           {r.totalFleetSize ? ` / ${r.totalFleetSize}` : ""}
                         </p>
                       </div>
                       <div>
                         {r.verificationStatus === "verified" ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[9px] font-bold text-emerald-300">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800">
                             Verified ✓
                           </span>
+                        ) : r.verificationStatus === "rejected" ? (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[10px] font-bold text-rose-800">
+                            Rejected ✕
+                          </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-500/15 border border-sky-500/30 px-2 py-0.5 text-[9px] font-bold text-sky-300">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-200 px-2.5 py-0.5 text-[10px] font-bold text-sky-800">
                             Under Review
                           </span>
                         )}
@@ -940,12 +973,12 @@ function AthleteWorkspace({
                           href={r.evidenceUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/20 px-3 py-1.5 font-semibold text-[11px] transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-800 border border-sky-200 px-3 py-1.5 font-bold text-[11px] transition-colors"
                         >
                           {r.evidenceType === "image" ? (
-                            <ImageIcon className="h-3.5 w-3.5" />
+                            <ImageIcon className="h-3.5 w-3.5 text-sky-700" />
                           ) : (
-                            <FileText className="h-3.5 w-3.5" />
+                            <FileText className="h-3.5 w-3.5 text-sky-700" />
                           )}
                           <span>
                             {r.evidenceName || "View Evidence Document"}
@@ -957,7 +990,7 @@ function AthleteWorkspace({
                           href={r.officialUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 border border-indigo-500/20 px-3 py-1.5 font-semibold text-[11px] transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-[var(--sp-harbour-teal)] border border-teal-200 px-3 py-1.5 font-bold text-[11px] transition-colors"
                         >
                           <ExternalLink className="h-3.5 w-3.5" />
                           <span>Official URL</span>
@@ -989,68 +1022,90 @@ function AthleteWorkspace({
 
 interface AthleteHubProps {
   athletes: AthleteProfile[];
-  initialSailorId?: string;
+  currentSailorId?: string;
   initialTab?: "results" | "profile" | "equipment" | "documents";
   initialAction?: string;
 }
 
 export function AthleteHub({
   athletes,
-  initialSailorId,
+  currentSailorId,
   initialTab = "results",
   initialAction,
 }: AthleteHubProps) {
-  // Active athlete selection
-  const [activeAthleteId, setActiveAthleteId] = useState<string>(
-    () =>
-      initialSailorId && athletes.some((a) => a.id === initialSailorId)
-        ? initialSailorId
-        : athletes[0]?.id || ""
-  );
+  const [selectedId, setSelectedId] = useState<string>(() => {
+    if (currentSailorId && athletes.some((a) => a.id === currentSailorId)) {
+      return currentSailorId;
+    }
+    return athletes[0]?.id || "";
+  });
 
-  const activeAthlete =
-    athletes.find((a) => a.id === activeAthleteId) || athletes[0];
+  const activeAthlete = athletes.find((a) => a.id === selectedId) || athletes[0];
 
   if (!activeAthlete) {
     return (
-      <div className="p-12 text-center text-slate-400">
-        No claimed athlete profile found.
+      <div className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-12 text-center space-y-4 shadow-xs">
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/30 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30">
+          <AlertCircle className="h-6 w-6" />
+        </div>
+        <div className="space-y-1">
+          <h2 className="text-lg font-bold text-[var(--sp-charcoal)]">
+            No Claimed Sailor Profiles Found
+          </h2>
+          <p className="text-xs text-[var(--sp-slate-soft)] max-w-sm mx-auto">
+            You don&apos;t have any active sailor profiles claimed yet. Search for your sailor profile to claim ownership and manage regattas.
+          </p>
+        </div>
+        <Link
+          href="/claim-profile"
+          className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-5 py-2.5 text-xs font-bold transition-all shadow-xs"
+        >
+          <Plus className="h-4 w-4" />
+          <span>Claim Sailor Profile</span>
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-4 sm:px-6 py-8 space-y-6">
-      {/* Top Banner: Parent / Multi-Athlete Switcher */}
+    <div className="space-y-6">
+      {/* Athlete Switcher (for parents managing multiple children) */}
       {athletes.length > 1 && (
-        <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-white/[0.03] border border-white/10">
-          <span className="px-3 text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
-            <Users className="h-3.5 w-3.5 text-emerald-400" />
-            Switch Athlete:
-          </span>
-          {athletes.map((ath) => (
-            <button
-              key={ath.id}
-              type="button"
-              onClick={() => setActiveAthleteId(ath.id)}
-              className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                ath.id === activeAthlete.id
-                  ? "bg-orange-600 text-white shadow-md shadow-orange-600/20"
-                  : "bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
-              }`}
-            >
-              <span>{ath.name}</span>
-              {ath.sailNumber && (
-                <span className="font-mono text-[11px] opacity-75">
-                  SIN {ath.sailNumber}
-                </span>
-              )}
-            </button>
-          ))}
+        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-2.5 flex items-center justify-between gap-4 overflow-x-auto">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-bold text-[var(--sp-slate-soft)] flex items-center gap-1.5 pl-2 shrink-0">
+              <Users className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
+              <span>Select Athlete:</span>
+            </span>
+            <div className="flex items-center gap-1.5">
+              {athletes.map((ath) => (
+                <button
+                  key={ath.id}
+                  type="button"
+                  onClick={() => setSelectedId(ath.id)}
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+                    ath.id === selectedId
+                      ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
+                      : "bg-white text-[var(--sp-charcoal)] hover:bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)]"
+                  }`}
+                >
+                  {ath.name}
+                  {ath.ownerRelation ? ` (${ath.ownerRelation})` : ""}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <Link
+            href="/claim-profile"
+            className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline whitespace-nowrap pr-2"
+          >
+            + Link Another Sailor
+          </Link>
         </div>
       )}
 
-      {/* Athlete Workspace (remounts cleanly on athlete switch) */}
+      {/* Active Athlete Workspace */}
       <AthleteWorkspace
         key={activeAthlete.id}
         athlete={activeAthlete}

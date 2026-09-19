@@ -114,7 +114,17 @@ export async function GET(req: Request) {
       .where(eq(regattaResults.sailorId, sailorId))
       .orderBy(desc(regattas.date));
 
-    return NextResponse.json({ results: rows });
+    const mappedRows = rows.map((r) => {
+      const isOfficial = !r.slug?.startsWith("log-") || Boolean(r.countsForRanking);
+      return {
+        ...r,
+        verificationStatus: isOfficial
+          ? "verified"
+          : r.verificationStatus || "self_reported",
+      };
+    });
+
+    return NextResponse.json({ results: mappedRows });
   } catch (e) {
     return jsonError(e);
   }

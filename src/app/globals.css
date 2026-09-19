@@ -348,7 +348,16 @@ body .border-white\/5, body .border-white\/10, body .border-white\/20, body .bor
 .bg-orange-600, .bg-orange-500, .bg-amber-500, .bg-amber-600,
 .bg-yellow-500, .bg-yellow-600, .bg-teal-500, .bg-teal-600,
 .bg-sky-500, .bg-sky-600, .bg-cyan-500, .bg-blue-500, .bg-blue-600,
-.bg-emerald-500, .bg-emerald-600, .sp-primary, .sp-btn-primary { color: #fff !important; }
+.bg-emerald-500, .bg-emerald-600, .sp-primary, .sp-btn-primary,
+.bg-harbour, .bg-harbour-shadow, .bg-harbour-mid,
+.bg-\[var\(--sp-harbour-teal\)\], .bg-\[var\(--sp-harbour-shadow\)\], .bg-\[var\(--sp-color-teal\)\],
+.bg-\[var\(--sp-racing-orange\)\],
+body [class*="bg-\[var\(--sp-harbour-teal\)\]"],
+body [class*="bg-\[var\(--sp-harbour-teal\)\]"] *,
+body [class*="bg-\[var\(--sp-harbour-shadow\)\]"],
+body [class*="bg-\[var\(--sp-harbour-shadow\)\]"] *,
+body .bg-harbour *,
+body .bg-harbour-shadow * { color: #fff !important; }
 .sp-reversed .text-white, .sp-reversed .text-slate-100, .sp-reversed .text-slate-200, .sp-reversed .text-slate-300 { color: var(--sp-sailcloth) !important; }
 .sp-reversed .text-slate-400, .sp-reversed .text-slate-500, .sp-reversed .text-slate-600 { color: var(--sp-soft-aqua) !important; }
 .sp-reversed .border-white\/5, .sp-reversed .border-white\/10 { border-color: rgb(143 204 200 / 0.28) !important; }

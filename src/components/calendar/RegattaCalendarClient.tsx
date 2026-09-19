@@ -349,7 +349,7 @@ export function RegattaCalendarClient({
               onClick={() => setTimelineTab("upcoming")}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 timelineTab === "upcoming"
-                  ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+                  ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
                   : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
               }`}
             >
@@ -361,7 +361,7 @@ export function RegattaCalendarClient({
               onClick={() => setTimelineTab("past")}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                 timelineTab === "past"
-                  ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
+                  ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
                   : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
               }`}
             >
@@ -405,7 +405,7 @@ export function RegattaCalendarClient({
                 onClick={() => setSelectedRegion(reg.id)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   isSelected
-                    ? "bg-[var(--sp-harbour-teal)] text-white border border-[var(--sp-harbour-teal)] shadow-xs"
+                    ? "bg-[var(--sp-harbour-teal)] !text-white border border-[var(--sp-harbour-teal)] shadow-xs"
                     : "bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)]"
                 }`}
               >
@@ -434,7 +434,7 @@ export function RegattaCalendarClient({
                   onClick={() => setSelectedClass(cat.id)}
                   className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                     isSelected
-                      ? "bg-[var(--sp-harbour-teal)] text-white border border-[var(--sp-harbour-teal)] shadow-xs"
+                      ? "bg-[var(--sp-harbour-teal)] !text-white border border-[var(--sp-harbour-teal)] shadow-xs"
                       : "bg-[var(--sp-warm-white)] text-[var(--sp-slate-soft)] hover:bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)]"
                   }`}
                 >
@@ -447,13 +447,13 @@ export function RegattaCalendarClient({
 
           {/* Search bar */}
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--sp-slate-soft)]" />
             <input
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search regattas or venues…"
-              className="sp-input w-full pl-9 py-1.5 text-xs"
+              className="sp-input w-full !pl-10 !py-2 text-xs"
             />
           </div>
         </div>

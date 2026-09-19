@@ -911,6 +911,8 @@ export async function POST(req: Request) {
         gender: string | null;
         birthYear: number | null;
         nationality: string | null;
+        verificationStatus?: "self_reported" | "pending_review" | "verified" | "rejected";
+        verifiedAt?: Date | null;
       }[] = [];
       const pendingAliases: { sailorId: string; aliasName: string }[] = [];
       const pendingOfficialRaces: {
@@ -1313,6 +1315,8 @@ export async function POST(req: Request) {
           gender: gNorm,
           birthYear,
           nationality: resultNat,
+          verificationStatus: "verified",
+          verifiedAt: new Date(),
         });
         if (row.races.length) {
           pendingOfficialRaces.push({ sailorId, races: row.races });
@@ -1475,6 +1479,8 @@ export async function POST(req: Request) {
                     gender: sql`excluded.gender`,
                     birthYear: sql`excluded.birth_year`,
                     nationality: sql`excluded.nationality`,
+                    verificationStatus: sql`excluded.verification_status`,
+                    verifiedAt: sql`COALESCE(excluded.verified_at, now())`,
                     updatedAt: sql`now()`,
                   },
                 });
