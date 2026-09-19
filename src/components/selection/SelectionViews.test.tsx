@@ -93,12 +93,11 @@ describe("WingfoilSelectionView", () => {
     expect(screen.getByText(/Category Selection Survey Deadline/i)).toBeInTheDocument();
     expect(screen.getByText("Top Youth U17")).toBeInTheDocument();
     expect(screen.getByText("Top Junior U15")).toBeInTheDocument();
-    expect(screen.getByText("Top Senior Female")).toBeInTheDocument();
+    expect(screen.getByText("Top Female (Youth/Junior)")).toBeInTheDocument();
     expect(
       screen.getByText(/Athlete Contribution Capped at \$2,800 per event/i)
     ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Southwest Monsoon Grand Prix Series 3/i)
-    ).toBeInTheDocument();
+    expect(screen.getByText(/Selection Trials/i)).toBeInTheDocument();
+    expect(screen.getByText("Official Selection Document")).toBeInTheDocument();
   });
 });

@@ -15,7 +15,7 @@ export function DemoNavHeader({
   activeDemo,
 }: DemoNavHeaderProps) {
   return (
-    <header className="sp-reversed sticky top-0 z-50 border-b border-[var(--sp-soft-aqua)]/20 bg-[var(--sp-harbour-shadow)] text-[var(--sp-sailcloth)] shadow-md">
+    <header className="sp-reversed sticky top-14 sm:top-16 z-30 border-b border-[var(--sp-soft-aqua)]/20 bg-[var(--sp-harbour-shadow)] text-[var(--sp-sailcloth)] shadow-md">
       <div className="mx-auto max-w-7xl px-3 sm:px-6 py-2.5">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Brand & Demo Indicator */}
@@ -34,7 +34,7 @@ export function DemoNavHeader({
                 <Sparkles className="h-3 w-3 text-[var(--sp-racing-orange)]" />
                 Live Demo
               </span>
-              <span className="text-xs font-bold text-[var(--sp-sailcloth)] hidden md:inline font-display">
+              <span className="text-xs font-bold !text-[var(--sp-sailcloth)] hidden md:inline font-display">
                 SailorPath Role Experiences
               </span>
             </div>

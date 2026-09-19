@@ -17,7 +17,7 @@ export type WingfoilFundingPolicy = {
     name: string;
     code: string;
     quota: number;
-    description: string;
+    description?: string;
   }>;
   costSplit: {
     ssfCovers: string[];
@@ -29,7 +29,7 @@ export type WingfoilFundingPolicy = {
     amount: string;
     terms: string;
   }>;
-  appeals: {
+  appeals?: {
     deadline: string;
     addressTo: string;
     bond: string;
@@ -53,7 +53,7 @@ export const WINGFOIL_FUNDING_POLICY: WingfoilFundingPolicy = {
     "Must participate in the qualifying regatta",
   ],
   qualifier: {
-    event: "Southwest Monsoon Grand Prix Series 3",
+    event: "Selection Trials",
     dates: "24 – 25 October 2026",
     equipment:
       "Athletes will race on SSF's X-15 equipment, made available to Advanced wingers in the lead-up to the event.",
@@ -65,19 +65,16 @@ export const WINGFOIL_FUNDING_POLICY: WingfoilFundingPolicy = {
       name: "Top Youth U17",
       code: "U17",
       quota: 1,
-      description: "Highest placed eligible youth athlete under 17 years of age.",
     },
     {
       name: "Top Junior U15",
       code: "U15",
       quota: 1,
-      description: "Highest placed eligible junior athlete under 15 years of age.",
     },
     {
-      name: "Top Senior Female",
-      code: "Senior F",
+      name: "Top Female (Youth/Junior)",
+      code: "Female",
       quota: 1,
-      description: "Highest placed eligible senior female competitor.",
     },
   ],
   costSplit: {

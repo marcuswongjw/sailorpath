@@ -7,7 +7,6 @@ import {
   ExternalLink,
   ShieldCheck,
   Plane,
-  AlertTriangle,
   FileText,
   DollarSign,
   Award,
@@ -37,15 +36,7 @@ export function WingfoilSelectionView() {
               <Wind className="h-6 w-6" />
             </span>
             <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[10px] font-bold text-teal-600 uppercase tracking-wide">
-                  Singapore WingFoil Pathway
-                </span>
-                <span className="inline-flex items-center rounded-full bg-teal-500/10 border border-teal-500/20 px-2 py-0.5 text-[9px] font-bold text-teal-700 dark:text-teal-300">
-                  Event Funding Policy
-                </span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-charcoal tracking-tight mt-0.5">
+              <h1 className="text-2xl sm:text-3xl font-black text-charcoal tracking-tight">
                 {policy.title}
               </h1>
               <p className="text-xs sm:text-sm text-slate-soft mt-1 leading-relaxed max-w-2xl">
@@ -53,10 +44,18 @@ export function WingfoilSelectionView() {
               </p>
             </div>
           </div>
-          <div className="sm:text-right shrink-0">
-            <p className="text-[10px] text-slate-soft font-semibold">Policy Authority</p>
-            <p className="text-xs font-bold text-charcoal">{policy.authority}</p>
-            <p className="text-[10px] text-slate-soft mt-0.5">
+          <div className="sm:text-right shrink-0 space-y-1.5">
+            <a
+              href="https://www.sailing.org.sg/file/jglvfm89yldiakkg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-teal-500/30 bg-teal-500/10 hover:bg-teal-500/20 px-3.5 py-2 text-xs font-bold text-teal-700 dark:text-teal-300 transition-colors shadow-2xs"
+            >
+              <FileText className="h-3.5 w-3.5 text-teal-600" />
+              <span>Official Selection Document</span>
+              <ExternalLink className="h-3 w-3 opacity-70" />
+            </a>
+            <p className="text-[10px] text-slate-soft">
               Policy Date: {policy.policyDate} · Amended: {policy.amendedDate}
             </p>
           </div>
@@ -105,7 +104,6 @@ export function WingfoilSelectionView() {
                 <span className="text-xs font-bold text-slate-soft">{cat.quota} funded spot</span>
               </div>
               <h3 className="text-base font-black text-charcoal">{cat.name}</h3>
-              <p className="text-xs text-slate-soft leading-snug">{cat.description}</p>
             </div>
           ))}
         </div>
@@ -193,41 +191,17 @@ export function WingfoilSelectionView() {
         </div>
       </div>
 
-      {/* Eligibility & Appeals */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-        <div className="rounded-2xl border border-cool-veil bg-warm-white p-5 space-y-2 shadow-xs">
-          <h3 className="font-bold text-charcoal flex items-center gap-1.5">
-            <ShieldCheck className="h-4 w-4 text-teal-600" />
-            <span>Eligibility Requirements</span>
-          </h3>
-          <ul className="space-y-1.5 text-slate-soft list-disc list-inside">
-            {policy.eligibility.map((el) => (
-              <li key={el} className="leading-snug">{el}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="rounded-2xl border border-cool-veil bg-warm-white p-5 space-y-2 shadow-xs">
-          <h3 className="font-bold text-charcoal flex items-center gap-1.5">
-            <AlertTriangle className="h-4 w-4 text-amber-600" />
-            <span>Appeals Process</span>
-          </h3>
-          <p className="text-slate-soft leading-snug">
-            Appeals must be submitted <strong>{policy.appeals.deadline}</strong> to:
-          </p>
-          <p className="text-charcoal font-semibold">{policy.appeals.addressTo}</p>
-          <p className="text-slate-soft text-[11px]">
-            {policy.appeals.bond} · {policy.appeals.conditions}
-          </p>
-        </div>
-      </div>
-
-      {/* Federation Context Footer */}
-      <div className="rounded-2xl border border-cool-veil bg-sailcloth p-4 flex items-start gap-3 text-xs text-slate-soft">
-        <FileText className="h-4 w-4 text-slate-soft shrink-0 mt-0.5" />
-        <p className="leading-relaxed">
-          {policy.context}
-        </p>
+      {/* Eligibility Requirements */}
+      <div className="rounded-2xl border border-cool-veil bg-warm-white p-5 space-y-2 shadow-xs text-xs">
+        <h3 className="font-bold text-charcoal flex items-center gap-1.5">
+          <ShieldCheck className="h-4 w-4 text-teal-600" />
+          <span>Eligibility Requirements</span>
+        </h3>
+        <ul className="space-y-1.5 text-slate-soft list-disc list-inside">
+          {policy.eligibility.map((el) => (
+            <li key={el} className="leading-snug">{el}</li>
+          ))}
+        </ul>
       </div>
     </div>
   );

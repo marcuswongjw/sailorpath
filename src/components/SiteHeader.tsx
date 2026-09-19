@@ -211,7 +211,7 @@ export function SiteHeader() {
         {openMenu === "optimist" && (
           <div
             role="menu"
-            className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-50 text-charcoal"
+            className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
           >
             {optimistLinks}
           </div>
@@ -235,7 +235,7 @@ export function SiteHeader() {
         {openMenu === "classes" && (
           <div
             role="menu"
-            className="absolute left-0 top-[52px] w-52 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-50 text-charcoal"
+            className="absolute left-0 top-[52px] w-52 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
           >
             {classesLinks}
           </div>
@@ -368,7 +368,7 @@ export function SiteHeader() {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full max-w-[100vw] border-b border-harbour-shadow bg-harbour text-sailcloth overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
+    <header className="sticky top-0 z-[60] w-full max-w-[100vw] border-b border-harbour-shadow bg-harbour text-sailcloth overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
       <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
         <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
           <div className="flex items-center gap-3 lg:gap-8 min-w-0 flex-1">
