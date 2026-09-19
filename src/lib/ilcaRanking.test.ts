@@ -39,14 +39,14 @@ describe("defaultIlcaIntake", () => {
   it("selects July intake of current year during Jan-Jun", () => {
     const march = new Date("2026-03-15T00:00:00Z");
     expect(defaultIlcaIntake(march)).toEqual({ kind: "july", year: 2026 });
-    expect(ilcaSquadCutoff("july", 2026).asOf).toBe("2026-12-31");
+    expect(ilcaSquadCutoff("july", 2026).asOf).toBe("2026-06-30");
   });
 
   it("selects January intake of next year during Jul-Dec", () => {
     const september = new Date("2026-09-19T00:00:00Z");
     expect(defaultIlcaIntake(september)).toEqual({ kind: "january", year: 2027 });
     const cutoff = ilcaSquadCutoff("january", 2027);
-    expect(cutoff.asOf).toBe("2027-06-30");
+    expect(cutoff.asOf).toBe("2026-12-31");
 
     // Regatta held in September 2026 is included in the ranking window
     const regattas = [
@@ -67,28 +67,40 @@ describe("defaultIlcaIntake", () => {
 });
 
 describe("ilcaSquadCutoff", () => {
-  it("July intake window covers Jul – Dec of the intake year", () => {
+  it("July intake window covers Jan – Jun of the intake year", () => {
     expect(ilcaSquadCutoff("july", 2026)).toEqual({
-      asOf: "2026-12-31",
+      asOf: "2026-06-30",
       intakeYear: 2026,
+      label: expect.stringContaining("Jan – Jun 2026"),
+    });
+  });
+
+  it("January intake window covers Jul – Dec of the prior year", () => {
+    expect(ilcaSquadCutoff("january", 2027)).toEqual({
+      asOf: "2026-12-31",
+      intakeYear: 2027,
       label: expect.stringContaining("Jul – Dec 2026"),
     });
   });
 
-  it("January intake window covers Jan – Jun of the intake year", () => {
-    expect(ilcaSquadCutoff("january", 2027).asOf).toBe("2027-06-30");
-    expect(ilcaSquadCutoff("january", 2027).intakeYear).toBe(2027);
-  });
-
-  it("July window includes H2 regattas and excludes the next half", () => {
+  it("January 2027 window includes H2 regattas and excludes the next year", () => {
     const regattas = [
       { id: "jun", name: "Jun Regatta", date: "2026-06-20", totalFleetSize: 40, boatClass: "ILCA 4", countsForRanking: true, raceCount: 6 },
       { id: "sep", name: "Sep Regatta", date: "2026-09-15", totalFleetSize: 46, boatClass: "ILCA 4", countsForRanking: true, raceCount: 6 },
       { id: "jan-next", name: "Jan Next Year", date: "2027-01-10", totalFleetSize: 40, boatClass: "ILCA 4", countsForRanking: true, raceCount: 6 },
     ];
-    const window = ilcaRankingRegattas(regattas, "ILCA 4", ilcaSquadCutoff("july", 2026).asOf);
-    // Returned oldest → newest; H2 regatta included, next-half regatta excluded
+    const window = ilcaRankingRegattas(regattas, "ILCA 4", ilcaSquadCutoff("january", 2027).asOf);
+    // Returned oldest → newest; H2 regatta included, next-year regatta excluded
     expect(window.map((r) => r.id)).toEqual(["jun", "sep"]);
+  });
+
+  it("July 2026 window excludes H2 regattas", () => {
+    const regattas = [
+      { id: "jun", name: "Jun Regatta", date: "2026-06-20", totalFleetSize: 40, boatClass: "ILCA 4", countsForRanking: true, raceCount: 6 },
+      { id: "sep", name: "Sep Regatta", date: "2026-09-15", totalFleetSize: 46, boatClass: "ILCA 4", countsForRanking: true, raceCount: 6 },
+    ];
+    const window = ilcaRankingRegattas(regattas, "ILCA 4", ilcaSquadCutoff("july", 2026).asOf);
+    expect(window.map((r) => r.id)).toEqual(["jun"]);
   });
 });
 

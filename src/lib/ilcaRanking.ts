@@ -411,8 +411,8 @@ export function defaultIlcaIntake(now = new Date()): {
   year: number;
 } {
   const y = now.getFullYear();
-  // In Jan–Jun (months 0–5), competition leads to the July intake of current year (cutoff: 30 June Y).
-  // In Jul–Dec (months 6–11), competition leads to the January intake of next year (cutoff: 20 Dec Y).
+  // In Jan–Jun (months 0–5), competition in H1 leads to the July intake of current year (cutoff: 30 June Y).
+  // In Jul–Dec (months 6–11), competition in H2 leads to the January intake of next year (cutoff: 31 Dec Y).
   if (now.getMonth() < 6) {
     return { kind: "july", year: y };
   }
@@ -420,11 +420,9 @@ export function defaultIlcaIntake(now = new Date()): {
 }
 
 /**
- * Ranking window + intake year for a squad intake.
- * The selector labels each intake by the half the squad serves, so the
- * ranking window covers that same half:
- *   July Y intake (serves Jul–Dec Y)  → regattas through 31 Dec Y
- *   January Y intake (serves Jan–Jun Y) → regattas through 30 Jun Y
+ * Ranking window + intake year for squad selection.
+ * Competition in Jan–Jun Y (cutoff 30 Jun Y) selects July Y intake.
+ * Competition in Jul–Dec Y (cutoff 31 Dec Y) selects January Y+1 intake.
  */
 export function ilcaSquadCutoff(
   kind: IlcaIntakeKind,
@@ -433,15 +431,17 @@ export function ilcaSquadCutoff(
 ): { asOf: string; intakeYear: number; label: string } {
   if (kind === "july") {
     return {
-      asOf: `${intakeYear}-12-31`,
+      asOf: `${intakeYear}-06-30`,
       intakeYear,
-      label: `July ${intakeYear} intake · Jul – Dec ${intakeYear} results`,
+      label: `Jan – Jun ${intakeYear} · July ${intakeYear} intake`,
     };
   }
+  // January intake of year Y is selected from Jul–Dec of previous year Y-1
+  const compYear = intakeYear - 1;
   return {
-    asOf: `${intakeYear}-06-30`,
+    asOf: `${compYear}-12-31`,
     intakeYear,
-    label: `January ${intakeYear} intake · Jan – Jun ${intakeYear} results`,
+    label: `Jul – Dec ${compYear} · January ${intakeYear} intake`,
   };
 }
 

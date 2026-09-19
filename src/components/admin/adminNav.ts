@@ -181,7 +181,7 @@ export type AdminTabGroup = {
 
 export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
   {
-    groupTitle: "Class Hubs & Database",
+    groupTitle: "Boat Classes",
     tabs: [
       {
         key: "edit",
@@ -205,13 +205,7 @@ export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
         key: "techno293",
         shortLabel: "Techno 293",
         label: "Techno 293",
-        sublabel: "One Design windsurfing scoreboards",
-      },
-      {
-        key: "analysis",
-        shortLabel: "Analysis",
-        label: "Gold Analysis",
-        sublabel: "Fleet progression",
+        sublabel: "One Design windsurfing",
       },
     ],
   },
@@ -229,6 +223,12 @@ export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
         shortLabel: "Ops",
         label: "Claims & Ops",
         sublabel: "Claims, coaches & support",
+      },
+      {
+        key: "analysis",
+        shortLabel: "Analysis",
+        label: "Gold Analysis",
+        sublabel: "Fleet progression",
       },
     ],
   },

@@ -22,25 +22,23 @@ export function getIlcaIntakeOptions(activeYear?: number): Array<{
   label: string;
 }> {
   const currentYear = new Date().getFullYear();
-  const maxYear = Math.max(currentYear + 1, (activeYear || 0) + 1);
+  const maxYear = Math.max(currentYear, activeYear || 0);
   const minYear = 2024;
   const list: Array<{ kind: IlcaIntakeKind; year: number; label: string }> = [];
 
   for (let yr = maxYear; yr >= minYear; yr--) {
-    // January intake of year yr serves Jan – Jun yr (table shows Jan – Jun yr regattas)
+    // Jul – Dec yr competition period leads to January yr+1 intake (cutoff 31 Dec yr)
     list.push({
       kind: "january",
+      year: yr + 1,
+      label: `Jul – Dec ${yr}`,
+    });
+    // Jan – Jun yr competition period leads to July yr intake (cutoff 30 Jun yr)
+    list.push({
+      kind: "july",
       year: yr,
       label: `Jan – Jun ${yr}`,
     });
-    // July intake of previous year serves Jul – Dec yr-1 (table shows Jul – Dec yr-1 regattas)
-    if (yr - 1 >= minYear) {
-      list.push({
-        kind: "july",
-        year: yr - 1,
-        label: `Jul – Dec ${yr - 1}`,
-      });
-    }
   }
   return list;
 }
@@ -80,6 +78,7 @@ export function IlcaRankingsView({
   const y = now.getFullYear();
   const acct = useAccountOptional();
   const isLoggedIn = Boolean(acct?.email);
+  const accountReady = acct ? acct.ready : true;
 
   const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(initialIntakeKind);
   const [intakeYear, setIntakeYear] = useState(initialIntakeYear);
@@ -138,34 +137,23 @@ export function IlcaRankingsView({
   }, [rankingBase]);
 
   const projectedSquadMap = useMemo(() => {
-    return new Map(projectedSquad.map((s) => [s.sailorId, s]));
+    const map = new Map<string, (typeof projectedSquad)[number]>();
+    for (const p of projectedSquad) {
+      map.set(p.sailorId, p);
+    }
+    return map;
   }, [projectedSquad]);
 
-  const filtered = useMemo(() => {
-    if (genderFilter === "all") return rankingBase;
-    return rankingBase.filter((r) => r.gender === genderFilter);
+  const displayRanked = useMemo(() => {
+    if (genderFilter === "all") return rankingBase.map((s, i) => ({ ...s, displayRank: i + 1 }));
+    return rankingBase
+      .filter((s) => s.gender === genderFilter)
+      .map((s, i) => ({ ...s, displayRank: i + 1 }));
   }, [rankingBase, genderFilter]);
 
-  const displayRanked = useMemo(() => {
-    return filtered.map((r, i) => ({ ...r, displayRank: i + 1 }));
-  }, [filtered]);
-
   const eventSlots = useMemo(() => {
-    const first = ranked.find((r) => r.eventScores?.length);
-    if (!first) return [] as {
-      regattaId: string;
-      regattaName: string;
-      date: string;
-      fleetSize: number;
-      idx: number;
-    }[];
-    return first.eventScores.map((e, idx) => ({
-      regattaId: e.regattaId,
-      regattaName: e.regattaName,
-      date: e.date,
-      fleetSize: e.fleetSize,
-      idx,
-    }));
+    const r0 = ranked[0];
+    return r0 ? r0.eventScores : [];
   }, [ranked]);
 
   const excludedIndexes = useMemo(() => {
@@ -196,6 +184,52 @@ export function IlcaRankingsView({
 
   return (
     <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-4 sm:space-y-6 overflow-x-clip">
+      {accountReady && !isLoggedIn && (
+        <div className="rounded-xl border border-sky-500/25 bg-sky-500/[0.07] px-3.5 py-3 sm:px-4 sm:py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 no-print">
+          <div className="flex items-start gap-2.5 min-w-0 flex-1">
+            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-500/15 text-sky-400 border border-sky-500/20">
+              <Lock className="h-3.5 w-3.5" />
+            </span>
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-sm font-bold text-white leading-snug">
+                  Projected National Squad &amp; 2026 Selection Trials
+                </p>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-400 bg-sky-500/15 px-1.5 py-0.5 rounded-full border border-sky-500/25">
+                  Sign in required
+                </span>
+              </div>
+              <p className="text-[12px] text-slate-400 mt-0.5 leading-snug">
+                Signed-in accounts can access projected Nat squad status and the 2026 Eastern Seaboard &amp; Asian Open Selection Trials leaderboards.
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 sm:shrink-0 pl-10 md:pl-0">
+            <Link
+              href="/sg/ilca4/selection"
+              prefetch
+              className="inline-flex items-center gap-1 rounded-full bg-sky-500/15 border border-sky-500/30 px-3 py-1.5 text-xs font-bold text-sky-300 hover:bg-sky-500/25 transition-colors"
+            >
+              <Trophy className="h-3 w-3 text-sky-400" />
+              <span>Selection Trials</span>
+              <span>→</span>
+            </Link>
+            <Link
+              href="/register?next=%2Fsg%2Filca4"
+              className="inline-flex rounded-full bg-sky-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-sky-500 shadow-sm"
+            >
+              Create account
+            </Link>
+            <Link
+              href="/login?next=%2Fsg%2Filca4"
+              className="text-xs font-semibold text-slate-400 hover:text-white px-1.5 py-1"
+            >
+              Log in
+            </Link>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 no-print min-w-0">
         <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
           <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-sky-600/15 text-sky-400 border border-sky-500/25">
@@ -212,22 +246,24 @@ export function IlcaRankingsView({
               Best 3 of last 5 · highlighted scores are selected · 1st = fleet
               size pts · * = DNS (0 pts)
             </p>
-            <div className="mt-2.5 flex flex-wrap items-center gap-2">
-              <Link
-                href="/sg/ilca4/selection"
-                prefetch
-                className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-[11px] font-bold text-sky-300 hover:bg-sky-500/20 transition-colors"
-              >
-                <Trophy className="h-3 w-3 text-sky-400" />
-                <span>Selection trials &amp; NJTS policy</span>
-                <span>→</span>
-              </Link>
-              {isLoggedIn && projectedSquad.length > 0 && (
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[11px] font-bold text-amber-300">
-                  <span>{projectedSquad.length} Projected Nat Squad</span>
-                </span>
-              )}
-            </div>
+            {isLoggedIn && (
+              <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                <Link
+                  href="/sg/ilca4/selection"
+                  prefetch
+                  className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-[11px] font-bold text-sky-300 hover:bg-sky-500/20 transition-colors"
+                >
+                  <Trophy className="h-3 w-3 text-sky-400" />
+                  <span>Selection trials &amp; Nat squad policy</span>
+                  <span>→</span>
+                </Link>
+                {projectedSquad.length > 0 && (
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[11px] font-bold text-amber-300">
+                    <span>{projectedSquad.length} Projected Nat Squad</span>
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 w-full lg:w-auto min-w-0">

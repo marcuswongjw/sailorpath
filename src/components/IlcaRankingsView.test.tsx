@@ -86,7 +86,8 @@ describe("IlcaRankingsView", () => {
     );
 
     expect(screen.getByText("National standings")).toBeInTheDocument();
-    expect(screen.getByText("Selection trials & NJTS policy")).toBeInTheDocument();
+    expect(screen.getByText(/Projected National Squad & 2026 Selection Trials/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Selection Trials/i })).toBeInTheDocument();
     expect(screen.getByText("Uncheck a regatta to exclude it from Best 3 of 5")).toBeInTheDocument();
     expect(screen.getAllByText("Alex Tan").length).toBeGreaterThanOrEqual(1);
   });

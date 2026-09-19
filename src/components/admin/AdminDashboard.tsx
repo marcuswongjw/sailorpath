@@ -518,11 +518,11 @@ function AdminDashboardInner() {
           <div
             key={grp.groupTitle}
             className={`rounded-2xl border border-white/5 bg-[#131520] p-1.5 flex flex-col justify-between ${
-              grp.groupTitle.startsWith("Class")
-                ? "md:col-span-6"
+              grp.groupTitle.startsWith("Boat") || grp.groupTitle.startsWith("Class")
+                ? "md:col-span-6 lg:col-span-5"
                 : grp.groupTitle.startsWith("Ingestion")
-                  ? "md:col-span-3"
-                  : "md:col-span-3"
+                  ? "md:col-span-6 lg:col-span-4"
+                  : "md:col-span-12 lg:col-span-3"
             }`}
           >
             <div className="px-2 py-0.5 mb-1 flex items-center justify-between">
@@ -564,6 +564,78 @@ function AdminDashboardInner() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Contextual live public view link for active workspace */}
+      <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 bg-[#131520] border border-white/5 rounded-2xl px-3.5 py-2">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="font-semibold text-slate-300">
+            {activeTab === "edit"
+              ? "Optimist & Database Workspace"
+              : activeTab === "ilca"
+                ? "ILCA 4 National Ranking & Squad Workspace"
+                : activeTab === "wingfoil"
+                  ? "WingFoil Slalom Scoring Workspace"
+                  : activeTab === "techno293"
+                    ? "Techno 293 Windsurfing Workspace"
+                    : activeTab === "import"
+                      ? "Excel & PDF Regatta Ingestion"
+                      : activeTab === "ops"
+                        ? "Claims & Support Operations"
+                        : activeTab === "analysis"
+                          ? "Gold Fleet Progression Analysis"
+                          : activeTab === "stats"
+                            ? "Platform Health & Metrics"
+                            : "Platform Release Notes"}
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          {activeTab === "edit" && (
+            <Link
+              href="/sg/optimist/gold"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-orange-400 hover:text-orange-300 transition-colors"
+            >
+              <span>Public Gold Rankings</span>
+              <ChevronRight className="h-3 w-3" />
+            </Link>
+          )}
+          {activeTab === "ilca" && (
+            <Link
+              href="/sg/ilca4"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-sky-400 hover:text-sky-300 transition-colors"
+            >
+              <span>Public ILCA 4 Standings</span>
+              <ChevronRight className="h-3 w-3" />
+            </Link>
+          )}
+          {activeTab === "wingfoil" && (
+            <Link
+              href="/sg/wingfoil"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+            >
+              <span>Public WingFoil Results</span>
+              <ChevronRight className="h-3 w-3" />
+            </Link>
+          )}
+          {activeTab === "techno293" && (
+            <Link
+              href="/sg/techno293"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
+            >
+              <span>Public Techno 293 Results</span>
+              <ChevronRight className="h-3 w-3" />
+            </Link>
+          )}
+        </div>
       </div>
 
       {!isSuperadmin && (
@@ -622,20 +694,37 @@ function AdminDashboardInner() {
           <div className="w-full min-w-0 space-y-4 sm:space-y-6">
             <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
               <div className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full">
-                {ADMIN_DB_SUB_TABS.map(({ id, label }) => (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => goSub(id)}
-                    className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation ${
-                      editSubTab === id
-                        ? "bg-orange-600 text-white"
-                        : "text-slate-400 hover:text-white hover:bg-white/5"
-                    }`}
-                  >
-                    {label}
-                  </button>
-                ))}
+                {ADMIN_DB_SUB_TABS.map(({ id, label }) => {
+                  let count: number | null = null;
+                  if (id === "sailors") count = data.sailorList.length;
+                  if (id === "regattas") count = data.regattaList.length;
+                  if (id === "results") count = data.resultsList.length;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => goSub(id)}
+                      className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation inline-flex items-center gap-1.5 ${
+                        editSubTab === id
+                          ? "bg-orange-600 text-white shadow-sm"
+                          : "text-slate-400 hover:text-white hover:bg-white/5"
+                      }`}
+                    >
+                      <span>{label}</span>
+                      {count != null && count > 0 && (
+                        <span
+                          className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-medium ${
+                            editSubTab === id
+                              ? "bg-orange-700/80 text-orange-100"
+                              : "bg-white/10 text-slate-400"
+                          }`}
+                        >
+                          {count}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 

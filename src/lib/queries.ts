@@ -666,7 +666,7 @@ export const getCachedIlcaRankings = unstable_cache(
       label: cutoff.label,
     };
   },
-  ["ilca-rankings-board-v5"],
+  ["ilca-rankings-board-v7"],
   { revalidate: 60, tags: [CACHE_TAG_ILCA_RANKINGS] }
 );
 
@@ -1079,7 +1079,7 @@ export const getCachedPublicRegattas = unstable_cache(
       return [];
     }
   },
-  ["public-regattas-list-v2"],
+  ["public-regattas-list-v3"],
   { revalidate: 120, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 

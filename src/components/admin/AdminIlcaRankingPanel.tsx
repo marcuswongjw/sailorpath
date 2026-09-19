@@ -466,8 +466,8 @@ export function AdminIlcaRankingPanel({
                 setIntakeKind(e.target.value as IlcaIntakeKind)
               }
             >
-              <option value="july">July intake (Jul – Dec results)</option>
-              <option value="january">January intake (Jan – Jun results)</option>
+              <option value="january">January intake (Jul – Dec results · cutoff 31 Dec)</option>
+              <option value="july">July intake (Jan – Jun results · cutoff 30 Jun)</option>
             </select>
           </label>
           <label className="text-xs text-slate-400">
