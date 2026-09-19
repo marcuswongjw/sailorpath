@@ -656,14 +656,23 @@ export function HomeLivePreview() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-1 text-xs text-slate-400">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1 text-xs text-slate-400">
               <span>Dedicated private workspaces for parents with athlete profile claiming.</span>
-              <Link
-                href="/parent"
-                className="font-bold text-emerald-400 hover:text-emerald-300"
-              >
-                Open Parent Dashboard →
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/demo/parent"
+                  className="font-bold text-emerald-400 hover:text-emerald-300"
+                >
+                  Explore Parent Demo →
+                </Link>
+                <span className="text-white/20">·</span>
+                <Link
+                  href="/parent"
+                  className="font-semibold text-slate-300 hover:text-white"
+                >
+                  Parent Portal
+                </Link>
+              </div>
             </div>
           </div>
         )}
@@ -749,14 +758,23 @@ export function HomeLivePreview() {
               </div>
             </div>
 
-            <div className="flex items-center justify-between pt-1 text-xs text-slate-400">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1 text-xs text-slate-400">
               <span>Coaching dashboard is restricted to verified club and national coaches.</span>
-              <Link
-                href="/register?role=coach&next=%2Fcoach-tools"
-                className="font-bold text-sky-400 hover:text-sky-300"
-              >
-                Apply for coach access →
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/demo/coach"
+                  className="font-bold text-sky-400 hover:text-sky-300"
+                >
+                  Explore Coach Demo →
+                </Link>
+                <span className="text-white/20">·</span>
+                <Link
+                  href="/register?role=coach&next=%2Fcoach-tools"
+                  className="font-semibold text-slate-300 hover:text-white"
+                >
+                  Apply for Access
+                </Link>
+              </div>
             </div>
           </div>
         )}

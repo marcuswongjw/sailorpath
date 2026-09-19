@@ -1,56 +1,34 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { SailorProfileView } from "@/components/SailorProfileView";
+import { DemoNavHeader } from "@/components/demo/DemoNavHeader";
 import {
   DEMO_ROLE_COPY,
-  SAMPLE_COACH_PANEL,
   SAMPLE_EQUIPMENT,
   SAMPLE_ILCA_STANDING,
   SAMPLE_OBSERVATIONS,
-  SAMPLE_PARENT_PANEL,
   SAMPLE_RESULTS,
   SAMPLE_SAILOR,
   SAMPLE_SERIES_STANDING,
   type DemoRole,
 } from "@/lib/sampleProfile";
 import {
-  Users,
   User,
-  Heart,
-  ClipboardList,
   Sparkles,
   Settings,
   X,
-  Calendar,
-  AlertTriangle,
-  CheckCircle2,
-  Wrench,
-  GraduationCap,
-  UserPlus,
-  ChevronRight,
-  Target,
-  CheckSquare,
-  Square,
-  RotateCcw,
+  Heart,
+  ClipboardList,
   ArrowRight,
-  Plus,
-  Trash2,
 } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
 
-type CoachRosterSailor = {
-  name: string;
-  handle: string;
-  rank: number;
-  highlight: string;
-  avgFinish?: string;
-  selection?: string;
-};
+export type SailorDemoRole = "public" | "sailor";
 
-const ROLES: DemoRole[] = ["public", "sailor", "parent", "coach"];
+const SAILOR_ROLES: SailorDemoRole[] = ["public", "sailor"];
 
 function PrivacySettingsBody({
   childLabel,
@@ -117,56 +95,31 @@ function PrivacySettingsBody({
 }
 
 export function SampleDemoShell() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const initial = (searchParams.get("view") || "public").toLowerCase();
-  const startRole: DemoRole = ROLES.includes(initial as DemoRole)
-    ? (initial as DemoRole)
+  const rawView = (searchParams.get("view") || "public").toLowerCase();
+
+  // Redirect parent & coach views to their dedicated demo pages
+  useEffect(() => {
+    if (rawView === "parent") {
+      router.replace("/demo/parent");
+    } else if (rawView === "coach") {
+      router.replace("/demo/coach");
+    }
+  }, [rawView, router]);
+
+  const startRole: SailorDemoRole = SAILOR_ROLES.includes(rawView as SailorDemoRole)
+    ? (rawView as SailorDemoRole)
     : "public";
 
-  const [role, setRole] = useState<DemoRole>(startRole);
+  const [role, setRole] = useState<SailorDemoRole>(startRole);
   const [toast, setToast] = useState<string | null>(null);
-  const [coachNotes, setCoachNotes] = useState(SAMPLE_COACH_PANEL.coachNotes);
-  const [parentNotes, setParentNotes] = useState(SAMPLE_PARENT_PANEL.parentNotes);
-  const [selectedAthleteId, setSelectedAthleteId] = useState<string>("sample-kimberly");
-  const [checklistItems, setChecklistItems] = useState(SAMPLE_PARENT_PANEL.morningChecklist);
-  const [newChecklistInput, setNewChecklistInput] = useState("");
-  const [coachDevRecords, setCoachDevRecords] = useState(
-    SAMPLE_COACH_PANEL.developmentRecords || []
-  );
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [compareTo, setCompareTo] = useState(
-    SAMPLE_COACH_PANEL.compareOptions[0]?.name || ""
-  );
-  const [coachRoster, setCoachRoster] = useState<CoachRosterSailor[]>(
-    SAMPLE_COACH_PANEL.squadTeaser.map((s) => ({
-      ...s,
-      avgFinish:
-        s.name === "Kimberly Tan"
-          ? "3.6"
-          : s.name === "Ethan Koh"
-            ? "7.1"
-            : "9.4",
-      selection:
-        s.name === "Kimberly Tan"
-          ? "On track"
-          : s.name === "Ethan Koh"
-            ? "Watch"
-            : "Developing",
-    }))
-  );
-  const [selectedCoachSailor, setSelectedCoachSailor] =
-    useState<CoachRosterSailor | null>(null);
 
-  const copy = DEMO_ROLE_COPY[role];
+  const copy = DEMO_ROLE_COPY[role as DemoRole];
 
-  // Access matrix:
-  // public — public only, can claim
-  // sailor — owner + private; privacy Settings only on sailor demo view
-  // parent — parent dashboard; no privacy toggles on demo
-  // coach — never privacy; no private weight/equipment unless shared
-  const canSeePrivate = role === "sailor" || role === "parent";
+  const canSeePrivate = role === "sailor";
   const isOwner = role === "sailor";
-  /** Demo: privacy controls only on sailor view */
   const canManagePrivacy = role === "sailor";
   const canClaim = role === "public";
 
@@ -175,7 +128,7 @@ export function SampleDemoShell() {
     setTimeout(() => setToast(null), 2200);
   };
 
-  const setRoleAndUrl = (r: DemoRole) => {
+  const setRoleAndUrl = (r: SailorDemoRole) => {
     if (r !== role) {
       trackClientUsage("demo_role_switch", "/sample", {
         from: role,
@@ -184,7 +137,6 @@ export function SampleDemoShell() {
     }
     setRole(r);
     setSettingsOpen(false);
-    setSelectedCoachSailor(null);
     if (typeof window !== "undefined") {
       const u = new URL(window.location.href);
       u.searchParams.set("view", r);
@@ -192,905 +144,55 @@ export function SampleDemoShell() {
     }
   };
 
-  const rolePanels = useMemo(() => {
-    if (role === "public") {
-      return null; // claim banner lives inside SailorProfileView
-    }
+  return (
+    <div className="flex-1 flex flex-col bg-[#0d1017]">
+      {/* Top Demo Navigation Bar */}
+      <DemoNavHeader
+        activeDemo="sailor"
+        sailorViewMode={role}
+        onSailorViewChange={setRoleAndUrl}
+      />
 
-    if (role === "sailor") {
-      return null; // tip lives inline near regatta table
-    }
-
-    if (role === "parent") {
-      const p = SAMPLE_PARENT_PANEL;
-      const currentAthlete =
-        p.athletes.find((a) => a.id === selectedAthleteId) || p.athletes[0];
-      const completedCount = checklistItems.filter((i) => i.checked).length;
-
-      return (
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 space-y-6 pb-6 pt-4">
-          {/* Header & Multi-Athlete Switcher */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-                <Heart className="h-5 w-5" />
-              </span>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="text-base font-black text-white tracking-tight">
-                    Parent Dashboard Command Center
-                  </h3>
-                  <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-black text-emerald-300">
-                    Live Demo
-                  </span>
-                </div>
-                <p className="text-xs text-slate-400">
-                  {p.claimStatus} · Linked to 2 athletes
-                </p>
-              </div>
-            </div>
-
-            {/* Athlete Switcher Pills */}
-            <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-black/40 border border-white/10 self-start sm:self-auto">
-              {p.athletes.map((ath) => (
-                <button
-                  key={ath.id}
-                  type="button"
-                  onClick={() => setSelectedAthleteId(ath.id)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                    selectedAthleteId === ath.id
-                      ? "bg-emerald-600 text-white shadow-sm shadow-emerald-900/40"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  <span>{ath.name}</span>
-                  <span className="ml-1.5 text-[10px] font-mono opacity-80 font-normal">
-                    ({ath.rankLabel})
-                  </span>
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={() => setSelectedAthleteId("all")}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                  selectedAthleteId === "all"
-                    ? "bg-emerald-600 text-white shadow-sm shadow-emerald-900/40"
-                    : "text-slate-400 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                All Athletes
-              </button>
-            </div>
-          </div>
-
-          {/* ALL ATHLETES VIEW */}
-          {selectedAthleteId === "all" ? (
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <h4 className="text-sm font-bold text-white mb-1">
-                  Family Fleet Summary
-                </h4>
-                <p className="text-xs text-slate-400">
-                  Side-by-side progression tracking across Optimist Gold and Silver series.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {p.athletes.map((ath) => (
-                  <div
-                    key={ath.id}
-                    className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-5 space-y-4"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <h4 className="text-base font-black text-white">{ath.name}</h4>
-                        <p className="text-xs text-slate-400 font-mono mt-0.5">
-                          {ath.sailNumber}
-                          {ath.sailNumberIlca4 ? ` · ${ath.sailNumberIlca4}` : ""}
-                        </p>
-                        <p className="text-xs text-emerald-400 font-bold mt-1">
-                          {ath.boatClass} · {ath.rankLabel}
-                        </p>
-                      </div>
-                      <span className="rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 text-xs font-black text-emerald-300 font-mono">
-                        #{ath.rank}
-                      </span>
-                    </div>
-                    <div className="rounded-xl bg-black/30 border border-white/5 p-3 space-y-1">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                        Status / Pathway
-                      </p>
-                      <p className="text-xs font-medium text-slate-200">
-                        {ath.selectionStatus}
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedAthleteId(ath.id)}
-                      className="w-full rounded-xl bg-white/10 hover:bg-white/15 py-2 text-xs font-bold text-white transition-colors"
-                    >
-                      Open {ath.name}&apos;s Workspace →
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            /* SINGLE ATHLETE BENTO WORKSPACE */
-            <div className="space-y-5">
-              {/* Athlete Hero Card */}
-              <div className="rounded-2xl border border-emerald-500/25 bg-gradient-to-r from-emerald-500/[0.08] via-teal-500/[0.04] to-transparent p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="space-y-1.5">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h4 className="text-xl font-black text-white">
-                      {currentAthlete.name}
-                    </h4>
-                    <span className="rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold">
-                      Verified Athlete
-                    </span>
-                    <span className="rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 text-[10px] font-mono font-bold">
-                      Opti {currentAthlete.sailNumber}
-                    </span>
-                    {currentAthlete.sailNumberIlca4 && (
-                      <span className="rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 text-[10px] font-mono font-bold">
-                        ILCA {currentAthlete.sailNumberIlca4}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-slate-400">
-                    {p.club} · {p.coachName} · {currentAthlete.selectionStatus}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <Link
-                    href="/calendar"
-                    className="rounded-xl border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 px-3.5 py-2 text-xs font-bold text-sky-300 transition-colors inline-flex items-center gap-1.5"
-                  >
-                    <Calendar className="h-3.5 w-3.5" />
-                    Racing Calendar
-                  </Link>
-                </div>
-              </div>
-
-              {/* 5-Card Bento Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Card 1: 2026 Asian Games & Selection Trials Standings */}
-                <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.04] p-5 space-y-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="text-[10px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                      <Target className="h-3.5 w-3.5" />
-                      2026 Selection Trials Standings
-                    </p>
-                    <span className="rounded-full bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-300">
-                      Rank #{p.selectionTrials.trialsRank}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
-                      <p className="text-[10px] font-bold uppercase text-slate-500">
-                        Combined Score
-                      </p>
-                      <p className="text-lg font-black text-white font-mono mt-0.5">
-                        {p.selectionTrials.totalPoints}
-                      </p>
-                    </div>
-                    <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
-                      <p className="text-[10px] font-bold uppercase text-slate-500">
-                        Events Sailed
-                      </p>
-                      <p className="text-lg font-black text-white font-mono mt-0.5">
-                        {p.selectionTrials.eventsCount}
-                      </p>
-                    </div>
-                    <div className="rounded-xl bg-black/30 border border-white/5 p-3 text-center">
-                      <p className="text-[10px] font-bold uppercase text-slate-500">
-                        Cutoff Buffer
-                      </p>
-                      <p className="text-lg font-black text-emerald-400 font-mono mt-0.5">
-                        +{p.selectionTrials.gapToCutoff} pts
-                      </p>
-                    </div>
-                  </div>
-                  <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3 space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-300">
-                      <CheckCircle2 className="h-3.5 w-3.5" />
-                      <span>Provisional Asian Games &amp; Perth Qualifier</span>
-                    </div>
-                    <p className="text-[11px] text-slate-300 leading-snug">
-                      {p.selectionTrials.selectionNote}
-                    </p>
-                  </div>
-                  <Link
-                    href="/sg/optimist/selection"
-                    className="inline-flex items-center gap-1 text-xs font-bold text-amber-400 hover:text-amber-300"
-                  >
-                    <span>View full 2026 Selection Board</span>
-                    <ArrowRight className="h-3 w-3" />
-                  </Link>
-                </div>
-
-                {/* Card 2: Equipment Locker & Maintenance Alerts */}
-                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-4">
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                      <Wrench className="h-3.5 w-3.5 text-orange-400" />
-                      Boat Locker &amp; Equipment
-                    </p>
-                    <span className="text-[10px] font-semibold text-slate-500">
-                      4 Registered Items
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    {p.equipmentLocker.map((item) => {
-                      const cond = String(item.condition);
-                      const isReady = cond === "race_ready" || cond === "good";
-                      const isPractice = cond === "practice_only" || cond === "fair";
-                      return (
-                        <div
-                          key={item.type}
-                          className="rounded-xl bg-black/25 border border-white/5 p-2.5"
-                        >
-                          <div className="flex items-center justify-between text-[10px]">
-                            <span className="font-bold text-slate-400 uppercase">
-                              {item.type}
-                            </span>
-                            <span
-                              className={`px-1.5 py-0.5 rounded font-bold uppercase text-[9px] ${
-                                isReady
-                                  ? "bg-emerald-500/15 text-emerald-300"
-                                  : isPractice
-                                  ? "bg-amber-500/15 text-amber-300"
-                                  : "bg-rose-500/15 text-rose-300"
-                              }`}
-                            >
-                              {isReady ? "Race Ready" : isPractice ? "Practice Only" : "Needs Repair"}
-                            </span>
-                          </div>
-                          <p className="text-xs font-bold text-white mt-1 truncate">
-                            {item.brand}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className="rounded-xl bg-amber-500/10 border border-amber-500/25 p-3 flex items-start gap-2.5">
-                    <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                    <p className="text-xs text-amber-200 leading-snug">
-                      Sail acquired Feb 2025 (~18 months). Consider measuring a backup sail before AOC trials.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Card 3: Coach Observations & Debriefs */}
-                <div className="rounded-2xl border border-blue-500/25 bg-blue-500/[0.04] p-5 space-y-3">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-blue-400 flex items-center gap-1.5">
-                    <GraduationCap className="h-3.5 w-3.5" />
-                    Coach Technical Debriefs
-                  </p>
-                  <div className="space-y-2">
-                    {p.coachDebriefs.map((deb, idx) => (
-                      <div
-                        key={idx}
-                        className="rounded-xl bg-black/30 border border-white/5 p-3 space-y-1"
-                      >
-                        <div className="flex items-center justify-between text-[10px]">
-                          <span className="font-bold text-blue-300">{deb.coachName}</span>
-                          <span className="rounded bg-white/5 px-1.5 py-0.5 text-slate-400 font-mono">
-                            {deb.category} · {deb.date}
-                          </span>
-                        </div>
-                        <p className="text-xs text-slate-300 leading-relaxed">
-                          {deb.note}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Card 4: Pre-Race Morning Checklist & Calendar */}
-                <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-3.5">
-                  <div className="flex items-center justify-between gap-2">
-                    <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                      <CheckSquare className="h-3.5 w-3.5 text-emerald-400" />
-                      Pre-Race Morning Checklist
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[10px] font-mono text-emerald-400 font-bold">
-                        {completedCount}/{checklistItems.length} Ready
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setChecklistItems((prev) =>
-                            prev.map((i) => ({ ...i, checked: false }))
-                          );
-                          flash("Demo checklist reset");
-                        }}
-                        className="text-[10px] text-slate-500 hover:text-white p-1"
-                        title="Reset checklist"
-                      >
-                        <RotateCcw className="h-3 w-3" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Interactive Checklist toggles in demo */}
-                  <div className="space-y-1.5">
-                    {checklistItems.map((item) => (
-                      <div
-                        key={item.id}
-                        className={`group flex items-center justify-between p-2 rounded-xl transition-colors ${
-                          item.checked
-                            ? "bg-emerald-500/10 border border-emerald-500/20 text-slate-200"
-                            : "bg-black/20 border border-white/5 text-slate-400 hover:bg-white/5"
-                        }`}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setChecklistItems((prev) =>
-                              prev.map((i) =>
-                                i.id === item.id ? { ...i, checked: !i.checked } : i
-                              )
-                            );
-                          }}
-                          className="w-full text-left flex items-start gap-2.5 min-w-0"
-                        >
-                          {item.checked ? (
-                            <CheckSquare className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                          ) : (
-                            <Square className="h-4 w-4 text-slate-600 shrink-0 mt-0.5" />
-                          )}
-                          <span
-                            className={`text-xs ${
-                              item.checked ? "line-through opacity-80" : ""
-                            }`}
-                          >
-                            {item.label}
-                          </span>
-                        </button>
-                        {item.id.startsWith("custom") && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setChecklistItems((prev) =>
-                                prev.filter((i) => i.id !== item.id)
-                              );
-                              flash("Checklist item removed");
-                            }}
-                            className="text-slate-500 hover:text-rose-400 p-1 opacity-70 group-hover:opacity-100 transition shrink-0 ml-2"
-                            title="Remove custom item"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </button>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Add Custom Item Input */}
-                  <div className="flex items-center gap-2 pt-1">
-                    <input
-                      type="text"
-                      value={newChecklistInput}
-                      onChange={(e) => setNewChecklistInput(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          const trimmed = newChecklistInput.trim();
-                          if (!trimmed) return;
-                          setChecklistItems((prev) => [
-                            ...prev,
-                            { id: `custom-${Date.now()}`, label: trimmed, checked: false },
-                          ]);
-                          setNewChecklistInput("");
-                          flash("Custom item added");
-                        }
-                      }}
-                      placeholder="Add custom prep item…"
-                      className="flex-1 rounded-xl bg-black/30 border border-white/10 px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        const trimmed = newChecklistInput.trim();
-                        if (!trimmed) return;
-                        setChecklistItems((prev) => [
-                          ...prev,
-                          { id: `custom-${Date.now()}`, label: trimmed, checked: false },
-                        ]);
-                        setNewChecklistInput("");
-                        flash("Custom item added");
-                      }}
-                      className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white transition flex items-center gap-1 shrink-0"
-                    >
-                      <Plus className="h-3.5 w-3.5" />
-                      <span>Add</span>
-                    </button>
-                  </div>
-
-                  {/* Upcoming Calendar Hook */}
-                  <div className="pt-2 border-t border-white/5">
-                    <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">
-                      Upcoming 2026 Fixtures
-                    </p>
-                    <div className="space-y-1.5">
-                      {p.nextEvents.slice(0, 2).map((ev) => (
-                        <div
-                          key={ev.name}
-                          className="flex items-center justify-between text-xs p-2 rounded-lg bg-black/20"
-                        >
-                          <div>
-                            <p className="font-bold text-white truncate max-w-[220px]">
-                              {ev.name}
-                            </p>
-                            <p className="text-[10px] text-slate-500">{ev.date} · {ev.venue}</p>
-                          </div>
-                          <span className="text-[10px] font-bold text-orange-400">
-                            {ev.deadline}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 5: Private Parent Journal */}
-              <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 space-y-3">
-                <div className="flex items-center justify-between gap-2">
-                  <div>
-                    <h4 className="text-xs font-black text-white uppercase tracking-wider">
-                      Private Parent Journal
-                    </h4>
-                    <p className="text-[11px] text-slate-500">
-                      Encrypted notes visible only to the guardian — separate from public logs
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setParentNotes((prev) => [
-                        {
-                          date: new Date().toISOString().slice(0, 10),
-                          text: "(Demo) Extra fitness conditioning before Singapore Youth Championships.",
-                        },
-                        ...prev,
-                      ]);
-                      flash("Demo parent note added");
-                    }}
-                    className="rounded-full bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white transition-colors"
-                  >
-                    + Add Note
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  {parentNotes.map((n, i) => (
-                    <div
-                      key={i}
-                      className="rounded-xl bg-black/25 border border-white/5 p-3 space-y-1"
-                    >
-                      <div className="flex items-center justify-between text-[10px]">
-                        <span className="font-mono text-emerald-400 font-bold">
-                          {n.date}
-                        </span>
-                        <span className="rounded bg-white/5 px-1.5 py-0.5 text-slate-500">
-                          Private
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-300 leading-relaxed">
-                        {n.text}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    // coach
-    const c = SAMPLE_COACH_PANEL;
-    return (
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 space-y-4 pb-2 pt-4">
-        {/* Squad Pulse Cards Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Fleet split</p>
-            <p className="mt-1 text-sm font-black text-white">{c.squadPulse.goldCount} Gold · {c.squadPulse.silverCount} Silver</p>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Gear health</p>
-            <p className="mt-1 text-sm font-black text-amber-400">{c.squadPulse.gearNeedingRepair} Needs repair</p>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Selection trials</p>
-            <p className="mt-1 text-sm font-black text-emerald-400">{c.squadPulse.aocQualifiedCount} On AOC roster</p>
-          </div>
-          <div className="rounded-xl border border-white/10 bg-black/20 p-3">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Squad actions</p>
-            <p className="mt-1 text-sm font-black text-orange-400">{c.squadPulse.actionsCount} To review</p>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border border-blue-500/25 bg-blue-500/[0.06] p-5 sm:p-6 space-y-5">
-          <div className="flex items-start justify-between gap-3 flex-wrap">
-            <div className="flex items-center gap-2">
-              <ClipboardList className="h-5 w-5 text-blue-400" />
-              <div>
-                <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                  Coach view · {c.squadName}
-                </h3>
-                <p className="text-[11px] text-slate-500">
-                  Private coach tools — no privacy controls on this view
-                </p>
-              </div>
-            </div>
-            <span
-              className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold border ${
-                c.selectionReadiness.score >= 75
-                  ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300"
-                  : "bg-amber-500/15 border-amber-500/30 text-amber-200"
-              }`}
-            >
-              <CheckCircle2 className="h-3.5 w-3.5" />
-              Selection {c.selectionReadiness.label} ·{" "}
-              {c.selectionReadiness.score}
-            </span>
-          </div>
-
-          <p className="text-[12px] text-slate-400 leading-relaxed">
-            {c.selectionReadiness.detail}
+      {/* Relocation Cross-Promotion Banner */}
+      <div className="bg-gradient-to-r from-emerald-950/40 via-sky-950/30 to-amber-950/30 border-b border-white/10 px-4 py-2.5">
+        <div className="mx-auto max-w-5xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <p className="text-slate-300">
+            Looking for multi-athlete management or squad tools?
           </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">
-                Training attendance (last 4)
-              </p>
-              <ul className="space-y-1.5">
-                {c.attendance.map((a) => (
-                  <li
-                    key={a.session}
-                    className="flex justify-between text-[12px]"
-                  >
-                    <span className="text-slate-300">{a.session}</span>
-                    <span
-                      className={
-                        a.status === "attended"
-                          ? "text-emerald-400 font-semibold"
-                          : "text-rose-400 font-semibold"
-                      }
-                    >
-                      {a.status === "attended" ? "Attended" : "Missed"}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-              <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">
-                Pathway checklist
-              </p>
-              <ul className="space-y-1.5">
-                {c.pathway.map((item) => (
-                  <li
-                    key={item.item}
-                    className="text-xs text-slate-300 flex items-center gap-2"
-                  >
-                    <span
-                      className={
-                        item.done ? "text-emerald-400" : "text-slate-600"
-                      }
-                    >
-                      {item.done ? "☑" : "☐"}
-                    </span>
-                    {item.item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div className="rounded-xl border border-white/10 bg-black/20 p-4 space-y-2">
-            <p className="text-[10px] font-bold text-slate-500 uppercase">
-              Compare to squad member
-            </p>
-            <select
-              value={compareTo}
-              onChange={(e) => setCompareTo(e.target.value)}
-              className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+          <div className="flex items-center gap-3">
+            <Link
+              href="/demo/parent"
+              className="inline-flex items-center gap-1 font-bold text-emerald-400 hover:text-emerald-300"
             >
-              {c.compareOptions.map((o) => (
-                <option key={o.name} value={o.name}>
-                  {o.name} · #{o.rank}
-                </option>
-              ))}
-            </select>
-            <p className="text-[11px] text-slate-500">
-              Demo: compare Kimberly (#{c.nationalRank}) with {compareTo}
-              product charts side-by-side finish trends.
-            </p>
-          </div>
-
-          <div>
-            <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">
-              Private coach notes
-              <span className="ml-1.5 font-normal normal-case tracking-normal text-slate-600">
-                (only you — not sailor or parent)
-              </span>
-            </p>
-            <ul className="space-y-2 max-h-40 overflow-y-auto">
-              {coachNotes.map((n, i) => (
-                <li
-                  key={i}
-                  className="rounded-lg bg-black/25 border border-white/5 px-3 py-2"
-                >
-                  <p className="text-[10px] text-slate-500 font-mono">
-                    {n.date}
-                  </p>
-                  <p className="text-xs text-slate-300 mt-0.5 leading-relaxed">
-                    {n.text}
-                  </p>
-                </li>
-              ))}
-            </ul>
-            <button
-              type="button"
-              onClick={() => {
-                setCoachNotes((prev) => [
-                  {
-                    date: new Date().toISOString().slice(0, 10),
-                    text: "(Demo) New coach note — SailorPath stores notes per athlete with visibility controls.",
-                  },
-                  ...prev,
-                ]);
-                flash("Demo coach note added");
-              }}
-              className="mt-3 rounded-full bg-blue-600/90 px-4 py-2 text-[11px] font-bold text-white"
+              <Heart className="h-3.5 w-3.5" />
+              <span>Parent Hub Demo</span>
+              <ArrowRight className="h-3 w-3" />
+            </Link>
+            <span className="text-white/20">·</span>
+            <Link
+              href="/demo/coach"
+              className="inline-flex items-center gap-1 font-bold text-sky-400 hover:text-sky-300"
             >
-              + Add coach note
-            </button>
+              <ClipboardList className="h-3.5 w-3.5" />
+              <span>Coach Hub Demo</span>
+              <ArrowRight className="h-3 w-3" />
+            </Link>
           </div>
-        </div>
-
-        {/* Athlete Development & Coaching Log */}
-        <div className="rounded-2xl border border-blue-500/25 bg-blue-500/[0.06] p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between gap-2 flex-wrap">
-            <div>
-              <h3 className="text-xs font-black text-white uppercase tracking-wider flex items-center gap-2">
-                <GraduationCap className="h-4 w-4 text-blue-400" />
-                Athlete Development Log
-              </h3>
-              <p className="text-[11px] text-slate-400 mt-0.5">
-                6 structured categories with selective athlete & parent sharing
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                const newRec = {
-                  id: `dev-${Date.now()}`,
-                  category: "Technical",
-                  type: "observation" as const,
-                  title: "(Demo) Downwind wave pumping rhythm",
-                  detail: "Consistent roll-tack cadence and steady mast angle in chop.",
-                  recordDate: new Date().toISOString().slice(0, 10),
-                  sentiment: "strength" as const,
-                  visibility: "shared" as const,
-                };
-                setCoachDevRecords((prev) => [newRec, ...prev]);
-                flash("Demo development entry added");
-              }}
-              className="rounded-full bg-blue-600 hover:bg-blue-500 px-3 py-1.5 text-xs font-bold text-white transition flex items-center gap-1"
-            >
-              <Plus className="h-3.5 w-3.5" />
-              <span>Log observation</span>
-            </button>
-          </div>
-
-          <div className="space-y-2">
-            {coachDevRecords.map((rec) => (
-              <div
-                key={rec.id}
-                className="rounded-xl border border-white/10 bg-black/25 p-3.5 space-y-1.5"
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-white">{rec.title}</span>
-                    <span className="rounded-md border border-blue-500/30 bg-blue-500/10 px-2 py-0.5 text-[10px] font-bold text-blue-300">
-                      {rec.category}
-                    </span>
-                    <span
-                      className={`rounded-md px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider border ${
-                        rec.sentiment === "strength"
-                          ? "bg-emerald-500/15 border-emerald-500/30 text-emerald-300"
-                          : rec.sentiment === "focus"
-                          ? "bg-amber-500/15 border-amber-500/30 text-amber-300"
-                          : "bg-white/10 border-white/15 text-slate-300"
-                      }`}
-                    >
-                      {rec.sentiment}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                        rec.visibility === "shared"
-                          ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
-                          : "bg-white/5 border-white/10 text-slate-400"
-                      }`}
-                    >
-                      {rec.visibility === "shared" ? "👥 Shared with Family" : "🔒 Coach Only"}
-                    </span>
-                    <span className="text-[10px] text-slate-500 font-mono">{rec.recordDate}</span>
-                  </div>
-                </div>
-                {rec.detail && (
-                  <p className="text-xs text-slate-300 leading-relaxed">{rec.detail}</p>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4 space-y-3">
-          <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-orange-400" />
-              <h3 className="text-xs font-black text-white uppercase tracking-wider">
-                Squad roster
-              </h3>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                const n = coachRoster.length + 1;
-                const newbie: CoachRosterSailor = {
-                  name: `Demo Sailor ${n}`,
-                  handle: "#",
-                  rank: 12 + n,
-                  highlight: "Newly added (demo)",
-                  avgFinish: "—",
-                  selection: "New",
-                };
-                setCoachRoster((prev) => [...prev, newbie]);
-                flash(`Demo: added ${newbie.name} to squad`);
-              }}
-              className="inline-flex items-center gap-1 rounded-full bg-blue-600/90 px-3 py-1.5 text-[11px] font-bold text-white"
-            >
-              <UserPlus className="h-3.5 w-3.5" />
-              Add sailor
-            </button>
-          </div>
-          <p className="text-[11px] text-slate-500">
-            Tap a sailor for coach detail — no full public profile under this
-            dashboard.
-          </p>
-          <ul className="divide-y divide-white/5">
-            {coachRoster.map((s) => {
-              const active = selectedCoachSailor?.name === s.name;
-              return (
-                <li key={s.name}>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setSelectedCoachSailor((cur) =>
-                        cur?.name === s.name ? null : s
-                      )
-                    }
-                    className={`w-full py-2.5 flex items-center justify-between gap-3 text-xs text-left rounded-lg px-2 -mx-1 transition-colors ${
-                      active
-                        ? "bg-blue-500/15 border border-blue-500/25"
-                        : "hover:bg-white/5"
-                    }`}
-                  >
-                    <div className="min-w-0">
-                      <p className="font-bold text-white">{s.name}</p>
-                      <p className="text-[11px] text-slate-500 truncate">
-                        {s.highlight}
-                        {s.selection ? ` · ${s.selection}` : ""}
-                      </p>
-                    </div>
-                    <span className="flex items-center gap-2 shrink-0">
-                      <span className="font-mono font-black text-orange-400">
-                        #{s.rank}
-                      </span>
-                      <ChevronRight
-                        className={`h-4 w-4 text-slate-500 transition-transform ${
-                          active ? "rotate-90 text-blue-300" : ""
-                        }`}
-                      />
-                    </span>
-                  </button>
-                  {active && (
-                    <div className="mb-3 mt-1 rounded-xl border border-blue-500/20 bg-blue-500/[0.06] px-3 py-3 space-y-2">
-                      <p className="text-[11px] font-bold text-blue-200 uppercase tracking-wide">
-                        Coach detail · {s.name}
-                      </p>
-                      <div className="grid grid-cols-2 gap-2 text-[12px]">
-                        <div className="rounded-lg bg-black/25 px-2.5 py-2">
-                          <p className="text-[10px] text-slate-500 uppercase">
-                            Rank
-                          </p>
-                          <p className="font-bold text-white">#{s.rank}</p>
-                        </div>
-                        <div className="rounded-lg bg-black/25 px-2.5 py-2">
-                          <p className="text-[10px] text-slate-500 uppercase">
-                            Avg finish
-                          </p>
-                          <p className="font-bold text-white">
-                            {s.avgFinish || "—"}
-                          </p>
-                        </div>
-                        <div className="rounded-lg bg-black/25 px-2.5 py-2 col-span-2">
-                          <p className="text-[10px] text-slate-500 uppercase">
-                            Selection
-                          </p>
-                          <p className="font-bold text-white">
-                            {s.selection || "—"}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="text-[11px] text-slate-400 leading-relaxed">
-                        {s.name === "Kimberly Tan"
-                          ? "Strong mid-line starts · light-air height is focus. Coach notes stay private."
-                          : "Demo athlete summary — the planned coach view opens a focused athlete detail panel."}
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setCoachNotes((prev) => [
-                            {
-                              date: new Date().toISOString().slice(0, 10),
-                              text: `(Demo) Note on ${s.name}: review starts video before next NRS.`,
-                            },
-                            ...prev,
-                          ]);
-                          flash(`Demo coach note for ${s.name}`);
-                        }}
-                        className="rounded-full border border-blue-500/30 px-3 py-1.5 text-[11px] font-bold text-blue-200"
-                      >
-                        + Note on {s.name.split(" ")[0]}
-                      </button>
-                    </div>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
         </div>
       </div>
-    );
-  }, [
-    role,
-    coachNotes,
-    parentNotes,
-    compareTo,
-    coachRoster,
-    selectedCoachSailor,
-    checklistItems,
-    selectedAthleteId,
-    newChecklistInput,
-    coachDevRecords,
-  ]);
 
-  return (
-    <div className="flex-1 flex flex-col">
-      {/* Demo chrome: title + view tabs */}
-      <div className="sticky top-0 z-40 border-b border-amber-500/30 bg-[#12100a]/95 backdrop-blur-md">
+      {/* Demo chrome: profile title + view tabs */}
+      <div className="border-b border-amber-500/20 bg-[#12100a]/90 backdrop-blur-md">
         <div className="mx-auto max-w-3xl px-3 sm:px-4 py-3 space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-amber-400/90">
-                Demo profile
+                Athlete Profile Demo
               </p>
               <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
                 Kimberly Tan · SGP 115 · SailorPath Profile
               </h1>
-              <p className="text-[11px] text-slate-500 mt-0.5">
+              <p className="text-[11px] text-slate-400 mt-0.5">
                 b. {SAMPLE_SAILOR.dob.slice(0, 4)} · dual-class Optimist + ILCA 4 ·
                 switch views below
               </p>
@@ -1108,22 +210,17 @@ export function SampleDemoShell() {
             )}
           </div>
 
-          {/* Prominent view tabs */}
+          {/* Focused View Tabs (Public vs Sailor) */}
           <div
             className="flex gap-1 p-1.5 rounded-2xl bg-black/50 border border-white/15"
             role="tablist"
             aria-label="Profile view"
           >
-            {ROLES.map((r) => {
+            {SAILOR_ROLES.map((r) => {
               const active = role === r;
-              const Icon =
-                r === "public"
-                  ? Sparkles
-                  : r === "sailor"
-                    ? User
-                    : r === "parent"
-                      ? Heart
-                      : ClipboardList;
+              const Icon = r === "public" ? Sparkles : User;
+              const label =
+                r === "public" ? "Public Profile View" : "Sailor Private View";
               return (
                 <button
                   key={r}
@@ -1138,7 +235,7 @@ export function SampleDemoShell() {
                   }`}
                 >
                   <Icon className="h-4 w-4 shrink-0" />
-                  <span>{DEMO_ROLE_COPY[r].title}</span>
+                  <span>{label}</span>
                 </button>
               );
             })}
@@ -1156,7 +253,7 @@ export function SampleDemoShell() {
         </div>
       )}
 
-      {/* Settings modal — privacy for sailor / parent only */}
+      {/* Settings modal — privacy for sailor only */}
       {settingsOpen && canManagePrivacy && (
         <div
           className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70"
@@ -1191,55 +288,26 @@ export function SampleDemoShell() {
         </div>
       )}
 
-      {/* Coach: dashboard only (no full profile underneath) */}
-      {role === "coach" && rolePanels}
-
-      {/* Parent: dashboard + light profile */}
-      {role === "parent" && rolePanels}
-
-      {role === "parent" && (
-        <SailorProfileView
-          initialSailor={SAMPLE_SAILOR}
-          initialResults={SAMPLE_RESULTS}
-          initialEquipment={SAMPLE_EQUIPMENT}
-          initialSeriesStanding={SAMPLE_SERIES_STANDING}
-          initialIlcaStanding={SAMPLE_ILCA_STANDING}
-          initialObservations={SAMPLE_OBSERVATIONS}
-          canSeePrivate
-          canClaim={false}
-          isOwner={false}
-          isLoggedIn
-          demoMode
-          demoRole="parent"
-          hidePrivacySection
-          profileVerified
-        />
-      )}
-
-      {/* Public + Sailor profile views */}
-      {(role === "public" || role === "sailor") && (
-        <SailorProfileView
-          initialSailor={SAMPLE_SAILOR}
-          initialResults={SAMPLE_RESULTS}
-          initialEquipment={SAMPLE_EQUIPMENT}
-          initialSeriesStanding={SAMPLE_SERIES_STANDING}
-          initialIlcaStanding={SAMPLE_ILCA_STANDING}
-          initialObservations={
-            role === "sailor" ? SAMPLE_OBSERVATIONS : []
-          }
-          canSeePrivate={canSeePrivate}
-          canClaim={canClaim}
-          isOwner={isOwner}
-          isLoggedIn={role !== "public"}
-          demoMode
-          demoRole={role}
-          hidePrivacySection={role === "sailor"}
-          profileVerified={role === "sailor"}
-          onDemoClaim={() =>
-            flash("Demo: claim would submit after you register & sign in")
-          }
-        />
-      )}
+      {/* Public & Sailor Profile Views */}
+      <SailorProfileView
+        initialSailor={SAMPLE_SAILOR}
+        initialResults={SAMPLE_RESULTS}
+        initialEquipment={SAMPLE_EQUIPMENT}
+        initialSeriesStanding={SAMPLE_SERIES_STANDING}
+        initialIlcaStanding={SAMPLE_ILCA_STANDING}
+        initialObservations={role === "sailor" ? SAMPLE_OBSERVATIONS : []}
+        canSeePrivate={canSeePrivate}
+        canClaim={canClaim}
+        isOwner={isOwner}
+        isLoggedIn={role !== "public"}
+        demoMode
+        demoRole={role}
+        hidePrivacySection={role === "sailor"}
+        profileVerified={role === "sailor"}
+        onDemoClaim={() =>
+          flash("Demo: claim would submit after you register & sign in")
+        }
+      />
     </div>
   );
 }

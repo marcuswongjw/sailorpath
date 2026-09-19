@@ -26,9 +26,15 @@ export default async function CoachToolsPage() {
           <p className="text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
             Sign in with an approved coach account to manage your squad roster.
           </p>
-          <div className="pt-2">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link href="/login?next=%2Fcoach-tools" className="sp-btn-primary">
               Sign in
+            </Link>
+            <Link
+              href="/demo/coach"
+              className="rounded-2xl border border-sky-500/40 bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 px-5 py-2.5 text-xs font-bold transition-colors"
+            >
+              Explore Coach Demo
             </Link>
           </div>
         </div>
@@ -50,8 +56,14 @@ export default async function CoachToolsPage() {
           <p className="text-sm leading-relaxed text-[var(--sp-charcoal-slate)]">
             Your account is active, but it has not been approved for coach tools yet.
           </p>
-          <div className="pt-2">
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             <CoachAccessRequestButton initiallyPending={request?.status === "pending"} />
+            <Link
+              href="/demo/coach"
+              className="rounded-2xl border border-sky-500/40 bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 px-5 py-2.5 text-xs font-bold transition-colors"
+            >
+              Explore Coach Demo
+            </Link>
           </div>
         </div>
       </div>
