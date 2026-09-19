@@ -219,17 +219,29 @@ export async function searchSailors(
     const q = (f.query || "").trim();
     const conditions = [];
     if (q) {
-      const pattern = `%${q}%`;
-      conditions.push(
-        or(
-          ilike(sailors.name, pattern),
-          ilike(sailors.sailNumber, pattern),
-          ilike(sailors.club, pattern),
-          ilike(sailors.handle, pattern),
-          ilike(sailors.school, pattern),
-          ilike(sailors.nationality, pattern)
-        )
-      );
+      const tokens = q.split(/\s+/).filter(Boolean);
+      for (const token of tokens) {
+        const tokenPattern = `%${token}%`;
+        const alphanumericOnly = token.replace(/[^a-zA-Z0-9]/g, "");
+        const cleanPattern = alphanumericOnly ? `%${alphanumericOnly}%` : null;
+
+        const tokenConditions = [
+          ilike(sailors.name, tokenPattern),
+          ilike(sailors.sailNumber, tokenPattern),
+          ilike(sailors.club, tokenPattern),
+          ilike(sailors.handle, tokenPattern),
+          ilike(sailors.school, tokenPattern),
+          ilike(sailors.nationality, tokenPattern),
+        ];
+
+        if (cleanPattern && cleanPattern !== tokenPattern) {
+          tokenConditions.push(
+            sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${cleanPattern}`
+          );
+        }
+
+        conditions.push(or(...tokenConditions));
+      }
     }
     if (f.squad && f.squad !== "all") {
       conditions.push(eq(sailors.nationalSquadStatus, f.squad));

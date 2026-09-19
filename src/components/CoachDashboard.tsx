@@ -10,11 +10,23 @@ import { fleetPillClass } from "@/components/sailor-profile/helpers";
 type SearchMatch = { id: string; name: string; handle: string; sailNumber: string; club: string };
 
 const DEMO_SEARCH_SAILORS: SearchMatch[] = [
-  { id: "demo-s1", name: "Lucas Wong", handle: "lucas-w", sailNumber: "SGP 4658", club: "SAF Yacht Club" },
-  { id: "demo-s2", name: "Chloe Tan", handle: "chloe-t", sailNumber: "SGP 4612", club: "Singapore Sailing Club" },
+  { id: "demo-s1", name: "Jedd Lam Zhi Hao", handle: "jedd-lam", sailNumber: "SGP 4688", club: "Changi Sailing Club" },
+  { id: "demo-s2", name: "Alyssa Wong", handle: "alyssa-w", sailNumber: "SGP 101", club: "Changi Sailing Club" },
   { id: "demo-s3", name: "Ethan Lee", handle: "ethan-l", sailNumber: "SGP 4589", club: "Changi Sailing Club" },
-  { id: "demo-s4", name: "Sarah Chen", handle: "sarah-c", sailNumber: "SGP 4701", club: "National Sailing Centre" },
-  { id: "demo-s5", name: "Marcus Koh", handle: "marcus-k", sailNumber: "SGP 2184", club: "Changi Sailing Club" },
+  { id: "demo-s4", name: "Ethan Mathew", handle: "ethan-m", sailNumber: "SGP 3841", club: "Changi Sailing Club" },
+  { id: "demo-s5", name: "Ethan Low Zhi Ren", handle: "ethan-low", sailNumber: "SGP 78", club: "National Sailing Centre" },
+  { id: "demo-s6", name: "Sean Kum", handle: "sean-k", sailNumber: "SGP 4712", club: "National Sailing Centre" },
+  { id: "demo-s7", name: "Russell Yom", handle: "russell-y", sailNumber: "SGP 4633", club: "Singapore Sailing Club" },
+  { id: "demo-s8", name: "Austin Yeo", handle: "austin-y", sailNumber: "SGP 4521", club: "SAF Yacht Club" },
+  { id: "demo-s9", name: "Chloe Tan", handle: "chloe-t", sailNumber: "SGP 4612", club: "Singapore Sailing Club" },
+  { id: "demo-s10", name: "Nicole Koh", handle: "nicole-k", sailNumber: "SGP 4715", club: "Changi Sailing Club" },
+  { id: "demo-s11", name: "Mikaela Wang", handle: "mikaela-w", sailNumber: "SGP 4620", club: "National Sailing Centre" },
+  { id: "demo-s12", name: "Joshua Tan", handle: "joshua-t", sailNumber: "SGP 4677", club: "SAF Yacht Club" },
+  { id: "demo-s13", name: "Lucas Wong", handle: "lucas-w", sailNumber: "SGP 4658", club: "SAF Yacht Club" },
+  { id: "demo-s14", name: "Sarah Chen", handle: "sarah-c", sailNumber: "SGP 4701", club: "National Sailing Centre" },
+  { id: "demo-s15", name: "Marcus Koh", handle: "marcus-k", sailNumber: "SGP 2184", club: "Changi Sailing Club" },
+  { id: "demo-s16", name: "Kimberly Tan", handle: "kimberly-t", sailNumber: "SGP 115", club: "Changi Sailing Club" },
+  { id: "demo-s17", name: "Kevin Ho", handle: "kevin-h", sailNumber: "SGP 102", club: "National Sailing Centre" },
 ];
 
 async function readJson<T>(response: Response): Promise<T> {
@@ -49,18 +61,14 @@ export function CoachDashboard({
     }
     if (demoMode) {
       const timer = window.setTimeout(() => {
-        const term = trimmed.toLowerCase();
-        const memberIds = new Set([...data.members, ...data.following].map((m) => m.sailorId));
+        const tokens = trimmed.toLowerCase().split(/\s+/).filter(Boolean);
         setMatches(
-          DEMO_SEARCH_SAILORS.filter(
-            (s) =>
-              !memberIds.has(s.id) &&
-              (s.name.toLowerCase().includes(term) ||
-                s.sailNumber.toLowerCase().includes(term) ||
-                s.club.toLowerCase().includes(term))
-          )
+          DEMO_SEARCH_SAILORS.filter((s) => {
+            const str = `${s.name} ${s.sailNumber} ${s.club} ${s.handle} ${s.sailNumber.replace(/\s+/g, "")}`.toLowerCase();
+            return tokens.every((token) => str.includes(token));
+          })
         );
-      }, 100);
+      }, 80);
       return () => window.clearTimeout(timer);
     }
     const controller = new AbortController();
@@ -68,8 +76,7 @@ export function CoachDashboard({
       try {
         const response = await fetch(`/api/coach/sailors?q=${encodeURIComponent(trimmed)}`, { signal: controller.signal });
         const body = await readJson<{ sailors: SearchMatch[] }>(response);
-        const memberIds = new Set([...data.members, ...data.following].map((member) => member.sailorId));
-        setMatches(body.sailors.filter((sailor) => !memberIds.has(sailor.id)));
+        setMatches(body.sailors);
       } catch (error) {
         if ((error as Error).name !== "AbortError") setMessage(error instanceof Error ? error.message : "Search failed");
       }
@@ -78,7 +85,7 @@ export function CoachDashboard({
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [query, data.members, data.following, demoMode]);
+  }, [query, demoMode]);
 
   useEffect(() => {
     if (!manageOpen) return;
@@ -752,30 +759,82 @@ export function CoachDashboard({
               )}
 
               <div className="relative mt-4">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-[var(--sp-slate-soft)]" />
-                <input value={query} onChange={(event) => {
-                  const value = event.target.value;
-                  setQuery(value);
-                  if (value.trim().length < 2) setMatches([]);
-                }} placeholder="Type at least 2 characters"
-                  aria-label="Search sailors to add" className="sp-input w-full py-2.5 pl-9 pr-3 text-sm" />
+                <Search className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--sp-slate-soft)]" />
+                <input
+                  value={query}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    setQuery(value);
+                    if (value.trim().length < 2) setMatches([]);
+                  }}
+                  placeholder="Type name, sail number, or club..."
+                  aria-label="Search sailors to add"
+                  className="sp-input w-full py-2.5 !pl-10 pr-3 text-sm"
+                />
               </div>
               <div className="mt-3 space-y-1.5" aria-live="polite">
-                {matches.map((sailor) => (
-                  <div key={sailor.id} className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3">
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--sp-racing-orange)]/10 text-[11px] font-black text-[var(--sp-racing-orange)]">
-                        {sailor.name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("")}
-                      </span>
-                      <span className="min-w-0 flex-1"><span className="block truncate text-xs font-bold text-[var(--sp-harbour-shadow)]">{sailor.name}</span><span className="block truncate text-[10px] text-[var(--sp-slate-soft)]">{sailor.sailNumber} · {sailor.club}</span></span>
+                {matches.map((sailor) => {
+                  const isMember = data.members.some((m) => m.sailorId === sailor.id);
+                  const isFollowing = data.following.some((m) => m.sailorId === sailor.id);
+                  return (
+                    <div key={sailor.id} className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3">
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--sp-racing-orange)]/10 text-[11px] font-black text-[var(--sp-racing-orange)]">
+                          {sailor.name.split(/\s+/).slice(0, 2).map((part) => part[0]).join("")}
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="flex items-center gap-2">
+                            <span className="truncate text-xs font-bold text-[var(--sp-harbour-shadow)]">{sailor.name}</span>
+                            {isMember && (
+                              <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800">
+                                In squad
+                              </span>
+                            )}
+                            {!isMember && isFollowing && (
+                              <span className="rounded-md bg-sky-100 px-1.5 py-0.5 text-[9px] font-bold text-sky-800">
+                                Following
+                              </span>
+                            )}
+                          </span>
+                          <span className="block truncate text-[10px] text-[var(--sp-slate-soft)]">{sailor.sailNumber} · {sailor.club}</span>
+                        </span>
+                      </div>
+                      <div className="mt-2 grid grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => !isMember && addSailor(sailor.id)}
+                          disabled={busyId === sailor.id || isMember}
+                          className={`rounded-lg px-2 py-1.5 text-[10px] font-bold transition-all ${
+                            isMember
+                              ? "bg-[var(--sp-cool-veil)]/50 text-[var(--sp-slate-soft)] cursor-not-allowed"
+                              : "sp-btn-primary disabled:opacity-50"
+                          }`}
+                        >
+                          <Plus className="mr-1 inline h-3 w-3" />
+                          {isMember ? "In Squad" : "Squad"}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => !isFollowing && followSailor(sailor.id)}
+                          disabled={busyId === sailor.id || isFollowing}
+                          className={`rounded-lg border px-2 py-1.5 text-[10px] font-bold transition-all ${
+                            isFollowing
+                              ? "border-[var(--sp-cool-veil)] bg-[var(--sp-cool-veil)]/30 text-[var(--sp-slate-soft)] cursor-not-allowed"
+                              : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] disabled:opacity-50"
+                          }`}
+                        >
+                          {isFollowing ? "Following" : "Follow"}
+                        </button>
+                      </div>
                     </div>
-                    <div className="mt-2 grid grid-cols-2 gap-2">
-                      <button type="button" onClick={() => addSailor(sailor.id)} disabled={busyId === sailor.id} className="sp-btn-primary rounded-lg px-2 py-1.5 text-[10px] disabled:opacity-50"><Plus className="mr-1 inline h-3 w-3" />Squad</button>
-                      <button type="button" onClick={() => followSailor(sailor.id)} disabled={busyId === sailor.id} className="rounded-lg border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-2 py-1.5 text-[10px] font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] disabled:opacity-50">Follow</button>
-                    </div>
+                  );
+                })}
+                {query.trim().length >= 2 && matches.length === 0 && (
+                  <div className="py-6 text-center text-xs text-[var(--sp-slate-soft)]">
+                    <p className="font-semibold text-[var(--sp-harbour-shadow)]">No sailors found matching &ldquo;{query}&rdquo;</p>
+                    <p className="mt-1 text-[11px]">Try searching by first or last name, sail number (e.g. SGP 4589), or club.</p>
                   </div>
-                ))}
-                {query.trim().length >= 2 && matches.length === 0 && <p className="py-5 text-center text-[11px] text-[var(--sp-slate-soft)]">No new matches yet.</p>}
+                )}
               </div>
             </div>
           </aside>
