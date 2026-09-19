@@ -83,6 +83,17 @@ export const ILCA4_NATIONAL_RANKING_NAMES: readonly string[] = [
   "Goy, Ethan",
   "Chen, Jun Jie",
   "Li, Sheng Rui",
+  "Cao, Lucas Zhihong",
+  "Lin, Shin Chen Rui",
+  "Li, Lyric Yuxuan",
+  "Lee, Ethan",
+  "Chan, Aaron",
+  "Liew, Jared Soon Kit",
+  "Kocourek, Daniel",
+  "Wu, Qiyou",
+  "Zhao, Chengwei",
+  "Ji, Wenxin",
+  "Wong, Febe Qi Ke",
 ] as const;
 
 const NATIONAL_KEYS = new Set(
