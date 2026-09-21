@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -52,16 +52,41 @@ export type AthleteProfile = {
   equipmentNotes?: string | null;
 };
 
+type WorkspaceTab = "results" | "profile" | "equipment" | "documents";
+
+function buildProfileForm(a: AthleteProfile) {
+  return {
+    sailNumber: a.sailNumber || "",
+    sailNumberIlca4: a.sailNumberIlca4 || "",
+    club: a.club || "",
+    school: a.school || "",
+    gender: a.gender || "M",
+    nationality: a.nationality || "SGP",
+    dob: a.dob ? String(a.dob).slice(0, 10) : "",
+    instagram: a.instagram || "",
+    avatarUrl: a.avatarUrl || "",
+    hullBrand: a.hullBrand || "",
+    sailMake: a.sailMake || "",
+    foilBrand: a.foilBrand || "",
+    mast: a.mast || "",
+    equipmentNotes: a.equipmentNotes || "",
+  };
+}
+
 interface AthleteWorkspaceProps {
   athlete: AthleteProfile;
-  initialTab?: "results" | "profile" | "equipment" | "documents";
+  initialTab?: WorkspaceTab;
   initialAction?: string;
+  onTabChange?: (tab: WorkspaceTab) => void;
+  onDirtyChange?: (dirty: boolean) => void;
 }
 
 function AthleteWorkspace({
   athlete: initialAthlete,
   initialTab = "results",
   initialAction,
+  onTabChange,
+  onDirtyChange,
 }: AthleteWorkspaceProps) {
   const router = useRouter();
   const { toast, confirm } = useFeedback();
@@ -69,10 +94,17 @@ function AthleteWorkspace({
   // Local athlete state so profile saves instantly refresh the header card
   const [athlete, setAthlete] = useState<AthleteProfile>(initialAthlete);
 
-  // Active tab: "results" | "profile" | "equipment" | "documents"
-  const [activeTab, setActiveTab] = useState<
-    "results" | "profile" | "equipment" | "documents"
-  >(initialTab);
+  // Active tab
+  const [activeTab, setActiveTab] = useState<WorkspaceTab>(initialTab);
+
+  const changeTab = (tab: WorkspaceTab) => {
+    setActiveTab(tab);
+    onTabChange?.(tab);
+    // Keep the URL shareable/deep-linkable without a server roundtrip
+    const url = new URL(window.location.href);
+    url.searchParams.set("tab", tab);
+    window.history.replaceState(null, "", url.toString());
+  };
 
   // Evidence modal state
   const [evidenceModalOpen, setEvidenceModalOpen] = useState(
@@ -90,23 +122,17 @@ function AthleteWorkspace({
   >("all");
 
   // Profile edit form state
-  const [profileForm, setProfileForm] = useState({
-    sailNumber: athlete.sailNumber || "",
-    sailNumberIlca4: athlete.sailNumberIlca4 || "",
-    club: athlete.club || "",
-    school: athlete.school || "",
-    gender: athlete.gender || "M",
-    nationality: athlete.nationality || "SGP",
-    dob: athlete.dob ? String(athlete.dob).slice(0, 10) : "",
-    instagram: athlete.instagram || "",
-    avatarUrl: athlete.avatarUrl || "",
-    hullBrand: athlete.hullBrand || "",
-    sailMake: athlete.sailMake || "",
-    foilBrand: athlete.foilBrand || "",
-    mast: athlete.mast || "",
-    equipmentNotes: athlete.equipmentNotes || "",
-  });
+  const [profileForm, setProfileForm] = useState(() =>
+    buildProfileForm(athlete)
+  );
   const [savingProfile, setSavingProfile] = useState(false);
+
+  // Dirty tracking: notify parent when the profile form diverges from the
+  // saved athlete record (baseline recomputes automatically after save)
+  const profileBaseline = useMemo(() => JSON.stringify(buildProfileForm(athlete)), [athlete]);
+  useEffect(() => {
+    onDirtyChange?.(JSON.stringify(profileForm) !== profileBaseline);
+  }, [profileForm, profileBaseline, onDirtyChange]);
 
   const fetchResults = useCallback(async () => {
     setLoadingResults(true);
@@ -328,7 +354,7 @@ function AthleteWorkspace({
         <div className="mt-8 pt-4 border-t border-[var(--sp-cool-veil)] flex gap-2 overflow-x-auto scrollbar-thin">
           <button
             type="button"
-            onClick={() => setActiveTab("results")}
+            onClick={() => changeTab("results")}
             className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "results"
                 ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
@@ -346,7 +372,7 @@ function AthleteWorkspace({
 
           <button
             type="button"
-            onClick={() => setActiveTab("profile")}
+            onClick={() => changeTab("profile")}
             className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "profile"
                 ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
@@ -359,7 +385,7 @@ function AthleteWorkspace({
 
           <button
             type="button"
-            onClick={() => setActiveTab("equipment")}
+            onClick={() => changeTab("equipment")}
             className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "equipment"
                 ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
@@ -372,7 +398,7 @@ function AthleteWorkspace({
 
           <button
             type="button"
-            onClick={() => setActiveTab("documents")}
+            onClick={() => changeTab("documents")}
             className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
               activeTab === "documents"
                 ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
@@ -1077,12 +1103,39 @@ export function AthleteHub({
   initialTab = "results",
   initialAction,
 }: AthleteHubProps) {
+  const { confirm } = useFeedback();
   const [selectedId, setSelectedId] = useState<string>(() => {
     if (currentSailorId && athletes.some((a) => a.id === currentSailorId)) {
       return currentSailorId;
     }
     return athletes[0]?.id || "";
   });
+  // Tab state lives here so it survives athlete switches (workspace remounts)
+  const [activeTab, setActiveTab] = useState<WorkspaceTab>(initialTab);
+  // Set by the workspace when its profile form has unsaved edits
+  const dirtyRef = useRef(false);
+  const handleDirtyChange = useCallback((dirty: boolean) => {
+    dirtyRef.current = dirty;
+  }, []);
+
+  const handleSelectAthlete = async (id: string) => {
+    if (id === selectedId) return;
+    if (dirtyRef.current) {
+      const ok = await confirm({
+        title: "Discard Unsaved Changes?",
+        message:
+          "You have unsaved edits on the athlete profile. Switching athlete will discard them.",
+        confirmLabel: "Discard & Switch",
+        tone: "danger",
+      });
+      if (!ok) return;
+      dirtyRef.current = false;
+    }
+    setSelectedId(id);
+    const url = new URL(window.location.href);
+    url.searchParams.set("id", id);
+    window.history.replaceState(null, "", url.toString());
+  };
 
   const activeAthlete = athletes.find((a) => a.id === selectedId) || athletes[0];
 
@@ -1126,7 +1179,7 @@ export function AthleteHub({
                 <button
                   key={ath.id}
                   type="button"
-                  onClick={() => setSelectedId(ath.id)}
+                  onClick={() => void handleSelectAthlete(ath.id)}
                   className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                     ath.id === selectedId
                       ? "bg-[var(--sp-harbour-teal)] !text-white shadow-xs"
@@ -1153,8 +1206,10 @@ export function AthleteHub({
       <AthleteWorkspace
         key={activeAthlete.id}
         athlete={activeAthlete}
-        initialTab={initialTab}
+        initialTab={activeTab}
         initialAction={initialAction}
+        onTabChange={setActiveTab}
+        onDirtyChange={handleDirtyChange}
       />
     </div>
   );
