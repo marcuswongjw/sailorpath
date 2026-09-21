@@ -262,18 +262,18 @@ export function AdminSuggestionsPanel({
                   <div className="flex flex-wrap items-start justify-between gap-2">
                     <div>
                       <p className="text-sm font-bold text-[var(--sp-charcoal)]">{s.name}</p>
-                      <p className="text-[11px] text-[var(--sp-slate-soft)] font-mono mt-0.5">
+                      <p className="text-[13px] text-[var(--sp-slate-soft)] font-mono mt-0.5">
                         {regattaDateLabel(s.date)} · {s.geography || "—"} · fleet{" "}
                         {s.totalFleetSize}
                       </p>
-                      <span className="inline-block mt-1.5 rounded-full bg-sky-50 border border-sky-300 px-2 py-0.5 text-[9px] font-black text-sky-800 uppercase tracking-wide">
+                      <span className="inline-block mt-1.5 rounded-full bg-sky-50 border border-sky-300 px-2 py-0.5 text-[12px] font-black text-sky-800 uppercase tracking-wide">
                         Non-ranking · needs review
                       </span>
                     </div>
                   </div>
 
                   <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 overflow-hidden">
-                    <p className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider px-3 py-2 bg-[var(--sp-warm-white)] border-b border-[var(--sp-cool-veil)]">
+                    <p className="text-[12px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider px-3 py-2 bg-[var(--sp-warm-white)] border-b border-[var(--sp-cool-veil)]">
                       Sailor results & attached evidence
                     </p>
                     <ul className="divide-y divide-[var(--sp-cool-veil)] text-xs">
@@ -302,22 +302,22 @@ export function AdminSuggestionsPanel({
                               {/* Status Badge */}
                               <div>
                                 {r.verificationStatus === "verified" ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-300 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-300 px-2 py-0.5 text-[11px] font-bold text-emerald-800">
                                     <ShieldCheck className="h-3 w-3" />
                                     Verified ✓
                                   </span>
                                 ) : r.verificationStatus === "pending_review" ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-300 px-2 py-0.5 text-[10px] font-bold text-sky-800">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-300 px-2 py-0.5 text-[11px] font-bold text-sky-800">
                                     <FileText className="h-3 w-3" />
                                     Evidence Submitted
                                   </span>
                                 ) : r.verificationStatus === "rejected" ? (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-300 px-2 py-0.5 text-[10px] font-bold text-rose-800">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-300 px-2 py-0.5 text-[11px] font-bold text-rose-800">
                                     <XCircle className="h-3 w-3" />
                                     Rejected
                                   </span>
                                 ) : (
-                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-300 px-2 py-0.5 text-[10px] font-bold text-amber-900">
+                                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-300 px-2 py-0.5 text-[11px] font-bold text-amber-900">
                                     Self-Reported
                                   </span>
                                 )}
@@ -326,7 +326,7 @@ export function AdminSuggestionsPanel({
 
                             {/* Evidence Links & Details */}
                             {(r.evidenceUrl || r.officialUrl || r.evidenceNotes) && (
-                              <div className="flex flex-wrap items-center gap-3 text-[11px] bg-white p-2.5 rounded-lg border border-[var(--sp-cool-veil)] shadow-2xs">
+                              <div className="flex flex-wrap items-center gap-3 text-[13px] bg-white p-2.5 rounded-lg border border-[var(--sp-cool-veil)] shadow-2xs">
                                 {r.evidenceUrl && evHref && (
                                   <a
                                     href={evHref}
@@ -370,7 +370,7 @@ export function AdminSuggestionsPanel({
                                   type="button"
                                   disabled={actionId === r.resultId}
                                   onClick={() => void verifyResult(r.resultId, "verify")}
-                                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 px-2.5 py-1 text-[11px] font-bold text-white transition-colors disabled:opacity-50 shadow-xs"
+                                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 px-2.5 py-1 text-[15px] font-bold text-white transition-colors disabled:opacity-50 shadow-xs"
                                 >
                                   <ShieldCheck className="h-3 w-3" />
                                   Verify Result
@@ -381,7 +381,7 @@ export function AdminSuggestionsPanel({
                                   type="button"
                                   disabled={actionId === r.resultId}
                                   onClick={() => void verifyResult(r.resultId, "reject")}
-                                  className="inline-flex items-center gap-1 rounded-lg border border-rose-300 bg-rose-50 hover:bg-rose-100 px-2.5 py-1 text-[11px] font-bold text-rose-800 transition-colors disabled:opacity-50 shadow-xs"
+                                  className="inline-flex items-center gap-1 rounded-lg border border-rose-300 bg-rose-50 hover:bg-rose-100 px-2.5 py-1 text-[15px] font-bold text-rose-800 transition-colors disabled:opacity-50 shadow-xs"
                                 >
                                   <XCircle className="h-3 w-3" />
                                   Reject Evidence
@@ -396,7 +396,7 @@ export function AdminSuggestionsPanel({
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+                    <label className="text-[12px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                       Division (on promote)
                       <select
                         value={form.division}
@@ -413,7 +413,7 @@ export function AdminSuggestionsPanel({
                         <option value="Both">Both</option>
                       </select>
                     </label>
-                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+                    <label className="text-[12px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                       Geography
                       <GeographySelect
                         value={form.geography}
@@ -429,7 +429,7 @@ export function AdminSuggestionsPanel({
                         className="mt-1 w-full rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] text-xs px-2.5 py-2 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                       />
                     </label>
-                    <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+                    <label className="text-[12px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                       Fleet size
                       <input
                         type="number"
@@ -460,7 +460,7 @@ export function AdminSuggestionsPanel({
                           totalFleetSize: Number(form.totalFleetSize) || 50,
                         })
                       }
-                      className="rounded-full bg-[var(--sp-racing-orange)] hover:brightness-105 px-4 py-1.5 text-[11px] font-bold text-white disabled:opacity-50 shadow-sm"
+                      className="rounded-full bg-[var(--sp-racing-orange)] hover:brightness-105 px-4 py-1.5 text-[15px] font-bold text-white disabled:opacity-50 shadow-sm"
                     >
                       Promote to series list
                     </button>
@@ -468,7 +468,7 @@ export function AdminSuggestionsPanel({
                       type="button"
                       disabled={actionId === s.id}
                       onClick={() => void patch(s.id, { action: "dismiss" })}
-                      className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-4 py-1.5 text-[11px] font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] disabled:opacity-50 shadow-xs"
+                      className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-4 py-1.5 text-[13px] font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] disabled:opacity-50 shadow-xs"
                     >
                       Dismiss (keep non-ranking)
                     </button>
