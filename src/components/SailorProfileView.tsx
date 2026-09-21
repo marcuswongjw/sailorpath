@@ -23,6 +23,7 @@ import {
   ImageIcon,
   CheckCircle2,
   ExternalLink,
+  Plus,
 } from "lucide-react";
 import { formatEventWhen } from "@/lib/profileUi";
 import {
@@ -189,14 +190,6 @@ export function SailorProfileView({
   });
   const [displaySailor, setDisplaySailor] = useState(initialSailor);
   const [results, setResults] = useState(initialResults || []);
-  const [personalForm, setPersonalForm] = useState({
-    name: "",
-    date: "",
-    rank: "",
-    fleetSize: "",
-    geography: "",
-    nett: "",
-  });
   const [personalBusy, setPersonalBusy] = useState(false);
   const [personalMsg, setPersonalMsg] = useState<string | null>(null);
   const [avatarBusy, setAvatarBusy] = useState(false);
@@ -650,62 +643,6 @@ export function SailorProfileView({
       );
     }
     await persistJourney(next);
-  };
-
-  const savePersonalResult = async () => {
-    if (demoMode) {
-      setPersonalMsg("Demo only — not saved");
-      return;
-    }
-    if (!personalForm.name.trim() || !personalForm.date) {
-      setPersonalMsg("Event name and date required");
-      return;
-    }
-    setPersonalBusy(true);
-    setPersonalMsg(null);
-    try {
-      const res = await fetch("/api/account/results", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({
-          sailorId: initialSailor.id,
-          name: personalForm.name.trim(),
-          date: personalForm.date,
-          rank: personalForm.rank === "" ? 1 : Number(personalForm.rank),
-          totalFleetSize:
-            personalForm.fleetSize === ""
-              ? null
-              : Number(personalForm.fleetSize),
-          geography: personalForm.geography || "INT",
-          nettScore: personalForm.nett === "" ? null : Number(personalForm.nett),
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Save failed");
-      if (data.entry) {
-        setResults((prev: RegattaResultItem[]) =>
-          [data.entry as RegattaResultItem, ...prev].sort((a, b) => {
-            const bd = String(b.regattaDate == null ? "" : b.regattaDate);
-            const ad = String(a.regattaDate == null ? "" : a.regattaDate);
-            return bd.localeCompare(ad);
-          })
-        );
-      }
-      setPersonalForm({
-        name: "",
-        date: "",
-        rank: "",
-        fleetSize: "",
-        geography: "",
-        nett: "",
-      });
-      setPersonalMsg("Added to logbook (non-ranking)");
-    } catch (e: unknown) {
-      setPersonalMsg(errorMessage(e, "Failed"));
-    } finally {
-      setPersonalBusy(false);
-    }
   };
 
   const deletePersonalResult = async (res: {
@@ -1887,59 +1824,23 @@ export function SailorProfileView({
         ) : null}
 
         {resultsTab !== "journey" && ownerView && !demoMode && (
-          <div className="mx-4 sm:mx-5 mb-3 rounded-xl border border-cool-veil bg-sailcloth/50 p-3 space-y-2">
-            <p className="text-[12px] font-bold uppercase tracking-wider text-slate-soft">
-              Add non-ranking result
+          <div className="mx-4 sm:mx-5 mb-3 rounded-xl border border-cool-veil bg-sailcloth/50 p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <p className="text-[13px] text-slate-soft">
+              Log an overseas, club, or training regatta — attach evidence for
+              a Verified ✓ badge.
             </p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              <input
-                value={personalForm.name}
-                onChange={(e) =>
-                  setPersonalForm((f) => ({ ...f, name: e.target.value }))
-                }
-                placeholder="Event name"
-                className="col-span-2 sm:col-span-3 rounded-lg bg-warm-white border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
-              />
-              <input
-                type="date"
-                value={personalForm.date}
-                onChange={(e) =>
-                  setPersonalForm((f) => ({ ...f, date: e.target.value }))
-                }
-                className="rounded-lg bg-warm-white border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
-              />
-              <input
-                type="number"
-                min={1}
-                value={personalForm.rank}
-                onChange={(e) =>
-                  setPersonalForm((f) => ({ ...f, rank: e.target.value }))
-                }
-                placeholder="Place"
-                className="rounded-lg bg-warm-white border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
-              />
-              <input
-                type="number"
-                min={1}
-                value={personalForm.fleetSize}
-                onChange={(e) =>
-                  setPersonalForm((f) => ({ ...f, fleetSize: e.target.value }))
-                }
-                placeholder="Fleet size"
-                className="rounded-lg bg-warm-white border border-cool-veil px-2.5 py-1.5 text-xs text-charcoal"
-              />
+            <div className="flex items-center gap-3 shrink-0">
+              {personalMsg && (
+                <p className="text-[13px] font-bold text-harbour">{personalMsg}</p>
+              )}
+              <Link
+                href={`/athlete?id=${initialSailor.id}&tab=results&action=new`}
+                className="sp-secondary inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-bold cursor-pointer"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                Log a regatta result
+              </Link>
             </div>
-            <button
-              type="button"
-              disabled={personalBusy}
-              onClick={() => void savePersonalResult()}
-              className="sp-secondary rounded-lg px-3 py-1.5 text-[13px] font-bold disabled:opacity-50 cursor-pointer"
-            >
-              {personalBusy ? "Saving…" : "Add to logbook"}
-            </button>
-            {personalMsg && (
-              <p className="text-[13px] font-bold text-harbour">{personalMsg}</p>
-            )}
           </div>
         )}
 
