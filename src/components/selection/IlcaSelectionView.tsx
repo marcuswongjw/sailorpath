@@ -46,24 +46,35 @@ export function IlcaSelectionView({
       : Boolean(email);
 
   const [clientSailors, setClientSailors] = useState<IlcaTrialSailor[] | null>(null);
+  const [clientLoadError, setClientLoadError] = useState(false);
+  const [reloadTick, setReloadTick] = useState(0);
   const sailorList = clientSailors ?? initialSailors;
 
   useEffect(() => {
     if (isLoggedIn && sailorList.length === 0) {
       let cancelled = false;
       fetch("/api/selection/ilca4")
-        .then((res) => (res.ok ? res.json() : null))
+        .then((res) => {
+          if (!res.ok) throw new Error(`load failed: ${res.status}`);
+          return res.json();
+        })
         .then((data) => {
-          if (!cancelled && Array.isArray(data?.sailors)) {
+          if (cancelled) return;
+          if (Array.isArray(data?.sailors)) {
             setClientSailors(data.sailors);
+            setClientLoadError(false);
+          } else {
+            setClientLoadError(true);
           }
         })
-        .catch(() => {});
+        .catch(() => {
+          if (!cancelled) setClientLoadError(true);
+        });
       return () => {
         cancelled = true;
       };
     }
-  }, [isLoggedIn, sailorList.length]);
+  }, [isLoggedIn, sailorList.length, reloadTick]);
 
   const [activeTab, setActiveTab] = useState<SelectionTab>("eastern");
   const [selectedSailorId, setSelectedSailorId] = useState<string | null>(null);
@@ -176,7 +187,10 @@ export function IlcaSelectionView({
     return rows;
   }, [genderFilter, eligibilityFilter, searchQuery, sailorList]);
 
-  if (!accountReady && initialIsAuthenticated === undefined) {
+  // Show the spinner while the account context is unresolved and we have no
+  // data — also covers a logged-in user whose SERVER auth check failed
+  // (page.tsx degrades to isAuthenticated=false), preventing a gate flash.
+  if (!accountReady && sailorList.length === 0 && !clientSailors) {
     return (
       <div className="mx-auto w-full max-w-4xl px-4 py-20 flex flex-col items-center justify-center space-y-3">
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-sky-500 border-t-transparent" />
@@ -281,6 +295,40 @@ export function IlcaSelectionView({
             Free access for Singapore sailors, sailing parents, and registered coaches.
           </p>
         </div>
+      </div>
+    );
+  }
+
+  // Logged in but no selection data yet (SSR auth failed → client fetch fallback)
+  if (sailorList.length === 0) {
+    if (clientLoadError) {
+      return (
+        <div className="mx-auto w-full max-w-4xl px-4 py-20 flex flex-col items-center justify-center space-y-4 text-center">
+          <p className="text-sm font-bold text-charcoal">
+            Couldn’t load selection data
+          </p>
+          <p className="text-[13px] text-slate-soft max-w-sm">
+            Check your connection and try again.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setClientLoadError(false);
+              setReloadTick((t) => t + 1);
+            }}
+            className="rounded-full border border-cool-veil bg-warm-white hover:bg-sailcloth px-5 py-2.5 text-[13px] font-bold text-charcoal transition-colors"
+          >
+            Retry
+          </button>
+        </div>
+      );
+    }
+    return (
+      <div className="mx-auto w-full max-w-4xl px-4 py-20 flex flex-col items-center justify-center space-y-3">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-sky-500 border-t-transparent" />
+        <p className="text-xs text-slate-500 font-medium">
+          Loading selection data…
+        </p>
       </div>
     );
   }

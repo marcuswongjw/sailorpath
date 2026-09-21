@@ -408,10 +408,8 @@ export function ParentDashboard() {
         : "race_ready";
     const nextCondition = fromSimplifiedCondition(nextSimplified);
 
-    let previousAthletes: Athlete[] = athletes;
-    setAthletes((prev) => {
-      previousAthletes = prev;
-      return prev.map((ath) => {
+    setAthletes((prev) =>
+      prev.map((ath) => {
         if (ath.id !== athleteId) return ath;
         return {
           ...ath,
@@ -419,8 +417,8 @@ export function ParentDashboard() {
             g.id === gearId ? { ...g, condition: nextCondition } : g
           ),
         };
-      });
-    });
+      })
+    );
 
     try {
       const res = await fetch("/api/account/equipment", {
@@ -438,7 +436,18 @@ export function ParentDashboard() {
           : "Gear marked Needs Repair"
       );
     } catch {
-      setAthletes(previousAthletes);
+      // Revert only this gear item so other optimistic updates are preserved
+      setAthletes((prev) =>
+        prev.map((ath) => {
+          if (ath.id !== athleteId) return ath;
+          return {
+            ...ath,
+            primaryGear: (ath.primaryGear || []).map((g) =>
+              g.id === gearId ? { ...g, condition: currentCondition } : g
+            ),
+          };
+        })
+      );
       toast.error("Failed to update equipment condition.");
     }
   };
@@ -450,10 +459,8 @@ export function ParentDashboard() {
   ) => {
     const nextPrimary = !currentPrimary;
 
-    let previousAthletes: Athlete[] = athletes;
-    setAthletes((prev) => {
-      previousAthletes = prev;
-      return prev.map((ath) => {
+    setAthletes((prev) =>
+      prev.map((ath) => {
         if (ath.id !== athleteId) return ath;
         return {
           ...ath,
@@ -461,8 +468,8 @@ export function ParentDashboard() {
             g.id === gearId ? { ...g, isPrimary: nextPrimary } : g
           ),
         };
-      });
-    });
+      })
+    );
 
     try {
       const res = await fetch("/api/account/equipment", {
@@ -476,7 +483,18 @@ export function ParentDashboard() {
         nextPrimary ? "Set as primary race gear" : "Removed from primary gear."
       );
     } catch {
-      setAthletes(previousAthletes);
+      // Revert only this gear item so other optimistic updates are preserved
+      setAthletes((prev) =>
+        prev.map((ath) => {
+          if (ath.id !== athleteId) return ath;
+          return {
+            ...ath,
+            primaryGear: (ath.primaryGear || []).map((g) =>
+              g.id === gearId ? { ...g, isPrimary: currentPrimary } : g
+            ),
+          };
+        })
+      );
       toast.error("Failed to update gear priority.");
     }
   };
@@ -491,17 +509,22 @@ export function ParentDashboard() {
     });
     if (!confirmed) return;
 
-    let previousAthletes: Athlete[] = athletes;
-    setAthletes((prev) => {
-      previousAthletes = prev;
-      return prev.map((ath) => {
+    // Capture the item (and its position) for a targeted rollback
+    const sourceAthlete = athletes.find((a) => a.id === athleteId);
+    const gearIndex =
+      sourceAthlete?.primaryGear?.findIndex((g) => g.id === gearId) ?? -1;
+    const removedGear =
+      gearIndex >= 0 ? sourceAthlete!.primaryGear![gearIndex] : null;
+
+    setAthletes((prev) =>
+      prev.map((ath) => {
         if (ath.id !== athleteId) return ath;
         return {
           ...ath,
           primaryGear: (ath.primaryGear || []).filter((g) => g.id !== gearId),
         };
-      });
-    });
+      })
+    );
 
     try {
       const res = await fetch(
@@ -514,7 +537,18 @@ export function ParentDashboard() {
       if (!res.ok) throw new Error();
       toast.success("Equipment item removed.");
     } catch {
-      setAthletes(previousAthletes);
+      // Re-insert the removed item at its original position, preserving
+      // any other optimistic updates that landed in between
+      if (removedGear) {
+        setAthletes((prev) =>
+          prev.map((ath) => {
+            if (ath.id !== athleteId) return ath;
+            const gear = [...(ath.primaryGear || [])];
+            gear.splice(Math.min(gearIndex, gear.length), 0, removedGear);
+            return { ...ath, primaryGear: gear };
+          })
+        );
+      }
       toast.error("Failed to remove equipment.");
     }
   };

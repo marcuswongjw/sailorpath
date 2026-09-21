@@ -211,10 +211,13 @@ export async function POST(req: Request) {
     }
     const officialUrl = off.value;
     const evidenceNotes = body.evidenceNotes ? String(body.evidenceNotes).trim().slice(0, 500) : null;
+    // Strip query/hash before the suffix test — Supabase signed URLs look like
+    // ".../doc.pdf?token=..." and would otherwise be misclassified as images.
+    const evidencePath = evidenceUrl?.split(/[?#]/)[0].toLowerCase();
     const evidenceType =
       body.evidenceType && ["pdf", "image", "link"].includes(body.evidenceType)
         ? body.evidenceType
-        : evidenceUrl?.toLowerCase().endsWith(".pdf")
+        : evidencePath?.endsWith(".pdf")
         ? "pdf"
         : evidenceUrl
         ? "image"
@@ -391,16 +394,18 @@ export async function PATCH(req: Request) {
       resultPatch.rank = Math.max(1, Math.round(Number(body.rank) || 1));
     }
     if (body.nettScore !== undefined) {
-      resultPatch.nettScore =
+      const n =
         body.nettScore === "" || body.nettScore == null
           ? null
           : Number(body.nettScore);
+      resultPatch.nettScore = n != null && Number.isFinite(n) ? n : null;
     }
     if (body.totalScore !== undefined) {
-      resultPatch.totalScore =
+      const n =
         body.totalScore === "" || body.totalScore == null
           ? null
           : Number(body.totalScore);
+      resultPatch.totalScore = n != null && Number.isFinite(n) ? n : null;
     }
     if (body.evidenceUrl !== undefined) {
       const p = parseSafeUrl(body.evidenceUrl);
