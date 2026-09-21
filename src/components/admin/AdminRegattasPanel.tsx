@@ -602,7 +602,7 @@ export function AdminRegattasPanel({
                           </div>
                           <div>
                             <label className="text-[12px] font-bold text-slate-500 uppercase">
-                              Notice of Race (NOR) URL
+                              Notice of Race / Official Notice Board URL
                             </label>
                             <input
                               type="url"
@@ -614,7 +614,7 @@ export function AdminRegattasPanel({
                                 })
                               }
                               className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
-                              placeholder="https://.../nor.pdf"
+                              placeholder="https://www.racingrulesofsailing.org/... or nor.pdf"
                             />
                           </div>
                           <div>

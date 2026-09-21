@@ -47,6 +47,7 @@ export default async function Ilca4RegattaDetailPage({
         raceCount={regatta.raceCount ?? null}
         series="ilca4"
         countsForRanking={regatta.countsForRanking !== false}
+        norUrl={regatta.norUrl}
       />
       <PublicRegattaResults
         results={results}

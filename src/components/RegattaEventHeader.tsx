@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FileText, ExternalLink } from "lucide-react";
 
 export type RegattaEventHeaderProps = {
   name: string;
@@ -9,6 +10,7 @@ export type RegattaEventHeaderProps = {
   /** "optimist" | "ilca4" */
   series: "optimist" | "ilca4";
   countsForRanking?: boolean;
+  norUrl?: string | null;
 };
 
 /**
@@ -22,6 +24,7 @@ export function RegattaEventHeader({
   raceCount,
   series,
   countsForRanking = true,
+  norUrl,
 }: RegattaEventHeaderProps) {
   const isIlca = series === "ilca4";
   const listHref = isIlca ? "/sg/ilca4/regattas" : "/sg/optimist/regattas";
@@ -75,6 +78,18 @@ export function RegattaEventHeader({
             <span className="inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]">
               Non-ranking
             </span>
+          )}
+          {norUrl && (
+            <a
+              href={norUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-orange)]/10 text-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-orange)]/20 transition-colors"
+            >
+              <FileText className="h-3 w-3" />
+              Official Notice Board
+              <ExternalLink className="h-2.5 w-2.5" />
+            </a>
           )}
         </div>
         <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] leading-snug break-words tracking-tight">

@@ -46,6 +46,7 @@ export default async function RegattaDetailPage({
         raceCount={regatta.raceCount ?? null}
         series="optimist"
         countsForRanking={regatta.countsForRanking !== false}
+        norUrl={regatta.norUrl}
       />
       <PublicRegattaResults
         results={results}

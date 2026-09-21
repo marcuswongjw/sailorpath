@@ -629,7 +629,7 @@ export function RegattaCalendarClient({
 
                   {/* Right Actions */}
                   <div className="flex flex-wrap sm:flex-col gap-2 shrink-0 sm:self-center">
-                    {/* Notice of Race (NOR) Link */}
+                    {/* Notice of Race (NOR) / Official Notice Board Link */}
                     {regatta.norUrl ? (
                       <a
                         href={regatta.norUrl}
@@ -638,7 +638,9 @@ export function RegattaCalendarClient({
                         className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] px-3.5 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] inline-flex items-center justify-center gap-1.5 transition-colors"
                       >
                         <FileText className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
-                        Notice of Race
+                        {regatta.norUrl.includes("racingrulesofsailing.org") || regatta.norUrl.includes("/documents/")
+                          ? "Official Notice Board"
+                          : "Notice of Race"}
                         <ExternalLink className="h-3 w-3 text-[var(--sp-slate-soft)]" />
                       </a>
                     ) : null}

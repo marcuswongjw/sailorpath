@@ -205,6 +205,21 @@ describe("RegattaCalendarClient", () => {
     expect(registerLink).toHaveAttribute("href", "https://singaporesailing.org/events/snsc-2099");
   });
 
+  it("renders Official Notice Board link for racingrulesofsailing portals", () => {
+    const onbEvents: RegattaRecord[] = [
+      {
+        ...mockEvents[0],
+        id: "reg-onb",
+        norUrl: "https://www.racingrulesofsailing.org/documents/14487/event",
+      },
+    ];
+    render(<RegattaCalendarClient regattas={onbEvents} />);
+
+    const onbLink = screen.getByRole("link", { name: /official notice board/i });
+    expect(onbLink).toBeInTheDocument();
+    expect(onbLink).toHaveAttribute("href", "https://www.racingrulesofsailing.org/documents/14487/event");
+  });
+
   it("toggles between upcoming regattas and past regattas", () => {
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
