@@ -28,6 +28,7 @@ import {
 } from "./RegattaEvidenceModal";
 import { EquipmentInventory } from "@/components/equipment/EquipmentInventory";
 import { GeographySelect } from "@/components/CountrySelect";
+import { ProfileIdentityFields } from "@/components/sailor-profile/ProfileIdentityFields";
 
 export type AthleteProfile = {
   id: string;
@@ -751,68 +752,12 @@ function AthleteWorkspace({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Optimist Sail Number
-              </label>
-              <input
-                type="text"
-                value={profileForm.sailNumber}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, sailNumber: e.target.value })
-                }
-                placeholder="e.g. 711"
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                ILCA 4 Sail Number
-              </label>
-              <input
-                type="text"
-                value={profileForm.sailNumberIlca4}
-                onChange={(e) =>
-                  setProfileForm({
-                    ...profileForm,
-                    sailNumberIlca4: e.target.value,
-                  })
-                }
-                placeholder="e.g. 219111"
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Sailing Club
-              </label>
-              <input
-                type="text"
-                value={profileForm.club}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, club: e.target.value })
-                }
-                placeholder="e.g. Changi Sailing Club (CSC)"
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                School
-              </label>
-              <input
-                type="text"
-                value={profileForm.school}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, school: e.target.value })
-                }
-                placeholder="e.g. Raffles Institution"
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              />
-            </div>
+            <ProfileIdentityFields
+              form={profileForm}
+              onFieldChange={(key, value) =>
+                setProfileForm((f) => ({ ...f, [key]: value }))
+              }
+            />
 
             <div>
               <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
@@ -843,35 +788,6 @@ function AthleteWorkspace({
                   })
                 }
                 className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Date of Birth
-              </label>
-              <input
-                type="date"
-                value={profileForm.dob}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, dob: e.target.value })
-                }
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-[var(--sp-slate-soft)] mb-1">
-                Instagram Handle
-              </label>
-              <input
-                type="text"
-                value={profileForm.instagram}
-                onChange={(e) =>
-                  setProfileForm({ ...profileForm, instagram: e.target.value })
-                }
-                placeholder="e.g. sailor_alex"
-                className="w-full rounded-xl bg-white border border-[var(--sp-cool-veil)] px-3.5 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] focus:outline-none"
               />
             </div>
           </div>

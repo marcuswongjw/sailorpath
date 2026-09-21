@@ -3,6 +3,7 @@
 import type React from "react";
 import { Pencil } from "lucide-react";
 import { PROFILE_CARD_CLASS } from "@/components/sailor-profile/helpers";
+import { ProfileIdentityFields } from "@/components/sailor-profile/ProfileIdentityFields";
 
 /** Matches SailorProfileView owner `form` state (profile + equipment draft fields). */
 export type ProfileOwnerForm = {
@@ -94,73 +95,19 @@ export function ProfileOwnerEditor({
             />
           </div>
         </label>
-        <label className="block">
-          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
-            School
-          </span>
-          <input
-            value={form.school}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, school: e.target.value }))
-            }
-            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
-          />
-        </label>
-        <label className="block">
-          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
-            Date of birth
-          </span>
-          <input
-            type="date"
-            value={form.dob}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, dob: e.target.value }))
-            }
-            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
-          />
-          <p className="mt-1 text-[13px] text-slate-soft leading-snug">
-            Public profiles show the birth year only (e.g. Born 2013). Turn on
-            “Also share month &amp; day” under Privacy if you want the full date
-            visible.
-          </p>
-        </label>
-        <label className="block">
-          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
-            Sailing club
-          </span>
-          <input
-            value={form.club}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, club: e.target.value }))
-            }
-            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
-          />
-        </label>
-        <label className="block">
-          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
-            Optimist sail #
-          </span>
-          <input
-            value={form.sailNumber}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, sailNumber: e.target.value }))
-            }
-            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal font-mono focus:border-harbour focus:outline-none"
-          />
-        </label>
-        <label className="block">
-          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
-            ILCA 4 sail #
-          </span>
-          <input
-            value={form.sailNumberIlca4}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, sailNumberIlca4: e.target.value }))
-            }
-            placeholder="Optional"
-            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal font-mono focus:border-harbour focus:outline-none"
-          />
-        </label>
+        <ProfileIdentityFields
+          form={form}
+          onFieldChange={(key, value) =>
+            setForm((f) => ({ ...f, [key]: value }))
+          }
+          dobHint={
+            <p className="mt-1 text-[13px] text-slate-soft leading-snug">
+              Public profiles show the birth year only (e.g. Born 2013). Turn on
+              “Also share month &amp; day” under Privacy if you want the full
+              date visible.
+            </p>
+          }
+        />
         <label className="block">
           <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             Weight (kg)
@@ -173,19 +120,6 @@ export function ProfileOwnerEditor({
             onChange={(e) =>
               setForm((f) => ({ ...f, weight: e.target.value }))
             }
-            className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
-          />
-        </label>
-        <label className="block">
-          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
-            Instagram
-          </span>
-          <input
-            value={form.instagram || ""}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, instagram: e.target.value }))
-            }
-            placeholder="@handle"
             className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
         </label>
