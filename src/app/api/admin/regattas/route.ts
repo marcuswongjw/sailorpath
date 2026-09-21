@@ -271,7 +271,11 @@ export async function PATCH(req: Request) {
     if (body.date !== undefined) patch.date = String(body.date);
     if (body.division !== undefined) patch.division = body.division || "Gold";
     if (body.totalFleetSize !== undefined) {
-      patch.totalFleetSize = Number(body.totalFleetSize) || 50;
+      const fsr = asPositiveInteger(body.totalFleetSize, "totalFleetSize");
+      if (!fsr.ok) {
+        return NextResponse.json({ error: fsr.error }, { status: 400 });
+      }
+      patch.totalFleetSize = fsr.value;
     }
     if (body.raceCount !== undefined) {
       patch.raceCount =
@@ -335,9 +339,6 @@ export async function PATCH(req: Request) {
           .toUpperCase()
           .slice(0, 12);
       }
-      if (body.totalFleetSize !== undefined) {
-        patch.totalFleetSize = Number(body.totalFleetSize) || 50;
-      }
       if (body.boatClass !== undefined) {
         patch.boatClass = String(body.boatClass || "Optimist").slice(0, 40);
       }
@@ -370,6 +371,15 @@ export async function PATCH(req: Request) {
       patch.raceCount !== undefined
         ? (patch.raceCount as number | null)
         : existing?.raceCount ?? null;
+
+    // Promoting an already-ranking regatta would clobber its division /
+    // geography / fleet size with suggestion defaults — refuse instead.
+    if (body.action === "promote" && existing?.countsForRanking) {
+      return NextResponse.json(
+        { error: "Regatta already counts for ranking" },
+        { status: 409 }
+      );
+    }
     let rankingNote: string | null = null;
     if (
       isAnyIlcaClass(effectiveBoatClass) &&

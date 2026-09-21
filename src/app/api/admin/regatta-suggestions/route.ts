@@ -27,7 +27,15 @@ export async function GET() {
       and(eq(regattas.countsForRanking, false), isNull(regattas.reviewedAt)),
     ];
     if (pendingRegattaIds.length > 0) {
-      conditions.push(inArray(regattas.id, pendingRegattaIds));
+      // Ranking regattas with pending evidence always surface for review.
+      // Dismissed (reviewedAt set) NON-ranking regattas stay dismissed even
+      // if pending evidence remains — otherwise dismiss appears to do nothing.
+      conditions.push(
+        and(
+          inArray(regattas.id, pendingRegattaIds),
+          or(isNull(regattas.reviewedAt), eq(regattas.countsForRanking, true))
+        )
+      );
     }
 
     const rows = await db
@@ -230,7 +238,45 @@ export async function PATCH(req: Request) {
       }
       const division = body.division ? String(body.division) : "Gold";
       const geography = body.geography ? String(body.geography) : "SGP";
-      const totalFleetSize = Number(body.totalFleetSize) || 50;
+
+      // Fleet size is optional (keeps existing when omitted) but must be
+      // a positive integer when provided — no silent "50" fallback.
+      let totalFleetSize: number | undefined;
+      if (
+        body.totalFleetSize !== undefined &&
+        body.totalFleetSize !== null &&
+        body.totalFleetSize !== ""
+      ) {
+        const n = Number(body.totalFleetSize);
+        if (!Number.isFinite(n) || n < 1) {
+          return NextResponse.json(
+            { error: "totalFleetSize must be a positive integer" },
+            { status: 400 }
+          );
+        }
+        totalFleetSize = Math.round(n);
+      }
+
+      const [current] = await db
+        .select({
+          countsForRanking: regattas.countsForRanking,
+          totalFleetSize: regattas.totalFleetSize,
+        })
+        .from(regattas)
+        .where(eq(regattas.id, regattaId))
+        .limit(1);
+      if (!current) {
+        return NextResponse.json(
+          { error: "Regatta not found" },
+          { status: 404 }
+        );
+      }
+      if (current.countsForRanking) {
+        return NextResponse.json(
+          { error: "Regatta already counts for ranking" },
+          { status: 409 }
+        );
+      }
 
       const [updated] = await db
         .update(regattas)
@@ -238,17 +284,21 @@ export async function PATCH(req: Request) {
           countsForRanking: true,
           division,
           geography,
-          totalFleetSize,
+          totalFleetSize: totalFleetSize ?? current.totalFleetSize ?? 50,
           reviewedAt: new Date(),
           updatedAt: new Date(),
         })
-        .where(eq(regattas.id, regattaId))
+        .where(
+          and(eq(regattas.id, regattaId), eq(regattas.countsForRanking, false))
+        )
         .returning();
 
       if (!updated) {
+        // Existence was pre-checked — an empty result means a concurrent
+        // promote won the race for the countsForRanking=false guard.
         return NextResponse.json(
-          { error: "Regatta not found" },
-          { status: 404 }
+          { error: "Regatta already counts for ranking" },
+          { status: 409 }
         );
       }
 

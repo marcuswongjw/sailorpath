@@ -4,6 +4,7 @@ const mocks = vi.hoisted(() => ({
   requireSuperadmin: vi.fn(),
   updateResultSpy: vi.fn(),
   updateRegattaSpy: vi.fn(),
+  regattaRowLimit: vi.fn(),
 }));
 
 vi.mock("@/lib/auth", () => ({
@@ -32,6 +33,7 @@ vi.mock("@/db", () => ({
     select: () => ({
       from: () => ({
         where: () => ({
+          limit: () => mocks.regattaRowLimit(),
           orderBy: () =>
             Promise.resolve([
               {
@@ -112,6 +114,10 @@ describe("/api/admin/regatta-suggestions", () => {
     mocks.requireSuperadmin.mockReset();
     mocks.updateResultSpy.mockReset();
     mocks.updateRegattaSpy.mockReset();
+    mocks.regattaRowLimit.mockReset();
+    mocks.regattaRowLimit.mockResolvedValue([
+      { countsForRanking: false, totalFleetSize: 60 },
+    ]);
     mocks.requireSuperadmin.mockResolvedValue({
       userId: "admin-1",
       email: "admin@sailorpath.com",
@@ -223,6 +229,59 @@ describe("/api/admin/regatta-suggestions", () => {
           totalFleetSize: 75,
         })
       );
+    });
+
+    it("keeps the existing fleet size when totalFleetSize is omitted", async () => {
+      const req = new Request("http://localhost/api/admin/regatta-suggestions", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "promote",
+          regattaId: "regatta-1",
+          division: "Gold",
+        }),
+      });
+      const res = await PATCH(req);
+      expect(res.status).toBe(200);
+      expect(mocks.updateRegattaSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ totalFleetSize: 60 })
+      );
+    });
+
+    it("returns 400 for a non-positive totalFleetSize instead of defaulting to 50", async () => {
+      const req = new Request("http://localhost/api/admin/regatta-suggestions", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "promote",
+          regattaId: "regatta-1",
+          totalFleetSize: 0,
+        }),
+      });
+      const res = await PATCH(req);
+      expect(res.status).toBe(400);
+      expect(mocks.updateRegattaSpy).not.toHaveBeenCalled();
+    });
+
+    it("returns 409 when the regatta already counts for ranking", async () => {
+      mocks.regattaRowLimit.mockResolvedValue([
+        { countsForRanking: true, totalFleetSize: 60 },
+      ]);
+      const req = new Request("http://localhost/api/admin/regatta-suggestions", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "promote",
+          regattaId: "regatta-1",
+          division: "Silver",
+          geography: "THA",
+          totalFleetSize: 10,
+        }),
+      });
+      const res = await PATCH(req);
+      expect(res.status).toBe(409);
+      // Must NOT overwrite division/geography/fleet size on a ranking regatta
+      expect(mocks.updateRegattaSpy).not.toHaveBeenCalled();
     });
   });
 });

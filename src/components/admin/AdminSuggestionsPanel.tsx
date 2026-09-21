@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   AlertTriangle,
   CheckCircle,
@@ -16,6 +17,7 @@ import { regattaDateLabel } from "@/types/regatta";
 import type { RegattaAdmin } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 
 type Suggestion = {
   id: string;
@@ -65,6 +67,13 @@ export function AdminSuggestionsPanel({
   onRegattaUpdated?: (reg: RegattaAdmin) => void;
 }) {
   const { toast } = useFeedback();
+  const queryClient = useQueryClient();
+  /** Keep the header notification badge in sync after queue mutations. */
+  const invalidateSuggestionsBadge = useCallback(() => {
+    void queryClient.invalidateQueries({
+      queryKey: adminQueryKeys.regattaSuggestions(),
+    });
+  }, [queryClient]);
   const [items, setItems] = useState<Suggestion[]>([]);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -153,6 +162,7 @@ export function AdminSuggestionsPanel({
       if (!res.ok) throw new Error(data.error || "Update failed");
       onRegattaUpdated?.(data.regatta);
       setItems((prev) => prev.filter((x) => x.id !== id));
+      invalidateSuggestionsBadge();
       return data.regatta;
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed");
@@ -193,6 +203,8 @@ export function AdminSuggestionsPanel({
           ),
         }))
       );
+      // Resolving the last pending result can drop the regatta from the queue
+      invalidateSuggestionsBadge();
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Failed");
     } finally {
