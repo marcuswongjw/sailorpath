@@ -27,7 +27,7 @@ export function EquipmentHeader({
             Equipment
           </h2>
           {activeCount > 0 && (
-            <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-charcoal)] tabular-nums">
+            <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[11px] font-bold text-[var(--sp-charcoal)] tabular-nums">
               {activeCount}
             </span>
           )}

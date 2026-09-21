@@ -1405,7 +1405,7 @@ export function SailorProfileView({
                     ? "ILCA 4 national ranking"
                     : "Series standing"}
                 </p>
-                <p className="text-[11px] text-slate-soft">
+                <p className="text-[13px] text-slate-soft">
                   {activeStanding.periodLabel}
                   <span className="text-cool-veil"> · </span>
                   <span
@@ -1423,7 +1423,7 @@ export function SailorProfileView({
               </div>
             </div>
             <div className="text-right">
-              <p className="text-[9px] font-bold uppercase tracking-[0.12em] text-slate-soft">
+              <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-slate-soft">
                 National rank
               </p>
               <p
@@ -1437,7 +1437,7 @@ export function SailorProfileView({
                 of {activeStanding.fleetSize}
                 {standingIsIlca ? "" : ` · ${activeStanding.fleet}`}
               </p>
-              <p className="text-[11px] text-slate-soft mt-1.5 tabular-nums">
+              <p className="text-[13px] text-slate-soft mt-1.5 tabular-nums">
                 Best 3 of 5{" "}
                 <span className="font-bold text-charcoal">
                   {activeStanding.best3of5}
@@ -1475,7 +1475,7 @@ export function SailorProfileView({
                   title={r?.regattaName}
                 >
                   <p
-                    className={`text-[11px] font-bold tracking-wide ${
+                    className={`text-[13px] font-bold tracking-wide ${
                       standingIsIlca ? "text-harbour" : "text-racing-orange"
                     }`}
                   >
@@ -1491,7 +1491,7 @@ export function SailorProfileView({
                           ? `#${r!.finishPlace}`
                           : "DNC"}
                       </p>
-                      <p className="text-[11px] font-bold text-harbour tabular-nums">
+                      <p className="text-[13px] font-bold text-harbour tabular-nums">
                         {r!.score} pts
                       </p>
                     </div>
@@ -1525,7 +1525,7 @@ export function SailorProfileView({
                 >
                   <div className="min-w-0 flex items-center gap-2.5">
                     <span
-                      className={`shrink-0 text-[11px] font-bold w-6 ${
+                      className={`shrink-0 text-[13px] font-bold w-6 ${
                         standingIsIlca ? "text-harbour" : "text-racing-orange"
                       }`}
                     >
@@ -1548,7 +1548,7 @@ export function SailorProfileView({
                             ? "DNC"
                             : "—"}
                       </span>
-                      <span className="block text-[11px] font-bold text-harbour tabular-nums mt-0.5">
+                      <span className="block text-[13px] font-bold text-harbour tabular-nums mt-0.5">
                         {r.score} pts
                       </span>
                     </span>
@@ -1564,7 +1564,7 @@ export function SailorProfileView({
             })}
           </ul>
           {!standingIsIlca && (
-            <p className="mt-3 text-[11px] text-slate-soft leading-relaxed">
+            <p className="mt-3 text-[13px] text-slate-soft leading-relaxed">
               <span className="font-bold text-charcoal">Key: </span>
               <span className="tabular-nums font-medium">CF</span> = carry-forward ·{" "}
               <span className="tabular-nums font-medium">*</span> = DNS (did not start;
@@ -1573,14 +1573,14 @@ export function SailorProfileView({
             </p>
           )}
           {!standingIsIlca && seriesDnsCount > 0 && (
-            <p className="mt-1.5 text-[11px] text-slate-soft leading-relaxed">
+            <p className="mt-1.5 text-[13px] text-slate-soft leading-relaxed">
               {seriesDnsCount} missed ranking{" "}
               {seriesDnsCount === 1 ? "event" : "events"} in this window
               (DNS) — listed under Results below and on the position trend.
             </p>
           )}
           {activeStanding.trendNote && (
-            <p className="mt-2 text-[11px] font-bold text-harbour">
+            <p className="mt-2 text-[13px] font-bold text-harbour">
               {activeStanding.trendNote}
             </p>
           )}
@@ -1617,7 +1617,7 @@ export function SailorProfileView({
             <section className={`${cardClass} p-4 sm:p-5 space-y-3`}>
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
+                  <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
                     Recent Regattas
                   </h2>
                   <p className="text-xs text-slate-soft mt-0.5 font-medium">
@@ -1649,7 +1649,7 @@ export function SailorProfileView({
                       className="rounded-xl border border-cool-veil bg-sailcloth/60 p-3.5 flex flex-col justify-between"
                     >
                       <div>
-                        <p className="text-[11px] text-slate-soft truncate font-medium">
+                        <p className="text-[13px] text-slate-soft truncate font-medium">
                           {dateStr}
                         </p>
                         <p
@@ -1672,7 +1672,7 @@ export function SailorProfileView({
                           {dns ? "DNS" : rank != null ? `#${rank}` : "—"}
                         </span>
                         {fleetSize ? (
-                          <span className="text-[11px] text-slate-soft tabular-nums font-medium">
+                          <span className="text-[13px] text-slate-soft tabular-nums font-medium">
                             of {fleetSize} boats
                           </span>
                         ) : null}
@@ -1689,7 +1689,7 @@ export function SailorProfileView({
             <section className={`${cardClass} p-4 sm:p-5 space-y-3`}>
               <div className="flex items-center justify-between gap-2">
                 <div>
-                  <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
+                  <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
                     Career Milestones
                   </h2>
                   <p className="text-xs text-slate-soft mt-0.5 font-medium">
@@ -1719,7 +1719,7 @@ export function SailorProfileView({
                           {m.title}
                         </p>
                         {m.when && (
-                          <span className="text-[11px] text-slate-soft font-medium shrink-0">
+                          <span className="text-[13px] text-slate-soft font-medium shrink-0">
                             {m.when}
                           </span>
                         )}
@@ -1749,7 +1749,7 @@ export function SailorProfileView({
                   <h2 className="text-[13px] font-bold text-harbour-shadow">
                     Boat Locker & Equipment
                   </h2>
-                  <p className="text-[11px] text-slate-soft mt-0.5 font-medium">
+                  <p className="text-[13px] text-slate-soft mt-0.5 font-medium">
                     Private gear inventory, condition statuses & use logs
                   </p>
                 </div>
@@ -1772,7 +1772,7 @@ export function SailorProfileView({
       <section className={`${cardClass} overflow-hidden`}>
         <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-2 flex flex-wrap items-end justify-between gap-2">
           <div className="min-w-0 flex-1">
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
+            <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
               {resultsTab === "journey"
                 ? "Sailing journey"
                 : dualClass && resultsTab === "ilca4"
@@ -1782,7 +1782,7 @@ export function SailorProfileView({
                     : "Regatta results"}
             </h2>
             {resultsTab !== "journey" && (
-            <p className="text-[11px] text-slate-soft mt-1 font-medium">
+            <p className="text-[13px] text-slate-soft mt-1 font-medium">
               {(() => {
                 const list = activeResultsList;
                 const n = list.length;
@@ -1813,7 +1813,7 @@ export function SailorProfileView({
                     setOptimistScope("gold");
                     setShowAllResults(false);
                   }}
-                  className={`rounded-full px-3 py-1 text-[10px] font-bold touch-manipulation min-h-[1.75rem] cursor-pointer ${
+                  className={`rounded-full px-3 py-1 text-[13px] font-bold touch-manipulation min-h-[1.75rem] cursor-pointer ${
                     optimistScope === "gold"
                       ? "bg-harbour text-sailcloth shadow-2xs"
                       : "text-slate-soft hover:text-charcoal"
@@ -1827,7 +1827,7 @@ export function SailorProfileView({
                     setOptimistScope("all");
                     setShowAllResults(false);
                   }}
-                  className={`rounded-full px-3 py-1 text-[10px] font-bold touch-manipulation min-h-[1.75rem] cursor-pointer ${
+                  className={`rounded-full px-3 py-1 text-[13px] font-bold touch-manipulation min-h-[1.75rem] cursor-pointer ${
                     optimistScope === "all"
                       ? "bg-harbour text-sailcloth shadow-2xs"
                       : "text-slate-soft hover:text-charcoal"
@@ -1839,7 +1839,7 @@ export function SailorProfileView({
             )}
           </div>
           {ownerView && resultsTab !== "journey" && (
-            <p className="text-[11px] text-slate-soft inline-flex items-center gap-1 font-medium">
+            <p className="text-[13px] text-slate-soft inline-flex items-center gap-1 font-medium">
               <StickyNote className="h-3 w-3 text-harbour" />
               Expand a row for race notes
             </p>
@@ -1888,7 +1888,7 @@ export function SailorProfileView({
 
         {resultsTab !== "journey" && ownerView && !demoMode && (
           <div className="mx-4 sm:mx-5 mb-3 rounded-xl border border-cool-veil bg-sailcloth/50 p-3 space-y-2">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-soft">
+            <p className="text-[12px] font-bold uppercase tracking-wider text-slate-soft">
               Add non-ranking result
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -1933,12 +1933,12 @@ export function SailorProfileView({
               type="button"
               disabled={personalBusy}
               onClick={() => void savePersonalResult()}
-              className="sp-secondary rounded-lg px-3 py-1.5 text-[11px] font-bold disabled:opacity-50 cursor-pointer"
+              className="sp-secondary rounded-lg px-3 py-1.5 text-[13px] font-bold disabled:opacity-50 cursor-pointer"
             >
               {personalBusy ? "Saving…" : "Add to logbook"}
             </button>
             {personalMsg && (
-              <p className="text-[11px] font-bold text-harbour">{personalMsg}</p>
+              <p className="text-[13px] font-bold text-harbour">{personalMsg}</p>
             )}
           </div>
         )}
@@ -1950,7 +1950,7 @@ export function SailorProfileView({
         ) : resultsTab !== "journey" ? (
           <>
             <div
-              className={`hidden sm:grid gap-2 px-4 sm:px-5 py-2.5 border-t border-cool-veil text-[10px] font-bold uppercase tracking-wider text-slate-soft ${
+              className={`hidden sm:grid gap-2 px-4 sm:px-5 py-2.5 border-t border-cool-veil text-[12px] font-bold uppercase tracking-wider text-slate-soft ${
                 primaryIsIlca
                   ? "grid-cols-[1.25rem_2.75rem_1fr_2.5rem_4.25rem]"
                   : "grid-cols-[1.25rem_2.75rem_1fr_4.5rem_4.25rem]"
@@ -2103,7 +2103,7 @@ export function SailorProfileView({
                           {isIlcaRow ? leftValue : leftValue === "DNS" ? "DNS" : leftValue === "—" ? "—" : `#${leftValue}`}
                         </span>
                         {showFleetSizeUnderPlace && (
-                            <span className="text-[10px] font-medium text-slate-soft mt-0.5">
+                            <span className="text-[13px] font-medium text-slate-soft mt-0.5">
                               /{fleetSize}
                             </span>
                           )}
@@ -2122,7 +2122,7 @@ export function SailorProfileView({
                             {res.regattaName}
                           </p>
                         )}
-                        <p className="text-[11px] text-slate-soft truncate mt-0.5 font-medium">
+                        <p className="text-[13px] text-slate-soft truncate mt-0.5 font-medium">
                           {[
                             res.geography,
                             formatEventWhen(res.regattaDate as string),
@@ -2144,7 +2144,7 @@ export function SailorProfileView({
                                 : null
                             : `Nett ${midValue}`;
                           return mobileSecondary ? (
-                            <p className="sm:hidden text-[11px] text-slate-soft mt-1 tabular-nums font-semibold">
+                            <p className="sm:hidden text-[13px] text-slate-soft mt-1 tabular-nums font-semibold">
                               {mobileSecondary}
                             </p>
                           ) : null;
@@ -2154,7 +2154,7 @@ export function SailorProfileView({
                             {tags.map((t) => (
                               <span
                                 key={t.label}
-                                className={`rounded-md px-1.5 py-px text-[9px] font-bold border ${t.className}`}
+                                className={`rounded-md px-1.5 py-px text-[11px] font-bold border ${t.className}`}
                               >
                                 {t.label}
                               </span>
@@ -2173,7 +2173,7 @@ export function SailorProfileView({
                           if (!compact.length) return null;
                           return (
                             <p
-                              className="mt-1.5 text-[10px] text-slate-soft flex flex-wrap items-center gap-x-2 gap-y-0.5 font-medium"
+                              className="mt-1.5 text-[13px] text-slate-soft flex flex-wrap items-center gap-x-2 gap-y-0.5 font-medium"
                               title="Equipment used at this regatta"
                             >
                               {compact.map((g, i) => {
@@ -2200,14 +2200,14 @@ export function SailorProfileView({
                           );
                         })()}
                         {raceNotes.length > 0 && (
-                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-harbour/30 bg-aqua-mist px-2 py-0.5 text-[10px] font-bold text-harbour">
+                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-harbour/30 bg-aqua-mist px-2 py-0.5 text-[11px] font-bold text-harbour">
                             <StickyNote className="h-3 w-3" />
                             {raceNotes.length} note
                             {raceNotes.length === 1 ? "" : "s"}
                           </span>
                         )}
                         {officialRaces.length > 0 && (
-                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                          <span className="mt-1.5 inline-flex items-center gap-1 rounded-md border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[11px] font-bold text-emerald-800">
                             <Trophy className="h-3 w-3 text-emerald-600" />
                             {officialRaces.length} race score
                             {officialRaces.length === 1 ? "" : "s"}
@@ -2220,7 +2220,7 @@ export function SailorProfileView({
                               e.stopPropagation();
                               setExpandedRegattaId(regattaId);
                             }}
-                            className={`mt-1.5 inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[10px] font-bold cursor-pointer ${
+                            className={`mt-1.5 inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[13px] font-bold cursor-pointer ${
                               raceNotes.length > 0
                                 ? "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
                                 : "border-racing-orange/30 bg-racing-mist/30 text-racing-orange hover:bg-racing-mist/50"
@@ -2245,14 +2245,14 @@ export function SailorProfileView({
                           fleetSize != null &&
                           Number(fleetSize) > 0 &&
                           midValue !== "—" && (
-                            <span className="text-[10px] font-medium text-slate-soft mt-0.5">
+                            <span className="text-[13px] font-medium text-slate-soft mt-0.5">
                               /{fleetSize}
                             </span>
                           )}
                       </span>
                       <span className="flex items-center justify-end pt-0.5">
                         <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${fleetPillClass(fleet)}`}
+                          className={`rounded-full px-2 py-0.5 text-[13px] font-bold ${fleetPillClass(fleet)}`}
                         >
                           {fleet === "—" ? "—" : fleet}
                         </span>
@@ -2276,22 +2276,22 @@ export function SailorProfileView({
                         {(res.evidenceUrl || res.officialUrl || res.evidenceNotes) && (
                           <div className="mt-3 rounded-xl border border-cool-veil bg-warm-white p-3.5 space-y-2 shadow-2xs">
                             <div className="flex flex-wrap items-center justify-between gap-2">
-                              <span className="text-[11px] font-bold text-slate-soft uppercase tracking-wider flex items-center gap-1.5">
+                              <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider flex items-center gap-1.5">
                                 <FileText className="h-3.5 w-3.5 text-harbour" />
                                 Official Evidence & Score Verification
                               </span>
                               {res.verificationStatus === "verified" ? (
-                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
+                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-full px-2 py-0.5">
                                   <CheckCircle2 className="h-3 w-3" />
                                   Verified Score
                                 </span>
                               ) : res.verificationStatus === "pending_review" ? (
-                                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded-full px-2 py-0.5">
+                                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-sky-700 bg-sky-50 border border-sky-200 rounded-full px-2 py-0.5">
                                   <FileText className="h-3 w-3" />
                                   Evidence Attached · Awaiting Review
                                 </span>
                               ) : (
-                                <span className="text-[10px] font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2 py-0.5">
+                                <span className="text-[11px] font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2 py-0.5">
                                   Self-Reported Score
                                 </span>
                               )}
@@ -2336,7 +2336,7 @@ export function SailorProfileView({
 
                         {officialRaces.length > 0 && (
                           <div className="pt-3 space-y-2">
-                            <div className="flex items-center gap-2 text-[11px] font-bold text-slate-soft uppercase tracking-wider">
+                            <div className="flex items-center gap-2 text-[12px] font-bold text-slate-soft uppercase tracking-wider">
                               <Trophy className="h-3.5 w-3.5 text-harbour" />
                               Published race scores
                             </div>
@@ -2346,12 +2346,12 @@ export function SailorProfileView({
                                   key={race.raceNumber}
                                   className="rounded-lg border border-cool-veil bg-warm-white px-3 py-2 shadow-2xs"
                                 >
-                                  <p className="text-[10px] text-slate-soft font-medium">Race {race.raceNumber}</p>
+                                  <p className="text-[13px] text-slate-soft font-medium">Race {race.raceNumber}</p>
                                   <p className="text-sm font-black text-harbour-shadow tabular-nums">
                                     {race.rawValue || race.score}
                                   </p>
                                   {race.scoringCode && (
-                                    <p className="text-[10px] font-bold text-racing-orange">
+                                    <p className="text-[13px] font-bold text-racing-orange">
                                       {race.scoringCode}
                                     </p>
                                   )}
@@ -2360,7 +2360,7 @@ export function SailorProfileView({
                             </div>
                           </div>
                         )}
-                        <div className="flex items-center gap-2 pt-3 text-[11px] font-bold text-slate-soft uppercase tracking-wider">
+                        <div className="flex items-center gap-2 pt-3 text-[12px] font-bold text-slate-soft uppercase tracking-wider">
                           <BookOpen className="h-3.5 w-3.5 text-racing-orange" />
                           Race observations
                         </div>
@@ -2383,7 +2383,7 @@ export function SailorProfileView({
                                   <span className="text-xs font-bold text-harbour-shadow">
                                     Race {String(o.raceNumber)}
                                   </span>
-                                  <span className="text-[11px] font-mono text-slate-soft">
+                                  <span className="text-[13px] font-mono text-slate-soft">
                                     {o.position != null
                                       ? `Score ${o.position}`
                                       : "—"}
@@ -2440,7 +2440,7 @@ export function SailorProfileView({
                         )}
                         {ownerView && (
                           <div className="rounded-lg border border-cool-veil bg-warm-white p-3 space-y-2">
-                            <p className="text-[10px] font-bold uppercase tracking-wider text-harbour">
+                            <p className="text-[12px] font-bold uppercase tracking-wider text-harbour">
                               {editingObsId
                                 ? "Edit observation"
                                 : "Add observation"}
@@ -2537,7 +2537,7 @@ export function SailorProfileView({
                               </div>
                             </div>
                             {obsMsg && (
-                              <p className="text-[11px] font-bold text-harbour">{obsMsg}</p>
+                              <p className="text-[13px] font-bold text-harbour">{obsMsg}</p>
                             )}
                           </div>
                         )}
@@ -2625,7 +2625,7 @@ export function SailorProfileView({
               id="profile-equipment-private"
               className={`${cardClass} p-4 sm:p-5`}
             >
-              <h2 className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+              <h2 className="text-[12px] font-medium uppercase tracking-[0.14em] text-neutral-500">
                 Equipment
               </h2>
               <p className="mt-2 text-[13px] text-neutral-400 leading-relaxed">

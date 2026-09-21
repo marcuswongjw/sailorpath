@@ -10,7 +10,7 @@ export function BadgeChip({
   if (badge === "good" || badge === "new") return null;
   return (
     <span
-      className={`inline-flex rounded-full border px-1.5 py-0.5 text-[9px] font-bold ${BADGE_STYLES[badge].className}`}
+      className={`inline-flex rounded-full border px-1.5 py-0.5 text-[11px] font-bold ${BADGE_STYLES[badge].className}`}
     >
       {label}
     </span>

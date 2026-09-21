@@ -16,10 +16,9 @@ const AREA_COLORS: Record<ProductChangeArea, string> = {
   Rankings: "bg-violet-500/15 text-violet-300 border-violet-500/25",
   Admin: "bg-emerald-500/15 text-emerald-300 border-emerald-500/25",
   Search: "bg-amber-500/15 text-amber-300 border-amber-500/25",
-  UX: "bg-pink-500/15 text-pink-300 border-pink-500/25",
+  UX: "bg-pink-500/15 text-pink-800 border-pink-500/25",
   Privacy: "bg-slate-500/15 text-slate-300 border-slate-500/25",
-  Platform: "bg-cyan-500/15 text-cyan-300 border-cyan-500/25",
-};
+  Platform: "bg-cyan-500/15 text-cyan-300 border-cyan-500/25",};
 
 const SEVERITY_COLORS: Record<ProductSeverity, string> = {
   info: "bg-white/5 text-slate-400 border-white/10",
@@ -99,9 +98,9 @@ export function AdminProductChangelogPanel({
         <button
           type="button"
           onClick={() => setAreaFilter("all")}
-          className={`rounded-full px-3 py-1.5 text-[11px] font-bold ${
+          className={`rounded-full px-3 py-1.5 text-[13px] font-bold ${
             areaFilter === "all"
-              ? "bg-white/15 text-white"
+              ? "bg-[var(--sp-harbour-teal)] text-white"
               : "bg-white/5 text-slate-400 border border-white/10"
           }`}
         >
@@ -112,7 +111,7 @@ export function AdminProductChangelogPanel({
             key={area}
             type="button"
             onClick={() => setAreaFilter(area)}
-            className={`rounded-full px-3 py-1.5 text-[11px] font-bold border ${
+            className={`rounded-full px-3 py-1.5 text-[13px] font-bold border ${
               areaFilter === area
                 ? AREA_COLORS[area]
                 : "bg-white/5 text-slate-400 border-white/10"
@@ -141,20 +140,20 @@ export function AdminProductChangelogPanel({
               >
                 <div className="flex flex-wrap items-center gap-2">
                   <span
-                    className={`rounded-full border px-2 py-0.5 text-[10px] font-black uppercase tracking-wide ${AREA_COLORS[entry.area]}`}
+                    className={`rounded-full border px-2 py-0.5 text-[12px] font-black uppercase tracking-wide ${AREA_COLORS[entry.area]}`}
                   >
                     {entry.area}
                   </span>
                   <span
-                    className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase ${SEVERITY_COLORS[severity]}`}
+                    className={`rounded-full border px-2 py-0.5 text-[12px] font-bold uppercase ${SEVERITY_COLORS[severity]}`}
                   >
                     {severity}
                   </span>
-                  <span className="text-[11px] text-slate-500 font-medium">
+                  <span className="text-[13px] text-slate-500 font-medium">
                     {formatDay(entry.date)}
                   </span>
                   {entry.commit && (
-                    <span className="text-[10px] font-mono text-slate-600">
+                    <span className="text-[13px] font-mono text-slate-600">
                       {entry.commit}
                     </span>
                   )}
@@ -165,7 +164,7 @@ export function AdminProductChangelogPanel({
                 <p className="text-xs text-slate-400 leading-relaxed">
                   {entry.summary}
                 </p>
-                <p className="text-[10px] text-slate-600">
+                <p className="text-[13px] text-slate-600">
                   Audience: {entry.audience.join(", ")}
                 </p>
                 {entry.href && (

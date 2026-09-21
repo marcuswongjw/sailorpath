@@ -403,11 +403,11 @@ function AdminDashboardInner() {
           </div>
           <a
             href={loginHref}
-            className="block w-full rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-xs font-bold text-white transition-all shadow-lg shadow-orange-600/20 text-center"
+            className="block w-full rounded-full bg-orange-600 hover:bg-orange-500 px-6 py-3 text-[15px] font-semibold text-white transition-all shadow-lg shadow-orange-600/20 text-center"
           >
             Sign In to Admin Portal
           </a>
-          <p className="text-[10px] text-slate-500 leading-relaxed">
+          <p className="text-[13px] text-slate-500 leading-relaxed">
             After signing in, you will return to the admin console.
           </p>
         </div>
@@ -418,7 +418,7 @@ function AdminDashboardInner() {
   return (
     <div className="mx-auto max-w-7xl w-full min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 flex-1 flex flex-col gap-4 sm:gap-6 lg:gap-8 overflow-x-clip">
       {/* Context Breadcrumb & Quick Info Bar */}
-      <div className="glass-panel rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 border border-white/5 bg-slate-900/40">
+      <div className="glass-panel rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <nav aria-label="Admin breadcrumb" className="flex items-center gap-1.5 text-xs flex-wrap min-w-0">
           <div className="flex items-center gap-1.5 shrink-0">
             <Shield className="h-4 w-4 text-orange-500" />
@@ -470,7 +470,7 @@ function AdminDashboardInner() {
                       : "support"
                 );
               }}
-              className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 px-3 py-1.5 text-[11px] font-bold text-rose-200 hover:bg-rose-500/25"
+              className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 px-3 py-1.5 text-[15px] font-bold text-[var(--sp-color-error)] hover:bg-rose-500/25"
             >
               <UserCheck className="h-3.5 w-3.5" />
               {claimsPendingCount > 0 && (
@@ -499,14 +499,14 @@ function AdminDashboardInner() {
           )}
           <Link
             href="/admin/metrics"
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-300 hover:border-orange-500/40 hover:text-white"
+            className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[15px] font-bold text-slate-300 hover:border-orange-500/40 hover:text-white"
           >
             Metrics guide
           </Link>
-          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[10px] font-black text-orange-400 capitalize">
+          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[11px] font-black text-orange-400 capitalize">
             {adminRole}
           </span>
-          <span className="text-[11px] text-slate-500 hidden sm:inline truncate max-w-[180px]">
+          <span className="text-[13px] text-slate-500 hidden sm:inline truncate max-w-[180px]">
             {user?.email}
           </span>
         </div>
@@ -526,7 +526,7 @@ function AdminDashboardInner() {
             }`}
           >
             <div className="px-2 py-0.5 mb-1 flex items-center justify-between">
-              <span className="text-[9px] font-black uppercase tracking-wider text-slate-500">
+              <span className="text-[12px] font-black uppercase tracking-wider text-slate-500">
                 {grp.groupTitle}
               </span>
             </div>
@@ -539,9 +539,9 @@ function AdminDashboardInner() {
                     key={tab.key}
                     type="button"
                     onClick={() => goTab(tab.key)}
-                    className={`relative flex-1 flex items-center justify-center gap-1.5 rounded-xl px-2 sm:px-2.5 py-2 text-[11px] sm:text-xs font-bold transition-all min-h-[2.5rem] touch-manipulation ${
+                    className={`relative flex-1 flex items-center justify-center gap-1.5 rounded-xl px-2 sm:px-2.5 py-2 text-[13px] sm:text-sm font-bold transition-all min-h-[2.5rem] touch-manipulation ${
                       isActive
-                        ? "bg-orange-600 text-white shadow-md shadow-orange-950/30"
+                        ? "bg-[var(--sp-harbour-teal)] text-white shadow-md"
                         : "text-slate-400 hover:text-white hover:bg-white/5"
                     }`}
                     title={tab.sublabel}
@@ -549,12 +549,12 @@ function AdminDashboardInner() {
                     {Icon && <Icon className="h-3.5 w-3.5 shrink-0" />}
                     <span className="truncate">{tab.shortLabel}</span>
                     {tab.key === "ops" && inboxNotifCount > 0 && (
-                      <span className="absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-rose-500 text-[9px] font-black text-white flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-rose-500 text-[11px] font-black text-white flex items-center justify-center">
                         {inboxNotifCount > 9 ? "9+" : inboxNotifCount}
                       </span>
                     )}
                     {tab.key === "changelog" && productChangelogUnread && (
-                      <span className="absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-sky-500 text-[9px] font-black text-white flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-sky-500 text-[11px] font-black text-white flex items-center justify-center">
                         •
                       </span>
                     )}
@@ -596,7 +596,7 @@ function AdminDashboardInner() {
               href="/sg/optimist/gold"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-orange-400 hover:text-orange-300 transition-colors"
+              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
             >
               <span>Public Gold Rankings</span>
               <ChevronRight className="h-3 w-3" />
@@ -607,7 +607,7 @@ function AdminDashboardInner() {
               href="/sg/ilca4"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-sky-400 hover:text-sky-300 transition-colors"
+              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
             >
               <span>Public ILCA 4 Standings</span>
               <ChevronRight className="h-3 w-3" />
@@ -618,7 +618,7 @@ function AdminDashboardInner() {
               href="/sg/wingfoil"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
             >
               <span>Public WingFoil Results</span>
               <ChevronRight className="h-3 w-3" />
@@ -629,7 +629,7 @@ function AdminDashboardInner() {
               href="/sg/techno293"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
             >
               <span>Public Techno 293 Results</span>
               <ChevronRight className="h-3 w-3" />
@@ -704,18 +704,18 @@ function AdminDashboardInner() {
                       key={id}
                       type="button"
                       onClick={() => goSub(id)}
-                      className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation inline-flex items-center gap-1.5 ${
+                      className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[13px] sm:text-sm font-bold transition-all text-center relative touch-manipulation inline-flex items-center gap-1.5 ${
                         editSubTab === id
-                          ? "bg-orange-600 text-white shadow-sm"
+                          ? "bg-[var(--sp-harbour-teal)] text-white shadow-sm"
                           : "text-slate-400 hover:text-white hover:bg-white/5"
                       }`}
                     >
                       <span>{label}</span>
                       {count != null && count > 0 && (
                         <span
-                          className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono font-medium ${
+                          className={`text-[13px] px-1.5 py-0.5 rounded-full font-mono font-medium ${
                             editSubTab === id
-                              ? "bg-orange-700/80 text-orange-100"
+                              ? "bg-white/25 text-white"
                               : "bg-white/10 text-slate-400"
                           }`}
                         >
@@ -781,30 +781,30 @@ function AdminDashboardInner() {
                     key={id}
                     type="button"
                     onClick={() => goSub(id)}
-                    className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[11px] sm:text-xs font-bold transition-all text-center relative touch-manipulation ${
+                    className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[13px] sm:text-sm font-bold transition-all text-center relative touch-manipulation ${
                       editSubTab === id
-                        ? "bg-orange-600 text-white"
+                        ? "bg-[var(--sp-harbour-teal)] text-white"
                         : "text-slate-400 hover:text-white hover:bg-white/5"
                     }`}
                   >
                     {label}
                     {id === "suggestions" && regattas.suggestionCount > 0 && (
-                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[9px] font-black text-white">
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[11px] font-black text-white">
                         {regattas.suggestionCount}
                       </span>
                     )}
                     {id === "claims" && claimsPendingCount > 0 && (
-                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white">
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[11px] font-black text-white">
                         {claimsPendingCount}
                       </span>
                     )}
                     {id === "coaches" && coachPendingCount > 0 && (
-                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-violet-500 px-1 text-[9px] font-black text-white">
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-violet-500 px-1 text-[11px] font-black text-white">
                         {coachPendingCount}
                       </span>
                     )}
                     {id === "support" && supportNewCount > 0 && (
-                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[9px] font-black text-white">
+                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-amber-500 px-1 text-[11px] font-black text-white">
                         {supportNewCount}
                       </span>
                     )}

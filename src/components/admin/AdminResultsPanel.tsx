@@ -288,9 +288,9 @@ export function AdminResultsPanel({
                   key={id}
                   type="button"
                   onClick={() => setRegattaClassFilter(id)}
-                  className={`rounded-full px-2.5 py-1 text-[10px] font-bold transition-all ${
+                  className={`rounded-full px-2.5 py-1 text-[12px] font-bold transition-all ${
                     regattaClassFilter === id
-                      ? "bg-orange-600 text-white"
+                      ? "bg-[var(--sp-harbour-teal)] text-white"
                       : "text-slate-400 hover:text-white"
                   }`}
                 >
@@ -312,9 +312,9 @@ export function AdminResultsPanel({
                   key={id}
                   type="button"
                   onClick={() => setRegattaRankingFilter(id)}
-                  className={`rounded-full px-2.5 py-1 text-[10px] font-bold transition-all ${
+                  className={`rounded-full px-2.5 py-1 text-[13px] font-bold transition-all ${
                     regattaRankingFilter === id
-                      ? "bg-slate-700 text-white"
+                      ? "bg-[var(--sp-harbour-teal)] text-white"
                       : "text-slate-400 hover:text-white"
                   }`}
                 >
@@ -387,7 +387,7 @@ export function AdminResultsPanel({
 
         {recentRegattas.length > 0 && (
           <div className="flex items-center gap-2 pt-1 flex-wrap">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 shrink-0">
+            <span className="text-[12px] font-bold uppercase tracking-wider text-slate-500 shrink-0">
               Quick Select:
             </span>
             <div className="flex items-center gap-1.5 flex-wrap">
@@ -398,14 +398,14 @@ export function AdminResultsPanel({
                     key={r.id}
                     type="button"
                     onClick={() => pickRegatta(r.id)}
-                    className={`rounded-lg px-2.5 py-1 text-[11px] font-medium transition-all ${
+                    className={`rounded-lg px-2.5 py-1 text-[13px] font-semibold transition-all ${
                       isSelected
-                        ? "bg-orange-500/20 text-orange-300 border border-orange-500/40 shadow-sm"
+                        ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/40 shadow-sm"
                         : "bg-white/5 hover:bg-white/10 text-slate-300 border border-white/5"
                     }`}
                   >
                     <span>{r.name}</span>
-                    <span className="text-[10px] text-slate-500 ml-1.5">
+                    <span className="text-[13px] text-slate-500 ml-1.5">
                       {regattaDateLabel(r.date)}
                     </span>
                   </button>
@@ -420,16 +420,16 @@ export function AdminResultsPanel({
         <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 bg-[#131520] flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-1.5 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[10px] font-black uppercase tracking-wider text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">
+              <span className="text-[12px] font-black uppercase tracking-wider text-orange-400 bg-orange-500/10 px-2 py-0.5 rounded border border-orange-500/20">
                 {selectedRegatta.boatClass || "Optimist"}
               </span>
               {selectedRegatta.division && (
-                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-300 bg-white/5 px-2 py-0.5 rounded border border-white/10">
+                <span className="text-[12px] font-bold uppercase tracking-wider text-slate-300 bg-white/5 px-2 py-0.5 rounded border border-white/10">
                   {selectedRegatta.division}
                 </span>
               )}
               <span
-                className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
+                className={`text-[12px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${
                   selectedRegatta.countsForRanking === false
                     ? "text-sky-300 bg-sky-500/10 border-sky-500/20"
                     : "text-emerald-300 bg-emerald-500/10 border-emerald-500/20"
@@ -495,13 +495,13 @@ export function AdminResultsPanel({
           </h3>
           {regattaList.find((r) => r.id === resultForm.regattaId)
             ?.countsForRanking === false && (
-            <p className="text-[11px] text-sky-300 font-semibold">
+            <p className="text-[13px] text-sky-300 font-semibold">
               Non-ranking event — not used in series rankings.
             </p>
           )}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
-              <label className="text-[10px] font-bold text-slate-500 uppercase">
+              <label className="text-[12px] font-bold text-slate-500 uppercase">
                 Sailor Name
               </label>
               <select
@@ -522,7 +522,7 @@ export function AdminResultsPanel({
               </select>
             </div>
             <div>
-              <label className="text-[10px] font-bold text-slate-500 uppercase">
+              <label className="text-[12px] font-bold text-slate-500 uppercase">
                 Total Score
               </label>
               <input
@@ -537,7 +537,7 @@ export function AdminResultsPanel({
               />
             </div>
             <div>
-              <label className="text-[10px] font-bold text-slate-500 uppercase">
+              <label className="text-[12px] font-bold text-slate-500 uppercase">
                 Nett Score (optional)
               </label>
               <input
@@ -551,7 +551,7 @@ export function AdminResultsPanel({
               />
             </div>
             <div>
-              <label className="text-[10px] font-bold text-slate-500 uppercase">
+              <label className="text-[12px] font-bold text-slate-500 uppercase">
                 Rank (Finishing Pos)
               </label>
               <input
@@ -562,7 +562,7 @@ export function AdminResultsPanel({
                 }
                 className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
               />
-              <p className="mt-1 text-[10px] text-slate-600">
+              <p className="mt-1 text-[13px] text-slate-600">
                 DNS defaults to fleet size + 1, but this score remains editable.
               </p>
             </div>
@@ -631,7 +631,7 @@ export function AdminResultsPanel({
               type="button"
               disabled={!isSuperadmin}
               onClick={() => void handleSaveResult()}
-              className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40"
+              className="rounded-full bg-orange-600 px-5 py-2 text-[15px] font-semibold text-white hover:bg-orange-500 disabled:opacity-40"
             >
               Save Result
             </button>
@@ -663,7 +663,7 @@ export function AdminResultsPanel({
                   value={sailorFilter}
                   onChange={(e) => setSailorFilter(e.target.value)}
                   placeholder="Filter sailors…"
-                  className="w-full rounded-full border border-white/10 bg-slate-950 pl-9 pr-3 py-2 text-[11px] sm:text-xs text-white focus:outline-none focus:border-orange-500/40"
+                  className="w-full rounded-full border border-white/10 bg-slate-950 pl-9 pr-3 py-2 text-[13px] sm:text-sm text-white focus:outline-none focus:border-orange-500/40"
                 />
               </div>
               <button
@@ -671,7 +671,7 @@ export function AdminResultsPanel({
                 onClick={() =>
                   void handleFillDnsForRegatta(selectedRegattaIdForResultEdit)
                 }
-                className="rounded-full bg-slate-800 border border-rose-500/30 hover:bg-rose-500/10 px-3 sm:px-4 py-2 text-[11px] sm:text-xs font-bold text-rose-300 flex items-center justify-center gap-1 touch-manipulation"
+                className="rounded-full bg-white border border-[var(--sp-color-error)]/40 hover:bg-rose-500/10 px-3 sm:px-4 py-2 text-[13px] sm:text-sm font-bold text-[var(--sp-color-error)] flex items-center justify-center gap-1 touch-manipulation"
                 title="Create DNS (fleet size + 1) for series members with no result"
               >
                 Fill DNS for non-starters
@@ -690,7 +690,7 @@ export function AdminResultsPanel({
                     rank: dnsPts,
                   });
                 }}
-                className="rounded-full bg-orange-600 hover:bg-orange-500 px-3 sm:px-4 py-2 text-[11px] sm:text-xs font-bold text-white flex items-center justify-center gap-1 touch-manipulation"
+                className="rounded-full bg-orange-600 hover:bg-orange-500 px-3 sm:px-4 py-2 text-[15px] font-semibold text-white flex items-center justify-center gap-1 touch-manipulation"
               >
                 <Plus className="h-4 w-4" />
                 Add Score
@@ -698,7 +698,7 @@ export function AdminResultsPanel({
             </div>
           </div>
 
-          <p className="px-3 sm:px-6 pb-2 text-[11px] text-slate-500">
+          <p className="px-3 sm:px-6 pb-2 text-[13px] text-slate-500">
             Non-starters: <strong className="text-slate-400">Fill DNS</strong>{" "}
             (fleet size + 1) or mark{" "}
             <strong className="text-sky-300">Overseas commitment</strong> and
@@ -713,7 +713,7 @@ export function AdminResultsPanel({
           <div className="overflow-x-auto max-w-full -mx-1 px-1">
             <table className="w-full text-left border-collapse text-xs min-w-[720px]">
               <thead>
-                <tr className="border-b border-white/5 bg-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <tr className="border-b border-white/5 bg-white/5 text-[12px] font-bold text-slate-400 uppercase tracking-wider">
                   <th className="py-3 px-3 text-center w-14">Rank</th>
                   <th className="py-3 px-4 sm:px-6">Competitor / Sailor</th>
                   <th className="py-3 px-3 text-center">Sail #</th>
@@ -803,7 +803,7 @@ export function AdminResultsPanel({
                         <div className="font-bold text-white leading-tight">
                           {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
                         </div>
-                        <div className="text-[10px] text-slate-400 mt-0.5 truncate max-w-[220px]">
+                        <div className="text-[13px] text-slate-400 mt-0.5 truncate max-w-[220px]">
                           {[sailor?.club, sailor?.school, sailor?.nationality]
                             .filter(Boolean)
                             .join(" · ") || "—"}
@@ -891,7 +891,7 @@ export function AdminResultsPanel({
                                   });
                                 }
                               }}
-                              className={`px-1.5 py-0.5 text-[9px] font-bold rounded transition-colors ${
+                              className={`px-1.5 py-0.5 text-[13px] font-bold rounded transition-colors ${
                                 !overseas && !dns
                                   ? "bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 shadow-sm"
                                   : "text-slate-400 hover:text-white"
@@ -913,7 +913,7 @@ export function AdminResultsPanel({
                                   });
                                 }
                               }}
-                              className={`px-1.5 py-0.5 text-[9px] font-bold rounded transition-colors ${
+                              className={`px-1.5 py-0.5 text-[13px] font-bold rounded transition-colors ${
                                 dns
                                   ? "bg-rose-500/25 text-rose-300 border border-rose-500/40 shadow-sm"
                                   : "text-slate-400 hover:text-white"
@@ -933,7 +933,7 @@ export function AdminResultsPanel({
                                   });
                                 }
                               }}
-                              className={`px-1.5 py-0.5 text-[9px] font-bold rounded transition-colors ${
+                              className={`px-1.5 py-0.5 text-[13px] font-bold rounded transition-colors ${
                                 overseas
                                   ? "bg-sky-500/25 text-sky-300 border border-sky-500/40 shadow-sm"
                                   : "text-slate-400 hover:text-white"
@@ -945,7 +945,7 @@ export function AdminResultsPanel({
                           </div>
                         ) : (
                           <span
-                            className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${
+                            className={`inline-block px-2 py-0.5 rounded text-[11px] font-bold ${
                               overseas
                                 ? "bg-sky-500/15 text-sky-300 border border-sky-500/30"
                                 : dns

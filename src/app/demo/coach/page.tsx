@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 function DemoFallback() {
   return (
-    <div className="min-h-screen bg-[#0d1017] flex items-center justify-center py-24">
+    <div className="min-h-screen bg-[var(--sp-sailcloth)] flex items-center justify-center py-24">
       <p className="text-sm font-semibold text-slate-500">Loading coach demo…</p>
     </div>
   );

@@ -39,7 +39,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <p className="text-sm font-bold text-rose-300">
             This section encountered an error.
           </p>
-          <p className="text-xs text-slate-500">
+          <p className="text-[13px] text-slate-500">
             {isDev
               ? this.state.error.message
               : "Please try again. If it keeps happening, contact support."}
@@ -47,7 +47,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <button
             type="button"
             onClick={() => this.setState({ error: null })}
-            className="rounded-full bg-rose-500/10 border border-rose-500/20 px-4 py-1.5 text-xs font-bold text-rose-200 hover:bg-rose-500/20"
+            className="rounded-full bg-rose-500/10 border border-rose-500/20 px-4 py-1.5 text-[15px] font-semibold text-rose-700 hover:bg-rose-500/20"
           >
             Retry
           </button>

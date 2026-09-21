@@ -63,7 +63,7 @@ export function SampleParentDemo() {
                   <h1 className="text-xl sm:text-2xl font-black font-display text-[var(--sp-harbour-shadow)] tracking-tight">
                     Parent Command Center
                   </h1>
-                  <span className="rounded-full bg-[var(--sp-harbour-teal)]/15 border border-[var(--sp-harbour-teal)]/30 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
+                  <span className="rounded-full bg-[var(--sp-harbour-teal)]/15 border border-[var(--sp-harbour-teal)]/30 px-2.5 py-0.5 text-[12px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
                     Live Demo
                   </span>
                 </div>
@@ -87,7 +87,7 @@ export function SampleParentDemo() {
                   }`}
                 >
                   <span>{ath.name}</span>
-                  <span className="ml-1.5 text-[10px] font-mono opacity-80 font-normal">
+                  <span className="ml-1.5 text-[13px] font-mono opacity-80 font-normal">
                     ({ath.rankLabel})
                   </span>
                 </button>
@@ -143,7 +143,7 @@ export function SampleParentDemo() {
                     </span>
                   </div>
                   <div className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 space-y-1">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
+                    <p className="text-[12px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">
                       Status / Pathway
                     </p>
                     <p className="text-xs font-medium text-[var(--sp-harbour-shadow)]">
@@ -171,15 +171,15 @@ export function SampleParentDemo() {
                   <h2 className="text-xl font-black font-display text-[var(--sp-harbour-shadow)]">
                     {currentAthlete.name}
                   </h2>
-                  <span className="rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 text-[10px] font-bold inline-flex items-center gap-1">
+                  <span className="rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 text-[11px] font-bold inline-flex items-center gap-1">
                     <ShieldCheck className="h-3 w-3" />
                     Verified Athlete
                   </span>
-                  <span className="rounded-full bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20 px-2 py-0.5 text-[10px] font-mono font-bold">
+                  <span className="rounded-full bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20 px-2 py-0.5 text-[11px] font-mono font-bold">
                     Opti {currentAthlete.sailNumber}
                   </span>
                   {currentAthlete.sailNumberIlca4 && (
-                    <span className="rounded-full bg-purple-500/10 text-purple-700 border border-purple-500/20 px-2 py-0.5 text-[10px] font-mono font-bold">
+                    <span className="rounded-full bg-purple-500/10 text-purple-700 border border-purple-500/20 px-2 py-0.5 text-[11px] font-mono font-bold">
                       ILCA {currentAthlete.sailNumberIlca4}
                     </span>
                   )}
@@ -204,17 +204,17 @@ export function SampleParentDemo() {
               {/* Card 1: 2026 Asian Games & Selection Trials Standings */}
               <div className="rounded-2xl border border-[var(--sp-racing-orange)]/25 bg-[var(--sp-warm-white)] p-5 space-y-4 shadow-xs">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-racing-orange)] flex items-center gap-1.5">
+                  <p className="text-[12px] font-black uppercase tracking-wider text-[var(--sp-racing-orange)] flex items-center gap-1.5">
                     <Target className="h-3.5 w-3.5" />
                     2026 Selection Trials Standings
                   </p>
-                  <span className="rounded-full bg-[var(--sp-racing-orange)]/15 border border-[var(--sp-racing-orange)]/30 px-2 py-0.5 text-[10px] font-bold text-[var(--sp-racing-deep)]">
+                  <span className="rounded-full bg-[var(--sp-racing-orange)]/15 border border-[var(--sp-racing-orange)]/30 px-2 py-0.5 text-[11px] font-bold text-[var(--sp-racing-deep)]">
                     Rank #{p.selectionTrials.trialsRank}
                   </span>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   <div className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 text-center">
-                    <p className="text-[10px] font-bold uppercase text-[var(--sp-slate-soft)]">
+                    <p className="text-[12px] font-bold uppercase text-[var(--sp-slate-soft)]">
                       Combined Score
                     </p>
                     <p className="text-lg font-black text-[var(--sp-harbour-shadow)] font-mono mt-0.5">
@@ -222,7 +222,7 @@ export function SampleParentDemo() {
                     </p>
                   </div>
                   <div className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 text-center">
-                    <p className="text-[10px] font-bold uppercase text-[var(--sp-slate-soft)]">
+                    <p className="text-[12px] font-bold uppercase text-[var(--sp-slate-soft)]">
                       Events Sailed
                     </p>
                     <p className="text-lg font-black text-[var(--sp-harbour-shadow)] font-mono mt-0.5">
@@ -230,7 +230,7 @@ export function SampleParentDemo() {
                     </p>
                   </div>
                   <div className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 text-center">
-                    <p className="text-[10px] font-bold uppercase text-[var(--sp-slate-soft)]">
+                    <p className="text-[12px] font-bold uppercase text-[var(--sp-slate-soft)]">
                       Cutoff Buffer
                     </p>
                     <p className="text-lg font-black text-emerald-600 font-mono mt-0.5">
@@ -243,7 +243,7 @@ export function SampleParentDemo() {
                     <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
                     <span>Provisional Asian Games &amp; Perth Qualifier</span>
                   </div>
-                  <p className="text-[11px] text-[var(--sp-charcoal-slate)] leading-snug">
+                  <p className="text-[13px] text-[var(--sp-charcoal-slate)] leading-snug">
                     {p.selectionTrials.selectionNote}
                   </p>
                 </div>
@@ -259,11 +259,11 @@ export function SampleParentDemo() {
               {/* Card 2: Equipment Locker & Maintenance Alerts */}
               <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 space-y-4 shadow-xs">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-slate-soft)] flex items-center gap-1.5">
+                  <p className="text-[12px] font-black uppercase tracking-wider text-[var(--sp-slate-soft)] flex items-center gap-1.5">
                     <Wrench className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
                     Boat Locker &amp; Equipment
                   </p>
-                  <span className="text-[10px] font-semibold text-[var(--sp-slate-soft)]">
+                  <span className="text-[13px] font-semibold text-[var(--sp-slate-soft)]">
                     4 Registered Items
                   </span>
                 </div>
@@ -277,12 +277,12 @@ export function SampleParentDemo() {
                         key={item.type}
                         className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-2.5"
                       >
-                        <div className="flex items-center justify-between text-[10px]">
+                        <div className="flex items-center justify-between text-[13px]">
                           <span className="font-bold text-[var(--sp-slate-soft)] uppercase">
                             {item.type}
                           </span>
                           <span
-                            className={`px-1.5 py-0.5 rounded font-bold uppercase text-[9px] ${
+                            className={`px-1.5 py-0.5 rounded font-bold uppercase text-[12px] ${
                               isReady
                                 ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300"
                                 : isPractice
@@ -310,7 +310,7 @@ export function SampleParentDemo() {
 
               {/* Card 3: Coach Observations & Debriefs */}
               <div className="rounded-2xl border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-warm-white)] p-5 space-y-3 shadow-xs">
-                <p className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
+                <p className="text-[12px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
                   <GraduationCap className="h-3.5 w-3.5" />
                   Coach Technical Debriefs
                 </p>
@@ -320,7 +320,7 @@ export function SampleParentDemo() {
                       key={idx}
                       className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 space-y-1"
                     >
-                      <div className="flex items-center justify-between text-[10px]">
+                      <div className="flex items-center justify-between text-[13px]">
                         <span className="font-bold text-[var(--sp-harbour-teal)]">{deb.coachName}</span>
                         <span className="rounded bg-[var(--sp-cool-veil)]/50 px-1.5 py-0.5 text-[var(--sp-slate-soft)] font-mono">
                           {deb.category} · {deb.date}
@@ -337,12 +337,12 @@ export function SampleParentDemo() {
               {/* Card 4: Pre-Race Morning Checklist */}
               <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 space-y-3.5 shadow-xs">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-slate-soft)] flex items-center gap-1.5">
+                  <p className="text-[12px] font-black uppercase tracking-wider text-[var(--sp-slate-soft)] flex items-center gap-1.5">
                     <CheckSquare className="h-3.5 w-3.5 text-emerald-600" />
                     Pre-Race Morning Checklist
                   </p>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-mono text-emerald-600 font-bold">
+                    <span className="text-[13px] font-mono text-emerald-600 font-bold">
                       {completedCount}/{checklistItems.length} Ready
                     </span>
                     <button
@@ -458,7 +458,7 @@ export function SampleParentDemo() {
 
                 {/* Upcoming Calendar Hook */}
                 <div className="pt-2 border-t border-[var(--sp-cool-veil)]">
-                  <p className="text-[10px] font-bold text-[var(--sp-slate-soft)] uppercase mb-2">
+                  <p className="text-[12px] font-bold text-[var(--sp-slate-soft)] uppercase mb-2">
                     Upcoming 2026 Fixtures
                   </p>
                   <div className="space-y-1.5">
@@ -471,9 +471,9 @@ export function SampleParentDemo() {
                           <p className="font-bold text-[var(--sp-harbour-shadow)] truncate max-w-[220px]">
                             {ev.name}
                           </p>
-                          <p className="text-[10px] text-[var(--sp-slate-soft)]">{ev.date} · {ev.venue}</p>
+                          <p className="text-[13px] text-[var(--sp-slate-soft)]">{ev.date} · {ev.venue}</p>
                         </div>
-                        <span className="text-[10px] font-bold text-[var(--sp-racing-orange)]">
+                        <span className="text-[13px] font-bold text-[var(--sp-racing-orange)]">
                           {ev.deadline}
                         </span>
                       </div>
@@ -490,7 +490,7 @@ export function SampleParentDemo() {
                   <h3 className="text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-shadow)]">
                     Private Parent Journal
                   </h3>
-                  <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                  <p className="text-[13px] text-[var(--sp-slate-soft)]">
                     Encrypted notes visible only to the guardian — separate from public logs
                   </p>
                 </div>
@@ -518,7 +518,7 @@ export function SampleParentDemo() {
                     key={i}
                     className="rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-3 space-y-1"
                   >
-                    <div className="flex items-center justify-between text-[10px]">
+                    <div className="flex items-center justify-between text-[13px]">
                       <span className="font-mono text-[var(--sp-harbour-teal)] font-bold">
                         {n.date}
                       </span>

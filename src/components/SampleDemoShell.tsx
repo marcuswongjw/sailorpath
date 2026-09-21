@@ -79,7 +79,7 @@ function PrivacySettingsBody({
                 className="rounded accent-[var(--sp-racing-orange)] shrink-0"
               />
             </span>
-            <span className="text-[10px] text-[var(--sp-slate-soft)]">{row.hint}</span>
+            <span className="text-[13px] text-[var(--sp-slate-soft)]">{row.hint}</span>
           </label>
         ))}
       </div>
@@ -182,7 +182,7 @@ export function SampleDemoShell() {
         <div className="mx-auto max-w-4xl px-4 sm:px-6 space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">
+              <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">
                 Athlete Profile Demo
               </p>
               <h1 className="text-xl sm:text-2xl font-black font-display text-[var(--sp-harbour-shadow)] tracking-tight">

@@ -22,31 +22,31 @@ export default function Error({
         An unexpected error occurred. Please try again.
       </p>
       {isDev && error.message && (
-        <p className="text-[11px] text-slate-500 font-mono break-words px-2">
+        <p className="text-[13px] text-slate-500 font-mono break-words px-2">
           {error.message}
         </p>
       )}
       {error.digest && (
-        <p className="text-[11px] text-slate-600 font-mono">
+        <p className="text-[13px] text-slate-600 font-mono">
           Error ID: {error.digest}
         </p>
       )}
       <div className="flex flex-wrap justify-center gap-3 pt-2">
         <button
           onClick={reset}
-          className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500"
+          className="rounded-full bg-orange-600 px-5 py-2 text-[15px] font-semibold text-white hover:bg-orange-500"
         >
           Try again
         </button>
         <Link
           href="/"
-          className="rounded-full border border-white/10 px-5 py-2 text-xs font-bold text-slate-300 hover:text-white"
+          className="rounded-full border border-white/10 px-5 py-2 text-[15px] font-semibold text-slate-300 hover:text-white"
         >
           Home
         </Link>
         <Link
           href="/support"
-          className="rounded-full border border-white/10 px-5 py-2 text-xs font-bold text-slate-300 hover:text-white"
+          className="rounded-full border border-white/10 px-5 py-2 text-[15px] font-semibold text-slate-300 hover:text-white"
         >
           Contact support
         </Link>

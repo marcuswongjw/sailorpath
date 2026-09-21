@@ -16,7 +16,7 @@ export function EquipmentArchive({
 
   return (
     <details className="group rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 open:bg-[var(--sp-sailcloth)]">
-      <summary className="cursor-pointer list-none flex items-center justify-between gap-2 px-3.5 py-2.5 text-[11px] font-semibold text-[var(--sp-charcoal)] touch-manipulation">
+      <summary className="cursor-pointer list-none flex items-center justify-between gap-2 px-3.5 py-2.5 text-[13px] font-semibold text-[var(--sp-charcoal)] touch-manipulation">
         <span className="inline-flex items-center gap-1.5">
           <Archive className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
           Past equipment ({archived.length})
@@ -27,7 +27,7 @@ export function EquipmentArchive({
         {archived.map((r) => (
           <li
             key={r.id}
-            className="text-[11px] text-[var(--sp-slate-soft)] flex items-center justify-between gap-2"
+            className="text-[13px] text-[var(--sp-slate-soft)] flex items-center justify-between gap-2"
           >
             <span>
               <span className="text-[var(--sp-charcoal)] font-medium">{displayName(r)}</span>

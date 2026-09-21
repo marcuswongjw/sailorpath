@@ -124,8 +124,8 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
               <div
                 className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border ${
                   confirmState.opts.tone === "danger"
-                    ? "border-rose-500/25 bg-rose-500/10 text-rose-300"
-                    : "border-orange-500/25 bg-orange-500/10 text-orange-300"
+                    ? "border-[var(--sp-color-error)]/30 bg-[var(--sp-racing-mist)]/40 text-[var(--sp-color-error)]"
+                    : "border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-deep)]"
                 }`}
               >
                 <AlertTriangle className="h-4 w-4" />
@@ -138,7 +138,7 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
                   {confirmState.opts.title}
                 </h3>
                 {confirmState.opts.message && (
-                  <p className="text-xs text-slate-400 leading-relaxed whitespace-pre-wrap">
+                  <p className="text-[13px] text-slate-400 leading-relaxed whitespace-pre-wrap">
                     {confirmState.opts.message}
                   </p>
                 )}
@@ -146,10 +146,10 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
                   <div className="pt-2 space-y-1.5">
                     <label
                       htmlFor="sp-confirm-type"
-                      className="block text-[10px] font-bold uppercase tracking-wider text-slate-500"
+                      className="block text-xs font-bold uppercase tracking-wider text-slate-500"
                     >
                       Type{" "}
-                      <span className="font-mono text-rose-300">
+                      <span className="font-mono font-bold text-[var(--sp-color-error)]">
                         {confirmState.opts.requireTypedConfirm}
                       </span>{" "}
                       to confirm
@@ -186,7 +186,7 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => closeConfirm(false)}
-                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold text-slate-300 hover:text-white"
+                className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[15px] font-semibold text-slate-300 hover:text-white"
               >
                 {confirmState.opts.cancelLabel || "Cancel"}
               </button>
@@ -198,7 +198,7 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
                   typedConfirm !== confirmState.opts.requireTypedConfirm
                 }
                 onClick={() => closeConfirm(true)}
-                className={`rounded-full px-4 py-2 text-xs font-bold text-white disabled:opacity-40 disabled:cursor-not-allowed ${
+                className={`rounded-full px-4 py-2 text-[15px] font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed ${
                   confirmState.opts.tone === "danger"
                     ? "bg-rose-600 hover:bg-rose-500"
                     : "bg-orange-600 hover:bg-orange-500"
@@ -217,14 +217,14 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
 function ToastPill({ message, tone }: { message: string; tone: ToastTone }) {
   const styles =
     tone === "success"
-      ? "border-emerald-500/30 bg-emerald-500/15 text-emerald-100"
+      ? "border-[var(--sp-harbour-teal)]/30 bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)]"
       : tone === "error"
-        ? "border-rose-500/30 bg-rose-500/15 text-rose-100"
-        : "border-sky-500/30 bg-sky-500/15 text-sky-100";
+        ? "border-[var(--sp-color-error)]/30 bg-[var(--sp-racing-mist)]/60 text-[var(--sp-color-error)]"
+        : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-charcoal-slate)]";
   const Icon = tone === "success" ? Check : tone === "error" ? AlertTriangle : Info;
   return (
     <div
-      className={`pointer-events-auto flex max-w-md items-start gap-2 rounded-2xl border px-3.5 py-2.5 text-[12px] font-semibold shadow-lg shadow-black/40 backdrop-blur-sm ${styles}`}
+      className={`pointer-events-auto flex max-w-md items-start gap-2 rounded-2xl border px-3.5 py-2.5 text-[13px] font-semibold shadow-lg shadow-black/40 backdrop-blur-sm ${styles}`}
     >
       <Icon className="mt-0.5 h-3.5 w-3.5 shrink-0 opacity-90" />
       <span className="min-w-0 whitespace-pre-wrap leading-snug">{message}</span>

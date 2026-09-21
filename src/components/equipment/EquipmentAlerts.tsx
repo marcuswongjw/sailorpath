@@ -16,21 +16,21 @@ export function EquipmentAlerts({
   if (alerts.length === 0) return null;
 
   return (
-    <div className="rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 to-transparent overflow-hidden">
+    <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 overflow-hidden">
       <button
         type="button"
         onClick={onToggleOpen}
         className="w-full flex items-center justify-between gap-2 px-3 py-2.5 text-left touch-manipulation"
       >
-        <span className="text-[11px] font-bold text-amber-200 flex items-center gap-1.5">
+        <span className="text-[13px] font-bold text-amber-900 flex items-center gap-1.5">
           <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
           {alerts.length} replacement alert
           {alerts.length === 1 ? "" : "s"}
         </span>
         {open ? (
-          <ChevronUp className="h-3.5 w-3.5 text-amber-300/70" />
+          <ChevronUp className="h-3.5 w-3.5 text-amber-800" />
         ) : (
-          <ChevronDown className="h-3.5 w-3.5 text-amber-300/70" />
+          <ChevronDown className="h-3.5 w-3.5 text-amber-800" />
         )}
       </button>
       {open && (
@@ -40,14 +40,14 @@ export function EquipmentAlerts({
               <button
                 type="button"
                 onClick={() => onEdit(a)}
-                className="w-full text-left rounded-lg px-2 py-1.5 hover:bg-amber-500/10 transition text-[11px] text-amber-50/90 flex items-center gap-2 flex-wrap"
+                className="w-full text-left rounded-lg px-2 py-1.5 hover:bg-amber-500/10 transition text-[13px] text-[var(--sp-charcoal)] flex items-center gap-2 flex-wrap"
               >
                 <BadgeChip badge={a.badge} label={a.badgeLabel} />
                 <span className="font-semibold text-white">
                   {displayName(a)}
                 </span>
                 {a.attentionReason && (
-                  <span className="text-amber-200/60">
+                  <span className="text-[var(--sp-slate-soft)]">
                     — {a.attentionReason}
                   </span>
                 )}

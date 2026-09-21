@@ -122,7 +122,7 @@ export function Techno293SeriesView({
               <div className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)]">
                 {series.totalRacesCompleted}
               </div>
-              <div className="text-[10px] text-[var(--sp-slate-soft)]">Races Sailed</div>
+              <div className="text-[13px] text-[var(--sp-slate-soft)]">Races Sailed</div>
             </div>
 
             <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-3 text-center">
@@ -130,7 +130,7 @@ export function Techno293SeriesView({
               <div className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-teal)]">
                 {series.discardsApplied}
               </div>
-              <div className="text-[10px] text-[var(--sp-slate-soft)]">Worst Dropped</div>
+              <div className="text-[13px] text-[var(--sp-slate-soft)]">Worst Dropped</div>
             </div>
 
             <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-3 text-center">
@@ -138,7 +138,7 @@ export function Techno293SeriesView({
               <div className="text-xl sm:text-2xl font-black text-emerald-700">
                 {series.competitors.length}
               </div>
-              <div className="text-[10px] text-[var(--sp-slate-soft)]">Competitors</div>
+              <div className="text-[13px] text-[var(--sp-slate-soft)]">Competitors</div>
             </div>
           </div>
         </div>
@@ -169,7 +169,7 @@ export function Techno293SeriesView({
                       Round {idx + 1}
                     </span>
                     <span
-                      className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
+                      className={`text-[12px] px-2 py-0.5 rounded-full font-bold uppercase ${
                         round.status === "Completed"
                           ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                           : "bg-blue-50 text-blue-800 border border-blue-200"
@@ -220,7 +220,7 @@ export function Techno293SeriesView({
                   className={`relative p-5 rounded-2xl border ${borderStyles} flex flex-col justify-between`}
                 >
                   {isFirst && (
-                    <div className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
+                    <div className="absolute top-3 right-3 flex items-center gap-1 text-[12px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
                       <Sparkles className="h-3 w-3 text-amber-600" />
                       Series Leader
                     </div>
@@ -245,7 +245,7 @@ export function Techno293SeriesView({
                         {sailor.sailNumber || "—"}
                       </span>
                       <span className="mx-1.5 text-[var(--sp-slate-soft)]">•</span>
-                      <span className="rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
+                      <span className="rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
                         {sailor.ageCategory}
                       </span>
                     </div>
@@ -253,7 +253,7 @@ export function Techno293SeriesView({
                       <span className="text-lg font-black text-[var(--sp-harbour-shadow)]">
                         {sailor.nettScore}
                       </span>
-                      <span className="text-[10px] text-[var(--sp-slate-soft)] ml-1">
+                      <span className="text-[13px] text-[var(--sp-slate-soft)] ml-1">
                         pts nett ({sailor.grossScore} gross)
                       </span>
                     </div>
@@ -283,18 +283,18 @@ export function Techno293SeriesView({
                   <div className="text-sm font-black text-[var(--sp-harbour-shadow)] mt-1">
                     {div.champion ? div.champion.name : "To be decided"}
                   </div>
-                  <div className="text-[11px] text-[var(--sp-slate-soft)]">
+                  <div className="text-[13px] text-[var(--sp-slate-soft)]">
                     {div.champion
                       ? `${div.champion.nettScore} pts (${div.competitorCount} sailors)`
                       : `${div.competitorCount} competitors`}
                   </div>
                 </div>
                 {div.isConstituted ? (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                     Constituted
                   </span>
                 ) : (
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                  <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
                     &lt;3 entries
                   </span>
                 )}
@@ -358,7 +358,7 @@ export function Techno293SeriesView({
           <table className="w-full text-left text-xs border-collapse">
             <thead>
               {/* Top Tier Header: Grouped by Round */}
-              <tr className="bg-[var(--sp-sailcloth)] border-b border-[var(--sp-cool-veil)] text-[10px] uppercase tracking-wider font-bold">
+              <tr className="bg-[var(--sp-sailcloth)] border-b border-[var(--sp-cool-veil)] text-[12px] uppercase tracking-wider font-bold">
                 <th colSpan={4} className="px-4 py-2.5 text-[var(--sp-slate-soft)] border-r border-[var(--sp-cool-veil)]">
                   Competitor Details
                 </th>
@@ -382,7 +382,7 @@ export function Techno293SeriesView({
               </tr>
 
               {/* Second Tier Header: Columns */}
-              <tr className="border-b border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] bg-[var(--sp-sailcloth)]/30 text-[10px] uppercase tracking-wider">
+              <tr className="border-b border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] bg-[var(--sp-sailcloth)]/30 text-[12px] uppercase tracking-wider">
                 <th className="px-4 py-2.5 w-12 text-center">Rank</th>
                 <th className="px-4 py-2.5 min-w-[12rem]">Sailor</th>
                 <th className="px-2 py-2.5 text-center w-14">Sail #</th>
@@ -391,7 +391,7 @@ export function Techno293SeriesView({
                   Array.from({ length: rnd.raceCount }).map((_, i) => (
                     <th
                       key={`${rnd.id}-r${i}`}
-                      className="px-1.5 py-2.5 text-center w-8 text-[10px] font-mono text-[var(--sp-slate-soft)]"
+                      className="px-1.5 py-2.5 text-center w-8 text-[13px] font-mono text-[var(--sp-slate-soft)]"
                     >
                       R{i + 1}
                     </th>
@@ -441,7 +441,7 @@ export function Techno293SeriesView({
                           />
                         </div>
                         {sailor.club && (
-                          <div className="text-[11px] text-[var(--sp-slate-soft)]">
+                          <div className="text-[13px] text-[var(--sp-slate-soft)]">
                             {sailor.club}
                           </div>
                         )}
@@ -452,7 +452,7 @@ export function Techno293SeriesView({
                       </td>
 
                       <td className="py-3 px-2 sm:px-3 text-center border-r border-[var(--sp-cool-veil)]">
-                        <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
+                        <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
                           {sailor.ageCategory}
                         </span>
                       </td>
@@ -561,7 +561,7 @@ export function Techno293SeriesView({
                         r.isDiscarded ? "(Discarded)" : ""
                       }`}
                     >
-                      <span className="text-[10px] text-[var(--sp-slate-soft)]">
+                      <span className="text-[13px] text-[var(--sp-slate-soft)]">
                         {r.roundShortName} R{r.raceInRound}:
                       </span>
                       <span>

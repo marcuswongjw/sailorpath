@@ -84,7 +84,7 @@ export function ProfileJourneyPanel({
   const body = (
     <>
       {isTab ? (
-        <p className="text-[11px] text-slate-soft font-medium">
+        <p className="text-[13px] text-slate-soft font-medium">
           Key moments — campaigns, firsts, and milestones.
           {hasSystem ? " Fleet milestones are filled in automatically." : ""}
         </p>
@@ -92,11 +92,11 @@ export function ProfileJourneyPanel({
         <>
           <div className="flex items-center gap-2 mb-1">
             <Anchor className="h-3.5 w-3.5 text-harbour" />
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
+            <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
               Sailing journey
             </h2>
           </div>
-          <p className="text-[11px] text-slate-soft mb-4 font-medium">
+          <p className="text-[13px] text-slate-soft mb-4 font-medium">
             Key moments — campaigns, firsts, and milestones.
             {hasSystem ? " Fleet milestones are filled in automatically." : ""}
           </p>
@@ -127,7 +127,7 @@ export function ProfileJourneyPanel({
               {editingId === it.id ? (
                 <div className="mt-1 space-y-2 rounded-xl border border-harbour/30 bg-warm-white p-3 shadow-xs">
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
+                    <label className="block text-[12px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
                       When
                     </label>
                     <input
@@ -138,7 +138,7 @@ export function ProfileJourneyPanel({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
+                    <label className="block text-[12px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
                       Title
                     </label>
                     <input
@@ -149,7 +149,7 @@ export function ProfileJourneyPanel({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
+                    <label className="block text-[12px] font-bold uppercase tracking-wider text-slate-soft mb-0.5">
                       Details
                     </label>
                     <textarea
@@ -183,14 +183,14 @@ export function ProfileJourneyPanel({
               ) : (
                 <>
                   {it.when && (
-                    <p className="text-[11px] font-bold uppercase tracking-wide text-harbour">
+                    <p className="text-[12px] font-bold uppercase tracking-wide text-harbour">
                       {it.when}
                     </p>
                   )}
                   <p className="text-sm font-bold text-harbour-shadow mt-0.5 inline-flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
                     <span>{it.title}</span>
                     {it.system ? (
-                      <span className="rounded px-1.5 py-px text-[9px] font-bold uppercase tracking-wide text-racing-orange bg-racing-mist/40 border border-racing-orange/30">
+                      <span className="rounded px-1.5 py-px text-[12px] font-bold uppercase tracking-wide text-racing-orange bg-racing-mist/40 border border-racing-orange/30">
                         milestone
                       </span>
                     ) : null}
@@ -264,7 +264,7 @@ export function ProfileJourneyPanel({
             {busy ? "Saving…" : "Add milestone"}
           </button>
           {message && (
-            <p className="text-[11px] font-bold text-harbour">{message}</p>
+            <p className="text-[13px] font-bold text-harbour">{message}</p>
           )}
         </div>
       )}

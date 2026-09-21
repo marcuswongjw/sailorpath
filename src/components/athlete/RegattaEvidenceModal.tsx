@@ -441,7 +441,7 @@ function RegattaEvidenceForm({
         {/* Section 1: Event Information */}
         <div className="space-y-4">
           <div className="flex items-center justify-between border-b border-[var(--sp-cool-veil)] pb-2">
-            <h4 className="text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
+            <h4 className="text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
               Event Details
             </h4>
             {isSharedRegatta && (
@@ -470,7 +470,7 @@ function RegattaEvidenceForm({
                 className={inputCls(fieldErrors.name, isSharedRegatta)}
               />
               {fieldErrors.name && (
-                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.name}</p>
+                <p className="mt-1 text-[13px] text-[var(--sp-color-error)] font-semibold">{fieldErrors.name}</p>
               )}
             </div>
 
@@ -492,7 +492,7 @@ function RegattaEvidenceForm({
                 className={inputCls(fieldErrors.date, isSharedRegatta)}
               />
               {fieldErrors.date && (
-                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.date}</p>
+                <p className="mt-1 text-[13px] text-[var(--sp-color-error)] font-semibold">{fieldErrors.date}</p>
               )}
             </div>
 
@@ -513,7 +513,7 @@ function RegattaEvidenceForm({
                 className={inputCls(fieldErrors.endDate, isSharedRegatta)}
               />
               {fieldErrors.endDate && (
-                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.endDate}</p>
+                <p className="mt-1 text-[13px] text-[var(--sp-color-error)] font-semibold">{fieldErrors.endDate}</p>
               )}
             </div>
 
@@ -578,7 +578,7 @@ function RegattaEvidenceForm({
 
         {/* Section 2: Sailor Score & Finish Position */}
         <div className="space-y-4 pt-2 border-t border-[var(--sp-cool-veil)]">
-          <h4 className="text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
+          <h4 className="text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
             Results &amp; Scoring
           </h4>
           {/* Responsive grid: single column on mobile, 3 cols on sm, 5 cols on lg */}
@@ -601,7 +601,7 @@ function RegattaEvidenceForm({
                 className={inputCls(fieldErrors.rank)}
               />
               {fieldErrors.rank && (
-                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.rank}</p>
+                <p className="mt-1 text-[13px] text-[var(--sp-color-error)] font-semibold">{fieldErrors.rank}</p>
               )}
             </div>
 
@@ -622,9 +622,9 @@ function RegattaEvidenceForm({
                 className={inputCls(fieldErrors.fleet)}
               />
               {fieldErrors.fleet ? (
-                <p className="mt-1 text-[11px] text-rose-600 font-semibold">{fieldErrors.fleet}</p>
+                <p className="mt-1 text-[13px] text-[var(--sp-color-error)] font-semibold">{fieldErrors.fleet}</p>
               ) : (
-                <p className="mt-1 text-[10px] text-[var(--sp-slate-soft)]">
+                <p className="mt-1 text-[13px] text-[var(--sp-slate-soft)]">
                   Total boats in fleet
                 </p>
               )}
@@ -680,7 +680,7 @@ function RegattaEvidenceForm({
         {/* Section 3: Official Verification Evidence */}
         <div className="space-y-4 pt-2 border-t border-[var(--sp-cool-veil)]">
           <div className="flex items-center justify-between">
-            <h4 className="text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
+            <h4 className="text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
               Official Evidence for Verification
             </h4>
             <span className="text-[11px] text-[var(--sp-harbour-teal)] font-bold">
@@ -749,11 +749,11 @@ function RegattaEvidenceForm({
                       <p className="font-bold text-[var(--sp-charcoal)] truncate">
                         {existingEvidenceName || "Attached Evidence Document"}
                       </p>
-                      <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800">
+                      <span className="rounded-md bg-emerald-100 px-1.5 py-0.5 text-[11px] font-bold text-emerald-800">
                         Uploaded ✓
                       </span>
                     </div>
-                    <p className="text-[11px] text-[var(--sp-slate-soft)] mt-0.5">
+                    <p className="text-[13px] text-[var(--sp-slate-soft)] mt-0.5">
                       Stored securely on SailorPath Cloud · Ready for verification
                     </p>
                   </div>
@@ -796,7 +796,7 @@ function RegattaEvidenceForm({
                 <p className="text-xs font-bold text-[var(--sp-charcoal)]">
                   Click to select file or drag &amp; drop
                 </p>
-                <p className="text-[11px] text-[var(--sp-slate-soft)] mt-1">
+                <p className="text-[13px] text-[var(--sp-slate-soft)] mt-1">
                   Official PDF results document, race sheet photo, or noticeboard image (max 10MB)
                 </p>
               </div>
@@ -844,7 +844,7 @@ function RegattaEvidenceForm({
         <button
           type="submit"
           disabled={isSubmitting || uploadState.isUploading}
-          className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-5 py-2 text-xs font-bold text-white transition-all disabled:opacity-50 shadow-xs"
+          className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-5 py-2 text-[15px] font-semibold text-white transition-all disabled:opacity-50 shadow-xs"
         >
           {isSubmitting ? (
             <>

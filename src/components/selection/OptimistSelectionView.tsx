@@ -159,7 +159,7 @@ export function OptimistSelectionView({
                 <Trophy className="h-4 w-4 text-[var(--sp-racing-orange)] shrink-0" />
                 <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Asian &amp; Oceania 2026 Roster</h2>
               </div>
-              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
+              <p className="text-[13px] text-[var(--sp-slate-soft)] leading-relaxed">
                 Top 10 qualifying standings, gender quotas (min 3 per gender), and reserves.
               </p>
             </div>
@@ -168,7 +168,7 @@ export function OptimistSelectionView({
                 <Users className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0" />
                 <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Perth Training Camp Roster</h2>
               </div>
-              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
+              <p className="text-[13px] text-[var(--sp-slate-soft)] leading-relaxed">
                 Age bucket allocations for birth years 2013, 2014, and 2015.
               </p>
             </div>
@@ -177,7 +177,7 @@ export function OptimistSelectionView({
                 <Award className="h-4 w-4 text-[var(--sp-racing-orange)] shrink-0" />
                 <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Combined Low-Point Matrices</h2>
               </div>
-              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
+              <p className="text-[13px] text-[var(--sp-slate-soft)] leading-relaxed">
                 Real-time race scores, automatic discard formulas, and tie-break rules.
               </p>
             </div>
@@ -186,13 +186,13 @@ export function OptimistSelectionView({
                 <Compass className="h-4 w-4 text-emerald-600 shrink-0" />
                 <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Athlete Cushion Buffers</h2>
               </div>
-              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
+              <p className="text-[13px] text-[var(--sp-slate-soft)] leading-relaxed">
                 Claimed athlete spotlight with exact point cushions to qualification cutoffs.
               </p>
             </div>
           </div>
 
-          <p className="text-[11px] text-[var(--sp-slate-soft)]">
+          <p className="text-[13px] text-[var(--sp-slate-soft)]">
             Free access for Singapore sailors, sailing parents, and registered coaches.
           </p>
         </div>
@@ -233,10 +233,10 @@ export function OptimistSelectionView({
       {/* ── Selection Events Status ── */}
       <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 sm:p-5 space-y-3 shadow-xs">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <p className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
+          <p className="text-[12px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Selection Series Progress
           </p>
-          <span className="text-[11px] font-semibold text-[var(--sp-slate-soft)]">
+          <span className="text-[13px] font-semibold text-[var(--sp-slate-soft)]">
             {selectionStatus.usableRaceCount} usable races · {selectionStatus.discardCount} discard
             {selectionStatus.discardCount === 1 ? "" : "s"}
           </span>
@@ -269,7 +269,7 @@ export function OptimistSelectionView({
                       {ev.def.label}
                     </p>
                     <span
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      className={`text-[11px] font-bold px-2 py-0.5 rounded-full ${
                         hasRegatta
                           ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
                           : "bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)]"
@@ -278,14 +278,14 @@ export function OptimistSelectionView({
                       {hasRegatta ? "Scored" : "Scheduled"}
                     </span>
                   </div>
-                  <p className="text-[11px] text-[var(--sp-slate-soft)] mt-0.5 flex items-center gap-1.5">
+                  <p className="text-[13px] text-[var(--sp-slate-soft)] mt-0.5 flex items-center gap-1.5">
                     <Calendar className="h-3 w-3 text-[var(--sp-slate-soft)]" />
                     <span>
                       {ev.def.dateFrom} to {ev.def.dateTo}
                     </span>
                   </p>
                   {ev.regatta && (
-                    <p className="text-[11px] text-emerald-700 font-medium mt-1">
+                    <p className="text-[13px] text-emerald-700 font-medium mt-1">
                       Matched: {ev.regatta.name} ({ev.regatta.totalFleetSize} sailors)
                     </p>
                   )}
@@ -315,7 +315,7 @@ export function OptimistSelectionView({
                 <p className="text-sm font-bold text-[var(--sp-harbour-shadow)] leading-tight">
                   Your Claimed Sailor: {mySailor.name}
                 </p>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30">
+                <span className="text-[12px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/30">
                   Rank #{mySailorAsianRank.rank} of {combinedScores.length}
                 </span>
               </div>
@@ -446,7 +446,7 @@ export function OptimistSelectionView({
                 <h2 className="text-sm font-bold text-[var(--sp-harbour-shadow)]">
                   {campaigns.asianOceania.title}
                 </h2>
-                <span className="rounded-full bg-[var(--sp-aqua-mist)] border border-[var(--sp-harbour-teal)]/30 px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)]">
+                <span className="rounded-full bg-[var(--sp-aqua-mist)] border border-[var(--sp-harbour-teal)]/30 px-2 py-0.5 text-[11px] font-bold text-[var(--sp-harbour-teal)]">
                   Key Event Funding
                 </span>
               </div>
@@ -473,7 +473,7 @@ export function OptimistSelectionView({
           <div className="rounded-2xl border border-[var(--sp-cool-veil)] overflow-hidden bg-[var(--sp-warm-white)] shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
-                <thead className="bg-[var(--sp-sailcloth)] text-[10px] text-[var(--sp-slate-soft)] uppercase tracking-wider">
+                <thead className="bg-[var(--sp-sailcloth)] text-[12px] text-[var(--sp-slate-soft)] uppercase tracking-wider">
                   <tr>
                     <th className="px-4 py-3 w-12">Slot</th>
                     <th className="px-4 py-3 min-w-[10rem]">Sailor</th>
@@ -500,7 +500,7 @@ export function OptimistSelectionView({
                                 <p className="text-xs font-bold text-[var(--sp-harbour-shadow)]">
                                   Sign in to view remaining {displayAsianRows.length - 5} competitors and live reserves
                                 </p>
-                                <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                                <p className="text-[13px] text-[var(--sp-slate-soft)]">
                                   Full rosters, discard calculations, and simulator access are available for free registered accounts.
                                 </p>
                                 <Link
@@ -521,7 +521,7 @@ export function OptimistSelectionView({
                       <Fragment key={sailor.sailorId}>
                         {idx === 10 && (
                           <tr key="cutoff-divider" className="bg-rose-50 border-y border-rose-300">
-                            <td colSpan={7} className="px-4 py-2 text-center text-[10px] font-black tracking-wider text-rose-700 uppercase">
+                            <td colSpan={7} className="px-4 py-2 text-center text-[12px] font-black tracking-wider text-rose-700 uppercase">
                               ═══ Qualifying Cutoff Line (Top 10 Slots) ═══
                             </td>
                           </tr>
@@ -550,20 +550,20 @@ export function OptimistSelectionView({
                                 {sailor.name}
                               </span>
                               {isMyAthlete && (
-                                <span className="rounded bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] text-[9px] font-black px-1.5 py-0.5 border border-[var(--sp-racing-orange)]/30">
+                                <span className="rounded bg-[var(--sp-racing-mist)]/40 text-[var(--sp-racing-orange)] text-[11px] font-black px-1.5 py-0.5 border border-[var(--sp-racing-orange)]/30">
                                   YOU
                                 </span>
                               )}
                             </div>
                             {sailor.handle && (
-                              <p className="text-[10px] text-[var(--sp-slate-soft)]">
+                              <p className="text-[13px] text-[var(--sp-slate-soft)]">
                                 @{sailor.handle}
                               </p>
                             )}
                           </td>
                           <td className="px-3 py-3 text-center">
                             <span
-                              className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                              className={`text-[11px] font-bold px-1.5 py-0.5 rounded ${
                                 sailor.gender === "F"
                                   ? "bg-pink-100 text-pink-700"
                                   : "bg-blue-100 text-blue-700"
@@ -593,7 +593,7 @@ export function OptimistSelectionView({
                             className="bg-[var(--sp-sailcloth)] border-t border-b border-[var(--sp-cool-veil)]"
                           >
                             <td colSpan={7} className="px-4 py-3 space-y-2">
-                              <p className="text-[11px] font-bold text-[var(--sp-harbour-shadow)]">
+                              <p className="text-[13px] font-bold text-[var(--sp-harbour-shadow)]">
                                 {sailor.name} · Complete Race Breakdown:
                               </p>
                               <div className="flex flex-wrap gap-1.5">
@@ -646,7 +646,7 @@ export function OptimistSelectionView({
                 <h2 className="text-sm font-bold text-[var(--sp-harbour-shadow)]">
                   {campaigns.perthCamp.title}
                 </h2>
-                <span className="rounded-full bg-purple-100 border border-purple-300 px-2 py-0.5 text-[10px] font-bold text-purple-800">
+                <span className="rounded-full bg-purple-100 border border-purple-300 px-2 py-0.5 text-[11px] font-bold text-purple-800">
                   {campaigns.perthCamp.funding}
                 </span>
               </div>
@@ -665,7 +665,7 @@ export function OptimistSelectionView({
                 {perthCamp.picks.length} Athletes Nominated
               </p>
               {perthCamp.notes.map((note, i) => (
-                <p key={i} className="text-[11px] text-[var(--sp-slate-soft)]">
+                <p key={i} className="text-[13px] text-[var(--sp-slate-soft)]">
                   {note}
                 </p>
               ))}
@@ -675,7 +675,7 @@ export function OptimistSelectionView({
           {/* Perth Picks Table */}
           <div className="rounded-2xl border border-[var(--sp-cool-veil)] overflow-hidden bg-[var(--sp-warm-white)] shadow-xs">
             <table className="w-full text-left text-xs border-collapse">
-              <thead className="bg-[var(--sp-sailcloth)] text-[10px] text-[var(--sp-slate-soft)] uppercase tracking-wider">
+              <thead className="bg-[var(--sp-sailcloth)] text-[12px] text-[var(--sp-slate-soft)] uppercase tracking-wider">
                 <tr>
                   <th className="px-4 py-3">Slot Designation</th>
                   <th className="px-4 py-3 min-w-[10rem]">Sailor</th>
@@ -696,7 +696,7 @@ export function OptimistSelectionView({
                     </td>
                     <td className="px-3 py-3 text-center">
                       <span
-                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                        className={`text-[11px] font-bold px-1.5 py-0.5 rounded ${
                           pick.gender === "F"
                             ? "bg-pink-100 text-pink-700"
                             : "bg-blue-100 text-blue-700"
@@ -737,7 +737,7 @@ export function OptimistSelectionView({
           <div className="rounded-2xl border border-[var(--sp-cool-veil)] overflow-hidden bg-[var(--sp-warm-white)] shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
-                <thead className="bg-[var(--sp-sailcloth)] text-[10px] text-[var(--sp-slate-soft)] uppercase tracking-wider">
+                <thead className="bg-[var(--sp-sailcloth)] text-[12px] text-[var(--sp-slate-soft)] uppercase tracking-wider">
                   <tr>
                     <th className="px-4 py-3 w-12">#</th>
                     <th className="px-4 py-3 min-w-[10rem]">Sailor</th>

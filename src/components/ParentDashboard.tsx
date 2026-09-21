@@ -167,7 +167,7 @@ const SECONDARY_BTN =
   "inline-flex items-center justify-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors";
 const PRIMARY_BTN = "sp-btn-primary";
 const SECTION_KICKER =
-  "text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]";
+  "text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]";
 const SECTION_TITLE =
   "mt-1 text-base font-black text-[var(--sp-harbour-shadow)]";
 const MUTED = "text-[var(--sp-slate-soft)]";
@@ -756,7 +756,7 @@ export function ParentDashboard() {
       </header>
 
       {error && (
-        <p className="text-sm font-bold text-rose-700 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3">
+        <p className="text-sm font-bold text-[var(--sp-color-error)] rounded-xl border border-rose-200 bg-rose-50 px-4 py-3">
           {error}
         </p>
       )}
@@ -780,7 +780,7 @@ export function ParentDashboard() {
                   >
                     {c.sailorName}
                   </Link>
-                  <p className={`text-[11px] ${MUTED}`}>
+                  <p className={`text-[13px] ${MUTED}`}>
                     {relationLabel(c.relation)} · submitted{" "}
                     {c.createdAt ? new Date(c.createdAt).toLocaleDateString() : "—"}
                   </p>
@@ -929,7 +929,7 @@ export function ParentDashboard() {
                       <button
                         type="button"
                         onClick={() => setSelectedAthleteId(a.id)}
-                        className={`${PRIMARY_BTN} px-3 py-1.5 text-[11px]`}
+                        className={`${PRIMARY_BTN} px-3 py-1.5`}
                       >
                         Open Dashboard
                         <ChevronRight className="h-3 w-3" />
@@ -939,7 +939,7 @@ export function ParentDashboard() {
 
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                     <div className={`${NESTED} p-2.5`}>
-                      <p className={`text-[10px] font-bold ${MUTED} uppercase`}>
+                      <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
                         Series Rank
                       </p>
                       <p className={`text-sm font-black ${INK} mt-0.5`}>
@@ -957,7 +957,7 @@ export function ParentDashboard() {
                     </div>
 
                     <div className={`${NESTED} p-2.5`}>
-                      <p className={`text-[10px] font-bold ${MUTED} uppercase`}>
+                      <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
                         Selection Trials
                       </p>
                       <p className={`text-sm font-black ${INK} mt-0.5`}>
@@ -975,7 +975,7 @@ export function ParentDashboard() {
                     </div>
 
                     <div className={`${NESTED} p-2.5 col-span-2 sm:col-span-1`}>
-                      <p className={`text-[10px] font-bold ${MUTED} uppercase`}>
+                      <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
                         Locker Alerts
                       </p>
                       <p className="text-sm font-black mt-0.5">
@@ -1034,12 +1034,12 @@ export function ParentDashboard() {
                           {activeAthlete.name}
                         </h2>
                         {activeAthlete.ownerRelation && (
-                          <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
+                          <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)]">
                             {relationLabel(activeAthlete.ownerRelation)}
                           </span>
                         )}
                         {activeAthlete.nationalSquadStatus && (
-                          <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[var(--sp-charcoal-slate)]">
+                          <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-[var(--sp-charcoal-slate)]">
                             {activeAthlete.nationalSquadStatus}
                           </span>
                         )}
@@ -1090,12 +1090,12 @@ export function ParentDashboard() {
                   <div className="flex flex-wrap sm:flex-col gap-2 shrink-0">
                     <Link
                       href={`/athlete?id=${activeAthlete.id}&tab=results&action=new`}
-                      className={`${SECONDARY_BTN} border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 text-orange-600 font-bold`}
+                      className={SECONDARY_BTN}
                     >
-                      <Trophy className="h-3.5 w-3.5 text-orange-500" />
+                      <Trophy className="h-3.5 w-3.5 text-[var(--sp-racing-orange)]" />
                       Log Score & Evidence ↗
                     </Link>
-                    <Link href={`/${activeAthlete.handle}`} className={PRIMARY_BTN}>
+                    <Link href={`/${activeAthlete.handle}`} className={SECONDARY_BTN}>
                       Public Profile
                       <ExternalLink className="h-3.5 w-3.5" />
                     </Link>
@@ -1147,7 +1147,7 @@ export function ParentDashboard() {
                                   <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${NESTED} ${MUTED}`}>
                                     Not Applicable
                                   </span>
-                                  <p className={`text-[11px] ${MUTED} leading-snug`}>
+                                  <p className={`text-[13px] ${MUTED} leading-snug`}>
                                     Only for Gold fleet sailors who took part in selection trial.
                                   </p>
                                 </div>
@@ -1177,7 +1177,7 @@ export function ParentDashboard() {
                                   <p className={`text-xs font-bold ${INK} leading-tight`}>
                                     {squadDetails}
                                   </p>
-                                  <p className={`text-[11px] ${MUTED} font-mono`}>
+                                  <p className={`text-[13px] ${MUTED} font-mono`}>
                                     Trials Rank #{trials?.rank} · {trials?.nettScore} pts ({trials?.eventsSailed}/2 events)
                                   </p>
                                 </div>
@@ -1195,7 +1195,7 @@ export function ParentDashboard() {
                                   Trials Rank #{trials?.rank} ({trials?.eventsSailed}/2 events)
                                 </p>
                                 {trials?.gapToCutoff != null && (
-                                  <p className={`text-[11px] ${MUTED} font-mono`}>
+                                  <p className={`text-[13px] ${MUTED} font-mono`}>
                                     {trials.gapToCutoff > 0 ? `+${trials.gapToCutoff.toFixed(1)}` : trials.gapToCutoff.toFixed(1)} pts to cutoff
                                   </p>
                                 )}
@@ -1217,7 +1217,7 @@ export function ParentDashboard() {
                       <div className="space-y-3 pt-4 md:pt-0 md:px-4 flex flex-col justify-between">
                         <div className="space-y-2.5">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
+                            <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
                               <Award className="h-3.5 w-3.5" />
                               National Ranking
                             </span>
@@ -1243,10 +1243,10 @@ export function ParentDashboard() {
                                   in {activeAthlete.standing.fleet} Fleet
                                 </span>
                               </div>
-                              <p className={`text-[11px] ${MUTED}`}>
+                              <p className={`text-[13px] ${MUTED}`}>
                                 {activeAthlete.standing.fleetSize} sailors · {activeAthlete.standing.periodLabel}
                               </p>
-                              <p className={`text-[11px] ${MUTED}`}>
+                              <p className={`text-[13px] ${MUTED}`}>
                                 Best 3 of 5:{" "}
                                 <span className={`font-bold ${INK}`}>
                                   {activeAthlete.standing.best3of5} pts
@@ -1279,7 +1279,7 @@ export function ParentDashboard() {
                       <div className="space-y-3 pt-4 md:pt-0 md:pl-4 flex flex-col justify-between">
                         <div className="space-y-2.5">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
+                            <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
                               <Sailboat className="h-3.5 w-3.5" />
                               Recent Results
                             </span>
@@ -1299,11 +1299,11 @@ export function ParentDashboard() {
                                     <p className={`font-bold ${INK} truncate text-xs`}>
                                       {r.regattaName}
                                     </p>
-                                    <p className={`text-[10px] ${MUTED} font-mono`}>
+                                    <p className={`text-[13px] ${MUTED} font-mono`}>
                                       {r.regattaDate}
                                     </p>
                                   </div>
-                                  <span className="text-xs font-black text-[var(--sp-racing-orange)] tabular-nums px-2 py-0.5 rounded-md bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/20 shrink-0">
+                                  <span className="text-xs font-black text-[var(--sp-racing-deep)] tabular-nums px-2 py-0.5 rounded-md bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/20 shrink-0">
                                     #{r.rank}
                                   </span>
                                 </div>
@@ -1362,14 +1362,14 @@ export function ParentDashboard() {
 
                     {(activeAthlete.equipmentAlertCount ?? 0) > 0 && (
                       <div className="rounded-xl border border-rose-200 bg-rose-50 p-3.5 space-y-2">
-                        <p className="text-xs font-bold text-rose-800 flex items-center gap-1.5">
-                          <AlertTriangle className="h-4 w-4 text-rose-600 shrink-0" />
+                        <p className="text-xs font-bold text-[var(--sp-color-error)] flex items-center gap-1.5">
+                          <AlertTriangle className="h-4 w-4 shrink-0" />
                           {activeAthlete.equipmentAlertCount} Equipment Alert
                           {activeAthlete.equipmentAlertCount === 1 ? "" : "s"} Require Action
                         </p>
                         <div className="space-y-1 pl-5">
                           {(activeAthlete.equipmentAlerts || []).map((al, idx) => (
-                            <p key={idx} className="text-xs text-rose-800">
+                            <p key={idx} className="text-xs text-[var(--sp-color-error)]">
                               <span className="font-bold">{al.label}:</span> {al.reason}
                             </p>
                           ))}
@@ -1387,7 +1387,7 @@ export function ParentDashboard() {
                             <div className="flex items-start justify-between gap-1.5">
                               <div className="min-w-0 flex-1">
                                 <div className="flex items-center gap-1.5">
-                                  <span className={`text-[10px] font-black uppercase tracking-wider ${MUTED}`}>
+                                  <span className={`text-[11px] font-black uppercase tracking-wider ${MUTED}`}>
                                     {g.category}
                                   </span>
                                   {g.isPrimary && (
@@ -1447,7 +1447,7 @@ export function ParentDashboard() {
                                   </button>
                                 );
                               })()}
-                              <span className={`text-[10px] ${MUTED} font-medium`}>
+                              <span className={`text-[13px] ${MUTED} font-medium`}>
                                 Tap to toggle
                               </span>
                             </div>
@@ -1461,7 +1461,7 @@ export function ParentDashboard() {
                         </div>
                         <div className="space-y-1">
                           <p className={`text-xs font-bold ${INK}`}>No equipment registered yet</p>
-                          <p className={`text-[11px] ${MUTED} max-w-sm mx-auto`}>
+                          <p className={`text-[13px] ${MUTED} max-w-sm mx-auto`}>
                             Add your sailor&apos;s hull, spars, sails, and foils to track safety checks, condition, and race-day readiness.
                           </p>
                         </div>
@@ -1530,7 +1530,7 @@ export function ParentDashboard() {
                             onClick={() => setAddGearTab("presets")}
                             className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                               addGearTab === "presets"
-                                ? "bg-racing-orange text-sailcloth shadow-xs"
+                                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
                                 : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
                             }`}
                           >
@@ -1541,7 +1541,7 @@ export function ParentDashboard() {
                             onClick={() => setAddGearTab("custom")}
                             className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
                               addGearTab === "custom"
-                                ? "bg-racing-orange text-sailcloth shadow-xs"
+                                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
                                 : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
                             }`}
                           >
@@ -1551,7 +1551,7 @@ export function ParentDashboard() {
 
                         {addGearTab === "presets" ? (
                           <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
-                            <p className={`text-[11px] ${MUTED}`}>
+                            <p className={`text-[13px] ${MUTED}`}>
                               Select standard youth equipment packages to add immediately:
                             </p>
                             <div className="grid grid-cols-1 gap-2">
@@ -1569,7 +1569,7 @@ export function ParentDashboard() {
                                         {preset.category}
                                       </span>
                                     </div>
-                                    <p className={`text-[11px] ${MUTED} mt-0.5 leading-snug`}>
+                                    <p className={`text-[13px] ${MUTED} mt-0.5 leading-snug`}>
                                       {preset.subtitle}
                                     </p>
                                   </div>
@@ -1727,7 +1727,7 @@ export function ParentDashboard() {
                   <section className={`${CARD} p-5 sm:p-6 space-y-4`}>
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Coach feed</p>
+                        <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Coach feed</p>
                         <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
                           <Award className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
                           Coach Observations & Development Records
@@ -1736,7 +1736,7 @@ export function ParentDashboard() {
                           Technical debriefs, starts, tactics, and boat speed observations logged by accredited coaches.
                         </p>
                       </div>
-                      <span className={`text-[10px] font-bold ${MUTED} uppercase tracking-wider`}>
+                      <span className={`text-[11px] font-bold ${MUTED} uppercase tracking-wider`}>
                         Read-Only Feed
                       </span>
                     </div>
@@ -1759,7 +1759,7 @@ export function ParentDashboard() {
                                   </span>
                                 )}
                               </div>
-                              <span className={`text-[10px] ${MUTED} font-mono`}>
+                              <span className={`text-[13px] ${MUTED} font-mono`}>
                                 {cf.recordDate}
                               </span>
                             </div>
@@ -1788,7 +1788,7 @@ export function ParentDashboard() {
                           <Calendar className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
                           Regatta Prep & Checklist
                         </h3>
-                        <p className={`text-[11px] ${MUTED} mt-0.5`}>
+                        <p className={`text-[13px] ${MUTED} mt-0.5`}>
                           Upcoming calendar & race-day verification items.
                         </p>
                       </div>
@@ -1806,7 +1806,7 @@ export function ParentDashboard() {
                     {upcomingRegattas.length > 0 ? (
                       <div className="space-y-2">
                         <div className="flex items-center justify-between">
-                          <p className={`text-[10px] font-black uppercase tracking-wider ${MUTED}`}>
+                          <p className={`text-[11px] font-black uppercase tracking-wider ${MUTED}`}>
                             Upcoming Regattas
                           </p>
                           <Link href="/calendar" className={LINK_TEAL}>
@@ -1821,14 +1821,14 @@ export function ParentDashboard() {
                             >
                               <div className="min-w-0 flex-1">
                                 <p className={`font-bold ${INK} truncate`}>{reg.name}</p>
-                                <p className={`text-[10px] ${MUTED} font-mono mt-0.5`}>
+                                <p className={`text-[13px] ${MUTED} font-mono mt-0.5`}>
                                   {reg.date}{" "}
                                   {reg.boatClass ? `· ${reg.boatClass}` : ""}
                                 </p>
                               </div>
                               <Link
                                 href="/calendar"
-                                className="text-[11px] font-bold text-[var(--sp-racing-orange)] hover:underline shrink-0"
+                                className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline shrink-0"
                               >
                                 Details
                               </Link>
@@ -1839,7 +1839,7 @@ export function ParentDashboard() {
                     ) : (
                       <div className={`rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3 text-xs ${MUTED} text-center`}>
                         No upcoming regattas scheduled.{" "}
-                        <Link href="/calendar" className="text-[var(--sp-racing-orange)] font-bold hover:underline">
+                        <Link href="/calendar" className="text-[var(--sp-harbour-teal)] font-bold hover:underline">
                           View full calendar
                         </Link>
                       </div>
@@ -1847,7 +1847,7 @@ export function ParentDashboard() {
 
                     <div className="space-y-2.5 pt-2 border-t border-[var(--sp-cool-veil)]">
                       <div className="flex items-center justify-between">
-                        <p className={`text-[10px] font-black uppercase tracking-wider ${MUTED}`}>
+                        <p className={`text-[11px] font-black uppercase tracking-wider ${MUTED}`}>
                           Race Day Morning Checklist
                         </p>
                         {(() => {
@@ -1939,12 +1939,12 @@ export function ParentDashboard() {
 
                   <section className={`${CARD} p-5 space-y-4`}>
                     <div>
-                      <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Private notes</p>
+                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Private notes</p>
                       <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
                         <StickyNote className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
                         Private Parent Journal
                       </h3>
-                      <p className={`text-[11px] ${MUTED} mt-0.5 flex items-center gap-1`}>
+                      <p className={`text-[13px] ${MUTED} mt-0.5 flex items-center gap-1`}>
                         <Lock className="h-3 w-3" />
                         100% private to your parent account.
                       </p>
@@ -1999,7 +1999,7 @@ export function ParentDashboard() {
                     </div>
 
                     {(activeAthlete.notes?.length ?? 0) === 0 ? (
-                      <p className={`text-[11px] ${MUTED} text-center py-3`}>
+                      <p className={`text-[13px] ${MUTED} text-center py-3`}>
                         No private notes yet. Log training thoughts, regatta debriefs, logistics, or equipment orders.
                       </p>
                     ) : (
@@ -2018,7 +2018,7 @@ export function ParentDashboard() {
                                       {parsed.category}
                                     </span>
                                   )}
-                                  <span className={`text-[10px] ${MUTED} font-mono`}>
+                                  <span className={`text-[13px] ${MUTED} font-mono`}>
                                     {n.createdAt ? n.createdAt.slice(0, 10) : ""}
                                   </span>
                                 </div>

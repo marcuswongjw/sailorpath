@@ -94,9 +94,9 @@ export function SearchNationalityField({
         <button
           type="button"
           onClick={clear}
-          className={`rounded-full px-2 py-0.5 text-[10px] font-bold transition-colors ${
+          className={`rounded-full px-2.5 py-1 text-[13px] font-semibold transition-colors ${
             !value
-              ? "bg-racing-orange text-white"
+              ? "bg-harbour text-white"
               : "border border-cool-veil bg-warm-white text-slate-soft hover:text-charcoal hover:border-harbour"
           }`}
         >
@@ -107,9 +107,9 @@ export function SearchNationalityField({
             key={code}
             type="button"
             onClick={() => pick(code)}
-            className={`rounded-full px-2 py-0.5 text-[10px] font-bold tabular-nums transition-colors ${
+            className={`rounded-full px-2.5 py-1 text-[13px] font-semibold tabular-nums transition-colors ${
               value === code
-                ? "bg-racing-orange text-white"
+                ? "bg-harbour text-white"
                 : "border border-cool-veil bg-warm-white text-slate-soft hover:text-charcoal hover:border-harbour"
             }`}
             title={byCode.get(code) || code}
@@ -143,7 +143,7 @@ export function SearchNationalityField({
         onBlur={() => {
           blurTimer.current = setTimeout(() => setOpen(false), 150);
         }}
-        className="mt-0 w-full rounded-lg bg-warm-white border border-cool-mist px-2 py-2 text-xs text-charcoal placeholder:text-slate-soft focus:border-harbour focus:outline-none"
+        className="mt-0 w-full rounded-lg bg-warm-white border border-cool-mist px-2 py-2 text-sm text-charcoal placeholder:text-slate-soft focus:border-harbour focus:outline-none"
       />
       {open && (
         <ul
@@ -156,7 +156,7 @@ export function SearchNationalityField({
               type="button"
               role="option"
               aria-selected={!value}
-              className="w-full px-3 py-2 text-left text-xs text-slate-soft hover:bg-aqua-mist/50 hover:text-charcoal"
+              className="w-full px-3 py-2 text-left text-sm text-slate-soft hover:bg-aqua-mist/50 hover:text-charcoal"
               onMouseDown={(e) => e.preventDefault()}
               onClick={clear}
             >

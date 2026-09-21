@@ -24,7 +24,7 @@ export default function ClaimProfilePage() {
 
       <ol className="space-y-4">
         <li className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 flex gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-orange-400 text-xs font-black">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-racing-deep text-xs font-black">
             1
           </span>
           <div>
@@ -37,14 +37,14 @@ export default function ClaimProfilePage() {
             </p>
             <Link
               href="/search"
-              className="inline-flex mt-3 rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-[11px] font-bold text-white"
+              className="inline-flex mt-3 rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-[15px] font-semibold text-white"
             >
               Search sailors
             </Link>
           </div>
         </li>
         <li className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 flex gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-orange-400 text-xs font-black">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-racing-deep text-xs font-black">
             2
           </span>
           <div>
@@ -58,13 +58,13 @@ export default function ClaimProfilePage() {
             <div className="mt-3 flex flex-wrap gap-2">
               <Link
                 href="/login"
-                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold text-white hover:border-orange-500/40"
+                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[15px] font-semibold text-white hover:border-orange-500/40"
               >
                 Log in
               </Link>
               <Link
                 href="/register"
-                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold text-white hover:border-orange-500/40"
+                className="rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[15px] font-semibold text-white hover:border-orange-500/40"
               >
                 Create account
               </Link>
@@ -72,7 +72,7 @@ export default function ClaimProfilePage() {
           </div>
         </li>
         <li className="rounded-2xl border border-white/10 bg-white/[0.03] p-4 flex gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-orange-400 text-xs font-black">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500/15 text-racing-deep text-xs font-black">
             3
           </span>
           <div>
@@ -94,7 +94,7 @@ export default function ClaimProfilePage() {
         </li>
       </ol>
 
-      <p className="text-center text-[11px] text-slate-600">
+      <p className="text-center text-[13px] text-slate-600">
         <Link href="/" className="text-slate-500 hover:text-white">
           ← Home
         </Link>

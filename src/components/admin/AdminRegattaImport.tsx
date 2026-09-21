@@ -734,7 +734,7 @@ export function AdminRegattaImport({
           <p className="text-sm font-bold text-white mb-2">
             Drop a regatta results PDF, Excel, or CSV file here
           </p>
-          <div className="mb-4 max-w-3xl space-y-2 text-xs leading-relaxed text-slate-500">
+          <div className="mb-4 max-w-3xl space-y-2 text-[13px] leading-relaxed text-slate-500">
             <p>
               Supports .pdf, .xlsx, and .csv. SailorPath reads PDFs and
               imports them directly when the filename contains the event date.
@@ -756,7 +756,7 @@ export function AdminRegattaImport({
               SG series until admitted in Database.
             </p>
           </div>
-          <label className="rounded-full bg-slate-800 border border-white/5 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition-all cursor-pointer">
+          <label className="rounded-full border border-[var(--sp-harbour-teal)] bg-[var(--sp-warm-white)] px-4 py-2 text-[15px] font-semibold text-[var(--sp-harbour-teal)] hover:bg-[var(--sp-aqua-mist)] transition-all cursor-pointer">
             Select File
             <input
               type="file"
@@ -771,7 +771,7 @@ export function AdminRegattaImport({
           <div className="mt-6 max-w-xl mx-auto space-y-2">
             {(importBusy || importProgress > 0) && (
               <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                <div className="flex items-center justify-between text-[12px] font-bold uppercase tracking-wide text-slate-500">
                   <span>{importBusy ? "In progress" : "Done"}</span>
                   <span className="tabular-nums text-orange-400">
                     {Math.round(importProgress)}%
@@ -810,7 +810,7 @@ export function AdminRegattaImport({
                   <button
                     type="button"
                     onClick={() => onOpenResults(lastImportedRegatta.id!)}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white shadow-lg shadow-orange-950/40 transition-all"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-[15px] font-semibold text-white shadow-lg shadow-orange-950/40 transition-all"
                   >
                     <Trophy className="h-3.5 w-3.5" />
                     Review &amp; Edit Results
@@ -824,7 +824,7 @@ export function AdminRegattaImport({
                         : `/sg/optimist/regattas/${lastImportedRegatta.slug}`
                     }
                     target="_blank"
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-2 text-xs font-bold text-slate-300 transition-all"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-cool-mist)] bg-white/5 hover:bg-white/10 px-3.5 py-2 text-[13px] font-semibold text-slate-300 transition-all"
                   >
                     <ExternalLink className="h-3.5 w-3.5 text-orange-400" />
                     View Public Standings
@@ -836,7 +836,7 @@ export function AdminRegattaImport({
                     setImportStatus(null);
                     setLastImportedRegatta(null);
                   }}
-                  className="rounded-full border border-white/10 px-3 py-2 text-xs font-semibold text-slate-400 hover:text-white"
+                  className="rounded-full border border-[var(--sp-cool-mist)] px-3 py-2 text-[13px] font-semibold text-slate-400 hover:text-white"
                 >
                   Import another
                 </button>
@@ -863,16 +863,16 @@ export function AdminRegattaImport({
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-5 w-5 shrink-0 text-amber-300 mt-0.5" />
               <div className="min-w-0">
-                <p className="text-sm font-bold text-amber-100">
+                <p className="text-sm font-bold text-amber-900">
                   Select the event to update
                 </p>
-                <p className="text-[11px] text-amber-100/70 mt-1">
+                <p className="text-[13px] text-amber-900/80 mt-1">
                   Existing regattas share this date, class, and division. Select one to update, or create a separate event.
                 </p>
               </div>
             </div>
             <div className="grid gap-2 sm:grid-cols-2">
-              <button type="button" disabled={importBusy} className="rounded-xl border border-white/10 p-3 text-left text-white disabled:opacity-50" onClick={() => {
+              <button type="button" disabled={importBusy} className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-3 text-left text-white disabled:opacity-50" onClick={() => {
                 const pending = pendingTargetSelection;
                 void handleImportToDb(pending.rows, pending.meta, NEW_IMPORT_TARGET);
               }}>Create a separate event</button>
@@ -889,10 +889,10 @@ export function AdminRegattaImport({
                       candidate.id
                     );
                   }}
-                  className="rounded-xl border border-white/10 bg-slate-950/60 p-3 text-left hover:border-amber-400/60 disabled:opacity-50"
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-3 text-left hover:border-amber-400/60 disabled:opacity-50"
                 >
                   <span className="block text-xs font-bold text-white">{candidate.name}</span>
-                  <span className="mt-1 block text-[10px] text-slate-400">
+                  <span className="mt-1 block text-[13px] text-slate-400">
                     {candidate.date} · {candidate.boatClass} · {candidate.division}
                   </span>
                 </button>
@@ -902,7 +902,7 @@ export function AdminRegattaImport({
               type="button"
               disabled={importBusy}
               onClick={() => setPendingTargetSelection(null)}
-              className="rounded-full border border-white/15 px-4 py-2 text-xs font-bold text-slate-300 hover:border-white/30 hover:text-white disabled:opacity-50"
+              className="rounded-full border border-[var(--sp-cool-mist)] px-4 py-2 text-[13px] font-semibold text-slate-300 hover:border-[var(--sp-harbour-teal)] hover:text-white disabled:opacity-50"
             >
               Cancel selection
             </button>
@@ -914,10 +914,10 @@ export function AdminRegattaImport({
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-5 w-5 shrink-0 text-amber-300 mt-0.5" />
               <div className="min-w-0">
-                <p className="text-sm font-bold text-amber-100">
+                <p className="text-sm font-bold text-amber-900">
                   Review discrepancies before replacing current results
                 </p>
-                <p className="text-[11px] text-amber-100/70 mt-1">
+                <p className="text-[13px] text-amber-900/80 mt-1">
                   The upload matched “{pendingReview.review.regattaName}”. No database
                   changes have been made. Confirming makes this document authoritative:
                   changed values are updated and competitors or races missing from the
@@ -936,16 +936,16 @@ export function AdminRegattaImport({
                 ["Races changed", pendingReview.review.summary.changedRaces],
                 ["Event fields", pendingReview.review.summary.metadataChanges],
               ].map(([label, count]) => (
-                <div key={String(label)} className="rounded-lg border border-white/10 bg-slate-950/60 px-2.5 py-2">
+                <div key={String(label)} className="rounded-lg border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-2.5 py-2">
                   <p className="text-lg font-black tabular-nums text-white">{count}</p>
-                  <p className="text-[9px] uppercase tracking-wide text-slate-500">{label}</p>
+                  <p className="text-[12px] uppercase tracking-wide text-slate-500">{label}</p>
                 </div>
               ))}
             </div>
 
             <div className="max-h-72 overflow-auto rounded-xl border border-white/10">
-              <table className="min-w-[680px] w-full text-left text-[11px]">
-                <thead className="sticky top-0 bg-slate-950 text-slate-500 uppercase tracking-wide text-[9px]">
+              <table className="min-w-[680px] w-full text-left text-[13px]">
+                <thead className="sticky top-0 bg-slate-950 text-slate-500 uppercase tracking-wide text-[12px]">
                   <tr>
                     <th className="px-3 py-2">Type</th>
                     <th className="px-3 py-2">Sailor</th>
@@ -954,21 +954,21 @@ export function AdminRegattaImport({
                     <th className="px-3 py-2">Uploaded</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5 bg-slate-900/70 text-slate-200">
+                <tbody className="divide-y divide-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-slate-200">
                   {pendingReview.review.discrepancies.map((item, index) => (
                     <tr key={`${item.kind}-${item.sailorName || "event"}-${item.field}-${index}`}>
                       <td className="px-3 py-2 whitespace-nowrap text-amber-300">{item.kind.replaceAll("-", " ")}</td>
                       <td className="px-3 py-2 font-semibold text-white">{item.sailorName || "Regatta"}</td>
                       <td className="px-3 py-2">{item.field}</td>
-                      <td className="px-3 py-2 font-mono text-rose-200">{item.before ?? "—"}</td>
-                      <td className="px-3 py-2 font-mono text-emerald-200">{item.after ?? "—"}</td>
+                      <td className="px-3 py-2 font-mono text-rose-700">{item.before ?? "—"}</td>
+                      <td className="px-3 py-2 font-mono text-emerald-700">{item.after ?? "—"}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
             {pendingReview.review.truncated && (
-              <p className="text-[10px] text-amber-200/70">
+              <p className="text-[13px] text-amber-900/80">
                 Showing the first 500 differences. The totals above include all detected differences.
               </p>
             )}
@@ -981,7 +981,7 @@ export function AdminRegattaImport({
                   setPendingReview(null);
                   setImportStatus("Update cancelled. Current regatta results were not changed.");
                 }}
-                className="rounded-full border border-white/15 px-4 py-2 text-xs font-bold text-slate-300 hover:bg-white/5 disabled:opacity-50"
+                className="rounded-full border border-[var(--sp-cool-mist)] px-4 py-2 text-[13px] font-semibold text-slate-300 hover:bg-white/5 disabled:opacity-50"
               >
                 Cancel update
               </button>
@@ -992,7 +992,7 @@ export function AdminRegattaImport({
                   const pending = pendingReview;
                   void handleImportToDb(pending.rows, pending.meta, pending.review.regattaId);
                 }}
-                className="rounded-full bg-amber-500 px-4 py-2 text-xs font-black text-slate-950 hover:bg-amber-400 disabled:opacity-50"
+                className="rounded-full bg-amber-500 px-4 py-2 text-[15px] font-semibold text-white hover:bg-amber-400 disabled:opacity-50"
               >
                 Confirm and replace results
               </button>
@@ -1005,10 +1005,10 @@ export function AdminRegattaImport({
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-bold text-sky-200">
+                <p className="text-[13px] font-bold text-sky-700">
                   Nationality flags ({nationalityFlags.length})
                 </p>
-                <p className="text-[11px] text-slate-400 mt-0.5">
+                <p className="text-[13px] text-slate-400 mt-0.5">
                   Latest regatta updates nationality when present on the sheet.
                   Review mismatches or unrecognized values and correct in
                   Database → Sailors if needed.
@@ -1019,16 +1019,16 @@ export function AdminRegattaImport({
               {nationalityFlags.slice(0, 50).map((f, i) => (
                 <li
                   key={`${f.sailorId}-${f.action}-${i}`}
-                  className="rounded-xl border border-white/5 bg-slate-950/50 px-3 py-2 text-[11px]"
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-3 py-2 text-[13px]"
                 >
                   <div className="flex flex-wrap items-center gap-2">
                     <span
-                      className={`rounded-full px-1.5 py-0.5 text-[9px] font-black uppercase ${
+                      className={`rounded-full px-1.5 py-0.5 text-[12px] font-black uppercase ${
                         f.action === "updated"
                           ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/30"
                           : f.action === "unrecognized"
                             ? "bg-rose-500/15 text-rose-300 border border-rose-500/30"
-                            : "bg-amber-500/15 text-amber-200 border border-amber-500/30"
+                            : "bg-amber-500/15 text-amber-900 border border-amber-500/30"
                       }`}
                     >
                       {f.action}
@@ -1037,7 +1037,7 @@ export function AdminRegattaImport({
                   </div>
                   <p className="text-slate-400 mt-1">{f.detail}</p>
                   {(f.previous || f.imported || f.raw) && (
-                    <p className="text-slate-500 mt-0.5 font-mono text-[10px]">
+                    <p className="text-slate-500 mt-0.5 font-mono text-[13px]">
                       was {f.previous || "—"} · sheet {f.imported || f.raw || "—"}
                     </p>
                   )}
@@ -1052,10 +1052,10 @@ export function AdminRegattaImport({
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
               <div>
-                <p className="text-xs font-bold text-amber-200">
+                <p className="text-[13px] font-bold text-amber-900">
                   Possible duplicate names ({importPossibleDuplicates.length})
                 </p>
-                <p className="text-[11px] text-slate-400 mt-0.5">
+                <p className="text-[13px] text-slate-400 mt-0.5">
                   Names ≥60% similar within this file or vs existing sailors.
                   Import still completed — review and merge in Database → Sailors
                   if they are the same person.
@@ -1066,19 +1066,19 @@ export function AdminRegattaImport({
               {importPossibleDuplicates.slice(0, 40).map((d, i) => (
                 <li
                   key={`${d.importName}-${d.otherName}-${i}`}
-                  className="rounded-xl border border-white/5 bg-slate-950/50 px-3 py-2 text-[11px]"
+                  className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-3 py-2 text-[13px]"
                 >
                   <div className="flex flex-wrap items-center gap-2">
                     <span
-                      className={`rounded-full px-1.5 py-0.5 text-[9px] font-black uppercase ${
+                      className={`rounded-full px-1.5 py-0.5 text-[12px] font-black uppercase ${
                         d.band === "high"
                           ? "bg-rose-500/15 text-rose-300 border border-rose-500/30"
-                          : "bg-amber-500/15 text-amber-200 border border-amber-500/30"
+                          : "bg-amber-500/15 text-amber-900 border border-amber-500/30"
                       }`}
                     >
                       {Math.round(d.similarity * 100)}% · {d.band}
                     </span>
-                    <span className="rounded-full bg-white/5 px-1.5 py-0.5 text-[9px] font-bold text-slate-400 uppercase">
+                    <span className="rounded-full bg-white/5 px-1.5 py-0.5 text-[12px] font-bold text-slate-400 uppercase">
                       {d.kind === "within-file" ? "In file" : "vs DB"}
                     </span>
                   </div>
@@ -1092,7 +1092,7 @@ export function AdminRegattaImport({
               ))}
             </ul>
             {importPossibleDuplicates.length > 40 && (
-              <p className="text-[10px] text-slate-500">
+              <p className="text-[13px] text-slate-500">
                 Showing first 40 of {importPossibleDuplicates.length}.
               </p>
             )}
@@ -1104,8 +1104,8 @@ export function AdminRegattaImport({
             {pdfScreenshots.length > 0 && (
               <div className="space-y-3">
                 <div>
-                  <p className="text-xs font-bold text-white">PDF page review</p>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[13px] font-bold text-white">PDF page review</p>
+                  <p className="text-[13px] text-slate-500">
                     Source pages remain on this screen so you can verify the
                     extracted results and any proposed update.
                   </p>
@@ -1116,7 +1116,7 @@ export function AdminRegattaImport({
                       {/* The image is generated locally from the admin-selected PDF. */}
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={page.dataUrl} alt={`PDF page ${page.pageNumber}`} className="h-auto w-full" />
-                      <figcaption className="bg-slate-950 px-3 py-1.5 text-[10px] text-slate-400">
+                      <figcaption className="bg-slate-950 px-3 py-1.5 text-[13px] text-slate-400">
                         Page {page.pageNumber}
                       </figcaption>
                     </figure>
@@ -1126,14 +1126,14 @@ export function AdminRegattaImport({
             )}
 
             <div>
-              <p className="mb-2 text-[11px] text-slate-500">
+              <p className="mb-2 text-[13px] text-slate-500">
                 Review extracted ranks below. DNS suggestions are highlighted;
                 the ranking score remains editable and does not have to equal
                 fleet size + 1.
               </p>
             </div>
             <div className="max-h-[32rem] overflow-auto rounded-xl border border-white/10">
-              <table className="min-w-full text-[11px]">
+              <table className="min-w-full text-[13px]">
                 <thead className="sticky top-0 z-10 bg-slate-950 text-slate-400">
                   <tr>
                     <th className="px-3 py-2 text-left">Rank / ranking score</th>
@@ -1149,7 +1149,7 @@ export function AdminRegattaImport({
                     <th className="px-3 py-2 text-right">Nett</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5 bg-slate-900/60 text-slate-200">
+                <tbody className="divide-y divide-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-slate-200">
                   {fullImportRows.map((row, index) => (
                     <tr
                       key={`${row.name}-${row.sailNumber || "no-sail"}-${index}`}
@@ -1220,7 +1220,7 @@ export function AdminRegattaImport({
             <label className="text-xs text-slate-400 sm:col-span-2">
               Regatta name
               <input
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.name}
                 onChange={(e) =>
                   setImportMeta((m) => ({ ...m, name: e.target.value }))
@@ -1231,7 +1231,7 @@ export function AdminRegattaImport({
               Event date
               <input
                 type="date"
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.date}
                 onChange={(e) =>
                   setImportMeta((m) => ({ ...m, date: e.target.value }))
@@ -1242,7 +1242,7 @@ export function AdminRegattaImport({
               Total fleet size
               <input
                 type="number"
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.fleetSize}
                 onChange={(e) =>
                   setImportMeta((m) => ({
@@ -1255,7 +1255,7 @@ export function AdminRegattaImport({
             <label className="text-xs text-slate-400">
               Class
               <select
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.boatClass}
                 onChange={(e) => {
                   const boatClass = e.target.value;
@@ -1281,7 +1281,7 @@ export function AdminRegattaImport({
             <label className="text-xs text-slate-400">
               Geography
               <select
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.geography}
                 onChange={(e) =>
                   setImportMeta((m) => ({ ...m, geography: e.target.value }))
@@ -1299,7 +1299,7 @@ export function AdminRegattaImport({
               <input
                 type="number"
                 min={0}
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.raceCount}
                 onChange={(e) => {
                   const raceCount = e.target.value;
@@ -1328,7 +1328,7 @@ export function AdminRegattaImport({
             <label className="text-xs text-slate-400">
               Ranking
               <select
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
                 value={importMeta.countsForRanking ? "ranking" : "non-ranking"}
                 onChange={(e) =>
                   setImportMeta((m) => ({
@@ -1359,7 +1359,7 @@ export function AdminRegattaImport({
             <label className="text-xs text-slate-400">
               Division
               <select
-                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-xs disabled:opacity-60"
+                className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px] disabled:opacity-60"
                 value={
                   isSingleFleetClass(importMeta.boatClass)
                     ? "Open"
@@ -1382,7 +1382,7 @@ export function AdminRegattaImport({
                 )}
               </select>
             </label>
-            <p className="sm:col-span-2 lg:col-span-4 text-[10px] text-slate-500 space-y-1">
+            <p className="sm:col-span-2 lg:col-span-4 text-[13px] text-slate-500 space-y-1">
               <span className="block">
                 Defaults: <strong className="text-slate-400">Optimist</strong>,{" "}
                 <strong className="text-slate-400">SG</strong>,{" "}
@@ -1390,7 +1390,7 @@ export function AdminRegattaImport({
                 events do not affect Best 3 of 5 series scores.
               </span>
               {classImportNote(importMeta.boatClass) && (
-                <span className="block text-amber-200/90">
+                <span className="block text-amber-900/90">
                   {classImportNote(importMeta.boatClass)}
                 </span>
               )}
@@ -1399,7 +1399,7 @@ export function AdminRegattaImport({
               type="button"
               onClick={() => void handleImportToDb()}
               disabled={!isSuperadmin || importBusy}
-              className="sm:col-span-2 lg:col-span-4 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-xs font-bold text-white"
+              className="sm:col-span-2 lg:col-span-4 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-[15px] font-semibold text-white"
             >
               {importBusy
                 ? `Importing… ${Math.round(importProgress)}%`

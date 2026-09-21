@@ -77,7 +77,7 @@ function LoginForm() {
           <p className="text-xs text-[var(--sp-slate-soft)] mt-2">Email + password login</p>
         </div>
         {message && (
-          <p className="text-xs font-bold text-[var(--sp-racing-orange)] text-center">{message}</p>
+          <p className="text-xs font-bold text-[var(--sp-harbour-teal)] text-center">{message}</p>
         )}
         {error && (
           <p className="text-xs font-bold text-rose-600 text-center leading-relaxed">
@@ -128,7 +128,7 @@ function LoginForm() {
           No account?{" "}
           <Link
             href={`/register?next=${encodeURIComponent(nextTarget)}`}
-            className="text-[var(--sp-racing-orange)] font-bold hover:underline"
+            className="text-[var(--sp-harbour-teal)] font-bold hover:underline"
           >
             Register
           </Link>

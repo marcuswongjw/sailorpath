@@ -30,7 +30,7 @@ export function DemoNavHeader({
             </Link>
             <div className="h-4 w-px bg-[var(--sp-soft-aqua)]/20 hidden sm:block" />
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--sp-racing-orange)]/20 border border-[var(--sp-racing-orange)]/40 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-[var(--sp-racing-mist)]">
+              <span className="inline-flex items-center gap-1 rounded-full bg-[var(--sp-racing-orange)]/20 border border-[var(--sp-racing-orange)]/40 px-2.5 py-0.5 text-[12px] font-black uppercase tracking-wider text-[var(--sp-racing-mist)]">
                 <Sparkles className="h-3 w-3 text-[var(--sp-racing-orange)]" />
                 Live Demo
               </span>
@@ -47,9 +47,9 @@ export function DemoNavHeader({
           >
             <Link
               href="/sample"
-              className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+              className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[13px] font-bold transition-all whitespace-nowrap ${
                 activeDemo === "sailor"
-                  ? "bg-[var(--sp-racing-orange)] !text-white shadow-sm"
+                  ? "bg-[var(--sp-harbour-teal)] !text-white shadow-sm"
                   : "text-[var(--sp-soft-aqua)] hover:text-white hover:bg-white/10"
               }`}
             >
@@ -59,7 +59,7 @@ export function DemoNavHeader({
 
             <Link
               href="/demo/parent"
-              className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+              className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[13px] font-bold transition-all whitespace-nowrap ${
                 activeDemo === "parent"
                   ? "bg-[var(--sp-harbour-teal)] !text-white shadow-sm"
                   : "text-[var(--sp-soft-aqua)] hover:text-white hover:bg-white/10"
@@ -71,9 +71,9 @@ export function DemoNavHeader({
 
             <Link
               href="/demo/coach"
-              className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+              className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-xl text-[13px] font-bold transition-all whitespace-nowrap ${
                 activeDemo === "coach"
-                  ? "bg-[var(--sp-reef-line)] !text-white shadow-sm"
+                  ? "bg-[var(--sp-harbour-teal)] !text-white shadow-sm"
                   : "text-[var(--sp-soft-aqua)] hover:text-white hover:bg-white/10"
               }`}
             >
@@ -92,7 +92,7 @@ export function DemoNavHeader({
             </Link>
             <Link
               href="/register"
-              className="rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] !text-white px-3.5 py-1.5 text-xs font-bold transition-colors shadow-xs"
+              className="rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] !text-white px-3.5 py-1.5 text-[15px] font-semibold transition-colors shadow-xs"
             >
               Get started
             </Link>

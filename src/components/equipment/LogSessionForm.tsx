@@ -67,7 +67,7 @@ export function LogSessionForm({
                   <span className="min-w-0 flex-1 truncate font-semibold">
                     {displayName(i)}
                   </span>
-                  <span className="text-[10px] text-[var(--sp-slate-soft)] shrink-0">
+                  <span className="text-[13px] text-[var(--sp-slate-soft)] shrink-0">
                     {categoryLabel(i.category)}
                   </span>
                 </label>
@@ -148,7 +148,7 @@ export function LogSessionForm({
               key={lab}
               type="button"
               onClick={() => onWind(val as WindRange | "")}
-              className={`rounded-full px-3 py-1.5 text-[11px] font-bold border touch-manipulation ${
+              className={`rounded-full px-3 py-1.5 text-[13px] font-bold border touch-manipulation ${
                 useWind === val
                   ? "bg-[var(--sp-harbour-teal)] text-white border-[var(--sp-harbour-teal)] shadow-xs"
                   : "border-[var(--sp-cool-veil)] bg-white text-[var(--sp-slate-soft)] hover:border-[var(--sp-charcoal)]/30"

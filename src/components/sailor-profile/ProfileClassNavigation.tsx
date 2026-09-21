@@ -72,7 +72,7 @@ export function ProfileClassNavigation({
                 >
                   {isIlca ? "ILCA 4" : isJourney ? "Journey" : "Optimist"}
                   <span
-                    className={`ml-1.5 tabular-nums text-[10px] sm:text-[11px] ${
+                    className={`ml-1.5 tabular-nums text-[13px] sm:text-[13px] ${
                       selected ? "text-sailcloth/90" : "text-slate-soft"
                     }`}
                   >
@@ -82,7 +82,7 @@ export function ProfileClassNavigation({
               );
             })}
           </div>
-          <p className="text-[11px] text-slate-soft mt-1.5 px-1 font-medium">
+          <p className="text-[13px] text-slate-soft mt-1.5 px-1 font-medium">
             {activeTab === "ilca4"
               ? "ILCA 4 ranking, stats, and results"
               : activeTab === "journey"
@@ -100,7 +100,7 @@ export function ProfileClassNavigation({
         <button
           type="button"
           onClick={() => onSectionTabChange?.("overview")}
-          className={`shrink-0 rounded-full px-4 py-1.5 text-[11px] font-bold touch-manipulation transition cursor-pointer ${
+          className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer ${
             sectionTab === "overview"
               ? "bg-harbour text-sailcloth shadow-xs"
               : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
@@ -126,7 +126,7 @@ export function ProfileClassNavigation({
                 el?.scrollIntoView({ behavior: "smooth" });
               }
             }}
-            className="shrink-0 rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-[11px] font-bold text-charcoal hover:bg-aqua-mist hover:text-harbour touch-manipulation"
+            className="shrink-0 rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-[13px] font-bold text-charcoal hover:bg-aqua-mist hover:text-harbour touch-manipulation"
           >
             Standing
           </a>
@@ -136,7 +136,7 @@ export function ProfileClassNavigation({
         <button
           type="button"
           onClick={() => onSectionTabChange?.("results")}
-          className={`shrink-0 rounded-full px-4 py-1.5 text-[11px] font-bold touch-manipulation transition cursor-pointer ${
+          className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer ${
             sectionTab === "results"
               ? "bg-harbour text-sailcloth shadow-xs"
               : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
@@ -145,7 +145,7 @@ export function ProfileClassNavigation({
           Regattas
           {resultsCount > 0 && (
             <span
-              className={`ml-1.5 tabular-nums text-[10px] ${
+              className={`ml-1.5 tabular-nums text-[13px] ${
                 sectionTab === "results" ? "text-sailcloth/90" : "text-slate-soft"
               }`}
             >
@@ -172,7 +172,7 @@ export function ProfileClassNavigation({
         <button
           type="button"
           onClick={() => onSectionTabChange?.("journey")}
-          className={`shrink-0 rounded-full px-4 py-1.5 text-[11px] font-bold touch-manipulation transition cursor-pointer ${
+          className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer ${
             sectionTab === "journey"
               ? "bg-harbour text-sailcloth shadow-xs"
               : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
@@ -181,7 +181,7 @@ export function ProfileClassNavigation({
           Milestones
           {journeyCount > 0 && (
             <span
-              className={`ml-1.5 tabular-nums text-[10px] ${
+              className={`ml-1.5 tabular-nums text-[13px] ${
                 sectionTab === "journey" ? "text-sailcloth/90" : "text-slate-soft"
               }`}
             >
@@ -212,7 +212,7 @@ export function ProfileClassNavigation({
             <button
               type="button"
               onClick={() => onSectionTabChange?.("equipment")}
-              className={`shrink-0 rounded-full px-4 py-1.5 text-[11px] font-bold touch-manipulation transition cursor-pointer ${
+              className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer ${
                 sectionTab === "equipment"
                   ? "bg-harbour text-sailcloth shadow-xs"
                   : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"

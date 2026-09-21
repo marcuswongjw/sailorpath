@@ -87,7 +87,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
             key={item}
             type="button"
             onClick={() => setFilter(item)}
-            className={`rounded-full px-3 py-1.5 text-[11px] font-bold capitalize ${filter === item ? "bg-orange-600 text-white" : "border border-white/10 bg-white/5 text-slate-400"}`}
+            className={`rounded-full px-3 py-1.5 text-[13px] font-bold capitalize ${filter === item ? "bg-[var(--sp-harbour-teal)] text-white" : "border border-white/10 bg-white/5 text-slate-400"}`}
           >
             {item}
             {item !== "all" && ` (${requests.filter((row) => row.status === item).length})`}
@@ -114,7 +114,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
                 <Mail className="h-3.5 w-3.5" />
                 <span className="truncate">{row.requesterEmail}</span>
               </p>
-              <p className="mt-2 text-[10px] uppercase tracking-wider text-slate-500">
+              <p className="mt-2 text-[12px] uppercase tracking-wider text-slate-500">
                 Requested {new Date(row.requestedAt).toLocaleDateString("en-SG")} · Current role: {row.requesterRole}
               </p>
             </div>
@@ -129,7 +129,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
                   </button>
                 </>
               ) : (
-                <span className={`rounded-full px-3 py-1.5 text-[10px] font-black uppercase ${row.status === "approved" ? "border border-emerald-500/25 bg-emerald-500/10 text-emerald-300" : "border border-white/10 bg-white/5 text-slate-400"}`}>
+                <span className={`rounded-full px-3 py-1.5 text-[12px] font-black uppercase ${row.status === "approved" ? "border border-emerald-500/25 bg-emerald-500/10 text-emerald-300" : "border border-white/10 bg-white/5 text-slate-400"}`}>
                   {row.status}
                 </span>
               )}

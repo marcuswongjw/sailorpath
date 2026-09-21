@@ -353,7 +353,7 @@ function AccountInner() {
               <button
                 type="submit"
                 disabled={profileSaving}
-                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-xs font-semibold text-white transition-colors disabled:opacity-50 shadow-xs"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors disabled:opacity-50 shadow-xs"
               >
                 <Check className="h-3.5 w-3.5" />
                 <span>{profileSaving ? "Saving changes…" : "Save changes"}</span>
@@ -430,7 +430,7 @@ function AccountInner() {
         <div>
           <Link
             href="/athlete"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-xs font-semibold text-white transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors shadow-xs"
           >
             <span>Open Athlete Hub</span>
             <ArrowRight className="h-3.5 w-3.5" />
@@ -448,7 +448,7 @@ function AccountInner() {
           </p>
           <Link
             href="/coach-tools"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-5 py-2.5 text-xs font-semibold text-white transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors shadow-xs"
           >
             <span>Open Coach Dashboard</span>
             <ArrowRight className="h-3.5 w-3.5" />
@@ -485,7 +485,7 @@ function AccountInner() {
           </p>
           <a
             href="https://admin.sailorpath.com/"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-xs font-semibold text-white transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors shadow-xs"
           >
             <span>Open admin console</span>
             <ExternalLink className="h-3.5 w-3.5" />
@@ -503,7 +503,7 @@ function AccountInner() {
           </p>
           <Link
             href="/parent"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-5 py-2.5 text-xs font-semibold text-white transition-colors shadow-xs"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] px-5 py-2.5 text-[15px] font-semibold text-white transition-colors shadow-xs"
           >
             <span>Open parent dashboard</span>
             <ArrowRight className="h-3.5 w-3.5" />

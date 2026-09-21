@@ -32,7 +32,7 @@ export default async function CoachToolsPage() {
             </Link>
             <Link
               href="/demo/coach"
-              className="rounded-2xl border border-sky-500/40 bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 px-5 py-2.5 text-xs font-bold transition-colors"
+              className="rounded-2xl border border-sky-500/40 bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 px-5 py-2.5 text-[15px] font-semibold transition-colors"
             >
               Explore Coach Demo
             </Link>
@@ -60,7 +60,7 @@ export default async function CoachToolsPage() {
             <CoachAccessRequestButton initiallyPending={request?.status === "pending"} />
             <Link
               href="/demo/coach"
-              className="rounded-2xl border border-sky-500/40 bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 px-5 py-2.5 text-xs font-bold transition-colors"
+              className="rounded-2xl border border-sky-500/40 bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-300 px-5 py-2.5 text-[15px] font-semibold transition-colors"
             >
               Explore Coach Demo
             </Link>

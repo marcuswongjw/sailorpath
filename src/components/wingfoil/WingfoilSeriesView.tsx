@@ -120,7 +120,7 @@ export function WingfoilSeriesView({
                 />
                 <span>{opt.shortName}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
+                  className={`text-[11px] px-1.5 py-0.2 rounded font-mono ${
                     isSelected
                       ? "bg-white/20 text-white font-bold"
                       : "bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]"
@@ -179,7 +179,7 @@ export function WingfoilSeriesView({
               <div className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)]">
                 {series.totalRacesCompleted}
               </div>
-              <div className="text-[10px] text-[var(--sp-slate-soft)]">Races Sailed</div>
+              <div className="text-[13px] text-[var(--sp-slate-soft)]">Races Sailed</div>
             </div>
 
             <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-3 text-center">
@@ -187,7 +187,7 @@ export function WingfoilSeriesView({
               <div className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-teal)]">
                 {series.discardsApplied}
               </div>
-              <div className="text-[10px] text-[var(--sp-slate-soft)]">Worst Dropped</div>
+              <div className="text-[13px] text-[var(--sp-slate-soft)]">Worst Dropped</div>
             </div>
 
             <div className="bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] rounded-2xl p-3 text-center">
@@ -195,7 +195,7 @@ export function WingfoilSeriesView({
               <div className="text-xl sm:text-2xl font-black text-emerald-700">
                 {series.competitors.length}
               </div>
-              <div className="text-[10px] text-[var(--sp-slate-soft)]">Competitors</div>
+              <div className="text-[13px] text-[var(--sp-slate-soft)]">Competitors</div>
             </div>
           </div>
         </div>
@@ -226,7 +226,7 @@ export function WingfoilSeriesView({
                       Round {idx + 1}
                     </span>
                     <span
-                      className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
+                      className={`text-[12px] px-2 py-0.5 rounded-full font-bold uppercase ${
                         round.status === "Completed"
                           ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
                           : "bg-blue-50 text-blue-800 border border-blue-200"
@@ -268,9 +268,9 @@ export function WingfoilSeriesView({
               </p>
             </div>
             <div className="rounded-2xl border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-harbour-teal)]/10 px-4 py-3 text-right shrink-0">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-harbour-teal)]">Series Target</p>
+              <p className="text-[12px] font-bold uppercase tracking-wider text-[var(--sp-harbour-teal)]">Series Target</p>
               <p className="text-xl font-black text-[var(--sp-harbour-shadow)]">Up to 72 Races</p>
-              <p className="text-[11px] text-[var(--sp-slate-soft)]">Min. 6 races to constitute series</p>
+              <p className="text-[13px] text-[var(--sp-slate-soft)]">Min. 6 races to constitute series</p>
             </div>
           </div>
 
@@ -282,10 +282,10 @@ export function WingfoilSeriesView({
                 className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 p-5 space-y-3 hover:border-[var(--sp-harbour-teal)] transition-colors"
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="rounded-full bg-amber-100 border border-amber-200 px-2.5 py-0.5 text-[10px] font-black text-amber-800 uppercase">
+                  <span className="rounded-full bg-amber-100 border border-amber-200 px-2.5 py-0.5 text-[12px] font-black text-amber-800 uppercase">
                     Round {idx + 1} of 3
                   </span>
-                  <span className="text-[11px] font-mono text-[var(--sp-slate-soft)] font-semibold">
+                  <span className="text-[13px] font-mono text-[var(--sp-slate-soft)] font-semibold">
                     {rnd.status}
                   </span>
                 </div>
@@ -309,7 +309,7 @@ export function WingfoilSeriesView({
                         : "National Sailing Centre (Championship Grand Finale)"}
                     </span>
                   </p>
-                  <p className="flex items-center gap-1.5 text-[11px] text-[var(--sp-slate-soft)]">
+                  <p className="flex items-center gap-1.5 text-[13px] text-[var(--sp-slate-soft)]">
                     <Flag className="h-3 w-3 text-[var(--sp-slate-soft)] shrink-0" />
                     <span>Slalom / Course / Marathon · Up to 24 heats</span>
                   </p>
@@ -321,24 +321,24 @@ export function WingfoilSeriesView({
           {/* Series Notice of Race Specifications */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-2">
             <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3.5 space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Format</p>
+              <p className="text-[12px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Format</p>
               <p className="text-sm font-bold text-[var(--sp-harbour-shadow)]">Slalom / Course / Marathon</p>
-              <p className="text-[11px] text-[var(--sp-charcoal-slate)]">Fast-paced course racing &amp; endurance</p>
+              <p className="text-[13px] text-[var(--sp-charcoal-slate)]">Fast-paced course racing &amp; endurance</p>
             </div>
             <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3.5 space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Classes</p>
+              <p className="text-[12px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Classes</p>
               <p className="text-sm font-bold text-[var(--sp-harbour-shadow)]">Wing Foil, Wind Foil, Techno 293, Kite Foil</p>
-              <p className="text-[11px] text-[var(--sp-charcoal-slate)]">Open &amp; age-group divisions</p>
+              <p className="text-[13px] text-[var(--sp-charcoal-slate)]">Open &amp; age-group divisions</p>
             </div>
             <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3.5 space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Constitution Rule</p>
+              <p className="text-[12px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Constitution Rule</p>
               <p className="text-sm font-bold text-[var(--sp-harbour-shadow)]">Min. 3 Competitors</p>
-              <p className="text-[11px] text-[var(--sp-charcoal-slate)]">Required to constitute a division (NoR 4.2)</p>
+              <p className="text-[13px] text-[var(--sp-charcoal-slate)]">Required to constitute a division (NoR 4.2)</p>
             </div>
             <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3.5 space-y-1">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Scoring &amp; Discards</p>
+              <p className="text-[12px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]">Scoring &amp; Discards</p>
               <p className="text-sm font-bold text-[var(--sp-harbour-shadow)]">Cumulative Discard Table</p>
-              <p className="text-[11px] text-[var(--sp-charcoal-slate)]">Per NoR 12.5.2 (1 at 5 races, up to 12 discards)</p>
+              <p className="text-[13px] text-[var(--sp-charcoal-slate)]">Per NoR 12.5.2 (1 at 5 races, up to 12 discards)</p>
             </div>
           </div>
         </div>
@@ -370,7 +370,7 @@ export function WingfoilSeriesView({
                       className={`relative p-5 rounded-2xl border ${borderStyles} flex flex-col justify-between`}
                     >
                       {isFirst && (
-                        <div className="absolute top-3 right-3 flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
+                        <div className="absolute top-3 right-3 flex items-center gap-1 text-[12px] font-black uppercase tracking-wider text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded-full">
                           <Sparkles className="h-3 w-3 text-amber-600" />
                           Series Leader
                         </div>
@@ -395,7 +395,7 @@ export function WingfoilSeriesView({
                             {sailor.sailNumber || "—"}
                           </span>
                           <span className="mx-1.5 text-[var(--sp-slate-soft)]">•</span>
-                          <span className="rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
+                          <span className="rounded bg-[var(--sp-sailcloth)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
                             {normalizeWingfoilCategory(sailor.ageCategory)}
                           </span>
                         </div>
@@ -403,7 +403,7 @@ export function WingfoilSeriesView({
                           <span className="text-lg font-black text-[var(--sp-harbour-shadow)]">
                             {sailor.nettScore}
                           </span>
-                          <span className="text-[10px] text-[var(--sp-slate-soft)] ml-1">
+                          <span className="text-[13px] text-[var(--sp-slate-soft)] ml-1">
                             pts nett ({sailor.grossScore} gross)
                           </span>
                         </div>
@@ -433,18 +433,18 @@ export function WingfoilSeriesView({
                       <div className="text-sm font-black text-[var(--sp-harbour-shadow)] mt-1">
                         {div.champion ? div.champion.name : "To be decided"}
                       </div>
-                      <div className="text-[11px] text-[var(--sp-slate-soft)]">
+                      <div className="text-[13px] text-[var(--sp-slate-soft)]">
                         {div.champion
                           ? `${div.champion.nettScore} pts (${div.competitorCount} sailors)`
                           : `${div.competitorCount} competitors`}
                       </div>
                     </div>
                     {div.isConstituted ? (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                         Constituted
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+                      <span className="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
                         &lt;3 entries
                       </span>
                     )}
@@ -529,7 +529,7 @@ export function WingfoilSeriesView({
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             {/* Top Tier Header: Grouped by Round */}
-            <thead className="bg-[var(--sp-sailcloth)] border-b border-[var(--sp-cool-veil)] text-[10px] uppercase tracking-wider font-bold">
+            <thead className="bg-[var(--sp-sailcloth)] border-b border-[var(--sp-cool-veil)] text-[12px] uppercase tracking-wider font-bold">
               <tr>
                 <th colSpan={5} className="px-4 py-2.5 text-[var(--sp-slate-soft)] border-r border-[var(--sp-cool-veil)]">
                   Competitor Details
@@ -563,7 +563,7 @@ export function WingfoilSeriesView({
                   Array.from({ length: rnd.raceCount }).map((_, i) => (
                     <th
                       key={`${rnd.id}-r${i}`}
-                      className="px-1.5 py-2.5 text-center w-8 text-[10px] font-mono text-[var(--sp-slate-soft)]"
+                      className="px-1.5 py-2.5 text-center w-8 text-[13px] font-mono text-[var(--sp-slate-soft)]"
                     >
                       R{i + 1}
                     </th>
@@ -602,7 +602,7 @@ export function WingfoilSeriesView({
                   </td>
 
                   <td className="px-2 py-3 text-center">
-                    <span className="rounded bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-1.5 py-0.5 text-[10px] font-semibold text-[var(--sp-charcoal-slate)]">
+                    <span className="rounded bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-1.5 py-0.5 text-[11px] font-semibold text-[var(--sp-charcoal-slate)]">
                       {normalizeWingfoilCategory(sailor.ageCategory)}
                     </span>
                   </td>
@@ -663,12 +663,12 @@ export function WingfoilSeriesView({
         </div>
 
         {/* Footer Scoring Legend */}
-        <div className="border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/40 px-4 py-2.5 text-[11px] text-[var(--sp-slate-soft)] flex flex-wrap items-center justify-between gap-2">
+        <div className="border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/40 px-4 py-2.5 text-[13px] text-[var(--sp-slate-soft)] flex flex-wrap items-center justify-between gap-2">
           <span>
             <strong className="text-[var(--sp-harbour-shadow)]">Scoring Rules:</strong> World Sailing RRS Appendix A &amp; NoR Clause 12. Low Points win.
             Non-attendees scored Attendee Count + 2 pts (DNC) per NoR 12.3.2.
           </span>
-          <span className="font-mono text-[10px] text-[var(--sp-slate-soft)]">
+          <span className="font-mono text-[13px] text-[var(--sp-slate-soft)]">
             Discards: {series.discardsApplied} of {series.totalRacesCompleted} races discarded per NoR 12.5.2 scale
           </span>
         </div>
@@ -688,7 +688,7 @@ export function WingfoilSeriesView({
                   <RankMedalBadge rank={sailor.rank} className="h-8 w-8 text-sm" />
                   <div>
                     <h4 className="font-bold text-[var(--sp-harbour-shadow)] text-sm">{sailor.name}</h4>
-                    <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                    <p className="text-[13px] text-[var(--sp-slate-soft)]">
                       #{sailor.sailNumber || "—"} · {sailor.ageCategory} · {sailor.club || "Singapore"}
                     </p>
                   </div>
@@ -696,9 +696,9 @@ export function WingfoilSeriesView({
 
                 <div className="text-right font-mono">
                   <p className="text-base font-black text-[var(--sp-harbour-shadow)]">
-                    {sailor.nettScore} <span className="text-[10px] font-normal text-[var(--sp-slate-soft)]">pts</span>
+                    {sailor.nettScore} <span className="text-[13px] font-normal text-[var(--sp-slate-soft)]">pts</span>
                   </p>
-                  <p className="text-[10px] text-[var(--sp-slate-soft)]">Gross: {sailor.grossScore}</p>
+                  <p className="text-[13px] text-[var(--sp-slate-soft)]">Gross: {sailor.grossScore}</p>
                 </div>
               </div>
 
@@ -719,14 +719,14 @@ export function WingfoilSeriesView({
 
               {isExpanded && (
                 <div className="pt-2 border-t border-[var(--sp-cool-veil)] space-y-2">
-                  <p className="text-[10px] uppercase font-bold text-[var(--sp-slate-soft)]">
+                  <p className="text-[12px] uppercase font-bold text-[var(--sp-slate-soft)]">
                     Heat Scores (Struck through = Discarded)
                   </p>
                   <div className="flex flex-wrap gap-1">
                     {sailor.races.map((r, i) => (
                       <span
                         key={i}
-                        className={`rounded px-1.5 py-0.5 font-mono text-[10px] ${
+                        className={`rounded px-1.5 py-0.5 font-mono text-[11px] ${
                           r.isDiscarded
                             ? "line-through text-[var(--sp-slate-soft)] bg-[var(--sp-sailcloth)]"
                             : r.score === 1

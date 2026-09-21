@@ -93,7 +93,7 @@ function SupportForm() {
           <p className="text-xs font-bold text-rose-600 text-center">{error}</p>
         )}
         <label className="block">
-          <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
+          <span className="text-xs font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Your name
           </span>
           <input
@@ -104,7 +104,7 @@ function SupportForm() {
           />
         </label>
         <label className="block">
-          <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
+          <span className="text-xs font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Email *
           </span>
           <input
@@ -117,7 +117,7 @@ function SupportForm() {
           />
         </label>
         <label className="block">
-          <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
+          <span className="text-xs font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Topic
           </span>
           <select
@@ -134,7 +134,7 @@ function SupportForm() {
           </select>
         </label>
         <label className="block">
-          <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
+          <span className="text-xs font-bold text-[var(--sp-slate-soft)] uppercase tracking-wider">
             Message *
           </span>
           <textarea

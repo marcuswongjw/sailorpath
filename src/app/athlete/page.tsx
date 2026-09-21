@@ -46,14 +46,14 @@ export default async function AthletePage({ searchParams }: AthletePageProps) {
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href="/login?next=%2Fathlete"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-6 py-3 text-xs font-bold transition-all shadow-xs"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-6 py-3 text-[15px] font-semibold transition-all shadow-xs"
             >
               <LogIn className="h-4 w-4" />
               <span>Sign in</span>
             </Link>
             <Link
               href="/demo/sailor"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-6 py-3 text-xs font-bold transition-all shadow-2xs"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-6 py-3 text-[15px] font-semibold transition-all shadow-2xs"
             >
               <Sparkles className="h-4 w-4 text-[var(--sp-racing-orange)]" />
               <span>Explore Sailor Demo</span>
@@ -145,14 +145,14 @@ export default async function AthletePage({ searchParams }: AthletePageProps) {
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href="/claim-profile"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-6 py-3 text-xs font-bold transition-all shadow-xs"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-6 py-3 text-[15px] font-semibold transition-all shadow-xs"
             >
               <UserPlus className="h-4 w-4" />
               <span>Claim Sailor Profile</span>
             </Link>
             <Link
               href="/demo/sailor"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-6 py-3 text-xs font-bold transition-all shadow-2xs"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] px-6 py-3 text-[15px] font-semibold transition-all shadow-2xs"
             >
               <Sparkles className="h-4 w-4 text-[var(--sp-racing-orange)]" />
               <span>Explore Sailor Demo</span>

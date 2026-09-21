@@ -81,7 +81,7 @@ export function ResetPasswordForm() {
             <p className="text-sm leading-relaxed text-rose-600">
               This reset link is invalid or has expired.
             </p>
-            <Link href="/forgot-password" className="font-bold text-[var(--sp-racing-orange)] hover:underline">
+            <Link href="/forgot-password" className="font-bold text-[var(--sp-harbour-teal)] hover:underline">
               Request a new reset link
             </Link>
           </div>

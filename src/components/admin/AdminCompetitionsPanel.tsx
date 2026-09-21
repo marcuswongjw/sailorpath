@@ -124,7 +124,7 @@ export function AdminCompetitionsPanel({
               add a missing result.
               {competitionsLoading ? " Refreshing…" : ""}
             </p>
-            <p className="text-[11px] text-slate-600 mt-1">
+            <p className="text-[13px] text-slate-600 mt-1">
               {allSailorResults.length} total
               {optimistCount > 0 ? ` · ${optimistCount} Optimist` : ""}
               {ilcaCount > 0 ? ` · ${ilcaCount} ILCA 4` : ""}
@@ -151,7 +151,7 @@ export function AdminCompetitionsPanel({
                   sailorId: sid,
                 });
               }}
-              className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-xs font-bold text-white flex items-center gap-1"
+              className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-2 text-[15px] font-semibold text-white flex items-center gap-1"
             >
               <Plus className="h-4 w-4" />
               Add result
@@ -187,13 +187,13 @@ export function AdminCompetitionsPanel({
                 role="tab"
                 aria-selected={active}
                 onClick={() => setClassFilter(key)}
-                className={`flex-1 rounded-lg px-2 py-2 text-[11px] font-bold transition-colors ${
+                className={`flex-1 rounded-lg px-2 py-2 text-[13px] font-bold transition-colors ${
                   active
                     ? key === "ilca4"
                       ? "bg-sky-600 text-white"
                       : key === "optimist"
-                        ? "bg-orange-500 text-white"
-                        : "bg-white/15 text-white"
+                        ? "bg-[var(--sp-harbour-teal)] text-white"
+                        : "bg-[var(--sp-harbour-teal)] text-white"
                     : "text-slate-400 hover:text-white"
                 }`}
               >
@@ -205,13 +205,13 @@ export function AdminCompetitionsPanel({
         </div>
 
         {editingResultId && (
-          <div className="rounded-2xl border border-white/10 bg-slate-950/80 p-4 space-y-3">
-            <p className="text-[10px] font-bold text-slate-500 uppercase">
+          <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 space-y-3">
+            <p className="text-[12px] font-bold text-slate-500 uppercase">
               {editingResultId === "new" ? "New result" : "Edit result"}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="sm:col-span-2">
-                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                <label className="text-[12px] font-bold text-slate-500 uppercase">
                   Regatta
                 </label>
                 <select
@@ -235,7 +235,7 @@ export function AdminCompetitionsPanel({
                 </select>
               </div>
               <div>
-                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                <label className="text-[12px] font-bold text-slate-500 uppercase">
                   Rank
                 </label>
                 <input
@@ -248,7 +248,7 @@ export function AdminCompetitionsPanel({
                 />
               </div>
               <div>
-                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                <label className="text-[12px] font-bold text-slate-500 uppercase">
                   Total Score
                 </label>
                 <input
@@ -265,7 +265,7 @@ export function AdminCompetitionsPanel({
                 />
               </div>
               <div>
-                <label className="text-[10px] font-bold text-slate-500 uppercase">
+                <label className="text-[12px] font-bold text-slate-500 uppercase">
                   Nett Score (optional)
                 </label>
                 <input
@@ -344,7 +344,7 @@ export function AdminCompetitionsPanel({
               <button
                 type="button"
                 onClick={() => void handleSaveResult()}
-                className="rounded-full bg-orange-600 px-4 py-2 text-xs font-bold text-white"
+                className="rounded-full bg-orange-600 px-4 py-2 text-[15px] font-semibold text-white"
               >
                 Save result
               </button>
@@ -355,7 +355,7 @@ export function AdminCompetitionsPanel({
         <div className="overflow-x-auto rounded-xl border border-white/5">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-white/5 text-[10px] font-bold text-slate-400 uppercase">
+              <tr className="bg-white/5 text-[12px] font-bold text-slate-400 uppercase">
                 <th className="py-3 px-4">Class</th>
                 <th className="py-3 px-4">Regatta</th>
                 <th className="py-3 px-4 text-center">Date</th>
@@ -380,7 +380,7 @@ export function AdminCompetitionsPanel({
                   >
                     <td className="py-3 px-4">
                       <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
+                        className={`text-[11px] font-bold px-2 py-0.5 rounded border ${
                           ilca
                             ? "bg-sky-500/15 text-sky-300 border-sky-500/30"
                             : "bg-orange-500/10 text-orange-300 border-orange-500/25"
@@ -412,7 +412,7 @@ export function AdminCompetitionsPanel({
                     </td>
                     <td className="py-3 px-4 text-center">
                       <span
-                        className={`text-[10px] px-2 py-0.5 rounded ${
+                        className={`text-[13px] px-2 py-0.5 rounded ${
                           overseas
                             ? "bg-sky-500/10 text-sky-300 border border-sky-500/25"
                             : dns

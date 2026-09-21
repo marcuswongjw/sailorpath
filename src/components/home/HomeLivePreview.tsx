@@ -205,9 +205,7 @@ export function HomeLivePreview() {
   return (
     <div className="w-full max-w-5xl mx-auto">
       {/* Outer Card with subtle glow */}
-      <div className="relative rounded-3xl border border-white/10 bg-[#0d0f18]/90 backdrop-blur-xl shadow-2xl shadow-black/60 overflow-hidden">
-        {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 h-36 w-3/4 bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="relative rounded-3xl border border-white/10 bg-[#0d0f18] shadow-xl overflow-hidden">
 
         {/* Tab Navigation Bar */}
         <div className="relative border-b border-white/10 p-2.5 sm:p-4 flex items-center justify-between gap-3 bg-white/[0.02]">
@@ -215,9 +213,9 @@ export function HomeLivePreview() {
             <button
               type="button"
               onClick={() => setActiveTab("standings")}
-              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-[15px] font-semibold transition-all whitespace-nowrap shrink-0 ${
                 activeTab === "standings"
-                  ? "bg-orange-600 text-white shadow-md shadow-orange-600/30"
+                  ? "bg-harbour text-white shadow-md"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
@@ -227,9 +225,9 @@ export function HomeLivePreview() {
             <button
               type="button"
               onClick={() => setActiveTab("profile")}
-              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-[15px] font-semibold transition-all whitespace-nowrap shrink-0 ${
                 activeTab === "profile"
-                  ? "bg-orange-600 text-white shadow-md shadow-orange-600/30"
+                  ? "bg-harbour text-white shadow-md"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
@@ -239,9 +237,9 @@ export function HomeLivePreview() {
             <button
               type="button"
               onClick={() => setActiveTab("parent")}
-              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-[15px] font-semibold transition-all whitespace-nowrap shrink-0 ${
                 activeTab === "parent"
-                  ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/30"
+                  ? "bg-harbour text-white shadow-md"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
@@ -251,9 +249,9 @@ export function HomeLivePreview() {
             <button
               type="button"
               onClick={() => setActiveTab("coach")}
-              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap shrink-0 ${
+              className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 rounded-xl text-[15px] font-semibold transition-all whitespace-nowrap shrink-0 ${
                 activeTab === "coach"
-                  ? "bg-sky-600 text-white shadow-md shadow-sky-600/30"
+                  ? "bg-harbour text-white shadow-md"
                   : "text-slate-400 hover:text-white hover:bg-white/5"
               }`}
             >
@@ -262,7 +260,7 @@ export function HomeLivePreview() {
             </button>
           </div>
 
-          <div className="hidden md:flex items-center gap-1 text-[11px] font-bold text-slate-500 shrink-0">
+          <div className="hidden md:flex items-center gap-1 text-[13px] font-bold text-slate-500 shrink-0">
             <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse mr-1" />
             Interactive Preview
           </div>
@@ -285,10 +283,10 @@ export function HomeLivePreview() {
                     key={key}
                     type="button"
                     onClick={() => setSelectedClass(key)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                    className={`px-3 py-1.5 rounded-lg text-[15px] font-semibold transition-colors ${
                       selectedClass === key
-                        ? "bg-white/10 text-white border border-white/10 shadow-sm"
-                        : "text-slate-400 hover:text-white"
+                        ? "bg-harbour text-white border border-harbour shadow-sm"
+                        : "text-slate-400 hover:text-charcoal"
                     }`}
                   >
                     {label}
@@ -296,21 +294,21 @@ export function HomeLivePreview() {
                 ))}
               </div>
 
-              <span className="text-[11px] text-slate-400 font-medium">
+              <span className="text-[13px] text-slate-400 font-medium">
                 {standingsData.subtitle}
               </span>
             </div>
 
-            <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.05] px-3.5 py-2 text-[11px] text-amber-300/90 flex items-center justify-between gap-2">
+            <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.05] px-3.5 py-2 text-[13px] text-amber-700 flex items-center justify-between gap-2">
               <span>⚠️ Demo preview with illustrative sample names and results. Open class links below for official live standings.</span>
             </div>
 
             {/* Standings Table Card */}
             <div className="rounded-2xl border border-white/5 bg-black/30 overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs min-w-[480px]">
+                <table className="w-full text-left text-sm min-w-[480px]">
                   <thead>
-                    <tr className="border-b border-white/5 bg-white/[0.02] text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                    <tr className="border-b border-white/5 bg-white/[0.02] text-[13px] uppercase font-bold text-slate-400 tracking-wider">
                       <th className="py-2.5 px-3 text-center w-14">Rank</th>
                       <th className="py-2.5 px-4">Sailor / Competitor</th>
                       <th className="py-2.5 px-3 text-center">Sail #</th>
@@ -335,7 +333,7 @@ export function HomeLivePreview() {
                           <div className="font-bold text-white flex items-center gap-1.5">
                             <span>{row.name}</span>
                           </div>
-                          <div className="text-[10px] text-slate-400 mt-0.5">
+                          <div className="text-[13px] text-slate-400 mt-0.5">
                             {row.club}
                           </div>
                         </td>
@@ -353,13 +351,13 @@ export function HomeLivePreview() {
             </div>
 
             {/* Bottom Footer Action */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 text-xs">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2 text-[13px]">
               <p className="text-slate-400">
                 Official RRS Appendix A &amp; High Points calculation rules applied automatically.
               </p>
               <Link
                 href={standingsData.link}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-400 hover:text-orange-300 group"
+                className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-harbour hover:text-harbour-shadow hover:underline group"
               >
                 <span>{standingsData.linkLabel}</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -373,7 +371,7 @@ export function HomeLivePreview() {
           <div className="p-5 sm:p-7 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5">
               <div className="flex items-center gap-3.5">
-                <div className="h-12 w-12 rounded-2xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center font-black text-lg text-white shadow-lg shadow-orange-600/30">
+                <div className="h-12 w-12 rounded-2xl bg-harbour flex items-center justify-center font-black text-lg text-white shadow-lg">
                   KT
                 </div>
                 <div>
@@ -400,51 +398,51 @@ export function HomeLivePreview() {
             {/* Career Progression & Medal Tally */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5 space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <p className="text-[13px] font-bold text-slate-400 uppercase tracking-wider">
                   Transition Timeline
                 </p>
                 <p className="text-xs font-bold text-white">
                   Optimist Gold (2022–25) → ILCA 4 (2025–Present)
                 </p>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[13px] text-slate-400">
                   Preserves all historical regattas and personal bests.
                 </p>
               </div>
 
               <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5 space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <p className="text-[13px] font-bold text-slate-400 uppercase tracking-wider">
                   Career Podium Tally
                 </p>
                 <div className="flex items-center gap-2 font-mono text-xs font-black text-white pt-0.5">
-                  <span className="text-amber-400">🥇 4 Gold</span>
+                  <span className="text-amber-700">🥇 4 Gold</span>
                   <span className="text-slate-300">🥈 3 Silver</span>
-                  <span className="text-amber-600">🥉 2 Bronze</span>
+                  <span className="text-amber-800">🥉 2 Bronze</span>
                 </div>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[13px] text-slate-400">
                   Automatic aggregation across national regattas.
                 </p>
               </div>
 
               <div className="rounded-xl border border-white/5 bg-white/[0.02] p-3.5 space-y-1">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <p className="text-[13px] font-bold text-slate-400 uppercase tracking-wider">
                   Privacy &amp; Logbook
                 </p>
                 <p className="text-xs font-bold text-white">
                   Equipment, Mast, Sails, Private Notes
                 </p>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[13px] text-slate-400">
                   Choose what to publish and what stays private.
                 </p>
               </div>
             </div>
 
             <div className="flex items-center justify-between pt-2">
-              <p className="text-xs text-slate-400">
+              <p className="text-[13px] text-slate-400">
                 Sailors and parents can claim profiles and log milestones.
               </p>
               <Link
                 href="/sample"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-orange-400 hover:text-orange-300 group"
+                className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-harbour hover:text-harbour-shadow hover:underline group"
               >
                 <span>Explore Interactive Demo Profile</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
@@ -476,10 +474,10 @@ export function HomeLivePreview() {
                 <button
                   type="button"
                   onClick={() => setParentDemoAthlete("kimberly")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-[15px] font-semibold transition-colors ${
                     parentDemoAthlete === "kimberly"
-                      ? "bg-emerald-600 text-white"
-                      : "text-slate-400 hover:text-white"
+                      ? "bg-harbour text-white"
+                      : "text-slate-400 hover:text-charcoal"
                   }`}
                 >
                   Kimberly (Gold #3)
@@ -487,10 +485,10 @@ export function HomeLivePreview() {
                 <button
                   type="button"
                   onClick={() => setParentDemoAthlete("alex")}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-[15px] font-semibold transition-colors ${
                     parentDemoAthlete === "alex"
-                      ? "bg-emerald-600 text-white"
-                      : "text-slate-400 hover:text-white"
+                      ? "bg-harbour text-white"
+                      : "text-slate-400 hover:text-charcoal"
                   }`}
                 >
                   Alex (Silver #8)
@@ -516,17 +514,17 @@ export function HomeLivePreview() {
 
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div className="rounded-xl bg-black/30 p-2 border border-white/5">
-                    <p className="text-[9px] uppercase font-bold text-slate-500">Combined</p>
+                    <p className="text-[13px] uppercase font-bold text-slate-500">Combined</p>
                     <p className="text-sm font-black text-white font-mono mt-0.5">
                       {parentDemoAthlete === "kimberly" ? "18 pts" : "48 pts"}
                     </p>
                   </div>
                   <div className="rounded-xl bg-black/30 p-2 border border-white/5">
-                    <p className="text-[9px] uppercase font-bold text-slate-500">Events</p>
+                    <p className="text-[13px] uppercase font-bold text-slate-500">Events</p>
                     <p className="text-sm font-black text-white font-mono mt-0.5">3 Sailed</p>
                   </div>
                   <div className="rounded-xl bg-black/30 p-2 border border-white/5">
-                    <p className="text-[9px] uppercase font-bold text-slate-500">Buffer</p>
+                    <p className="text-[13px] uppercase font-bold text-slate-500">Buffer</p>
                     <p className="text-sm font-black text-emerald-400 font-mono mt-0.5">
                       {parentDemoAthlete === "kimberly" ? "+14 pts" : "On Track"}
                     </p>
@@ -535,7 +533,7 @@ export function HomeLivePreview() {
 
                 <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-2.5 flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                  <p className="text-[11px] text-emerald-200 leading-snug">
+                  <p className="text-[13px] text-emerald-700 leading-snug">
                     {parentDemoAthlete === "kimberly"
                       ? "Provisional Asian Games Qualifier (Top 5 qualify). Gender quota allocation satisfied."
                       : "Silver fleet podium contender. Target top-5 in next 2 regattas for Gold promotion."}
@@ -567,7 +565,7 @@ export function HomeLivePreview() {
                           prev.map((i) => (i.id === item.id ? { ...i, done: !i.done } : i))
                         )
                       }
-                      className={`w-full text-left flex items-center gap-2 p-2 rounded-lg text-xs transition-colors ${
+                      className={`w-full text-left flex items-center gap-2 p-2 rounded-lg text-[13px] transition-colors ${
                         item.done
                           ? "bg-emerald-500/10 text-slate-300 line-through opacity-80"
                           : "bg-black/20 text-white hover:bg-white/5"
@@ -601,7 +599,7 @@ export function HomeLivePreview() {
                       }
                     }}
                     placeholder="Try adding custom item…"
-                    className="flex-1 rounded-xl bg-black/30 border border-white/10 px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                    className="flex-1 rounded-xl bg-black/30 border border-white/10 px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-harbour"
                   />
                   <button
                     type="button"
@@ -614,7 +612,7 @@ export function HomeLivePreview() {
                       ]);
                       setNewChecklistText("");
                     }}
-                    className="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white transition flex items-center gap-1 shrink-0"
+                    className="rounded-xl bg-harbour hover:bg-harbour-shadow px-3 py-1.5 text-[15px] font-semibold text-white transition flex items-center gap-1 shrink-0"
                   >
                     <Plus className="h-3.5 w-3.5" />
                     <span>Add</span>
@@ -630,7 +628,7 @@ export function HomeLivePreview() {
                 </div>
                 <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-2.5 flex items-start gap-2">
                   <AlertTriangle className="h-3.5 w-3.5 text-amber-400 shrink-0 mt-0.5" />
-                  <p className="text-[11px] text-amber-200 leading-snug">
+                  <p className="text-[13px] text-amber-800 leading-snug">
                     Sail: J-Sails Blue (2025) is ~18 months old. Measurement backup advised before Asian Championships.
                   </p>
                 </div>
@@ -645,7 +643,7 @@ export function HomeLivePreview() {
                   </div>
                   <Link
                     href="/calendar"
-                    className="text-[11px] font-bold text-sky-400 hover:text-sky-300"
+                    className="text-[13px] font-bold text-harbour hover:text-harbour-shadow hover:underline"
                   >
                     Open Calendar →
                   </Link>
@@ -656,16 +654,16 @@ export function HomeLivePreview() {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1 text-xs text-slate-400">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1 text-[13px] text-slate-400">
               <span>Dedicated private workspaces for parents with athlete profile claiming.</span>
               <div className="flex items-center gap-3">
                 <Link
                   href="/demo/parent"
-                  className="font-bold text-emerald-400 hover:text-emerald-300"
+                  className="font-bold text-harbour hover:text-harbour-shadow hover:underline"
                 >
                   Explore Parent Demo →
                 </Link>
-                <span className="text-white/20">·</span>
+                <span className="text-slate-soft">·</span>
                 <Link
                   href="/parent"
                   className="font-semibold text-slate-300 hover:text-white"
@@ -697,7 +695,7 @@ export function HomeLivePreview() {
 
               <Link
                 href="/coach-tools"
-                className="inline-flex items-center gap-1.5 rounded-full bg-sky-600 hover:bg-sky-500 px-4 py-2 text-xs font-bold text-white transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-full bg-harbour hover:bg-harbour-shadow px-4 py-2 text-[15px] font-semibold text-white transition-colors"
               >
                 <span>Open Coach Tools</span>
                 <ArrowRight className="h-3.5 w-3.5" />
@@ -713,7 +711,7 @@ export function HomeLivePreview() {
                 <p className="text-xs text-slate-300 font-semibold pt-1">
                   Fleet Segregation &amp; Gear Condition
                 </p>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[13px] text-slate-400">
                   Instant visibility into Gold/Silver squad splits, gear repair alerts, and carry-forward points.
                 </p>
               </div>
@@ -726,7 +724,7 @@ export function HomeLivePreview() {
                 <p className="text-xs text-slate-300 font-semibold pt-1">
                   6 Structured Coaching Categories
                 </p>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[13px] text-slate-400">
                   Log Technical, Tactical, Physical, Mental, Equipment, and Communication observations with sentiment tracking.
                 </p>
               </div>
@@ -739,7 +737,7 @@ export function HomeLivePreview() {
                 <p className="text-xs text-slate-300 font-semibold pt-1">
                   Asian Games &amp; Perth Trials Roster
                 </p>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[13px] text-slate-400">
                   Automatic point cushion buffers against cutoff lines with gender quotas and birth year allocations.
                 </p>
               </div>
@@ -752,22 +750,22 @@ export function HomeLivePreview() {
                 <p className="text-xs text-slate-300 font-semibold pt-1">
                   Coach-Only vs Family-Shared Notes
                 </p>
-                <p className="text-[11px] text-slate-400">
+                <p className="text-[13px] text-slate-400">
                   Control debrief visibility per athlete and run 1-click head-to-head comparison across shared regattas.
                 </p>
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1 text-xs text-slate-400">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 pt-1 text-[13px] text-slate-400">
               <span>Coaching dashboard is restricted to verified club and national coaches.</span>
               <div className="flex items-center gap-3">
                 <Link
                   href="/demo/coach"
-                  className="font-bold text-sky-400 hover:text-sky-300"
+                  className="font-bold text-harbour hover:text-harbour-shadow hover:underline"
                 >
                   Explore Coach Demo →
                 </Link>
-                <span className="text-white/20">·</span>
+                <span className="text-slate-soft">·</span>
                 <Link
                   href="/register?role=coach&next=%2Fcoach-tools"
                   className="font-semibold text-slate-300 hover:text-white"

@@ -83,7 +83,7 @@ export function EquipmentItemForm({
           <div>
             <div className="flex items-center gap-1.5 mb-1.5">
               <Sparkles className="h-3.5 w-3.5 text-orange-400" />
-              <p className="text-[11px] font-bold text-slate-200">
+              <p className="text-[13px] font-bold text-slate-200">
                 1-Click Popular Gear Presets
               </p>
             </div>
@@ -93,7 +93,7 @@ export function EquipmentItemForm({
                   key={p.id}
                   type="button"
                   onClick={() => applyPreset(p)}
-                  className={`rounded-lg px-2.5 py-1 text-[11px] font-bold border transition touch-manipulation ${
+                  className={`rounded-lg px-2.5 py-1 text-[13px] font-bold border transition touch-manipulation ${
                     form.brand.toLowerCase() === p.brand.toLowerCase() &&
                     form.model.toLowerCase() === p.model.toLowerCase()
                       ? "bg-[var(--sp-racing-mist)]/30 border-[var(--sp-racing-orange)] text-[var(--sp-racing-orange)] shadow-xs"
@@ -125,7 +125,7 @@ export function EquipmentItemForm({
                   key={cat}
                   type="button"
                   onClick={() => setCategory(cat)}
-                  className={`rounded-full px-2.5 py-1 text-[11px] font-bold border touch-manipulation transition-colors ${
+                  className={`rounded-full px-2.5 py-1 text-[13px] font-bold border touch-manipulation transition-colors ${
                     form.category === cat
                       ? "bg-[var(--sp-racing-mist)]/30 border-[var(--sp-racing-orange)] text-[var(--sp-racing-orange)] shadow-xs"
                       : "border-[var(--sp-cool-veil)] bg-white text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)] shadow-2xs"
@@ -277,7 +277,7 @@ export function EquipmentItemForm({
                       windRange: val as WindRange | "",
                     })
                   }
-                  className={`rounded-full px-3 py-1.5 text-[11px] font-bold border touch-manipulation ${
+                  className={`rounded-full px-3 py-1.5 text-[13px] font-bold border touch-manipulation ${
                     form.windRange === val
                       ? "bg-sky-50 border-sky-300 text-sky-900"
                       : "border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] bg-white hover:border-[var(--sp-charcoal)]/30"
@@ -317,7 +317,7 @@ export function EquipmentItemForm({
                     }`}
                   >
                     <span className={`h-2 w-2 rounded-full ${meta.dot}`} />
-                    <span className="text-[10px] font-bold leading-tight">
+                    <span className="text-[13px] font-bold leading-tight">
                       {meta.shortLabel}
                     </span>
                   </button>
@@ -338,7 +338,7 @@ export function EquipmentItemForm({
           />
           <div>
             <span className="font-semibold text-[var(--sp-charcoal)]">⭐ Primary Race-Day Gear</span>
-            <p className="text-[10px] text-[var(--sp-slate-soft)]">
+            <p className="text-[13px] text-[var(--sp-slate-soft)]">
               Rigged for competition (used on race day)
             </p>
           </div>
@@ -385,7 +385,7 @@ export function EquipmentItemForm({
                   key={t.value}
                   type="button"
                   onClick={() => onToggleTag(t.value)}
-                  className={`rounded-full px-2.5 py-1.5 text-[10px] font-bold border touch-manipulation ${
+                  className={`rounded-full px-2.5 py-1.5 text-[13px] font-bold border touch-manipulation ${
                     form.tags.includes(t.value)
                       ? "bg-orange-50 border-orange-300 text-orange-900"
                       : "border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] bg-white hover:border-[var(--sp-charcoal)]/30"

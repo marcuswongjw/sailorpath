@@ -239,7 +239,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
           <ShieldQuestion className="h-4 w-4" />
           How to verify a claim
         </h4>
-        <ul className="mt-3 space-y-2 text-[11px] text-slate-400 leading-relaxed">
+        <ul className="mt-3 space-y-2 text-[13px] text-slate-400 leading-relaxed">
           <li>
             <strong className="text-slate-200">1. Email identity</strong> —
             match signup email to a known parent/sailor contact.
@@ -268,9 +268,9 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
               key={f}
               type="button"
               onClick={() => setFilter(f)}
-              className={`rounded-full px-3 py-1.5 text-[11px] font-bold capitalize ${
+              className={`rounded-full px-3 py-1.5 text-[13px] font-bold capitalize ${
                 filter === f
-                  ? "bg-orange-600 text-white"
+                  ? "bg-[var(--sp-harbour-teal)] text-white"
                   : "bg-white/5 text-slate-400 border border-white/10"
               }`}
             >
@@ -311,7 +311,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
               className="glass-card rounded-xl border border-white/5 px-4 py-4 w-full grid grid-cols-1 lg:grid-cols-12 gap-4"
             >
               <div className="lg:col-span-4 min-w-0">
-                <p className="text-[10px] font-bold text-slate-500 uppercase">
+                <p className="text-[12px] font-bold text-slate-500 uppercase">
                   Sailor profile
                 </p>
                 <Link
@@ -320,13 +320,13 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                 >
                   {c.sailorName}
                 </Link>
-                <p className="text-[11px] text-slate-500 mt-0.5 font-mono">
+                <p className="text-[13px] text-slate-500 mt-0.5 font-mono">
                   /{c.sailorHandle}
                   {c.sailorSailNumber ? ` · ${c.sailorSailNumber}` : ""}
                   {c.sailorClub ? ` · ${c.sailorClub}` : ""}
                 </p>
                 <span
-                  className={`inline-block mt-2 rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${
+                  className={`inline-block mt-2 rounded-full px-2 py-0.5 text-[12px] font-black uppercase ${
                     c.status === "pending"
                       ? "bg-amber-500/15 text-amber-300 border border-amber-500/25"
                       : c.status === "approved"
@@ -337,7 +337,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   {c.status}
                 </span>
                 {c.sailorOwnerRelation && (
-                  <p className="text-[10px] text-slate-500 mt-1.5">
+                  <p className="text-[13px] text-slate-500 mt-1.5">
                     Linked as:{" "}
                     <span className="text-slate-300 font-semibold">
                       {relationLabel(
@@ -349,7 +349,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
               </div>
 
               <div className="lg:col-span-4 min-w-0">
-                <p className="text-[10px] font-bold text-slate-500 uppercase flex items-center gap-1">
+                <p className="text-[12px] font-bold text-slate-500 uppercase flex items-center gap-1">
                   <Mail className="h-3 w-3" />
                   Signup email (account)
                 </p>
@@ -360,12 +360,12 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   {c.requesterEmail || "—"}
                 </a>
                 {c.requesterName && (
-                  <p className="text-[11px] text-slate-500 mt-1">
+                  <p className="text-[13px] text-slate-500 mt-1">
                     Display name: {c.requesterName}
                   </p>
                 )}
                 {c.requesterRole && (
-                  <p className="text-[10px] text-slate-600 mt-0.5">
+                  <p className="text-[13px] text-slate-600 mt-0.5">
                     Account role:{" "}
                     <span className="font-mono text-slate-400">
                       {c.requesterRole}
@@ -374,10 +374,10 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                 )}
                 {c.note && (
                   <div className="mt-2 rounded-lg bg-white/5 border border-white/5 px-2.5 py-2">
-                    <p className="text-[10px] font-bold text-slate-500 uppercase">
+                    <p className="text-[12px] font-bold text-slate-500 uppercase">
                       Verification note
                     </p>
-                    <p className="text-[11px] text-slate-300 mt-0.5 whitespace-pre-wrap">
+                    <p className="text-[13px] text-slate-300 mt-0.5 whitespace-pre-wrap">
                       {c.note}
                     </p>
                   </div>
@@ -386,7 +386,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
 
               <div className="lg:col-span-4 flex flex-col gap-2 justify-center">
                 <label className="block">
-                  <span className="text-[10px] font-bold text-slate-500 uppercase">
+                  <span className="text-[12px] font-bold text-slate-500 uppercase">
                     Role for this profile
                   </span>
                   <select
@@ -398,7 +398,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                         [c.id]: e.target.value as ClaimRelation,
                       }))
                     }
-                    className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-2.5 py-2 text-xs text-white font-semibold"
+                    className="mt-1 w-full rounded-lg bg-slate-950 border border-white/10 px-2.5 py-2 text-[13px] text-white font-semibold"
                   >
                     {RELATIONS.map((r) => (
                       <option key={r} value={r}>
@@ -420,7 +420,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                           setAccountRole: true,
                         })
                       }
-                      className="inline-flex items-center justify-center gap-1 rounded-full bg-emerald-600 px-3 py-2 text-[11px] font-bold text-white flex-1 disabled:opacity-50"
+                      className="inline-flex items-center justify-center gap-1 rounded-full bg-emerald-600 px-3 py-2 text-[15px] font-bold text-white flex-1 disabled:opacity-50"
                     >
                       <CheckCircle className="h-3.5 w-3.5" />
                       Approve as {relationLabel(draft)}
@@ -431,7 +431,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                       onClick={() =>
                         void patch(c.id, { status: "rejected" })
                       }
-                      className="inline-flex items-center justify-center gap-1 rounded-full bg-slate-800 px-3 py-2 text-[11px] font-bold text-slate-300 border border-white/10 disabled:opacity-50"
+                      className="inline-flex items-center justify-center gap-1 rounded-full bg-white px-3 py-2 text-[15px] font-bold text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)] disabled:opacity-50"
                     >
                       <XCircle className="h-3.5 w-3.5" />
                       Reject
@@ -450,7 +450,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                           setAccountRole: true,
                         })
                       }
-                      className="inline-flex items-center justify-center gap-1 rounded-full bg-sky-600 px-3 py-2 text-[11px] font-bold text-white flex-1 disabled:opacity-50"
+                      className="inline-flex items-center justify-center gap-1 rounded-full bg-sky-600 px-3 py-2 text-[15px] font-bold text-white flex-1 disabled:opacity-50"
                     >
                       <Save className="h-3.5 w-3.5" />
                       Update role
@@ -473,7 +473,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                           await patch(c.id, { unclaim: true });
                         })();
                       }}
-                      className="inline-flex items-center justify-center gap-1 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-[11px] font-bold text-rose-200 disabled:opacity-50"
+                      className="inline-flex items-center justify-center gap-1 rounded-full border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-[15px] font-bold text-[var(--sp-color-error)] disabled:opacity-50"
                     >
                       <Unlink className="h-3.5 w-3.5" />
                       Unlink
@@ -481,7 +481,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   </div>
                 )}
 
-                <p className="text-[10px] text-slate-600 font-mono">
+                <p className="text-[13px] text-slate-600 font-mono">
                   {c.createdAt
                     ? new Date(c.createdAt).toLocaleString()
                     : ""}
@@ -517,7 +517,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   <h3 className="text-base font-black font-display text-[var(--sp-harbour-shadow)]">
                     Assign User to Sailor
                   </h3>
-                  <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                  <p className="text-[13px] text-[var(--sp-slate-soft)]">
                     Link a registered account directly to an athlete profile.
                   </p>
                 </div>
@@ -544,7 +544,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   <div className="flex items-center justify-between p-2.5 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
                     <div>
                       <p className="font-bold text-[var(--sp-harbour-shadow)]">{selectedUser.fullName || "User"}</p>
-                      <p className="text-[11px] text-[var(--sp-slate-soft)] font-mono">{selectedUser.email}</p>
+                      <p className="text-[13px] text-[var(--sp-slate-soft)] font-mono">{selectedUser.email}</p>
                     </div>
                     <button
                       type="button"
@@ -568,7 +568,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                     />
                     <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
                     {assignUserLoading && (
-                      <span className="absolute right-3 top-2.5 text-[10px] text-[var(--sp-slate-soft)]">Searching…</span>
+                      <span className="absolute right-3 top-2.5 text-[13px] text-[var(--sp-slate-soft)]">Searching…</span>
                     )}
                     {assignUsers.length > 0 && (
                       <div className="absolute z-10 top-full left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-lg divide-y divide-[var(--sp-cool-veil)]">
@@ -584,7 +584,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                             className="p-2.5 hover:bg-[var(--sp-sailcloth)] cursor-pointer text-left transition-colors"
                           >
                             <p className="font-bold text-[var(--sp-harbour-shadow)]">{u.fullName || "Unnamed User"}</p>
-                            <p className="text-[11px] text-[var(--sp-slate-soft)] font-mono">{u.email} ({u.role})</p>
+                            <p className="text-[13px] text-[var(--sp-slate-soft)] font-mono">{u.email} ({u.role})</p>
                           </div>
                         ))}
                       </div>
@@ -602,7 +602,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   <div className="flex items-center justify-between p-2.5 rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
                     <div>
                       <p className="font-bold text-[var(--sp-harbour-shadow)]">{selectedSailor.name}</p>
-                      <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                      <p className="text-[13px] text-[var(--sp-slate-soft)]">
                         {selectedSailor.sailNumber ? `Sail #${selectedSailor.sailNumber}` : "No sail #"} {selectedSailor.club ? `· ${selectedSailor.club}` : ""}
                       </p>
                     </div>
@@ -628,7 +628,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                     />
                     <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
                     {assignSailorLoading && (
-                      <span className="absolute right-3 top-2.5 text-[10px] text-[var(--sp-slate-soft)]">Searching…</span>
+                      <span className="absolute right-3 top-2.5 text-[13px] text-[var(--sp-slate-soft)]">Searching…</span>
                     )}
                     {assignSailors.length > 0 && (
                       <div className="absolute z-10 top-full left-0 right-0 mt-1 max-h-48 overflow-y-auto rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-lg divide-y divide-[var(--sp-cool-veil)]">
@@ -644,7 +644,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                             className="p-2.5 hover:bg-[var(--sp-sailcloth)] cursor-pointer text-left transition-colors"
                           >
                             <p className="font-bold text-[var(--sp-harbour-shadow)]">{s.name}</p>
-                            <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                            <p className="text-[13px] text-[var(--sp-slate-soft)]">
                               {s.sailNumber ? `Sail #${s.sailNumber}` : "No sail #"} {s.club ? `· ${s.club}` : ""}
                             </p>
                           </div>

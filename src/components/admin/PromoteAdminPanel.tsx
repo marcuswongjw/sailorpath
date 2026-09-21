@@ -83,7 +83,7 @@ export function PromoteAdminPanel({
       {error && <p className="text-xs text-rose-400">{error}</p>}
       <div className="overflow-x-auto rounded-2xl border border-white/5">
         <table className="w-full text-left text-xs">
-          <thead className="bg-white/5 text-[10px] uppercase text-slate-400">
+          <thead className="bg-white/5 text-[12px] uppercase text-slate-400">
             <tr>
               <th className="px-4 py-3">Sailor</th>
               <th className="px-4 py-3">Sail #</th>
@@ -114,7 +114,7 @@ export function PromoteAdminPanel({
                   <button
                     type="button"
                     onClick={() => void promote(c.id, c.name)}
-                    className="inline-flex items-center gap-1 rounded-full bg-yellow-600/90 hover:bg-yellow-500 px-3 py-1.5 text-[11px] font-bold text-white"
+                    className="inline-flex items-center gap-1 rounded-full bg-yellow-600/90 hover:bg-yellow-500 px-3 py-1.5 text-[15px] font-bold text-white"
                   >
                     <ArrowUpCircle className="h-3.5 w-3.5" />
                     Promote to Gold

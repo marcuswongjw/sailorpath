@@ -532,7 +532,7 @@ export function CoachDashboard({
           <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--sp-racing-orange)]">Coach workspace</p>
           <h1 className="mt-1 text-3xl font-black tracking-tight text-[var(--sp-harbour-shadow)] sm:text-4xl">Squad dashboard</h1>
           <p className="mt-2 text-sm text-[var(--sp-charcoal-slate)]">Live rankings, development priorities, and follow-up for your sailors.</p>
-          <p className="mt-1 text-[10px] font-semibold text-[var(--sp-slate-soft)]">Ranking results through {data.updatedThrough || "no published event yet"}</p>
+          <p className="mt-1 text-[13px] font-semibold text-[var(--sp-slate-soft)]">Ranking results through {data.updatedThrough || "no published event yet"}</p>
         </div>
         <div className="flex gap-2">
           <button type="button" onClick={() => setManageOpen(true)} className="sp-btn-primary">
@@ -556,7 +556,7 @@ export function CoachDashboard({
       <section className="order-1 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 shadow-xs" aria-labelledby="action-centre-title">
         <div className="flex items-center justify-between gap-4">
           <div><p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]">Today</p><h2 id="action-centre-title" className="mt-1 text-base font-black text-[var(--sp-harbour-shadow)]">Squad action centre</h2></div>
-          <span className="rounded-full bg-[var(--sp-racing-mist)]/50 px-2.5 py-1 text-[10px] font-bold text-[var(--sp-racing-deep)]">{actions.length} to review</span>
+          <span className="rounded-full bg-[var(--sp-racing-mist)]/50 px-2.5 py-1 text-[11px] font-bold text-[var(--sp-racing-deep)]">{actions.length} to review</span>
         </div>
         {actions.length ? (
           <div className="mt-3 grid gap-2 md:grid-cols-2">
@@ -565,15 +565,15 @@ export function CoachDashboard({
                 <button type="button" onClick={() => openSailor(action.sailorId)} className="flex w-full items-center gap-3 text-left">
                   <span className="min-w-0 flex-1">
                     <span className="block truncate text-xs font-bold text-[var(--sp-harbour-shadow)]">{action.sailor}</span>
-                    <span className="block text-[11px] text-[var(--sp-charcoal-slate)]">{action.text}</span>
+                    <span className="block text-[13px] text-[var(--sp-charcoal-slate)]">{action.text}</span>
                   </span>
                   <ChevronRight className="h-4 w-4 text-[var(--sp-slate-soft)]" />
                 </button>
                 <div className="mt-2 flex gap-2">
-                  <button type="button" onClick={() => reviewAction(action, "reviewed")} disabled={busyId === action.key} className="rounded-md bg-[var(--sp-racing-mist)]/50 px-2 py-1 text-[9px] font-bold text-[var(--sp-racing-deep)] disabled:opacity-50">
+                  <button type="button" onClick={() => reviewAction(action, "reviewed")} disabled={busyId === action.key} className="rounded-md bg-[var(--sp-racing-mist)]/50 px-2 py-1 text-[11px] font-bold text-[var(--sp-racing-deep)] disabled:opacity-50">
                     Mark reviewed
                   </button>
-                  <button type="button" onClick={() => reviewAction(action, "dismissed")} disabled={busyId === action.key} className="rounded-md px-2 py-1 text-[9px] font-bold text-[var(--sp-slate-soft)] hover:bg-[var(--sp-warm-white)]">
+                  <button type="button" onClick={() => reviewAction(action, "dismissed")} disabled={busyId === action.key} className="rounded-md px-2 py-1 text-[11px] font-bold text-[var(--sp-slate-soft)] hover:bg-[var(--sp-warm-white)]">
                     Dismiss
                   </button>
                 </div>
@@ -600,7 +600,7 @@ export function CoachDashboard({
                 maxLength={80}
                 className="min-w-0 rounded-lg border border-transparent bg-transparent px-2 py-1 text-lg font-black text-[var(--sp-harbour-shadow)] outline-none hover:border-[var(--sp-cool-veil)] focus:border-[var(--sp-harbour-teal)]"
               />
-              <span className="text-[10px] text-[var(--sp-slate-soft)] shrink-0">
+              <span className="text-[13px] text-[var(--sp-slate-soft)] shrink-0">
                 {busyId === "rename" ? "Saving…" : "Edit name"}
               </span>
             </div>
@@ -609,7 +609,7 @@ export function CoachDashboard({
               <div className="flex items-center gap-2">
                 <label
                   htmlFor="squad-sort"
-                  className="text-[10px] font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]"
+                  className="text-xs font-bold uppercase tracking-wider text-[var(--sp-slate-soft)]"
                 >
                   Sort
                 </label>
@@ -617,7 +617,7 @@ export function CoachDashboard({
                   id="squad-sort"
                   value={sortKey}
                   onChange={(event) => setSortKey(event.target.value as typeof sortKey)}
-                  className="sp-select text-[11px] font-bold"
+                  className="sp-select font-bold"
                 >
                   <option value="ranking">Fleet rank</option>
                   <option value="name">Name</option>
@@ -627,15 +627,15 @@ export function CoachDashboard({
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-[11px] text-[var(--sp-slate-soft)] hidden sm:inline">
+                <span className="text-[13px] text-[var(--sp-slate-soft)] hidden sm:inline">
                   Select two sailors
                 </span>
                 {compareHref ? (
-                  <Link href={compareHref} className="sp-btn-primary px-3 py-1.5 text-[11px]">
+                  <Link href={compareHref} className="sp-btn-primary px-3 py-1.5">
                     <GitCompareArrows className="h-3.5 w-3.5" /> Compare
                   </Link>
                 ) : (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-sailcloth)] px-3 py-1.5 text-[11px] font-bold text-[var(--sp-slate-soft)]">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--sp-sailcloth)] px-3 py-1.5 text-xs font-bold text-[var(--sp-slate-soft)]">
                     <GitCompareArrows className="h-3.5 w-3.5" /> Compare
                   </span>
                 )}
@@ -654,7 +654,7 @@ export function CoachDashboard({
                     aria-label="Select all sailors"
                     className="h-4 w-4 rounded border-[var(--sp-cool-veil)] text-[var(--sp-racing-orange)] accent-[var(--sp-racing-orange)]"
                   />
-                  <span className="text-[11px] font-bold text-[var(--sp-charcoal-slate)]">
+                  <span className="text-xs font-bold text-[var(--sp-charcoal-slate)]">
                     {selected.length > 0 ? `${selected.length} of ${data.members.length} selected` : "Select all"}
                   </span>
                 </label>
@@ -662,7 +662,7 @@ export function CoachDashboard({
                   <button
                     type="button"
                     onClick={() => setSelected([])}
-                    className="text-[10px] font-semibold text-[var(--sp-slate-soft)] underline hover:text-[var(--sp-harbour-shadow)]"
+                    className="text-[11px] font-semibold text-[var(--sp-slate-soft)] underline hover:text-[var(--sp-harbour-shadow)]"
                   >
                     Clear selection
                   </button>
@@ -695,7 +695,7 @@ export function CoachDashboard({
               <button
                 type="button"
                 onClick={() => setManageOpen(true)}
-                className="sp-btn-primary mt-4 inline-flex items-center gap-1.5 px-4 py-2 text-xs"
+                className="sp-btn-primary mt-4 inline-flex items-center gap-1.5 px-4 py-2"
               >
                 <Plus className="h-3.5 w-3.5" /> Add sailors to squad
               </button>
@@ -711,13 +711,13 @@ export function CoachDashboard({
                       <Link href={`/${member.handle}`} className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)]">
                         {member.name}
                       </Link>
-                      {member.fleet && <span className={`rounded-full border px-2 py-0.5 text-[10px] font-bold ${fleetPillClass(member.fleet)}`}>{member.fleet} #{member.ranking}</span>}
-                      {member.squadStatus && <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-charcoal-slate)]">{member.squadStatus}</span>}
+                      {member.fleet && <span className={`rounded-full border px-2 py-0.5 text-[11px] font-bold ${fleetPillClass(member.fleet)}`}>{member.fleet} #{member.ranking}</span>}
+                      {member.squadStatus && <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[11px] font-bold text-[var(--sp-charcoal-slate)]">{member.squadStatus}</span>}
                     </div>
                     <button type="button" onClick={() => openSailor(member.sailorId)} className="mt-1 block w-full text-left" aria-label={`Open ${member.name} details`}>
-                      <p className="text-[11px] text-[var(--sp-slate-soft)]">{member.sailNumber} · {member.club}{member.bestThreeOfFive != null ? ` · Best 3: ${member.bestThreeOfFive}` : ""}</p>
-                      {member.latestResult && <p className="mt-1 text-[11px] text-[var(--sp-charcoal-slate)]">Latest: {member.latestResult.regattaName} · #{member.latestResult.rank} of {member.latestResult.fleetSize}</p>}
-                      {member.recentMovement != null && <span className={`mt-1 inline-flex items-center gap-1 text-[10px] font-bold ${member.recentMovement > 0 ? "text-emerald-600" : member.recentMovement < 0 ? "text-rose-600" : "text-[var(--sp-slate-soft)]"}`}>{member.recentMovement > 0 ? <TrendingUp className="h-3 w-3" /> : member.recentMovement < 0 ? <TrendingDown className="h-3 w-3" /> : null}{member.recentMovement === 0 ? "Series rank unchanged" : `Series rank ${member.recentMovement > 0 ? "up" : "down"} ${Math.abs(member.recentMovement)}`}</span>}
+                      <p className="text-[13px] text-[var(--sp-slate-soft)]">{member.sailNumber} · {member.club}{member.bestThreeOfFive != null ? ` · Best 3: ${member.bestThreeOfFive}` : ""}</p>
+                      {member.latestResult && <p className="mt-1 text-[13px] text-[var(--sp-charcoal-slate)]">Latest: {member.latestResult.regattaName} · #{member.latestResult.rank} of {member.latestResult.fleetSize}</p>}
+                      {member.recentMovement != null && <span className={`mt-1 inline-flex items-center gap-1 text-[11px] font-bold ${member.recentMovement > 0 ? "text-emerald-600" : member.recentMovement < 0 ? "text-rose-600" : "text-[var(--sp-slate-soft)]"}`}>{member.recentMovement > 0 ? <TrendingUp className="h-3 w-3" /> : member.recentMovement < 0 ? <TrendingDown className="h-3 w-3" /> : null}{member.recentMovement === 0 ? "Series rank unchanged" : `Series rank ${member.recentMovement > 0 ? "up" : "down"} ${Math.abs(member.recentMovement)}`}</span>}
                     </button>
                   </div>
                   <button type="button" onClick={() => removeSailor(member.sailorId)} disabled={busyId === member.sailorId}

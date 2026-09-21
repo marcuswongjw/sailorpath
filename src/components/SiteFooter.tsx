@@ -26,12 +26,12 @@ export function SiteFooter() {
     (!ready || shouldShowDemoNavigation(host, owned.length));
 
   return (
-    <footer className="border-t border-harbour-shadow bg-harbour-shadow py-8 sm:py-10 text-xs text-sailcloth">
+    <footer className="border-t border-harbour-shadow bg-harbour-shadow py-8 sm:py-10 text-[13px] text-sailcloth">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <BrandWordmark reversed className="text-base sm:text-lg" />
           <span className="text-soft-aqua/60">·</span>
-          <p className="text-soft-aqua text-xs">© {new Date().getFullYear()} SailorPath</p>
+          <p className="text-soft-aqua">© {new Date().getFullYear()} SailorPath</p>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sailcloth/90">
           <Link

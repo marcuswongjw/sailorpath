@@ -172,7 +172,7 @@ export function AdminGoldAnalysisPanel({
               <strong className="text-slate-300">series half-years</strong> so
               different promotion dates line up fairly.
             </p>
-            <ul className="mt-2 text-[11px] text-slate-500 space-y-0.5 list-disc pl-4">
+            <ul className="mt-2 text-[13px] text-slate-500 space-y-0.5 list-disc pl-4">
               <li>
                 <strong className="text-slate-400">Immediate form</strong> —
                 1st series half of gold entry + 2nd series half (Best 3 of 5)
@@ -217,14 +217,14 @@ export function AdminGoldAnalysisPanel({
               <button
                 type="button"
                 onClick={() => selectTop(5)}
-                className="rounded-full bg-white/5 border border-white/10 px-2.5 py-1 text-[10px] font-bold text-slate-300 hover:text-white"
+                className="rounded-full bg-white/5 border border-white/10 px-2.5 py-1 text-[15px] font-bold text-slate-300 hover:text-white"
               >
                 Select first 5
               </button>
               <button
                 type="button"
                 onClick={() => setSelectedIds([])}
-                className="rounded-full bg-white/5 border border-white/10 px-2.5 py-1 text-[10px] font-bold text-slate-300 hover:text-white"
+                className="rounded-full bg-white/5 border border-white/10 px-2.5 py-1 text-[15px] font-bold text-slate-300 hover:text-white"
               >
                 Clear
               </button>
@@ -267,7 +267,7 @@ export function AdminGoldAnalysisPanel({
                       }`}
                     >
                       <span className="font-semibold">{s.name}</span>
-                      <span className="block text-[10px] text-slate-500 mt-0.5">
+                      <span className="block text-[13px] text-slate-500 mt-0.5">
                         Gold {String(s.goldEntryDate).slice(0, 10)}
                         {s.sailNumber ? ` · ${s.sailNumber}` : ""}
                         {s.gender ? ` · ${s.gender}` : ""}
@@ -285,7 +285,7 @@ export function AdminGoldAnalysisPanel({
             <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-1">
               Best 3 of 5 by series half
             </h3>
-            <p className="text-[11px] text-slate-500 mb-4">
+            <p className="text-[13px] text-slate-500 mb-4">
               Lower is better. H1 = promotion half, H2 = next half, Now =
               current half.
             </p>
@@ -383,7 +383,7 @@ export function AdminGoldAnalysisPanel({
                   {chart.paths.map(({ s, color }) => (
                     <span
                       key={s.sailorId}
-                      className="inline-flex items-center gap-1.5 text-[11px] text-slate-300"
+                      className="inline-flex items-center gap-1.5 text-[13px] text-slate-300"
                     >
                       <span
                         className="h-2 w-2 rounded-full"
@@ -407,7 +407,7 @@ export function AdminGoldAnalysisPanel({
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs">
                   <thead>
-                    <tr className="text-[10px] uppercase tracking-wide text-slate-500 border-b border-white/5">
+                    <tr className="text-[12px] uppercase tracking-wide text-slate-500 border-b border-white/5">
                       <th className="px-3 py-2 font-bold">Sailor</th>
                       <th className="px-3 py-2 font-bold">Gold entry</th>
                       <th className="px-3 py-2 font-bold">H1 (promo)</th>
@@ -438,7 +438,7 @@ export function AdminGoldAnalysisPanel({
                         </td>
                         <td className="px-3 py-2.5 tabular-nums text-slate-400">
                           {s.goldEntryDate}
-                          <span className="block text-[10px] text-slate-600">
+                          <span className="block text-[13px] text-slate-600">
                             {s.monthsInGold} mo in gold
                           </span>
                         </td>
@@ -447,14 +447,14 @@ export function AdminGoldAnalysisPanel({
                             {fmtScore(s.half1?.best3of5)}
                           </span>
                           {s.half1?.seriesRank != null && (
-                            <span className="block text-[10px] text-slate-500">
+                            <span className="block text-[13px] text-slate-500">
                               #{s.half1.seriesRank}
                               {s.half1.fleetSize
                                 ? ` / ${s.half1.fleetSize}`
                                 : ""}
                             </span>
                           )}
-                          <span className="block text-[9px] text-slate-600">
+                          <span className="block text-[13px] text-slate-600">
                             {s.half1?.periodLabel}
                           </span>
                         </td>
@@ -463,28 +463,28 @@ export function AdminGoldAnalysisPanel({
                             {fmtScore(s.half2?.best3of5)}
                           </span>
                           {s.half2?.seriesRank != null && (
-                            <span className="block text-[10px] text-slate-500">
+                            <span className="block text-[13px] text-slate-500">
                               #{s.half2.seriesRank}
                               {s.half2.fleetSize
                                 ? ` / ${s.half2.fleetSize}`
                                 : ""}
                             </span>
                           )}
-                          <span className="block text-[9px] text-slate-600">
+                          <span className="block text-[13px] text-slate-600">
                             {s.half2?.periodLabel}
                           </span>
                         </td>
                         <td className="px-3 py-2.5 tabular-nums font-semibold text-emerald-400">
                           {fmtScore(s.immediateBest3Avg)}
                           {s.immediateRankAvg != null && (
-                            <span className="block text-[10px] font-normal text-slate-500">
+                            <span className="block text-[13px] font-normal text-slate-500">
                               avg rank #{s.immediateRankAvg}
                             </span>
                           )}
                         </td>
                         <td className="px-3 py-2.5 tabular-nums font-semibold text-sky-400">
                           {fmtScore(s.currentBest3)}
-                          <span className="block text-[9px] font-normal text-slate-600">
+                          <span className="block text-[13px] font-normal text-slate-600">
                             {s.currentHalf?.periodLabel}
                           </span>
                         </td>
@@ -536,17 +536,17 @@ export function AdminGoldAnalysisPanel({
                       <h4 className="text-sm font-bold text-white">
                         {s.name}
                       </h4>
-                      <span className="text-[10px] text-slate-500">
+                      <span className="text-[13px] text-slate-500">
                         Gold {s.goldEntryDate}
                       </span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-white/5">
                       {halves.map(({ key, label, half }) => (
                         <div key={key} className="p-3 sm:p-4 min-w-0">
-                          <p className="text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                          <p className="text-[12px] font-bold uppercase tracking-wide text-slate-500">
                             {label}
                           </p>
-                          <p className="text-[11px] text-slate-400 mt-0.5">
+                          <p className="text-[13px] text-slate-400 mt-0.5">
                             {half?.periodLabel || "—"}
                             {half?.best3of5 != null && (
                               <span className="text-white font-semibold ml-1">
@@ -555,7 +555,7 @@ export function AdminGoldAnalysisPanel({
                             )}
                           </p>
                           {!half?.events?.length ? (
-                            <p className="text-[11px] text-slate-600 mt-3">
+                            <p className="text-[13px] text-slate-600 mt-3">
                               No ranking events in window
                             </p>
                           ) : (
@@ -563,10 +563,10 @@ export function AdminGoldAnalysisPanel({
                               {half.events.map((ev, ei) => (
                                 <li
                                   key={`${s.sailorId}-${key}-${ev.regattaId}-${ei}`}
-                                  className="flex items-start justify-between gap-2 text-[11px] rounded-lg bg-black/25 border border-white/[0.04] px-2 py-1.5"
+                                  className="flex items-start justify-between gap-2 text-[13px] rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2 py-1.5"
                                 >
                                   <span className="min-w-0">
-                                    <span className="text-[9px] font-bold text-orange-400/90">
+                                    <span className="text-[13px] font-bold text-orange-400/90">
                                       R{ei + 1}
                                       {ev.isCarryForward ? " CF" : ""}
                                     </span>
@@ -574,7 +574,7 @@ export function AdminGoldAnalysisPanel({
                                       {ev.regattaName}
                                     </span>
                                     {ev.periodLabel && (
-                                      <span className="block text-[9px] text-slate-600">
+                                      <span className="block text-[13px] text-slate-600">
                                         {ev.periodLabel}
                                       </span>
                                     )}
@@ -594,7 +594,7 @@ export function AdminGoldAnalysisPanel({
                                           ? "*"
                                           : ""}
                                     </span>
-                                    <span className="block text-[9px] text-slate-500">
+                                    <span className="block text-[13px] text-slate-500">
                                       rank
                                     </span>
                                   </span>
@@ -605,7 +605,7 @@ export function AdminGoldAnalysisPanel({
                         </div>
                       ))}
                     </div>
-                    <p className="px-4 py-2 text-[9px] text-slate-600 border-t border-white/5">
+                    <p className="px-4 py-2 text-[13px] text-slate-600 border-t border-white/5">
                       * DNS · † overseas commitment · CF = carry-forward from
                       prior half
                     </p>
@@ -617,7 +617,7 @@ export function AdminGoldAnalysisPanel({
         </div>
       </div>
 
-      <p className="text-[10px] text-slate-600 leading-relaxed max-w-3xl">
+      <p className="text-[13px] text-slate-600 leading-relaxed max-w-3xl">
         Ranking Optimist Gold events only (DNS = fleet size + 1; overseas
         commitment scores included as stored). Non-ranking regattas are never
         used. ILCA 4 analysis can be added later as a separate single-fleet

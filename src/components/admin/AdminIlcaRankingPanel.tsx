@@ -441,7 +441,7 @@ export function AdminIlcaRankingPanel({
             <p className="text-[12px] text-[var(--sp-slate)] mt-1 max-w-3xl leading-relaxed">
               {ILCA_POLICY_NOTES.highPoints}
             </p>
-            <p className="text-[11px] text-[var(--sp-muted)] mt-1 max-w-3xl">
+            <p className="text-[13px] text-[var(--sp-slate)] mt-1 max-w-3xl">
               {ILCA_POLICY_NOTES.nationalList} {ILCA_POLICY_NOTES.dualSail}
             </p>
           </div>
@@ -452,7 +452,7 @@ export function AdminIlcaRankingPanel({
             Class
             <div className="mt-1 w-full rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs">
               ILCA 4
-              <span className="ml-2 text-[10px] text-[var(--sp-muted)]">
+              <span className="ml-2 text-[13px] text-[var(--sp-slate)]">
                 (ILCA 6 not active)
               </span>
             </div>
@@ -484,12 +484,12 @@ export function AdminIlcaRankingPanel({
             />
           </label>
         </div>
-        <p className="text-[11px] text-sky-800 font-medium">
+        <p className="text-[13px] text-sky-800 font-medium">
           {cutoff.label} · {ranked.length} on scored national board · Best 3 of
           last 5 ≤ {cutoff.asOf}
         </p>
         {msg && (
-          <p className="text-[11px] text-emerald-700 font-medium">{msg}</p>
+          <p className="text-[13px] text-emerald-700 font-medium">{msg}</p>
         )}
       </div>
 
@@ -502,7 +502,7 @@ export function AdminIlcaRankingPanel({
                 <ListChecks className="h-4 w-4 text-sky-600" />
                 All ILCA 4 sailors
               </h3>
-              <p className="text-[11px] text-[var(--sp-slate)] mt-0.5">
+              <p className="text-[13px] text-[var(--sp-slate)] mt-0.5">
                 {ilca4Sailors.length} with ILCA 4 results or sail # ·{" "}
                 <span className="text-sky-800 font-semibold">{onListCount} on national list</span>
                 {seedMatchedUnset > 0 && (
@@ -518,7 +518,7 @@ export function AdminIlcaRankingPanel({
                 type="button"
                 disabled={seedBusy}
                 onClick={() => void seedFromNames()}
-                className="inline-flex items-center gap-1.5 rounded-full border border-sky-300 bg-sky-50 px-3 py-1.5 text-[10px] font-bold text-sky-800 hover:bg-sky-100 disabled:opacity-50"
+                className="inline-flex items-center gap-1.5 rounded-full border border-sky-300 bg-sky-50 px-3 py-1.5 text-[15px] font-bold text-sky-800 hover:bg-sky-100 disabled:opacity-50"
               >
                 {seedBusy ? (
                   <Loader2 className="h-3 w-3 animate-spin" />
@@ -535,7 +535,7 @@ export function AdminIlcaRankingPanel({
               value={rosterSearch}
               onChange={(e) => setRosterSearch(e.target.value)}
               placeholder="Search name / sail / club…"
-              className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] placeholder:text-[var(--sp-muted)] px-3 py-1.5 text-xs min-w-[12rem] flex-1 max-w-sm"
+              className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] placeholder:text-[var(--sp-slate)] px-3 py-1.5 text-xs min-w-[12rem] flex-1 max-w-sm"
             />
             <select
               className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-2 py-1.5 text-xs"
@@ -552,7 +552,7 @@ export function AdminIlcaRankingPanel({
               <option value="with_results">Has ILCA 4 results</option>
               <option value="no_results">No results yet</option>
             </select>
-            <span className="text-[10px] text-[var(--sp-slate)]">
+            <span className="text-[13px] text-[var(--sp-slate)]">
               Showing {filteredRoster.length}
             </span>
           </div>
@@ -574,7 +574,7 @@ export function AdminIlcaRankingPanel({
             >
               Clear
             </button>
-            <span className="text-[10px] text-[var(--sp-slate)]">
+            <span className="text-[13px] text-[var(--sp-slate)]">
               {selectedIds.size} selected
             </span>
             <select
@@ -609,7 +609,7 @@ export function AdminIlcaRankingPanel({
               type="button"
               disabled={bulkBusy || selectedIds.size === 0}
               onClick={() => void applyBulk()}
-              className="rounded-full bg-sky-600 px-3 py-1.5 text-[10px] font-bold text-white hover:bg-sky-700 disabled:opacity-50"
+              className="rounded-full bg-sky-600 px-3 py-1.5 text-[15px] font-bold text-white hover:bg-sky-700 disabled:opacity-50"
             >
               {bulkBusy ? "…" : "Bulk apply"}
             </button>
@@ -617,7 +617,7 @@ export function AdminIlcaRankingPanel({
 
           {editId && (
             <div className="px-4 py-3 border-b border-sky-200 bg-sky-50/70 space-y-2">
-              <p className="text-[11px] font-bold text-sky-900 uppercase tracking-wide">
+              <p className="text-[12px] font-bold text-sky-900 uppercase tracking-wide">
                 Edit sailor
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -632,7 +632,7 @@ export function AdminIlcaRankingPanel({
                     ["dob", "DOB"],
                   ] as const
                 ).map(([key, label]) => (
-                  <label key={key} className="text-[10px] text-[var(--sp-slate)] font-medium">
+                  <label key={key} className="text-[13px] text-[var(--sp-slate)] font-medium">
                     {label}
                     {key === "nationality" ? (
                       <NationalitySelect
@@ -660,14 +660,14 @@ export function AdminIlcaRankingPanel({
                   type="button"
                   disabled={editBusy}
                   onClick={() => void saveEdit()}
-                  className="rounded-full bg-sky-600 px-3 py-1.5 text-[10px] font-bold text-white hover:bg-sky-700 disabled:opacity-50"
+                  className="rounded-full bg-sky-600 px-3 py-1.5 text-[15px] font-bold text-white hover:bg-sky-700 disabled:opacity-50"
                 >
                   {editBusy ? "Saving…" : "Save"}
                 </button>
                 <button
                   type="button"
                   onClick={() => setEditId(null)}
-                  className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[10px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
+                  className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[13px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
                 >
                   Cancel
                 </button>
@@ -676,14 +676,14 @@ export function AdminIlcaRankingPanel({
           )}
 
           {filteredRoster.length === 0 ? (
-            <p className="p-6 text-sm text-[var(--sp-muted)] text-center">
+            <p className="p-6 text-sm text-[var(--sp-slate)] text-center">
               No ILCA 4 sailors match. Import ILCA 4 regattas or set sail numbers.
             </p>
           ) : (
             <div className="overflow-x-auto max-h-[28rem] overflow-y-auto">
               <table className="w-full text-left text-xs">
                 <thead className="sticky top-0 bg-[var(--sp-sailcloth)] text-[var(--sp-slate)] border-b border-[var(--sp-cool-veil)] z-10">
-                  <tr className="text-[10px] uppercase tracking-wide">
+                  <tr className="text-[12px] uppercase tracking-wide">
                     <th className="px-2 py-2 font-bold w-8" />
                     <th className="px-3 py-2 font-bold">Sailor</th>
                     <th className="px-3 py-2 font-bold">ILCA #</th>
@@ -727,15 +727,15 @@ export function AdminIlcaRankingPanel({
                             </span>
                           )}
                           {sailor.club && (
-                            <span className="block text-[10px] text-[var(--sp-muted)]">
+                            <span className="block text-[13px] text-[var(--sp-slate)]">
                               {sailor.club}
                             </span>
                           )}
                         </td>
-                        <td className="px-3 py-2 font-mono text-[11px] text-[var(--sp-charcoal)]">
+                        <td className="px-3 py-2 font-mono text-[13px] text-[var(--sp-charcoal)]">
                           {sailor.sailNumberIlca4 || "—"}
                         </td>
-                        <td className="px-3 py-2 font-mono text-[11px] text-[var(--sp-slate)]">
+                        <td className="px-3 py-2 font-mono text-[13px] text-[var(--sp-slate)]">
                           {sailor.sailNumber || "—"}
                         </td>
                         <td className="px-3 py-2 text-[var(--sp-charcoal)]">
@@ -753,7 +753,7 @@ export function AdminIlcaRankingPanel({
                               #{rank.rank} · {rank.totalPoints}pts
                             </span>
                           ) : onList ? (
-                            <span className="text-[var(--sp-muted)]">no score</span>
+                            <span className="text-[var(--sp-slate)]">no score</span>
                           ) : (
                             "—"
                           )}
@@ -765,7 +765,7 @@ export function AdminIlcaRankingPanel({
                             onClick={() =>
                               void setOnList(sailor.id, !onList)
                             }
-                            className={`rounded-full px-2.5 py-1 text-[10px] font-bold border disabled:opacity-50 ${
+                            className={`rounded-full px-2.5 py-1 text-[13px] font-bold border disabled:opacity-50 ${
                               onList
                                 ? "bg-sky-50 border-sky-300 text-sky-800 hover:bg-rose-50 hover:border-rose-300 hover:text-rose-800"
                                 : "bg-white border-[var(--sp-cool-veil)] text-[var(--sp-slate)] hover:bg-sky-50 hover:border-sky-300 hover:text-sky-800"
@@ -794,7 +794,7 @@ export function AdminIlcaRankingPanel({
               </table>
             </div>
           )}
-          <p className="px-4 py-2 text-[9px] text-[var(--sp-muted)] border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30">
+          <p className="px-4 py-2 text-[13px] text-[var(--sp-slate)] border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30">
             Seed matching compares names regardless of token order (for example,
             &quot;Goh, Ian&quot; and &quot;Ian Goh&quot;).
           </p>
@@ -811,7 +811,7 @@ export function AdminIlcaRankingPanel({
                 ILCA 4 possible duplicates
               </h3>
               {ilcaDupes.length > 0 && (
-                <span className="rounded-full bg-orange-100 border border-orange-200 text-orange-800 px-2 py-0.5 text-[10px] font-bold">
+                <span className="rounded-full bg-orange-100 border border-orange-200 text-orange-800 px-2 py-0.5 text-[11px] font-bold">
                   {ilcaDupes.length}
                 </span>
               )}
@@ -826,13 +826,13 @@ export function AdminIlcaRankingPanel({
           </div>
           {showDupes && (
             <div className="p-4 space-y-2">
-              <p className="text-[11px] text-[var(--sp-slate)]">
+              <p className="text-[13px] text-[var(--sp-slate)]">
                 Among ILCA 4 sailors only: name ≥60% similar, same Optimist
                 sail #, or same ILCA 4 sail #. Merge opens the same keep/delete
                 flow as Database → Sailors.
               </p>
               {ilcaDupes.length === 0 ? (
-                <p className="text-xs text-[var(--sp-muted)] py-3 text-center">
+                <p className="text-xs text-[var(--sp-slate)] py-3 text-center">
                   No pairs at 60%+ among ILCA 4 sailors.
                 </p>
               ) : (
@@ -852,7 +852,7 @@ export function AdminIlcaRankingPanel({
                         <div className="min-w-0">
                           <div className="flex flex-wrap items-center gap-2 mb-1">
                             <span
-                              className={`rounded-full px-2 py-0.5 text-[10px] font-bold border ${
+                              className={`rounded-full px-2 py-0.5 text-[11px] font-bold border ${
                                 high
                                   ? "bg-rose-100 text-rose-800 border-rose-300"
                                   : "bg-amber-100 text-amber-800 border-amber-300"
@@ -860,20 +860,20 @@ export function AdminIlcaRankingPanel({
                             >
                               {pct}% · {high ? "High" : "Medium"}
                             </span>
-                            <span className="text-[10px] text-[var(--sp-muted)]">
+                            <span className="text-[13px] text-[var(--sp-slate)]">
                               {p.how}
                             </span>
                           </div>
                           <p className="text-[var(--sp-charcoal)] font-semibold truncate">
                             {p.a.name}
-                            <span className="text-[var(--sp-slate)] font-mono text-[10px] ml-2">
+                            <span className="text-[var(--sp-slate)] font-mono text-[13px] ml-2">
                               Opti {p.a.sailNumber || "—"} · ILCA{" "}
                               {p.a.sailNumberIlca4 || "—"}
                             </span>
                           </p>
                           <p className="text-[var(--sp-charcoal)] font-semibold truncate">
                             {p.b.name}
-                            <span className="text-[var(--sp-slate)] font-mono text-[10px] ml-2">
+                            <span className="text-[var(--sp-slate)] font-mono text-[13px] ml-2">
                               Opti {p.b.sailNumber || "—"} · ILCA{" "}
                               {p.b.sailNumberIlca4 || "—"}
                             </span>
@@ -887,7 +887,7 @@ export function AdminIlcaRankingPanel({
                                 onClick={() =>
                                   void onMergePair(p.a.id, p.b.id)
                                 }
-                                className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 text-[10px] font-bold text-white shadow-sm"
+                                className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 text-[15px] font-bold text-white shadow-sm"
                               >
                                 Keep A · merge B
                               </button>
@@ -896,7 +896,7 @@ export function AdminIlcaRankingPanel({
                                 onClick={() =>
                                   void onMergePair(p.b.id, p.a.id)
                                 }
-                                className="rounded-full bg-emerald-700 hover:bg-emerald-800 px-3 py-1.5 text-[10px] font-bold text-white shadow-sm"
+                                className="rounded-full bg-emerald-700 hover:bg-emerald-800 px-3 py-1.5 text-[15px] font-bold text-white shadow-sm"
                               >
                                 Keep B · merge A
                               </button>
@@ -905,7 +905,7 @@ export function AdminIlcaRankingPanel({
                           <button
                             type="button"
                             onClick={() => ignoreDupe(p.a.id, p.b.id)}
-                            className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[10px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
+                            className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[13px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
                           >
                             Ignore
                           </button>
@@ -928,7 +928,7 @@ export function AdminIlcaRankingPanel({
             </h3>
           </div>
           {ranked.length === 0 ? (
-            <p className="p-6 text-sm text-[var(--sp-muted)] text-center">
+            <p className="p-6 text-sm text-[var(--sp-slate)] text-center">
               No scored sailors. For ILCA 4: add sailors to the national list
               above and ensure they have ranking results ≤ {cutoff.asOf}.
             </p>
@@ -936,7 +936,7 @@ export function AdminIlcaRankingPanel({
             <div className="overflow-x-auto max-h-[32rem] overflow-y-auto">
               <table className="w-full text-left text-xs">
                 <thead className="sticky top-0 bg-[var(--sp-sailcloth)] text-[var(--sp-slate)] border-b border-[var(--sp-cool-veil)]">
-                  <tr className="text-[10px] uppercase tracking-wide">
+                  <tr className="text-[12px] uppercase tracking-wide">
                     <th className="px-3 py-2 font-bold">#</th>
                     <th className="px-3 py-2 font-bold">Sailor</th>
                     <th className="px-3 py-2 font-bold">Gender</th>
@@ -968,7 +968,7 @@ export function AdminIlcaRankingPanel({
                       <td className="px-3 py-2 tabular-nums font-bold text-sky-700">
                         {r.totalPoints}
                       </td>
-                      <td className="px-3 py-2 text-[10px] text-[var(--sp-slate)] max-w-[14rem]">
+                      <td className="px-3 py-2 text-[13px] text-[var(--sp-slate)] max-w-[14rem]">
                         {r.eventScores
                           .filter((e) => !e.isDns)
                           .map(
@@ -982,7 +982,7 @@ export function AdminIlcaRankingPanel({
               </table>
             </div>
           )}
-          <p className="px-4 py-2 text-[9px] text-[var(--sp-muted)] border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30">
+          <p className="px-4 py-2 text-[13px] text-[var(--sp-slate)] border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30">
             Birth year from DOB. Squad eligibility requires a verified birth year, SGP nationality, top-25 ranking, and age ≤17 in intake year {cutoff.intakeYear}.
           </p>
         </div>
@@ -997,12 +997,12 @@ export function AdminIlcaRankingPanel({
             </h3>
           </div>
           {boatClass !== "ILCA 4" ? (
-            <p className="p-4 text-xs text-[var(--sp-muted)]">
+            <p className="p-4 text-xs text-[var(--sp-slate)]">
               National squad rules in this tool are configured for ILCA 4.
               Switch class to ILCA 4 to preview selection.
             </p>
           ) : squad.length === 0 ? (
-            <p className="p-4 text-xs text-[var(--sp-muted)]">
+            <p className="p-4 text-xs text-[var(--sp-slate)]">
               No eligible sailors (need top-25 ranking + SGP nationality +
               gender + intake-year ≤ 17).
             </p>
@@ -1014,16 +1014,16 @@ export function AdminIlcaRankingPanel({
                   className="px-4 py-2.5 flex items-start justify-between gap-2 text-xs hover:bg-[var(--sp-sailcloth)]/30"
                 >
                   <span>
-                    <span className="text-[var(--sp-muted)] tabular-nums mr-2">
+                    <span className="text-[var(--sp-slate)] tabular-nums mr-2">
                       {i + 1}.
                     </span>
                     <span className="font-semibold text-[var(--sp-charcoal)]">{s.name}</span>
-                    <span className="block text-[10px] text-[var(--sp-slate)] mt-0.5">
+                    <span className="block text-[13px] text-[var(--sp-slate)] mt-0.5">
                       Series #{s.rankingPosition} · {s.gender} ·{" "}
                       {s.totalPoints} pts
                     </span>
                   </span>
-                  <span className="shrink-0 rounded-full bg-white border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[9px] font-bold text-[var(--sp-slate)]">
+                  <span className="shrink-0 rounded-full bg-white border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[11px] font-bold text-[var(--sp-slate)]">
                     {REASON_LABEL[s.reason] || s.reason}
                   </span>
                 </li>
@@ -1031,7 +1031,7 @@ export function AdminIlcaRankingPanel({
             </ol>
           )}
           {missingEligibilityBirthYears.length > 0 && (
-            <p className="border-t border-amber-200 bg-amber-50 px-4 py-3 text-[11px] leading-relaxed text-amber-900">
+            <p className="border-t border-amber-200 bg-amber-50 px-4 py-3 text-[13px] leading-relaxed text-amber-900">
               {missingEligibilityBirthYears.length} top-25 SGP sailor
               {missingEligibilityBirthYears.length === 1 ? "" : "s"} {" "}
               {missingEligibilityBirthYears.length === 1 ? "is" : "are"} excluded
@@ -1039,7 +1039,7 @@ export function AdminIlcaRankingPanel({
               {missingEligibilityBirthYears.map((sailor) => sailor.name).join(", ")}.
             </p>
           )}
-          <p className="px-4 py-2 text-[9px] text-[var(--sp-muted)] border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30">
+          <p className="px-4 py-2 text-[13px] text-[var(--sp-slate)] border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30">
             {ILCA_POLICY_NOTES.squad}
           </p>
         </div>

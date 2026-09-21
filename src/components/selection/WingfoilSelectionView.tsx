@@ -55,7 +55,7 @@ export function WingfoilSelectionView() {
               <span>Official Selection Document</span>
               <ExternalLink className="h-3 w-3 opacity-70" />
             </a>
-            <p className="text-[10px] text-slate-soft">
+            <p className="text-[13px] text-slate-soft">
               Policy Date: {policy.policyDate} · Amended: {policy.amendedDate}
             </p>
           </div>
@@ -98,7 +98,7 @@ export function WingfoilSelectionView() {
               className="rounded-2xl border border-cool-veil bg-warm-white p-5 space-y-2 shadow-xs"
             >
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center rounded-full bg-teal-500/10 border border-teal-500/20 px-2 py-0.5 text-[10px] font-extrabold text-teal-700 dark:text-teal-300">
+                <span className="inline-flex items-center rounded-full bg-teal-500/10 border border-teal-500/20 px-2 py-0.5 text-[11px] font-extrabold text-teal-700 dark:text-teal-300">
                   {cat.code}
                 </span>
                 <span className="text-xs font-bold text-slate-soft">{cat.quota} funded spot</span>
@@ -119,12 +119,12 @@ export function WingfoilSelectionView() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
           <div className="rounded-xl border border-cool-veil bg-sailcloth p-4 space-y-1">
-            <p className="font-bold text-slate-soft uppercase tracking-wider text-[10px]">Dates</p>
+            <p className="font-bold text-slate-soft uppercase tracking-wider text-[12px]">Dates</p>
             <p className="text-sm font-extrabold text-charcoal">{policy.qualifier.dates}</p>
             <p className="text-slate-soft">Mandatory participation: non-attendees will not be considered.</p>
           </div>
           <div className="rounded-xl border border-cool-veil bg-sailcloth p-4 space-y-1">
-            <p className="font-bold text-slate-soft uppercase tracking-wider text-[10px]">Equipment Format</p>
+            <p className="font-bold text-slate-soft uppercase tracking-wider text-[12px]">Equipment Format</p>
             <p className="text-sm font-extrabold text-charcoal">SSF X-15 One-Design</p>
             <p className="text-slate-soft leading-snug">{policy.qualifier.equipment}</p>
           </div>
@@ -168,7 +168,7 @@ export function WingfoilSelectionView() {
                 <li key={item} className="leading-snug">{item}</li>
               ))}
             </ul>
-            <p className="text-[11px] text-slate-soft pt-1 border-t border-cool-veil">
+            <p className="text-[13px] text-slate-soft pt-1 border-t border-cool-veil">
               Exact contribution confirmed upon selection; payable before team departure.
             </p>
           </div>

@@ -276,12 +276,12 @@ function AthleteWorkspace({
                   {athlete.name}
                 </h1>
                 {athlete.currentFleet && (
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200">
                     {athlete.currentFleet} Fleet
                   </span>
                 )}
                 {athlete.nationalSquadStatus && (
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-black uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200">
                     National Squad
                   </span>
                 )}
@@ -316,7 +316,7 @@ function AthleteWorkspace({
                 setEditingResult(null);
                 setEvidenceModalOpen(true);
               }}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-4 py-2 text-xs font-bold transition-all shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] text-white px-4 py-2 text-[15px] font-semibold transition-all shadow-xs"
             >
               <Plus className="h-4 w-4" />
               <span>Log Score</span>
@@ -337,7 +337,7 @@ function AthleteWorkspace({
           >
             <Trophy className="h-4 w-4 text-[var(--sp-racing-orange)]" />
             <span>Regattas &amp; Evidence Logbook</span>
-            <span className={`ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+            <span className={`ml-1 rounded-full px-2 py-0.5 text-[11px] font-bold ${
               activeTab === "results" ? "bg-white/20 text-white" : "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]"
             }`}>
               {results.length}
@@ -381,7 +381,7 @@ function AthleteWorkspace({
           >
             <FileText className="h-4 w-4" />
             <span>Evidence Documents</span>
-            <span className={`ml-1 rounded-full px-2 py-0.5 text-[10px] font-bold ${
+            <span className={`ml-1 rounded-full px-2 py-0.5 text-[11px] font-bold ${
               activeTab === "documents" ? "bg-white/20 text-white" : "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]"
             }`}>
               {results.filter((r) => r.evidenceUrl || r.officialUrl).length}
@@ -461,7 +461,7 @@ function AthleteWorkspace({
                 setEditingResult(null);
                 setEvidenceModalOpen(true);
               }}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-4 py-2 text-xs font-bold text-white transition-all shadow-xs"
+              className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--sp-harbour-teal)]/40 bg-white hover:bg-[var(--sp-sailcloth)] active:scale-[0.98] px-4 py-2 text-[15px] font-semibold text-[var(--sp-harbour-teal)] transition-all shadow-2xs"
             >
               <Plus className="h-4 w-4" />
               <span>Log Regatta Score &amp; Evidence</span>
@@ -494,7 +494,7 @@ function AthleteWorkspace({
                     setEditingResult(null);
                     setEvidenceModalOpen(true);
                   }}
-                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-5 py-2.5 text-xs font-bold transition-all shadow-xs"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-5 py-2.5 text-[15px] font-semibold transition-all shadow-xs"
                 >
                   <Plus className="h-4 w-4" />
                   <span>Log Regatta Score</span>
@@ -519,11 +519,11 @@ function AthleteWorkspace({
                           {r.regattaName}
                         </h4>
                         {r.countsForRanking ? (
-                          <span className="rounded-full bg-teal-50 border border-teal-200 px-2.5 py-0.5 text-[9px] font-black uppercase text-[var(--sp-harbour-teal)]">
+                          <span className="rounded-full bg-teal-50 border border-teal-200 px-2.5 py-0.5 text-[11px] font-black uppercase text-[var(--sp-harbour-teal)]">
                             Singapore Series Ranking
                           </span>
                         ) : (
-                          <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2.5 py-0.5 text-[9px] font-black uppercase text-[var(--sp-slate-soft)]">
+                          <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2.5 py-0.5 text-[11px] font-black uppercase text-[var(--sp-slate-soft)]">
                             Non-Ranking / Overseas Logbook
                           </span>
                         )}
@@ -556,7 +556,7 @@ function AthleteWorkspace({
                           ) : null}
                         </div>
                         {r.nettScore != null && (
-                          <div className="text-[11px] font-mono text-[var(--sp-slate-soft)]">
+                          <div className="text-[13px] font-mono text-[var(--sp-slate-soft)]">
                             nett {r.nettScore} pts
                           </div>
                         )}
@@ -660,7 +660,7 @@ function AthleteWorkspace({
                         <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
                         Verified Official Result
                       </span>
-                      <span className="text-[11px] text-[var(--sp-slate-soft)] font-medium">
+                      <span className="text-[13px] text-[var(--sp-slate-soft)] font-medium">
                         {r.countsForRanking ? "National Ranking Series" : "Official Event Record"}
                       </span>
                     </div>
@@ -708,7 +708,7 @@ function AthleteWorkspace({
             <button
               type="submit"
               disabled={savingProfile}
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-5 py-2 text-xs font-bold text-white transition-all disabled:opacity-50 shadow-xs"
+              className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] active:scale-[0.98] px-5 py-2 text-[15px] font-semibold text-white transition-all disabled:opacity-50 shadow-xs"
             >
               {savingProfile ? (
                 <>
@@ -851,7 +851,7 @@ function AthleteWorkspace({
           </div>
 
           <div className="pt-4 border-t border-[var(--sp-cool-veil)]">
-            <h4 className="text-[11px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] mb-3">
+            <h4 className="text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] mb-3">
               Standard Boat Gear &amp; Rig Configuration
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -931,7 +931,7 @@ function AthleteWorkspace({
               <h4 className="text-xs font-bold text-[var(--sp-charcoal)]">
                 Career Milestones &amp; Sailing Journey
               </h4>
-              <p className="text-[11px] text-[var(--sp-slate-soft)] mt-0.5">
+              <p className="text-[13px] text-[var(--sp-slate-soft)] mt-0.5">
                 Key moments, breakthroughs, and campaigns. Athletes and parents can add, edit, or customize any milestone.
               </p>
             </div>
@@ -989,22 +989,22 @@ function AthleteWorkspace({
                         <p className="font-bold text-[var(--sp-charcoal)] text-xs">
                           {r.regattaName}
                         </p>
-                        <p className="text-[11px] text-[var(--sp-slate-soft)]">
+                        <p className="text-[13px] text-[var(--sp-slate-soft)]">
                           {String(r.regattaDate).slice(0, 10)} · Place {r.rank}
                           {r.totalFleetSize ? ` / ${r.totalFleetSize}` : ""}
                         </p>
                       </div>
                       <div>
                         {isResultVerified(r) ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-bold text-emerald-800">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-800">
                             Verified ✓
                           </span>
                         ) : r.verificationStatus === "rejected" ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[10px] font-bold text-rose-800">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-rose-50 border border-rose-200 px-2.5 py-0.5 text-[11px] font-bold text-rose-800">
                             Rejected ✕
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-200 px-2.5 py-0.5 text-[10px] font-bold text-sky-800">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-sky-50 border border-sky-200 px-2.5 py-0.5 text-[11px] font-bold text-sky-800">
                             Under Review
                           </span>
                         )}
@@ -1102,7 +1102,7 @@ export function AthleteHub({
         </div>
         <Link
           href="/claim-profile"
-          className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-5 py-2.5 text-xs font-bold transition-all shadow-xs"
+          className="inline-flex items-center gap-2 rounded-xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-5 py-2.5 text-[15px] font-semibold transition-all shadow-xs"
         >
           <Plus className="h-4 w-4" />
           <span>Claim Sailor Profile</span>

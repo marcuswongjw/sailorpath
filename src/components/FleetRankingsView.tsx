@@ -50,7 +50,7 @@ function squadBadgeClass(label: string | null | undefined): string {
   if (s === "ds" || s.includes("development")) {
     return "bg-violet-500/15 border-violet-400/35 text-violet-300";
   }
-  return "bg-orange-500/10 border-orange-500/20 text-orange-400";
+  return "bg-orange-500/10 border-orange-500/20 text-[var(--sp-racing-deep)]";
 }
 
 function SquadBadge({ label }: { label: string }) {
@@ -324,7 +324,7 @@ export function FleetRankingsView({
       {fleet === "Gold" && accountReady && !isLoggedIn && (
         <div className="rounded-xl border border-orange-500/25 bg-orange-500/[0.07] px-3.5 py-3 sm:px-4 sm:py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 no-print">
           <div className="flex items-start gap-2.5 min-w-0 flex-1">
-            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15 text-orange-400 border border-orange-500/20">
+            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-orange-500/15 text-[var(--sp-racing-deep)] border border-orange-500/20">
               <Lock className="h-3.5 w-3.5" />
             </span>
             <div className="min-w-0">
@@ -332,7 +332,7 @@ export function FleetRankingsView({
                 <p className="text-sm font-bold text-white leading-snug">
                   Projected National Squad &amp; 2026 Selection Trials
                 </p>
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-400 bg-orange-500/15 px-1.5 py-0.5 rounded-full border border-orange-500/25">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[var(--sp-racing-deep)] bg-orange-500/15 px-1.5 py-0.5 rounded-full border border-orange-500/25">
                   Sign in required
                 </span>
               </div>
@@ -345,9 +345,9 @@ export function FleetRankingsView({
             <Link
               href="/sg/optimist/selection"
               prefetch
-              className="inline-flex items-center gap-1 rounded-full bg-orange-500/15 border border-orange-500/30 px-3 py-1.5 text-xs font-bold text-orange-300 hover:bg-orange-500/25 transition-colors"
+              className="inline-flex items-center gap-1 rounded-full bg-orange-500/15 border border-orange-500/30 px-3 py-1.5 text-xs font-bold text-[var(--sp-racing-deep)] hover:bg-orange-500/25 transition-colors"
             >
-              <Trophy className="h-3 w-3 text-orange-400" />
+              <Trophy className="h-3 w-3 text-[var(--sp-racing-deep)]" />
               <span>Selection Trials</span>
               <span>→</span>
             </Link>
@@ -369,11 +369,11 @@ export function FleetRankingsView({
 
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 no-print min-w-0">
         <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
-          <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-600/10 text-orange-500 border border-orange-500/20">
+          <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-600/10 text-[var(--sp-racing-deep)] border border-orange-500/20">
             <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-[10px] sm:text-xs font-bold text-orange-400 uppercase tracking-wide">
+            <p className="text-[10px] sm:text-xs font-bold text-[var(--sp-racing-deep)] uppercase tracking-wide">
               SG Optimist
             </p>
             <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight break-words">
@@ -397,9 +397,9 @@ export function FleetRankingsView({
                 <Link
                   href="/sg/optimist/selection"
                   prefetch
-                  className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[11px] font-bold text-orange-300 hover:bg-orange-500/20 transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 text-[11px] font-bold text-[var(--sp-racing-deep)] hover:bg-orange-500/20 transition-colors"
                 >
-                  <Trophy className="h-3 w-3 text-orange-400" />
+                  <Trophy className="h-3 w-3 text-[var(--sp-racing-deep)]" />
                   <span>2026 Selection Trials (Asian &amp; Perth)</span>
                   <span>→</span>
                 </Link>
@@ -409,7 +409,7 @@ export function FleetRankingsView({
         </div>
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2 w-full lg:w-auto min-w-0">
           <div className="flex items-center gap-2 min-w-0 w-full sm:w-auto">
-            <Calendar className="h-4 w-4 text-orange-500 shrink-0" />
+            <Calendar className="h-4 w-4 text-[var(--sp-racing-deep)] shrink-0" />
             <select
               value={`${period.year}|${period.half}`}
               onChange={(e) => {
@@ -573,7 +573,7 @@ export function FleetRankingsView({
                       }
                     >
                       <div className="flex items-center justify-center gap-1">
-                        <span className="text-[9px] font-black text-orange-400">
+                        <span className="text-[9px] font-black text-[var(--sp-racing-deep)]">
                           R{idx + 1}
                         </span>
                         {ev.isCarryForward && (
@@ -611,7 +611,7 @@ export function FleetRankingsView({
                     } ${canToggle ? "cursor-pointer hover:border-orange-500/30" : ""}`}
                   >
                     <div className="flex items-start justify-between gap-1">
-                      <p className="text-[10px] font-black text-orange-400">R{idx + 1}</p>
+                      <p className="text-[10px] font-black text-[var(--sp-racing-deep)]">R{idx + 1}</p>
                       {canToggle && (
                         <input
                           type="checkbox"
@@ -704,7 +704,7 @@ export function FleetRankingsView({
                   <RankMedalBadge
                     rank={i + 1}
                     className="w-6 shrink-0"
-                    nonPodiumClassName="text-orange-400 font-black text-sm shrink-0 tabular-nums w-6 text-center"
+                    nonPodiumClassName="text-[var(--sp-racing-deep)] font-black text-sm shrink-0 tabular-nums w-6 text-center"
                   />
                   <div className="min-w-0 flex-1">
                     <Link
@@ -763,7 +763,7 @@ export function FleetRankingsView({
                       title={regName || undefined}
                     >
                       <div className="flex items-center justify-center gap-0.5 text-[8px] leading-tight font-bold truncate">
-                        <span className="text-orange-400/90 font-black">R{idx + 1}</span>
+                        <span className="text-[var(--sp-racing-deep)] font-black">R{idx + 1}</span>
                         <span className="text-slate-500">·</span>
                         <span className="text-slate-300 truncate">{badge}</span>
                         {rs.isCarryForward && (
@@ -870,7 +870,7 @@ export function FleetRankingsView({
                         (off ? " · excluded" : "")
                       }
                     >
-                      <span className="block text-orange-400 font-black normal-case tracking-normal">
+                      <span className="block text-[var(--sp-racing-deep)] font-black normal-case tracking-normal">
                         R{idx + 1}
                         {off ? " · off" : ""}
                       </span>
@@ -910,7 +910,7 @@ export function FleetRankingsView({
                     <td className="sticky left-0 z-10 px-4 lg:px-5 py-3.5 bg-warm-white">
                       <RankMedalBadge
                         rank={i + 1}
-                        nonPodiumClassName="font-bold text-orange-400 font-mono"
+                        nonPodiumClassName="font-bold text-[var(--sp-racing-deep)] font-mono"
                       />
                     </td>
                     <td className="sticky left-12 z-10 px-4 lg:px-5 py-3.5 bg-warm-white">

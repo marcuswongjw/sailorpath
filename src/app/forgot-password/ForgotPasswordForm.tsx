@@ -81,7 +81,7 @@ export function ForgotPasswordForm() {
           </form>
         )}
         <p className="text-center text-xs text-[var(--sp-slate-soft)]">
-          <Link href="/login" className="font-bold text-[var(--sp-racing-orange)] hover:underline">
+          <Link href="/login" className="font-bold text-[var(--sp-harbour-teal)] hover:underline">
             Back to log in
           </Link>
         </p>

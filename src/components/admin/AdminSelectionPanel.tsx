@@ -273,7 +273,7 @@ export function AdminSelectionPanel({
               events. The shortlist now combines every Gold Fleet race, then
               applies the policy discard table and Appendix A8 tie-breaks.
             </p>
-            <p className="text-[11px] text-[var(--sp-muted)] mt-1 max-w-3xl">
+            <p className="text-[13px] text-[var(--sp-slate)] mt-1 max-w-3xl">
               Participation rule: gold sailors need ≥
               {GOLD_MIN_RANKING_REGATTAS_PER_HALF} ranking gold regattas in each
               completed half (Jan–Jun / Jul–Dec) or they are dropped at the next
@@ -291,7 +291,7 @@ export function AdminSelectionPanel({
                   {participationDrops.length === 1 ? "" : "s"} flagged for
                   participation drop
                 </p>
-                <p className="text-[11px] text-rose-700 mt-0.5">
+                <p className="text-[13px] text-rose-700 mt-0.5">
                   Only completed halves are checked — the current half is
                   excluded until all ranking regattas have finished. Review
                   before applying.
@@ -300,7 +300,7 @@ export function AdminSelectionPanel({
               <button
                 type="button"
                 onClick={() => openDropReview()}
-                className="inline-flex items-center gap-1.5 rounded-full border border-rose-300 bg-rose-100 px-3 py-1.5 text-[10px] font-bold text-rose-800 hover:bg-rose-200"
+                className="inline-flex items-center gap-1.5 rounded-full border border-rose-300 bg-rose-100 px-3 py-1.5 text-[15px] font-bold text-rose-800 hover:bg-rose-200"
               >
                 Review {participationDrops.length} sailor
                 {participationDrops.length === 1 ? "" : "s"}
@@ -309,7 +309,7 @@ export function AdminSelectionPanel({
             {dropReviewOpen && (
               <div className="rounded-lg border border-[var(--sp-cool-veil)] bg-white overflow-hidden shadow-sm">
                 <div className="px-3 py-2 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 flex flex-wrap items-center justify-between gap-2">
-                  <label className="text-[11px] text-[var(--sp-charcoal)] flex items-center gap-2 font-medium">
+                  <label className="text-[13px] text-[var(--sp-charcoal)] flex items-center gap-2 font-medium">
                     <input
                       type="checkbox"
                       checked={
@@ -341,7 +341,7 @@ export function AdminSelectionPanel({
                       type="button"
                       disabled={dropBusy || selectedDropIds.size === 0}
                       onClick={() => void applyParticipationDrops()}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-rose-300 bg-rose-600 px-3 py-1.5 text-[10px] font-bold text-white hover:bg-rose-700 disabled:opacity-50"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-rose-300 bg-rose-600 px-3 py-1.5 text-[15px] font-bold text-white hover:bg-rose-700 disabled:opacity-50"
                     >
                       {dropBusy ? (
                         <Loader2 className="h-3 w-3 animate-spin" />
@@ -351,8 +351,8 @@ export function AdminSelectionPanel({
                   </div>
                 </div>
                 <div className="max-h-64 overflow-y-auto overflow-x-auto">
-                  <table className="w-full text-left text-[11px] min-w-[520px]">
-                    <thead className="sticky top-0 bg-[var(--sp-sailcloth)] text-[var(--sp-slate)] uppercase tracking-wide text-[9px] border-b border-[var(--sp-cool-veil)]">
+                  <table className="w-full text-left text-sm min-w-[520px]">
+                    <thead className="sticky top-0 bg-[var(--sp-sailcloth)] text-[var(--sp-slate)] uppercase tracking-wide text-[12px] border-b border-[var(--sp-cool-veil)]">
                       <tr>
                         <th className="px-3 py-2 w-8" />
                         <th className="px-3 py-2">Sailor</th>
@@ -405,7 +405,7 @@ export function AdminSelectionPanel({
           </div>
         )}
         {dropMsg && (
-          <p className="text-[11px] text-emerald-700 font-medium">{dropMsg}</p>
+          <p className="text-[13px] text-emerald-700 font-medium">{dropMsg}</p>
         )}
       </div>
 
@@ -414,21 +414,21 @@ export function AdminSelectionPanel({
         <h3 className="text-xs font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
           2026 selection events (shared by Asian Champs &amp; Perth Camp)
         </h3>
-        <p className="text-[11px] text-[var(--sp-slate)]">
+        <p className="text-[13px] text-[var(--sp-slate)]">
           Every non-medal race is combined. An absent sailor receives fleet
           size + 1 for each race in that event. Current combined series: {selectionStatus.usableRaceCount}{" "}
           races, {selectionStatus.discardCount} discard{selectionStatus.discardCount === 1 ? "" : "s"}.
         </p>
         {selectionLoading && (
-          <p className="text-[11px] text-sky-700 inline-flex items-center gap-1.5">
+          <p className="text-[13px] text-sky-700 inline-flex items-center gap-1.5">
             <Loader2 className="h-3 w-3 animate-spin" /> Loading published race scores…
           </p>
         )}
         {selectionLoadError && (
-          <p className="text-[11px] text-rose-600">Race score load failed: {selectionLoadError}</p>
+          <p className="text-[13px] text-rose-600">Race score load failed: {selectionLoadError}</p>
         )}
         {!selectionLoading && selectionStatus.warnings.length > 0 && (
-          <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[11px] text-amber-800">
+          <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-[13px] text-amber-800">
             <span className="font-bold">Provisional / incomplete:</span>{" "}
             {selectionStatus.warnings.join(" ")}
           </div>
@@ -440,7 +440,7 @@ export function AdminSelectionPanel({
               className="flex flex-wrap items-center gap-2 text-xs"
             >
               <span
-                className={`rounded-full px-2 py-0.5 text-[10px] font-bold border ${
+                className={`rounded-full px-2 py-0.5 text-[11px] font-bold border ${
                   m.matched
                     ? "bg-emerald-50 border-emerald-200 text-emerald-800"
                     : "bg-rose-50 border-rose-200 text-rose-800"
@@ -451,7 +451,7 @@ export function AdminSelectionPanel({
               <span className="text-[var(--sp-charcoal)] font-semibold">
                 {m.def.label}
               </span>
-              <span className="text-[var(--sp-muted)]">
+              <span className="text-[var(--sp-slate)]">
                 {m.def.dateFrom} → {m.def.dateTo}
               </span>
               {m.regatta && (
@@ -464,7 +464,7 @@ export function AdminSelectionPanel({
         </ul>
       </div>
 
-      <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4 text-[11px] text-sky-900 leading-relaxed">
+      <div className="rounded-2xl border border-sky-200 bg-sky-50 p-4 text-[13px] text-sky-900 leading-relaxed">
         <span className="font-bold text-sky-950">Policy checks before confirmation:</span>{" "}
         this is a computational shortlist, not a final selection. The panel must
         verify Singapore citizenship, affiliated-club membership, regular 12–16
@@ -482,22 +482,22 @@ export function AdminSelectionPanel({
               <h3 className="text-xs font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                 {ASIAN_OCEANIA_2026.title}
               </h3>
-              <p className="text-[11px] text-[var(--sp-slate)] mt-0.5">
+              <p className="text-[13px] text-[var(--sp-slate)] mt-0.5">
                 {ASIAN_OCEANIA_2026.subtitle}
               </p>
-              <p className="text-[10px] text-[var(--sp-muted)] mt-1">
+              <p className="text-[13px] text-[var(--sp-slate)] mt-1">
                 {ASIAN_OCEANIA_2026.notes}
               </p>
-              <p className="text-[10px] text-violet-700 mt-1 font-medium">
+              <p className="text-[13px] text-violet-700 mt-1 font-medium">
                 {ASIAN_OCEANIA_2026.funding}
               </p>
             </div>
           </div>
-          <p className="px-4 py-2 text-[11px] text-violet-800 bg-violet-50/50 border-b border-[var(--sp-cool-veil)]">
+          <p className="px-4 py-2 text-[13px] text-violet-800 bg-violet-50/50 border-b border-[var(--sp-cool-veil)]">
             {asianTeam.reason}
           </p>
           {asianTeam.selected.length === 0 ? (
-            <p className="p-4 text-xs text-[var(--sp-muted)]">
+            <p className="p-4 text-xs text-[var(--sp-slate)]">
               Import Gold results for SSF Selection Trials (22–30 Aug 2026) and
               SNSC (11–13 Sep 2026) to populate.
             </p>
@@ -509,11 +509,11 @@ export function AdminSelectionPanel({
                   className="px-4 py-2 text-xs flex justify-between gap-2 hover:bg-[var(--sp-sailcloth)]/30"
                 >
                   <span>
-                    <span className="text-[var(--sp-muted)] tabular-nums mr-2">
+                    <span className="text-[var(--sp-slate)] tabular-nums mr-2">
                       #{s.teamRank}
                     </span>
                     <span className="font-semibold text-[var(--sp-charcoal)]">{s.name}</span>
-                    <span className="block text-[10px] text-[var(--sp-slate)] mt-0.5">
+                    <span className="block text-[13px] text-[var(--sp-slate)] mt-0.5">
                       {s.gender || "?"} · BY {s.birthYear ?? "—"} · net{" "}
                       {s.combinedScore} (gross {s.grossScore}; {s.discardCount}{" "}
                       discard{s.discardCount === 1 ? "" : "s"})
@@ -530,7 +530,7 @@ export function AdminSelectionPanel({
             </ol>
           )}
           {asianTeam.reserves.length > 0 && (
-            <div className="border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30 px-4 py-2 text-[10px] text-[var(--sp-slate)]">
+            <div className="border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30 px-4 py-2 text-[13px] text-[var(--sp-slate)]">
               Additional-entry order: {asianTeam.reserves.slice(0, 5).map((s) => `${s.name} (${s.combinedScore})`).join(" · ")}
             </div>
           )}
@@ -543,24 +543,24 @@ export function AdminSelectionPanel({
               <h3 className="text-xs font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
                 {PERTH_CAMP_2026.title}
               </h3>
-              <p className="text-[11px] text-[var(--sp-slate)] mt-0.5">
+              <p className="text-[13px] text-[var(--sp-slate)] mt-0.5">
                 {PERTH_CAMP_2026.subtitle}
               </p>
-              <p className="text-[10px] text-[var(--sp-muted)] mt-1">
+              <p className="text-[13px] text-[var(--sp-slate)] mt-1">
                 {PERTH_CAMP_2026.notes}
               </p>
-              <p className="text-[10px] text-emerald-700 mt-1 font-medium">
+              <p className="text-[13px] text-emerald-700 mt-1 font-medium">
                 {PERTH_CAMP_2026.funding}
               </p>
             </div>
           </div>
           {perth.notes.length > 0 && (
-            <p className="px-4 py-2 text-[11px] text-amber-800 bg-amber-50/50 border-b border-[var(--sp-cool-veil)]">
+            <p className="px-4 py-2 text-[13px] text-amber-800 bg-amber-50/50 border-b border-[var(--sp-cool-veil)]">
               {perth.notes.join(" · ")}
             </p>
           )}
           {perth.picks.length === 0 ? (
-            <p className="p-4 text-xs text-[var(--sp-muted)]">
+            <p className="p-4 text-xs text-[var(--sp-slate)]">
               No birth-year matches yet. Need selection-event results and DOBs
               for 2013 / 2014 / 2015.
             </p>
@@ -571,7 +571,7 @@ export function AdminSelectionPanel({
                 if (!group.length) return null;
                 return (
                   <li key={bucket} className="px-4 py-2">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-emerald-800 mb-1.5">
+                    <p className="text-[12px] font-bold uppercase tracking-wider text-emerald-800 mb-1.5">
                       {group[0]?.bucketLabel}
                     </p>
                     <ul className="space-y-1">
@@ -610,7 +610,7 @@ export function AdminSelectionPanel({
           <div className="overflow-x-auto max-h-64 overflow-y-auto">
             <table className="w-full text-left text-xs">
               <thead className="sticky top-0 bg-[var(--sp-sailcloth)] text-[var(--sp-slate)] border-b border-[var(--sp-cool-veil)]">
-                <tr className="text-[10px] uppercase">
+                <tr className="text-[12px] uppercase">
                   <th className="px-3 py-2">#</th>
                   <th className="px-3 py-2">Sailor</th>
                   <th className="px-3 py-2">G</th>
@@ -626,7 +626,7 @@ export function AdminSelectionPanel({
               <tbody className="divide-y divide-[var(--sp-cool-veil)]">
                 {combinedScores.slice(0, 40).map((s, i) => (
                   <tr key={s.sailorId} className="text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]/30">
-                    <td className="px-3 py-1.5 tabular-nums text-[var(--sp-muted)]">
+                    <td className="px-3 py-1.5 tabular-nums text-[var(--sp-slate)]">
                       {i + 1}
                     </td>
                     <td className="px-3 py-1.5 font-semibold text-[var(--sp-charcoal)]">
@@ -646,7 +646,7 @@ export function AdminSelectionPanel({
                     ))}
                     <td className="px-3 py-1.5 tabular-nums font-bold text-[var(--sp-charcoal)]">
                       {s.combinedScore}
-                      <span className="block text-[9px] font-normal text-[var(--sp-slate)]">
+                      <span className="block text-[13px] font-normal text-[var(--sp-slate)]">
                         gross {s.grossScore} · {s.discardCount} discard{s.discardCount === 1 ? "" : "s"}
                       </span>
                     </td>

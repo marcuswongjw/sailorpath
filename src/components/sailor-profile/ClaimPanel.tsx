@@ -99,12 +99,12 @@ export function ClaimPanel({
         type="button"
         disabled={busy || !relation || !isClaimNoteReady(note)}
         onClick={() => void submit()}
-        className="rounded-lg bg-orange-500 text-white px-4 py-2 text-[11px] font-semibold disabled:opacity-50"
+        className="rounded-lg bg-orange-500 text-white px-4 py-2 text-[15px] font-semibold disabled:opacity-50"
       >
         {busy ? "Submitting…" : "Submit claim"}
       </button>
       {!isClaimNoteReady(note) && note.trim().length > 0 && (
-        <p className="text-[10px] text-slate-500">
+        <p className="text-[13px] text-slate-500">
           Note needs at least {CLAIM_NOTE_MIN} characters.
         </p>
       )}

@@ -62,7 +62,7 @@ export function ProfileOwnerEditor({
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label className="block sm:col-span-2">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             Bio
           </span>
           <textarea
@@ -73,7 +73,7 @@ export function ProfileOwnerEditor({
           />
         </label>
         <label className="block sm:col-span-2">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             Profile URL
           </span>
           <div className="mt-1 flex rounded-lg bg-sailcloth border border-cool-veil overflow-hidden focus-within:border-harbour">
@@ -95,7 +95,7 @@ export function ProfileOwnerEditor({
           </div>
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             School
           </span>
           <input
@@ -107,7 +107,7 @@ export function ProfileOwnerEditor({
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             Date of birth
           </span>
           <input
@@ -118,14 +118,14 @@ export function ProfileOwnerEditor({
             }
             className="mt-1 w-full rounded-lg bg-sailcloth border border-cool-veil px-3 py-2 text-sm text-charcoal focus:border-harbour focus:outline-none"
           />
-          <p className="mt-1 text-[11px] text-slate-soft leading-snug">
+          <p className="mt-1 text-[13px] text-slate-soft leading-snug">
             Public profiles show the birth year only (e.g. Born 2013). Turn on
             “Also share month &amp; day” under Privacy if you want the full date
             visible.
           </p>
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             Sailing club
           </span>
           <input
@@ -137,7 +137,7 @@ export function ProfileOwnerEditor({
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             Optimist sail #
           </span>
           <input
@@ -149,7 +149,7 @@ export function ProfileOwnerEditor({
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             ILCA 4 sail #
           </span>
           <input
@@ -162,7 +162,7 @@ export function ProfileOwnerEditor({
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             Weight (kg)
           </span>
           <input
@@ -177,7 +177,7 @@ export function ProfileOwnerEditor({
           />
         </label>
         <label className="block">
-          <span className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+          <span className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
             Instagram
           </span>
           <input
@@ -190,10 +190,10 @@ export function ProfileOwnerEditor({
           />
         </label>
         <div className="sm:col-span-2 rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 space-y-2">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-soft">
+          <p className="text-[12px] font-bold uppercase tracking-wider text-slate-soft">
             Privacy controls
           </p>
-          <p className="text-[11px] text-slate-soft leading-snug">
+          <p className="text-[13px] text-slate-soft leading-snug">
             Birth year is always shown on the public profile when set. Month and
             day stay private unless you share them. Weight stays private unless
             shared. Equipment is always private (sailor and linked parents only).

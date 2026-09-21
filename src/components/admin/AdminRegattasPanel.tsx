@@ -80,7 +80,7 @@ export function AdminRegattasPanel({
               <div className="w-full min-w-0 space-y-4">
                 <div className="glass-panel rounded-2xl border border-white/5 p-4 flex flex-col sm:flex-row sm:items-end gap-3 w-full">
                   <div className="flex-1 min-w-0">
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="text-[12px] font-bold text-slate-500 uppercase">
                       Search events
                     </label>
                     <input
@@ -92,7 +92,7 @@ export function AdminRegattasPanel({
                     />
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="text-[12px] font-bold text-slate-500 uppercase">
                       Class
                     </label>
                     <select
@@ -107,7 +107,7 @@ export function AdminRegattasPanel({
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="text-[12px] font-bold text-slate-500 uppercase">
                       Division
                     </label>
                     <select
@@ -123,7 +123,7 @@ export function AdminRegattasPanel({
                     </select>
                   </div>
                   <div>
-                    <label className="text-[10px] font-bold text-slate-500 uppercase">
+                    <label className="text-[12px] font-bold text-slate-500 uppercase">
                       Ranking
                     </label>
                     <select
@@ -232,12 +232,12 @@ export function AdminRegattasPanel({
                               <p className="text-xs font-bold text-white truncate">
                                 {r.name}
                                 {r.countsForRanking === false && (
-                                  <span className="ml-1.5 rounded-full bg-sky-500/15 border border-sky-500/30 px-1.5 py-0.5 text-[9px] font-black text-sky-300">
+                                  <span className="ml-1.5 rounded-full bg-sky-500/15 border border-sky-500/30 px-1.5 py-0.5 text-[11px] font-black text-sky-300">
                                     Non-ranking
                                   </span>
                                 )}
                               </p>
-                              <p className="text-[10px] text-slate-500 mt-0.5 font-mono">
+                              <p className="text-[13px] text-slate-500 mt-0.5 font-mono">
                                 {regattaDateLabel(r.date)} · {r.geography || "SGP"} ·{" "}
                                 {r.boatClass || "Optimist"} · {r.division || "Gold"}{" "}
                                 · fleet {r.totalFleetSize}
@@ -274,7 +274,7 @@ export function AdminRegattasPanel({
                                 ? "New regatta"
                                 : "Edit regatta"}
                             </h3>
-                            <p className="text-[11px] text-slate-500 mt-0.5">
+                            <p className="text-[13px] text-slate-500 mt-0.5">
                               Meta details &amp; scoring parameters.
                             </p>
                             {editingRegattaId !== "new" && (
@@ -297,7 +297,7 @@ export function AdminRegattasPanel({
                                         : `/sg/optimist/regattas/${regattaForm.slug}`
                                     }
                                     target="_blank"
-                                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-2.5 py-1 text-[11px] font-semibold text-slate-300 transition-all"
+                                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-2.5 py-1 text-[13px] font-semibold text-slate-300 transition-all"
                                   >
                                     <ExternalLink className="h-3 w-3 text-orange-400" />
                                     Public page
@@ -319,7 +319,7 @@ export function AdminRegattasPanel({
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <div className="sm:col-span-2">
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Event name
                             </label>
                             <input
@@ -336,7 +336,7 @@ export function AdminRegattasPanel({
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Date
                             </label>
                             <input
@@ -352,7 +352,7 @@ export function AdminRegattasPanel({
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Total fleet size
                             </label>
                             <input
@@ -368,7 +368,7 @@ export function AdminRegattasPanel({
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Races completed
                             </label>
                             <input
@@ -396,13 +396,13 @@ export function AdminRegattasPanel({
                               className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                               placeholder="e.g. 6"
                             />
-                            <p className="mt-1 text-[10px] text-slate-500 leading-snug">
+                            <p className="mt-1 text-[13px] text-slate-500 leading-snug">
                               ILCA 4/6: if fewer than <strong>3</strong> races are
                               completed, the event is non-ranking for series.
                             </p>
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Division
                             </label>
                             <select
@@ -444,7 +444,7 @@ export function AdminRegattasPanel({
                                 <strong className="text-white">
                                   Counts for series ranking
                                 </strong>
-                                <span className="block text-[10px] text-slate-500 leading-snug">
+                                <span className="block text-[13px] text-slate-500 leading-snug">
                                   Optimist: Gold/Silver Best 3 of 5. ILCA 4/6: high-points
                                   Best 3 of last 5. Turn off for trials, training, or when
                                   too few races were completed.
@@ -452,7 +452,7 @@ export function AdminRegattasPanel({
                               </span>
                             </label>
                             {regattaForm.countsForRanking === false && (
-                              <p className="mt-2 rounded-lg border border-sky-500/30 bg-sky-500/10 px-2 py-1.5 text-[10px] font-bold text-sky-200">
+                              <p className="mt-2 rounded-lg border border-sky-500/30 bg-sky-500/10 px-2 py-1.5 text-[11px] font-bold text-sky-800">
                                 Non-ranking — excluded from series (still on profiles /
                                 logbook)
                               </p>
@@ -462,7 +462,7 @@ export function AdminRegattasPanel({
                             ) &&
                               regattaForm.raceCount !== "" &&
                               Number(regattaForm.raceCount) < 3 && (
-                                <p className="mt-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2 py-1.5 text-[10px] font-bold text-amber-200">
+                                <p className="mt-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2 py-1.5 text-[11px] font-bold text-amber-800">
                                   Insufficient races ({String(regattaForm.raceCount)}{" "}
                                   &lt; 3) — this ILCA event is treated as non-ranking for
                                   national series.
@@ -470,7 +470,7 @@ export function AdminRegattasPanel({
                               )}
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Geography
                             </label>
                             <GeographySelect
@@ -485,7 +485,7 @@ export function AdminRegattasPanel({
                           </div>
                           <div>
                             <div className="flex items-center justify-between">
-                              <label className="text-[10px] font-bold text-slate-500 uppercase">
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">
                                 Class
                               </label>
                               <div className="flex gap-1">
@@ -500,9 +500,9 @@ export function AdminRegattasPanel({
                                           boatClass: cls,
                                         })
                                       }
-                                      className={`px-1.5 py-0.5 rounded text-[9px] font-bold transition-all ${
+                                      className={`px-1.5 py-0.5 rounded text-[13px] font-bold transition-all ${
                                         regattaForm.boatClass === cls
-                                          ? "bg-orange-600 text-white"
+                                          ? "bg-[var(--sp-harbour-teal)] text-white"
                                           : "bg-white/5 text-slate-400 hover:text-white"
                                       }`}
                                     >
@@ -528,7 +528,7 @@ export function AdminRegattasPanel({
 
                           {/* Calendar & Schedule metadata */}
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               End Date (optional)
                             </label>
                             <input
@@ -544,7 +544,7 @@ export function AdminRegattasPanel({
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Venue
                             </label>
                             <input
@@ -561,7 +561,7 @@ export function AdminRegattasPanel({
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Organizer / Host
                             </label>
                             <input
@@ -594,14 +594,14 @@ export function AdminRegattasPanel({
                                 <strong className="text-amber-300">
                                   Official Selection Trial / Qualifier
                                 </strong>
-                                <span className="block text-[10px] text-slate-500 leading-snug">
+                                <span className="block text-[13px] text-slate-500 leading-snug">
                                   Highlights this event on the upcoming calendar with a special Selection Trial badge.
                                 </span>
                               </span>
                             </label>
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Notice of Race (NOR) URL
                             </label>
                             <input
@@ -618,7 +618,7 @@ export function AdminRegattasPanel({
                             />
                           </div>
                           <div>
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Registration / Entry Portal URL
                             </label>
                             <input
@@ -635,7 +635,7 @@ export function AdminRegattasPanel({
                             />
                           </div>
                           <div className="sm:col-span-2">
-                            <label className="text-[10px] font-bold text-slate-500 uppercase">
+                            <label className="text-[12px] font-bold text-slate-500 uppercase">
                               Schedule Notes / Description
                             </label>
                             <input

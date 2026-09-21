@@ -19,19 +19,19 @@ export function DbOffline(_props: { message?: string }) {
       <div className="flex flex-wrap justify-center gap-3 pt-2">
         <a
           href=""
-          className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500"
+          className="rounded-full bg-orange-600 px-5 py-2 text-[15px] font-semibold text-white hover:bg-orange-500"
         >
           Try again
         </a>
         <Link
           href="/rankings"
-          className="rounded-full border border-white/10 px-5 py-2 text-xs font-bold text-white"
+          className="rounded-full border border-white/10 px-5 py-2 text-[15px] font-semibold text-white"
         >
           View rankings
         </Link>
         <Link
           href="/support"
-          className="rounded-full border border-white/10 px-5 py-2 text-xs font-bold text-slate-300"
+          className="rounded-full border border-white/10 px-5 py-2 text-[15px] font-semibold text-slate-300"
         >
           Contact support
         </Link>

@@ -19,7 +19,7 @@ export function ConditionChip({
           onClick();
         }}
         title="Click to toggle condition (Race Ready / Practice Only / Needs Repair)"
-        className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[9px] font-bold transition hover:opacity-80 touch-manipulation cursor-pointer ${s.className}`}
+        className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[13px] font-bold transition hover:opacity-80 touch-manipulation cursor-pointer ${s.className}`}
       >
         <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
         {s.label}
@@ -28,7 +28,7 @@ export function ConditionChip({
   }
   return (
     <span
-      className={`inline-flex rounded-full border px-1.5 py-0.5 text-[9px] font-bold ${s.className}`}
+      className={`inline-flex rounded-full border px-1.5 py-0.5 text-[11px] font-bold ${s.className}`}
     >
       {s.label}
     </span>

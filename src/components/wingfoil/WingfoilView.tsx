@@ -214,11 +214,11 @@ export function WingfoilView({
           <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-xs">
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)]/10 px-2 py-0.5 rounded border border-[var(--sp-harbour-teal)]/20">
+                <span className="text-[12px] font-black uppercase tracking-wider text-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)]/10 px-2 py-0.5 rounded border border-[var(--sp-harbour-teal)]/20">
                   {activeRegatta.format}
                 </span>
                 {activeRegatta.seriesPart && (
-                  <span className="text-[10px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-amber-200">
+                  <span className="text-[11px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded border border-amber-200">
                     {activeRegatta.seriesPart}
                   </span>
                 )}
@@ -239,7 +239,7 @@ export function WingfoilView({
             </div>
             <div className="text-xs text-[var(--sp-charcoal-slate)] md:text-right border-t md:border-t-0 pt-2 md:pt-0 border-[var(--sp-cool-veil)] shrink-0">
               <p className="font-semibold text-[var(--sp-harbour-shadow)]">Organized by {activeRegatta.organizer}</p>
-              <p className="text-[11px] text-[var(--sp-harbour-teal)] font-mono mt-0.5">{activeRegatta.scoringSystem}</p>
+              <p className="text-[13px] text-[var(--sp-harbour-teal)] font-mono mt-0.5">{activeRegatta.scoringSystem}</p>
             </div>
           </div>
 
@@ -254,7 +254,7 @@ export function WingfoilView({
               <div className="hidden md:block rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] overflow-hidden shadow-xs">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-[var(--sp-sailcloth)] border-b border-[var(--sp-cool-veil)] text-[10px] uppercase tracking-wider text-[var(--sp-slate-soft)] font-bold">
+                    <thead className="bg-[var(--sp-sailcloth)] border-b border-[var(--sp-cool-veil)] text-[12px] uppercase tracking-wider text-[var(--sp-slate-soft)] font-bold">
                       <tr>
                         <th className="px-4 py-3 w-12 text-center">Rank</th>
                         <th className="px-4 py-3 min-w-[12rem]">Racer / Sailor</th>
@@ -281,7 +281,7 @@ export function WingfoilView({
                           </td>
                           <td className="px-4 py-3">
                             <p className="font-bold text-[var(--sp-harbour-shadow)]">{racer.name}</p>
-                            <p className="text-[10px] text-[var(--sp-slate-soft)]">{normalizeWingfoilCategory(racer.ageCategory)}</p>
+                            <p className="text-[13px] text-[var(--sp-slate-soft)]">{normalizeWingfoilCategory(racer.ageCategory)}</p>
                           </td>
                           <td className="px-2 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
                             {racer.sailNumber}
@@ -291,7 +291,7 @@ export function WingfoilView({
                           </td>
                           <td className="px-3 py-3 min-w-[10rem]">
                             <p className="text-[var(--sp-charcoal-slate)] font-medium truncate">{racer.club}</p>
-                            <p className="text-[10px] text-[var(--sp-slate-soft)] truncate">{racer.schoolName}</p>
+                            <p className="text-[13px] text-[var(--sp-slate-soft)] truncate">{racer.schoolName}</p>
                           </td>
                           {Array.from({ length: maxRaces }).map((_, i) => {
                             const r = racer.races[i];
@@ -335,7 +335,7 @@ export function WingfoilView({
                               <div className="space-y-1.5 max-w-sm mx-auto">
                                 <p className="text-sm font-bold text-[var(--sp-harbour-shadow)]">Upcoming Round</p>
                                 <p className="text-xs text-[var(--sp-charcoal-slate)]">{activeRegatta.rulesNotes}</p>
-                                <p className="text-[11px] text-[var(--sp-harbour-teal)] font-mono pt-1">Scheduled dates: {activeRegatta.dates}</p>
+                                <p className="text-[13px] text-[var(--sp-harbour-teal)] font-mono pt-1">Scheduled dates: {activeRegatta.dates}</p>
                               </div>
                             ) : (
                               "No competitors match the selected filter."
@@ -346,7 +346,7 @@ export function WingfoilView({
                     </tbody>
                   </table>
                 </div>
-                <div className="border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/40 px-4 py-2 text-[10px] text-[var(--sp-slate-soft)] flex items-center justify-between">
+                <div className="border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/40 px-4 py-2 text-[13px] text-[var(--sp-slate-soft)] flex items-center justify-between">
                   <span>Scoring: Low points win. {activeRegatta.scoringSystem || "Discards applied after 4+ races."}</span>
                   <span>RDG = Redress · DNF = Did Not Finish · DSQ = Disqualified · DNC = Did Not Compete</span>
                 </div>
@@ -372,29 +372,29 @@ export function WingfoilView({
                       <p className="font-bold text-[var(--sp-harbour-shadow)] text-sm leading-tight">
                         {racer.name}
                       </p>
-                      <p className="text-[10px] text-[var(--sp-slate-soft)] mt-0.5">
+                      <p className="text-[13px] text-[var(--sp-slate-soft)] mt-0.5">
                         Sail #{racer.sailNumber} · {racer.gender === "M" ? "Male" : "Female"} · {normalizeWingfoilCategory(racer.ageCategory)}
                       </p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-[9px] uppercase font-bold text-[var(--sp-slate-soft)] tracking-wider">
+                    <span className="text-[12px] uppercase font-bold text-[var(--sp-slate-soft)] tracking-wider">
                       Nett
                     </span>
                     <p className="font-black text-[var(--sp-harbour-shadow)] text-base leading-none">
-                      {racer.nettScore} <span className="text-[10px] text-[var(--sp-slate-soft)] font-normal">pts</span>
+                      {racer.nettScore} <span className="text-[13px] text-[var(--sp-slate-soft)] font-normal">pts</span>
                     </p>
                   </div>
                 </div>
 
-                <div className="text-[11px] text-[var(--sp-charcoal-slate)] bg-[var(--sp-sailcloth)] rounded-lg px-2.5 py-1.5 border border-[var(--sp-cool-veil)]">
+                <div className="text-[13px] text-[var(--sp-charcoal-slate)] bg-[var(--sp-sailcloth)] rounded-lg px-2.5 py-1.5 border border-[var(--sp-cool-veil)]">
                   <p className="font-medium text-[var(--sp-charcoal-slate)] truncate">{racer.club}</p>
-                  <p className="text-[10px] text-[var(--sp-slate-soft)] truncate">{racer.schoolName}</p>
+                  <p className="text-[13px] text-[var(--sp-slate-soft)] truncate">{racer.schoolName}</p>
                 </div>
 
                 {/* Heat Finishes Strip */}
                 <div>
-                  <div className="flex items-center justify-between text-[9px] text-[var(--sp-slate-soft)] font-bold uppercase mb-1">
+                  <div className="flex items-center justify-between text-[12px] text-[var(--sp-slate-soft)] font-bold uppercase mb-1">
                     <span>Heats R1–R{racer.races.length}</span>
                     <span>Gross: {racer.grossScore}</span>
                   </div>
@@ -402,7 +402,7 @@ export function WingfoilView({
                     {racer.races.map((r, i) => (
                       <div
                         key={i}
-                        className={`min-w-[2rem] flex-1 rounded py-1 px-1 text-[10px] border ${
+                        className={`min-w-[2rem] flex-1 rounded py-1 px-1 text-[11px] border ${
                           r.isDiscarded
                             ? "bg-[var(--sp-sailcloth)] border-[var(--sp-cool-veil)] text-[var(--sp-slate-soft)] line-through"
                             : r.score === 1
@@ -431,7 +431,7 @@ export function WingfoilView({
                   <div className="space-y-1.5 max-w-sm mx-auto">
                     <p className="text-sm font-bold text-[var(--sp-harbour-shadow)]">Upcoming Round</p>
                     <p className="text-xs text-[var(--sp-charcoal-slate)]">{activeRegatta.rulesNotes}</p>
-                    <p className="text-[11px] text-[var(--sp-harbour-teal)] font-mono pt-1">Scheduled dates: {activeRegatta.dates}</p>
+                    <p className="text-[13px] text-[var(--sp-harbour-teal)] font-mono pt-1">Scheduled dates: {activeRegatta.dates}</p>
                   </div>
                 ) : (
                   "No competitors match the selected filter."

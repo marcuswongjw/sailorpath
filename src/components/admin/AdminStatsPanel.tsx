@@ -40,14 +40,14 @@ function Card({
         : "text-white";
   return (
     <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4 min-w-0">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+      <p className="text-[12px] font-bold uppercase tracking-wider text-slate-500">
         {label}
       </p>
       <p className={`mt-1.5 text-2xl font-black tabular-nums ${valueColor}`}>
         {value}
       </p>
       {hint && (
-        <p className="mt-1 text-[11px] text-slate-500 leading-snug">{hint}</p>
+        <p className="mt-1 text-[13px] text-slate-500 leading-snug">{hint}</p>
       )}
     </div>
   );
@@ -157,7 +157,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {stats?.generatedAt && (
-            <span className="text-[10px] text-slate-500 tabular-nums">
+            <span className="text-[13px] text-slate-500 tabular-nums">
               As of {new Date(stats.generatedAt).toLocaleString()}
             </span>
           )}
@@ -165,7 +165,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
             type="button"
             onClick={() => void statsQuery.refetch()}
             disabled={loading}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] font-bold text-slate-200 hover:border-orange-500/40 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[13px] font-bold text-slate-200 hover:border-orange-500/40 disabled:opacity-50"
           >
             <RefreshCw
               className={`h-3.5 w-3.5 ${loading ? "animate-spin text-orange-400" : ""}`}
@@ -305,14 +305,14 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
                 <h2 className="text-sm font-black text-white tracking-tight">
                   Recent account activity
                 </h2>
-                <p className="mt-1 text-[11px] text-slate-500">
+                <p className="mt-1 text-[13px] text-slate-500">
                   Superadmin only. A session can remain valid while the person
                   is away, so this does not claim real-time online status.
                 </p>
               </div>
               <div className="overflow-x-auto rounded-2xl border border-white/5 bg-white/[0.03]">
-                <table className="w-full min-w-[720px] text-left text-[11px]">
-                  <thead className="border-b border-white/5 text-[10px] uppercase tracking-wider text-slate-500">
+                <table className="w-full min-w-[720px] text-left text-sm">
+                  <thead className="border-b border-white/5 text-[12px] uppercase tracking-wider text-slate-500">
                     <tr>
                       <th className="px-4 py-3 font-bold">Account</th>
                       <th className="px-4 py-3 font-bold">Role</th>

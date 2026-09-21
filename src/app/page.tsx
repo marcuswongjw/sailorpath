@@ -87,7 +87,7 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs sm:text-sm text-slate-soft">
+          <div className="mt-5 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[13px] sm:text-sm text-slate-soft">
             {["Free to use", "No credit card", "Data from official SSF results"].map(
               (item) => (
                 <span key={item} className="inline-flex items-center gap-1.5">

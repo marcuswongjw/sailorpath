@@ -84,7 +84,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-harbour hover:bg-sailcloth hover:text-harbour-shadow transition-colors"
       >
         Selection trials 2026
       </Link>
@@ -105,7 +105,7 @@ export function SiteHeader() {
 
   const classesLinks = (
     <>
-      <p className="px-3.5 pb-1 pt-1.5 text-[9px] font-bold uppercase tracking-wider text-slate-soft">
+      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
         ILCA 4
       </p>
       <Link
@@ -139,7 +139,7 @@ export function SiteHeader() {
         ILCA 4 regattas
       </Link>
       <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 text-[9px] font-bold uppercase tracking-wider text-slate-soft">
+      <p className="px-3.5 pb-1 text-xs font-bold uppercase tracking-wider text-slate-soft">
         WingFoil
       </p>
       <Link
@@ -163,7 +163,7 @@ export function SiteHeader() {
         Funding &amp; selection policy
       </Link>
       <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 text-[9px] font-bold uppercase tracking-wider text-slate-soft">
+      <p className="px-3.5 pb-1 text-xs font-bold uppercase tracking-wider text-slate-soft">
         Techno 293
       </p>
       <Link
@@ -548,7 +548,7 @@ export function SiteHeader() {
                   <Link
                     href="/register"
                     onClick={() => setMobileOpen(false)}
-                    className="rounded-lg bg-soft-aqua/20 border border-soft-aqua/40 px-3 py-2.5 text-center text-sm font-semibold text-white hover:bg-soft-aqua/30 touch-manipulation flex items-center justify-center min-h-[2.75rem]"
+                    className="rounded-lg border border-soft-aqua/40 px-3 py-2.5 text-center text-sm font-semibold text-white hover:bg-harbour-mid touch-manipulation flex items-center justify-center min-h-[2.75rem]"
                   >
                     Create account
                   </Link>

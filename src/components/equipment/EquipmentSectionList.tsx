@@ -54,12 +54,12 @@ export function EquipmentSectionList({
                   <p className="text-[13px] font-bold text-[var(--sp-charcoal)] tracking-tight flex items-center gap-2">
                     {sec.label}
                     {!sec.isEmpty && (
-                      <span className="text-[10px] font-bold text-[var(--sp-slate-soft)] bg-white border border-[var(--sp-cool-veil)] px-1.5 py-0.5 rounded-full tabular-nums">
+                      <span className="text-[11px] font-bold text-[var(--sp-slate-soft)] bg-white border border-[var(--sp-cool-veil)] px-1.5 py-0.5 rounded-full tabular-nums">
                         {sec.items.length}
                       </span>
                     )}
                   </p>
-                  <p className="text-[11px] text-[var(--sp-slate-soft)] mt-0.5 leading-snug">
+                  <p className="text-[13px] text-[var(--sp-slate-soft)] mt-0.5 leading-snug">
                     {sec.hint}
                   </p>
                 </div>
@@ -68,7 +68,7 @@ export function EquipmentSectionList({
                 <button
                   type="button"
                   onClick={() => onQuickAdd(sec.categories[0])}
-                  className="shrink-0 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-3 py-1 text-[11px] font-bold text-[var(--sp-harbour-teal)] transition-colors shadow-2xs touch-manipulation"
+                  className="shrink-0 rounded-full border border-[var(--sp-cool-veil)] bg-white hover:bg-[var(--sp-sailcloth)] px-3 py-1 text-[13px] font-bold text-[var(--sp-harbour-teal)] transition-colors shadow-2xs touch-manipulation"
                 >
                   + Add
                 </button>
@@ -82,7 +82,7 @@ export function EquipmentSectionList({
                     key={cat}
                     type="button"
                     onClick={() => onQuickAdd(cat)}
-                    className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-[11px] font-bold text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-teal)] transition-colors touch-manipulation shadow-2xs"
+                    className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-[13px] font-bold text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-teal)] transition-colors touch-manipulation shadow-2xs"
                   >
                     + {categoryLabel(cat)}
                   </button>
@@ -91,7 +91,7 @@ export function EquipmentSectionList({
                   <button
                     type="button"
                     onClick={onOpenFullRig}
-                    className="rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/20 px-2.5 py-1 text-[11px] font-bold text-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-mist)]/30 transition-colors touch-manipulation shadow-2xs"
+                    className="rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/20 px-2.5 py-1 text-[15px] font-bold text-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-mist)]/30 transition-colors touch-manipulation shadow-2xs"
                   >
                     + Full rig set
                   </button>

@@ -41,7 +41,7 @@ export function FullRigForm({
           className={fieldClass}
         />
       )}
-      <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
+      <p className="text-[13px] text-[var(--sp-slate-soft)] leading-relaxed">
         Creates primary mast, boom, and sprit with the same brand — typical for
         Optimist rig replacements.
       </p>

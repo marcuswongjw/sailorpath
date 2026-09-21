@@ -28,7 +28,7 @@ export function AdminSignInGate({
           <BrandMark size="lg" />
         </div>
         <div className="space-y-2">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+          <p className="text-[12px] font-bold uppercase tracking-wider text-slate-500">
             <BrandWordmark className="text-sm normal-case tracking-tight" />{" "}
             Admin
           </p>
@@ -52,7 +52,7 @@ export function AdminSignInGate({
         >
           Sign in to Admin Portal
         </a>
-        <p className="text-[10px] text-slate-500 leading-relaxed">
+        <p className="text-[13px] text-slate-500 leading-relaxed">
           After login you return to{" "}
           <code className="text-slate-400 break-all">{nextUrl}</code>.
         </p>

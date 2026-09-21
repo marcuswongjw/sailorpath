@@ -437,7 +437,7 @@ export function AdminWingfoilPanel({
               <div>
                 <div className="flex items-center justify-between gap-2 mb-1.5">
                   <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
+                    className={`text-[12px] font-bold px-2 py-0.5 rounded-full uppercase ${
                       regatta.status === "Completed"
                         ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30"
                         : "bg-[var(--sp-harbour-teal)]/15 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/30"
@@ -445,7 +445,7 @@ export function AdminWingfoilPanel({
                   >
                     {regatta.status}
                   </span>
-                  <span className="text-[11px] text-[var(--sp-slate-soft)] font-mono">
+                  <span className="text-[13px] text-[var(--sp-slate-soft)] font-mono">
                     {count} sailors
                   </span>
                 </div>
@@ -458,7 +458,7 @@ export function AdminWingfoilPanel({
               </div>
 
               <div className="flex items-center justify-between pt-2 border-t border-[var(--sp-cool-veil)] text-xs">
-                <span className="text-[var(--sp-slate-soft)] font-mono text-[10px]">
+                <span className="text-[var(--sp-slate-soft)] font-mono text-[13px]">
                   {regatta.shortName}
                 </span>
                 <div className="flex items-center gap-1.5">
@@ -552,7 +552,7 @@ export function AdminWingfoilPanel({
           <div className="overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)]">
             <table className="w-full text-left text-xs border-collapse">
               <thead>
-                <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[11px]">
+                <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[12px]">
                   <th className="py-2.5 px-3 text-center w-12">Rank</th>
                   <th className="py-2.5 px-3">Sailor</th>
                   <th className="py-2.5 px-3 text-center">Sail #</th>
@@ -587,14 +587,14 @@ export function AdminWingfoilPanel({
                       {sailor.gender || "M"}
                     </td>
                     <td className="py-3 px-3 text-center">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20">
+                      <span className="px-2 py-0.5 rounded text-[11px] font-bold bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20">
                         {normalizeWingfoilCategory(sailor.ageCategory)}
                       </span>
                     </td>
                     <td className="py-3 px-3 text-[var(--sp-slate-soft)]">
                       <p className="font-medium text-[var(--sp-charcoal-slate)] truncate max-w-[8rem]">{sailor.club || "—"}</p>
                       {sailor.schoolName && (
-                        <p className="text-[10px] text-[var(--sp-slate-soft)] truncate max-w-[8rem]">{sailor.schoolName}</p>
+                        <p className="text-[13px] text-[var(--sp-slate-soft)] truncate max-w-[8rem]">{sailor.schoolName}</p>
                       )}
                     </td>
                     {Array.from({ length: maxRaces }).map((_, i) => {
@@ -765,7 +765,7 @@ export function AdminWingfoilPanel({
                   placeholder="e.g. 1, 2, 1, (4), 2, 1"
                   className="w-full sp-input py-2 font-mono"
                 />
-                <p className="text-[10px] text-[var(--sp-slate-soft)] mt-1">
+                <p className="text-[13px] text-[var(--sp-slate-soft)] mt-1">
                   Example: 1, 2, (9 DNF), 3, 1 (parentheses mark discarded scores)
                 </p>
               </div>

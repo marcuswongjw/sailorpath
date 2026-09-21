@@ -19,7 +19,7 @@ export function EquipmentEmptyState({
         <p className="text-sm font-bold text-[var(--sp-charcoal)]">
           {isOwner ? "Build your gear bag" : "No gear logged yet"}
         </p>
-        <p className="text-[11px] text-[var(--sp-slate-soft)] mt-1 max-w-xs mx-auto leading-relaxed">
+        <p className="text-[13px] text-[var(--sp-slate-soft)] mt-1 max-w-xs mx-auto leading-relaxed">
           {isOwner
             ? "Hull, sail, and foils stay private — only you and linked parents can see them. Start with what you race most."
             : "Only the sailor can add equipment from their profile. Gear stays private to the family."}
@@ -38,7 +38,7 @@ export function EquipmentEmptyState({
               key={cat}
               type="button"
               onClick={() => onQuickAdd(cat)}
-              className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3.5 py-2 text-[11px] font-bold text-[var(--sp-charcoal)] hover:border-[var(--sp-charcoal)]/40 shadow-xs touch-manipulation"
+              className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3.5 py-2 text-[13px] font-bold text-[var(--sp-charcoal)] hover:border-[var(--sp-charcoal)]/40 shadow-xs touch-manipulation"
             >
               + {label}
             </button>
@@ -46,7 +46,7 @@ export function EquipmentEmptyState({
           <button
             type="button"
             onClick={onOpenFullRig}
-            className="rounded-full border border-orange-300 bg-orange-50 px-3.5 py-2 text-[11px] font-bold text-orange-900 hover:bg-orange-100 shadow-xs touch-manipulation"
+            className="rounded-full border border-orange-300 bg-orange-50 px-3.5 py-2 text-[15px] font-bold text-orange-900 hover:bg-orange-100 shadow-xs touch-manipulation"
           >
             + Full rig set
           </button>

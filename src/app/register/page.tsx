@@ -136,12 +136,12 @@ function RegisterForm() {
             type="button"
             disabled={resendBusy}
             onClick={() => void resendConfirmation()}
-            className="text-xs font-bold text-[var(--sp-racing-orange)] hover:underline disabled:opacity-50"
+            className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline disabled:opacity-50"
           >
             {resendBusy ? "Sending…" : "Resend confirmation email"}
           </button>
           {resendMessage && (
-            <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
+            <p className="text-[13px] text-[var(--sp-slate-soft)] leading-relaxed">
               {resendMessage}
             </p>
           )}
@@ -152,7 +152,7 @@ function RegisterForm() {
 
   if (done === "session") {
     return (
-      <div className="min-h-[70vh] flex items-center justify-center text-[var(--sp-racing-orange)] text-sm font-bold">
+      <div className="min-h-[70vh] flex items-center justify-center text-[var(--sp-harbour-teal)] text-sm font-bold">
         Account created — opening {isCoachSignup ? "Coach Dashboard" : "My account"}…
       </div>
     );
@@ -210,7 +210,7 @@ function RegisterForm() {
               aria-describedby="password-help"
               className="sp-input w-full text-sm font-normal"
             />
-            <span id="password-help" className="block font-normal text-[var(--sp-slate-soft)] text-[11px]">
+            <span id="password-help" className="block font-normal text-[var(--sp-slate-soft)] text-[13px]">
               Use at least 6 characters.
             </span>
           </label>
@@ -222,7 +222,7 @@ function RegisterForm() {
             {busy ? "Creating…" : isCoachSignup ? "Create coach account" : "Create account"}
           </button>
         </form>
-        <p className="text-center text-[11px] leading-relaxed text-[var(--sp-slate-soft)]">
+        <p className="text-center text-[13px] leading-relaxed text-[var(--sp-slate-soft)]">
           By creating an account, you agree to the{" "}
           <Link href="/terms" className="font-semibold text-[var(--sp-charcoal-slate)] hover:underline">
             Terms
@@ -237,7 +237,7 @@ function RegisterForm() {
           Have an account?{" "}
           <Link
             href={`/login?next=${encodeURIComponent(nextTarget)}`}
-            className="text-[var(--sp-racing-orange)] font-bold hover:underline"
+            className="text-[var(--sp-harbour-teal)] font-bold hover:underline"
           >
             Log in
           </Link>

@@ -115,7 +115,7 @@ export function Techno293View({
               <span className="text-xs font-bold uppercase tracking-widest text-[var(--sp-harbour-teal)]">
                 World Sailing International Class
               </span>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-bold bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/20">
                 <Sparkles className="h-3 w-3" /> One Design
               </span>
             </div>
@@ -289,7 +289,7 @@ export function Techno293View({
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs border-collapse">
                   <thead>
-                    <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[11px]">
+                    <tr className="border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)] uppercase tracking-wider font-semibold text-[12px]">
                       <th className="py-3 px-3 sm:px-4 w-12 text-center">Rank</th>
                       <th className="py-3 px-3 sm:px-4">Sailor</th>
                       <th className="py-3 px-2 sm:px-3 text-center">Sail #</th>
@@ -323,7 +323,7 @@ export function Techno293View({
                         <td className="py-3.5 px-3 sm:px-4">
                           <div className="font-bold text-[var(--sp-harbour-shadow)]">{s.name}</div>
                           {(s.schoolName || s.club) && (
-                            <div className="text-[11px] text-[var(--sp-slate-soft)]">
+                            <div className="text-[13px] text-[var(--sp-slate-soft)]">
                               {[s.schoolName, s.club].filter(Boolean).join(" · ")}
                             </div>
                           )}
@@ -334,7 +334,7 @@ export function Techno293View({
                         </td>
 
                         <td className="py-3.5 px-2 sm:px-3 text-center">
-                          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
+                          <span className="px-2 py-0.5 rounded-md text-[11px] font-bold bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal-slate)] border border-[var(--sp-cool-veil)]">
                             {s.ageCategory || s.division || "Open"}
                           </span>
                         </td>

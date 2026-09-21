@@ -227,14 +227,14 @@ export function HeroAthleteCard({
                 </h1>
 
                 <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold ${fleetBadge.className}`}
+                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[13px] font-bold ${fleetBadge.className}`}
                 >
                   {fleetBadge.label}
                 </span>
 
                 {resolvedNatSquad && (
                   <span
-                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold ${natSquadBadgeClass(
+                    className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[13px] font-bold ${natSquadBadgeClass(
                       resolvedNatSquad
                     )}`}
                   >
@@ -243,12 +243,12 @@ export function HeroAthleteCard({
                 )}
 
                 {profileClaimed || profileVerified ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-bold text-emerald-800">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[11px] font-bold text-emerald-800">
                     <BadgeCheck className="h-3 w-3 text-emerald-600" />
                     Claimed
                   </span>
                 ) : (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-800">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-200 px-2 py-0.5 text-[11px] font-bold text-amber-800">
                     <ShieldAlert className="h-3 w-3 text-amber-600" />
                     Unclaimed
                   </span>
@@ -413,7 +413,7 @@ export function HeroAthleteCard({
                 <button
                   type="button"
                   onClick={() => onSelectBoatClass("optimist")}
-                  className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-bold transition ${
+                  className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-bold transition ${
                     selectedBoatClass === "optimist"
                       ? "bg-harbour text-sailcloth shadow-xs"
                       : "text-slate-soft hover:text-charcoal"
@@ -425,7 +425,7 @@ export function HeroAthleteCard({
                 <button
                   type="button"
                   onClick={() => onSelectBoatClass("ilca4")}
-                  className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[11px] font-bold transition ${
+                  className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-bold transition ${
                     selectedBoatClass === "ilca4"
                       ? "bg-harbour text-sailcloth shadow-xs"
                       : "text-slate-soft hover:text-charcoal"
@@ -435,7 +435,7 @@ export function HeroAthleteCard({
                   ILCA 4
                 </button>
               </div>
-              <span className="text-[10px] text-slate-soft hidden sm:inline">
+              <span className="text-[13px] text-slate-soft hidden sm:inline">
                 Dual-class athlete
               </span>
             </div>
@@ -453,7 +453,7 @@ export function HeroAthleteCard({
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1">
           {/* Metric 1: National Ranking */}
           <div className="rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-slate-soft text-[10px] font-bold uppercase tracking-wider">
+            <div className="flex items-center justify-between text-slate-soft text-[12px] font-bold uppercase tracking-wider">
               <span>{standingIsIlca ? "ILCA 4 Rank" : "National Rank"}</span>
               <Trophy
                 className={`h-3.5 w-3.5 ${
@@ -476,12 +476,12 @@ export function HeroAthleteCard({
                   : "—"}
               </span>
               {activeStanding?.fleetSize ? (
-                <span className="text-[11px] text-slate-soft tabular-nums font-medium">
+                <span className="text-[13px] text-slate-soft tabular-nums font-medium">
                   of {activeStanding.fleetSize}
                 </span>
               ) : null}
             </div>
-            <p className="text-[11px] text-slate-soft mt-1 truncate">
+            <p className="text-[13px] text-slate-soft mt-1 truncate">
               {activeStanding?.best3of5 != null
                 ? `Best 3 of 5: ${activeStanding.best3of5} pts`
                 : activeStanding?.periodLabel || "2026 Series"}
@@ -490,7 +490,7 @@ export function HeroAthleteCard({
 
           {/* Metric 2: Fleet Qualification / Standing */}
           <div className="rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-slate-soft text-[10px] font-bold uppercase tracking-wider">
+            <div className="flex items-center justify-between text-slate-soft text-[12px] font-bold uppercase tracking-wider">
               <span>Status</span>
               <BadgeCheck className="h-3.5 w-3.5 text-harbour" />
             </div>
@@ -501,7 +501,7 @@ export function HeroAthleteCard({
                   : fleetBadge.label}
               </span>
             </div>
-            <p className="text-[11px] text-harbour mt-1 truncate font-medium">
+            <p className="text-[13px] text-harbour mt-1 truncate font-medium">
               {activeStanding?.trendNote && !activeStanding.trendNote.toLowerCase().includes("carry-forward")
                 ? activeStanding.trendNote
                 : fleetBadge.label === "Gold fleet"
@@ -512,7 +512,7 @@ export function HeroAthleteCard({
 
           {/* Metric 3: Medals or Regatta Experience */}
           <div className="col-span-2 sm:col-span-1 rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-slate-soft text-[10px] font-bold uppercase tracking-wider">
+            <div className="flex items-center justify-between text-slate-soft text-[12px] font-bold uppercase tracking-wider">
               <span>{hasMedals ? "Career Medals" : "Regatta Record"}</span>
               {hasMedals ? (
                 <Medal className="h-3.5 w-3.5 text-amber-500" />
@@ -534,7 +534,7 @@ export function HeroAthleteCard({
               )}
             </div>
             {hasMedals && (
-              <p className="text-[11px] text-slate-soft mt-1 truncate">
+              <p className="text-[13px] text-slate-soft mt-1 truncate">
                 {totalRegattasCount} logged regattas
               </p>
             )}
@@ -548,7 +548,7 @@ export function HeroAthleteCard({
             <button
               type="button"
               onClick={handleShare}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-cool-veil bg-warm-white px-3 py-1.5 text-[11px] font-bold text-charcoal hover:bg-sailcloth transition touch-manipulation cursor-pointer shadow-2xs"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-cool-veil bg-warm-white px-3 py-1.5 text-[13px] font-bold text-charcoal hover:bg-sailcloth transition touch-manipulation cursor-pointer shadow-2xs"
             >
               {copied ? (
                 <>
@@ -618,7 +618,7 @@ export function HeroAthleteCard({
                 <button
                   type="button"
                   onClick={onTogglePreviewPublic}
-                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[11px] font-bold transition touch-manipulation cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
                     previewPublic
                       ? "border-harbour/40 bg-aqua-mist text-harbour"
                       : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
@@ -637,7 +637,7 @@ export function HeroAthleteCard({
                 <button
                   type="button"
                   onClick={onToggleEditing}
-                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[11px] font-bold transition touch-manipulation cursor-pointer ${
+                  className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[13px] font-bold transition touch-manipulation cursor-pointer ${
                     editing
                       ? "border-harbour/40 bg-aqua-mist text-harbour"
                       : "border-cool-veil bg-warm-white text-charcoal hover:bg-sailcloth"
@@ -653,11 +653,11 @@ export function HeroAthleteCard({
 
         {/* Feedback messages */}
         {avatarMsg && (
-          <p className="text-[11px] font-medium text-emerald-600">{avatarMsg}</p>
+          <p className="text-[13px] font-medium text-emerald-600">{avatarMsg}</p>
         )}
         {claimMsg && (
           <p
-            className={`text-[11px] font-medium ${
+            className={`text-[13px] font-medium ${
               claimStatus === "error" ? "text-rose-600" : "text-emerald-600"
             }`}
           >

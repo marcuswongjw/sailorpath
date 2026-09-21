@@ -74,9 +74,9 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
             key={f}
             type="button"
             onClick={() => setFilter(f)}
-            className={`rounded-full px-3 py-1.5 text-[11px] font-bold capitalize ${
+            className={`rounded-full px-3 py-1.5 text-[13px] font-bold capitalize ${
               filter === f
-                ? "bg-orange-600 text-white"
+                ? "bg-[var(--sp-harbour-teal)] text-white"
                 : "bg-white/5 text-slate-400 border border-white/10"
             }`}
           >
@@ -104,17 +104,17 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   {m.email}
                 </a>
                 {m.name && (
-                  <p className="text-[11px] text-slate-500 mt-0.5">{m.name}</p>
+                  <p className="text-[13px] text-slate-500 mt-0.5">{m.name}</p>
                 )}
-                <p className="text-[10px] text-slate-600 font-mono mt-1">
+                <p className="text-[13px] text-slate-600 font-mono mt-1">
                   {m.topic || "other"} ·{" "}
                   {m.createdAt ? new Date(m.createdAt).toLocaleString() : ""}
                 </p>
               </div>
               <span
-                className={`self-start rounded-full px-2 py-0.5 text-[10px] font-black uppercase ${
+                className={`self-start rounded-full px-2 py-0.5 text-[12px] font-black uppercase ${
                   m.status === "new"
-                    ? "bg-amber-500/15 text-amber-200 border border-amber-500/25"
+                    ? "bg-amber-500/15 text-amber-800 border border-amber-500/25"
                     : m.status === "resolved"
                       ? "bg-emerald-500/15 text-emerald-300 border border-emerald-500/25"
                       : "bg-white/5 text-slate-400"
@@ -127,7 +127,7 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
               {m.body}
             </p>
             {m.pageUrl && (
-              <p className="text-[10px] text-slate-600 truncate">
+              <p className="text-[13px] text-slate-600 truncate">
                 From: {m.pageUrl}
               </p>
             )}
@@ -135,7 +135,7 @@ export function SupportInboxPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
               <button
                 type="button"
                 onClick={() => void setStatus(m.id, "resolved")}
-                className="inline-flex items-center gap-1 rounded-full bg-emerald-600/90 px-3 py-1.5 text-[11px] font-bold text-white"
+                className="inline-flex items-center gap-1 rounded-full bg-emerald-600/90 px-3 py-1.5 text-[15px] font-bold text-white"
               >
                 <CheckCircle className="h-3.5 w-3.5" />
                 Mark resolved

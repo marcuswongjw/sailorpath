@@ -60,7 +60,7 @@ export function ProfilePerformanceSummary({
       {showSummary && (
         <section className={`${cardClass} overflow-hidden`}>
           <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-1">
-            <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
+            <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
               {keyStatsTitle}
             </h2>
           </div>
@@ -83,11 +83,11 @@ export function ProfilePerformanceSummary({
                 >
                   {stat.value}
                 </p>
-                <p className="mt-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-slate-soft leading-tight">
+                <p className="mt-1.5 text-[12px] font-bold uppercase tracking-[0.1em] text-slate-soft leading-tight">
                   {stat.label}
                 </p>
                 {stat.hint && (
-                  <p className="mt-0.5 text-[10px] font-medium text-slate-soft leading-tight normal-case tracking-normal">
+                  <p className="mt-0.5 text-[13px] font-medium text-slate-soft leading-tight normal-case tracking-normal">
                     {stat.hint}
                   </p>
                 )}
@@ -99,7 +99,7 @@ export function ProfilePerformanceSummary({
 
       {showMedals && (
         <section className={`${cardClass} p-4 sm:p-5`}>
-          <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft mb-3">
+          <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft mb-3">
             {medalTallyTitle}
           </h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -121,7 +121,7 @@ export function ProfilePerformanceSummary({
                 <p className="mt-1 text-2xl font-black text-harbour-shadow tabular-nums">
                   {medal.value}
                 </p>
-                <p className="mt-0.5 text-[11px] font-semibold text-slate-soft">
+                <p className="mt-0.5 text-[13px] font-semibold text-slate-soft">
                   {medal.label}
                 </p>
               </div>
@@ -132,7 +132,7 @@ export function ProfilePerformanceSummary({
 
       {showSummary && (
         <section className={`${cardClass} p-4 sm:p-5`}>
-          <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-soft">
+          <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
             Position trend
           </h2>
           <p className="text-[12px] text-slate-soft mt-0.5 mb-4 font-medium">

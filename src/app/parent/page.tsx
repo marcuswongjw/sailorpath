@@ -34,14 +34,14 @@ export default async function ParentPage() {
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               href="/login?next=%2Fparent"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-harbour-shadow)]/90 text-white px-6 py-3 text-xs font-bold transition-colors shadow-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-deep)] text-white px-6 py-3 text-[15px] font-semibold transition-colors shadow-sm"
             >
               <LogIn className="h-4 w-4" />
               <span>Sign in</span>
             </Link>
             <Link
               href="/demo/parent"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-6 py-3 text-xs font-bold transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 px-6 py-3 text-[15px] font-semibold transition-colors"
             >
               <Sparkles className="h-4 w-4 text-emerald-600" />
               <span>Explore Parent Demo</span>
@@ -52,7 +52,7 @@ export default async function ParentPage() {
             <span>Need to claim your child&apos;s profile?</span>
             <Link
               href="/claim-profile"
-              className="font-bold text-orange-600 hover:underline inline-flex items-center gap-0.5"
+              className="font-bold text-[var(--sp-harbour-teal)] hover:underline inline-flex items-center gap-0.5"
             >
               <span>Claim profile</span>
               <UserPlus className="h-3 w-3" />

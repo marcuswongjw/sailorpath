@@ -48,7 +48,7 @@ function Section({
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs min-w-[640px]">
           <thead>
-            <tr className="text-[10px] font-bold uppercase tracking-wider text-slate-500 border-b border-white/5 bg-white/[0.02]">
+            <tr className="text-[12px] font-bold uppercase tracking-wider text-slate-500 border-b border-white/5 bg-white/[0.02]">
               <th className="px-4 py-2.5 w-[22%]">Metric</th>
               <th className="px-4 py-2.5 w-[38%]">Definition</th>
               <th className="px-4 py-2.5">Why it matters</th>
@@ -60,7 +60,7 @@ function Section({
                 <td className="px-4 py-3">
                   <p className="font-bold text-white leading-snug">{r.metric}</p>
                   {r.source && (
-                    <p className="text-[10px] text-slate-600 mt-1 font-mono">
+                    <p className="text-[13px] text-slate-600 mt-1 font-mono">
                       {r.source}
                     </p>
                   )}
@@ -233,7 +233,7 @@ export function AdminMetricsGuide() {
           <ArrowLeft className="h-3.5 w-3.5" />
           Back to admin
         </Link>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-orange-300">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/25 bg-orange-500/10 px-2.5 py-1 text-[12px] font-black uppercase tracking-wide text-orange-300">
           <Shield className="h-3 w-3" />
           Superadmin
         </span>
@@ -256,7 +256,7 @@ export function AdminMetricsGuide() {
             </p>
           </div>
         </div>
-        <div className="flex flex-wrap gap-2 text-[11px]">
+        <div className="flex flex-wrap gap-2 text-[13px]">
           <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-slate-300">
             North stars weekly
           </span>
@@ -322,7 +322,7 @@ export function AdminMetricsGuide() {
             admin Stats tab for load time).
           </li>
         </ul>
-        <p className="text-[11px] text-slate-500 leading-relaxed pt-1">
+        <p className="text-[13px] text-slate-500 leading-relaxed pt-1">
           Instrumentation already exists for many of these via{" "}
           <code className="text-slate-400">usage_events</code>, claims, support,
           and inventory tables. Live numbers can be added later as small, cached

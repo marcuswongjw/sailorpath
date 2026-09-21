@@ -85,7 +85,7 @@ export function EquipmentCard({
               {displayName(item)}
             </p>
             {partLabel && (
-              <span className="text-[10px] font-bold uppercase tracking-wide text-[var(--sp-slate-soft)] mt-0.5">
+              <span className="text-[12px] font-bold uppercase tracking-wide text-[var(--sp-slate-soft)] mt-0.5">
                 {partLabel}
               </span>
             )}
@@ -99,19 +99,19 @@ export function EquipmentCard({
             />
             <BadgeChip badge={item.badge} label={item.badgeLabel} />
             {item.windRange && (
-              <span className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[10px] font-bold uppercase text-sky-800">
+              <span className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-2 py-0.5 text-[12px] font-bold uppercase text-sky-800">
                 {item.windRange}
               </span>
             )}
             {item.isPrimary && (
-              <span className="inline-flex rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-[10px] font-bold text-amber-900">
+              <span className="inline-flex rounded-full border border-amber-300 bg-amber-50 px-2 py-0.5 text-[11px] font-bold text-amber-900">
                 Primary
               </span>
             )}
             {tags.slice(0, 3).map((t) => (
               <span
                 key={t}
-                className="inline-flex rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-semibold text-[var(--sp-charcoal)]"
+                className="inline-flex rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[11px] font-semibold text-[var(--sp-charcoal)]"
               >
                 {t}
               </span>

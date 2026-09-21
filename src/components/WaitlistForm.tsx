@@ -63,7 +63,7 @@ export function WaitlistForm({
       onSubmit={(e) => void submit(e)}
       className={`${compact ? "mt-3" : "mt-6 mx-auto max-w-md"} space-y-3 text-left`}
     >
-      <label className="block text-[11px] font-bold uppercase tracking-wide text-slate-500">
+      <label className="block text-xs font-bold uppercase tracking-wide text-slate-500">
         Email
         <input
           type="email"
@@ -75,7 +75,7 @@ export function WaitlistForm({
         />
       </label>
       {!presetRole && (
-        <label className="block text-[11px] font-bold uppercase tracking-wide text-slate-500">
+        <label className="block text-xs font-bold uppercase tracking-wide text-slate-500">
           I am a…
           <select
             required
@@ -102,12 +102,12 @@ export function WaitlistForm({
         {busy ? "Submitting…" : submitLabel}
       </button>
       {msg && (
-        <p className="text-center text-[12px] text-harbour font-medium">
+        <p className="text-center text-[13px] text-harbour font-medium">
           {msg}
         </p>
       )}
       {err && (
-        <p className="text-center text-[12px] text-[var(--sp-error)] font-medium">
+        <p className="text-center text-[13px] text-[var(--sp-error)] font-medium">
           {err}
         </p>
       )}

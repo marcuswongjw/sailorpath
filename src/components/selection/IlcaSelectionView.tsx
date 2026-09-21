@@ -244,7 +244,7 @@ export function IlcaSelectionView({
                 <Trophy className="h-4 w-4 text-sky-500 shrink-0" />
                 <h2 className="text-xs font-bold text-charcoal">Eastern Seaboard Qualified Team</h2>
               </div>
-              <p className="text-[11px] text-slate-soft leading-relaxed">
+              <p className="text-[13px] text-slate-soft leading-relaxed">
                 Top 3 U14 qualifying standings per gender, reserve slots, and points cushions.
               </p>
             </div>
@@ -253,7 +253,7 @@ export function IlcaSelectionView({
                 <Award className="h-4 w-4 text-emerald-600 shrink-0" />
                 <h2 className="text-xs font-bold text-charcoal">Asian Open Provisional Leaders</h2>
               </div>
-              <p className="text-[11px] text-slate-soft leading-relaxed">
+              <p className="text-[13px] text-slate-soft leading-relaxed">
                 Gender-quota leaderboards tracking the 2026 Asian Open Championships team.
               </p>
             </div>
@@ -262,7 +262,7 @@ export function IlcaSelectionView({
                 <Users className="h-4 w-4 text-sky-500 shrink-0" />
                 <h2 className="text-xs font-bold text-charcoal">NJTS Projected Squad</h2>
               </div>
-              <p className="text-[11px] text-slate-soft leading-relaxed">
+              <p className="text-[13px] text-slate-soft leading-relaxed">
                 National Junior Training Squad projection from the top 25 national ranking.
               </p>
             </div>
@@ -271,13 +271,13 @@ export function IlcaSelectionView({
                 <Compass className="h-4 w-4 text-emerald-600 shrink-0" />
                 <h2 className="text-xs font-bold text-charcoal">Trial Scoreboard &amp; Policies</h2>
               </div>
-              <p className="text-[11px] text-slate-soft leading-relaxed">
+              <p className="text-[13px] text-slate-soft leading-relaxed">
                 Race-by-race trial results, U14 eligibility filters, and SSF squad regulations.
               </p>
             </div>
           </div>
 
-          <p className="text-[11px] text-slate-soft">
+          <p className="text-[13px] text-slate-soft">
             Free access for Singapore sailors, sailing parents, and registered coaches.
           </p>
         </div>
@@ -312,10 +312,10 @@ export function IlcaSelectionView({
             </span>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-[10px] font-bold text-sky-500 uppercase tracking-wider">
+                <span className="text-[12px] font-bold text-sky-500 uppercase tracking-wider">
                   Singapore ILCA 4 Pathway
                 </span>
-                <span className="inline-flex items-center rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[9px] font-bold text-emerald-600 dark:text-emerald-300">
+                <span className="inline-flex items-center rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-300">
                   Trials Finalized
                 </span>
               </div>
@@ -331,19 +331,19 @@ export function IlcaSelectionView({
             </div>
           </div>
           <div className="md:text-right shrink-0">
-            <p className="text-[10px] text-slate-soft font-semibold">Policy Authority</p>
+            <p className="text-[13px] text-slate-soft font-semibold">Policy Authority</p>
             <p className="text-xs font-bold text-charcoal">Singapore Sailing Federation</p>
-            <p className="text-[10px] text-slate-soft mt-0.5">Updated 16 Sep 2026 · 81 Ranked Sailors</p>
+            <p className="text-[13px] text-slate-soft mt-0.5">Updated 16 Sep 2026 · 81 Ranked Sailors</p>
           </div>
         </div>
 
         {/* ── Selection Series Progress Banner ── */}
         <div className="pt-2 border-t border-cool-veil">
           <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-            <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">
+            <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">
               Selection Trials Event Schedule &amp; Results
             </p>
-            <span className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+            <span className="text-[13px] font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
               <CheckCircle2 className="h-3.5 w-3.5" />
               <span>Eastern Seaboard Trials Concluded (2 of 2 Scored)</span>
             </span>
@@ -372,7 +372,7 @@ export function IlcaSelectionView({
                   <div className="flex items-center justify-between gap-1">
                     <p className="text-xs font-bold text-charcoal truncate">{ev.shortName}</p>
                     <span
-                      className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
+                      className={`text-[11px] font-bold px-1.5 py-0.5 rounded-full ${
                         ev.completed
                           ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20"
                           : "bg-amber-500/10 text-amber-600 dark:text-amber-300 border border-amber-500/20"
@@ -381,11 +381,11 @@ export function IlcaSelectionView({
                       {ev.completed ? "Scored" : "Scheduled"}
                     </span>
                   </div>
-                  <p className="text-[10px] text-slate-soft mt-0.5 flex items-center gap-1">
+                  <p className="text-[13px] text-slate-soft mt-0.5 flex items-center gap-1">
                     <Calendar className="h-2.5 w-2.5" />
                     <span>{ev.dateStr}</span>
                   </p>
-                  <p className="text-[10px] font-medium mt-0.5 text-slate-soft truncate">
+                  <p className="text-[13px] font-medium mt-0.5 text-slate-soft truncate">
                     {ev.completed ? `${ev.fleetSize} competitors scored` : "Trials Event 2"}
                   </p>
                 </div>
@@ -471,10 +471,10 @@ export function IlcaSelectionView({
                 <p className="text-sm font-bold text-charcoal leading-tight">
                   Your Claimed Sailor: {mySailor.name}
                 </p>
-                <span className="text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30">
+                <span className="text-[12px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider bg-sky-500/15 text-sky-600 dark:text-sky-300 border border-sky-500/30">
                   National Rank #{mySailor.nationalRank}
                 </span>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-sailcloth text-slate-soft border border-cool-veil">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-sailcloth text-slate-soft border border-cool-veil">
                   {mySailor.gender === "M" ? "Boy" : "Girl"} · Born {mySailor.birthYear}
                 </span>
               </div>
@@ -522,7 +522,7 @@ export function IlcaSelectionView({
                   <h2 className="text-lg sm:text-xl font-black text-charcoal">
                     {easternCampaign.name}
                   </h2>
-                  <span className="rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-300">
+                  <span className="rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[11px] font-bold text-emerald-600 dark:text-emerald-300">
                     Selection Concluded
                   </span>
                 </div>
@@ -546,19 +546,19 @@ export function IlcaSelectionView({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               <div className="rounded-xl border border-cool-veil bg-sailcloth p-3 space-y-1">
-                <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">Team Quota</p>
+                <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">Team Quota</p>
                 <p className="text-sm font-black text-charcoal">Top 3 boys &amp; Top 3 girls</p>
-                <p className="text-[11px] text-slate-soft">Separate selection boards for boys and girls.</p>
+                <p className="text-[13px] text-slate-soft">Separate selection boards for boys and girls.</p>
               </div>
               <div className="rounded-xl border border-cool-veil bg-sailcloth p-3 space-y-1">
-                <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">Age Eligibility</p>
+                <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">Age Eligibility</p>
                 <p className="text-sm font-black text-charcoal">Singapore Citizens born in 2012 or later</p>
-                <p className="text-[11px] text-slate-soft">U14 category eligibility.</p>
+                <p className="text-[13px] text-slate-soft">U14 category eligibility.</p>
               </div>
               <div className="rounded-xl border border-cool-veil bg-sailcloth p-3 space-y-1">
-                <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">Scoring Formula</p>
+                <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">Scoring Formula</p>
                 <p className="text-sm font-black text-charcoal">Lowest Combined Finish Places</p>
-                <p className="text-[11px] text-slate-soft">Pesta Sukan 2026 + SNSC 2026 sum.</p>
+                <p className="text-[13px] text-slate-soft">Pesta Sukan 2026 + SNSC 2026 sum.</p>
               </div>
             </div>
           </div>
@@ -570,7 +570,7 @@ export function IlcaSelectionView({
                 <Trophy className="h-3.5 w-3.5 text-amber-500" />
                 <span>Provisional Qualified Roster · Eastern Seaboard Regatta 2026</span>
               </h3>
-              <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
+              <span className="text-[13px] font-bold text-emerald-600 dark:text-emerald-400">
                 6 Athletes Nominated (3 Boys, 3 Girls)
               </span>
             </div>
@@ -585,7 +585,7 @@ export function IlcaSelectionView({
                     </span>
                     <h4 className="text-sm font-black text-charcoal">Qualified Boys (Top 3)</h4>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-600">
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-600">
                     U14 Boys
                   </span>
                 </div>
@@ -602,14 +602,14 @@ export function IlcaSelectionView({
                         </span>
                         <div className="min-w-0">
                           <p className="text-xs font-bold text-charcoal truncate">{boy.name}</p>
-                          <p className="text-[10px] text-slate-soft">
+                          <p className="text-[13px] text-slate-soft">
                             Born {boy.birthYear} · Nat Rank #{boy.nationalRank}
                           </p>
                         </div>
                       </div>
                       <div className="text-right shrink-0">
                         <p className="text-xs font-black text-charcoal font-mono">{boy.trialPts} pts</p>
-                        <p className="text-[10px] text-slate-soft">Pesta: {boy.pestaPoints} · SNSC: {boy.snscPoints}</p>
+                        <p className="text-[13px] text-slate-soft">Pesta: {boy.pestaPoints} · SNSC: {boy.snscPoints}</p>
                       </div>
                     </div>
                   ))}
@@ -617,7 +617,7 @@ export function IlcaSelectionView({
 
                 {/* Reserves */}
                 <div className="pt-2 border-t border-blue-500/15">
-                  <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider mb-1.5">
+                  <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider mb-1.5">
                     Official Reserves (Boys):
                   </p>
                   <div className="space-y-1">
@@ -647,7 +647,7 @@ export function IlcaSelectionView({
                     </span>
                     <h4 className="text-sm font-black text-charcoal">Qualified Girls (Top 3)</h4>
                   </div>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/15 text-pink-600">
+                  <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-pink-500/15 text-pink-600">
                     U14 Girls
                   </span>
                 </div>
@@ -664,14 +664,14 @@ export function IlcaSelectionView({
                         </span>
                         <div className="min-w-0">
                           <p className="text-xs font-bold text-charcoal truncate">{girl.name}</p>
-                          <p className="text-[10px] text-slate-soft">
+                          <p className="text-[13px] text-slate-soft">
                             Born {girl.birthYear} · Nat Rank #{girl.nationalRank}
                           </p>
                         </div>
                       </div>
                       <div className="text-right shrink-0">
                         <p className="text-xs font-black text-charcoal font-mono">{girl.trialPts} pts</p>
-                        <p className="text-[10px] text-slate-soft">Pesta: {girl.pestaPoints} · SNSC: {girl.snscPoints}</p>
+                        <p className="text-[13px] text-slate-soft">Pesta: {girl.pestaPoints} · SNSC: {girl.snscPoints}</p>
                       </div>
                     </div>
                   ))}
@@ -679,7 +679,7 @@ export function IlcaSelectionView({
 
                 {/* Reserves */}
                 <div className="pt-2 border-t border-pink-500/15">
-                  <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider mb-1.5">
+                  <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider mb-1.5">
                     Official Reserves (Girls):
                   </p>
                   <div className="space-y-1">
@@ -797,7 +797,7 @@ export function IlcaSelectionView({
           <div className="rounded-2xl border border-cool-veil overflow-hidden bg-warm-white shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
-                <thead className="bg-sailcloth text-[10px] text-slate-soft uppercase tracking-wider border-b border-cool-veil">
+                <thead className="bg-sailcloth text-[12px] text-slate-soft uppercase tracking-wider border-b border-cool-veil">
                   <tr>
                     <th className="px-4 py-3 w-12 text-center">Pos</th>
                     <th className="px-4 py-3 min-w-[12rem]">Sailor</th>
@@ -823,7 +823,7 @@ export function IlcaSelectionView({
                           <tr className="bg-rose-500/10 border-y border-rose-500/30">
                             <td
                               colSpan={9}
-                              className="px-4 py-1.5 text-center text-[10px] font-black tracking-wider text-rose-600 uppercase"
+                              className="px-4 py-1.5 text-center text-[12px] font-black tracking-wider text-rose-600 uppercase"
                             >
                               ═══ {genderFilter === "M" ? "Boys" : "Girls"} Qualifying Cutoff Line (Top 3 Slots) ═══
                             </td>
@@ -853,18 +853,18 @@ export function IlcaSelectionView({
                             <div className="flex items-center gap-2">
                               <span className="font-bold text-charcoal">{sailor.name}</span>
                               {isMyAthlete && (
-                                <span className="rounded bg-sky-500/20 text-sky-600 text-[9px] font-black px-1.5 py-0.5 border border-sky-500/30">
+                                <span className="rounded bg-sky-500/20 text-sky-600 text-[11px] font-black px-1.5 py-0.5 border border-sky-500/30">
                                   YOU
                                 </span>
                               )}
                             </div>
                             {sailor.handle && (
-                              <p className="text-[10px] text-slate-soft">@{sailor.handle}</p>
+                              <p className="text-[13px] text-slate-soft">@{sailor.handle}</p>
                             )}
                           </td>
                           <td className="px-3 py-3 text-center">
                             <span
-                              className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                              className={`inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold ${
                                 isQualified
                                   ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border border-emerald-500/20"
                                   : isReserve
@@ -879,7 +879,7 @@ export function IlcaSelectionView({
                           </td>
                           <td className="px-3 py-3 text-center">
                             <span
-                              className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                              className={`text-[11px] font-bold px-1.5 py-0.5 rounded ${
                                 sailor.gender === "F"
                                   ? "bg-pink-100 text-pink-700"
                                   : "bg-blue-100 text-blue-700"
@@ -895,7 +895,7 @@ export function IlcaSelectionView({
                             {sailor.pestaPoints > 0 ? (
                               <span>
                                 <strong className="text-charcoal">{sailor.pestaPoints} pts</strong>{" "}
-                                <span className="text-[10px] text-slate-soft">
+                                <span className="text-[13px] text-slate-soft">
                                   ({sailor.pestaPlace ? `${sailor.pestaPlace}th` : "—"})
                                 </span>
                               </span>
@@ -907,7 +907,7 @@ export function IlcaSelectionView({
                             {sailor.snscPoints > 0 ? (
                               <span>
                                 <strong className="text-charcoal">{sailor.snscPoints} pts</strong>{" "}
-                                <span className="text-[10px] text-slate-soft">
+                                <span className="text-[13px] text-slate-soft">
                                   ({sailor.snscPlace ? `${sailor.snscPlace}th` : "—"})
                                 </span>
                               </span>
@@ -933,31 +933,31 @@ export function IlcaSelectionView({
                                 <p className="text-xs font-bold text-charcoal">
                                   {sailor.name} · Complete Performance &amp; Eligibility Audit:
                                 </p>
-                                <span className="text-[11px] text-slate-soft">
+                                <span className="text-[13px] text-slate-soft">
                                   Combined Finish Positions Sum: {sailor.finishPos}
                                 </span>
                               </div>
                               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                                 <div className="rounded-lg bg-warm-white border border-cool-veil p-2">
-                                  <p className="text-[10px] text-slate-soft">Event 1: Pesta Sukan</p>
+                                  <p className="text-[13px] text-slate-soft">Event 1: Pesta Sukan</p>
                                   <p className="font-bold text-charcoal font-mono">
                                     {sailor.pestaPoints > 0 ? `${sailor.pestaPoints} pts (Finish: ${sailor.pestaPlace})` : "Did not compete (0 pts)"}
                                   </p>
                                 </div>
                                 <div className="rounded-lg bg-warm-white border border-cool-veil p-2">
-                                  <p className="text-[10px] text-slate-soft">Event 2: SNSC 2026</p>
+                                  <p className="text-[13px] text-slate-soft">Event 2: SNSC 2026</p>
                                   <p className="font-bold text-charcoal font-mono">
                                     {sailor.snscPoints > 0 ? `${sailor.snscPoints} pts (Finish: ${sailor.snscPlace})` : "Did not compete (0 pts)"}
                                   </p>
                                 </div>
                                 <div className="rounded-lg bg-warm-white border border-cool-veil p-2">
-                                  <p className="text-[10px] text-slate-soft">Best 3 of 5 National Series</p>
+                                  <p className="text-[13px] text-slate-soft">Best 3 of 5 National Series</p>
                                   <p className="font-bold text-charcoal font-mono">
                                     {sailor.bestThreePoints} pts (Rank #{sailor.nationalRank})
                                   </p>
                                 </div>
                                 <div className="rounded-lg bg-warm-white border border-cool-veil p-2">
-                                  <p className="text-[10px] text-slate-soft">U14 Selection Outcome</p>
+                                  <p className="text-[13px] text-slate-soft">U14 Selection Outcome</p>
                                   <p className="font-bold text-sky-600 font-mono">
                                     {sailor.easternStatus}
                                   </p>
@@ -988,7 +988,7 @@ export function IlcaSelectionView({
                   <h2 className="text-lg sm:text-xl font-black text-charcoal">
                     {asianCampaign.name}
                   </h2>
-                  <span className="rounded-full bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-300">
+                  <span className="rounded-full bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 text-[11px] font-bold text-amber-600 dark:text-amber-300">
                     Event 1 Scored · Event 2 Oct 2026
                   </span>
                 </div>
@@ -1012,19 +1012,19 @@ export function IlcaSelectionView({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               <div className="rounded-xl border border-cool-veil bg-sailcloth p-3 space-y-1">
-                <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">Team Quota</p>
+                <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">Team Quota</p>
                 <p className="text-sm font-black text-charcoal">Top 4 boys &amp; Top 4 girls</p>
-                <p className="text-[11px] text-slate-soft">8 athletes total representation.</p>
+                <p className="text-[13px] text-slate-soft">8 athletes total representation.</p>
               </div>
               <div className="rounded-xl border border-cool-veil bg-sailcloth p-3 space-y-1">
-                <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">Age Eligibility</p>
+                <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">Age Eligibility</p>
                 <p className="text-sm font-black text-charcoal">Singapore Citizens born in 2010 or later</p>
-                <p className="text-[11px] text-slate-soft">U17 category eligibility.</p>
+                <p className="text-[13px] text-slate-soft">U17 category eligibility.</p>
               </div>
               <div className="rounded-xl border border-cool-veil bg-sailcloth p-3 space-y-1">
-                <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">Selection Events</p>
+                <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">Selection Events</p>
                 <p className="text-sm font-black text-charcoal">SNSC 2026 + October Trials</p>
-                <p className="text-[11px] text-slate-soft">Event 2: 10, 11, 17, 18 Oct 2026.</p>
+                <p className="text-[13px] text-slate-soft">Event 2: 10, 11, 17, 18 Oct 2026.</p>
               </div>
             </div>
           </div>
@@ -1037,7 +1037,7 @@ export function IlcaSelectionView({
                 <h4 className="text-xs font-black uppercase tracking-wider text-charcoal">
                   Boys Provisional Leaders (Top 4) · After Event 1
                 </h4>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600">
                   U17 Boys
                 </span>
               </div>
@@ -1053,12 +1053,12 @@ export function IlcaSelectionView({
                       </span>
                       <div className="min-w-0">
                         <p className="text-xs font-bold text-charcoal truncate">{boy.name}</p>
-                        <p className="text-[10px] text-slate-soft">Born {boy.birthYear} · Nat Rank #{boy.nationalRank}</p>
+                        <p className="text-[13px] text-slate-soft">Born {boy.birthYear} · Nat Rank #{boy.nationalRank}</p>
                       </div>
                     </div>
                     <div className="text-right shrink-0">
                       <p className="text-xs font-black text-charcoal font-mono">{boy.snscPoints} pts</p>
-                      <p className="text-[10px] text-slate-soft">SNSC Place: {boy.snscPlace}th</p>
+                      <p className="text-[13px] text-slate-soft">SNSC Place: {boy.snscPlace}th</p>
                     </div>
                   </div>
                 ))}
@@ -1071,7 +1071,7 @@ export function IlcaSelectionView({
                 <h4 className="text-xs font-black uppercase tracking-wider text-charcoal">
                   Girls Provisional Leaders (Top 4) · After Event 1
                 </h4>
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-600">
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-600">
                   U17 Girls
                 </span>
               </div>
@@ -1087,12 +1087,12 @@ export function IlcaSelectionView({
                       </span>
                       <div className="min-w-0">
                         <p className="text-xs font-bold text-charcoal truncate">{girl.name}</p>
-                        <p className="text-[10px] text-slate-soft">Born {girl.birthYear} · Nat Rank #{girl.nationalRank}</p>
+                        <p className="text-[13px] text-slate-soft">Born {girl.birthYear} · Nat Rank #{girl.nationalRank}</p>
                       </div>
                     </div>
                     <div className="text-right shrink-0">
                       <p className="text-xs font-black text-charcoal font-mono">{girl.snscPoints} pts</p>
-                      <p className="text-[10px] text-slate-soft">SNSC Place: {girl.snscPlace}th</p>
+                      <p className="text-[13px] text-slate-soft">SNSC Place: {girl.snscPlace}th</p>
                     </div>
                   </div>
                 ))}
@@ -1125,9 +1125,9 @@ export function IlcaSelectionView({
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
               {ILCA4_NJTS_POLICY.quotaRules.map((rule) => (
                 <div key={rule.category} className="rounded-xl border border-cool-veil bg-sailcloth p-3.5 space-y-1">
-                  <p className="text-[10px] font-bold text-slate-soft uppercase tracking-wider">{rule.category}</p>
+                  <p className="text-[12px] font-bold text-slate-soft uppercase tracking-wider">{rule.category}</p>
                   <p className="text-base font-black text-charcoal">{rule.total} Sailors ({rule.quotaM}M / {rule.quotaF}F)</p>
-                  <p className="text-[11px] text-slate-soft leading-snug">{rule.description}</p>
+                  <p className="text-[13px] text-slate-soft leading-snug">{rule.description}</p>
                 </div>
               ))}
             </div>
@@ -1139,14 +1139,14 @@ export function IlcaSelectionView({
               <h3 className="text-xs font-black uppercase tracking-wider text-charcoal">
                 National Junior Training Squad (NJTS) · 16-Athlete Selection Matrix
               </h3>
-              <span className="text-[11px] font-bold text-slate-soft">
+              <span className="text-[13px] font-bold text-slate-soft">
                 {njtsSquad.length} Qualified Candidates
               </span>
             </div>
 
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
-                <thead className="bg-sailcloth text-[10px] text-slate-soft uppercase tracking-wider border-b border-cool-veil">
+                <thead className="bg-sailcloth text-[12px] text-slate-soft uppercase tracking-wider border-b border-cool-veil">
                   <tr>
                     <th className="px-4 py-2.5 text-center">Nat Rank</th>
                     <th className="px-4 py-2.5">Sailor</th>
@@ -1167,7 +1167,7 @@ export function IlcaSelectionView({
                       </td>
                       <td className="px-3 py-2.5 text-center">
                         <span
-                          className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                          className={`text-[11px] font-bold px-1.5 py-0.5 rounded ${
                             sailor.gender === "F"
                               ? "bg-pink-100 text-pink-700"
                               : "bg-blue-100 text-blue-700"
@@ -1180,7 +1180,7 @@ export function IlcaSelectionView({
                         {sailor.birthYear ?? "—"}
                       </td>
                       <td className="px-3 py-2.5 text-center">
-                        <span className="inline-flex items-center rounded-full bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 text-[10px] font-bold text-sky-600 dark:text-sky-300">
+                        <span className="inline-flex items-center rounded-full bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 text-[11px] font-bold text-sky-600 dark:text-sky-300">
                           {sailor.njtsStatus}
                         </span>
                       </td>
@@ -1225,7 +1225,7 @@ export function IlcaSelectionView({
           <div className="rounded-2xl border border-cool-veil overflow-hidden bg-warm-white shadow-xs">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
-                <thead className="bg-sailcloth text-[10px] text-slate-soft uppercase tracking-wider border-b border-cool-veil">
+                <thead className="bg-sailcloth text-[12px] text-slate-soft uppercase tracking-wider border-b border-cool-veil">
                   <tr>
                     <th className="px-4 py-3 text-center w-12">Rank</th>
                     <th className="px-4 py-3 min-w-[12rem]">Sailor</th>
@@ -1252,7 +1252,7 @@ export function IlcaSelectionView({
                       </td>
                       <td className="px-3 py-2.5 text-center">
                         <span
-                          className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                          className={`text-[11px] font-bold px-1.5 py-0.5 rounded ${
                             s.gender === "F"
                               ? "bg-pink-100 text-pink-700"
                               : "bg-blue-100 text-blue-700"
