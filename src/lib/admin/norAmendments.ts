@@ -60,6 +60,9 @@ export const NOR_AMENDMENTS: NorAmendment[] = [
       { fleet: "Passage Race", prizes: "Open 1st–3rd for Optimist Gold and Silver, ILCA 4/6/7, 29er, Techno 293, iQFOiL, and WingFoil" },
     ],
     notes: [
+      "Official final results. Optimist Gold: 6 races, 1 discard, 77 entries, final 3 Aug 2026 at 17:07. Open winner Alyssa Li Lin Wong (sail 150, nett 15).",
+      "Optimist Silver: 4 races, 1 discard, 54 entries, final 28 Jul 2026 at 09:57. Open winner Bryan Thian Tsek Lee (sail 3508, nett 4).",
+      "ILCA 4: 5 races, 1 discard, 43 entries, final 3 Aug 2026 at 17:04. Open winner Caleb Peck (sail 225221, nett 6), then Lucas Zhihong Cao and Yuk Jun Lim.",
       "A class may be cancelled if fewer than 6 boats enter. Fees for a cancelled class are refunded.",
       "Novice and school prizes are not awarded to overseas or visiting competitors.",
       "If a category has fewer than 6 entries, only 1st is awarded.",

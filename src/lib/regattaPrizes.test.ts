@@ -42,13 +42,24 @@ describe("regattaPrizes", () => {
     expect(ilca4).toBeDefined();
 
     const openCat = ilca4?.categories.find((c) => c.categoryName === "Open");
-    expect(openCat?.winners[0].sailorName).toBe("Goh, Ian");
+    expect(openCat?.winners[0].sailorName).toBe("Caleb Peck");
+    expect(openCat?.winners[1].sailorName).toBe("Lucas Zhihong Cao");
+    expect(openCat?.winners[2].sailorName).toBe("Yuk Jun Lim");
 
     const femaleCat = ilca4?.categories.find((c) => c.categoryName === "Female");
-    expect(femaleCat?.winners[0].sailorName).toBe("Li, Lyric Yuxuan");
+    expect(femaleCat?.winners[0].sailorName).toBe("Lyric Yuxuan Li");
 
     const u13Cat = ilca4?.categories.find((c) => c.categoryName.includes("13 Years & Under"));
-    expect(u13Cat?.winners[0].sailorName).toBe("Kong, Charles Shing Chak");
+    expect(u13Cat?.winners[0].sailorName).toBe("Charles Shing Chak Kong");
+
+    const gold = PESTA_SUKAN_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Optimist Gold Fleet");
+    expect(gold?.categories.find((c) => c.categoryName === "Open")?.winners[0].sailorName).toBe(
+      "Alyssa Li Lin Wong"
+    );
+    const silver = PESTA_SUKAN_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Optimist Silver Fleet");
+    expect(silver?.categories.find((c) => c.categoryName === "Open")?.winners[0].sailorName).toBe(
+      "Bryan Thian Tsek Lee"
+    );
   });
 
   it("defines Cincapura Regatta 2026 prize categories and verified winners", () => {

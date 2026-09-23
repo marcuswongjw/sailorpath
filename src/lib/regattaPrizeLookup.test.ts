@@ -50,9 +50,14 @@ describe("getPrizeWinnersForRegatta", () => {
 
   it("returns null for fleets whose categories have no verified winners yet", () => {
     expect(getPrizeWinnersForRegatta("snsc-gold-sep-26-2026-09-11")).toBeNull();
-    expect(
-      getPrizeWinnersForRegatta("pesta-sukan-silver-aug-26-2026-08-01")
-    ).toBeNull();
+  });
+
+  it("maps the Pesta Sukan Silver slug to the official Silver prize winners", () => {
+    const view = getPrizeWinnersForRegatta("pesta-sukan-silver-aug-26-2026-08-01");
+    expect(view).not.toBeNull();
+    expect(view!.fleets[0].fleetName).toBe("Optimist Silver Fleet");
+    const open = view!.fleets[0].categories.find((c) => c.categoryName === "Open");
+    expect(open?.winners[0].sailorName).toBe("Bryan Thian Tsek Lee");
   });
 
   it("does not show ILCA 4 prizes for ILCA 6 or 29er slugs", () => {
