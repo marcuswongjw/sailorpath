@@ -105,6 +105,11 @@ export const NOR_AMENDMENTS: NorAmendment[] = [
       { fleet: "WingFoil", prizes: "18 & under (born 2008 or later) 1st–3rd, Female 1st" },
     ],
     notes: [
+      "Official final results. Optimist Gold: 3 races, no discard, 86 entries, final 20 Jul 2026 at 13:18. Open winner Kyle Jeremy Zhi Jun Soh (sail 3183, nett 21).",
+      "Optimist Silver: 4 races, 1 discard, 55 entries, final 21 Jul 2026 at 10:00. Open winner Adele Ziyi Chiang (sail 3120, nett 11).",
+      "ILCA 4: 2 races, no discard, 42 entries, final 20 Jul 2026 at 13:34. Open winner Mika Tew (sail 227461, nett 7).",
+      "ILCA 6: 3 races, no discard, 16 entries, final 21 Jul 2026 at 09:56. Open winner Sarah Rui-En Yong (sail 221689, nett 6).",
+      "29er: 2 races, no discard, 3 entries. Techno 293: 8 races, 1 discard, 7 entries. Both final 21 Jul 2026 at 10:13. 29er winners Cheryl Ho / Gemma Chen. Techno 293 winner Addy Armand Anuar. First Techno female Kate Teo.",
       "Event website in Amendment 1 is https://www.sailing.org.sg/events/323693.",
       "Optimist sailors must sail the fleet that matches their national ranking. The wrong fleet scores no ranking points.",
       "International Optimist entrants who do not live in Singapore are assigned a fleet by the organising authority.",

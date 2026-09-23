@@ -64,7 +64,7 @@ describe("regattaPrizes", () => {
 
   it("defines Cincapura Regatta 2026 prize categories and verified winners", () => {
     expect(CINCAPURA_2026_PRIZE_SCHEDULE.regattaName).toContain("Cincapura Regatta 2026");
-    expect(CINCAPURA_2026_PRIZE_SCHEDULE.fleets).toHaveLength(2);
+    expect(CINCAPURA_2026_PRIZE_SCHEDULE.fleets).toHaveLength(6);
 
     const goldFleet = CINCAPURA_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Optimist Gold Fleet");
     expect(goldFleet).toBeDefined();
@@ -90,6 +90,16 @@ describe("regattaPrizes", () => {
     const silverNovice = silverFleet?.categories.find((c) => c.categoryName === "Novice");
     expect(silverNovice?.winners).toHaveLength(5);
     expect(silverNovice?.winners[0].sailorName).toBe("Allison Li Xin Teh");
+
+    const ilca4 = CINCAPURA_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "ILCA 4");
+    expect(ilca4?.categories.find((c) => c.categoryName === "Open")?.winners[0].sailorName).toBe("Mika Tew");
+    const ilca6 = CINCAPURA_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "ILCA 6");
+    expect(ilca6?.categories.find((c) => c.categoryName === "Open")?.winners[0].sailorName).toBe("Sarah Rui-En Yong");
+    const skiff = CINCAPURA_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "29er");
+    expect(skiff?.categories[0].winners[0].sailorName).toBe("Cheryl Ho / Gemma Chen");
+    const techno = CINCAPURA_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Techno 293");
+    expect(techno?.categories.find((c) => c.categoryName === "Open")?.winners[0].sailorName).toBe("Addy Armand Anuar");
+    expect(techno?.categories.find((c) => c.categoryName === "Female")?.winners[0].sailorName).toBe("Kate Teo");
   });
 
   it("provides complete race-by-race datasets for Cincapura 2026 Gold and Silver", () => {

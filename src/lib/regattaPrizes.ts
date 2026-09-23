@@ -733,9 +733,9 @@ export const CINCAPURA_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
     lateFee: 50,
   },
   scheduleSummary:
-    "National Sailing Centre, Singapore. Gold Fleet: 86 entries, 3 races sailed (no discards). Silver Fleet: 55 entries, 4 races sailed (1 discard).",
+    "Official final results at National Sailing Centre. Optimist Gold: 3 races, no discard, 86 entries (final 20 Jul 2026, 13:18). Optimist Silver: 4 races, 1 discard, 55 entries (final 21 Jul 2026, 10:00). ILCA 4: 2 races, no discard, 42 entries (final 20 Jul 2026, 13:34). ILCA 6: 3 races, no discard, 16 entries (final 21 Jul 2026, 09:56). 29er: 2 races, no discard, 3 entries. Techno 293: 8 races, 1 discard, 7 entries (both final 21 Jul 2026, 10:13).",
   scoringRules:
-    "Appendix A scoring. Gold Fleet: 3 races, 0 discards. Silver Fleet: 4 races, 1 discard.",
+    "Appendix A. Gold, ILCA 4, ILCA 6, and 29er: no discard. Silver: 1 discard. Techno 293: 1 discard.",
   fleets: [
     {
       fleetName: "Optimist Gold Fleet",
@@ -1248,6 +1248,126 @@ export const CINCAPURA_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
         },
       ],
     },
+    {
+      fleetName: "ILCA 4",
+      boatClass: "ILCA 4",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Mika Tew", sailNumber: "227461", gender: "F", schoolName: "Raffles Girls' School (Secondary)", club: "PAssion Wave", notes: "Nett 7." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Lucas Zhihong Cao", sailNumber: "93", gender: "M", schoolName: "Raffles Institution", club: "SAF Yacht Club", notes: "Nett 10." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Zhi Tong Wai", sailNumber: "225226", gender: "F", schoolName: "CHIJ Secondary (Toa Payoh)", club: "SAF Yacht Club", notes: "Nett 10." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Mika Tew", sailNumber: "227461", gender: "F" },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Zhi Tong Wai", sailNumber: "225226", gender: "F" },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Lyric Yuxuan Li", sailNumber: "21476", gender: "F" },
+          ],
+        },
+        {
+          categoryName: "Novice",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Novice", sailorName: "Lyric Yuxuan Li", sailNumber: "21476" },
+            { rank: 2, prizeTitle: "2nd Novice", sailorName: "Shin Chen Rui Lin", sailNumber: "197424" },
+            { rank: 3, prizeTitle: "3rd Novice", sailorName: "Aiden Kang Jun Wong", sailNumber: "18" },
+          ],
+        },
+        {
+          categoryName: "13 years and under",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st (13 & under)", sailorName: "Shin Chen Rui Lin", sailNumber: "197424" },
+            { rank: 2, prizeTitle: "2nd (13 & under)", sailorName: "Charles Shing Chak Kong", sailNumber: "227676" },
+            { rank: 3, prizeTitle: "3rd (13 & under)", sailorName: "Rayson Yin Yi Lee", sailNumber: "217060" },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "ILCA 6",
+      boatClass: "ILCA 6",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Sarah Rui-En Yong", sailNumber: "221689", gender: "F", schoolName: "Nanyang Polytechnic", club: "Royal Varuna Yacht Club", notes: "Nett 6." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Keira Carlyle", sailNumber: "225225", gender: "F", schoolName: "Nanyang Polytechnic", club: "SAF Yacht Club", notes: "Nett 7." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Kenan Kee Zen Tan", sailNumber: "1", gender: "M", club: "Royal Varuna Yacht Club", notes: "Nett 9." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Sarah Rui-En Yong", sailNumber: "221689", gender: "F" },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Keira Carlyle", sailNumber: "225225", gender: "F" },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Nia Zahedi", sailNumber: "224245", gender: "F" },
+          ],
+        },
+        {
+          categoryName: "15 years and under",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st (15 & under)", sailorName: "Kai Lun Wong", sailNumber: "227462" },
+            { rank: 2, prizeTitle: "2nd (15 & under)", sailorName: "Travis Jia Le Yeo", sailNumber: "222727" },
+            { rank: 3, prizeTitle: "3rd (15 & under)", sailorName: "Darren Lai", sailNumber: "222257" },
+          ],
+        },
+        {
+          categoryName: "Novice",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "The final prize list names 1st only. 2nd and 3rd are blank.",
+          winners: [
+            { rank: 1, prizeTitle: "1st Novice", sailorName: "Travis Jia Le Yeo", sailNumber: "222727" },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "29er",
+      boatClass: "29er",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Cheryl Ho / Gemma Chen", sailNumber: "2869", gender: "F", schoolName: "Raffles Girls' School", notes: "Nett 2." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Cheryl Yong / Seth Low", sailNumber: "2466", club: "Changi Sailing Club", notes: "Mixed crew. Nett 4." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Sean Kum / Nigel Tan", sailNumber: "2742", gender: "M", notes: "DNC both races. Nett 8." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "Techno 293",
+      boatClass: "Techno 293",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Addy Armand Anuar", sailNumber: "143", gender: "M", schoolName: "Bedok Green Secondary School", club: "Constant Wind SeaSports", notes: "Nett 14." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Axl Tan", sailNumber: "64", gender: "M", schoolName: "Anglo-Chinese School (Barker Road)", club: "Constant Wind SeaSports", notes: "Nett 20." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Trevor Ng", sailNumber: "45", gender: "M", schoolName: "Victoria School", club: "Constant Wind SeaSports", notes: "Nett 23." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Kate Teo", sailNumber: "235", gender: "F", schoolName: "Paya Lebar Methodist Girls' School", club: "Constant Wind SeaSports", notes: "4th overall. Nett 24." },
+          ],
+        },
+      ],
+    },
   ],
 };
 
@@ -1292,15 +1412,17 @@ export type RegattaPrizeWinnersView = {
 /**
  * Fleet name implied by a results-page slug.
  * `undefined` means an event-level slug: show every fleet that has winners.
- * `null` means a class this schedule does not publish (ILCA 6/7, 29er).
+ * `null` means a class this schedule does not publish, such as ILCA 7.
  */
 export function inferPrizeFleetName(slug: string): string | undefined | null {
   const s = String(slug || "").toLowerCase();
   if (/ilca-?4/.test(s)) return "ILCA 4";
+  if (/ilca-?6/.test(s)) return "ILCA 6";
+  if (/ilca-?7/.test(s)) return "ILCA 7";
   if (s.includes("ilca")) return null;
   if (s.includes("wingfoil") || s.includes("wing-foil")) return "WingFoil";
-  if (s.includes("techno")) return "Techno 293 / 293+";
-  if (s.includes("29er")) return null;
+  if (s.includes("techno")) return "Techno 293";
+  if (s.includes("29er")) return "29er";
   if (s.includes("gold")) return "Optimist Gold Fleet";
   if (s.includes("silver")) return "Optimist Silver Fleet";
   return undefined;
@@ -1324,7 +1446,13 @@ export function getPrizeWinnersForRegatta(
   if (resolved === null) return null;
 
   const fleets = schedule.fleets
-    .filter((f) => !resolved || f.fleetName === resolved)
+    .filter((f) => {
+      if (!resolved) return true;
+      if (f.fleetName === resolved) return true;
+      const fleet = f.fleetName.toLowerCase();
+      const want = resolved.toLowerCase();
+      return fleet.startsWith("techno") && want.startsWith("techno");
+    })
     .map((f) => ({
       ...f,
       categories: f.categories.filter((c) => c.winners.length > 0),
