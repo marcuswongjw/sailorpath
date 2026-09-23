@@ -4,6 +4,7 @@ import {
   PESTA_SUKAN_2026_PRIZE_SCHEDULE,
   CINCAPURA_2026_PRIZE_SCHEDULE,
   SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE,
+  TEMASEK_2026_PRIZE_SCHEDULE,
 } from "./regattaPrizes";
 import {
   CINCAPURA_2026_GOLD_RESULTS,
@@ -110,6 +111,17 @@ describe("regattaPrizes", () => {
     expect(gold.categories[0].winners[0].sailorName).toBe("Alyssa Wong Li Lin");
     expect(silver.categories[0].winners[0].sailorName).toBe("Lee Thian Tsek Bryan");
     expect(silver.categories[0].winners).toHaveLength(10);
+  });
+
+  it("records Temasek Regatta 2026 from Amendment 2 and the final results", () => {
+    expect(TEMASEK_2026_PRIZE_SCHEDULE.datesText).toBe("20–21 June 2026");
+    expect(TEMASEK_2026_PRIZE_SCHEDULE.entryFees.singleHanded).toBe(68);
+    const gold = TEMASEK_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Optimist Gold Fleet");
+    const ilca4 = TEMASEK_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "ILCA 4");
+    const ilca7 = TEMASEK_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "ILCA 7");
+    expect(gold?.categories[0].winners[0].sailorName).toBe("Elliot Goh");
+    expect(ilca4?.categories[0].winners[0].sailorName).toBe("Desiree Yuet Chi Lee");
+    expect(ilca7?.categories[0].winners[0].sailorName).toBe("Andrew Crombie");
   });
 
   it("provides complete race-by-race datasets for Cincapura 2026 Gold and Silver", () => {

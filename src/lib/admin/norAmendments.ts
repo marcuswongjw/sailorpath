@@ -23,6 +23,44 @@ export type NorAmendment = {
 
 export const NOR_AMENDMENTS: NorAmendment[] = [
   {
+    id: "temasek-2026",
+    title: "Temasek Regatta 2026 — NoR Amendment 2",
+    amendedOn: "15 June 2026",
+    website: "https://www.sailing.org.sg/events/335514",
+    noticeUrl: "https://www.racingrulesofsailing.org/documents/13596/event",
+    venue: "National Sailing Centre, 1500 East Coast Parkway, Singapore 468963",
+    classes:
+      "Optimist Gold, Optimist Silver, ILCA 4, ILCA 6, ILCA 7, 29er, Techno 293/293+, iQFOiL, WingFoil",
+    fees:
+      "By 17 May 2026, 2359h: single-handed dinghy and board $68, double-handed dinghy $136. Late fee $34 if payment is not received by 17 May 2026, 2359h.",
+    deadlines: "Entry form and fees due 7 June 2026, 2359h.",
+    schedule: [
+      "20 June: briefing 1000h, NSC Auditorium. First warning 1200h.",
+      "21 June: briefing 0930h. First warning 1100h. Prize presentation 1830h, NSC Boat Hangar.",
+    ],
+    races: [
+      "Optimist Gold, ILCA 4, ILCA 6, ILCA 7, and 29er: 6 races scheduled, maximum 4 per day.",
+      "Optimist Silver: 5 races scheduled, maximum 3 per day.",
+      "Techno 293: 8 races scheduled, maximum 5 per day. iQFOiL and WingFoil: 10 races scheduled, maximum 5 per day.",
+      "Official results. Gold: 6 sailed, 1 discard, 77 entries, final 30 Jun 2026 at 15:31. Winner Elliot Goh, sail 3103, nett 15.",
+      "Silver: 5 sailed, 1 discard, 61 entries, final 24 Jun 2026 at 15:00. Winner Cyra Cama, sail 29, nett 13.",
+      "ILCA 4: 4 sailed, 1 discard, 42 entries, final 24 Jun 2026 at 15:04. Winner Desiree Yuet Chi Lee, sail 226897, nett 5.",
+      "ILCA 6: 5 sailed, 1 discard, 11 entries. Winner Keira Marie Carlyle, sail 225225, nett 5. ILCA 7: 5 sailed, 1 discard, 7 entries. Winner Andrew Crombie, sail 224714, nett 6. Both final 24 Jun 2026 at 15:06.",
+    ],
+    prizes: [
+      { fleet: "Optimist Gold", prizes: "Open 1st–10th, Female 1st–3rd, 11–12 1st–5th, 9–10 1st–5th. Open winner Elliot Goh." },
+      { fleet: "Optimist Silver", prizes: "Open 1st–10th, Female 1st–3rd, 9–10 1st–3rd, 8 & under 1st–3rd, Novice 1st–4th named. Open winner Cyra Cama." },
+      { fleet: "ILCA 4", prizes: "Open 1st–3rd, Female 1st–3rd, 13 & under 1st–3rd. Open winner Desiree Yuet Chi Lee." },
+      { fleet: "ILCA 6", prizes: "Open 1st–3rd, Female 1st–3rd. Open winner Keira Marie Carlyle." },
+      { fleet: "ILCA 7", prizes: "Open 1st–3rd. Winner Andrew Crombie, then Yeo Ngak Hoe and Rohit Behl." },
+    ],
+    notes: [
+      "Amendment 1 is dated 2 February 2026. Amendment 2 is dated 15 June 2026.",
+      "No 29er, Techno 293, iQFOiL, or WingFoil final-results sheet was in this set, so those prizes are not recorded.",
+      "If a category has fewer than 6 entries, only 1st is awarded. Novice and school prizes are not awarded to overseas sailors.",
+    ],
+  },
+  {
     id: "safyc-optimist-2026",
     title: "2nd SAFYC Optimist Championships 2026 — Notice of Race",
     amendedOn: "Notice of Race",
@@ -156,6 +194,7 @@ export function norAmendmentForRegatta(
 ): NorAmendment | null {
   const hay = `${name || ""} ${slug || ""}`.toLowerCase();
   const byId = (id: string) => NOR_AMENDMENTS.find((notice) => notice.id === id) ?? null;
+  if (hay.includes("temasek")) return byId("temasek-2026");
   if (hay.includes("pesta") && hay.includes("sukan")) return byId("pesta-sukan-2026");
   if (hay.includes("cincapura")) return byId("cincapura-2026");
   if (
