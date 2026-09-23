@@ -1748,6 +1748,38 @@ export function inferPrizeFleetName(slug: string): string | undefined | null {
   return undefined;
 }
 
+function fleetsForSlug(
+  slug: string,
+  fleetName?: string
+): { schedule: RegattaPrizeSchedule; fleets: RegattaPrizeFleet[] } | null {
+  const s = String(slug || "").toLowerCase();
+  const schedule = getRegattaPrizeSchedule(s);
+  if (!schedule) return null;
+  const resolved = fleetName !== undefined ? fleetName : inferPrizeFleetName(s);
+  if (resolved === null) return null;
+  const fleets = schedule.fleets.filter((f) => {
+    if (!resolved) return true;
+    if (f.fleetName === resolved) return true;
+    const fleet = f.fleetName.toLowerCase();
+    const want = resolved.toLowerCase();
+    return fleet.startsWith("techno") && want.startsWith("techno");
+  });
+  return { schedule, fleets };
+}
+
+/**
+ * Prize categories for a results slug, including categories that have no
+ * names yet. Those can be calculated from the published results.
+ */
+export function getPrizeFleetDefinitions(
+  slug: string,
+  fleetName?: string
+): { schedule: RegattaPrizeSchedule; fleets: RegattaPrizeFleet[] } | null {
+  const found = fleetsForSlug(slug, fleetName);
+  if (!found || found.fleets.length === 0) return null;
+  return found;
+}
+
 /**
  * Prize fleets for a results slug, with empty categories removed.
  * Pass `fleetName` to force one fleet (used by the event hub for board classes).
@@ -1757,22 +1789,9 @@ export function getPrizeWinnersForRegatta(
   slug: string,
   fleetName?: string
 ): RegattaPrizeWinnersView | null {
-  const s = String(slug || "").toLowerCase();
-  const schedule = getRegattaPrizeSchedule(s);
-  if (!schedule) return null;
-
-  const resolved =
-    fleetName !== undefined ? fleetName : inferPrizeFleetName(s);
-  if (resolved === null) return null;
-
-  const fleets = schedule.fleets
-    .filter((f) => {
-      if (!resolved) return true;
-      if (f.fleetName === resolved) return true;
-      const fleet = f.fleetName.toLowerCase();
-      const want = resolved.toLowerCase();
-      return fleet.startsWith("techno") && want.startsWith("techno");
-    })
+  const found = fleetsForSlug(slug, fleetName);
+  if (!found) return null;
+  const fleets = found.fleets
     .map((f) => ({
       ...f,
       categories: f.categories.filter((c) => c.winners.length > 0),
@@ -1780,5 +1799,5 @@ export function getPrizeWinnersForRegatta(
     .filter((f) => f.categories.length > 0);
 
   if (fleets.length === 0) return null;
-  return { schedule, fleets };
+  return { schedule: found.schedule, fleets };
 }

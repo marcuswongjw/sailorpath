@@ -67,6 +67,7 @@ describe("computeOptimistSelectionData", () => {
         isOverseasCommitment: false,
         sailorName: "Lucas Wong",
         sailNumber: "4682",
+        school: null,
         handle: "lucas-wong",
         gender: "M",
         sailorGender: "M",

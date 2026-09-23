@@ -447,6 +447,7 @@ export async function getResultsForRegatta(regattaId: string) {
         sailorName: sailors.name,
         sailNumber: sailors.sailNumber,
         handle: sailors.handle,
+        school: sailors.school,
         gender: regattaResults.gender,
         sailorGender: sailors.gender,
         birthYear: regattaResults.birthYear,

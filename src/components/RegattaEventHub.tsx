@@ -13,7 +13,8 @@ import {
   type RegattaEventSliceDef,
   type ResolvedEventSlice,
 } from "@/lib/regattaEvents";
-import { getPrizeWinnersForRegatta, prizeNameKey, type PrizeWinner } from "@/lib/regattaPrizes";
+import { fillUnlistedPrizeWinners } from "@/lib/prizeWinnersFromResults";
+import { getPrizeFleetDefinitions, prizeNameKey, type PrizeWinner } from "@/lib/regattaPrizes";
 import { getCachedPublicRegattas, getResultsForRegatta } from "@/lib/queries";
 import type { RegattaRecord } from "@/lib/ranking";
 import type { Techno293Regatta } from "@/lib/techno293";
@@ -35,11 +36,14 @@ function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
 
 function prizeViewForSlice(event: RegattaEventDef, slice: ResolvedEventSlice) {
   if (slice.regatta) {
-    const fromRow = getPrizeWinnersForRegatta(slice.regatta.slug);
+    const fromRow = getPrizeFleetDefinitions(
+      slice.regatta.slug,
+      slice.def.prizeFleetName
+    );
     if (fromRow) return fromRow;
   }
   if (!slice.def.prizeFleetName) return null;
-  return getPrizeWinnersForRegatta(event.slug, slice.def.prizeFleetName);
+  return getPrizeFleetDefinitions(event.slug, slice.def.prizeFleetName);
 }
 
 function sliceStatusText(slice: ResolvedEventSlice): string {
@@ -239,13 +243,19 @@ async function DbSlicePanel({
     return <DbOffline message={message} />;
   }
   const accent = def.series === "ilca4" ? "sky" : "orange";
-  const winners = prizeView?.fleets.flatMap((fleet) => fleet.categories.flatMap((category) => category.winners)) ?? [];
+  const eventYear = Number(String(regatta.date || "").slice(0, 4));
+  const fleets = prizeView
+    ? fillUnlistedPrizeWinners(prizeView.fleets, results, eventYear)
+    : [];
+  const winners = fleets.flatMap((fleet) =>
+    fleet.categories.flatMap((category) => category.winners)
+  );
   const profileHandles = profileHandlesForWinners(results, winners);
   return (
     <div className="space-y-3">
-      {prizeView && (
+      {prizeView && fleets.length > 0 && (
         <RegattaPrizeWinners
-          schedule={{ ...prizeView.schedule, fleets: prizeView.fleets }}
+          schedule={{ ...prizeView.schedule, fleets }}
           profileHandles={profileHandles}
         />
       )}

@@ -6,7 +6,8 @@ import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
 import { DbUnavailableError } from "@/db";
 import { hubHrefForClassSlug } from "@/lib/regattaEventGroups";
 import { getCachedPublicRegattas, getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
-import { getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
+import { fillUnlistedPrizeWinners } from "@/lib/prizeWinnersFromResults";
+import { getPrizeFleetDefinitions, getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -42,7 +43,14 @@ export default async function RegattaDetailPage({
   if (errorMsg) return <DbOffline message={errorMsg} />;
   if (!regatta || !results) notFound();
 
-  const prizeWinners = getPrizeWinnersForRegatta(regatta_slug);
+  const eventYear = Number(String(regatta.date || "").slice(0, 4));
+  const defined = getPrizeFleetDefinitions(regatta_slug);
+  const calculated = defined
+    ? fillUnlistedPrizeWinners(defined.fleets, results, eventYear)
+    : null;
+  const prizeWinners = calculated?.length
+    ? { schedule: defined!.schedule, fleets: calculated }
+    : getPrizeWinnersForRegatta(regatta_slug);
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
@@ -56,17 +64,17 @@ export default async function RegattaDetailPage({
         countsForRanking={regatta.countsForRanking !== false}
         norUrl={regatta.norUrl}
       />
+      {prizeWinners && (
+        <RegattaPrizeWinners
+          schedule={{ ...prizeWinners.schedule, fleets: prizeWinners.fleets }}
+        />
+      )}
       <PublicRegattaResults
         results={results}
         totalFleetSize={regatta.totalFleetSize}
         raceCount={regatta.raceCount}
         accent="orange"
       />
-      {prizeWinners && (
-        <RegattaPrizeWinners
-          schedule={{ ...prizeWinners.schedule, fleets: prizeWinners.fleets }}
-        />
-      )}
       <p className="text-[13px] text-[var(--sp-slate-soft)]">
         Source: published regatta results reviewed before import · Parentheses indicate a discarded race score · * DNS · † Overseas commitment
       </p>
