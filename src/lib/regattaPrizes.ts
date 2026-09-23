@@ -1371,6 +1371,76 @@ export const CINCAPURA_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+export const SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "2nd-safyc-optimist-championships-2026",
+  regattaName: "2nd SAFYC Optimist Championships 2026",
+  year: 2026,
+  datesText: "4–5 July 2026",
+  venue: "NSRCC Seasports Centre, 11 Changi Coast Walk, Singapore 499740",
+  organizer: "SAF Yacht Club",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/14691/event",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14691/event",
+  websiteUrl: "https://www.safyc.org.sg",
+  registrationUrl: "https://www.safyc.org.sg",
+  entryFees: {
+    singleHanded: 70.85,
+    doubleHanded: 70.85,
+    earlyBirdDeadline: "25 June 2026",
+    finalDeadline: "25 June 2026",
+    lateFee: 21.8,
+  },
+  scheduleSummary:
+    "Optimist Gold and Silver. First warning 1100h on 4 and 5 July. Prize presentation 1800h on 5 July at NSRCC Seasports Centre. Official results final 6 July 2026. Gold: 7 races, 1 discard, 91 entries. Silver: 5 races, 1 discard, 58 entries.",
+  scoringRules:
+    "One race constitutes the event. Fewer than 4 races: no discard. Four or more races: one discard.",
+  fleets: [
+    {
+      fleetName: "Optimist Gold Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 10th",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Alyssa Wong Li Lin", sailNumber: "150", club: "SAF Yacht Club", notes: "Nett 18.8." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Kevin Ho", sailNumber: "171", club: "SAF Yacht Club", notes: "Nett 23.3." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Low Ethan Zhi Ren", sailNumber: "78", club: "SAF Yacht Club", notes: "Nett 28.0." },
+            { rank: 4, prizeTitle: "4th", sailorName: "Ethan Lee", sailNumber: "83", notes: "Nett 45.0." },
+            { rank: 5, prizeTitle: "5th", sailorName: "Teo Jairus", sailNumber: "4073", club: "SAF Yacht Club", notes: "Nett 46.0." },
+            { rank: 6, prizeTitle: "6th", sailorName: "Anya Zahedi", sailNumber: "159", notes: "Nett 50.0." },
+            { rank: 7, prizeTitle: "7th", sailorName: "Elliot Goh", sailNumber: "3103", club: "SAF Yacht Club", notes: "Nett 56.0." },
+            { rank: 8, prizeTitle: "8th", sailorName: "Nathaniel Kaiden Ng", sailNumber: "3344", notes: "Nett 58.2." },
+            { rank: 9, prizeTitle: "9th", sailorName: "Darian Huang", sailNumber: "3700", notes: "Nett 64.0." },
+            { rank: 10, prizeTitle: "10th", sailorName: "Tong Xuan Ya", sailNumber: "107", club: "Constant Wind", notes: "Nett 71.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "Optimist Silver Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 10th",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Lee Thian Tsek Bryan", sailNumber: "3508", club: "SAF Yacht Club", notes: "Nett 11.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Han Moyan", sailNumber: "2042", club: "Constant Wind", notes: "Nett 14.5." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Changqi Tao", sailNumber: "5721", club: "Wuxi Schonst Sailing Club", notes: "Nett 17.5." },
+            { rank: 4, prizeTitle: "4th", sailorName: "Jerome Puah Yang Yi", sailNumber: "2037", notes: "Nett 19.0." },
+            { rank: 5, prizeTitle: "5th", sailorName: "Wu Jiaqian", sailNumber: "3424", club: "SAF Yacht Club", notes: "Nett 27.0." },
+            { rank: 6, prizeTitle: "6th", sailorName: "Jade Tan", sailNumber: "3555", club: "SAF Yacht Club", notes: "Nett 30.0." },
+            { rank: 7, prizeTitle: "7th", sailorName: "Chiang Ziyi Adele", sailNumber: "3120", club: "SAF Yacht Club", notes: "Nett 31.3." },
+            { rank: 8, prizeTitle: "8th", sailorName: "Henry Mittelhauser", sailNumber: "2052", club: "Constant Wind", notes: "Nett 35.0." },
+            { rank: 9, prizeTitle: "9th", sailorName: "Muhammad Rehan Bin Mohamed Salim", sailNumber: "2059", club: "Constant Wind", notes: "Nett 39.0." },
+            { rank: 10, prizeTitle: "10th", sailorName: "Zheng Ryan Feiran", sailNumber: "2045", club: "Constant Wind", notes: "Nett 43.0." },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 /**
  * Retrieves the official prize schedule (categories and verified winners) for a given regatta slug.
  */
@@ -1399,6 +1469,12 @@ export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | nu
     (s.includes("cincapura") && s.includes("jul-26"))
   ) {
     return CINCAPURA_2026_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("2nd-safyc-optimist") ||
+    s.includes("safyc-optimist-championship")
+  ) {
+    return SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE;
   }
   return null;
 }

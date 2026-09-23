@@ -171,6 +171,8 @@ export function AdminRegattasPanel({
                               ? "29er"
                               : regattaClassFilter === "techno"
                                 ? "Techno 293"
+                                : regattaClassFilter === "iqfoil"
+                                  ? "iQFOiL"
                                 : regattaDivisionFilter === "ILCA 6" ||
                                     regattaDivisionFilter === "ILCA 7" ||
                                     regattaDivisionFilter === "ILCA 4"

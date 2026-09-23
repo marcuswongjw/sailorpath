@@ -23,6 +23,36 @@ export type NorAmendment = {
 
 export const NOR_AMENDMENTS: NorAmendment[] = [
   {
+    id: "safyc-optimist-2026",
+    title: "2nd SAFYC Optimist Championships 2026 — Notice of Race",
+    amendedOn: "Notice of Race",
+    website: "https://www.safyc.org.sg",
+    noticeUrl: "https://www.racingrulesofsailing.org/documents/14691/event",
+    venue: "NSRCC Seasports Centre, 11 Changi Coast Walk, Singapore 499740",
+    classes: "Optimist Gold, Optimist Silver",
+    fees:
+      "Early bird on or before 25 June 2026: SAFYC members $70.85, non-members $92.65. After 25 June: members $92.65, non-members $114.45.",
+    deadlines: "Entry closes 25 June 2026. Late entries may be accepted at the organising authority’s discretion.",
+    schedule: [
+      "4 July 2026, 1100h: first warning for Optimist Gold and Silver.",
+      "5 July 2026, 1100h: first warning. Prize presentation 1800h at NSRCC Seasports Centre.",
+      "No warning signal after 1600h on the last day.",
+    ],
+    races: [
+      "7 races scheduled, maximum 4 per day, for both Gold and Silver.",
+      "Official results, final 6 July 2026. Gold sailed 7 races with 1 discard, 91 entries. Silver sailed 5 races with 1 discard, 58 entries.",
+      "One race constitutes the event. Fewer than 4 races: no discard. Four or more: one discard.",
+    ],
+    prizes: [
+      { fleet: "Optimist Gold", prizes: "Open 1st–10th, Female 1st–5th, 12 & under 1st–5th, 10 & under 1st–5th. Open winner Alyssa Wong Li Lin, sail 150, nett 18.8." },
+      { fleet: "Optimist Silver", prizes: "Open 1st–10th, Female 1st–5th, 10 & under (born 2016) 1st–5th, 9 years (born 2017) 1st–5th, 8 & under (born 2018 or later) 1st–5th. Open winner Lee Thian Tsek Bryan, sail 3508, nett 11.0." },
+    ],
+    notes: [
+      "The organising authority is SAF Yacht Club. Questions: seasports@safyc.org.sg, 6758 3359.",
+      "Sailing instructions are posted on the notice board after 1 July 2026.",
+    ],
+  },
+  {
     id: "pesta-sukan-2026",
     title: "Pesta Sukan 2026 — NoR Amendment 1",
     amendedOn: "27 April 2026",
@@ -125,7 +155,14 @@ export function norAmendmentForRegatta(
   slug: string | null | undefined
 ): NorAmendment | null {
   const hay = `${name || ""} ${slug || ""}`.toLowerCase();
-  if (hay.includes("pesta") && hay.includes("sukan")) return NOR_AMENDMENTS[0];
-  if (hay.includes("cincapura")) return NOR_AMENDMENTS[1];
+  const byId = (id: string) => NOR_AMENDMENTS.find((notice) => notice.id === id) ?? null;
+  if (hay.includes("pesta") && hay.includes("sukan")) return byId("pesta-sukan-2026");
+  if (hay.includes("cincapura")) return byId("cincapura-2026");
+  if (
+    (hay.includes("safyc") || hay.includes("saf yacht")) &&
+    hay.includes("optimist")
+  ) {
+    return byId("safyc-optimist-2026");
+  }
   return null;
 }

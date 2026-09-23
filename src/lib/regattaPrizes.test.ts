@@ -3,6 +3,7 @@ import {
   SNSC_2026_PRIZE_SCHEDULE,
   PESTA_SUKAN_2026_PRIZE_SCHEDULE,
   CINCAPURA_2026_PRIZE_SCHEDULE,
+  SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE,
 } from "./regattaPrizes";
 import {
   CINCAPURA_2026_GOLD_RESULTS,
@@ -100,6 +101,15 @@ describe("regattaPrizes", () => {
     const techno = CINCAPURA_2026_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Techno 293");
     expect(techno?.categories.find((c) => c.categoryName === "Open")?.winners[0].sailorName).toBe("Addy Armand Anuar");
     expect(techno?.categories.find((c) => c.categoryName === "Female")?.winners[0].sailorName).toBe("Kate Teo");
+  });
+
+  it("records the 2nd SAFYC Optimist Championships from the final results", () => {
+    expect(SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE.datesText).toBe("4–5 July 2026");
+    const gold = SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE.fleets[0];
+    const silver = SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE.fleets[1];
+    expect(gold.categories[0].winners[0].sailorName).toBe("Alyssa Wong Li Lin");
+    expect(silver.categories[0].winners[0].sailorName).toBe("Lee Thian Tsek Bryan");
+    expect(silver.categories[0].winners).toHaveLength(10);
   });
 
   it("provides complete race-by-race datasets for Cincapura 2026 Gold and Silver", () => {

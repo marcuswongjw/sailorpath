@@ -5,6 +5,7 @@ export type RegattaClassFamily =
   | "optimist"
   | "ilca"
   | "wingfoil"
+  | "iqfoil"
   | "29er"
   | "techno";
 
@@ -13,6 +14,7 @@ export const REGATTA_CLASS_FAMILIES: { id: RegattaClassFamily; label: string }[]
   { id: "optimist", label: "Optimist" },
   { id: "ilca", label: "ILCA" },
   { id: "wingfoil", label: "WingFoil" },
+  { id: "iqfoil", label: "iQFOiL" },
   { id: "29er", label: "29er" },
   { id: "techno", label: "Techno 293" },
 ];
@@ -28,6 +30,7 @@ export const ADMIN_BOAT_CLASS_GROUPS: { family: string; classes: string[] }[] = 
   { family: "ILCA", classes: ["ILCA 4", "ILCA 6", "ILCA 7"] },
   { family: "29er", classes: ["29er"] },
   { family: "WingFoil", classes: ["WingFoil"] },
+  { family: "iQFOiL", classes: ["iQFOiL"] },
   { family: "Techno 293", classes: ["Techno 293"] },
 ];
 
@@ -43,6 +46,7 @@ export function regattaClassFamily(
   if (!bc || bc.includes("optimist") || a === "opti") return "optimist";
   if (a.includes("29er")) return "29er";
   if (a.includes("wingfoil")) return "wingfoil";
+  if (a.includes("iqfoil")) return "iqfoil";
   if (a.includes("techno")) return "techno";
   if (/ilca|laser|radial/.test(bc)) return "ilca";
   return "other";

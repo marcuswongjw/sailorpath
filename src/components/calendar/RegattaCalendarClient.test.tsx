@@ -151,7 +151,7 @@ describe("RegattaCalendarClient", () => {
     expect(screen.getByText("ILCA Singapore Open 2099")).toBeInTheDocument();
     expect(screen.getByText("Eastern Seaboard Regatta 2099")).toBeInTheDocument();
     expect(screen.queryByText(/official selection trial for world championship team/i)).not.toBeInTheDocument();
-    expect(screen.getByText("Ranking Regatta")).toBeInTheDocument();
+    expect(screen.getAllByText("Ranking Regatta").length).toBeGreaterThan(0);
     expect(screen.queryByText("National Series Ranking")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "ILCA Singapore Open 2099" })).toHaveAttribute(
       "href",

@@ -97,7 +97,7 @@ export function AdminResultsPanel({
 }: AdminResultsPanelProps) {
   const [regattaQuery, setRegattaQuery] = useState("");
   const [regattaClassFilter, setRegattaClassFilter] = useState<
-    "all" | "optimist" | "ilca" | "wingfoil" | "29er" | "techno"
+    "all" | "optimist" | "ilca" | "wingfoil" | "iqfoil" | "29er" | "techno"
   >("all");
   const [regattaFleetFilter, setRegattaFleetFilter] = useState("all");
   const [regattaRankingFilter, setRegattaRankingFilter] = useState<
@@ -290,6 +290,7 @@ export function AdminResultsPanel({
                   ["optimist", "Optimist"],
                   ["ilca", "ILCA"],
                   ["wingfoil", "WingFoil"],
+                  ["iqfoil", "iQFOiL"],
                   ["29er", "29er"],
                   ["techno", "Techno"],
                 ] as const

@@ -593,7 +593,8 @@ export function RegattaCalendarClient({
                           </span>
                         ))}
 
-                        {regatta.division && (
+                        {regatta.division &&
+                          regatta.division.trim().toLowerCase() !== "national" && (
                           <span className="rounded-md border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-semibold text-[var(--sp-slate-soft)]">
                             {regatta.division}
                           </span>
@@ -613,7 +614,7 @@ export function RegattaCalendarClient({
                           </span>
                         )}
 
-                        {regatta.countsForRanking && !regatta.isSelectionTrial && (
+                        {regatta.countsForRanking && (
                           <span className="rounded-md border border-emerald-500/30 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 inline-flex items-center gap-1">
                             <Award className="h-3 w-3" />
                             Ranking Regatta
