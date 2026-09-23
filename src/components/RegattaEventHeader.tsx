@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { FileText, ExternalLink } from "lucide-react";
-import { dinghyClassPage, type DinghyClassKey } from "@/lib/classPages";
 
 export type RegattaEventHeaderProps = {
   name: string;
@@ -8,7 +7,8 @@ export type RegattaEventHeaderProps = {
   division?: string | null;
   totalFleetSize: number;
   raceCount?: number | null;
-  series: "optimist" | "ilca4" | DinghyClassKey;
+  /** "optimist" | "ilca4" */
+  series: "optimist" | "ilca4";
   countsForRanking?: boolean;
   norUrl?: string | null;
 };
@@ -26,28 +26,11 @@ export function RegattaEventHeader({
   countsForRanking = true,
   norUrl,
 }: RegattaEventHeaderProps) {
-  const dinghy =
-    series === "ilca6" || series === "ilca7" || series === "29er"
-      ? dinghyClassPage(series)
-      : null;
-  const isSingleFleet = series !== "optimist";
-  const listHref = dinghy
-    ? dinghy.regattasPath
-    : series === "ilca4"
-      ? "/sg/ilca4/regattas"
-      : "/sg/optimist/regattas";
-  const rankingsHref = dinghy
-    ? dinghy.homePath
-    : series === "ilca4"
-      ? "/sg/ilca4"
-      : "/sg/optimist/gold";
-  const rankingsLabel = dinghy
-    ? dinghy.label
-    : series === "ilca4"
-      ? "ILCA 4 rankings"
-      : "Optimist rankings";
-  const classLabel = dinghy ? dinghy.label : series === "ilca4" ? "ILCA 4" : "Optimist";
-  const divLabel = String(division || (isSingleFleet ? "Open" : "—")).trim() || "—";
+  const isIlca = series === "ilca4";
+  const listHref = isIlca ? "/sg/ilca4/regattas" : "/sg/optimist/regattas";
+  const rankingsHref = isIlca ? "/sg/ilca4" : "/sg/optimist/gold";
+  const classLabel = isIlca ? "ILCA 4" : "Optimist";
+  const divLabel = String(division || (isIlca ? "Open" : "—")).trim() || "—";
   const divisionIsNonRanking = /^(non[\s-]?ranking|practice)$/i.test(divLabel);
 
   return (
@@ -60,7 +43,7 @@ export function RegattaEventHeader({
           href={rankingsHref}
           className="text-[var(--sp-harbour-teal)] hover:underline"
         >
-          {rankingsLabel}
+          {isIlca ? "ILCA 4 rankings" : "Optimist rankings"}
         </Link>
         <span className="text-[var(--sp-slate-soft)]" aria-hidden>
           /

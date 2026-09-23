@@ -140,40 +140,6 @@ export function SiteHeader() {
       </Link>
       <hr className="my-1.5 border-cool-veil" />
       <p className="px-3.5 pb-1 text-xs font-bold uppercase tracking-wider text-slate-soft">
-        ILCA 6, ILCA 7 &amp; 29er
-      </p>
-      <Link
-        href="/sg/ilca6"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        ILCA 6 regattas
-      </Link>
-      <Link
-        href="/sg/ilca7"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        ILCA 7 regattas
-      </Link>
-      <Link
-        href="/sg/29er"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        29er regattas
-      </Link>
-      <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 text-xs font-bold uppercase tracking-wider text-slate-soft">
         WingFoil
       </p>
       <Link
@@ -521,30 +487,6 @@ export function SiteHeader() {
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 4 regattas
-            </Link>
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
-              ILCA 6, ILCA 7 &amp; 29er
-            </p>
-            <Link
-              href="/sg/ilca6"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA 6 regattas
-            </Link>
-            <Link
-              href="/sg/ilca7"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA 7 regattas
-            </Link>
-            <Link
-              href="/sg/29er"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              29er regattas
             </Link>
             <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
               WingFoil

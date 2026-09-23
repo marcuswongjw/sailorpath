@@ -20,7 +20,11 @@ import {
   ExternalLink,
   Medal,
 } from "lucide-react";
-import { regattaResultsHref } from "@/lib/classPages";
+import {
+  ILCA_FLEETS,
+  OPTIMIST_FLEETS,
+  regattaMatchesAdminClass,
+} from "@/lib/admin/regattaClass";
 import { rankingPeriodOptions } from "@/lib/datesSg";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
@@ -93,8 +97,9 @@ export function AdminResultsPanel({
 }: AdminResultsPanelProps) {
   const [regattaQuery, setRegattaQuery] = useState("");
   const [regattaClassFilter, setRegattaClassFilter] = useState<
-    "all" | "optimist" | "ilca" | "wingfoil"
+    "all" | "optimist" | "ilca" | "wingfoil" | "29er" | "techno"
   >("all");
+  const [regattaFleetFilter, setRegattaFleetFilter] = useState("all");
   const [regattaRankingFilter, setRegattaRankingFilter] = useState<
     "all" | "series" | "nonranking"
   >("all");
@@ -116,33 +121,35 @@ export function AdminResultsPanel({
   const recentRegattas = useMemo(() => {
     return [...regattaList]
       .filter((r) => {
-        if (regattaClassFilter !== "all") {
-          const bc = (r.boatClass || "Optimist").toLowerCase();
-          if (regattaClassFilter === "optimist" && !bc.includes("optimist")) return false;
-          if (regattaClassFilter === "ilca" && !/ilca|laser/i.test(bc)) return false;
-          if (regattaClassFilter === "wingfoil" && !bc.includes("wingfoil")) return false;
+        if (
+          !regattaMatchesAdminClass({
+            boatClass: r.boatClass,
+            division: r.division,
+            family: regattaClassFilter,
+            fleet: regattaFleetFilter,
+          })
+        ) {
+          return false;
         }
         return true;
       })
       .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))
       .slice(0, 4);
-  }, [regattaList, regattaClassFilter]);
+  }, [regattaList, regattaClassFilter, regattaFleetFilter]);
 
   const filteredRegattas = useMemo(() => {
     const q = regattaQuery.trim().toLowerCase();
     return [...regattaList]
       .filter((r) => {
-        if (regattaClassFilter !== "all") {
-          const bc = (r.boatClass || "Optimist").toLowerCase();
-          if (regattaClassFilter === "optimist" && !bc.includes("optimist")) {
-            return false;
-          }
-          if (regattaClassFilter === "ilca" && !/ilca|laser/i.test(bc)) {
-            return false;
-          }
-          if (regattaClassFilter === "wingfoil" && !bc.includes("wingfoil")) {
-            return false;
-          }
+        if (
+          !regattaMatchesAdminClass({
+            boatClass: r.boatClass,
+            division: r.division,
+            family: regattaClassFilter,
+            fleet: regattaFleetFilter,
+          })
+        ) {
+          return false;
         }
         const isNon = r.countsForRanking === false;
         if (regattaRankingFilter === "series" && isNon) return false;
@@ -153,7 +160,7 @@ export function AdminResultsPanel({
         return hay.includes(q);
       })
       .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
-  }, [regattaList, regattaQuery, regattaClassFilter, regattaRankingFilter]);
+  }, [regattaList, regattaQuery, regattaClassFilter, regattaFleetFilter, regattaRankingFilter]);
 
   const sailorById = useMemo(() => {
     const m = new Map<string, SailorAdmin>();
@@ -279,16 +286,21 @@ export function AdminResultsPanel({
             <div className="flex rounded-full bg-white/5 p-0.5 border border-white/10">
               {(
                 [
-                  ["all", "All Classes"],
+                  ["all", "All"],
                   ["optimist", "Optimist"],
-                  ["ilca", "ILCA 4"],
+                  ["ilca", "ILCA"],
                   ["wingfoil", "WingFoil"],
+                  ["29er", "29er"],
+                  ["techno", "Techno"],
                 ] as const
               ).map(([id, label]) => (
                 <button
                   key={id}
                   type="button"
-                  onClick={() => setRegattaClassFilter(id)}
+                  onClick={() => {
+                    setRegattaClassFilter(id);
+                    setRegattaFleetFilter("all");
+                  }}
                   className={`rounded-full px-2.5 py-1 text-[12px] font-bold transition-all ${
                     regattaClassFilter === id
                       ? "bg-[var(--sp-harbour-teal)] text-white"
@@ -299,6 +311,37 @@ export function AdminResultsPanel({
                 </button>
               ))}
             </div>
+            {(regattaClassFilter === "optimist" || regattaClassFilter === "ilca") && (
+              <div className="flex rounded-full bg-white/5 p-0.5 border border-white/10">
+                <button
+                  type="button"
+                  onClick={() => setRegattaFleetFilter("all")}
+                  className={`rounded-full px-2.5 py-1 text-[12px] font-bold transition-all ${
+                    regattaFleetFilter === "all"
+                      ? "bg-[var(--sp-harbour-teal)] text-white"
+                      : "text-slate-400 hover:text-white"
+                  }`}
+                >
+                  All
+                </button>
+                {(regattaClassFilter === "ilca" ? ILCA_FLEETS : OPTIMIST_FLEETS.filter((fleet) => fleet === "Gold" || fleet === "Silver")).map(
+                  (fleet) => (
+                    <button
+                      key={fleet}
+                      type="button"
+                      onClick={() => setRegattaFleetFilter(fleet)}
+                      className={`rounded-full px-2.5 py-1 text-[12px] font-bold transition-all ${
+                        regattaFleetFilter === fleet
+                          ? "bg-[var(--sp-harbour-teal)] text-white"
+                          : "text-slate-400 hover:text-white"
+                      }`}
+                    >
+                      {regattaClassFilter === "ilca" ? fleet.replace("ILCA ", "") : fleet}
+                    </button>
+                  )
+                )}
+              </div>
+            )}
 
             {/* Ranking Filter */}
             <div className="flex rounded-full bg-white/5 p-0.5 border border-white/10">
@@ -463,10 +506,9 @@ export function AdminResultsPanel({
             {selectedRegatta.slug && (
               <Link
                 href={
-                  regattaResultsHref(
-                    selectedRegatta.boatClass,
-                    selectedRegatta.slug
-                  )
+                  (selectedRegatta.boatClass || "").toLowerCase().includes("ilca")
+                    ? `/sg/ilca4/regattas/${selectedRegatta.slug}`
+                    : `/sg/optimist/regattas/${selectedRegatta.slug}`
                 }
                 target="_blank"
                 className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-1.5 text-xs font-bold text-slate-300 transition-all"

@@ -34,24 +34,6 @@ const classHubs = [
     note: "Dual sail numbers and year-on-year progression in one record.",
   },
   {
-    name: "ILCA 6 Class",
-    href: "/sg/ilca6",
-    tagline: "Published regatta results",
-    note: "Race scores for ILCA 6 fleets, including SNSC.",
-  },
-  {
-    name: "ILCA 7 Class",
-    href: "/sg/ilca7",
-    tagline: "Published regatta results",
-    note: "Race scores for ILCA 7 fleets, including SNSC.",
-  },
-  {
-    name: "29er Class",
-    href: "/sg/29er",
-    tagline: "Published regatta results",
-    note: "Race scores for 29er fleets, including SNSC.",
-  },
-  {
     name: "WingFoil Class",
     href: "/sg/wingfoil",
     tagline: "Sprint slalom event standings",

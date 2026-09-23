@@ -4,7 +4,6 @@ import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
 import { DbUnavailableError } from "@/db";
-import { dinghyClassPage } from "@/lib/classPages";
 import {
   defaultEventFleetKey,
   eventHubHref,
@@ -31,9 +30,6 @@ function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
   if (series === "techno293") return "/sg/techno293";
   if (series === "ilca4") return "/sg/ilca4";
   if (series === "optimist") return "/sg/optimist/gold";
-  if (series === "ilca6" || series === "ilca7" || series === "29er") {
-    return dinghyClassPage(series).homePath;
-  }
   return null;
 }
 
@@ -97,22 +93,11 @@ function BoardClassPanel({
   const classHref = seriesPageHref(slice.series);
 
   if (!board || !board.results?.length) {
-    const classHref = seriesPageHref(slice.series);
     return (
-      <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 text-center shadow-xs space-y-2">
+      <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 text-center shadow-xs">
         <p className="text-sm font-semibold text-[var(--sp-charcoal-slate)]">
           No {slice.label} results published yet.
         </p>
-        {classHref && (
-          <p className="text-[13px] text-[var(--sp-slate-soft)]">
-            <Link
-              href={classHref}
-              className="font-semibold text-[var(--sp-harbour-teal)] hover:underline"
-            >
-              {slice.label} class page
-            </Link>
-          </p>
-        )}
       </div>
     );
   }
@@ -225,7 +210,7 @@ async function DbSlicePanel({ regatta, def }: { regatta: RegattaRecord; def: Reg
       error instanceof DbUnavailableError ? error.message : "DB error";
     return <DbOffline message={message} />;
   }
-  const accent = def.series === "optimist" || def.series === "29er" ? "orange" : "sky";
+  const accent = def.series === "ilca4" ? "sky" : "orange";
   return (
     <div className="space-y-3">
       <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">

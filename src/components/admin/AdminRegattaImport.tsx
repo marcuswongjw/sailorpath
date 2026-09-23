@@ -12,7 +12,6 @@ import {
 import {
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
-import { regattaResultsHref } from "@/lib/classPages";
 import { parseRegattaTitle } from "@/lib/excel/parseRegattaTitle";
 import { parseApi, apiErr, apiStr, type AdminApiJson } from "@/components/admin/parseApi";
 import type {
@@ -820,10 +819,9 @@ export function AdminRegattaImport({
                 {lastImportedRegatta.slug && (
                   <Link
                     href={
-                      regattaResultsHref(
-                        lastImportedRegatta.boatClass,
-                        lastImportedRegatta.slug
-                      )
+                      (lastImportedRegatta.boatClass || "").toLowerCase().includes("ilca")
+                        ? `/sg/ilca4/regattas/${lastImportedRegatta.slug}`
+                        : `/sg/optimist/regattas/${lastImportedRegatta.slug}`
                     }
                     target="_blank"
                     className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-cool-mist)] bg-white/5 hover:bg-white/10 px-3.5 py-2 text-[13px] font-semibold text-slate-300 transition-all"

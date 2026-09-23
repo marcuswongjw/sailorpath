@@ -3,7 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Calendar, Trophy, ExternalLink, Sparkles, Loader2 } from "lucide-react";
-import { regattaResultsHref } from "@/lib/classPages";
+import { AdminNorAmendmentCard } from "@/components/admin/AdminNorAmendmentCard";
+import {
+  ADMIN_BOAT_CLASS_GROUPS,
+  ILCA_FLEETS,
+  OPTIMIST_FLEETS,
+  REGATTA_CLASS_FAMILIES,
+} from "@/lib/admin/regattaClass";
+import { norAmendmentForRegatta } from "@/lib/admin/norAmendments";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
@@ -98,29 +105,43 @@ export function AdminRegattasPanel({
                     </label>
                     <select
                       value={regattaClassFilter}
-                      onChange={(e) => setRegattaClassFilter?.(e.target.value)}
+                      onChange={(e) => {
+                        setRegattaClassFilter?.(e.target.value);
+                        setRegattaDivisionFilter("all");
+                      }}
                       className="mt-1 w-full sm:w-36 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
                     >
-                      <option value="all">All Classes</option>
-                      <option value="optimist">Optimist</option>
-                      <option value="ilca">ILCA 4 / 6</option>
-                      <option value="wingfoil">WingFoil</option>
+                      {REGATTA_CLASS_FAMILIES.map((family) => (
+                        <option key={family.id} value={family.id}>
+                          {family.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div>
                     <label className="text-[12px] font-bold text-slate-500 uppercase">
-                      Division
+                      {regattaClassFilter === "ilca" ? "ILCA fleet" : "Fleet"}
                     </label>
                     <select
                       value={regattaDivisionFilter}
                       onChange={(e) => setRegattaDivisionFilter(e.target.value)}
                       className="mt-1 w-full sm:w-36 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
                     >
-                      <option value="all">All Divisions</option>
-                      <option value="Gold">Gold</option>
-                      <option value="Silver">Silver</option>
-                      <option value="Both">Both</option>
-                      <option value="NonRanking">NonRanking</option>
+                      <option value="all">
+                        {regattaClassFilter === "ilca" ? "All ILCA" : "All fleets"}
+                      </option>
+                      {(regattaClassFilter === "ilca"
+                        ? ILCA_FLEETS
+                        : regattaClassFilter === "optimist" || regattaClassFilter === "all"
+                          ? OPTIMIST_FLEETS
+                          : []
+                      ).map(
+                        (fleet) => (
+                          <option key={fleet} value={fleet}>
+                            {fleet === "NonRanking" ? "Non-ranking" : fleet}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
                   <div>
@@ -143,7 +164,28 @@ export function AdminRegattasPanel({
                       setEditingRegattaId("new");
                       setRegattaForm({
                         ...emptyRegattaForm(),
-                        boatClass: regattaClassFilter === "wingfoil" ? "WingFoil" : regattaClassFilter === "ilca" ? "ILCA 4" : "Optimist",
+                        boatClass:
+                          regattaClassFilter === "wingfoil"
+                            ? "WingFoil"
+                            : regattaClassFilter === "29er"
+                              ? "29er"
+                              : regattaClassFilter === "techno"
+                                ? "Techno 293"
+                                : regattaDivisionFilter === "ILCA 6" ||
+                                    regattaDivisionFilter === "ILCA 7" ||
+                                    regattaDivisionFilter === "ILCA 4"
+                                  ? regattaDivisionFilter
+                                  : regattaClassFilter === "ilca"
+                                    ? "ILCA 4"
+                                    : "Optimist",
+                        division:
+                          regattaClassFilter === "ilca" ||
+                          regattaDivisionFilter.startsWith("ILCA")
+                            ? "Open"
+                            : regattaDivisionFilter === "Gold" ||
+                                regattaDivisionFilter === "Silver"
+                              ? regattaDivisionFilter
+                              : "Gold",
                         date: new Date().toISOString().split("T")[0],
                       });
                     }}
@@ -293,10 +335,9 @@ export function AdminRegattasPanel({
                                 {regattaForm.slug && (
                                   <Link
                                     href={
-                                      regattaResultsHref(
-                                        regattaForm.boatClass,
-                                        regattaForm.slug
-                                      )
+                                      (regattaForm.boatClass || "").toLowerCase().includes("ilca")
+                                        ? `/sg/ilca4/regattas/${regattaForm.slug}`
+                                        : `/sg/optimist/regattas/${regattaForm.slug}`
                                     }
                                     target="_blank"
                                     className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-2.5 py-1 text-[13px] font-semibold text-slate-300 transition-all"
@@ -319,6 +360,11 @@ export function AdminRegattasPanel({
                             </button>
                           )}
                         </div>
+                        {norAmendmentForRegatta(regattaForm.name, regattaForm.slug) && (
+                          <AdminNorAmendmentCard
+                            notice={norAmendmentForRegatta(regattaForm.name, regattaForm.slug)!}
+                          />
+                        )}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <div className="sm:col-span-2">
                             <label className="text-[12px] font-bold text-slate-500 uppercase">
@@ -421,9 +467,15 @@ export function AdminRegattasPanel({
                               }
                               className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
                             >
-                              <option value="Gold">Gold only</option>
-                              <option value="Silver">Silver only</option>
-                              <option value="Both">Both</option>
+                              {/ilca|laser|radial/i.test(String(regattaForm.boatClass || "")) ? (
+                                <option value="Open">Open</option>
+                              ) : (
+                                <>
+                                  <option value="Gold">Gold only</option>
+                                  <option value="Silver">Silver only</option>
+                                  <option value="Both">Both</option>
+                                </>
+                              )}
                               <option value="NonRanking">Non-ranking</option>
                             </select>
                           </div>
@@ -490,28 +542,41 @@ export function AdminRegattasPanel({
                               <label className="text-[12px] font-bold text-slate-500 uppercase">
                                 Class
                               </label>
-                              <div className="flex gap-1">
-                                {(["Optimist", "ILCA 4", "ILCA 6", "WingFoil"] as const).map(
-                                  (cls) => (
-                                    <button
-                                      key={cls}
-                                      type="button"
-                                      onClick={() =>
-                                        setRegattaForm({
-                                          ...regattaForm,
-                                          boatClass: cls,
-                                        })
-                                      }
-                                      className={`px-1.5 py-0.5 rounded text-[13px] font-bold transition-all ${
-                                        regattaForm.boatClass === cls
-                                          ? "bg-[var(--sp-harbour-teal)] text-white"
-                                          : "bg-white/5 text-slate-400 hover:text-white"
-                                      }`}
-                                    >
-                                      {cls}
-                                    </button>
-                                  )
-                                )}
+                              <div className="flex flex-wrap justify-end gap-1 max-w-[16rem]">
+                                {ADMIN_BOAT_CLASS_GROUPS.map((group) => (
+                                  <span key={group.family} className="inline-flex gap-1">
+                                    {group.classes.map((cls) => (
+                                      <button
+                                        key={cls}
+                                        type="button"
+                                        onClick={() =>
+                                          setRegattaForm({
+                                            ...regattaForm,
+                                            boatClass: cls,
+                                            division:
+                                              group.family === "ILCA" &&
+                                              ["", "Gold", "Silver", "Both"].includes(
+                                                regattaForm.division || ""
+                                              )
+                                                ? "Open"
+                                                : group.family === "Optimist" &&
+                                                    (regattaForm.division === "Open" ||
+                                                      !regattaForm.division)
+                                                  ? "Gold"
+                                                  : regattaForm.division,
+                                          })
+                                        }
+                                        className={`px-1.5 py-0.5 rounded text-[13px] font-bold transition-all ${
+                                          regattaForm.boatClass === cls
+                                            ? "bg-[var(--sp-harbour-teal)] text-white"
+                                            : "bg-white/5 text-slate-400 hover:text-white"
+                                        }`}
+                                      >
+                                        {group.family === "ILCA" ? cls.replace("ILCA ", "") : cls}
+                                      </button>
+                                    ))}
+                                  </span>
+                                ))}
                               </div>
                             </div>
                             <input

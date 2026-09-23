@@ -6,6 +6,7 @@ import { emptyRegattaForm } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import { cascadeLine } from "@/lib/confirmCopy";
+import { regattaMatchesAdminClass } from "@/lib/admin/regattaClass";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
@@ -54,22 +55,14 @@ export function useAdminRegattas({
     return [...(regattaList || [])]
       .filter((r) => {
         if (
-          regattaDivisionFilter !== "all" &&
-          String(r.division || "Gold") !== regattaDivisionFilter
+          !regattaMatchesAdminClass({
+            boatClass: r.boatClass,
+            division: r.division,
+            family: regattaClassFilter,
+            fleet: regattaDivisionFilter,
+          })
         ) {
           return false;
-        }
-        if (regattaClassFilter !== "all") {
-          const bc = (r.boatClass || "Optimist").toLowerCase();
-          if (regattaClassFilter === "optimist" && !bc.includes("optimist")) {
-            return false;
-          }
-          if (regattaClassFilter === "ilca" && !/ilca|laser/i.test(bc)) {
-            return false;
-          }
-          if (regattaClassFilter === "wingfoil" && !bc.includes("wingfoil")) {
-            return false;
-          }
         }
         const isNon = r.countsForRanking === false;
         if (regattaRankingFilter === "series" && isNon) return false;

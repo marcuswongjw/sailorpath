@@ -1,6 +1,5 @@
 import { permanentRedirect, redirect } from "next/navigation";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
-import { regattaResultsHref } from "@/lib/classPages";
 import { getRegattaBySlug } from "@/lib/queries";
 import {
   eventHubHref,
@@ -59,5 +58,9 @@ export default async function RegattaRedirectPage({
     redirect("/calendar");
   }
 
-  redirect(regattaResultsHref(regatta.boatClass, regatta_slug));
+  if (regatta.boatClass === "ILCA 4") {
+    redirect(`/sg/ilca4/regattas/${encodeURIComponent(regatta_slug)}`);
+  }
+
+  redirect(`/sg/optimist/regattas/${encodeURIComponent(regatta_slug)}`);
 }
