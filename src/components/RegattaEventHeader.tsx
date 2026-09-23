@@ -11,8 +11,6 @@ export type RegattaEventHeaderProps = {
   series: "optimist" | "ilca4";
   countsForRanking?: boolean;
   norUrl?: string | null;
-  /** Parent multi-class event, when this regatta is one slice of it. */
-  eventHub?: { href: string; label: string } | null;
 };
 
 /**
@@ -27,7 +25,6 @@ export function RegattaEventHeader({
   series,
   countsForRanking = true,
   norUrl,
-  eventHub,
 }: RegattaEventHeaderProps) {
   const isIlca = series === "ilca4";
   const listHref = isIlca ? "/sg/ilca4/regattas" : "/sg/optimist/regattas";
@@ -57,19 +54,6 @@ export function RegattaEventHeader({
         >
           Regattas
         </Link>
-        {eventHub ? (
-          <>
-            <span className="text-[var(--sp-slate-soft)]" aria-hidden>
-              /
-            </span>
-            <Link
-              href={eventHub.href}
-              className="text-[var(--sp-harbour-teal)] hover:underline"
-            >
-              {eventHub.label}
-            </Link>
-          </>
-        ) : null}
         <span className="text-[var(--sp-slate-soft)]" aria-hidden>
           /
         </span>

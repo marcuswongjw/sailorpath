@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaEventHeader } from "@/components/RegattaEventHeader";
@@ -25,6 +25,10 @@ export default async function RegattaDetailPage({
   params: Promise<{ regatta_slug: string }>;
 }) {
   const { regatta_slug } = await params;
+  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
+  if (eventSlice) {
+    permanentRedirect(eventHubHref(eventSlice.event.slug, eventSlice.slice.key));
+  }
   if (regatta_slug === "cincapura-regatta-2026") {
     redirect("/sg/optimist/regattas/cincapura-regatta-2026-gold");
   }
@@ -46,7 +50,6 @@ export default async function RegattaDetailPage({
   if (!regatta || !results) notFound();
 
   const prizeWinners = getPrizeWinnersForRegatta(regatta_slug);
-  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
@@ -59,14 +62,6 @@ export default async function RegattaDetailPage({
         series="optimist"
         countsForRanking={regatta.countsForRanking !== false}
         norUrl={regatta.norUrl}
-        eventHub={
-          eventSlice
-            ? {
-                href: eventHubHref(eventSlice.event.slug, eventSlice.slice.key),
-                label: eventSlice.event.shortName,
-              }
-            : null
-        }
       />
       <PublicRegattaResults
         results={results}

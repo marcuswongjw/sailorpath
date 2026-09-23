@@ -1,7 +1,11 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect, redirect } from "next/navigation";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
 import { getRegattaBySlug } from "@/lib/queries";
-import { getRegattaEvent } from "@/lib/regattaEvents";
+import {
+  eventHubHref,
+  findEventSliceForRegattaSlug,
+  getRegattaEvent,
+} from "@/lib/regattaEvents";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -38,6 +42,11 @@ export default async function RegattaRedirectPage({
   if (event) {
     const { fleet } = await searchParams;
     return <RegattaEventHub event={event} activeFleet={fleet ?? null} />;
+  }
+
+  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
+  if (eventSlice) {
+    permanentRedirect(eventHubHref(eventSlice.event.slug, eventSlice.slice.key));
   }
 
   if (regatta_slug === "cincapura-regatta-2026") {

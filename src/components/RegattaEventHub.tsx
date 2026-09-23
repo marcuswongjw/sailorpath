@@ -33,16 +33,6 @@ function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
   return null;
 }
 
-function sliceClassHref(slice: ResolvedEventSlice): string | null {
-  if (slice.regatta) {
-    const slug = encodeURIComponent(slice.regatta.slug);
-    return slice.def.series === "ilca4"
-      ? `/sg/ilca4/regattas/${slug}`
-      : `/sg/optimist/regattas/${slug}`;
-  }
-  return seriesPageHref(slice.def.series);
-}
-
 function prizeViewForSlice(event: RegattaEventDef, slice: ResolvedEventSlice) {
   if (slice.regatta) {
     const fromRow = getPrizeWinnersForRegatta(slice.regatta.slug);
@@ -384,18 +374,6 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
         <RegattaPrizeWinners
           schedule={{ ...prizeView.schedule, fleets: prizeView.fleets }}
         />
-      )}
-
-      {sliceClassHref(active) && active.regatta && (
-        <p className="text-[13px] text-[var(--sp-slate-soft)]">
-          Permalink for this class:{" "}
-          <Link
-            href={sliceClassHref(active)!}
-            className="font-semibold text-[var(--sp-harbour-teal)] hover:underline"
-          >
-            {sliceClassHref(active)}
-          </Link>
-        </p>
       )}
     </div>
   );

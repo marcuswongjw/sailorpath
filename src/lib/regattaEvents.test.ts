@@ -104,12 +104,18 @@ describe("getStaticBoardRegatta", () => {
 
 describe("findEventSliceForRegattaSlug", () => {
   it("points a class slug back at the event hub tab", () => {
-    const found = findEventSliceForRegattaSlug("snsc-ilca-4-sep-26-2026-09-11");
-    expect(found?.event.slug).toBe("snsc-2026");
-    expect(found?.slice.key).toBe("ilca-4");
+    const ilca = findEventSliceForRegattaSlug("snsc-ilca-4-sep-26-2026-09-11");
+    expect(ilca?.event.slug).toBe("snsc-2026");
+    expect(ilca?.slice.key).toBe("ilca-4");
     expect(eventHubHref("snsc-2026", "ilca-4")).toBe(
       "/regattas/snsc-2026?fleet=ilca-4"
     );
+
+    const silver = findEventSliceForRegattaSlug("snsc-silver-sep-26-2026-09-05");
+    expect(silver?.slice.key).toBe("optimist-silver");
+    expect(
+      silver && eventHubHref(silver.event.slug, silver.slice.key)
+    ).toBe("/regattas/snsc-2026?fleet=optimist-silver");
   });
 
   it("ignores other classes and other years", () => {
