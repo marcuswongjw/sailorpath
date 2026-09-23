@@ -9,6 +9,9 @@ export default async function RegattaRedirectPage({
   params: Promise<{ regatta_slug: string }>;
 }) {
   const { regatta_slug } = await params;
+  if (regatta_slug === "cincapura-regatta-2026") {
+    redirect("/sg/optimist/regattas/cincapura-regatta-2026-gold");
+  }
   const regatta = await getRegattaBySlug(regatta_slug).catch(() => null);
 
   if (!regatta) {

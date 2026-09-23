@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaEventHeader } from "@/components/RegattaEventHeader";
@@ -19,6 +19,9 @@ export default async function RegattaDetailPage({
   params: Promise<{ regatta_slug: string }>;
 }) {
   const { regatta_slug } = await params;
+  if (regatta_slug === "cincapura-regatta-2026") {
+    redirect("/sg/optimist/regattas/cincapura-regatta-2026-gold");
+  }
   let regatta;
   let results;
   let errorMsg: string | null = null;
