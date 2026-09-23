@@ -358,6 +358,59 @@ body [class*="bg-\[var\(--sp-harbour-shadow\)\]"],
 body [class*="bg-\[var\(--sp-harbour-shadow\)\]"] *,
 body .bg-harbour *,
 body .bg-harbour-shadow * { color: #fff !important; }
+
+/* Restore proper contrast for dropdown menus, popovers, and light cards nested inside dark header/teal containers */
+body .bg-harbour [role="menu"],
+body .bg-harbour [role="menu"] *,
+body .bg-harbour .bg-warm-white,
+body .bg-harbour .bg-warm-white *,
+body .bg-harbour .bg-white,
+body .bg-harbour .bg-white *,
+body .bg-harbour-shadow [role="menu"],
+body .bg-harbour-shadow [role="menu"] *,
+body .bg-harbour-shadow .bg-warm-white,
+body .bg-harbour-shadow .bg-warm-white *,
+body .bg-harbour-shadow .bg-white,
+body .bg-harbour-shadow .bg-white *,
+body header [role="menu"],
+body header [role="menu"] * {
+  color: var(--sp-charcoal) !important;
+}
+
+body .bg-harbour [role="menu"] .text-slate-soft,
+body .bg-harbour [role="menu"] p,
+body .bg-harbour .bg-warm-white .text-slate-soft,
+body header [role="menu"] .text-slate-soft,
+body header [role="menu"] p {
+  color: var(--sp-slate-soft) !important;
+}
+
+body .bg-harbour [role="menu"] .text-harbour,
+body .bg-harbour .bg-warm-white .text-harbour,
+body header [role="menu"] .text-harbour {
+  color: var(--sp-harbour) !important;
+}
+
+body .bg-harbour [role="menu"] .text-racing-orange,
+body .bg-harbour .bg-warm-white .text-racing-orange,
+body header [role="menu"] .text-racing-orange {
+  color: var(--sp-racing-orange) !important;
+}
+
+body .bg-harbour [role="menu"] a:hover,
+body .bg-harbour .bg-warm-white a:hover,
+body header [role="menu"] a:hover {
+  background-color: var(--sp-sailcloth) !important;
+  color: var(--sp-harbour) !important;
+}
+
+body .bg-harbour [role="menu"] a.text-racing-orange:hover,
+body .bg-harbour .bg-warm-white a.text-racing-orange:hover,
+body header [role="menu"] a.text-racing-orange:hover {
+  background-color: var(--sp-sailcloth) !important;
+  color: var(--sp-racing-deep) !important;
+}
+
 .sp-reversed .text-white, .sp-reversed .text-slate-100, .sp-reversed .text-slate-200, .sp-reversed .text-slate-300 { color: var(--sp-sailcloth) !important; }
 .sp-reversed .text-slate-400, .sp-reversed .text-slate-500, .sp-reversed .text-slate-600 { color: var(--sp-soft-aqua) !important; }
 .sp-reversed .border-white\/5, .sp-reversed .border-white\/10 { border-color: rgb(143 204 200 / 0.28) !important; }

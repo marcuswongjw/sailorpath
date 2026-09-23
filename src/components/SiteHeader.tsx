@@ -84,7 +84,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-harbour hover:bg-sailcloth hover:text-harbour-shadow transition-colors"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
       >
         Selection trials 2026
       </Link>
@@ -124,7 +124,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-sky-600 dark:text-sky-400 hover:bg-sailcloth hover:text-harbour transition-colors"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
       >
         Selection trials &amp; policies
       </Link>
@@ -158,7 +158,7 @@ export function SiteHeader() {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-teal-700 dark:text-teal-400 hover:bg-sailcloth hover:text-harbour transition-colors"
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
       >
         Funding &amp; selection policy
       </Link>
@@ -186,7 +186,7 @@ export function SiteHeader() {
         <Link
           href="/calendar"
           prefetch
-          className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 transition-colors"
+          className="text-sm font-semibold text-sailcloth hover:text-white py-2 md:py-0 transition-colors"
         >
           Calendar
         </Link>
@@ -199,11 +199,11 @@ export function SiteHeader() {
           onClick={() =>
             setOpenMenu((m) => (m === "optimist" ? null : "optimist"))
           }
-          className="text-sm font-medium text-sailcloth/90 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none focus-visible:text-white"
+          className="text-sm font-semibold text-sailcloth hover:text-white transition-colors flex items-center gap-1.5 py-2 md:py-5 focus:outline-none focus-visible:text-white cursor-pointer"
         >
           Optimist
           <ChevronDown
-            className={`h-4 w-4 text-sailcloth/70 transition-transform ${
+            className={`h-4 w-4 text-sailcloth transition-transform ${
               openMenu === "optimist" ? "rotate-180 text-white" : ""
             }`}
           />
@@ -223,11 +223,11 @@ export function SiteHeader() {
           aria-expanded={openMenu === "classes"}
           aria-haspopup="menu"
           onClick={() => setOpenMenu((m) => (m === "classes" ? null : "classes"))}
-          className="text-sm font-medium text-sailcloth/90 hover:text-white transition-colors flex items-center gap-1 py-2 md:py-5 focus:outline-none focus-visible:text-white"
+          className="text-sm font-semibold text-sailcloth hover:text-white transition-colors flex items-center gap-1.5 py-2 md:py-5 focus:outline-none focus-visible:text-white cursor-pointer"
         >
           Classes
           <ChevronDown
-            className={`h-4 w-4 text-sailcloth/70 transition-transform ${
+            className={`h-4 w-4 text-sailcloth transition-transform ${
               openMenu === "classes" ? "rotate-180 text-white" : ""
             }`}
           />
@@ -246,7 +246,7 @@ export function SiteHeader() {
         <Link
           href="/search"
           onClick={() => setMobileOpen(false)}
-          className="text-sm font-medium text-sailcloth/90 hover:text-white py-2 md:py-0 transition-colors"
+          className="text-sm font-semibold text-sailcloth hover:text-white py-2 md:py-0 transition-colors"
         >
           Search
         </Link>
@@ -255,7 +255,7 @@ export function SiteHeader() {
         <Link
           href="/sample"
           onClick={() => setMobileOpen(false)}
-          className="text-sm font-medium text-racing-mist hover:text-white py-2 md:py-0 transition-colors"
+          className="text-sm font-semibold text-racing-mist hover:text-white py-2 md:py-0 transition-colors"
         >
           Explore demo
         </Link>
@@ -264,10 +264,10 @@ export function SiteHeader() {
   );
 
   const authButtons = !ready ? (
-    <span className="text-xs text-sailcloth/70">…</span>
+    <span className="text-xs text-sailcloth">…</span>
   ) : email ? (
     <>
-      <span className="hidden xl:inline text-xs text-sailcloth/80 max-w-[140px] truncate">
+      <span className="hidden xl:inline text-xs text-sailcloth/90 max-w-[140px] truncate">
         {email}
       </span>
       {owned.length > 0 && (
@@ -275,7 +275,7 @@ export function SiteHeader() {
           <Link
             href="/athlete"
             onClick={() => setMobileOpen(false)}
-            className="text-sm font-semibold text-sailcloth/90 hover:text-white transition-colors"
+            className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
           >
             Athlete Hub
           </Link>
@@ -331,7 +331,7 @@ export function SiteHeader() {
               ? "/admin"
               : "https://admin.sailorpath.com/"
           }
-          className="text-xs font-bold text-sailcloth/80 hover:text-white transition-colors"
+          className="text-xs font-bold text-sailcloth hover:text-white transition-colors"
         >
           Admin console
         </a>
@@ -339,7 +339,7 @@ export function SiteHeader() {
       <button
         type="button"
         onClick={() => void signOut()}
-        className="text-sm font-semibold text-sailcloth/80 hover:text-white transition-colors"
+        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors cursor-pointer"
       >
         Log out
       </button>
@@ -355,13 +355,13 @@ export function SiteHeader() {
       </Link>
       <Link
         href="/login"
-        className="text-sm font-semibold text-sailcloth/90 hover:text-white transition-colors"
+        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
       >
         Log in
       </Link>
       <Link
         href="/register"
-        className="text-sm font-semibold text-sailcloth/90 hover:text-white transition-colors"
+        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
       >
         Create account
       </Link>
@@ -410,7 +410,7 @@ export function SiteHeader() {
               <Link
                 href="/calendar"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
               >
                 Race Calendar
               </Link>
@@ -424,87 +424,94 @@ export function SiteHeader() {
                 Find and claim a profile
               </Link>
             )}
-            <p className="px-3 pt-2 pb-1 text-xs font-bold uppercase tracking-wider text-sailcloth/70">
+            <p className="px-3 pt-2 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
               Optimist
             </p>
             <Link
               href="/sg/optimist/gold"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Gold standings
             </Link>
             <Link
               href="/sg/optimist/silver"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Silver standings
             </Link>
             <Link
               href="/sg/optimist/regattas"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Optimist regattas
+            </Link>
+            <Link
+              href="/sg/optimist/selection"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              Selection trials 2026
             </Link>
             {isSuperadmin && (
               <Link
                 href="/sg/optimist/goldsailors"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-soft-aqua hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-soft-aqua hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
               >
                 All Gold Fleet sailors
               </Link>
             )}
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-sailcloth/70">
+            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
               ILCA 4
             </p>
             <Link
               href="/sg/ilca4"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 4 standings
             </Link>
             <Link
               href="/sg/ilca4/selection"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-racing-mist hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Selection trials &amp; policies
             </Link>
             <Link
               href="/sg/ilca4/regattas"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 4 regattas
             </Link>
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-sailcloth/70">
+            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
               WingFoil
             </p>
             <Link
               href="/sg/wingfoil"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               WingFoil standings
             </Link>
             <Link
               href="/sg/wingfoil/selection"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-racing-mist hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Funding &amp; selection policy
             </Link>
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-sailcloth/70">
+            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
               Techno 293
             </p>
             <Link
               href="/sg/techno293"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Techno 293 Racing
             </Link>
@@ -512,7 +519,7 @@ export function SiteHeader() {
               <Link
                 href="/search"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
               >
                 Search
               </Link>
@@ -521,7 +528,7 @@ export function SiteHeader() {
               <Link
                 href="/sample"
                 onClick={() => setMobileOpen(false)}
-                className="rounded-lg px-3 py-2.5 text-sm font-medium text-racing-mist hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
               >
                 Explore demo
               </Link>
@@ -529,7 +536,7 @@ export function SiteHeader() {
             <Link
               href="/support"
               onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-sailcloth hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               Help &amp; support
             </Link>
@@ -541,14 +548,14 @@ export function SiteHeader() {
                   <Link
                     href="/login"
                     onClick={() => setMobileOpen(false)}
-                    className="rounded-lg border border-soft-aqua/40 px-3 py-2.5 text-center text-sm font-semibold text-sailcloth hover:bg-harbour-mid touch-manipulation flex items-center justify-center min-h-[2.75rem]"
+                    className="rounded-lg border border-soft-aqua/50 px-3 py-2.5 text-center text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation flex items-center justify-center min-h-[2.75rem] transition-colors"
                   >
                     Log in
                   </Link>
                   <Link
                     href="/register"
                     onClick={() => setMobileOpen(false)}
-                    className="rounded-lg border border-soft-aqua/40 px-3 py-2.5 text-center text-sm font-semibold text-white hover:bg-harbour-mid touch-manipulation flex items-center justify-center min-h-[2.75rem]"
+                    className="rounded-lg bg-racing-orange hover:bg-racing-deep px-3 py-2.5 text-center text-sm font-semibold text-white touch-manipulation flex items-center justify-center min-h-[2.75rem] transition-colors shadow-sm"
                   >
                     Create account
                   </Link>
