@@ -19,6 +19,7 @@ import {
   Globe,
   AlertCircle,
 } from "lucide-react";
+import { regattaResultsHref } from "@/lib/classPages";
 import type { RegattaRecord } from "@/lib/ranking";
 import { useAccount } from "@/components/AccountProvider";
 
@@ -693,9 +694,7 @@ export function RegattaCalendarClient({
                     ) : regatta.hasResults && regatta.slug ? (
                       <Link
                         href={
-                          regatta.boatClass?.toLowerCase().includes("ilca")
-                            ? `/sg/ilca4/regattas/${regatta.slug}`
-                            : `/sg/optimist/regattas/${regatta.slug}`
+                          regattaResultsHref(regatta.boatClass, regatta.slug)
                         }
                         className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:bg-[var(--sp-sailcloth)] px-3.5 py-2 text-xs font-bold text-[var(--sp-racing-orange)] inline-flex items-center justify-center gap-1 transition-colors"
                       >

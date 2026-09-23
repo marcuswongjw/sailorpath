@@ -2,6 +2,7 @@ import { DbOffline } from "@/components/DbOffline";
 import { RegattasListClient } from "@/components/RegattasListClient";
 import { getCachedPublicRegattas } from "@/lib/queries";
 import { DbUnavailableError } from "@/db";
+import { dinghyClassForBoatClass } from "@/lib/classPages";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import type { Metadata } from "next";
 
@@ -17,9 +18,13 @@ function isOptimistClass(boatClass: string | null | undefined): boolean {
     .trim()
     .toLowerCase();
   if (!s || s === "optimist" || s === "opti") return true;
-  // Explicitly exclude ILCA
-  if (isIlcaSeriesClass(boatClass, "ILCA 4") || isIlcaSeriesClass(boatClass, "ILCA 6"))
+  if (
+    dinghyClassForBoatClass(boatClass) ||
+    isIlcaSeriesClass(boatClass, "ILCA 4") ||
+    isIlcaSeriesClass(boatClass, "ILCA 6")
+  ) {
     return false;
+  }
   return true;
 }
 

@@ -118,8 +118,16 @@ describe("findEventSliceForRegattaSlug", () => {
     ).toBe("/regattas/snsc-2026?fleet=optimist-silver");
   });
 
-  it("ignores other classes and other years", () => {
-    expect(findEventSliceForRegattaSlug("snsc-ilca-6-sep-26-2026-09-11")).toBeNull();
+  it("routes ILCA 6, ILCA 7, and 29er to their own SNSC tabs", () => {
+    expect(findEventSliceForRegattaSlug("snsc-ilca-6-sep-26-2026-09-11")?.slice.key).toBe(
+      "ilca-6"
+    );
+    expect(findEventSliceForRegattaSlug("snsc-ilca-7-sep-26-2026-09-11")?.slice.key).toBe(
+      "ilca-7"
+    );
+    expect(findEventSliceForRegattaSlug("snsc-29er-sep-26-2026-09-11")?.slice.key).toBe(
+      "29er"
+    );
     expect(findEventSliceForRegattaSlug("cincapura-regatta-2026-gold")).toBeNull();
   });
 });

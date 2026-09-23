@@ -14,6 +14,7 @@ import {
   FileText,
   Trophy,
 } from "lucide-react";
+import { regattaResultsHref } from "@/lib/classPages";
 import type { CoachSquadMember } from "@/lib/coachDashboard";
 import { fleetPillClass } from "@/components/sailor-profile/helpers";
 
@@ -354,10 +355,10 @@ export function AthleteDevelopmentDrawer({
               {sailor.recentResults.length > 0 ? (
                 <div className="space-y-3">
                   {sailor.recentResults.map((result) => {
-                    const regattaHref =
-                      result.boatClass === "ILCA 4"
-                        ? `/sg/ilca4/regattas/${result.regattaSlug}`
-                        : `/sg/optimist/regattas/${result.regattaSlug}`;
+                    const regattaHref = regattaResultsHref(
+                      result.boatClass,
+                      result.regattaSlug
+                    );
 
                     return (
                       <div key={result.resultId} className={`${NESTED} p-4`}>

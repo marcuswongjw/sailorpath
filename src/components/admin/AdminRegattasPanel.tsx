@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Calendar, Trophy, ExternalLink, Sparkles, Loader2 } from "lucide-react";
+import { regattaResultsHref } from "@/lib/classPages";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
@@ -292,9 +293,10 @@ export function AdminRegattasPanel({
                                 {regattaForm.slug && (
                                   <Link
                                     href={
-                                      (regattaForm.boatClass || "").toLowerCase().includes("ilca")
-                                        ? `/sg/ilca4/regattas/${regattaForm.slug}`
-                                        : `/sg/optimist/regattas/${regattaForm.slug}`
+                                      regattaResultsHref(
+                                        regattaForm.boatClass,
+                                        regattaForm.slug
+                                      )
                                     }
                                     target="_blank"
                                     className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-2.5 py-1 text-[13px] font-semibold text-slate-300 transition-all"

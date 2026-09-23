@@ -20,6 +20,7 @@ import {
   ExternalLink,
   Medal,
 } from "lucide-react";
+import { regattaResultsHref } from "@/lib/classPages";
 import { rankingPeriodOptions } from "@/lib/datesSg";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
@@ -462,9 +463,10 @@ export function AdminResultsPanel({
             {selectedRegatta.slug && (
               <Link
                 href={
-                  (selectedRegatta.boatClass || "").toLowerCase().includes("ilca")
-                    ? `/sg/ilca4/regattas/${selectedRegatta.slug}`
-                    : `/sg/optimist/regattas/${selectedRegatta.slug}`
+                  regattaResultsHref(
+                    selectedRegatta.boatClass,
+                    selectedRegatta.slug
+                  )
                 }
                 target="_blank"
                 className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3.5 py-1.5 text-xs font-bold text-slate-300 transition-all"

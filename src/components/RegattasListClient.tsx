@@ -74,6 +74,8 @@ type RegattasListProps = {
   hideDivisionFilter?: boolean;
   /** Accent: orange (Optimist) or sky (ILCA) */
   accent?: "orange" | "sky";
+  /** Shown when the class has no regattas at all. */
+  emptyMessage?: string;
 };
 
 export function RegattasListClient({
@@ -84,6 +86,7 @@ export function RegattasListClient({
   detailBasePath = "/sg/optimist/regattas",
   hideDivisionFilter,
   accent = "orange",
+  emptyMessage = "No regattas yet. Import from admin.",
 }: RegattasListProps) {
   const [query, setQuery] = useState("");
   const [rankingFilter, setRankingFilter] = useState<"all" | "ranking" | "non-ranking">("all");
@@ -377,7 +380,7 @@ export function RegattasListClient({
       {/* Regatta Results List */}
       {regattas.length === 0 ? (
         <p className="text-sm text-[var(--sp-slate-soft)] text-center py-12">
-          No regattas yet. Import from admin.
+          {emptyMessage}
         </p>
       ) : filtered.length === 0 ? (
         <div className="rounded-2xl p-12 text-center border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] space-y-3 shadow-xs">
