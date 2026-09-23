@@ -2,9 +2,11 @@ import { notFound } from "next/navigation";
 import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaEventHeader } from "@/components/RegattaEventHeader";
+import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
 import { DbUnavailableError } from "@/db";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
+import { getRegattaPrizeSchedule } from "@/lib/regattaPrizes";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -37,6 +39,8 @@ export default async function Ilca4RegattaDetailPage({
   if (errorMsg) return <DbOffline message={errorMsg} />;
   if (!regatta || !results) notFound();
 
+  const prizeSchedule = getRegattaPrizeSchedule(regatta_slug);
+
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
       <RegattaEventHeader
@@ -55,6 +59,12 @@ export default async function Ilca4RegattaDetailPage({
         raceCount={regatta.raceCount}
         accent="sky"
       />
+      {prizeSchedule && (
+        <RegattaPrizeWinners
+          schedule={prizeSchedule}
+          filterFleet="ILCA 4"
+        />
+      )}
       <p className="text-[13px] text-[var(--sp-slate-soft)]">
         Source: published regatta results reviewed before import · Parentheses indicate a discarded race score · * DNS · † Overseas commitment
       </p>

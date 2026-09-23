@@ -1201,3 +1201,72 @@ export const CINCAPURA_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
     },
   ],
 };
+
+/**
+ * Retrieves the official prize schedule (categories and verified winners) for a given regatta slug.
+ */
+export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
+  const s = String(slug || "").toLowerCase();
+  if (
+    s.includes("singapore-national-sailing-championships-2026") ||
+    s.includes("snsc-2026") ||
+    s === "snsc-2026" ||
+    (s.includes("snsc") && s.includes("sep-26"))
+  ) {
+    return SNSC_2026_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("pesta-sukan-2026") ||
+    s.includes("pesta-sukan-regatta-2026") ||
+    s === "pesta-sukan-2026" ||
+    (s.includes("pesta-sukan") && s.includes("aug-26"))
+  ) {
+    return PESTA_SUKAN_2026_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("cincapura-regatta-2026") ||
+    s.includes("cincapura-2026") ||
+    s === "cincapura-2026" ||
+    (s.includes("cincapura") && s.includes("jul-26"))
+  ) {
+    return CINCAPURA_2026_PRIZE_SCHEDULE;
+  }
+  return null;
+}
+
+export type RegattaPrizeWinnersView = {
+  schedule: RegattaPrizeSchedule;
+  /** Fleets with at least one winner-bearing category (empty categories stripped). */
+  fleets: RegattaPrizeFleet[];
+};
+
+/**
+ * Resolves a live regatta slug (e.g. "snsc-ilca-4-sep-26-2026-09-11",
+ * "cincapura-regatta-2026-gold") to the prize schedule and the fleets relevant
+ * to that page, keeping only categories that actually have verified winners.
+ * Returns null when there is nothing to display.
+ */
+export function getPrizeWinnersForRegatta(
+  slug: string
+): RegattaPrizeWinnersView | null {
+  const s = String(slug || "").toLowerCase();
+  const schedule = getRegattaPrizeSchedule(s);
+  if (!schedule) return null;
+
+  // Fleet filter derived from the page slug; undefined = all fleets
+  let fleetName: string | undefined;
+  if (s.includes("ilca")) fleetName = "ILCA 4";
+  else if (s.includes("gold")) fleetName = "Optimist Gold Fleet";
+  else if (s.includes("silver")) fleetName = "Optimist Silver Fleet";
+
+  const fleets = schedule.fleets
+    .filter((f) => !fleetName || f.fleetName === fleetName)
+    .map((f) => ({
+      ...f,
+      categories: f.categories.filter((c) => c.winners.length > 0),
+    }))
+    .filter((f) => f.categories.length > 0);
+
+  if (fleets.length === 0) return null;
+  return { schedule, fleets };
+}
