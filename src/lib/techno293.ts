@@ -141,7 +141,7 @@ export const SINGAPORE_TECHNO293_REGATTAS: Techno293Regatta[] = [
     id: "techno-snsc-2026",
     name: "Singapore National Sailing Championships 2026",
     shortName: "SNSC 2026",
-    dates: "11 - 14 September 2026",
+    dates: "5 - 7 September 2026",
     venue: "National Sailing Centre, Singapore",
     organizer: "Singapore Sailing Federation",
     format: "One Design",
@@ -149,8 +149,9 @@ export const SINGAPORE_TECHNO293_REGATTAS: Techno293Regatta[] = [
     lifecycleStatus: "published",
     scoringSystem: "World Sailing RRS Appendix A (Low Point)",
     rulesNotes:
-      "Techno 293 Class. 12 races completed, 2 discards applied per RRS Appendix A. 9 entries.",
-    websiteUrl: "https://www.sailing.org.sg/events/357398",
+      "Techno 293 Class. 12 races completed, 2 discards applied per RRS Appendix A. 9 entries. Awards: Open 1st-3rd, Female 1st.",
+    websiteUrl: "https://www.sailing.org.sg/events/354194",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14487/event",
     results: [
       {
         rank: 1,

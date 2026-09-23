@@ -624,6 +624,19 @@ export function RegattaCalendarClient({
                           {regatta.scheduleNotes}
                         </p>
                       )}
+
+                      {/* Official Prize Categories */}
+                      {regatta.prizesSummary && (
+                        <div className="pt-1">
+                          <p className="text-[11px] text-[var(--sp-charcoal-slate)] flex items-start gap-1.5 bg-[var(--sp-sailcloth)]/70 border border-[var(--sp-cool-veil)] rounded-lg px-2.5 py-1.5 leading-relaxed">
+                            <Award className="h-3.5 w-3.5 text-[var(--sp-racing-orange)] shrink-0 mt-0.5" />
+                            <span>
+                              <strong className="font-bold text-[var(--sp-harbour-shadow)]">Prizes: </strong>
+                              {regatta.prizesSummary}
+                            </span>
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
 

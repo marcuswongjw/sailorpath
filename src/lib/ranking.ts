@@ -87,6 +87,8 @@ export interface RegattaRecord {
   keyDeadlines?: string | null;
   /** Pre-event clinic / tuning camp dates */
   clinicDates?: string | null;
+  /** Official Notice of Race prize categories and awards summary */
+  prizesSummary?: string | null;
   /** Campaign estimate & budget breakdown from Singapore */
   campaignBudget?: {
     totalEstimatedSgd: number;

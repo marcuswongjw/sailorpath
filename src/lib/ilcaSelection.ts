@@ -132,6 +132,8 @@ export type IlcaTrialEvent = {
   venue: string;
   fleetSize: number;
   completed: boolean;
+  norUrl?: string;
+  registrationUrl?: string;
 };
 
 export type IlcaTrialSailor = {
@@ -189,6 +191,8 @@ export const ILCA4_SELECTION_EVENTS: IlcaTrialEvent[] = [
     venue: "National Sailing Centre, Singapore",
     fleetSize: 41,
     completed: true,
+    norUrl: "https://www.racingrulesofsailing.org/documents/14397/event?name=pesta-sukan-2026",
+    registrationUrl: "https://www.sailing.org.sg/events/351968",
   },
   {
     id: "snsc-2026",
@@ -198,6 +202,8 @@ export const ILCA4_SELECTION_EVENTS: IlcaTrialEvent[] = [
     venue: "National Sailing Centre, Singapore",
     fleetSize: 45,
     completed: true,
+    norUrl: "https://www.racingrulesofsailing.org/documents/14487/event",
+    registrationUrl: "https://www.sailing.org.sg/events/323705",
   },
   {
     id: "selection-trials-2026",

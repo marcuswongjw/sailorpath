@@ -159,7 +159,10 @@ export const SINGAPORE_WINGFOIL_REGATTAS: WingfoilRegatta[] = [
     format: "Sprint Slalom",
     status: "Completed",
     scoringSystem: "9 races, 1 discard",
-    rulesNotes: "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races.",
+    rulesNotes:
+      "Delta Buoy Slalom course, 4–5 min heat target time, 1 discard after 4+ races. Awards: Open 1st-3rd, Female 1st-3rd, 16&U 1st-3rd.",
+    websiteUrl: "https://www.sailing.org.sg/events/354194",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14487/event",
     results: [
       {
         rank: 1,
