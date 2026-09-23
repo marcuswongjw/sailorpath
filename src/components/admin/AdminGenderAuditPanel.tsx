@@ -164,14 +164,14 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
   };
 
   return (
-    <section className="rounded-2xl border border-violet-500/25 bg-violet-500/[0.06] p-4 sm:p-5 space-y-3">
+    <section className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-4 sm:p-5 space-y-3 shadow-xs">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
-          <p className="text-[12px] font-bold uppercase tracking-wider text-violet-300/90 flex items-center gap-1.5">
+          <p className="text-[12px] font-bold uppercase tracking-wider text-[var(--sp-harbour-teal)] flex items-center gap-1.5">
             <Users className="h-3.5 w-3.5" />
             Gender audit
           </p>
-          <p className="mt-1 text-[12px] text-slate-400 leading-relaxed">
+          <p className="mt-1 text-[12px] text-[var(--sp-charcoal)] leading-relaxed">
             {counts.needs} need review ({counts.conflict} name conflicts,{" "}
             {counts.unknown} unknown) · stored {counts.m} M / {counts.f} F
           </p>
@@ -179,7 +179,7 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="text-[11px] font-semibold text-violet-200 hover:text-white"
+          className="text-[11px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]"
         >
           {open ? "Collapse" : "Expand"}
         </button>
@@ -204,8 +204,8 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
                 onClick={() => setFilter(id)}
                 className={`rounded-full px-2.5 py-1 text-[13px] font-bold ${
                   filter === id
-                    ? "bg-violet-500 text-white"
-                    : "bg-white/5 text-slate-400 hover:text-white"
+                    ? "bg-[var(--sp-harbour-teal)] text-white"
+                    : "border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)]"
                 }`}
               >
                 {label}
@@ -215,7 +215,7 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search name / club / sail…"
-              className="ml-auto min-w-[10rem] flex-1 rounded-lg border border-white/10 bg-black/30 px-2.5 py-1.5 text-[12px] text-white placeholder:text-slate-600"
+              className="ml-auto min-w-[10rem] flex-1 rounded-lg border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2.5 py-1.5 text-[12px] text-[var(--sp-charcoal)] placeholder:text-[var(--sp-slate-soft)]"
             />
           </div>
 
@@ -224,7 +224,7 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
               type="button"
               disabled={bulkBusy}
               onClick={() => void applyAllSuggestions()}
-              className="rounded-lg bg-violet-600 px-3 py-1.5 text-[15px] font-bold text-white disabled:opacity-50"
+              className="rounded-lg bg-[var(--sp-harbour-teal)] px-3 py-1.5 text-[15px] font-bold text-white hover:bg-[var(--sp-harbour-shadow)] disabled:opacity-50"
             >
               {bulkBusy ? (
                 <Loader2 className="h-3.5 w-3.5 animate-spin inline" />
@@ -236,7 +236,7 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
               type="button"
               disabled={bulkBusy}
               onClick={() => void normalizeCodes()}
-              className="rounded-lg border border-white/15 px-3 py-1.5 text-[15px] font-semibold text-slate-300 hover:text-white disabled:opacity-50"
+              className="rounded-lg border border-[var(--sp-harbour-teal)] bg-[var(--sp-warm-white)] px-3 py-1.5 text-[15px] font-semibold text-[var(--sp-harbour-teal)] hover:bg-[var(--sp-aqua-mist)] disabled:opacity-50"
             >
               Normalize Male/Female → M/F
             </button>
@@ -244,7 +244,7 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
 
           <div className="max-h-[28rem] overflow-auto rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]">
             <table className="w-full text-left text-[12px]">
-              <thead className="sticky top-0 bg-slate-950 text-[12px] uppercase tracking-wide text-slate-500">
+              <thead className="sticky top-0 bg-[var(--sp-sailcloth)] text-[12px] uppercase tracking-wide text-[var(--sp-charcoal)]">
                 <tr>
                   <th className="px-3 py-2 font-bold">Sailor</th>
                   <th className="px-3 py-2 font-bold">Stored</th>
@@ -252,14 +252,14 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
                   <th className="px-3 py-2 font-bold text-right">Set</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/[0.04]">
+              <tbody className="divide-y divide-[var(--sp-cool-veil)]">
                 {visible.slice(0, 200).map((r) => (
-                  <tr key={r.id} className="hover:bg-white/[0.02]">
+                  <tr key={r.id} className="hover:bg-[var(--sp-aqua-mist)]">
                     <td className="px-3 py-2 min-w-0">
-                      <p className="font-semibold text-white truncate">
+                      <p className="font-semibold text-[var(--sp-charcoal)] truncate">
                         {r.name}
                       </p>
-                      <p className="text-[13px] text-slate-500 truncate">
+                      <p className="text-[13px] text-[var(--sp-slate-soft)] truncate">
                         {[r.sailNumber, r.club, r.handle]
                           .filter(Boolean)
                           .join(" · ")}
@@ -269,10 +269,10 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
                       <span
                         className={`font-bold ${
                           r.gender === "F"
-                            ? "text-pink-300"
+                            ? "text-[var(--sp-error)]"
                             : r.gender === "M"
-                              ? "text-sky-300"
-                              : "text-slate-500"
+                              ? "text-[var(--sp-harbour-teal)]"
+                              : "text-[var(--sp-slate-soft)]"
                         }`}
                       >
                         {formatGenderLabel(r.gender)}
@@ -283,40 +283,40 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
                         <span
                           className={`text-[13px] font-semibold ${
                             r.conflict
-                              ? "text-amber-300"
-                              : "text-violet-800"
+                              ? "text-[var(--sp-racing-deep)]"
+                              : "text-[var(--sp-harbour-teal)]"
                           }`}
                         >
                           {r.suggested}
                           {r.conflict ? " ≠ stored" : ""}
                         </span>
                       ) : (
-                        <span className="text-slate-600">—</span>
+                        <span className="text-[var(--sp-slate-soft)]">—</span>
                       )}
                     </td>
                     <td className="px-3 py-2 text-right whitespace-nowrap">
                       {busyId === r.id ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin inline text-slate-400" />
+                        <Loader2 className="h-3.5 w-3.5 animate-spin inline text-[var(--sp-slate-soft)]" />
                       ) : (
                         <span className="inline-flex gap-1">
                           <button
                             type="button"
                             onClick={() => void setOne(r, "F")}
-                            className="rounded-md bg-pink-500/20 px-2 py-0.5 text-[15px] font-bold text-pink-800 hover:bg-pink-500/30"
+                            className="rounded-md border border-[var(--sp-error)] bg-[var(--sp-warm-white)] px-2 py-0.5 text-[15px] font-bold text-[var(--sp-error)] hover:bg-[var(--sp-racing-mist)]"
                           >
                             F
                           </button>
                           <button
                             type="button"
                             onClick={() => void setOne(r, "M")}
-                            className="rounded-md bg-sky-500/20 px-2 py-0.5 text-[15px] font-bold text-sky-800 hover:bg-sky-500/30"
+                            className="rounded-md border border-[var(--sp-harbour-teal)] bg-[var(--sp-warm-white)] px-2 py-0.5 text-[15px] font-bold text-[var(--sp-harbour-teal)] hover:bg-[var(--sp-aqua-mist)]"
                           >
                             M
                           </button>
                           <button
                             type="button"
                             onClick={() => void setOne(r, null)}
-                            className="rounded-md bg-white/5 px-2 py-0.5 text-[15px] font-bold text-slate-400 hover:text-white"
+                            className="rounded-md border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-2 py-0.5 text-[15px] font-bold text-[var(--sp-charcoal)] hover:border-[var(--sp-charcoal)]"
                           >
                             Clear
                           </button>
@@ -329,7 +329,7 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
                   <tr>
                     <td
                       colSpan={4}
-                      className="px-3 py-8 text-center text-slate-500"
+                      className="px-3 py-8 text-center text-[var(--sp-charcoal)]"
                     >
                       No sailors in this filter.
                     </td>
@@ -338,7 +338,7 @@ export function AdminGenderAuditPanel({ sailors, onSailorsChange }: Props) {
               </tbody>
             </table>
             {visible.length > 200 && (
-              <p className="px-3 py-2 text-[13px] text-slate-500">
+              <p className="px-3 py-2 text-[13px] text-[var(--sp-slate-soft)]">
                 Showing first 200 of {visible.length}. Refine search/filter.
               </p>
             )}

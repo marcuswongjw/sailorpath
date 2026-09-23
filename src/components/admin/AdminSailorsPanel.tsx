@@ -378,11 +378,11 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                 />
 
                 {emptySeriesCount > 0 && onCleanupEmptySeries && (
-                  <div className="rounded-2xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-                      <p className="text-xs text-amber-100/90">
-                        <strong className="text-amber-200">{emptySeriesCount}</strong> In SG Fleet
+                      <AlertTriangle className="h-4 w-4 text-[var(--sp-racing-deep)] shrink-0 mt-0.5" />
+                      <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
+                        <strong className="text-[var(--sp-racing-deep)]">{emptySeriesCount}</strong> In SG Fleet
                         sailor(s) have no silver/gold entry date — they are not ranked.
                         Stamp today&apos;s date as Silver entry (SG) to include them.
                       </p>
@@ -391,21 +391,21 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       type="button"
                       disabled={!isSuperadmin}
                       onClick={() => void onCleanupEmptySeries()}
-                      className="shrink-0 rounded-full bg-amber-600/90 hover:bg-amber-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                      className="shrink-0 rounded-full bg-amber-600 hover:bg-amber-700 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
                     >
                       Stamp silver entry for empty Series
                     </button>
                   </div>
                 )}
                 {onBackfillNationalityFromSail && (
-                  <div className="rounded-2xl border border-sky-500/25 bg-sky-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
-                      <p className="text-xs text-sky-100/90">
+                      <AlertTriangle className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
+                      <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
                         Sailors with a country code on their sail # (e.g.{" "}
-                        <span className="font-mono text-sky-200">SGP 115</span>) but no
+                        <span className="font-mono font-semibold text-[var(--sp-harbour-teal)]">SGP 115</span>) but no
                         nationality can be tagged automatically. Flagged rows show{" "}
-                        <span className="font-semibold text-amber-200">from sail</span>{" "}
+                        <span className="font-semibold text-[var(--sp-racing-deep)]">from sail</span>{" "}
                         — verify and set nationality manually to clear the flag.
                         Import nationality columns always win (latest regatta).
                       </p>
@@ -414,17 +414,17 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       type="button"
                       disabled={!isSuperadmin}
                       onClick={() => void onBackfillNationalityFromSail()}
-                      className="shrink-0 rounded-full bg-sky-600/90 hover:bg-sky-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                      className="shrink-0 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
                     >
                       Fill nationality from sail #
                     </button>
                   </div>
                 )}
                 {onUpdateOptimistSailNumbers && (
-                  <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <p className="text-xs text-emerald-100/90">
+                      <CheckCircle className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
+                      <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
                         Official Optimist Ranking Sync: Update missing or placeholder (0 / SGP 0)
                         sail numbers for 134 Optimist sailors based on the official ranking list.
                       </p>
@@ -433,19 +433,19 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       type="button"
                       disabled={!isSuperadmin}
                       onClick={() => void onUpdateOptimistSailNumbers()}
-                      className="shrink-0 rounded-full bg-emerald-600/90 hover:bg-emerald-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                      className="shrink-0 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
                     >
                       Update 134 Optimist Sail #s
                     </button>
                   </div>
                 )}
                 {onCleanOptimistSailNumbers && (
-                  <div className="rounded-2xl border border-indigo-500/25 bg-indigo-500/5 px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-indigo-400 shrink-0 mt-0.5" />
-                      <p className="text-xs text-indigo-100/90">
+                      <CheckCircle className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
+                      <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
                         Numeric Optimist Sail #s: Ensure all Optimist sail numbers contain only digits (e.g.{" "}
-                        <span className="font-mono text-indigo-200">SGP3029 → 3029</span>) and extract
+                        <span className="font-mono font-semibold text-[var(--sp-harbour-teal)]">SGP3029 → 3029</span>) and extract
                         missing nationality from country prefixes.
                       </p>
                     </div>
@@ -453,7 +453,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       type="button"
                       disabled={!isSuperadmin}
                       onClick={() => void onCleanOptimistSailNumbers()}
-                      className="shrink-0 rounded-full bg-indigo-600/90 hover:bg-indigo-500 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
+                      className="shrink-0 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
                     >
                       Clean Sail Numbers (Digits Only)
                     </button>
@@ -736,7 +736,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       type="button"
                       disabled={!isSuperadmin || selectedSailors.length === 0}
                       onClick={handleBulkDelete}
-                      className="rounded-full bg-rose-600/90 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500 disabled:opacity-40 flex items-center gap-1.5 shadow-sm"
+                      className="rounded-full bg-rose-600 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500 disabled:opacity-40 flex items-center gap-1.5 shadow-sm"
                     >
                       <Trash2 className="h-4 w-4" />
                       Delete selected
@@ -1498,7 +1498,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                 {s.nationality || "—"}
                                 {s.nationalityFromSail ? (
                                   <span
-                                    className="ml-1.5 inline-flex rounded-full bg-amber-500/15 border border-amber-500/30 px-1.5 py-px text-[9px] font-bold text-amber-200"
+                                    className="ml-1.5 inline-flex rounded-full bg-[var(--sp-racing-mist)] border border-[var(--sp-racing-deep)] px-1.5 py-px text-[11px] font-bold text-[var(--sp-charcoal)]"
                                     title="Nationality was auto-set from sail number — verify"
                                   >
                                     from sail
@@ -1507,7 +1507,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                               </span>
                             ),
                             natFromSail: s.nationalityFromSail ? (
-                              <span className="inline-flex rounded-full bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-amber-200">
+                              <span className="inline-flex rounded-full bg-[var(--sp-racing-mist)] border border-[var(--sp-racing-deep)] px-2 py-0.5 text-[11px] font-bold text-[var(--sp-charcoal)]">
                                 From sail #
                               </span>
                             ) : (
