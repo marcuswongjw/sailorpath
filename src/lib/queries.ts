@@ -5,6 +5,7 @@ import {
   CACHE_TAG_PUBLIC_REGATTAS,
 } from "@/lib/cacheTags";
 import { db, DbUnavailableError, formatDbError, ensureCoreSchema } from "@/db";
+import { restoreBestNettHiddenAsDns, restoreBestNettHiddenAsDnsByRegatta } from "@/lib/restoreFinisherRank";
 import {
   sailors,
   regattas,
@@ -492,12 +493,14 @@ export async function getResultsForRegatta(regattaId: string) {
       list.push(race);
       racesByResult.set(race.regattaResultId, list);
     }
-    return rows.map((r) => ({
-      ...r,
-      gender: r.gender || r.sailorGender || null,
-      nationality: r.nationality || r.sailorNationality || null,
-      raceResults: racesByResult.get(r.resultId) || [],
-    }));
+    return restoreBestNettHiddenAsDns(
+      rows.map((r) => ({
+        ...r,
+        gender: r.gender || r.sailorGender || null,
+        nationality: r.nationality || r.sailorNationality || null,
+        raceResults: racesByResult.get(r.resultId) || [],
+      }))
+    );
   });
 }
 
@@ -802,13 +805,14 @@ async function computeIlcaRankingsBoard(
         sailorId: regattaResults.sailorId,
         regattaId: regattaResults.regattaId,
         rank: regattaResults.rank,
+        nettScore: regattaResults.nettScore,
         isDns: regattaResults.isDns,
         isOverseasCommitment: regattaResults.isOverseasCommitment,
       })
       .from(regattaResults)
       .where(inArray(regattaResults.regattaId, scoringIds));
 
-    const ilcaResults = resultRows.map((row) => ({
+    const ilcaResults = restoreBestNettHiddenAsDnsByRegatta(resultRows).map((row) => ({
       sailorId: row.sailorId,
       regattaId: row.regattaId,
       rank: row.rank,
