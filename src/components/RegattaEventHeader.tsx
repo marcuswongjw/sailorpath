@@ -84,7 +84,7 @@ export function RegattaEventHeader({
               href={norUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-orange)]/10 text-[var(--sp-racing-orange)] hover:bg-[var(--sp-racing-orange)]/20 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-harbour-shadow)] bg-[var(--sp-warm-white)] px-3 py-1 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] transition-colors"
             >
               <FileText className="h-3 w-3" />
               Official Notice Board

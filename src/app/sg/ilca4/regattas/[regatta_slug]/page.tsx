@@ -5,11 +5,8 @@ import { RegattaEventHeader } from "@/components/RegattaEventHeader";
 import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
 import { DbUnavailableError } from "@/db";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
-import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
-import {
-  eventHubHref,
-  findEventSliceForRegattaSlug,
-} from "@/lib/regattaEvents";
+import { hubHrefForClassSlug } from "@/lib/regattaEventGroups";
+import { getCachedPublicRegattas, getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
 import { getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
 import type { Metadata } from "next";
 
@@ -26,10 +23,9 @@ export default async function Ilca4RegattaDetailPage({
   params: Promise<{ regatta_slug: string }>;
 }) {
   const { regatta_slug } = await params;
-  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
-  if (eventSlice) {
-    permanentRedirect(eventHubHref(eventSlice.event.slug, eventSlice.slice.key));
-  }
+  const published = await getCachedPublicRegattas().catch(() => []);
+  const hubHref = hubHrefForClassSlug(regatta_slug, published);
+  if (hubHref) permanentRedirect(hubHref);
   let regatta;
   let results;
   let errorMsg: string | null = null;

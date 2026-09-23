@@ -72,7 +72,7 @@ function EventLinkChip({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-harbour-teal)]/25 bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-teal)]/20 transition-colors"
+      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-harbour-shadow)] bg-[var(--sp-warm-white)] px-3 py-1 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] transition-colors"
     >
       <FileText className="h-3 w-3" aria-hidden />
       {label}

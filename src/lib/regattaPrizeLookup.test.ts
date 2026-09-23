@@ -48,8 +48,14 @@ describe("getPrizeWinnersForRegatta", () => {
     expect(view!.fleets[0].fleetName).toBe("ILCA 4");
   });
 
-  it("returns null for fleets whose categories have no verified winners yet", () => {
-    expect(getPrizeWinnersForRegatta("snsc-gold-sep-26-2026-09-11")).toBeNull();
+  it("shows the published SNSC Optimist Gold and Silver open winners", () => {
+    const gold = getPrizeWinnersForRegatta("snsc-gold-sep-26-2026-09-11");
+    const silver = getPrizeWinnersForRegatta("snsc-silver-sep-26-2026-09-05");
+    expect(gold?.fleets[0].fleetName).toBe("Optimist Gold Fleet");
+    expect(gold?.fleets[0].categories[0].winners[0].sailorName).toBe("Alyssa Wong Li Lin");
+    expect(silver?.fleets[0].categories[0].winners[0].sailorName).toBe(
+      "Muhammad Rehan Bin Mohamed Salim"
+    );
   });
 
   it("maps the Pesta Sukan Silver slug to the official Silver prize winners", () => {

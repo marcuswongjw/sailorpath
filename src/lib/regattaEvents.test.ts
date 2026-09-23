@@ -8,6 +8,9 @@ import {
   getStaticBoardRegatta,
   resolveEventSlices,
   sliceMatchesRegattaSlug,
+  CINCAPURA_2026_EVENT,
+  PESTA_SUKAN_2026_EVENT,
+  SAFYC_OPTIMIST_2026_EVENT,
   SNSC_2026_EVENT,
 } from "@/lib/regattaEvents";
 
@@ -39,8 +42,18 @@ describe("getRegattaEvent", () => {
 
   it("returns null for slice slugs and unknown events", () => {
     expect(getRegattaEvent("snsc-gold-sep-26-2026-09-11")).toBeNull();
-    expect(getRegattaEvent("cincapura-regatta-2026")).toBeNull();
     expect(getRegattaEvent("")).toBeNull();
+  });
+
+  it("opens the other 2026 regattas, including both Pesta calendar cards, on one event", () => {
+    expect(getRegattaEvent("cincapura-regatta-2026")?.slices.map((s) => s.key)).toEqual([
+      "optimist-gold",
+      "optimist-silver",
+      "ilca-4",
+    ]);
+    expect(getRegattaEvent("pesta-sukan-regatta-2026-optimist")?.slug).toBe("pesta-sukan-2026");
+    expect(getRegattaEvent("pesta-sukan-regatta-2026-ilca-wingfoil")?.slug).toBe("pesta-sukan-2026");
+    expect(getRegattaEvent("singapore-national-sailing-championships-2026")?.slug).toBe("snsc-2026");
   });
 });
 
@@ -61,6 +74,25 @@ describe("sliceMatchesRegattaSlug", () => {
     expect(sliceMatchesRegattaSlug(ilca, "snsc-ilca-7-sep-26-2026-09-11")).toBe(false);
     expect(sliceMatchesRegattaSlug(gold, "snsc-gold-sep-25-2025-09-06")).toBe(false);
     expect(sliceMatchesRegattaSlug(gold, "cincapura-regatta-2026-gold")).toBe(false);
+  });
+
+  it("keeps Pesta 2025 and the two SAFYC months off the wrong event", () => {
+    const [pestaGold, , pestaIlca] = PESTA_SUKAN_2026_EVENT.slices;
+    const [julyGold] = SAFYC_OPTIMIST_2026_EVENT.slices;
+    expect(sliceMatchesRegattaSlug(pestaGold, "pesta-sukan-gold-aug-25-2025-08-02")).toBe(false);
+    expect(sliceMatchesRegattaSlug(pestaIlca, "pesta-sukan-ilca4-aug-26-2026-08-01")).toBe(true);
+    expect(sliceMatchesRegattaSlug(julyGold, "safyc-gold-mar-26-2026-03-28")).toBe(false);
+    expect(sliceMatchesRegattaSlug(julyGold, "safyc-gold-jul-26-2026-07-04")).toBe(true);
+  });
+
+  it("keeps the fuller Cincapura sheet when the fleet was imported twice", () => {
+    const slices = resolveEventSlices(CINCAPURA_2026_EVENT, [
+      regatta("cincapura-gold-jul-26-2026-07-18"),
+      { ...regatta("cincapura-regatta-2026-gold"), raceCount: 3, totalFleetSize: 86 },
+    ]);
+    expect(slices.find((slice) => slice.def.key === "optimist-gold")?.regatta?.slug).toBe(
+      "cincapura-regatta-2026-gold"
+    );
   });
 
   it("never matches slices without slug tokens (board classes)", () => {
@@ -122,7 +154,9 @@ describe("findEventSliceForRegattaSlug", () => {
     expect(findEventSliceForRegattaSlug("snsc-ilca-6-sep-26-2026-09-11")).toBeNull();
     expect(findEventSliceForRegattaSlug("snsc-ilca-7-sep-26-2026-09-11")).toBeNull();
     expect(findEventSliceForRegattaSlug("snsc-29er-sep-26-2026-09-11")).toBeNull();
-    expect(findEventSliceForRegattaSlug("cincapura-regatta-2026-gold")).toBeNull();
+    expect(findEventSliceForRegattaSlug("cincapura-regatta-2026-gold")?.event.slug).toBe(
+      "cincapura-regatta-2026"
+    );
   });
 });
 

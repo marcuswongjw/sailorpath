@@ -6,6 +6,7 @@ import {
   matchCalendarResults,
 } from "@/lib/calendar/calendarResultLinks";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
+import { groupedHubForSlug } from "@/lib/regattaEventGroups";
 import { getCachedPublicRegattas, getRegattaBySlug } from "@/lib/queries";
 import {
   eventHubHref,
@@ -22,7 +23,9 @@ export async function generateMetadata({
   params: Promise<{ regatta_slug: string }>;
 }): Promise<Metadata> {
   const { regatta_slug } = await params;
-  const event = getRegattaEvent(regatta_slug);
+  const event =
+    getRegattaEvent(regatta_slug) ||
+    groupedHubForSlug(regatta_slug, await getCachedPublicRegattas().catch(() => []))?.event;
   if (event) {
     return {
       title: `${event.name} — results | SailorPath`,
@@ -50,23 +53,38 @@ export default async function RegattaRedirectPage({
 }) {
   const { regatta_slug } = await params;
 
-  // Multi-class event hub (pilot) — one page, tab per class/division slice.
   const event = getRegattaEvent(regatta_slug);
   if (event) {
+    if (event.slug !== regatta_slug.toLowerCase()) {
+      permanentRedirect(`/regattas/${event.slug}`);
+    }
     const { fleet } = await searchParams;
     return <RegattaEventHub event={event} activeFleet={fleet ?? null} />;
-  }
-
-  if (
-    regatta_slug === "snsc-2026" ||
-    regatta_slug.startsWith("singapore-national-sailing-championships-2026")
-  ) {
-    permanentRedirect("/regattas/snsc-2026");
   }
 
   const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
   if (eventSlice) {
     permanentRedirect(eventHubHref(eventSlice.event.slug, eventSlice.slice.key));
+  }
+
+  const published = await getCachedPublicRegattas().catch(() => []);
+  const grouped = groupedHubForSlug(regatta_slug, published);
+  if (grouped && grouped.event.slices.length > 1) {
+    if (grouped.event.slug !== regatta_slug.toLowerCase()) {
+      permanentRedirect(
+        eventHubHref(
+          grouped.event.slug,
+          grouped.fleetKey || grouped.event.slices[0].key
+        )
+      );
+    }
+    const { fleet } = await searchParams;
+    return (
+      <RegattaEventHub
+        event={grouped.event}
+        activeFleet={fleet ?? grouped.fleetKey}
+      />
+    );
   }
 
   const regatta = await getRegattaBySlug(regatta_slug).catch(() => null);
@@ -75,7 +93,6 @@ export default async function RegattaRedirectPage({
   }
 
   const calendarEntry = SINGAPORE_REGATTAS_2026.find((entry) => entry.slug === regatta_slug);
-  const published = await getCachedPublicRegattas().catch(() => []);
   const matches = matchCalendarResults(regatta_slug, published);
 
   if (matches.length === 1) {

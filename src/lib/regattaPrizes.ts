@@ -359,7 +359,18 @@ export const SNSC_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
         {
           categoryName: "Open",
           prizesAwarded: "1st to 10th",
-          winners: [],
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Alyssa Wong Li Lin", notes: "Published results. Nett 28." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Ashlyn Tham Yan Lin", notes: "Published results. Nett 37." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Rahul Rajakanth", notes: "Published results. Nett 40." },
+            { rank: 4, prizeTitle: "4th", sailorName: "Nathaniel Kaiden Ng" },
+            { rank: 5, prizeTitle: "5th", sailorName: "Kevin Ho Jun Yi" },
+            { rank: 6, prizeTitle: "6th", sailorName: "Elijah Ong" },
+            { rank: 7, prizeTitle: "7th", sailorName: "Anya Alessia Zahedi" },
+            { rank: 8, prizeTitle: "8th", sailorName: "Rohan Maliah" },
+            { rank: 9, prizeTitle: "9th", sailorName: "Jedd Lam Zhi Hao" },
+            { rank: 10, prizeTitle: "10th", sailorName: "Darian Huang" },
+          ],
         },
         {
           categoryName: "Female",
@@ -395,7 +406,18 @@ export const SNSC_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
         {
           categoryName: "Open",
           prizesAwarded: "1st to 10th",
-          winners: [],
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Muhammad Rehan Bin Mohamed Salim", notes: "Published results. Nett 21." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Moyan Han", notes: "Published results. Nett 23." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Bryan Thian Tsek Lee", notes: "Published results. Nett 25." },
+            { rank: 4, prizeTitle: "4th", sailorName: "Jiaqian Wu" },
+            { rank: 5, prizeTitle: "5th", sailorName: "Ryan Feiran Zheng" },
+            { rank: 6, prizeTitle: "6th", sailorName: "Skyler Kang" },
+            { rank: 7, prizeTitle: "7th", sailorName: "Henry Shayan Mittelhauser" },
+            { rank: 8, prizeTitle: "8th", sailorName: "Jiayi Du" },
+            { rank: 9, prizeTitle: "9th", sailorName: "Chiang Ziyi Adele" },
+            { rank: 10, prizeTitle: "10th", sailorName: "Kiyansh Kanishk Singh" },
+          ],
         },
         {
           categoryName: "Female",

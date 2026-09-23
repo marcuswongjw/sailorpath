@@ -1,14 +1,11 @@
-import { notFound, permanentRedirect, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaEventHeader } from "@/components/RegattaEventHeader";
 import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
 import { DbUnavailableError } from "@/db";
-import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
-import {
-  eventHubHref,
-  findEventSliceForRegattaSlug,
-} from "@/lib/regattaEvents";
+import { hubHrefForClassSlug } from "@/lib/regattaEventGroups";
+import { getCachedPublicRegattas, getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
 import { getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
 import type { Metadata } from "next";
 
@@ -25,13 +22,9 @@ export default async function RegattaDetailPage({
   params: Promise<{ regatta_slug: string }>;
 }) {
   const { regatta_slug } = await params;
-  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
-  if (eventSlice) {
-    permanentRedirect(eventHubHref(eventSlice.event.slug, eventSlice.slice.key));
-  }
-  if (regatta_slug === "cincapura-regatta-2026") {
-    redirect("/sg/optimist/regattas/cincapura-regatta-2026-gold");
-  }
+  const published = await getCachedPublicRegattas().catch(() => []);
+  const hubHref = hubHrefForClassSlug(regatta_slug, published);
+  if (hubHref) permanentRedirect(hubHref);
   let regatta;
   let results;
   let errorMsg: string | null = null;
