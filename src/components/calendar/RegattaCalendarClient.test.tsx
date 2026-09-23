@@ -155,8 +155,11 @@ describe("RegattaCalendarClient", () => {
     expect(screen.queryByText("National Series Ranking")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "ILCA Singapore Open 2099" })).toHaveAttribute(
       "href",
-      "/sg/ilca4/regattas/ilca-singapore-open-2099"
+      "/regattas/ilca-singapore-open-2099"
     );
+    expect(
+      screen.getByRole("link", { name: "Singapore National Sailing Championships 2099" })
+    ).toHaveAttribute("href", "/regattas/singapore-national-sailing-championships-2099");
   });
 
   it("filters events when typing in search", () => {

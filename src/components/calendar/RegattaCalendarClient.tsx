@@ -101,8 +101,8 @@ function regattaClasses(regatta: RegattaRecord): string[] {
   return [regatta.boatClass || "Optimist"];
 }
 
-/** Where the calendar card opens. SNSC uses the combined event page. */
-export function regattaPageHref(regatta: Pick<RegattaRecord, "slug" | "boatClass">): string {
+/** Calendar cards open the resolver, which sends each event to its real results page. */
+export function regattaPageHref(regatta: Pick<RegattaRecord, "slug">): string {
   const slug = regatta.slug || "";
   if (
     slug === "snsc-2026" ||
@@ -110,12 +110,7 @@ export function regattaPageHref(regatta: Pick<RegattaRecord, "slug" | "boatClass
   ) {
     return "/regattas/snsc-2026";
   }
-  const boat = (regatta.boatClass || "").toLowerCase();
-  if (boat === "wingfoil") return "/sg/wingfoil";
-  if (boat.includes("techno")) return "/sg/techno293";
-  const encoded = encodeURIComponent(slug);
-  if (boat.includes("ilca")) return `/sg/ilca4/regattas/${encoded}`;
-  return `/sg/optimist/regattas/${encoded}`;
+  return `/regattas/${encodeURIComponent(slug)}`;
 }
 
 function downloadIcs(regatta: RegattaRecord) {

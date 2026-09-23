@@ -5,9 +5,9 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
-import { shouldShowDemoNavigation, isAdminHost } from "@/lib/adminHost";
+import { isAdminHost, shouldShowDemoNavigation } from "@/lib/adminHost";
 
-type OpenMenu = "optimist" | "classes" | null;
+type OpenMenu = "optimist" | "classes" | "account" | null;
 
 const subscribeToHost = () => () => {};
 const getBrowserHost = () => window.location.hostname;
@@ -22,7 +22,7 @@ export function SiteHeader() {
     getBrowserHost,
     getServerHost
   );
-  const navRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
 
   const primaryProfile = owned[0] || null;
   const showClaimCta = ready && !email;
@@ -180,9 +180,11 @@ export function SiteHeader() {
   );
 
 
+  const showDirectoryLinks = isAdminHost(host) || Boolean(email);
+
   const navLinks = (
     <>
-      {isAdminHost(host) && (
+      {showDirectoryLinks && (
         <Link
           href="/calendar"
           prefetch
@@ -242,7 +244,7 @@ export function SiteHeader() {
         )}
       </div>
 
-      {isAdminHost(host) && (
+      {showDirectoryLinks && (
         <Link
           href="/search"
           onClick={() => setMobileOpen(false)}
@@ -263,87 +265,97 @@ export function SiteHeader() {
     </>
   );
 
+  const closeMenus = () => {
+    setMobileOpen(false);
+    setOpenMenu(null);
+  };
+  const showParentDashboard =
+    owned.some((o) => String(o.ownerRelation || "").toLowerCase() === "parent") ||
+    String(role || "").toLowerCase() === "parent";
+  const adminHref =
+    host &&
+    (host.includes("localhost") ||
+      host.includes("127.0.0.1") ||
+      host.includes("vercel.app"))
+      ? "/admin"
+      : "https://admin.sailorpath.com/";
+  const accountMenuItems = (onDark: boolean) => {
+    const itemClass = onDark
+      ? "block rounded-lg px-3.5 py-2.5 text-sm font-semibold text-sailcloth hover:bg-harbour-mid hover:text-white"
+      : "block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour";
+    return (
+      <>
+        <p className={`px-3.5 py-2 text-xs truncate ${onDark ? "text-soft-aqua" : "text-slate-soft"}`}>
+          {email}
+        </p>
+        {primaryProfile && (
+          <Link
+            href={owned.length === 1 ? `/${primaryProfile.handle}` : "/athlete"}
+            onClick={closeMenus}
+            className={itemClass}
+          >
+            My profile
+          </Link>
+        )}
+        {owned.length > 0 && (
+          <Link href="/athlete" onClick={closeMenus} className={itemClass}>
+            Athlete Hub
+          </Link>
+        )}
+        {showParentDashboard && owned.length > 0 && (
+          <Link href="/parent" onClick={closeMenus} className={itemClass}>
+            Parent Dashboard
+          </Link>
+        )}
+        {role === "coach" && (
+          <Link href="/coach-tools" onClick={closeMenus} className={itemClass}>
+            Coach Dashboard
+          </Link>
+        )}
+        <Link href="/account" onClick={closeMenus} className={itemClass}>
+          My account
+        </Link>
+        {isSuperadmin && (
+          <a href={adminHref} onClick={closeMenus} className={itemClass}>
+            Admin console
+          </a>
+        )}
+        <button
+          type="button"
+          onClick={() => void signOut()}
+          className={`${itemClass} w-full text-left cursor-pointer`}
+        >
+          Log out
+        </button>
+      </>
+    );
+  };
+
   const authButtons = !ready ? (
     <span className="text-xs text-sailcloth">…</span>
   ) : email ? (
-    <>
-      <span className="hidden xl:inline text-xs text-sailcloth/90 max-w-[140px] truncate">
-        {email}
-      </span>
-      {owned.length > 0 && (
-        <>
-          <Link
-            href="/athlete"
-            onClick={() => setMobileOpen(false)}
-            className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
-          >
-            Athlete Hub
-          </Link>
-          {owned.some(
-            (o) =>
-              String(o.ownerRelation || "").toLowerCase() === "parent" ||
-              String(role || "").toLowerCase() === "parent"
-          ) && (
-            <Link
-              href="/parent"
-              onClick={() => setMobileOpen(false)}
-              className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
-            >
-              Parent Dashboard
-            </Link>
-          )}
-        </>
-      )}
-      {primaryProfile && (
-        <Link
-          href={
-            owned.length === 1 ? `/${primaryProfile.handle}` : "/athlete"
-          }
-          onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-white hover:text-racing-mist transition-colors"
-        >
-          My profile
-        </Link>
-      )}
-      {role === "coach" && (
-        <Link
-          href="/coach-tools"
-          onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-racing-mist hover:text-white transition-colors"
-        >
-          Coach Dashboard
-        </Link>
-      )}
-      <Link
-        href="/account"
-        onClick={() => setMobileOpen(false)}
-        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors"
-      >
-        My account
-      </Link>
-      {isSuperadmin && (
-        <a
-          href={
-            host &&
-            (host.includes("localhost") ||
-              host.includes("127.0.0.1") ||
-              host.includes("vercel.app"))
-              ? "/admin"
-              : "https://admin.sailorpath.com/"
-          }
-          className="text-xs font-bold text-sailcloth hover:text-white transition-colors"
-        >
-          Admin console
-        </a>
-      )}
+    <div className="relative">
       <button
         type="button"
-        onClick={() => void signOut()}
-        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors cursor-pointer"
+        aria-expanded={openMenu === "account"}
+        aria-haspopup="menu"
+        onClick={() => setOpenMenu((m) => (m === "account" ? null : "account"))}
+        className="text-sm font-semibold text-sailcloth hover:text-white transition-colors flex items-center gap-1.5 py-2 md:py-5 cursor-pointer"
       >
-        Log out
+        Account
+        <ChevronDown
+          className={`h-4 w-4 transition-transform ${openMenu === "account" ? "rotate-180 text-white" : ""}`}
+        />
       </button>
-    </>
+      {openMenu === "account" && (
+        <div
+          role="menu"
+          className="absolute right-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
+        >
+          {accountMenuItems(false)}
+        </div>
+      )}
+    </div>
   ) : (
     <>
       <Link
@@ -371,18 +383,17 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-[60] w-full max-w-[100vw] border-b border-harbour-shadow bg-harbour text-sailcloth overflow-x-clip pt-[env(safe-area-inset-top,0px)]">
       <div className="mx-auto w-full max-w-7xl px-3 sm:px-6 lg:px-8 min-w-0">
-        <div className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
+        <div ref={navRef} className="flex h-14 sm:h-16 items-center justify-between gap-2 sm:gap-4 min-w-0">
           <div className="flex items-center gap-3 lg:gap-8 min-w-0 flex-1">
             <BrandLogoLink variant="reversed" />
             <nav
-              ref={navRef}
               className="hidden md:flex items-center gap-5 lg:gap-6"
             >
               {navLinks}
             </nav>
           </div>
 
-          <div className="hidden md:flex items-center gap-2 lg:gap-3 flex-wrap justify-end">
+          <div className="hidden md:flex items-center gap-3 justify-end shrink-0">
             {authButtons}
           </div>
 
@@ -406,13 +417,13 @@ export function SiteHeader() {
 
         {mobileOpen && (
           <div className="md:hidden border-t border-harbour-shadow bg-harbour py-3 pb-[max(1rem,env(safe-area-inset-bottom))] flex flex-col gap-0.5 max-h-[min(70vh,32rem)] overflow-y-auto px-2">
-            {isAdminHost(host) && (
+            {showDirectoryLinks && (
               <Link
                 href="/calendar"
                 onClick={() => setMobileOpen(false)}
                 className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
               >
-                Race Calendar
+                Calendar
               </Link>
             )}
             {showClaimCta && (
@@ -515,7 +526,7 @@ export function SiteHeader() {
             >
               Techno 293 Racing
             </Link>
-            {isAdminHost(host) && (
+            {showDirectoryLinks && (
               <Link
                 href="/search"
                 onClick={() => setMobileOpen(false)}
@@ -542,7 +553,7 @@ export function SiteHeader() {
             </Link>
             <div className="mt-3 pt-3 border-t border-harbour-shadow flex flex-col gap-1.5">
               {email ? (
-                authButtons
+                <div className="flex flex-col gap-1 px-1">{accountMenuItems(true)}</div>
               ) : (
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <Link
