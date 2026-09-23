@@ -211,30 +211,30 @@ export function getPercentileBadge(rank: number, totalFleetSize: number): {
     return {
       label: "Top 20%",
       className:
-        "bg-emerald-500/10 text-emerald-500 border border-emerald-500/20",
+        "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-shadow)] border border-[var(--sp-harbour-teal)]/40",
     };
   }
   if (pct <= 40) {
     return {
       label: "Top 40%",
-      className: "bg-sky-500/10 text-sky-400 border border-sky-500/20",
+      className: "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]",
     };
   }
   if (pct <= 60) {
     return {
       label: "Top 60%",
-      className: "bg-blue-500/10 text-blue-400 border border-blue-500/20",
+      className: "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]",
     };
   }
   if (pct <= 80) {
     return {
       label: "Top 80%",
-      className: "bg-amber-500/10 text-amber-400 border border-amber-500/20",
+      className: "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]",
     };
   }
   return {
     label: "Bottom 20%",
-    className: "bg-rose-500/10 text-rose-500 border border-rose-500/20",
+    className: "bg-[var(--sp-racing-mist)] text-[var(--sp-charcoal)] border border-[var(--sp-racing-deep)]/30",
   };
 }
 

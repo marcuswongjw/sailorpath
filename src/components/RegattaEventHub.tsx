@@ -13,7 +13,8 @@ import {
   type RegattaEventSliceDef,
   type ResolvedEventSlice,
 } from "@/lib/regattaEvents";
-import { getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
+import { getPrizeWinnersForRegatta, type PrizeWinner } from "@/lib/regattaPrizes";
+import { prizeNameKey } from "@/components/RegattaPrizeWinners";
 import { getCachedPublicRegattas, getResultsForRegatta } from "@/lib/queries";
 import type { RegattaRecord } from "@/lib/ranking";
 import type { Techno293Regatta } from "@/lib/techno293";
@@ -81,6 +82,26 @@ function EventLinkChip({
   );
 }
 
+function profileHandlesForWinners(
+  results: { sailorName: string; handle: string; sailNumber?: string | null }[],
+  winners: PrizeWinner[]
+): Record<string, string> {
+  const byName = new Map<string, string>();
+  const bySail = new Map<string, string>();
+  for (const row of results) {
+    if (row.handle) byName.set(prizeNameKey(row.sailorName), row.handle);
+    const sail = String(row.sailNumber || "").replace(/\s+/g, "");
+    if (sail && row.handle) bySail.set(sail, row.handle);
+  }
+  const handles: Record<string, string> = {};
+  for (const winner of winners) {
+    const sail = String(winner.sailNumber || "").replace(/\s+/g, "");
+    const handle = byName.get(prizeNameKey(winner.sailorName)) || (sail ? bySail.get(sail) : undefined);
+    if (handle) handles[prizeNameKey(winner.sailorName)] = handle;
+  }
+  return handles;
+}
+
 function BoardClassPanel({
   slice,
 }: {
@@ -136,7 +157,7 @@ function BoardResultsTable({ results }: { results: BoardResult[] }) {
   return (
     <div className="overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
       <table className="w-full min-w-[720px] text-left text-sm">
-        <thead className="bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-slate-soft)] font-semibold border-b border-[var(--sp-cool-veil)]">
+        <thead className="bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-charcoal)] font-bold border-b border-[var(--sp-cool-veil)]">
           <tr>
             <th className="px-3 py-3 text-center">Rank</th>
             <th className="px-3 py-3">Name</th>
@@ -177,9 +198,9 @@ function BoardResultsTable({ results }: { results: BoardResult[] }) {
                     key={index}
                     className={`px-2 py-3 text-center font-mono text-xs font-semibold tabular-nums ${
                       !race
-                        ? "text-[var(--sp-slate-soft)]"
+                        ? "text-[var(--sp-charcoal-slate)]"
                         : race.isDiscarded
-                          ? "text-[var(--sp-slate-soft)] line-through"
+                          ? "text-[var(--sp-charcoal)] line-through"
                           : race.code
                             ? "text-[var(--sp-racing-deep)]"
                             : "text-[var(--sp-charcoal)]"
@@ -201,7 +222,15 @@ function BoardResultsTable({ results }: { results: BoardResult[] }) {
   );
 }
 
-async function DbSlicePanel({ regatta, def }: { regatta: RegattaRecord; def: RegattaEventSliceDef }) {
+async function DbSlicePanel({
+  regatta,
+  def,
+  prizeView,
+}: {
+  regatta: RegattaRecord;
+  def: RegattaEventSliceDef;
+  prizeView: ReturnType<typeof prizeViewForSlice>;
+}) {
   let results;
   try {
     results = await getResultsForRegatta(regatta.id);
@@ -211,9 +240,17 @@ async function DbSlicePanel({ regatta, def }: { regatta: RegattaRecord; def: Reg
     return <DbOffline message={message} />;
   }
   const accent = def.series === "ilca4" ? "sky" : "orange";
+  const winners = prizeView?.fleets.flatMap((fleet) => fleet.categories.flatMap((category) => category.winners)) ?? [];
+  const profileHandles = profileHandlesForWinners(results, winners);
   return (
     <div className="space-y-3">
-      <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
+      {prizeView && (
+        <RegattaPrizeWinners
+          schedule={{ ...prizeView.schedule, fleets: prizeView.fleets }}
+          profileHandles={profileHandles}
+        />
+      )}
+      <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed">
         {String(regatta.date)}
         {regatta.endDate ? ` – ${String(regatta.endDate)}` : ""}
         {" · "}
@@ -234,7 +271,7 @@ async function DbSlicePanel({ regatta, def }: { regatta: RegattaRecord; def: Reg
           accent={accent}
         />
       )}
-      <p className="text-[13px] text-[var(--sp-slate-soft)]">
+      <p className="text-[13px] text-[var(--sp-charcoal)]">
         Source: published regatta results reviewed before import · Parentheses
         indicate a discarded race score · * DNS · † Overseas commitment
       </p>
@@ -280,16 +317,13 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
         <span className="text-[var(--sp-slate-soft)]" aria-hidden>
           /
         </span>
-        <span className="text-[var(--sp-slate-soft)] truncate max-w-[12rem] sm:max-w-xs font-medium">
+        <span className="text-[var(--sp-charcoal)] truncate max-w-[12rem] sm:max-w-xs font-medium">
           {event.shortName}
         </span>
       </nav>
 
       <header className="min-w-0 space-y-2">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-harbour-teal)]/10 text-[var(--sp-harbour-teal)]">
-            {event.slices.length} classes
-          </span>
           {event.officialNoticeBoardUrl && (
             <EventLinkChip
               href={event.officialNoticeBoardUrl}
@@ -300,12 +334,6 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
             event.noticeOfRaceUrl !== event.officialNoticeBoardUrl && (
               <EventLinkChip href={event.noticeOfRaceUrl} label="Notice of Race" />
             )}
-          {event.websiteUrl && (
-            <EventLinkChip href={event.websiteUrl} label="Event website" />
-          )}
-          {event.registrationUrl && (
-            <EventLinkChip href={event.registrationUrl} label="Registration" />
-          )}
         </div>
         <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] leading-snug break-words tracking-tight">
           {event.name}
@@ -321,7 +349,7 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
           {event.organizer}
         </p>
         {event.scheduleSummary && (
-          <p className="text-[12px] sm:text-xs text-[var(--sp-slate-soft)] leading-relaxed max-w-3xl">
+          <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed max-w-3xl">
             {event.scheduleSummary}
           </p>
         )}
@@ -346,7 +374,7 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
               className={`rounded-xl border px-3 py-2 transition-colors ${
                 isActive
                   ? "border-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)] text-white shadow-xs"
-                  : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-charcoal-slate)] hover:border-[var(--sp-harbour-teal)]/40 hover:text-[var(--sp-harbour-teal)]"
+                  : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-teal)]"
               }`}
             >
               <span className="block text-[13px] font-bold leading-tight">
@@ -354,7 +382,7 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
               </span>
               <span
                 className={`block text-[10px] font-semibold leading-tight mt-0.5 ${
-                  isActive ? "text-white/80" : "text-[var(--sp-slate-soft)]"
+                  isActive ? "text-white" : "text-[var(--sp-charcoal)]"
                 }`}
               >
                 {sliceStatusText(slice)}
@@ -364,16 +392,16 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
         })}
       </nav>
 
-      {active.regatta ? (
-        <DbSlicePanel regatta={active.regatta} def={active.def} />
-      ) : (
-        <BoardClassPanel slice={active.def} />
-      )}
-
-      {prizeView && (
+      {!active.regatta && prizeView && (
         <RegattaPrizeWinners
           schedule={{ ...prizeView.schedule, fleets: prizeView.fleets }}
         />
+      )}
+
+      {active.regatta ? (
+        <DbSlicePanel regatta={active.regatta} def={active.def} prizeView={prizeView} />
+      ) : (
+        <BoardClassPanel slice={active.def} />
       )}
     </div>
   );

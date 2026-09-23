@@ -34,8 +34,8 @@ function raceValue(race: OfficialRaceResultInput | undefined) {
 }
 
 function raceValueClass(race: OfficialRaceResultInput | undefined) {
-  if (!race) return "text-[var(--sp-slate-soft)]/50";
-  if (race.discarded) return "text-[var(--sp-slate-soft)] line-through";
+  if (!race) return "text-[var(--sp-charcoal-slate)]";
+  if (race.discarded) return "text-[var(--sp-charcoal)] line-through";
   if (race.scoringCode) return "text-amber-800 font-bold bg-amber-50 rounded px-1";
   return "text-[var(--sp-charcoal-slate)]";
 }
@@ -110,7 +110,7 @@ export function PublicRegattaResults({
                       {result.sailorName}
                     </Link>
                   </div>
-                  <p className="mt-1 text-[11px] text-[var(--sp-slate-soft)]">
+                  <p className="mt-1 text-[11px] text-[var(--sp-charcoal)]">
                     {[
                       result.nationality,
                       formatGenderLabel(result.gender) !== "—"
@@ -131,7 +131,7 @@ export function PublicRegattaResults({
                   ["Nett", result.nettScore],
                 ].map(([label, value]) => (
                   <div key={String(label)} className="rounded-lg bg-[var(--sp-sailcloth)] px-2.5 py-2">
-                    <p className="text-[10px] font-semibold uppercase text-[var(--sp-slate-soft)]">{label}</p>
+                    <p className="text-[10px] font-semibold uppercase text-[var(--sp-charcoal)]">{label}</p>
                     <p className="font-mono font-bold tabular-nums text-[var(--sp-harbour-shadow)]">{value ?? "—"}</p>
                   </div>
                 ))}
@@ -160,7 +160,7 @@ export function PublicRegattaResults({
 
       <div className="hidden sm:block overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
         <table className={`w-full ${hasRaceResults ? "min-w-[1050px]" : "min-w-[680px]"} text-left text-sm`}>
-          <thead className="bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-slate-soft)] font-semibold border-b border-[var(--sp-cool-veil)]">
+          <thead className="bg-[var(--sp-sailcloth)] text-xs uppercase text-[var(--sp-charcoal)] font-bold border-b border-[var(--sp-cool-veil)]">
             <tr>
               <th className="px-3 py-3 text-center">Rank</th>
               <th className="px-3 py-3">Name</th>
@@ -195,9 +195,9 @@ export function PublicRegattaResults({
                       {result.sailorName}
                     </Link>
                   </td>
-                  <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">{result.nationality || "—"}</td>
-                  <td className="px-3 py-3 text-center text-[var(--sp-charcoal-slate)]">{formatGenderLabel(result.gender)}</td>
-                  <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal-slate)]">
+                  <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">{result.nationality || "—"}</td>
+                  <td className="px-3 py-3 text-center text-[var(--sp-charcoal)]">{formatGenderLabel(result.gender)}</td>
+                  <td className="px-3 py-3 text-center font-mono text-[var(--sp-charcoal)]">
                     {result.birthYear ?? birthYear(result.dob) ?? "—"}
                   </td>
                   {raceNumbers.map((raceNumber) => {

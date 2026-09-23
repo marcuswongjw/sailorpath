@@ -3,15 +3,23 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Trophy, Award, School, Compass, ChevronDown } from "lucide-react";
-import { normalizeHandle } from "@/lib/handles";
 import type { RegattaPrizeSchedule, RegattaPrizeFleet, PrizeCategory } from "@/lib/regattaPrizes";
 
 type Props = {
   schedule: RegattaPrizeSchedule;
   filterFleet?: string; // e.g. "Optimist Gold", "ILCA 4"
+  /** Real profile handles keyed by a normalised sailor name. */
+  profileHandles?: Record<string, string>;
 };
 
-export function RegattaPrizeWinners({ schedule, filterFleet }: Props) {
+export function prizeNameKey(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: Props) {
   const matched = filterFleet
     ? schedule.fleets.filter(
         (f) =>
@@ -123,20 +131,18 @@ export function RegattaPrizeWinners({ schedule, filterFleet }: Props) {
                     </span>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-baseline justify-between gap-1">
-                        <Link
-                          href={`/${normalizeHandle(w.sailorName)}`}
-                          className="font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)] truncate"
-                        >
-                          {w.sailorName}
-                        </Link>
+                        <PrizeSailorName
+                          name={w.sailorName}
+                          handle={profileHandles?.[prizeNameKey(w.sailorName)]}
+                        />
                         {w.sailNumber && (
-                          <span className="font-mono text-[10px] text-[var(--sp-slate-soft)] shrink-0">
+                          <span className="font-mono text-[10px] text-[var(--sp-charcoal)] shrink-0">
                             #{w.sailNumber}
                           </span>
                         )}
                       </div>
                       {(w.club || w.schoolName) && (
-                        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] text-[var(--sp-slate-soft)] mt-0.5">
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] text-[var(--sp-charcoal)] mt-0.5">
                           {w.schoolName && (
                             <span className="inline-flex items-center gap-0.5 truncate max-w-[12rem]">
                               <School className="h-2.5 w-2.5 shrink-0" />
@@ -165,5 +171,19 @@ export function RegattaPrizeWinners({ schedule, filterFleet }: Props) {
         ))}
       </div>
     </section>
+  );
+}
+
+function PrizeSailorName({ name, handle }: { name: string; handle?: string }) {
+  if (!handle) {
+    return <span className="font-bold text-[var(--sp-charcoal)] truncate">{name}</span>;
+  }
+  return (
+    <Link
+      href={`/${handle}`}
+      className="font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)] truncate"
+    >
+      {name}
+    </Link>
   );
 }
