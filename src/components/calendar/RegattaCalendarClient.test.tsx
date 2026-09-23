@@ -150,6 +150,13 @@ describe("RegattaCalendarClient", () => {
     expect(screen.getByText("Singapore National Sailing Championships 2099")).toBeInTheDocument();
     expect(screen.getByText("ILCA Singapore Open 2099")).toBeInTheDocument();
     expect(screen.getByText("Eastern Seaboard Regatta 2099")).toBeInTheDocument();
+    expect(screen.queryByText(/official selection trial for world championship team/i)).not.toBeInTheDocument();
+    expect(screen.getByText("Ranking Regatta")).toBeInTheDocument();
+    expect(screen.queryByText("National Series Ranking")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "ILCA Singapore Open 2099" })).toHaveAttribute(
+      "href",
+      "/sg/ilca4/regattas/ilca-singapore-open-2099"
+    );
   });
 
   it("filters events when typing in search", () => {

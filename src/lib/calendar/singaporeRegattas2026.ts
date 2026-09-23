@@ -29,6 +29,8 @@ export type RegattaCalendarEntry = {
   startDate: string; // YYYY-MM-DD
   endDate?: string;  // YYYY-MM-DD
   boatClass: string; // e.g. "Optimist", "ILCA 4", "ILCA 6", "WingFoil", "All"
+  /** Classes sailed at this regatta. Shown instead of a single boat-class chip. */
+  classes?: string[];
   division: string;  // e.g. "National", "Gold", "Silver", "Open"
   venue: string;     // e.g. "National Sailing Centre"
   region: "Singapore" | "Asia" | "Europe" | "International";
@@ -237,6 +239,7 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     startDate: "2026-07-20",
     endDate: "2026-07-21",
     boatClass: "Optimist",
+    classes: ["Optimist", "ILCA 4", "ILCA 6", "ILCA 7", "29er", "Techno 293", "iQFOiL", "WingFoil"],
     division: "Gold / Silver",
     region: "Singapore",
     geography: "SG",
@@ -259,6 +262,7 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     startDate: "2026-07-25",
     endDate: "2026-08-02",
     boatClass: "Optimist",
+    classes: ["Optimist", "ILCA 4", "ILCA 6", "ILCA 7", "29er", "Techno 293", "iQFOiL", "WingFoil"],
     division: "Gold / Silver",
     region: "Singapore",
     geography: "SG",
@@ -280,6 +284,7 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     startDate: "2026-07-25",
     endDate: "2026-08-02",
     boatClass: "ILCA 4",
+    classes: ["Optimist", "ILCA 4", "ILCA 6", "ILCA 7", "29er", "Techno 293", "iQFOiL", "WingFoil"],
     division: "National",
     region: "Singapore",
     geography: "SG",
@@ -319,6 +324,7 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     startDate: "2026-09-05",
     endDate: "2026-09-13",
     boatClass: "Optimist",
+    classes: ["Optimist", "ILCA 4", "ILCA 6", "ILCA 7", "29er", "Techno 293", "WingFoil"],
     division: "National",
     region: "Singapore",
     geography: "SG",

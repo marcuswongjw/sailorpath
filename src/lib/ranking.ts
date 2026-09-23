@@ -63,6 +63,8 @@ export interface RegattaRecord {
   geography?: string | null;
   /** e.g. Optimist, ILCA 6 */
   boatClass?: string | null;
+  /** Every class sailed at this regatta, when it is more than boatClass. */
+  classes?: string[] | null;
   /** false = personal / overseas logbook only — not in Best 3 of 5 */
   countsForRanking?: boolean | null;
   /** Host venue / club */

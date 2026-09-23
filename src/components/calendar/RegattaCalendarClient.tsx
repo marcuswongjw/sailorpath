@@ -96,6 +96,28 @@ function getCountdownLabel(startDateStr: string, endDateStr?: string | null): {
   return { label: `In ${months} month${months === 1 ? "" : "s"}`, tone: "future" };
 }
 
+function regattaClasses(regatta: RegattaRecord): string[] {
+  if (regatta.classes && regatta.classes.length > 0) return regatta.classes;
+  return [regatta.boatClass || "Optimist"];
+}
+
+/** Where the calendar card opens. SNSC uses the combined event page. */
+export function regattaPageHref(regatta: Pick<RegattaRecord, "slug" | "boatClass">): string {
+  const slug = regatta.slug || "";
+  if (
+    slug === "snsc-2026" ||
+    slug.startsWith("singapore-national-sailing-championships-2026")
+  ) {
+    return "/regattas/snsc-2026";
+  }
+  const boat = (regatta.boatClass || "").toLowerCase();
+  if (boat === "wingfoil") return "/sg/wingfoil";
+  if (boat.includes("techno")) return "/sg/techno293";
+  const encoded = encodeURIComponent(slug);
+  if (boat.includes("ilca")) return `/sg/ilca4/regattas/${encoded}`;
+  return `/sg/optimist/regattas/${encoded}`;
+}
+
 function downloadIcs(regatta: RegattaRecord) {
   const startYmd = String(regatta.date).slice(0, 10).replace(/-/g, "");
   // For ICS whole-day event end date is exclusive (day after)
@@ -113,7 +135,7 @@ function downloadIcs(regatta: RegattaRecord) {
   const title = regatta.name.replace(/[,;]/g, " ");
   const description = [
     regatta.scheduleNotes,
-    regatta.countsForRanking ? "Official Singapore National Series Ranking Event" : null,
+    regatta.countsForRanking ? "Ranking Regatta" : null,
     regatta.isSelectionTrial ? "Official Selection Trial for National Squad" : null,
     regatta.norUrl ? `Notice of Race: ${regatta.norUrl}` : null,
     regatta.registrationUrl ? `Registration: ${regatta.registrationUrl}` : null,
@@ -204,17 +226,19 @@ export function RegattaCalendarClient({
 
       // Class filter
       if (selectedClass !== "all") {
-        const cls = String(r.boatClass || "").toLowerCase();
-        if (selectedClass === "optimist" && !cls.includes("optimist") && !cls.includes("opti")) {
+        const labels = regattaClasses(r).map((label) => label.toLowerCase());
+        const matches = (needles: string[]) =>
+          labels.some((label) => needles.some((needle) => label.includes(needle)));
+        if (selectedClass === "optimist" && !matches(["optimist", "opti"])) {
           return false;
         }
-        if (selectedClass === "ilca4" && !cls.includes("ilca 4") && !cls.includes("ilca4")) {
+        if (selectedClass === "ilca4" && !matches(["ilca 4", "ilca4"])) {
           return false;
         }
-        if (selectedClass === "ilca6" && !cls.includes("ilca 6") && !cls.includes("ilca6")) {
+        if (selectedClass === "ilca6" && !matches(["ilca 6", "ilca6"])) {
           return false;
         }
-        if (selectedClass === "wingfoil" && !cls.includes("wingfoil") && !cls.includes("wing")) {
+        if (selectedClass === "wingfoil" && !matches(["wingfoil", "wing"])) {
           return false;
         }
       }
@@ -486,17 +510,24 @@ export function RegattaCalendarClient({
             const countdown = getCountdownLabel(regatta.date, regatta.endDate);
             const dateRangeStr = formatDateRange(regatta.date, regatta.endDate);
             const cardKey = regatta.id || regatta.slug;
+            const pageHref = regattaPageHref(regatta);
+            const classes = regattaClasses(regatta);
 
             return (
               <div
                 key={cardKey}
-                className={`rounded-2xl border transition-all p-5 sm:p-6 bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] shadow-xs hover:shadow-md space-y-4 ${
+                className={`relative rounded-2xl border transition-all p-5 sm:p-6 bg-[var(--sp-warm-white)] hover:border-[var(--sp-harbour-teal)] shadow-xs hover:shadow-md space-y-4 ${
                   regatta.isSelectionTrial
                     ? "border-[var(--sp-racing-orange)]/40"
                     : "border-[var(--sp-cool-veil)]"
                 }`}
               >
-                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+                <Link
+                  href={pageHref}
+                  aria-label={regatta.name}
+                  className="absolute inset-0 z-0 rounded-2xl"
+                />
+                <div className="relative z-10 flex flex-col sm:flex-row sm:items-start justify-between gap-4 pointer-events-none">
                   {/* Left: Date Badge + Main Details */}
                   <div className="flex items-start gap-4 flex-1 min-w-0">
                     {/* Date Block */}
@@ -552,20 +583,19 @@ export function RegattaCalendarClient({
                           </span>
                         )}
 
-                        <span className="rounded-md border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)] inline-flex items-center gap-1">
-                          <Sailboat className="h-3 w-3" />
-                          {regatta.boatClass || "Optimist"}
-                        </span>
+                        {classes.map((className) => (
+                          <span
+                            key={className}
+                            className="rounded-md border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)] inline-flex items-center gap-1"
+                          >
+                            <Sailboat className="h-3 w-3" />
+                            {className}
+                          </span>
+                        ))}
 
                         {regatta.division && (
                           <span className="rounded-md border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2 py-0.5 text-[10px] font-semibold text-[var(--sp-slate-soft)]">
                             {regatta.division}
-                          </span>
-                        )}
-
-                        {regatta.targetFleet && (
-                          <span className="rounded-md border border-purple-500/30 bg-purple-50 px-2 py-0.5 text-[10px] font-bold text-purple-700">
-                            Fleet: {regatta.targetFleet}
                           </span>
                         )}
 
@@ -586,7 +616,7 @@ export function RegattaCalendarClient({
                         {regatta.countsForRanking && !regatta.isSelectionTrial && (
                           <span className="rounded-md border border-emerald-500/30 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 inline-flex items-center gap-1">
                             <Award className="h-3 w-3" />
-                            National Series Ranking
+                            Ranking Regatta
                           </span>
                         )}
                       </div>
@@ -618,30 +648,11 @@ export function RegattaCalendarClient({
                         </p>
                       )}
 
-                      {/* Schedule notes */}
-                      {regatta.scheduleNotes && (
-                        <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed pt-0.5">
-                          {regatta.scheduleNotes}
-                        </p>
-                      )}
-
-                      {/* Official Prize Categories */}
-                      {regatta.prizesSummary && (
-                        <div className="pt-1">
-                          <p className="text-[11px] text-[var(--sp-charcoal-slate)] flex items-start gap-1.5 bg-[var(--sp-sailcloth)]/70 border border-[var(--sp-cool-veil)] rounded-lg px-2.5 py-1.5 leading-relaxed">
-                            <Award className="h-3.5 w-3.5 text-[var(--sp-racing-orange)] shrink-0 mt-0.5" />
-                            <span>
-                              <strong className="font-bold text-[var(--sp-harbour-shadow)]">Prizes: </strong>
-                              {regatta.prizesSummary}
-                            </span>
-                          </p>
-                        </div>
-                      )}
                     </div>
                   </div>
 
                   {/* Right Actions */}
-                  <div className="flex flex-wrap sm:flex-col gap-2 shrink-0 sm:self-center">
+                  <div className="pointer-events-auto relative z-10 flex flex-wrap sm:flex-col gap-2 shrink-0 sm:self-center">
                     {/* Notice of Race (NOR) / Official Notice Board Link */}
                     {regatta.norUrl ? (
                       <a
@@ -682,26 +693,6 @@ export function RegattaCalendarClient({
                       Add to Calendar (.ics)
                     </button>
 
-                    {/* View scoreboard if results published in SailorPath or WingFoil hub */}
-                    {regatta.boatClass?.toLowerCase() === "wingfoil" ? (
-                      <Link
-                        href="/sg/wingfoil"
-                        className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:bg-[var(--sp-sailcloth)] px-3.5 py-2 text-xs font-bold text-[var(--sp-harbour-teal)] inline-flex items-center justify-center gap-1 transition-colors"
-                      >
-                        WingFoil Hub →
-                      </Link>
-                    ) : regatta.hasResults && regatta.slug ? (
-                      <Link
-                        href={
-                          regatta.boatClass?.toLowerCase().includes("ilca")
-                            ? `/sg/ilca4/regattas/${regatta.slug}`
-                            : `/sg/optimist/regattas/${regatta.slug}`
-                        }
-                        className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] hover:bg-[var(--sp-sailcloth)] px-3.5 py-2 text-xs font-bold text-[var(--sp-racing-orange)] inline-flex items-center justify-center gap-1 transition-colors"
-                      >
-                        Event Scoreboard →
-                      </Link>
-                    ) : null}
                   </div>
                 </div>
               </div>

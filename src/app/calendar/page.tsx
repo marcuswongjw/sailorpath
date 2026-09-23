@@ -54,6 +54,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
       scheduleNotes: item.scheduleNotes,
       prizesSummary: item.prizesSummary,
       boatClass: item.boatClass,
+      classes: item.classes,
       geography: item.geography || "SG",
     });
   }
