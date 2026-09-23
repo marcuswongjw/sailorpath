@@ -5,7 +5,11 @@ import { RegattaEventHeader } from "@/components/RegattaEventHeader";
 import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
 import { DbUnavailableError } from "@/db";
 import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
-import { getRegattaPrizeSchedule } from "@/lib/regattaPrizes";
+import {
+  eventHubHref,
+  findEventSliceForRegattaSlug,
+} from "@/lib/regattaEvents";
+import { getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -41,13 +45,8 @@ export default async function RegattaDetailPage({
   if (errorMsg) return <DbOffline message={errorMsg} />;
   if (!regatta || !results) notFound();
 
-  const prizeSchedule = getRegattaPrizeSchedule(regatta_slug);
-  // For Gold/Silver-specific slugs, narrow to matching fleet
-  const fleetHint = /gold/i.test(regatta_slug)
-    ? "Gold"
-    : /silver/i.test(regatta_slug)
-    ? "Silver"
-    : regatta.division ?? undefined;
+  const prizeWinners = getPrizeWinnersForRegatta(regatta_slug);
+  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
@@ -60,6 +59,14 @@ export default async function RegattaDetailPage({
         series="optimist"
         countsForRanking={regatta.countsForRanking !== false}
         norUrl={regatta.norUrl}
+        eventHub={
+          eventSlice
+            ? {
+                href: eventHubHref(eventSlice.event.slug, eventSlice.slice.key),
+                label: eventSlice.event.shortName,
+              }
+            : null
+        }
       />
       <PublicRegattaResults
         results={results}
@@ -67,10 +74,9 @@ export default async function RegattaDetailPage({
         raceCount={regatta.raceCount}
         accent="orange"
       />
-      {prizeSchedule && (
+      {prizeWinners && (
         <RegattaPrizeWinners
-          schedule={prizeSchedule}
-          filterFleet={fleetHint}
+          schedule={{ ...prizeWinners.schedule, fleets: prizeWinners.fleets }}
         />
       )}
       <p className="text-[13px] text-[var(--sp-slate-soft)]">

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getPrizeWinnersForRegatta } from "./regattaPrizes";
+import { getPrizeWinnersForRegatta, inferPrizeFleetName } from "./regattaPrizes";
 
 describe("getPrizeWinnersForRegatta", () => {
   it("maps the live Cincapura Gold slug to the Gold fleet winners", () => {
@@ -53,6 +53,19 @@ describe("getPrizeWinnersForRegatta", () => {
     expect(
       getPrizeWinnersForRegatta("pesta-sukan-silver-aug-26-2026-08-01")
     ).toBeNull();
+  });
+
+  it("does not show ILCA 4 prizes for ILCA 6 or 29er slugs", () => {
+    expect(inferPrizeFleetName("snsc-ilca-6-sep-26-2026-09-11")).toBeNull();
+    expect(getPrizeWinnersForRegatta("snsc-ilca-6-sep-26-2026-09-11")).toBeNull();
+    expect(getPrizeWinnersForRegatta("snsc-29er-sep-26-2026-09-11")).toBeNull();
+  });
+
+  it("can select one fleet on the event slug", () => {
+    const view = getPrizeWinnersForRegatta("snsc-2026", "WingFoil");
+    expect(view).not.toBeNull();
+    expect(view!.fleets.map((fleet) => fleet.fleetName)).toEqual(["WingFoil"]);
+    expect(view!.fleets[0].categories.length).toBeGreaterThan(0);
   });
 
   it("returns null for unrelated or empty slugs", () => {

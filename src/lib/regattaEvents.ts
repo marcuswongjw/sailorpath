@@ -30,6 +30,8 @@ export type RegattaEventSliceDef = {
   slugIncludes?: string[];
   /** Static-data id for board classes served outside the regattas table. */
   staticId?: string;
+  /** Exact prize-schedule fleet name, when this slice has verified winners. */
+  prizeFleetName?: string;
 };
 
 export type RegattaEventDef = {
@@ -70,35 +72,58 @@ export const SNSC_2026_EVENT: RegattaEventDef = {
       label: "Optimist Gold",
       series: "optimist",
       slugIncludes: ["snsc", "gold", "sep-26"],
+      prizeFleetName: "Optimist Gold Fleet",
     },
     {
       key: "optimist-silver",
       label: "Optimist Silver",
       series: "optimist",
       slugIncludes: ["snsc", "silver", "sep-26"],
+      prizeFleetName: "Optimist Silver Fleet",
     },
     {
       key: "ilca-4",
       label: "ILCA 4",
       series: "ilca4",
-      slugIncludes: ["snsc", "ilca", "sep-26"],
+      slugIncludes: ["snsc", "ilca-4", "sep-26"],
+      prizeFleetName: "ILCA 4",
     },
     {
       key: "wingfoil",
       label: "WingFoil",
       series: "wingfoil",
       staticId: "snsc-2026-wingfoil",
+      prizeFleetName: "WingFoil",
     },
     {
       key: "techno-293",
       label: "Techno 293",
       series: "techno293",
       staticId: "techno-snsc-2026",
+      prizeFleetName: "Techno 293 / 293+",
     },
   ],
 };
 
 export const REGATTA_EVENTS: RegattaEventDef[] = [SNSC_2026_EVENT];
+
+/** Event hub entry for a class-slice slug such as snsc-ilca-4-sep-26-… */
+export function findEventSliceForRegattaSlug(regattaSlug: string): {
+  event: RegattaEventDef;
+  slice: RegattaEventSliceDef;
+} | null {
+  for (const event of REGATTA_EVENTS) {
+    const slice = event.slices.find((candidate) =>
+      sliceMatchesRegattaSlug(candidate, regattaSlug)
+    );
+    if (slice) return { event, slice };
+  }
+  return null;
+}
+
+export function eventHubHref(eventSlug: string, fleetKey: string): string {
+  return `/regattas/${eventSlug}?fleet=${encodeURIComponent(fleetKey)}`;
+}
 
 export function getRegattaEvent(slug: string): RegattaEventDef | null {
   const s = String(slug || "").toLowerCase();
@@ -168,8 +193,9 @@ export function defaultEventFleetKey(
   event: RegattaEventDef,
   slices: ResolvedEventSlice[]
 ): string {
-  const withData = slices.find(
-    (slice) => slice.regatta || getStaticBoardRegatta(slice.def)
-  );
+  const withData = slices.find((slice) => {
+    if (slice.regatta) return true;
+    return (getStaticBoardRegatta(slice.def)?.results?.length ?? 0) > 0;
+  });
   return withData?.def.key ?? slices[0]?.def.key ?? event.slices[0]?.key ?? "";
 }

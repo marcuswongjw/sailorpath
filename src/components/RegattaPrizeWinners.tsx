@@ -12,8 +12,7 @@ type Props = {
 };
 
 export function RegattaPrizeWinners({ schedule, filterFleet }: Props) {
-  // If filterFleet is specified, prioritize matching fleets; otherwise show all
-  const relevantFleets = filterFleet
+  const matched = filterFleet
     ? schedule.fleets.filter(
         (f) =>
           f.fleetName.toLowerCase().includes(filterFleet.toLowerCase()) ||
@@ -21,12 +20,18 @@ export function RegattaPrizeWinners({ schedule, filterFleet }: Props) {
       )
     : schedule.fleets;
 
-  const fleetsToDisplay = relevantFleets.length > 0 ? relevantFleets : schedule.fleets;
+  const fleetsToDisplay = matched
+    .map((fleet) => ({
+      ...fleet,
+      categories: fleet.categories.filter((category) => category.winners.length > 0),
+    }))
+    .filter((fleet) => fleet.categories.length > 0);
 
   const [selectedFleetIdx, setSelectedFleetIdx] = useState(0);
-  const currentFleet: RegattaPrizeFleet | undefined = fleetsToDisplay[selectedFleetIdx] || fleetsToDisplay[0];
+  const currentFleet: RegattaPrizeFleet | undefined =
+    fleetsToDisplay[selectedFleetIdx] || fleetsToDisplay[0];
 
-  if (!currentFleet || currentFleet.categories.length === 0) return null;
+  if (!currentFleet) return null;
 
   return (
     <section

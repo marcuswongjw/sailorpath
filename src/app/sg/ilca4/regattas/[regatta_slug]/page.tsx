@@ -6,7 +6,11 @@ import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
 import { DbUnavailableError } from "@/db";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import { getRegattaBySlug, getResultsForRegatta } from "@/lib/queries";
-import { getRegattaPrizeSchedule } from "@/lib/regattaPrizes";
+import {
+  eventHubHref,
+  findEventSliceForRegattaSlug,
+} from "@/lib/regattaEvents";
+import { getPrizeWinnersForRegatta } from "@/lib/regattaPrizes";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -39,7 +43,8 @@ export default async function Ilca4RegattaDetailPage({
   if (errorMsg) return <DbOffline message={errorMsg} />;
   if (!regatta || !results) notFound();
 
-  const prizeSchedule = getRegattaPrizeSchedule(regatta_slug);
+  const prizeWinners = getPrizeWinnersForRegatta(regatta_slug);
+  const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
 
   return (
     <div className="mx-auto w-full min-w-0 max-w-7xl space-y-5 px-3 py-8 sm:space-y-6 sm:px-4 sm:py-10">
@@ -52,6 +57,14 @@ export default async function Ilca4RegattaDetailPage({
         series="ilca4"
         countsForRanking={regatta.countsForRanking !== false}
         norUrl={regatta.norUrl}
+        eventHub={
+          eventSlice
+            ? {
+                href: eventHubHref(eventSlice.event.slug, eventSlice.slice.key),
+                label: eventSlice.event.shortName,
+              }
+            : null
+        }
       />
       <PublicRegattaResults
         results={results}
@@ -59,10 +72,9 @@ export default async function Ilca4RegattaDetailPage({
         raceCount={regatta.raceCount}
         accent="sky"
       />
-      {prizeSchedule && (
+      {prizeWinners && (
         <RegattaPrizeWinners
-          schedule={prizeSchedule}
-          filterFleet="ILCA 4"
+          schedule={{ ...prizeWinners.schedule, fleets: prizeWinners.fleets }}
         />
       )}
       <p className="text-[13px] text-[var(--sp-slate-soft)]">

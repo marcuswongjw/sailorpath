@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import type { RegattaRecord } from "@/lib/ranking";
 import {
   defaultEventFleetKey,
+  eventHubHref,
+  findEventSliceForRegattaSlug,
   getRegattaEvent,
   getStaticBoardRegatta,
   resolveEventSlices,
@@ -55,6 +57,8 @@ describe("sliceMatchesRegattaSlug", () => {
     expect(sliceMatchesRegattaSlug(gold, "snsc-silver-sep-26-2026-09-05")).toBe(false);
     expect(sliceMatchesRegattaSlug(silver, "snsc-gold-sep-26-2026-09-11")).toBe(false);
     expect(sliceMatchesRegattaSlug(ilca, "snsc-gold-sep-26-2026-09-11")).toBe(false);
+    expect(sliceMatchesRegattaSlug(ilca, "snsc-ilca-6-sep-26-2026-09-11")).toBe(false);
+    expect(sliceMatchesRegattaSlug(ilca, "snsc-ilca-7-sep-26-2026-09-11")).toBe(false);
     expect(sliceMatchesRegattaSlug(gold, "snsc-gold-sep-25-2025-09-06")).toBe(false);
     expect(sliceMatchesRegattaSlug(gold, "cincapura-regatta-2026-gold")).toBe(false);
   });
@@ -95,6 +99,22 @@ describe("getStaticBoardRegatta", () => {
     expect(getStaticBoardRegatta(wingfoil)?.id).toBe("snsc-2026-wingfoil");
     expect(getStaticBoardRegatta(techno)?.id).toBe("techno-snsc-2026");
     expect(getStaticBoardRegatta(SNSC_2026_EVENT.slices[0])).toBeNull();
+  });
+});
+
+describe("findEventSliceForRegattaSlug", () => {
+  it("points a class slug back at the event hub tab", () => {
+    const found = findEventSliceForRegattaSlug("snsc-ilca-4-sep-26-2026-09-11");
+    expect(found?.event.slug).toBe("snsc-2026");
+    expect(found?.slice.key).toBe("ilca-4");
+    expect(eventHubHref("snsc-2026", "ilca-4")).toBe(
+      "/regattas/snsc-2026?fleet=ilca-4"
+    );
+  });
+
+  it("ignores other classes and other years", () => {
+    expect(findEventSliceForRegattaSlug("snsc-ilca-6-sep-26-2026-09-11")).toBeNull();
+    expect(findEventSliceForRegattaSlug("cincapura-regatta-2026-gold")).toBeNull();
   });
 });
 

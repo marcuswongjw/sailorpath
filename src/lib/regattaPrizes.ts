@@ -1241,26 +1241,41 @@ export type RegattaPrizeWinnersView = {
 };
 
 /**
- * Resolves a live regatta slug (e.g. "snsc-ilca-4-sep-26-2026-09-11",
- * "cincapura-regatta-2026-gold") to the prize schedule and the fleets relevant
- * to that page, keeping only categories that actually have verified winners.
+ * Fleet name implied by a results-page slug.
+ * `undefined` means an event-level slug: show every fleet that has winners.
+ * `null` means a class this schedule does not publish (ILCA 6/7, 29er).
+ */
+export function inferPrizeFleetName(slug: string): string | undefined | null {
+  const s = String(slug || "").toLowerCase();
+  if (/ilca-?4/.test(s)) return "ILCA 4";
+  if (s.includes("ilca")) return null;
+  if (s.includes("wingfoil") || s.includes("wing-foil")) return "WingFoil";
+  if (s.includes("techno")) return "Techno 293 / 293+";
+  if (s.includes("29er")) return null;
+  if (s.includes("gold")) return "Optimist Gold Fleet";
+  if (s.includes("silver")) return "Optimist Silver Fleet";
+  return undefined;
+}
+
+/**
+ * Prize fleets for a results slug, with empty categories removed.
+ * Pass `fleetName` to force one fleet (used by the event hub for board classes).
  * Returns null when there is nothing to display.
  */
 export function getPrizeWinnersForRegatta(
-  slug: string
+  slug: string,
+  fleetName?: string
 ): RegattaPrizeWinnersView | null {
   const s = String(slug || "").toLowerCase();
   const schedule = getRegattaPrizeSchedule(s);
   if (!schedule) return null;
 
-  // Fleet filter derived from the page slug; undefined = all fleets
-  let fleetName: string | undefined;
-  if (s.includes("ilca")) fleetName = "ILCA 4";
-  else if (s.includes("gold")) fleetName = "Optimist Gold Fleet";
-  else if (s.includes("silver")) fleetName = "Optimist Silver Fleet";
+  const resolved =
+    fleetName !== undefined ? fleetName : inferPrizeFleetName(s);
+  if (resolved === null) return null;
 
   const fleets = schedule.fleets
-    .filter((f) => !fleetName || f.fleetName === fleetName)
+    .filter((f) => !resolved || f.fleetName === resolved)
     .map((f) => ({
       ...f,
       categories: f.categories.filter((c) => c.winners.length > 0),
