@@ -3,7 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Trophy, Award, School, Compass, ChevronDown } from "lucide-react";
-import type { RegattaPrizeSchedule, RegattaPrizeFleet, PrizeCategory } from "@/lib/regattaPrizes";
+import {
+  prizeNameKey,
+  type PrizeCategory,
+  type RegattaPrizeFleet,
+  type RegattaPrizeSchedule,
+} from "@/lib/regattaPrizes";
 
 type Props = {
   schedule: RegattaPrizeSchedule;
@@ -11,13 +16,6 @@ type Props = {
   /** Real profile handles keyed by a normalised sailor name. */
   profileHandles?: Record<string, string>;
 };
-
-export function prizeNameKey(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
-}
 
 export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: Props) {
   const matched = filterFleet

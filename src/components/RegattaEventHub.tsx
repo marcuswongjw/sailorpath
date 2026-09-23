@@ -13,8 +13,7 @@ import {
   type RegattaEventSliceDef,
   type ResolvedEventSlice,
 } from "@/lib/regattaEvents";
-import { getPrizeWinnersForRegatta, type PrizeWinner } from "@/lib/regattaPrizes";
-import { prizeNameKey } from "@/components/RegattaPrizeWinners";
+import { getPrizeWinnersForRegatta, prizeNameKey, type PrizeWinner } from "@/lib/regattaPrizes";
 import { getCachedPublicRegattas, getResultsForRegatta } from "@/lib/queries";
 import type { RegattaRecord } from "@/lib/ranking";
 import type { Techno293Regatta } from "@/lib/techno293";

@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
+  prizeNameKey,
   SNSC_2026_PRIZE_SCHEDULE,
   PESTA_SUKAN_2026_PRIZE_SCHEDULE,
   CINCAPURA_2026_PRIZE_SCHEDULE,
@@ -12,6 +13,11 @@ import {
 } from "./cincapuraResultsData";
 
 describe("regattaPrizes", () => {
+  it("matches prize names to result names despite commas", () => {
+    expect(prizeNameKey("Goh, Ian")).toBe(prizeNameKey("Goh Ian"));
+    expect(prizeNameKey("Wai, Zhi Tong")).toBe("wai zhi tong");
+  });
+
   it("defines SNSC 2026 prize categories and winners per NoR", () => {
     expect(SNSC_2026_PRIZE_SCHEDULE.regattaName).toContain("Singapore National Sailing Championships");
     expect(SNSC_2026_PRIZE_SCHEDULE.entryFees.singleHanded).toBe(117);
