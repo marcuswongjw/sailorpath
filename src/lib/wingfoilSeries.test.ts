@@ -5,7 +5,10 @@ import {
   isNEMonsoonSeriesRegatta,
   isSWMonsoonSeriesRegatta,
 } from "./wingfoilSeries";
-import type { WingfoilRegatta } from "./wingfoil";
+import {
+  type WingfoilRegatta,
+  SINGAPORE_WINGFOIL_REGATTAS,
+} from "./wingfoil";
 
 function testRegatta(
   input: Pick<WingfoilRegatta, "id" | "name" | "shortName"> &
@@ -463,5 +466,28 @@ describe("calculateWingfoilSeries with sw-monsoon", () => {
     expect(womenDiv?.competitorCount).toBe(3);
     expect(womenDiv?.champion?.name).toBe("Victoria Natasha Chew");
     expect(res.divisionChampions.women?.name).toBe("Victoria Natasha Chew");
+  });
+
+  it("includes Singapore National Sailing Championships 2025 (SNSC 2025) Wingfoil results", () => {
+    const snsc = SINGAPORE_WINGFOIL_REGATTAS.find((r) => r.id === "snsc-2025-wingfoil");
+    expect(snsc).toBeDefined();
+    expect(snsc?.name).toContain("Singapore National Sailing Championships 2025");
+    expect(snsc?.status).toBe("Completed");
+    expect(snsc?.results).toHaveLength(5);
+
+    const winner = snsc?.results?.[0];
+    expect(winner?.name).toBe("Malo Pichoir");
+    expect(winner?.sailNumber).toBe("123");
+    expect(winner?.grossScore).toBe(30);
+    expect(winner?.nettScore).toBe(21);
+    expect(winner?.races).toHaveLength(14);
+
+    const second = snsc?.results?.[1];
+    expect(second?.name).toBe("Ker Wan Chew");
+    expect(second?.nettScore).toBe(26);
+
+    const third = snsc?.results?.[2];
+    expect(third?.name).toBe("Mason Qifeng Lau");
+    expect(third?.nettScore).toBe(26);
   });
 });
