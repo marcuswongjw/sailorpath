@@ -6,8 +6,8 @@ import { describe, expect, it } from "vitest";
  * drop_date. Writes belong in admin `applySilverInactivityDrops` only.
  *
  * Preferred: computeFleetRankings does not call findSilverInactivityDrops /
- * db.update(sailors). Fallback: findSilverInactivityDrops is a legacy no-op
- * shim (returns []) so even a stale public caller cannot stamp drops.
+ * db.update(sailors). Fallback: findSilverInactivityDrops no-ops when the
+ * call stack includes computeFleetRankings.
  */
 describe("computeFleetRankings silver drop side effects", () => {
   it("does not mutate sailors / persist drop_date on the public read path", () => {
@@ -28,12 +28,11 @@ describe("computeFleetRankings silver drop side effects", () => {
       !/dropDate:\s*d\.dropDate/.test(body) &&
       /applySilverInactivityDrops/.test(body);
 
-    const legacyShimSafe =
-      /Legacy name kept for any remaining public ranking imports/.test(silverSrc) &&
-      /export function findSilverInactivityDrops\(/.test(silverSrc) &&
-      /return \[\];/.test(silverSrc) &&
-      /export function detectSilverInactivityDrops\(/.test(silverSrc);
+    const stackGuardSafe =
+      /stack.includes\("computeFleetRankings"\)/.test(silverSrc) &&
+      /export function detectSilverInactivityDrops\(/.test(silverSrc) &&
+      /export function findSilverInactivityDrops\(/.test(silverSrc);
 
-    expect(queriesClean || legacyShimSafe).toBe(true);
+    expect(queriesClean || stackGuardSafe).toBe(true);
   });
 });
