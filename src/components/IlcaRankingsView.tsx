@@ -239,30 +239,30 @@ export function IlcaRankingsView({
       <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-warm-white border border-cool-veil shadow-xs w-fit no-print">
         <Link
           href="/sg/ilca4"
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition-colors ${
             boatClass === "ILCA 4"
               ? "bg-harbour text-white shadow-xs"
-              : "text-slate-soft hover:text-charcoal hover:bg-sailcloth"
+              : "text-slate-800 hover:text-charcoal hover:bg-sailcloth font-bold"
           }`}
         >
           ILCA 4
         </Link>
         <Link
           href="/sg/ilca6"
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition-colors ${
             boatClass === "ILCA 6"
               ? "bg-harbour text-white shadow-xs"
-              : "text-slate-soft hover:text-charcoal hover:bg-sailcloth"
+              : "text-slate-800 hover:text-charcoal hover:bg-sailcloth font-bold"
           }`}
         >
           ILCA 6
         </Link>
         <Link
           href="/sg/ilca7"
-          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition-colors ${
             boatClass === "ILCA 7"
               ? "bg-harbour text-white shadow-xs"
-              : "text-slate-soft hover:text-charcoal hover:bg-sailcloth"
+              : "text-slate-800 hover:text-charcoal hover:bg-sailcloth font-bold"
           }`}
         >
           ILCA 7
@@ -288,7 +288,7 @@ export function IlcaRankingsView({
             <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-charcoal tracking-tight break-words">
               National standings
             </h1>
-            <p className="text-[11px] sm:text-sm text-slate-soft mt-1 leading-snug">
+            <p className="text-[11px] sm:text-sm text-slate-700 mt-1 leading-snug font-medium">
               Best 3 of last 5 · highlighted scores are selected · 1st = fleet
               size pts · * = DNS (0 pts)
             </p>
@@ -375,17 +375,17 @@ export function IlcaRankingsView({
         </p>
       )}
       {!loading && ranked.length > 0 && (
-        <p className="text-[11px] font-medium text-slate-500">
+        <p className="text-[11px] font-semibold text-slate-700">
           {latestResultDate ? `Results through ${latestResultDate} · ` : ""}
           Source: published regatta results reviewed before import
         </p>
       )}
       {error && (
-        <p className="text-[11px] text-rose-300 font-medium">{error}</p>
+        <p className="text-[11px] text-rose-600 font-semibold">{error}</p>
       )}
 
       {genderFilter !== "all" && (
-        <p className="text-[11px] text-amber-200/90 font-semibold no-print">
+        <p className="text-[11px] text-amber-900 bg-amber-50 border border-amber-200 p-2 rounded-lg font-bold no-print">
           Showing {displayRanked.length} of {rankingBase.length} sailors ·{" "}
           {genderFilter === "M" ? "Male" : "Female"}. Rank # restarts within
           this filter.
@@ -397,19 +397,19 @@ export function IlcaRankingsView({
         <div className="w-full max-w-full min-w-0 no-print">
           <div className="rounded-xl border border-cool-veil bg-warm-white px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0 shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 min-w-0">
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              <p className="text-[11px] font-black text-charcoal uppercase tracking-wider">
                 Scoring events — R1 oldest · R{eventSlots.length} newest (last{" "}
                 {eventSlots.length} ranking regattas)
               </p>
               <div className="flex items-center gap-2 min-w-0 flex-wrap">
-                <p className="text-[10px] text-slate-500 font-semibold hidden md:block">
+                <p className="text-[11px] text-slate-700 font-semibold hidden md:block">
                   Uncheck a regatta to exclude it from Best 3 of 5
                 </p>
                 {excluded.size > 0 && (
                   <button
                     type="button"
                     onClick={() => setExcluded(new Set())}
-                    className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2.5 py-1 text-[10px] font-bold text-amber-200 shrink-0 cursor-pointer hover:bg-amber-500/20 transition-colors"
+                    className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-100 px-2.5 py-1 text-[10px] font-bold text-amber-900 shrink-0 cursor-pointer hover:bg-amber-200 transition-colors shadow-xs"
                   >
                     <RotateCcw className="h-3 w-3" />
                     Reset ({excluded.size})
@@ -420,15 +420,15 @@ export function IlcaRankingsView({
 
             {/* Mobile: Tap button strip */}
             <div className="md:hidden w-full min-w-0 space-y-1.5">
-              <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">
+              <div className="flex items-center justify-between text-[11px] text-slate-700 font-medium">
+                <span className="text-[10px] uppercase font-bold text-slate-700 tracking-wider">
                   Tap event to include/exclude
                 </span>
                 {excluded.size > 0 && (
                   <button
                     type="button"
                     onClick={() => setExcluded(new Set())}
-                    className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-300 hover:text-amber-200"
+                    className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-900 hover:text-amber-800"
                   >
                     <RotateCcw className="h-2.5 w-2.5" />
                     Reset ({excluded.size})
@@ -484,7 +484,7 @@ export function IlcaRankingsView({
                     }`}
                   >
                     <div className="flex items-start justify-between gap-1">
-                      <p className="text-[10px] font-black text-harbour">R{idx + 1}</p>
+                      <p className="text-[11px] font-black text-harbour">R{idx + 1}</p>
                       <input
                         type="checkbox"
                         checked={!off}
@@ -494,12 +494,12 @@ export function IlcaRankingsView({
                       />
                     </div>
                     <p
-                      className="text-[11px] font-semibold text-charcoal leading-snug line-clamp-2"
+                      className="text-[11px] font-bold text-charcoal leading-snug line-clamp-2"
                       title={`${ev.regattaName} · ${ev.date} · fleet ${ev.fleetSize}`}
                     >
                       {regattaDisplayName(ev.regattaName, idx)}
                     </p>
-                    <p className="text-[10px] sm:text-[11px] font-medium text-slate-600 tabular-nums">
+                    <p className="text-[10px] sm:text-[11px] font-bold text-slate-700 tabular-nums">
                       {ev.date.slice(5)} · n={ev.fleetSize}
                     </p>
                   </label>
@@ -700,18 +700,18 @@ export function IlcaRankingsView({
       <div className="hidden md:block rounded-2xl border border-cool-veil bg-warm-white overflow-hidden w-full max-w-full min-w-0 shadow-xs">
         <div className="overflow-x-auto max-w-full">
           <table className="w-full text-left text-sm min-w-[760px] border-collapse">
-            <thead className="text-[10px] text-slate-soft uppercase tracking-wider font-bold">
+            <thead className="text-[11px] text-charcoal uppercase tracking-wider font-black">
               <tr>
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 w-12 bg-aqua-mist border-b border-cool-veil">
+                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3.5 w-12 bg-aqua-mist border-b border-cool-veil text-charcoal font-black">
                   #
                 </th>
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 bg-aqua-mist border-b border-cool-veil">
+                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3.5 bg-aqua-mist border-b border-cool-veil text-charcoal font-black">
                   Sailor
                 </th>
-                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-aqua-mist border-b border-cool-veil">
+                <th className="sticky top-0 z-20 px-3 py-3.5 text-center bg-aqua-mist border-b border-cool-veil text-charcoal font-black">
                   Gender
                 </th>
-                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-aqua-mist border-b border-cool-veil">
+                <th className="sticky top-0 z-20 px-3 py-3.5 text-center bg-aqua-mist border-b border-cool-veil text-charcoal font-black">
                   Birth year
                 </th>
                 {Array.from({ length: 5 }).map((_, idx) => {
@@ -728,25 +728,25 @@ export function IlcaRankingsView({
                       }
                     >
                       <span className="block text-harbour font-black normal-case tracking-normal">
-                        R{idx + 1} {off && <span className="text-[9px] text-rose-600 uppercase tracking-tight">(Excl)</span>}
+                        R{idx + 1} {off && <span className="text-[9px] text-rose-600 uppercase tracking-tight font-extrabold">(Excl)</span>}
                       </span>
-                      <span className="block text-[10px] font-semibold text-charcoal normal-case tracking-normal leading-snug mt-0.5 whitespace-normal break-words">
+                      <span className="block text-[10px] font-bold text-charcoal normal-case tracking-normal leading-snug mt-0.5 whitespace-normal break-words">
                         {ev ? regattaDisplayName(ev.regattaName, idx) : "—"}
                       </span>
                     </th>
                   );
                 })}
-                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 text-center bg-aqua-mist border-b border-cool-veil">
+                <th className="sticky top-0 z-20 px-4 lg:px-5 py-3.5 text-center bg-aqua-mist border-b border-cool-veil text-charcoal font-black">
                   Best 3 of 5
                 </th>
-                <th className="sticky top-0 z-20 px-3 py-3 text-center bg-aqua-mist border-b border-cool-veil">
+                <th className="sticky top-0 z-20 px-3 py-3.5 text-center bg-aqua-mist border-b border-cool-veil text-charcoal font-black">
                   {isLoggedIn ? (
                     <span title="Projected National Junior Training Squad selection based on current ranking and eligibility criteria">
                       Proj. Squad
                     </span>
                   ) : (
-                    <span className="inline-flex items-center justify-center gap-1 text-slate-soft" title="Sign in to view projected squad status">
-                      <Lock className="h-3 w-3" />
+                    <span className="inline-flex items-center justify-center gap-1 text-slate-700 font-bold" title="Sign in to view projected squad status">
+                      <Lock className="h-3 w-3 text-harbour" />
                       <span>Proj. Squad</span>
                     </span>
                   )}
@@ -771,7 +771,7 @@ export function IlcaRankingsView({
                     <td className="px-4 lg:px-5 py-3.5">
                       <RankMedalBadge
                         rank={s.displayRank}
-                        nonPodiumClassName="font-mono font-bold text-slate-soft"
+                        nonPodiumClassName="font-mono font-bold text-slate-700"
                       />
                     </td>
                     <td className="px-4 lg:px-5 py-3.5">
@@ -786,10 +786,10 @@ export function IlcaRankingsView({
                         <span className="font-bold text-charcoal">{s.name}</span>
                       )}
                     </td>
-                    <td className="px-3 py-3.5 text-center text-slate-soft">
+                    <td className="px-3 py-3.5 text-center text-slate-700 font-semibold">
                       {s.gender || "—"}
                     </td>
-                    <td className="px-3 py-3.5 text-center font-mono text-slate-soft">
+                    <td className="px-3 py-3.5 text-center font-mono text-slate-700 font-semibold">
                       {s.birthYear ?? "—"}
                     </td>
                     {Array.from({ length: 5 }).map((_, idx) => {
@@ -798,7 +798,7 @@ export function IlcaRankingsView({
                         return (
                           <td
                             key={`empty-${idx}`}
-                            className="px-3 py-3.5 text-center text-slate-soft/40"
+                            className="px-3 py-3.5 text-center text-slate-400"
                           >
                             —
                           </td>
@@ -815,8 +815,8 @@ export function IlcaRankingsView({
                             isRegattaExcluded
                               ? "opacity-40 line-through text-slate-400 bg-rose-50/40"
                               : selected
-                                ? "bg-aqua-mist font-bold text-harbour shadow-[inset_0_0_0_1px_rgba(10,85,87,0.2)]"
-                                : "font-medium text-slate-soft"
+                                ? "bg-aqua-mist font-black text-harbour shadow-[inset_0_0_0_1px_rgba(10,85,87,0.2)]"
+                                : "font-semibold text-slate-700"
                           }`}
                           title={
                             isRegattaExcluded
