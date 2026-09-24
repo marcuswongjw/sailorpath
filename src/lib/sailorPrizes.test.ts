@@ -137,5 +137,51 @@ describe("sailorPrizes", () => {
       expect(kenanSnsc?.prizeTitle).toBe("1st (National Champion)");
       expect(kenanSnsc?.boatClass).toBe("ILCA 6");
     });
+
+    it("links official SNSC 2025 prizes for Board Classes (Techno 293, Wingfoil, iQFOiL)", () => {
+      // Techno 293
+      const trevor = getSailorPrizes({
+        name: "Trevor Ng",
+        sailNumber: "45",
+      });
+      const trevorSnsc = trevor.filter((p) => p.year === 2025 && p.boatClass === "Techno 293");
+      expect(trevorSnsc.length).toBe(2); // 1st Open & 1st 17&U
+      expect(trevorSnsc.every((p) => p.medal === "gold")).toBe(true);
+
+      // WingFoil
+      const malo = getSailorPrizes({
+        name: "Malo Pichoir",
+        sailNumber: "123",
+      });
+      const maloSnsc = malo.filter((p) => p.year === 2025 && p.boatClass === "WingFoil");
+      expect(maloSnsc.length).toBe(2); // 1st Open & 1st 18&U
+      expect(maloSnsc.every((p) => p.medal === "gold")).toBe(true);
+
+      const victoria = getSailorPrizes({
+        name: "Victoria Natasha Chew",
+        sailNumber: "12",
+      });
+      const vicSnsc = victoria.find((p) => p.year === 2025 && p.boatClass === "WingFoil");
+      expect(vicSnsc).toBeDefined();
+      expect(vicSnsc?.prizeTitle).toBe("1st Female");
+
+      // iQFOiL
+      const jonas = getSailorPrizes({
+        name: "Jonas Knick",
+        sailNumber: "39",
+      });
+      const jonasSnsc = jonas.filter((p) => p.year === 2025 && p.boatClass === "iQFOiL");
+      expect(jonasSnsc.length).toBe(2); // 1st Open & 1st 18&U
+      expect(jonasSnsc.every((p) => p.medal === "gold")).toBe(true);
+
+      const angyal = getSailorPrizes({
+        name: "Angyal Chew",
+        sailNumber: "711",
+      });
+      const angyalSnsc = angyal.filter((p) => p.year === 2025 && p.boatClass === "iQFOiL");
+      expect(angyalSnsc.length).toBe(3); // 2nd Open, 1st Female, 2nd 18&U
+      const femalePrize = angyalSnsc.find((p) => p.prizeTitle === "1st Female");
+      expect(femalePrize?.medal).toBe("gold");
+    });
   });
 });
