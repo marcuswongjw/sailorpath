@@ -511,34 +511,50 @@ export function HeroAthleteCard({
           </div>
 
           {/* Metric 3: Medals or Regatta Experience */}
-          <div className="col-span-2 sm:col-span-1 rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-slate-soft text-[12px] font-bold uppercase tracking-wider">
-              <span>{hasMedals ? "Career Medals" : "Regatta Record"}</span>
-              {hasMedals ? (
-                <Medal className="h-3.5 w-3.5 text-amber-500" />
-              ) : (
-                <Sailboat className="h-3.5 w-3.5 text-slate-soft" />
-              )}
-            </div>
-            <div className="mt-1.5 flex items-baseline gap-2">
-              {hasMedals && medals ? (
+          {hasMedals && medals ? (
+            <a
+              href="#profile-awards"
+              onClick={(e) => {
+                const el = document.getElementById("profile-awards");
+                if (el) {
+                  e.preventDefault();
+                  el.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="col-span-2 sm:col-span-1 rounded-xl border border-amber-300/80 bg-amber-50/40 p-3.5 flex flex-col justify-between hover:border-amber-400 hover:bg-amber-50/70 transition-colors cursor-pointer group"
+              title="Click to view awards and prizes"
+            >
+              <div className="flex items-center justify-between text-amber-900 text-[12px] font-bold uppercase tracking-wider">
+                <span className="group-hover:underline">Career Medals</span>
+                <Medal className="h-3.5 w-3.5 text-amber-600" />
+              </div>
+              <div className="mt-1.5 flex items-baseline gap-2">
                 <div className="flex items-center gap-2 text-base sm:text-lg font-black tabular-nums text-harbour-shadow">
                   {medals.gold > 0 && <span>🥇 {medals.gold}</span>}
                   {medals.silver > 0 && <span>🥈 {medals.silver}</span>}
                   {medals.bronze > 0 && <span>🥉 {medals.bronze}</span>}
                 </div>
-              ) : (
+              </div>
+              <p className="text-[12px] text-amber-800 font-semibold mt-1 truncate">
+                View {medals.gold + medals.silver + medals.bronze} awards &amp; prizes →
+              </p>
+            </a>
+          ) : (
+            <div className="col-span-2 sm:col-span-1 rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
+              <div className="flex items-center justify-between text-slate-soft text-[12px] font-bold uppercase tracking-wider">
+                <span>Regatta Record</span>
+                <Sailboat className="h-3.5 w-3.5 text-slate-soft" />
+              </div>
+              <div className="mt-1.5 flex items-baseline gap-2">
                 <span className="text-2xl sm:text-3xl font-black tabular-nums text-harbour-shadow">
                   {totalRegattasCount}
                 </span>
-              )}
-            </div>
-            {hasMedals && (
+              </div>
               <p className="text-[13px] text-slate-soft mt-1 truncate">
                 {totalRegattasCount} logged regattas
               </p>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* Action Toolbar */}

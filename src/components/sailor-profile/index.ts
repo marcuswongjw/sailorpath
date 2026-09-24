@@ -28,4 +28,5 @@ export { ProfileOwnerEditor } from "./ProfileOwnerEditor";
 export type { ProfileOwnerForm } from "./ProfileOwnerEditor";
 export { ProfileJourneyPanel } from "./ProfileJourneyPanel";
 export type { JourneyDraft } from "./ProfileJourneyPanel";
+export { ProfileAwardsCabinet } from "./ProfileAwardsCabinet";
 

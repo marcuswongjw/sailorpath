@@ -2040,7 +2040,333 @@ export const TEMASEK_2026_ILCA6_RESULTS: Ilca6CompetitorResult[] = [
 ];
 
 
+export const SAFYC_2026_ILCA6_RESULTS: Ilca6CompetitorResult[] = [
+  {
+    rank: 1,
+    sailorName: "Gordon Alexander Allan",
+    sailNumber: "221058",
+    gender: "M",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 29.0,
+    nettScore: 12.0,
+    races: [
+      { raceNumber: 1, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 2, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 3, score: 3.0, rawValue: "3.0" },
+      { raceNumber: 4, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 5, score: 17.0, rawValue: "17.0 DNC", scoringCode: "DNC", discarded: true },
+      { raceNumber: 6, score: 3.0, rawValue: "3.0" },
+      { raceNumber: 7, score: 3.0, rawValue: "3.0" },
+    ]
+  },
+  {
+    rank: 2,
+    sailorName: "Leow You Shun Aurick",
+    sailNumber: "67",
+    gender: "M",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 29.0,
+    nettScore: 12.0,
+    races: [
+      { raceNumber: 1, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 2, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 3, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 4, score: 4.0, rawValue: "4.0" },
+      { raceNumber: 5, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 6, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 7, score: 17.0, rawValue: "17.0 RET", scoringCode: "RET", discarded: true },
+    ]
+  },
+  {
+    rank: 3,
+    sailorName: "Eitan Oh",
+    sailNumber: "224717",
+    gender: "M",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 21.0,
+    nettScore: 14.0,
+    races: [
+      { raceNumber: 1, score: 5.0, rawValue: "5.0" },
+      { raceNumber: 2, score: 7.0, rawValue: "7.0", discarded: true },
+      { raceNumber: 3, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 4, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 5, score: 3.0, rawValue: "3.0" },
+      { raceNumber: 6, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 7, score: 1.0, rawValue: "1.0" },
+    ]
+  },
+  {
+    rank: 4,
+    sailorName: "Austin Yeo",
+    sailNumber: "222727",
+    gender: "M",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 29.0,
+    nettScore: 21.0,
+    races: [
+      { raceNumber: 1, score: 4.0, rawValue: "4.0" },
+      { raceNumber: 2, score: 3.0, rawValue: "3.0" },
+      { raceNumber: 3, score: 8.0, rawValue: "8.0", discarded: true },
+      { raceNumber: 4, score: 3.0, rawValue: "3.0" },
+      { raceNumber: 5, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 6, score: 5.0, rawValue: "5.0" },
+      { raceNumber: 7, score: 4.0, rawValue: "4.0" },
+    ]
+  },
+  {
+    rank: 5,
+    sailorName: "Keira Marie Carlyle",
+    sailNumber: "225225",
+    gender: "F",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 33.0,
+    nettScore: 26.0,
+    races: [
+      { raceNumber: 1, score: 3.0, rawValue: "3.0" },
+      { raceNumber: 2, score: 5.0, rawValue: "5.0" },
+      { raceNumber: 3, score: 7.0, rawValue: "7.0", discarded: true },
+      { raceNumber: 4, score: 6.0, rawValue: "6.0" },
+      { raceNumber: 5, score: 4.0, rawValue: "4.0" },
+      { raceNumber: 6, score: 6.0, rawValue: "6.0" },
+      { raceNumber: 7, score: 2.0, rawValue: "2.0" },
+    ]
+  },
+  {
+    rank: 6,
+    sailorName: "Sarah Yong",
+    sailNumber: "18",
+    gender: "F",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 54.0,
+    nettScore: 41.0,
+    races: [
+      { raceNumber: 1, score: 9.0, rawValue: "9.0" },
+      { raceNumber: 2, score: 4.0, rawValue: "4.0" },
+      { raceNumber: 3, score: 6.0, rawValue: "6.0" },
+      { raceNumber: 4, score: 13.0, rawValue: "13.0", discarded: true },
+      { raceNumber: 5, score: 6.0, rawValue: "6.0" },
+      { raceNumber: 6, score: 11.0, rawValue: "11.0" },
+      { raceNumber: 7, score: 5.0, rawValue: "5.0" },
+    ]
+  },
+  {
+    rank: 7,
+    sailorName: "Jayden Teo",
+    sailNumber: "214813",
+    gender: "M",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 58.0,
+    nettScore: 46.0,
+    races: [
+      { raceNumber: 1, score: 12.0, rawValue: "12.0", discarded: true },
+      { raceNumber: 2, score: 8.0, rawValue: "8.0" },
+      { raceNumber: 3, score: 4.0, rawValue: "4.0" },
+      { raceNumber: 4, score: 10.0, rawValue: "10.0" },
+      { raceNumber: 5, score: 7.0, rawValue: "7.0" },
+      { raceNumber: 6, score: 8.0, rawValue: "8.0" },
+      { raceNumber: 7, score: 9.0, rawValue: "9.0" },
+    ]
+  },
+  {
+    rank: 8,
+    sailorName: "Asher-James Nair",
+    sailNumber: "185201",
+    gender: "M",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 63.0,
+    nettScore: 46.0,
+    races: [
+      { raceNumber: 1, score: 7.0, rawValue: "7.0" },
+      { raceNumber: 2, score: 12.0, rawValue: "12.0" },
+      { raceNumber: 3, score: 5.0, rawValue: "5.0" },
+      { raceNumber: 4, score: 11.0, rawValue: "11.0" },
+      { raceNumber: 5, score: 5.0, rawValue: "5.0" },
+      { raceNumber: 6, score: 17.0, rawValue: "17.0 RET", scoringCode: "RET", discarded: true },
+      { raceNumber: 7, score: 6.0, rawValue: "6.0" },
+    ]
+  },
+  {
+    rank: 9,
+    sailorName: "Foo Yuei Jit",
+    sailNumber: "221686",
+    gender: "M",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 62.0,
+    nettScore: 49.0,
+    races: [
+      { raceNumber: 1, score: 10.0, rawValue: "10.0" },
+      { raceNumber: 2, score: 13.0, rawValue: "13.0", discarded: true },
+      { raceNumber: 3, score: 9.0, rawValue: "9.0" },
+      { raceNumber: 4, score: 5.0, rawValue: "5.0" },
+      { raceNumber: 5, score: 11.0, rawValue: "11.0" },
+      { raceNumber: 6, score: 7.0, rawValue: "7.0" },
+      { raceNumber: 7, score: 7.0, rawValue: "7.0" },
+    ]
+  },
+  {
+    rank: 10,
+    sailorName: "Darren Lai",
+    sailNumber: "222257",
+    gender: "M",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 70.0,
+    nettScore: 55.0,
+    races: [
+      { raceNumber: 1, score: 13.0, rawValue: "13.0" },
+      { raceNumber: 2, score: 6.0, rawValue: "6.0" },
+      { raceNumber: 3, score: 15.0, rawValue: "15.0", discarded: true },
+      { raceNumber: 4, score: 9.0, rawValue: "9.0" },
+      { raceNumber: 5, score: 12.0, rawValue: "12.0" },
+      { raceNumber: 6, score: 4.0, rawValue: "4.0" },
+      { raceNumber: 7, score: 11.0, rawValue: "11.0" },
+    ]
+  },
+  {
+    rank: 11,
+    sailorName: "Josiah Tan Zhi En",
+    sailNumber: "1978",
+    gender: "M",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 73.0,
+    nettScore: 57.0,
+    races: [
+      { raceNumber: 1, score: 11.0, rawValue: "11.0" },
+      { raceNumber: 2, score: 16.0, rawValue: "16.0", discarded: true },
+      { raceNumber: 3, score: 11.0, rawValue: "11.0" },
+      { raceNumber: 4, score: 8.0, rawValue: "8.0" },
+      { raceNumber: 5, score: 10.0, rawValue: "10.0" },
+      { raceNumber: 6, score: 9.0, rawValue: "9.0" },
+      { raceNumber: 7, score: 8.0, rawValue: "8.0" },
+    ]
+  },
+  {
+    rank: 12,
+    sailorName: "Elizabeth Victoria Say",
+    sailNumber: "214873",
+    gender: "F",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 74.0,
+    nettScore: 59.0,
+    races: [
+      { raceNumber: 1, score: 8.0, rawValue: "8.0" },
+      { raceNumber: 2, score: 15.0, rawValue: "15.0", discarded: true },
+      { raceNumber: 3, score: 13.0, rawValue: "13.0" },
+      { raceNumber: 4, score: 7.0, rawValue: "7.0" },
+      { raceNumber: 5, score: 8.0, rawValue: "8.0" },
+      { raceNumber: 6, score: 10.0, rawValue: "10.0" },
+      { raceNumber: 7, score: 13.0, rawValue: "13.0" },
+    ]
+  },
+  {
+    rank: 13,
+    sailorName: "Seah En Rui Cleo",
+    sailNumber: "224379",
+    gender: "F",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 85.0,
+    nettScore: 70.0,
+    races: [
+      { raceNumber: 1, score: 14.0, rawValue: "14.0" },
+      { raceNumber: 2, score: 9.0, rawValue: "9.0" },
+      { raceNumber: 3, score: 12.0, rawValue: "12.0" },
+      { raceNumber: 4, score: 15.0, rawValue: "15.0", discarded: true },
+      { raceNumber: 5, score: 13.0, rawValue: "13.0" },
+      { raceNumber: 6, score: 12.0, rawValue: "12.0" },
+      { raceNumber: 7, score: 10.0, rawValue: "10.0" },
+    ]
+  },
+  {
+    rank: 14,
+    sailorName: "Ho Jian Yi Jonathan",
+    sailNumber: "214848",
+    gender: "M",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 86.0,
+    nettScore: 71.0,
+    races: [
+      { raceNumber: 1, score: 15.0, rawValue: "15.0", discarded: true },
+      { raceNumber: 2, score: 11.0, rawValue: "11.0" },
+      { raceNumber: 3, score: 14.0, rawValue: "14.0" },
+      { raceNumber: 4, score: 12.0, rawValue: "12.0" },
+      { raceNumber: 5, score: 9.0, rawValue: "9.0" },
+      { raceNumber: 6, score: 13.0, rawValue: "13.0" },
+      { raceNumber: 7, score: 12.0, rawValue: "12.0" },
+    ]
+  },
+  {
+    rank: 15,
+    sailorName: "Tristan Joseph Low",
+    sailNumber: "33",
+    gender: "M",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 91.0,
+    nettScore: 74.0,
+    races: [
+      { raceNumber: 1, score: 6.0, rawValue: "6.0" },
+      { raceNumber: 2, score: 10.0, rawValue: "10.0" },
+      { raceNumber: 3, score: 10.0, rawValue: "10.0" },
+      { raceNumber: 4, score: 14.0, rawValue: "14.0" },
+      { raceNumber: 5, score: 17.0, rawValue: "17.0 DNC", scoringCode: "DNC", discarded: true },
+      { raceNumber: 6, score: 17.0, rawValue: "17.0 DNC", scoringCode: "DNC" },
+      { raceNumber: 7, score: 17.0, rawValue: "17.0 DNC", scoringCode: "DNC" },
+    ]
+  },
+  {
+    rank: 16,
+    sailorName: "Angela Sabbatino",
+    sailNumber: "209145",
+    gender: "F",
+    club: "Others",
+    nationality: "SGP",
+    totalScore: 107.0,
+    nettScore: 90.0,
+    races: [
+      { raceNumber: 1, score: 16.0, rawValue: "16.0" },
+      { raceNumber: 2, score: 14.0, rawValue: "14.0" },
+      { raceNumber: 3, score: 16.0, rawValue: "16.0" },
+      { raceNumber: 4, score: 16.0, rawValue: "16.0" },
+      { raceNumber: 5, score: 14.0, rawValue: "14.0" },
+      { raceNumber: 6, score: 17.0, rawValue: "17.0 RET", scoringCode: "RET", discarded: true },
+      { raceNumber: 7, score: 14.0, rawValue: "14.0" },
+    ]
+  },
+];
+
 export const ILCA6_STATIC_REGATTAS: RegattaRecord[] = [
+  {
+    id: "safyc-2026-ilca-6",
+    name: "22nd SAFYC Regatta 2026 (ILCA 6)",
+    slug: "safyc-2026-ilca-6",
+    date: "2026-02-14",
+    endDate: "2026-02-15",
+    boatClass: "ILCA 6",
+    division: "Open",
+    totalFleetSize: 16,
+    raceCount: 7,
+    geography: "SG",
+    countsForRanking: true,
+    venue: "NSRCC Seasports Centre, Singapore",
+    organizer: "SAF Yacht Club",
+    norUrl: "https://www.racingrulesofsailing.org/documents/13551/event",
+    registrationUrl: "https://www.safyc.org.sg",
+    scheduleNotes: "22nd SAFYC Regatta 2026 ILCA 6 fleet: 16 entries, 7 races sailed (1 discard).",
+  },
+
   {
     id: "reg-pulau-ujong-2026-ilca-6",
     name: "Pulau Ujong Regatta 2026 (ILCA 6)",
@@ -2207,6 +2533,7 @@ export function getStaticIlca6Results(
     else if (directMatch.slug.includes("cincapura")) entries = CINCAPURA_2026_ILCA6_RESULTS;
     else if (directMatch.slug.includes("pesta")) entries = PESTA_SUKAN_2026_ILCA6_RESULTS;
     else if (directMatch.slug.includes("snsc")) entries = SNSC_2026_ILCA6_RESULTS;
+    else if (directMatch.slug.includes("safyc")) entries = SAFYC_2026_ILCA6_RESULTS;
   } else if (norm.includes("pulau-ujong") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = PULAU_UJONG_2026_ILCA6_RESULTS;
     regatta = ILCA6_STATIC_REGATTAS[0];
@@ -2225,6 +2552,9 @@ export function getStaticIlca6Results(
   } else if (norm.includes("snsc") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = SNSC_2026_ILCA6_RESULTS;
     regatta = ILCA6_STATIC_REGATTAS[5];
+  } else if (norm.includes("safyc") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
+    entries = SAFYC_2026_ILCA6_RESULTS;
+    regatta = ILCA6_STATIC_REGATTAS[0];
   }
 
   if (!entries || !regatta) return null;
@@ -2286,6 +2616,7 @@ export function getStaticIlca6RankingsData(): {
     { regatta: regattas[2], list: TEMASEK_2026_ILCA6_RESULTS },
     { regatta: regattas[3], list: CINCAPURA_2026_ILCA6_RESULTS },
     { regatta: regattas[4], list: PESTA_SUKAN_2026_ILCA6_RESULTS },
+    { regatta: regattas[0], list: SAFYC_2026_ILCA6_RESULTS },
     { regatta: regattas[5], list: SNSC_2026_ILCA6_RESULTS },
   ];
 

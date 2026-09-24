@@ -158,7 +158,83 @@ export const TEMASEK_2026_ILCA7_RESULTS: Ilca7CompetitorResult[] = [
 
 
 
+export const SAFYC_2026_ILCA7_RESULTS: Ilca7CompetitorResult[] = [
+  {
+    rank: 1,
+    sailorName: "Justiin Ang",
+    sailNumber: "158031",
+    gender: "M",
+    club: "Constant Wind",
+    nationality: "SGP",
+    totalScore: 6.0,
+    nettScore: 5.0,
+    races: [
+      { raceNumber: 1, score: 1.0, rawValue: "1.0", discarded: true },
+      { raceNumber: 2, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 3, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 4, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 5, score: 1.0, rawValue: "1.0" },
+      { raceNumber: 6, score: 1.0, rawValue: "1.0" },
+    ]
+  },
+  {
+    rank: 2,
+    sailorName: "Balazs Vincze",
+    sailNumber: "213095",
+    gender: "M",
+    club: "Changi Sailing Club",
+    nationality: "SGP",
+    totalScore: 16.0,
+    nettScore: 12.0,
+    races: [
+      { raceNumber: 1, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 2, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 3, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 4, score: 2.0, rawValue: "2.0" },
+      { raceNumber: 5, score: 4.0, rawValue: "4.0 DNC", scoringCode: "DNC", discarded: true },
+      { raceNumber: 6, score: 4.0, rawValue: "4.0 DNC", scoringCode: "DNC" },
+    ]
+  },
+  {
+    rank: 3,
+    sailorName: "Cameron Hunter",
+    sailNumber: "197877",
+    gender: "M",
+    club: "Changi Sailing Club",
+    nationality: "SGP",
+    totalScore: 24.0,
+    nettScore: 20.0,
+    races: [
+      { raceNumber: 1, score: 4.0, rawValue: "4.0 UFD", scoringCode: "UFD", discarded: true },
+      { raceNumber: 2, score: 4.0, rawValue: "4.0 RET", scoringCode: "RET" },
+      { raceNumber: 3, score: 4.0, rawValue: "4.0 DNC", scoringCode: "DNC" },
+      { raceNumber: 4, score: 4.0, rawValue: "4.0 DNC", scoringCode: "DNC" },
+      { raceNumber: 5, score: 4.0, rawValue: "4.0 DNC", scoringCode: "DNC" },
+      { raceNumber: 6, score: 4.0, rawValue: "4.0 DNC", scoringCode: "DNC" },
+    ]
+  },
+];
+
 export const ILCA7_STATIC_REGATTAS: RegattaRecord[] = [
+  {
+    id: "safyc-2026-ilca-7",
+    name: "22nd SAFYC Regatta 2026 (ILCA 7)",
+    slug: "safyc-2026-ilca-7",
+    date: "2026-02-14",
+    endDate: "2026-02-15",
+    boatClass: "ILCA 7",
+    division: "Open",
+    totalFleetSize: 3,
+    raceCount: 6,
+    geography: "SG",
+    countsForRanking: true,
+    venue: "NSRCC Seasports Centre, Singapore",
+    organizer: "SAF Yacht Club",
+    norUrl: "https://www.racingrulesofsailing.org/documents/13551/event",
+    registrationUrl: "https://www.safyc.org.sg",
+    scheduleNotes: "22nd SAFYC Regatta 2026 ILCA 7 fleet: 3 entries, 6 races sailed (1 discard).",
+  },
+
   {
     id: "reg-temasek-2026-ilca-7",
     name: "Temasek Regatta 2026 (ILCA 7)",
@@ -198,10 +274,14 @@ export function getStaticIlca7Results(
   );
   if (directMatch) {
     regatta = directMatch;
-    entries = TEMASEK_2026_ILCA7_RESULTS;
+    if (directMatch.slug.includes("temasek")) entries = TEMASEK_2026_ILCA7_RESULTS;
+    else if (directMatch.slug.includes("safyc")) entries = SAFYC_2026_ILCA7_RESULTS;
   } else if (norm.includes("temasek") && (norm.includes("ilca-7") || norm.includes("ilca7"))) {
     entries = TEMASEK_2026_ILCA7_RESULTS;
-    regatta = ILCA7_STATIC_REGATTAS[0];
+    regatta = ILCA7_STATIC_REGATTAS.find(r => r.slug.includes("temasek"))!;
+  } else if (norm.includes("safyc") && (norm.includes("ilca-7") || norm.includes("ilca7"))) {
+    entries = SAFYC_2026_ILCA7_RESULTS;
+    regatta = ILCA7_STATIC_REGATTAS.find(r => r.slug.includes("safyc"))!;
   }
 
   if (!entries || !regatta) return null;
@@ -254,7 +334,8 @@ export function getStaticIlca7RankingsData(): {
   const results: RegattaResultRecord[] = [];
 
   const datasets = [
-    { regatta: regattas[0], list: TEMASEK_2026_ILCA7_RESULTS },
+    { regatta: regattas.find(r => r.slug.includes("safyc"))!, list: SAFYC_2026_ILCA7_RESULTS },
+    { regatta: regattas.find(r => r.slug.includes("temasek"))!, list: TEMASEK_2026_ILCA7_RESULTS },
   ];
 
   for (const { regatta, list } of datasets) {

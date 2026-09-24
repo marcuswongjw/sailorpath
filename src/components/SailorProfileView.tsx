@@ -60,8 +60,10 @@ import {
   type SailorProfileViewProps,
   HeroAthleteCard,
   ProfileClassNavigation,
+  ProfileAwardsCabinet,
   type ProfileSectionTab,
 } from "@/components/sailor-profile";
+import { getSailorPrizes, getSailorMedalCounts } from "@/lib/sailorPrizes";
 import type { ProfileOwnerForm } from "@/components/sailor-profile/ProfileOwnerEditor";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
@@ -788,6 +790,25 @@ export function SailorProfileView({
     [displaySailor, classBuckets.optimist, observations, initialSeriesStanding]
   );
 
+  // Cross-class official Notice of Race (NoR) prizes and verified awards
+  const awards = useMemo(
+    () => getSailorPrizes(displaySailor, results),
+    [displaySailor, results]
+  );
+  const awardCounts = useMemo(() => getSailorMedalCounts(awards), [awards]);
+
+  const heroMedals = useMemo(() => {
+    if (awards.length > 0) {
+      return {
+        gold: awardCounts.gold,
+        silver: awardCounts.silver,
+        bronze: awardCounts.bronze,
+        show: true,
+      };
+    }
+    return analytics.medals;
+  }, [awards, awardCounts, analytics.medals]);
+
   /**
    * DOB privacy:
    * - Birth year is always public when DOB is set
@@ -1226,7 +1247,7 @@ export function SailorProfileView({
           setResultsTab(cls);
           setShowAllResults(false);
         }}
-        medals={analytics.medals}
+        medals={heroMedals}
         profileClaimed={profileClaimed}
         profileVerified={profileVerified}
         showUnclaimedBanner={showUnclaimedBanner}
@@ -1304,6 +1325,7 @@ export function SailorProfileView({
         optimistCount={optimistResults.length}
         ilcaCount={ilca4Results.length}
         journeyCount={displayJourney.length}
+        awardsCount={awards.length}
         showStanding={Boolean(activeStanding)}
         showEquipment={showEquipmentSection || !isOwner}
         onTabChange={(tab) => {
@@ -1321,6 +1343,15 @@ export function SailorProfileView({
       {/* ── OVERVIEW TAB ────────────────────────────────────────── */}
       {sectionTab === "overview" && (
         <div className="space-y-4">
+          {/* ── Awards & Honours Cabinet ─────────────────────────── */}
+          {awards.length > 0 && (
+            <ProfileAwardsCabinet
+              awards={awards}
+              sailorName={displaySailor.name}
+              isOwner={ownerView}
+            />
+          )}
+
           {/* ── Series / ILCA national standing ─────────────────── */}
           {activeStanding && resultsTab !== "journey" && (
             <section
@@ -2063,6 +2094,31 @@ export function SailorProfileView({
                           </div>
                         )}
                         {(() => {
+                          const regAwards = awards.filter(
+                            (a) =>
+                              a.regattaSlug === res.regattaSlug ||
+                              (res.regattaName &&
+                                a.regattaName.toLowerCase().trim() ===
+                                  res.regattaName.toLowerCase().trim())
+                          );
+                          if (!regAwards.length) return null;
+                          return (
+                            <div className="mt-1.5 flex flex-wrap gap-1.5">
+                              {regAwards.map((a) => (
+                                <span
+                                  key={a.id}
+                                  className="inline-flex items-center gap-1 rounded-md border border-amber-300 bg-amber-50 px-2 py-0.5 text-[11px] font-bold text-amber-900 shadow-2xs"
+                                  title={`Official Prize: ${a.prizeTitle} (${a.categoryName})`}
+                                >
+                                  <Trophy className="h-3 w-3 text-amber-600" />
+                                  <span>{a.prizeTitle}</span>
+                                  <span className="text-amber-700">· {a.categoryName}</span>
+                                </span>
+                              ))}
+                            </div>
+                          );
+                        })()}
+                        {(() => {
                           if (!showEquipment) return null;
                           const gear = gearByRegatta[regattaId] || [];
                           const compact = gear
@@ -2465,6 +2521,17 @@ export function SailorProfileView({
         ) : null}
       </section>
       </div>
+      )}
+
+      {/* ── AWARDS TAB ─────────────────────────────────────────── */}
+      {sectionTab === "awards" && (
+        <div id="profile-awards-tab" className="scroll-mt-28">
+          <ProfileAwardsCabinet
+            awards={awards}
+            sailorName={displaySailor.name}
+            isOwner={ownerView}
+          />
+        </div>
       )}
 
       {/* ── MILESTONES TAB ──────────────────────────────────────── */}

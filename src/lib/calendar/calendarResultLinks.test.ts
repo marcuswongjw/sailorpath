@@ -65,6 +65,7 @@ describe("matchCalendarResults", () => {
     expect(matchCalendarResults("22nd-safyc-regatta-2026", published).map((r) => r.slug)).toEqual([
       "safyc-gold-mar-26-2026-03-28",
       "safyc-silver-mar-26-2026-03-28",
+      "safyc-ilca4-feb-26-2026-02-14",
     ]);
   });
 

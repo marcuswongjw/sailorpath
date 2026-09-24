@@ -1875,6 +1875,177 @@ export const TEMASEK_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+export const SAFYC_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "22nd-safyc-regatta-2026",
+  regattaName: "22nd SAFYC Regatta 2026",
+  year: 2026,
+  datesText: "14–15 February 2026 (ILCA) & 28–29 March 2026 (Optimist)",
+  venue: "NSRCC Seasports Centre, 11 Changi Coast Walk, Singapore 499740",
+  organizer: "SAF Yacht Club",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/13551/event",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/13551/event",
+  websiteUrl: "https://www.safyc.org.sg",
+  registrationUrl: "https://www.safyc.org.sg",
+  entryFees: {
+    singleHanded: 70.85,
+    doubleHanded: 70.85,
+    earlyBirdDeadline: "4 February 2026 (ILCA) / 22 March 2026 (Optimist)",
+    finalDeadline: "4 February 2026 (ILCA) / 22 March 2026 (Optimist)",
+    lateFee: 21.8,
+  },
+  scheduleSummary:
+    "Weekend 1 (14–15 Feb): ILCA 4, ILCA 6, ILCA 7 (7 races scheduled, max 4/day). Weekend 2 (28–29 Mar): Optimist Gold, Optimist Silver (7 races scheduled, max 4/day). NSRCC Seasports Centre. Scoring: 1 race to constitute event; 4 or more races completed = 1 discard (RRS Appendix A).",
+  scoringRules:
+    "One race per class/fleet required to constitute event. Fewer than 4 races: no discard. 4 or more races: 1 discard (RRS Appendix A).",
+  fleets: [
+    {
+      fleetName: "ILCA 4",
+      boatClass: "ILCA 4",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 5th",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Ethan Han Wei Chia", sailNumber: "228368", gender: "M", club: "SAF Yacht Club", notes: "Nett 13.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Ian Goh", sailNumber: "222713", gender: "M", club: "Constant Wind", notes: "Nett 15.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Desiree Lee", sailNumber: "226897", gender: "F", club: "Others", notes: "Nett 26.0." },
+            { rank: 4, prizeTitle: "4th", sailorName: "Zeph Wan", sailNumber: "226650", gender: "M", club: "Others", notes: "Nett 27.0." },
+            { rank: 5, prizeTitle: "5th", sailorName: "Nicholette Lee", sailNumber: "224620", gender: "F", club: "Others", notes: "Nett 42.0." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 5th",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Desiree Lee", sailNumber: "226897", gender: "F", club: "Others", notes: "Nett 26.0 (3rd overall)." },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Nicholette Lee", sailNumber: "224620", gender: "F", club: "Others", notes: "Nett 42.0 (5th overall)." },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Wai Zhi Tong", sailNumber: "225226", gender: "F", club: "SAF Yacht Club", notes: "Nett 47.0 (7th overall)." },
+            { rank: 4, prizeTitle: "4th Female", sailorName: "Nia Zahedi", sailNumber: "224245", gender: "F", club: "Others", notes: "Nett 50.0 (8th overall)." },
+            { rank: 5, prizeTitle: "5th Female", sailorName: "Mildred Wong Li Xuan", sailNumber: "223200", gender: "F", notes: "Nett 50.0 (9th overall)." },
+          ],
+        },
+        {
+          categoryName: "15 and Under",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st (15 & Under)", sailorName: "Desiree Lee", sailNumber: "226897", gender: "F", notes: "Nett 26.0 (3rd overall, YOB 2011)." },
+            { rank: 2, prizeTitle: "2nd (15 & Under)", sailorName: "Zeph Wan", sailNumber: "226650", gender: "M", notes: "Nett 27.0 (4th overall, YOB 2011)." },
+            { rank: 3, prizeTitle: "3rd (15 & Under)", sailorName: "Gabi Oh", sailNumber: "222743", gender: "F", club: "SAF Yacht Club", notes: "Nett 56.0 (10th overall, YOB 2011)." },
+          ],
+        },
+        {
+          categoryName: "13 and Under",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st (13 & Under)", sailorName: "Charles Kong", sailNumber: "227676", gender: "M", club: "Changi Sailing Club", notes: "Nett 84.0 (13th overall, YOB 2014)." },
+            { rank: 2, prizeTitle: "2nd (13 & Under)", sailorName: "Caleb Cao Zhixuan", sailNumber: "225207", gender: "M", club: "SAF Yacht Club", notes: "Nett 172.0 (32nd overall, YOB 2014)." },
+            { rank: 3, prizeTitle: "3rd (13 & Under)", sailorName: "Jonas Tan", sailNumber: "197840", gender: "M", club: "SAF Yacht Club", notes: "Nett 203.0 (41st overall, YOB 2013)." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "ILCA 6",
+      boatClass: "ILCA 6",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Gordon Alexander Allan", sailNumber: "221058", gender: "M", club: "Others", notes: "Nett 12.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Leow You Shun Aurick", sailNumber: "67", gender: "M", club: "SAF Yacht Club", notes: "Nett 12.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Eitan Oh", sailNumber: "224717", gender: "M", club: "SAF Yacht Club", notes: "Nett 14.0." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Keira Marie Carlyle", sailNumber: "225225", gender: "F", club: "SAF Yacht Club", notes: "Nett 26.0 (5th overall)." },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Sarah Yong", sailNumber: "18", gender: "F", club: "Others", notes: "Nett 41.0 (6th overall)." },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Elizabeth Victoria Say", sailNumber: "214873", gender: "F", club: "Others", notes: "Nett 59.0 (12th overall)." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "ILCA 7",
+      boatClass: "ILCA 7",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Justiin Ang", sailNumber: "158031", gender: "M", club: "Constant Wind", notes: "Nett 5.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Balazs Vincze", sailNumber: "213095", gender: "M", club: "Changi Sailing Club", notes: "Nett 12.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Cameron Hunter", sailNumber: "197877", gender: "M", club: "Changi Sailing Club", notes: "Nett 20.0." },
+          ],
+        },
+        {
+          categoryName: "Masters and Above",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Master", sailorName: "Balazs Vincze", sailNumber: "213095", gender: "M", club: "Changi Sailing Club", notes: "Born 1986 or earlier." },
+            { rank: 2, prizeTitle: "2nd Master", sailorName: "Cameron Hunter", sailNumber: "197877", gender: "M", club: "Changi Sailing Club", notes: "Born 1986 or earlier." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "Optimist Gold Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 10th",
+          winners: [],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 5th",
+          winners: [],
+        },
+        {
+          categoryName: "12 and Under",
+          prizesAwarded: "1st to 5th",
+          winners: [],
+        },
+        {
+          categoryName: "10 and Under",
+          prizesAwarded: "1st to 5th",
+          winners: [],
+        },
+      ],
+    },
+    {
+      fleetName: "Optimist Silver Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 10th",
+          winners: [],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 5th",
+          winners: [],
+        },
+        {
+          categoryName: "10 and Under",
+          prizesAwarded: "1st to 5th",
+          winners: [],
+        },
+        {
+          categoryName: "9 and Under",
+          prizesAwarded: "1st to 5th",
+          winners: [],
+        },
+      ],
+    },
+  ],
+};
+
 export const SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   regattaSlug: "2nd-safyc-optimist-championships-2026",
   regattaName: "2nd SAFYC Optimist Championships 2026",
@@ -2156,6 +2327,17 @@ export const PULAU_UJONG_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
+  PULAU_UJONG_2026_PRIZE_SCHEDULE,
+  SYSC_2026_PRIZE_SCHEDULE,
+  TEMASEK_2026_PRIZE_SCHEDULE,
+  SAFYC_2026_PRIZE_SCHEDULE,
+  SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE,
+  CINCAPURA_2026_PRIZE_SCHEDULE,
+  PESTA_SUKAN_2026_PRIZE_SCHEDULE,
+  SNSC_2026_PRIZE_SCHEDULE,
+];
+
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
   if (
@@ -2187,6 +2369,13 @@ export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | nu
     s.includes("safyc-optimist-championship")
   ) {
     return SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("22nd-safyc-regatta-2026") ||
+    s.includes("22nd-safyc") ||
+    (s.includes("safyc") && s.includes("2026") && !s.includes("championship") && !s.includes("jul"))
+  ) {
+    return SAFYC_2026_PRIZE_SCHEDULE;
   }
   if (s.includes("temasek-regatta") || (s.includes("temasek") && s.includes("2026"))) {
     return TEMASEK_2026_PRIZE_SCHEDULE;

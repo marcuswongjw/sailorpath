@@ -192,12 +192,12 @@ export const SAFYC_REGATTA_2026_EVENT: RegattaEventDef = {
   slug: "22nd-safyc-regatta-2026",
   name: "22nd SAFYC Regatta 2026",
   shortName: "SAFYC Regatta 2026",
-  datesText: "28–29 March 2026",
-  venue: "SAF Yacht Club, Sembawang",
+  datesText: "14–15 February 2026 (ILCA) & 28–29 March 2026 (Optimist)",
+  venue: "NSRCC Seasports Centre, Singapore",
   organizer: "SAF Yacht Club",
   noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/13551/event",
   officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/13551/event",
-  slices: fleetSlices("safyc", "2026", ["gold", "silver"], ["mar-26"]),
+  slices: fleetSlices("safyc", "2026", ["gold", "silver", "ilca4", "ilca6", "ilca7"], [], ["jul"]),
 };
 
 export const SAFYC_OPTIMIST_2026_EVENT: RegattaEventDef = {

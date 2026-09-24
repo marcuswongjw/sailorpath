@@ -3,7 +3,7 @@
 import { PROFILE_CARD_CLASS as cardClass } from "./helpers";
 
 export type ProfileClassTab = "optimist" | "ilca4" | "journey";
-export type ProfileSectionTab = "overview" | "results" | "journey" | "equipment";
+export type ProfileSectionTab = "overview" | "results" | "awards" | "journey" | "equipment";
 
 type Props = {
   dualClass: boolean;
@@ -13,6 +13,7 @@ type Props = {
   optimistCount: number;
   ilcaCount: number;
   journeyCount: number;
+  awardsCount?: number;
   showStanding: boolean;
   showEquipment: boolean;
   onTabChange: (tab: ProfileClassTab) => void;
@@ -28,6 +29,7 @@ export function ProfileClassNavigation({
   optimistCount,
   ilcaCount,
   journeyCount,
+  awardsCount = 0,
   showStanding,
   showEquipment,
   onTabChange,
@@ -153,6 +155,30 @@ export function ProfileClassNavigation({
             </span>
           )}
         </button>
+
+        {/* Awards / Prizes tab */}
+        {awardsCount != null && awardsCount > 0 && (
+          <button
+            type="button"
+            onClick={() => onSectionTabChange?.("awards")}
+            className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer flex items-center gap-1.5 ${
+              sectionTab === "awards"
+                ? "bg-harbour text-sailcloth shadow-xs"
+                : "border border-amber-300/80 bg-amber-50/60 text-amber-950 hover:bg-amber-100"
+            }`}
+          >
+            <span>🏆 Awards</span>
+            <span
+              className={`tabular-nums text-[12px] font-black rounded-full px-1.5 py-0.2 ${
+                sectionTab === "awards"
+                  ? "bg-sailcloth/20 text-sailcloth"
+                  : "bg-amber-200/80 text-amber-900"
+              }`}
+            >
+              {awardsCount}
+            </span>
+          </button>
+        )}
 
         {/* Backward-compatibility link for Results/Journey */}
         <a

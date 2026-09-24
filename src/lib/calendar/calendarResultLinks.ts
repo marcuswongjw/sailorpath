@@ -25,8 +25,9 @@ export const CALENDAR_RESULT_ALIASES: Record<string, CalendarResultAlias> = {
     classes: ["optimist", "ilca4"],
   },
   "22nd-safyc-regatta-2026": {
-    slugIncludes: ["safyc", "mar-26", "2026"],
-    classes: ["optimist", "ilca4"],
+    slugIncludes: ["safyc", "2026"],
+    slugExcludes: ["jul"],
+    classes: ["optimist", "ilca4", "ilca6", "ilca7"],
   },
   "2nd-safyc-optimist-championships-2026": {
     slugIncludes: ["safyc", "jul-26", "2026"],
