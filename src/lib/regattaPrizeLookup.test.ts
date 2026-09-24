@@ -69,7 +69,9 @@ describe("getPrizeWinnersForRegatta", () => {
   it("does not show ILCA 4 prizes for ILCA 6 or 29er slugs", () => {
     expect(inferPrizeFleetName("snsc-ilca-6-sep-26-2026-09-11")).toBe("ILCA 6");
     expect(inferPrizeFleetName("snsc-29er-sep-26-2026-09-11")).toBe("29er");
-    expect(getPrizeWinnersForRegatta("snsc-ilca-6-sep-26-2026-09-11")).toBeNull();
+    const snscIlca6 = getPrizeWinnersForRegatta("snsc-ilca-6-sep-26-2026-09-11");
+    expect(snscIlca6?.fleets[0].fleetName).toBe("ILCA 6");
+    expect(snscIlca6?.fleets[0].categories[0].winners[0].sailorName).toBe("Kenan Kee Zen Tan");
     expect(getPrizeWinnersForRegatta("snsc-29er-sep-26-2026-09-11")).toBeNull();
     const cincapuraIlca6 = getPrizeWinnersForRegatta("cincapura-ilca-6-jul-26-2026-07-18");
     expect(cincapuraIlca6?.fleets[0].fleetName).toBe("ILCA 6");

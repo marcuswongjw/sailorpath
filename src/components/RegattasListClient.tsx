@@ -84,6 +84,7 @@ export function RegattasListClient({
   description = "Explore published Singapore Optimist ranking series results and local events.",
   badgeLabel = "Regatta Directory",
   detailBasePath = "/sg/optimist/regattas",
+  hideBoatClassFilter = true,
   hideDivisionFilter,
   accent = "orange",
   emptyMessage = "No regattas yet. Import from admin.",
@@ -92,9 +93,9 @@ export function RegattasListClient({
   const [rankingFilter, setRankingFilter] = useState<"all" | "ranking" | "non-ranking">("all");
   const [division, setDivision] = useState<string>("all");
   const [period, setPeriod] = useState<string>("all");
+  const [boatClassFilter, setBoatClassFilter] = useState<string>("all");
   const [geography, setGeography] = useState<string>("all");
   const [viewMode, setViewMode] = useState<"grid" | "compact">("grid");
-
 
   // Metric counts
   const metrics = useMemo(() => {
@@ -112,6 +113,14 @@ export function RegattasListClient({
       ranking: rankingCount,
       nonRanking: nonRankingCount,
     };
+  }, [regattas]);
+
+  const boatClasses = useMemo(() => {
+    const set = new Set<string>();
+    for (const r of regattas) {
+      if (r.boatClass) set.add(r.boatClass);
+    }
+    return Array.from(set).sort();
   }, [regattas]);
 
   const periods = useMemo(() => {
@@ -141,6 +150,9 @@ export function RegattasListClient({
       if (rankingFilter === "ranking" && r.countsForRanking === false) return false;
       if (rankingFilter === "non-ranking" && r.countsForRanking !== false) return false;
 
+      if (!hideBoatClassFilter && boatClassFilter !== "all" && r.boatClass !== boatClassFilter) {
+        return false;
+      }
       if (division !== "all" && String(r.division || "Gold") !== division) {
         return false;
       }
@@ -156,7 +168,7 @@ export function RegattasListClient({
         .toLowerCase()
         .includes(q);
     });
-  }, [regattas, query, rankingFilter, division, period, geography]);
+  }, [regattas, query, rankingFilter, hideBoatClassFilter, boatClassFilter, division, period, geography]);
 
   const grouped = useMemo(() => {
     const map = new Map<string, PublicRegatta[]>();
@@ -333,6 +345,22 @@ export function RegattasListClient({
               className="sp-input w-full pl-10 text-xs sm:text-sm"
             />
           </div>
+
+          {!hideBoatClassFilter && boatClasses.length > 1 && (
+            <select
+              value={boatClassFilter}
+              onChange={(e) => setBoatClassFilter(e.target.value)}
+              className="sp-select text-xs sm:text-sm font-semibold"
+              aria-label="Boat Class"
+            >
+              <option value="all">All classes</option>
+              {boatClasses.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+          )}
 
           <select
             value={geography}

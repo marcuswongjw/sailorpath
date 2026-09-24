@@ -92,10 +92,10 @@ describe("matchCalendarResults", () => {
     expect(matchCalendarResults("eastern-seaboard-regatta-2026", published)).toEqual([]);
   });
 
-  it("links ILCA 4 rows to the ILCA results page and Optimist rows to Optimist", () => {
+  it("links ILCA rows to the unified ILCA results page and Optimist rows to Optimist", () => {
     const ilca = published.find((r) => r.slug === "pesta-sukan-ilca4-aug-26-2026-08-01")!;
     const gold = published.find((r) => r.slug === "pesta-sukan-gold-aug-26-2026-08-01")!;
-    expect(classResultsHref(ilca)).toBe("/sg/ilca4/regattas/pesta-sukan-ilca4-aug-26-2026-08-01");
+    expect(classResultsHref(ilca)).toBe("/sg/ilca/regattas/pesta-sukan-ilca4-aug-26-2026-08-01");
     expect(classResultsHref(gold)).toBe("/sg/optimist/regattas/pesta-sukan-gold-aug-26-2026-08-01");
   });
 });

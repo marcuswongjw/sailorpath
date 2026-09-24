@@ -50,6 +50,7 @@ describe("getRegattaEvent", () => {
       "optimist-gold",
       "optimist-silver",
       "ilca-4",
+      "ilca-6",
     ]);
     expect(getRegattaEvent("pesta-sukan-regatta-2026-optimist")?.slug).toBe("pesta-sukan-2026");
     expect(getRegattaEvent("pesta-sukan-regatta-2026-ilca-wingfoil")?.slug).toBe("pesta-sukan-2026");

@@ -34,7 +34,7 @@ export const CALENDAR_RESULT_ALIASES: Record<string, CalendarResultAlias> = {
   },
   "cincapura-regatta-2026": {
     slugIncludes: ["cincapura", "2026"],
-    classes: ["optimist", "ilca4"],
+    classes: ["optimist", "ilca4", "ilca6"],
   },
   "pesta-sukan-regatta-2026-optimist": {
     slugIncludes: ["pesta-sukan", "2026"],
@@ -42,7 +42,7 @@ export const CALENDAR_RESULT_ALIASES: Record<string, CalendarResultAlias> = {
   },
   "pesta-sukan-regatta-2026-ilca-wingfoil": {
     slugIncludes: ["pesta-sukan", "2026"],
-    classes: ["ilca4"],
+    classes: ["ilca4", "ilca6"],
   },
   "pulau-ujong-regatta-2026": {
     slugIncludes: ["pulau-ujong", "2026"],
@@ -81,9 +81,9 @@ export function classResultsHref(
 ): string {
   const slug = encodeURIComponent(regatta.slug);
   const cls = publicResultClass(regatta.boatClass);
-  if (cls === "ilca4") return `/sg/ilca4/regattas/${slug}`;
-  if (cls === "ilca6") return `/sg/ilca6/regattas/${slug}`;
-  if (cls === "ilca7") return `/sg/ilca7/regattas/${slug}`;
+  if (cls === "ilca4" || cls === "ilca6" || cls === "ilca7") {
+    return `/sg/ilca/regattas/${slug}`;
+  }
   return `/sg/optimist/regattas/${slug}`;
 }
 

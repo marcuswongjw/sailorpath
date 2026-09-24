@@ -235,6 +235,46 @@ export function IlcaRankingsView({
         </div>
       )}
 
+      {/* ILCA Class Switcher Tabs */}
+      <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-slate-900/60 border border-slate-800 w-fit no-print">
+        <Link
+          href="/sg/ilca4"
+          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+            boatClass === "ILCA 4"
+              ? "bg-sky-500 text-slate-950 shadow-xs"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          ILCA 4
+        </Link>
+        <Link
+          href="/sg/ilca6"
+          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+            boatClass === "ILCA 6"
+              ? "bg-sky-500 text-slate-950 shadow-xs"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          ILCA 6
+        </Link>
+        <Link
+          href="/sg/ilca7"
+          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+            boatClass === "ILCA 7"
+              ? "bg-sky-500 text-slate-950 shadow-xs"
+              : "text-slate-400 hover:text-white"
+          }`}
+        >
+          ILCA 7
+        </Link>
+        <Link
+          href="/sg/ilca/regattas"
+          className="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors border-l border-slate-800 ml-1 pl-3"
+        >
+          ILCA Regattas →
+        </Link>
+      </div>
+
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 no-print min-w-0">
         <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
           <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-sky-600/15 text-sky-400 border border-sky-500/25">

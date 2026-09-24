@@ -7,7 +7,7 @@ import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
 import { isAdminHost, shouldShowDemoNavigation } from "@/lib/adminHost";
 
-type OpenMenu = "optimist" | "classes" | "account" | null;
+type OpenMenu = "optimist" | "ilca" | "classes" | "account" | null;
 
 const subscribeToHost = () => () => {};
 const getBrowserHost = () => window.location.hostname;
@@ -103,13 +103,11 @@ export function SiteHeader() {
     </>
   );
 
-  const classesLinks = (
+  const ilcaLinks = (
     <>
-      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
-        ILCA 4
-      </p>
       <Link
         href="/sg/ilca4"
+        prefetch
         onClick={() => {
           setMobileOpen(false);
           setOpenMenu(null);
@@ -119,31 +117,8 @@ export function SiteHeader() {
         ILCA 4 standings
       </Link>
       <Link
-        href="/sg/ilca4/selection"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
-      >
-        Selection trials &amp; policies
-      </Link>
-      <Link
-        href="/sg/ilca4/regattas"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        ILCA 4 regattas
-      </Link>
-      <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
-        ILCA 6
-      </p>
-      <Link
         href="/sg/ilca6"
+        prefetch
         onClick={() => {
           setMobileOpen(false);
           setOpenMenu(null);
@@ -153,21 +128,8 @@ export function SiteHeader() {
         ILCA 6 standings
       </Link>
       <Link
-        href="/sg/ilca6/regattas"
-        onClick={() => {
-          setMobileOpen(false);
-          setOpenMenu(null);
-        }}
-        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
-      >
-        ILCA 6 regattas
-      </Link>
-      <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
-        ILCA 7
-      </p>
-      <Link
         href="/sg/ilca7"
+        prefetch
         onClick={() => {
           setMobileOpen(false);
           setOpenMenu(null);
@@ -177,17 +139,32 @@ export function SiteHeader() {
         ILCA 7 standings
       </Link>
       <Link
-        href="/sg/ilca7/regattas"
+        href="/sg/ilca/regattas"
         onClick={() => {
           setMobileOpen(false);
           setOpenMenu(null);
         }}
         className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
       >
-        ILCA 7 regattas
+        ILCA regattas
       </Link>
-      <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 text-xs font-bold uppercase tracking-wider text-slate-soft">
+      <Link
+        href="/sg/ilca4/selection"
+        prefetch
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-racing-orange hover:bg-sailcloth hover:text-racing-deep transition-colors"
+      >
+        Selection trials &amp; policies
+      </Link>
+    </>
+  );
+
+  const classesLinks = (
+    <>
+      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
         WingFoil
       </p>
       <Link
@@ -211,7 +188,7 @@ export function SiteHeader() {
         Funding &amp; selection policy
       </Link>
       <hr className="my-1.5 border-cool-veil" />
-      <p className="px-3.5 pb-1 text-xs font-bold uppercase tracking-wider text-slate-soft">
+      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
         Techno 293
       </p>
       <Link
@@ -264,6 +241,32 @@ export function SiteHeader() {
             className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
           >
             {optimistLinks}
+          </div>
+        )}
+      </div>
+      <div className="relative">
+        <button
+          type="button"
+          aria-expanded={openMenu === "ilca"}
+          aria-haspopup="menu"
+          onClick={() =>
+            setOpenMenu((m) => (m === "ilca" ? null : "ilca"))
+          }
+          className="text-sm font-semibold text-sailcloth hover:text-white transition-colors flex items-center gap-1.5 py-2 md:py-5 focus:outline-none focus-visible:text-white cursor-pointer"
+        >
+          ILCA
+          <ChevronDown
+            className={`h-4 w-4 text-sailcloth transition-transform ${
+              openMenu === "ilca" ? "rotate-180 text-white" : ""
+            }`}
+          />
+        </button>
+        {openMenu === "ilca" && (
+          <div
+            role="menu"
+            className="absolute left-0 top-[52px] w-56 rounded-xl bg-warm-white border border-cool-veil p-2 shadow-xl z-[70] text-charcoal"
+          >
+            {ilcaLinks}
           </div>
         )}
       </div>
@@ -524,7 +527,7 @@ export function SiteHeader() {
               </Link>
             )}
             <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
-              ILCA 4
+              ILCA
             </p>
             <Link
               href="/sg/ilca4"
@@ -534,39 +537,12 @@ export function SiteHeader() {
               ILCA 4 standings
             </Link>
             <Link
-              href="/sg/ilca4/selection"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              Selection trials &amp; policies
-            </Link>
-            <Link
-              href="/sg/ilca4/regattas"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA 4 regattas
-            </Link>
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
-              ILCA 6
-            </p>
-            <Link
               href="/sg/ilca6"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 6 standings
             </Link>
-            <Link
-              href="/sg/ilca6/regattas"
-              onClick={() => setMobileOpen(false)}
-              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
-            >
-              ILCA 6 regattas
-            </Link>
-            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
-              ILCA 7
-            </p>
             <Link
               href="/sg/ilca7"
               onClick={() => setMobileOpen(false)}
@@ -575,11 +551,18 @@ export function SiteHeader() {
               ILCA 7 standings
             </Link>
             <Link
-              href="/sg/ilca7/regattas"
+              href="/sg/ilca/regattas"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
-              ILCA 7 regattas
+              ILCA regattas
+            </Link>
+            <Link
+              href="/sg/ilca4/selection"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-racing-mist hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              Selection trials &amp; policies
             </Link>
             <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
               WingFoil

@@ -222,7 +222,7 @@ export const CINCAPURA_2026_EVENT: RegattaEventDef = {
   noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/14587/event",
   officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14587/event",
   registrationUrl: "https://www.sailing.org.sg/events/356060",
-  slices: fleetSlices("cincapura", "2026", ["gold", "silver", "ilca4"]),
+  slices: fleetSlices("cincapura", "2026", ["gold", "silver", "ilca4", "ilca6"]),
 };
 
 export const PESTA_SUKAN_2026_EVENT: RegattaEventDef = {
@@ -237,7 +237,7 @@ export const PESTA_SUKAN_2026_EVENT: RegattaEventDef = {
   officialNoticeBoardUrl:
     "https://www.racingrulesofsailing.org/documents/14397/event?name=pesta-sukan-2026",
   registrationUrl: "https://www.sailing.org.sg/events/351968",
-  slices: fleetSlices("pesta-sukan", "2026", ["gold", "silver", "ilca4"]),
+  slices: fleetSlices("pesta-sukan", "2026", ["gold", "silver", "ilca4", "ilca6"]),
 };
 
 export const PULAU_UJONG_2026_EVENT: RegattaEventDef = {

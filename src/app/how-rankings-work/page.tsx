@@ -78,7 +78,7 @@ export default function HowRankingsWorkPage() {
       </section>
 
       <section className="space-y-3 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 shadow-xs">
-        <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">ILCA 4 national ranking</h2>
+        <h2 className="text-lg font-bold text-[var(--sp-harbour-shadow)]">ILCA national series &amp; rankings (ILCA 4, ILCA 6, ILCA 7)</h2>
         <ul className="space-y-2 text-sm text-[var(--sp-charcoal-slate)] leading-relaxed list-disc pl-5">
           <li>
             <strong className="text-[var(--sp-harbour-shadow)]">High Ranking Points</strong> —

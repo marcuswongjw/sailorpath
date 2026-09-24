@@ -14,6 +14,8 @@ export interface SailorRecord {
   sailNumber: string;
   /** Class-specific ILCA 4 sail number (Optimist keeps sailNumber) */
   sailNumberIlca4?: string | null;
+  ilca4NationalList?: boolean | null;
+  ilca6NationalList?: boolean | null;
   club: string;
   school?: string | null;
   nationality?: string | null;
