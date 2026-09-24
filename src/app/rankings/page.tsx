@@ -69,6 +69,36 @@ export default function RankingsHubPage() {
         </Link>
 
         <Link
+          href="/sg/ilca6"
+          className="group rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs hover:border-[var(--sp-harbour-teal)] hover:shadow-md transition-all"
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-aqua-mist)] mb-3">
+            <Sailboat className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
+          </div>
+          <h2 className="text-base font-bold text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-harbour-teal)] transition-colors">
+            ILCA 6
+          </h2>
+          <p className="text-xs text-[var(--sp-slate-soft)] mt-1.5 leading-relaxed">
+            Singapore ILCA 6 national ranking standings.
+          </p>
+        </Link>
+
+        <Link
+          href="/sg/ilca7"
+          className="group rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs hover:border-[var(--sp-harbour-teal)] hover:shadow-md transition-all"
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-aqua-mist)] mb-3">
+            <Sailboat className="h-5 w-5 text-[var(--sp-harbour-teal)]" />
+          </div>
+          <h2 className="text-base font-bold text-[var(--sp-harbour-shadow)] group-hover:text-[var(--sp-harbour-teal)] transition-colors">
+            ILCA 7
+          </h2>
+          <p className="text-xs text-[var(--sp-slate-soft)] mt-1.5 leading-relaxed">
+            Singapore ILCA 7 standings from published regattas.
+          </p>
+        </Link>
+
+        <Link
           href="/sg/wingfoil"
           className="group rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 shadow-xs hover:border-[var(--sp-harbour-teal)] hover:shadow-md transition-all"
         >

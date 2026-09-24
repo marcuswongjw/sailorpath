@@ -67,8 +67,7 @@ export function AdminIlcaRankingPanel({
   const { confirm } = useFeedback();
   const now = new Date();
   const y = now.getFullYear();
-  /** ILCA 6 not active — rankings are ILCA 4 only for now */
-  const boatClass: IlcaBoatClass = "ILCA 4";
+  const [boatClass, setBoatClass] = useState<IlcaBoatClass>("ILCA 4");
   const defaultIntake = defaultIlcaIntake(now);
   const [intakeKind, setIntakeKind] = useState<IlcaIntakeKind>(defaultIntake.kind);
   const [intakeYear, setIntakeYear] = useState(defaultIntake.year);
@@ -165,7 +164,7 @@ export function AdminIlcaRankingPanel({
         results,
         {
           intakeYear: cutoff.intakeYear,
-          restrictToNationalList: boatClass === "ILCA 4",
+          restrictToNationalList: boatClass === "ILCA 4" || boatClass === "ILCA 6",
         }
       ),
     [boatClass, cutoff, sailors, regattas, results]
@@ -450,12 +449,15 @@ export function AdminIlcaRankingPanel({
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <label className="text-xs text-[var(--sp-slate)] font-medium">
             Class
-            <div className="mt-1 w-full rounded-lg bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs">
-              ILCA 4
-              <span className="ml-2 text-[13px] text-[var(--sp-slate)]">
-                (ILCA 6 not active)
-              </span>
-            </div>
+            <select
+              className="mt-1 w-full rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs font-bold"
+              value={boatClass}
+              onChange={(e) => setBoatClass(e.target.value as IlcaBoatClass)}
+            >
+              <option value="ILCA 4">ILCA 4</option>
+              <option value="ILCA 6">ILCA 6</option>
+              <option value="ILCA 7">ILCA 7</option>
+            </select>
           </label>
           <label className="text-xs text-[var(--sp-slate)] font-medium">
             Intake

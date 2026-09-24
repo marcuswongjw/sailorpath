@@ -21,8 +21,9 @@ import {
   isSailorOnIlca4NationalList,
   isSingaporeNationality,
 } from "@/lib/ilca4NationalList";
+import { isSailorOnIlca6NationalList } from "@/lib/ilca6NationalList";
 
-export type IlcaBoatClass = "ILCA 4" | "ILCA 6";
+export type IlcaBoatClass = "ILCA 4" | "ILCA 6" | "ILCA 7";
 
 export type IlcaRegatta = {
   id: string;
@@ -171,13 +172,19 @@ export function isIlcaSeriesClass(
     return true;
   if (target === "ILCA 6" && (a === "ilca6" || a === "laser radial" || a === "radial"))
     return true;
+  if (
+    target === "ILCA 7" &&
+    (a === "ilca7" || a === "laser standard" || a === "standard")
+  )
+    return true;
   return false;
 }
 
 export function isAnyIlcaClass(boatClass: string | null | undefined): boolean {
   return (
     isIlcaSeriesClass(boatClass, "ILCA 4") ||
-    isIlcaSeriesClass(boatClass, "ILCA 6")
+    isIlcaSeriesClass(boatClass, "ILCA 6") ||
+    isIlcaSeriesClass(boatClass, "ILCA 7")
   );
 }
 
@@ -264,18 +271,20 @@ export function computeIlcaRankings(
   );
 
   const useNationalList =
-    boatClass === "ILCA 4" && opts?.restrictToNationalList !== false;
+    (boatClass === "ILCA 4" || boatClass === "ILCA 6") &&
+    opts?.restrictToNationalList !== false;
 
   const onNationalList = (s: IlcaSailor): boolean => {
     if (!useNationalList) return false;
-    return isSailorOnIlca4NationalList(s);
+    if (boatClass === "ILCA 4") return isSailorOnIlca4NationalList(s);
+    if (boatClass === "ILCA 6") return isSailorOnIlca6NationalList(s);
+    return false;
   };
 
   /**
    * Candidates:
-   * - National list board: everyone on the list (even with no results → 0 pts),
-   *   plus anyone with results who is on the list.
-   * - Unrestricted: anyone with results in the scoring window.
+   * - National list board (ILCA 4 & ILCA 6): everyone on the respective national list.
+   * - Result-based board (ILCA 7 or unrestricted preview): anyone with results in the scoring window.
    */
   const candidates = sailors.filter((s) => {
     if (useNationalList) {
@@ -526,9 +535,9 @@ export const ILCA_POLICY_NOTES = {
   dualSail:
     "Sailors younger than 15 may hold two sail numbers: one Optimist and one ILCA 4. Each is updated from the latest regatta of that class.",
   highPoints:
-    "ILCA 4 and ILCA 6 use High Ranking Points: in a fleet of N, 1st earns N points, 2nd earns N−1, and so on. Best 3 of the last 5 ranking regattas (higher total is better).",
+    "ILCA 4, ILCA 6, and ILCA 7 use High Ranking Points: in a fleet of N, 1st earns N points, 2nd earns N−1, and so on. Best 3 of the last 5 ranking regattas (higher total is better).",
   nationalList:
-    "Only sailors marked on the ILCA 4 national ranking list (admin-managed) appear on the public board.",
+    "ILCA 4 and ILCA 6 display sailors verified on their respective official Singapore Sailing Federation national ranking lists. ILCA 7 standings are computed directly from published regatta performance.",
   squad:
     "ILCA 4 national squad (≤16, SGP nationality only, verified birth year and age ≤17 in intake year). SSF selects from the ranking as of 30 Jun (July intake) or 20 Dec (January intake); the table window follows the half each intake serves. From top 25: top 2 M/F overall, then top 2 M/F in the intake-year-16 bucket, then top 4 M/F in ≤15 bucket; fill remaining with next highest same gender.",
 } as const;

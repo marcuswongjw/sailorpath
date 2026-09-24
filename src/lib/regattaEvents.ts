@@ -23,7 +23,7 @@ export type RegattaEventSliceDef = {
   key: string;
   /** Tab label, e.g. "Optimist Gold". */
   label: string;
-  series: "optimist" | "ilca4" | "wingfoil" | "techno293";
+  series: "optimist" | "ilca4" | "ilca6" | "ilca7" | "wingfoil" | "techno293";
   /**
    * Regattas-table slice: lowercased regatta slug must contain every token.
    */
@@ -91,6 +91,20 @@ export const SNSC_2026_EVENT: RegattaEventDef = {
       prizeFleetName: "ILCA 4",
     },
     {
+      key: "ilca-6",
+      label: "ILCA 6",
+      series: "ilca6",
+      slugIncludes: ["snsc", "ilca-6", "sep-26"],
+      prizeFleetName: "ILCA 6",
+    },
+    {
+      key: "ilca-7",
+      label: "ILCA 7",
+      series: "ilca7",
+      slugIncludes: ["snsc", "ilca-7", "sep-26"],
+      prizeFleetName: "ILCA 7",
+    },
+    {
       key: "wingfoil",
       label: "WingFoil",
       series: "wingfoil",
@@ -107,12 +121,14 @@ export const SNSC_2026_EVENT: RegattaEventDef = {
   ],
 };
 
-const ILCA_EXCLUDES = ["gold", "silver", "ilca-6", "ilca6", "ilca-7", "ilca7", "29er"];
+const ILCA4_EXCLUDES = ["gold", "silver", "ilca-6", "ilca6", "ilca-7", "ilca7", "29er"];
+const ILCA6_EXCLUDES = ["gold", "silver", "ilca-4", "ilca4", "ilca-7", "ilca7", "29er"];
+const ILCA7_EXCLUDES = ["gold", "silver", "ilca-4", "ilca4", "ilca-6", "ilca6", "29er"];
 
 function fleetSlices(
   eventToken: string,
   yearToken: string,
-  fleets: Array<"gold" | "silver" | "ilca4">,
+  fleets: Array<"gold" | "silver" | "ilca4" | "ilca6" | "ilca7">,
   extraIncludes: string[] = [],
   extraExcludes: string[] = []
 ): RegattaEventSliceDef[] {
@@ -123,8 +139,28 @@ function fleetSlices(
         label: "ILCA 4",
         series: "ilca4" as const,
         slugIncludes: [eventToken, yearToken, "ilca", ...extraIncludes],
-        slugExcludes: [...ILCA_EXCLUDES, ...extraExcludes],
+        slugExcludes: [...ILCA4_EXCLUDES, ...extraExcludes],
         prizeFleetName: "ILCA 4",
+      };
+    }
+    if (fleet === "ilca6") {
+      return {
+        key: "ilca-6",
+        label: "ILCA 6",
+        series: "ilca6" as const,
+        slugIncludes: [eventToken, yearToken, "ilca-6", ...extraIncludes],
+        slugExcludes: [...ILCA6_EXCLUDES, ...extraExcludes],
+        prizeFleetName: "ILCA 6",
+      };
+    }
+    if (fleet === "ilca7") {
+      return {
+        key: "ilca-7",
+        label: "ILCA 7",
+        series: "ilca7" as const,
+        slugIncludes: [eventToken, yearToken, "ilca-7", ...extraIncludes],
+        slugExcludes: [...ILCA7_EXCLUDES, ...extraExcludes],
+        prizeFleetName: "ILCA 7",
       };
     }
     const gold = fleet === "gold";

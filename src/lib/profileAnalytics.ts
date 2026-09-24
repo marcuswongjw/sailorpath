@@ -667,11 +667,14 @@ export function profileBoatClassGroup(
     s === "ilca4" ||
     s === "laser 4.7" ||
     s === "laser4.7" ||
-    // No active ILCA 6 — treat as ILCA 4 for display/rankings grouping
     s === "ilca 6" ||
     s === "ilca6" ||
     s === "laser radial" ||
-    s === "radial"
+    s === "radial" ||
+    s === "ilca 7" ||
+    s === "ilca7" ||
+    s === "laser standard" ||
+    s === "standard"
   )
     return "ilca4";
   return "other";

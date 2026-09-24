@@ -104,7 +104,8 @@ function detectDivision(text: string): string | null {
 
 function detectBoatClass(text: string): string | null {
   if (/\bilca\s*4\b|\bilca4\b|\blaser\s*4\.?7\b/i.test(text)) return "ILCA 4";
-  if (/\bilca\s*6\b|\bilca6\b|\bradial\b/i.test(text)) return "ILCA 6";
+  if (/\bilca\s*6\b|\bilca6\b|\bradial\b|\blaser\s*radial\b/i.test(text)) return "ILCA 6";
+  if (/\bilca\s*7\b|\bilca7\b|\blaser\s*standard\b|\bstandard\b/i.test(text)) return "ILCA 7";
   if (/\boptimist\b|\bopti\b/i.test(text)) return "Optimist";
   return null;
 }

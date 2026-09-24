@@ -150,9 +150,9 @@ describe("findEventSliceForRegattaSlug", () => {
     ).toBe("/regattas/snsc-2026?fleet=optimist-silver");
   });
 
-  it("does not give ILCA 6, ILCA 7, or 29er a public SNSC tab", () => {
-    expect(findEventSliceForRegattaSlug("snsc-ilca-6-sep-26-2026-09-11")).toBeNull();
-    expect(findEventSliceForRegattaSlug("snsc-ilca-7-sep-26-2026-09-11")).toBeNull();
+  it("gives ILCA 6 and ILCA 7 a public SNSC tab, but not 29er", () => {
+    expect(findEventSliceForRegattaSlug("snsc-ilca-6-sep-26-2026-09-11")?.slice.key).toBe("ilca-6");
+    expect(findEventSliceForRegattaSlug("snsc-ilca-7-sep-26-2026-09-11")?.slice.key).toBe("ilca-7");
     expect(findEventSliceForRegattaSlug("snsc-29er-sep-26-2026-09-11")).toBeNull();
     expect(findEventSliceForRegattaSlug("cincapura-regatta-2026-gold")?.event.slug).toBe(
       "cincapura-regatta-2026"

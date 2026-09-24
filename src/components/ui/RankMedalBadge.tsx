@@ -21,6 +21,7 @@ export function RankMedalBadge({
     return (
       <span
         role="img"
+        title="1st Place (Gold Medal)"
         aria-label="1st Place – Gold Medal"
         className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-black text-[11px] shrink-0 ${className}`}
         style={{ backgroundColor: "#FFD700", color: "#1a1a1a" }}
@@ -33,6 +34,7 @@ export function RankMedalBadge({
     return (
       <span
         role="img"
+        title="2nd Place (Silver Medal)"
         aria-label="2nd Place – Silver Medal"
         className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-black text-[11px] shrink-0 ${className}`}
         style={{ backgroundColor: "#C0C0C0", color: "#1a1a1a" }}
@@ -45,6 +47,7 @@ export function RankMedalBadge({
     return (
       <span
         role="img"
+        title="3rd Place (Bronze Medal)"
         aria-label="3rd Place – Bronze Medal"
         className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-black text-[11px] shrink-0 ${className}`}
         style={{ backgroundColor: "#CD7F32", color: "#fff" }}

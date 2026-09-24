@@ -90,8 +90,9 @@ export default function HowRankingsWorkPage() {
             races are non-ranking for series.
           </li>
           <li>
-            <strong className="text-[var(--sp-harbour-shadow)]">National list</strong> — squad
-            selection draws from the official ILCA 4 national list roster.
+            <strong className="text-[var(--sp-harbour-shadow)]">National list</strong> — ILCA 4 and ILCA 6
+            display sailors verified on the official national list rosters. ILCA 7 standings
+            are computed from open regatta performance.
           </li>
           <li>
             <strong className="text-[var(--sp-harbour-shadow)]">Dual sail numbers</strong> —
@@ -99,14 +100,26 @@ export default function HowRankingsWorkPage() {
             dual-class sailors.
           </li>
         </ul>
-        <p className="text-xs pt-2">
+        <div className="flex flex-wrap gap-4 text-xs pt-2">
           <Link
             href="/sg/ilca4"
             className="text-[var(--sp-harbour-teal)] font-semibold hover:underline"
           >
-            View ILCA 4 standings →
+            ILCA 4 standings →
           </Link>
-        </p>
+          <Link
+            href="/sg/ilca6"
+            className="text-[var(--sp-harbour-teal)] font-semibold hover:underline"
+          >
+            ILCA 6 standings →
+          </Link>
+          <Link
+            href="/sg/ilca7"
+            className="text-[var(--sp-harbour-teal)] font-semibold hover:underline"
+          >
+            ILCA 7 standings →
+          </Link>
+        </div>
       </section>
 
       <p className="text-center text-xs text-[var(--sp-slate-soft)]">

@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useState } from "react";
 import Link from "next/link";
 import {
+  type IlcaBoatClass,
   type IlcaIntakeKind,
   type IlcaRankedSailor,
   reRankIlcaWithExcluded,
@@ -46,6 +47,7 @@ export function getIlcaIntakeOptions(activeYear?: number): Array<{
 export const ILCA_INTAKE_OPTIONS = getIlcaIntakeOptions();
 
 type Props = {
+  boatClass?: IlcaBoatClass;
   initialRanked: IlcaRankedSailor[];
   initialIntakeKind: IlcaIntakeKind;
   initialIntakeYear: number;
@@ -69,6 +71,7 @@ function scoreCell(points: number | undefined, isDns?: boolean) {
  * Board is computed on the server (cached); intake switches hit /api/rankings.
  */
 export function IlcaRankingsView({
+  boatClass = "ILCA 4",
   initialRanked,
   initialIntakeKind,
   initialIntakeYear,
@@ -106,8 +109,9 @@ export function IlcaRankingsView({
     setLoading(true);
     setError(null);
     try {
+      const fleetParam = boatClass.replace(/\s+/g, "");
       const res = await fetch(
-        `/api/rankings?fleet=ILCA4&intake=${encodeURIComponent(kind)}&year=${year}`,
+        `/api/rankings?fleet=${encodeURIComponent(fleetParam)}&intake=${encodeURIComponent(kind)}&year=${year}`,
         { credentials: "same-origin" }
       );
       const data = (await res.json()) as {
@@ -125,7 +129,7 @@ export function IlcaRankingsView({
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [boatClass]);
 
   const rankingBase = useMemo(() => {
     if (excluded.size === 0) return ranked;
@@ -133,8 +137,9 @@ export function IlcaRankingsView({
   }, [ranked, excluded]);
 
   const projectedSquad = useMemo(() => {
+    if (boatClass !== "ILCA 4") return [];
     return selectIlca4NationalSquad(rankingBase);
-  }, [rankingBase]);
+  }, [boatClass, rankingBase]);
 
   const projectedSquadMap = useMemo(() => {
     const map = new Map<string, (typeof projectedSquad)[number]>();
@@ -237,7 +242,7 @@ export function IlcaRankingsView({
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-[10px] sm:text-xs font-bold text-sky-400 uppercase tracking-wide">
-              SG ILCA 4
+              SG {boatClass}
             </p>
             <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight break-words">
               National standings
@@ -246,7 +251,7 @@ export function IlcaRankingsView({
               Best 3 of last 5 · highlighted scores are selected · 1st = fleet
               size pts · * = DNS (0 pts)
             </p>
-            {isLoggedIn && (
+            {isLoggedIn && boatClass === "ILCA 4" && (
               <div className="mt-2.5 flex flex-wrap items-center gap-2">
                 <Link
                   href="/sg/ilca4/selection"
@@ -487,9 +492,8 @@ export function IlcaRankingsView({
 
       {displayRanked.length === 0 && !loading && (
         <p className="text-sm text-slate-500">
-          No ILCA 4 ranking results for listed sailors on or before {asOf}.
-          Import ILCA 4 regattas and ensure sailors are on the national list
-          (admin).
+          No {boatClass} ranking results for listed sailors on or before {asOf}.
+          Import {boatClass} regattas to view standings.
         </p>
       )}
 
@@ -819,7 +823,7 @@ export function IlcaRankingsView({
           </table>
         </div>
         <p className="px-4 py-3 text-[11px] text-slate-soft border-t border-cool-veil bg-sailcloth leading-relaxed">
-          <strong className="text-charcoal">Scoring &amp; Selection:</strong> High Ranking Points apply: in a fleet of N, 1st earns N points, 2nd earns N−1, and * = DNS (0 pts). R1–R5 show up to the last 5 ranking regattas on or before the cutoff (R1 oldest). Best 3 of 5 is the sum of the three highest scores (highlighted in aqua; higher total is better). Projected National Junior Training Squad (NJTS) status is computed according to the Singapore ILCA 4 Ranking System criteria (top 25 overall, age ≤ 17, gender/age quotas).
+          <strong className="text-charcoal">Scoring &amp; Standings:</strong> High Ranking Points apply: in a fleet of N, 1st earns N points, 2nd earns N−1, and * = DNS (0 pts). R1–R5 show up to the last 5 ranking regattas on or before the cutoff (R1 oldest). Best 3 of 5 is the sum of the three highest scores (highlighted in aqua; higher total is better).{boatClass === "ILCA 4" ? " Projected National Junior Training Squad (NJTS) status is computed according to the Singapore ILCA 4 Ranking System criteria (top 25 overall, age ≤ 17, gender/age quotas)." : ""}
         </p>
       </div>
     </div>

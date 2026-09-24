@@ -9,7 +9,7 @@ import type { RegattaRecord } from "@/lib/ranking";
  * to the March regatta, and "youth" cannot jump from the June championships
  * to the March SYSC results.
  */
-export type PublicResultClass = "optimist" | "ilca4";
+export type PublicResultClass = "optimist" | "ilca4" | "ilca6" | "ilca7";
 
 export type CalendarResultAlias = {
   /** Every token must appear in the published regatta slug. */
@@ -58,6 +58,8 @@ export function publicResultClass(
   boatClass: string | null | undefined
 ): PublicResultClass | null {
   if (isIlcaSeriesClass(boatClass, "ILCA 4")) return "ilca4";
+  if (isIlcaSeriesClass(boatClass, "ILCA 6")) return "ilca6";
+  if (isIlcaSeriesClass(boatClass, "ILCA 7")) return "ilca7";
   const boat = String(boatClass || "").trim().toLowerCase();
   if (
     boat.includes("ilca") ||
@@ -78,9 +80,10 @@ export function classResultsHref(
   regatta: Pick<RegattaRecord, "slug" | "boatClass">
 ): string {
   const slug = encodeURIComponent(regatta.slug);
-  if (publicResultClass(regatta.boatClass) === "ilca4") {
-    return `/sg/ilca4/regattas/${slug}`;
-  }
+  const cls = publicResultClass(regatta.boatClass);
+  if (cls === "ilca4") return `/sg/ilca4/regattas/${slug}`;
+  if (cls === "ilca6") return `/sg/ilca6/regattas/${slug}`;
+  if (cls === "ilca7") return `/sg/ilca7/regattas/${slug}`;
   return `/sg/optimist/regattas/${slug}`;
 }
 

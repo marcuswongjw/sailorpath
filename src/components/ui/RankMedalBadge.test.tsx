@@ -8,7 +8,7 @@ describe("RankMedalBadge", () => {
     render(<RankMedalBadge rank={1} />);
     const badge = screen.getByTitle("1st Place (Gold Medal)");
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass("bg-amber-400");
+    expect(badge).toHaveStyle({ backgroundColor: "#FFD700" });
     expect(badge.textContent).toBe("1");
   });
 
@@ -16,7 +16,7 @@ describe("RankMedalBadge", () => {
     render(<RankMedalBadge rank={2} />);
     const badge = screen.getByTitle("2nd Place (Silver Medal)");
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass("bg-slate-300");
+    expect(badge).toHaveStyle({ backgroundColor: "#C0C0C0" });
     expect(badge.textContent).toBe("2");
   });
 
@@ -24,7 +24,7 @@ describe("RankMedalBadge", () => {
     render(<RankMedalBadge rank={3} />);
     const badge = screen.getByTitle("3rd Place (Bronze Medal)");
     expect(badge).toBeInTheDocument();
-    expect(badge).toHaveClass("bg-amber-700");
+    expect(badge).toHaveStyle({ backgroundColor: "#CD7F32" });
     expect(badge.textContent).toBe("3");
   });
 

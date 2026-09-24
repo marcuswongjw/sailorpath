@@ -362,5 +362,46 @@ describe("computeIlcaRankings + squad", () => {
     expect(squadReasonLabel("age15_or_under")).toBe("Nat (≤15)");
     expect(squadReasonLabel("fill_same_gender")).toBe("Nat (Invited)");
   });
+
+  it("computes ILCA 6 ranking using ILCA 6 national list", () => {
+    const ilca6Sailors = [
+      { id: "s1", name: "Tan, Kenan Kee Zen", gender: "M", nationality: "SGP" },
+      { id: "s2", name: "Non List Sailor", gender: "M", nationality: "SGP" },
+    ];
+    const ilca6Regattas = [
+      { id: "r1", name: "Regatta 1", date: "2026-03-01", totalFleetSize: 10, boatClass: "ILCA 6", countsForRanking: true, raceCount: 4 },
+    ];
+    const ilca6Results = [
+      { regattaId: "r1", sailorId: "s1", rank: 1, nettScore: 4, totalScore: 4, isDns: false },
+      { regattaId: "r1", sailorId: "s2", rank: 2, nettScore: 5, totalScore: 5, isDns: false },
+    ];
+
+    const ranked = computeIlcaRankings("ILCA 6", "2026-06-30", ilca6Sailors, ilca6Regattas, ilca6Results);
+    // Non-list sailor is excluded by default on national ranking board
+    expect(ranked.some((r) => r.sailorId === "s1")).toBe(true);
+    expect(ranked.some((r) => r.sailorId === "s2")).toBe(false);
+  });
+
+  it("computes ILCA 7 ranking directly from regatta performance without national list", () => {
+    const ilca7Sailors = [
+      { id: "s1", name: "Standard Sailor One", gender: "M", nationality: "SGP" },
+      { id: "s2", name: "Standard Sailor Two", gender: "M", nationality: "SGP" },
+    ];
+    const ilca7Regattas = [
+      { id: "r1", name: "Regatta 1", date: "2026-03-01", totalFleetSize: 10, boatClass: "ILCA 7", countsForRanking: true, raceCount: 4 },
+    ];
+    const ilca7Results = [
+      { regattaId: "r1", sailorId: "s1", rank: 1, nettScore: 4, totalScore: 4, isDns: false },
+      { regattaId: "r1", sailorId: "s2", rank: 2, nettScore: 5, totalScore: 5, isDns: false },
+    ];
+
+    const ranked = computeIlcaRankings("ILCA 7", "2026-06-30", ilca7Sailors, ilca7Regattas, ilca7Results);
+    expect(ranked.length).toBe(2);
+    expect(ranked[0].sailorId).toBe("s1");
+    expect(ranked[0].rank).toBe(1);
+    expect(ranked[1].sailorId).toBe("s2");
+    expect(ranked[1].rank).toBe(2);
+  });
 });
+
 

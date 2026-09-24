@@ -30,6 +30,8 @@ function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
   if (series === "wingfoil") return "/sg/wingfoil";
   if (series === "techno293") return "/sg/techno293";
   if (series === "ilca4") return "/sg/ilca4";
+  if (series === "ilca6") return "/sg/ilca6";
+  if (series === "ilca7") return "/sg/ilca7";
   if (series === "optimist") return "/sg/optimist/gold";
   return null;
 }
@@ -242,7 +244,10 @@ async function DbSlicePanel({
       error instanceof DbUnavailableError ? error.message : "DB error";
     return <DbOffline message={message} />;
   }
-  const accent = def.series === "ilca4" ? "sky" : "orange";
+  const accent =
+    def.series === "ilca4" || def.series === "ilca6" || def.series === "ilca7"
+      ? "sky"
+      : "orange";
   const eventYear = Number(String(regatta.date || "").slice(0, 4));
   const fleets = prizeView
     ? fillUnlistedPrizeWinners(prizeView.fleets, results, eventYear)

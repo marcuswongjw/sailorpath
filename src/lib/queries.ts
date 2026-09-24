@@ -743,9 +743,10 @@ async function computeIlcaRankingsBoard(
               join ${regattas} r on rr.regatta_id = r.id
               where rr.sailor_id = ${sailors.id}
                 and (
-                  r.boat_class = 'ILCA 4'
-                  or r.boat_class = 'ILCA4'
+                  r.boat_class in ('ILCA 4', 'ILCA4', 'ILCA 6', 'ILCA6', 'ILCA 7', 'ILCA7', 'Radial', 'Laser Radial', 'Laser Standard', 'Standard')
                   or lower(coalesce(r.boat_class, '')) like '%ilca%'
+                  or lower(coalesce(r.boat_class, '')) like '%laser%'
+                  or lower(coalesce(r.boat_class, '')) like '%radial%'
                 )
             )`
           )
@@ -766,7 +767,13 @@ async function computeIlcaRankingsBoard(
           or(
             eq(regattas.boatClass, "ILCA 4"),
             eq(regattas.boatClass, "ILCA4"),
-            sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%'`
+            eq(regattas.boatClass, "ILCA 6"),
+            eq(regattas.boatClass, "ILCA6"),
+            eq(regattas.boatClass, "ILCA 7"),
+            eq(regattas.boatClass, "ILCA7"),
+            sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%'`,
+            sql`lower(coalesce(${regattas.boatClass}, '')) like '%laser%'`,
+            sql`lower(coalesce(${regattas.boatClass}, '')) like '%radial%'`
           )
         ),
     ]);

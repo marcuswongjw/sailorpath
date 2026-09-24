@@ -7,8 +7,8 @@ export type RegattaEventHeaderProps = {
   division?: string | null;
   totalFleetSize: number;
   raceCount?: number | null;
-  /** "optimist" | "ilca4" */
-  series: "optimist" | "ilca4";
+  /** "optimist" | "ilca4" | "ilca6" | "ilca7" */
+  series: "optimist" | "ilca4" | "ilca6" | "ilca7";
   countsForRanking?: boolean;
   norUrl?: string | null;
 };
@@ -26,10 +26,31 @@ export function RegattaEventHeader({
   countsForRanking = true,
   norUrl,
 }: RegattaEventHeaderProps) {
-  const isIlca = series === "ilca4";
-  const listHref = isIlca ? "/sg/ilca4/regattas" : "/sg/optimist/regattas";
-  const rankingsHref = isIlca ? "/sg/ilca4" : "/sg/optimist/gold";
-  const classLabel = isIlca ? "ILCA 4" : "Optimist";
+  const isIlca = series === "ilca4" || series === "ilca6" || series === "ilca7";
+  const listHref =
+    series === "ilca4"
+      ? "/sg/ilca4/regattas"
+      : series === "ilca6"
+      ? "/sg/ilca6/regattas"
+      : series === "ilca7"
+      ? "/sg/ilca7/regattas"
+      : "/sg/optimist/regattas";
+  const rankingsHref =
+    series === "ilca4"
+      ? "/sg/ilca4"
+      : series === "ilca6"
+      ? "/sg/ilca6"
+      : series === "ilca7"
+      ? "/sg/ilca7"
+      : "/sg/optimist/gold";
+  const classLabel =
+    series === "ilca4"
+      ? "ILCA 4"
+      : series === "ilca6"
+      ? "ILCA 6"
+      : series === "ilca7"
+      ? "ILCA 7"
+      : "Optimist";
   const divLabel = String(division || (isIlca ? "Open" : "—")).trim() || "—";
   const divisionIsNonRanking = /^(non[\s-]?ranking|practice)$/i.test(divLabel);
 

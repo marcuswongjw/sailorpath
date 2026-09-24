@@ -230,7 +230,10 @@ export function RegattaCalendarClient({
         if (selectedClass === "ilca4" && !matches(["ilca 4", "ilca4"])) {
           return false;
         }
-        if (selectedClass === "ilca6" && !matches(["ilca 6", "ilca6"])) {
+        if (selectedClass === "ilca6" && !matches(["ilca 6", "ilca6", "radial"])) {
+          return false;
+        }
+        if (selectedClass === "ilca7" && !matches(["ilca 7", "ilca7", "standard"])) {
           return false;
         }
         if (selectedClass === "wingfoil" && !matches(["wingfoil", "wing"])) {
@@ -442,6 +445,7 @@ export function RegattaCalendarClient({
               { id: "optimist", label: "Optimist", icon: Sailboat },
               { id: "ilca4", label: "ILCA 4", icon: Compass },
               { id: "ilca6", label: "ILCA 6", icon: Compass },
+              { id: "ilca7", label: "ILCA 7", icon: Compass },
               { id: "wingfoil", label: "WingFoil", icon: Trophy },
             ].map((cat) => {
               const Icon = cat.icon;

@@ -14,22 +14,32 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const fleetRaw = (searchParams.get("fleet") || "Gold").trim();
 
-    // ILCA national board: ?fleet=ILCA4&intake=july&year=2026
+    const fleetLower = fleetRaw.toLowerCase().replace(/[\s._-]+/g, "");
+
+    // ILCA national board: ?fleet=ILCA4 | ILCA6 | ILCA7
     if (
-      fleetRaw.toLowerCase() === "ilca4" ||
-      fleetRaw.toLowerCase() === "ilca" ||
-      fleetRaw.toUpperCase() === "ILCA 4"
+      fleetLower === "ilca4" ||
+      fleetLower === "ilca" ||
+      fleetLower === "ilca6" ||
+      fleetLower === "ilca7"
     ) {
+      const targetClass: "ILCA 4" | "ILCA 6" | "ILCA 7" =
+        fleetLower === "ilca6"
+          ? "ILCA 6"
+          : fleetLower === "ilca7"
+          ? "ILCA 7"
+          : "ILCA 4";
       const now = new Date();
       const fallback = defaultIlcaIntake(now);
       const intakeRaw = (searchParams.get("intake") || fallback.kind).toLowerCase();
       const intakeKind: IlcaIntakeKind =
         intakeRaw === "january" ? "january" : "july";
       const year = Number(searchParams.get("year") || fallback.year);
-      const board = await getCachedIlcaRankings("ILCA 4", intakeKind, year);
+      const board = await getCachedIlcaRankings(targetClass, intakeKind, year);
       return NextResponse.json(
         {
-          fleet: "ILCA4",
+          fleet: targetClass.replace(/\s+/g, ""),
+          boatClass: targetClass,
           intakeKind: board.intakeKind,
           intakeYear: board.intakeYear,
           asOf: board.asOf,

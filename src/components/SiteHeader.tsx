@@ -139,6 +139,54 @@ export function SiteHeader() {
         ILCA 4 regattas
       </Link>
       <hr className="my-1.5 border-cool-veil" />
+      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
+        ILCA 6
+      </p>
+      <Link
+        href="/sg/ilca6"
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
+      >
+        ILCA 6 standings
+      </Link>
+      <Link
+        href="/sg/ilca6/regattas"
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
+      >
+        ILCA 6 regattas
+      </Link>
+      <hr className="my-1.5 border-cool-veil" />
+      <p className="px-3.5 pb-1 pt-1.5 text-xs font-bold uppercase tracking-wider text-slate-soft">
+        ILCA 7
+      </p>
+      <Link
+        href="/sg/ilca7"
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
+      >
+        ILCA 7 standings
+      </Link>
+      <Link
+        href="/sg/ilca7/regattas"
+        onClick={() => {
+          setMobileOpen(false);
+          setOpenMenu(null);
+        }}
+        className="block rounded-lg px-3.5 py-2 text-xs font-semibold text-charcoal hover:bg-sailcloth hover:text-harbour transition-colors"
+      >
+        ILCA 7 regattas
+      </Link>
+      <hr className="my-1.5 border-cool-veil" />
       <p className="px-3.5 pb-1 text-xs font-bold uppercase tracking-wider text-slate-soft">
         WingFoil
       </p>
@@ -498,6 +546,40 @@ export function SiteHeader() {
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
               ILCA 4 regattas
+            </Link>
+            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
+              ILCA 6
+            </p>
+            <Link
+              href="/sg/ilca6"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              ILCA 6 standings
+            </Link>
+            <Link
+              href="/sg/ilca6/regattas"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              ILCA 6 regattas
+            </Link>
+            <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
+              ILCA 7
+            </p>
+            <Link
+              href="/sg/ilca7"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              ILCA 7 standings
+            </Link>
+            <Link
+              href="/sg/ilca7/regattas"
+              onClick={() => setMobileOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
+            >
+              ILCA 7 regattas
             </Link>
             <p className="px-3 pt-3 pb-1 text-xs font-bold uppercase tracking-wider text-soft-aqua">
               WingFoil

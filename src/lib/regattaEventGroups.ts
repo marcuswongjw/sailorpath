@@ -31,11 +31,13 @@ export function groupSlug(key: string): string {
   return key.replace("|", "-").replace(/\s+/g, "-");
 }
 
-type Fleet = "gold" | "silver" | "open" | "ilca4";
+type Fleet = "gold" | "silver" | "open" | "ilca4" | "ilca6" | "ilca7";
 
 function publicFleet(row: RegattaRecord): Fleet | null {
   const boat = String(row.boatClass || "");
   if (isIlcaSeriesClass(boat, "ILCA 4")) return "ilca4";
+  if (isIlcaSeriesClass(boat, "ILCA 6")) return "ilca6";
+  if (isIlcaSeriesClass(boat, "ILCA 7")) return "ilca7";
   const lower = boat.toLowerCase();
   if (
     lower.includes("ilca") ||
@@ -79,6 +81,24 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
       prizeFleetName: "ILCA 4",
     };
   }
+  if (fleet === "ilca6") {
+    return {
+      key: "ilca-6",
+      label: "ILCA 6",
+      series: "ilca6",
+      slugIncludes: [row.slug.toLowerCase()],
+      prizeFleetName: "ILCA 6",
+    };
+  }
+  if (fleet === "ilca7") {
+    return {
+      key: "ilca-7",
+      label: "ILCA 7",
+      series: "ilca7",
+      slugIncludes: [row.slug.toLowerCase()],
+      prizeFleetName: "ILCA 7",
+    };
+  }
   if (fleet === "silver") {
     return {
       key: "optimist-silver",
@@ -106,7 +126,7 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
   };
 }
 
-const FLEET_ORDER: Fleet[] = ["gold", "silver", "open", "ilca4"];
+const FLEET_ORDER: Fleet[] = ["gold", "silver", "open", "ilca4", "ilca6", "ilca7"];
 
 /**
  * Tabs for a results row that is not already part of a registered event.
