@@ -101,5 +101,41 @@ describe("sailorPrizes", () => {
       expect(maiaCsc?.rank).toBe(1);
       expect(maiaCsc?.medal).toBe("gold");
     });
+
+    it("links official SNSC 2025 prizes to sailors (Pailin, Katelynn, Ian Goh, Kenan Tan)", () => {
+      const pailin = getSailorPrizes({
+        name: "Pailin Jaroenpon",
+        sailNumber: "1253",
+      });
+      const pailinSnsc = pailin.filter((p) => p.year === 2025 && p.regattaName.includes("Singapore National"));
+      expect(pailinSnsc.length).toBe(2); // 1st Open & 1st Female
+      expect(pailinSnsc.every((p) => p.medal === "gold")).toBe(true);
+
+      const katelynn = getSailorPrizes({
+        name: "Katelynn Kai En Lee",
+        sailNumber: "3383",
+      });
+      const katelynnSnsc = katelynn.filter((p) => p.year === 2025 && p.regattaName.includes("Singapore National"));
+      expect(katelynnSnsc.length).toBe(2); // 1st Silver Champion & 1st Female
+      expect(katelynnSnsc.every((p) => p.medal === "gold")).toBe(true);
+
+      const ian = getSailorPrizes({
+        name: "Ian Goh",
+        sailNumber: "222713",
+      });
+      const ianSnsc = ian.find((p) => p.year === 2025 && p.regattaName.includes("Singapore National"));
+      expect(ianSnsc).toBeDefined();
+      expect(ianSnsc?.prizeTitle).toBe("1st (National Champion)");
+      expect(ianSnsc?.boatClass).toBe("ILCA 4");
+
+      const kenan = getSailorPrizes({
+        name: "Kenan Kee Zen Tan",
+        sailNumber: "1",
+      });
+      const kenanSnsc = kenan.find((p) => p.year === 2025 && p.regattaName.includes("Singapore National"));
+      expect(kenanSnsc).toBeDefined();
+      expect(kenanSnsc?.prizeTitle).toBe("1st (National Champion)");
+      expect(kenanSnsc?.boatClass).toBe("ILCA 6");
+    });
   });
 });

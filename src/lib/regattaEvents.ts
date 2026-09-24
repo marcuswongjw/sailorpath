@@ -52,6 +52,53 @@ export type RegattaEventDef = {
   slices: RegattaEventSliceDef[];
 };
 
+export const SNSC_2025_EVENT: RegattaEventDef = {
+  slug: "snsc-2025",
+  name: "Singapore National Sailing Championships 2025",
+  shortName: "SNSC 2025",
+  datesText: "6–9 September 2025",
+  venue: "National Sailing Centre, Singapore",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/11799/event",
+  officialNoticeBoardUrl:
+    "https://www.racingrulesofsailing.org/documents/11799/event",
+  websiteUrl: "https://www.sailing.org.sg/events/298131",
+  scheduleSummary:
+    "6–9 September 2025 at National Sailing Centre. Scoring: 10 or more races sailed = 2 discards.",
+  scoringRules:
+    "At least 3 races to constitute a series. 5–9 races: 1 discard. 10 or more races: 2 discards (RRS Appendix A). Section 20 Prizes: Category awards per NoR.",
+  slices: [
+    {
+      key: "optimist-gold",
+      label: "Optimist Gold",
+      series: "optimist",
+      slugIncludes: ["snsc", "gold", "sep-25"],
+      prizeFleetName: "Optimist Gold Fleet",
+    },
+    {
+      key: "optimist-silver",
+      label: "Optimist Silver",
+      series: "optimist",
+      slugIncludes: ["snsc", "silver", "sep-25"],
+      prizeFleetName: "Optimist Silver Fleet",
+    },
+    {
+      key: "ilca-4",
+      label: "ILCA 4",
+      series: "ilca4",
+      slugIncludes: ["snsc", "ilca-4", "sep-25"],
+      prizeFleetName: "ILCA 4",
+    },
+    {
+      key: "ilca-6",
+      label: "ILCA 6",
+      series: "ilca6",
+      slugIncludes: ["snsc", "ilca-6", "sep-25"],
+      prizeFleetName: "ILCA 6",
+    },
+  ],
+};
+
 export const SNSC_2026_EVENT: RegattaEventDef = {
   slug: "snsc-2026",
   name: "Singapore National Sailing Championships 2026",
@@ -319,6 +366,7 @@ export const CSC_ILCA_29ER_2026_EVENT: RegattaEventDef = {
 export const REGATTA_EVENTS: RegattaEventDef[] = [
   CSC_ILCA_29ER_2026_EVENT,
   SNSC_2026_EVENT,
+  SNSC_2025_EVENT,
   TEMASEK_2026_EVENT,
   SAFYC_REGATTA_2026_EVENT,
   SAFYC_OPTIMIST_2026_EVENT,
@@ -335,6 +383,8 @@ const EVENT_SLUG_ALIASES: Record<string, string> = {
   "csc-ilca-29er-2026": "6th-csc-ilca-29er-open-2026",
   "singapore-national-sailing-championships-2026": "snsc-2026",
   "singapore-national-sailing-championships-2026-ilca4": "snsc-2026",
+  "singapore-national-sailing-championships-2025": "snsc-2025",
+  "singapore-national-sailing-championships-2025-ilca4": "snsc-2025",
   "pesta-sukan-regatta-2026-optimist": "pesta-sukan-2026",
   "pesta-sukan-regatta-2026-ilca-wingfoil": "pesta-sukan-2026",
   "singapore-youth-sailing-championships-2026": "sysc-2026",

@@ -11,6 +11,7 @@ import {
   CINCAPURA_2026_EVENT,
   PESTA_SUKAN_2026_EVENT,
   SAFYC_OPTIMIST_2026_EVENT,
+  SNSC_2025_EVENT,
   SNSC_2026_EVENT,
 } from "@/lib/regattaEvents";
 
@@ -55,6 +56,8 @@ describe("getRegattaEvent", () => {
     expect(getRegattaEvent("pesta-sukan-regatta-2026-optimist")?.slug).toBe("pesta-sukan-2026");
     expect(getRegattaEvent("pesta-sukan-regatta-2026-ilca-wingfoil")?.slug).toBe("pesta-sukan-2026");
     expect(getRegattaEvent("singapore-national-sailing-championships-2026")?.slug).toBe("snsc-2026");
+    expect(getRegattaEvent("singapore-national-sailing-championships-2025")?.slug).toBe("snsc-2025");
+    expect(getRegattaEvent("snsc-2025")?.slug).toBe("snsc-2025");
   });
 });
 
@@ -64,6 +67,14 @@ describe("sliceMatchesRegattaSlug", () => {
     expect(sliceMatchesRegattaSlug(gold, "snsc-gold-sep-26-2026-09-11")).toBe(true);
     expect(sliceMatchesRegattaSlug(silver, "snsc-silver-sep-26-2026-09-05")).toBe(true);
     expect(sliceMatchesRegattaSlug(ilca, "snsc-ilca-4-sep-26-2026-09-11")).toBe(true);
+  });
+
+  it("matches the live SNSC 2025 slice slugs to the right slices", () => {
+    const [gold, silver, ilca4, ilca6] = SNSC_2025_EVENT.slices;
+    expect(sliceMatchesRegattaSlug(gold, "snsc-gold-sep-25-2025-09-06")).toBe(true);
+    expect(sliceMatchesRegattaSlug(silver, "snsc-silver-sep-25-2025-09-06")).toBe(true);
+    expect(sliceMatchesRegattaSlug(ilca4, "snsc-ilca-4-sep-25-2025-09-06")).toBe(true);
+    expect(sliceMatchesRegattaSlug(ilca6, "snsc-ilca-6-sep-25-2025-09-06")).toBe(true);
   });
 
   it("does not cross-match slices or other years", () => {

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   prizeNameKey,
+  SNSC_2025_PRIZE_SCHEDULE,
   SNSC_2026_PRIZE_SCHEDULE,
   PESTA_SUKAN_2026_PRIZE_SCHEDULE,
   CINCAPURA_2026_PRIZE_SCHEDULE,
@@ -16,6 +17,40 @@ describe("regattaPrizes", () => {
   it("matches prize names to result names despite commas", () => {
     expect(prizeNameKey("Goh, Ian")).toBe(prizeNameKey("Goh Ian"));
     expect(prizeNameKey("Wai, Zhi Tong")).toBe("wai zhi tong");
+  });
+
+  it("defines SNSC 2025 prize categories and winners per NoR", () => {
+    expect(SNSC_2025_PRIZE_SCHEDULE.regattaName).toContain("Singapore National Sailing Championships (SNSC) 2025");
+    expect(SNSC_2025_PRIZE_SCHEDULE.entryFees.singleHanded).toBe(136);
+    expect(SNSC_2025_PRIZE_SCHEDULE.entryFees.doubleHanded).toBe(272);
+    expect(SNSC_2025_PRIZE_SCHEDULE.entryFees.lateFee).toBe(68);
+
+    const gold = SNSC_2025_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Optimist Gold Fleet");
+    expect(gold).toBeDefined();
+    const goldOpen = gold?.categories.find((c) => c.categoryName === "Open");
+    expect(goldOpen?.winners[0].sailorName).toBe("Pailin Jaroenpon");
+    expect(goldOpen?.winners[1].sailorName).toBe("Sean Kok Wei Kum");
+    expect(goldOpen?.winners[2].sailorName).toBe("Lucas Zhihong Cao");
+
+    const silver = SNSC_2025_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Optimist Silver Fleet");
+    expect(silver).toBeDefined();
+    const silverOpen = silver?.categories.find((c) => c.categoryName === "Open");
+    expect(silverOpen?.winners).toHaveLength(10);
+    expect(silverOpen?.winners[0].sailorName).toBe("Katelynn Kai En Lee");
+
+    const ilca4 = SNSC_2025_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "ILCA 4");
+    expect(ilca4).toBeDefined();
+    const ilca4Open = ilca4?.categories.find((c) => c.categoryName === "Open");
+    expect(ilca4Open?.winners[0].sailorName).toBe("Ian Goh");
+    expect(ilca4Open?.winners[1].sailorName).toBe("Nigel Xu Yuan Tan");
+    expect(ilca4Open?.winners[2].sailorName).toBe("Nia Zahedi");
+
+    const ilca6 = SNSC_2025_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "ILCA 6");
+    expect(ilca6).toBeDefined();
+    const ilca6Open = ilca6?.categories.find((c) => c.categoryName === "Open");
+    expect(ilca6Open?.winners[0].sailorName).toBe("Kenan Kee Zen Tan");
+    expect(ilca6Open?.winners[1].sailorName).toBe("Jania Ang");
+    expect(ilca6Open?.winners[2].sailorName).toBe("Noppassorn Khunboonjan");
   });
 
   it("defines SNSC 2026 prize categories and winners per NoR", () => {
