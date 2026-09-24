@@ -558,27 +558,27 @@ export function IlcaRankingsView({
                     <RankMedalBadge
                       rank={s.displayRank}
                       className="w-6 shrink-0"
-                      nonPodiumClassName="font-mono font-bold text-slate-soft text-sm shrink-0 tabular-nums w-6 text-center"
+                      nonPodiumClassName="font-mono font-bold text-slate-700 text-sm shrink-0 tabular-nums w-6 text-center"
                     />
                     {handle ? (
                       <Link
                         href={`/${handle}`}
-                        className="font-bold text-charcoal hover:text-harbour text-[15px] leading-snug break-words min-w-0"
+                        className="font-black text-charcoal hover:text-harbour text-[15px] leading-snug break-words min-w-0"
                       >
                         {s.name}
                       </Link>
                     ) : (
-                      <span className="font-bold text-charcoal text-[15px]">
+                      <span className="font-black text-charcoal text-[15px] leading-snug break-words min-w-0">
                         {s.name}
                       </span>
                     )}
                   </div>
-                  <p className="text-[11px] text-slate-soft mt-1">
+                  <p className="text-[11px] text-slate-700 font-medium mt-1">
                     {s.gender || "—"} · Born {s.birthYear ?? "—"}
                   </p>
                 </div>
                 <div className="text-right shrink-0 pl-1">
-                  <p className="text-[9px] text-slate-soft uppercase font-bold tracking-wide">
+                  <p className="text-[9px] text-slate-700 uppercase font-black tracking-wide">
                     Best 3
                   </p>
                   <p className="font-black text-charcoal text-lg tabular-nums leading-none mt-0.5">

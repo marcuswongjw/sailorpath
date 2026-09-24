@@ -61,48 +61,80 @@ function winnerRowTint(rank: number): string {
   return "bg-[var(--sp-warm-white)] border-[var(--sp-cool-veil)]/80";
 }
 
-function WinnerRow({ w, profileHandles }: { w: PrizeCategory["winners"][number]; profileHandles?: Record<string, string> }) {
+function WinnerRow({
+  w,
+  profileHandles,
+}: {
+  w: PrizeCategory["winners"][number];
+  profileHandles?: Record<string, string>;
+}) {
   const { bg, fg } = medalStyle(w.rank);
   const tint = winnerRowTint(w.rank);
   return (
-    <div className={`flex items-center gap-2.5 rounded-lg border px-2.5 py-2 text-xs ${tint}`}>
-      <span
-        role="img"
-        aria-label={
-          w.rank === 1 ? "1st Place – Gold Medal"
-          : w.rank === 2 ? "2nd Place – Silver Medal"
-          : w.rank === 3 ? "3rd Place – Bronze Medal"
-          : `${w.rank}th Place`
-        }
-        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full font-black text-[10px]"
-        style={{ backgroundColor: bg, color: fg }}
-        title={w.prizeTitle}
-      >
-        {w.rank}
-      </span>
-      <div className="min-w-0 flex-1 flex items-baseline justify-between gap-1">
-        <PrizeSailorName
-          name={w.sailorName}
-          handle={profileHandles?.[prizeNameKey(w.sailorName)]}
-        />
-        <div className="flex items-center gap-2 shrink-0">
+    <div
+      className={`rounded-xl border px-3 py-2.5 text-xs transition-colors shadow-xs ${tint}`}
+    >
+      {/* Primary line: Medal, Sailor Name (Prominent & Non-truncated), and Score/Note badge */}
+      <div className="flex items-center justify-between gap-2 min-w-0">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
+          <span
+            role="img"
+            aria-label={
+              w.rank === 1
+                ? "1st Place – Gold Medal"
+                : w.rank === 2
+                  ? "2nd Place – Silver Medal"
+                  : w.rank === 3
+                    ? "3rd Place – Bronze Medal"
+                    : `${w.rank}th Place`
+            }
+            className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-black text-[11px] shadow-xs"
+            style={{ backgroundColor: bg, color: fg }}
+            title={w.prizeTitle}
+          >
+            {w.rank}
+          </span>
+          <div className="min-w-0 flex-1">
+            <PrizeSailorName
+              name={w.sailorName}
+              handle={profileHandles?.[prizeNameKey(w.sailorName)]}
+            />
+          </div>
+        </div>
+
+        {w.notes && (
+          <span className="text-[10px] sm:text-[11px] font-bold text-harbour bg-harbour/10 border border-harbour/25 rounded-md px-2 py-0.5 shrink-0 whitespace-nowrap">
+            {w.notes}
+          </span>
+        )}
+      </div>
+
+      {/* Subline: Club, School, Sail Number metadata */}
+      {(w.club || w.schoolName || w.sailNumber) && (
+        <div className="flex items-center gap-1.5 flex-wrap text-[10px] sm:text-[11px] text-slate-700 font-medium mt-1 pl-8">
           {w.club && (
-            <span className="inline-flex items-center gap-0.5 text-[10px] text-[var(--sp-charcoal)] hidden sm:inline-flex">
-              <Compass className="h-2.5 w-2.5 shrink-0" aria-hidden />
-              <span className="truncate max-w-[8rem]">{w.club}</span>
+            <span className="inline-flex items-center gap-1 text-slate-700">
+              <Compass className="h-2.5 w-2.5 shrink-0 text-harbour" aria-hidden />
+              <span>{w.club}</span>
             </span>
           )}
+          {w.club && (w.sailNumber || w.schoolName) && (
+            <span className="text-slate-400">·</span>
+          )}
           {w.sailNumber && (
-            <span className="font-mono text-[10px] text-[var(--sp-charcoal)]">
+            <span className="font-mono font-bold text-charcoal tabular-nums">
               #{w.sailNumber}
             </span>
           )}
+          {w.sailNumber && w.schoolName && (
+            <span className="text-slate-400">·</span>
+          )}
+          {w.schoolName && (
+            <span className="text-slate-600 font-normal">
+              {w.schoolName}
+            </span>
+          )}
         </div>
-      </div>
-      {w.notes && (
-        <p className="text-[10px] text-[var(--sp-racing-deep)] font-medium shrink-0">
-          {w.notes}
-        </p>
       )}
     </div>
   );
@@ -148,26 +180,26 @@ function CategoryCard({
 
       {/* Winners layout */}
       {isThreePodium ? (
-        <div className="p-3 flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-stretch">
+        <div className="p-2.5 sm:p-3 flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-2.5 items-stretch">
           {cat.winners.map((w) => (
             <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
           ))}
         </div>
       ) : splitAt ? (
-        <div className="p-2.5 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1.5 items-start">
-          <div className="space-y-1.5">
+        <div className="p-2 sm:p-2.5 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-x-3 sm:gap-y-1.5 items-start">
+          <div className="space-y-2 sm:space-y-1.5">
             {leftCol.map((w) => (
               <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
             ))}
           </div>
-          <div className="space-y-1.5">
+          <div className="space-y-2 sm:space-y-1.5">
             {rightCol.map((w) => (
               <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
             ))}
           </div>
         </div>
       ) : (
-        <div className="p-2.5 flex-1 space-y-1.5">
+        <div className="p-2 sm:p-2.5 flex-1 space-y-2 sm:space-y-1.5">
           {leftCol.map((w) => (
             <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
           ))}
@@ -256,7 +288,7 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
       </div>
 
       {/* ── Podium layout ───────────────────────────────────────────── */}
-      <div className="p-4 sm:p-6 space-y-4">
+      <div className="p-3 sm:p-6 space-y-3 sm:space-y-4">
         {mainCat && (mainCat.winners.length > 5 || mainCat.winners.length === 3) ? (
           // Main category full-width (2-col split for >5 winners, 3-col split for 3 winners), sub-cats grid below
           <>
@@ -293,12 +325,16 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
 
 function PrizeSailorName({ name, handle }: { name: string; handle?: string }) {
   if (!handle) {
-    return <span className="font-bold text-[var(--sp-charcoal)] truncate">{name}</span>;
+    return (
+      <span className="font-black text-charcoal text-[13px] sm:text-sm leading-snug break-words">
+        {name}
+      </span>
+    );
   }
   return (
     <Link
       href={`/${handle}`}
-      className="font-bold text-[var(--sp-harbour-shadow)] hover:text-[var(--sp-racing-orange)] truncate"
+      className="font-black text-harbour hover:text-harbour-deep hover:underline text-[13px] sm:text-sm leading-snug break-words"
     >
       {name}
     </Link>
