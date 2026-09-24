@@ -23,7 +23,15 @@ export type RegattaEventSliceDef = {
   key: string;
   /** Tab label, e.g. "Optimist Gold". */
   label: string;
-  series: "optimist" | "ilca4" | "ilca6" | "ilca7" | "wingfoil" | "techno293" | "29er";
+  series:
+    | "optimist"
+    | "ilca4"
+    | "ilca6"
+    | "ilca7"
+    | "wingfoil"
+    | "techno293"
+    | "29er"
+    | "iqfoil";
   /**
    * Regattas-table slice: lowercased regatta slug must contain every token.
    */
@@ -95,6 +103,29 @@ export const SNSC_2025_EVENT: RegattaEventDef = {
       series: "ilca6",
       slugIncludes: ["snsc", "ilca-6", "sep-25"],
       prizeFleetName: "ILCA 6",
+    },
+    {
+      key: "techno-293",
+      label: "Techno 293",
+      series: "techno293",
+      slugIncludes: ["snsc", "techno-293", "sep-25"],
+      staticId: "techno-snsc-2025",
+      prizeFleetName: "Techno 293 / 293+",
+    },
+    {
+      key: "wingfoil",
+      label: "WingFoil",
+      series: "wingfoil",
+      slugIncludes: ["snsc", "wingfoil", "sep-25"],
+      staticId: "snsc-2025-wingfoil",
+      prizeFleetName: "WingFoil",
+    },
+    {
+      key: "iqfoil",
+      label: "iQFOiL",
+      series: "iqfoil",
+      slugIncludes: ["snsc", "iqfoil", "sep-25"],
+      prizeFleetName: "iQFOiL",
     },
   ],
 };
