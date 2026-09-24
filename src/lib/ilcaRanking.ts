@@ -431,7 +431,7 @@ export function defaultIlcaIntake(now = new Date()): {
 /**
  * Ranking window + intake year for squad selection.
  * Competition in Jan–Jun Y (cutoff 30 Jun Y) selects July Y intake.
- * Competition in Jul–Dec Y (cutoff 31 Dec Y) selects January Y+1 intake.
+ * Competition in Jul–Dec Y (cutoff 20 Dec Y) selects January Y+1 intake.
  */
 export function ilcaSquadCutoff(
   kind: IlcaIntakeKind,
@@ -448,7 +448,7 @@ export function ilcaSquadCutoff(
   // January intake of year Y is selected from Jul–Dec of previous year Y-1
   const compYear = intakeYear - 1;
   return {
-    asOf: `${compYear}-12-31`,
+    asOf: `${compYear}-12-20`,
     intakeYear,
     label: `Jul – Dec ${compYear} · January ${intakeYear} intake`,
   };

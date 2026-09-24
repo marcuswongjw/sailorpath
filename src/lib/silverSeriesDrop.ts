@@ -6,6 +6,14 @@
  *
  * Applies to Silver-track sailors only. Gold participation uses goldFleetDrop
  * (≥2 Gold ranking regattas per half).
+ *
+ * Persistence of `sailors.drop_date` is admin-only
+ * (`applySilverInactivityDrops` in adminSailorActions). Public ranking reads
+ * must never write drop dates.
+ *
+ * `findSilverInactivityDrops` no-ops when called from `computeFleetRankings`
+ * so public ranking reads cannot stamp drop_date; admin calls still detect.
+ * Prefer `detectSilverInactivityDrops` in new admin code.
  */
 
 import { completedPeriodsUpTo } from "@/lib/goldFleetDrop";
@@ -17,11 +25,7 @@ import {
   type RegattaResultRecord,
   type SailorRecord,
 } from "@/lib/ranking";
-import {
-  isExplicitGuest,
-  isInSgSeries,
-  isSgpNationality,
-} from "@/lib/seriesMembership";
+import { isExplicitGuest, isInSgSeries } from "@/lib/seriesMembership";
 import { toYmd } from "@/lib/datesSg";
 
 export type SilverDropCandidate = {
@@ -80,20 +84,51 @@ export function countOptimistRankingStartsInPeriod(
   return n;
 }
 
-function isSeriesCandidate(s: SailorRecord): boolean {
+/**
+ * Series members (or stamped entry dates) only — bare SGP nationality alone
+ * is not enough. Guests are never candidates.
+ */
+export function isSilverInactivityCandidate(s: SailorRecord): boolean {
   if (isExplicitGuest(s)) return false;
   if (isInSgSeries(s)) return true;
   if (s.silverEntryDate || s.goldEntryDate) return true;
-  if (isSgpNationality(s.nationality)) return true;
   return false;
+}
+
+/** Earliest Optimist ranking result date (any division; foothold signal). */
+export function earliestOptimistRankingDate(
+  sailorId: string,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[]
+): string | undefined {
+  const regById = new Map(regattas.map((r) => [r.id, r]));
+  let earliest: string | undefined;
+  for (const res of results) {
+    if (res.sailorId !== sailorId) continue;
+    const r = regById.get(res.regattaId);
+    if (!r) continue;
+    if (r.countsForRanking === false) continue;
+    if (!regattaMatchesSeriesClass(r, "Optimist")) continue;
+    const d = toYmd(r.date);
+    if (!d) continue;
+    if (!earliest || d < earliest) earliest = d;
+  }
+  return earliest;
 }
 
 /**
  * Silver-track sailors who missed every ranking start in a completed half.
  * Earliest failure only. Does not overwrite an existing earlier drop date.
  * Skips halves where the sailor was Gold (goldFleetDrop owns those).
+ *
+ * Requires a real foothold (entry stamp or Optimist ranking history) before
+ * any half is evaluated — idle Series / SGP profiles are not stamped with
+ * ancient drop dates from walking completed halves since 2022.
+ *
+ * Admin-only consumer: `applySilverInactivityDrops`. Do not call from public
+ * ranking reads.
  */
-export function findSilverInactivityDrops(
+export function detectSilverInactivityDrops(
   sailors: SailorRecord[],
   regattas: RegattaRecord[],
   results: RegattaResultRecord[],
@@ -103,7 +138,7 @@ export function findSilverInactivityDrops(
   const out: SilverDropCandidate[] = [];
 
   for (const s of sailors) {
-    if (!isSeriesCandidate(s)) continue;
+    if (!isSilverInactivityCandidate(s)) continue;
     const gold = toYmd(s.goldEntryDate);
     const silver = toYmd(s.silverEntryDate);
     const existingDrop = toYmd(s.dropDate);
@@ -113,21 +148,19 @@ export function findSilverInactivityDrops(
     // Active gold track → goldFleetDrop owns participation drops
     if (gold) continue;
 
+    const earliestEntry = [silver, gold].filter(Boolean).sort()[0] as
+      | string
+      | undefined;
+    const historyFoothold = earliestOptimistRankingDate(s.id, regattas, results);
+    const foothold = earliestEntry || historyFoothold;
+    // No entry stamp and no Optimist history → do not evaluate halves
+    if (!foothold) continue;
+
     for (const period of periods) {
       const { end } = periodBounds(period);
 
-      // Need some series foothold by period end (entry stamp or series member)
-      const earliestEntry = [silver, gold].filter(Boolean).sort()[0] as
-        | string
-        | undefined;
-      if (earliestEntry && earliestEntry > end) continue;
-      if (
-        !earliestEntry &&
-        !isInSgSeries(s) &&
-        !isSgpNationality(s.nationality)
-      ) {
-        continue;
-      }
+      // Need foothold by period end (do not stamp pre-membership halves)
+      if (foothold > end) continue;
 
       const starts = countOptimistRankingStartsInPeriod(
         s.id,
@@ -151,4 +184,25 @@ export function findSilverInactivityDrops(
   }
 
   return out;
+}
+
+/**
+ * Legacy entry point. Public `computeFleetRankings` may still call this and
+ * attempt to persist; when the call stack includes that function, return []
+ * so drop_date is never stamped on a ranking read. Admin
+ * `applySilverInactivityDrops` calls this outside that stack and gets real
+ * candidates (same as `detectSilverInactivityDrops`). Prefer calling detect
+ * explicitly from new admin code.
+ */
+export function findSilverInactivityDrops(
+  sailors: SailorRecord[],
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[],
+  asOfYmd: string
+): SilverDropCandidate[] {
+  const stack = new Error().stack ?? "";
+  if (stack.includes("computeFleetRankings")) {
+    return [];
+  }
+  return detectSilverInactivityDrops(sailors, regattas, results, asOfYmd);
 }
