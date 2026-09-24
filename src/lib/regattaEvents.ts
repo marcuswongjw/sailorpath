@@ -23,7 +23,7 @@ export type RegattaEventSliceDef = {
   key: string;
   /** Tab label, e.g. "Optimist Gold". */
   label: string;
-  series: "optimist" | "ilca4" | "ilca6" | "ilca7" | "wingfoil" | "techno293";
+  series: "optimist" | "ilca4" | "ilca6" | "ilca7" | "wingfoil" | "techno293" | "29er";
   /**
    * Regattas-table slice: lowercased regatta slug must contain every token.
    */
@@ -284,7 +284,40 @@ export const SELECTION_TRIALS_2026_EVENT: RegattaEventDef = {
   ],
 };
 
+export const CSC_ILCA_29ER_2026_EVENT: RegattaEventDef = {
+  slug: "6th-csc-ilca-29er-open-2026",
+  name: "6th CSC ILCA & 29er Open 2026",
+  shortName: "CSC ILCA & 29er 2026",
+  datesText: "28 February & 1 March 2026",
+  venue: "Changi Sailing Club, Singapore",
+  organizer: "Changi Sailing Club",
+  noticeOfRaceUrl: "https://www.csc.org.sg",
+  officialNoticeBoardUrl: "https://www.csc.org.sg",
+  registrationUrl: "https://www.csc.org.sg/csc-ilca-29er-championships-entry-form/",
+  scheduleSummary:
+    "28 February & 1 March 2026 at Changi Sailing Club. 7 races scheduled, max 5/day. Scoring: 5 or more races = 1 discard.",
+  scoringRules:
+    "At least 2 races to constitute a series. 5 or more races: 1 discard (RRS Appendix A). Section 15 Prizes: Top 3 for each category.",
+  slices: [
+    {
+      key: "ilca-6",
+      label: "ILCA 6",
+      series: "ilca6",
+      slugIncludes: ["csc", "2026", "ilca-6"],
+      prizeFleetName: "ILCA 6",
+    },
+    {
+      key: "29er",
+      label: "29er",
+      series: "29er",
+      slugIncludes: ["csc", "2026", "29er"],
+      prizeFleetName: "29er",
+    },
+  ],
+};
+
 export const REGATTA_EVENTS: RegattaEventDef[] = [
+  CSC_ILCA_29ER_2026_EVENT,
   SNSC_2026_EVENT,
   TEMASEK_2026_EVENT,
   SAFYC_REGATTA_2026_EVENT,
@@ -297,6 +330,9 @@ export const REGATTA_EVENTS: RegattaEventDef[] = [
 ];
 
 const EVENT_SLUG_ALIASES: Record<string, string> = {
+  "csc-ilca-29er-championships-2026": "6th-csc-ilca-29er-open-2026",
+  "csc-ilca-open-2026": "6th-csc-ilca-29er-open-2026",
+  "csc-ilca-29er-2026": "6th-csc-ilca-29er-open-2026",
   "singapore-national-sailing-championships-2026": "snsc-2026",
   "singapore-national-sailing-championships-2026-ilca4": "snsc-2026",
   "pesta-sukan-regatta-2026-optimist": "pesta-sukan-2026",

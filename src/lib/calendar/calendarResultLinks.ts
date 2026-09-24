@@ -20,6 +20,11 @@ export type CalendarResultAlias = {
 };
 
 export const CALENDAR_RESULT_ALIASES: Record<string, CalendarResultAlias> = {
+  "6th-csc-ilca-29er-open-2026": {
+    slugIncludes: ["csc", "2026"],
+    slugExcludes: ["youth-championship", "gold", "silver"],
+    classes: ["ilca6"],
+  },
   "temasek-regatta-2026": {
     slugIncludes: ["temasek", "2026"],
     classes: ["optimist", "ilca4"],

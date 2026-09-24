@@ -2327,7 +2327,123 @@ export const PULAU_UJONG_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+export const CSC_ILCA_29ER_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "6th-csc-ilca-29er-open-2026",
+  regattaName: "6th CSC ILCA & 29er Open 2026",
+  year: 2026,
+  datesText: "28 February & 1 March 2026",
+  venue: "Changi Sailing Club, Singapore",
+  organizer: "Changi Sailing Club",
+  noticeOfRaceUrl: "https://www.csc.org.sg",
+  officialNoticeBoardUrl: "https://www.csc.org.sg",
+  websiteUrl: "https://www.csc.org.sg",
+  registrationUrl: "https://www.csc.org.sg/csc-ilca-29er-championships-entry-form/",
+  entryFees: {
+    singleHanded: 98.1,
+    doubleHanded: 196.2,
+    earlyBirdDeadline: "23 January 2026, 2359h",
+    finalDeadline: "15 February 2026, 1700h",
+    lateFee: 21.8,
+  },
+  scheduleSummary:
+    "28 February & 1 March 2026 at Changi Sailing Club. 7 races scheduled (max 5/day). Scoring: 5 or more races completed = 1 discard.",
+  scoringRules:
+    "At least 2 races to constitute a series. Fewer than 5 races: total score. 5 or more races: worst score excluded (1 discard). Section 15 Prizes: Top 3 for each category.",
+  fleets: [
+    {
+      fleetName: "ILCA 6",
+      boatClass: "ILCA 6",
+      categories: [
+        {
+          categoryName: "Youth Mixed",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "19 years of age and under (born 2007 or later)",
+          winners: [
+            { rank: 1, prizeTitle: "1st Youth Mixed", sailorName: "Ikuto Mori", sailNumber: "219178", gender: "M", notes: "Rank 1 overall. Nett 11.0." },
+            { rank: 2, prizeTitle: "2nd Youth Mixed", sailorName: "Austin Yeo", sailNumber: "2", gender: "M", club: "SAF Yacht Club", notes: "Rank 2 overall. Nett 14.0." },
+            { rank: 3, prizeTitle: "3rd Youth Mixed", sailorName: "Eitan Oh", sailNumber: "224717", gender: "M", club: "SAF Yacht Club", notes: "Rank 3 overall. Nett 15.0." },
+          ],
+        },
+        {
+          categoryName: "Open Mixed",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Open Mixed", sailorName: "Ikuto Mori", sailNumber: "219178", gender: "M", notes: "Rank 1 overall. Nett 11.0." },
+            { rank: 2, prizeTitle: "2nd Open Mixed", sailorName: "Austin Yeo", sailNumber: "2", gender: "M", club: "SAF Yacht Club", notes: "Rank 2 overall. Nett 14.0." },
+            { rank: 3, prizeTitle: "3rd Open Mixed", sailorName: "Eitan Oh", sailNumber: "224717", gender: "M", club: "SAF Yacht Club", notes: "Rank 3 overall. Nett 15.0." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Maia Lim Laurie", sailNumber: "223201", gender: "F", club: "Changi Sailing Club", notes: "Rank 5 overall. Nett 22.0." },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Sarah Yong", sailNumber: "221689", gender: "F", club: "Royal Varuna Yacht Club", notes: "Rank 6 overall. Nett 24.0." },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Cleo Seah En Rui", sailNumber: "224379", gender: "F", club: "SAF Yacht Club", notes: "Rank 11 overall. Nett 51.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "29er",
+      boatClass: "29er",
+      categories: [
+        {
+          categoryName: "Youth Mixed",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "17 years of age and under (born 2009 or later)",
+          winners: [
+            { rank: 1, prizeTitle: "1st Youth Mixed", sailorName: "Cheryl Yong Heng Xi", sailNumber: "2466", gender: "F", club: "Changi Sailing Club", notes: "Rank 1 overall. Nett 9.0." },
+            { rank: 2, prizeTitle: "2nd Youth Mixed", sailorName: "Sean Kum", sailNumber: "2472", gender: "M", club: "SAF Yacht Club", notes: "Rank 2 overall. Nett 10.0." },
+            { rank: 3, prizeTitle: "3rd Youth Mixed", sailorName: "Cheryl Ho", sailNumber: "2869", gender: "F", club: "SAF Yacht Club", notes: "Rank 3 overall. Nett 14.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "ILCA 4",
+      boatClass: "ILCA 4",
+      categories: [
+        {
+          categoryName: "Youth Mixed",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "17 years of age and under (born 2009 or later)",
+          winners: [],
+        },
+        {
+          categoryName: "Open Mixed",
+          prizesAwarded: "1st to 3rd",
+          winners: [],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 3rd",
+          winners: [],
+        },
+        {
+          categoryName: "13 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born in 2013 and later",
+          winners: [],
+        },
+      ],
+    },
+    {
+      fleetName: "ILCA 7",
+      boatClass: "ILCA 7",
+      categories: [
+        {
+          categoryName: "Open Mixed",
+          prizesAwarded: "1st to 3rd",
+          winners: [],
+        },
+      ],
+    },
+  ],
+};
+
 export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
+  CSC_ILCA_29ER_2026_PRIZE_SCHEDULE,
   PULAU_UJONG_2026_PRIZE_SCHEDULE,
   SYSC_2026_PRIZE_SCHEDULE,
   TEMASEK_2026_PRIZE_SCHEDULE,
@@ -2340,6 +2456,15 @@ export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
 
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
+  if (
+    s.includes("6th-csc-ilca-29er-open-2026") ||
+    s.includes("csc-ilca-29er-championships-2026") ||
+    s.includes("csc-2026-ilca-6") ||
+    s.includes("csc-2026-29er") ||
+    (s.includes("csc") && (s.includes("ilca") || s.includes("29er") || s.includes("open")) && s.includes("2026") && !s.includes("youth-championship"))
+  ) {
+    return CSC_ILCA_29ER_2026_PRIZE_SCHEDULE;
+  }
   if (
     s.includes("singapore-national-sailing-championships-2026") ||
     s.includes("snsc-2026") ||
