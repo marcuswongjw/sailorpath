@@ -1,1 +1,546 @@
-PLACEHOLDER_WILL_REPLACE
+/**
+ * Singapore ILCA 4 / ILCA 6 ranking policy.
+ *
+ * High Ranking Points: in a fleet of N, 1st = N pts, 2nd = N−1, … last = 1.
+ * Series: Best 3 of last 5 ranking regattas (higher sum wins).
+ *
+ * ILCA 4 national squad (up to 16, age ≤ 17 in intake year), ranked top 25 only.
+ * Squad selection cutoffs (SSF policy): 30 Jun → July intake; 20 Dec → January intake.
+ * Ranking table windows follow the half each intake serves: Jul–Dec Y (July Y) / Jan–Jun Y (January Y).
+ * Selection order:
+ *  1. Top 2 males + top 2 females (overall)
+ *  2. Top 2 males + top 2 females aged 16 in intake year
+ *  3. Top 4 males + top 4 females aged ≤ 15 in intake year
+ * Unfilled slots → next highest ranked same gender (still top 25).
+ */
+
+import { ageYears, birthYear } from "@/lib/age";
+import { toYmd } from "@/lib/datesSg";
+import { isSingleFleetClass } from "@/lib/countries";
+import {
+  isSailorOnIlca4NationalList,
+  isSingaporeNationality,
+} from "@/lib/ilca4NationalList";
+import { isSailorOnIlca6NationalList } from "@/lib/ilca6NationalList";
+
+export type IlcaBoatClass = "ILCA 4" | "ILCA 6" | "ILCA 7";
+
+export type IlcaRegatta = {
+  id: string;
+  name: string;
+  date: string | Date;
+  totalFleetSize: number;
+  boatClass?: string | null;
+  countsForRanking?: boolean | null;
+  /** Completed races; ILCA series needs ≥ ILCA_MIN_RACES_FOR_RANKING */
+  raceCount?: number | null;
+  division?: string | null;
+};
+
+export type IlcaResult = {
+  sailorId: string;
+  regattaId: string;
+  rank: number;
+  isDns?: boolean | null;
+  isOverseasCommitment?: boolean | null;
+};
+
+export type IlcaSailor = {
+  id: string;
+  name: string;
+  gender?: string | null;
+  dob?: string | Date | null;
+  nationality?: string | null;
+  sailNumber?: string | null;
+  sailNumberIlca4?: string | null;
+  /** Admin-managed national ranking membership */
+  ilca4NationalList?: boolean | null;
+  club?: string | null;
+  handle?: string | null;
+};
+
+export type IlcaEventScore = {
+  regattaId: string;
+  regattaName: string;
+  date: string;
+  place: number;
+  fleetSize: number;
+  points: number;
+  isDns: boolean;
+};
+
+export type IlcaRankedSailor = {
+  sailorId: string;
+  name: string;
+  handle?: string | null;
+  gender: "M" | "F" | null;
+  /** Calendar birth year (public-facing; not age) */
+  birthYear: number | null;
+  /** Internal: whole years old as of 31 Dec intake year (squad buckets) */
+  ageInIntakeYear: number | null;
+  nationality: string | null;
+  eventScores: IlcaEventScore[];
+  /** Best 3 of up to 5 (highest points) */
+  bestThreePoints: number[];
+  totalPoints: number;
+  rank: number;
+};
+
+export type SquadPickReason =
+  | "top2_overall"
+  | "age16"
+  | "age15_or_under"
+  | "fill_same_gender";
+
+export type SquadSelection = {
+  sailorId: string;
+  name: string;
+  gender: "M" | "F";
+  rankingPosition: number;
+  ageInIntakeYear: number | null;
+  totalPoints: number;
+  reason: SquadPickReason;
+};
+
+function ymd(v: string | Date | null | undefined): string {
+  return String(v || "").slice(0, 10);
+}
+
+export function normalizeGender(g: string | null | undefined): "M" | "F" | null {
+  const s = String(g || "")
+    .trim()
+    .toLowerCase();
+  if (s === "f" || s === "female" || s === "girl" || s === "w" || s === "woman")
+    return "F";
+  if (s === "m" || s === "male" || s === "boy" || s === "man") return "M";
+  return null;
+}
+
+/** Age as of 31 Dec of intake year (year of birth → age in intake year). */
+export function ageInIntakeYear(
+  dob: string | Date | null | undefined,
+  intakeYear: number
+): number | null {
+  const d = toYmd(dob);
+  if (!d) return null;
+  return ageYears(d, new Date(`${intakeYear}-12-31T12:00:00`));
+}
+
+/**
+ * High Ranking Points for a finishing place in a fleet of N.
+ * 1st → N, 2nd → N−1, … DNS / invalid → 0.
+ */
+export function highRankingPoints(
+  place: number,
+  fleetSize: number,
+  opts?: { isDns?: boolean }
+): number {
+  if (opts?.isDns) return 0;
+  const n = Math.max(0, Math.floor(fleetSize));
+  const p = Math.floor(place);
+  if (!Number.isFinite(n) || n < 1) return 0;
+  if (!Number.isFinite(p) || p < 1) return 0;
+  if (p > n) return 0;
+  return n - p + 1;
+}
+
+/** Best 3 (highest) of available points; pad with 0 if fewer than 3. */
+export function bestThreeHighPoints(points: number[]): {
+  bestThree: number[];
+  total: number;
+} {
+  const sorted = [...points]
+    .filter((n) => Number.isFinite(n) && n >= 0)
+    .sort((a, b) => b - a);
+  const bestThree = sorted.slice(0, 3);
+  while (bestThree.length < 3) bestThree.push(0);
+  const total = bestThree.reduce((s, x) => s + x, 0);
+  return { bestThree, total };
+}
+
+export function isIlcaSeriesClass(
+  boatClass: string | null | undefined,
+  target: IlcaBoatClass
+): boolean {
+  const a = String(boatClass || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+  const b = target.toLowerCase();
+  if (a === b) return true;
+  if (target === "ILCA 4" && (a === "ilca4" || a === "laser 4.7" || a === "laser4.7"))
+    return true;
+  if (target === "ILCA 6" && (a === "ilca6" || a === "laser radial" || a === "radial"))
+    return true;
+  if (
+    target === "ILCA 7" &&
+    (a === "ilca7" || a === "laser standard" || a === "standard")
+  )
+    return true;
+  return false;
+}
+
+export function isAnyIlcaClass(boatClass: string | null | undefined): boolean {
+  return (
+    isIlcaSeriesClass(boatClass, "ILCA 4") ||
+    isIlcaSeriesClass(boatClass, "ILCA 6") ||
+    isIlcaSeriesClass(boatClass, "ILCA 7")
+  );
+}
+
+/**
+ * Minimum completed races for an ILCA regatta to count toward series ranking.
+ * Fewer races (e.g. abandoned event) → treat as non-ranking even if flagged.
+ */
+export const ILCA_MIN_RACES_FOR_RANKING = 3;
+
+/**
+ * Whether a regatta counts toward ILCA high-points series.
+ * - Explicit non-ranking flag → no
+ * - ILCA with raceCount set below {@link ILCA_MIN_RACES_FOR_RANKING} → no
+ * - raceCount null/unknown → trust countsForRanking flag
+ */
+export function ilcaRegattaCountsForRanking(r: {
+  countsForRanking?: boolean | null;
+  raceCount?: number | null;
+  boatClass?: string | null;
+}): boolean {
+  if (r.countsForRanking === false) return false;
+  // Flag is true / null / undefined → potentially ranking
+  if (!isAnyIlcaClass(r.boatClass)) {
+    return true;
+  }
+  const n = r.raceCount;
+  if (n != null && Number.isFinite(Number(n)) && Number(n) < ILCA_MIN_RACES_FOR_RANKING) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Last 5 ranking regattas for an ILCA class with date ≤ asOf, oldest → newest.
+ * Excludes non-ranking events and ILCA events with too few races.
+ */
+export function ilcaRankingRegattas(
+  allRegattas: IlcaRegatta[],
+  boatClass: IlcaBoatClass,
+  asOfYmd: string
+): IlcaRegatta[] {
+  const asOf = toYmd(asOfYmd) || asOfYmd;
+  return allRegattas
+    .filter((r) => {
+      if (!ilcaRegattaCountsForRanking(r)) return false;
+      if (!isIlcaSeriesClass(r.boatClass, boatClass)) return false;
+      const d = ymd(r.date);
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return false;
+      if (d > asOf) return false;
+      return true;
+    })
+    .sort((a, b) => ymd(b.date).localeCompare(ymd(a.date)))
+    .slice(0, 5)
+    .reverse();
+}
+
+export function computeIlcaRankings(
+  boatClass: IlcaBoatClass,
+  asOfYmd: string,
+  sailors: IlcaSailor[],
+  regattas: IlcaRegatta[],
+  results: IlcaResult[],
+  opts?: {
+    intakeYear?: number;
+    /**
+     * ILCA 4 only: restrict to official national list (default true).
+     * Pass false for unit tests / unrestricted admin preview.
+     */
+    restrictToNationalList?: boolean;
+  }
+): IlcaRankedSailor[] {
+  const window = ilcaRankingRegattas(regattas, boatClass, asOfYmd);
+  if (!window.length) return [];
+
+  const intakeYear =
+    opts?.intakeYear ??
+    Number((toYmd(asOfYmd) || asOfYmd).slice(0, 4));
+
+  const regById = new Map(window.map((r) => [r.id, r]));
+  const sailorIdsWithResults = new Set(
+    results
+      .filter((r) => regById.has(r.regattaId))
+      .map((r) => r.sailorId)
+  );
+
+  const useNationalList =
+    (boatClass === "ILCA 4" || boatClass === "ILCA 6") &&
+    opts?.restrictToNationalList !== false;
+
+  const onNationalList = (s: IlcaSailor): boolean => {
+    if (!useNationalList) return false;
+    if (boatClass === "ILCA 4") return isSailorOnIlca4NationalList(s);
+    if (boatClass === "ILCA 6") return isSailorOnIlca6NationalList(s);
+    return false;
+  };
+
+  /**
+   * Candidates:
+   * - National list board (ILCA 4 & ILCA 6): everyone on the respective national list.
+   * - Result-based board (ILCA 7 or unrestricted preview): anyone with results in the scoring window.
+   */
+  const candidates = sailors.filter((s) => {
+    if (useNationalList) {
+      return onNationalList(s);
+    }
+    return sailorIdsWithResults.has(s.id);
+  });
+
+  // Pre-index results by "sailorId:regattaId" for O(1) score lookup
+  const resultsMap = new Map<string, IlcaResult>();
+  for (const r of results) {
+    resultsMap.set(`${r.sailorId}:${r.regattaId}`, r);
+  }
+
+  const ranked: Omit<IlcaRankedSailor, "rank">[] = candidates.map((s) => {
+    const eventScores: IlcaEventScore[] = window.map((reg) => {
+      const res = resultsMap.get(`${s.id}:${reg.id}`);
+      const fleetSize = Math.max(1, Number(reg.totalFleetSize) || 1);
+      const noResult = !res;
+      const isDns =
+        noResult ||
+        (Boolean(res?.isDns) && !res?.isOverseasCommitment);
+      // Non-participation / DNS → 0 high-ranking points (not fleet-size penalty)
+      const place =
+        res && !isDns && Number.isFinite(Number(res.rank))
+          ? Number(res.rank)
+          : 0;
+      const points = highRankingPoints(
+        place > 0 ? place : fleetSize + 1,
+        fleetSize,
+        { isDns }
+      );
+      return {
+        regattaId: reg.id,
+        regattaName: reg.name,
+        date: ymd(reg.date),
+        place,
+        fleetSize,
+        points,
+        isDns,
+      };
+    });
+    const { bestThree, total } = bestThreeHighPoints(
+      eventScores.map((e) => e.points)
+    );
+    return {
+      sailorId: s.id,
+      name: s.name,
+      handle: s.handle ?? null,
+      gender: normalizeGender(s.gender),
+      birthYear: birthYear(s.dob),
+      ageInIntakeYear: ageInIntakeYear(s.dob, intakeYear),
+      nationality: s.nationality ?? null,
+      eventScores,
+      bestThreePoints: bestThree,
+      totalPoints: total,
+    };
+  });
+
+  ranked.sort((a, b) => {
+    if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
+    // Tie-break: better best-three sequence
+    for (let i = 0; i < 3; i++) {
+      const da = a.bestThreePoints[i] ?? 0;
+      const db = b.bestThreePoints[i] ?? 0;
+      if (db !== da) return db - da;
+    }
+    return a.name.localeCompare(b.name);
+  });
+
+  return ranked.map((r, i) => ({ ...r, rank: i + 1 }));
+}
+
+/**
+ * Re-ranks ILCA sailors with specified regattas excluded (what-if scenario).
+ * Keeps eventScores intact for display, but re-evaluates Best 3 high points
+ * and re-sorts according to standard ILCA tie-break rules.
+ */
+export function reRankIlcaWithExcluded(
+  ranked: IlcaRankedSailor[],
+  excludedRegattaIds: Set<string>
+): IlcaRankedSailor[] {
+  if (excludedRegattaIds.size === 0) return ranked;
+
+  const next = ranked.map((s) => {
+    const keptScores = (s.eventScores || []).filter(
+      (ev) => !excludedRegattaIds.has(ev.regattaId)
+    );
+    const { bestThree, total } = bestThreeHighPoints(
+      keptScores.map((ev) => ev.points)
+    );
+    return {
+      ...s,
+      bestThreePoints: bestThree,
+      totalPoints: total,
+    };
+  });
+
+  next.sort((a, b) => {
+    if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
+    // Tie-break: better best-three sequence
+    for (let i = 0; i < 3; i++) {
+      const da = a.bestThreePoints[i] ?? 0;
+      const db = b.bestThreePoints[i] ?? 0;
+      if (db !== da) return db - da;
+    }
+    return a.name.localeCompare(b.name);
+  });
+
+  return next.map((r, i) => ({ ...r, rank: i + 1 }));
+}
+
+export function squadReasonLabel(reason: SquadPickReason): string {
+  switch (reason) {
+    case "top2_overall":
+      return "Nat (Overall)";
+    case "age16":
+      return "Nat (Age 16)";
+    case "age15_or_under":
+      return "Nat (≤15)";
+    case "fill_same_gender":
+      return "Nat (Invited)";
+    default:
+      return "Nat";
+  }
+}
+
+export type IlcaIntakeKind = "july" | "january";
+
+/** Default intake for a reference date (Singapore ILCA policy). */
+export function defaultIlcaIntake(now = new Date()): {
+  kind: IlcaIntakeKind;
+  year: number;
+} {
+  const y = now.getFullYear();
+  // In Jan–Jun (months 0–5), competition in H1 leads to the July intake of current year (cutoff: 30 June Y).
+  // In Jul–Dec (months 6–11), competition in H2 leads to the January intake of next year (cutoff: 31 Dec Y).
+  if (now.getMonth() < 6) {
+    return { kind: "july", year: y };
+  }
+  return { kind: "january", year: y + 1 };
+}
+
+/**
+ * Ranking window + intake year for squad selection.
+ * Competition in Jan–Jun Y (cutoff 30 Jun Y) selects July Y intake.
+ * Competition in Jul–Dec Y (cutoff 20 Dec Y) selects January Y+1 intake.
+ */
+export function ilcaSquadCutoff(
+  kind: IlcaIntakeKind,
+  /** Calendar year of the intake (July Y or January Y) */
+  intakeYear: number
+): { asOf: string; intakeYear: number; label: string } {
+  if (kind === "july") {
+    return {
+      asOf: `${intakeYear}-06-30`,
+      intakeYear,
+      label: `Jan – Jun ${intakeYear} · July ${intakeYear} intake`,
+    };
+  }
+  // January intake of year Y is selected from Jul–Dec of previous year Y-1
+  const compYear = intakeYear - 1;
+  return {
+    asOf: `${compYear}-12-20`,
+    intakeYear,
+    label: `Jul – Dec ${compYear} · January ${intakeYear} intake`,
+  };
+}
+
+/**
+ * ILCA 4 national squad selection (max 16), from high-points ranking.
+ * Only SGP nationals; top 25; birth-year-derived age ≤ 17 in intake year (31 Dec).
+ */
+export function selectIlca4NationalSquad(
+  ranked: IlcaRankedSailor[]
+): SquadSelection[] {
+  const eligible = ranked
+    .filter((r) => r.rank <= 25)
+    .filter((r) => isSingaporeNationality(r.nationality))
+    .filter((r) => r.gender === "M" || r.gender === "F")
+    .filter(
+      (r) => r.ageInIntakeYear != null && r.ageInIntakeYear <= 17
+    );
+
+  const picked = new Set<string>();
+  const out: SquadSelection[] = [];
+
+  const take = (
+    list: IlcaRankedSailor[],
+    n: number,
+    reason: SquadPickReason
+  ) => {
+    let taken = 0;
+    for (const r of list) {
+      if (taken >= n) break;
+      if (picked.has(r.sailorId)) continue;
+      if (r.gender !== "M" && r.gender !== "F") continue;
+      picked.add(r.sailorId);
+      out.push({
+        sailorId: r.sailorId,
+        name: r.name,
+        gender: r.gender,
+        rankingPosition: r.rank,
+        ageInIntakeYear: r.ageInIntakeYear,
+        totalPoints: r.totalPoints,
+        reason,
+      });
+      taken++;
+    }
+    return taken;
+  };
+
+  const males = eligible.filter((r) => r.gender === "M");
+  const females = eligible.filter((r) => r.gender === "F");
+
+  // 1) Top 2 M + top 2 F overall
+  const needM1 = 2 - take(males, 2, "top2_overall");
+  const needF1 = 2 - take(females, 2, "top2_overall");
+
+  // 2) Top 2 M + top 2 F aged 16
+  const m16 = males.filter((r) => r.ageInIntakeYear === 16);
+  const f16 = females.filter((r) => r.ageInIntakeYear === 16);
+  const needM2 = 2 - take(m16, 2, "age16");
+  const needF2 = 2 - take(f16, 2, "age16");
+
+  // 3) Top 4 M + top 4 F aged ≤ 15
+  const m15 = males.filter(
+    (r) => r.ageInIntakeYear != null && r.ageInIntakeYear <= 15
+  );
+  const f15 = females.filter(
+    (r) => r.ageInIntakeYear != null && r.ageInIntakeYear <= 15
+  );
+  const needM3 = 4 - take(m15, 4, "age15_or_under");
+  const needF3 = 4 - take(f15, 4, "age15_or_under");
+
+  // Fill unfilled slots by next highest same gender
+  const unfilledM = needM1 + needM2 + needM3;
+  const unfilledF = needF1 + needF2 + needF3;
+  take(males, unfilledM, "fill_same_gender");
+  take(females, unfilledF, "fill_same_gender");
+
+  // Cap 16 (should already be)
+  return out.slice(0, 16);
+}
+
+/** Policy notes for UI */
+export const ILCA_POLICY_NOTES = {
+  dualSail:
+    "Sailors younger than 15 may hold two sail numbers: one Optimist and one ILCA 4. Each is updated from the latest regatta of that class.",
+  highPoints:
+    "ILCA 4, ILCA 6, and ILCA 7 use High Ranking Points: in a fleet of N, 1st earns N points, 2nd earns N−1, and so on. Best 3 of the last 5 ranking regattas (higher total is better).",
+  nationalList:
+    "ILCA 4 and ILCA 6 display sailors verified on their respective official Singapore Sailing Federation national ranking lists. ILCA 7 standings are computed directly from published regatta performance.",
+  squad:
+    "ILCA 4 national squad (≤16, SGP nationality only, verified birth year and age ≤17 in intake year). SSF selects from the ranking as of 30 Jun (July intake) or 20 Dec (January intake); the table window follows the half each intake serves. From top 25: top 2 M/F overall, then top 2 M/F in the intake-year-16 bucket, then top 4 M/F in ≤15 bucket; fill remaining with next highest same gender.",
+} as const;
+
+// Re-export helper used by import notes
+export { isSingleFleetClass };
