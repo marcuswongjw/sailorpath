@@ -1945,9 +1945,217 @@ export const SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
-/**
- * Retrieves the official prize schedule (categories and verified winners) for a given regatta slug.
- */
+export const SYSC_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "sysc-2026",
+  regattaName: "Singapore Youth Sailing Championships 2026",
+  year: 2026,
+  datesText: "14–17 March 2026",
+  venue: "National Sailing Centre, Singapore",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/13601/event",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/13601/event",
+  websiteUrl: "https://www.sailing.org.sg",
+  registrationUrl: "https://www.sailing.org.sg",
+  entryFees: {
+    singleHanded: 68,
+    doubleHanded: 136,
+    earlyBirdDeadline: "8 February 2026, 2359h",
+    finalDeadline: "1 March 2026, 2359h",
+    lateFee: 68,
+  },
+  scheduleSummary:
+    "14–17 March 2026 at NSC. 1 race constitutes series. 5–9 races: 1 discard; 10+ races: 2 discards.",
+  scoringRules:
+    "1 race to constitute series. 5 to 9 races: 1 discard. 10 or more races: 2 discards (RRS Appendix A). Categories with fewer than 6 entries present prizes to the 1st place only.",
+  fleets: [
+    {
+      fleetName: "ILCA 6",
+      boatClass: "ILCA 6",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Austin Jia Yu Yeo", sailNumber: "221062", gender: "M", club: "SAF Yacht Club", notes: "Nett 19.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Aurick You Shun Leow", sailNumber: "214737", gender: "M", club: "SAF Yacht Club", notes: "Nett 22.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Eitan Oh", sailNumber: "224717", gender: "M", club: "SAF Yacht Club", notes: "Nett 26.0." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st",
+          eligibilityNotes: "Top Female per NoR prize schedule (fewer than 6 female entries: 1st presented)",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Sarah Rui-En Yong", sailNumber: "18", gender: "F", club: "Royal Varuna Yacht Club", notes: "Rank 5 overall. Nett 47.0." },
+          ],
+        },
+        {
+          categoryName: "15 years and under",
+          prizesAwarded: "1st",
+          eligibilityNotes: "Born in 2011 or later",
+          winners: [
+            { rank: 1, prizeTitle: "1st (15 & under)", sailorName: "Darren Lai", sailNumber: "222257", gender: "M", club: "Royal Varuna Yacht Club", notes: "Rank 9 overall. Nett 91.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "29er",
+      boatClass: "29er",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Cheryl Yong / Febe Wong", sailNumber: "2466", gender: "F", notes: "Nett 10.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Cheryl Ho / Gemma Chen", sailNumber: "2869", gender: "F", notes: "Nett 19.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Sean Kum / Nigel Tan", sailNumber: "2472", gender: "M", notes: "Nett 40.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "Techno 293",
+      boatClass: "Techno 293",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Axl Tan", sailNumber: "64", gender: "M", notes: "Nett 13.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Trevor Ng", sailNumber: "45", gender: "M", notes: "Nett 16.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Addy Armand Anuar", sailNumber: "143", gender: "M", notes: "Nett 19.0." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Eunice Yi Ning Tan", sailNumber: "679", gender: "F", notes: "Rank 4 overall. Nett 41.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "iQFOiL",
+      boatClass: "iQFOiL",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 2nd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Angyal Chew", sailNumber: "711", gender: "F", notes: "Nett 6.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "John Tze Xiang Wong", sailNumber: "2", gender: "M", notes: "Nett 8.0." },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
+export const PULAU_UJONG_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "pulau-ujong-regatta-2026",
+  regattaName: "Pulau Ujong Regatta 2026",
+  year: 2026,
+  datesText: "21–22 February 2026",
+  venue: "National Sailing Centre, Singapore",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/13180/event",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/13180/event",
+  websiteUrl: "https://www.sailing.org.sg",
+  registrationUrl: "https://www.sailing.org.sg",
+  entryFees: {
+    singleHanded: 68,
+    doubleHanded: 136,
+    earlyBirdDeadline: "1 February 2026, 2359h",
+    finalDeadline: "15 February 2026, 2359h",
+    lateFee: 34,
+  },
+  scheduleSummary:
+    "21–22 February 2026 at NSC. Scoring: 4 or more races completed = 1 discard.",
+  scoringRules:
+    "1 race to constitute series. 4 or more races: 1 discard (RRS Appendix A). Categories with fewer than 6 entries present prizes to the 1st place only.",
+  fleets: [
+    {
+      fleetName: "ILCA 6",
+      boatClass: "ILCA 6",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Kenan Kee Zen Tan", sailNumber: "1", gender: "M", club: "Royal Varuna Yacht Club", notes: "Nett 5.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Gordon Alexander Allan", sailNumber: "221058", gender: "M", club: "Royal Varuna Yacht Club", notes: "Nett 17.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Eitan Oh", sailNumber: "224717", gender: "M", club: "SAF Yacht Club", notes: "Nett 17.0." },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Sarah Rui-En Yong", sailNumber: "221689", gender: "F", club: "Royal Varuna Yacht Club", notes: "Rank 5 overall. Nett 30.0." },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Keira Carlyle", sailNumber: "25", gender: "F", club: "SAF Yacht Club", notes: "Rank 6 overall. Nett 31.0." },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Cleo En Rui Seah", sailNumber: "224379", gender: "F", club: "SAF Yacht Club", notes: "Rank 15 overall. Nett 64.0." },
+          ],
+        },
+        {
+          categoryName: "15 years and under",
+          prizesAwarded: "1st",
+          eligibilityNotes: "Born in 2011 or later",
+          winners: [
+            { rank: 1, prizeTitle: "1st (15 & under)", sailorName: "Darren Lai", sailNumber: "222257", gender: "M", club: "Royal Varuna Yacht Club", notes: "Rank 10 overall. Nett 38.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "29er",
+      boatClass: "29er",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Sean Kum / Nigel Tan", sailNumber: "2472", gender: "M", notes: "Nett 8.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Cheryl Yong / Febe Wong", sailNumber: "2466", gender: "F", notes: "Nett 12.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Cheryl Ho / Gemma Chen", sailNumber: "2869", gender: "F", notes: "Nett 23.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "Techno 293",
+      boatClass: "Techno 293",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Addy Armand Anuar", sailNumber: "143", gender: "M", notes: "Nett 6.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Shan Qi", sailNumber: "26", gender: "F", notes: "Nett 17.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Eunice Yi Ning Tan", sailNumber: "679", gender: "F", notes: "Nett 17.0." },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "iQFOiL",
+      boatClass: "iQFOiL",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "John Tze Xiang Wong", sailNumber: "2", gender: "M", notes: "Nett 3.0." },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Jonas Knick", sailNumber: "39", gender: "M", notes: "Nett 6.0." },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Angyal Chew", sailNumber: "711", gender: "F", notes: "Nett 8.0." },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
   if (
@@ -1982,6 +2190,22 @@ export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | nu
   }
   if (s.includes("temasek-regatta") || (s.includes("temasek") && s.includes("2026"))) {
     return TEMASEK_2026_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("sysc-2026") ||
+    s.includes("singapore-youth-sailing-championships-2026") ||
+    s === "sysc-2026" ||
+    (s.includes("sysc") && (s.includes("mar-26") || s.includes("2026")))
+  ) {
+    return SYSC_2026_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("pulau-ujong-regatta-2026") ||
+    s.includes("pulau-ujong-2026") ||
+    s === "pulau-ujong-2026" ||
+    (s.includes("pulau-ujong") && (s.includes("feb-26") || s.includes("2026")))
+  ) {
+    return PULAU_UJONG_2026_PRIZE_SCHEDULE;
   }
   return null;
 }

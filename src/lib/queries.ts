@@ -52,6 +52,10 @@ import {
   getStaticIlca6RankingsData,
 } from "@/lib/ilca6ResultsData";
 import {
+  getStaticIlca7Results,
+  getStaticIlca7RankingsData,
+} from "@/lib/ilca7ResultsData";
+import {
   asc,
   desc,
   eq,
@@ -529,14 +533,16 @@ export async function getResultsForRegatta(regattaId: string) {
     });
 
     if (results.length === 0) {
-      const staticResults = getStaticIlca6Results(regattaId);
+      const staticResults =
+        getStaticIlca6Results(regattaId) || getStaticIlca7Results(regattaId);
       if (staticResults && staticResults.length > 0) {
         return staticResults;
       }
     }
     return results;
   } catch (error) {
-    const staticResults = getStaticIlca6Results(regattaId);
+    const staticResults =
+      getStaticIlca6Results(regattaId) || getStaticIlca7Results(regattaId);
     if (staticResults && staticResults.length > 0) {
       return staticResults;
     }
@@ -876,6 +882,38 @@ async function computeIlcaRankingsBoard(
             });
           }
         }
+      } else if (boatClass === "ILCA 7") {
+        const staticData = getStaticIlca7RankingsData();
+        for (const r of staticData.regattas) {
+          if (!ilcaRegattas.some((ir) => ir.id === r.id || ir.name.toLowerCase() === r.name.toLowerCase())) {
+            ilcaRegattas.push({
+              id: r.id,
+              name: r.name,
+              date: r.date,
+              totalFleetSize: r.totalFleetSize ?? 50,
+              boatClass: r.boatClass ?? "ILCA 7",
+              countsForRanking: r.countsForRanking !== false,
+              raceCount: r.raceCount ?? null,
+              division: r.division || "Open",
+            });
+          }
+        }
+        for (const s of staticData.sailors) {
+          if (!ilcaSailors.some((is) => is.id === s.id || is.name.toLowerCase() === s.name.toLowerCase())) {
+            ilcaSailors.push({
+              id: s.id,
+              name: s.name,
+              gender: s.gender ?? null,
+              dob: s.dob ?? null,
+              nationality: s.nationality ?? "SGP",
+              sailNumber: s.sailNumber || "",
+              sailNumberIlca4: null,
+              ilca4NationalList: false,
+              club: s.club || "",
+              handle: s.handle || "",
+            });
+          }
+        }
       }
 
       const window = ilcaRankingRegattas(ilcaRegattas, boatClass, asOf);
@@ -915,6 +953,19 @@ async function computeIlcaRankingsBoard(
             });
           }
         }
+      } else if (boatClass === "ILCA 7") {
+        const staticData = getStaticIlca7RankingsData();
+        for (const sr of staticData.results) {
+          if (!ilcaResults.some((r) => r.regattaId === sr.regattaId && r.sailorId === sr.sailorId)) {
+            ilcaResults.push({
+              sailorId: sr.sailorId,
+              regattaId: sr.regattaId,
+              rank: sr.rank,
+              isDns: sr.isDns ?? false,
+              isOverseasCommitment: false,
+            });
+          }
+        }
       }
 
       const ranked = computeIlcaRankings(
@@ -925,7 +976,7 @@ async function computeIlcaRankingsBoard(
         ilcaResults,
         {
           intakeYear: intakeYear ?? Number(asOf.slice(0, 4)),
-          restrictToNationalList: true,
+          restrictToNationalList: boatClass !== "ILCA 7",
         }
       );
 
@@ -960,6 +1011,38 @@ async function computeIlcaRankingsBoard(
         {
           intakeYear: intakeYear ?? Number(asOf.slice(0, 4)),
           restrictToNationalList: true,
+        }
+      );
+      return { ranked, asOf };
+    }
+    if (boatClass === "ILCA 7") {
+      const staticData = getStaticIlca7RankingsData();
+      const ranked = computeIlcaRankings(
+        boatClass,
+        asOf,
+        staticData.sailors.map((s) => ({
+          id: s.id,
+          name: s.name,
+          gender: s.gender ?? null,
+          dob: s.dob ?? null,
+          nationality: s.nationality ?? "SGP",
+          sailNumber: s.sailNumber ?? null,
+          sailNumberIlca4: null,
+          ilca4NationalList: null,
+          club: s.club ?? null,
+          handle: s.handle ?? null,
+        })),
+        staticData.regattas,
+        staticData.results.map((r) => ({
+          sailorId: r.sailorId,
+          regattaId: r.regattaId,
+          rank: r.rank,
+          isDns: r.isDns ?? false,
+          isOverseasCommitment: false,
+        })),
+        {
+          intakeYear: intakeYear ?? Number(asOf.slice(0, 4)),
+          restrictToNationalList: false,
         }
       );
       return { ranked, asOf };

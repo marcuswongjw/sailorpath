@@ -22,7 +22,10 @@ function isSchoolCategory(name: string): boolean {
   return (
     lower.includes("school") ||
     lower.includes("primary") ||
-    lower.includes("secondary")
+    lower.includes("secondary") ||
+    lower.includes("college") ||
+    lower.includes("jc") ||
+    lower.includes("poly")
   );
 }
 
@@ -114,7 +117,9 @@ function CategoryCard({
   profileHandles?: Record<string, string>;
   wide?: boolean;
 }) {
-  // wide + many entries → explicit half-split columns so order reads 1-5 left, 6-10 right
+  // If wide and exactly 3 winners (e.g. Open top 3 podium), display in 3 columns
+  const isThreePodium = wide && cat.winners.length === 3;
+  // If wide and > 5 entries (e.g. Open top 10), explicit half-split columns: 1-5 left, 6-10 right
   const splitAt = wide && cat.winners.length > 5 ? Math.ceil(cat.winners.length / 2) : null;
   const leftCol = splitAt ? cat.winners.slice(0, splitAt) : cat.winners;
   const rightCol = splitAt ? cat.winners.slice(splitAt) : [];
@@ -141,9 +146,15 @@ function CategoryCard({
         </p>
       )}
 
-      {/* Winners — two explicit half-split columns when wide+many, otherwise single column */}
-      {splitAt ? (
-        <div className="p-2.5 flex-1 grid grid-cols-2 gap-x-3 gap-y-1.5 items-start">
+      {/* Winners layout */}
+      {isThreePodium ? (
+        <div className="p-3 flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2.5 items-stretch">
+          {cat.winners.map((w) => (
+            <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
+          ))}
+        </div>
+      ) : splitAt ? (
+        <div className="p-2.5 flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-1.5 items-start">
           <div className="space-y-1.5">
             {leftCol.map((w) => (
               <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
@@ -246,8 +257,8 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
 
       {/* ── Podium layout ───────────────────────────────────────────── */}
       <div className="p-4 sm:p-6 space-y-4">
-        {mainCat && mainCat.winners.length > 5 ? (
-          // Many winners: main category full-width (2-col split inside), sub-cats grid below
+        {mainCat && (mainCat.winners.length > 5 || mainCat.winners.length === 3) ? (
+          // Main category full-width (2-col split for >5 winners, 3-col split for 3 winners), sub-cats grid below
           <>
             <CategoryCard cat={mainCat} profileHandles={profileHandles} wide />
             {subCats.length > 0 && (
@@ -259,7 +270,7 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
             )}
           </>
         ) : (
-          // Few winners (e.g. ILCA 4 Open = 3): all categories in one uniform grid
+          // General layout
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {currentFleet.categories.map((cat) => (
               <CategoryCard key={cat.categoryName} cat={cat} profileHandles={profileHandles} />

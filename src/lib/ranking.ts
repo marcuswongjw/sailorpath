@@ -16,6 +16,7 @@ export interface SailorRecord {
   sailNumberIlca4?: string | null;
   ilca4NationalList?: boolean | null;
   ilca6NationalList?: boolean | null;
+  ilca7NationalList?: boolean | null;
   club: string;
   school?: string | null;
   nationality?: string | null;

@@ -185,7 +185,7 @@ export const TEMASEK_2026_EVENT: RegattaEventDef = {
   noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/13596/event",
   officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/13596/event",
   registrationUrl: "https://www.sailing.org.sg/events/335514",
-  slices: fleetSlices("temasek", "2026", ["gold", "silver", "ilca4"]),
+  slices: fleetSlices("temasek", "2026", ["gold", "silver", "ilca4", "ilca6", "ilca7"]),
 };
 
 export const SAFYC_REGATTA_2026_EVENT: RegattaEventDef = {
@@ -244,10 +244,24 @@ export const PULAU_UJONG_2026_EVENT: RegattaEventDef = {
   slug: "pulau-ujong-regatta-2026",
   name: "Pulau Ujong Regatta 2026",
   shortName: "Pulau Ujong 2026",
-  datesText: "February 2026",
-  venue: "Changi Sailing Club",
-  organizer: "Changi Sailing Club",
-  slices: fleetSlices("pulau-ujong", "2026", ["gold", "silver", "ilca4"]),
+  datesText: "21–22 February 2026",
+  venue: "National Sailing Centre, Singapore",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/13180/event",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/13180/event",
+  slices: fleetSlices("pulau-ujong", "2026", ["gold", "silver", "ilca4", "ilca6"]),
+};
+
+export const SYSC_2026_EVENT: RegattaEventDef = {
+  slug: "sysc-2026",
+  name: "Singapore Youth Sailing Championships 2026",
+  shortName: "SYSC 2026",
+  datesText: "14–17 March 2026",
+  venue: "National Sailing Centre, Singapore",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/13601/event",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/13601/event",
+  slices: fleetSlices("sysc", "2026", ["gold", "silver", "ilca4", "ilca6"]),
 };
 
 export const SELECTION_TRIALS_2026_EVENT: RegattaEventDef = {
@@ -278,6 +292,7 @@ export const REGATTA_EVENTS: RegattaEventDef[] = [
   CINCAPURA_2026_EVENT,
   PESTA_SUKAN_2026_EVENT,
   PULAU_UJONG_2026_EVENT,
+  SYSC_2026_EVENT,
   SELECTION_TRIALS_2026_EVENT,
 ];
 
@@ -286,6 +301,8 @@ const EVENT_SLUG_ALIASES: Record<string, string> = {
   "singapore-national-sailing-championships-2026-ilca4": "snsc-2026",
   "pesta-sukan-regatta-2026-optimist": "pesta-sukan-2026",
   "pesta-sukan-regatta-2026-ilca-wingfoil": "pesta-sukan-2026",
+  "singapore-youth-sailing-championships-2026": "sysc-2026",
+  "singapore-youth-sailing-championships-2026-ilca4": "sysc-2026",
 };
 
 /** Event hub entry for a class-slice slug such as snsc-ilca-4-sep-26-… */

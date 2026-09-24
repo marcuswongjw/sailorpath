@@ -190,21 +190,21 @@ export function IlcaRankingsView({
   return (
     <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-4 sm:space-y-6 overflow-x-clip">
       {accountReady && !isLoggedIn && (
-        <div className="rounded-xl border border-sky-500/25 bg-sky-500/[0.07] px-3.5 py-3 sm:px-4 sm:py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 no-print">
+        <div className="rounded-xl border border-cool-veil bg-warm-white p-3.5 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 no-print shadow-xs">
           <div className="flex items-start gap-2.5 min-w-0 flex-1">
-            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-500/15 text-sky-400 border border-sky-500/20">
+            <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-harbour/10 text-harbour border border-harbour/20">
               <Lock className="h-3.5 w-3.5" />
             </span>
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <p className="text-sm font-bold text-white leading-snug">
+                <p className="text-sm font-bold text-charcoal leading-snug">
                   Projected National Squad &amp; 2026 Selection Trials
                 </p>
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-sky-400 bg-sky-500/15 px-1.5 py-0.5 rounded-full border border-sky-500/25">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-harbour bg-harbour/10 px-2 py-0.5 rounded-full border border-harbour/20">
                   Sign in required
                 </span>
               </div>
-              <p className="text-[12px] text-slate-400 mt-0.5 leading-snug">
+              <p className="text-[12px] text-slate-soft mt-0.5 leading-snug">
                 Signed-in accounts can access projected Nat squad status and the 2026 Eastern Seaboard &amp; Asian Open Selection Trials leaderboards.
               </p>
             </div>
@@ -213,21 +213,21 @@ export function IlcaRankingsView({
             <Link
               href="/sg/ilca4/selection"
               prefetch
-              className="inline-flex items-center gap-1 rounded-full bg-sky-500/15 border border-sky-500/30 px-3 py-1.5 text-xs font-bold text-sky-300 hover:bg-sky-500/25 transition-colors"
+              className="inline-flex items-center gap-1 rounded-full bg-sailcloth border border-cool-veil px-3 py-1.5 text-xs font-bold text-charcoal hover:bg-aqua-mist transition-colors"
             >
-              <Trophy className="h-3 w-3 text-sky-400" />
+              <Trophy className="h-3 w-3 text-harbour" />
               <span>Selection Trials</span>
               <span>→</span>
             </Link>
             <Link
               href="/register?next=%2Fsg%2Filca4"
-              className="inline-flex rounded-full bg-sky-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-sky-500 shadow-sm"
+              className="inline-flex rounded-full bg-harbour px-3.5 py-1.5 text-xs font-bold text-white hover:bg-harbour-deep shadow-xs"
             >
               Create account
             </Link>
             <Link
               href="/login?next=%2Fsg%2Filca4"
-              className="text-xs font-semibold text-slate-400 hover:text-white px-1.5 py-1"
+              className="text-xs font-semibold text-slate-soft hover:text-charcoal px-1.5 py-1"
             >
               Log in
             </Link>
@@ -236,40 +236,41 @@ export function IlcaRankingsView({
       )}
 
       {/* ILCA Class Switcher Tabs */}
-      <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-slate-900/60 border border-slate-800 w-fit no-print">
+      <div className="flex flex-wrap items-center gap-1 p-1 rounded-xl bg-warm-white border border-cool-veil shadow-xs w-fit no-print">
         <Link
           href="/sg/ilca4"
-          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
             boatClass === "ILCA 4"
-              ? "bg-sky-500 text-slate-950 shadow-xs"
-              : "text-slate-400 hover:text-white"
+              ? "bg-harbour text-white shadow-xs"
+              : "text-slate-soft hover:text-charcoal hover:bg-sailcloth"
           }`}
         >
           ILCA 4
         </Link>
         <Link
           href="/sg/ilca6"
-          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
             boatClass === "ILCA 6"
-              ? "bg-sky-500 text-slate-950 shadow-xs"
-              : "text-slate-400 hover:text-white"
+              ? "bg-harbour text-white shadow-xs"
+              : "text-slate-soft hover:text-charcoal hover:bg-sailcloth"
           }`}
         >
           ILCA 6
         </Link>
         <Link
           href="/sg/ilca7"
-          className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+          className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-colors ${
             boatClass === "ILCA 7"
-              ? "bg-sky-500 text-slate-950 shadow-xs"
-              : "text-slate-400 hover:text-white"
+              ? "bg-harbour text-white shadow-xs"
+              : "text-slate-soft hover:text-charcoal hover:bg-sailcloth"
           }`}
         >
           ILCA 7
         </Link>
+        <span className="w-px h-4 bg-cool-veil mx-0.5" />
         <Link
           href="/sg/ilca/regattas"
-          className="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-colors border-l border-slate-800 ml-1 pl-3"
+          className="px-3.5 py-1.5 rounded-lg text-xs font-bold text-harbour hover:text-harbour-deep hover:bg-sailcloth transition-colors"
         >
           ILCA Regattas →
         </Link>
@@ -277,17 +278,17 @@ export function IlcaRankingsView({
 
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-3 sm:gap-4 no-print min-w-0">
         <div className="flex items-start gap-2.5 sm:gap-3 min-w-0">
-          <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-sky-600/15 text-sky-400 border border-sky-500/25">
+          <span className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-harbour/10 text-harbour border border-harbour/20">
             <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
           <div className="min-w-0 flex-1">
-            <p className="text-[10px] sm:text-xs font-bold text-sky-400 uppercase tracking-wide">
+            <p className="text-[10px] sm:text-xs font-bold text-harbour uppercase tracking-wider">
               SG {boatClass}
             </p>
-            <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight break-words">
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-black text-charcoal tracking-tight break-words">
               National standings
             </h1>
-            <p className="text-[11px] sm:text-sm text-slate-500 mt-1 leading-snug">
+            <p className="text-[11px] sm:text-sm text-slate-soft mt-1 leading-snug">
               Best 3 of last 5 · highlighted scores are selected · 1st = fleet
               size pts · * = DNS (0 pts)
             </p>
@@ -296,14 +297,14 @@ export function IlcaRankingsView({
                 <Link
                   href="/sg/ilca4/selection"
                   prefetch
-                  className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 text-[11px] font-bold text-sky-300 hover:bg-sky-500/20 transition-colors"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-harbour/30 bg-harbour/10 px-3 py-1 text-[11px] font-bold text-harbour hover:bg-harbour/20 transition-colors shadow-xs"
                 >
-                  <Trophy className="h-3 w-3 text-sky-400" />
+                  <Trophy className="h-3 w-3 text-harbour" />
                   <span>Selection trials &amp; Nat squad policy</span>
                   <span>→</span>
                 </Link>
                 {projectedSquad.length > 0 && (
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3 py-1 text-[11px] font-bold text-amber-300">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-100/90 px-3 py-1 text-[11px] font-bold text-amber-900 shadow-xs">
                     <span>{projectedSquad.length} Projected Nat Squad</span>
                   </span>
                 )}
@@ -313,7 +314,7 @@ export function IlcaRankingsView({
         </div>
         <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-2.5 w-full lg:w-auto min-w-0">
           <div className="relative flex items-center min-w-0 w-full sm:w-auto">
-            <Calendar className="absolute left-3.5 h-4 w-4 text-sky-400 pointer-events-none" />
+            <Calendar className="absolute left-3.5 h-4 w-4 text-harbour pointer-events-none" />
             <select
               value={`${intakeKind}|${intakeYear}`}
               onChange={(e) => {
@@ -330,7 +331,7 @@ export function IlcaRankingsView({
                 void loadBoard(nextKind, nextYear);
               }}
               className="flex-1 sm:flex-none min-w-0 w-full sm:w-auto max-w-full rounded-xl bg-warm-white border border-cool-veil pl-10 pr-8 py-2 text-xs sm:text-sm text-charcoal font-semibold cursor-pointer hover:border-harbour/40 focus:border-harbour focus:outline-none focus:ring-1 focus:ring-harbour/30 transition-all shadow-sm"
-              aria-label="Select ILCA 4 intake period"
+              aria-label={`Select ${boatClass} intake period`}
             >
               {intakeOptions.map((opt) => (
                 <option
@@ -344,7 +345,7 @@ export function IlcaRankingsView({
             </select>
           </div>
           <div className="relative flex items-center min-w-0 w-full sm:w-auto">
-            <Filter className="absolute left-3 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+            <Filter className="absolute left-3 h-3.5 w-3.5 text-slate-soft pointer-events-none" />
             <select
               value={genderFilter}
               onChange={(e) =>
@@ -368,7 +369,7 @@ export function IlcaRankingsView({
       </div>
 
       {loading && (
-        <p className="text-[11px] text-sky-300 font-medium inline-flex items-center gap-2">
+        <p className="text-[11px] text-harbour font-medium inline-flex items-center gap-2">
           <RefreshCw className="h-3 w-3 animate-spin" />
           <span>Updating standings…</span>
         </p>
@@ -451,15 +452,15 @@ export function IlcaRankingsView({
                       title={`${off ? "Include" : "Exclude"} ${ev.regattaName}`}
                     >
                       <div className="flex items-center justify-center gap-1">
-                        <span className="text-[9px] font-black text-sky-400">
+                        <span className="text-[9px] font-black text-harbour">
                           R{idx + 1}
                         </span>
                       </div>
-                      <p className="text-[10px] font-bold truncate leading-tight mt-0.5">
+                      <p className="text-[10px] font-bold truncate leading-tight mt-0.5 text-charcoal">
                         {badge}
                       </p>
                       {off && (
-                        <p className="text-[8px] font-extrabold text-rose-400 uppercase tracking-tighter mt-0.5 no-underline">
+                        <p className="text-[8px] font-extrabold text-rose-600 uppercase tracking-tighter mt-0.5 no-underline">
                           EXCL
                         </p>
                       )}
@@ -476,19 +477,19 @@ export function IlcaRankingsView({
                 return (
                   <label
                     key={ev.regattaId}
-                    className={`rounded-lg border px-2.5 py-2 min-h-[3.25rem] flex flex-col gap-1 transition-all cursor-pointer hover:border-sky-500/30 ${
+                    className={`rounded-lg border px-2.5 py-2 min-h-[3.25rem] flex flex-col gap-1 transition-all cursor-pointer hover:border-harbour/40 ${
                       off
-                        ? "bg-slate-900/80 border-rose-500/40 opacity-60"
+                        ? "bg-rose-50/70 border-rose-300 opacity-60"
                         : "bg-sailcloth border-cool-veil"
                     }`}
                   >
                     <div className="flex items-start justify-between gap-1">
-                      <p className="text-[10px] font-black text-sky-400">R{idx + 1}</p>
+                      <p className="text-[10px] font-black text-harbour">R{idx + 1}</p>
                       <input
                         type="checkbox"
                         checked={!off}
                         onChange={() => toggleExclude(ev.regattaId)}
-                        className="mt-0.5 h-3.5 w-3.5 rounded border-slate-600 bg-slate-900 text-sky-600 focus:ring-sky-500 cursor-pointer"
+                        className="mt-0.5 h-3.5 w-3.5 rounded border-cool-veil text-harbour focus:ring-harbour cursor-pointer"
                         title={off ? "Include in Best 3 of 5" : "Exclude from Best 3 of 5"}
                       />
                     </div>
@@ -498,7 +499,7 @@ export function IlcaRankingsView({
                     >
                       {regattaDisplayName(ev.regattaName, idx)}
                     </p>
-                    <p className="text-[9px] text-slate-soft tabular-nums">
+                    <p className="text-[10px] sm:text-[11px] font-medium text-slate-600 tabular-nums">
                       {ev.date.slice(5)} · n={ev.fleetSize}
                     </p>
                   </label>
@@ -520,7 +521,7 @@ export function IlcaRankingsView({
             </div>
 
             {excluded.size > 0 && (
-              <p className="text-[11px] text-amber-700 dark:text-amber-200/90 font-semibold">
+              <p className="text-[11px] text-amber-800 font-semibold">
                 Viewing what-if ranking: {excluded.size} regatta
                 {excluded.size === 1 ? "" : "s"} excluded · Best 3 of remaining
                 scores. Current standings return when you reset.
@@ -531,7 +532,7 @@ export function IlcaRankingsView({
       )}
 
       {displayRanked.length === 0 && !loading && (
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-soft">
           No {boatClass} ranking results for listed sailors on or before {asOf}.
           Import {boatClass} regattas to view standings.
         </p>
@@ -549,7 +550,7 @@ export function IlcaRankingsView({
           return (
             <div
               key={s.sailorId}
-              className="w-full max-w-full min-w-0 rounded-2xl p-3 border border-cool-veil bg-warm-white space-y-2.5"
+              className="w-full max-w-full min-w-0 rounded-2xl p-3 border border-cool-veil bg-warm-white space-y-2.5 shadow-xs"
             >
               <div className="flex items-start justify-between gap-2 min-w-0">
                 <div className="min-w-0 flex-1">
@@ -557,7 +558,7 @@ export function IlcaRankingsView({
                     <RankMedalBadge
                       rank={s.displayRank}
                       className="w-6 shrink-0"
-                      nonPodiumClassName="text-sky-400 font-black text-sm shrink-0 tabular-nums w-6 text-center"
+                      nonPodiumClassName="font-mono font-bold text-slate-soft text-sm shrink-0 tabular-nums w-6 text-center"
                     />
                     {handle ? (
                       <Link
@@ -617,9 +618,9 @@ export function IlcaRankingsView({
                       data-best-three-selected={selected || undefined}
                       className={`min-w-0 rounded-lg border px-1 py-1.5 flex flex-col justify-between text-center transition-all ${
                         isRegattaExcluded
-                          ? "border-rose-500/20 bg-rose-500/5 opacity-50"
+                          ? "border-rose-300 bg-rose-50/60 opacity-60"
                           : isCounted
-                            ? "border-sky-400/60 bg-sky-500/20 ring-1 ring-sky-500/40 shadow-sm"
+                            ? "border-harbour/40 bg-aqua-mist/50 ring-1 ring-harbour/30 shadow-xs"
                             : isDropped
                               ? "border-cool-veil bg-sailcloth/40 opacity-70"
                               : "border-cool-veil bg-sailcloth"
@@ -627,8 +628,8 @@ export function IlcaRankingsView({
                       title={`${ev.regattaName}${selected ? " · counts toward Best 3 of 5" : ""}${isRegattaExcluded ? " (regatta excluded)" : ""}`}
                     >
                       <div className="flex items-center justify-center gap-0.5 text-[8px] leading-tight font-bold truncate">
-                        <span className="text-sky-400/90 font-black">R{idx + 1}</span>
-                        <span className="text-slate-500">·</span>
+                        <span className="text-harbour font-black">R{idx + 1}</span>
+                        <span className="text-slate-400">·</span>
                         <span className="text-slate-soft truncate">{badge}</span>
                       </div>
 
@@ -636,8 +637,8 @@ export function IlcaRankingsView({
                         isCounted
                           ? "text-charcoal font-black text-[14px]"
                           : isDropped
-                            ? "text-slate-400 font-semibold line-through decoration-slate-500/60"
-                            : "text-slate-500 font-medium"
+                            ? "text-slate-400 font-semibold line-through decoration-slate-400"
+                            : "text-slate-soft font-medium"
                       }`}>
                         {selected && <span className="sr-only">Selected score: </span>}
                         {scoreCell(points, isDns)}
@@ -645,19 +646,19 @@ export function IlcaRankingsView({
 
                       <div>
                         {isRegattaExcluded ? (
-                          <span className="inline-block text-[7.5px] font-bold uppercase tracking-wider text-rose-500 leading-none py-0.5">
+                          <span className="inline-block text-[7.5px] font-bold uppercase tracking-wider text-rose-600 leading-none py-0.5">
                             Excl
                           </span>
                         ) : isCounted ? (
-                          <span className="inline-flex items-center justify-center text-[7.5px] font-black uppercase tracking-wider text-sky-700 dark:text-sky-200 bg-sky-500/30 border border-sky-400/30 rounded px-1 py-0.5 leading-none w-full">
+                          <span className="inline-flex items-center justify-center text-[7.5px] font-black uppercase tracking-wider text-harbour bg-harbour/15 border border-harbour/25 rounded px-1 py-0.5 leading-none w-full">
                             ★ Count
                           </span>
                         ) : isDropped ? (
-                          <span className="inline-block text-[7.5px] font-medium uppercase tracking-wider text-slate-500 leading-none py-0.5">
+                          <span className="inline-block text-[7.5px] font-medium uppercase tracking-wider text-slate-soft leading-none py-0.5">
                             Drop
                           </span>
                         ) : (
-                          <span className="inline-block text-[7.5px] text-slate-600 leading-none py-0.5">
+                          <span className="inline-block text-[7.5px] text-slate-400 leading-none py-0.5">
                             —
                           </span>
                         )}
@@ -674,7 +675,7 @@ export function IlcaRankingsView({
                 </span>
                 {isLoggedIn ? (
                   squadPick ? (
-                    <span className="inline-flex items-center rounded-full bg-amber-500/15 border border-amber-400/30 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-300">
+                    <span className="inline-flex items-center rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-[10px] font-bold text-amber-900">
                       {squadReasonLabel(squadPick.reason)}
                     </span>
                   ) : (
@@ -683,7 +684,7 @@ export function IlcaRankingsView({
                 ) : (
                   <Link
                     href="/login"
-                    className="inline-flex items-center gap-1 text-[10px] text-sky-600 dark:text-sky-400 font-semibold hover:underline"
+                    className="inline-flex items-center gap-1 text-[10px] text-harbour font-semibold hover:underline"
                   >
                     <Lock className="h-2.5 w-2.5" />
                     Sign in to view
@@ -696,10 +697,10 @@ export function IlcaRankingsView({
       </div>
 
       {/* Desktop Table View */}
-      <div className="hidden md:block rounded-2xl border border-cool-veil bg-warm-white overflow-hidden w-full max-w-full min-w-0">
+      <div className="hidden md:block rounded-2xl border border-cool-veil bg-warm-white overflow-hidden w-full max-w-full min-w-0 shadow-xs">
         <div className="overflow-x-auto max-w-full">
           <table className="w-full text-left text-sm min-w-[760px] border-collapse">
-            <thead className="text-[10px] text-slate-400 uppercase tracking-wider">
+            <thead className="text-[10px] text-slate-soft uppercase tracking-wider font-bold">
               <tr>
                 <th className="sticky top-0 z-20 px-4 lg:px-5 py-3 w-12 bg-aqua-mist border-b border-cool-veil">
                   #
@@ -726,8 +727,8 @@ export function IlcaRankingsView({
                           : `R${idx + 1}`
                       }
                     >
-                      <span className="block text-sky-400 font-black normal-case tracking-normal">
-                        R{idx + 1} {off && <span className="text-[9px] text-rose-400 uppercase tracking-tight">(Excl)</span>}
+                      <span className="block text-harbour font-black normal-case tracking-normal">
+                        R{idx + 1} {off && <span className="text-[9px] text-rose-600 uppercase tracking-tight">(Excl)</span>}
                       </span>
                       <span className="block text-[10px] font-semibold text-charcoal normal-case tracking-normal leading-snug mt-0.5 whitespace-normal break-words">
                         {ev ? regattaDisplayName(ev.regattaName, idx) : "—"}
@@ -770,7 +771,7 @@ export function IlcaRankingsView({
                     <td className="px-4 lg:px-5 py-3.5">
                       <RankMedalBadge
                         rank={s.displayRank}
-                        nonPodiumClassName="font-bold text-sky-400 font-mono"
+                        nonPodiumClassName="font-mono font-bold text-slate-soft"
                       />
                     </td>
                     <td className="px-4 lg:px-5 py-3.5">
@@ -812,7 +813,7 @@ export function IlcaRankingsView({
                           data-best-three-selected={selected || undefined}
                           className={`px-3 py-3.5 text-center font-mono text-xs ${
                             isRegattaExcluded
-                              ? "opacity-40 line-through text-slate-400 bg-rose-500/5"
+                              ? "opacity-40 line-through text-slate-400 bg-rose-50/40"
                               : selected
                                 ? "bg-aqua-mist font-bold text-harbour shadow-[inset_0_0_0_1px_rgba(10,85,87,0.2)]"
                                 : "font-medium text-slate-soft"
@@ -837,7 +838,7 @@ export function IlcaRankingsView({
                       {isLoggedIn ? (
                         squadPick ? (
                           <span
-                            className="inline-flex items-center rounded-full bg-amber-500/15 border border-amber-400/30 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-300 whitespace-nowrap"
+                            className="inline-flex items-center rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-[10px] font-bold text-amber-900 whitespace-nowrap"
                             title={`Rank #${squadPick.rankingPosition} · ${squadReasonLabel(squadPick.reason)}`}
                           >
                             {squadReasonLabel(squadPick.reason)}
@@ -848,7 +849,7 @@ export function IlcaRankingsView({
                       ) : (
                         <Link
                           href="/login"
-                          className="inline-flex items-center gap-1 text-[10px] text-slate-soft hover:text-sky-500 transition-colors"
+                          className="inline-flex items-center gap-1 text-[10px] text-slate-soft hover:text-harbour transition-colors"
                           title="Sign in to view projected squad status"
                         >
                           <Lock className="h-2.5 w-2.5" />
