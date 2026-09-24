@@ -9,8 +9,11 @@
  *
  * Persistence of `sailors.drop_date` is admin-only
  * (`applySilverInactivityDrops` in adminSailorActions). Public ranking reads
- * must never write drop dates — they may call `findSilverInactivityDrops` to
- * detect candidates, but must not mutate sailors.
+ * must never write drop dates.
+ *
+ * `findSilverInactivityDrops` is a legacy no-op (returns []) so any remaining
+ * public read-path callers cannot stamp drop_date. Admin uses
+ * `detectSilverInactivityDrops`.
  */
 
 import { completedPeriodsUpTo } from "@/lib/goldFleetDrop";
@@ -121,8 +124,11 @@ export function earliestOptimistRankingDate(
  * Requires a real foothold (entry stamp or Optimist ranking history) before
  * any half is evaluated — idle Series / SGP profiles are not stamped with
  * ancient drop dates from walking completed halves since 2022.
+ *
+ * Admin-only consumer: `applySilverInactivityDrops`. Do not call from public
+ * ranking reads.
  */
-export function findSilverInactivityDrops(
+export function detectSilverInactivityDrops(
   sailors: SailorRecord[],
   regattas: RegattaRecord[],
   results: RegattaResultRecord[],
@@ -178,4 +184,18 @@ export function findSilverInactivityDrops(
   }
 
   return out;
+}
+
+/**
+ * Legacy name kept for any remaining public ranking imports.
+ * Always returns [] so read-path code cannot persist drop_date even if it
+ * still calls this and writes the result. Use `detectSilverInactivityDrops`.
+ */
+export function findSilverInactivityDrops(
+  _sailors: SailorRecord[],
+  _regattas: RegattaRecord[],
+  _results: RegattaResultRecord[],
+  _asOfYmd: string
+): SilverDropCandidate[] {
+  return [];
 }
