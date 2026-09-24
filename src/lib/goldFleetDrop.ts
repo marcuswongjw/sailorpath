@@ -86,7 +86,11 @@ export function completedPeriodsUpTo(asOfYmd: string): Period[] {
   );
 }
 
-function sailedRankingCount(
+/**
+ * Real ranking participations in a half (Optimist Gold events).
+ * DNS / no-show / Tier 2 absences and overseas-commitment rows do NOT count.
+ */
+export function countGoldRankingParticipations(
   sailorId: string,
   period: Period,
   regattas: RegattaRecord[],
@@ -98,10 +102,23 @@ function sailedRankingCount(
   for (const res of results) {
     if (res.sailorId !== sailorId) continue;
     if (!ids.has(res.regattaId)) continue;
-    // DNS still counts as participation (they entered)
+    // DNS / no-show / absent / Tier 2 = NOT participation
+    if (Boolean(res.isDns)) continue;
+    // Overseas commitment is scored for points but is not a start
+    if (Boolean(res.isOverseasCommitment)) continue;
     n++;
   }
   return n;
+}
+
+/** @deprecated use countGoldRankingParticipations */
+function sailedRankingCount(
+  sailorId: string,
+  period: Period,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[]
+): number {
+  return countGoldRankingParticipations(sailorId, period, regattas, results);
 }
 
 /**
@@ -173,4 +190,25 @@ export function monthsInGoldTenure(
   const [sy, sm] = start.split("-").map(Number);
   const [ey, em] = end.split("-").map(Number);
   return Math.max(0, (ey - sy) * 12 + (em - sm));
+}
+
+/**
+ * Under projected next-half status, mark Dropped when the sailor is below the
+ * participation bar for the *current* ranking half (Gold: ≥2 real starts).
+ * DNS / overseas / Tier 2 absences do not count. Call after Nat A/B projection
+ * so Dropped overrides a squad tier when they will leave Gold.
+ */
+export function applyProjectedGoldParticipationDropped<
+  T extends { id: string; nextPeriodSquadStatus?: string | null },
+>(
+  ranked: T[],
+  period: Period,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[]
+): T[] {
+  return ranked.map((s) => {
+    const n = countGoldRankingParticipations(s.id, period, regattas, results);
+    if (n >= GOLD_MIN_RANKING_REGATTAS_PER_HALF) return s;
+    return { ...s, nextPeriodSquadStatus: "Dropped" };
+  });
 }

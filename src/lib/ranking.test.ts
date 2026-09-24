@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   bestThreeOf,
   calculateRankings,
+  maxSheetRankByRegattaId,
+  optimistTier2Score,
   compareRankedSailors,
   getPercentileBadge,
   natSquadFieldForPeriod,
@@ -509,5 +511,90 @@ describe("reRankWithExcluded", () => {
     expect(alice.overallScore).toBe(1 + 2 + 9999);
     // Full regattaScores still present for display
     expect(alice.regattaScores).toHaveLength(5);
+  });
+});
+
+describe("Optimist Tier 2 max(sheet)+1 scoring", () => {
+  const period = { year: 2026, half: "Jan-Jun" as const };
+  const goldSailor = (id: string): SailorRecord =>
+    ({
+      id,
+      name: id,
+      handle: id,
+      sailNumber: "SGP 1",
+      club: "C",
+      currentFleet: "Series",
+      goldEntryDate: "2025-01-01",
+      silverEntryDate: "2024-01-01",
+      dropDate: null,
+      nationality: "SGP",
+    }) as SailorRecord;
+
+  it("SNSC-style: three tied at 81 → unentered get 82 (not fleetSize+1)", () => {
+    const regattas: RegattaRecord[] = [
+      {
+        id: "snsc",
+        name: "SNSC",
+        slug: "snsc",
+        date: "2026-03-01",
+        totalFleetSize: 83,
+        division: "Gold",
+        boatClass: "Optimist",
+        countsForRanking: true,
+      },
+    ];
+    const onSheet = goldSailor("ethan");
+    const absent = goldSailor("absent");
+    const results = [
+      { sailorId: "ethan", regattaId: "snsc", rank: 81, isDns: true },
+      { sailorId: "a", regattaId: "snsc", rank: 81, isDns: true },
+      { sailorId: "b", regattaId: "snsc", rank: 81, isDns: true },
+      { sailorId: "fin", regattaId: "snsc", rank: 1 },
+    ];
+    const ranked = calculateRankings(
+      period,
+      [onSheet, absent],
+      regattas,
+      results
+    );
+    const ethan = ranked.find((s) => s.id === "ethan")!;
+    const miss = ranked.find((s) => s.id === "absent")!;
+    // Tier 1: official sheet DNS place
+    expect(ethan.regattaScores[0]?.score).toBe(81);
+    expect(ethan.regattaScores[0]?.isDNS).toBe(true);
+    // Tier 2: max sheet place + 1 = 82 (not 84)
+    expect(miss.regattaScores[0]?.score).toBe(82);
+    expect(miss.regattaScores[0]?.isDNS).toBe(true);
+  });
+
+  it("empty sheet: no Tier 2 invented for absentees", () => {
+    const regattas: RegattaRecord[] = [
+      {
+        id: "empty",
+        name: "Not uploaded",
+        slug: "empty",
+        date: "2026-04-01",
+        totalFleetSize: 50,
+        division: "Gold",
+        boatClass: "Optimist",
+        countsForRanking: true,
+      },
+    ];
+    const sailor = goldSailor("g1");
+    const ranked = calculateRankings(period, [sailor], regattas, []);
+    expect(ranked).toHaveLength(1);
+    // No uploaded results → regatta excluded from scoring window
+    expect(ranked[0].regattaScores).toHaveLength(0);
+  });
+
+  it("maxSheetRankByRegattaId / optimistTier2Score helpers", () => {
+    expect(optimistTier2Score(81)).toBe(82);
+    expect(optimistTier2Score(null)).toBeNull();
+    expect(optimistTier2Score(undefined)).toBeNull();
+    const m = maxSheetRankByRegattaId([
+      { sailorId: "a", regattaId: "r1", rank: 10 },
+      { sailorId: "b", regattaId: "r1", rank: 81, isDns: true },
+    ]);
+    expect(m.get("r1")).toBe(81);
   });
 });

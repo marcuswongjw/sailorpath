@@ -5,11 +5,6 @@ import { regattaRaceResults, regattaResults, regattas, sailors } from "@/db/sche
 import { asc, eq, inArray } from "drizzle-orm";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import {
-  activeSailorsForFleet,
-  missingDnsPairs,
-  rankingRegattasForFleet,
-} from "@/lib/fillDns";
-import {
   resolveSailorFleet,
   type Period,
   type RegattaRecord,
@@ -184,271 +179,37 @@ export async function POST(req: Request) {
     const body = await req.json();
 
     /**
-     * fillDnsPeriod: ensure every active Gold/Silver sailor for a half-year has a
-     * result row for each ranking regatta in that period (missing → DNS = N+1).
-     * Body: { action, fleet: "Gold"|"Silver", year, half: "Jan-Jun"|"Jul-Dec" }
+     * fillDnsPeriod — removed. Optimist Tier 2 DNS is scored at ranking time as
+     * max(sheet place) + 1 after results are uploaded. Do not invent fill rows.
      */
     if (
       body.action === "fillDnsPeriod" ||
       body.action === "fillDNSPeriod" ||
       body.action === "ensureFleetDns"
     ) {
-      const fleet =
-        String(body.fleet || "Gold").toLowerCase() === "silver"
-          ? "Silver"
-          : "Gold";
-      const year = Number(body.year) || new Date().getFullYear();
-      const half = (
-        body.half === "Jan-Jun" ? "Jan-Jun" : "Jul-Dec"
-      ) as Period["half"];
-      const period: Period = { year, half };
-
-      const [sailorRows, regattaRows, resultRows] = await Promise.all([
-        db.select().from(sailors),
-        db.select().from(regattas),
-        db
-          .select({
-            sailorId: regattaResults.sailorId,
-            regattaId: regattaResults.regattaId,
-          })
-          .from(regattaResults),
-      ]);
-
-      const sailorRecords: SailorRecord[] = sailorRows.map((row) => ({
-        id: row.id,
-        name: row.name,
-        handle: row.handle,
-        sailNumber: row.sailNumber,
-        club: row.club,
-        school: row.school,
-        nationality: row.nationality,
-        goldEntryDate: row.goldEntryDate,
-        silverEntryDate: row.silverEntryDate,
-        dropDate: row.dropDate,
-        currentFleet: row.currentFleet,
-
-        dob: row.dob,
-        gender: row.gender,
-        nationalSquadStatus: row.nationalSquadStatus,
-      }));
-
-      const regattaRecords: RegattaRecord[] = regattaRows.map((r) => ({
-        id: r.id,
-        name: r.name,
-        slug: r.slug,
-        date: r.date,
-        totalFleetSize: r.totalFleetSize,
-        division: r.division,
-        // Required so personal/non-ranking logbook events are excluded
-        countsForRanking: r.countsForRanking !== false,
-      }));
-
-      const existingKeys = new Set(
-        resultRows.map((r) => `${r.sailorId}|${r.regattaId}`)
-      );
-      const pairs = missingDnsPairs({
-        fleet,
-        period,
-        sailors: sailorRecords,
-        regattas: regattaRecords,
-        existingKeys,
-      });
-      const events = rankingRegattasForFleet(fleet, period, regattaRecords);
-      const fleetSailors = activeSailorsForFleet(
-        fleet,
-        period,
-        sailorRecords
-      );
-
-      let created = 0;
-      for (const p of pairs) {
-        const [row] = await db
-          .insert(regattaResults)
-          .values({
-            sailorId: p.sailorId,
-            regattaId: p.regattaId,
-            rank: p.dnsPoints,
-            nettScore: null,
-            totalScore: null,
-            isDns: true,
-            isOverseasCommitment: false,
-          })
-          .onConflictDoNothing()
-          .returning();
-        if (row) created++;
-      }
-
-      revalidatePublicRankings(`results:fillDnsPeriod:${fleet}:${year}:${half}`);
-      void logAdminChange({
-        actorUserId: auth.userId,
-        actorEmail: auth.email,
-        action: "result.fill_dns_period",
-        entityType: "bulk",
-        entityId: null,
-        entityLabel: `${fleet} ${half} ${year}`,
-        summary: `Filled DNS for ${fleet} ${half} ${year}: ${created} created`,
-        details: {
-          created,
-          fleet,
-          year,
-          half,
-          activeSailors: fleetSailors.length,
-          rankingRegattas: events.length,
-          missingBefore: pairs.length,
+      return NextResponse.json(
+        {
+          error:
+            "Fill DNS period is removed. Absentees are auto-scored at ranking time as max(sheet place) + 1 after results upload. Official sheet DNS ranks are kept as published.",
+          deprecated: true,
         },
-        source: "/api/admin/results",
-      });
-      return NextResponse.json({
-        ok: true,
-        message: `Ensured DNS for ${fleet} fleet ${half} ${year}: ${created} missing results created (rank = each regatta fleet size + 1). ${fleetSailors.length} active sailors × ${events.length} ranking regattas.`,
-        created,
-        fleet,
-        period,
-        activeSailors: fleetSailors.length,
-        rankingRegattas: events.map((e) => ({
-          id: e.id,
-          name: e.name,
-          date: e.date,
-          totalFleetSize: e.totalFleetSize,
-          dnsPoints: (e.totalFleetSize || 0) + 1,
-        })),
-        missingBefore: pairs.length,
-      });
+        { status: 410 }
+      );
     }
 
     // Bulk: create DNS for fleet members missing a result at ONE regatta
+    /**
+     * fillDns — removed. Tier 2 absentees are auto-scored at ranking time.
+     */
     if (body.action === "fillDns" || body.action === "fillDNS") {
-      const regattaId = String(body.regattaId || "").trim();
-      if (!regattaId) {
-        return NextResponse.json(
-          { error: "regattaId required for fillDns" },
-          { status: 400 }
-        );
-      }
-      const [reg] = await db
-        .select()
-        .from(regattas)
-        .where(eq(regattas.id, regattaId))
-        .limit(1);
-      if (!reg) {
-        return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
-      }
-      if (reg.countsForRanking === false) {
-        return NextResponse.json(
-          {
-            error:
-              "Cannot fill DNS for a non-ranking (personal/logbook) regatta. Mark counts_for_ranking=true first if it should count.",
-          },
-          { status: 400 }
-        );
-      }
-
-      const dnsPoints = Math.max(1, (reg.totalFleetSize || 0) + 1);
-      // Infer period half from regatta date (YYYY-MM-DD / SG calendar)
-      const halfInfo = periodHalfFromYmd(reg.date);
-      if (!halfInfo) {
-        return NextResponse.json(
-          { error: "Regatta date invalid for period DNS fill" },
-          { status: 400 }
-        );
-      }
-      const period: Period = {
-        year: halfInfo.year,
-        half: halfInfo.half,
-      };
-      const div = (reg.division || "Gold").toLowerCase();
-      const fleet: "Gold" | "Silver" =
-        div === "silver" ? "Silver" : "Gold";
-
-      const sailorRows = await db.select().from(sailors);
-      const sailorRecords: SailorRecord[] = sailorRows.map((row) => ({
-        id: row.id,
-        name: row.name,
-        handle: row.handle,
-        sailNumber: row.sailNumber,
-        club: row.club,
-        goldEntryDate: row.goldEntryDate,
-        silverEntryDate: row.silverEntryDate,
-        dropDate: row.dropDate,
-        currentFleet: row.currentFleet,
-
-      }));
-      // For "Both" division, fill for both fleets
-      const fleets: ("Gold" | "Silver")[] =
-        div === "both" ? ["Gold", "Silver"] : [fleet];
-      const eligibleIds = new Set<string>();
-      for (const f of fleets) {
-        for (const s of activeSailorsForFleet(f, period, sailorRecords)) {
-          eligibleIds.add(s.id);
-        }
-      }
-      // Fallback: same resolveSailorFleet rules (handles division Both / edge cases)
-      if (eligibleIds.size === 0) {
-        for (const s of sailorRecords) {
-          if (sailorEligibleForRegattaDns(s, reg.division || "Gold", period)) {
-            eligibleIds.add(s.id);
-          }
-        }
-      }
-
-      const existing = await db
-        .select({
-          sailorId: regattaResults.sailorId,
-        })
-        .from(regattaResults)
-        .where(eq(regattaResults.regattaId, regattaId));
-      const have = new Set(existing.map((e) => e.sailorId));
-
-      let created = 0;
-      const createdRows: (typeof regattaResults.$inferSelect)[] = [];
-      for (const sailorId of eligibleIds) {
-        if (have.has(sailorId)) continue;
-        const [row] = await db
-          .insert(regattaResults)
-          .values({
-            sailorId,
-            regattaId,
-            rank: dnsPoints,
-            nettScore: null,
-            totalScore: null,
-            isDns: true,
-            isOverseasCommitment: false,
-          })
-          .onConflictDoNothing()
-          .returning();
-        if (row) {
-          created++;
-          createdRows.push(row);
-        }
-      }
-
-      revalidatePublicRankings(`results:fillDns:${reg.id}`);
-      void logAdminChange({
-        actorUserId: auth.userId,
-        actorEmail: auth.email,
-        action: "result.fill_dns",
-        entityType: "regatta",
-        entityId: reg.id,
-        entityLabel: reg.name || null,
-        summary: `Filled DNS for ${reg.name}: ${created} created`,
-        details: {
-          created,
-          dnsPoints,
-          eligible: eligibleIds.size,
-          alreadyHadResults: have.size,
-          division: reg.division,
+      return NextResponse.json(
+        {
+          error:
+            "Fill DNS is removed. Absentees not on the uploaded sheet are auto-scored as max(sheet place) + 1 at ranking time. Do not create fill rows.",
+          deprecated: true,
         },
-        source: "/api/admin/results",
-      });
-      return NextResponse.json({
-        ok: true,
-        message: `Created ${created} DNS results (score ${dnsPoints} = fleet ${reg.totalFleetSize} + 1) for active ${reg.division} fleet members missing this regatta.`,
-        created,
-        dnsPoints,
-        eligible: eligibleIds.size,
-        alreadyHadResults: have.size,
-        results: createdRows.map((r) => ({ ...r, isDNS: r.isDns })),
-      });
+        { status: 410 }
+      );
     }
 
     const sailorIdR = asUuid(body.sailorId, "sailorId");

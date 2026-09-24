@@ -521,6 +521,7 @@ export function optimistSailorsEligibleForSilverPeriod(
   const regById = new Map(regattas.map((r) => [r.id, r]));
   for (const res of results) {
     if (Boolean(res.isDns)) continue;
+    if (Boolean(res.isOverseasCommitment)) continue;
     const r = regById.get(res.regattaId);
     if (!r) continue;
     if (r.countsForRanking === false) continue;
@@ -532,14 +533,44 @@ export function optimistSailorsEligibleForSilverPeriod(
   return ids;
 }
 
+/**
+ * Max finishing place on an uploaded results sheet (every place, including
+ * official DNS/DNC ranks). Used for Optimist Tier 2: absentees score max+1.
+ * Empty sheets → no entry (do not invent Tier 2 penalties).
+ */
+export function maxSheetRankByRegattaId(
+  results: RegattaResultRecord[]
+): Map<string, number> {
+  const m = new Map<string, number>();
+  for (const r of results) {
+    if (!Number.isFinite(r.rank)) continue;
+    const prev = m.get(r.regattaId);
+    if (prev == null || r.rank > prev) m.set(r.regattaId, r.rank);
+  }
+  return m;
+}
+
+/**
+ * Optimist Tier 2 DNS points for a regatta with an uploaded sheet.
+ * Returns null when the sheet is empty (no Tier 2 yet).
+ */
+export function optimistTier2Score(
+  maxSheetRank: number | null | undefined
+): number | null {
+  if (maxSheetRank == null || !Number.isFinite(maxSheetRank)) return null;
+  if (maxSheetRank < 1) return null;
+  return maxSheetRank + 1;
+}
+
 function scoreForResult(
   sailorId: string,
   regatta: RegattaRecord,
-  results: RegattaResultRecord[] | Map<string, RegattaResultRecord>
+  results: RegattaResultRecord[] | Map<string, RegattaResultRecord>,
+  maxRankByRegattaId: Map<string, number>
 ): Pick<
   RegattaScoreSlot,
   "score" | "isDNS" | "isOverseasCommitment"
-> {
+> | null {
   const result =
     results instanceof Map
       ? results.get(`${sailorId}:${regatta.id}`)
@@ -553,8 +584,12 @@ function scoreForResult(
       isOverseasCommitment: Boolean(result.isOverseasCommitment),
     };
   }
+  // Tier 2: max place on the uploaded sheet + 1 (not totalFleetSize + 1).
+  // Empty sheet → no auto-score (caller should skip this regatta).
+  const tier2 = optimistTier2Score(maxRankByRegattaId.get(regatta.id));
+  if (tier2 == null) return null;
   return {
-    score: regatta.totalFleetSize + 1,
+    score: tier2,
     isDNS: true,
     isOverseasCommitment: false,
   };
@@ -705,23 +740,37 @@ export function calculateRankings(
     resultsMap.set(`${res.sailorId}:${res.regattaId}`, res);
   }
 
-  const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
-    const slots = sailor.fleet === "Gold" ? goldSlots : silverSlots;
+  // Max place per regatta sheet (incl. official DNS/DNC) for Tier 2 scoring.
+  // Regattas with no uploaded results are excluded from the Best 3 window.
+  const maxRankByRegattaId = maxSheetRankByRegattaId(results);
 
-    const regattaScores: RegattaScoreSlot[] = slots.map((slot) => {
-      const scored = scoreForResult(sailor.id, slot.regatta, resultsMap);
-      return {
-        regattaId: slot.regatta.id,
-        regattaName: slot.regatta.name,
-        score: scored.score,
-        isDNS: scored.isDNS,
-        isOverseasCommitment: scored.isOverseasCommitment,
-        isCarryForward: slot.isCarryForward,
-        periodLabel: slot.periodLabel,
-        regattaDate: slot.regatta.date
-          ? String(slot.regatta.date).slice(0, 10)
-          : null,
-      };
+  const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
+    const slots = (sailor.fleet === "Gold" ? goldSlots : silverSlots).filter(
+      (slot) => maxRankByRegattaId.has(slot.regatta.id)
+    );
+
+    const regattaScores: RegattaScoreSlot[] = slots.flatMap((slot) => {
+      const scored = scoreForResult(
+        sailor.id,
+        slot.regatta,
+        resultsMap,
+        maxRankByRegattaId
+      );
+      if (!scored) return [];
+      return [
+        {
+          regattaId: slot.regatta.id,
+          regattaName: slot.regatta.name,
+          score: scored.score,
+          isDNS: scored.isDNS,
+          isOverseasCommitment: scored.isOverseasCommitment,
+          isCarryForward: slot.isCarryForward,
+          periodLabel: slot.periodLabel,
+          regattaDate: slot.regatta.date
+            ? String(slot.regatta.date).slice(0, 10)
+            : null,
+        },
+      ];
     });
 
     const { bestThreeScores, overallScore } = bestThreeOf(

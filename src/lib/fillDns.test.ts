@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { missingDnsPairs, rankingRegattasForFleet } from "./fillDns";
-import type { Period, RegattaRecord, SailorRecord } from "./ranking";
+import type { Period, RegattaRecord, RegattaResultRecord, SailorRecord } from "./ranking";
 
 const period: Period = { year: 2026, half: "Jan-Jun" };
 
@@ -17,7 +17,7 @@ const seriesGold = (id: string): SailorRecord =>
     dropDate: null,
   }) as SailorRecord;
 
-describe("fillDns / ranking regattas", () => {
+describe("fillDns / ranking regattas (diagnostic helpers)", () => {
   it("excludes countsForRanking=false from period pool", () => {
     const regattas: RegattaRecord[] = [
       {
@@ -52,7 +52,7 @@ describe("fillDns / ranking regattas", () => {
     expect(events.map((e) => e.id)).toEqual(["r1", "r2"]);
   });
 
-  it("missingDnsPairs skips non-ranking regattas", () => {
+  it("missingDnsPairs skips non-ranking regattas; empty sheet → null dnsPoints", () => {
     const sailors = [seriesGold("s1")];
     const regattas: RegattaRecord[] = [
       {
@@ -83,7 +83,40 @@ describe("fillDns / ranking regattas", () => {
     });
     expect(pairs).toHaveLength(1);
     expect(pairs[0].regattaId).toBe("rank");
-    expect(pairs[0].dnsPoints).toBe(31);
+    // No uploaded results → do not invent Tier 2 points
+    expect(pairs[0].dnsPoints).toBeNull();
+  });
+
+  it("missingDnsPairs uses max(sheet place)+1 when results exist (not fleetSize+1)", () => {
+    const sailors = [seriesGold("s1")];
+    const regattas: RegattaRecord[] = [
+      {
+        id: "snsc",
+        name: "SNSC",
+        slug: "snsc",
+        date: "2026-01-10",
+        totalFleetSize: 83,
+        division: "Gold",
+        countsForRanking: true,
+      },
+    ];
+    const results: RegattaResultRecord[] = [
+      { sailorId: "a", regattaId: "snsc", rank: 1 },
+      { sailorId: "b", regattaId: "snsc", rank: 81, isDns: true },
+      { sailorId: "c", regattaId: "snsc", rank: 81, isDns: true },
+      { sailorId: "d", regattaId: "snsc", rank: 81, isDns: true },
+    ];
+    const pairs = missingDnsPairs({
+      fleet: "Gold",
+      period,
+      sailors,
+      regattas,
+      existingKeys: new Set(),
+      results,
+    });
+    expect(pairs).toHaveLength(1);
+    // Three tied at 81 → Tier 2 = 82 (not totalFleetSize+1 = 84)
+    expect(pairs[0].dnsPoints).toBe(82);
   });
 
   it("undefined countsForRanking still counts (legacy)", () => {

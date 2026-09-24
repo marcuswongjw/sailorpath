@@ -25,7 +25,6 @@ import {
   OPTIMIST_FLEETS,
   regattaMatchesAdminClass,
 } from "@/lib/admin/regattaClass";
-import { rankingPeriodOptions } from "@/lib/datesSg";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
@@ -37,9 +36,22 @@ import {
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
-const DNS_PERIODS = rankingPeriodOptions(4);
 
 export type { ResultFormState };
+
+/** Tier 2 DNS points: max place on this regatta's uploaded sheet + 1. */
+function dnsPointsFromResults(
+  regattaId: string,
+  results: { regattaId: string; rank?: number | null }[]
+): number {
+  let max = 0;
+  for (const r of results) {
+    if (r.regattaId !== regattaId) continue;
+    const rank = Number(r.rank);
+    if (Number.isFinite(rank) && rank > max) max = rank;
+  }
+  return max > 0 ? max + 1 : 1;
+}
 
 export type AdminResultsPanelProps = {
   isSuperadmin: boolean;
@@ -67,12 +79,6 @@ export type AdminResultsPanelProps = {
     }
   ) => Promise<void>;
   handleDeleteResult: (id: string) => void | Promise<void>;
-  handleFillDnsForRegatta: (regattaId: string) => void | Promise<void>;
-  handleFillDnsForPeriod: (
-    fleet: "Gold" | "Silver",
-    year: number,
-    half: "Jan-Jun" | "Jul-Dec"
-  ) => void | Promise<void>;
 };
 
 function regattaLabel(r: RegattaAdmin): string {
@@ -95,8 +101,6 @@ export function AdminResultsPanel({
   handleSaveResult,
   handleQuickUpdateResult,
   handleDeleteResult,
-  handleFillDnsForRegatta,
-  handleFillDnsForPeriod,
 }: AdminResultsPanelProps) {
   const [regattaQuery, setRegattaQuery] = useState("");
   const [regattaClassFilter, setRegattaClassFilter] = useState<
@@ -106,7 +110,6 @@ export function AdminResultsPanel({
   const [regattaRankingFilter, setRegattaRankingFilter] = useState<
     "all" | "series" | "nonranking"
   >("all");
-  const [dnsAutomationOpen, setDnsAutomationOpen] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [sailorFilter, setSailorFilter] = useState("");
   const [inlineEditing, setInlineEditing] = useState<{
@@ -220,58 +223,6 @@ export function AdminResultsPanel({
 
   return (
     <div className="w-full min-w-0 space-y-6">
-      {/* Optimist Period-wide DNS (Collapsible) */}
-      <div className="glass-panel rounded-2xl p-4 border border-rose-500/20 bg-rose-500/[0.03] space-y-2">
-        <div
-          className="flex items-center justify-between cursor-pointer select-none"
-          onClick={() => setDnsAutomationOpen((o) => !o)}
-        >
-          <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-rose-500" />
-            <h3 className="text-xs font-bold text-white uppercase tracking-wider">
-              Optimist Fleet DNS Automation (Gold / Silver)
-            </h3>
-          </div>
-          <button
-            type="button"
-            className="text-xs text-rose-300/80 hover:text-white font-semibold transition-colors"
-          >
-            {dnsAutomationOpen ? "Collapse" : "Expand Tool"}
-          </button>
-        </div>
-        {dnsAutomationOpen && (
-          <div className="space-y-3 pt-2 border-t border-rose-500/15">
-            <p className="text-xs text-slate-400 leading-relaxed">
-              Gold (or Silver) fleet sailors must have a result for{" "}
-              <strong className="text-slate-300">every ranking regatta</strong> in
-              the half-year they are in that fleet. Missing events get DNS = fleet
-              size + 1. Run this after importing period regattas. Edit overseas
-              commitment scores afterwards.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {DNS_PERIODS.flatMap(({ period, label }) =>
-                (["Gold", "Silver"] as const).map((fleet) => (
-                  <button
-                    key={`${fleet}-${period.year}-${period.half}`}
-                    type="button"
-                    disabled={!isSuperadmin}
-                    onClick={() =>
-                      void handleFillDnsForPeriod(fleet, period.year, period.half)
-                    }
-                    className={
-                      fleet === "Gold"
-                        ? "rounded-full bg-rose-600/90 hover:bg-rose-500 disabled:opacity-40 px-3.5 py-1.5 text-xs font-bold text-white"
-                        : "rounded-full bg-slate-700 hover:bg-slate-600 disabled:opacity-40 px-3.5 py-1.5 text-xs font-bold text-white"
-                    }
-                  >
-                    {fleet} · {label.replace(" (Current)", "")}
-                  </button>
-                ))
-              )}
-            </div>
-          </div>
-        )}
-      </div>
 
       {/* Searchable regatta picker */}
       <div className="glass-panel rounded-3xl p-6 border border-white/5 space-y-3">
@@ -611,7 +562,7 @@ export function AdminResultsPanel({
                 className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
               />
               <p className="mt-1 text-[13px] text-slate-600">
-                DNS defaults to fleet size + 1, but this score remains editable.
+                DNS defaults to max(sheet place) + 1; edit if the published sheet used a different place.
               </p>
             </div>
             <div className="flex items-center gap-2 h-full pt-5 md:pl-4">
@@ -624,7 +575,7 @@ export function AdminResultsPanel({
                   const reg = regattaList.find(
                     (r) => r.id === resultForm.regattaId
                   );
-                  const dnsPts = (reg?.totalFleetSize || 50) + 1;
+                  const dnsPts = dnsPointsFromResults(reg?.id || resultForm.regattaId, resultsList);
                   setResultForm({
                     ...resultForm,
                     isDNS: on,
@@ -638,8 +589,8 @@ export function AdminResultsPanel({
                 htmlFor="dnsCheckbox"
                 className="text-xs font-bold text-slate-400 cursor-pointer"
               >
-                Did Not Start (DNS) — initially sets rank to fleet size + 1;
-                edit the score afterward if the event used a different value
+                Did Not Start (DNS) — initially sets rank to max(sheet place) + 1;
+                edit if the published sheet used a different place
               </label>
             </div>
             <div className="flex items-center gap-2 h-full pt-2 md:pl-4 md:col-span-2">
@@ -716,21 +667,11 @@ export function AdminResultsPanel({
               </div>
               <button
                 type="button"
-                onClick={() =>
-                  void handleFillDnsForRegatta(selectedRegattaIdForResultEdit)
-                }
-                className="rounded-full bg-white border border-[var(--sp-color-error)]/40 hover:bg-rose-500/10 px-3 sm:px-4 py-2 text-[13px] sm:text-sm font-bold text-[var(--sp-color-error)] flex items-center justify-center gap-1 touch-manipulation"
-                title="Create DNS (fleet size + 1) for series members with no result"
-              >
-                Fill DNS for non-starters
-              </button>
-              <button
-                type="button"
                 onClick={() => {
                   const reg = regattaList.find(
                     (r) => r.id === selectedRegattaIdForResultEdit
                   );
-                  const dnsPts = (reg?.totalFleetSize || 50) + 1;
+                  const dnsPts = dnsPointsFromResults(reg?.id || resultForm.regattaId, resultsList);
                   setEditingResultId("new");
                   setResultForm({
                     ...emptyResultForm(),
@@ -747,8 +688,9 @@ export function AdminResultsPanel({
           </div>
 
           <p className="px-3 sm:px-6 pb-2 text-[13px] text-slate-500">
-            Non-starters: <strong className="text-slate-400">Fill DNS</strong>{" "}
-            (fleet size + 1) or mark{" "}
+            Absentees not on the uploaded sheet are auto-scored at ranking time
+            as max(sheet place) + 1 (Tier 2). Official sheet DNS/DNC ranks stay
+            as published. Mark{" "}
             <strong className="text-sky-300">Overseas commitment</strong> and
             set points to their standing before the trip (e.g. 2nd → 2 pts).
             {isSuperadmin && handleQuickUpdateResult && (
@@ -952,7 +894,7 @@ export function AdminResultsPanel({
                               type="button"
                               onClick={() => {
                                 if (!dns) {
-                                  const dnsPts = (selectedRegatta?.totalFleetSize || 50) + 1;
+                                  const dnsPts = dnsPointsFromResults(selectedRegatta?.id || selectedRegattaIdForResultEdit, resultsList);
                                   void handleQuickUpdateResult(res.id, {
                                     isDns: true,
                                     isDNS: true,
@@ -966,7 +908,7 @@ export function AdminResultsPanel({
                                   ? "bg-rose-500/25 text-rose-300 border border-rose-500/40 shadow-sm"
                                   : "text-slate-400 hover:text-white"
                               }`}
-                              title={`Mark as DNS (${(selectedRegatta?.totalFleetSize || 50) + 1} pts)`}
+                              title={`Mark as DNS (${dnsPointsFromResults(selectedRegatta?.id || selectedRegattaIdForResultEdit, resultsList)} pts)`}
                             >
                               DNS
                             </button>
@@ -1060,7 +1002,7 @@ export function AdminResultsPanel({
                             const reg = regattaList.find(
                               (r) => r.id === selectedRegattaIdForResultEdit
                             );
-                            const dnsPts = (reg?.totalFleetSize || 50) + 1;
+                            const dnsPts = dnsPointsFromResults(reg?.id || resultForm.regattaId, resultsList);
                             setEditingResultId("new");
                             setResultForm({
                               ...emptyResultForm(),
