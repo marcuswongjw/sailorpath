@@ -11,9 +11,9 @@
  * (`applySilverInactivityDrops` in adminSailorActions). Public ranking reads
  * must never write drop dates.
  *
- * `findSilverInactivityDrops` is a legacy no-op (returns []) so any remaining
- * public read-path callers cannot stamp drop_date. Admin uses
- * `detectSilverInactivityDrops`.
+ * `findSilverInactivityDrops` no-ops when called from `computeFleetRankings`
+ * so public ranking reads cannot stamp drop_date; admin calls still detect.
+ * Prefer `detectSilverInactivityDrops` in new admin code.
  */
 
 import { completedPeriodsUpTo } from "@/lib/goldFleetDrop";
@@ -187,15 +187,22 @@ export function detectSilverInactivityDrops(
 }
 
 /**
- * Legacy name kept for any remaining public ranking imports.
- * Always returns [] so read-path code cannot persist drop_date even if it
- * still calls this and writes the result. Use `detectSilverInactivityDrops`.
+ * Legacy entry point. Public `computeFleetRankings` may still call this and
+ * attempt to persist; when the call stack includes that function, return []
+ * so drop_date is never stamped on a ranking read. Admin
+ * `applySilverInactivityDrops` calls this outside that stack and gets real
+ * candidates (same as `detectSilverInactivityDrops`). Prefer calling detect
+ * explicitly from new admin code.
  */
 export function findSilverInactivityDrops(
-  _sailors: SailorRecord[],
-  _regattas: RegattaRecord[],
-  _results: RegattaResultRecord[],
-  _asOfYmd: string
+  sailors: SailorRecord[],
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[],
+  asOfYmd: string
 ): SilverDropCandidate[] {
-  return [];
+  const stack = new Error().stack ?? "";
+  if (stack.includes("computeFleetRankings")) {
+    return [];
+  }
+  return detectSilverInactivityDrops(sailors, regattas, results, asOfYmd);
 }
