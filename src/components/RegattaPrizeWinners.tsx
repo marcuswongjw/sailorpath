@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Trophy, Award, School, Compass, ChevronDown } from "lucide-react";
+import { Trophy, School, Compass } from "lucide-react";
 import {
   prizeNameKey,
   type PrizeCategory,

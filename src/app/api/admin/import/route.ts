@@ -45,6 +45,7 @@ import { isAnyIlcaClass, ILCA_MIN_RACES_FOR_RANKING } from "@/lib/ilcaRanking";
 import { normalizeImportGender } from "@/lib/gender";
 import { birthYear as birthYearFromDob } from "@/lib/age";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
+import { findWithinFileDuplicates, MAX_DUPLICATE_FLAGS } from "@/lib/importDuplicates";
 import { NEW_IMPORT_TARGET, resolveImportTarget } from "@/lib/importTarget";
 import { asPositiveInteger, asRank } from "@/lib/validate";
 
@@ -53,7 +54,6 @@ export type { ImportPossibleDuplicate };
 /** Allow long Optimist fleet imports on Vercel (default is often 10–15s). */
 export const maxDuration = 300;
 
-const MAX_DUPLICATE_FLAGS = 40;
 const MAX_REVIEW_DETAILS = 500;
 
 type ReviewUploadRow = {
@@ -343,44 +343,6 @@ async function buildExistingRegattaReview(args: {
     discrepancies,
     reviewToken,
   };
-}
-
-/** Pairwise similar names within the import sheet (60%+). Cap pairs for speed. */
-function findWithinFileDuplicates(
-  names: string[],
-  minSimilarity = 0.6,
-  maxPairs = MAX_DUPLICATE_FLAGS
-): ImportPossibleDuplicate[] {
-  const out: ImportPossibleDuplicate[] = [];
-  const seen = new Set<string>();
-  const list = names.slice(0, 120);
-  for (let i = 0; i < list.length; i++) {
-    for (let j = i + 1; j < list.length; j++) {
-      if (out.length >= maxPairs) {
-        return out.sort((x, y) => y.similarity - x.similarity);
-      }
-      const a = list[i];
-      const b = list[j];
-      if (!a || !b || a === b) continue;
-      const sim = combinedNameSimilarity(a, b);
-      if (sim < minSimilarity) continue;
-      const key = [a, b]
-        .map((n) => n.toLowerCase())
-        .sort()
-        .join("|");
-      if (seen.has(key)) continue;
-      seen.add(key);
-      out.push({
-        kind: "within-file",
-        importName: a,
-        otherName: b,
-        similarity: Math.round(sim * 100) / 100,
-        band: sim >= 0.8 ? "high" : "medium",
-        note: "Two rows in this file look like the same sailor",
-      });
-    }
-  }
-  return out.sort((x, y) => y.similarity - x.similarity);
 }
 
 export async function POST(req: Request) {
