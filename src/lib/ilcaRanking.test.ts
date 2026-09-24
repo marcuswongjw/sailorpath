@@ -46,7 +46,7 @@ describe("defaultIlcaIntake", () => {
     const september = new Date("2026-09-19T00:00:00Z");
     expect(defaultIlcaIntake(september)).toEqual({ kind: "january", year: 2027 });
     const cutoff = ilcaSquadCutoff("january", 2027);
-    expect(cutoff.asOf).toBe("2026-12-31");
+    expect(cutoff.asOf).toBe("2026-12-20");
 
     // Regatta held in September 2026 is included in the ranking window
     const regattas = [
@@ -77,7 +77,7 @@ describe("ilcaSquadCutoff", () => {
 
   it("January intake window covers Jul – Dec of the prior year", () => {
     expect(ilcaSquadCutoff("january", 2027)).toEqual({
-      asOf: "2026-12-31",
+      asOf: "2026-12-20",
       intakeYear: 2027,
       label: expect.stringContaining("Jul – Dec 2026"),
     });
