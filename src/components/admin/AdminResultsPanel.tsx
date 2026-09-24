@@ -571,7 +571,7 @@ export function AdminResultsPanel({
                 className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
               />
               <p className="mt-1 text-[13px] text-slate-600">
-                DNS defaults to started + 1 (registered no-show). Unregistered sailors are auto-scored as registered + 1 at ranking time.
+                DNS defaults to starters + 1 (Group 1 registered no-show). Unregistered sailors are auto-scored as max(sheet place) + 1 at ranking time (Group 2).
               </p>
             </div>
             <div className="flex items-center gap-2 h-full pt-5 md:pl-4">
@@ -697,8 +697,9 @@ export function AdminResultsPanel({
           </div>
 
           <p className="px-3 sm:px-6 pb-2 text-[13px] text-slate-500">
-            Absentees not on the uploaded sheet are auto-scored at ranking time
-            as started + 1 when on the sheet (Group 1), or registered + 1 if never entered (Group 2, scored live). Official finish ranks stay
+            On-sheet DNS (Group 1) national points = starters + 1. Absentees not on
+            the sheet (Group 2) are auto-scored at ranking time as max(sheet place) + 1.
+            Official finish ranks stay
             as published. Mark{" "}
             <strong className="text-sky-300">Overseas commitment</strong> and
             set points to their standing before the trip (e.g. 2nd → 2 pts).

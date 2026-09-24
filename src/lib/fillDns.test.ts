@@ -91,7 +91,7 @@ describe("fillDns / ranking regattas (diagnostic helpers)", () => {
     expect(pairs[0].dnsPoints).toBeNull();
   });
 
-  it("missingDnsPairs uses registered+1 for Group 2 (not fleetSize+1)", () => {
+  it("missingDnsPairs uses max(sheet place)+1 for Group 2 (not registered+1)", () => {
     const sailors = [seriesGold("s1")];
     const regattas: RegattaRecord[] = [
       {
@@ -119,8 +119,8 @@ describe("fillDns / ranking regattas (diagnostic helpers)", () => {
       results,
     });
     expect(pairs).toHaveLength(1);
-    // 80 registered → Group 2 = 81 (not totalFleetSize+1 = 91)
-    expect(pairs[0].dnsPoints).toBe(81);
+    // max sheet place = 79 (DNS rows) → Group 2 = 80 (not registered+1 = 81)
+    expect(pairs[0].dnsPoints).toBe(80);
   });
 
   it("undefined countsForRanking still counts (legacy)", () => {

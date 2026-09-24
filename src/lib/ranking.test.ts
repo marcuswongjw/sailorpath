@@ -532,7 +532,7 @@ describe("Optimist DNS Group 1 / Group 2 scoring", () => {
       nationality: "SGP",
     }) as SailorRecord;
 
-  it("80 registered / 78 started → Group1 DNS = 79, Group2 unregistered = 81", () => {
+  it("Group1 = starters+1; Group2 = max(sheet place)+1 (not registered+1)", () => {
     const regattas: RegattaRecord[] = [
       {
         id: "ex",
@@ -549,9 +549,9 @@ describe("Optimist DNS Group 1 / Group 2 scoring", () => {
     for (let i = 1; i <= 78; i++) {
       results.push({ sailorId: `f${i}`, regattaId: "ex", rank: i });
     }
-    // Two registered no-shows (on sheet with DNS)
-    results.push({ sailorId: "dns-a", regattaId: "ex", rank: 99, isDns: true });
-    results.push({ sailorId: "dns-b", regattaId: "ex", rank: 99, isDns: true });
+    // Two registered no-shows (on sheet with DNS). Worst sheet place = 81.
+    results.push({ sailorId: "dns-a", regattaId: "ex", rank: 81, isDns: true });
+    results.push({ sailorId: "dns-b", regattaId: "ex", rank: 81, isDns: true });
 
     const dnsA = goldSailor("dns-a");
     const dnsB = goldSailor("dns-b");
@@ -565,7 +565,7 @@ describe("Optimist DNS Group 1 / Group 2 scoring", () => {
       results
     );
     expect(ranked.find((s) => s.id === "f1")!.regattaScores[0]?.score).toBe(1);
-    // Group 1: started (78) + 1 = 79 (sheet rank 99 ignored)
+    // Group 1: starters (78) + 1 = 79 (sheet DNS place ignored for national score)
     expect(ranked.find((s) => s.id === "dns-a")!.regattaScores[0]?.score).toBe(
       79
     );
@@ -575,9 +575,9 @@ describe("Optimist DNS Group 1 / Group 2 scoring", () => {
     expect(ranked.find((s) => s.id === "dns-a")!.regattaScores[0]?.isDNS).toBe(
       true
     );
-    // Group 2: registered (80) + 1 = 81
+    // Group 2: max sheet place (81) + 1 = 82 — NOT registered+1 (81)
     expect(ranked.find((s) => s.id === "never")!.regattaScores[0]?.score).toBe(
-      81
+      82
     );
     expect(ranked.find((s) => s.id === "never")!.regattaScores[0]?.isDNS).toBe(
       true
@@ -639,7 +639,8 @@ describe("Optimist DNS Group 1 / Group 2 scoring", () => {
 
   it("sheet stats + score helpers", () => {
     expect(optimistRegisteredNoShowScore(78)).toBe(79);
-    expect(optimistUnregisteredScore(80)).toBe(81);
+    // Group 2 uses max sheet place + 1
+    expect(optimistUnregisteredScore(81)).toBe(82);
     expect(optimistUnregisteredScore(null)).toBeNull();
     expect(optimistUnregisteredScore(0)).toBeNull();
     const m = optimistSheetStatsByRegattaId([
@@ -654,6 +655,7 @@ describe("Optimist DNS Group 1 / Group 2 scoring", () => {
         isOverseasCommitment: true,
       },
     ]);
-    expect(m.get("r1")).toEqual({ registered: 4, started: 2 });
+    // started excludes DNS and overseas; maxRank includes all places
+    expect(m.get("r1")).toEqual({ registered: 4, started: 2, maxRank: 4 });
   });
 });

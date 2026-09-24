@@ -4,7 +4,7 @@
  * two-group national scoring model:
  *
  *   Group 1 (on sheet, is_dns):  started + 1
- *   Group 2 (never registered):  registered + 1  (live; prefer DELETE fill rows)
+ *   Group 2 (never registered):  max(sheet place) + 1  (live; prefer DELETE fill rows)
  *
  * Fill-style heuristic (old admin fill):
  *   is_dns = true AND rank = total_fleet_size + 1
@@ -29,7 +29,8 @@ WITH sheet AS (
     COUNT(*) FILTER (
       WHERE NOT COALESCE(r.is_dns, false)
         AND NOT COALESCE(r.is_overseas_commitment, false)
-    )::int AS started
+    )::int AS started,
+    MAX(r.rank)::int AS max_rank
   FROM regatta_results r
   JOIN regattas reg ON reg.id = r.regatta_id
   WHERE COALESCE(reg.boat_class, 'Optimist') ILIKE '%optimist%'
@@ -71,7 +72,8 @@ WITH sheet AS (
     COUNT(*) FILTER (
       WHERE NOT COALESCE(r.is_dns, false)
         AND NOT COALESCE(r.is_overseas_commitment, false)
-    )::int AS started
+    )::int AS started,
+    MAX(r.rank)::int AS max_rank
   FROM regatta_results r
   JOIN regattas reg ON reg.id = r.regatta_id
   WHERE COALESCE(reg.boat_class, 'Optimist') ILIKE '%optimist%'
@@ -86,7 +88,8 @@ SELECT
   reg.total_fleet_size,
   s.registered,
   s.started,
-  s.registered + 1 AS group2_score_if_deleted,
+  s.max_rank,
+  s.max_rank + 1 AS group2_score_if_deleted,
   s.started + 1 AS group1_score_if_kept_as_onsheet_dns,
   'DELETE fill-style row (prefer Group 2 live score)' AS recommended_action
 FROM regatta_results r
@@ -110,7 +113,8 @@ WITH sheet AS (
     COUNT(*) FILTER (
       WHERE NOT COALESCE(r.is_dns, false)
         AND NOT COALESCE(r.is_overseas_commitment, false)
-    )::int AS started
+    )::int AS started,
+    MAX(r.rank)::int AS max_rank
   FROM regatta_results r
   JOIN regattas reg ON reg.id = r.regatta_id
   WHERE COALESCE(reg.boat_class, 'Optimist') ILIKE '%optimist%'
@@ -155,7 +159,7 @@ RETURNING r.id;
 
 async function main() {
   const url = process.env.DATABASE_URL || process.env.POSTGRES_URL;
-  console.log("Optimist DNS rewrite (Group1=started+1, Group2=registered+1)");
+  console.log("Optimist DNS rewrite (Group1=started+1, Group2=max(sheet place)+1)");
   console.log(`Mode: ${APPLY ? "APPLY" : "DRY-RUN"}`);
   console.log(`Supabase project hint: ${PROJECT_HINT}`);
 

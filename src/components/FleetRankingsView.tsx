@@ -1001,7 +1001,7 @@ export function FleetRankingsView({
           the three selected scores. Best 3 of 5 = sum of the three best (lowest)
           scores. Ties: compare all regatta ranks best-first
           (a 1st beats a 2nd, then next-best, and so on), then name. Uncheck events
-          above for a what-if score. * = DNS (fleet size + 1). † = SSF overseas
+          above for a what-if score. * = DNS (Group 1: starters+1; Group 2: max sheet place+1). † = SSF overseas
           commitment. {squadColumnLabel} = official national squad for the selected
           period.{showProjectedSquad
             ? ` ${nextSquadColumnLabel} = live projection for the following half using Nat A (top 8 male + top 8 female) then Nat B age buckets (13 / 12 / ≤11), max 16 each, age ≤15 in intake year.`

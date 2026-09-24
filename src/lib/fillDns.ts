@@ -1,8 +1,8 @@
 /**
  * @deprecated Creating fill-DNS result rows is removed from admin UX/API.
  * Optimist national DNS scores are computed at ranking time:
- *   Group 1 (on sheet, isDns): started + 1
- *   Group 2 (not on sheet):    registered + 1
+ *   Group 1 (on sheet, isDns): starters + 1
+ *   Group 2 (not on sheet):    max(sheet place) + 1
  * (`optimistSheetStatsByRegattaId` in `@/lib/ranking`).
  *
  * Helpers remain for diagnostics and the one-time rewrite script.
@@ -25,7 +25,7 @@ export type FillDnsPair = {
   sailorName: string;
   regattaId: string;
   regattaName: string;
-  /** Group 2 points = registered + 1 when sheet has results; else null */
+  /** Group 2 points = max(sheet place) + 1 when sheet has results; else null */
   dnsPoints: number | null;
 };
 
@@ -56,7 +56,7 @@ export function activeSailorsForFleet(
 
 /**
  * Diagnostic: (sailor, regatta) pairs with no result row (Group 2).
- * dnsPoints = registered + 1 when the regatta has uploaded results;
+ * dnsPoints = max(sheet place) + 1 when the regatta has uploaded results;
  * null when the sheet is empty.
  */
 export function missingDnsPairs(args: {
@@ -90,7 +90,7 @@ export function missingDnsPairs(args: {
         sailorName: s.name,
         regattaId: r.id,
         regattaName: r.name,
-        dnsPoints: optimistUnregisteredScore(stats?.registered),
+        dnsPoints: optimistUnregisteredScore(stats?.maxRank),
       });
     }
   }

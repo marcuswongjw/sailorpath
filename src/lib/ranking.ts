@@ -534,23 +534,37 @@ export function optimistSailorsEligibleForSilverPeriod(
 }
 
 /**
- * Per-regatta sheet counts after results are uploaded.
+ * Per-regatta sheet stats after results are uploaded.
  * - registered = every result row on the sheet (including DNS/DNC / overseas)
- * - started = real participations: not isDns and not overseas-commitment
- *   (mirrors Gold/Silver participation counting)
+ * - started = raced rows: not plain DNS. Overseas-commitment rows are NOT
+ *   counted as "started" for Group 1 DNS points (they keep stored rank for
+ *   scoring); Gold fleet eligibility counts overseas separately.
+ * - maxRank = worst/lowest place on the sheet (every place, incl. DNS/DNC)
  */
 export type OptimistSheetStats = {
   registered: number;
   started: number;
+  maxRank: number;
 };
 
-/** Whether a result row counts as a real start (took part). */
+/**
+ * Whether a result row counts as a raced start for Group 1 DNS math
+ * (started + 1). Plain DNS does not; overseas is not a race start for this
+ * count (overseas keeps its stored rank for national points).
+ */
+export function isOptimistRacedStart(
+  res: Pick<RegattaResultRecord, "isDns" | "isOverseasCommitment">
+): boolean {
+  if (Boolean(res.isOverseasCommitment)) return false;
+  if (Boolean(res.isDns)) return false;
+  return true;
+}
+
+/** @deprecated alias — use isOptimistRacedStart */
 export function isOptimistRealStart(
   res: Pick<RegattaResultRecord, "isDns" | "isOverseasCommitment">
 ): boolean {
-  if (Boolean(res.isDns)) return false;
-  if (Boolean(res.isOverseasCommitment)) return false;
-  return true;
+  return isOptimistRacedStart(res);
 }
 
 /**
@@ -563,18 +577,19 @@ export function optimistSheetStatsByRegattaId(
   for (const r of results) {
     let s = m.get(r.regattaId);
     if (!s) {
-      s = { registered: 0, started: 0 };
+      s = { registered: 0, started: 0, maxRank: 0 };
       m.set(r.regattaId, s);
     }
     s.registered += 1;
-    if (isOptimistRealStart(r)) s.started += 1;
+    if (isOptimistRacedStart(r)) s.started += 1;
+    if (Number.isFinite(r.rank) && r.rank > s.maxRank) s.maxRank = r.rank;
   }
   return m;
 }
 
 /**
  * Group 1 — registered, did not start (on sheet with DNS):
- * national score = started + 1.
+ * national score = starters + 1.
  */
 export function optimistRegisteredNoShowScore(
   started: number | null | undefined
@@ -585,22 +600,19 @@ export function optimistRegisteredNoShowScore(
 
 /**
  * Group 2 — never registered (not on the sheet):
- * national score = registered + 1.
+ * national score = lowest (worst/max) sheet place + 1.
  * Returns null when the sheet is empty (no auto-score yet).
  */
 export function optimistUnregisteredScore(
-  registered: number | null | undefined
+  maxSheetRank: number | null | undefined
 ): number | null {
-  if (registered == null || !Number.isFinite(registered) || registered < 1) {
+  if (maxSheetRank == null || !Number.isFinite(maxSheetRank) || maxSheetRank < 1) {
     return null;
   }
-  return registered + 1;
+  return maxSheetRank + 1;
 }
 
-/**
- * @deprecated Use optimistSheetStatsByRegattaId + optimistUnregisteredScore.
- * Kept briefly so older imports fail loudly at typecheck if still max-based.
- */
+/** Max finishing place on an uploaded sheet (incl. official DNS/DNC). */
 export function maxSheetRankByRegattaId(
   results: RegattaResultRecord[]
 ): Map<string, number> {
@@ -613,13 +625,11 @@ export function maxSheetRankByRegattaId(
   return m;
 }
 
-/** @deprecated Use optimistUnregisteredScore / optimistRegisteredNoShowScore. */
+/** Alias: Group 2 points = max sheet place + 1. */
 export function optimistTier2Score(
   maxSheetRank: number | null | undefined
 ): number | null {
-  if (maxSheetRank == null || !Number.isFinite(maxSheetRank)) return null;
-  if (maxSheetRank < 1) return null;
-  return maxSheetRank + 1;
+  return optimistUnregisteredScore(maxSheetRank);
 }
 
 function scoreForResult(
@@ -667,10 +677,10 @@ function scoreForResult(
     };
   }
 
-  // Group 2: never registered (not on sheet) → registered + 1.
+  // Group 2: never registered (not on sheet) → max(sheet place) + 1.
   // Empty sheet → no auto-score (caller should skip this regatta).
-  if (!stats || stats.registered < 1) return null;
-  const unreg = optimistUnregisteredScore(stats.registered);
+  if (!stats || stats.registered < 1 || stats.maxRank < 1) return null;
+  const unreg = optimistUnregisteredScore(stats.maxRank);
   if (unreg == null) return null;
   return {
     score: unreg,

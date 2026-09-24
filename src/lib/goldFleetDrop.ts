@@ -87,8 +87,11 @@ export function completedPeriodsUpTo(asOfYmd: string): Period[] {
 }
 
 /**
- * Real ranking participations in a half (Optimist Gold events).
- * DNS / no-show / Tier 2 absences and overseas-commitment rows do NOT count.
+ * Gold ("Go") fleet ranking participations in a half.
+ * - Plain DNS / never-started = does NOT count.
+ * - Overseas commitment representing Singapore DOES count (even if DNS-like
+ *   for national points display).
+ * Need ≥2 of these per half to stay in Gold.
  */
 export function countGoldRankingParticipations(
   sailorId: string,
@@ -102,10 +105,13 @@ export function countGoldRankingParticipations(
   for (const res of results) {
     if (res.sailorId !== sailorId) continue;
     if (!ids.has(res.regattaId)) continue;
-    // DNS / no-show / absent / Tier 2 = NOT participation
+    // Overseas Singapore representation counts as a completed ranking event
+    if (Boolean(res.isOverseasCommitment)) {
+      n++;
+      continue;
+    }
+    // Plain DNS / no-show / absent = NOT participation
     if (Boolean(res.isDns)) continue;
-    // Overseas commitment is scored for points but is not a start
-    if (Boolean(res.isOverseasCommitment)) continue;
     n++;
   }
   return n;
@@ -195,7 +201,7 @@ export function monthsInGoldTenure(
 /**
  * Under projected next-half status, mark Dropped when the sailor is below the
  * participation bar for the *current* ranking half (Gold: ≥2 real starts).
- * DNS / overseas / Tier 2 absences do not count. Call after Nat A/B projection
+ * Plain DNS / never-registered do not count; overseas commitment does. Call after Nat A/B projection
  * so Dropped overrides a squad tier when they will leave Gold.
  */
 export function applyProjectedGoldParticipationDropped<
