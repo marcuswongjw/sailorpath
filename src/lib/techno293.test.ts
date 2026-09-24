@@ -26,7 +26,7 @@ describe("Techno 293 data and utilities", () => {
 
   it("sorts regattas in reverse chronological order (latest first)", () => {
     const sorted = sortTechno293Regattas(SINGAPORE_TECHNO293_REGATTAS);
-    expect(sorted).toHaveLength(7);
+    expect(sorted).toHaveLength(8);
     expect(sorted[0].shortName).toBe("SW Monsoon GP3");
     expect(sorted[1].shortName).toBe("SNSC 2026");
     expect(sorted[2].shortName).toBe("SW Monsoon GP2");
@@ -34,6 +34,7 @@ describe("Techno 293 data and utilities", () => {
     expect(sorted[4].shortName).toBe("NE Monsoon GP3");
     expect(sorted[5].shortName).toBe("NE Monsoon GP2");
     expect(sorted[6].shortName).toBe("NE Monsoon GP1");
+    expect(sorted[7].shortName).toBe("SNSC 2025");
   });
 
   it("normalizes sailor names accurately", () => {
@@ -101,5 +102,25 @@ describe("Techno 293 data and utilities", () => {
     expect(runnerUp?.name).toBe("Shan Qi");
     expect(runnerUp?.sailNumber).toBe("26");
     expect(runnerUp?.nettScore).toBe(21.0);
+  });
+
+  it("includes Singapore National Sailing Championships 2025 (SNSC 2025) results", () => {
+    const snsc = SINGAPORE_TECHNO293_REGATTAS.find((r) => r.id === "techno-snsc-2025");
+    expect(snsc).toBeDefined();
+    expect(snsc?.name).toBe("Singapore National Sailing Championships 2025");
+    expect(snsc?.status).toBe("Completed");
+    expect(snsc?.results).toHaveLength(14);
+
+    const winner = snsc?.results?.[0];
+    expect(winner?.name).toBe("Trevor Ng");
+    expect(winner?.sailNumber).toBe("45");
+    expect(winner?.grossScore).toBe(24.0);
+    expect(winner?.nettScore).toBe(18.0);
+    expect(winner?.races).toHaveLength(12);
+
+    const runnerUp = snsc?.results?.[1];
+    expect(runnerUp?.name).toBe("Axl Tan");
+    expect(runnerUp?.sailNumber).toBe("82");
+    expect(runnerUp?.nettScore).toBe(18.0);
   });
 });
