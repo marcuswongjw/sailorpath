@@ -221,7 +221,7 @@ async function buildExistingRegattaReview(args: {
   const matchedSailorIds = new Set<string>();
   for (const uploaded of args.rows) {
     const hit = findSailorByName(uploaded.name, index);
-    const stored = hit ? currentBySailor.get(hit.sailor.id) : null;
+    const stored = hit?.sailor ? currentBySailor.get(hit.sailor.id) : null;
     if (!stored) {
       summary.addedSailors++;
       add({
@@ -931,13 +931,13 @@ export async function POST(req: Request) {
         const matchedBySailNumber = sailMatches.length === 1;
         let sailorId: string | null = matchedBySailNumber
           ? sailMatches[0].id
-          : hit?.sailor.id ?? null;
+          : hit?.sailor?.id ?? null;
 
         if (matchedBySailNumber) {
           matchHow["sail-number"] = (matchHow["sail-number"] || 0) + 1;
         }
 
-        if (hit && !matchedBySailNumber) {
+        if (hit?.sailor && !matchedBySailNumber) {
           matchHow[hit.how] = (matchHow[hit.how] || 0) + 1;
           if (hit.how.startsWith("fuzzy")) {
             const sim = combinedNameSimilarity(row.name, hit.sailor.name);

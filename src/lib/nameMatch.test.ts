@@ -57,7 +57,7 @@ describe("findSailorByName", () => {
     const hit = findSailorByName("B. Lee", sailors, [
       { sailorId: "1", aliasName: "B. Lee" },
     ]);
-    expect(hit?.sailor.id).toBe("1");
+    expect(hit?.sailor?.id).toBe("1");
     expect(hit?.how).toBe("alias");
   });
 
@@ -71,8 +71,8 @@ describe("findSailorByName", () => {
     ]);
     expect(findSailorByName("Bryan Lee Thian Tsek", index)?.how).toBe("exact");
     expect(findSailorByName("Lee Thian Tsek Bryan", index)?.how).toBe("tokens");
-    expect(findSailorByName("B. Lee", index)?.sailor.id).toBe("1");
-    expect(findSailorByName("Mikaela Tan", index)?.sailor.id).toBe("2");
+    expect(findSailorByName("B. Lee", index)?.sailor?.id).toBe("1");
+    expect(findSailorByName("Mikaela Tan", index)?.sailor?.id).toBe("2");
   });
 
   it("suggestSailorByName works with an index", () => {
