@@ -371,7 +371,8 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
 
       <nav
         aria-label="Classes at this event"
-        className="flex flex-wrap gap-2"
+        className="flex flex-wrap gap-0 border-b border-[var(--sp-cool-veil)]"
+        role="tablist"
       >
         {slices.map((slice) => {
           const isActive = slice.def.key === active.def.key;
@@ -379,21 +380,23 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
             <Link
               key={slice.def.key}
               href={eventHubHref(event.slug, slice.def.key)}
+              role="tab"
               aria-current={isActive ? "page" : undefined}
-              className={`rounded-xl border px-3 py-2 transition-colors ${
-                isActive
-                  ? "border-[var(--sp-harbour-teal)] bg-[var(--sp-harbour-teal)] text-white shadow-xs"
-                  : "border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] text-[var(--sp-charcoal)] hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-teal)]"
-              }`}
+              aria-selected={isActive}
+              className={`
+                relative px-4 py-2.5 transition-colors mr-1 last:mr-0
+                border-b-2 -mb-px
+                focus-visible:outline-2 focus-visible:outline-[#2D6A6F] focus-visible:rounded
+                ${isActive
+                  ? "border-b-[#2D6A6F] text-[#2D6A6F]"
+                  : "border-b-transparent text-[var(--sp-charcoal)] hover:text-[#2D6A6F] hover:bg-[var(--sp-sailcloth)]"
+                }
+              `}
             >
-              <span className="block text-[13px] font-bold leading-tight">
+              <span className={`block text-[13px] leading-tight ${isActive ? "font-black" : "font-semibold"}`}>
                 {slice.def.label}
               </span>
-              <span
-                className={`block text-[10px] font-semibold leading-tight mt-0.5 ${
-                  isActive ? "text-white" : "text-[var(--sp-charcoal)]"
-                }`}
-              >
+              <span className={`block text-[10px] font-semibold leading-tight mt-0.5 ${isActive ? "text-[#2D6A6F]/80" : "text-[var(--sp-charcoal)]"}`}>
                 {sliceStatusText(slice)}
               </span>
             </Link>

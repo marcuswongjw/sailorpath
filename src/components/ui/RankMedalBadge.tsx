@@ -20,8 +20,10 @@ export function RankMedalBadge({
   if (rank === 1) {
     return (
       <span
-        className={`inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-400 text-slate-950 font-black text-[11px] shadow-sm shadow-amber-400/30 shrink-0 ${className}`}
-        title="1st Place (Gold Medal)"
+        role="img"
+        aria-label="1st Place – Gold Medal"
+        className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-black text-[11px] shrink-0 ${className}`}
+        style={{ backgroundColor: "#FFD700", color: "#1a1a1a" }}
       >
         1{suffix}
       </span>
@@ -30,8 +32,10 @@ export function RankMedalBadge({
   if (rank === 2) {
     return (
       <span
-        className={`inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-300 text-slate-950 font-black text-[11px] shadow-sm shadow-white/10 shrink-0 ${className}`}
-        title="2nd Place (Silver Medal)"
+        role="img"
+        aria-label="2nd Place – Silver Medal"
+        className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-black text-[11px] shrink-0 ${className}`}
+        style={{ backgroundColor: "#C0C0C0", color: "#1a1a1a" }}
       >
         2{suffix}
       </span>
@@ -40,8 +44,10 @@ export function RankMedalBadge({
   if (rank === 3) {
     return (
       <span
-        className={`inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-700 text-amber-100 font-black text-[11px] shadow-sm shadow-amber-900/30 shrink-0 ${className}`}
-        title="3rd Place (Bronze Medal)"
+        role="img"
+        aria-label="3rd Place – Bronze Medal"
+        className={`inline-flex h-6 w-6 items-center justify-center rounded-full font-black text-[11px] shrink-0 ${className}`}
+        style={{ backgroundColor: "#CD7F32", color: "#fff" }}
       >
         3{suffix}
       </span>
@@ -59,4 +65,3 @@ export function RankMedalBadge({
     </span>
   );
 }
-

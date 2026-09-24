@@ -210,14 +210,13 @@ export function getPercentileBadge(rank: number, totalFleetSize: number): {
   if (pct <= 20) {
     return {
       label: "Top 20%",
-      className:
-        "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-shadow)] border border-[var(--sp-harbour-teal)]/40",
+      className: "bg-emerald-100 text-emerald-800 border border-emerald-300",
     };
   }
   if (pct <= 40) {
     return {
       label: "Top 40%",
-      className: "bg-[var(--sp-sailcloth)] text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)]",
+      className: "bg-amber-100 text-amber-800 border border-amber-300",
     };
   }
   if (pct <= 60) {
