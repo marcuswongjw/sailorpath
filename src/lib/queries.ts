@@ -31,7 +31,6 @@ import {
 } from "@/lib/ranking";
 import { withProjectedNextSquadStatus } from "@/lib/optimistSquadPreview";
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
-import { findSilverInactivityDrops } from "@/lib/silverSeriesDrop";
 import { normalizeGender } from "@/lib/gender";
 import {
   isInSgSeries,
@@ -1238,32 +1237,9 @@ export async function computeFleetRankings(
       isOverseasCommitment: row.isOverseasCommitment,
     }));
 
-    /**
-     * Auto-stamp Optimist dropDate for Silver-track inactivity.
-     * Apply in-memory for this board compute; persist async so SSR/ISR
-     * is not blocked on dozens of UPDATEs (was causing long loading flash).
-     */
-    const asOf = todayYmdSg();
-    const silverDrops = findSilverInactivityDrops(s, r, res, asOf);
-    if (silverDrops.length > 0) {
-      const dropById = new Map(
-        silverDrops.map((d) => [d.sailorId, d.dropDate] as const)
-      );
-      for (const sailor of s) {
-        const stamped = dropById.get(sailor.id);
-        if (stamped) sailor.dropDate = stamped;
-      }
-      void Promise.all(
-        silverDrops.map((d) =>
-          db
-            .update(sailors)
-            .set({ dropDate: d.dropDate, updatedAt: new Date() })
-            .where(eq(sailors.id, d.sailorId))
-        )
-      ).catch((err) => {
-        console.warn("[sailorpath] silver inactivity drop persist failed", err);
-      });
-    }
+    // Silver inactivity drops: detect/persist only via admin action
+    // `applySilverInactivityDrops` — never write drop_date on this public
+    // ranking read path (stack guard remains in findSilverInactivityDrops).
 
     const excludedRegattaId = excludeLatestEvent
       ? latestRankingRegattaIdForFleet(r, fleet, period)
