@@ -114,8 +114,10 @@ function CategoryCard({
   profileHandles?: Record<string, string>;
   wide?: boolean;
 }) {
-  // Wide (main open) category: display winners in 2 columns when many entries
-  const useColumns = wide && cat.winners.length > 5;
+  // wide + many entries → explicit half-split columns so order reads 1-5 left, 6-10 right
+  const splitAt = wide && cat.winners.length > 5 ? Math.ceil(cat.winners.length / 2) : null;
+  const leftCol = splitAt ? cat.winners.slice(0, splitAt) : cat.winners;
+  const rightCol = splitAt ? cat.winners.slice(splitAt) : [];
 
   return (
     <article
@@ -139,18 +141,27 @@ function CategoryCard({
         </p>
       )}
 
-      {/* Winners */}
-      <div
-        className={`p-2.5 flex-1 ${
-          useColumns
-            ? "grid grid-cols-1 sm:grid-cols-2 gap-1.5"
-            : "space-y-1.5"
-        }`}
-      >
-        {cat.winners.map((w) => (
-          <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
-        ))}
-      </div>
+      {/* Winners — two explicit half-split columns when wide+many, otherwise single column */}
+      {splitAt ? (
+        <div className="p-2.5 flex-1 grid grid-cols-2 gap-x-3 gap-y-1.5 items-start">
+          <div className="space-y-1.5">
+            {leftCol.map((w) => (
+              <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
+            ))}
+          </div>
+          <div className="space-y-1.5">
+            {rightCol.map((w) => (
+              <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className="p-2.5 flex-1 space-y-1.5">
+          {leftCol.map((w) => (
+            <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
+          ))}
+        </div>
+      )}
     </article>
   );
 }
@@ -235,15 +246,22 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
 
       {/* ── Podium layout ───────────────────────────────────────────── */}
       <div className="p-4 sm:p-6 space-y-4">
-        {/* Main / Open category — always full width */}
-        {mainCat && (
-          <CategoryCard cat={mainCat} profileHandles={profileHandles} wide />
-        )}
-
-        {/* Sub-categories (Female, Age groups) — responsive grid */}
-        {subCats.length > 0 && (
+        {mainCat && mainCat.winners.length > 5 ? (
+          // Many winners: main category full-width (2-col split inside), sub-cats grid below
+          <>
+            <CategoryCard cat={mainCat} profileHandles={profileHandles} wide />
+            {subCats.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {subCats.map((cat) => (
+                  <CategoryCard key={cat.categoryName} cat={cat} profileHandles={profileHandles} />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          // Few winners (e.g. ILCA 4 Open = 3): all categories in one uniform grid
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {subCats.map((cat) => (
+            {currentFleet.categories.map((cat) => (
               <CategoryCard key={cat.categoryName} cat={cat} profileHandles={profileHandles} />
             ))}
           </div>
