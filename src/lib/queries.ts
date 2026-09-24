@@ -4,6 +4,7 @@ import {
   CACHE_TAG_ILCA_RANKINGS,
   CACHE_TAG_PUBLIC_REGATTAS,
 } from "@/lib/cacheTags";
+import { PUBLIC_RANKING_REGATTA_STATUS } from "@/lib/regattaStatus";
 import { db, DbUnavailableError, formatDbError, ensureCoreSchema } from "@/db";
 import { restoreBestNettHiddenAsDns, restoreBestNettHiddenAsDnsByRegatta } from "@/lib/restoreFinisherRank";
 import {
@@ -748,7 +749,7 @@ export const getCachedIlcaRankings = unstable_cache(
       label: cutoff.label,
     };
   },
-  ["ilca-rankings-board-v7"],
+  ["ilca-rankings-board-v8"],
   { revalidate: 60, tags: [CACHE_TAG_ILCA_RANKINGS] }
 );
 
@@ -809,16 +810,19 @@ async function computeIlcaRankingsBoard(
           })
           .from(regattas)
           .where(
-            or(
-              eq(regattas.boatClass, "ILCA 4"),
-              eq(regattas.boatClass, "ILCA4"),
-              eq(regattas.boatClass, "ILCA 6"),
-              eq(regattas.boatClass, "ILCA6"),
-              eq(regattas.boatClass, "ILCA 7"),
-              eq(regattas.boatClass, "ILCA7"),
-              sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%'`,
-              sql`lower(coalesce(${regattas.boatClass}, '')) like '%laser%'`,
-              sql`lower(coalesce(${regattas.boatClass}, '')) like '%radial%'`
+            and(
+              eq(regattas.status, PUBLIC_RANKING_REGATTA_STATUS),
+              or(
+                eq(regattas.boatClass, "ILCA 4"),
+                eq(regattas.boatClass, "ILCA4"),
+                eq(regattas.boatClass, "ILCA 6"),
+                eq(regattas.boatClass, "ILCA6"),
+                eq(regattas.boatClass, "ILCA 7"),
+                eq(regattas.boatClass, "ILCA7"),
+                sql`lower(coalesce(${regattas.boatClass}, '')) like '%ilca%'`,
+                sql`lower(coalesce(${regattas.boatClass}, '')) like '%laser%'`,
+                sql`lower(coalesce(${regattas.boatClass}, '')) like '%radial%'`
+              )
             )
           ),
       ]);
@@ -1180,9 +1184,12 @@ export async function computeFleetRankings(
         })
         .from(regattas)
         .where(
-          or(
-            eq(regattas.boatClass, "Optimist"),
-            sql`lower(coalesce(${regattas.boatClass}, 'optimist')) not like '%ilca%'`
+          and(
+            eq(regattas.status, PUBLIC_RANKING_REGATTA_STATUS),
+            or(
+              eq(regattas.boatClass, "Optimist"),
+              sql`lower(coalesce(${regattas.boatClass}, 'optimist')) not like '%ilca%'`
+            )
           )
         ),
     ]);
@@ -1269,7 +1276,7 @@ export const getCachedFleetRankings = unstable_cache(
   ): Promise<RankedSailor[]> => {
     return computeFleetRankings(fleet, { year, half });
   },
-  ["fleet-rankings-v6"],
+  ["fleet-rankings-v7"],
   { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
@@ -1277,7 +1284,7 @@ export const getCachedFleetRankings = unstable_cache(
 export const getCachedPreviousFleetRankings = unstable_cache(
   async (fleet: "Gold" | "Silver", year: number, half: Period["half"]): Promise<RankedSailor[]> =>
     computeFleetRankings(fleet, { year, half }, true),
-  ["previous-fleet-rankings-v1"],
+  ["previous-fleet-rankings-v2"],
   { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
