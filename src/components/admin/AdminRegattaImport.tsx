@@ -1182,15 +1182,12 @@ export function AdminRegattaImport({
                               isDns,
                               ...(isDns && row.rank == null
                                 ? {
+                                    // Group 1: started + 1 among other non-DNS rows on this sheet
                                     rank:
-                                      Math.max(
-                                        0,
-                                        ...fullImportRows.map((r) =>
-                                          Number.isFinite(r.rank as number)
-                                            ? Number(r.rank)
-                                            : 0
-                                        )
-                                      ) + 1,
+                                      fullImportRows.filter(
+                                        (r, i) =>
+                                          i !== index && !r.isDns
+                                      ).length + 1,
                                   }
                                 : {}),
                             });

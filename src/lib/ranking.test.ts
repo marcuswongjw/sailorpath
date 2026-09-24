@@ -2,8 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   bestThreeOf,
   calculateRankings,
-  maxSheetRankByRegattaId,
-  optimistTier2Score,
+  optimistSheetStatsByRegattaId,
+  optimistRegisteredNoShowScore,
+  optimistUnregisteredScore,
   compareRankedSailors,
   getPercentileBadge,
   natSquadFieldForPeriod,
@@ -17,6 +18,7 @@ import {
   squadStatusForPeriod,
   type RankedSailor,
   type RegattaRecord,
+  type RegattaResultRecord,
   type SailorRecord,
 } from "./ranking";
 
@@ -514,7 +516,7 @@ describe("reRankWithExcluded", () => {
   });
 });
 
-describe("Optimist Tier 2 max(sheet)+1 scoring", () => {
+describe("Optimist DNS Group 1 / Group 2 scoring", () => {
   const period = { year: 2026, half: "Jan-Jun" as const };
   const goldSailor = (id: string): SailorRecord =>
     ({
@@ -530,44 +532,59 @@ describe("Optimist Tier 2 max(sheet)+1 scoring", () => {
       nationality: "SGP",
     }) as SailorRecord;
 
-  it("SNSC-style: three tied at 81 → unentered get 82 (not fleetSize+1)", () => {
+  it("80 registered / 78 started → Group1 DNS = 79, Group2 unregistered = 81", () => {
     const regattas: RegattaRecord[] = [
       {
-        id: "snsc",
-        name: "SNSC",
-        slug: "snsc",
+        id: "ex",
+        name: "Example",
+        slug: "ex",
         date: "2026-03-01",
-        totalFleetSize: 83,
+        totalFleetSize: 90,
         division: "Gold",
         boatClass: "Optimist",
         countsForRanking: true,
       },
     ];
-    const onSheet = goldSailor("ethan");
-    const absent = goldSailor("absent");
-    const results = [
-      { sailorId: "ethan", regattaId: "snsc", rank: 81, isDns: true },
-      { sailorId: "a", regattaId: "snsc", rank: 81, isDns: true },
-      { sailorId: "b", regattaId: "snsc", rank: 81, isDns: true },
-      { sailorId: "fin", regattaId: "snsc", rank: 1 },
-    ];
+    const results: RegattaResultRecord[] = [];
+    for (let i = 1; i <= 78; i++) {
+      results.push({ sailorId: `f${i}`, regattaId: "ex", rank: i });
+    }
+    // Two registered no-shows (on sheet with DNS)
+    results.push({ sailorId: "dns-a", regattaId: "ex", rank: 99, isDns: true });
+    results.push({ sailorId: "dns-b", regattaId: "ex", rank: 99, isDns: true });
+
+    const dnsA = goldSailor("dns-a");
+    const dnsB = goldSailor("dns-b");
+    const neverReg = goldSailor("never");
+    const finisher = goldSailor("f1");
+
     const ranked = calculateRankings(
       period,
-      [onSheet, absent],
+      [dnsA, dnsB, neverReg, finisher],
       regattas,
       results
     );
-    const ethan = ranked.find((s) => s.id === "ethan")!;
-    const miss = ranked.find((s) => s.id === "absent")!;
-    // Tier 1: official sheet DNS place
-    expect(ethan.regattaScores[0]?.score).toBe(81);
-    expect(ethan.regattaScores[0]?.isDNS).toBe(true);
-    // Tier 2: max sheet place + 1 = 82 (not 84)
-    expect(miss.regattaScores[0]?.score).toBe(82);
-    expect(miss.regattaScores[0]?.isDNS).toBe(true);
+    expect(ranked.find((s) => s.id === "f1")!.regattaScores[0]?.score).toBe(1);
+    // Group 1: started (78) + 1 = 79 (sheet rank 99 ignored)
+    expect(ranked.find((s) => s.id === "dns-a")!.regattaScores[0]?.score).toBe(
+      79
+    );
+    expect(ranked.find((s) => s.id === "dns-b")!.regattaScores[0]?.score).toBe(
+      79
+    );
+    expect(ranked.find((s) => s.id === "dns-a")!.regattaScores[0]?.isDNS).toBe(
+      true
+    );
+    // Group 2: registered (80) + 1 = 81
+    expect(ranked.find((s) => s.id === "never")!.regattaScores[0]?.score).toBe(
+      81
+    );
+    expect(ranked.find((s) => s.id === "never")!.regattaScores[0]?.isDNS).toBe(
+      true
+    );
   });
 
-  it("empty sheet: no Tier 2 invented for absentees", () => {
+  it("empty sheet: no Group 2 invented for absentees", () => {
     const regattas: RegattaRecord[] = [
       {
         id: "empty",
@@ -583,18 +600,60 @@ describe("Optimist Tier 2 max(sheet)+1 scoring", () => {
     const sailor = goldSailor("g1");
     const ranked = calculateRankings(period, [sailor], regattas, []);
     expect(ranked).toHaveLength(1);
-    // No uploaded results → regatta excluded from scoring window
     expect(ranked[0].regattaScores).toHaveLength(0);
   });
 
-  it("maxSheetRankByRegattaId / optimistTier2Score helpers", () => {
-    expect(optimistTier2Score(81)).toBe(82);
-    expect(optimistTier2Score(null)).toBeNull();
-    expect(optimistTier2Score(undefined)).toBeNull();
-    const m = maxSheetRankByRegattaId([
-      { sailorId: "a", regattaId: "r1", rank: 10 },
-      { sailorId: "b", regattaId: "r1", rank: 81, isDns: true },
+  it("overseas commitment keeps stored rank (overrides DNS formula)", () => {
+    const regattas: RegattaRecord[] = [
+      {
+        id: "r1",
+        name: "R1",
+        slug: "r1",
+        date: "2026-03-01",
+        totalFleetSize: 50,
+        division: "Gold",
+        boatClass: "Optimist",
+        countsForRanking: true,
+      },
+    ];
+    const ovs = goldSailor("ovs");
+    const results = [
+      { sailorId: "f1", regattaId: "r1", rank: 1 },
+      {
+        sailorId: "ovs",
+        regattaId: "r1",
+        rank: 3,
+        isDns: true,
+        isOverseasCommitment: true,
+      },
+    ];
+    const ranked = calculateRankings(period, [ovs], regattas, results);
+    expect(ranked.find((s) => s.id === "ovs")!.regattaScores[0]?.score).toBe(3);
+    expect(
+      ranked.find((s) => s.id === "ovs")!.regattaScores[0]?.isOverseasCommitment
+    ).toBe(true);
+    expect(ranked.find((s) => s.id === "ovs")!.regattaScores[0]?.isDNS).toBe(
+      false
+    );
+  });
+
+  it("sheet stats + score helpers", () => {
+    expect(optimistRegisteredNoShowScore(78)).toBe(79);
+    expect(optimistUnregisteredScore(80)).toBe(81);
+    expect(optimistUnregisteredScore(null)).toBeNull();
+    expect(optimistUnregisteredScore(0)).toBeNull();
+    const m = optimistSheetStatsByRegattaId([
+      { sailorId: "a", regattaId: "r1", rank: 1 },
+      { sailorId: "b", regattaId: "r1", rank: 2 },
+      { sailorId: "c", regattaId: "r1", rank: 3, isDns: true },
+      {
+        sailorId: "d",
+        regattaId: "r1",
+        rank: 4,
+        isDns: true,
+        isOverseasCommitment: true,
+      },
     ]);
-    expect(m.get("r1")).toBe(81);
+    expect(m.get("r1")).toEqual({ registered: 4, started: 2 });
   });
 });

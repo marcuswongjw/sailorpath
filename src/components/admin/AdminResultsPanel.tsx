@@ -39,18 +39,27 @@ import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 
 export type { ResultFormState };
 
-/** Tier 2 DNS points: max place on this regatta's uploaded sheet + 1. */
+/**
+ * Group 1 national DNS points when marking a sailor DNS on the sheet:
+ * started (non-DNS, non-overseas rows) + 1.
+ */
 function dnsPointsFromResults(
   regattaId: string,
-  results: { regattaId: string; rank?: number | null }[]
+  results: {
+    regattaId: string;
+    isDns?: boolean | null;
+    isDNS?: boolean | null;
+    isOverseasCommitment?: boolean | null;
+  }[]
 ): number {
-  let max = 0;
+  let started = 0;
   for (const r of results) {
     if (r.regattaId !== regattaId) continue;
-    const rank = Number(r.rank);
-    if (Number.isFinite(rank) && rank > max) max = rank;
+    if (Boolean(r.isDns || r.isDNS)) continue;
+    if (Boolean(r.isOverseasCommitment)) continue;
+    started += 1;
   }
-  return max > 0 ? max + 1 : 1;
+  return started + 1;
 }
 
 export type AdminResultsPanelProps = {
@@ -562,7 +571,7 @@ export function AdminResultsPanel({
                 className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
               />
               <p className="mt-1 text-[13px] text-slate-600">
-                DNS defaults to max(sheet place) + 1; edit if the published sheet used a different place.
+                DNS defaults to started + 1 (registered no-show). Unregistered sailors are auto-scored as registered + 1 at ranking time.
               </p>
             </div>
             <div className="flex items-center gap-2 h-full pt-5 md:pl-4">
@@ -589,7 +598,7 @@ export function AdminResultsPanel({
                 htmlFor="dnsCheckbox"
                 className="text-xs font-bold text-slate-400 cursor-pointer"
               >
-                Did Not Start (DNS) — initially sets rank to max(sheet place) + 1;
+                Did Not Start (DNS) — initially sets rank to started + 1 (Group 1);
                 edit if the published sheet used a different place
               </label>
             </div>
@@ -689,7 +698,7 @@ export function AdminResultsPanel({
 
           <p className="px-3 sm:px-6 pb-2 text-[13px] text-slate-500">
             Absentees not on the uploaded sheet are auto-scored at ranking time
-            as max(sheet place) + 1 (Tier 2). Official sheet DNS/DNC ranks stay
+            as started + 1 when on the sheet (Group 1), or registered + 1 if never entered (Group 2, scored live). Official finish ranks stay
             as published. Mark{" "}
             <strong className="text-sky-300">Overseas commitment</strong> and
             set points to their standing before the trip (e.g. 2nd → 2 pts).

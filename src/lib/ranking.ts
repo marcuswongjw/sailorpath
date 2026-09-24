@@ -534,9 +534,72 @@ export function optimistSailorsEligibleForSilverPeriod(
 }
 
 /**
- * Max finishing place on an uploaded results sheet (every place, including
- * official DNS/DNC ranks). Used for Optimist Tier 2: absentees score max+1.
- * Empty sheets → no entry (do not invent Tier 2 penalties).
+ * Per-regatta sheet counts after results are uploaded.
+ * - registered = every result row on the sheet (including DNS/DNC / overseas)
+ * - started = real participations: not isDns and not overseas-commitment
+ *   (mirrors Gold/Silver participation counting)
+ */
+export type OptimistSheetStats = {
+  registered: number;
+  started: number;
+};
+
+/** Whether a result row counts as a real start (took part). */
+export function isOptimistRealStart(
+  res: Pick<RegattaResultRecord, "isDns" | "isOverseasCommitment">
+): boolean {
+  if (Boolean(res.isDns)) return false;
+  if (Boolean(res.isOverseasCommitment)) return false;
+  return true;
+}
+
+/**
+ * Sheet stats by regatta id. Empty sheets are omitted (no invented scores).
+ */
+export function optimistSheetStatsByRegattaId(
+  results: RegattaResultRecord[]
+): Map<string, OptimistSheetStats> {
+  const m = new Map<string, OptimistSheetStats>();
+  for (const r of results) {
+    let s = m.get(r.regattaId);
+    if (!s) {
+      s = { registered: 0, started: 0 };
+      m.set(r.regattaId, s);
+    }
+    s.registered += 1;
+    if (isOptimistRealStart(r)) s.started += 1;
+  }
+  return m;
+}
+
+/**
+ * Group 1 — registered, did not start (on sheet with DNS):
+ * national score = started + 1.
+ */
+export function optimistRegisteredNoShowScore(
+  started: number | null | undefined
+): number | null {
+  if (started == null || !Number.isFinite(started) || started < 0) return null;
+  return started + 1;
+}
+
+/**
+ * Group 2 — never registered (not on the sheet):
+ * national score = registered + 1.
+ * Returns null when the sheet is empty (no auto-score yet).
+ */
+export function optimistUnregisteredScore(
+  registered: number | null | undefined
+): number | null {
+  if (registered == null || !Number.isFinite(registered) || registered < 1) {
+    return null;
+  }
+  return registered + 1;
+}
+
+/**
+ * @deprecated Use optimistSheetStatsByRegattaId + optimistUnregisteredScore.
+ * Kept briefly so older imports fail loudly at typecheck if still max-based.
  */
 export function maxSheetRankByRegattaId(
   results: RegattaResultRecord[]
@@ -550,10 +613,7 @@ export function maxSheetRankByRegattaId(
   return m;
 }
 
-/**
- * Optimist Tier 2 DNS points for a regatta with an uploaded sheet.
- * Returns null when the sheet is empty (no Tier 2 yet).
- */
+/** @deprecated Use optimistUnregisteredScore / optimistRegisteredNoShowScore. */
 export function optimistTier2Score(
   maxSheetRank: number | null | undefined
 ): number | null {
@@ -566,7 +626,7 @@ function scoreForResult(
   sailorId: string,
   regatta: RegattaRecord,
   results: RegattaResultRecord[] | Map<string, RegattaResultRecord>,
-  maxRankByRegattaId: Map<string, number>
+  sheetStatsByRegattaId: Map<string, OptimistSheetStats>
 ): Pick<
   RegattaScoreSlot,
   "score" | "isDNS" | "isOverseasCommitment"
@@ -577,19 +637,43 @@ function scoreForResult(
       : results.find(
           (res) => res.sailorId === sailorId && res.regattaId === regatta.id
         );
+  const stats = sheetStatsByRegattaId.get(regatta.id);
+
   if (result) {
+    // Overseas commitment still overrides DNS display/scoring (use stored rank).
+    if (Boolean(result.isOverseasCommitment)) {
+      return {
+        score: result.rank,
+        isDNS: false,
+        isOverseasCommitment: true,
+      };
+    }
+    // Group 1: on sheet, registered no-show → started + 1 (all tied).
+    if (Boolean(result.isDns)) {
+      if (!stats || stats.registered < 1) return null;
+      const score = optimistRegisteredNoShowScore(stats.started);
+      if (score == null) return null;
+      return {
+        score,
+        isDNS: true,
+        isOverseasCommitment: false,
+      };
+    }
+    // Finished: use sheet rank.
     return {
       score: result.rank,
-      isDNS: Boolean(result.isDns) && !result.isOverseasCommitment,
-      isOverseasCommitment: Boolean(result.isOverseasCommitment),
+      isDNS: false,
+      isOverseasCommitment: false,
     };
   }
-  // Tier 2: max place on the uploaded sheet + 1 (not totalFleetSize + 1).
+
+  // Group 2: never registered (not on sheet) → registered + 1.
   // Empty sheet → no auto-score (caller should skip this regatta).
-  const tier2 = optimistTier2Score(maxRankByRegattaId.get(regatta.id));
-  if (tier2 == null) return null;
+  if (!stats || stats.registered < 1) return null;
+  const unreg = optimistUnregisteredScore(stats.registered);
+  if (unreg == null) return null;
   return {
-    score: tier2,
+    score: unreg,
     isDNS: true,
     isOverseasCommitment: false,
   };
@@ -740,13 +824,13 @@ export function calculateRankings(
     resultsMap.set(`${res.sailorId}:${res.regattaId}`, res);
   }
 
-  // Max place per regatta sheet (incl. official DNS/DNC) for Tier 2 scoring.
+  // Sheet registered/started counts for Optimist Group 1 / Group 2 DNS scoring.
   // Regattas with no uploaded results are excluded from the Best 3 window.
-  const maxRankByRegattaId = maxSheetRankByRegattaId(results);
+  const sheetStatsByRegattaId = optimistSheetStatsByRegattaId(results);
 
   const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
     const slots = (sailor.fleet === "Gold" ? goldSlots : silverSlots).filter(
-      (slot) => maxRankByRegattaId.has(slot.regatta.id)
+      (slot) => sheetStatsByRegattaId.has(slot.regatta.id)
     );
 
     const regattaScores: RegattaScoreSlot[] = slots.flatMap((slot) => {
@@ -754,7 +838,7 @@ export function calculateRankings(
         sailor.id,
         slot.regatta,
         resultsMap,
-        maxRankByRegattaId
+        sheetStatsByRegattaId
       );
       if (!scored) return [];
       return [

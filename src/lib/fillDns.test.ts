@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { missingDnsPairs, rankingRegattasForFleet } from "./fillDns";
-import type { Period, RegattaRecord, RegattaResultRecord, SailorRecord } from "./ranking";
+import type {
+  Period,
+  RegattaRecord,
+  RegattaResultRecord,
+  SailorRecord,
+} from "./ranking";
 
 const period: Period = { year: 2026, half: "Jan-Jun" };
 
@@ -52,7 +57,7 @@ describe("fillDns / ranking regattas (diagnostic helpers)", () => {
     expect(events.map((e) => e.id)).toEqual(["r1", "r2"]);
   });
 
-  it("missingDnsPairs skips non-ranking regattas; empty sheet → null dnsPoints", () => {
+  it("missingDnsPairs skips non-ranking; empty sheet → null dnsPoints", () => {
     const sailors = [seriesGold("s1")];
     const regattas: RegattaRecord[] = [
       {
@@ -83,29 +88,28 @@ describe("fillDns / ranking regattas (diagnostic helpers)", () => {
     });
     expect(pairs).toHaveLength(1);
     expect(pairs[0].regattaId).toBe("rank");
-    // No uploaded results → do not invent Tier 2 points
     expect(pairs[0].dnsPoints).toBeNull();
   });
 
-  it("missingDnsPairs uses max(sheet place)+1 when results exist (not fleetSize+1)", () => {
+  it("missingDnsPairs uses registered+1 for Group 2 (not fleetSize+1)", () => {
     const sailors = [seriesGold("s1")];
     const regattas: RegattaRecord[] = [
       {
-        id: "snsc",
-        name: "SNSC",
-        slug: "snsc",
+        id: "ex",
+        name: "Example",
+        slug: "ex",
         date: "2026-01-10",
-        totalFleetSize: 83,
+        totalFleetSize: 90,
         division: "Gold",
         countsForRanking: true,
       },
     ];
-    const results: RegattaResultRecord[] = [
-      { sailorId: "a", regattaId: "snsc", rank: 1 },
-      { sailorId: "b", regattaId: "snsc", rank: 81, isDns: true },
-      { sailorId: "c", regattaId: "snsc", rank: 81, isDns: true },
-      { sailorId: "d", regattaId: "snsc", rank: 81, isDns: true },
-    ];
+    const results: RegattaResultRecord[] = [];
+    for (let i = 1; i <= 78; i++) {
+      results.push({ sailorId: `f${i}`, regattaId: "ex", rank: i });
+    }
+    results.push({ sailorId: "dns1", regattaId: "ex", rank: 79, isDns: true });
+    results.push({ sailorId: "dns2", regattaId: "ex", rank: 79, isDns: true });
     const pairs = missingDnsPairs({
       fleet: "Gold",
       period,
@@ -115,8 +119,8 @@ describe("fillDns / ranking regattas (diagnostic helpers)", () => {
       results,
     });
     expect(pairs).toHaveLength(1);
-    // Three tied at 81 → Tier 2 = 82 (not totalFleetSize+1 = 84)
-    expect(pairs[0].dnsPoints).toBe(82);
+    // 80 registered → Group 2 = 81 (not totalFleetSize+1 = 91)
+    expect(pairs[0].dnsPoints).toBe(81);
   });
 
   it("undefined countsForRanking still counts (legacy)", () => {
@@ -128,7 +132,6 @@ describe("fillDns / ranking regattas (diagnostic helpers)", () => {
         date: "2026-04-01",
         totalFleetSize: 40,
         division: "Gold",
-        // countsForRanking omitted
       },
     ];
     expect(rankingRegattasForFleet("Gold", period, regattas)).toHaveLength(1);
