@@ -92,12 +92,16 @@ export function combinedNameSimilarity(a: string, b: string): number {
   const containment = nameContainment(a, b);
   const edit = stringSimilarity(keyA.replace(/\s/g, ""), keyB.replace(/\s/g, ""));
   // Weight: token overlap is primary; containment helps missing middle names
-  const score = Math.max(
+  const raw = Math.max(
     jaccard,
     containment * 0.95,
     edit * 0.9,
     (jaccard * 0.6 + containment * 0.4)
   );
+  // A pure containment hit (one name's tokens are a strict subset of the
+  // other's, e.g. "Ethan Tan" ⊂ "Ethan Tan Wei Jie") must stay below the
+  // 0.75 auto-match threshold — it may surface as a suggestion only.
+  const score = containment >= 1 && jaccard < 1 ? Math.min(raw, 0.74) : raw;
   return Math.min(1, Math.round(score * 1000) / 1000);
 }
 
@@ -284,15 +288,33 @@ function fuzzyCandidates(
 }
 
 /**
+ * Result of a sailor lookup. A fuzzy tie between two or more DISTINCT
+ * candidates at the same top score is reported as `ambiguous` instead of
+ * silently picking the first candidate.
+ */
+export type SailorMatchHit =
+  | { sailor: SailorMatchRow; how: string; candidates?: undefined }
+  | {
+      sailor: null;
+      how: "ambiguous";
+      candidates: SailorMatchRow[];
+      similarity: number;
+    };
+
+/** Similarity at or above which a fuzzy match may auto-link. */
+export const FUZZY_AUTO_MATCH_THRESHOLD = 0.75;
+
+/**
  * Find best sailor for a raw import name.
  * Pass a `SailorNameIndex` from `buildSailorNameIndex` for batch imports.
  * 1) exact  2) case-insensitive  3) token-order key  4) high token overlap
+ * Pure containment (subset names) never auto-matches — suggestion only.
  */
 export function findSailorByName(
   rawName: string,
   sailorsOrIndex: SailorMatchRow[] | SailorNameIndex,
   aliases: { sailorId: string; aliasName: string }[] = []
-): { sailor: SailorMatchRow; how: string } | null {
+): SailorMatchHit | null {
   const index: SailorNameIndex = Array.isArray(sailorsOrIndex)
     ? buildSailorNameIndex(sailorsOrIndex, aliases)
     : sailorsOrIndex;
@@ -327,18 +349,29 @@ export function findSailorByName(
 
   let best: SailorMatchRow | null = null;
   let bestSim = 0;
+  const tied: SailorMatchRow[] = [];
   for (const s of fuzzyCandidates(index, raw)) {
     const sim = combinedNameSimilarity(raw, s.name);
     if (sim > bestSim) {
       bestSim = sim;
       best = s;
+      tied.length = 0;
+    } else if (best && sim === bestSim && s.id !== best.id) {
+      tied.push(s);
     }
   }
-  if (best && bestSim >= 0.75) {
+  if (best && bestSim >= FUZZY_AUTO_MATCH_THRESHOLD) {
+    // Two or more DISTINCT candidates clear the threshold with equal top
+    // scores — never silently pick the first; surface the ambiguity.
+    if (tied.length > 0) {
+      return {
+        sailor: null,
+        how: "ambiguous",
+        candidates: [best, ...tied],
+        similarity: bestSim,
+      };
+    }
     return { sailor: best, how: `fuzzy:${bestSim.toFixed(2)}` };
-  }
-  if (best && bestSim >= 0.55 && nameContainment(raw, best.name) >= 0.66) {
-    return { sailor: best, how: `fuzzy-contain:${bestSim.toFixed(2)}` };
   }
 
   return null;

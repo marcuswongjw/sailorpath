@@ -92,6 +92,8 @@ export function useAdminSailors({
   const [editingSailorId, setEditingSailorId] = useState<string | null>(null);
   const [sailorForm, setSailorForm] = useState(emptySailorForm);
   const [showDuplicateFinder, setShowDuplicateFinder] = useState(false);
+  /** Double-submit guard for mutating actions (save / bulk / merge / delete). */
+  const [saving, setSaving] = useState(false);
 
   const openSailorResults = (sailorId: string) => {
     setEditingSailorId(null);
@@ -462,6 +464,7 @@ export function useAdminSailors({
   };
 
   const handleApplyBulk = async () => {
+    if (saving) return;
     if (!isSuperadmin) {
       toast.error(
         "Error: 403 Forbidden. Only Superadmins can update fleet properties."
@@ -476,6 +479,7 @@ export function useAdminSailors({
       toast.error("Please select a field to update.");
       return;
     }
+    setSaving(true);
     try {
       const res = await fetch("/api/admin/bulk", {
         method: "POST",
@@ -538,10 +542,13 @@ export function useAdminSailors({
       invalidateSailors?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
+    } finally {
+      setSaving(false);
     }
   };
 
   const handleMergeSailors = async () => {
+    if (saving) return;
     if (!isSuperadmin) {
       toast.error("Error: 403 Forbidden. Only Superadmins can merge sailors.");
       return;
@@ -589,6 +596,7 @@ export function useAdminSailors({
     });
     if (!ok) return;
 
+    setSaving(true);
     try {
       const data = await mergeSailorsClient({
         keepId: keep.id,
@@ -612,6 +620,8 @@ export function useAdminSailors({
       invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Merge failed"));
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -646,6 +656,7 @@ export function useAdminSailors({
   };
 
   const handleBulkDelete = async () => {
+    if (saving) return;
     if (!isSuperadmin) {
       toast.error("Superadmin only");
       return;
@@ -676,6 +687,7 @@ export function useAdminSailors({
       requireTypedConfirm: "DELETE",
     });
     if (!ok) return;
+    setSaving(true);
     try {
       const res = await fetch("/api/admin/bulk", {
         method: "POST",
@@ -700,10 +712,13 @@ export function useAdminSailors({
       invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
+    } finally {
+      setSaving(false);
     }
   };
 
   const handleSaveSailor = async () => {
+    if (saving) return;
     if (!isSuperadmin) {
       toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
@@ -799,6 +814,7 @@ export function useAdminSailors({
       seaGames: sailorForm.seaGames || null,
       sailingJourney: sailorForm.sailingJourney || null,
     };
+    setSaving(true);
     try {
       if (editingSailorId === "new") {
         const res = await fetch("/api/admin/sailors", {
@@ -839,6 +855,8 @@ export function useAdminSailors({
       setEditingSailorId(null);
     } catch (e: unknown) {
       toast.error(errorMessage(e, "Update failed"));
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -909,6 +927,7 @@ export function useAdminSailors({
     setBulkField,
     bulkValue,
     setBulkValue,
+    saving,
     handleApplyBulk,
     handleBulkDelete,
     handleMergeSailors,

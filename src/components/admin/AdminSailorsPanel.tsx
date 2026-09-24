@@ -85,6 +85,8 @@ export type AdminSailorsPanelProps = {
   setBulkField: (v: string) => void;
   bulkValue: string;
   setBulkValue: (v: string) => void;
+  /** True while a mutating action (save / bulk / merge / delete) is in flight. */
+  saving: boolean;
   handleApplyBulk: () => void | Promise<void>;
   handleBulkDelete: () => void | Promise<void>;
   handleMergeSailors: () => void | Promise<void>;
@@ -343,6 +345,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     setBulkField,
     bulkValue,
     setBulkValue,
+    saving,
     handleApplyBulk,
     handleBulkDelete,
     handleMergeSailors,
@@ -714,7 +717,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     </div>
                     <button
                       type="button"
-                      disabled={!isSuperadmin || selectedSailors.length === 0 || !bulkField}
+                      disabled={!isSuperadmin || saving || selectedSailors.length === 0 || !bulkField}
                       onClick={handleApplyBulk}
                       className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40 flex items-center gap-1.5 shadow-sm"
                     >
@@ -723,7 +726,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     </button>
                     <button
                       type="button"
-                      disabled={!isSuperadmin || selectedSailors.length !== 2}
+                      disabled={!isSuperadmin || saving || selectedSailors.length !== 2}
                       onClick={handleMergeSailors}
                       title="Select exactly 2 sailors to merge duplicates"
                       className="rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-500 disabled:opacity-40 flex items-center gap-1.5 shadow-sm"
@@ -734,7 +737,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     </button>
                     <button
                       type="button"
-                      disabled={!isSuperadmin || selectedSailors.length === 0}
+                      disabled={!isSuperadmin || saving || selectedSailors.length === 0}
                       onClick={handleBulkDelete}
                       className="rounded-full bg-rose-600 px-4 py-2 text-xs font-bold text-white hover:bg-rose-500 disabled:opacity-40 flex items-center gap-1.5 shadow-sm"
                     >
@@ -1297,10 +1300,11 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                       </button>
                       <button
                         type="button"
+                        disabled={saving}
                         onClick={handleSaveSailor}
-                        className="rounded-full bg-[var(--sp-racing-orange)] px-5 py-2 text-xs font-bold text-white hover:brightness-105 shadow-sm"
+                        className="rounded-full bg-[var(--sp-racing-orange)] px-5 py-2 text-xs font-bold text-white hover:brightness-105 shadow-sm disabled:opacity-40"
                       >
-                        Save Sailor
+                        {saving ? "Saving…" : "Save Sailor"}
                       </button>
                     </div>
                     </div>

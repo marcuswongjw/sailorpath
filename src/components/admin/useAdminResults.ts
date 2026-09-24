@@ -42,8 +42,11 @@ export function useAdminResults({
   const { toast, confirm } = useFeedback();
   const [editingResultId, setEditingResultId] = useState<string | null>(null);
   const [resultForm, setResultForm] = useState(emptyResultForm);
+  /** Double-submit guard for result save. */
+  const [saving, setSaving] = useState(false);
 
   const handleSaveResult = async () => {
+    if (saving) return;
     if (!isSuperadmin) {
       toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
@@ -66,6 +69,7 @@ export function useAdminResults({
       isDNS: isDns,
       isOverseasCommitment: overseas,
     };
+    setSaving(true);
     try {
       if (editingResultId === "new") {
         const res = await fetch("/api/admin/results", {
@@ -102,6 +106,8 @@ export function useAdminResults({
       invalidateResults?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -287,6 +293,7 @@ export function useAdminResults({
     setEditingResultId,
     resultForm,
     setResultForm,
+    saving,
     handleSaveResult,
     handleQuickUpdateResult,
     handleDeleteResult,
@@ -302,6 +309,7 @@ export function useAdminResults({
     setEditingResultId,
     resultForm,
     setResultForm,
+    saving,
     handleSaveResult,
     handleQuickUpdateResult,
     handleDeleteResult,

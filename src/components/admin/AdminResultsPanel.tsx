@@ -52,6 +52,8 @@ export type AdminResultsPanelProps = {
   setEditingResultId: (id: string | null) => void;
   resultForm: ResultFormState;
   setResultForm: Dispatch<SetStateAction<ResultFormState>>;
+  /** True while the save mutation is in flight. */
+  saving: boolean;
   handleSaveResult: () => void | Promise<void>;
   handleQuickUpdateResult?: (
     id: string,
@@ -89,6 +91,7 @@ export function AdminResultsPanel({
   setEditingResultId,
   resultForm,
   setResultForm,
+  saving,
   handleSaveResult,
   handleQuickUpdateResult,
   handleDeleteResult,
@@ -674,11 +677,11 @@ export function AdminResultsPanel({
             </button>
             <button
               type="button"
-              disabled={!isSuperadmin}
+              disabled={!isSuperadmin || saving}
               onClick={() => void handleSaveResult()}
               className="rounded-full bg-orange-600 px-5 py-2 text-[15px] font-semibold text-white hover:bg-orange-500 disabled:opacity-40"
             >
-              Save Result
+              {saving ? "Saving…" : "Save Result"}
             </button>
           </div>
         </div>

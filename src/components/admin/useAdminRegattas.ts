@@ -49,6 +49,8 @@ export function useAdminRegattas({
     useState<string>("all");
   const [editingRegattaId, setEditingRegattaId] = useState<string | null>(null);
   const [regattaForm, setRegattaForm] = useState(emptyRegattaForm);
+  /** Double-submit guard for regatta save. */
+  const [saving, setSaving] = useState(false);
 
   const filteredRegattaList = useMemo(() => {
     const q = regattaSearch.trim().toLowerCase();
@@ -90,6 +92,7 @@ export function useAdminRegattas({
   );
 
   const handleSaveRegatta = async () => {
+    if (saving) return;
     if (!isSuperadmin) {
       toast.error(
         "Error: 403 Forbidden. Only Superadmins can write to the database."
@@ -100,6 +103,7 @@ export function useAdminRegattas({
       toast.error("Regatta Name and Date are required.");
       return;
     }
+    setSaving(true);
     try {
       if (editingRegattaId === "new") {
         const res = await fetch("/api/admin/regattas", {
@@ -133,6 +137,8 @@ export function useAdminRegattas({
       invalidateRegattas?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -199,6 +205,7 @@ export function useAdminRegattas({
     setEditingRegattaId,
     regattaForm,
     setRegattaForm,
+    saving,
     handleSaveRegatta,
     handleDeleteRegatta,
   };

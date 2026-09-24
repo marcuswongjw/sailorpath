@@ -38,6 +38,8 @@ export type AdminRegattasPanelProps = {
   setEditingRegattaId: (id: string | null) => void;
   regattaForm: RegattaFormState;
   setRegattaForm: React.Dispatch<React.SetStateAction<RegattaFormState>>;
+  /** True while the save mutation is in flight. */
+  saving: boolean;
   handleSaveRegatta: () => void | Promise<void>;
   handleDeleteRegatta: (id: string) => void | Promise<void>;
   onOpenResults?: (regattaId: string) => void;
@@ -58,6 +60,7 @@ export function AdminRegattasPanel({
   setEditingRegattaId,
   regattaForm,
   setRegattaForm,
+  saving,
   handleSaveRegatta,
   handleDeleteRegatta,
   onOpenResults,
@@ -731,10 +734,11 @@ export function AdminRegattasPanel({
                           </button>
                           <button
                             type="button"
+                            disabled={saving}
                             onClick={handleSaveRegatta}
-                            className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500"
+                            className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40"
                           >
-                            Save regatta
+                            {saving ? "Saving…" : "Save regatta"}
                           </button>
                         </div>
                       </div>

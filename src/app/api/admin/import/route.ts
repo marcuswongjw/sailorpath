@@ -861,7 +861,13 @@ export async function POST(req: Request) {
       const possibleDuplicates: ImportPossibleDuplicate[] = [];
       const vsDbSeen = new Set<string>();
 
-      const regattaId = existingTarget ? existingTarget.id : randomUUID();
+      // Never reuse a resolved target's id when it is not a same-day
+      // (same class/division) event — the insert branch below would
+      // PK-collide with the existing regatta row.
+      const regattaId =
+        existingTarget && sameDay.length >= 1
+          ? existingTarget.id
+          : randomUUID();
 
       const pendingResults: {
         regattaId: string;
@@ -1378,12 +1384,33 @@ export async function POST(req: Request) {
               .returning();
             reg = updated;
           } else {
+            // The base slug may already be taken by a different event that
+            // shares name + date but not class/division (slugMatch). Never
+            // reuse that event's id or slug — de-conflict instead.
+            let insertSlug = slug;
+            const [slugTaken] = await tx
+              .select({ id: regattas.id })
+              .from(regattas)
+              .where(eq(regattas.slug, insertSlug))
+              .limit(1);
+            if (slugTaken) {
+              const classSuffix = slugify(boat).replace(/-+/g, "") || "event";
+              insertSlug = `${slug}-${classSuffix}`;
+              const [stillTaken] = await tx
+                .select({ id: regattas.id })
+                .from(regattas)
+                .where(eq(regattas.slug, insertSlug))
+                .limit(1);
+              if (stillTaken) {
+                insertSlug = `${slug}-${classSuffix}-${regattaId.slice(0, 8)}`;
+              }
+            }
             const [upserted] = await tx
               .insert(regattas)
               .values({
                 id: regattaId,
                 name: regattaName,
-                slug,
+                slug: insertSlug,
                 date: eventDate,
                 totalFleetSize: fleetSize,
                 division: div,
