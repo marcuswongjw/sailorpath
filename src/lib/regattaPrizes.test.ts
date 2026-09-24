@@ -1,8 +1,10 @@
 import { describe, it, expect } from "vitest";
 import {
   prizeNameKey,
+  getRegattaPrizeSchedule,
   SNSC_2025_PRIZE_SCHEDULE,
   SNSC_2026_PRIZE_SCHEDULE,
+  PESTA_SUKAN_2025_PRIZE_SCHEDULE,
   PESTA_SUKAN_2026_PRIZE_SCHEDULE,
   CINCAPURA_2026_PRIZE_SCHEDULE,
   SAFYC_OPTIMIST_2026_PRIZE_SCHEDULE,
@@ -183,6 +185,34 @@ describe("regattaPrizes", () => {
     expect(silverWinner.races[3].discarded).toBe(true);
     expect(silverWinner.totalScore).toBe(23);
     expect(silverWinner.nettScore).toBe(11);
+  });
+
+  it("defines Pesta Sukan 2025 prize categories and winners per NoR", () => {
+    expect(PESTA_SUKAN_2025_PRIZE_SCHEDULE.regattaName).toBe("Pesta Sukan Regatta 2025");
+    expect(PESTA_SUKAN_2025_PRIZE_SCHEDULE.entryFees.singleHanded).toBe(68);
+    expect(PESTA_SUKAN_2025_PRIZE_SCHEDULE.entryFees.doubleHanded).toBe(135);
+
+    const lookup = getRegattaPrizeSchedule("pesta-sukan-gold-aug-25-2025-08-02");
+    expect(lookup?.regattaSlug).toBe("pesta-sukan-2025");
+
+    const ilca4 = PESTA_SUKAN_2025_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "ILCA 4");
+    expect(ilca4?.categories[0].winners[0].sailorName).toBe("Nigel Xu Yuan Tan");
+    expect(ilca4?.categories[0].winners[1].sailorName).toBe("Nicholette Wee Wen Lee");
+    expect(ilca4?.categories[0].winners[2].sailorName).toBe("Nia Zahedi");
+
+    const ilca6 = PESTA_SUKAN_2025_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "ILCA 6");
+    expect(ilca6?.categories[0].winners[0].sailorName).toBe("Keira Carlyle");
+    expect(ilca6?.categories[0].winners[1].sailorName).toBe("Isaac Goh");
+    expect(ilca6?.categories[0].winners[2].sailorName).toBe("Kenan Kee Zen Tan");
+
+    const gold = PESTA_SUKAN_2025_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Optimist Gold Fleet");
+    expect(gold?.categories[0].winners[0].sailorName).toBe("Lucas Zhihong Cao");
+    expect(gold?.categories[0].winners[1].sailorName).toBe("Sean Kok Wei Kum");
+    expect(gold?.categories[0].winners[2].sailorName).toBe("Anya Alessia Zahedi");
+
+    const silver = PESTA_SUKAN_2025_PRIZE_SCHEDULE.fleets.find((f) => f.fleetName === "Optimist Silver Fleet");
+    expect(silver?.categories[0].winners[0].sailorName).toBe("Mikaela Hui Ting Wong");
+    expect(silver?.categories[0].winners[1].sailorName).toBe("Nigel Jiang Long Ng");
   });
 });
 

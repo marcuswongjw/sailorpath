@@ -303,6 +303,56 @@ export const CINCAPURA_2026_EVENT: RegattaEventDef = {
   slices: fleetSlices("cincapura", "2026", ["gold", "silver", "ilca4", "ilca6"]),
 };
 
+export const PESTA_SUKAN_2025_EVENT: RegattaEventDef = {
+  slug: "pesta-sukan-2025",
+  name: "Pesta Sukan Regatta 2025",
+  shortName: "Pesta Sukan 2025",
+  datesText: "2–3 August 2025",
+  venue: "National Sailing Centre, Singapore",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl:
+    "https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025",
+  officialNoticeBoardUrl:
+    "https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025",
+  websiteUrl: "https://www.sailing.org.sg/events/293985",
+  registrationUrl: "https://www.sailing.org.sg/events/293985",
+  scheduleSummary:
+    "2–3 August 2025 at National Sailing Centre. Official final results as of 4 August 2025. 3 races completed across all fleets (0 discards).",
+  scoringRules:
+    "1 race to constitute a series. Fewer than 4 races: all races count (0 discards per NoR 12.2a). Category awards per NoR Section 20.",
+  slices: [
+    {
+      key: "optimist-gold",
+      label: "Optimist Gold",
+      series: "optimist",
+      slugIncludes: ["pesta-sukan", "gold", "aug-25"],
+      prizeFleetName: "Optimist Gold Fleet",
+    },
+    {
+      key: "optimist-silver",
+      label: "Optimist Silver",
+      series: "optimist",
+      slugIncludes: ["pesta-sukan", "silver", "aug-25"],
+      prizeFleetName: "Optimist Silver Fleet",
+    },
+    {
+      key: "ilca-4",
+      label: "ILCA 4",
+      series: "ilca4",
+      slugIncludes: ["pesta-sukan", "ilca", "aug-25"],
+      slugExcludes: ["ilca-6", "ilca6"],
+      prizeFleetName: "ILCA 4",
+    },
+    {
+      key: "ilca-6",
+      label: "ILCA 6",
+      series: "ilca6",
+      slugIncludes: ["pesta-sukan", "ilca-6", "aug-25"],
+      prizeFleetName: "ILCA 6",
+    },
+  ],
+};
+
 export const PESTA_SUKAN_2026_EVENT: RegattaEventDef = {
   slug: "pesta-sukan-2026",
   name: "Pesta Sukan 2026",
@@ -403,6 +453,7 @@ export const REGATTA_EVENTS: RegattaEventDef[] = [
   SAFYC_OPTIMIST_2026_EVENT,
   CINCAPURA_2026_EVENT,
   PESTA_SUKAN_2026_EVENT,
+  PESTA_SUKAN_2025_EVENT,
   PULAU_UJONG_2026_EVENT,
   SYSC_2026_EVENT,
   SELECTION_TRIALS_2026_EVENT,
@@ -418,6 +469,9 @@ const EVENT_SLUG_ALIASES: Record<string, string> = {
   "singapore-national-sailing-championships-2025-ilca4": "snsc-2025",
   "pesta-sukan-regatta-2026-optimist": "pesta-sukan-2026",
   "pesta-sukan-regatta-2026-ilca-wingfoil": "pesta-sukan-2026",
+  "pesta-sukan-regatta-2025-optimist": "pesta-sukan-2025",
+  "pesta-sukan-regatta-2025-ilca": "pesta-sukan-2025",
+  "pesta-sukan-regatta-2025": "pesta-sukan-2025",
   "singapore-youth-sailing-championships-2026": "sysc-2026",
   "singapore-youth-sailing-championships-2026-ilca4": "sysc-2026",
 };

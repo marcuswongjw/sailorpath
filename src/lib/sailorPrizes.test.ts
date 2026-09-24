@@ -183,5 +183,50 @@ describe("sailorPrizes", () => {
       const femalePrize = angyalSnsc.find((p) => p.prizeTitle === "1st Female");
       expect(femalePrize?.medal).toBe("gold");
     });
+
+    it("links official Pesta Sukan 2025 prizes to sailors (Nigel, Keira, Lucas, Mikaela, Anya)", () => {
+      // Nigel Xu Yuan Tan (ILCA 4)
+      const nigel = getSailorPrizes({
+        name: "Nigel Xu Yuan Tan",
+        sailNumber: "225176",
+      });
+      const nigelPesta = nigel.filter((p) => p.year === 2025 && p.regattaName.includes("Pesta Sukan"));
+      expect(nigelPesta.length).toBeGreaterThanOrEqual(2); // 1st Open, 1st Novice, 1st Secondary
+      expect(nigelPesta.some((p) => p.prizeTitle === "1st (Champion)")).toBe(true);
+
+      // Keira Carlyle (ILCA 6)
+      const keira = getSailorPrizes({
+        name: "Keira Carlyle",
+        sailNumber: "225225",
+      });
+      const keiraPesta = keira.filter((p) => p.year === 2025 && p.regattaName.includes("Pesta Sukan"));
+      expect(keiraPesta.length).toBeGreaterThanOrEqual(2); // 1st Open, 1st Female, 1st JC
+      expect(keiraPesta.every((p) => p.medal === "gold")).toBe(true);
+
+      // Lucas Zhihong Cao (Optimist Gold)
+      const lucas = getSailorPrizes({
+        name: "Lucas Zhihong Cao",
+        sailNumber: "149",
+      });
+      const lucasPesta = lucas.filter((p) => p.year === 2025 && p.regattaName.includes("Pesta Sukan"));
+      expect(lucasPesta.some((p) => p.prizeTitle === "1st (Champion)")).toBe(true);
+
+      // Mikaela Hui Ting Wong (Optimist Silver)
+      const mikaela = getSailorPrizes({
+        name: "Mikaela Hui Ting Wong",
+        sailNumber: "3029",
+      });
+      const mikaelaPesta = mikaela.filter((p) => p.year === 2025 && p.regattaName.includes("Pesta Sukan"));
+      expect(mikaelaPesta.length).toBeGreaterThanOrEqual(3); // 1st Open, 1st Female, 1st 10&U, 1st Primary
+
+      // Anya Alessia Zahedi (Optimist Gold)
+      const anya = getSailorPrizes({
+        name: "Anya Alessia Zahedi",
+        sailNumber: "159",
+      });
+      const anyaPesta = anya.filter((p) => p.year === 2025 && p.regattaName.includes("Pesta Sukan"));
+      expect(anyaPesta.some((p) => p.prizeTitle === "1st Female")).toBe(true);
+      expect(anyaPesta.some((p) => p.prizeTitle === "1st (12&U)")).toBe(true);
+    });
   });
 });

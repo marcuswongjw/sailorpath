@@ -9,6 +9,7 @@ import {
   resolveEventSlices,
   sliceMatchesRegattaSlug,
   CINCAPURA_2026_EVENT,
+  PESTA_SUKAN_2025_EVENT,
   PESTA_SUKAN_2026_EVENT,
   SAFYC_OPTIMIST_2026_EVENT,
   SNSC_2025_EVENT,
@@ -95,6 +96,12 @@ describe("sliceMatchesRegattaSlug", () => {
     expect(sliceMatchesRegattaSlug(pestaIlca, "pesta-sukan-ilca4-aug-26-2026-08-01")).toBe(true);
     expect(sliceMatchesRegattaSlug(julyGold, "safyc-gold-mar-26-2026-03-28")).toBe(false);
     expect(sliceMatchesRegattaSlug(julyGold, "safyc-gold-jul-26-2026-07-04")).toBe(true);
+
+    const [pesta25Gold, pesta25Silver, pesta25Ilca4, pesta25Ilca6] = PESTA_SUKAN_2025_EVENT.slices;
+    expect(sliceMatchesRegattaSlug(pesta25Gold, "pesta-sukan-gold-aug-25-2025-08-02")).toBe(true);
+    expect(sliceMatchesRegattaSlug(pesta25Silver, "pesta-sukan-silver-aug-25-2025-08-02")).toBe(true);
+    expect(sliceMatchesRegattaSlug(pesta25Ilca4, "pesta-sukan-ilca-4-aug-25-2025-08-02")).toBe(true);
+    expect(sliceMatchesRegattaSlug(pesta25Ilca6, "pesta-sukan-ilca-6-aug-25-2025-08-02")).toBe(true);
   });
 
   it("keeps the fuller Cincapura sheet when the fleet was imported twice", () => {
