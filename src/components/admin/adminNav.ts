@@ -14,8 +14,8 @@ export type AdminActiveTab =
   | "techno293"
   | "changelog";
 
-/** Database CRUD sub-tabs */
-export type AdminDbSubTab = "sailors" | "regattas" | "results" | "selection";
+/** Database CRUD sub-tabs. Results belong to a class sheet inside Regattas. */
+export type AdminDbSubTab = "sailors" | "regattas" | "selection";
 
 /** Ops triage sub-tabs */
 export type AdminOpsSubTab =
@@ -50,7 +50,6 @@ const PRIMARY_TABS: readonly AdminActiveTab[] = [
 const DB_SUBS: readonly AdminDbSubTab[] = [
   "sailors",
   "regattas",
-  "results",
   "selection",
 ] as const;
 
@@ -92,7 +91,11 @@ export function parseAdminNav(
 ): AdminNavState {
   let tabRaw = params.get("tab");
   let subRaw = params.get("sub");
-  const regattaIdRaw = params.get("regattaId")?.trim() || null;
+  const regattaIdRaw =
+    params.get("sheet")?.trim() || params.get("regattaId")?.trim() || null;
+
+  // Results used to be a sibling tab. A sheet now opens inside its event.
+  if (subRaw === "results") subRaw = "regattas";
 
   // Legacy: Gold ranking primary tab → Database → Selection
   if (tabRaw === "gold") {
@@ -126,9 +129,7 @@ export function parseAdminNav(
   }
 
   const regattaId =
-    tab === "edit" && sub === "results" && regattaIdRaw
-      ? regattaIdRaw
-      : null;
+    tab === "edit" && sub === "regattas" && regattaIdRaw ? regattaIdRaw : null;
 
   return { tab, sub, regattaId };
 }
@@ -144,8 +145,8 @@ export function serializeAdminNav(state: {
   if (state.tab === "edit") {
     const sub = isDbSub(state.sub) ? state.sub : "sailors";
     params.set("sub", sub);
-    if (sub === "results" && state.regattaId) {
-      params.set("regattaId", state.regattaId);
+    if (sub === "regattas" && state.regattaId) {
+      params.set("sheet", state.regattaId);
     }
   } else if (state.tab === "ops") {
     params.set("sub", isOpsSub(state.sub) ? state.sub : "claims");
@@ -156,7 +157,6 @@ export function serializeAdminNav(state: {
 export const ADMIN_DB_SUB_TABS: { id: AdminDbSubTab; label: string }[] = [
   { id: "sailors", label: "Sailors" },
   { id: "regattas", label: "Regattas" },
-  { id: "results", label: "Results" },
   { id: "selection", label: "Selection" },
 ];
 

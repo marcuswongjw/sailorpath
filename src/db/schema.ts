@@ -302,10 +302,32 @@ export const coachActionReviews = pgTable(
   })
 );
 
+/** One sailing weekend. Class sheets in `regattas` point at it. */
+export const regattaEvents = pgTable("regatta_events", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  name: text("name").notNull(),
+  slug: text("slug").unique().notNull(),
+  startDate: date("start_date").notNull(),
+  endDate: date("end_date"),
+  venue: text("venue"),
+  organizer: text("organizer"),
+  classes: jsonb("classes").$type<string[]>().notNull(),
+  norUrl: text("nor_url"),
+  registrationUrl: text("registration_url"),
+  countsForRanking: boolean("counts_for_ranking").default(true).notNull(),
+  isSelectionTrial: boolean("is_selection_trial").default(false).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 export const regattas = pgTable("regattas", {
   id: uuid("id").primaryKey().defaultRandom().notNull(),
   name: text("name").notNull(),
   slug: text("slug").unique().notNull(),
+  /** Weekend this class sheet belongs to. Null until linked. */
+  eventId: uuid("event_id").references(() => regattaEvents.id, {
+    onDelete: "set null",
+  }),
   date: date("date").notNull(),
   totalFleetSize: integer("total_fleet_size").notNull(),
   division: text("division").default("Gold").notNull(),

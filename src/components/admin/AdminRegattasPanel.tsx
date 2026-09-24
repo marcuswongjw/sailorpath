@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Calendar, Trophy, ExternalLink, Sparkles, Loader2 } from "lucide-react";
 import { AdminNorAmendmentCard } from "@/components/admin/AdminNorAmendmentCard";
@@ -20,6 +20,14 @@ import {
 } from "@/components/admin/adminForms";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import {
+  eventStatusLabel,
+  groupRegattaEvents,
+  sheetClassLabel,
+  UNASSIGNED_EVENT_SLUG,
+  type AdminEventGroup,
+  type GroupableRegatta,
+} from "@/lib/admin/groupRegattaEvents";
 
 export type { RegattaFormState };
 
@@ -43,6 +51,10 @@ export type AdminRegattasPanelProps = {
   handleSaveRegatta: () => void | Promise<void>;
   handleDeleteRegatta: (id: string) => void | Promise<void>;
   onOpenResults?: (regattaId: string) => void;
+  onClearSheet?: () => void;
+  /** Sheet opened from ?sheet= or the results editor. */
+  activeSheetId?: string;
+  resultsEditor?: ReactNode;
 };
 
 export function AdminRegattasPanel({
@@ -64,9 +76,67 @@ export function AdminRegattasPanel({
   handleSaveRegatta,
   handleDeleteRegatta,
   onOpenResults,
+  onClearSheet,
+  activeSheetId,
+  resultsEditor,
 }: AdminRegattasPanelProps) {
   const { toast } = useFeedback();
   const [isSeeding, setIsSeeding] = useState(false);
+  const [selectedEventSlug, setSelectedEventSlug] = useState<string | null>(null);
+
+  const grouped = useMemo(
+    () => groupRegattaEvents(filteredRegattaList),
+    [filteredRegattaList]
+  );
+  const selectedEvent: AdminEventGroup | null =
+    selectedEventSlug === UNASSIGNED_EVENT_SLUG
+      ? {
+          slug: UNASSIGNED_EVENT_SLUG,
+          name: "Unassigned sheets",
+          startDate: "",
+          countsForRanking: false,
+          isSelectionTrial: false,
+          expectedClasses: [],
+          missingClasses: [],
+          sheets: grouped.unassigned,
+          shell: null,
+        }
+      : grouped.events.find((event) => event.slug === selectedEventSlug) ?? null;
+
+  const formFrom = (r: GroupableRegatta) => ({
+    id: r.id,
+    name: r.name || "",
+    date: String(r.date || "").slice(0, 10),
+    slug: r.slug,
+    division: r.division || "",
+    raceCount: r.raceCount != null ? String(r.raceCount) : "",
+    totalFleetSize: r.totalFleetSize != null ? String(r.totalFleetSize) : "",
+    geography: r.geography || "SGP",
+    boatClass: r.boatClass || "Optimist",
+    countsForRanking: r.countsForRanking !== false,
+    endDate: r.endDate ? String(r.endDate).slice(0, 10) : "",
+    venue: r.venue || "",
+    organizer: r.organizer || "",
+    norUrl: r.norUrl || "",
+    registrationUrl: r.registrationUrl || "",
+    isSelectionTrial: Boolean(r.isSelectionTrial),
+    scheduleNotes: r.scheduleNotes || "",
+  });
+
+  useEffect(() => {
+    if (!activeSheetId) return;
+    const row = filteredRegattaList.find((item) => item.id === activeSheetId);
+    if (!row) return;
+    const event = grouped.events.find(
+      (item) =>
+        item.sheets.some((sheet) => sheet.id === activeSheetId) ||
+        item.shell?.id === activeSheetId
+    );
+    setSelectedEventSlug(event ? event.slug : UNASSIGNED_EVENT_SLUG);
+    if (editingRegattaId === activeSheetId) return;
+    setEditingRegattaId(row.id);
+    setRegattaForm(formFrom(row));
+  }, [activeSheetId, editingRegattaId, filteredRegattaList, grouped.events, setEditingRegattaId, setRegattaForm]);
 
   const handleSeed2026 = async () => {
     if (!isSuperadmin) return;
@@ -205,14 +275,14 @@ export function AdminRegattasPanel({
                       disabled={isSeeding}
                       onClick={handleSeed2026}
                       className="rounded-full border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 px-3.5 py-2.5 text-xs font-bold text-sky-300 flex items-center justify-center gap-1.5 shrink-0 transition-colors disabled:opacity-50"
-                      title="Populate missing 2026 official Singapore regattas & Selection Trials into the database"
+                      title="Attach 2026 calendar weekends to their class sheets. Does not publish new results."
                     >
                       {isSeeding ? (
                         <Loader2 className="h-3.5 w-3.5 animate-spin" />
                       ) : (
                         <Sparkles className="h-3.5 w-3.5 text-sky-400" />
                       )}
-                      Seed 2026 Calendar
+                      Link 2026 events
                     </button>
                   )}
                 </div>
@@ -224,106 +294,101 @@ export function AdminRegattasPanel({
                       <h3 className="text-sm font-bold text-white">
                         Events{" "}
                         <span className="text-slate-500 font-semibold">
-                          ({filteredRegattaList.length})
+                          ({grouped.events.length + (grouped.unassigned.length ? 1 : 0)})
                         </span>
                       </h3>
                     </div>
                     <div className="overflow-y-auto flex-1 divide-y divide-white/5">
-                      {filteredRegattaList.length === 0 ? (
+                      {grouped.events.length === 0 && grouped.unassigned.length === 0 ? (
                         <AdminEmptyState
                           icon={Calendar}
                           title="No regattas match filters"
                           description="Try clearing search or changing division / ranking filters."
                         />
                       ) : (
-                        filteredRegattaList.map((r) => {
-                          const active = editingRegattaId === r.id;
-                          return (
+                        <>
+                          {grouped.events.map((event) => {
+                            const active = selectedEventSlug === event.slug;
+                            return (
+                              <button
+                                key={event.slug}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedEventSlug(event.slug);
+                                  setEditingRegattaId(null);
+                                  onClearSheet?.();
+                                }}
+                                className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${
+                                  active
+                                    ? "bg-orange-500/10 border-l-2 border-orange-500"
+                                    : "border-l-2 border-transparent"
+                                }`}
+                              >
+                                <p className="text-xs font-bold text-white truncate">
+                                  {event.name}
+                                </p>
+                                <p className="text-[13px] text-slate-500 mt-0.5">
+                                  {event.startDate || "—"}
+                                  {event.venue ? ` · ${event.venue}` : ""}
+                                </p>
+                                <p className="text-[12px] text-slate-400 mt-1">
+                                  {eventStatusLabel(event)}
+                                </p>
+                              </button>
+                            );
+                          })}
+                          {grouped.unassigned.length > 0 && (
                             <button
-                              key={r.id}
                               type="button"
                               onClick={() => {
-                                setEditingRegattaId(r.id);
-                                setRegattaForm({
-                                  id: r.id,
-                                  name: r.name || "",
-                                  date: String(r.date || "").slice(0, 10),
-                                  slug: r.slug,
-                                  division: r.division || "",
-                                  raceCount:
-                                    r.raceCount != null
-                                      ? String(r.raceCount)
-                                      : "",
-                                  totalFleetSize:
-                                    r.totalFleetSize != null
-                                      ? String(r.totalFleetSize)
-                                      : "",
-                                  geography: r.geography || "SGP",
-                                  boatClass: r.boatClass || "Optimist",
-                                  countsForRanking:
-                                    r.countsForRanking !== false,
-                                  endDate: r.endDate ? String(r.endDate).slice(0, 10) : "",
-                                  venue: r.venue || "",
-                                  organizer: r.organizer || "",
-                                  norUrl: r.norUrl || "",
-                                  registrationUrl: r.registrationUrl || "",
-                                  isSelectionTrial: Boolean(r.isSelectionTrial),
-                                  scheduleNotes: r.scheduleNotes || "",
-                                });
+                                setSelectedEventSlug(UNASSIGNED_EVENT_SLUG);
+                                setEditingRegattaId(null);
+                                onClearSheet?.();
                               }}
                               className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${
-                                active
+                                selectedEventSlug === UNASSIGNED_EVENT_SLUG
                                   ? "bg-orange-500/10 border-l-2 border-orange-500"
                                   : "border-l-2 border-transparent"
                               }`}
                             >
-                              <p className="text-xs font-bold text-white truncate">
-                                {r.name}
-                                {r.countsForRanking === false && (
-                                  <span className="ml-1.5 rounded-full bg-sky-500/15 border border-sky-500/30 px-1.5 py-0.5 text-[11px] font-black text-sky-300">
-                                    Non-ranking
-                                  </span>
-                                )}
+                              <p className="text-xs font-bold text-white">
+                                Unassigned sheets
                               </p>
-                              <p className="text-[13px] text-slate-500 mt-0.5 font-mono">
-                                {regattaDateLabel(r.date)} · {r.geography || "SGP"} ·{" "}
-                                {r.boatClass || "Optimist"} · {r.division || "Gold"}{" "}
-                                · fleet {r.totalFleetSize}
-                                {r.raceCount != null
-                                  ? ` · ${r.raceCount} races`
-                                  : ""}
+                              <p className="text-[13px] text-slate-500 mt-0.5">
+                                {grouped.unassigned.length} class sheet
+                                {grouped.unassigned.length === 1 ? "" : "s"} with no weekend
                               </p>
                             </button>
-                          );
-                        })
+                          )}
+                        </>
                       )}
                     </div>
                   </div>
 
                   {/* Detail / edit pane */}
                   <div className="lg:col-span-7 glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 min-h-[320px]">
-                    {!editingRegattaId ? (
+                    {!selectedEvent && !editingRegattaId ? (
                       <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
                         <Calendar className="h-10 w-10 text-slate-600 mb-3" />
                         <p className="text-sm font-bold text-slate-300">
-                          Select an event to edit
+                          Select an event
                         </p>
                         <p className="text-xs text-slate-500 mt-1 max-w-sm">
-                          Choose a regatta from the list, or add a new one. Details
-                          open here so the list stays compact.
+                          A weekend opens here. Each class is a scoreboard, and its
+                          finishes sit on that class.
                         </p>
                       </div>
-                    ) : (
+                    ) : editingRegattaId ? (
                       <div className="space-y-4">
                         <div className="flex items-start justify-between gap-3">
                           <div>
                             <h3 className="text-sm font-black text-white uppercase tracking-wider">
                               {editingRegattaId === "new"
-                                ? "New regatta"
-                                : "Edit regatta"}
+                                ? "New class sheet"
+                                : "Class sheet"}
                             </h3>
                             <p className="text-[13px] text-slate-500 mt-0.5">
-                              Meta details &amp; scoring parameters.
+                              {selectedEvent ? selectedEvent.name : "Scoreboard details"}
                             </p>
                             {editingRegattaId !== "new" && (
                               <div className="flex flex-wrap items-center gap-2 mt-2">
@@ -727,7 +792,10 @@ export function AdminRegattasPanel({
                         <div className="flex flex-wrap justify-end gap-2 border-t border-white/5 pt-4">
                           <button
                             type="button"
-                            onClick={() => setEditingRegattaId(null)}
+                            onClick={() => {
+                              setEditingRegattaId(null);
+                              onClearSheet?.();
+                            }}
                             className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
                           >
                             Close
@@ -738,11 +806,102 @@ export function AdminRegattasPanel({
                             onClick={handleSaveRegatta}
                             className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40"
                           >
-                            {saving ? "Saving…" : "Save regatta"}
+                            {saving ? "Saving…" : "Save class sheet"}
                           </button>
                         </div>
+                        {editingRegattaId !== "new" && resultsEditor}
                       </div>
-                    )}
+                    ) : selectedEvent ? (
+                      <div className="space-y-5">
+                        <div>
+                          <h3 className="text-sm font-black text-white uppercase tracking-wider">
+                            {selectedEvent.name}
+                          </h3>
+                          <p className="text-[13px] text-slate-500 mt-1">
+                            {selectedEvent.startDate || "No date"}
+                            {selectedEvent.endDate && selectedEvent.endDate !== selectedEvent.startDate
+                              ? ` – ${selectedEvent.endDate}`
+                              : ""}
+                            {selectedEvent.venue ? ` · ${selectedEvent.venue}` : ""}
+                          </p>
+                          <p className="text-[12px] text-slate-400 mt-1">
+                            {selectedEvent.slug === UNASSIGNED_EVENT_SLUG
+                              ? "These class sheets are not attached to a calendar weekend."
+                              : eventStatusLabel(selectedEvent)}
+                          </p>
+                        </div>
+                        {selectedEvent.slug !== UNASSIGNED_EVENT_SLUG && (
+                          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 text-[13px] text-slate-300 space-y-1">
+                            <p>{selectedEvent.countsForRanking ? "Ranking regatta" : "Not a ranking regatta"}</p>
+                            {selectedEvent.isSelectionTrial && <p>Selection trial</p>}
+                            {selectedEvent.organizer && <p>{selectedEvent.organizer}</p>}
+                            {selectedEvent.norUrl && (
+                              <a href={selectedEvent.norUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[var(--sp-harbour-teal)]">
+                                <ExternalLink className="h-3 w-3" /> Notice of race
+                              </a>
+                            )}
+                          </div>
+                        )}
+                        <div className="space-y-2">
+                          <h4 className="text-[12px] font-bold uppercase text-slate-500">Classes</h4>
+                          {selectedEvent.sheets.length === 0 && selectedEvent.missingClasses.length === 0 && (
+                            <p className="text-xs text-slate-500">No class sheets yet.</p>
+                          )}
+                          {selectedEvent.sheets.map((sheet) => (
+                            <button
+                              key={sheet.id}
+                              type="button"
+                              onClick={() => {
+                                setEditingRegattaId(sheet.id);
+                                setRegattaForm(formFrom(sheet));
+                                onOpenResults?.(sheet.id);
+                              }}
+                              className="w-full text-left rounded-xl border border-white/10 px-3 py-2 hover:bg-white/[0.04]"
+                            >
+                              <span className="text-xs font-bold text-white">{sheetClassLabel(sheet)}</span>
+                              <span className="block text-[12px] text-slate-500 mt-0.5">
+                                {sheet.status || "draft"}
+                                {sheet.raceCount != null ? ` · ${sheet.raceCount} races` : ""}
+                                {sheet.totalFleetSize != null ? ` · fleet ${sheet.totalFleetSize}` : ""}
+                                {sheet.countsForRanking === false ? " · non-ranking" : ""}
+                              </span>
+                            </button>
+                          ))}
+                          {selectedEvent.missingClasses.map((label) => (
+                            <div key={label} className="flex items-center justify-between gap-3 rounded-xl border border-dashed border-white/15 px-3 py-2">
+                              <div>
+                                <span className="text-xs font-bold text-slate-300">{label}</span>
+                                <span className="block text-[12px] text-slate-500 mt-0.5">Awaiting results</span>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const optimist = /optimist/i.test(label);
+                                  setEditingRegattaId("new");
+                                  setRegattaForm({
+                                    ...emptyRegattaForm(),
+                                    name: `${selectedEvent.name} ${label}`,
+                                    date: selectedEvent.startDate,
+                                    endDate: selectedEvent.endDate || "",
+                                    venue: selectedEvent.venue || "",
+                                    organizer: selectedEvent.organizer || "",
+                                    norUrl: selectedEvent.norUrl || "",
+                                    registrationUrl: selectedEvent.registrationUrl || "",
+                                    boatClass: optimist ? "Optimist" : label,
+                                    division: /gold/i.test(label) ? "Gold" : /silver/i.test(label) ? "Silver" : "Open",
+                                    countsForRanking: selectedEvent.countsForRanking,
+                                    isSelectionTrial: selectedEvent.isSelectionTrial,
+                                  });
+                                }}
+                                className="shrink-0 rounded-full border border-white/15 px-2.5 py-1 text-[12px] font-bold text-slate-200 hover:bg-white/10"
+                              >
+                                Add sheet
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : null}
                   </div>
                 </div>
               </div>

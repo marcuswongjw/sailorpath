@@ -88,6 +88,8 @@ export type AdminResultsPanelProps = {
     }
   ) => Promise<void>;
   handleDeleteResult: (id: string) => void | Promise<void>;
+  /** Hide the global regatta search. The event page already chose the class. */
+  embedded?: boolean;
 };
 
 function regattaLabel(r: RegattaAdmin): string {
@@ -110,6 +112,7 @@ export function AdminResultsPanel({
   handleSaveResult,
   handleQuickUpdateResult,
   handleDeleteResult,
+  embedded = false,
 }: AdminResultsPanelProps) {
   const [regattaQuery, setRegattaQuery] = useState("");
   const [regattaClassFilter, setRegattaClassFilter] = useState<
@@ -233,6 +236,8 @@ export function AdminResultsPanel({
   return (
     <div className="w-full min-w-0 space-y-6">
 
+      {!embedded && (
+      <>
       {/* Searchable regatta picker */}
       <div className="glass-panel rounded-3xl p-6 border border-white/5 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
@@ -423,6 +428,8 @@ export function AdminResultsPanel({
           </div>
         )}
       </div>
+      </>
+      )}
 
       {selectedRegatta && (
         <div className="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 bg-[#131520] flex flex-col md:flex-row md:items-center justify-between gap-4">

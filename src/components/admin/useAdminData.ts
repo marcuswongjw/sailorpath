@@ -59,25 +59,27 @@ export function useAdminData({
     activeTab === "ilca" ||
     (activeTab === "edit" && editSubTab === "selection");
 
+  const sheetOpen =
+    isSuperadmin &&
+    activeTab === "edit" &&
+    editSubTab === "regattas" &&
+    Boolean(selectedRegattaIdForResultEdit);
+
   const needSailors =
     isSuperadmin &&
     (needsFullResults ||
+      sheetOpen ||
       (activeTab === "edit" &&
-        (editSubTab === "sailors" ||
-          editSubTab === "results" ||
-          editSubTab === "selection")));
+        (editSubTab === "sailors" || editSubTab === "selection")));
 
   const needRegattas =
     isSuperadmin &&
     (needsFullResults ||
       (activeTab === "edit" &&
-        (editSubTab === "regattas" ||
-          editSubTab === "results" ||
-          editSubTab === "selection")) ||
+        (editSubTab === "regattas" || editSubTab === "selection")) ||
       (activeTab === "ops" && editSubTab === "suggestions"));
 
-  const needResultsEditor =
-    isSuperadmin && activeTab === "edit" && editSubTab === "results";
+  const needResultsEditor = sheetOpen;
 
   const sailorsQuery = useQuery({
     queryKey: adminQueryKeys.sailors(),
@@ -108,7 +110,7 @@ export function useAdminData({
       fetchAdminResultsForRegatta(selectedRegattaId),
     enabled:
       needResultsEditor &&
-      Boolean(selectedRegattaId) &&
+      Boolean(selectedRegattaIdForResultEdit) &&
       !needsFullResults,
   });
 

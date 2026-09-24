@@ -56,19 +56,27 @@ describe("parseAdminNav", () => {
     });
   });
 
-  it("keeps Database results + regattaId", () => {
+  it("opens a legacy results link inside Regattas", () => {
     expect(
       parseAdminNav(
         new URLSearchParams("tab=edit&sub=results&regattaId=abc-123")
       )
     ).toEqual({
       tab: "edit",
-      sub: "results",
+      sub: "regattas",
       regattaId: "abc-123",
     });
   });
 
-  it("ignores regattaId outside results", () => {
+  it("reads the sheet selected on an event", () => {
+    expect(
+      parseAdminNav(
+        new URLSearchParams("tab=edit&sub=regattas&sheet=abc-123")
+      ).regattaId
+    ).toBe("abc-123");
+  });
+
+  it("ignores regattaId outside regattas", () => {
     expect(
       parseAdminNav(
         new URLSearchParams("tab=edit&sub=sailors&regattaId=abc-123")
@@ -93,14 +101,14 @@ describe("serializeAdminNav", () => {
     );
   });
 
-  it("includes regattaId only for results", () => {
+  it("includes the open class sheet on Regattas", () => {
     expect(
       serializeAdminNav({
         tab: "edit",
-        sub: "results",
+        sub: "regattas",
         regattaId: "r1",
       })
-    ).toBe("tab=edit&sub=results&regattaId=r1");
+    ).toBe("tab=edit&sub=regattas&sheet=r1");
     expect(
       serializeAdminNav({
         tab: "edit",

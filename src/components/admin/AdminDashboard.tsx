@@ -290,7 +290,6 @@ function AdminDashboardInner() {
       setEditSubTab((prev) =>
         prev === "sailors" ||
         prev === "regattas" ||
-        prev === "results" ||
         prev === "selection"
           ? prev
           : "sailors"
@@ -340,7 +339,7 @@ function AdminDashboardInner() {
       const subLabel =
         ADMIN_DB_SUB_TABS.find((s) => s.id === editSubTab)?.label || editSubTab;
       crumbs.push({ label: subLabel, onClick: () => goSub(editSubTab) });
-      if (editSubTab === "results" && selectedRegatta) {
+      if (editSubTab === "regattas" && selectedRegatta) {
         crumbs.push({ label: selectedRegatta.name });
       }
     } else if (activeTab === "ilca") {
@@ -679,7 +678,7 @@ function AdminDashboardInner() {
             onOpenResults={(regattaId) => {
               setSelectedRegattaIdForResultEdit(regattaId);
               setActiveTab("edit");
-              setEditSubTab("results");
+              setEditSubTab("regattas");
             }}
             onImportComplete={() => {
               data.invalidateRegattas();
@@ -698,7 +697,6 @@ function AdminDashboardInner() {
                   let count: number | null = null;
                   if (id === "sailors") count = data.sailorList.length;
                   if (id === "regattas") count = data.regattaList.length;
-                  if (id === "results") count = data.resultsList.length;
                   return (
                     <button
                       key={id}
@@ -741,22 +739,24 @@ function AdminDashboardInner() {
               {editSubTab === "regattas" && (
                 <AdminRegattasPanel
                   isSuperadmin={isSuperadmin}
+                  activeSheetId={data.selectedRegattaIdForResultEdit}
                   onOpenResults={(regattaId) => {
                     setSelectedRegattaIdForResultEdit(regattaId);
                     setActiveTab("edit");
-                    setEditSubTab("results");
+                    setEditSubTab("regattas");
                   }}
+                  onClearSheet={() => setSelectedRegattaIdForResultEdit("")}
+                  resultsEditor={
+                    <AdminResultsPanel
+                      embedded
+                      isSuperadmin={isSuperadmin}
+                      sailorList={data.sailorList}
+                      regattaList={data.regattaList}
+                      resultsList={data.resultsList}
+                      {...results.panelProps}
+                    />
+                  }
                   {...regattas.panelProps}
-                />
-              )}
-
-              {editSubTab === "results" && (
-                <AdminResultsPanel
-                  isSuperadmin={isSuperadmin}
-                  sailorList={data.sailorList}
-                  regattaList={data.regattaList}
-                  resultsList={data.resultsList}
-                  {...results.panelProps}
                 />
               )}
 
@@ -859,9 +859,7 @@ function AdminDashboardInner() {
               )}
 
               {/* If URL/state briefly has a DB sub while on Ops, nudge to claims */}
-              {(editSubTab === "sailors" ||
-                editSubTab === "regattas" ||
-                editSubTab === "results") && (
+              {(editSubTab === "sailors" || editSubTab === "regattas") && (
                 <p className="text-sm text-slate-500">
                   Switch to a triage queue above, or open{" "}
                   <button

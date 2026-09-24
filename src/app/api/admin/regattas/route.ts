@@ -11,7 +11,7 @@ import {
 import { asPositiveInteger } from "@/lib/validate";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { logAdminChange } from "@/lib/adminChangeLog";
-import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
+import { linkRegattaEvents } from "@/lib/admin/linkRegattaEvents";
 
 export async function GET(req: Request) {
   try {
@@ -65,63 +65,24 @@ export async function POST(req: Request) {
     }
     const body = await req.json();
 
-    // 1-Click seed for 2026 Singapore Regatta Calendar
+    // Link 2026 calendar weekends to the class sheets already stored.
+    // Does not create or publish scoreboards.
     if (body.action === "seed-2026") {
-      const seeded = [];
-      for (const item of SINGAPORE_REGATTAS_2026) {
-        const [row] = await db
-          .insert(regattas)
-          .values({
-            name: item.name,
-            slug: item.slug,
-            date: item.startDate,
-            totalFleetSize: item.totalFleetSize,
-            division: item.division,
-            venue: item.venue,
-            endDate: item.endDate || null,
-            norUrl: item.norUrl || null,
-            registrationUrl: item.registrationUrl || null,
-            isSelectionTrial: item.isSelectionTrial,
-            organizer: item.organizer,
-            scheduleNotes: item.scheduleNotes || null,
-            countsForRanking: item.countsForRanking,
-            boatClass: item.boatClass,
-            geography: "SG",
-            status: "published",
-          })
-          .onConflictDoUpdate({
-            target: regattas.slug,
-            set: {
-              name: item.name,
-              date: item.startDate,
-              totalFleetSize: item.totalFleetSize,
-              division: item.division,
-              venue: item.venue,
-              endDate: item.endDate || null,
-              norUrl: item.norUrl || null,
-              registrationUrl: item.registrationUrl || null,
-              isSelectionTrial: item.isSelectionTrial,
-              organizer: item.organizer,
-              scheduleNotes: item.scheduleNotes || null,
-              countsForRanking: item.countsForRanking,
-              boatClass: item.boatClass,
-              status: "published",
-              updatedAt: new Date(),
-            },
-          })
-          .returning();
-        seeded.push(row);
-      }
-      revalidatePublicRankings("regattas:seed:2026");
+      const linked = await linkRegattaEvents();
+      revalidatePublicRankings("regattas:link:2026");
       void logAdminChange({
         actorUserId: auth.userId,
         actorEmail: auth.email,
-        action: "regattas_seed_2026",
-        entityType: "regatta",
-        summary: `Seeded ${seeded.length} regattas for 2026 schedule`,
-        details: { count: seeded.length },
+        action: "regattas_link_2026",
+        entityType: "regatta_event",
+        summary: `Linked ${linked.linked} class sheets to ${linked.events} events`,
+        details: linked,
       });
-      return NextResponse.json({ ok: true, count: seeded.length, regattas: seeded });
+      return NextResponse.json({
+        ok: true,
+        ...linked,
+        message: `Linked ${linked.linked} class sheets to ${linked.events} events`,
+      });
     }
 
     if (!body.name || !body.date) {
