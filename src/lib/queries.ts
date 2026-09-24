@@ -1133,16 +1133,21 @@ export async function getEquipmentLogsForSailor(sailorId: string) {
   });
 }
 
+type OptimistRankingSnapshot = {
+  sailors: SailorRecord[];
+  regattas: RegattaRecord[];
+  results: RegattaResultRecord[];
+};
+
 /**
- * Public fleet rankings (Gold/Silver).
- * Loads lean sailor columns + Optimist regattas only + results for those regattas
- * (avoids full-table scans that made /sg/optimist/gold slow).
+ * Blank and "Optimist" match normalizeSeriesBoatClass(). Wingfoil, Techno,
+ * 29er, and ILCA do not, so they must not be pulled into this board's results.
  */
-export async function computeFleetRankings(
-  fleet: "Gold" | "Silver",
-  period: Period,
-  excludeLatestEvent = false
-) {
+function publishedOptimistBoatClassSql() {
+  return sql`lower(btrim(coalesce(${regattas.boatClass}, ''))) in ('', 'optimist')`;
+}
+
+async function queryPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot> {
   return withDb(async () => {
     const [sailorRows, regattaRows] = await Promise.all([
       db
@@ -1186,15 +1191,12 @@ export async function computeFleetRankings(
         .where(
           and(
             eq(regattas.status, PUBLIC_RANKING_REGATTA_STATUS),
-            or(
-              eq(regattas.boatClass, "Optimist"),
-              sql`lower(coalesce(${regattas.boatClass}, 'optimist')) not like '%ilca%'`
-            )
+            publishedOptimistBoatClassSql()
           )
         ),
     ]);
 
-    const s = sailorRows.map((row) => ({
+    const sailorsOut = sailorRows.map((row) => ({
       ...row,
       gender: normalizeGender(row.gender),
       currentFleet: (() => {
@@ -1204,7 +1206,7 @@ export async function computeFleetRankings(
       })(),
     })) as SailorRecord[];
 
-    const r: RegattaRecord[] = regattaRows.map((row) => ({
+    const regattasOut: RegattaRecord[] = regattaRows.map((row) => ({
       id: row.id,
       name: row.name,
       slug: row.slug,
@@ -1217,7 +1219,7 @@ export async function computeFleetRankings(
       countsForRanking: row.countsForRanking !== false,
     }));
 
-    const regattaIds = r.map((x) => x.id);
+    const regattaIds = regattasOut.map((x) => x.id);
     const resRows =
       regattaIds.length === 0
         ? []
@@ -1234,7 +1236,7 @@ export async function computeFleetRankings(
             .from(regattaResults)
             .where(inArray(regattaResults.regattaId, regattaIds));
 
-    const res: RegattaResultRecord[] = resRows.map((row) => ({
+    const resultsOut: RegattaResultRecord[] = resRows.map((row) => ({
       sailorId: row.sailorId,
       regattaId: row.regattaId,
       rank: row.rank,
@@ -1244,24 +1246,57 @@ export async function computeFleetRankings(
       isOverseasCommitment: row.isOverseasCommitment,
     }));
 
-    // Silver inactivity drops: detect/persist only via admin action
-    // `applySilverInactivityDrops` — never write drop_date on this public
-    // ranking read path (stack guard remains in findSilverInactivityDrops).
-
-    const excludedRegattaId = excludeLatestEvent
-      ? latestRankingRegattaIdForFleet(r, fleet, period)
-      : null;
-    const rankingRegattas = excludedRegattaId ? r.filter((row) => row.id !== excludedRegattaId) : r;
-    const rankingResults = excludedRegattaId ? res.filter((row) => row.regattaId !== excludedRegattaId) : res;
-    const ranked = calculateRankings(period, s, rankingRegattas, rankingResults).filter(
-      (x) => x.fleet === fleet
-    );
-    // Gold: next-half column = live Nat A/B projection (not stored stamp alone)
-    if (fleet === "Gold") {
-      return withProjectedNextSquadStatus(ranked, period);
-    }
-    return ranked;
+    return { sailors: sailorsOut, regattas: regattasOut, results: resultsOut };
   });
+}
+
+let buildOptimistSnapshot: Promise<OptimistRankingSnapshot> | null = null;
+let optimistSnapshotPending: Promise<OptimistRankingSnapshot> | null = null;
+
+/** One published-Optimist load per production build, and one in flight otherwise. */
+function loadPublishedOptimistSnapshot(): Promise<OptimistRankingSnapshot> {
+  if (process.env.NEXT_PHASE === "phase-production-build" && buildOptimistSnapshot) {
+    return buildOptimistSnapshot;
+  }
+  if (optimistSnapshotPending) return optimistSnapshotPending;
+  const pending = queryPublishedOptimistSnapshot().finally(() => {
+    if (optimistSnapshotPending === pending) optimistSnapshotPending = null;
+  });
+  optimistSnapshotPending = pending;
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    buildOptimistSnapshot = pending;
+  }
+  return pending;
+}
+
+/**
+ * Public fleet rankings (Gold/Silver).
+ * Loads lean sailor columns + published Optimist regattas + their results.
+ */
+export async function computeFleetRankings(
+  fleet: "Gold" | "Silver",
+  period: Period,
+  excludeLatestEvent = false
+) {
+  const { sailors: s, regattas: r, results: res } = await loadPublishedOptimistSnapshot();
+
+  // Silver inactivity drops: detect/persist only via admin action
+  // `applySilverInactivityDrops` — never write drop_date on this public
+  // ranking read path (stack guard remains in findSilverInactivityDrops).
+
+  const excludedRegattaId = excludeLatestEvent
+    ? latestRankingRegattaIdForFleet(r, fleet, period)
+    : null;
+  const rankingRegattas = excludedRegattaId ? r.filter((row) => row.id !== excludedRegattaId) : r;
+  const rankingResults = excludedRegattaId ? res.filter((row) => row.regattaId !== excludedRegattaId) : res;
+  const ranked = calculateRankings(period, s, rankingRegattas, rankingResults).filter(
+    (x) => x.fleet === fleet
+  );
+  // Gold: next-half column = live Nat A/B projection (not stored stamp alone)
+  if (fleet === "Gold") {
+    return withProjectedNextSquadStatus(ranked, period);
+  }
+  return ranked;
 }
 
 /**
@@ -1276,7 +1311,7 @@ export const getCachedFleetRankings = unstable_cache(
   ): Promise<RankedSailor[]> => {
     return computeFleetRankings(fleet, { year, half });
   },
-  ["fleet-rankings-v7"],
+  ["fleet-rankings-v8"],
   { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
