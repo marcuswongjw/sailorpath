@@ -56,6 +56,10 @@ import {
   getStaticIlca7RankingsData,
 } from "@/lib/ilca7ResultsData";
 import {
+  TWENTY_NINER_STATIC_REGATTAS,
+  getStatic29erResults,
+} from "@/lib/results29erData";
+import {
   asc,
   desc,
   eq,
@@ -397,13 +401,20 @@ export async function getRegattaBySlug(slug: string, options?: { allowUnpublishe
     const [row] = await query;
     if (!row) {
       const s = slug.toLowerCase();
-      const staticMatch = ILCA6_STATIC_REGATTAS.find(
-        (r) =>
-          r.slug.toLowerCase() === s ||
-          (s.includes("cincapura") && (s.includes("ilca-6") || s.includes("ilca6")) && r.slug.includes("cincapura")) ||
-          (s.includes("pesta") && (s.includes("ilca-6") || s.includes("ilca6")) && r.slug.includes("pesta")) ||
-          (s.includes("snsc") && (s.includes("ilca-6") || s.includes("ilca6")) && r.slug.includes("snsc"))
-      );
+      const staticMatch =
+        ILCA6_STATIC_REGATTAS.find(
+          (r) =>
+            r.slug.toLowerCase() === s ||
+            (s.includes("cincapura") && (s.includes("ilca-6") || s.includes("ilca6")) && r.slug.includes("cincapura")) ||
+            (s.includes("pesta") && (s.includes("ilca-6") || s.includes("ilca6")) && r.slug.includes("pesta")) ||
+            (s.includes("snsc") && (s.includes("ilca-6") || s.includes("ilca6")) && r.slug.includes("snsc")) ||
+            (s.includes("csc") && (s.includes("ilca-6") || s.includes("ilca6")) && r.slug.includes("csc"))
+        ) ||
+        TWENTY_NINER_STATIC_REGATTAS.find(
+          (r) =>
+            r.slug.toLowerCase() === s ||
+            (s.includes("csc") && s.includes("29er") && r.slug.includes("csc"))
+        );
       if (staticMatch) return staticMatch;
       return null;
     }
@@ -534,7 +545,9 @@ export async function getResultsForRegatta(regattaId: string) {
 
     if (results.length === 0) {
       const staticResults =
-        getStaticIlca6Results(regattaId) || getStaticIlca7Results(regattaId);
+        getStaticIlca6Results(regattaId) ||
+        getStaticIlca7Results(regattaId) ||
+        getStatic29erResults(regattaId);
       if (staticResults && staticResults.length > 0) {
         return staticResults;
       }
@@ -542,7 +555,9 @@ export async function getResultsForRegatta(regattaId: string) {
     return results;
   } catch (error) {
     const staticResults =
-      getStaticIlca6Results(regattaId) || getStaticIlca7Results(regattaId);
+      getStaticIlca6Results(regattaId) ||
+      getStaticIlca7Results(regattaId) ||
+      getStatic29erResults(regattaId);
     if (staticResults && staticResults.length > 0) {
       return staticResults;
     }

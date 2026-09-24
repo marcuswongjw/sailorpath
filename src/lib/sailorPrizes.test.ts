@@ -73,6 +73,33 @@ describe("sailorPrizes", () => {
       expect(sysc29er).toBeDefined();
       expect(sysc29er?.rank).toBe(1);
       expect(sysc29er?.medal).toBe("gold");
+
+      const csc29er = prizes.find((p) => p.regattaName.includes("CSC") && p.boatClass === "29er");
+      expect(csc29er).toBeDefined();
+      expect(csc29er?.rank).toBe(1);
+      expect(csc29er?.medal).toBe("gold");
+      expect(csc29er?.prizeTitle).toBe("1st Youth Mixed");
+    });
+
+    it("links official prizes for 6th CSC ILCA & 29er Open (Ikuto Mori & Maia Lim)", () => {
+      const ikutoPrizes = getSailorPrizes({
+        name: "Ikuto Mori",
+        sailNumber: "219178",
+        handle: "ikuto-mori",
+      });
+      const ikutoCsc = ikutoPrizes.filter((p) => p.regattaName.includes("CSC"));
+      expect(ikutoCsc.length).toBe(2); // Youth Mixed 1st & Open Mixed 1st
+      expect(ikutoCsc[0].medal).toBe("gold");
+
+      const maiaPrizes = getSailorPrizes({
+        name: "Maia Lim Laurie",
+        sailNumber: "223201",
+        handle: "maia-lim-laurie-6vmk",
+      });
+      const maiaCsc = maiaPrizes.find((p) => p.regattaName.includes("CSC") && p.categoryName === "Female");
+      expect(maiaCsc).toBeDefined();
+      expect(maiaCsc?.rank).toBe(1);
+      expect(maiaCsc?.medal).toBe("gold");
     });
   });
 });

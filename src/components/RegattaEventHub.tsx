@@ -33,6 +33,7 @@ function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
   if (series === "ilca6") return "/sg/ilca6";
   if (series === "ilca7") return "/sg/ilca7";
   if (series === "optimist") return "/sg/optimist/gold";
+  if (series === "29er") return "/regattas";
   return null;
 }
 
@@ -245,7 +246,7 @@ async function DbSlicePanel({
     return <DbOffline message={message} />;
   }
   const accent =
-    def.series === "ilca4" || def.series === "ilca6" || def.series === "ilca7"
+    def.series === "ilca4" || def.series === "ilca6" || def.series === "ilca7" || def.series === "29er"
       ? "sky"
       : "orange";
   const eventYear = Number(String(regatta.date || "").slice(0, 4));

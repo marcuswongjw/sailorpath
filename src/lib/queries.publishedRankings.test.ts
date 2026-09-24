@@ -19,9 +19,9 @@ describe("public ranking published-regatta guard (source)", () => {
     return queriesSrc.slice(start, end);
   }
 
-  it("computeFleetRankings filters regattas to published", () => {
+  it("queryPublishedOptimistSnapshot filters regattas to published", () => {
     const body = fnBody(
-      "export async function computeFleetRankings",
+      "async function queryPublishedOptimistSnapshot",
       "export const getCachedFleetRankings"
     );
     expect(body).toMatch(/eq\(\s*regattas\.status\s*,\s*PUBLIC_RANKING_REGATTA_STATUS\s*\)/);

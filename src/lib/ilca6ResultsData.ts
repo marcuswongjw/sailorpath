@@ -2347,7 +2347,324 @@ export const SAFYC_2026_ILCA6_RESULTS: Ilca6CompetitorResult[] = [
   },
 ];
 
+export const CSC_2026_ILCA6_RESULTS: Ilca6CompetitorResult[] = [
+  {
+    rank: 1,
+    sailorName: "Ikuto Mori",
+    sailNumber: "219178",
+    gender: "M",
+    club: "Changi Sailing Club",
+    nationality: "SGP",
+    totalScore: 19,
+    nettScore: 11,
+    races: [
+      { raceNumber: 1, score: 1, rawValue: "1" },
+      { raceNumber: 2, score: 1, rawValue: "1" },
+      { raceNumber: 3, score: 6, rawValue: "6" },
+      { raceNumber: 4, score: 1, rawValue: "1" },
+      { raceNumber: 5, score: 8, rawValue: "8", discarded: true },
+      { raceNumber: 6, score: 2, rawValue: "2" },
+    ],
+  },
+  {
+    rank: 2,
+    sailorName: "Austin Yeo",
+    sailNumber: "2",
+    gender: "M",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 18,
+    nettScore: 14,
+    races: [
+      { raceNumber: 1, score: 3, rawValue: "3" },
+      { raceNumber: 2, score: 4, rawValue: "4", discarded: true },
+      { raceNumber: 3, score: 3, rawValue: "3" },
+      { raceNumber: 4, score: 2, rawValue: "2" },
+      { raceNumber: 5, score: 3, rawValue: "3" },
+      { raceNumber: 6, score: 3, rawValue: "3" },
+    ],
+  },
+  {
+    rank: 3,
+    sailorName: "Eitan Oh",
+    sailNumber: "224717",
+    gender: "M",
+    schoolName: "Raffles Institution",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 22,
+    nettScore: 15,
+    races: [
+      { raceNumber: 1, score: 2, rawValue: "2" },
+      { raceNumber: 2, score: 5, rawValue: "5" },
+      { raceNumber: 3, score: 1, rawValue: "1" },
+      { raceNumber: 4, score: 6, rawValue: "6" },
+      { raceNumber: 5, score: 1, rawValue: "1" },
+      { raceNumber: 6, score: 7, rawValue: "7", discarded: true },
+    ],
+  },
+  {
+    rank: 4,
+    sailorName: "Aurick You Shun Leow",
+    sailNumber: "67",
+    gender: "M",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 26,
+    nettScore: 18,
+    races: [
+      { raceNumber: 1, score: 8, rawValue: "8", discarded: true },
+      { raceNumber: 2, score: 6, rawValue: "6" },
+      { raceNumber: 3, score: 2, rawValue: "2" },
+      { raceNumber: 4, score: 3, rawValue: "3" },
+      { raceNumber: 5, score: 6, rawValue: "6" },
+      { raceNumber: 6, score: 1, rawValue: "1" },
+    ],
+  },
+  {
+    rank: 5,
+    sailorName: "Maia Lim Laurie",
+    sailNumber: "223201",
+    gender: "F",
+    schoolName: "Singapore American School",
+    club: "Changi Sailing Club",
+    nationality: "SGP",
+    totalScore: 29,
+    nettScore: 22,
+    races: [
+      { raceNumber: 1, score: 6, rawValue: "6" },
+      { raceNumber: 2, score: 2, rawValue: "2" },
+      { raceNumber: 3, score: 7, rawValue: "7", discarded: true },
+      { raceNumber: 4, score: 4, rawValue: "4" },
+      { raceNumber: 5, score: 4, rawValue: "4" },
+      { raceNumber: 6, score: 6, rawValue: "6" },
+    ],
+  },
+  {
+    rank: 6,
+    sailorName: "Sarah Yong",
+    sailNumber: "221689",
+    gender: "F",
+    club: "Royal Varuna Yacht Club",
+    nationality: "SGP",
+    totalScore: 32,
+    nettScore: 24,
+    races: [
+      { raceNumber: 1, score: 4, rawValue: "4" },
+      { raceNumber: 2, score: 8, rawValue: "8", discarded: true },
+      { raceNumber: 3, score: 4, rawValue: "4" },
+      { raceNumber: 4, score: 5, rawValue: "5" },
+      { raceNumber: 5, score: 7, rawValue: "7" },
+      { raceNumber: 6, score: 4, rawValue: "4" },
+    ],
+  },
+  {
+    rank: 7,
+    sailorName: "Gordon Alexander Allan",
+    sailNumber: "221058",
+    gender: "M",
+    schoolName: "Anglo-Chinese School (Independent)",
+    club: "Royal Varuna Yacht Club",
+    nationality: "SGP",
+    totalScore: 35,
+    nettScore: 25,
+    races: [
+      { raceNumber: 1, score: 5, rawValue: "5" },
+      { raceNumber: 2, score: 3, rawValue: "3" },
+      { raceNumber: 3, score: 8, rawValue: "8" },
+      { raceNumber: 4, score: 7, rawValue: "7" },
+      { raceNumber: 5, score: 2, rawValue: "2" },
+      { raceNumber: 6, score: 10, rawValue: "10", discarded: true },
+    ],
+  },
+  {
+    rank: 8,
+    sailorName: "Asher-James Nair",
+    sailNumber: "185201",
+    gender: "M",
+    club: "PAssion Wave",
+    nationality: "SGP",
+    totalScore: 42,
+    nettScore: 30,
+    races: [
+      { raceNumber: 1, score: 7, rawValue: "7" },
+      { raceNumber: 2, score: 12, rawValue: "12", discarded: true },
+      { raceNumber: 3, score: 5, rawValue: "5" },
+      { raceNumber: 4, score: 8, rawValue: "8" },
+      { raceNumber: 5, score: 5, rawValue: "5" },
+      { raceNumber: 6, score: 5, rawValue: "5" },
+    ],
+  },
+  {
+    rank: 9,
+    sailorName: "Jayden Teo",
+    sailNumber: "214813",
+    gender: "M",
+    schoolName: "St. Joseph's Institution",
+    club: "PAssion Wave",
+    nationality: "SGP",
+    totalScore: 59,
+    nettScore: 47,
+    races: [
+      { raceNumber: 1, score: 9, rawValue: "9" },
+      { raceNumber: 2, score: 7, rawValue: "7" },
+      { raceNumber: 3, score: 12, rawValue: "12", discarded: true },
+      { raceNumber: 4, score: 10, rawValue: "10" },
+      { raceNumber: 5, score: 9, rawValue: "9" },
+      { raceNumber: 6, score: 12, rawValue: "12" },
+    ],
+  },
+  {
+    rank: 10,
+    sailorName: "Yuei Jit Foo",
+    sailNumber: "221686",
+    gender: "M",
+    schoolName: "Anderson Serangoon Junior College",
+    club: "PAssion Wave",
+    nationality: "SGP",
+    totalScore: 62,
+    nettScore: 50,
+    races: [
+      { raceNumber: 1, score: 10, rawValue: "10" },
+      { raceNumber: 2, score: 9, rawValue: "9" },
+      { raceNumber: 3, score: 11, rawValue: "11" },
+      { raceNumber: 4, score: 12, rawValue: "12", discarded: true },
+      { raceNumber: 5, score: 12, rawValue: "12" },
+      { raceNumber: 6, score: 8, rawValue: "8" },
+    ],
+  },
+  {
+    rank: 11,
+    sailorName: "Cleo En Rui Seah",
+    sailNumber: "224379",
+    gender: "F",
+    schoolName: "Ngee Ann Polytechnic",
+    club: "SAF Yacht Club",
+    nationality: "SGP",
+    totalScore: 65,
+    nettScore: 51,
+    races: [
+      { raceNumber: 1, score: 12, rawValue: "12" },
+      { raceNumber: 2, score: 11, rawValue: "11" },
+      { raceNumber: 3, score: 10, rawValue: "10" },
+      { raceNumber: 4, score: 9, rawValue: "9" },
+      { raceNumber: 5, score: 14, rawValue: "14", discarded: true },
+      { raceNumber: 6, score: 9, rawValue: "9" },
+    ],
+  },
+  {
+    rank: 12,
+    sailorName: "John Gabriel Lim",
+    sailNumber: "206799",
+    gender: "M",
+    club: "Changi Sailing Club",
+    nationality: "SGP",
+    totalScore: 69,
+    nettScore: 56,
+    races: [
+      { raceNumber: 1, score: 13, rawValue: "13" },
+      { raceNumber: 2, score: 10, rawValue: "10" },
+      { raceNumber: 3, score: 9, rawValue: "9" },
+      { raceNumber: 4, score: 13, rawValue: "13", discarded: true },
+      { raceNumber: 5, score: 13, rawValue: "13" },
+      { raceNumber: 6, score: 11, rawValue: "11" },
+    ],
+  },
+  {
+    rank: 13,
+    sailorName: "Darren Lai",
+    sailNumber: "222257",
+    gender: "M",
+    schoolName: "St. Joseph's Institution",
+    club: "Royal Varuna Yacht Club",
+    nationality: "SGP",
+    totalScore: 79,
+    nettScore: 64,
+    races: [
+      { raceNumber: 1, score: 14, rawValue: "14" },
+      { raceNumber: 2, score: 14, rawValue: "14" },
+      { raceNumber: 3, score: 14, rawValue: "14" },
+      { raceNumber: 4, score: 11, rawValue: "11" },
+      { raceNumber: 5, score: 11, rawValue: "11" },
+      { raceNumber: 6, score: 15, rawValue: "15", discarded: true },
+    ],
+  },
+  {
+    rank: 14,
+    sailorName: "Elizabeth Victoria Say",
+    sailNumber: "214873",
+    gender: "F",
+    schoolName: "Dunman High School",
+    club: "PAssion Wave",
+    nationality: "SGP",
+    totalScore: 82,
+    nettScore: 66,
+    races: [
+      { raceNumber: 1, score: 15, rawValue: "15" },
+      { raceNumber: 2, score: 15, rawValue: "15" },
+      { raceNumber: 3, score: 13, rawValue: "13" },
+      { raceNumber: 4, score: 16, rawValue: "16", discarded: true },
+      { raceNumber: 5, score: 10, rawValue: "10" },
+      { raceNumber: 6, score: 13, rawValue: "13" },
+    ],
+  },
+  {
+    rank: 15,
+    sailorName: "Rohit Behl",
+    sailNumber: "193871",
+    gender: "M",
+    club: "Changi Sailing Club",
+    nationality: "IND",
+    totalScore: 82,
+    nettScore: 67,
+    races: [
+      { raceNumber: 1, score: 11, rawValue: "11" },
+      { raceNumber: 2, score: 13, rawValue: "13" },
+      { raceNumber: 3, score: 15, rawValue: "15", discarded: true },
+      { raceNumber: 4, score: 14, rawValue: "14" },
+      { raceNumber: 5, score: 15, rawValue: "15" },
+      { raceNumber: 6, score: 14, rawValue: "14" },
+    ],
+  },
+  {
+    rank: 16,
+    sailorName: "Angela Sabbatino",
+    sailNumber: "209145",
+    gender: "F",
+    club: "Changi Sailing Club",
+    nationality: "SGP",
+    totalScore: 95,
+    nettScore: 79,
+    races: [
+      { raceNumber: 1, score: 16, rawValue: "16" },
+      { raceNumber: 2, score: 16, rawValue: "16" },
+      { raceNumber: 3, score: 16, rawValue: "16" },
+      { raceNumber: 4, score: 15, rawValue: "15" },
+      { raceNumber: 5, score: 16, rawValue: "16" },
+      { raceNumber: 6, score: 16, rawValue: "16", discarded: true },
+    ],
+  },
+];
+
 export const ILCA6_STATIC_REGATTAS: RegattaRecord[] = [
+  {
+    id: "csc-2026-ilca-6",
+    name: "6th CSC ILCA & 29er Open 2026 (ILCA 6)",
+    slug: "csc-2026-ilca-6",
+    date: "2026-02-28",
+    endDate: "2026-03-01",
+    boatClass: "ILCA 6",
+    division: "Open",
+    totalFleetSize: 16,
+    raceCount: 6,
+    geography: "SG",
+    countsForRanking: true,
+    venue: "Changi Sailing Club, Singapore",
+    organizer: "Changi Sailing Club",
+    norUrl: "https://www.csc.org.sg",
+    registrationUrl: "https://www.csc.org.sg/csc-ilca-29er-championships-entry-form/",
+    scheduleNotes: "6th CSC ILCA & 29er Open 2026 ILCA 6 fleet: 16 entries, 6 races sailed (1 discard).",
+  },
   {
     id: "safyc-2026-ilca-6",
     name: "22nd SAFYC Regatta 2026 (ILCA 6)",
@@ -2534,27 +2851,31 @@ export function getStaticIlca6Results(
     else if (directMatch.slug.includes("pesta")) entries = PESTA_SUKAN_2026_ILCA6_RESULTS;
     else if (directMatch.slug.includes("snsc")) entries = SNSC_2026_ILCA6_RESULTS;
     else if (directMatch.slug.includes("safyc")) entries = SAFYC_2026_ILCA6_RESULTS;
+    else if (directMatch.slug.includes("csc")) entries = CSC_2026_ILCA6_RESULTS;
   } else if (norm.includes("pulau-ujong") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = PULAU_UJONG_2026_ILCA6_RESULTS;
-    regatta = ILCA6_STATIC_REGATTAS[0];
+    regatta = ILCA6_STATIC_REGATTAS.find((r) => r.slug.includes("pulau-ujong")) || ILCA6_STATIC_REGATTAS[0];
   } else if (norm.includes("sysc") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = SYSC_2026_ILCA6_RESULTS;
-    regatta = ILCA6_STATIC_REGATTAS[1];
+    regatta = ILCA6_STATIC_REGATTAS.find((r) => r.slug.includes("sysc")) || ILCA6_STATIC_REGATTAS[1];
   } else if (norm.includes("temasek") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = TEMASEK_2026_ILCA6_RESULTS;
-    regatta = ILCA6_STATIC_REGATTAS[2];
+    regatta = ILCA6_STATIC_REGATTAS.find((r) => r.slug.includes("temasek")) || ILCA6_STATIC_REGATTAS[2];
   } else if (norm.includes("cincapura") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = CINCAPURA_2026_ILCA6_RESULTS;
-    regatta = ILCA6_STATIC_REGATTAS[3];
+    regatta = ILCA6_STATIC_REGATTAS.find((r) => r.slug.includes("cincapura")) || ILCA6_STATIC_REGATTAS[3];
   } else if (norm.includes("pesta") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = PESTA_SUKAN_2026_ILCA6_RESULTS;
-    regatta = ILCA6_STATIC_REGATTAS[4];
+    regatta = ILCA6_STATIC_REGATTAS.find((r) => r.slug.includes("pesta")) || ILCA6_STATIC_REGATTAS[4];
   } else if (norm.includes("snsc") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = SNSC_2026_ILCA6_RESULTS;
-    regatta = ILCA6_STATIC_REGATTAS[5];
+    regatta = ILCA6_STATIC_REGATTAS.find((r) => r.slug.includes("snsc")) || ILCA6_STATIC_REGATTAS[5];
   } else if (norm.includes("safyc") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
     entries = SAFYC_2026_ILCA6_RESULTS;
-    regatta = ILCA6_STATIC_REGATTAS[0];
+    regatta = ILCA6_STATIC_REGATTAS.find((r) => r.slug.includes("safyc")) || ILCA6_STATIC_REGATTAS[0];
+  } else if (norm.includes("csc") && (norm.includes("ilca-6") || norm.includes("ilca6"))) {
+    entries = CSC_2026_ILCA6_RESULTS;
+    regatta = ILCA6_STATIC_REGATTAS.find((r) => r.slug.includes("csc")) || ILCA6_STATIC_REGATTAS[0];
   }
 
   if (!entries || !regatta) return null;
@@ -2611,14 +2932,15 @@ export function getStaticIlca6RankingsData(): {
   const results: RegattaResultRecord[] = [];
 
   const datasets = [
-    { regatta: regattas[0], list: PULAU_UJONG_2026_ILCA6_RESULTS },
-    { regatta: regattas[1], list: SYSC_2026_ILCA6_RESULTS },
-    { regatta: regattas[2], list: TEMASEK_2026_ILCA6_RESULTS },
-    { regatta: regattas[3], list: CINCAPURA_2026_ILCA6_RESULTS },
-    { regatta: regattas[4], list: PESTA_SUKAN_2026_ILCA6_RESULTS },
-    { regatta: regattas[0], list: SAFYC_2026_ILCA6_RESULTS },
-    { regatta: regattas[5], list: SNSC_2026_ILCA6_RESULTS },
-  ];
+    { regatta: regattas.find((r) => r.slug.includes("pulau-ujong")), list: PULAU_UJONG_2026_ILCA6_RESULTS },
+    { regatta: regattas.find((r) => r.slug.includes("sysc")), list: SYSC_2026_ILCA6_RESULTS },
+    { regatta: regattas.find((r) => r.slug.includes("temasek")), list: TEMASEK_2026_ILCA6_RESULTS },
+    { regatta: regattas.find((r) => r.slug.includes("cincapura")), list: CINCAPURA_2026_ILCA6_RESULTS },
+    { regatta: regattas.find((r) => r.slug.includes("pesta")), list: PESTA_SUKAN_2026_ILCA6_RESULTS },
+    { regatta: regattas.find((r) => r.slug.includes("safyc")), list: SAFYC_2026_ILCA6_RESULTS },
+    { regatta: regattas.find((r) => r.slug.includes("csc")), list: CSC_2026_ILCA6_RESULTS },
+    { regatta: regattas.find((r) => r.slug.includes("snsc")), list: SNSC_2026_ILCA6_RESULTS },
+  ].filter((d): d is { regatta: RegattaRecord; list: Ilca6CompetitorResult[] } => d.regatta != null);
 
   for (const { regatta, list } of datasets) {
     for (const c of list) {
