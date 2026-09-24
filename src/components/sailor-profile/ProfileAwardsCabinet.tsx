@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { Trophy, Compass, Calendar, Award, ExternalLink } from "lucide-react";
+import { Trophy, Compass, Calendar } from "lucide-react";
 import {
   type SailorPrizeAward,
   type SailorMedalCounts,
@@ -23,7 +23,7 @@ function medalStyle(medal: "gold" | "silver" | "bronze" | "other", rank: number)
   return { bg: "var(--sp-warm-white)", fg: "var(--sp-charcoal)", border: "border-cool-veil", tint: "bg-warm-white" };
 }
 
-export function ProfileAwardsCabinet({ awards, sailorName, isOwner }: Props) {
+export function ProfileAwardsCabinet({ awards, sailorName }: Props) {
   const counts: SailorMedalCounts = useMemo(() => getSailorMedalCounts(awards), [awards]);
   const [classFilter, setClassFilter] = useState<string>("all");
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { parseApi, apiErr, apiStr, apiNum } from "@/components/admin/parseApi";
+import { parseApi, apiErr } from "@/components/admin/parseApi";
 import { emptyResultForm } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
@@ -34,7 +34,6 @@ export function useAdminResults({
   sailorList,
   resultsList,
   setResultsList,
-  refreshResultsList,
   selectedRegattaIdForResultEdit,
   setSelectedRegattaIdForResultEdit,
   invalidateResults,

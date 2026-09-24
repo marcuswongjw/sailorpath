@@ -8,8 +8,6 @@
 import {
   ALL_REGATTA_PRIZE_SCHEDULES,
   prizeNameKey,
-  type PrizeWinner,
-  type RegattaPrizeSchedule,
 } from "./regattaPrizes";
 
 export interface SailorPrizeAward {

@@ -5,13 +5,6 @@ import { regattaRaceResults, regattaResults, regattas, sailors } from "@/db/sche
 import { asc, eq, inArray } from "drizzle-orm";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import {
-  resolveSailorFleet,
-  type Period,
-  type RegattaRecord,
-  type SailorRecord,
-} from "@/lib/ranking";
-import { periodHalfFromYmd } from "@/lib/datesSg";
-import {
   asOptionalNumber,
   asRank,
   asUuid,
@@ -74,24 +67,6 @@ async function attachOfficialRaces<
       rawValue: race.rawValue,
     })),
   }));
-}
-
-/**
- * Eligible for DNS fill on a regatta: same rules as ranking board
- * (Guest/Series + gold entry/drop via resolveSailorFleet).
- */
-function sailorEligibleForRegattaDns(
-  s: SailorRecord,
-  division: string,
-  period: Period
-): boolean {
-  const res = resolveSailorFleet(s, period);
-  if (!res?.active) return false;
-  const div = (division || "Gold").toLowerCase();
-  if (div === "both") return true;
-  if (div === "silver") return res.fleet === "Silver";
-  // Gold (default)
-  return res.fleet === "Gold";
 }
 
 export async function GET(req: Request) {
