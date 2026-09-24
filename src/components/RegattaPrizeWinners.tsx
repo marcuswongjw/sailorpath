@@ -16,10 +16,21 @@ type Props = {
   profileHandles?: Record<string, string>;
 };
 
+/** School-related categories are hidden from the public podium view. */
+function isSchoolCategory(name: string): boolean {
+  const lower = name.toLowerCase();
+  return (
+    lower.includes("school") ||
+    lower.includes("primary") ||
+    lower.includes("secondary")
+  );
+}
+
 /** Derive a category icon from the category name. */
 function categoryIcon(name: string): string {
   const lower = name.toLowerCase();
-  if (lower.includes("female") || lower.includes("girl") || lower.includes("women")) return "♀";
+  if (lower.includes("female") || lower.includes("girl") || lower.includes("women"))
+    return "♀";
   if (
     lower.includes("age") ||
     lower.includes("year") ||
@@ -47,6 +58,103 @@ function winnerRowTint(rank: number): string {
   return "bg-[var(--sp-warm-white)] border-[var(--sp-cool-veil)]/80";
 }
 
+function WinnerRow({ w, profileHandles }: { w: PrizeCategory["winners"][number]; profileHandles?: Record<string, string> }) {
+  const { bg, fg } = medalStyle(w.rank);
+  const tint = winnerRowTint(w.rank);
+  return (
+    <div className={`flex items-center gap-2.5 rounded-lg border px-2.5 py-2 text-xs ${tint}`}>
+      <span
+        role="img"
+        aria-label={
+          w.rank === 1 ? "1st Place – Gold Medal"
+          : w.rank === 2 ? "2nd Place – Silver Medal"
+          : w.rank === 3 ? "3rd Place – Bronze Medal"
+          : `${w.rank}th Place`
+        }
+        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full font-black text-[10px]"
+        style={{ backgroundColor: bg, color: fg }}
+        title={w.prizeTitle}
+      >
+        {w.rank}
+      </span>
+      <div className="min-w-0 flex-1 flex items-baseline justify-between gap-1">
+        <PrizeSailorName
+          name={w.sailorName}
+          handle={profileHandles?.[prizeNameKey(w.sailorName)]}
+        />
+        <div className="flex items-center gap-2 shrink-0">
+          {w.club && (
+            <span className="inline-flex items-center gap-0.5 text-[10px] text-[var(--sp-charcoal)] hidden sm:inline-flex">
+              <Compass className="h-2.5 w-2.5 shrink-0" aria-hidden />
+              <span className="truncate max-w-[8rem]">{w.club}</span>
+            </span>
+          )}
+          {w.sailNumber && (
+            <span className="font-mono text-[10px] text-[var(--sp-charcoal)]">
+              #{w.sailNumber}
+            </span>
+          )}
+        </div>
+      </div>
+      {w.notes && (
+        <p className="text-[10px] text-[var(--sp-racing-deep)] font-medium shrink-0">
+          {w.notes}
+        </p>
+      )}
+    </div>
+  );
+}
+
+function CategoryCard({
+  cat,
+  profileHandles,
+  wide,
+}: {
+  cat: PrizeCategory;
+  profileHandles?: Record<string, string>;
+  wide?: boolean;
+}) {
+  // Wide (main open) category: display winners in 2 columns when many entries
+  const useColumns = wide && cat.winners.length > 5;
+
+  return (
+    <article
+      aria-label={`${cat.categoryName} podium`}
+      className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 overflow-hidden flex flex-col"
+    >
+      {/* Card header */}
+      <div className="flex items-center justify-between gap-2 px-3.5 py-2.5 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)]">
+        <span className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-shadow)]">
+          <span aria-hidden className="text-sm">{categoryIcon(cat.categoryName)}</span>
+          {cat.categoryName}
+        </span>
+        <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-slate-soft)] whitespace-nowrap">
+          {cat.prizesAwarded}
+        </span>
+      </div>
+
+      {cat.eligibilityNotes && (
+        <p className="px-3.5 py-1.5 text-[11px] text-[var(--sp-slate-soft)] italic leading-snug border-b border-[var(--sp-cool-veil)]/60">
+          {cat.eligibilityNotes}
+        </p>
+      )}
+
+      {/* Winners */}
+      <div
+        className={`p-2.5 flex-1 ${
+          useColumns
+            ? "grid grid-cols-1 sm:grid-cols-2 gap-1.5"
+            : "space-y-1.5"
+        }`}
+      >
+        {cat.winners.map((w) => (
+          <WinnerRow key={`${w.rank}-${w.sailorName}`} w={w} profileHandles={profileHandles} />
+        ))}
+      </div>
+    </article>
+  );
+}
+
 export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: Props) {
   const matched = filterFleet
     ? schedule.fleets.filter(
@@ -59,7 +167,9 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
   const fleetsToDisplay = matched
     .map((fleet) => ({
       ...fleet,
-      categories: fleet.categories.filter((category) => category.winners.length > 0),
+      categories: fleet.categories.filter(
+        (cat) => cat.winners.length > 0 && !isSchoolCategory(cat.categoryName)
+      ),
     }))
     .filter((fleet) => fleet.categories.length > 0);
 
@@ -68,6 +178,9 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
     fleetsToDisplay[selectedFleetIdx] || fleetsToDisplay[0];
 
   if (!currentFleet) return null;
+
+  // Split into "main" (open / overall — first category or any large one) and "sub" categories
+  const [mainCat, ...subCats] = currentFleet.categories;
 
   return (
     <section
@@ -92,10 +205,7 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
 
           {/* Fleet tabs (only when multiple fleets) */}
           {fleetsToDisplay.length > 1 && (
-            <nav
-              aria-label="Prize fleet selector"
-              className="flex flex-wrap gap-1.5 shrink-0"
-            >
+            <nav aria-label="Prize fleet selector" className="flex flex-wrap gap-1.5 shrink-0">
               {fleetsToDisplay.map((f, idx) => {
                 const isActive = idx === selectedFleetIdx;
                 return (
@@ -106,7 +216,7 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
                     aria-selected={isActive}
                     onClick={() => setSelectedFleetIdx(idx)}
                     className={`
-                      relative rounded-none px-4 py-2 text-xs font-bold transition-all cursor-pointer
+                      relative px-4 py-2 text-xs font-bold transition-all cursor-pointer
                       border-b-2 focus-visible:outline-2 focus-visible:outline-[#2D6A6F]
                       ${isActive
                         ? "border-b-[#2D6A6F] text-[#2D6A6F] bg-[var(--sp-aqua-mist)]/40"
@@ -123,93 +233,21 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
         </div>
       </div>
 
-      {/* ── Podium grid ────────────────────────────────────────────── */}
-      <div className="p-4 sm:p-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {currentFleet.categories.map((cat: PrizeCategory) => (
-            <article
-              key={cat.categoryName}
-              aria-label={`${cat.categoryName} podium`}
-              className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/60 overflow-hidden flex flex-col"
-              style={{ borderRadius: "8px" }}
-            >
-              {/* Card header */}
-              <div className="flex items-center justify-between gap-2 px-3.5 py-2.5 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)]">
-                <span className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[var(--sp-harbour-shadow)]">
-                  <span aria-hidden className="text-sm">{categoryIcon(cat.categoryName)}</span>
-                  {cat.categoryName}
-                </span>
-                <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-slate-soft)] whitespace-nowrap">
-                  {cat.prizesAwarded}
-                </span>
-              </div>
+      {/* ── Podium layout ───────────────────────────────────────────── */}
+      <div className="p-4 sm:p-6 space-y-4">
+        {/* Main / Open category — always full width */}
+        {mainCat && (
+          <CategoryCard cat={mainCat} profileHandles={profileHandles} wide />
+        )}
 
-              {cat.eligibilityNotes && (
-                <p className="px-3.5 py-1.5 text-[11px] text-[var(--sp-slate-soft)] italic leading-snug border-b border-[var(--sp-cool-veil)]/60">
-                  {cat.eligibilityNotes}
-                </p>
-              )}
-
-              {/* Winners list */}
-              <div className="p-2.5 space-y-1.5 flex-1">
-                {cat.winners.map((w) => {
-                  const { bg, fg } = medalStyle(w.rank);
-                  const tint = winnerRowTint(w.rank);
-                  return (
-                    <div
-                      key={`${w.rank}-${w.sailorName}`}
-                      className={`flex items-start gap-2.5 rounded-lg border p-2 text-xs ${tint}`}
-                    >
-                      <span
-                        role="img"
-                        aria-label={
-                          w.rank === 1
-                            ? "1st Place – Gold Medal"
-                            : w.rank === 2
-                            ? "2nd Place – Silver Medal"
-                            : w.rank === 3
-                            ? "3rd Place – Bronze Medal"
-                            : `${w.rank}th Place`
-                        }
-                        className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full font-black text-[10px]"
-                        style={{ backgroundColor: bg, color: fg }}
-                        title={w.prizeTitle}
-                      >
-                        {w.rank}
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-baseline justify-between gap-1">
-                          <PrizeSailorName
-                            name={w.sailorName}
-                            handle={profileHandles?.[prizeNameKey(w.sailorName)]}
-                          />
-                          {w.sailNumber && (
-                            <span className="font-mono text-[10px] text-[var(--sp-charcoal)] shrink-0">
-                              #{w.sailNumber}
-                            </span>
-                          )}
-                        </div>
-                        {w.club && (
-                          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] text-[var(--sp-charcoal)] mt-0.5">
-                            <span className="inline-flex items-center gap-0.5 truncate max-w-[10rem]">
-                              <Compass className="h-2.5 w-2.5 shrink-0" aria-hidden />
-                              {w.club}
-                            </span>
-                          </div>
-                        )}
-                        {w.notes && (
-                          <p className="text-[10px] text-[var(--sp-racing-deep)] font-medium mt-0.5">
-                            {w.notes}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </article>
-          ))}
-        </div>
+        {/* Sub-categories (Female, Age groups) — responsive grid */}
+        {subCats.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {subCats.map((cat) => (
+              <CategoryCard key={cat.categoryName} cat={cat} profileHandles={profileHandles} />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ── Visual bridge to results table ─────────────────────────── */}
