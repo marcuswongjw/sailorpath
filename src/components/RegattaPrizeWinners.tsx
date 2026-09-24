@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Trophy, School, Compass } from "lucide-react";
+import { Trophy, Compass } from "lucide-react";
 import {
   prizeNameKey,
   type PrizeCategory,
@@ -189,20 +189,12 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
                             </span>
                           )}
                         </div>
-                        {(w.club || w.schoolName) && (
+                        {w.club && (
                           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[10px] text-[var(--sp-charcoal)] mt-0.5">
-                            {w.schoolName && (
-                              <span className="inline-flex items-center gap-0.5 truncate max-w-[12rem]">
-                                <School className="h-2.5 w-2.5 shrink-0" aria-hidden />
-                                {w.schoolName}
-                              </span>
-                            )}
-                            {w.club && (
-                              <span className="inline-flex items-center gap-0.5 truncate max-w-[10rem]">
-                                <Compass className="h-2.5 w-2.5 shrink-0" aria-hidden />
-                                {w.club}
-                              </span>
-                            )}
+                            <span className="inline-flex items-center gap-0.5 truncate max-w-[10rem]">
+                              <Compass className="h-2.5 w-2.5 shrink-0" aria-hidden />
+                              {w.club}
+                            </span>
                           </div>
                         )}
                         {w.notes && (
