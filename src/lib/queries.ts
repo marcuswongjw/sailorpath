@@ -1,1 +1,1 @@
-@file:///tmp/PUSH.json
+short
