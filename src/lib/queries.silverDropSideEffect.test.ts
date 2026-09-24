@@ -5,9 +5,8 @@ import { describe, expect, it } from "vitest";
  * Regression: public fleet ranking compute must never persist Optimist
  * drop_date. Writes belong in admin `applySilverInactivityDrops` only.
  *
- * Preferred: computeFleetRankings does not call findSilverInactivityDrops /
- * db.update(sailors). Fallback: findSilverInactivityDrops no-ops when the
- * call stack includes computeFleetRankings.
+ * Requires: computeFleetRankings does not call findSilverInactivityDrops /
+ * db.update(sailors). Stack guard in silverSeriesDrop remains defense-in-depth.
  */
 describe("computeFleetRankings silver drop side effects", () => {
   it("does not mutate sailors / persist drop_date on the public read path", () => {
@@ -28,11 +27,11 @@ describe("computeFleetRankings silver drop side effects", () => {
       !/dropDate:\s*d\.dropDate/.test(body) &&
       /applySilverInactivityDrops/.test(body);
 
-    const stackGuardSafe =
-      /stack.includes\("computeFleetRankings"\)/.test(silverSrc) &&
-      /export function detectSilverInactivityDrops\(/.test(silverSrc) &&
-      /export function findSilverInactivityDrops\(/.test(silverSrc);
+    expect(queriesClean).toBe(true);
 
-    expect(queriesClean || stackGuardSafe).toBe(true);
+    // Defense-in-depth: detect/find split + stack guard still present for admin safety.
+    expect(/stack.includes\("computeFleetRankings"\)/.test(silverSrc)).toBe(true);
+    expect(/export function detectSilverInactivityDrops\(/.test(silverSrc)).toBe(true);
+    expect(/export function findSilverInactivityDrops\(/.test(silverSrc)).toBe(true);
   });
 });
