@@ -1181,7 +1181,14 @@ export function AdminRegattaImport({
                             updateImportRow(index, {
                               isDns,
                               ...(isDns && row.rank == null
-                                ? { rank: importMeta.fleetSize + 1 }
+                                ? {
+                                    // Group 1: started + 1 among other non-DNS rows on this sheet
+                                    rank:
+                                      fullImportRows.filter(
+                                        (r, i) =>
+                                          i !== index && !r.isDns
+                                      ).length + 1,
+                                  }
                                 : {}),
                             });
                           }}
@@ -1239,7 +1246,7 @@ export function AdminRegattaImport({
               />
             </label>
             <label className="text-xs text-slate-400">
-              Total fleet size
+              Registered fleet size (auto from sheet rows; not used for Optimist DNS points)
               <input
                 type="number"
                 className="mt-1 w-full rounded-lg bg-slate-900 border border-white/10 text-white px-3 py-2 text-[13px]"
@@ -1247,7 +1254,7 @@ export function AdminRegattaImport({
                 onChange={(e) =>
                   setImportMeta((m) => ({
                     ...m,
-                    fleetSize: Number(e.target.value) || 50,
+                    fleetSize: Number(e.target.value) || fullImportRows.length || 1,
                   }))
                 }
               />

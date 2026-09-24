@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   bestThreeOf,
   calculateRankings,
+  optimistSheetStatsByRegattaId,
+  optimistRegisteredNoShowScore,
+  optimistUnregisteredScore,
   compareRankedSailors,
   getPercentileBadge,
   natSquadFieldForPeriod,
@@ -15,6 +18,7 @@ import {
   squadStatusForPeriod,
   type RankedSailor,
   type RegattaRecord,
+  type RegattaResultRecord,
   type SailorRecord,
 } from "./ranking";
 
@@ -509,5 +513,149 @@ describe("reRankWithExcluded", () => {
     expect(alice.overallScore).toBe(1 + 2 + 9999);
     // Full regattaScores still present for display
     expect(alice.regattaScores).toHaveLength(5);
+  });
+});
+
+describe("Optimist DNS Group 1 / Group 2 scoring", () => {
+  const period = { year: 2026, half: "Jan-Jun" as const };
+  const goldSailor = (id: string): SailorRecord =>
+    ({
+      id,
+      name: id,
+      handle: id,
+      sailNumber: "SGP 1",
+      club: "C",
+      currentFleet: "Series",
+      goldEntryDate: "2025-01-01",
+      silverEntryDate: "2024-01-01",
+      dropDate: null,
+      nationality: "SGP",
+    }) as SailorRecord;
+
+  it("Group1 = starters+1; Group2 = max(sheet place)+1 (not registered+1)", () => {
+    const regattas: RegattaRecord[] = [
+      {
+        id: "ex",
+        name: "Example",
+        slug: "ex",
+        date: "2026-03-01",
+        totalFleetSize: 90,
+        division: "Gold",
+        boatClass: "Optimist",
+        countsForRanking: true,
+      },
+    ];
+    const results: RegattaResultRecord[] = [];
+    for (let i = 1; i <= 78; i++) {
+      results.push({ sailorId: `f${i}`, regattaId: "ex", rank: i });
+    }
+    // Two registered no-shows (on sheet with DNS). Worst sheet place = 81.
+    results.push({ sailorId: "dns-a", regattaId: "ex", rank: 81, isDns: true });
+    results.push({ sailorId: "dns-b", regattaId: "ex", rank: 81, isDns: true });
+
+    const dnsA = goldSailor("dns-a");
+    const dnsB = goldSailor("dns-b");
+    const neverReg = goldSailor("never");
+    const finisher = goldSailor("f1");
+
+    const ranked = calculateRankings(
+      period,
+      [dnsA, dnsB, neverReg, finisher],
+      regattas,
+      results
+    );
+    expect(ranked.find((s) => s.id === "f1")!.regattaScores[0]?.score).toBe(1);
+    // Group 1: starters (78) + 1 = 79 (sheet DNS place ignored for national score)
+    expect(ranked.find((s) => s.id === "dns-a")!.regattaScores[0]?.score).toBe(
+      79
+    );
+    expect(ranked.find((s) => s.id === "dns-b")!.regattaScores[0]?.score).toBe(
+      79
+    );
+    expect(ranked.find((s) => s.id === "dns-a")!.regattaScores[0]?.isDNS).toBe(
+      true
+    );
+    // Group 2: max sheet place (81) + 1 = 82 — NOT registered+1 (81)
+    expect(ranked.find((s) => s.id === "never")!.regattaScores[0]?.score).toBe(
+      82
+    );
+    expect(ranked.find((s) => s.id === "never")!.regattaScores[0]?.isDNS).toBe(
+      true
+    );
+  });
+
+  it("empty sheet: no Group 2 invented for absentees", () => {
+    const regattas: RegattaRecord[] = [
+      {
+        id: "empty",
+        name: "Not uploaded",
+        slug: "empty",
+        date: "2026-04-01",
+        totalFleetSize: 50,
+        division: "Gold",
+        boatClass: "Optimist",
+        countsForRanking: true,
+      },
+    ];
+    const sailor = goldSailor("g1");
+    const ranked = calculateRankings(period, [sailor], regattas, []);
+    expect(ranked).toHaveLength(1);
+    expect(ranked[0].regattaScores).toHaveLength(0);
+  });
+
+  it("overseas commitment keeps stored rank (overrides DNS formula)", () => {
+    const regattas: RegattaRecord[] = [
+      {
+        id: "r1",
+        name: "R1",
+        slug: "r1",
+        date: "2026-03-01",
+        totalFleetSize: 50,
+        division: "Gold",
+        boatClass: "Optimist",
+        countsForRanking: true,
+      },
+    ];
+    const ovs = goldSailor("ovs");
+    const results = [
+      { sailorId: "f1", regattaId: "r1", rank: 1 },
+      {
+        sailorId: "ovs",
+        regattaId: "r1",
+        rank: 3,
+        isDns: true,
+        isOverseasCommitment: true,
+      },
+    ];
+    const ranked = calculateRankings(period, [ovs], regattas, results);
+    expect(ranked.find((s) => s.id === "ovs")!.regattaScores[0]?.score).toBe(3);
+    expect(
+      ranked.find((s) => s.id === "ovs")!.regattaScores[0]?.isOverseasCommitment
+    ).toBe(true);
+    expect(ranked.find((s) => s.id === "ovs")!.regattaScores[0]?.isDNS).toBe(
+      false
+    );
+  });
+
+  it("sheet stats + score helpers", () => {
+    expect(optimistRegisteredNoShowScore(78)).toBe(79);
+    // Group 2 uses max sheet place + 1
+    expect(optimistUnregisteredScore(81)).toBe(82);
+    expect(optimistUnregisteredScore(null)).toBeNull();
+    expect(optimistUnregisteredScore(0)).toBeNull();
+    const m = optimistSheetStatsByRegattaId([
+      { sailorId: "a", regattaId: "r1", rank: 1 },
+      { sailorId: "b", regattaId: "r1", rank: 2 },
+      { sailorId: "c", regattaId: "r1", rank: 3, isDns: true },
+      {
+        sailorId: "d",
+        regattaId: "r1",
+        rank: 4,
+        isDns: true,
+        isOverseasCommitment: true,
+      },
+    ]);
+    // started excludes DNS and overseas; maxRank includes all places
+    expect(m.get("r1")).toEqual({ registered: 4, started: 2, maxRank: 4 });
   });
 });

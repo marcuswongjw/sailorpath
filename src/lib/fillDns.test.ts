@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { missingDnsPairs, rankingRegattasForFleet } from "./fillDns";
-import type { Period, RegattaRecord, SailorRecord } from "./ranking";
+import type {
+  Period,
+  RegattaRecord,
+  RegattaResultRecord,
+  SailorRecord,
+} from "./ranking";
 
 const period: Period = { year: 2026, half: "Jan-Jun" };
 
@@ -17,7 +22,7 @@ const seriesGold = (id: string): SailorRecord =>
     dropDate: null,
   }) as SailorRecord;
 
-describe("fillDns / ranking regattas", () => {
+describe("fillDns / ranking regattas (diagnostic helpers)", () => {
   it("excludes countsForRanking=false from period pool", () => {
     const regattas: RegattaRecord[] = [
       {
@@ -52,7 +57,7 @@ describe("fillDns / ranking regattas", () => {
     expect(events.map((e) => e.id)).toEqual(["r1", "r2"]);
   });
 
-  it("missingDnsPairs skips non-ranking regattas", () => {
+  it("missingDnsPairs skips non-ranking; empty sheet → null dnsPoints", () => {
     const sailors = [seriesGold("s1")];
     const regattas: RegattaRecord[] = [
       {
@@ -83,7 +88,39 @@ describe("fillDns / ranking regattas", () => {
     });
     expect(pairs).toHaveLength(1);
     expect(pairs[0].regattaId).toBe("rank");
-    expect(pairs[0].dnsPoints).toBe(31);
+    expect(pairs[0].dnsPoints).toBeNull();
+  });
+
+  it("missingDnsPairs uses max(sheet place)+1 for Group 2 (not registered+1)", () => {
+    const sailors = [seriesGold("s1")];
+    const regattas: RegattaRecord[] = [
+      {
+        id: "ex",
+        name: "Example",
+        slug: "ex",
+        date: "2026-01-10",
+        totalFleetSize: 90,
+        division: "Gold",
+        countsForRanking: true,
+      },
+    ];
+    const results: RegattaResultRecord[] = [];
+    for (let i = 1; i <= 78; i++) {
+      results.push({ sailorId: `f${i}`, regattaId: "ex", rank: i });
+    }
+    results.push({ sailorId: "dns1", regattaId: "ex", rank: 79, isDns: true });
+    results.push({ sailorId: "dns2", regattaId: "ex", rank: 79, isDns: true });
+    const pairs = missingDnsPairs({
+      fleet: "Gold",
+      period,
+      sailors,
+      regattas,
+      existingKeys: new Set(),
+      results,
+    });
+    expect(pairs).toHaveLength(1);
+    // max sheet place = 79 (DNS rows) → Group 2 = 80 (not registered+1 = 81)
+    expect(pairs[0].dnsPoints).toBe(80);
   });
 
   it("undefined countsForRanking still counts (legacy)", () => {
@@ -95,7 +132,6 @@ describe("fillDns / ranking regattas", () => {
         date: "2026-04-01",
         totalFleetSize: 40,
         division: "Gold",
-        // countsForRanking omitted
       },
     ];
     expect(rankingRegattasForFleet("Gold", period, regattas)).toHaveLength(1);

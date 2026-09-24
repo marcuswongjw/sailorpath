@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type Dispatch, type SetStateAction } from "react";
-import { parseApi, apiErr, apiStr, apiNum } from "@/components/admin/parseApi";
+import { parseApi, apiErr } from "@/components/admin/parseApi";
 import { emptyResultForm } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
@@ -34,7 +34,6 @@ export function useAdminResults({
   sailorList,
   resultsList,
   setResultsList,
-  refreshResultsList,
   selectedRegattaIdForResultEdit,
   setSelectedRegattaIdForResultEdit,
   invalidateResults,
@@ -147,94 +146,7 @@ export function useAdminResults({
     }
   };
 
-  const handleFillDnsForRegatta = async (regattaId: string) => {
-    if (!isSuperadmin) {
-      toast.error("Error: 403 Forbidden.");
-      return;
-    }
-    if (!regattaId) {
-      toast.error("Select a regatta first.");
-      return;
-    }
-    const reg = regattaList.find((r) => r.id === regattaId);
-    const ok = await confirm({
-      title: `Create DNS scores for ${reg?.division || ""} fleet?`,
-      message:
-        `Create DNS for active fleet members who do not have a result at “${reg?.name || "this regatta"}”.\n\n` +
-        `DNS points = fleet size + 1 = ${(reg?.totalFleetSize || 0) + 1}.\n` +
-        `You can edit any row afterwards (e.g. overseas commitment).`,
-      confirmLabel: "Continue",
-    });
-    if (!ok) return;
-    try {
-      const res = await fetch("/api/admin/results", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "fillDns", regattaId }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(apiErr(data, "Fill DNS failed"));
-      await refreshResultsList({ regattaId });
-      invalidateResults?.();
-      toast.success(
-        apiStr(data, "message") ||
-          `Created ${apiNum(data, "created") ?? 0} DNS rows.`
-      );
-    } catch (e: unknown) {
-      toast.error(errorMessage(e, "Fill DNS failed"));
-    }
-  };
 
-  /** Ensure every active fleet sailor has results for all ranking regattas in a half-year */
-  const handleFillDnsForPeriod = async (
-    fleet: "Gold" | "Silver",
-    year: number,
-    half: "Jan-Jun" | "Jul-Dec"
-  ) => {
-    if (!isSuperadmin) {
-      toast.error("Error: 403 Forbidden.");
-      return;
-    }
-    const ok = await confirm({
-      title: `Ensure DNS for ${fleet} fleet?`,
-      message:
-        `Ensure DNS for all active ${fleet} fleet sailors in ${half} ${year}.\n\n` +
-        `Each sailor will get a result for every ranking regatta in that period they are missing.\n` +
-        `Missing → rank = that regatta’s fleet size + 1 (DNS).\n` +
-        `Existing results (including overseas) are left unchanged.`,
-      confirmLabel: "Continue",
-    });
-    if (!ok) return;
-    try {
-      const res = await fetch("/api/admin/results", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "fillDnsPeriod",
-          fleet,
-          year,
-          half,
-        }),
-      });
-      const data = await parseApi(res);
-      if (!res.ok) throw new Error(apiErr(data, "Period DNS fill failed"));
-      await refreshResultsList();
-      invalidateResults?.();
-      const rankingRaw = data.rankingRegattas;
-      const rankingList = Array.isArray(rankingRaw) ? rankingRaw : [];
-      const events = rankingList
-        .map((e) => {
-          const row = e as Record<string, unknown>;
-          return `• ${String(row.name ?? "")} (${String(row.date ?? "")}) → DNS ${String(row.dnsPoints ?? "")}`;
-        })
-        .join("\n");
-      toast.success(
-        `${apiStr(data, "message") || "Done"}\n\nRanking regattas:\n${events || "(none found — import regattas with dates in this period)"}`
-      );
-    } catch (e: unknown) {
-      toast.error(errorMessage(e, "Period DNS fill failed"));
-    }
-  };
 
   const handleDeleteResult = async (id: string) => {
     if (!isSuperadmin) {
@@ -297,8 +209,6 @@ export function useAdminResults({
     handleSaveResult,
     handleQuickUpdateResult,
     handleDeleteResult,
-    handleFillDnsForRegatta,
-    handleFillDnsForPeriod,
   };
 
   return {

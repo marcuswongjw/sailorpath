@@ -79,6 +79,7 @@ export function countOptimistRankingStartsInPeriod(
     if (res.sailorId !== sailorId) continue;
     if (!eventIds.has(res.regattaId)) continue;
     if (Boolean(res.isDns)) continue;
+    if (Boolean(res.isOverseasCommitment)) continue;
     n++;
   }
   return n;
@@ -205,4 +206,28 @@ export function findSilverInactivityDrops(
     return [];
   }
   return detectSilverInactivityDrops(sailors, regattas, results, asOfYmd);
+}
+
+/**
+ * Projected next-half status: Silver needs ≥1 real ranking start in the half.
+ * DNS / overseas / Tier 2 absences do not count.
+ */
+export function applyProjectedSilverParticipationDropped<
+  T extends { id: string; nextPeriodSquadStatus?: string | null },
+>(
+  ranked: T[],
+  period: Period,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[]
+): T[] {
+  return ranked.map((s) => {
+    const n = countOptimistRankingStartsInPeriod(
+      s.id,
+      period,
+      regattas,
+      results
+    );
+    if (n >= 1) return s;
+    return { ...s, nextPeriodSquadStatus: "Dropped" };
+  });
 }

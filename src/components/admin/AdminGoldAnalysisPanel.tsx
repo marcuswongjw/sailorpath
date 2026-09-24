@@ -618,10 +618,11 @@ export function AdminGoldAnalysisPanel({
       </div>
 
       <p className="text-[13px] text-slate-600 leading-relaxed max-w-3xl">
-        Ranking Optimist Gold events only (DNS = fleet size + 1; overseas
-        commitment scores included as stored). Non-ranking regattas are never
-        used. ILCA 4 analysis can be added later as a separate single-fleet
-        board.
+        Ranking Optimist Gold events only (national DNS: Group 1 starters+1 /
+        Group 2 max sheet place+1; overseas commitment scores use stored rank).
+        Gold participation: overseas Singapore representation counts; plain DNS
+        does not. Non-ranking regattas are never used. ILCA 4 analysis can be
+        added later as a separate single-fleet board.
       </p>
     </div>
   );

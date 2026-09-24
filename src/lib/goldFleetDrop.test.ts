@@ -126,4 +126,123 @@ describe("findGoldParticipationDrops", () => {
     );
     expect(ev).toHaveLength(3);
   });
+
+  it("DNS does not count toward Gold participation", () => {
+    const sailors: SailorRecord[] = [
+      {
+        id: "s-dns",
+        name: "DnsOnly",
+        handle: "dnsonly",
+        sailNumber: "SGP 9",
+        club: "X",
+        goldEntryDate: "2026-01-01",
+        silverEntryDate: "2024-01-01",
+        dropDate: null,
+        currentFleet: "Series",
+      },
+    ];
+    // Two Gold ranking results but both DNS → 0 real participations → drop
+    const results: RegattaResultRecord[] = [
+      { sailorId: "s-dns", regattaId: "g1", rank: 51, isDns: true },
+      { sailorId: "s-dns", regattaId: "g2", rank: 51, isDns: true },
+    ];
+    const drops = findGoldParticipationDrops(
+      sailors,
+      regattas,
+      results,
+      "2026-08-01"
+    ).filter(
+      (d) =>
+        d.sailorId === "s-dns" &&
+        d.failedPeriod.year === 2026 &&
+        d.failedPeriod.half === "Jan-Jun"
+    );
+    expect(drops.length).toBe(1);
+    expect(drops[0]?.participationCount).toBe(0);
+  });
+
+  it("overseas commitment DOES count as Gold (Go Fleet) participation", () => {
+    const sailors: SailorRecord[] = [
+      {
+        id: "s-ovs",
+        name: "Overseas",
+        handle: "ovs",
+        sailNumber: "SGP 8",
+        club: "X",
+        goldEntryDate: "2026-01-01",
+        silverEntryDate: "2024-01-01",
+        dropDate: null,
+        currentFleet: "Series",
+      },
+    ];
+    const results: RegattaResultRecord[] = [
+      {
+        sailorId: "s-ovs",
+        regattaId: "g1",
+        rank: 2,
+        isDns: true,
+        isOverseasCommitment: true,
+      },
+      { sailorId: "s-ovs", regattaId: "g2", rank: 12 },
+    ];
+    // Overseas (g1) + raced (g2) = 2 → meets Gold bar; no drop for Jan-Jun 2026
+    const drops = findGoldParticipationDrops(
+      sailors,
+      regattas,
+      results,
+      "2026-08-01"
+    ).filter(
+      (d) =>
+        d.sailorId === "s-ovs" &&
+        d.failedPeriod.year === 2026 &&
+        d.failedPeriod.half === "Jan-Jun"
+    );
+    expect(drops).toHaveLength(0);
+  });
+
+  it("overseas alone can help meet the Gold bar of 2", () => {
+    const sailors: SailorRecord[] = [
+      {
+        id: "s-ovs2",
+        name: "OvsTwo",
+        handle: "ovs2",
+        sailNumber: "SGP 7",
+        club: "X",
+        goldEntryDate: "2026-01-01",
+        silverEntryDate: "2024-01-01",
+        dropDate: null,
+        currentFleet: "Series",
+      },
+    ];
+    const results: RegattaResultRecord[] = [
+      {
+        sailorId: "s-ovs2",
+        regattaId: "g1",
+        rank: 5,
+        isOverseasCommitment: true,
+      },
+      {
+        sailorId: "s-ovs2",
+        regattaId: "g2",
+        rank: 6,
+        isDns: true,
+        isOverseasCommitment: true,
+      },
+      // plain DNS does not count
+      { sailorId: "s-ovs2", regattaId: "g3", rank: 50, isDns: true },
+    ];
+    const drops = findGoldParticipationDrops(
+      sailors,
+      regattas,
+      results,
+      "2026-08-01"
+    ).filter(
+      (d) =>
+        d.sailorId === "s-ovs2" &&
+        d.failedPeriod.year === 2026 &&
+        d.failedPeriod.half === "Jan-Jun"
+    );
+    expect(drops).toHaveLength(0);
+  });
+
 });

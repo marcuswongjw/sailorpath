@@ -521,6 +521,7 @@ export function optimistSailorsEligibleForSilverPeriod(
   const regById = new Map(regattas.map((r) => [r.id, r]));
   for (const res of results) {
     if (Boolean(res.isDns)) continue;
+    if (Boolean(res.isOverseasCommitment)) continue;
     const r = regById.get(res.regattaId);
     if (!r) continue;
     if (r.countsForRanking === false) continue;
@@ -532,29 +533,157 @@ export function optimistSailorsEligibleForSilverPeriod(
   return ids;
 }
 
+/**
+ * Per-regatta sheet stats after results are uploaded.
+ * - registered = every result row on the sheet (including DNS/DNC / overseas)
+ * - started = raced rows: not plain DNS. Overseas-commitment rows are NOT
+ *   counted as "started" for Group 1 DNS points (they keep stored rank for
+ *   scoring); Gold fleet eligibility counts overseas separately.
+ * - maxRank = worst/lowest place on the sheet (every place, incl. DNS/DNC)
+ */
+export type OptimistSheetStats = {
+  registered: number;
+  started: number;
+  maxRank: number;
+};
+
+/**
+ * Whether a result row counts as a raced start for Group 1 DNS math
+ * (started + 1). Plain DNS does not; overseas is not a race start for this
+ * count (overseas keeps its stored rank for national points).
+ */
+export function isOptimistRacedStart(
+  res: Pick<RegattaResultRecord, "isDns" | "isOverseasCommitment">
+): boolean {
+  if (Boolean(res.isOverseasCommitment)) return false;
+  if (Boolean(res.isDns)) return false;
+  return true;
+}
+
+/** @deprecated alias — use isOptimistRacedStart */
+export function isOptimistRealStart(
+  res: Pick<RegattaResultRecord, "isDns" | "isOverseasCommitment">
+): boolean {
+  return isOptimistRacedStart(res);
+}
+
+/**
+ * Sheet stats by regatta id. Empty sheets are omitted (no invented scores).
+ */
+export function optimistSheetStatsByRegattaId(
+  results: RegattaResultRecord[]
+): Map<string, OptimistSheetStats> {
+  const m = new Map<string, OptimistSheetStats>();
+  for (const r of results) {
+    let s = m.get(r.regattaId);
+    if (!s) {
+      s = { registered: 0, started: 0, maxRank: 0 };
+      m.set(r.regattaId, s);
+    }
+    s.registered += 1;
+    if (isOptimistRacedStart(r)) s.started += 1;
+    if (Number.isFinite(r.rank) && r.rank > s.maxRank) s.maxRank = r.rank;
+  }
+  return m;
+}
+
+/**
+ * Group 1 — registered, did not start (on sheet with DNS):
+ * national score = starters + 1.
+ */
+export function optimistRegisteredNoShowScore(
+  started: number | null | undefined
+): number | null {
+  if (started == null || !Number.isFinite(started) || started < 0) return null;
+  return started + 1;
+}
+
+/**
+ * Group 2 — never registered (not on the sheet):
+ * national score = lowest (worst/max) sheet place + 1.
+ * Returns null when the sheet is empty (no auto-score yet).
+ */
+export function optimistUnregisteredScore(
+  maxSheetRank: number | null | undefined
+): number | null {
+  if (maxSheetRank == null || !Number.isFinite(maxSheetRank) || maxSheetRank < 1) {
+    return null;
+  }
+  return maxSheetRank + 1;
+}
+
+/** Max finishing place on an uploaded sheet (incl. official DNS/DNC). */
+export function maxSheetRankByRegattaId(
+  results: RegattaResultRecord[]
+): Map<string, number> {
+  const m = new Map<string, number>();
+  for (const r of results) {
+    if (!Number.isFinite(r.rank)) continue;
+    const prev = m.get(r.regattaId);
+    if (prev == null || r.rank > prev) m.set(r.regattaId, r.rank);
+  }
+  return m;
+}
+
+/** Alias: Group 2 points = max sheet place + 1. */
+export function optimistTier2Score(
+  maxSheetRank: number | null | undefined
+): number | null {
+  return optimistUnregisteredScore(maxSheetRank);
+}
+
 function scoreForResult(
   sailorId: string,
   regatta: RegattaRecord,
-  results: RegattaResultRecord[] | Map<string, RegattaResultRecord>
+  results: RegattaResultRecord[] | Map<string, RegattaResultRecord>,
+  sheetStatsByRegattaId: Map<string, OptimistSheetStats>
 ): Pick<
   RegattaScoreSlot,
   "score" | "isDNS" | "isOverseasCommitment"
-> {
+> | null {
   const result =
     results instanceof Map
       ? results.get(`${sailorId}:${regatta.id}`)
       : results.find(
           (res) => res.sailorId === sailorId && res.regattaId === regatta.id
         );
+  const stats = sheetStatsByRegattaId.get(regatta.id);
+
   if (result) {
+    // Overseas commitment still overrides DNS display/scoring (use stored rank).
+    if (Boolean(result.isOverseasCommitment)) {
+      return {
+        score: result.rank,
+        isDNS: false,
+        isOverseasCommitment: true,
+      };
+    }
+    // Group 1: on sheet, registered no-show → started + 1 (all tied).
+    if (Boolean(result.isDns)) {
+      if (!stats || stats.registered < 1) return null;
+      const score = optimistRegisteredNoShowScore(stats.started);
+      if (score == null) return null;
+      return {
+        score,
+        isDNS: true,
+        isOverseasCommitment: false,
+      };
+    }
+    // Finished: use sheet rank.
     return {
       score: result.rank,
-      isDNS: Boolean(result.isDns) && !result.isOverseasCommitment,
-      isOverseasCommitment: Boolean(result.isOverseasCommitment),
+      isDNS: false,
+      isOverseasCommitment: false,
     };
   }
+
+  // Group 2: never registered (not on sheet) → max(sheet place) + 1.
+  // Empty sheet → no auto-score (caller should skip this regatta).
+  if (!stats || stats.registered < 1 || stats.maxRank < 1) return null;
+  const unreg = optimistUnregisteredScore(stats.maxRank);
+  if (unreg == null) return null;
   return {
-    score: regatta.totalFleetSize + 1,
+    score: unreg,
     isDNS: true,
     isOverseasCommitment: false,
   };
@@ -705,23 +834,37 @@ export function calculateRankings(
     resultsMap.set(`${res.sailorId}:${res.regattaId}`, res);
   }
 
-  const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
-    const slots = sailor.fleet === "Gold" ? goldSlots : silverSlots;
+  // Sheet registered/started counts for Optimist Group 1 / Group 2 DNS scoring.
+  // Regattas with no uploaded results are excluded from the Best 3 window.
+  const sheetStatsByRegattaId = optimistSheetStatsByRegattaId(results);
 
-    const regattaScores: RegattaScoreSlot[] = slots.map((slot) => {
-      const scored = scoreForResult(sailor.id, slot.regatta, resultsMap);
-      return {
-        regattaId: slot.regatta.id,
-        regattaName: slot.regatta.name,
-        score: scored.score,
-        isDNS: scored.isDNS,
-        isOverseasCommitment: scored.isOverseasCommitment,
-        isCarryForward: slot.isCarryForward,
-        periodLabel: slot.periodLabel,
-        regattaDate: slot.regatta.date
-          ? String(slot.regatta.date).slice(0, 10)
-          : null,
-      };
+  const rankedSailors: RankedSailor[] = activeSailors.map((sailor) => {
+    const slots = (sailor.fleet === "Gold" ? goldSlots : silverSlots).filter(
+      (slot) => sheetStatsByRegattaId.has(slot.regatta.id)
+    );
+
+    const regattaScores: RegattaScoreSlot[] = slots.flatMap((slot) => {
+      const scored = scoreForResult(
+        sailor.id,
+        slot.regatta,
+        resultsMap,
+        sheetStatsByRegattaId
+      );
+      if (!scored) return [];
+      return [
+        {
+          regattaId: slot.regatta.id,
+          regattaName: slot.regatta.name,
+          score: scored.score,
+          isDNS: scored.isDNS,
+          isOverseasCommitment: scored.isOverseasCommitment,
+          isCarryForward: slot.isCarryForward,
+          periodLabel: slot.periodLabel,
+          regattaDate: slot.regatta.date
+            ? String(slot.regatta.date).slice(0, 10)
+            : null,
+        },
+      ];
     });
 
     const { bestThreeScores, overallScore } = bestThreeOf(

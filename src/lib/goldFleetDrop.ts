@@ -86,7 +86,14 @@ export function completedPeriodsUpTo(asOfYmd: string): Period[] {
   );
 }
 
-function sailedRankingCount(
+/**
+ * Gold ("Go") fleet ranking participations in a half.
+ * - Plain DNS / never-started = does NOT count.
+ * - Overseas commitment representing Singapore DOES count (even if DNS-like
+ *   for national points display).
+ * Need ≥2 of these per half to stay in Gold.
+ */
+export function countGoldRankingParticipations(
   sailorId: string,
   period: Period,
   regattas: RegattaRecord[],
@@ -98,10 +105,26 @@ function sailedRankingCount(
   for (const res of results) {
     if (res.sailorId !== sailorId) continue;
     if (!ids.has(res.regattaId)) continue;
-    // DNS still counts as participation (they entered)
+    // Overseas Singapore representation counts as a completed ranking event
+    if (Boolean(res.isOverseasCommitment)) {
+      n++;
+      continue;
+    }
+    // Plain DNS / no-show / absent = NOT participation
+    if (Boolean(res.isDns)) continue;
     n++;
   }
   return n;
+}
+
+/** @deprecated use countGoldRankingParticipations */
+function sailedRankingCount(
+  sailorId: string,
+  period: Period,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[]
+): number {
+  return countGoldRankingParticipations(sailorId, period, regattas, results);
 }
 
 /**
@@ -173,4 +196,25 @@ export function monthsInGoldTenure(
   const [sy, sm] = start.split("-").map(Number);
   const [ey, em] = end.split("-").map(Number);
   return Math.max(0, (ey - sy) * 12 + (em - sm));
+}
+
+/**
+ * Under projected next-half status, mark Dropped when the sailor is below the
+ * participation bar for the *current* ranking half (Gold: ≥2 real starts).
+ * Plain DNS / never-registered do not count; overseas commitment does. Call after Nat A/B projection
+ * so Dropped overrides a squad tier when they will leave Gold.
+ */
+export function applyProjectedGoldParticipationDropped<
+  T extends { id: string; nextPeriodSquadStatus?: string | null },
+>(
+  ranked: T[],
+  period: Period,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[]
+): T[] {
+  return ranked.map((s) => {
+    const n = countGoldRankingParticipations(s.id, period, regattas, results);
+    if (n >= GOLD_MIN_RANKING_REGATTAS_PER_HALF) return s;
+    return { ...s, nextPeriodSquadStatus: "Dropped" };
+  });
 }
