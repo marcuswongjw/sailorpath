@@ -19,6 +19,7 @@ import {
   Flame,
   ChevronRight,
   Compass,
+  Trophy,
 } from "lucide-react";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
@@ -38,6 +39,7 @@ import {
 import { adminLoginOrigin, adminReturnUrl } from "@/lib/adminHost";
 
 const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string }>> = {
+  regattas: Trophy,
   edit: Database,
   ilca: Medal,
   wingfoil: Flame,
@@ -331,9 +333,21 @@ function AdminDashboardInner() {
       { label: "Admin Console", onClick: () => goTab("edit") },
     ];
 
-    if (activeTab === "edit") {
+    if (activeTab === "regattas") {
       crumbs.push({
-        label: "Optimist & Core",
+        label: "Ops",
+        onClick: () => goTab("regattas"),
+      });
+      crumbs.push({
+        label: "Regattas & Events",
+        onClick: () => goTab("regattas"),
+      });
+      if (selectedRegatta) {
+        crumbs.push({ label: selectedRegatta.name });
+      }
+    } else if (activeTab === "edit") {
+      crumbs.push({
+        label: "Optimist Fleet",
         onClick: () => goTab("edit"),
       });
       const subLabel =
@@ -517,11 +531,11 @@ function AdminDashboardInner() {
           <div
             key={grp.groupTitle}
             className={`rounded-2xl border border-white/5 bg-[#131520] p-1.5 flex flex-col justify-between ${
-              grp.groupTitle.startsWith("Boat") || grp.groupTitle.startsWith("Class")
+              grp.groupTitle === "Boat Classes"
                 ? "md:col-span-6 lg:col-span-5"
-                : grp.groupTitle.startsWith("Ingestion")
-                  ? "md:col-span-6 lg:col-span-4"
-                  : "md:col-span-12 lg:col-span-3"
+                : grp.groupTitle === "Ops"
+                  ? "md:col-span-6 lg:col-span-5"
+                  : "md:col-span-12 lg:col-span-2"
             }`}
           >
             <div className="px-2 py-0.5 mb-1 flex items-center justify-between">
@@ -570,26 +584,39 @@ function AdminDashboardInner() {
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="font-semibold text-slate-300">
-            {activeTab === "edit"
-              ? "Optimist & Database Workspace"
-              : activeTab === "ilca"
-                ? "ILCA 4 National Ranking & Squad Workspace"
-                : activeTab === "wingfoil"
-                  ? "WingFoil Slalom Scoring Workspace"
-                  : activeTab === "techno293"
-                    ? "Techno 293 Windsurfing Workspace"
-                    : activeTab === "import"
-                      ? "Excel & PDF Regatta Ingestion"
-                      : activeTab === "ops"
-                        ? "Claims & Support Operations"
-                        : activeTab === "analysis"
-                          ? "Gold Fleet Progression Analysis"
-                          : activeTab === "stats"
-                            ? "Platform Health & Metrics"
-                            : "Platform Release Notes"}
+            {activeTab === "regattas"
+              ? "Regattas & Events Operations"
+              : activeTab === "edit"
+                ? "Optimist Roster & Selection Workspace"
+                : activeTab === "ilca"
+                  ? "ILCA 4 National Ranking & Squad Workspace"
+                  : activeTab === "wingfoil"
+                    ? "WingFoil Slalom Scoring Workspace"
+                    : activeTab === "techno293"
+                      ? "Techno 293 Windsurfing Workspace"
+                      : activeTab === "import"
+                        ? "Excel & PDF Regatta Ingestion"
+                        : activeTab === "ops"
+                          ? "Claims & Support Operations"
+                          : activeTab === "analysis"
+                            ? "Gold Fleet Progression Analysis"
+                            : activeTab === "stats"
+                              ? "Platform Health & Metrics"
+                              : "Platform Release Notes"}
           </span>
         </div>
         <div className="flex items-center gap-3">
+          {activeTab === "regattas" && (
+            <Link
+              href="/sg/calendar"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
+            >
+              <span>Public 2026 Calendar</span>
+              <ChevronRight className="h-3 w-3" />
+            </Link>
+          )}
           {activeTab === "edit" && (
             <Link
               href="/sg/optimist/gold"
@@ -665,6 +692,31 @@ function AdminDashboardInner() {
           </div>
         )}
 
+        {activeTab === "regattas" && (
+          <div className="w-full min-w-0">
+            <AdminRegattasPanel
+              isSuperadmin={isSuperadmin}
+              activeSheetId={data.selectedRegattaIdForResultEdit}
+              onOpenResults={(regattaId) => {
+                setSelectedRegattaIdForResultEdit(regattaId);
+                setActiveTab("regattas");
+              }}
+              onClearSheet={() => setSelectedRegattaIdForResultEdit("")}
+              resultsEditor={
+                <AdminResultsPanel
+                  embedded
+                  isSuperadmin={isSuperadmin}
+                  sailorList={data.sailorList}
+                  regattaList={data.regattaList}
+                  resultsList={data.resultsList}
+                  {...results.panelProps}
+                />
+              }
+              {...regattas.panelProps}
+            />
+          </div>
+        )}
+
         {activeTab === "stats" && (
           <AdminStatsPanel isSuperadmin={isSuperadmin} />
         )}
@@ -677,8 +729,7 @@ function AdminDashboardInner() {
             onResultsUpdated={data.patchResultsFromImport}
             onOpenResults={(regattaId) => {
               setSelectedRegattaIdForResultEdit(regattaId);
-              setActiveTab("edit");
-              setEditSubTab("regattas");
+              setActiveTab("regattas");
             }}
             onImportComplete={() => {
               data.invalidateRegattas();
@@ -742,8 +793,7 @@ function AdminDashboardInner() {
                   activeSheetId={data.selectedRegattaIdForResultEdit}
                   onOpenResults={(regattaId) => {
                     setSelectedRegattaIdForResultEdit(regattaId);
-                    setActiveTab("edit");
-                    setEditSubTab("regattas");
+                    setActiveTab("regattas");
                   }}
                   onClearSheet={() => setSelectedRegattaIdForResultEdit("")}
                   resultsEditor={

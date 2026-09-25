@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Fragment,
   useEffect,
   useMemo,
   useRef,
@@ -15,6 +16,8 @@ import {
   Edit3,
   Search,
   ChevronsUpDown,
+  ChevronDown,
+  ChevronUp,
   Calendar,
   Trophy,
   ExternalLink,
@@ -129,6 +132,7 @@ export function AdminResultsPanel({
     field: "rank" | "nettScore";
     value: string;
   } | null>(null);
+  const [expandedResultId, setExpandedResultId] = useState<string | null>(null);
   const pickerRef = useRef<HTMLDivElement>(null);
 
   const selectedRegatta = useMemo(
@@ -213,6 +217,21 @@ export function AdminResultsPanel({
       ).length,
     [resultsList, selectedRegattaIdForResultEdit]
   );
+
+  const raceNumbers = useMemo(() => {
+    let maxRace = Number(selectedRegatta?.raceCount) || 0;
+    for (const r of eventResults) {
+      if (r.raceResults && Array.isArray(r.raceResults)) {
+        for (const race of r.raceResults) {
+          if (race.raceNumber > maxRace) {
+            maxRace = race.raceNumber;
+          }
+        }
+      }
+    }
+    if (maxRace <= 0) return [];
+    return Array.from({ length: maxRace }, (_, i) => i + 1);
+  }, [eventResults, selectedRegatta?.raceCount]);
 
   useEffect(() => {
     if (!pickerOpen) return;
@@ -726,6 +745,15 @@ export function AdminResultsPanel({
                   <th className="py-3 px-3 text-center">Sail #</th>
                   <th className="py-3 px-3 text-center">Gender</th>
                   <th className="py-3 px-3 text-center">Birth year</th>
+                  {raceNumbers.map((rNum) => (
+                    <th
+                      key={rNum}
+                      className="py-3 px-2 text-center font-mono font-black text-orange-400 bg-orange-500/[0.04] border-x border-white/5 min-w-[42px]"
+                      title={`Race ${rNum} finish`}
+                    >
+                      R{rNum}
+                    </th>
+                  ))}
                   <th className="py-3 px-3 text-center">Total</th>
                   <th className="py-3 px-3 text-center font-black text-orange-300">Nett</th>
                   <th className="py-3 px-3 text-center">Status</th>
@@ -744,9 +772,9 @@ export function AdminResultsPanel({
                     return String(y);
                   })();
                   return (
-                    <tr
-                      key={res.id}
-                      className={`hover:bg-white/[0.03] transition-colors ${
+                    <Fragment key={res.id}>
+                      <tr
+                        className={`hover:bg-white/[0.03] transition-colors ${
                         overseas
                           ? "bg-sky-500/[0.04]"
                           : dns
@@ -807,8 +835,24 @@ export function AdminResultsPanel({
                         )}
                       </td>
                       <td className="py-3 px-4 sm:px-6 min-w-[140px]">
-                        <div className="font-bold text-white leading-tight">
-                          {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-bold text-white leading-tight">
+                            {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
+                          </span>
+                          {res.raceResults && res.raceResults.length > 0 && (
+                            <button
+                              type="button"
+                              onClick={() => setExpandedResultId((prev) => (prev === res.id ? null : res.id))}
+                              className="text-slate-500 hover:text-orange-400 p-0.5 rounded transition-colors shrink-0"
+                              title={expandedResultId === res.id ? "Hide individual race finishes" : "Show individual race finishes breakdown"}
+                            >
+                              {expandedResultId === res.id ? (
+                                <ChevronUp className="h-3.5 w-3.5 text-orange-400" />
+                              ) : (
+                                <ChevronDown className="h-3.5 w-3.5" />
+                              )}
+                            </button>
+                          )}
                         </div>
                         <div className="text-[13px] text-slate-400 mt-0.5 truncate max-w-[220px]">
                           {[sailor?.club, sailor?.school, sailor?.nationality]
@@ -825,6 +869,56 @@ export function AdminResultsPanel({
                       <td className="py-3 px-3 text-center font-mono text-slate-300">
                         {birthY}
                       </td>
+                      {raceNumbers.map((rNum) => {
+                        const race = res.raceResults?.find((rr) => rr.raceNumber === rNum);
+                        if (!race) {
+                          return (
+                            <td
+                              key={rNum}
+                              className="py-3 px-2 text-center font-mono text-slate-600 text-xs border-x border-white/5"
+                            >
+                              —
+                            </td>
+                          );
+                        }
+                        const isDiscarded = Boolean(race.discarded);
+                        const hasPenalty = Boolean(race.scoringCode);
+                        const displayVal = race.rawValue || String(race.score);
+
+                        return (
+                          <td
+                            key={rNum}
+                            className={`py-3 px-2 text-center text-xs font-mono border-x border-white/5 transition-colors ${
+                              isDiscarded ? "bg-white/[0.015]" : ""
+                            }`}
+                            title={
+                              hasPenalty
+                                ? `Race ${rNum}: ${race.scoringCode} (${race.score} pts)${isDiscarded ? " - Discarded" : ""}`
+                                : `Race ${rNum}: ${race.score} pts${isDiscarded ? " - Discarded" : ""}`
+                            }
+                          >
+                            {hasPenalty ? (
+                              <span
+                                className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-black ${
+                                  isDiscarded
+                                    ? "bg-amber-500/10 text-amber-400/60 line-through border border-amber-500/20"
+                                    : "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                                }`}
+                              >
+                                {race.scoringCode}
+                              </span>
+                            ) : isDiscarded ? (
+                              <span className="text-slate-500 line-through text-[11px] font-medium">
+                                ({displayVal})
+                              </span>
+                            ) : (
+                              <span className="text-slate-200 font-bold">
+                                {displayVal}
+                              </span>
+                            )}
+                          </td>
+                        );
+                      })}
                       <td className="py-3 px-3 text-center font-mono text-slate-400">
                         {res.totalScore != null ? res.totalScore : "—"}
                       </td>
@@ -1004,11 +1098,56 @@ export function AdminResultsPanel({
                         </div>
                       </td>
                     </tr>
-                  );
-                })}
+                    {expandedResultId === res.id && res.raceResults && res.raceResults.length > 0 && (
+                      <tr className="bg-slate-900/90 border-b border-white/5">
+                        <td colSpan={9 + raceNumbers.length} className="px-4 sm:px-6 py-3">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                            <div className="flex items-center gap-2">
+                              <Trophy className="h-4 w-4 text-orange-400 shrink-0" />
+                              <span className="text-xs font-bold text-white">
+                                Official Race Finishes for {sailor?.name || res.sailorName || "Sailor"}:
+                              </span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-1.5">
+                              {res.raceResults.map((race) => {
+                                const isDiscarded = Boolean(race.discarded);
+                                const hasPenalty = Boolean(race.scoringCode);
+                                return (
+                                  <div
+                                    key={race.raceNumber}
+                                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-mono ${
+                                      isDiscarded
+                                        ? "bg-white/5 border-white/10 text-slate-400"
+                                        : "bg-orange-500/10 border-orange-500/20 text-orange-200"
+                                    }`}
+                                    title={isDiscarded ? "Worst finish discarded from nett score" : `Race ${race.raceNumber}`}
+                                  >
+                                    <span className="text-slate-400 font-semibold">R{race.raceNumber}:</span>
+                                    <span className={isDiscarded ? "line-through text-slate-400 font-bold" : "font-black text-white"}>
+                                      {race.rawValue || race.score}
+                                    </span>
+                                    {hasPenalty && (
+                                      <span className="px-1 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300">
+                                        {race.scoringCode}
+                                      </span>
+                                    )}
+                                    {isDiscarded && (
+                                      <span className="text-[10px] text-slate-500 font-sans font-semibold">(disc)</span>
+                                    )}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </Fragment>
+                );
+              })}
                 {eventResultCount === 0 && (
                   <tr>
-                    <td colSpan={9} className="p-0">
+                    <td colSpan={9 + raceNumbers.length} className="p-0">
                       <AdminEmptyState
                         icon={Medal}
                         title="No results for this event"
@@ -1034,7 +1173,7 @@ export function AdminResultsPanel({
                 )}
                 {eventResultCount > 0 && eventResults.length === 0 && (
                   <tr>
-                    <td colSpan={9} className="p-0">
+                    <td colSpan={9 + raceNumbers.length} className="p-0">
                       <AdminEmptyState
                         icon={Search}
                         title={`No sailors match “${sailorFilter.trim()}”`}

@@ -10,8 +10,6 @@ import {
   ExternalLink,
   Sparkles,
   Loader2,
-  Maximize2,
-  Minimize2,
   Wand2,
   Link2,
   ArrowLeft,
@@ -37,7 +35,6 @@ import {
   emptyRegattaForm,
   type RegattaFormState,
 } from "@/components/admin/adminForms";
-import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import {
   eventStatusLabel,
@@ -182,7 +179,6 @@ export function AdminRegattasPanel({
   const [calendarSaving, setCalendarSaving] = useState(false);
   const calendarSlug = useRef("");
   const [sheetTab, setSheetTab] = useState<"details" | "results">("details");
-  const [isExpanded, setIsExpanded] = useState(false);
   const [showCalendarForm, setShowCalendarForm] = useState(false);
   const [showLogistics, setShowLogistics] = useState(false);
 
@@ -190,8 +186,12 @@ export function AdminRegattasPanel({
     () => groupRegattaEvents(filteredRegattaList),
     [filteredRegattaList]
   );
+
+  const effectiveEventSlug =
+    selectedEventSlug ?? (grouped.events[0]?.slug || null);
+
   const selectedEvent: AdminEventGroup | null =
-    selectedEventSlug === UNASSIGNED_EVENT_SLUG
+    effectiveEventSlug === UNASSIGNED_EVENT_SLUG
       ? {
           slug: UNASSIGNED_EVENT_SLUG,
           name: "Unassigned sheets",
@@ -204,7 +204,7 @@ export function AdminRegattasPanel({
           shells: [],
           shell: null,
         }
-      : grouped.events.find((event) => event.slug === selectedEventSlug) ?? null;
+      : grouped.events.find((event) => event.slug === effectiveEventSlug) ?? null;
   const selectedEventView = selectedEvent
     ? withSavedEvent(selectedEvent, savedEvents[selectedEvent.slug])
     : null;
@@ -474,102 +474,94 @@ export function AdminRegattasPanel({
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 w-full min-w-0 items-start">
-                  {/* Compact event list */}
-                  <div className={`lg:col-span-5 glass-panel rounded-2xl border border-white/5 overflow-hidden flex flex-col max-h-[min(70vh,720px)] ${isExpanded && editingRegattaId ? "hidden lg:hidden" : ""}`}>
-                    <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between shrink-0">
-                      <h3 className="text-sm font-bold text-white">
-                        Events{" "}
-                        <span className="text-slate-500 font-semibold">
-                          ({grouped.events.length + (grouped.unassigned.length ? 1 : 0)})
-                        </span>
-                      </h3>
+                {/* Top Event / Regatta Dropdown Selector Bar */}
+                <div className="glass-panel rounded-2xl border border-white/5 p-3.5 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 w-full">
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div className="h-10 w-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
+                      <Calendar className="h-5 w-5 text-orange-400" />
                     </div>
-                    <div className="overflow-y-auto flex-1 divide-y divide-white/5">
-                      {grouped.events.length === 0 && grouped.unassigned.length === 0 ? (
-                        <AdminEmptyState
-                          icon={Calendar}
-                          title="No regattas match filters"
-                          description="Try clearing search or changing division / ranking filters."
-                        />
-                      ) : (
-                        <>
-                          {grouped.events.map((event) => {
-                            const shown = withSavedEvent(event, savedEvents[event.slug]);
-                            const active = selectedEventSlug === event.slug;
-                            return (
-                              <button
-                                key={event.slug}
-                                type="button"
-                                onClick={() => {
-                                  setSelectedEventSlug(event.slug);
-                                  setEditingRegattaId(null);
-                                  onClearSheet?.();
-                                }}
-                                className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${
-                                  active
-                                    ? "bg-orange-500/10 border-l-2 border-orange-500"
-                                    : "border-l-2 border-transparent"
-                                }`}
-                              >
-                                <p className="text-xs font-bold text-white truncate">
-                                  {shown.name}
-                                </p>
-                                <p className="text-[13px] text-slate-500 mt-0.5">
-                                  {shown.startDate || "—"}
-                                  {shown.venue ? ` · ${shown.venue}` : ""}
-                                </p>
-                                <p className="text-[12px] text-slate-400 mt-1">
-                                  {eventStatusLabel(event)}
-                                </p>
-                              </button>
-                            );
-                          })}
-                          {grouped.unassigned.length > 0 && (
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setSelectedEventSlug(UNASSIGNED_EVENT_SLUG);
-                                setEditingRegattaId(null);
-                                onClearSheet?.();
-                              }}
-                              className={`w-full text-left px-4 py-3 transition-colors hover:bg-white/[0.04] ${
-                                selectedEventSlug === UNASSIGNED_EVENT_SLUG
-                                  ? "bg-orange-500/10 border-l-2 border-orange-500"
-                                  : "border-l-2 border-transparent"
-                              }`}
-                            >
-                              <p className="text-xs font-bold text-white">
-                                Unassigned sheets
-                              </p>
-                              <p className="text-[13px] text-slate-500 mt-0.5">
-                                {grouped.unassigned.length} class sheet
-                                {grouped.unassigned.length === 1 ? "" : "s"} with no weekend
-                              </p>
-                            </button>
-                          )}
-                        </>
-                      )}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <label
+                          htmlFor="admin-regatta-selector"
+                          className="text-[11px] font-black uppercase tracking-wider text-slate-400"
+                        >
+                          Selected Regatta Event ({grouped.events.length + (grouped.unassigned.length ? 1 : 0)})
+                        </label>
+                        {selectedEventView && (
+                          <span className="text-[11px] font-medium text-slate-500 hidden sm:inline">
+                            {selectedEventView.sheets.length} class sheet{selectedEventView.sheets.length === 1 ? "" : "s"}
+                          </span>
+                        )}
+                      </div>
+                      <select
+                        id="admin-regatta-selector"
+                        value={effectiveEventSlug || ""}
+                        onChange={(e) => {
+                          setSelectedEventSlug(e.target.value);
+                          setEditingRegattaId(null);
+                          onClearSheet?.();
+                        }}
+                        className="w-full rounded-xl border border-white/10 bg-slate-950 hover:border-orange-500/40 focus:border-orange-500 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-inner focus:outline-none transition-colors"
+                      >
+                        {grouped.events.length === 0 && grouped.unassigned.length === 0 ? (
+                          <option value="">No regattas match filters</option>
+                        ) : null}
+                        {grouped.events.map((event) => {
+                          const shown = withSavedEvent(event, savedEvents[event.slug]);
+                          const status = eventStatusLabel(event);
+                          return (
+                            <option key={event.slug} value={event.slug}>
+                              {shown.name} ({shown.startDate || "No date"}) — {status}
+                            </option>
+                          );
+                        })}
+                        {grouped.unassigned.length > 0 && (
+                          <option value={UNASSIGNED_EVENT_SLUG}>
+                            Unassigned class sheets ({grouped.unassigned.length} sheet{grouped.unassigned.length === 1 ? "" : "s"} without weekend)
+                          </option>
+                        )}
+                      </select>
                     </div>
                   </div>
 
-                  {/* Detail / edit pane */}
-                  <div
-                    className={`${
-                      isExpanded && editingRegattaId ? "lg:col-span-12" : "lg:col-span-7"
-                    } glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 min-h-[320px] transition-all`}
-                  >
-                    {!selectedEvent && !editingRegattaId ? (
-                      <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
-                        <Calendar className="h-10 w-10 text-slate-600 mb-3" />
-                        <p className="text-sm font-bold text-slate-300">
-                          Select an event
-                        </p>
-                        <p className="text-xs text-slate-500 mt-1 max-w-sm">
-                          Choose an event from the list on the left to view its class sheets, edit details, or update race scores.
-                        </p>
-                      </div>
-                    ) : editingRegattaId ? (
+                  {selectedEventView && selectedEventView.slug !== UNASSIGNED_EVENT_SLUG && (
+                    <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-white/5 shrink-0">
+                      <span className="text-xs px-2.5 py-1 rounded-full font-bold bg-white/5 border border-white/10 text-slate-300">
+                        {selectedEventView.startDate || "Date TBD"}
+                        {selectedEventView.endDate ? ` to ${selectedEventView.endDate}` : ""}
+                      </span>
+                      {selectedEventView.venue && (
+                        <span className="text-xs px-2.5 py-1 rounded-full font-semibold bg-white/5 border border-white/10 text-slate-400 truncate max-w-[180px]">
+                          {selectedEventView.venue}
+                        </span>
+                      )}
+                      <span
+                        className={`text-xs px-2.5 py-1 rounded-full font-bold border ${
+                          selectedEventView.countsForRanking
+                            ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/20"
+                            : "bg-sky-500/10 text-sky-300 border-sky-500/20"
+                        }`}
+                      >
+                        {selectedEventView.countsForRanking ? "Series Ranking" : "Non-Ranking"}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Detail / edit pane */}
+                <div className="w-full glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 min-h-[320px] transition-all">
+                  {!selectedEvent && !editingRegattaId ? (
+                    <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
+                      <Calendar className="h-10 w-10 text-slate-600 mb-3" />
+                      <p className="text-sm font-bold text-slate-300">
+                        Select a regatta event
+                      </p>
+                      <p className="text-xs text-slate-500 mt-1 max-w-sm">
+                        Choose a regatta from the dropdown above to view its class sheets, edit details, or update race scores.
+                      </p>
+                    </div>
+                  ) : editingRegattaId ? (
                       <div className="space-y-5">
                         {/* Sheet Header */}
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/5">
@@ -637,18 +629,6 @@ export function AdminRegattasPanel({
                                 <span>Public page</span>
                               </Link>
                             )}
-                            <button
-                              type="button"
-                              onClick={() => setIsExpanded((prev) => !prev)}
-                              className="hidden lg:inline-flex items-center justify-center p-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-                              title={isExpanded ? "Collapse to split view" : "Expand to full width"}
-                            >
-                              {isExpanded ? (
-                                <Minimize2 className="h-3.5 w-3.5" />
-                              ) : (
-                                <Maximize2 className="h-3.5 w-3.5" />
-                              )}
-                            </button>
                             {editingRegattaId !== "new" && (
                               <button
                                 type="button"
@@ -1619,6 +1599,5 @@ export function AdminRegattasPanel({
                     ) : null}
                   </div>
                 </div>
-              </div>
   );
 }

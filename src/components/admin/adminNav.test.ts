@@ -62,13 +62,18 @@ describe("parseAdminNav", () => {
         new URLSearchParams("tab=edit&sub=results&regattaId=abc-123")
       )
     ).toEqual({
-      tab: "edit",
-      sub: "regattas",
+      tab: "regattas",
+      sub: "sailors",
       regattaId: "abc-123",
     });
   });
 
   it("reads the sheet selected on an event", () => {
+    expect(
+      parseAdminNav(
+        new URLSearchParams("tab=regattas&sheet=abc-123")
+      ).regattaId
+    ).toBe("abc-123");
     expect(
       parseAdminNav(
         new URLSearchParams("tab=edit&sub=regattas&sheet=abc-123")
@@ -88,8 +93,8 @@ describe("parseAdminNav", () => {
 describe("serializeAdminNav", () => {
   it("writes tab + sub for edit/ops", () => {
     expect(
-      serializeAdminNav({ tab: "edit", sub: "regattas" })
-    ).toBe("tab=edit&sub=regattas");
+      serializeAdminNav({ tab: "regattas", sub: "sailors" })
+    ).toBe("tab=regattas");
     expect(
       serializeAdminNav({ tab: "ops", sub: "support" })
     ).toBe("tab=ops&sub=support");
@@ -104,11 +109,18 @@ describe("serializeAdminNav", () => {
   it("includes the open class sheet on Regattas", () => {
     expect(
       serializeAdminNav({
+        tab: "regattas",
+        sub: "sailors",
+        regattaId: "r1",
+      })
+    ).toBe("tab=regattas&sheet=r1");
+    expect(
+      serializeAdminNav({
         tab: "edit",
         sub: "regattas",
         regattaId: "r1",
       })
-    ).toBe("tab=edit&sub=regattas&sheet=r1");
+    ).toBe("tab=regattas&sheet=r1");
     expect(
       serializeAdminNav({
         tab: "edit",

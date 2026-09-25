@@ -4,6 +4,7 @@
  */
 
 export type AdminActiveTab =
+  | "regattas"
   | "stats"
   | "import"
   | "edit"
@@ -36,6 +37,7 @@ export type AdminNavState = {
 };
 
 const PRIMARY_TABS: readonly AdminActiveTab[] = [
+  "regattas",
   "stats",
   "import",
   "edit",
@@ -84,7 +86,8 @@ export function isDbSubTab(sub: AdminEditSubTab): sub is AdminDbSubTab {
 
 /**
  * Parse admin nav from URLSearchParams.
- * Migrates legacy `tab=edit&sub=claims` (etc.) → `tab=ops&sub=claims`.
+ * Migrates legacy `tab=edit&sub=claims` → `tab=ops&sub=claims`,
+ * and `tab=edit&sub=regattas` → `tab=regattas`.
  */
 export function parseAdminNav(
   params: URLSearchParams | { get: (k: string) => string | null }
@@ -94,13 +97,18 @@ export function parseAdminNav(
   const regattaIdRaw =
     params.get("sheet")?.trim() || params.get("regattaId")?.trim() || null;
 
-  // Results used to be a sibling tab. A sheet now opens inside its event.
+  // Results used to be a sibling tab. A sheet now opens inside Regattas.
   if (subRaw === "results") subRaw = "regattas";
 
   // Legacy: Gold ranking primary tab → Database → Selection
   if (tabRaw === "gold") {
     tabRaw = "edit";
     subRaw = subRaw && isDbSub(subRaw) ? subRaw : "selection";
+  }
+
+  // Legacy: regattas lived under Database (edit)
+  if ((!tabRaw || tabRaw === "edit") && subRaw === "regattas") {
+    tabRaw = "regattas";
   }
 
   // Legacy: ops subs lived under Database (edit)
@@ -122,14 +130,12 @@ export function parseAdminNav(
     sub = isOpsSub(subRaw) ? subRaw : "claims";
   } else if (tab === "edit") {
     sub = isDbSub(subRaw) ? subRaw : "sailors";
-  } else if (isOpsSub(subRaw)) {
-    sub = subRaw;
-  } else if (isDbSub(subRaw)) {
-    sub = subRaw;
   }
 
   const regattaId =
-    tab === "edit" && sub === "regattas" && regattaIdRaw ? regattaIdRaw : null;
+    (tab === "regattas" || (tab === "edit" && sub === "regattas")) && regattaIdRaw
+      ? regattaIdRaw
+      : null;
 
   return { tab, sub, regattaId };
 }
@@ -141,13 +147,24 @@ export function serializeAdminNav(state: {
   regattaId?: string | null;
 }): string {
   const params = new URLSearchParams();
-  params.set("tab", state.tab);
-  if (state.tab === "edit") {
-    const sub = isDbSub(state.sub) ? state.sub : "sailors";
-    params.set("sub", sub);
-    if (sub === "regattas" && state.regattaId) {
+
+  // If state is legacy edit+regattas, serialize to primary regattas tab
+  if (state.tab === "edit" && state.sub === "regattas") {
+    params.set("tab", "regattas");
+    if (state.regattaId) {
       params.set("sheet", state.regattaId);
     }
+    return params.toString();
+  }
+
+  params.set("tab", state.tab);
+  if (state.tab === "regattas") {
+    if (state.regattaId) {
+      params.set("sheet", state.regattaId);
+    }
+  } else if (state.tab === "edit") {
+    const sub = isDbSub(state.sub) ? state.sub : "sailors";
+    params.set("sub", sub);
   } else if (state.tab === "ops") {
     params.set("sub", isOpsSub(state.sub) ? state.sub : "claims");
   }
@@ -156,7 +173,6 @@ export function serializeAdminNav(state: {
 
 export const ADMIN_DB_SUB_TABS: { id: AdminDbSubTab; label: string }[] = [
   { id: "sailors", label: "Sailors" },
-  { id: "regattas", label: "Regattas" },
   { id: "selection", label: "Selection" },
 ];
 
@@ -186,8 +202,8 @@ export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
       {
         key: "edit",
         shortLabel: "Optimist",
-        label: "Optimist & Database",
-        sublabel: "Regattas, results & selection",
+        label: "Optimist Fleet",
+        sublabel: "Sailors & selection ranking",
       },
       {
         key: "ilca",
@@ -210,8 +226,14 @@ export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
     ],
   },
   {
-    groupTitle: "Ingestion & Ops",
+    groupTitle: "Ops",
     tabs: [
+      {
+        key: "regattas",
+        shortLabel: "Regattas",
+        label: "Regattas & Events",
+        sublabel: "Events, schedules & results",
+      },
       {
         key: "import",
         shortLabel: "Import",
@@ -220,7 +242,7 @@ export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
       },
       {
         key: "ops",
-        shortLabel: "Ops",
+        shortLabel: "Claims",
         label: "Claims & Ops",
         sublabel: "Claims, coaches & support",
       },

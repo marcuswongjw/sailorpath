@@ -61,20 +61,22 @@ export function useAdminData({
 
   const sheetOpen =
     isSuperadmin &&
-    activeTab === "edit" &&
-    editSubTab === "regattas" &&
+    (activeTab === "regattas" ||
+      (activeTab === "edit" && editSubTab === "regattas")) &&
     Boolean(selectedRegattaIdForResultEdit);
 
   const needSailors =
     isSuperadmin &&
     (needsFullResults ||
       sheetOpen ||
+      activeTab === "regattas" ||
       (activeTab === "edit" &&
         (editSubTab === "sailors" || editSubTab === "selection")));
 
   const needRegattas =
     isSuperadmin &&
     (needsFullResults ||
+      activeTab === "regattas" ||
       (activeTab === "edit" &&
         (editSubTab === "regattas" || editSubTab === "selection")) ||
       (activeTab === "ops" && editSubTab === "suggestions"));
@@ -108,11 +110,10 @@ export function useAdminData({
       selectedRegattaId || "_"
     ),
     queryFn: () =>
-      fetchAdminResultsForRegatta(selectedRegattaId),
+      fetchAdminResultsForRegatta(selectedRegattaId, true),
     enabled:
       needResultsEditor &&
-      Boolean(selectedRegattaIdForResultEdit) &&
-      !needsFullResults,
+      Boolean(selectedRegattaIdForResultEdit),
   });
 
   // Query data remains cached even when its ranking tab is disabled.
@@ -122,12 +123,18 @@ export function useAdminData({
   const regattaList = regattasQuery.data ?? [];
 
   const resultsList = useMemo(() => {
+    // When a specific class sheet is open in the results editor, prioritize
+    // its detailed row results with attached individual official race finishes.
+    if (sheetOpen && resultsRegattaQuery.data) {
+      return resultsRegattaQuery.data;
+    }
     if (hasFullResults || needsFullResults) {
       return resultsAllQuery.data ?? [];
     }
     // Results editor: active regatta slice only (competitions forces a full load).
     return resultsRegattaQuery.data ?? [];
   }, [
+    sheetOpen,
     hasFullResults,
     needsFullResults,
     resultsAllQuery.data,
@@ -139,7 +146,6 @@ export function useAdminData({
     (needRegattas && regattasQuery.isFetching) ||
     (needsFullResults && resultsAllQuery.isFetching) ||
     (needResultsEditor &&
-      !needsFullResults &&
       Boolean(selectedRegattaId) &&
       resultsRegattaQuery.isFetching);
 
@@ -205,7 +211,7 @@ export function useAdminData({
         if (opts?.regattaId) {
           const rows = await queryClient.fetchQuery({
             queryKey: adminQueryKeys.resultsByRegatta(opts.regattaId),
-            queryFn: () => fetchAdminResultsForRegatta(opts.regattaId!),
+            queryFn: () => fetchAdminResultsForRegatta(opts.regattaId!, true),
           });
           if (hasFullResults) {
             queryClient.setQueryData<ResultAdmin[]>(
