@@ -19,17 +19,22 @@ export default async function SilverPage() {
   const period = currentPeriodFromSgToday();
   let initialRanked: RankedSailor[] | undefined;
   let initialError: string | null = null;
-  try {
-    initialRanked = await getCachedFleetRankings(
-      "Silver",
-      period.year,
-      period.half
-    );
-    initialRanked = toPublicRankedSailors(initialRanked);
-  } catch (e) {
-    initialError =
-      e instanceof DbUnavailableError ? e.message : "Failed to load rankings";
-    initialRanked = [];
+  // The full board can exceed the static-generation limit and fail the deploy.
+  // The browser then loads /api/rankings. Request-time renders still include it.
+  const prerendering = process.env.NEXT_PHASE === "phase-production-build";
+  if (!prerendering) {
+    try {
+      initialRanked = await getCachedFleetRankings(
+        "Silver",
+        period.year,
+        period.half
+      );
+      initialRanked = toPublicRankedSailors(initialRanked);
+    } catch (e) {
+      initialError =
+        e instanceof DbUnavailableError ? e.message : "Failed to load rankings";
+      initialRanked = [];
+    }
   }
 
   return (
