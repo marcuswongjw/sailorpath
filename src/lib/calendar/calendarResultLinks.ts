@@ -58,6 +58,10 @@ export const CALENDAR_RESULT_ALIASES: Record<string, CalendarResultAlias> = {
     slugIncludes: ["selection-trials", "2026"],
     classes: ["optimist", "ilca4"],
   },
+  "singapore-youth-sailing-championships-2026": {
+    slugIncludes: ["sysc", "2026"],
+    classes: ["optimist", "ilca4", "ilca6"],
+  },
 };
 
 export function publicResultClass(

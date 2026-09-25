@@ -87,8 +87,10 @@ describe("matchCalendarResults", () => {
     ]);
   });
 
-  it("does not treat a different regatta in the same year as a match", () => {
-    expect(matchCalendarResults("singapore-youth-sailing-championships-2026", published)).toEqual([]);
+  it("matches SYSC 2026 published rows and avoids different youth events jumping to it", () => {
+    expect(matchCalendarResults("singapore-youth-sailing-championships-2026", published).map((r) => r.slug)).toEqual([
+      "sysc-gold-mar-26-2026-03-14",
+    ]);
     expect(matchCalendarResults("csc-youth-championship-2026", published)).toEqual([]);
     expect(matchCalendarResults("eastern-seaboard-regatta-2026", published)).toEqual([]);
   });

@@ -3992,6 +3992,113 @@ export const SYSC_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
     "1 race to constitute series. 5 to 9 races: 1 discard. 10 or more races: 2 discards (RRS Appendix A). Categories with fewer than 6 entries present prizes to the 1st place only.",
   fleets: [
     {
+      fleetName: "Optimist Gold Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 10th",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Wenyu Cheng", sailNumber: "CHN 5051", gender: "F", club: "HHFLCSC" },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Ashlyn Tham", sailNumber: "SGP 4452", gender: "F", club: "PA", schoolName: "St. Hilda's Secondary School" },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Anya Alessia Zahedi", sailNumber: "SGP 159", gender: "F", club: "PA", schoolName: "Raffles Girls' School" },
+            { rank: 4, prizeTitle: "4th", sailorName: "Youjia Xu", sailNumber: "CHN 5016", gender: "M", club: "CYA" },
+            { rank: 5, prizeTitle: "5th", sailorName: "Sorawit Naksuk", sailNumber: "THA 1493", gender: "M", club: "YRAT" },
+            { rank: 6, prizeTitle: "6th", sailorName: "Rachata Sadtrakulwatanna", sailNumber: "THA 1963", gender: "M", club: "YRAT" },
+            { rank: 7, prizeTitle: "7th", sailorName: "Kevin Jun Yi Ho", sailNumber: "SGP 171", gender: "M", club: "SAF Yacht Club", schoolName: "Raffles Institution" },
+            { rank: 8, prizeTitle: "8th", sailorName: "Nathaniel Kaiden Ng", sailNumber: "SGP 3344", gender: "M", club: "PA", schoolName: "Anglo-Chinese School (Independent)" },
+            { rank: 9, prizeTitle: "9th", sailorName: "Alyssa Li Lin Wong", sailNumber: "SGP 150", gender: "F", club: "SAF Yacht Club", schoolName: "Raffles Girls' School" },
+            { rank: 10, prizeTitle: "10th", sailorName: "Xuan Ya Tong", sailNumber: "SGP 175", gender: "F", club: "Constant Wind SeaSports" },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Wenyu Cheng", sailNumber: "CHN 5051", gender: "F", club: "HHFLCSC" },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Ashlyn Tham", sailNumber: "SGP 4452", gender: "F", club: "PA", schoolName: "St. Hilda's Secondary School" },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Anya Alessia Zahedi", sailNumber: "SGP 159", gender: "F", club: "PA", schoolName: "Raffles Girls' School" },
+          ],
+        },
+        {
+          categoryName: "11–12 years",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born 2014–2015",
+          winners: [
+            { rank: 1, prizeTitle: "1st (11–12yo)", sailorName: "Ethan Zhi Ren Low", sailNumber: "SGP 78", gender: "M", club: "SAF Yacht Club", schoolName: "Tao Nan School" },
+            { rank: 2, prizeTitle: "2nd (11–12yo)", sailorName: "Zhichen Jiang", sailNumber: "CHN 8101", gender: "M", club: "HHFLCSC" },
+            { rank: 3, prizeTitle: "3rd (11–12yo)", sailorName: "Rachel Qian Hui Lim", sailNumber: "SGP 3197", gender: "F", club: "SAF Yacht Club", schoolName: "Nanyang Primary School" },
+          ],
+        },
+        {
+          categoryName: "9–10 years",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born 2016–2017",
+          winners: [
+            { rank: 1, prizeTitle: "1st (9–10yo)", sailorName: "Kirsten En Ting Tan", sailNumber: "SGP 3663", gender: "F", club: "SAF Yacht Club", schoolName: "St. Hilda's Primary School" },
+            { rank: 2, prizeTitle: "2nd (9–10yo)", sailorName: "Meera Srihari", sailNumber: "SGP 3889", gender: "F", club: "SAF Yacht Club", schoolName: "CHIJ (Katong) Primary" },
+            { rank: 3, prizeTitle: "3rd (9–10yo)", sailorName: "Abby Yan Ying Chen", sailNumber: "SGP 4729", gender: "F", club: "SAF Yacht Club", schoolName: "CHIJ (Katong) Primary" },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "Optimist Silver Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Open",
+          prizesAwarded: "1st to 10th",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Yasin Yusuf Yusfianshah", sailNumber: "SGP 3575", gender: "M", club: "SAF Yacht Club", schoolName: "St. Hilda's Primary School" },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Su Yuan", sailNumber: "CHN 3043", gender: "F", club: "SAF Yacht Club", schoolName: "CHIJ (Katong) Primary" },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Shen Jie Teo", sailNumber: "SGP 3870", gender: "M", club: "SAF Yacht Club", schoolName: "Raffles Institution" },
+            { rank: 4, prizeTitle: "4th", sailorName: "Cyra Cama", sailNumber: "SGP 29", gender: "F", club: "ONE°15", schoolName: "International French School (Singapore)" },
+            { rank: 5, prizeTitle: "5th", sailorName: "Clara Siew Ning Ng", sailNumber: "SGP 3739", gender: "F", club: "SAF Yacht Club", schoolName: "St. Hilda's Primary School" },
+            { rank: 6, prizeTitle: "6th", sailorName: "Ivor Zhuo Xi Lee", sailNumber: "SGP 3306", gender: "M", club: "SAF Yacht Club", schoolName: "Endeavour Primary School" },
+            { rank: 7, prizeTitle: "7th", sailorName: "Evan En Kai Ong", sailNumber: "SGP 3955", gender: "M", club: "SAF Yacht Club", schoolName: "St. Hilda's Primary School" },
+            { rank: 8, prizeTitle: "8th", sailorName: "Kai Jie Teo", sailNumber: "SGP 3550", gender: "M", club: "SAF Yacht Club", schoolName: "Tanjong Katong Primary School" },
+            { rank: 9, prizeTitle: "9th", sailorName: "Hayden Zi Xuan Soh", sailNumber: "SGP 3838", gender: "M", club: "SAF Yacht Club", schoolName: "White Sands Primary School" },
+            { rank: 10, prizeTitle: "10th", sailorName: "Yan Cheng Loh", sailNumber: "SGP 3717", gender: "M", club: "SAF Yacht Club", schoolName: "Nan Chiau Primary School" },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Su Yuan", sailNumber: "CHN 3043", gender: "F", club: "SAF Yacht Club", schoolName: "CHIJ (Katong) Primary" },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Cyra Cama", sailNumber: "SGP 29", gender: "F", club: "ONE°15", schoolName: "International French School (Singapore)" },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Clara Siew Ning Ng", sailNumber: "SGP 3739", gender: "F", club: "SAF Yacht Club", schoolName: "St. Hilda's Primary School" },
+          ],
+        },
+        {
+          categoryName: "9–10 years",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st (9–10yo)", sailorName: "Ivor Zhuo Xi Lee", sailNumber: "SGP 3306", gender: "M", club: "SAF Yacht Club", schoolName: "Endeavour Primary School" },
+            { rank: 2, prizeTitle: "2nd (9–10yo)", sailorName: "Evan En Kai Ong", sailNumber: "SGP 3955", gender: "M", club: "SAF Yacht Club", schoolName: "St. Hilda's Primary School" },
+            { rank: 3, prizeTitle: "3rd (9–10yo)", sailorName: "Kai Jie Teo", sailNumber: "SGP 3550", gender: "M", club: "SAF Yacht Club", schoolName: "Tanjong Katong Primary School" },
+          ],
+        },
+        {
+          categoryName: "8 & Under",
+          prizesAwarded: "1st",
+          winners: [
+            { rank: 1, prizeTitle: "1st (8&U)", sailorName: "Jae Guan Yu Toh", sailNumber: "SGP 3311", gender: "M", club: "SAF Yacht Club", schoolName: "Maris Stella High School" },
+          ],
+        },
+        {
+          categoryName: "Novice",
+          prizesAwarded: "1st to 3rd",
+          winners: [
+            { rank: 1, prizeTitle: "1st Novice", sailorName: "Joshua Hon", sailNumber: "MAS 1", gender: "M", club: "SYC", schoolName: "Victoria School" },
+            { rank: 2, prizeTitle: "2nd Novice", sailorName: "Neel Paul Behl", sailNumber: "USA 4494", gender: "M", club: "CSC", schoolName: "Zhangde Primary School" },
+            { rank: 3, prizeTitle: "3rd Novice", sailorName: "Jonathan Zi Kang Tan", sailNumber: "SGP 2", gender: "M", club: "PAssion Wave", schoolName: "Queenstown Primary School" },
+          ],
+        },
+      ],
+    },
+    {
       fleetName: "ILCA 6",
       boatClass: "ILCA 6",
       categories: [
@@ -3999,9 +4106,9 @@ export const SYSC_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
           categoryName: "Open",
           prizesAwarded: "1st to 3rd",
           winners: [
-            { rank: 1, prizeTitle: "1st", sailorName: "Austin Jia Yu Yeo", sailNumber: "221062", gender: "M", club: "SAF Yacht Club", notes: "Nett 19.0." },
-            { rank: 2, prizeTitle: "2nd", sailorName: "Aurick You Shun Leow", sailNumber: "214737", gender: "M", club: "SAF Yacht Club", notes: "Nett 22.0." },
-            { rank: 3, prizeTitle: "3rd", sailorName: "Eitan Oh", sailNumber: "224717", gender: "M", club: "SAF Yacht Club", notes: "Nett 26.0." },
+            { rank: 1, prizeTitle: "1st", sailorName: "Austin Jia Yu Yeo", sailNumber: "SGP 221062", gender: "M", club: "SAF Yacht Club" },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Aurick You Shun Leow", sailNumber: "SGP 214737", gender: "M", club: "SAF Yacht Club" },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Eitan Oh", sailNumber: "SGP 224717", gender: "M", club: "SAF Yacht Club" },
           ],
         },
         {
@@ -4009,7 +4116,7 @@ export const SYSC_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
           prizesAwarded: "1st",
           eligibilityNotes: "Top Female per NoR prize schedule (fewer than 6 female entries: 1st presented)",
           winners: [
-            { rank: 1, prizeTitle: "1st Female", sailorName: "Sarah Rui-En Yong", sailNumber: "18", gender: "F", club: "Royal Varuna Yacht Club", notes: "Rank 5 overall. Nett 47.0." },
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Sarah Rui-En Yong", sailNumber: "SGP 18", gender: "F", club: "Royal Varuna Yacht Club" },
           ],
         },
         {
@@ -4017,7 +4124,7 @@ export const SYSC_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
           prizesAwarded: "1st",
           eligibilityNotes: "Born in 2011 or later",
           winners: [
-            { rank: 1, prizeTitle: "1st (15 & under)", sailorName: "Darren Lai", sailNumber: "222257", gender: "M", club: "Royal Varuna Yacht Club", notes: "Rank 9 overall. Nett 91.0." },
+            { rank: 1, prizeTitle: "1st (15 & under)", sailorName: "Darren Lai", sailNumber: "SGP 222257", gender: "M", club: "Royal Varuna Yacht Club" },
           ],
         },
       ],
