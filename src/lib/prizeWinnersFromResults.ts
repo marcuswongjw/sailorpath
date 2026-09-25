@@ -1,6 +1,7 @@
 import { birthYear } from "@/lib/age";
 import type { PrizeCategory, PrizeWinner, RegattaPrizeFleet } from "@/lib/regattaPrizes";
 import { prizeNameKey } from "@/lib/regattaPrizes";
+import { getOptimistSailNumber } from "@/lib/optimistSailNumberMap";
 
 export type PrizeResultRow = {
   sailorName: string;
@@ -138,7 +139,6 @@ function fillCategory(
     .map((row, index) => {
       const place = index + 1;
       const year = sailorYear(row);
-      const nett = row.nettScore;
       return {
         rank: place,
         prizeTitle: placeTitle(place),
@@ -147,14 +147,13 @@ function fillCategory(
         gender: isFemale(row.gender) ? "F" : String(row.gender || "").toUpperCase() === "M" ? "M" : undefined,
         birthYear: year ?? undefined,
         schoolName: row.school ? String(row.school) : undefined,
-        notes: nett != null && Number.isFinite(Number(nett)) ? `Nett ${nett}.` : undefined,
       };
     });
 
   if (winners.length === 0) return category;
   return {
     ...category,
-    eligibilityNotes: category.eligibilityNotes || "Calculated from the published results.",
+    eligibilityNotes: category.eligibilityNotes,
     winners,
   };
 }
@@ -170,11 +169,30 @@ export function fillUnlistedPrizeWinners(
     .slice()
     .sort((a, b) => a.rank - b.rank || Number(a.nettScore ?? 1e9) - Number(b.nettScore ?? 1e9) || prizeNameKey(a.sailorName).localeCompare(prizeNameKey(b.sailorName)));
 
+  const finisherSailMap = new Map<string, string>();
+  for (const f of finishers) {
+    if (f.sailNumber) {
+      finisherSailMap.set(prizeNameKey(f.sailorName), String(f.sailNumber));
+    }
+  }
+
   return fleets
     .map((fleet) => ({
       ...fleet,
       categories: fleet.categories
-        .map((category) => fillCategory(category, finishers, eventYear))
+        .map((category) => {
+          const filled = fillCategory(category, finishers, eventYear);
+          return {
+            ...filled,
+            winners: filled.winners.map((w) => ({
+              ...w,
+              sailNumber:
+                w.sailNumber ||
+                finisherSailMap.get(prizeNameKey(w.sailorName)) ||
+                getOptimistSailNumber(w.sailorName),
+            })),
+          };
+        })
         .filter((category) => category.winners.length > 0),
     }))
     .filter((fleet) => fleet.categories.length > 0);

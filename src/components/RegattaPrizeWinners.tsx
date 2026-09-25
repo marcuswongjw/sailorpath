@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Trophy, Compass } from "lucide-react";
 import {
   prizeNameKey,
   type PrizeCategory,
   type RegattaPrizeFleet,
   type RegattaPrizeSchedule,
 } from "@/lib/regattaPrizes";
+import { getOptimistSailNumber } from "@/lib/optimistSailNumberMap";
 
 type Props = {
   schedule: RegattaPrizeSchedule;
@@ -61,6 +61,33 @@ function winnerRowTint(rank: number): string {
   return "bg-[var(--sp-warm-white)] border-[var(--sp-cool-veil)]/80";
 }
 
+/**
+ * Formats a sail number cleanly as "SGP xxxx" (e.g. SGP 2059, SGP 3120).
+ * Falls back to the master Optimist directory if missing.
+ */
+export function formatSailNumber(
+  rawSailNumber?: string | number | null,
+  sailorName?: string
+): string | null {
+  let num = rawSailNumber ? String(rawSailNumber).trim() : "";
+  if (!num && sailorName) {
+    const found = getOptimistSailNumber(sailorName);
+    if (found) num = found;
+  }
+  if (!num) return null;
+  num = num.replace(/^#\s*/, "").trim();
+
+  // If already prefixed by a 3-letter country code (e.g. SGP 2059, SGP2059, SIN 2059)
+  const codeMatch = num.match(/^([A-Za-z]{3})\s*(.+)$/);
+  if (codeMatch) {
+    const code = codeMatch[1].toUpperCase() === "SIN" ? "SGP" : codeMatch[1].toUpperCase();
+    return `${code} ${codeMatch[2].trim()}`;
+  }
+
+  // Pure digits or code -> "SGP <num>"
+  return `SGP ${num}`;
+}
+
 function WinnerRow({
   w,
   profileHandles,
@@ -70,11 +97,13 @@ function WinnerRow({
 }) {
   const { bg, fg } = medalStyle(w.rank);
   const tint = winnerRowTint(w.rank);
+  const sailNo = formatSailNumber(w.sailNumber, w.sailorName);
+
   return (
     <div
       className={`rounded-xl border px-3 py-2.5 text-xs transition-colors shadow-xs ${tint}`}
     >
-      {/* Primary line: Medal, Sailor Name (Prominent & Non-truncated), and Score/Note badge */}
+      {/* Primary line: Medal, Sailor Name, and Formatted Sail Number */}
       <div className="flex items-center justify-between gap-2 min-w-0">
         <div className="flex items-center gap-2 min-w-0 flex-1">
           <span
@@ -102,40 +131,12 @@ function WinnerRow({
           </div>
         </div>
 
-        {w.notes && (
-          <span className="text-[10px] sm:text-[11px] font-bold text-harbour bg-harbour/10 border border-harbour/25 rounded-md px-2 py-0.5 shrink-0 whitespace-nowrap">
-            {w.notes}
+        {sailNo && (
+          <span className="font-mono font-semibold text-[11px] sm:text-xs text-slate-600 tabular-nums shrink-0 whitespace-nowrap">
+            {sailNo}
           </span>
         )}
       </div>
-
-      {/* Subline: Club, School, Sail Number metadata */}
-      {(w.club || w.schoolName || w.sailNumber) && (
-        <div className="flex items-center gap-1.5 flex-wrap text-[10px] sm:text-[11px] text-slate-700 font-medium mt-1 pl-8">
-          {w.club && (
-            <span className="inline-flex items-center gap-1 text-slate-700">
-              <Compass className="h-2.5 w-2.5 shrink-0 text-harbour" aria-hidden />
-              <span>{w.club}</span>
-            </span>
-          )}
-          {w.club && (w.sailNumber || w.schoolName) && (
-            <span className="text-slate-400">·</span>
-          )}
-          {w.sailNumber && (
-            <span className="font-mono font-bold text-charcoal tabular-nums">
-              #{w.sailNumber}
-            </span>
-          )}
-          {w.sailNumber && w.schoolName && (
-            <span className="text-slate-400">·</span>
-          )}
-          {w.schoolName && (
-            <span className="text-slate-600 font-normal">
-              {w.schoolName}
-            </span>
-          )}
-        </div>
-      )}
     </div>
   );
 }
@@ -172,7 +173,7 @@ function CategoryCard({
         </span>
       </div>
 
-      {cat.eligibilityNotes && (
+      {cat.eligibilityNotes && cat.eligibilityNotes !== "Calculated from the published results." && (
         <p className="px-3.5 py-1.5 text-[11px] text-[var(--sp-slate-soft)] italic leading-snug border-b border-[var(--sp-cool-veil)]/60">
           {cat.eligibilityNotes}
         </p>
@@ -238,17 +239,13 @@ export function RegattaPrizeWinners({ schedule, filterFleet, profileHandles }: P
 
   return (
     <section
-      aria-label="Official NoR Prize Winners"
+      aria-label="Regatta Prize Winners & Podiums"
       className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs overflow-hidden"
     >
       {/* ── Header ─────────────────────────────────────────────────── */}
       <div className="px-4 sm:px-6 pt-5 pb-4 border-b border-[var(--sp-cool-veil)] space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 px-2.5 py-0.5 text-xs font-bold text-amber-800">
-              <Trophy className="h-3.5 w-3.5 text-amber-600" />
-              Official Notice of Race (NoR) Prizes
-            </div>
             <h2 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] tracking-tight leading-tight">
               Verified Prize Winners &amp; Podiums
             </h2>
