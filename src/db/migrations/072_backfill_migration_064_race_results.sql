@@ -67,10 +67,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 1, 7, 5, false, false,
-    '1', 'M', NULL, 'Royal Varuna Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -126,10 +126,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 2, 27, 17, false, false,
-    '221058', 'M', 'Anglo-Chinese School (Independent)', 'Royal Varuna Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -185,10 +185,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 3, 23, 17, false, false,
-    '224717', 'M', 'Raffles Institution', 'SAF Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -244,10 +244,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 4, 39, 22, false, false,
-    '158031', 'M', NULL, 'Constant Wind SeaSports', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -303,10 +303,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 5, 42, 30, false, false,
-    '221689', 'F', 'Nanyang Polytechnic', 'Royal Varuna Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -362,10 +362,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 6, 44, 31, false, false,
-    '25', 'F', 'Nanyang Polytechnic', 'SAF Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -421,10 +421,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 7, 49, 32, false, false,
-    '2', 'M', 'Anglo-Chinese School (Independent)', 'SAF Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -480,10 +480,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 8, 50, 38, false, false,
-    '1978', 'M', 'Victoria School', 'ONE°15 Marina', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -539,10 +539,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 9, 50, 38, false, false,
-    '221686', 'M', 'Anderson Serangoon Junior College', 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -598,10 +598,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 10, 48, 38, false, false,
-    '222257', 'M', 'St. Joseph''s Institution', 'Royal Varuna Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -657,10 +657,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 11, 57, 43, false, false,
-    '51', 'M', NULL, 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -716,10 +716,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 12, 64, 50, false, false,
-    '214813', 'M', 'St. Joseph''s Institution', 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -775,10 +775,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 13, 70, 55, false, false,
-    '221931', 'M', NULL, 'Changi Sailing Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -834,10 +834,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 14, 78, 63, false, false,
-    '214848', 'M', 'Anglo-Chinese School (Independent)', 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -893,10 +893,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 15, 78, 64, false, false,
-    '224379', 'F', 'Ngee Ann Polytechnic', 'SAF Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -952,10 +952,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 16, 102, 85, true, false,
-    '67', 'M', 'Raffles Institution', 'SAF Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1055,10 +1055,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 1, 37, 19, false, false,
-    '221062', 'M', 'Anglo-Chinese School (Independent)', 'SAF Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1144,10 +1144,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 2, 45, 22, false, false,
-    '214737', 'M', 'Raffles Institution', 'SAF Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1233,10 +1233,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 3, 39, 26, false, false,
-    '224717', 'M', 'Raffles Institution', 'SAF Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1322,10 +1322,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 4, 46, 34, false, false,
-    '221058', 'M', 'Anglo-Chinese School (Independent)', 'Royal Varuna Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1411,10 +1411,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 5, 67, 47, false, false,
-    '18', 'F', 'Nanyang Polytechnic', 'Royal Varuna Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1500,10 +1500,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 6, 65, 49, false, false,
-    '25', 'F', NULL, 'SAF Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1589,10 +1589,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 7, 110, 80, false, false,
-    '214664', 'M', NULL, 'Changi Sailing Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1678,10 +1678,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 8, 117, 87, false, false,
-    '185201', 'M', 'St. Joseph''s Institution', 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1767,10 +1767,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 9, 119, 91, false, false,
-    '222257', 'M', 'St. Joseph''s Institution', 'Royal Varuna Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1856,10 +1856,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 10, 118, 94, false, false,
-    '214848', 'M', 'Anglo-Chinese School (Independent)', 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -1945,10 +1945,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 11, 125, 98, false, false,
-    '214813', 'M', 'St. Joseph''s Institution', 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2034,10 +2034,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 12, 131, 100, false, false,
-    '224379', 'F', 'Ngee Ann Polytechnic', 'SAF Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2123,10 +2123,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 13, 133, 105, false, false,
-    '1978', 'M', 'Victoria School', 'ONE°15 Marina', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2212,10 +2212,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 14, 146, 115, false, false,
-    '214873', 'F', 'Dunman High School', 'Royal Varuna Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2301,10 +2301,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 15, 169, 135, false, false,
-    '221686', 'M', 'Anderson Serangoon Junior College', 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2390,10 +2390,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 16, 177, 145, false, false,
-    '221690', 'F', 'Tanjong Katong Girls'' School', 'PAssion Wave', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2523,10 +2523,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 1, 8, 5, false, false,
-    '225225', 'F', NULL, 'SAF Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2577,10 +2577,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 2, 13, 8, false, false,
-    '1', 'M', NULL, 'Royal Varuna Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2631,10 +2631,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 3, 16, 11, false, false,
-    '224245', 'F', 'Raffles Institution', 'PAssion Wave', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2685,10 +2685,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 4, 24, 14, false, false,
-    '221689', 'F', 'Nanyang Polytechnic', 'Royal Varuna Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2739,10 +2739,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 5, 26, 18, false, false,
-    '224717', 'F', 'Raffles Institution', 'SAF Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2793,10 +2793,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 6, 27, 20, false, false,
-    '221062', 'M', 'Anglo-Chinese School (Independent)', 'SAF Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2847,10 +2847,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 7, 36, 27, false, false,
-    '221058', 'M', 'Anglo-Chinese School (Independent)', 'Royal Varuna Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2901,10 +2901,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 8, 41, 31, false, false,
-    '224379', 'F', 'Ngee Ann Polytechnic', 'SAF Yacht Club', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -2955,10 +2955,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 9, 43, 31, false, false,
-    '228158', 'M', 'St. Joseph''s Institution', 'PAssion Wave', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3009,10 +3009,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 10, 48, 36, false, false,
-    '222257', 'M', 'St. Joseph''s Institution', 'Royal Varuna Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3063,10 +3063,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 11, 50, 39, false, false,
-    '214873', 'F', 'Dunman High School', 'PAssion Wave', now(), now()
+    'F', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3161,10 +3161,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 1, 9, 6, false, false,
-    '224714', 'M', NULL, 'Changi Sailing Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3215,10 +3215,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 2, 15, 10, false, false,
-    '193939', 'M', NULL, 'Constant Wind SeaSports', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3269,10 +3269,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 3, 14, 10, false, false,
-    '224860', 'M', NULL, 'Changi Sailing Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3323,10 +3323,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 4, 18, 13, false, false,
-    '222436', 'M', NULL, 'Constant Wind SeaSports', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3377,10 +3377,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 5, 19, 14, false, false,
-    '193945', 'M', NULL, 'Constant Wind SeaSports', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3431,10 +3431,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 6, 32, 24, false, false,
-    '218246', 'M', NULL, 'SAF Yacht Club', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (
@@ -3485,10 +3485,10 @@ BEGIN
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
     id, regatta_id, sailor_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
-    sail_number, sailor_gender, school, club, created_at, updated_at
+    gender, verification_status, created_at, updated_at
   ) VALUES (
     v_res_id, v_reg_id, v_sailor_id, 7, 40, 32, true, false,
-    '158031', 'M', NULL, 'Constant Wind SeaSports', now(), now()
+    'M', 'verified', now(), now()
   );
 
   INSERT INTO public.regatta_race_results (

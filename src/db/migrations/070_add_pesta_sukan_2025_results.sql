@@ -71,19 +71,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 1, 10.0, 10.0, NULL, '149',
-    'SAFYC', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 1, 10.0, 10.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 1, 1.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 2, 2.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 7, 7.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 1.0, '1', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 2.0, '2', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 7.0, '7', false, NULL, now(), now());
 
   -- Competitor: Sean Kok Wei Kum (Rank 2)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Sean Kok Wei Kum')) LIMIT 1;
@@ -107,19 +107,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 2, 10.0, 10.0, NULL, '142',
-    'SAFYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 2, 10.0, 10.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 4, 4.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 5, 5.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 1, 1.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 4.0, '4', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 5.0, '5', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 1.0, '1', false, NULL, now(), now());
 
   -- Competitor: Anya Alessia Zahedi (Rank 3)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Anya Alessia Zahedi')) LIMIT 1;
@@ -143,19 +143,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 3, 19.0, 19.0, '12&U', '159',
-    'PA', 'Tao Nan School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 3, 19.0, 19.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 2, 2.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 3, 3.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 14, 14.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 2.0, '2', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 3.0, '3', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 14.0, '14', false, NULL, now(), now());
 
   -- Competitor: Lyric Yuxuan Li (Rank 4)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Lyric Yuxuan Li')) LIMIT 1;
@@ -179,19 +179,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 4, 20.0, 20.0, NULL, '728',
-    'CSC', 'Raffles Girls'' School (Secondary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 4, 20.0, 20.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 17, 17.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 1, 1.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 2, 2.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 17.0, '17', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 1.0, '1', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 2.0, '2', false, NULL, now(), now());
 
   -- Competitor: Mikaela Rae Ng (Rank 5)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Mikaela Rae Ng')) LIMIT 1;
@@ -215,19 +215,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 5, 27.0, 27.0, NULL, '151',
-    'PA', 'Raffles Girls'' School (Secondary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 5, 27.0, 27.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 18, 18.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 4, 4.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 5, 5.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 18.0, '18', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 4.0, '4', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 5.0, '5', false, NULL, now(), now());
 
   -- Competitor: Zeph Wan (Rank 6)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Zeph Wan')) LIMIT 1;
@@ -251,19 +251,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 6, 28.0, 28.0, NULL, '122',
-    'SAFYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 6, 28.0, 28.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 3, 3.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 12, 12.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 13, 13.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 3.0, '3', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 12.0, '12', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 13.0, '13', false, NULL, now(), now());
 
   -- Competitor: Desiree Yuet Chi Lee (Rank 7)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Desiree Yuet Chi Lee')) LIMIT 1;
@@ -287,19 +287,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 7, 28.0, 28.0, NULL, '165',
-    'RVYC', 'Tanjong Katong Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 7, 28.0, 28.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 7, 7.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 15, 15.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 6, 6.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 7.0, '7', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 15.0, '15', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 6.0, '6', false, NULL, now(), now());
 
   -- Competitor: Ashlyn Tham (Rank 8)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ashlyn Tham')) LIMIT 1;
@@ -323,19 +323,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 8, 32.0, 32.0, NULL, '4452',
-    'RM', 'St. Hilda''s Secondary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 8, 32.0, 32.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 9, 9.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 8, 8.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 15, 15.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 9.0, '9', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 8.0, '8', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 15.0, '15', false, NULL, now(), now());
 
   -- Competitor: Teck Woon Pee (Rank 9)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Teck Woon Pee')) LIMIT 1;
@@ -359,19 +359,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 9, 34.0, 34.0, NULL, '164',
-    'SAFYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 9, 34.0, 34.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 20, 20.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 6, 6.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 8, 8.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 20.0, '20', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 6.0, '6', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 8.0, '8', false, NULL, now(), now());
 
   -- Competitor: Ethan Han Wei Chia (Rank 10)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ethan Han Wei Chia')) LIMIT 1;
@@ -395,19 +395,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 10, 37.0, 37.0, NULL, '121',
-    'SAFYC', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 10, 37.0, 37.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 24, 24.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 10, 10.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 3, 3.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 24.0, '24', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 10.0, '10', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 3.0, '3', false, NULL, now(), now());
 
   -- Competitor: Julien Christian Petracco (Rank 11)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Julien Christian Petracco')) LIMIT 1;
@@ -431,19 +431,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 11, 38.0, 38.0, NULL, '3102',
-    'SAFYC', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 11, 38.0, 38.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 11, 11.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 11, 11.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 16, 16.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 11.0, '11', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 11.0, '11', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 16.0, '16', false, NULL, now(), now());
 
   -- Competitor: Nathaniel Kaiden Ng (Rank 12)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Nathaniel Kaiden Ng')) LIMIT 1;
@@ -467,19 +467,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 12, 46.0, 46.0, NULL, '3344',
-    'PA', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 12, 46.0, 46.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 6, 6.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 14, 14.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 26, 26.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 6.0, '6', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 14.0, '14', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 26.0, '26', false, NULL, now(), now());
 
   -- Competitor: Rahul Rajakanth (Rank 13)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Rahul Rajakanth')) LIMIT 1;
@@ -503,19 +503,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 13, 54.0, 54.0, NULL, '2006',
-    'CWSS', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 13, 54.0, 54.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 27, 27.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 17, 17.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 10, 10.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 27.0, '27', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 17.0, '17', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 10.0, '10', false, NULL, now(), now());
 
   -- Competitor: Ethan Zhi Ren Low (Rank 14)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ethan Zhi Ren Low')) LIMIT 1;
@@ -539,19 +539,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 14, 57.0, 57.0, '12&U', '3855',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 14, 57.0, 57.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 38, 38.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 7, 7.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 12, 12.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 38.0, '38', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 7.0, '7', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 12.0, '12', false, NULL, now(), now());
 
   -- Competitor: Ashlea Tham (Rank 15)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ashlea Tham')) LIMIT 1;
@@ -575,19 +575,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 15, 59.0, 59.0, NULL, '175',
-    'RM', 'Tanjong Katong Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 15, 59.0, 59.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 42, 42.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 13, 13.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 4, 4.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 42.0, '42', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 13.0, '13', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 4.0, '4', false, NULL, now(), now());
 
   -- Competitor: Jairus Xin Jie Teo (Rank 16)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jairus Xin Jie Teo')) LIMIT 1;
@@ -611,19 +611,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 16, 65.0, 65.0, NULL, '4073',
-    'PA', 'St. Andrew''s Secondary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 16, 65.0, 65.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 25, 25.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 16, 16.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 24, 24.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 25.0, '25', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 16.0, '16', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 24.0, '24', false, NULL, now(), now());
 
   -- Competitor: Alyssa Li Lin Wong (Rank 17)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Alyssa Li Lin Wong')) LIMIT 1;
@@ -647,19 +647,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 17, 69.0, 69.0, '12&U', '150',
-    'SAFYC', 'Haig Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 17, 69.0, 69.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 16, 16.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 21, 21.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 32, 32.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 16.0, '16', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 21.0, '21', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 32.0, '32', false, NULL, now(), now());
 
   -- Competitor: Kirsten En Ting Tan (Rank 18)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kirsten En Ting Tan')) LIMIT 1;
@@ -683,19 +683,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 18, 84.0, 84.0, '12&U', '3663',
-    'SAFYC', 'St. Hilda''s Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 18, 84.0, 84.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 13, 13.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 9, 9.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 62, 62.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 13.0, '13', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, '9', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 62.0, '62', false, NULL, now(), now());
 
   -- Competitor: Dylan Yue Teng Goh (Rank 19)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Dylan Yue Teng Goh')) LIMIT 1;
@@ -719,19 +719,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 19, 90.0, 90.0, NULL, '3800',
-    'SAFYC', 'Victoria School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 19, 90.0, 90.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 55, 55.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 18, 18.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 17, 17.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 55.0, '55', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 18.0, '18', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 17.0, '17', false, NULL, now(), now());
 
   -- Competitor: Shin Chen Rui Lin (Rank 20)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Shin Chen Rui Lin')) LIMIT 1;
@@ -755,19 +755,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 20, 104.0, 104.0, '12&U', '3333',
-    'SAFYC', 'Horizon Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 20, 104.0, 104.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 44, 44.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 19, 19.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 41, 41.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 44.0, '44', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 19.0, '19', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 41.0, '41', false, NULL, now(), now());
 
   -- Competitor: Germaine Sim (Rank 21)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Germaine Sim')) LIMIT 1;
@@ -791,19 +791,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 21, 111.0, 111.0, NULL, '3177',
-    'RVYC', 'Tanjong Katong Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 21, 111.0, 111.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 8, 8.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 20, 20.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 8.0, '8', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 20.0, '20', false, NULL, now(), now());
 
   -- Competitor: Darian Huang (Rank 22)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Darian Huang')) LIMIT 1;
@@ -827,19 +827,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 22, 112.0, 112.0, '12&U', '3700',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 22, 112.0, 112.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 10, 10.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 19, 19.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 10.0, '10', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 19.0, '19', false, NULL, now(), now());
 
   -- Competitor: Kevin Jun Yi Ho (Rank 23)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kevin Jun Yi Ho')) LIMIT 1;
@@ -863,19 +863,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 23, 117.0, 117.0, NULL, '3118',
-    'SAFYC', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 23, 117.0, 117.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 23, 23.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 11, 11.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 23.0, '23', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 11.0, '11', false, NULL, now(), now());
 
   -- Competitor: Zhi Tong Wai (Rank 24)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Zhi Tong Wai')) LIMIT 1;
@@ -899,19 +899,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 24, 118.0, 118.0, NULL, '157',
-    'SAFYC', 'CHIJ Secondary (Toa Payoh)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 24, 118.0, 118.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 5, 5.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 30, 30.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 5.0, '5', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 30.0, '30', false, NULL, now(), now());
 
   -- Competitor: Joel Zhuo Le Khoo (Rank 25)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Joel Zhuo Le Khoo')) LIMIT 1;
@@ -935,19 +935,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 25, 127.0, 127.0, '12&U', '4730',
-    'SAFYC', 'Nanyang Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 25, 127.0, 127.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 59, 59.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 20, 20.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 48, 48.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, '59', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 20.0, '20', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 48.0, '48', false, NULL, now(), now());
 
   -- Competitor: Jaye Xi En Low (Rank 26)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jaye Xi En Low')) LIMIT 1;
@@ -971,19 +971,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 26, 129.0, 129.0, '12&U', '3179',
-    'PA', 'Endeavour Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 26, 129.0, 129.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 19, 19.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 27, 27.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 19.0, '19', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 27.0, '27', false, NULL, now(), now());
 
   -- Competitor: Damien Huang (Rank 27)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Damien Huang')) LIMIT 1;
@@ -1007,19 +1007,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 27, 130.0, 130.0, NULL, '3300',
-    'SAFYC', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 27, 130.0, 130.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 12, 12.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 35, 35.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 12.0, '12', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 35.0, '35', false, NULL, now(), now());
 
   -- Competitor: Elliot Goh (Rank 28)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Elliot Goh')) LIMIT 1;
@@ -1043,19 +1043,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 28, 130.0, 130.0, '12&U', '3103',
-    'SAFYC', 'Henry Park Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 28, 130.0, 130.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 22, 22.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 25, 25.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 22.0, '22', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 25.0, '25', false, NULL, now(), now());
 
   -- Competitor: Kaelyn Dayna Soh Zhi Yi (Rank 29)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kaelyn Dayna Soh Zhi Yi')) LIMIT 1;
@@ -1079,19 +1079,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 29, 133.0, 133.0, NULL, '3113',
-    'SAFYC', 'Raffles Girls'' School (Secondary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 29, 133.0, 133.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 41, 41.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 9, 9.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 41.0, '41', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 9.0, '9', false, NULL, now(), now());
 
   -- Competitor: Jeremiah Rui Feng Ong (Rank 30)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jeremiah Rui Feng Ong')) LIMIT 1;
@@ -1115,19 +1115,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 30, 134.0, 134.0, '12&U', '3373',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 30, 134.0, 134.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 29, 29.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 22.0, 'SCP', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 29.0, '29', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 22.0, 'SCP', false, 'SCP', now(), now());
 
   -- Competitor: Elijah Ong (Rank 31)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Elijah Ong')) LIMIT 1;
@@ -1151,19 +1151,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 31, 138.0, 138.0, '12&U', '140',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 31, 138.0, 138.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 26, 26.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 29, 29.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 26.0, '26', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 29.0, '29', false, NULL, now(), now());
 
   -- Competitor: Nicole Jing Chen Wong (Rank 32)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Nicole Jing Chen Wong')) LIMIT 1;
@@ -1187,19 +1187,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 32, 141.0, 141.0, '12&U', '3006',
-    'SAFYC', 'CHIJ Our Lady Queen of Peace', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 32, 141.0, 141.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 35, 35.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 23, 23.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 35.0, '35', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 23.0, '23', false, NULL, now(), now());
 
   -- Competitor: Siti Ra'idah Binte Mohd Airudin (Rank 33)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Siti Ra''idah Binte Mohd Airudin')) LIMIT 1;
@@ -1223,19 +1223,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 33, 145.0, 145.0, '12&U', '112',
-    'PA', 'Northland Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 33, 145.0, 145.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 15, 15.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 47, 47.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 15.0, '15', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 47.0, '47', false, NULL, now(), now());
 
   -- Competitor: Ethan Lee (Rank 34)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ethan Lee')) LIMIT 1;
@@ -1259,19 +1259,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 34, 145.0, 145.0, NULL, '83',
-    'PA', 'Victoria School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 34, 145.0, 145.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 40, 40.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 22, 22.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 40.0, '40', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 22.0, '22', false, NULL, now(), now());
 
   -- Competitor: Edrei En Xu Ong (Rank 35)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Edrei En Xu Ong')) LIMIT 1;
@@ -1295,19 +1295,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 35, 149.0, 149.0, '12&U', '3957',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 35, 149.0, 149.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 45, 45.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 21, 21.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 45.0, '45', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 21.0, '21', false, NULL, now(), now());
 
   -- Competitor: Zachary Zhi En Low (Rank 36)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Zachary Zhi En Low')) LIMIT 1;
@@ -1331,19 +1331,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 36, 150.0, 150.0, '12&U', '3369',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 36, 150.0, 150.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 39, 39.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 28, 28.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 39.0, '39', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 28.0, '28', false, NULL, now(), now());
 
   -- Competitor: Padmaeja Rajakanth (Rank 37)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Padmaeja Rajakanth')) LIMIT 1;
@@ -1367,19 +1367,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 37, 150.0, 150.0, '12&U', '2022',
-    'CWSS', 'Raffles Girls'' Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 37, 150.0, 150.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 30, 30.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 37, 37.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 30.0, '30', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 37.0, '37', false, NULL, now(), now());
 
   -- Competitor: Jedd Zhi Hao Lam (Rank 38)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jedd Zhi Hao Lam')) LIMIT 1;
@@ -1403,19 +1403,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 38, 150.0, 150.0, '12&U', '2000',
-    'CWSS', 'Henry Park Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 38, 150.0, 150.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 31, 31.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 36, 36.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 31.0, '31', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 36.0, '36', false, NULL, now(), now());
 
   -- Competitor: Olivia Ting Jia Cheong (Rank 39)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Olivia Ting Jia Cheong')) LIMIT 1;
@@ -1439,19 +1439,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 39, 151.0, 151.0, '12&U', '3002',
-    'SAFYC', 'Nan Hua Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 39, 151.0, 151.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 28, 28.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 40, 40.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 28.0, '28', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 40.0, '40', false, NULL, now(), now());
 
   -- Competitor: Herng Yee Tan (Rank 40)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Herng Yee Tan')) LIMIT 1;
@@ -1475,19 +1475,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 40, 153.0, 153.0, NULL, '3000',
-    'SAFYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 40, 153.0, 153.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 14, 14.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 56, 56.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 14.0, '14', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 56.0, '56', false, NULL, now(), now());
 
   -- Competitor: Luke Yi Jie Loh (Rank 41)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Luke Yi Jie Loh')) LIMIT 1;
@@ -1511,19 +1511,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 41, 153.0, 153.0, '12&U', '3322',
-    'SAFYC', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 41, 153.0, 153.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 37, 37.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 33, 33.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 37.0, '37', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 33.0, '33', false, NULL, now(), now());
 
   -- Competitor: Lavene Rui Xuan Lim (Rank 42)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Lavene Rui Xuan Lim')) LIMIT 1;
@@ -1547,19 +1547,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 42, 163.0, 163.0, '12&U', '3553',
-    'SAFYC', 'Pasir Ris Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 42, 163.0, 163.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 49, 49.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 31, 31.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 49.0, '49', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 31.0, '31', false, NULL, now(), now());
 
   -- Competitor: Charlene Heng Ning Yong (Rank 43)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Charlene Heng Ning Yong')) LIMIT 1;
@@ -1583,19 +1583,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 43, 164.0, 164.0, '12&U', '766',
-    'CSC', 'Pasir Ris Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 43, 164.0, 164.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 36, 36.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 45, 45.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 36.0, '36', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 45.0, '45', false, NULL, now(), now());
 
   -- Competitor: Joseph Kia Guan Tan (Rank 44)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Joseph Kia Guan Tan')) LIMIT 1;
@@ -1619,19 +1619,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 44, 166.0, 166.0, '12&U', '3688',
-    'SAFYC', 'St. Joseph''s Institution Junior', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 44, 166.0, 166.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 33, 33.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 50, 50.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 33.0, '33', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 50.0, '50', false, NULL, now(), now());
 
   -- Competitor: Jared Soon Kit Liew (Rank 45)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jared Soon Kit Liew')) LIMIT 1;
@@ -1655,19 +1655,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 45, 172.0, 172.0, NULL, '2002',
-    'PA', 'Ngee Ann Secondary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 45, 172.0, 172.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 34, 34.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 55, 55.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 34.0, '34', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 55.0, '55', false, NULL, now(), now());
 
   -- Competitor: Rui Ling Teo (Rank 46)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Rui Ling Teo')) LIMIT 1;
@@ -1691,19 +1691,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 46, 173.0, 173.0, '12&U', '3820',
-    'SAFYC', 'CHIJ (Katong) Primary', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 46, 173.0, 173.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 48, 48.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 42, 42.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 48.0, '48', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 42.0, '42', false, NULL, now(), now());
 
   -- Competitor: Joash Kok Jit Yin (Rank 47)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Joash Kok Jit Yin')) LIMIT 1;
@@ -1727,19 +1727,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 47, 175.0, 175.0, NULL, '3057',
-    'SAFYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 47, 175.0, 175.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 21, 21.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 71, 71.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 21.0, '21', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 71.0, '71', false, NULL, now(), now());
 
   -- Competitor: Aaron Zhiyi Chiang (Rank 48)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Aaron Zhiyi Chiang')) LIMIT 1;
@@ -1763,19 +1763,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 48, 175.0, 175.0, '12&U', '3128',
-    'SAFYC', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 48, 175.0, 175.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 32, 32.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 60, 60.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 32.0, '32', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 60.0, '60', false, NULL, now(), now());
 
   -- Competitor: Timothy Kai Zhe Ng (Rank 49)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Timothy Kai Zhe Ng')) LIMIT 1;
@@ -1799,19 +1799,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 49, 175.0, 175.0, '12&U', '2023',
-    'CWSS', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 49, 175.0, 175.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 54, 54.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 38.0, 'SCP', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 54.0, '54', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 38.0, 'SCP', false, 'SCP', now(), now());
 
   -- Competitor: Yuk Pin Lim (Rank 50)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yuk Pin Lim')) LIMIT 1;
@@ -1835,19 +1835,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 50, 177.0, 177.0, '12&U', '3880',
-    'SAFYC', 'Ai Tong School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 50, 177.0, 177.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 43, 43.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 51, 51.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 43.0, '43', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 51.0, '51', false, NULL, now(), now());
 
   -- Competitor: Gerome Sim (Rank 51)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Gerome Sim')) LIMIT 1;
@@ -1871,19 +1871,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 51, 178.0, 178.0, '12&U', '3188',
-    'RVYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 51, 178.0, 178.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 57, 57.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 38, 38.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 57.0, '57', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 38.0, '38', false, NULL, now(), now());
 
   -- Competitor: Kyle Jeremy Zhi Jun Soh (Rank 52)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kyle Jeremy Zhi Jun Soh')) LIMIT 1;
@@ -1907,19 +1907,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 52, 181.0, 181.0, '12&U', '3183',
-    'SAFYC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 52, 181.0, 181.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 52, 52.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 46, 46.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 52.0, '52', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 46.0, '46', false, NULL, now(), now());
 
   -- Competitor: Lucas Rui Kai Lim (Rank 53)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Lucas Rui Kai Lim')) LIMIT 1;
@@ -1943,19 +1943,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 53, 191.0, 191.0, NULL, '3355',
-    'SAFYC', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 53, 191.0, 191.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 64, 64.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 44, 44.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 64.0, '64', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 44.0, '44', false, NULL, now(), now());
 
   -- Competitor: Gloria Yen Rui Kwok (Rank 54)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Gloria Yen Rui Kwok')) LIMIT 1;
@@ -1979,19 +1979,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 54, 193.0, 193.0, '12&U', '2004',
-    'CWSS', 'CHIJ (Katong) Primary', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 54, 193.0, 193.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 58, 58.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 52, 52.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 58.0, '58', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 52.0, '52', false, NULL, now(), now());
 
   -- Competitor: Yvette Yi Min Chow (Rank 55)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yvette Yi Min Chow')) LIMIT 1;
@@ -2015,19 +2015,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 55, 194.0, 194.0, '12&U, N', '3151',
-    'SAFYC', 'Pei Hwa Presbyterian Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 55, 194.0, 194.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 68, 68.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 43, 43.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 68.0, '68', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 43.0, '43', false, NULL, now(), now());
 
   -- Competitor: Joel Han Sheng Ong (Rank 56)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Joel Han Sheng Ong')) LIMIT 1;
@@ -2051,19 +2051,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 56, 196.0, 196.0, '12&U', '2014',
-    'CWSS', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 56, 196.0, 196.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 74, 74.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 39, 39.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 74.0, '74', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 39.0, '39', false, NULL, now(), now());
 
   -- Competitor: Gemma Huan Heng Chen (Rank 57)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Gemma Huan Heng Chen')) LIMIT 1;
@@ -2087,19 +2087,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 57, 196.0, 196.0, NULL, '4729',
-    'PA', 'Raffles Girls'' School (Secondary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 57, 196.0, 196.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 50, 50.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 63, 63.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 50.0, '50', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 63.0, '63', false, NULL, now(), now());
 
   -- Competitor: Quintan Rupert Low (Rank 58)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Quintan Rupert Low')) LIMIT 1;
@@ -2123,19 +2123,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 58, 197.0, 197.0, '12&U, N', '4681',
-    'SAFYC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 58, 197.0, 197.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 65, 65.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 49, 49.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 65.0, '65', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 49.0, '49', false, NULL, now(), now());
 
   -- Competitor: Rupert Chang (Rank 59)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Rupert Chang')) LIMIT 1;
@@ -2159,19 +2159,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 59, 198.0, 198.0, '12&U', '4722',
-    'PA', 'Anglo-Chinese School (Primary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 59, 198.0, 198.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 51, 51.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 64, 64.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 51.0, '51', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 64.0, '64', false, NULL, now(), now());
 
   -- Competitor: Matthew Qin Hao Chiam (Rank 60)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Matthew Qin Hao Chiam')) LIMIT 1;
@@ -2195,19 +2195,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 60, 198.0, 198.0, '12&U, N', '3606',
-    'SAFYC', 'Ai Tong School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 60, 198.0, 198.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 61, 61.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 54, 54.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 61.0, '61', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 54.0, '54', false, NULL, now(), now());
 
   -- Competitor: Kenji Huan Zhe Tan (Rank 61)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kenji Huan Zhe Tan')) LIMIT 1;
@@ -2231,19 +2231,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 61, 199.0, 199.0, '12&U', '3999',
-    'SAFYC', 'Anderson Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 61, 199.0, 199.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 63, 63.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 53, 53.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 63.0, '63', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 53.0, '53', false, NULL, now(), now());
 
   -- Competitor: Jude Nathan Wong (Rank 62)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jude Nathan Wong')) LIMIT 1;
@@ -2267,19 +2267,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 62, 201.0, 201.0, '12&U', '3495',
-    'SAFYC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 62, 201.0, 201.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 60, 60.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 58, 58.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 60.0, '60', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 58.0, '58', false, NULL, now(), now());
 
   -- Competitor: Joshua Zhuo Xi Khoo (Rank 63)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Joshua Zhuo Xi Khoo')) LIMIT 1;
@@ -2303,19 +2303,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 63, 202.0, 202.0, NULL, '4728',
-    'SAFYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 63, 202.0, 202.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 62, 62.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 57, 57.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 62.0, '62', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 57.0, '57', false, NULL, now(), now());
 
   -- Competitor: Meera Srihari (Rank 64)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Meera Srihari')) LIMIT 1;
@@ -2339,19 +2339,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 64, 203.0, 203.0, '12&U, N', '3889',
-    'SAFYC', 'Raffles Girls'' Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 64, 203.0, 203.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 53, 53.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 67, 67.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, '53', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 67.0, '67', false, NULL, now(), now());
 
   -- Competitor: Aidan Armand Anuar (Rank 65)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Aidan Armand Anuar')) LIMIT 1;
@@ -2375,19 +2375,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 65, 204.0, 204.0, '12&U, N', '3143',
-    'SAFYC', 'Tanjong Katong Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 65, 204.0, 204.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 56, 56.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 65, 65.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 56.0, '56', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 65.0, '65', false, NULL, now(), now());
 
   -- Competitor: Gentaro Noah Lee (Rank 66)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Gentaro Noah Lee')) LIMIT 1;
@@ -2411,19 +2411,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 66, 207.0, 207.0, '12&U, N', '4471',
-    'PA', 'Anglo-Chinese School (Primary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 66, 207.0, 207.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 46, 46.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 78, 78.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 46.0, '46', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 78.0, '78', false, NULL, now(), now());
 
   -- Competitor: Hagen Goh (Rank 67)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Hagen Goh')) LIMIT 1;
@@ -2447,19 +2447,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 67, 211.0, 211.0, '12&U, N', '3600',
-    'SAFYC', 'Dover Court International School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 67, 211.0, 211.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 47, 47.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 81, 81.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 47.0, '47', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 81.0, '81', false, NULL, now(), now());
 
   -- Competitor: Dan Guan You Toh (Rank 68)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Dan Guan You Toh')) LIMIT 1;
@@ -2483,19 +2483,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 68, 213.0, 213.0, '12&U', '3811',
-    'SAFYC', 'Maris Stella High School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 68, 213.0, 213.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 71, 71.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 59, 59.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 71.0, '71', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 59.0, '59', false, NULL, now(), now());
 
   -- Competitor: Rachel Qian Hui Lim (Rank 69)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Rachel Qian Hui Lim')) LIMIT 1;
@@ -2519,19 +2519,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 69, 216.0, 216.0, '12&U', '3197',
-    'SAFYC', 'Haig Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 69, 216.0, 216.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 67, 67.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 66, 66.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 67.0, '67', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 66.0, '66', false, NULL, now(), now());
 
   -- Competitor: Sage Yeh (Rank 70)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Sage Yeh')) LIMIT 1;
@@ -2555,19 +2555,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 70, 219.0, 219.0, '12&U, N', '796',
-    'CSC', 'Punggol Cove Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 70, 219.0, 219.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 66, 66.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 70, 70.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 66.0, '66', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 70.0, '70', false, NULL, now(), now());
 
   -- Competitor: Charles Shing Chak Kong (Rank 71)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Charles Shing Chak Kong')) LIMIT 1;
@@ -2591,19 +2591,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 71, 221.0, 221.0, '12&U', '716',
-    'CSC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 71, 221.0, 221.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 69, 69.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 69, 69.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 69.0, '69', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 69.0, '69', false, NULL, now(), now());
 
   -- Competitor: Mohamed Mikail Bin Mohd Shahrom (Rank 72)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Mohamed Mikail Bin Mohd Shahrom')) LIMIT 1;
@@ -2627,19 +2627,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 72, 222.0, 222.0, NULL, '704',
-    'CSC', 'NA', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 72, 222.0, 222.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 78, 78.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 61, 61.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 78.0, '78', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 61.0, '61', false, NULL, now(), now());
 
   -- Competitor: Estelle Rui En Yeo (Rank 73)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Estelle Rui En Yeo')) LIMIT 1;
@@ -2663,19 +2663,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 73, 230.0, 230.0, '12&U', '773',
-    'CSC', 'St. Hilda''s Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 73, 230.0, 230.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 70, 70.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 77, 77.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 70.0, '70', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 77.0, '77', false, NULL, now(), now());
 
   -- Competitor: Denzel Seah (Rank 74)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Denzel Seah')) LIMIT 1;
@@ -2699,19 +2699,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 74, 230.0, 230.0, '12&U, N', '3925',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 74, 230.0, 230.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 73, 73.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 74, 74.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 73.0, '73', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 74.0, '74', false, NULL, now(), now());
 
   -- Competitor: Luke Tin Fong (Rank 75)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Luke Tin Fong')) LIMIT 1;
@@ -2735,19 +2735,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 75, 231.0, 231.0, '12&U, N', '2019',
-    'CWSS', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 75, 231.0, 231.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 80, 80.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 68, 68.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 80.0, '80', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 68.0, '68', false, NULL, now(), now());
 
   -- Competitor: Xavier Yang Zheng Puah (Rank 76)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Xavier Yang Zheng Puah')) LIMIT 1;
@@ -2771,19 +2771,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 76, 234.0, 234.0, '12&U', '2037',
-    'CWSS', 'St. Joseph''s Institution Junior', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 76, 234.0, 234.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 72, 72.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 79, 79.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 72.0, '72', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 79.0, '79', false, NULL, now(), now());
 
   -- Competitor: Yen-Yu Kai (Rank 77)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yen-Yu Kai')) LIMIT 1;
@@ -2807,19 +2807,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 77, 234.0, 234.0, '12&U', '758',
-    'CSC', 'Raffles Girls'' Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 77, 234.0, 234.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 76, 76.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 75, 75.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 76.0, '76', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 75.0, '75', false, NULL, now(), now());
 
   -- Competitor: Euan Hao Xuan Poh (Rank 78)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Euan Hao Xuan Poh')) LIMIT 1;
@@ -2843,19 +2843,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 78, 234.0, 234.0, '12&U, N', '2030',
-    'CWSS', 'St. Stephen''s School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 78, 234.0, 234.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 75, 75.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 76.0, 'SCP', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 75.0, '75', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 76.0, 'SCP', false, 'SCP', now(), now());
 
   -- Competitor: Jamiroquai Kai Nuo Tay (Rank 79)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jamiroquai Kai Nuo Tay')) LIMIT 1;
@@ -2879,19 +2879,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 79, 235.0, 235.0, '12&U', '2013',
-    'SAFYC', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 79, 235.0, 235.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 79, 79.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 73, 73.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 79.0, '79', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 73.0, '73', false, NULL, now(), now());
 
   -- Competitor: Aiden Kang Jun Wong (Rank 80)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Aiden Kang Jun Wong')) LIMIT 1;
@@ -2915,19 +2915,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 80, 241.0, 241.0, '12&U, N', '2018',
-    'CWSS', 'Pei Chun Public School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 80, 241.0, 241.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 82, 82.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 76, 76.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 82.0, '82', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 76.0, '76', false, NULL, now(), now());
 
   -- Competitor: Tianyi Huang (Rank 81)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Tianyi Huang')) LIMIT 1;
@@ -2951,19 +2951,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 81, 242.0, 242.0, '12&U, N', '3438',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 81, 242.0, 242.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 77, 77.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 82, 82.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 77.0, '77', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 82.0, '82', false, NULL, now(), now());
 
   -- Competitor: Kyan Chun Hong Tan (Rank 82)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kyan Chun Hong Tan')) LIMIT 1;
@@ -2987,19 +2987,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 82, 244.0, 244.0, '12&U', '4712',
-    'SAFYC', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 82, 244.0, 244.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 81, 81.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 83.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 80, 80.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 81.0, '81', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 83.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 80.0, '80', false, NULL, now(), now());
 
   -- Competitor: Worawit Jutahkiti (Rank 83)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Worawit Jutahkiti')) LIMIT 1;
@@ -3023,19 +3023,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 83, 252.0, 252.0, '12&U, N', '2025',
-    'CWSS', 'Catholic High School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 83, 252.0, 252.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 84.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 84.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 84.0, 'DNC', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 84.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 84.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 84.0, 'DNC', false, 'DNC', now(), now());
 
 END $$;
 
@@ -3104,19 +3104,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 1, 12.0, 12.0, '10&U', '3029',
-    'SAFYC', 'St. Hilda''s Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 1, 12.0, 12.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 1, 1.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 2, 2.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 1.0, '1', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 2.0, '2', false, NULL, now(), now());
 
   -- Competitor: Nigel Jiang Long Ng (Rank 2)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Nigel Jiang Long Ng')) LIMIT 1;
@@ -3140,19 +3140,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 2, 17.0, 17.0, '10&U', '3363',
-    'SAFYC', 'Endeavour Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 2, 17.0, 17.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 3, 3.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 5, 5.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 9, 9.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 3.0, '3', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 5.0, '5', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 9.0, '9', false, NULL, now(), now());
 
   -- Competitor: Joshua Zhi Kai Tan (Rank 3)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Joshua Zhi Kai Tan')) LIMIT 1;
@@ -3176,19 +3176,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 3, 19.0, 19.0, NULL, '3036',
-    'SAFYC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 3, 19.0, 19.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 12, 12.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 4, 4.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 3, 3.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 12.0, '12', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 4.0, '4', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 3.0, '3', false, NULL, now(), now());
 
   -- Competitor: William Poon (Rank 4)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('William Poon')) LIMIT 1;
@@ -3212,19 +3212,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 4, 19.0, 19.0, '10&U, N', '3005',
-    'SAFYC', 'Singapore American School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 4, 19.0, 19.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 6, 6.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 4, 4.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 6.0, '6', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 4.0, '4', false, NULL, now(), now());
 
   -- Competitor: Weihan Mao (Rank 5)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Weihan Mao')) LIMIT 1;
@@ -3248,19 +3248,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 5, 20.0, 20.0, NULL, '3619',
-    'SAFYC', 'St. Hilda''s Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 5, 20.0, 20.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 2, 2.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 2, 2.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 16, 16.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 2.0, '2', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 2.0, '2', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 16.0, '16', false, NULL, now(), now());
 
   -- Competitor: Abby Yan Ying Chen (Rank 6)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Abby Yan Ying Chen')) LIMIT 1;
@@ -3284,19 +3284,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 6, 23.0, 23.0, '10&U', '4729',
-    'PA', 'CHIJ St. Nicholas Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 6, 23.0, 23.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 9, 9.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 5, 5.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 9.0, '9', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 5.0, '5', false, NULL, now(), now());
 
   -- Competitor: Katelynn Kai En Lee (Rank 7)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Katelynn Kai En Lee')) LIMIT 1;
@@ -3320,19 +3320,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 7, 23.0, 23.0, 'N', '3383',
-    'SAFYC', 'St. Anthony''s Canossian Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 7, 23.0, 23.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 8, 8.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 6, 6.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 8.0, '8', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 6.0, '6', false, NULL, now(), now());
 
   -- Competitor: Boren Wang (Rank 8)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Boren Wang')) LIMIT 1;
@@ -3356,19 +3356,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 8, 24.0, 24.0, 'N', '2039',
-    'PA', 'Alexandra Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 8, 24.0, 24.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 10, 10.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 1, 1.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 13, 13.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 10.0, '10', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 1.0, '1', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 13.0, '13', false, NULL, now(), now());
 
   -- Competitor: Lucas Jun Sheng Seow (Rank 9)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Lucas Jun Sheng Seow')) LIMIT 1;
@@ -3392,19 +3392,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 9, 28.0, 28.0, 'N', '2047',
-    'CWSS', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 9, 28.0, 28.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 5, 5.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 14, 14.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 5.0, '5', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 14.0, '14', false, NULL, now(), now());
 
   -- Competitor: Auwin Zhao Hong Leow (Rank 10)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Auwin Zhao Hong Leow')) LIMIT 1;
@@ -3428,19 +3428,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 10, 30.0, 30.0, '10&U', '3405',
-    'SAFYC', 'Anglo-Chinese School (Primary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 10, 30.0, 30.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 11, 11.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 10, 10.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 11.0, '11', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 10.0, '10', false, NULL, now(), now());
 
   -- Competitor: Tan Qi (Rank 11)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Tan Qi')) LIMIT 1;
@@ -3464,19 +3464,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 11, 34.0, 34.0, '10&U, N', '3026',
-    'CWSS', 'Tao Nan School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 11, 34.0, 34.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 17, 17.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 8, 8.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 17.0, '17', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 8.0, '8', false, NULL, now(), now());
 
   -- Competitor: Breyven Zhi Long Chan (Rank 12)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Breyven Zhi Long Chan')) LIMIT 1;
@@ -3500,19 +3500,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 12, 34.0, 34.0, NULL, '3338',
-    'SAFYC', 'Endeavour Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 12, 34.0, 34.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 13, 13.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 12, 12.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 13.0, '13', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 12.0, '12', false, NULL, now(), now());
 
   -- Competitor: Hanyue Ouyang (Rank 13)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Hanyue Ouyang')) LIMIT 1;
@@ -3536,19 +3536,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 13, 35.0, 35.0, '10&U', '5003',
-    'ONE°15', 'Nanyang Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 13, 35.0, 35.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 7, 7.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 19, 19.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 7.0, '7', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 19.0, '19', false, NULL, now(), now());
 
   -- Competitor: Isabelle Xinyi Zhang (Rank 14)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Isabelle Xinyi Zhang')) LIMIT 1;
@@ -3572,19 +3572,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 14, 35.0, 35.0, '10&U', '2035',
-    'CWSS', 'Methodist Girls'' School (Primary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 14, 35.0, 35.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 15, 15.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 11, 11.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 15.0, '15', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 11.0, '11', false, NULL, now(), now());
 
   -- Competitor: George Kai Whittington (Rank 15)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('George Kai Whittington')) LIMIT 1;
@@ -3608,19 +3608,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 15, 40.0, 40.0, '10&U', '799',
-    'CSC', 'St. Stephen''s School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 15, 40.0, 40.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 26, 26.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 7, 7.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 7, 7.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 26.0, '26', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 7.0, '7', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 7.0, '7', false, NULL, now(), now());
 
   -- Competitor: Ryan Yong Jie Choo (Rank 16)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ryan Yong Jie Choo')) LIMIT 1;
@@ -3644,19 +3644,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 16, 46.0, 46.0, 'N', '789',
-    'CSC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 16, 46.0, 46.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 36, 36.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 1, 1.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 36.0, '36', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 1.0, '1', false, NULL, now(), now());
 
   -- Competitor: Yasin Yusuf Yusfianshah (Rank 17)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yasin Yusuf Yusfianshah')) LIMIT 1;
@@ -3680,19 +3680,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 17, 47.0, 47.0, '10&U, N', '3575',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 17, 47.0, 47.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 21, 21.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 6, 6.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 20, 20.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 21.0, '21', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 6.0, '6', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 20.0, '20', false, NULL, now(), now());
 
   -- Competitor: Matthias Kai Lun Lee (Rank 18)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Matthias Kai Lun Lee')) LIMIT 1;
@@ -3716,19 +3716,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 18, 47.0, 47.0, '8&U, 10&U, N', '3385',
-    'SAFYC', 'Maris Stella High School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 18, 47.0, 47.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 23, 23.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 15, 15.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 23.0, '23', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 15.0, '15', false, NULL, now(), now());
 
   -- Competitor: Spencer Quek (Rank 19)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Spencer Quek')) LIMIT 1;
@@ -3752,19 +3752,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 19, 48.0, 48.0, NULL, '3108',
-    'SAFYC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 19, 48.0, 48.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 14, 14.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 25, 25.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 14.0, '14', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 25.0, '25', false, NULL, now(), now());
 
   -- Competitor: Ashleigh Li Ying Teh (Rank 20)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ashleigh Li Ying Teh')) LIMIT 1;
@@ -3788,19 +3788,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 20, 49.0, 49.0, '10&U, N', '788',
-    'SAFYC', 'Tao Nan School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 20, 49.0, 49.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 18, 18.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 22, 22.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 18.0, '18', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 22.0, '22', false, NULL, now(), now());
 
   -- Competitor: Hayley Kai En Tan (Rank 21)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Hayley Kai En Tan')) LIMIT 1;
@@ -3824,19 +3824,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 21, 51.0, 51.0, '10&U', '700',
-    'CSC', 'Kong Hwa School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 21, 51.0, 51.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 24, 24.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 18, 18.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 24.0, '24', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 18.0, '18', false, NULL, now(), now());
 
   -- Competitor: Tyler Koo (Rank 22)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Tyler Koo')) LIMIT 1;
@@ -3860,19 +3860,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 22, 51.0, 51.0, 'N', '996',
-    'RSYC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 22, 51.0, 51.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 19, 19.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 23, 23.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 19.0, '19', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 23.0, '23', false, NULL, now(), now());
 
   -- Competitor: Jan Welzl (Rank 23)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jan Welzl')) LIMIT 1;
@@ -3896,19 +3896,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 23, 61.0, 61.0, '10&U', '2033',
-    'CWSS', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 23, 61.0, 61.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 28, 28.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 24, 24.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 28.0, '28', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 24.0, '24', false, NULL, now(), now());
 
   -- Competitor: Aidan See Hett Yeo (Rank 24)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Aidan See Hett Yeo')) LIMIT 1;
@@ -3932,19 +3932,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 24, 63.0, 63.0, NULL, '3112',
-    'SAFYC', 'Kuo Chuan Presbyterian Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 24, 63.0, 63.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 16, 16.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 38, 38.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 16.0, '16', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 38.0, '38', false, NULL, now(), now());
 
   -- Competitor: Evan En Kai Ong (Rank 25)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Evan En Kai Ong')) LIMIT 1;
@@ -3968,19 +3968,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 25, 63.0, 63.0, '8&U, 10&U', '3955',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 25, 63.0, 63.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 20, 20.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 34, 34.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 20.0, '20', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 34.0, '34', false, NULL, now(), now());
 
   -- Competitor: Iver Zhe Xi Lee (Rank 26)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Iver Zhe Xi Lee')) LIMIT 1;
@@ -4004,19 +4004,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 26, 69.0, 69.0, '10&U', '3309',
-    'SAFYC', 'Endeavour Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 26, 69.0, 69.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 43, 43.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 17, 17.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 43.0, '43', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 17.0, '17', false, NULL, now(), now());
 
   -- Competitor: Mitchell Shi Kai Lim (Rank 27)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Mitchell Shi Kai Lim')) LIMIT 1;
@@ -4040,19 +4040,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 27, 69.0, 69.0, '10&U', '3323',
-    'SAFYC', 'Anglo-Chinese School (Primary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 27, 69.0, 69.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 34, 34.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 26, 26.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 34.0, '34', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 26.0, '26', false, NULL, now(), now());
 
   -- Competitor: Clara Siew Ning Ng (Rank 28)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Clara Siew Ning Ng')) LIMIT 1;
@@ -4076,19 +4076,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 28, 69.0, 69.0, '10&U, N', '3739',
-    'SAFYC', 'St. Hilda''s Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 28, 69.0, 69.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 33, 33.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 27, 27.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 33.0, '33', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 27.0, '27', false, NULL, now(), now());
 
   -- Competitor: Hayden Zi Xuan Soh (Rank 29)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Hayden Zi Xuan Soh')) LIMIT 1;
@@ -4112,19 +4112,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 29, 69.0, 69.0, 'N', '3838',
-    'SAFYC', 'White Sands Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 29, 69.0, 69.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 30, 30.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 30, 30.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 30.0, '30', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 30.0, '30', false, NULL, now(), now());
 
   -- Competitor: Seraphina Kang (Rank 30)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Seraphina Kang')) LIMIT 1;
@@ -4148,19 +4148,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 30, 72.0, 72.0, '10&U, N', '2040',
-    'CWSS', 'CHIJ Our Lady Queen of Peace', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 30, 72.0, 72.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 35, 35.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 28, 28.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 35.0, '35', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 28.0, '28', false, NULL, now(), now());
 
   -- Competitor: Kai Jie Teo (Rank 31)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kai Jie Teo')) LIMIT 1;
@@ -4184,19 +4184,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 31, 73.0, 73.0, '10&U, N', '3550',
-    'SAFYC', 'Tanjong Katong Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 31, 73.0, 73.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 29, 29.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 35, 35.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 29.0, '29', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 35.0, '35', false, NULL, now(), now());
 
   -- Competitor: Christopher Soh (Rank 32)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Christopher Soh')) LIMIT 1;
@@ -4220,19 +4220,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 32, 76.0, 76.0, '10&U', '3168',
-    'SAFYC', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 32, 76.0, 76.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 4, 4.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 3, 3.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 69.0, 'UFD', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 4.0, '4', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 3.0, '3', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 69.0, 'UFD', false, 'UFD', now(), now());
 
   -- Competitor: Zachary Yi Jie Koh (Rank 33)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Zachary Yi Jie Koh')) LIMIT 1;
@@ -4256,19 +4256,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 33, 76.0, 76.0, NULL, '4731',
-    'PA', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 33, 76.0, 76.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 27, 27.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 40, 40.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 27.0, '27', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 40.0, '40', false, NULL, now(), now());
 
   -- Competitor: Kiyansh Kanishk Singh (Rank 34)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kiyansh Kanishk Singh')) LIMIT 1;
@@ -4292,19 +4292,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 34, 77.0, 77.0, '10&U, N', '2046',
-    'CWSS', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 34, 77.0, 77.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 32, 32.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 36, 36.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 32.0, '32', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 36.0, '36', false, NULL, now(), now());
 
   -- Competitor: Su Yuan (Rank 35)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Su Yuan')) LIMIT 1;
@@ -4328,19 +4328,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 35, 82.0, 82.0, 'N', '3043',
-    'SAFYC', 'CHIJ (Katong) Primary', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 35, 82.0, 82.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 52, 52.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 21, 21.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 52.0, '52', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 21.0, '21', false, NULL, now(), now());
 
   -- Competitor: Yahe Wang (Rank 36)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yahe Wang')) LIMIT 1;
@@ -4364,19 +4364,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 36, 82.0, 82.0, NULL, '3020',
-    'SAFYC', 'Pei Tong Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 36, 82.0, 82.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 41, 41.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 32, 32.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 41.0, '41', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 32.0, '32', false, NULL, now(), now());
 
   -- Competitor: Hao Li (Rank 37)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Hao Li')) LIMIT 1;
@@ -4400,19 +4400,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 37, 83.0, 83.0, NULL, '3303',
-    'CYA', 'NA', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 37, 83.0, 83.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 37, 37.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 15.0, 'SCP', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 31, 31.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 37.0, '37', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 15.0, 'SCP', false, 'SCP', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 31.0, '31', false, NULL, now(), now());
 
   -- Competitor: Ryan Feiran Zheng (Rank 38)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ryan Feiran Zheng')) LIMIT 1;
@@ -4436,19 +4436,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 38, 88.0, 88.0, '10&U, N', '2045',
-    'CWSS', 'St. Stephen''s School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 38, 88.0, 88.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 31, 31.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 48, 48.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 31.0, '31', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 48.0, '48', false, NULL, now(), now());
 
   -- Competitor: Yong Le Wai (Rank 39)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yong Le Wai')) LIMIT 1;
@@ -4472,19 +4472,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 39, 89.0, 89.0, '10&U', '3488',
-    'SAFYC', 'First Toa Payoh Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 39, 89.0, 89.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 25, 25.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 55, 55.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 25.0, '25', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 55.0, '55', false, NULL, now(), now());
 
   -- Competitor: Moyan Han (Rank 40)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Moyan Han')) LIMIT 1;
@@ -4508,19 +4508,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 40, 89.0, 89.0, '10&U, N', '2042',
-    'CWSS', 'Nan Hua Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 40, 89.0, 89.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 47, 47.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 33, 33.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 47.0, '47', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 33.0, '33', false, NULL, now(), now());
 
   -- Competitor: Scott Goh (Rank 41)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Scott Goh')) LIMIT 1;
@@ -4544,19 +4544,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 41, 92.0, 92.0, 'N', '729',
-    'CSC', 'St. Joseph''s Institution Junior', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 41, 92.0, 92.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 40, 40.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 43, 43.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 40.0, '40', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 43.0, '43', false, NULL, now(), now());
 
   -- Competitor: Xuanye Chen (Rank 42)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Xuanye Chen')) LIMIT 1;
@@ -4580,19 +4580,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 42, 93.0, 93.0, NULL, '3305',
-    'CYA', 'NA', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 42, 93.0, 93.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 39, 39.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 15.0, 'SCP', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 39, 39.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 39.0, '39', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 15.0, 'SCP', false, 'SCP', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 39.0, '39', false, NULL, now(), now());
 
   -- Competitor: Skyler Kang (Rank 43)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Skyler Kang')) LIMIT 1;
@@ -4616,19 +4616,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 43, 95.0, 95.0, '8&U, 10&U, N', '2041',
-    'CWSS', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 43, 95.0, 95.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 42, 42.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 44, 44.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 42.0, '42', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 44.0, '44', false, NULL, now(), now());
 
   -- Competitor: Damien Seah (Rank 44)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Damien Seah')) LIMIT 1;
@@ -4652,19 +4652,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 44, 96.0, 96.0, '10&U', '3825',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 44, 96.0, 96.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 38, 38.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 49, 49.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 38.0, '38', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 49.0, '49', false, NULL, now(), now());
 
   -- Competitor: Chen-Yi Kai (Rank 45)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Chen-Yi Kai')) LIMIT 1;
@@ -4688,19 +4688,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 45, 97.0, 97.0, '10&U', '757',
-    'CSC', 'Fairfield Methodist School (Primary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 45, 97.0, 97.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 29, 29.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 29.0, '29', false, NULL, now(), now());
 
   -- Competitor: Enzo Kengsin Teo (Rank 46)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Enzo Kengsin Teo')) LIMIT 1;
@@ -4724,19 +4724,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 46, 99.0, 99.0, '10&U, N', '2044',
-    'CWSS', 'St. Stephen''s School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 46, 99.0, 99.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 53, 53.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 37, 37.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, '53', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 37.0, '37', false, NULL, now(), now());
 
   -- Competitor: Gwenyth Sze En Chia (Rank 47)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Gwenyth Sze En Chia')) LIMIT 1;
@@ -4760,19 +4760,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 47, 99.0, 99.0, '10&U, N', '2048',
-    'CWSS', 'Tao Nan School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 47, 99.0, 99.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 48, 48.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 42, 42.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 48.0, '48', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 42.0, '42', false, NULL, now(), now());
 
   -- Competitor: Zachary Hoo (Rank 48)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Zachary Hoo')) LIMIT 1;
@@ -4796,19 +4796,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 48, 100.0, 100.0, 'N', '2051',
-    'CWSS', 'Red Swastika School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 48, 100.0, 100.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 50, 50.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 41, 41.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 50.0, '50', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 41.0, '41', false, NULL, now(), now());
 
   -- Competitor: Jade Tan (Rank 49)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jade Tan')) LIMIT 1;
@@ -4832,19 +4832,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 49, 102.0, 102.0, '10&U', '3131',
-    'SAFYC', 'Ai Tong School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 49, 102.0, 102.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 22, 22.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 71.0, 'DNC', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 22.0, '22', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 71.0, 'DNC', false, 'DNC', now(), now());
 
   -- Competitor: Jiayi Du (Rank 50)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jiayi Du')) LIMIT 1;
@@ -4868,19 +4868,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 50, 102.0, 102.0, '10&U, N', '3141',
-    'SAFYC', 'St. Gabriel''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 50, 102.0, 102.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 46, 46.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 47, 47.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 46.0, '46', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 47.0, '47', false, NULL, now(), now());
 
   -- Competitor: Raphael Garbourg (Rank 51)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Raphael Garbourg')) LIMIT 1;
@@ -4904,19 +4904,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 51, 106.0, 106.0, NULL, '780',
-    'CSC', 'Opera Estate Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 51, 106.0, 106.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 45, 45.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 52, 52.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 45.0, '45', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 52.0, '52', false, NULL, now(), now());
 
   -- Competitor: Ezra Yi Yang Mak (Rank 52)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ezra Yi Yang Mak')) LIMIT 1;
@@ -4940,19 +4940,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 52, 106.0, 106.0, '10&U', '3535',
-    'SAFYC', 'St. Andrew''s Junior School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 52, 106.0, 106.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 51, 51.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 46, 46.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 51.0, '51', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 46.0, '46', false, NULL, now(), now());
 
   -- Competitor: You Yu Tan (Rank 53)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('You Yu Tan')) LIMIT 1;
@@ -4976,19 +4976,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 53, 109.0, 109.0, NULL, '3137',
-    'PA', 'Meridian Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 53, 109.0, 109.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 55, 55.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 45, 45.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 55.0, '55', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 45.0, '45', false, NULL, now(), now());
 
   -- Competitor: Yuki Youqi Wang (Rank 54)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yuki Youqi Wang')) LIMIT 1;
@@ -5012,19 +5012,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 54, 110.0, 110.0, '10&U, N', '3523',
-    'SAFYC', 'St. Hilda''s Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 54, 110.0, 110.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 44, 44.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 57, 57.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 44.0, '44', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 57.0, '57', false, NULL, now(), now());
 
   -- Competitor: Emil Lam (Rank 55)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Emil Lam')) LIMIT 1;
@@ -5048,19 +5048,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 55, 114.0, 114.0, '10&U, N', '2049',
-    'CWSS', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 55, 114.0, 114.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 54, 54.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 51, 51.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 54.0, '54', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 51.0, '51', false, NULL, now(), now());
 
   -- Competitor: Yan Cheng Loh (Rank 56)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yan Cheng Loh')) LIMIT 1;
@@ -5084,19 +5084,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 56, 116.0, 116.0, '8&U, 10&U', '3717',
-    'SAFYC', 'Nan Chiau Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 56, 116.0, 116.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 49, 49.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 58, 58.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 49.0, '49', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 58.0, '58', false, NULL, now(), now());
 
   -- Competitor: An Hu (Rank 57)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('An Hu')) LIMIT 1;
@@ -5120,19 +5120,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 57, 121.0, 121.0, '10&U', '2050',
-    'CWSS', 'Singapore American School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 57, 121.0, 121.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 53, 53.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 53.0, '53', false, NULL, now(), now());
 
   -- Competitor: Asher Goh (Rank 58)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Asher Goh')) LIMIT 1;
@@ -5156,19 +5156,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 58, 122.0, 122.0, 'N', '735',
-    'CSC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 58, 122.0, 122.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 54, 54.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 54.0, '54', false, NULL, now(), now());
 
   -- Competitor: Llewellyn Ding Zhe Tay (Rank 59)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Llewellyn Ding Zhe Tay')) LIMIT 1;
@@ -5192,19 +5192,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 59, 124.0, 124.0, '8&U, 10&U, N', '3013',
-    'SAFYC', 'Tao Nan School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 59, 124.0, 124.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 56, 56.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 56.0, '56', false, NULL, now(), now());
 
   -- Competitor: Ziyi Adele Chiang (Rank 60)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ziyi Adele Chiang')) LIMIT 1;
@@ -5228,19 +5228,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 60, 126.0, 126.0, '8&U, 10&U N', '3228',
-    'SAFYC', 'Tao Nan School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 60, 126.0, 126.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 56, 56.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 61.0, 'TLE', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 56.0, '56', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 61.0, 'TLE', false, 'TLE', now(), now());
 
   -- Competitor: Jae Guan Yu Toh (Rank 61)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jae Guan Yu Toh')) LIMIT 1;
@@ -5264,19 +5264,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 61, 127.0, 127.0, '8&U, 10&U', '3311',
-    'SAFYC', 'Maris Stella High School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 61, 127.0, 127.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 57, 57.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 61.0, 'TLE', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 57.0, '57', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 61.0, 'TLE', false, 'TLE', now(), now());
 
   -- Competitor: Cadee Jia Xing See (Rank 62)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Cadee Jia Xing See')) LIMIT 1;
@@ -5300,19 +5300,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 62, 128.0, 128.0, '10&U, N', '3628',
-    'CWSS', 'St. Hilda''s Primary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 62, 128.0, 128.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 60.0, 'TLE', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 60.0, 'TLE', false, 'TLE', now(), now());
 
   -- Competitor: Efrem Mak (Rank 63)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Efrem Mak')) LIMIT 1;
@@ -5336,19 +5336,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 63, 129.0, 129.0, '8&U, 10&U N', '3222',
-    'SAFYC', 'St. Andrew''s Junior School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 63, 129.0, 129.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 61.0, 'TLE', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 61.0, 'TLE', false, 'TLE', now(), now());
 
   -- Competitor: Jacob Jit Yeung Kok (Rank 63)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jacob Jit Yeung Kok')) LIMIT 1;
@@ -5372,19 +5372,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 63, 129.0, 129.0, '8&U, 10&U', '3087',
-    'SAFYC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 63, 129.0, 129.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 61.0, 'TLE', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 61.0, 'TLE', false, 'TLE', now(), now());
 
   -- Competitor: Nadia Zahedi (Rank 63)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Nadia Zahedi')) LIMIT 1;
@@ -5408,19 +5408,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 63, 129.0, 129.0, '8&U, 10&U, N', '4724',
-    'PA', 'Tao Nan School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 63, 129.0, 129.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 61.0, 'TLE', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 61.0, 'TLE', false, 'TLE', now(), now());
 
   -- Competitor: Ivor Zhuo Xi Lee (Rank 66)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ivor Zhuo Xi Lee')) LIMIT 1;
@@ -5444,19 +5444,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 66, 137.0, 137.0, '10&U', '3306',
-    'SAFYC', 'Endeavour Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 66, 137.0, 137.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 59.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 69.0, 'UFD', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 59.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 69.0, 'UFD', false, 'UFD', now(), now());
 
   -- Competitor: Isaac Qin Ran Chiam (Rank 67)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Isaac Qin Ran Chiam')) LIMIT 1;
@@ -5480,19 +5480,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 67, 139.0, 139.0, '10&U', '3606',
-    'SAFYC', 'Ai Tong School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 67, 139.0, 139.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 69.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 9.0, 'TLE', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 61.0, 'TLE', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 69.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, 'TLE', false, 'TLE', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 61.0, 'TLE', false, 'TLE', now(), now());
 
   -- Competitor: Samuel Zhang (Rank 68)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Samuel Zhang')) LIMIT 1;
@@ -5516,19 +5516,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 68, 145.0, 145.0, NULL, '3301',
-    'CYA', 'NA', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 68, 145.0, 145.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 69.0, 'UFD', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 15.0, 'SCP', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 61.0, 'TLE', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 69.0, 'UFD', false, 'UFD', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 15.0, 'SCP', false, 'SCP', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 61.0, 'TLE', false, 'TLE', now(), now());
 
   -- Competitor: Tyler Jun Feng Tan (Rank 69)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Tyler Jun Feng Tan')) LIMIT 1;
@@ -5552,19 +5552,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 69, 192.0, 192.0, '10&U', '3787',
-    'SAFYC', 'Anglo-Chinese School (Junior)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 69, 192.0, 192.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 71.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 71.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 50, 50.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 71.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 71.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 50.0, '50', false, NULL, now(), now());
 
   -- Competitor: Henry Shayan Mittelhauser (Rank 70)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Henry Shayan Mittelhauser')) LIMIT 1;
@@ -5588,19 +5588,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 70, 213.0, 213.0, '10&U, N', '2052',
-    'CWSS', 'Tanjong Katong Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 70, 213.0, 213.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 71.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 71.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 71.0, 'DNC', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 71.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 71.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 71.0, 'DNC', false, 'DNC', now(), now());
 
 END $$;
 
@@ -5669,19 +5669,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 1, 6.0, 6.0, 'N', '225176',
-    'CWSS', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 1, 6.0, 6.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 4, 4.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 1, 1.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 1, 1.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 4.0, '4', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 1.0, '1', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 1.0, '1', false, NULL, now(), now());
 
   -- Competitor: Nicholette Wee Wen Lee (Rank 2)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Nicholette Wee Wen Lee')) LIMIT 1;
@@ -5705,19 +5705,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 2, 9.0, 9.0, NULL, '224620',
-    'RVYC', 'Tanjong Katong Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 2, 9.0, 9.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 2, 2.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 5, 5.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 2, 2.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 2.0, '2', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 5.0, '5', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 2.0, '2', false, NULL, now(), now());
 
   -- Competitor: Nia Zahedi (Rank 3)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Nia Zahedi')) LIMIT 1;
@@ -5741,19 +5741,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 3, 11.0, 11.0, NULL, '224245',
-    'RM', 'Raffles Girls'' School (Secondary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 3, 11.0, 11.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 6, 6.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 2, 2.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 3, 3.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 6.0, '6', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 2.0, '2', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 3.0, '3', false, NULL, now(), now());
 
   -- Competitor: Austin Yeo (Rank 4)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Austin Yeo')) LIMIT 1;
@@ -5777,19 +5777,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 4, 11.0, 11.0, NULL, '221062',
-    'RVYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 4, 11.0, 11.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 3, 3.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 4, 4.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 4, 4.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 3.0, '3', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 4.0, '4', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 4.0, '4', false, NULL, now(), now());
 
   -- Competitor: Caleb Peck (Rank 5)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Caleb Peck')) LIMIT 1;
@@ -5813,19 +5813,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 5, 16.0, 16.0, NULL, '225221',
-    'PA', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 5, 16.0, 16.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 1, 1.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 8, 8.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 7, 7.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 1.0, '1', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 8.0, '8', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 7.0, '7', false, NULL, now(), now());
 
   -- Competitor: Ikuto Mori (Rank 6)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ikuto Mori')) LIMIT 1;
@@ -5849,19 +5849,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 6, 23.0, 23.0, NULL, '221687',
-    'CSC', 'Victoria School', 'M', 'JPN', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 6, 23.0, 23.0, false, false,
+    'M', 'JPN', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 11, 11.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 6, 6.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 6, 6.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 11.0, '11', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 6.0, '6', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 6.0, '6', false, NULL, now(), now());
 
   -- Competitor: Kayden Yi Kai Tan (Rank 7)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kayden Yi Kai Tan')) LIMIT 1;
@@ -5885,19 +5885,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 7, 26.0, 26.0, 'N', '197424',
-    'SAFYC', 'St. Andrew''s Secondary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 7, 26.0, 26.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 8, 8.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 10, 10.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 8, 8.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 8.0, '8', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 10.0, '10', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 8.0, '8', false, NULL, now(), now());
 
   -- Competitor: Jemima Chang (Rank 8)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jemima Chang')) LIMIT 1;
@@ -5921,19 +5921,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 8, 35.0, 35.0, NULL, '214636',
-    'PA', 'Dunman High School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 8, 35.0, 35.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 18, 18.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 7, 7.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 10, 10.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 18.0, '18', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 7.0, '7', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 10.0, '10', false, NULL, now(), now());
 
   -- Competitor: Zachary Weikai Wong (Rank 9)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Zachary Weikai Wong')) LIMIT 1;
@@ -5957,19 +5957,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 9, 35.0, 35.0, NULL, '221061',
-    'RVYC', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 9, 35.0, 35.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 7, 7.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 15, 15.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 13, 13.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 7.0, '7', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 15.0, '15', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 13.0, '13', false, NULL, now(), now());
 
   -- Competitor: Joash Jing En Tan (Rank 10)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Joash Jing En Tan')) LIMIT 1;
@@ -5993,19 +5993,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 10, 44.0, 44.0, 'N', '209051',
-    'ONE°15', 'Victoria School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 10, 44.0, 44.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 5, 5.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 27, 27.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 12, 12.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 5.0, '5', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 27.0, '27', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 12.0, '12', false, NULL, now(), now());
 
   -- Competitor: Jonas Kia Jeng Tan (Rank 11)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jonas Kia Jeng Tan')) LIMIT 1;
@@ -6029,19 +6029,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 11, 46.0, 46.0, 'N', '197840',
-    'SAFYC', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 11, 46.0, 46.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 15, 15.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 9, 9.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 22, 22.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 15.0, '15', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, '9', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 22.0, '22', false, NULL, now(), now());
 
   -- Competitor: Mildred Li Xuan Wong (Rank 12)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Mildred Li Xuan Wong')) LIMIT 1;
@@ -6065,19 +6065,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 12, 47.0, 47.0, NULL, '223200',
-    'CWSS', 'Raffles Girls'' School (Secondary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 12, 47.0, 47.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 10, 10.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 28, 28.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 9, 9.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 10.0, '10', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 28.0, '28', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 9.0, '9', false, NULL, now(), now());
 
   -- Competitor: Mika Tew (Rank 13)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Mika Tew')) LIMIT 1;
@@ -6101,19 +6101,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 13, 47.0, 47.0, 'N', '219762',
-    'PA', 'Raffles Girls'' School (Secondary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 13, 47.0, 47.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 19, 19.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 11, 11.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 17, 17.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 19.0, '19', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 11.0, '11', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 17.0, '17', false, NULL, now(), now());
 
   -- Competitor: Kai Lun Wong (Rank 14)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kai Lun Wong')) LIMIT 1;
@@ -6137,19 +6137,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 14, 51.0, 51.0, NULL, '214779',
-    'PA', 'Bowen Secondary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 14, 51.0, 51.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 24, 24.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 3, 3.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 24, 24.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 24.0, '24', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 3.0, '3', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 24.0, '24', false, NULL, now(), now());
 
   -- Competitor: Isaiah Chor Hong Yap (Rank 15)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Isaiah Chor Hong Yap')) LIMIT 1;
@@ -6173,19 +6173,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 15, 51.0, 51.0, '13&U,N', '227463',
-    'CSC', 'Xinmin Secondary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 15, 51.0, 51.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 20, 20.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 17, 17.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 14, 14.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 20.0, '20', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 17.0, '17', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 14.0, '14', false, NULL, now(), now());
 
   -- Competitor: Jayden Zi Xi Bai (Rank 16)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jayden Zi Xi Bai')) LIMIT 1;
@@ -6209,19 +6209,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 16, 54.0, 54.0, NULL, '225261',
-    'PA', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 16, 54.0, 54.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 13, 13.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 13, 13.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 28, 28.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 13.0, '13', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 13.0, '13', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 28.0, '28', false, NULL, now(), now());
 
   -- Competitor: Caleb Zhixuan Cao (Rank 17)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Caleb Zhixuan Cao')) LIMIT 1;
@@ -6245,19 +6245,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 17, 58.0, 58.0, '13&U', '225207',
-    'SAFYC', 'St. Hilda''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 17, 58.0, 58.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 12, 12.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 12, 12.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 34, 34.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 12.0, '12', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 12.0, '12', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 34.0, '34', false, NULL, now(), now());
 
   -- Competitor: Cory Zhi Hang Loh (Rank 18)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Cory Zhi Hang Loh')) LIMIT 1;
@@ -6281,19 +6281,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 18, 63.0, 63.0, '13&U, N', '226899',
-    'SAFYC', 'Admiralty Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 18, 63.0, 63.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 28, 28.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 16, 16.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 19, 19.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 28.0, '28', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 16.0, '16', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 19.0, '19', false, NULL, now(), now());
 
   -- Competitor: Yuk Jun Lim (Rank 19)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yuk Jun Lim')) LIMIT 1;
@@ -6317,19 +6317,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 19, 66.0, 66.0, 'N', '225182',
-    'SAFYC', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 19, 66.0, 66.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 9, 9.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 20, 20.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 37, 37.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 9.0, '9', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 20.0, '20', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 37.0, '37', false, NULL, now(), now());
 
   -- Competitor: John Raphael Lim (Rank 20)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('John Raphael Lim')) LIMIT 1;
@@ -6353,19 +6353,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 20, 66.0, 66.0, '13&U, N', '206799',
-    'CSC', 'St. Patrick''s School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 20, 66.0, 66.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 17, 17.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 14, 14.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 35, 35.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 17.0, '17', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 14.0, '14', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 35.0, '35', false, NULL, now(), now());
 
   -- Competitor: Eunice Yi Ning Tan (Rank 21)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Eunice Yi Ning Tan')) LIMIT 1;
@@ -6389,19 +6389,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 21, 68.0, 68.0, NULL, '224664',
-    'SAFYC', 'Dunman High School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 21, 68.0, 68.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 33, 33.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 30, 30.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 5, 5.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 33.0, '33', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 30.0, '30', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 5.0, '5', false, NULL, now(), now());
 
   -- Competitor: Liao Zhiting (Rank 22)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Liao Zhiting')) LIMIT 1;
@@ -6425,19 +6425,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 22, 70.0, 70.0, '13&U', '214760',
-    'SAFYC', 'Raffles Institute Secondary', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 22, 70.0, 70.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 29, 29.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 26, 26.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 15, 15.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 29.0, '29', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 26.0, '26', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 15.0, '15', false, NULL, now(), now());
 
   -- Competitor: Kate Zi Ning Yeh (Rank 23)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kate Zi Ning Yeh')) LIMIT 1;
@@ -6461,19 +6461,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 23, 70.0, 70.0, '13&U', '797',
-    'CSC', 'North Vista Secondary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 23, 70.0, 70.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 21, 21.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 31, 31.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 18, 18.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 21.0, '21', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 31.0, '31', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 18.0, '18', false, NULL, now(), now());
 
   -- Competitor: Febe Qi Ke Wong (Rank 24)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Febe Qi Ke Wong')) LIMIT 1;
@@ -6497,19 +6497,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 24, 70.0, 70.0, NULL, '225224',
-    'SAFYC', 'CHIJ St. Theresa''s Convent', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 24, 70.0, 70.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 25, 25.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 18, 18.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 27, 27.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 25.0, '25', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 18.0, '18', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 27.0, '27', false, NULL, now(), now());
 
   -- Competitor: Reyes Jit Eng Tan (Rank 25)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Reyes Jit Eng Tan')) LIMIT 1;
@@ -6533,19 +6533,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 25, 71.0, 71.0, NULL, '214251',
-    'CSC', 'Dunman High School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 25, 71.0, 71.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 23, 23.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 25, 25.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 23, 23.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 23.0, '23', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 25.0, '25', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 23.0, '23', false, NULL, now(), now());
 
   -- Competitor: Josiah Tan (Rank 26)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Josiah Tan')) LIMIT 1;
@@ -6569,19 +6569,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 26, 73.0, 73.0, NULL, '1978',
-    'ONE°15', 'Victoria School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 26, 73.0, 73.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 14, 14.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 19, 19.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 40, 40.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 14.0, '14', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 19.0, '19', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 40.0, '40', false, NULL, now(), now());
 
   -- Competitor: Rayson Yin Yi Lee (Rank 27)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Rayson Yin Yi Lee')) LIMIT 1;
@@ -6605,19 +6605,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 27, 75.0, 75.0, '13&U, N', '217060',
-    'SAFYC', 'Ai Tong School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 27, 75.0, 75.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 36, 36.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 23, 23.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 16, 16.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 36.0, '36', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 23.0, '23', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 16.0, '16', false, NULL, now(), now());
 
   -- Competitor: Jade Zi Yu Yeh (Rank 28)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jade Zi Yu Yeh')) LIMIT 1;
@@ -6641,19 +6641,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 28, 78.0, 78.0, 'N', '227609',
-    'CSC', 'North Vista Secondary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 28, 78.0, 78.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 27, 27.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 21, 21.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 30, 30.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 27.0, '27', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 21.0, '21', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 30.0, '30', false, NULL, now(), now());
 
   -- Competitor: Lauren Lim (Rank 29)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Lauren Lim')) LIMIT 1;
@@ -6677,19 +6677,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 29, 84.0, 84.0, '13&U', '216431',
-    'SAFYC', 'Whitley Secondary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 29, 84.0, 84.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 26, 26.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 22, 22.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 36, 36.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 26.0, '26', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 22.0, '22', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 36.0, '36', false, NULL, now(), now());
 
   -- Competitor: James Kong (Rank 30)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('James Kong')) LIMIT 1;
@@ -6713,19 +6713,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 30, 88.0, 88.0, NULL, '212216',
-    'PA', 'Dunman High School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 30, 88.0, 88.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 22, 22.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 40, 40.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 26, 26.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 22.0, '22', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 40.0, '40', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 26.0, '26', false, NULL, now(), now());
 
   -- Competitor: Jiayan Xu (Rank 31)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jiayan Xu')) LIMIT 1;
@@ -6749,19 +6749,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 31, 89.0, 89.0, '13&U', '224656',
-    'SAFYC', 'St. Gabriel''s Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 31, 89.0, 89.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 31, 31.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 29, 29.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 29, 29.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 31.0, '31', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 29.0, '29', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 29.0, '29', false, NULL, now(), now());
 
   -- Competitor: Josh Ong Yong Jun (Rank 32)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Josh Ong Yong Jun')) LIMIT 1;
@@ -6785,19 +6785,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 32, 92.0, 92.0, '13&U', '189662',
-    'SAFYC', 'Victoria School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 32, 92.0, 92.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 16, 16.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 33, 33.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 43, 43.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 16.0, '16', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 33.0, '33', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 43.0, '43', false, NULL, now(), now());
 
   -- Competitor: Travis Jia Le Yeo (Rank 33)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Travis Jia Le Yeo')) LIMIT 1;
@@ -6821,19 +6821,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 33, 93.0, 93.0, '13&U', '223728',
-    'SAFYC', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 33, 93.0, 93.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 41, 41.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 32, 32.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 20, 20.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 41.0, '41', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 32.0, '32', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 20.0, '20', false, NULL, now(), now());
 
   -- Competitor: Mathias Cheow (Rank 34)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Mathias Cheow')) LIMIT 1;
@@ -6857,19 +6857,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 34, 94.0, 94.0, '13&U, N', '225167',
-    'SAFYC', 'Anglo-Chinese School (Barker Road)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 34, 94.0, 94.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 30, 30.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 43, 43.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 21, 21.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 30.0, '30', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 43.0, '43', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 21.0, '21', false, NULL, now(), now());
 
   -- Competitor: Jonathan Kum Loong Kwok (Rank 35)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jonathan Kum Loong Kwok')) LIMIT 1;
@@ -6893,19 +6893,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 35, 100.0, 100.0, '13&U, N', '214808',
-    'CWSS', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 35, 100.0, 100.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 32, 32.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 37, 37.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 31, 31.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 32.0, '32', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 37.0, '37', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 31.0, '31', false, NULL, now(), now());
 
   -- Competitor: Angela Fei'er Huang (Rank 36)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Angela Fei''er Huang')) LIMIT 1;
@@ -6929,19 +6929,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 36, 102.0, 102.0, NULL, '213191',
-    'SAFYC', 'Methodist Girls'' School (Secondary)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 36, 102.0, 102.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 24, 24.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 25, 25.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 24.0, '24', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 25.0, '25', false, NULL, now(), now());
 
   -- Competitor: Isla Zhi Xi Lee (Rank 37)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Isla Zhi Xi Lee')) LIMIT 1;
@@ -6965,19 +6965,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 37, 102.0, 102.0, '13&U, N', '203535',
-    'SAFYC', 'Chung Cheng High School (Yishun)', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 37, 102.0, 102.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 35, 35.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 34, 34.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 33, 33.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 35.0, '35', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 34.0, '34', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 33.0, '33', false, NULL, now(), now());
 
   -- Competitor: Heng Yi Yong (Rank 38)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Heng Yi Yong')) LIMIT 1;
@@ -7001,19 +7001,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 38, 116.0, 116.0, '13&U', '225259',
-    'CSC', 'Pasir Ris Primary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 38, 116.0, 116.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 52.0, 'UFD', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 11, 11.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 52.0, 'UFD', false, 'UFD', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 11.0, '11', false, NULL, now(), now());
 
   -- Competitor: Eugene Yi Ze Tan (Rank 39)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Eugene Yi Ze Tan')) LIMIT 1;
@@ -7037,19 +7037,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 39, 117.0, 117.0, '13&U, N', '217008',
-    'SAFYC', 'St. Joseph''s Institution Junior', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 39, 117.0, 117.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 37, 37.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 38, 38.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 42, 42.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 37.0, '37', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 38.0, '38', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 42.0, '42', false, NULL, now(), now());
 
   -- Competitor: Kye Tang (Rank 40)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kye Tang')) LIMIT 1;
@@ -7073,19 +7073,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 40, 118.0, 118.0, '13&U', '226900',
-    'CWSS', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 40, 118.0, 118.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 34, 34.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 52.0, 'RET', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 32, 32.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 34.0, '34', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 52.0, 'RET', false, 'RET', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 32.0, '32', false, NULL, now(), now());
 
   -- Competitor: Haoying He (Rank 41)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Haoying He')) LIMIT 1;
@@ -7109,19 +7109,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 41, 120.0, 120.0, NULL, '220078',
-    'CYA', 'NA', 'F', 'CHN', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 41, 120.0, 120.0, false, false,
+    'F', 'CHN', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 39, 39.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 36, 36.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 45, 45.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 39.0, '39', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 36.0, '36', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 45.0, '45', false, NULL, now(), now());
 
   -- Competitor: Nicholas Jiang En Ng (Rank 42)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Nicholas Jiang En Ng')) LIMIT 1;
@@ -7145,19 +7145,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 42, 127.0, 127.0, NULL, '209042',
-    'SAFYC', 'Yishun Town Secondary School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 42, 127.0, 127.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 38, 38.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 39, 39.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 50, 50.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 38.0, '38', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 39.0, '39', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 50.0, '50', false, NULL, now(), now());
 
   -- Competitor: Keyin Ren (Rank 43)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Keyin Ren')) LIMIT 1;
@@ -7181,19 +7181,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 43, 128.0, 128.0, NULL, '226328',
-    'CYA', 'NA', 'M', 'CHN', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 43, 128.0, 128.0, false, false,
+    'M', 'CHN', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 40, 40.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 44, 44.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 44, 44.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 40.0, '40', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 44.0, '44', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 44.0, '44', false, NULL, now(), now());
 
   -- Competitor: Callum Joon Thang Wong (Rank 44)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Callum Joon Thang Wong')) LIMIT 1;
@@ -7217,19 +7217,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 44, 136.0, 136.0, '13&U, N', '214748',
-    'SAFYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 44, 136.0, 136.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 42, 42.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 41, 41.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 42.0, '42', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 41.0, '41', false, NULL, now(), now());
 
   -- Competitor: Jiale Yang (Rank 45)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jiale Yang')) LIMIT 1;
@@ -7253,19 +7253,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 45, 139.0, 139.0, NULL, '220808',
-    'CYA', 'NA', 'M', 'CHN', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 45, 139.0, 139.0, false, false,
+    'M', 'CHN', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 35, 35.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 51.0, 'SCP', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 35.0, '35', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 51.0, 'SCP', false, 'SCP', now(), now());
 
   -- Competitor: Aaron Abraham Say (Rank 46)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Aaron Abraham Say')) LIMIT 1;
@@ -7289,19 +7289,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 46, 143.0, 143.0, '13&U', '203846',
-    'RVYC', 'Victoria School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 46, 143.0, 143.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 41, 41.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 49, 49.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 41.0, '41', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 49.0, '49', false, NULL, now(), now());
 
   -- Competitor: Cecilia Sze Sen Kong (Rank 47)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Cecilia Sze Sen Kong')) LIMIT 1;
@@ -7325,19 +7325,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 47, 144.0, 144.0, 'N', '221688',
-    'CSC', 'National Junior College', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 47, 144.0, 144.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 52.0, 'RET', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 39, 39.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 52.0, 'RET', false, 'RET', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 39.0, '39', false, NULL, now(), now());
 
   -- Competitor: Yunosuke Ogawa (Rank 48)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yunosuke Ogawa')) LIMIT 1;
@@ -7361,19 +7361,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 48, 145.0, 145.0, NULL, '43',
-    'CWSS', 'Overseas Family School', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 48, 145.0, 145.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 45, 45.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 47, 47.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 45.0, '45', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 47.0, '47', false, NULL, now(), now());
 
   -- Competitor: Bingnan Li (Rank 49)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Bingnan Li')) LIMIT 1;
@@ -7397,19 +7397,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 49, 146.0, 146.0, NULL, '220428',
-    'CYA', 'NA', 'M', 'CHN', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 49, 146.0, 146.0, false, false,
+    'M', 'CHN', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 52.0, 'UFD', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 41.0, 'SCP', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 52.0, 'UFD', false, 'UFD', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 41.0, 'SCP', false, 'SCP', now(), now());
 
   -- Competitor: Noel Jiang Wen Ng (Rank 50)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Noel Jiang Wen Ng')) LIMIT 1;
@@ -7433,19 +7433,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 50, 151.0, 151.0, NULL, '193911',
-    'SAFYC', 'Chung Cheng High School (Yishun)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 50, 151.0, 151.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 52.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 46, 46.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 52.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 46.0, '46', false, NULL, now(), now());
 
   -- Competitor: Yuan Feng (Rank 51)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yuan Feng')) LIMIT 1;
@@ -7469,19 +7469,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 51, 156.0, 156.0, NULL, '220505',
-    'CYA', 'NA', 'M', 'CHN', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 51, 156.0, 156.0, false, false,
+    'M', 'CHN', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 52.0, 'RET', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 51, 51.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 52.0, 'RET', false, 'RET', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 51.0, '51', false, NULL, now(), now());
 
   -- Competitor: Lixin Wei (Rank 52)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Lixin Wei')) LIMIT 1;
@@ -7505,19 +7505,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 52, 161.0, 161.0, NULL, '220055',
-    'CYA', 'NA', 'M', 'CHN', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 52, 161.0, 161.0, false, false,
+    'M', 'CHN', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 53.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 54.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 54.0, 'DNC', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 53.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 54.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 54.0, 'DNC', false, 'DNC', now(), now());
 
   -- Competitor: Tiago Cheng De Villemor Salgado (Rank 53)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Tiago Cheng De Villemor Salgado')) LIMIT 1;
@@ -7541,19 +7541,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 53, 162.0, 162.0, NULL, '222437',
-    'CSC', 'United World College of South East Asia (Dover Campus)', 'M', 'HKG', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 53, 162.0, 162.0, false, false,
+    'M', 'HKG', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 54.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 54.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 54.0, 'DNC', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 54.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 54.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 54.0, 'DNC', false, 'DNC', now(), now());
 
 END $$;
 
@@ -7622,19 +7622,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 1, 9.0, 9.0, NULL, '225225',
-    'SAFYC', 'Nanyang Polytechnic', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 1, 9.0, 9.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 1, 1.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 4, 4.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 4, 4.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 1.0, '1', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 4.0, '4', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 4.0, '4', false, NULL, now(), now());
 
   -- Competitor: Isaac Goh (Rank 2)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Isaac Goh')) LIMIT 1;
@@ -7658,19 +7658,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 2, 11.0, 11.0, NULL, '219158',
-    'CSC', 'Raffles Institution (Junior College)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 2, 11.0, 11.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 3, 3.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 1, 1.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 7, 7.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 3.0, '3', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 1.0, '1', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 7.0, '7', false, NULL, now(), now());
 
   -- Competitor: Kenan Kee Zen Tan (Rank 3)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Kenan Kee Zen Tan')) LIMIT 1;
@@ -7694,19 +7694,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 3, 13.0, 13.0, NULL, '1',
-    'RVYC', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 3, 13.0, 13.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 10, 10.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 2, 2.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 1, 1.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 10.0, '10', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 2.0, '2', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 1.0, '1', false, NULL, now(), now());
 
   -- Competitor: Aurick You Shun Leow (Rank 4)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Aurick You Shun Leow')) LIMIT 1;
@@ -7730,19 +7730,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 4, 16.0, 16.0, NULL, '5',
-    'SAFYC', 'Raffles Institution (Junior College)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 4, 16.0, 16.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 11, 11.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 3, 3.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 2, 2.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 11.0, '11', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 3.0, '3', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 2.0, '2', false, NULL, now(), now());
 
   -- Competitor: Asher James Nair (Rank 5)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Asher James Nair')) LIMIT 1;
@@ -7766,19 +7766,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 5, 21.0, 21.0, NULL, '185201',
-    'PA', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 5, 21.0, 21.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 2, 2.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 10, 10.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 9, 9.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 2.0, '2', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 10.0, '10', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 9.0, '9', false, NULL, now(), now());
 
   -- Competitor: Danielle Lai (Rank 6)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Danielle Lai')) LIMIT 1;
@@ -7802,19 +7802,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 6, 21.0, 21.0, NULL, '222257',
-    'RVYC', 'Tanjong Katong Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 6, 21.0, 21.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 4, 4.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 9, 9.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 8, 8.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 4.0, '4', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 9.0, '9', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 8.0, '8', false, NULL, now(), now());
 
   -- Competitor: Sarah Rui-En Yong (Rank 7)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Sarah Rui-En Yong')) LIMIT 1;
@@ -7838,19 +7838,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 7, 24.0, 24.0, NULL, '18',
-    'RVYC', 'Nanyang Polytechnic', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 7, 24.0, 24.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 5, 5.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 5, 5.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 14, 14.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 5.0, '5', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 5.0, '5', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 14.0, '14', false, NULL, now(), now());
 
   -- Competitor: Gabi Oh (Rank 8)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Gabi Oh')) LIMIT 1;
@@ -7874,19 +7874,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 8, 25.0, 25.0, NULL, '224717',
-    'SAFYC', 'St. Hilda''s Secondary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 8, 25.0, 25.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 6, 6.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 6, 6.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 13, 13.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 6.0, '6', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 6.0, '6', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 13.0, '13', false, NULL, now(), now());
 
   -- Competitor: Avelino Shin (Rank 9)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Avelino Shin')) LIMIT 1;
@@ -7910,19 +7910,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 9, 26.0, 26.0, NULL, '209902',
-    'HHYC', 'N.A.', 'M', 'HKG', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 9, 26.0, 26.0, false, false,
+    'M', 'HKG', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 8, 8.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 13, 13.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 5, 5.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 8.0, '8', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 13.0, '13', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 5.0, '5', false, NULL, now(), now());
 
   -- Competitor: Justiin Ang (Rank 10)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Justiin Ang')) LIMIT 1;
@@ -7946,19 +7946,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 10, 29.0, 29.0, NULL, '158031',
-    'CWSS', 'NA', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 10, 29.0, 29.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 12, 12.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 7, 7.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 10, 10.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 12.0, '12', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 7.0, '7', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 10.0, '10', false, NULL, now(), now());
 
   -- Competitor: Jayden Teo (Rank 11)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jayden Teo')) LIMIT 1;
@@ -7982,19 +7982,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 11, 35.0, 35.0, NULL, '214813',
-    'PA', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 11, 35.0, 35.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 9, 9.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 8, 8.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 18, 18.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 9.0, '9', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 8.0, '8', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 18.0, '18', false, NULL, now(), now());
 
   -- Competitor: Jarrod Toh (Rank 12)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jarrod Toh')) LIMIT 1;
@@ -8018,19 +8018,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 12, 38.0, 38.0, NULL, '214748',
-    'RVYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 12, 38.0, 38.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 14, 14.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 18, 18.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 6, 6.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 14.0, '14', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 18.0, '18', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 6.0, '6', false, NULL, now(), now());
 
   -- Competitor: Eitan Oh (Rank 13)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Eitan Oh')) LIMIT 1;
@@ -8054,19 +8054,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 13, 39.0, 39.0, NULL, '222743',
-    'SAFYC', 'Raffles Institution (Junior College)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 13, 39.0, 39.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 15, 15.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 21, 21.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 3, 3.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 15.0, '15', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 21.0, '21', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 3.0, '3', false, NULL, now(), now());
 
   -- Competitor: Cleo En Rui Seah (Rank 14)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Cleo En Rui Seah')) LIMIT 1;
@@ -8090,19 +8090,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 14, 40.0, 40.0, NULL, '224379',
-    'SAFYC', 'Canberra Secondary School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 14, 40.0, 40.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 13, 13.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 12, 12.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 15, 15.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 13.0, '13', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 12.0, '12', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 15.0, '15', false, NULL, now(), now());
 
   -- Competitor: Jonathan Jian Yi Ho (Rank 15)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jonathan Jian Yi Ho')) LIMIT 1;
@@ -8126,19 +8126,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 15, 42.0, 42.0, '15&U', '214848',
-    'PA', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 15, 42.0, 42.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 7, 7.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 19, 19.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 16, 16.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 7.0, '7', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 19.0, '19', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 16.0, '16', false, NULL, now(), now());
 
   -- Competitor: Yuei Jit Foo (Rank 16)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Yuei Jit Foo')) LIMIT 1;
@@ -8162,19 +8162,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 16, 45.0, 45.0, NULL, '221686',
-    'PA', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 16, 45.0, 45.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 18, 18.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 16, 16.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 11, 11.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 18.0, '18', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 16.0, '16', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 11.0, '11', false, NULL, now(), now());
 
   -- Competitor: Elizabeth Victoria Say (Rank 17)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Elizabeth Victoria Say')) LIMIT 1;
@@ -8198,19 +8198,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 17, 49.0, 49.0, '15&U', '214873',
-    'RVYC', 'Dunman High School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 17, 49.0, 49.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 22, 22.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 15, 15.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 12, 12.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 22.0, '22', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 15.0, '15', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 12.0, '12', false, NULL, now(), now());
 
   -- Competitor: Jaydn Wilkins (Rank 18)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Jaydn Wilkins')) LIMIT 1;
@@ -8234,19 +8234,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 18, 52.0, 52.0, NULL, '221703',
-    'CSC', 'Stamford American International School', 'M', 'TPE', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 18, 52.0, 52.0, false, false,
+    'M', 'TPE', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 16, 16.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 14, 14.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 22, 22.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 16.0, '16', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 14.0, '14', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 22.0, '22', false, NULL, now(), now());
 
   -- Competitor: Clive Wei Jun Seah (Rank 19)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Clive Wei Jun Seah')) LIMIT 1;
@@ -8270,19 +8270,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 19, 53.0, 53.0, NULL, '214240',
-    'SAFYC', 'Catholic Junior College', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 19, 53.0, 53.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 19, 19.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 17, 17.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 17, 17.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 19.0, '19', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 17.0, '17', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 17.0, '17', false, NULL, now(), now());
 
   -- Competitor: John Gabriel Lim (Rank 20)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('John Gabriel Lim')) LIMIT 1;
@@ -8306,19 +8306,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 20, 58.0, 58.0, '15&U', '206799',
-    'CSC', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 20, 58.0, 58.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 17, 17.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 20, 20.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 21, 21.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 17.0, '17', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 20.0, '20', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 21.0, '21', false, NULL, now(), now());
 
   -- Competitor: Gordon Alexander Allan (Rank 21)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Gordon Alexander Allan')) LIMIT 1;
@@ -8342,19 +8342,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 21, 63.0, 63.0, '15&U', '221058',
-    'RVYC', 'Anglo-Chinese School (Independent)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 21, 63.0, 63.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 26, 26.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 11, 11.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 26, 26.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 26.0, '26', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 11.0, '11', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 26.0, '26', false, NULL, now(), now());
 
   -- Competitor: Darren Lai (Rank 22)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Darren Lai')) LIMIT 1;
@@ -8378,19 +8378,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 22, 71.0, 71.0, '15&U', '222256',
-    'RVYC', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 22, 71.0, 71.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 25, 25.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 23, 23.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 23, 23.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 25.0, '25', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 23.0, '23', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 23.0, '23', false, NULL, now(), now());
 
   -- Competitor: Mathias Yu Da Wong (Rank 23)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Mathias Yu Da Wong')) LIMIT 1;
@@ -8414,19 +8414,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 23, 73.0, 73.0, '15&U', '222255',
-    'CWSS', 'Raffles Institution (Secondary)', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 23, 73.0, 73.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 20, 20.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 29, 29.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 24, 24.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 20.0, '20', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 29.0, '29', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 24.0, '24', false, NULL, now(), now());
 
   -- Competitor: Abigail Jia En Ling (Rank 24)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Abigail Jia En Ling')) LIMIT 1;
@@ -8450,19 +8450,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 24, 77.0, 77.0, NULL, '204636',
-    'CWSS', 'Dunman High School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 24, 77.0, 77.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 27, 27.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 22, 22.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 28, 28.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 27.0, '27', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 22.0, '22', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 28.0, '28', false, NULL, now(), now());
 
   -- Competitor: Fion Yingyi Liang (Rank 25)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Fion Yingyi Liang')) LIMIT 1;
@@ -8486,19 +8486,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 25, 78.0, 78.0, NULL, '39',
-    'CSC', 'NA', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 25, 78.0, 78.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 21, 21.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 24, 24.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, NULL, 33.0, 'DNC', false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 21.0, '21', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 24.0, '24', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 33.0, 'DNC', false, 'DNC', now(), now());
 
   -- Competitor: Daryl Goh (Rank 26)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Daryl Goh')) LIMIT 1;
@@ -8522,19 +8522,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 26, 78.0, 78.0, NULL, '203818',
-    'CSC', 'N.A.', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 26, 78.0, 78.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 23, 23.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 25, 25.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 30, 30.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 23.0, '23', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 25.0, '25', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 30.0, '30', false, NULL, now(), now());
 
   -- Competitor: Leo Lee (Rank 27)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Leo Lee')) LIMIT 1;
@@ -8558,19 +8558,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 27, 80.0, 80.0, NULL, '213307',
-    'HHCY', 'N.A.', 'M', 'HKG', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 27, 80.0, 80.0, false, false,
+    'M', 'HKG', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 30, 30.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 30, 30.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 20, 20.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 30.0, '30', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 30.0, '30', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 20.0, '20', false, NULL, now(), now());
 
   -- Competitor: Arabelle En Xi Tan (Rank 28)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Arabelle En Xi Tan')) LIMIT 1;
@@ -8594,19 +8594,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 28, 80.0, 80.0, '15&U', '221690',
-    'PA', 'Tanjong Katong Girls'' School', 'F', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 28, 80.0, 80.0, false, false,
+    'F', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 29, 29.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 26, 26.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 25, 25.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 29.0, '29', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 26.0, '26', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 25.0, '25', false, NULL, now(), now());
 
   -- Competitor: Omar Agoes (Rank 29)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Omar Agoes')) LIMIT 1;
@@ -8630,19 +8630,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 29, 83.0, 83.0, NULL, '209145',
-    'CWSS', 'NA', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 29, 83.0, 83.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 28, 28.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 28, 28.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 27, 27.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 28.0, '28', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 28.0, '28', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 27.0, '27', false, NULL, now(), now());
 
   -- Competitor: Samuel Tan (Rank 30)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Samuel Tan')) LIMIT 1;
@@ -8666,19 +8666,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 30, 85.0, 85.0, NULL, '223134',
-    'ONEÂ°15', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 30, 85.0, 85.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, NULL, 33.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 33.0, 'DNC', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 19, 19.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 33.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 33.0, 'DNC', false, 'DNC', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 19.0, '19', false, NULL, now(), now());
 
   -- Competitor: Darius Xian Rui Low (Rank 31)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Darius Xian Rui Low')) LIMIT 1;
@@ -8702,19 +8702,19 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 31, 87.0, 87.0, '15&U', '8',
-    'PA', 'St. Joseph''s Institution', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 31, 87.0, 87.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 24, 24.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, NULL, 32.0, 'DNF', false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 31, 31.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 24.0, '24', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 32.0, 'DNF', false, 'DNF', now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 31.0, '31', false, NULL, now(), now());
 
   -- Competitor: Ryan Cheung (Rank 32)
   SELECT id INTO v_sailor_id FROM public.sailors WHERE lower(trim(name)) = lower(trim('Ryan Cheung')) LIMIT 1;
@@ -8738,18 +8738,18 @@ BEGIN
 
   v_res_id := gen_random_uuid();
   INSERT INTO public.regatta_results (
-    id, regatta_id, sailor_id, position, points, nett, division, sail_number,
-    club, school, gender, nationality, created_at, updated_at
+    id, sailor_id, regatta_id, rank, total_score, nett_score, is_dns, is_overseas_commitment,
+    gender, nationality, verification_status, created_at, updated_at
   ) VALUES (
-    v_res_id, v_reg_id, v_sailor_id, 32, 87.0, 87.0, '15&U', '215313',
-    'HHCY', 'NA', 'M', 'SGP', now(), now()
+    v_res_id, v_sailor_id, v_reg_id, 32, 87.0, 87.0, false, false,
+    'M', 'SGP', 'verified', now(), now()
   );
 
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 1, 31, 31.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 2, 27, 27.0, NULL, false, now(), now());
-  INSERT INTO public.regatta_race_results (id, result_id, race_number, place, score, scoring_code, is_discard, created_at, updated_at)
-  VALUES (gen_random_uuid(), v_res_id, 3, 29, 29.0, NULL, false, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 1, 31.0, '31', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 2, 27.0, '27', false, NULL, now(), now());
+  INSERT INTO public.regatta_race_results (id, regatta_result_id, race_number, score, raw_value, discarded, scoring_code, created_at, updated_at)
+  VALUES (gen_random_uuid(), v_res_id, 3, 29.0, '29', false, NULL, now(), now());
 
 END $$;
