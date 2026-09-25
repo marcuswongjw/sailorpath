@@ -109,6 +109,13 @@ export function sheetClassLabel(row: GroupableRegatta): string {
   return boat || division || "Class";
 }
 
+export function missingClassesFor(
+  expected: string[],
+  sheets: GroupableRegatta[]
+): string[] {
+  return expected.filter((label) => !classCovered(label, sheets));
+}
+
 function classCovered(expected: string, sheets: GroupableRegatta[]): boolean {
   const family = regattaClassFamily(expected);
   if (family === "optimist") {
@@ -217,9 +224,10 @@ export function groupRegattaEvents(rows: GroupableRegatta[]): {
         : Boolean(shell?.isSelectionTrial),
       keyDeadlines: primary?.keyDeadlines || undefined,
       expectedClasses,
-      missingClasses: expectedClasses.filter(
-        (label) => !classCovered(label, [...eventSheets, ...eventShells])
-      ),
+      missingClasses: missingClassesFor(expectedClasses, [
+        ...eventSheets,
+        ...eventShells,
+      ]),
       sheets: eventSheets,
       shells: eventShells,
       shell,

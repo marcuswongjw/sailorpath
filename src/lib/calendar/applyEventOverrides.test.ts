@@ -56,6 +56,21 @@ describe("applyCalendarEventOverride", () => {
     expect(next.keyDeadlines).toBe("Entry closes 1 August 2026");
     expect(next.classes).toEqual(["Optimist", "ILCA 4", "29er"]);
     expect(next.norUrl).toBe("https://example.com/notice");
+    const cleared = applyCalendarEventOverride(
+      card,
+      {
+        slug: "snsc-2026",
+        name: "SNSC 2026",
+        startDate: "2026-09-06",
+        venue: null,
+        keyDeadlines: null,
+        norUrl: null,
+      },
+      true
+    );
+    expect(cleared.venue).toBeUndefined();
+    expect(cleared.keyDeadlines).toBeUndefined();
+    expect(cleared.norUrl).toBeUndefined();
   });
 
   it("leaves a sibling card's name and classes alone", () => {

@@ -118,7 +118,11 @@ export function useAdminRegattas({
         if (!selectedRegattaIdForResultEdit) {
           setSelectedRegattaIdForResultEdit(regatta.id);
         }
-        toast.success("Regatta created successfully!");
+        toast.success(
+          data.rankingNote
+            ? `Saved. ${data.rankingNote}`
+            : "Regatta created successfully!"
+        );
       } else {
         const res = await fetch("/api/admin/regattas", {
           method: "PATCH",
@@ -131,7 +135,11 @@ export function useAdminRegattas({
         setRegattaList((prev) =>
           prev.map((r) => (r.id === editingRegattaId ? regatta : r))
         );
-        toast.success("Regatta updated successfully!");
+        toast.success(
+          data.rankingNote
+            ? `Saved. ${data.rankingNote}`
+            : "Regatta updated successfully!"
+        );
       }
       setEditingRegattaId(null);
       invalidateRegattas?.();
@@ -208,6 +216,7 @@ export function useAdminRegattas({
     saving,
     handleSaveRegatta,
     handleDeleteRegatta,
+    invalidateRegattas,
   };
 
   return {

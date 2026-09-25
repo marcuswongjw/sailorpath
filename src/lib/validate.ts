@@ -95,6 +95,27 @@ export function asRank(
 }
 
 /** Positive integer for counts such as fleet size. */
+/**
+ * Completed races. Blank means unknown. Zero is a real count, not unknown.
+ * Negative and non-numeric values are rejected.
+ */
+export function asOptionalRaceCount(
+  v: unknown,
+  field = "raceCount"
+): { ok: true; value: number | null } | { ok: false; error: string } {
+  if (v === null || v === undefined || v === "") {
+    return { ok: true, value: null };
+  }
+  const n = typeof v === "number" ? v : Number(String(v).trim());
+  if (!Number.isFinite(n) || n < 0) {
+    return {
+      ok: false,
+      error: `${field} must be a whole number of 0 or more`,
+    };
+  }
+  return { ok: true, value: Math.round(n) };
+}
+
 export function asPositiveInteger(
   v: unknown,
   field = "value",

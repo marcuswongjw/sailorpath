@@ -4,11 +4,8 @@ import { db, ensureCoreSchema } from "@/db";
 import { regattas } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { slugifyWithDate } from "@/lib/slug";
-import {
-  isAnyIlcaClass,
-  ILCA_MIN_RACES_FOR_RANKING,
-} from "@/lib/ilcaRanking";
-import { asPositiveInteger } from "@/lib/validate";
+import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
+import { asOptionalRaceCount, asPositiveInteger } from "@/lib/validate";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { linkRegattaEvents } from "@/lib/admin/linkRegattaEvents";
@@ -105,10 +102,11 @@ export async function POST(req: Request) {
     }
     const totalFleetSize = fleetSizeResult.value;
     const division = body.division || "Gold";
-    const raceCount =
-      body.raceCount === "" || body.raceCount == null
-        ? null
-        : Math.max(0, Math.round(Number(body.raceCount))) || null;
+    const raceCountResult = asOptionalRaceCount(body.raceCount);
+    if (!raceCountResult.ok) {
+      return NextResponse.json({ error: raceCountResult.error }, { status: 400 });
+    }
+    const raceCount = raceCountResult.value;
     const geography =
       body.geography != null && String(body.geography).trim()
         ? String(body.geography).trim().toUpperCase().slice(0, 12)
@@ -118,7 +116,7 @@ export async function POST(req: Request) {
         ? String(body.boatClass).trim().slice(0, 40)
         : "Optimist";
     // Default: counts for series ranking. Off = non-ranking (trial / training / etc.)
-    // ILCA: insufficient completed races → force non-ranking.
+    // Fewer than 3 completed races → non-ranking for every class.
     let countsForRanking = body.countsForRanking !== false;
     let finalDivision = division || "Gold";
     if (division === "NonRanking") {
@@ -130,10 +128,10 @@ export async function POST(req: Request) {
     let rankingNote: string | null = null;
     if (
       raceCount != null &&
-      raceCount < ILCA_MIN_RACES_FOR_RANKING
+      raceCount < MIN_RACES_FOR_RANKING
     ) {
       countsForRanking = false;
-      rankingNote = `Regatta with ${raceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races required for ranking series).`;
+      rankingNote = `Regatta with ${raceCount} race(s) is non-ranking (minimum ${MIN_RACES_FOR_RANKING} races required for ranking series).`;
     }
 
     const venue = body.venue ? String(body.venue).trim() : null;
@@ -238,10 +236,11 @@ export async function PATCH(req: Request) {
       patch.totalFleetSize = fsr.value;
     }
     if (body.raceCount !== undefined) {
-      patch.raceCount =
-        body.raceCount === "" || body.raceCount == null
-          ? null
-          : Math.max(0, Math.round(Number(body.raceCount))) || null;
+      const raceCountResult = asOptionalRaceCount(body.raceCount);
+      if (!raceCountResult.ok) {
+        return NextResponse.json({ error: raceCountResult.error }, { status: 400 });
+      }
+      patch.raceCount = raceCountResult.value;
     }
     if (body.geography !== undefined) {
       patch.geography =
@@ -340,14 +339,23 @@ export async function PATCH(req: Request) {
         { status: 409 }
       );
     }
-    let rankingNote: string | null = null;
+    const races = effectiveRaceCount == null ? null : Number(effectiveRaceCount);
     if (
-      effectiveRaceCount != null &&
-      Number(effectiveRaceCount) < ILCA_MIN_RACES_FOR_RANKING &&
-      body.action !== "promote"
+      body.action === "promote" &&
+      races != null &&
+      races < MIN_RACES_FOR_RANKING
     ) {
+      return NextResponse.json(
+        {
+          error: `Cannot promote: ${races} completed race(s). Ranking needs at least ${MIN_RACES_FOR_RANKING}.`,
+        },
+        { status: 400 }
+      );
+    }
+    let rankingNote: string | null = null;
+    if (races != null && races < MIN_RACES_FOR_RANKING) {
       patch.countsForRanking = false;
-      rankingNote = `Regatta with ${effectiveRaceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races required for ranking series).`;
+      rankingNote = `Regatta with ${races} race(s) is non-ranking (minimum ${MIN_RACES_FOR_RANKING} races required for ranking series).`;
     }
 
     const [row] = await db

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   asEmail,
+  asOptionalRaceCount,
   asPositiveInteger,
   asRank,
   asUuid,
@@ -23,6 +24,16 @@ describe("validate", () => {
     if (asRank(3.7).ok) {
       expect(asRank(3.7)).toMatchObject({ value: 4 });
     }
+  });
+
+  it("asOptionalRaceCount keeps zero and rejects junk", () => {
+    expect(asOptionalRaceCount("")).toMatchObject({ value: null });
+    expect(asOptionalRaceCount(null)).toMatchObject({ value: null });
+    expect(asOptionalRaceCount(0)).toMatchObject({ value: 0 });
+    expect(asOptionalRaceCount("0")).toMatchObject({ value: 0 });
+    expect(asOptionalRaceCount(6)).toMatchObject({ value: 6 });
+    expect(asOptionalRaceCount(-1).ok).toBe(false);
+    expect(asOptionalRaceCount("nope").ok).toBe(false);
   });
 
   it("asPositiveInteger", () => {

@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { regattaResults, regattas, sailors } from "@/db/schema";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
 
 /**
  * GET /api/admin/regatta-suggestions
@@ -261,6 +262,7 @@ export async function PATCH(req: Request) {
         .select({
           countsForRanking: regattas.countsForRanking,
           totalFleetSize: regattas.totalFleetSize,
+          raceCount: regattas.raceCount,
         })
         .from(regattas)
         .where(eq(regattas.id, regattaId))
@@ -275,6 +277,17 @@ export async function PATCH(req: Request) {
         return NextResponse.json(
           { error: "Regatta already counts for ranking" },
           { status: 409 }
+        );
+      }
+      if (
+        current.raceCount != null &&
+        current.raceCount < MIN_RACES_FOR_RANKING
+      ) {
+        return NextResponse.json(
+          {
+            error: `Cannot promote: ${current.raceCount} completed race(s). Ranking needs at least ${MIN_RACES_FOR_RANKING}.`,
+          },
+          { status: 400 }
         );
       }
 

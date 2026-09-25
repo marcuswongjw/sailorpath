@@ -23,6 +23,7 @@ import { useFeedback } from "@/components/ui/FeedbackProvider";
 import {
   eventStatusLabel,
   groupRegattaEvents,
+  missingClassesFor,
   sheetClassLabel,
   UNASSIGNED_EVENT_SLUG,
   type AdminEventGroup,
@@ -64,19 +65,24 @@ function withSavedEvent(
 ): AdminEventGroup {
   if (!saved) return event;
   const classes = (saved.classes || []).map((item) => item.trim()).filter(Boolean);
+  const expectedClasses = classes.length > 0 ? classes : event.expectedClasses;
   return {
     ...event,
     name: saved.name || event.name,
     startDate: String(saved.startDate || event.startDate).slice(0, 10),
-    endDate: saved.endDate ? String(saved.endDate).slice(0, 10) : event.endDate,
-    venue: saved.venue || event.venue,
-    organizer: saved.organizer || event.organizer,
-    norUrl: saved.norUrl || event.norUrl,
-    registrationUrl: saved.registrationUrl || event.registrationUrl,
+    endDate: saved.endDate ? String(saved.endDate).slice(0, 10) : "",
+    venue: saved.venue ?? "",
+    organizer: saved.organizer ?? "",
+    norUrl: saved.norUrl ?? "",
+    registrationUrl: saved.registrationUrl ?? "",
     countsForRanking: saved.countsForRanking ?? event.countsForRanking,
-    isSelectionTrial: saved.isSelectionTrial ?? event.isSelectionTrial,
-    keyDeadlines: saved.keyDeadlines || event.keyDeadlines,
-    expectedClasses: classes.length > 0 ? classes : event.expectedClasses,
+    isSelectionTrial: Boolean(saved.isSelectionTrial),
+    keyDeadlines: saved.keyDeadlines ?? "",
+    expectedClasses,
+    missingClasses: missingClassesFor(expectedClasses, [
+      ...event.sheets,
+      ...event.shells,
+    ]),
   };
 }
 
@@ -117,6 +123,7 @@ export type AdminRegattasPanelProps = {
   saving: boolean;
   handleSaveRegatta: () => void | Promise<void>;
   handleDeleteRegatta: (id: string) => void | Promise<void>;
+  invalidateRegattas?: () => void;
   onOpenResults?: (regattaId: string) => void;
   onClearSheet?: () => void;
   /** Sheet opened from ?sheet= or the results editor. */
@@ -142,6 +149,7 @@ export function AdminRegattasPanel({
   saving,
   handleSaveRegatta,
   handleDeleteRegatta,
+  invalidateRegattas,
   onOpenResults,
   onClearSheet,
   activeSheetId,
@@ -266,7 +274,16 @@ export function AdminRegattasPanel({
       if (!res.ok) throw new Error(data.error || "Could not save the calendar card");
       const saved = data.event as SavedCalendarEvent;
       setSavedEvents((prev) => ({ ...prev, [saved.slug]: saved }));
-      toast.success("Calendar card saved.");
+      invalidateRegattas?.();
+      const held = Number(data.sheetsKeptNonRanking || 0);
+      const updated = Number(data.sheetsUpdated || 0);
+      toast.success(
+        held > 0
+          ? `Calendar card saved. ${held} class sheet${held === 1 ? "" : "s"} stayed non-ranking because fewer than 3 races were completed.`
+          : updated > 0
+            ? "Calendar card saved. Class sheets now use this ranking setting."
+            : "Calendar card saved. No class sheets are linked yet, so series scores are unchanged."
+      );
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Could not save the calendar card");
     } finally {
@@ -633,27 +650,20 @@ export function AdminRegattasPanel({
                               onChange={(e) => {
                                 const raceCount = e.target.value;
                                 const n = Number(raceCount);
-                                const isIlca = /ilca|laser/i.test(
-                                  String(regattaForm.boatClass || "")
-                                );
+                                const tooFew =
+                                  raceCount !== "" && Number.isFinite(n) && n < 3;
                                 setRegattaForm({
                                   ...regattaForm,
                                   raceCount,
-                                  // ILCA: fewer than 3 races → non-ranking (insufficient races)
-                                  ...(isIlca &&
-                                  raceCount !== "" &&
-                                  Number.isFinite(n) &&
-                                  n < 3
-                                    ? { countsForRanking: false }
-                                    : {}),
+                                  ...(tooFew ? { countsForRanking: false } : {}),
                                 });
                               }}
                               className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
                               placeholder="e.g. 6"
                             />
                             <p className="mt-1 text-[13px] text-slate-500 leading-snug">
-                              ILCA 4/6: if fewer than <strong>3</strong> races are
-                              completed, the event is non-ranking for series.
+                              Fewer than <strong>3</strong> completed races makes
+                              the regatta non-ranking for every class.
                             </p>
                           </div>
                           <div>
@@ -690,15 +700,22 @@ export function AdminRegattasPanel({
                             <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer">
                               <input
                                 type="checkbox"
-                                checked={regattaForm.countsForRanking !== false}
-                                onChange={(e) =>
+                                checked={
+                                  regattaForm.countsForRanking !== false &&
+                                  !(
+                                    regattaForm.raceCount !== "" &&
+                                    Number(regattaForm.raceCount) < 3
+                                  )
+                                }
+                                onChange={(e) => {
+                                  const tooFew =
+                                    regattaForm.raceCount !== "" &&
+                                    Number(regattaForm.raceCount) < 3;
                                   setRegattaForm({
                                     ...regattaForm,
-                                    countsForRanking: e.target.checked,
-                                    // Keep Gold/Silver/Both division even when non-ranking
-                                    // (e.g. SG selection trial in Gold fleet that does not score Best 3 of 5)
-                                  })
-                                }
+                                    countsForRanking: e.target.checked && !tooFew,
+                                  });
+                                }}
                                 className="rounded border-slate-600"
                               />
                               <span>
@@ -706,9 +723,9 @@ export function AdminRegattasPanel({
                                   Counts for series ranking
                                 </strong>
                                 <span className="block text-[13px] text-slate-500 leading-snug">
-                                  Optimist: Gold/Silver Best 3 of 5. ILCA 4/6: high-points
-                                  Best 3 of last 5. Turn off for trials, training, or when
-                                  too few races were completed.
+                                  Optimist: Gold/Silver Best 3 of 5. ILCA: high-points Best 3
+                                  of last 5. Turn off for trials or training. Fewer than
+                                  3 completed races cannot rank.
                                 </span>
                               </span>
                             </label>
@@ -718,15 +735,12 @@ export function AdminRegattasPanel({
                                 logbook)
                               </p>
                             )}
-                            {/ilca|laser/i.test(
-                              String(regattaForm.boatClass || "")
-                            ) &&
-                              regattaForm.raceCount !== "" &&
+                            {regattaForm.raceCount !== "" &&
                               Number(regattaForm.raceCount) < 3 && (
                                 <p className="mt-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-2 py-1.5 text-[11px] font-bold text-amber-800">
-                                  Insufficient races ({String(regattaForm.raceCount)}{" "}
-                                  &lt; 3) — this ILCA event is treated as non-ranking for
-                                  national series.
+                                  {String(regattaForm.raceCount)} completed race(s) —
+                                  ranking needs at least 3, so this regatta stays
+                                  non-ranking.
                                 </p>
                               )}
                           </div>
@@ -1043,13 +1057,19 @@ export function AdminRegattasPanel({
                                 className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
                               />
                             </div>
-                            <label className="flex items-center gap-2 text-xs font-semibold text-slate-300">
+                            <label className="sm:col-span-2 flex items-start gap-2 text-xs font-semibold text-slate-300">
                               <input
                                 type="checkbox"
+                                className="mt-0.5"
                                 checked={calendarForm.countsForRanking}
                                 onChange={(e) => setCalendarForm({ ...calendarForm, countsForRanking: e.target.checked })}
                               />
-                              Ranking regatta
+                              <span>
+                                Ranking regatta
+                                <span className="block text-[12px] font-normal text-slate-500">
+                                  Applies to every class sheet. Fewer than 3 races stays non-ranking.
+                                </span>
+                              </span>
                             </label>
                             <label className="flex items-center gap-2 text-xs font-semibold text-slate-300">
                               <input

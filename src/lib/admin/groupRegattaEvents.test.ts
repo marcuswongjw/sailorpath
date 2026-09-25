@@ -3,6 +3,7 @@ import {
   eventShellSlug,
   eventStatusLabel,
   groupRegattaEvents,
+  missingClassesFor,
   sheetClassLabel,
 } from "./groupRegattaEvents";
 
@@ -27,6 +28,20 @@ function row(
     status: partial.status || "published",
   };
 }
+
+describe("missingClassesFor", () => {
+  it("follows the saved class list instead of the original calendar", () => {
+    const sheets = [
+      row({
+        slug: "sheet-gold",
+        boatClass: "Optimist",
+        division: "Gold",
+      }),
+    ];
+    expect(missingClassesFor(["Optimist", "ILCA 4"], sheets)).toEqual(["ILCA 4"]);
+    expect(missingClassesFor(["Optimist"], sheets)).toEqual([]);
+  });
+});
 
 describe("groupRegattaEvents", () => {
   it("treats a calendar slug as the event, not a class sheet", () => {

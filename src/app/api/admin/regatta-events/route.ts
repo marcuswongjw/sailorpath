@@ -3,8 +3,11 @@ import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
-import { regattaEvents } from "@/db/schema";
+import { regattaEvents, regattas } from "@/db/schema";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
+import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
+import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 function clean(value: unknown, max = 300): string | null {
   const text = String(value ?? "").trim();
@@ -66,7 +69,48 @@ export async function PATCH(req: Request) {
       })
       .returning();
 
+    const sheetRows = await db
+      .select({
+        id: regattas.id,
+        name: regattas.name,
+        slug: regattas.slug,
+        date: regattas.date,
+        boatClass: regattas.boatClass,
+        division: regattas.division,
+        status: regattas.status,
+        raceCount: regattas.raceCount,
+        countsForRanking: regattas.countsForRanking,
+        eventId: regattas.eventId,
+      })
+      .from(regattas);
+    const match = groupRegattaEvents(sheetRows).events.find(
+      (event) => event.slug === slug
+    );
+    let sheetsUpdated = 0;
+    let sheetsKeptNonRanking = 0;
+    if (match && saved) {
+      for (const sheet of match.sheets) {
+        const tooFew =
+          sheet.raceCount != null && sheet.raceCount < MIN_RACES_FOR_RANKING;
+        const nextFlag = values.countsForRanking && !tooFew;
+        if (values.countsForRanking && tooFew) sheetsKeptNonRanking += 1;
+        if (sheet.countsForRanking === nextFlag && sheet.eventId === saved.id) {
+          continue;
+        }
+        await db
+          .update(regattas)
+          .set({
+            countsForRanking: nextFlag,
+            eventId: saved.id,
+            updatedAt: new Date(),
+          })
+          .where(eq(regattas.id, sheet.id));
+        sheetsUpdated += 1;
+      }
+    }
+
     revalidatePath("/calendar");
+    revalidatePublicRankings(`regatta-event:${slug}`);
     void logAdminChange({
       actorUserId: auth.userId,
       actorEmail: auth.email,
@@ -74,10 +118,15 @@ export async function PATCH(req: Request) {
       entityType: "regatta_event",
       entityId: saved?.id,
       summary: `Updated calendar card ${name}`,
-      details: { slug },
+      details: { slug, sheetsUpdated, sheetsKeptNonRanking },
     });
 
-    return NextResponse.json({ ok: true, event: saved });
+    return NextResponse.json({
+      ok: true,
+      event: saved,
+      sheetsUpdated,
+      sheetsKeptNonRanking,
+    });
   } catch (e: unknown) {
     return jsonError(e);
   }
