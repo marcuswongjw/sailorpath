@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import { regattas } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import { slugifyWithDate } from "@/lib/slug";
+import { eq, and, ne } from "drizzle-orm";
+import { slugify, slugifyWithDate } from "@/lib/slug";
 import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
 import { asOptionalRaceCount, asPositiveInteger } from "@/lib/validate";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
@@ -88,9 +88,10 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    const slug =
+    const slug = slugify(
       (body.slug as string)?.trim() ||
-      slugifyWithDate(String(body.name), String(body.date));
+        slugifyWithDate(String(body.name), String(body.date))
+    );
     const fleetSizeResult = asPositiveInteger(
       body.totalFleetSize == null || body.totalFleetSize === ""
         ? 50
@@ -255,7 +256,24 @@ export async function PATCH(req: Request) {
           : String(body.boatClass).trim().slice(0, 40);
     }
     if (body.slug !== undefined && body.slug) {
-      patch.slug = String(body.slug).trim();
+      const slugVal = slugify(String(body.slug));
+      if (!slugVal) {
+        return NextResponse.json({ error: "Slug cannot be empty" }, { status: 400 });
+      }
+      const [conflict] = await db
+        .select({ id: regattas.id, name: regattas.name })
+        .from(regattas)
+        .where(and(eq(regattas.slug, slugVal), ne(regattas.id, String(body.id))))
+        .limit(1);
+      if (conflict) {
+        return NextResponse.json(
+          {
+            error: `Slug "${slugVal}" is already in use by "${conflict.name}". Please choose a different slug.`,
+          },
+          { status: 409 }
+        );
+      }
+      patch.slug = slugVal;
     }
     if (body.countsForRanking !== undefined) {
       patch.countsForRanking = Boolean(body.countsForRanking);

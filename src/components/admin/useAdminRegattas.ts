@@ -115,9 +115,28 @@ export function useAdminRegattas({
         if (!res.ok) throw new Error(apiErr(data, "Create failed"));
         const regatta = data.regatta as RegattaAdmin;
         setRegattaList((prev) => [...prev, regatta]);
-        if (!selectedRegattaIdForResultEdit) {
-          setSelectedRegattaIdForResultEdit(regatta.id);
-        }
+        setEditingRegattaId(regatta.id);
+        setRegattaForm({
+          id: regatta.id,
+          name: regatta.name || "",
+          date: String(regatta.date || "").slice(0, 10),
+          slug: regatta.slug,
+          division: regatta.division || "",
+          raceCount: regatta.raceCount != null ? String(regatta.raceCount) : "",
+          totalFleetSize:
+            regatta.totalFleetSize != null ? String(regatta.totalFleetSize) : "",
+          geography: regatta.geography || "SGP",
+          boatClass: regatta.boatClass || "Optimist",
+          countsForRanking: regatta.countsForRanking !== false,
+          endDate: regatta.endDate ? String(regatta.endDate).slice(0, 10) : "",
+          venue: regatta.venue || "",
+          organizer: regatta.organizer || "",
+          norUrl: regatta.norUrl || "",
+          registrationUrl: regatta.registrationUrl || "",
+          isSelectionTrial: Boolean(regatta.isSelectionTrial),
+          scheduleNotes: regatta.scheduleNotes || "",
+        });
+        setSelectedRegattaIdForResultEdit(regatta.id);
         toast.success(
           data.rankingNote
             ? `Saved. ${data.rankingNote}`
@@ -135,13 +154,32 @@ export function useAdminRegattas({
         setRegattaList((prev) =>
           prev.map((r) => (r.id === editingRegattaId ? regatta : r))
         );
+        setRegattaForm({
+          id: regatta.id,
+          name: regatta.name || "",
+          date: String(regatta.date || "").slice(0, 10),
+          slug: regatta.slug,
+          division: regatta.division || "",
+          raceCount: regatta.raceCount != null ? String(regatta.raceCount) : "",
+          totalFleetSize:
+            regatta.totalFleetSize != null ? String(regatta.totalFleetSize) : "",
+          geography: regatta.geography || "SGP",
+          boatClass: regatta.boatClass || "Optimist",
+          countsForRanking: regatta.countsForRanking !== false,
+          endDate: regatta.endDate ? String(regatta.endDate).slice(0, 10) : "",
+          venue: regatta.venue || "",
+          organizer: regatta.organizer || "",
+          norUrl: regatta.norUrl || "",
+          registrationUrl: regatta.registrationUrl || "",
+          isSelectionTrial: Boolean(regatta.isSelectionTrial),
+          scheduleNotes: regatta.scheduleNotes || "",
+        });
         toast.success(
           data.rankingNote
             ? `Saved. ${data.rankingNote}`
             : "Regatta updated successfully!"
         );
       }
-      setEditingRegattaId(null);
       invalidateRegattas?.();
     } catch (e: unknown) {
       toast.error(errorMessage(e));
