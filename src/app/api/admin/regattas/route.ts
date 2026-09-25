@@ -324,8 +324,6 @@ export async function PATCH(req: Request) {
       .where(eq(regattas.id, body.id))
       .limit(1);
 
-    const effectiveBoatClass =
-      (patch.boatClass as string | undefined) ?? existing?.boatClass ?? "Optimist";
     const effectiveRaceCount =
       patch.raceCount !== undefined
         ? (patch.raceCount as number | null)

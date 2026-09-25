@@ -12,7 +12,6 @@ import {
 } from "@/lib/admin/regattaClass";
 import { norAmendmentForRegatta } from "@/lib/admin/norAmendments";
 import type { RegattaAdmin } from "@/types/regatta";
-import { regattaDateLabel } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
 import {
   emptyRegattaForm,
@@ -222,6 +221,7 @@ export function AdminRegattasPanel({
         item.shells.some((sheet) => sheet.id === activeSheetId)
     );
     seenSheetId.current = activeSheetId;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedEventSlug(event ? event.slug : UNASSIGNED_EVENT_SLUG);
     setEditingRegattaId(row.id);
     setRegattaForm(formFrom(row));
