@@ -49,7 +49,7 @@ vi.mock("@/lib/revalidatePublic", () => ({
   revalidatePublicRankings: vi.fn().mockResolvedValue(undefined),
 }));
 
-import { GET } from "./route";
+import { GET, PATCH } from "./route";
 
 describe("GET /api/admin/regattas", () => {
   beforeEach(() => {
@@ -68,6 +68,23 @@ describe("GET /api/admin/regattas", () => {
     const data = await res.json();
     expect(data.regattas).toHaveLength(1);
     expect(data.regattas[0].status).toBe("draft");
+    expect(mocks.updateSpy).not.toHaveBeenCalled();
+  });
+
+  it("rejects lifecycle changes through the generic patch route", async () => {
+    const res = await PATCH(
+      new Request("https://sailorpath.com/api/admin/regattas", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: "regatta-draft", status: "published" }),
+      })
+    );
+
+    expect(res.status).toBe(400);
+    expect(await res.json()).toEqual({
+      error:
+        "Publication status must be changed through /api/admin/regattas/:id/publish",
+    });
     expect(mocks.updateSpy).not.toHaveBeenCalled();
   });
 });

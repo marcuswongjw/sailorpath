@@ -28,6 +28,7 @@ import {
   REGATTA_CLASS_FAMILIES,
 } from "@/lib/admin/regattaClass";
 import type { RegattaAdmin } from "@/types/regatta";
+import { setAdminRegattaStatus } from "@/components/admin/adminRegattaLifecycle";
 import { GeographySelect } from "@/components/CountrySelect";
 import {
   emptyRegattaForm,
@@ -202,13 +203,7 @@ export function AdminRegattasPanel({
     const targetStatus = currentStatus === "published" ? "draft" : "published";
     setPublishingId(sheetId);
     try {
-      const res = await fetch(`/api/admin/regattas/${sheetId}/publish`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ targetStatus }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to update publication status");
+      await setAdminRegattaStatus(sheetId, targetStatus);
       toast.success(
         targetStatus === "published"
           ? "Sailing class published successfully! Results are now visible publicly."
@@ -609,6 +604,7 @@ export function AdminRegattasPanel({
                           <div className="flex items-center gap-2 flex-wrap min-w-0">
                             <button
                               type="button"
+                              aria-label="Back to regatta events"
                               onClick={() => {
                                 setEditingRegattaId(null);
                                 onClearSheet?.();
@@ -673,8 +669,9 @@ export function AdminRegattasPanel({
                             {editingRegattaId !== "new" && (
                               <button
                                 type="button"
+                                aria-label={`Delete ${regattaForm.name || "regatta"} and all of its results`}
                                 onClick={() => handleDeleteRegatta(editingRegattaId)}
-                                className="p-1.5 rounded-full border border-white/10 bg-white/5 text-slate-500 hover:text-rose-400 hover:border-rose-500/30 hover:bg-rose-500/10 transition-colors"
+                                className="p-1.5 rounded-full border border-white/10 bg-white/5 text-slate-500 hover:text-rose-400 hover:border-rose-500/30 hover:bg-rose-500/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400"
                                 title="Delete regatta and cascade results"
                               >
                                 <Trash2 className="h-3.5 w-3.5" />
@@ -684,11 +681,19 @@ export function AdminRegattasPanel({
                         </div>
 
                         {/* Segmented Workspace Tabs */}
-                        <div className="flex items-center gap-2 border-b border-white/10 pb-3">
+                        <div
+                          className="flex items-center gap-2 border-b border-white/10 pb-3"
+                          role="tablist"
+                          aria-label="Sailing class editor"
+                        >
                           <button
                             type="button"
+                            id="regatta-details-tab"
+                            role="tab"
+                            aria-selected={sheetTab === "details"}
+                            aria-controls="regatta-details-panel"
                             onClick={() => setSheetTab("details")}
-                            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 ${
                               sheetTab === "details"
                                 ? "bg-[var(--sp-harbour-teal)] text-white shadow-sm"
                                 : "text-slate-400 hover:text-white hover:bg-white/5"
@@ -699,6 +704,10 @@ export function AdminRegattasPanel({
                           </button>
                           <button
                             type="button"
+                            id="regatta-results-tab"
+                            role="tab"
+                            aria-selected={sheetTab === "results"}
+                            aria-controls="regatta-results-panel"
                             onClick={() => {
                               setSheetTab("results");
                               if (editingRegattaId && editingRegattaId !== "new") {
@@ -706,7 +715,7 @@ export function AdminRegattasPanel({
                               }
                             }}
                             disabled={editingRegattaId === "new"}
-                            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 ${
                               sheetTab === "results"
                                 ? "bg-[var(--sp-harbour-teal)] text-white shadow-sm"
                                 : "text-slate-400 hover:text-white hover:bg-white/5 disabled:opacity-40"
@@ -735,7 +744,12 @@ export function AdminRegattasPanel({
 
                         {/* TAB 1: REGATTA DETAILS & SETTINGS */}
                         {sheetTab === "details" && (
-                          <div className="space-y-4">
+                          <div
+                            id="regatta-details-panel"
+                            role="tabpanel"
+                            aria-labelledby="regatta-details-tab"
+                            className="space-y-4"
+                          >
                             {/* Primary Details Card */}
                             <div className="rounded-2xl border border-white/5 bg-[#131520] p-4 sm:p-5 space-y-4">
                               <h4 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
@@ -1271,7 +1285,12 @@ export function AdminRegattasPanel({
 
                         {/* TAB 2: RESULTS & RACE SCORES */}
                         {sheetTab === "results" && editingRegattaId !== "new" && (
-                          <div className="space-y-4">
+                          <div
+                            id="regatta-results-panel"
+                            role="tabpanel"
+                            aria-labelledby="regatta-results-tab"
+                            className="space-y-4"
+                          >
                             {resultsEditor}
                           </div>
                         )}

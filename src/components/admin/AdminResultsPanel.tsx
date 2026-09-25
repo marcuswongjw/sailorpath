@@ -1090,8 +1090,9 @@ export function AdminResultsPanel({
                           </button>
                           <button
                             type="button"
+                            aria-label={`Delete result for ${sailor?.name || "sailor"}`}
                             onClick={() => void handleDeleteResult(res.id)}
-                            className="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                            className="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>

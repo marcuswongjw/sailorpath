@@ -9,6 +9,10 @@ import { asOptionalRaceCount, asPositiveInteger } from "@/lib/validate";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { linkRegattaEvents } from "@/lib/admin/linkRegattaEvents";
+import {
+  isRegattaLifecycleStatus,
+  REGATTA_LIFECYCLE_STATUSES,
+} from "@/lib/regattaStatus";
 
 export async function GET(req: Request) {
   try {
@@ -143,6 +147,14 @@ export async function POST(req: Request) {
     const organizer = body.organizer ? String(body.organizer).trim() : null;
     const scheduleNotes = body.scheduleNotes ? String(body.scheduleNotes).trim() : null;
     const status = body.status || "published";
+    if (!isRegattaLifecycleStatus(status)) {
+      return NextResponse.json(
+        {
+          error: `Invalid status. Must be one of: ${REGATTA_LIFECYCLE_STATUSES.join(", ")}`,
+        },
+        { status: 400 }
+      );
+    }
 
     const [row] = await db
       .insert(regattas)
@@ -183,7 +195,6 @@ export async function POST(req: Request) {
           isSelectionTrial,
           organizer,
           scheduleNotes,
-          status,
           updatedAt: new Date(),
         },
       })
@@ -223,6 +234,15 @@ export async function PATCH(req: Request) {
     const body = await req.json();
     if (!body.id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
+    }
+    if (Object.prototype.hasOwnProperty.call(body, "status")) {
+      return NextResponse.json(
+        {
+          error:
+            "Publication status must be changed through /api/admin/regattas/:id/publish",
+        },
+        { status: 400 }
+      );
     }
 
     const patch: Record<string, unknown> = { updatedAt: new Date() };
@@ -301,9 +321,6 @@ export async function PATCH(req: Request) {
     }
     if (body.scheduleNotes !== undefined) {
       patch.scheduleNotes = body.scheduleNotes === "" || body.scheduleNotes == null ? null : String(body.scheduleNotes).trim();
-    }
-    if (body.status !== undefined) {
-      patch.status = body.status;
     }
     // Promote / dismiss suggestions
     if (body.action === "promote") {

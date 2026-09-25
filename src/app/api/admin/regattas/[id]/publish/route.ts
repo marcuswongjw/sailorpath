@@ -7,6 +7,10 @@ import { eq } from "drizzle-orm";
 import { auditAdminMutation } from "@/lib/adminChangeLog";
 import type { WingfoilRegatta } from "@/lib/wingfoil";
 import type { Techno293Regatta } from "@/lib/techno293";
+import {
+  isRegattaLifecycleStatus,
+  REGATTA_LIFECYCLE_STATUSES,
+} from "@/lib/regattaStatus";
 
 export async function POST(
   req: Request,
@@ -24,16 +28,12 @@ export async function POST(
     }
 
     const body = await req.json().catch(() => ({}));
-    const targetStatus = (body.targetStatus || body.status || "published") as
-      | "draft"
-      | "in_review"
-      | "published"
-      | "archived";
-
-    const validStatuses = ["draft", "in_review", "published", "archived"];
-    if (!validStatuses.includes(targetStatus)) {
+    const targetStatus = body.targetStatus || body.status || "published";
+    if (!isRegattaLifecycleStatus(targetStatus)) {
       return NextResponse.json(
-        { error: `Invalid target status. Must be one of: ${validStatuses.join(", ")}` },
+        {
+          error: `Invalid target status. Must be one of: ${REGATTA_LIFECYCLE_STATUSES.join(", ")}`,
+        },
         { status: 400 }
       );
     }

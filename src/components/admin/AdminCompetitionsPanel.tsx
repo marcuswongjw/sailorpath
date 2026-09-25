@@ -455,8 +455,9 @@ export function AdminCompetitionsPanel({
                         </button>
                         <button
                           type="button"
+                          aria-label={`Delete result for ${sailor?.name || "sailor"}`}
                           onClick={() => void handleDeleteResult(r.id)}
-                          className="text-slate-500 hover:text-red-400"
+                          className="text-slate-500 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 rounded"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>

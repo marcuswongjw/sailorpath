@@ -526,7 +526,11 @@ function AdminDashboardInner() {
       </div>
 
       {/* Primary Workspaces Bar */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-2 w-full">
+      <div
+        className="grid grid-cols-1 md:grid-cols-12 gap-2 w-full"
+        role="tablist"
+        aria-label="Admin workspaces"
+      >
         {ADMIN_TAB_GROUPS.map((grp) => (
           <div
             key={grp.groupTitle}
@@ -551,8 +555,10 @@ function AdminDashboardInner() {
                   <button
                     key={tab.key}
                     type="button"
+                    role="tab"
+                    aria-selected={isActive}
                     onClick={() => goTab(tab.key)}
-                    className={`relative flex-1 flex items-center justify-center gap-1.5 rounded-xl px-2 sm:px-2.5 py-2 text-[13px] sm:text-sm font-bold transition-all min-h-[2.5rem] touch-manipulation ${
+                    className={`relative flex-1 flex items-center justify-center gap-1.5 rounded-xl px-2 sm:px-2.5 py-2 text-[13px] sm:text-sm font-bold transition-all min-h-[2.5rem] touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 focus-visible:ring-offset-[#131520] ${
                       isActive
                         ? "bg-[var(--sp-harbour-teal)] text-white shadow-md"
                         : "text-slate-400 hover:text-white hover:bg-white/5"
@@ -743,7 +749,11 @@ function AdminDashboardInner() {
         {activeTab === "edit" && (
           <div className="w-full min-w-0 space-y-4 sm:space-y-6">
             <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
-              <div className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full">
+              <div
+                className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full"
+                role="tablist"
+                aria-label="Database sections"
+              >
                 {ADMIN_DB_SUB_TABS.map(({ id, label }) => {
                   let count: number | null = null;
                   if (id === "sailors") count = data.sailorList.length;
@@ -752,8 +762,10 @@ function AdminDashboardInner() {
                     <button
                       key={id}
                       type="button"
+                      role="tab"
+                      aria-selected={editSubTab === id}
                       onClick={() => goSub(id)}
-                      className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[13px] sm:text-sm font-bold transition-all text-center relative touch-manipulation inline-flex items-center gap-1.5 ${
+                      className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[13px] sm:text-sm font-bold transition-all text-center relative touch-manipulation inline-flex items-center gap-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 ${
                         editSubTab === id
                           ? "bg-[var(--sp-harbour-teal)] text-white shadow-sm"
                           : "text-slate-400 hover:text-white hover:bg-white/5"
@@ -825,13 +837,19 @@ function AdminDashboardInner() {
         {activeTab === "ops" && (
           <div className="w-full min-w-0 space-y-4 sm:space-y-6">
             <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
-              <div className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full">
+              <div
+                className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full"
+                role="tablist"
+                aria-label="Operations queues"
+              >
                 {ADMIN_OPS_SUB_TABS.map(({ id, label }) => (
                   <button
                     key={id}
                     type="button"
+                    role="tab"
+                    aria-selected={editSubTab === id}
                     onClick={() => goSub(id)}
-                    className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[13px] sm:text-sm font-bold transition-all text-center relative touch-manipulation ${
+                    className={`shrink-0 rounded-xl px-3 sm:px-4 py-2.5 text-[13px] sm:text-sm font-bold transition-all text-center relative touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 ${
                       editSubTab === id
                         ? "bg-[var(--sp-harbour-teal)] text-white"
                         : "text-slate-400 hover:text-white hover:bg-white/5"

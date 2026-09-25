@@ -464,6 +464,7 @@ export function AdminWingfoilPanel({
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
+                    aria-label={`Delete regatta ${regatta.name}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       setRegattaFormData({ ...regatta });
@@ -637,6 +638,7 @@ export function AdminWingfoilPanel({
                         </button>
                         <button
                           type="button"
+                          aria-label={`Delete sailor ${sailor.name}`}
                           onClick={() => handleDeleteSailor(idx)}
                           className="p-1 rounded hover:bg-rose-50 text-[var(--sp-slate-soft)] hover:text-rose-600"
                           title="Delete sailor"

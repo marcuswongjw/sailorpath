@@ -13,6 +13,22 @@ export type RegattaLifecycleStatus =
   | "published"
   | "archived";
 
+export const REGATTA_LIFECYCLE_STATUSES: readonly RegattaLifecycleStatus[] = [
+  "draft",
+  "in_review",
+  "published",
+  "archived",
+] as const;
+
+export function isRegattaLifecycleStatus(
+  status: unknown
+): status is RegattaLifecycleStatus {
+  return (
+    typeof status === "string" &&
+    (REGATTA_LIFECYCLE_STATUSES as readonly string[]).includes(status)
+  );
+}
+
 /** True when a regatta may contribute starts/scores to public rankings. */
 export function isPublicRankingRegattaStatus(
   status: string | null | undefined

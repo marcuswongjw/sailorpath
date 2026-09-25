@@ -1761,9 +1761,10 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                   </button>
                                   <button
                                     type="button"
+                                    aria-label={`Delete sailor ${s.name}`}
                                     title="Delete sailor"
                                     onClick={() => handleDeleteSailor(s.id)}
-                                    className="text-[var(--sp-slate-soft)] hover:text-rose-600"
+                                    className="text-[var(--sp-slate-soft)] hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 rounded"
                                   >
                                     <Trash2 className="h-4 w-4" />
                                   </button>

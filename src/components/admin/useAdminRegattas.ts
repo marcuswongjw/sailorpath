@@ -10,6 +10,11 @@ import { regattaMatchesAdminClass } from "@/lib/admin/regattaClass";
 import type { RegattaAdmin } from "@/types/regatta";
 import { regattaDateLabel } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
+import { setAdminRegattaStatus } from "@/components/admin/adminRegattaLifecycle";
+import {
+  isRegattaLifecycleStatus,
+  type RegattaLifecycleStatus,
+} from "@/lib/regattaStatus";
 
 type UseAdminRegattasArgs = {
   isSuperadmin: boolean;
@@ -144,16 +149,32 @@ export function useAdminRegattas({
             : "Regatta created successfully!"
         );
       } else {
+        if (!editingRegattaId) {
+          throw new Error("Select a sailing class before saving changes.");
+        }
+        const regattaId = editingRegattaId;
+        const current = regattaList.find((r) => r.id === regattaId);
+        const requestedStatus = regattaForm.status || "published";
+        if (!isRegattaLifecycleStatus(requestedStatus)) {
+          throw new Error("Select a valid publication status before saving.");
+        }
+        const desiredStatus: RegattaLifecycleStatus = requestedStatus;
+        const detailsForm = { ...regattaForm };
+        delete detailsForm.status;
         const res = await fetch("/api/admin/regattas", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...regattaForm, id: editingRegattaId }),
+          body: JSON.stringify({ ...detailsForm, id: regattaId }),
         });
         const data = await parseApi(res);
         if (!res.ok) throw new Error(apiErr(data, "Update failed"));
-        const regatta = data.regatta as RegattaAdmin;
+        let regatta = data.regatta as RegattaAdmin;
+        if ((current?.status || "published") !== desiredStatus) {
+          await setAdminRegattaStatus(regattaId, desiredStatus);
+          regatta = { ...regatta, status: desiredStatus };
+        }
         setRegattaList((prev) =>
-          prev.map((r) => (r.id === editingRegattaId ? regatta : r))
+          prev.map((r) => (r.id === regattaId ? regatta : r))
         );
         setRegattaForm({
           id: regatta.id,
