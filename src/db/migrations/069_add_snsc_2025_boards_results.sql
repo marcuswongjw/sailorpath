@@ -31,7 +31,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
       registration_url = 'https://www.sailing.org.sg/events/298131',
       schedule_notes = 'Singapore National Sailing Championships 2025 Techno 293 Class: 14 entries, 12 races sailed (2 discards).',
       status = 'published',
@@ -41,10 +40,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Singapore National Sailing Championships 2025 (Techno 293)', 'snsc-techno-293-sep-25-2025-09-06', '2025-09-06', '2025-09-09', 'Techno 293', 'Open', 14, 12,
-      'SG', false, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 Techno 293 Class: 14 entries, 12 races sailed (2 discards).', 'published', now(), now()
+      'SG', false, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 Techno 293 Class: 14 entries, 12 races sailed (2 discards).', 'published', now(), now()
     );
   END IF;
 
@@ -823,7 +822,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
       registration_url = 'https://www.sailing.org.sg/events/298131',
       schedule_notes = 'Singapore National Sailing Championships 2025 Wingfoil Class: 5 entries, 14 races sailed (2 discards).',
       status = 'published',
@@ -833,10 +831,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Singapore National Sailing Championships 2025 (WingFoil)', 'snsc-wingfoil-sep-25-2025-09-06', '2025-09-06', '2025-09-09', 'WingFoil', 'Open', 5, 14,
-      'SG', false, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 Wingfoil Class: 5 entries, 14 races sailed (2 discards).', 'published', now(), now()
+      'SG', false, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 Wingfoil Class: 5 entries, 14 races sailed (2 discards).', 'published', now(), now()
     );
   END IF;
 
@@ -1157,7 +1155,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
       registration_url = 'https://www.sailing.org.sg/events/298131',
       schedule_notes = 'Singapore National Sailing Championships 2025 iQFOiL Class: 8 entries, 12 races sailed (2 discards).',
       status = 'published',
@@ -1167,10 +1164,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Singapore National Sailing Championships 2025 (iQFOiL)', 'snsc-iqfoil-sep-25-2025-09-06', '2025-09-06', '2025-09-09', 'iQFOiL', 'Open', 8, 12,
-      'SG', false, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 iQFOiL Class: 8 entries, 12 races sailed (2 discards).', 'published', now(), now()
+      'SG', false, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 iQFOiL Class: 8 entries, 12 races sailed (2 discards).', 'published', now(), now()
     );
   END IF;
 

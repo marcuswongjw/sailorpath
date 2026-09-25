@@ -31,7 +31,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
       registration_url = 'https://www.sailing.org.sg/events/298131',
       schedule_notes = 'Singapore National Sailing Championships 2025 Optimist Gold fleet: 100 entries, 11 races sailed (2 discards).',
       status = 'published',
@@ -41,10 +40,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Singapore National Sailing Championships 2025 (Optimist Gold)', 'snsc-gold-sep-25-2025-09-06', '2025-09-06', '2025-09-09', 'Optimist', 'Gold', 100, 11,
-      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 Optimist Gold fleet: 100 entries, 11 races sailed (2 discards).', 'published', now(), now()
+      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 Optimist Gold fleet: 100 entries, 11 races sailed (2 discards).', 'published', now(), now()
     );
   END IF;
 
@@ -4277,7 +4276,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
       registration_url = 'https://www.sailing.org.sg/events/298131',
       schedule_notes = 'Singapore National Sailing Championships 2025 Optimist Silver fleet: 60 entries, 10 races sailed (2 discards).',
       status = 'published',
@@ -4287,10 +4285,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Singapore National Sailing Championships 2025 (Optimist Silver)', 'snsc-silver-sep-25-2025-09-06', '2025-09-06', '2025-09-09', 'Optimist', 'Silver', 60, 10,
-      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 Optimist Silver fleet: 60 entries, 10 races sailed (2 discards).', 'published', now(), now()
+      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 Optimist Silver fleet: 60 entries, 10 races sailed (2 discards).', 'published', now(), now()
     );
   END IF;
 
@@ -6783,7 +6781,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
       registration_url = 'https://www.sailing.org.sg/events/298131',
       schedule_notes = 'Singapore National Sailing Championships 2025 ILCA 4 fleet: 56 entries, 12 races sailed (2 discards).',
       status = 'published',
@@ -6793,10 +6790,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Singapore National Sailing Championships 2025 (ILCA 4)', 'snsc-ilca-4-sep-25-2025-09-06', '2025-09-06', '2025-09-09', 'ILCA 4', 'Open', 56, 12,
-      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 ILCA 4 fleet: 56 entries, 12 races sailed (2 discards).', 'published', now(), now()
+      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 ILCA 4 fleet: 56 entries, 12 races sailed (2 discards).', 'published', now(), now()
     );
   END IF;
 
@@ -9237,7 +9234,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11799/event',
       registration_url = 'https://www.sailing.org.sg/events/298131',
       schedule_notes = 'Singapore National Sailing Championships 2025 ILCA 6 fleet: 22 entries, 12 races sailed (2 discards).',
       status = 'published',
@@ -9247,10 +9243,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Singapore National Sailing Championships 2025 (ILCA 6)', 'snsc-ilca-6-sep-25-2025-09-06', '2025-09-06', '2025-09-09', 'ILCA 6', 'Open', 22, 12,
-      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 ILCA 6 fleet: 22 entries, 12 races sailed (2 discards).', 'published', now(), now()
+      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11799/event', 'https://www.sailing.org.sg/events/298131', 'Singapore National Sailing Championships 2025 ILCA 6 fleet: 22 entries, 12 races sailed (2 discards).', 'published', now(), now()
     );
   END IF;
 

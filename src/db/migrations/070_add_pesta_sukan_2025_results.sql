@@ -31,7 +31,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025',
       registration_url = 'https://www.sailing.org.sg/events/293985',
       schedule_notes = 'Pesta Sukan Regatta 2025 Optimist Gold fleet: 83 entries, 3 races sailed (0 discards).',
       status = 'published',
@@ -41,10 +40,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Pesta Sukan Regatta 2025 (Optimist Gold)', 'pesta-sukan-gold-aug-25-2025-08-02', '2025-08-02', '2025-08-04', 'Optimist', 'Gold', 83, 3,
-      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.sailing.org.sg/events/293985', 'Pesta Sukan Regatta 2025 Optimist Gold fleet: 83 entries, 3 races sailed (0 discards).', 'published', now(), now()
+      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.sailing.org.sg/events/293985', 'Pesta Sukan Regatta 2025 Optimist Gold fleet: 83 entries, 3 races sailed (0 discards).', 'published', now(), now()
     );
   END IF;
 
@@ -3065,7 +3064,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025',
       registration_url = 'https://www.sailing.org.sg/events/293985',
       schedule_notes = 'Pesta Sukan Regatta 2025 Optimist Silver fleet: 70 entries, 3 races sailed (0 discards).',
       status = 'published',
@@ -3075,10 +3073,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Pesta Sukan Regatta 2025 (Optimist Silver)', 'pesta-sukan-silver-aug-25-2025-08-02', '2025-08-02', '2025-08-04', 'Optimist', 'Silver', 70, 3,
-      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.sailing.org.sg/events/293985', 'Pesta Sukan Regatta 2025 Optimist Silver fleet: 70 entries, 3 races sailed (0 discards).', 'published', now(), now()
+      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.sailing.org.sg/events/293985', 'Pesta Sukan Regatta 2025 Optimist Silver fleet: 70 entries, 3 races sailed (0 discards).', 'published', now(), now()
     );
   END IF;
 
@@ -5631,7 +5629,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025',
       registration_url = 'https://www.sailing.org.sg/events/293985',
       schedule_notes = 'Pesta Sukan Regatta 2025 ILCA 4 fleet: 53 entries, 3 races sailed (0 discards).',
       status = 'published',
@@ -5641,10 +5638,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Pesta Sukan Regatta 2025 (ILCA 4)', 'pesta-sukan-ilca-4-aug-25-2025-08-02', '2025-08-02', '2025-08-04', 'ILCA 4', 'Open', 53, 3,
-      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.sailing.org.sg/events/293985', 'Pesta Sukan Regatta 2025 ILCA 4 fleet: 53 entries, 3 races sailed (0 discards).', 'published', now(), now()
+      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.sailing.org.sg/events/293985', 'Pesta Sukan Regatta 2025 ILCA 4 fleet: 53 entries, 3 races sailed (0 discards).', 'published', now(), now()
     );
   END IF;
 
@@ -7585,7 +7582,6 @@ BEGIN
       venue = 'National Sailing Centre, Singapore',
       organizer = 'Singapore Sailing Federation',
       nor_url = 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025',
-      official_notice_board_url = 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025',
       registration_url = 'https://www.sailing.org.sg/events/293985',
       schedule_notes = 'Pesta Sukan Regatta 2025 ILCA 6 fleet: 32 entries, 3 races sailed (0 discards).',
       status = 'published',
@@ -7595,10 +7591,10 @@ BEGIN
     v_reg_id := gen_random_uuid();
     INSERT INTO public.regattas (
       id, name, slug, date, end_date, boat_class, division, total_fleet_size, race_count,
-      geography, counts_for_ranking, venue, organizer, nor_url, official_notice_board_url, registration_url, schedule_notes, status, created_at, updated_at
+      geography, counts_for_ranking, venue, organizer, nor_url, registration_url, schedule_notes, status, created_at, updated_at
     ) VALUES (
       v_reg_id, 'Pesta Sukan Regatta 2025 (ILCA 6)', 'pesta-sukan-ilca-6-aug-25-2025-08-02', '2025-08-02', '2025-08-04', 'ILCA 6', 'Open', 32, 3,
-      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.sailing.org.sg/events/293985', 'Pesta Sukan Regatta 2025 ILCA 6 fleet: 32 entries, 3 races sailed (0 discards).', 'published', now(), now()
+      'SG', true, 'National Sailing Centre, Singapore', 'Singapore Sailing Federation', 'https://www.racingrulesofsailing.org/documents/11535/event?name=Pesta%2520Sukan%25202025', 'https://www.sailing.org.sg/events/293985', 'Pesta Sukan Regatta 2025 ILCA 6 fleet: 32 entries, 3 races sailed (0 discards).', 'published', now(), now()
     );
   END IF;
 
