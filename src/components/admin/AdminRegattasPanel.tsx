@@ -21,14 +21,12 @@ import {
 } from "lucide-react";
 import { slugifyWithDate, slugify } from "@/lib/slug";
 import { classResultsHref } from "@/lib/calendar/calendarResultLinks";
-import { AdminNorAmendmentCard } from "@/components/admin/AdminNorAmendmentCard";
 import {
   ADMIN_BOAT_CLASS_GROUPS,
   ILCA_FLEETS,
   OPTIMIST_FLEETS,
   REGATTA_CLASS_FAMILIES,
 } from "@/lib/admin/regattaClass";
-import { norAmendmentForRegatta } from "@/lib/admin/norAmendments";
 import type { RegattaAdmin } from "@/types/regatta";
 import { GeographySelect } from "@/components/CountrySelect";
 import {
@@ -194,6 +192,35 @@ export function AdminRegattasPanel({
   const [sheetTab, setSheetTab] = useState<"details" | "results">("details");
   const [showCalendarForm, setShowCalendarForm] = useState(false);
   const [showLogistics, setShowLogistics] = useState(false);
+  const [publishingId, setPublishingId] = useState<string | null>(null);
+
+  const handleTogglePublish = async (sheetId: string, currentStatus?: string | null) => {
+    if (!isSuperadmin) {
+      toast.error("Only superadmins can change the publication status.");
+      return;
+    }
+    const targetStatus = currentStatus === "published" ? "draft" : "published";
+    setPublishingId(sheetId);
+    try {
+      const res = await fetch(`/api/admin/regattas/${sheetId}/publish`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetStatus }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to update publication status");
+      toast.success(
+        targetStatus === "published"
+          ? "Sailing class published successfully! Results are now visible publicly."
+          : "Sailing class set to draft. It is now hidden from public views."
+      );
+      invalidateRegattas?.();
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Failed to update publication status");
+    } finally {
+      setPublishingId(null);
+    }
+  };
 
   const grouped = useMemo(
     () => groupRegattaEvents(filteredRegattaList),
@@ -248,6 +275,7 @@ export function AdminRegattasPanel({
     registrationUrl: r.registrationUrl || "",
     isSelectionTrial: Boolean(r.isSelectionTrial),
     scheduleNotes: r.scheduleNotes || "",
+    status: r.status || "published",
   });
 
   const seenSheetId = useRef<string | null>(null);
@@ -503,7 +531,7 @@ export function AdminRegattasPanel({
                         </label>
                         {selectedEventView && (
                           <span className="text-[11px] font-medium text-slate-600 hidden sm:inline">
-                            {selectedEventView.sheets.length} class sheet{selectedEventView.sheets.length === 1 ? "" : "s"}
+                            {selectedEventView.sheets.length} sailing class{selectedEventView.sheets.length === 1 ? "" : "es"}
                           </span>
                         )}
                       </div>
@@ -531,7 +559,7 @@ export function AdminRegattasPanel({
                         })}
                         {grouped.unassigned.length > 0 && (
                           <option value={UNASSIGNED_EVENT_SLUG}>
-                            Unassigned class sheets ({grouped.unassigned.length} sheet{grouped.unassigned.length === 1 ? "" : "s"} without weekend)
+                            Unassigned sailing classes ({grouped.unassigned.length} class{grouped.unassigned.length === 1 ? "" : "es"} without weekend)
                           </option>
                         )}
                       </select>
@@ -708,12 +736,6 @@ export function AdminRegattasPanel({
                         {/* TAB 1: REGATTA DETAILS & SETTINGS */}
                         {sheetTab === "details" && (
                           <div className="space-y-4">
-                            {norAmendmentForRegatta(regattaForm.name, regattaForm.slug) && (
-                              <AdminNorAmendmentCard
-                                notice={norAmendmentForRegatta(regattaForm.name, regattaForm.slug)!}
-                              />
-                            )}
-
                             {/* Primary Details Card */}
                             <div className="rounded-2xl border border-white/5 bg-[#131520] p-4 sm:p-5 space-y-4">
                               <h4 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
@@ -722,7 +744,7 @@ export function AdminRegattasPanel({
                               </h4>
 
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                <div className="sm:col-span-2">
+                                <div>
                                   <label className="text-[11px] font-bold text-slate-400 uppercase">
                                     Regatta / Sheet Name
                                   </label>
@@ -738,6 +760,26 @@ export function AdminRegattasPanel({
                                     className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
                                     placeholder="e.g. Pesta Sukan 2026 (ILCA 6)"
                                   />
+                                </div>
+                                <div>
+                                  <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                    Publication Status
+                                  </label>
+                                  <select
+                                    value={regattaForm.status || "published"}
+                                    onChange={(e) =>
+                                      setRegattaForm({
+                                        ...regattaForm,
+                                        status: e.target.value,
+                                      })
+                                    }
+                                    className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs font-semibold focus:outline-none focus:border-orange-500/50"
+                                  >
+                                    <option value="published">Published</option>
+                                    <option value="draft">Draft</option>
+                                    <option value="in_review">In Review</option>
+                                    <option value="archived">Archived</option>
+                                  </select>
                                 </div>
 
                                 {/* EDITABLE SLUG WITH AUTO-GENERATE & LIVE PREVIEW */}
@@ -1219,7 +1261,7 @@ export function AdminRegattasPanel({
                                       <span>Saving…</span>
                                     </>
                                   ) : (
-                                    <span>Save Class Sheet</span>
+                                    <span>Save Sailing Class</span>
                                   )}
                                 </button>
                               </div>
@@ -1486,11 +1528,11 @@ export function AdminRegattasPanel({
                           </div>
                         )}
 
-                        {/* Class sheets section */}
+                        {/* Sailing classes section */}
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
                             <h4 className="text-xs font-black uppercase tracking-wider text-slate-800">
-                              Class Sheets ({selectedEventView.sheets.length + selectedEventView.shells.length})
+                              Sailing Class ({selectedEventView.sheets.length + selectedEventView.shells.length})
                             </h4>
                           </div>
 
@@ -1498,7 +1540,7 @@ export function AdminRegattasPanel({
                             selectedEventView.shells.length === 0 &&
                             selectedEventView.missingClasses.length === 0 && (
                               <p className="text-xs text-slate-600 font-medium py-4 text-center">
-                                No class sheets attached yet.
+                                No sailing classes attached yet.
                               </p>
                             )}
 
@@ -1518,7 +1560,17 @@ export function AdminRegattasPanel({
                                         <span className="text-xs font-bold text-slate-900">
                                           {isShell ? sheet.name : sheetClassLabel(sheet)}
                                         </span>
-                                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                        <span
+                                          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${
+                                            (sheet.status || "published") === "published"
+                                              ? "bg-emerald-100 text-emerald-800 border-emerald-200"
+                                              : sheet.status === "draft"
+                                                ? "bg-amber-100 text-amber-800 border-amber-300"
+                                                : sheet.status === "in_review"
+                                                  ? "bg-sky-100 text-sky-800 border-sky-200"
+                                                  : "bg-slate-100 text-slate-700 border-slate-200"
+                                          }`}
+                                        >
                                           {sheet.status || "published"}
                                         </span>
                                         {sheet.countsForRanking === false && (
@@ -1551,6 +1603,37 @@ export function AdminRegattasPanel({
                                     </div>
 
                                     <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                                      {isSuperadmin && (
+                                        sheet.status === "draft" ? (
+                                          <button
+                                            type="button"
+                                            disabled={publishingId === sheet.id}
+                                            onClick={() => handleTogglePublish(sheet.id, sheet.status)}
+                                            className="rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-xs disabled:opacity-50"
+                                            title="Publish this sailing class to rankings and public results"
+                                          >
+                                            {publishingId === sheet.id ? (
+                                              <Loader2 className="h-3 w-3 animate-spin" />
+                                            ) : (
+                                              <Globe className="h-3 w-3" />
+                                            )}
+                                            <span>Publish</span>
+                                          </button>
+                                        ) : (
+                                          <button
+                                            type="button"
+                                            disabled={publishingId === sheet.id}
+                                            onClick={() => handleTogglePublish(sheet.id, sheet.status)}
+                                            className="rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1.5 text-xs font-semibold transition-colors inline-flex items-center gap-1 shadow-xs disabled:opacity-50"
+                                            title="Revert to draft (hide from public views)"
+                                          >
+                                            {publishingId === sheet.id ? (
+                                              <Loader2 className="h-3 w-3 animate-spin" />
+                                            ) : null}
+                                            <span>Unpublish</span>
+                                          </button>
+                                        )
+                                      )}
                                       <button
                                         type="button"
                                         onClick={() => {
@@ -1633,7 +1716,7 @@ export function AdminRegattasPanel({
                                   className="shrink-0 rounded-lg border border-orange-300 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 text-xs font-bold text-orange-900 transition-colors inline-flex items-center gap-1.5 shadow-xs"
                                 >
                                   <Plus className="h-3 w-3" />
-                                  <span>Add Sheet</span>
+                                  <span>Add Sailing Class</span>
                                 </button>
                               </div>
                             ))}

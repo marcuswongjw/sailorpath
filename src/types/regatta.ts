@@ -18,6 +18,7 @@ export type RegattaAdmin = {
   registrationUrl?: string | null;
   isSelectionTrial?: boolean | null;
   scheduleNotes?: string | null;
+  status?: string | null;
   reviewedAt?: string | Date | null;
   createdAt?: string | Date | null;
   updatedAt?: string | Date | null;

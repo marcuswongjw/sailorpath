@@ -135,6 +135,7 @@ export function useAdminRegattas({
           registrationUrl: regatta.registrationUrl || "",
           isSelectionTrial: Boolean(regatta.isSelectionTrial),
           scheduleNotes: regatta.scheduleNotes || "",
+          status: regatta.status || "published",
         });
         setSelectedRegattaIdForResultEdit(regatta.id);
         toast.success(
@@ -173,6 +174,7 @@ export function useAdminRegattas({
           registrationUrl: regatta.registrationUrl || "",
           isSelectionTrial: Boolean(regatta.isSelectionTrial),
           scheduleNotes: regatta.scheduleNotes || "",
+          status: regatta.status || "published",
         });
         toast.success(
           data.rankingNote

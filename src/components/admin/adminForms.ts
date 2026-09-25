@@ -99,6 +99,7 @@ export type RegattaFormState = {
   boatClass: string;
   countsForRanking: boolean;
   slug?: string;
+  status?: string;
 };
 
 export function emptyRegattaForm(): RegattaFormState {
@@ -119,6 +120,7 @@ export function emptyRegattaForm(): RegattaFormState {
     geography: "SGP",
     boatClass: "Optimist",
     countsForRanking: true,
+    status: "published",
   };
 }
 
