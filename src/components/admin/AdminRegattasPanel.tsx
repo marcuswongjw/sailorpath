@@ -61,6 +61,19 @@ type SavedCalendarEvent = {
   keyDeadlines?: string | null;
 };
 
+const DEFAULT_CALENDAR_CLASSES = [
+  "Optimist",
+  "ILCA 4",
+  "ILCA 6",
+  "ILCA 7",
+  "29er",
+  "420",
+  "Techno 293",
+  "iQFOiL",
+  "WingFoil",
+  "RS Feva",
+] as const;
+
 type CalendarFormState = {
   name: string;
   startDate: string;
@@ -345,9 +358,9 @@ export function AdminRegattasPanel({
   };
   return (
               <div className="w-full min-w-0 space-y-4">
-                <div className="glass-panel rounded-2xl border border-white/5 p-4 flex flex-col sm:flex-row sm:items-end gap-3 w-full">
+                <div className="glass-panel rounded-2xl border border-slate-200 p-4 flex flex-col sm:flex-row sm:items-end gap-3 w-full">
                   <div className="flex-1 min-w-0">
-                    <label className="text-[12px] font-bold text-slate-500 uppercase">
+                    <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                       Search events
                     </label>
                     <input
@@ -355,11 +368,11 @@ export function AdminRegattasPanel({
                       value={regattaSearch}
                       onChange={(e) => setRegattaSearch(e.target.value)}
                       placeholder="Name, date, division, class…"
-                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-orange-500"
                     />
                   </div>
                   <div>
-                    <label className="text-[12px] font-bold text-slate-500 uppercase">
+                    <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                       Class
                     </label>
                     <select
@@ -368,7 +381,7 @@ export function AdminRegattasPanel({
                         setRegattaClassFilter?.(e.target.value);
                         setRegattaDivisionFilter("all");
                       }}
-                      className="mt-1 w-full sm:w-36 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full sm:w-36 rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-orange-500"
                     >
                       {REGATTA_CLASS_FAMILIES.map((family) => (
                         <option key={family.id} value={family.id}>
@@ -378,13 +391,13 @@ export function AdminRegattasPanel({
                     </select>
                   </div>
                   <div>
-                    <label className="text-[12px] font-bold text-slate-500 uppercase">
+                    <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                       {regattaClassFilter === "ilca" ? "ILCA fleet" : "Fleet"}
                     </label>
                     <select
                       value={regattaDivisionFilter}
                       onChange={(e) => setRegattaDivisionFilter(e.target.value)}
-                      className="mt-1 w-full sm:w-36 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full sm:w-36 rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-orange-500"
                     >
                       <option value="all">
                         {regattaClassFilter === "ilca" ? "All ILCA" : "All fleets"}
@@ -404,13 +417,13 @@ export function AdminRegattasPanel({
                     </select>
                   </div>
                   <div>
-                    <label className="text-[12px] font-bold text-slate-500 uppercase">
+                    <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                       Ranking
                     </label>
                     <select
                       value={regattaRankingFilter}
                       onChange={(e) => setRegattaRankingFilter(e.target.value)}
-                      className="mt-1 w-full sm:w-36 rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-xs text-white"
+                      className="mt-1 w-full sm:w-36 rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-900 font-medium focus:outline-none focus:border-orange-500"
                     >
                       <option value="all">All events</option>
                       <option value="series">Series only</option>
@@ -461,13 +474,13 @@ export function AdminRegattasPanel({
                       type="button"
                       disabled={isSeeding}
                       onClick={handleSeed2026}
-                      className="rounded-full border border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/20 px-3.5 py-2.5 text-xs font-bold text-sky-300 flex items-center justify-center gap-1.5 shrink-0 transition-colors disabled:opacity-50"
+                      className="rounded-full border border-sky-300 bg-sky-50 hover:bg-sky-100 px-3.5 py-2.5 text-xs font-bold text-sky-800 flex items-center justify-center gap-1.5 shrink-0 transition-colors disabled:opacity-50 shadow-xs"
                       title="Attach 2026 calendar weekends to their class sheets. Does not publish new results."
                     >
                       {isSeeding ? (
                         <Loader2 className="h-3.5 w-3.5 animate-spin" />
                       ) : (
-                        <Sparkles className="h-3.5 w-3.5 text-sky-400" />
+                        <Sparkles className="h-3.5 w-3.5 text-sky-600" />
                       )}
                       Link 2026 events
                     </button>
@@ -475,21 +488,21 @@ export function AdminRegattasPanel({
                 </div>
 
                 {/* Top Event / Regatta Dropdown Selector Bar */}
-                <div className="glass-panel rounded-2xl border border-white/5 p-3.5 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 w-full">
+                <div className="glass-panel rounded-2xl border border-slate-200 p-3.5 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 w-full">
                   <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="h-10 w-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center shrink-0">
-                      <Calendar className="h-5 w-5 text-orange-400" />
+                    <div className="h-10 w-10 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center shrink-0">
+                      <Calendar className="h-5 w-5 text-orange-600" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between mb-1">
                         <label
                           htmlFor="admin-regatta-selector"
-                          className="text-[11px] font-black uppercase tracking-wider text-slate-400"
+                          className="text-[11px] font-black uppercase tracking-wider text-slate-700"
                         >
                           Selected Regatta Event ({grouped.events.length + (grouped.unassigned.length ? 1 : 0)})
                         </label>
                         {selectedEventView && (
-                          <span className="text-[11px] font-medium text-slate-500 hidden sm:inline">
+                          <span className="text-[11px] font-medium text-slate-600 hidden sm:inline">
                             {selectedEventView.sheets.length} class sheet{selectedEventView.sheets.length === 1 ? "" : "s"}
                           </span>
                         )}
@@ -502,7 +515,7 @@ export function AdminRegattasPanel({
                           setEditingRegattaId(null);
                           onClearSheet?.();
                         }}
-                        className="w-full rounded-xl border border-white/10 bg-slate-950 hover:border-orange-500/40 focus:border-orange-500 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-white shadow-inner focus:outline-none transition-colors"
+                        className="w-full rounded-xl border border-slate-300 bg-white hover:border-orange-500 focus:border-orange-500 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-900 shadow-xs focus:outline-none transition-colors"
                       >
                         {grouped.events.length === 0 && grouped.unassigned.length === 0 ? (
                           <option value="">No regattas match filters</option>
@@ -526,21 +539,21 @@ export function AdminRegattasPanel({
                   </div>
 
                   {selectedEventView && selectedEventView.slug !== UNASSIGNED_EVENT_SLUG && (
-                    <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-white/5 shrink-0">
-                      <span className="text-xs px-2.5 py-1 rounded-full font-bold bg-white/5 border border-white/10 text-slate-300">
+                    <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-slate-200 shrink-0">
+                      <span className="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-100 border border-slate-200 text-slate-800">
                         {selectedEventView.startDate || "Date TBD"}
                         {selectedEventView.endDate ? ` to ${selectedEventView.endDate}` : ""}
                       </span>
                       {selectedEventView.venue && (
-                        <span className="text-xs px-2.5 py-1 rounded-full font-semibold bg-white/5 border border-white/10 text-slate-400 truncate max-w-[180px]">
+                        <span className="text-xs px-2.5 py-1 rounded-full font-semibold bg-slate-100 border border-slate-200 text-slate-700 truncate max-w-[180px]">
                           {selectedEventView.venue}
                         </span>
                       )}
                       <span
                         className={`text-xs px-2.5 py-1 rounded-full font-bold border ${
                           selectedEventView.countsForRanking
-                            ? "bg-emerald-500/10 text-emerald-300 border-emerald-500/20"
-                            : "bg-sky-500/10 text-sky-300 border-sky-500/20"
+                            ? "bg-emerald-100 text-emerald-800 border-emerald-300"
+                            : "bg-sky-100 text-sky-800 border-sky-300"
                         }`}
                       >
                         {selectedEventView.countsForRanking ? "Series Ranking" : "Non-Ranking"}
@@ -1224,15 +1237,12 @@ export function AdminRegattasPanel({
                     ) : selectedEventView ? (
                       <div className="space-y-5">
                         {/* Weekend header */}
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/5">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
                           <div>
-                            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                              Calendar Weekend Event
-                            </span>
-                            <h3 className="text-base font-black text-white mt-0.5">
+                            <h3 className="text-base font-black text-slate-900 mt-0.5">
                               {selectedEventView.name}
                             </h3>
-                            <p className="text-xs text-slate-400 mt-0.5">
+                            <p className="text-xs text-slate-700 font-medium mt-0.5">
                               {selectedEventView.startDate || "—"}
                               {selectedEventView.endDate ? ` to ${selectedEventView.endDate}` : ""}
                               {selectedEventView.venue ? ` · ${selectedEventView.venue}` : ""}
@@ -1243,10 +1253,10 @@ export function AdminRegattasPanel({
                               <button
                                 type="button"
                                 onClick={() => setShowCalendarForm((prev) => !prev)}
-                                className="rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-xs font-bold text-slate-300 transition-colors inline-flex items-center gap-1"
+                                className="rounded-full border border-slate-300 bg-white hover:bg-slate-50 px-3.5 py-1.5 text-xs font-bold text-slate-800 shadow-xs transition-colors inline-flex items-center gap-1.5"
                               >
-                                <Sliders className="h-3 w-3 text-orange-400" />
-                                <span>{showCalendarForm ? "Hide Calendar Editor" : "Edit Weekend Card"}</span>
+                                <Sliders className="h-3 w-3 text-orange-600" />
+                                <span>{showCalendarForm ? "Hide Event Editor" : "Edit Event"}</span>
                               </button>
                             )}
                           </div>
@@ -1254,9 +1264,9 @@ export function AdminRegattasPanel({
 
                         {/* Optional Collapsible Calendar Card Form */}
                         {selectedEventView.slug !== UNASSIGNED_EVENT_SLUG && calendarForm && showCalendarForm && (
-                          <div className="rounded-2xl border border-white/10 bg-[#131520] p-4 sm:p-5 space-y-4">
+                          <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5 space-y-4 shadow-xs">
                             <div className="flex items-center justify-between">
-                              <h4 className="text-xs font-black uppercase tracking-wider text-orange-400 flex items-center gap-1.5">
+                              <h4 className="text-xs font-black uppercase tracking-wider text-orange-600 flex items-center gap-1.5">
                                 <Calendar className="h-3.5 w-3.5" />
                                 Public Notice Board &amp; Calendar Details
                               </h4>
@@ -1264,7 +1274,7 @@ export function AdminRegattasPanel({
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                               <div className="sm:col-span-2">
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                                   Event Name
                                 </label>
                                 <input
@@ -1272,11 +1282,11 @@ export function AdminRegattasPanel({
                                   onChange={(e) =>
                                     setCalendarForm({ ...calendarForm, name: e.target.value })
                                   }
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
+                                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 />
                               </div>
                               <div>
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                                   Start Date
                                 </label>
                                 <input
@@ -1288,11 +1298,11 @@ export function AdminRegattasPanel({
                                       startDate: e.target.value,
                                     })
                                   }
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs font-mono focus:outline-none focus:border-orange-500/50"
+                                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-mono focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 />
                               </div>
                               <div>
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                                   End Date
                                 </label>
                                 <input
@@ -1304,11 +1314,11 @@ export function AdminRegattasPanel({
                                       endDate: e.target.value,
                                     })
                                   }
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs font-mono focus:outline-none focus:border-orange-500/50"
+                                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-mono focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 />
                               </div>
                               <div className="sm:col-span-2">
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                                   Venue
                                 </label>
                                 <input
@@ -1316,11 +1326,11 @@ export function AdminRegattasPanel({
                                   onChange={(e) =>
                                     setCalendarForm({ ...calendarForm, venue: e.target.value })
                                   }
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
+                                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 />
                               </div>
                               <div className="sm:col-span-2">
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                                   Organiser
                                 </label>
                                 <input
@@ -1331,27 +1341,61 @@ export function AdminRegattasPanel({
                                       organizer: e.target.value,
                                     })
                                   }
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
+                                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 />
                               </div>
                               <div className="sm:col-span-2">
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
-                                  Classes on the card
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block mb-1.5">
+                                  Sailing Classes
                                 </label>
-                                <input
-                                  value={calendarForm.classes}
-                                  onChange={(e) =>
-                                    setCalendarForm({
-                                      ...calendarForm,
-                                      classes: e.target.value,
-                                    })
-                                  }
-                                  placeholder="Optimist, ILCA 4, ILCA 6"
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
-                                />
+                                <div className="p-3 rounded-xl border border-slate-300 bg-white shadow-xs">
+                                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                                    {Array.from(
+                                      new Set([
+                                        ...DEFAULT_CALENDAR_CLASSES,
+                                        ...((calendarForm.classes || "")
+                                          .split(",")
+                                          .map((c) => c.trim())
+                                          .filter(Boolean)),
+                                      ])
+                                    ).map((cls) => {
+                                      const currentList = (calendarForm.classes || "")
+                                        .split(",")
+                                        .map((c) => c.trim())
+                                        .filter(Boolean);
+                                      const isChecked = currentList.includes(cls);
+                                      return (
+                                        <label
+                                          key={cls}
+                                          className={`flex items-center gap-2 p-2 rounded-lg border text-xs font-semibold cursor-pointer select-none transition-all ${
+                                            isChecked
+                                              ? "bg-orange-50 border-orange-300 text-orange-900 shadow-xs"
+                                              : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100"
+                                          }`}
+                                        >
+                                          <input
+                                            type="checkbox"
+                                            checked={isChecked}
+                                            onChange={(e) => {
+                                              const updated = e.target.checked
+                                                ? [...currentList, cls]
+                                                : currentList.filter((item) => item !== cls);
+                                              setCalendarForm({
+                                                ...calendarForm,
+                                                classes: updated.join(", "),
+                                              });
+                                            }}
+                                            className="rounded border-slate-300 text-orange-600 focus:ring-orange-500 h-4 w-4"
+                                          />
+                                          <span className="truncate">{cls}</span>
+                                        </label>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
                               </div>
                               <div className="sm:col-span-2">
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                                   Status / Deadline
                                 </label>
                                 <input
@@ -1363,11 +1407,11 @@ export function AdminRegattasPanel({
                                     })
                                   }
                                   placeholder="Entry closes 24 August 2026, 2359h"
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
+                                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 />
                               </div>
                               <div className="sm:col-span-2">
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                                   Official Notice Board URL
                                 </label>
                                 <input
@@ -1376,11 +1420,11 @@ export function AdminRegattasPanel({
                                   onChange={(e) =>
                                     setCalendarForm({ ...calendarForm, norUrl: e.target.value })
                                   }
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
+                                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 />
                               </div>
                               <div className="sm:col-span-2">
-                                <label className="text-[11px] font-bold text-slate-400 uppercase">
+                                <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider">
                                   Registration Link
                                 </label>
                                 <input
@@ -1392,13 +1436,13 @@ export function AdminRegattasPanel({
                                       registrationUrl: e.target.value,
                                     })
                                   }
-                                  className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
+                                  className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                                 />
                               </div>
-                              <label className="sm:col-span-2 flex items-start gap-2 text-xs font-semibold text-slate-300">
+                              <label className="sm:col-span-2 flex items-start gap-2.5 text-xs font-semibold text-slate-800 cursor-pointer">
                                 <input
                                   type="checkbox"
-                                  className="mt-0.5 rounded border-slate-600 text-orange-500 focus:ring-0"
+                                  className="mt-0.5 rounded border-slate-300 text-orange-600 focus:ring-orange-500 h-4 w-4"
                                   checked={calendarForm.countsForRanking}
                                   onChange={(e) =>
                                     setCalendarForm({
@@ -1409,15 +1453,15 @@ export function AdminRegattasPanel({
                                 />
                                 <span>
                                   Ranking regatta
-                                  <span className="block text-[11px] font-normal text-slate-500">
+                                  <span className="block text-[11px] font-normal text-slate-600">
                                     Applies to linked class sheets. Fewer than 3 races stays non-ranking.
                                   </span>
                                 </span>
                               </label>
-                              <label className="flex items-center gap-2 text-xs font-semibold text-slate-300">
+                              <label className="flex items-center gap-2.5 text-xs font-semibold text-slate-800 cursor-pointer">
                                 <input
                                   type="checkbox"
-                                  className="rounded border-slate-600 text-amber-400 focus:ring-0"
+                                  className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4"
                                   checked={calendarForm.isSelectionTrial}
                                   onChange={(e) =>
                                     setCalendarForm({
@@ -1435,7 +1479,7 @@ export function AdminRegattasPanel({
                                   onClick={handleSaveCalendar}
                                   className="rounded-full bg-orange-600 hover:bg-orange-500 px-5 py-2 text-xs font-bold text-white transition-colors disabled:opacity-40 shadow-sm"
                                 >
-                                  {calendarSaving ? "Saving…" : "Save calendar card"}
+                                  {calendarSaving ? "Saving…" : "Save Event Details"}
                                 </button>
                               </div>
                             </div>
@@ -1445,7 +1489,7 @@ export function AdminRegattasPanel({
                         {/* Class sheets section */}
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
-                            <h4 className="text-xs font-black uppercase tracking-wider text-slate-400">
+                            <h4 className="text-xs font-black uppercase tracking-wider text-slate-800">
                               Class Sheets ({selectedEventView.sheets.length + selectedEventView.shells.length})
                             </h4>
                           </div>
@@ -1453,7 +1497,7 @@ export function AdminRegattasPanel({
                           {selectedEventView.sheets.length === 0 &&
                             selectedEventView.shells.length === 0 &&
                             selectedEventView.missingClasses.length === 0 && (
-                              <p className="text-xs text-slate-500 py-4 text-center">
+                              <p className="text-xs text-slate-600 font-medium py-4 text-center">
                                 No class sheets attached yet.
                               </p>
                             )}
@@ -1467,29 +1511,29 @@ export function AdminRegattasPanel({
                                 return (
                                   <div
                                     key={sheet.id}
-                                    className="rounded-xl border border-white/10 bg-[#131520] p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-orange-500/30 transition-all"
+                                    className="rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs hover:border-orange-500/40 transition-all"
                                   >
-                                    <div className="space-y-1 min-w-0">
+                                    <div className="space-y-1.5 min-w-0">
                                       <div className="flex items-center gap-2 flex-wrap">
-                                        <span className="text-xs font-bold text-white">
+                                        <span className="text-xs font-bold text-slate-900">
                                           {isShell ? sheet.name : sheetClassLabel(sheet)}
                                         </span>
-                                        <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-white/10 text-slate-300">
+                                        <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
                                           {sheet.status || "published"}
                                         </span>
                                         {sheet.countsForRanking === false && (
-                                          <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-sky-500/10 text-sky-300 border border-sky-500/20">
+                                          <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-200">
                                             Non-ranking
                                           </span>
                                         )}
                                       </div>
-                                      <div className="flex items-center gap-3 text-xs text-slate-400 flex-wrap">
+                                      <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium flex-wrap">
                                         <span>
                                           {sheet.raceCount != null
                                             ? `${sheet.raceCount} completed races`
                                             : "No race count"}
                                         </span>
-                                        <span>·</span>
+                                        <span className="text-slate-400">·</span>
                                         <span>
                                           {sheet.totalFleetSize != null
                                             ? `Fleet ${sheet.totalFleetSize}`
@@ -1497,8 +1541,8 @@ export function AdminRegattasPanel({
                                         </span>
                                         {sheet.slug && (
                                           <>
-                                            <span>·</span>
-                                            <span className="font-mono text-slate-500 text-[11px] truncate max-w-[200px]">
+                                            <span className="text-slate-400">·</span>
+                                            <span className="font-mono text-slate-600 text-[11px] truncate max-w-[200px]">
                                               {sheet.slug}
                                             </span>
                                           </>
@@ -1515,9 +1559,9 @@ export function AdminRegattasPanel({
                                           setRegattaForm(formFrom(sheet));
                                           setSheetTab("details");
                                         }}
-                                        className="rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 px-3 py-1.5 text-xs font-bold text-slate-200 hover:text-white transition-colors inline-flex items-center gap-1"
+                                        className="rounded-lg border border-slate-300 bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-800 shadow-xs transition-colors inline-flex items-center gap-1.5"
                                       >
-                                        <FileText className="h-3 w-3 text-slate-400" />
+                                        <FileText className="h-3 w-3 text-slate-600" />
                                         <span>Edit Details</span>
                                       </button>
                                       <button
@@ -1529,7 +1573,7 @@ export function AdminRegattasPanel({
                                           setSheetTab("results");
                                           onOpenResults?.(sheet.id);
                                         }}
-                                        className="rounded-lg bg-orange-600 hover:bg-orange-500 px-3 py-1.5 text-xs font-bold text-white transition-colors inline-flex items-center gap-1 shadow-sm"
+                                        className="rounded-lg bg-orange-600 hover:bg-orange-500 px-3 py-1.5 text-xs font-bold text-white transition-colors inline-flex items-center gap-1.5 shadow-sm"
                                       >
                                         <Trophy className="h-3 w-3" />
                                         <span>Results &amp; Scores</span>
@@ -1543,13 +1587,13 @@ export function AdminRegattasPanel({
                             {selectedEventView.missingClasses.map((label) => (
                               <div
                                 key={label}
-                                className="flex items-center justify-between gap-3 rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-3 sm:p-4"
+                                className="flex items-center justify-between gap-3 rounded-xl border border-dashed border-slate-300 bg-slate-50/60 p-3.5 sm:p-4"
                               >
                                 <div>
-                                  <span className="text-xs font-bold text-slate-300">
+                                  <span className="text-xs font-bold text-slate-800">
                                     {label}
                                   </span>
-                                  <span className="block text-[11px] text-slate-500 mt-0.5">
+                                  <span className="block text-[11px] text-slate-600 font-medium mt-0.5">
                                     Awaiting scoreboard sheet
                                   </span>
                                 </div>
@@ -1586,7 +1630,7 @@ export function AdminRegattasPanel({
                                         selectedEventView.isSelectionTrial,
                                     });
                                   }}
-                                  className="shrink-0 rounded-lg border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 px-3 py-1.5 text-xs font-bold text-orange-300 transition-colors inline-flex items-center gap-1"
+                                  className="shrink-0 rounded-lg border border-orange-300 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 text-xs font-bold text-orange-900 transition-colors inline-flex items-center gap-1.5 shadow-xs"
                                 >
                                   <Plus className="h-3 w-3" />
                                   <span>Add Sheet</span>

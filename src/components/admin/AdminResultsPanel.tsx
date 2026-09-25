@@ -521,21 +521,21 @@ export function AdminResultsPanel({
 
       {/* Result Form Card */}
       {editingResultId && (
-        <div className="glass-panel rounded-3xl p-6 border border-white/5 space-y-4">
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+        <div className="glass-panel rounded-3xl p-6 border border-slate-200 space-y-4 shadow-sm">
+          <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
             {editingResultId === "new"
               ? "Add Sailor Regatta Result"
               : "Edit Sailor Regatta Result"}
           </h3>
           {regattaList.find((r) => r.id === resultForm.regattaId)
             ?.countsForRanking === false && (
-            <p className="text-[13px] text-sky-300 font-semibold">
+            <p className="text-[13px] text-sky-800 font-bold">
               Non-ranking event — not used in series rankings.
             </p>
           )}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
-              <label className="text-[12px] font-bold text-slate-500 uppercase">
+              <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                 Sailor Name
               </label>
               <select
@@ -543,7 +543,7 @@ export function AdminResultsPanel({
                 onChange={(e) =>
                   setResultForm({ ...resultForm, sailorId: e.target.value })
                 }
-                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none"
+                className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-medium focus:outline-none focus:border-orange-500"
               >
                 <option value="" disabled>
                   -- Select Sailor --
@@ -556,7 +556,7 @@ export function AdminResultsPanel({
               </select>
             </div>
             <div>
-              <label className="text-[12px] font-bold text-slate-500 uppercase">
+              <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                 Total Score
               </label>
               <input
@@ -566,12 +566,12 @@ export function AdminResultsPanel({
                 onChange={(e) =>
                   setResultForm({ ...resultForm, totalScore: e.target.value })
                 }
-                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-mono focus:outline-none focus:border-orange-500"
                 placeholder="Optional"
               />
             </div>
             <div>
-              <label className="text-[12px] font-bold text-slate-500 uppercase">
+              <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                 Nett Score (optional)
               </label>
               <input
@@ -581,11 +581,11 @@ export function AdminResultsPanel({
                 onChange={(e) =>
                   setResultForm({ ...resultForm, nettScore: e.target.value })
                 }
-                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-mono focus:outline-none focus:border-orange-500"
               />
             </div>
             <div>
-              <label className="text-[12px] font-bold text-slate-500 uppercase">
+              <label className="text-[12px] font-bold text-slate-700 uppercase tracking-wider">
                 Rank (Finishing Pos)
               </label>
               <input
@@ -594,9 +594,9 @@ export function AdminResultsPanel({
                 onChange={(e) =>
                   setResultForm({ ...resultForm, rank: e.target.value })
                 }
-                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs font-mono"
+                className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs font-mono focus:outline-none focus:border-orange-500"
               />
-              <p className="mt-1 text-[13px] text-slate-600">
+              <p className="mt-1 text-[13px] text-slate-700 font-medium">
                 DNS defaults to starters + 1 (Group 1 registered no-show). Unregistered sailors are auto-scored as max(sheet place) + 1 at ranking time (Group 2).
               </p>
             </div>
@@ -618,11 +618,11 @@ export function AdminResultsPanel({
                     ...(on ? { rank: dnsPts } : {}),
                   });
                 }}
-                className="rounded border-slate-700 bg-slate-900 text-orange-600 focus:ring-orange-500 h-4 w-4"
+                className="rounded border-slate-300 text-orange-600 focus:ring-orange-500 h-4 w-4"
               />
               <label
                 htmlFor="dnsCheckbox"
-                className="text-xs font-bold text-slate-400 cursor-pointer"
+                className="text-xs font-semibold text-slate-800 cursor-pointer"
               >
                 Did Not Start (DNS) — initially sets rank to started + 1 (Group 1);
                 edit if the published sheet used a different place
@@ -642,22 +642,22 @@ export function AdminResultsPanel({
                     isDns: on ? false : resultForm.isDns,
                   });
                 }}
-                className="rounded border-slate-700 bg-slate-900 text-sky-500 focus:ring-sky-500 h-4 w-4"
+                className="rounded border-slate-300 text-teal-600 focus:ring-teal-500 h-4 w-4"
               />
               <label
                 htmlFor="overseasCheckbox"
-                className="text-xs font-bold text-sky-300/90 cursor-pointer leading-snug"
+                className="text-xs font-bold text-teal-900 cursor-pointer leading-snug"
               >
                 Overseas commitment (SSF) — set points to standing before trip
                 (e.g. rank 2 → 2 pts); tag only, does not auto-calc
               </label>
             </div>
           </div>
-          <div className="flex justify-end gap-2 border-t border-white/5 pt-4">
+          <div className="flex justify-end gap-2 border-t border-slate-200 pt-4">
             <button
               type="button"
               onClick={() => setEditingResultId(null)}
-              className="rounded-full bg-slate-800 px-4 py-2 text-xs font-bold text-slate-400 hover:text-white"
+              className="rounded-full border border-slate-300 bg-white hover:bg-slate-50 px-4 py-2 text-xs font-bold text-slate-700 shadow-xs transition-colors"
             >
               Cancel
             </button>
@@ -665,7 +665,7 @@ export function AdminResultsPanel({
               type="button"
               disabled={!isSuperadmin || saving}
               onClick={() => void handleSaveResult()}
-              className="rounded-full bg-orange-600 px-5 py-2 text-[15px] font-semibold text-white hover:bg-orange-500 disabled:opacity-40"
+              className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40 shadow-sm"
             >
               {saving ? "Saving…" : "Save Result"}
             </button>
@@ -675,13 +675,13 @@ export function AdminResultsPanel({
 
       {/* Results List */}
       {selectedRegattaIdForResultEdit && (
-        <div className="glass-panel rounded-2xl sm:rounded-3xl border border-white/5 overflow-hidden">
-          <div className="p-4 sm:p-6 border-b border-white/5 flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
+        <div className="glass-panel rounded-2xl sm:rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
+          <div className="p-4 sm:p-6 border-b border-slate-200 flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
             <div className="min-w-0">
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-slate-900">
                 Regatta Results Table
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-600 font-medium">
                 {eventResultCount} row{eventResultCount === 1 ? "" : "s"}
                 {sailorFilter.trim()
                   ? ` · showing ${eventResults.length} match${eventResults.length === 1 ? "" : "es"}`
@@ -691,13 +691,13 @@ export function AdminResultsPanel({
             </div>
             <div className="flex flex-wrap items-stretch sm:items-end gap-2 sm:gap-3">
               <div className="relative min-w-[10rem] flex-1 sm:flex-initial sm:w-48">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                 <input
                   type="search"
                   value={sailorFilter}
                   onChange={(e) => setSailorFilter(e.target.value)}
                   placeholder="Filter sailors…"
-                  className="w-full rounded-full border border-white/10 bg-slate-950 pl-9 pr-3 py-2 text-[13px] sm:text-sm text-white focus:outline-none focus:border-orange-500/40"
+                  className="w-full rounded-full border border-slate-300 bg-white pl-9 pr-3 py-2 text-[13px] sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-orange-500 shadow-xs"
                 />
               </div>
               <button
@@ -714,7 +714,7 @@ export function AdminResultsPanel({
                     rank: dnsPts,
                   });
                 }}
-                className="rounded-full bg-orange-600 hover:bg-orange-500 px-3 sm:px-4 py-2 text-[15px] font-semibold text-white flex items-center justify-center gap-1 touch-manipulation"
+                className="rounded-full bg-orange-600 hover:bg-orange-500 px-3 sm:px-4 py-2 text-xs font-bold text-white flex items-center justify-center gap-1 touch-manipulation shadow-sm"
               >
                 <Plus className="h-4 w-4" />
                 Add Score
@@ -722,15 +722,15 @@ export function AdminResultsPanel({
             </div>
           </div>
 
-          <p className="px-3 sm:px-6 pb-2 text-[13px] text-slate-500">
+          <p className="px-3 sm:px-6 py-2.5 text-[13px] text-slate-700 font-medium border-b border-slate-100 bg-slate-50/50">
             On-sheet DNS (Group 1) national points = starters + 1. Absentees not on
             the sheet (Group 2) are auto-scored at ranking time as max(sheet place) + 1.
             Official finish ranks stay
             as published. Mark{" "}
-            <strong className="text-sky-300">Overseas commitment</strong> and
+            <strong className="text-teal-900 font-bold">Overseas commitment</strong> and
             set points to their standing before the trip (e.g. 2nd → 2 pts).
             {isSuperadmin && handleQuickUpdateResult && (
-              <span className="text-orange-400/90 ml-1">
+              <span className="text-orange-700 font-semibold ml-1 block sm:inline">
                 Tip: Double-click rank or nett to edit inline, or toggle Fin / DNS / OVS directly.
               </span>
             )}
@@ -739,28 +739,28 @@ export function AdminResultsPanel({
           <div className="overflow-x-auto max-w-full -mx-1 px-1">
             <table className="w-full text-left border-collapse text-xs min-w-[720px]">
               <thead>
-                <tr className="border-b border-white/5 bg-white/5 text-[12px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="py-3 px-3 text-center w-14">Rank</th>
-                  <th className="py-3 px-4 sm:px-6">Competitor / Sailor</th>
-                  <th className="py-3 px-3 text-center">Sail #</th>
-                  <th className="py-3 px-3 text-center">Gender</th>
-                  <th className="py-3 px-3 text-center">Birth year</th>
+                <tr className="border-b border-slate-200 bg-slate-100 text-[12px] font-bold text-slate-800 uppercase tracking-wider">
+                  <th className="py-3 px-3 text-center w-14 text-slate-800 font-bold">Rank</th>
+                  <th className="py-3 px-4 sm:px-6 text-slate-800 font-bold">Competitor / Sailor</th>
+                  <th className="py-3 px-3 text-center text-slate-800 font-bold">Sail #</th>
+                  <th className="py-3 px-3 text-center text-slate-800 font-bold">Gender</th>
+                  <th className="py-3 px-3 text-center text-slate-800 font-bold">Birth year</th>
                   {raceNumbers.map((rNum) => (
                     <th
                       key={rNum}
-                      className="py-3 px-2 text-center font-mono font-black text-orange-400 bg-orange-500/[0.04] border-x border-white/5 min-w-[42px]"
+                      className="py-3 px-2 text-center font-mono font-black text-orange-700 bg-orange-50 border-x border-slate-200 min-w-[42px]"
                       title={`Race ${rNum} finish`}
                     >
                       R{rNum}
                     </th>
                   ))}
-                  <th className="py-3 px-3 text-center">Total</th>
-                  <th className="py-3 px-3 text-center font-black text-orange-300">Nett</th>
-                  <th className="py-3 px-3 text-center">Status</th>
-                  <th className="py-3 px-4 sm:px-6 text-right">Actions</th>
+                  <th className="py-3 px-3 text-center text-slate-800 font-bold">Total</th>
+                  <th className="py-3 px-3 text-center font-black text-orange-700">Nett</th>
+                  <th className="py-3 px-3 text-center text-slate-800 font-bold">Status</th>
+                  <th className="py-3 px-4 sm:px-6 text-right text-slate-800 font-bold">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 font-semibold text-slate-300">
+              <tbody className="divide-y divide-slate-200 font-semibold text-slate-800">
                 {eventResults.map((res) => {
                   const sailor = sailorById.get(res.sailorId);
                   const dns = Boolean(res.isDns || res.isDNS);
@@ -836,37 +836,37 @@ export function AdminResultsPanel({
                       </td>
                       <td className="py-3 px-4 sm:px-6 min-w-[140px]">
                         <div className="flex items-center gap-1.5">
-                          <span className="font-bold text-white leading-tight">
+                          <span className="font-bold text-slate-900 leading-tight">
                             {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
                           </span>
                           {res.raceResults && res.raceResults.length > 0 && (
                             <button
                               type="button"
                               onClick={() => setExpandedResultId((prev) => (prev === res.id ? null : res.id))}
-                              className="text-slate-500 hover:text-orange-400 p-0.5 rounded transition-colors shrink-0"
+                              className="text-slate-500 hover:text-orange-600 p-0.5 rounded transition-colors shrink-0"
                               title={expandedResultId === res.id ? "Hide individual race finishes" : "Show individual race finishes breakdown"}
                             >
                               {expandedResultId === res.id ? (
-                                <ChevronUp className="h-3.5 w-3.5 text-orange-400" />
+                                <ChevronUp className="h-3.5 w-3.5 text-orange-600" />
                               ) : (
                                 <ChevronDown className="h-3.5 w-3.5" />
                               )}
                             </button>
                           )}
                         </div>
-                        <div className="text-[13px] text-slate-400 mt-0.5 truncate max-w-[220px]">
+                        <div className="text-[13px] text-slate-600 mt-0.5 truncate max-w-[220px]">
                           {[sailor?.club, sailor?.school, sailor?.nationality]
                             .filter(Boolean)
                             .join(" · ") || "—"}
                         </div>
                       </td>
-                      <td className="py-3 px-3 text-center font-mono font-bold text-slate-300">
+                      <td className="py-3 px-3 text-center font-mono font-bold text-slate-800">
                         {sailor?.sailNumber || sailor?.sailNumberIlca4 || "—"}
                       </td>
-                      <td className="py-3 px-3 text-center text-slate-300">
+                      <td className="py-3 px-3 text-center text-slate-700">
                         {sailor?.gender || "—"}
                       </td>
-                      <td className="py-3 px-3 text-center font-mono text-slate-300">
+                      <td className="py-3 px-3 text-center font-mono text-slate-700">
                         {birthY}
                       </td>
                       {raceNumbers.map((rNum) => {
@@ -875,7 +875,7 @@ export function AdminResultsPanel({
                           return (
                             <td
                               key={rNum}
-                              className="py-3 px-2 text-center font-mono text-slate-600 text-xs border-x border-white/5"
+                              className="py-3 px-2 text-center font-mono text-slate-400 text-xs border-x border-slate-200"
                             >
                               —
                             </td>
@@ -888,8 +888,8 @@ export function AdminResultsPanel({
                         return (
                           <td
                             key={rNum}
-                            className={`py-3 px-2 text-center text-xs font-mono border-x border-white/5 transition-colors ${
-                              isDiscarded ? "bg-white/[0.015]" : ""
+                            className={`py-3 px-2 text-center text-xs font-mono border-x border-slate-200 transition-colors ${
+                              isDiscarded ? "bg-slate-50/60" : ""
                             }`}
                             title={
                               hasPenalty
@@ -901,25 +901,25 @@ export function AdminResultsPanel({
                               <span
                                 className={`inline-block px-1.5 py-0.5 rounded text-[10px] font-black ${
                                   isDiscarded
-                                    ? "bg-amber-500/10 text-amber-400/60 line-through border border-amber-500/20"
-                                    : "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                                    ? "bg-amber-100 text-amber-800 line-through border border-amber-300"
+                                    : "bg-amber-100 text-amber-900 border border-amber-300"
                                 }`}
                               >
                                 {race.scoringCode}
                               </span>
                             ) : isDiscarded ? (
-                              <span className="text-slate-500 line-through text-[11px] font-medium">
+                              <span className="text-slate-400 line-through text-[11px] font-medium">
                                 ({displayVal})
                               </span>
                             ) : (
-                              <span className="text-slate-200 font-bold">
+                              <span className="text-slate-900 font-bold">
                                 {displayVal}
                               </span>
                             )}
                           </td>
                         );
                       })}
-                      <td className="py-3 px-3 text-center font-mono text-slate-400">
+                      <td className="py-3 px-3 text-center font-mono font-medium text-slate-700">
                         {res.totalScore != null ? res.totalScore : "—"}
                       </td>
                       <td className="py-3 px-3 text-center">
@@ -928,7 +928,7 @@ export function AdminResultsPanel({
                             type="number"
                             step="any"
                             autoFocus
-                            className="w-16 rounded border border-orange-500/50 bg-slate-950 px-1.5 py-0.5 text-center text-xs font-mono text-white focus:outline-none shadow-lg"
+                            className="w-16 rounded border border-orange-500 bg-white px-1.5 py-0.5 text-center text-xs font-mono text-slate-900 focus:outline-none shadow-md"
                             value={inlineEditing.value}
                             onChange={(e) => setInlineEditing({ ...inlineEditing, value: e.target.value })}
                             onKeyDown={(e) => {
@@ -961,16 +961,16 @@ export function AdminResultsPanel({
                                 });
                               }
                             }}
-                            className={`inline-flex items-center justify-center gap-1 font-mono font-black text-orange-300 ${
+                            className={`inline-flex items-center justify-center gap-1 font-mono font-black text-orange-700 ${
                               isSuperadmin && handleQuickUpdateResult
-                                ? "cursor-pointer group hover:bg-white/5 px-1.5 py-0.5 rounded transition-colors"
+                                ? "cursor-pointer group hover:bg-orange-50 px-1.5 py-0.5 rounded transition-colors"
                                 : ""
                             }`}
                             title={isSuperadmin && handleQuickUpdateResult ? "Double-click to edit nett score inline" : undefined}
                           >
                             <span>{res.nettScore != null ? res.nettScore : "—"}</span>
                             {isSuperadmin && handleQuickUpdateResult && (
-                              <Edit3 className="w-2.5 h-2.5 text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                              <Edit3 className="w-2.5 h-2.5 text-slate-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                             )}
                           </div>
                         )}
@@ -978,7 +978,7 @@ export function AdminResultsPanel({
                       <td className="py-3 px-3 text-center">
                         {isSuperadmin && handleQuickUpdateResult ? (
                           <div
-                            className="inline-flex rounded-lg bg-black/40 p-0.5 border border-white/10"
+                            className="inline-flex rounded-lg bg-slate-100 p-0.5 border border-slate-300 shadow-xs"
                             title="Click status to toggle immediately"
                           >
                             <button
@@ -994,8 +994,8 @@ export function AdminResultsPanel({
                               }}
                               className={`px-1.5 py-0.5 text-[13px] font-bold rounded transition-colors ${
                                 !overseas && !dns
-                                  ? "bg-emerald-500/25 text-emerald-300 border border-emerald-500/40 shadow-sm"
-                                  : "text-slate-400 hover:text-white"
+                                  ? "bg-emerald-100 text-emerald-800 border border-emerald-300 shadow-xs"
+                                  : "text-slate-600 hover:text-slate-900"
                               }`}
                               title="Mark as Finished"
                             >
@@ -1016,8 +1016,8 @@ export function AdminResultsPanel({
                               }}
                               className={`px-1.5 py-0.5 text-[13px] font-bold rounded transition-colors ${
                                 dns
-                                  ? "bg-rose-500/25 text-rose-300 border border-rose-500/40 shadow-sm"
-                                  : "text-slate-400 hover:text-white"
+                                  ? "bg-rose-100 text-rose-800 border border-rose-300 shadow-xs"
+                                  : "text-slate-600 hover:text-slate-900"
                               }`}
                               title={`Mark as DNS (${dnsPointsFromResults(selectedRegatta?.id || selectedRegattaIdForResultEdit, resultsList)} pts)`}
                             >
@@ -1036,8 +1036,8 @@ export function AdminResultsPanel({
                               }}
                               className={`px-1.5 py-0.5 text-[13px] font-bold rounded transition-colors ${
                                 overseas
-                                  ? "bg-sky-500/25 text-sky-300 border border-sky-500/40 shadow-sm"
-                                  : "text-slate-400 hover:text-white"
+                                  ? "bg-sky-100 text-sky-800 border border-sky-300 shadow-xs"
+                                  : "text-slate-600 hover:text-slate-900"
                               }`}
                               title="Mark as Overseas Commitment"
                             >
@@ -1048,10 +1048,10 @@ export function AdminResultsPanel({
                           <span
                             className={`inline-block px-2 py-0.5 rounded text-[11px] font-bold ${
                               overseas
-                                ? "bg-sky-500/15 text-sky-300 border border-sky-500/30"
+                                ? "bg-sky-100 text-sky-800 border border-sky-300"
                                 : dns
-                                  ? "bg-rose-500/15 text-rose-400 border border-rose-500/30"
-                                  : "bg-emerald-500/10 text-emerald-300 border border-emerald-500/20"
+                                  ? "bg-rose-100 text-rose-800 border border-rose-300"
+                                  : "bg-emerald-100 text-emerald-800 border border-emerald-300"
                             }`}
                           >
                             {overseas ? "Overseas" : dns ? "DNS" : "Finished"}
@@ -1084,14 +1084,14 @@ export function AdminResultsPanel({
                                 isOverseasCommitment: overseas,
                               });
                             }}
-                            className="text-slate-400 hover:text-white"
+                            className="p-1 rounded text-slate-500 hover:text-orange-600 hover:bg-orange-50 transition-colors"
                           >
                             <Edit3 className="h-4 w-4" />
                           </button>
                           <button
                             type="button"
                             onClick={() => void handleDeleteResult(res.id)}
-                            className="text-slate-500 hover:text-red-400"
+                            className="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -1099,12 +1099,12 @@ export function AdminResultsPanel({
                       </td>
                     </tr>
                     {expandedResultId === res.id && res.raceResults && res.raceResults.length > 0 && (
-                      <tr className="bg-slate-900/90 border-b border-white/5">
+                      <tr className="bg-slate-50 border-b border-slate-200">
                         <td colSpan={9 + raceNumbers.length} className="px-4 sm:px-6 py-3">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <div className="flex items-center gap-2">
-                              <Trophy className="h-4 w-4 text-orange-400 shrink-0" />
-                              <span className="text-xs font-bold text-white">
+                              <Trophy className="h-4 w-4 text-orange-600 shrink-0" />
+                              <span className="text-xs font-bold text-slate-900">
                                 Official Race Finishes for {sailor?.name || res.sailorName || "Sailor"}:
                               </span>
                             </div>
@@ -1115,24 +1115,26 @@ export function AdminResultsPanel({
                                 return (
                                   <div
                                     key={race.raceNumber}
-                                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-mono ${
+                                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-mono shadow-xs ${
                                       isDiscarded
-                                        ? "bg-white/5 border-white/10 text-slate-400"
-                                        : "bg-orange-500/10 border-orange-500/20 text-orange-200"
+                                        ? "bg-slate-100 border-slate-200 text-slate-500"
+                                        : hasPenalty
+                                          ? "bg-amber-50 border-amber-300 text-amber-900"
+                                          : "bg-white border-slate-300 text-slate-900"
                                     }`}
                                     title={isDiscarded ? "Worst finish discarded from nett score" : `Race ${race.raceNumber}`}
                                   >
-                                    <span className="text-slate-400 font-semibold">R{race.raceNumber}:</span>
-                                    <span className={isDiscarded ? "line-through text-slate-400 font-bold" : "font-black text-white"}>
+                                    <span className="text-slate-500 font-semibold text-[11px]">R{race.raceNumber}:</span>
+                                    <span className={isDiscarded ? "line-through text-slate-500 font-bold" : "font-black text-slate-900"}>
                                       {race.rawValue || race.score}
                                     </span>
                                     {hasPenalty && (
-                                      <span className="px-1 py-0.5 rounded text-[10px] font-bold bg-amber-500/20 text-amber-300">
+                                      <span className="px-1 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 ml-0.5">
                                         {race.scoringCode}
                                       </span>
                                     )}
                                     {isDiscarded && (
-                                      <span className="text-[10px] text-slate-500 font-sans font-semibold">(disc)</span>
+                                      <span className="text-[10px] text-slate-500 font-sans font-semibold ml-0.5">(disc)</span>
                                     )}
                                   </div>
                                 );
