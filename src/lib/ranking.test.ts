@@ -8,6 +8,7 @@ import {
   optimistRegisteredNoShowScore,
   optimistUnregisteredScore,
   compareRankedSailors,
+  sharedOverallRanks,
   getPercentileBadge,
   natSquadFieldForPeriod,
   periodBounds,
@@ -82,6 +83,20 @@ describe("compareRankedSailors", () => {
       regattaScores: [slot(2), slot(2), slot(5), slot(6), slot(9)],
     };
     expect(compareRankedSailors(a, b)).toBeLessThan(0);
+  });
+
+  it("gives equal Best 3 scores the same rank", () => {
+    expect(
+      sharedOverallRanks([
+        { overallScore: 220 },
+        { overallScore: 226 },
+        { overallScore: 226 },
+        { overallScore: 233 },
+        { overallScore: 233 },
+        { overallScore: 233 },
+        { overallScore: 233 },
+      ])
+    ).toEqual([1, 2, 2, 4, 4, 4, 4]);
   });
 
   it("falls back to name when ranks fully tie", () => {

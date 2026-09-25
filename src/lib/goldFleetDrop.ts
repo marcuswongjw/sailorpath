@@ -7,11 +7,14 @@
  * half-boundary entry/drop conventions.
  */
 
+import { todayYmdSg } from "@/lib/datesSg";
+import { withProjectedNextSquadStatus } from "@/lib/optimistSquadPreview";
 import {
   periodBounds,
   regattaCountsForRanking,
   regattaMatchesSeriesClass,
   type Period,
+  type RankedSailor,
   type RegattaRecord,
   type RegattaResultRecord,
   type SailorRecord,
@@ -200,23 +203,77 @@ export function monthsInGoldTenure(
   return Math.max(0, (ey - sy) * 12 + (em - sm));
 }
 
+function regattaYmd(regatta: RegattaRecord): string {
+  return String(regatta.date || "").slice(0, 10);
+}
+
 /**
- * Under projected next-half status, mark Dropped when the sailor is below the
- * participation bar for the *current* ranking half (Gold: ≥2 real starts).
- * Plain DNS / never-registered do not count; overseas commitment does. Call after Nat A/B projection
- * so Dropped overrides a squad tier when they will leave Gold.
+ * Gold starts already sailed in this half, and ranking regattas still ahead.
+ * A sailor is Drop when starts so far plus regattas still to come cannot
+ * reach 2. Zero starts with one regatta left is Drop: the last event can
+ * only make it one.
  */
-export function applyProjectedGoldParticipationDropped<
-  T extends { id: string; nextPeriodSquadStatus?: string | null },
->(
-  ranked: T[],
+export function goldParticipationOutlook(
+  sailorId: string,
   period: Period,
   regattas: RegattaRecord[],
-  results: RegattaResultRecord[]
-): T[] {
-  return ranked.map((s) => {
-    const n = countGoldRankingParticipations(s.id, period, regattas, results);
-    if (n >= GOLD_MIN_RANKING_REGATTAS_PER_HALF) return s;
-    return { ...s, nextPeriodSquadStatus: "Dropped" };
-  });
+  results: RegattaResultRecord[],
+  asOfYmd: string
+): { soFar: number; remaining: number; meetsMinimum: boolean } {
+  const events = rankingGoldRegattasInPeriod(period, regattas);
+  const held = events.filter((regatta) => regattaYmd(regatta) <= asOfYmd);
+  const remaining = events.length - held.length;
+  const soFar = countGoldRankingParticipations(
+    sailorId,
+    period,
+    held,
+    results
+  );
+  return {
+    soFar,
+    remaining,
+    meetsMinimum: soFar + remaining >= GOLD_MIN_RANKING_REGATTAS_PER_HALF,
+  };
+}
+
+/**
+ * Proj. Squad for the next half.
+ * Sailors who cannot reach 2 Gold ranking starts are "Drop" and do not take
+ * a Nat A or Nat B place. Everyone else is projected from the remaining order.
+ */
+export function applyProjectedGoldParticipationDropped(
+  ranked: RankedSailor[],
+  period: Period,
+  regattas: RegattaRecord[],
+  results: RegattaResultRecord[],
+  asOfYmd?: string
+): RankedSailor[] {
+  const asOf = asOfYmd || todayYmdSg();
+  const dropIds = new Set(
+    ranked
+      .filter(
+        (sailor) =>
+          !goldParticipationOutlook(
+            sailor.id,
+            period,
+            regattas,
+            results,
+            asOf
+          ).meetsMinimum
+      )
+      .map((sailor) => sailor.id)
+  );
+  const projected = withProjectedNextSquadStatus(
+    ranked.filter((sailor) => !dropIds.has(sailor.id)),
+    period
+  );
+  const statusById = new Map(
+    projected.map((sailor) => [sailor.id, sailor.nextPeriodSquadStatus])
+  );
+  return ranked.map((sailor) => ({
+    ...sailor,
+    nextPeriodSquadStatus: dropIds.has(sailor.id)
+      ? "Drop"
+      : (statusById.get(sailor.id) ?? null),
+  }));
 }

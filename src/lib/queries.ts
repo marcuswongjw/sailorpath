@@ -30,7 +30,7 @@ import {
   type RegattaResultRecord,
   type RegattaScoreSlot,
 } from "@/lib/ranking";
-import { withProjectedNextSquadStatus } from "@/lib/optimistSquadPreview";
+
 import { applyProjectedGoldParticipationDropped } from "@/lib/goldFleetDrop";
 import { applyProjectedSilverParticipationDropped } from "@/lib/silverSeriesDrop";
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
@@ -1311,10 +1311,9 @@ export async function computeFleetRankings(
   );
   // Gold: next-half column = live Nat A/B projection (not stored stamp alone)
   if (fleet === "Gold") {
-    const withSquad = withProjectedNextSquadStatus(ranked, period);
-    // Participation bar: <2 real Gold starts this half → projected Dropped
+    // Nat A/B, then Drop when this half cannot reach 2 ranking starts.
     return applyProjectedGoldParticipationDropped(
-      withSquad,
+      ranked,
       period,
       rankingRegattas,
       rankingResults

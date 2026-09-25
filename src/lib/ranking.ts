@@ -770,6 +770,26 @@ export function compareRankedSailors(
 }
 
 /**
+ * Display rank for a list already sorted by Best 3 of 5.
+ * Equal overall scores share the rank of the first sailor in the tie
+ * (97, 97, 97, 97). The next different score takes the next place number.
+ * Tie-break order inside the group is unchanged.
+ */
+export function sharedOverallRanks(
+  rows: { overallScore: number }[]
+): number[] {
+  const ranks: number[] = [];
+  for (let i = 0; i < rows.length; i++) {
+    if (i > 0 && rows[i].overallScore === rows[i - 1].overallScore) {
+      ranks.push(ranks[i - 1]);
+    } else {
+      ranks.push(i + 1);
+    }
+  }
+  return ranks;
+}
+
+/**
  * Recompute ranking board after excluding some regatta IDs (client “what-if”).
  * Order is re-sorted by new overall score + regatta-rank tie-breakers.
  */

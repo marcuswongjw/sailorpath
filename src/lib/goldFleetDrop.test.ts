@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+  applyProjectedGoldParticipationDropped,
   completedPeriodsUpTo,
   findGoldParticipationDrops,
+  goldParticipationOutlook,
   monthsInGoldTenure,
   rankingGoldRegattasInPeriod,
 } from "./goldFleetDrop";
+import type { RankedSailor } from "./ranking";
 import type { RegattaRecord, RegattaResultRecord, SailorRecord } from "./ranking";
 
 describe("completedPeriodsUpTo", () => {
@@ -245,4 +248,82 @@ describe("findGoldParticipationDrops", () => {
     expect(drops).toHaveLength(0);
   });
 
+});
+
+describe("projected Drop while the half is still open", () => {
+  const period = { year: 2026, half: "Jul-Dec" as const };
+  const regattas: RegattaRecord[] = [
+    {
+      id: "past",
+      name: "Past",
+      slug: "past",
+      date: "2026-08-01",
+      totalFleetSize: 40,
+      division: "Gold",
+      boatClass: "Optimist",
+      countsForRanking: true,
+    },
+    {
+      id: "final",
+      name: "Final",
+      slug: "final",
+      date: "2026-11-01",
+      totalFleetSize: 40,
+      division: "Gold",
+      boatClass: "Optimist",
+      countsForRanking: true,
+    },
+  ];
+
+  function sailor(id: string): RankedSailor {
+    return {
+      id,
+      name: id,
+      handle: id,
+      sailNumber: "1",
+      club: "X",
+      goldEntryDate: "2026-07-01",
+      silverEntryDate: null,
+      dropDate: null,
+      currentFleet: "Series",
+      fleet: "Gold",
+      gender: "M",
+      dob: "2012-06-01",
+      nationality: "SGP",
+      regattaScores: [],
+      bestThreeScores: [10, 10, 10],
+      overallScore: 30,
+    };
+  }
+
+  it("tags zero starts as Drop when one ranking regatta is left", () => {
+    expect(
+      goldParticipationOutlook("none", period, regattas, [], "2026-09-25")
+    ).toMatchObject({ soFar: 0, remaining: 1, meetsMinimum: false });
+    const [row] = applyProjectedGoldParticipationDropped(
+      [sailor("none")],
+      period,
+      regattas,
+      [],
+      "2026-09-25"
+    );
+    expect(row.nextPeriodSquadStatus).toBe("Drop");
+  });
+
+  it("does not drop a sailor who already has one start and one regatta left", () => {
+    const results: RegattaResultRecord[] = [
+      { sailorId: "one", regattaId: "past", rank: 10 },
+    ];
+    expect(
+      goldParticipationOutlook("one", period, regattas, results, "2026-09-25")
+    ).toMatchObject({ soFar: 1, remaining: 1, meetsMinimum: true });
+    const [row] = applyProjectedGoldParticipationDropped(
+      [sailor("one")],
+      period,
+      regattas,
+      results,
+      "2026-09-25"
+    );
+    expect(row.nextPeriodSquadStatus).not.toBe("Drop");
+  });
 });

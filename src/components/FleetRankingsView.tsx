@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import type { RankedSailor, Period } from "@/lib/ranking";
-import { reRankWithExcluded } from "@/lib/ranking";
+import { reRankWithExcluded, sharedOverallRanks } from "@/lib/ranking";
 import {
   currentPeriodFromSgToday,
   rankingPeriodOptions,
@@ -46,6 +46,9 @@ function squadBadgeClass(label: string | null | undefined): string {
   }
   if (s === "nat b" || s === "national b" || s === "b") {
     return "bg-sky-500/15 border-sky-400/35 text-sky-300";
+  }
+  if (s === "drop" || s === "dropped") {
+    return "bg-slate-200/80 border-slate-300 text-slate-600";
   }
   if (s === "ds" || s.includes("development")) {
     return "bg-violet-500/15 border-violet-400/35 text-violet-300";
@@ -244,8 +247,29 @@ export function FleetRankingsView({
 
   const rankingWithProjection = useMemo(() => {
     if (!showProjectedSquad || rankingBase.length === 0) return rankingBase;
-    return withProjectedNextSquadStatus(rankingBase, period);
-  }, [showProjectedSquad, rankingBase, period]);
+    // The server already projected Nat A/B and Drop. Re-project only for a
+    // what-if, and keep Drop so a sailor who cannot reach 2 starts does not
+    // take a squad place.
+    if (excluded.size === 0) return rankingBase;
+    const dropIds = new Set(
+      rankingBase
+        .filter((sailor) => sailor.nextPeriodSquadStatus === "Drop")
+        .map((sailor) => sailor.id)
+    );
+    const projected = withProjectedNextSquadStatus(
+      rankingBase.filter((sailor) => !dropIds.has(sailor.id)),
+      period
+    );
+    const statusById = new Map(
+      projected.map((sailor) => [sailor.id, sailor.nextPeriodSquadStatus])
+    );
+    return rankingBase.map((sailor) => ({
+      ...sailor,
+      nextPeriodSquadStatus: dropIds.has(sailor.id)
+        ? "Drop"
+        : (statusById.get(sailor.id) ?? null),
+    }));
+  }, [showProjectedSquad, rankingBase, period, excluded.size]);
 
   const displayRanked = useMemo(() => {
     return rankingWithProjection.filter((s) => {
@@ -268,6 +292,11 @@ export function FleetRankingsView({
       return true;
     });
   }, [rankingWithProjection, genderFilter, squadFilter, showSquad]);
+
+  const displayRanks = useMemo(
+    () => sharedOverallRanks(displayRanked),
+    [displayRanked]
+  );
 
   const carryCount = eventSlots.filter((s) => s.isCarryForward && s.regattaName).length;
   const currentCount = eventSlots.filter((s) => !s.isCarryForward && s.regattaName).length;
@@ -702,7 +731,7 @@ export function FleetRankingsView({
               <div className="flex items-center justify-between gap-2 min-w-0">
                 <div className="min-w-0 flex-1 flex items-center gap-2">
                   <RankMedalBadge
-                    rank={i + 1}
+                    rank={displayRanks[i] ?? i + 1}
                     className="w-6 shrink-0"
                     nonPodiumClassName="text-[var(--sp-racing-deep)] font-black text-sm shrink-0 tabular-nums w-6 text-center"
                   />
@@ -909,7 +938,7 @@ export function FleetRankingsView({
                   >
                     <td className="sticky left-0 z-10 px-4 lg:px-5 py-3.5 bg-warm-white">
                       <RankMedalBadge
-                        rank={i + 1}
+                        rank={displayRanks[i] ?? i + 1}
                         nonPodiumClassName="font-bold text-[var(--sp-racing-deep)] font-mono"
                       />
                     </td>
@@ -999,12 +1028,12 @@ export function FleetRankingsView({
           current half has fewer than 5 events, the most recent events from the
           previous half fill the window (sky “prev” / carry). Highlighted cells are
           the three selected scores. Best 3 of 5 = sum of the three best (lowest)
-          scores. Ties: compare all regatta ranks best-first
-          (a 1st beats a 2nd, then next-best, and so on), then name. Uncheck events
+          scores. Sailors with the same Best 3 of 5 share that rank. Within a tie,
+          order is best regatta rank first (a 1st beats a 2nd), then name. Uncheck events
           above for a what-if score. * = DNS (Group 1: starters+1; Group 2: max sheet place+1). † = SSF overseas
           commitment. {squadColumnLabel} = official national squad for the selected
           period.{showProjectedSquad
-            ? ` ${nextSquadColumnLabel} = live projection for the following half using Nat A (top 8 male + top 8 female) then Nat B age buckets (13 / 12 / ≤11), max 16 each, age ≤15 in intake year.`
+            ? ` ${nextSquadColumnLabel} = live projection for the following half using Nat A (top 8 male + top 8 female) then Nat B age buckets (13 / 12 / ≤11), max 16 each, age ≤15 in intake year. Drop = cannot reach 2 Gold ranking starts this half, even if they sail every regatta still to come.`
             : ""}
         </p>
       </div>
