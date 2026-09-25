@@ -32,12 +32,14 @@ BEGIN
   PERFORM pg_advisory_xact_lock(hashtext('sailorpath_supabase_sync'));
   INSERT INTO public.regattas (name,slug,date,end_date,boat_class,division,total_fleet_size,race_count,geography,counts_for_ranking,venue,organizer,nor_url,registration_url,schedule_notes,status)
   VALUES (g->>'name',g->>'slug',(g->>'date')::date,(g->>'end_date')::date,g->>'boat_class',g->>'division',(g->>'total_fleet_size')::int,(g->>'race_count')::int,'SGP',(g->>'counts_for_ranking')::boolean,g->>'venue',g->>'organizer',g->>'nor_url',g->>'registration_url',g->>'schedule_notes','published')
-  ON CONFLICT (slug) DO UPDATE SET name=excluded.name,end_date=excluded.end_date,total_fleet_size=excluded.total_fleet_size,race_count=excluded.race_count,venue=excluded.venue,organizer=excluded.organizer,nor_url=excluded.nor_url,registration_url=excluded.registration_url,schedule_notes=excluded.schedule_notes,updated_at=now()
+  ON CONFLICT (slug) DO UPDATE SET name=excluded.name,end_date=excluded.end_date,total_fleet_size=excluded.total_fleet_size,race_count=excluded.race_count,counts_for_ranking=excluded.counts_for_ranking,boat_class=excluded.boat_class,division=excluded.division,venue=excluded.venue,organizer=excluded.organizer,nor_url=excluded.nor_url,registration_url=excluded.registration_url,schedule_notes=excluded.schedule_notes,updated_at=now()
   RETURNING id INTO reg_id;
   FOR c IN SELECT value FROM jsonb_array_elements(event->'competitors') LOOP
     SELECT id INTO sailor_id_value FROM public.sailors WHERE handle=c->>'handle';
     IF sailor_id_value IS NULL THEN
-      IF (c->>'existing')::boolean THEN RAISE EXCEPTION 'Previously matched sailor disappeared: %',c->>'handle'; END IF;
+      SELECT id INTO sailor_id_value FROM public.sailors WHERE lower(trim(name)) = lower(trim(c->'sailor'->>'name')) LIMIT 1;
+    END IF;
+    IF sailor_id_value IS NULL THEN
       INSERT INTO public.sailors(name,handle,sail_number,club,school,gender,nationality)
       VALUES(c->'sailor'->>'name',c->>'handle',c->'sailor'->>'sail_number',coalesce(c->'sailor'->>'club',''),c->'sailor'->>'school',c->'sailor'->>'gender',c->'sailor'->>'nationality')
       RETURNING id INTO sailor_id_value;
@@ -60,4 +62,5 @@ END $sync$;`;
 }
 fs.writeFileSync(`${dir}/manifest.json`,JSON.stringify(statements,null,2));
 fs.writeFileSync(`${dir}/payloads.json`,JSON.stringify(events));
+fs.writeFileSync(`${dir}/apply-all.sql`, statements.map(s => fs.readFileSync(s.file, 'utf8')).join('\n\n'));
 console.log(JSON.stringify({events:events.length,results:statements.reduce((s,e)=>s+e.results,0),races:statements.reduce((s,e)=>s+e.races,0),newProfiles:knownNew.size}));
