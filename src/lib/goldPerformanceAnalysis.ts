@@ -44,6 +44,7 @@ export type AnalysisRegatta = {
   division?: string | null;
   boatClass?: string | null;
   countsForRanking?: boolean | null;
+  raceCount?: number | null;
   totalFleetSize?: number | null;
 };
 
@@ -161,6 +162,7 @@ function toRegattaRecords(regattas: AnalysisRegatta[]): RegattaRecord[] {
     totalFleetSize: r.totalFleetSize ?? 50,
     division: r.division ?? "Gold",
     boatClass: r.boatClass ?? "Optimist",
+    raceCount: r.raceCount,
     countsForRanking: r.countsForRanking !== false,
   }));
 }

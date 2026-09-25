@@ -48,6 +48,7 @@ import {
   ilcaHighPointsForResult,
   type ProfileResult,
 } from "@/lib/profileAnalytics";
+import { regattaCountsForRanking } from "@/lib/ranking";
 import dynamic from "next/dynamic";
 import {
   PROFILE_CARD_CLASS as cardClass,
@@ -1918,7 +1919,7 @@ export function SailorProfileView({
                   (a, b) => a.raceNumber - b.raceNumber
                 );
                 const fleetSize = res.totalFleetSize ?? res.fleetSize;
-                const nonRanking = res.countsForRanking === false;
+                const nonRanking = !regattaCountsForRanking(res);
                 /** Public: expand when there are visible notes, official races, or evidence; owners always can. */
                 const canExpand =
                   officialRaces.length > 0 ||
@@ -1926,10 +1927,12 @@ export function SailorProfileView({
                   Boolean(res.evidenceUrl || res.officialUrl || res.evidenceNotes) ||
                   ownerView;
                 const canLink =
-                  !nonRanking &&
-                  !isIlcaRow &&
                   slug &&
-                  String(slug).length > 2;
+                  String(slug).length > 2 &&
+                  !String(slug).startsWith("log-");
+                const regattaHref = isIlcaRow
+                  ? `/sg/ilca/regattas/${slug}`
+                  : `/sg/optimist/regattas/${slug}`;
                 const nett =
                   res.nettScore != null &&
                   Number.isFinite(Number(res.nettScore))
@@ -2043,7 +2046,7 @@ export function SailorProfileView({
                       <div className="min-w-0">
                         {canLink ? (
                           <Link
-                            href={`/sg/optimist/regattas/${slug}`}
+                            href={regattaHref}
                             onClick={(e) => e.stopPropagation()}
                             className="text-[13px] font-bold text-harbour-shadow truncate block hover:text-harbour"
                           >

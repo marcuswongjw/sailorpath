@@ -129,12 +129,11 @@ export async function POST(req: Request) {
     }
     let rankingNote: string | null = null;
     if (
-      isAnyIlcaClass(boatClass) &&
       raceCount != null &&
       raceCount < ILCA_MIN_RACES_FOR_RANKING
     ) {
       countsForRanking = false;
-      rankingNote = `ILCA event with ${raceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races for series).`;
+      rankingNote = `Regatta with ${raceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races required for ranking series).`;
     }
 
     const venue = body.venue ? String(body.venue).trim() : null;
@@ -343,13 +342,12 @@ export async function PATCH(req: Request) {
     }
     let rankingNote: string | null = null;
     if (
-      isAnyIlcaClass(effectiveBoatClass) &&
       effectiveRaceCount != null &&
       Number(effectiveRaceCount) < ILCA_MIN_RACES_FOR_RANKING &&
       body.action !== "promote"
     ) {
       patch.countsForRanking = false;
-      rankingNote = `ILCA event with ${effectiveRaceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races for series).`;
+      rankingNote = `Regatta with ${effectiveRaceCount} race(s) is non-ranking (minimum ${ILCA_MIN_RACES_FOR_RANKING} races required for ranking series).`;
     }
 
     const [row] = await db

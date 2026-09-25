@@ -552,7 +552,6 @@ export async function POST(req: Request) {
         ? countsForRanking
         : true;
     if (
-      isAnyIlcaClass(boat) &&
       raceCount != null &&
       raceCount < ILCA_MIN_RACES_FOR_RANKING
     ) {

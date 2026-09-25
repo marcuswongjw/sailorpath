@@ -15,6 +15,7 @@ import {
   LayoutGrid,
   Sparkles,
 } from "lucide-react";
+import { regattaCountsForRanking } from "@/lib/ranking";
 
 export type PublicRegatta = {
   id: string;
@@ -102,7 +103,7 @@ export function RegattasListClient({
     let rankingCount = 0;
     let nonRankingCount = 0;
     for (const r of regattas) {
-      if (r.countsForRanking !== false) {
+      if (regattaCountsForRanking(r)) {
         rankingCount++;
       } else {
         nonRankingCount++;
@@ -147,8 +148,8 @@ export function RegattasListClient({
     const q = query.trim().toLowerCase();
     return regattas.filter((r) => {
       // Ranking vs Non-Ranking filter
-      if (rankingFilter === "ranking" && r.countsForRanking === false) return false;
-      if (rankingFilter === "non-ranking" && r.countsForRanking !== false) return false;
+      if (rankingFilter === "ranking" && !regattaCountsForRanking(r)) return false;
+      if (rankingFilter === "non-ranking" && regattaCountsForRanking(r)) return false;
 
       if (!hideBoatClassFilter && boatClassFilter !== "all" && r.boatClass !== boatClassFilter) {
         return false;
@@ -448,7 +449,7 @@ export function RegattasListClient({
                 /* Grid View */
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {list.map((r) => {
-                    const isRanking = r.countsForRanking !== false;
+                    const isRanking = regattaCountsForRanking(r);
                     return (
                       <Link
                         key={r.id}
@@ -467,7 +468,9 @@ export function RegattasListClient({
                               </span>
                             ) : (
                               <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2.5 py-0.5 text-[10px] font-bold text-[var(--sp-slate-soft)]">
-                                Non-ranking
+                                {r.raceCount != null && r.raceCount < 3
+                                  ? `Non-ranking (${r.raceCount} race${r.raceCount === 1 ? "" : "s"})`
+                                  : "Non-ranking"}
                               </span>
                             )}
                           </div>
@@ -507,7 +510,7 @@ export function RegattasListClient({
                 /* Compact List View */
                 <div className="divide-y divide-[var(--sp-cool-veil)] rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs overflow-hidden">
                   {list.map((r) => {
-                    const isRanking = r.countsForRanking !== false;
+                    const isRanking = regattaCountsForRanking(r);
                     return (
                       <Link
                         key={r.id}
@@ -525,7 +528,9 @@ export function RegattasListClient({
                               </span>
                             ) : (
                               <span className="rounded-full bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] px-2 py-0.5 text-[9px] font-bold text-[var(--sp-slate-soft)]">
-                                Non-Ranking
+                                {r.raceCount != null && r.raceCount < 3
+                                  ? `Non-ranking (${r.raceCount} races)`
+                                  : "Non-Ranking"}
                               </span>
                             )}
                           </div>

@@ -107,7 +107,7 @@ export async function linkRegattaEvents(): Promise<{
   for (const event of grouped.events) {
     const eventId = saved.get(event.slug);
     if (!eventId) continue;
-    const rows = event.shell ? [...event.sheets, event.shell] : event.sheets;
+    const rows = [...event.sheets, ...event.shells];
     for (const sheet of rows) {
       if (sheet.eventId === eventId) continue;
       await db

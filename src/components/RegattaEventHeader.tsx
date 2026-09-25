@@ -95,9 +95,11 @@ export function RegattaEventHeader({
               {divLabel}
             </span>
           )}
-          {!countsForRanking && (
+          {(!countsForRanking || (raceCount != null && raceCount < 3)) && (
             <span className="inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]">
-              Non-ranking
+              {raceCount != null && raceCount < 3
+                ? `Non-ranking (${raceCount} race${raceCount === 1 ? "" : "s"} < 3 min)`
+                : "Non-ranking"}
             </span>
           )}
           {norUrl && (

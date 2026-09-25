@@ -270,8 +270,9 @@ async function DbSlicePanel({
         {String(regatta.date)}
         {regatta.endDate ? ` – ${String(regatta.endDate)}` : ""}
         {" · "}
-        {def.label}
-        {regatta.countsForRanking === false ? " · non-ranking" : ""}
+        {regatta.countsForRanking === false || (regatta.raceCount != null && regatta.raceCount < 3)
+          ? ` · non-ranking${regatta.raceCount != null && regatta.raceCount < 3 ? ` (${regatta.raceCount} race${regatta.raceCount === 1 ? "" : "s"} < 3 min)` : ""}`
+          : ""}
       </p>
       {results.length === 0 ? (
         <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 text-center shadow-xs">

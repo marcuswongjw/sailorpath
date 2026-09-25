@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { Plus, Trash2, Calendar, Trophy, ExternalLink, Sparkles, Loader2 } from "lucide-react";
 import { AdminNorAmendmentCard } from "@/components/admin/AdminNorAmendmentCard";
@@ -28,6 +28,73 @@ import {
   type AdminEventGroup,
   type GroupableRegatta,
 } from "@/lib/admin/groupRegattaEvents";
+
+type SavedCalendarEvent = {
+  slug: string;
+  name: string;
+  startDate: string;
+  endDate?: string | null;
+  venue?: string | null;
+  organizer?: string | null;
+  classes?: string[] | null;
+  norUrl?: string | null;
+  registrationUrl?: string | null;
+  countsForRanking?: boolean | null;
+  isSelectionTrial?: boolean | null;
+  keyDeadlines?: string | null;
+};
+
+type CalendarFormState = {
+  name: string;
+  startDate: string;
+  endDate: string;
+  venue: string;
+  organizer: string;
+  classes: string;
+  norUrl: string;
+  registrationUrl: string;
+  keyDeadlines: string;
+  countsForRanking: boolean;
+  isSelectionTrial: boolean;
+};
+
+function withSavedEvent(
+  event: AdminEventGroup,
+  saved?: SavedCalendarEvent
+): AdminEventGroup {
+  if (!saved) return event;
+  const classes = (saved.classes || []).map((item) => item.trim()).filter(Boolean);
+  return {
+    ...event,
+    name: saved.name || event.name,
+    startDate: String(saved.startDate || event.startDate).slice(0, 10),
+    endDate: saved.endDate ? String(saved.endDate).slice(0, 10) : event.endDate,
+    venue: saved.venue || event.venue,
+    organizer: saved.organizer || event.organizer,
+    norUrl: saved.norUrl || event.norUrl,
+    registrationUrl: saved.registrationUrl || event.registrationUrl,
+    countsForRanking: saved.countsForRanking ?? event.countsForRanking,
+    isSelectionTrial: saved.isSelectionTrial ?? event.isSelectionTrial,
+    keyDeadlines: saved.keyDeadlines || event.keyDeadlines,
+    expectedClasses: classes.length > 0 ? classes : event.expectedClasses,
+  };
+}
+
+function calendarFormFrom(event: AdminEventGroup): CalendarFormState {
+  return {
+    name: event.name || "",
+    startDate: event.startDate || "",
+    endDate: event.endDate || "",
+    venue: event.venue || "",
+    organizer: event.organizer || "",
+    classes: event.expectedClasses.join(", "),
+    norUrl: event.norUrl || "",
+    registrationUrl: event.registrationUrl || "",
+    keyDeadlines: event.keyDeadlines || "",
+    countsForRanking: event.countsForRanking,
+    isSelectionTrial: event.isSelectionTrial,
+  };
+}
 
 export type { RegattaFormState };
 
@@ -83,6 +150,10 @@ export function AdminRegattasPanel({
   const { toast } = useFeedback();
   const [isSeeding, setIsSeeding] = useState(false);
   const [selectedEventSlug, setSelectedEventSlug] = useState<string | null>(null);
+  const [savedEvents, setSavedEvents] = useState<Record<string, SavedCalendarEvent>>({});
+  const [calendarForm, setCalendarForm] = useState<CalendarFormState | null>(null);
+  const [calendarSaving, setCalendarSaving] = useState(false);
+  const calendarSlug = useRef("");
 
   const grouped = useMemo(
     () => groupRegattaEvents(filteredRegattaList),
@@ -99,9 +170,13 @@ export function AdminRegattasPanel({
           expectedClasses: [],
           missingClasses: [],
           sheets: grouped.unassigned,
+          shells: [],
           shell: null,
         }
       : grouped.events.find((event) => event.slug === selectedEventSlug) ?? null;
+  const selectedEventView = selectedEvent
+    ? withSavedEvent(selectedEvent, savedEvents[selectedEvent.slug])
+    : null;
 
   const formFrom = (r: GroupableRegatta) => ({
     id: r.id,
@@ -123,20 +198,81 @@ export function AdminRegattasPanel({
     scheduleNotes: r.scheduleNotes || "",
   });
 
+  const seenSheetId = useRef<string | null>(null);
+
   useEffect(() => {
-    if (!activeSheetId) return;
+    if ((activeSheetId || "") === (seenSheetId.current || "")) return;
+    if (!activeSheetId) {
+      seenSheetId.current = "";
+      return;
+    }
     const row = filteredRegattaList.find((item) => item.id === activeSheetId);
     if (!row) return;
     const event = grouped.events.find(
       (item) =>
         item.sheets.some((sheet) => sheet.id === activeSheetId) ||
-        item.shell?.id === activeSheetId
+        item.shells.some((sheet) => sheet.id === activeSheetId)
     );
+    seenSheetId.current = activeSheetId;
     setSelectedEventSlug(event ? event.slug : UNASSIGNED_EVENT_SLUG);
-    if (editingRegattaId === activeSheetId) return;
     setEditingRegattaId(row.id);
     setRegattaForm(formFrom(row));
-  }, [activeSheetId, editingRegattaId, filteredRegattaList, grouped.events, setEditingRegattaId, setRegattaForm]);
+  }, [activeSheetId, filteredRegattaList, grouped.events, setEditingRegattaId, setRegattaForm]);
+
+  useEffect(() => {
+    let cancelled = false;
+    void fetch("/api/admin/regatta-events", { credentials: "include" })
+      .then((res) => res.json())
+      .then((body: { events?: SavedCalendarEvent[] }) => {
+        if (cancelled || !Array.isArray(body.events)) return;
+        const next: Record<string, SavedCalendarEvent> = {};
+        for (const event of body.events) next[event.slug] = event;
+        setSavedEvents(next);
+      })
+      .catch(() => {
+        /* Static calendar copy still fills the form. */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!selectedEventView || selectedEventView.slug === UNASSIGNED_EVENT_SLUG) return;
+    const token = `${selectedEventView.slug}:${savedEvents[selectedEventView.slug]?.name ?? ""}:${savedEvents[selectedEventView.slug]?.startDate ?? ""}`;
+    if (calendarSlug.current === token) return;
+    calendarSlug.current = token;
+    setCalendarForm(calendarFormFrom(selectedEventView));
+  }, [selectedEventView, savedEvents]);
+
+  const handleSaveCalendar = async () => {
+    if (!selectedEventView || !calendarForm || calendarSaving) return;
+    if (!isSuperadmin) {
+      toast.error("Only a superadmin can update the public calendar.");
+      return;
+    }
+    setCalendarSaving(true);
+    try {
+      const res = await fetch("/api/admin/regatta-events", {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          slug: selectedEventView.slug,
+          ...calendarForm,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not save the calendar card");
+      const saved = data.event as SavedCalendarEvent;
+      setSavedEvents((prev) => ({ ...prev, [saved.slug]: saved }));
+      toast.success("Calendar card saved.");
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Could not save the calendar card");
+    } finally {
+      setCalendarSaving(false);
+    }
+  };
 
   const handleSeed2026 = async () => {
     if (!isSuperadmin) return;
@@ -308,6 +444,7 @@ export function AdminRegattasPanel({
                       ) : (
                         <>
                           {grouped.events.map((event) => {
+                            const shown = withSavedEvent(event, savedEvents[event.slug]);
                             const active = selectedEventSlug === event.slug;
                             return (
                               <button
@@ -325,11 +462,11 @@ export function AdminRegattasPanel({
                                 }`}
                               >
                                 <p className="text-xs font-bold text-white truncate">
-                                  {event.name}
+                                  {shown.name}
                                 </p>
                                 <p className="text-[13px] text-slate-500 mt-0.5">
-                                  {event.startDate || "—"}
-                                  {event.venue ? ` · ${event.venue}` : ""}
+                                  {shown.startDate || "—"}
+                                  {shown.venue ? ` · ${shown.venue}` : ""}
                                 </p>
                                 <p className="text-[12px] text-slate-400 mt-1">
                                   {eventStatusLabel(event)}
@@ -811,63 +948,167 @@ export function AdminRegattasPanel({
                         </div>
                         {editingRegattaId !== "new" && resultsEditor}
                       </div>
-                    ) : selectedEvent ? (
+                    ) : selectedEventView ? (
                       <div className="space-y-5">
                         <div>
                           <h3 className="text-sm font-black text-white uppercase tracking-wider">
-                            {selectedEvent.name}
+                            Calendar card
                           </h3>
                           <p className="text-[13px] text-slate-500 mt-1">
-                            {selectedEvent.startDate || "No date"}
-                            {selectedEvent.endDate && selectedEvent.endDate !== selectedEvent.startDate
-                              ? ` – ${selectedEvent.endDate}`
-                              : ""}
-                            {selectedEvent.venue ? ` · ${selectedEvent.venue}` : ""}
+                            {selectedEventView.slug === UNASSIGNED_EVENT_SLUG
+                              ? "These class sheets are not attached to a calendar weekend."
+                              : "This is the public calendar card. Choose a class below to edit its results."}
                           </p>
                           <p className="text-[12px] text-slate-400 mt-1">
-                            {selectedEvent.slug === UNASSIGNED_EVENT_SLUG
-                              ? "These class sheets are not attached to a calendar weekend."
-                              : eventStatusLabel(selectedEvent)}
+                            {eventStatusLabel(selectedEventView)}
                           </p>
                         </div>
-                        {selectedEvent.slug !== UNASSIGNED_EVENT_SLUG && (
-                          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 text-[13px] text-slate-300 space-y-1">
-                            <p>{selectedEvent.countsForRanking ? "Ranking regatta" : "Not a ranking regatta"}</p>
-                            {selectedEvent.isSelectionTrial && <p>Selection trial</p>}
-                            {selectedEvent.organizer && <p>{selectedEvent.organizer}</p>}
-                            {selectedEvent.norUrl && (
-                              <a href={selectedEvent.norUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-[var(--sp-harbour-teal)]">
-                                <ExternalLink className="h-3 w-3" /> Notice of race
-                              </a>
-                            )}
+                        {selectedEventView.slug !== UNASSIGNED_EVENT_SLUG && calendarForm && (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="sm:col-span-2">
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">Event name</label>
+                              <input
+                                value={calendarForm.name}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, name: e.target.value })}
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">Start date</label>
+                              <input
+                                type="date"
+                                value={calendarForm.startDate}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, startDate: e.target.value })}
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <div>
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">End date</label>
+                              <input
+                                type="date"
+                                value={calendarForm.endDate}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, endDate: e.target.value })}
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <div className="sm:col-span-2">
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">Venue</label>
+                              <input
+                                value={calendarForm.venue}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, venue: e.target.value })}
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <div className="sm:col-span-2">
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">Organiser</label>
+                              <input
+                                value={calendarForm.organizer}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, organizer: e.target.value })}
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <div className="sm:col-span-2">
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">Classes on the card</label>
+                              <input
+                                value={calendarForm.classes}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, classes: e.target.value })}
+                                placeholder="Optimist, ILCA 4, ILCA 6"
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <div className="sm:col-span-2">
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">Status / deadline</label>
+                              <input
+                                value={calendarForm.keyDeadlines}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, keyDeadlines: e.target.value })}
+                                placeholder="Entry closes 24 August 2026, 2359h"
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <div className="sm:col-span-2">
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">Official notice board</label>
+                              <input
+                                type="url"
+                                value={calendarForm.norUrl}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, norUrl: e.target.value })}
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <div className="sm:col-span-2">
+                              <label className="text-[12px] font-bold text-slate-500 uppercase">Registration link</label>
+                              <input
+                                type="url"
+                                value={calendarForm.registrationUrl}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, registrationUrl: e.target.value })}
+                                className="mt-1 w-full rounded-xl border border-white/5 bg-slate-950 px-3 py-2 text-white text-xs"
+                              />
+                            </div>
+                            <label className="flex items-center gap-2 text-xs font-semibold text-slate-300">
+                              <input
+                                type="checkbox"
+                                checked={calendarForm.countsForRanking}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, countsForRanking: e.target.checked })}
+                              />
+                              Ranking regatta
+                            </label>
+                            <label className="flex items-center gap-2 text-xs font-semibold text-slate-300">
+                              <input
+                                type="checkbox"
+                                checked={calendarForm.isSelectionTrial}
+                                onChange={(e) => setCalendarForm({ ...calendarForm, isSelectionTrial: e.target.checked })}
+                              />
+                              Official selection trial
+                            </label>
+                            <div className="sm:col-span-2 flex justify-end">
+                              <button
+                                type="button"
+                                disabled={calendarSaving}
+                                onClick={handleSaveCalendar}
+                                className="rounded-full bg-orange-600 px-5 py-2 text-xs font-bold text-white hover:bg-orange-500 disabled:opacity-40"
+                              >
+                                {calendarSaving ? "Saving…" : "Save calendar card"}
+                              </button>
+                            </div>
                           </div>
                         )}
                         <div className="space-y-2">
                           <h4 className="text-[12px] font-bold uppercase text-slate-500">Classes</h4>
-                          {selectedEvent.sheets.length === 0 && selectedEvent.missingClasses.length === 0 && (
+                          {selectedEventView.sheets.length === 0 && selectedEventView.missingClasses.length === 0 && (
                             <p className="text-xs text-slate-500">No class sheets yet.</p>
                           )}
-                          {selectedEvent.sheets.map((sheet) => (
+                          {[...selectedEventView.shells, ...selectedEventView.sheets].map((sheet) => {
+                            const isShell = selectedEventView.shells.some((row) => row.id === sheet.id);
+                            const selected = editingRegattaId === sheet.id;
+                            return (
                             <button
                               key={sheet.id}
                               type="button"
                               onClick={() => {
+                                seenSheetId.current = sheet.id;
                                 setEditingRegattaId(sheet.id);
                                 setRegattaForm(formFrom(sheet));
                                 onOpenResults?.(sheet.id);
                               }}
-                              className="w-full text-left rounded-xl border border-white/10 px-3 py-2 hover:bg-white/[0.04]"
+                              className={`w-full text-left rounded-xl border px-3 py-2 hover:bg-white/[0.04] ${
+                                selected
+                                  ? "border-orange-500 bg-orange-500/10"
+                                  : "border-white/10"
+                              }`}
                             >
-                              <span className="text-xs font-bold text-white">{sheetClassLabel(sheet)}</span>
+                              <span className="text-xs font-bold text-white">
+                                {isShell ? sheet.name : sheetClassLabel(sheet)}
+                              </span>
                               <span className="block text-[12px] text-slate-500 mt-0.5">
+                                {isShell ? "Calendar record · " : ""}
                                 {sheet.status || "draft"}
                                 {sheet.raceCount != null ? ` · ${sheet.raceCount} races` : ""}
                                 {sheet.totalFleetSize != null ? ` · fleet ${sheet.totalFleetSize}` : ""}
                                 {sheet.countsForRanking === false ? " · non-ranking" : ""}
                               </span>
                             </button>
-                          ))}
-                          {selectedEvent.missingClasses.map((label) => (
+                            );
+                          })}
+                          {selectedEventView.missingClasses.map((label) => (
                             <div key={label} className="flex items-center justify-between gap-3 rounded-xl border border-dashed border-white/15 px-3 py-2">
                               <div>
                                 <span className="text-xs font-bold text-slate-300">{label}</span>
@@ -880,17 +1121,17 @@ export function AdminRegattasPanel({
                                   setEditingRegattaId("new");
                                   setRegattaForm({
                                     ...emptyRegattaForm(),
-                                    name: `${selectedEvent.name} ${label}`,
-                                    date: selectedEvent.startDate,
-                                    endDate: selectedEvent.endDate || "",
-                                    venue: selectedEvent.venue || "",
-                                    organizer: selectedEvent.organizer || "",
-                                    norUrl: selectedEvent.norUrl || "",
-                                    registrationUrl: selectedEvent.registrationUrl || "",
+                                    name: `${selectedEventView.name} ${label}`,
+                                    date: selectedEventView.startDate,
+                                    endDate: selectedEventView.endDate || "",
+                                    venue: selectedEventView.venue || "",
+                                    organizer: selectedEventView.organizer || "",
+                                    norUrl: selectedEventView.norUrl || "",
+                                    registrationUrl: selectedEventView.registrationUrl || "",
                                     boatClass: optimist ? "Optimist" : label,
                                     division: /gold/i.test(label) ? "Gold" : /silver/i.test(label) ? "Silver" : "Open",
-                                    countsForRanking: selectedEvent.countsForRanking,
-                                    isSelectionTrial: selectedEvent.isSelectionTrial,
+                                    countsForRanking: selectedEventView.countsForRanking,
+                                    isSelectionTrial: selectedEventView.isSelectionTrial,
                                   });
                                 }}
                                 className="shrink-0 rounded-full border border-white/15 px-2.5 py-1 text-[12px] font-bold text-slate-200 hover:bg-white/10"

@@ -4,17 +4,19 @@
  */
 
 import { toYmd } from "@/lib/datesSg";
+import { regattaCountsForRanking } from "@/lib/ranking";
 
 export type ResultRegattaLink = {
   sailorId: string;
   regattaDate: string | null | undefined;
   division?: string | null;
   countsForRanking?: boolean | null;
+  raceCount?: number | null;
   boatClass?: string | null;
 };
 
 function isOptimistSeriesLink(l: ResultRegattaLink): boolean {
-  if (l.countsForRanking === false) return false;
+  if (!regattaCountsForRanking(l)) return false;
   const bc = String(l.boatClass || "Optimist")
     .trim()
     .toLowerCase();

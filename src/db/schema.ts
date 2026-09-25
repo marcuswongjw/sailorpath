@@ -316,6 +316,8 @@ export const regattaEvents = pgTable("regatta_events", {
   registrationUrl: text("registration_url"),
   countsForRanking: boolean("counts_for_ranking").default(true).notNull(),
   isSelectionTrial: boolean("is_selection_trial").default(false).notNull(),
+  /** Public calendar line: "Status / Deadline: …". Not shown as schedule notes. */
+  keyDeadlines: text("key_deadlines"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });

@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+  MIN_RACES_FOR_RANKING,
+  regattaCountsForRanking,
   bestThreeOf,
   calculateRankings,
   optimistSheetStatsByRegattaId,
@@ -659,3 +661,76 @@ describe("Optimist DNS Group 1 / Group 2 scoring", () => {
     expect(m.get("r1")).toEqual({ registered: 4, started: 2, maxRank: 4 });
   });
 });
+
+describe("regattaCountsForRanking", () => {
+  it("defines MIN_RACES_FOR_RANKING as 3", () => {
+    expect(MIN_RACES_FOR_RANKING).toBe(3);
+  });
+
+  it("returns false when countsForRanking is explicitly false", () => {
+    expect(regattaCountsForRanking({ countsForRanking: false })).toBe(false);
+    expect(regattaCountsForRanking({ countsForRanking: false, raceCount: 6 })).toBe(false);
+  });
+
+  it("returns false when completed races < 3 (abandoned / shortened event)", () => {
+    expect(regattaCountsForRanking({ countsForRanking: true, raceCount: 0 })).toBe(false);
+    expect(regattaCountsForRanking({ countsForRanking: true, raceCount: 1 })).toBe(false);
+    expect(regattaCountsForRanking({ countsForRanking: true, raceCount: 2 })).toBe(false);
+    expect(regattaCountsForRanking({ countsForRanking: null, raceCount: 2 })).toBe(false);
+  });
+
+  it("returns true when completed races >= 3", () => {
+    expect(regattaCountsForRanking({ countsForRanking: true, raceCount: 3 })).toBe(true);
+    expect(regattaCountsForRanking({ countsForRanking: true, raceCount: 4 })).toBe(true);
+    expect(regattaCountsForRanking({ countsForRanking: true, raceCount: 12 })).toBe(true);
+  });
+
+  it("returns true when raceCount is null/undefined and countsForRanking is true or unflagged", () => {
+    expect(regattaCountsForRanking({ countsForRanking: true })).toBe(true);
+    expect(regattaCountsForRanking({})).toBe(true);
+  });
+
+  it("excludes regattas with fewer than 3 races from rankingRegattasInPeriod", () => {
+    const period = { year: 2026, half: "Jan-Jun" as const };
+    const regattas: RegattaRecord[] = [
+      {
+        id: "r1",
+        name: "Full Regatta",
+        slug: "full-regatta",
+        date: "2026-03-01",
+        totalFleetSize: 40,
+        boatClass: "Optimist",
+        division: "Gold",
+        raceCount: 4,
+        countsForRanking: true,
+      },
+      {
+        id: "r2",
+        name: "Shortened Regatta (2 races)",
+        slug: "shortened-regatta",
+        date: "2026-04-01",
+        totalFleetSize: 40,
+        boatClass: "Optimist",
+        division: "Gold",
+        raceCount: 2,
+        countsForRanking: true,
+      },
+      {
+        id: "r3",
+        name: "Pesta Sukan (3 races)",
+        slug: "pesta-sukan",
+        date: "2026-05-01",
+        totalFleetSize: 40,
+        boatClass: "Optimist",
+        division: "Gold",
+        raceCount: 3,
+        countsForRanking: true,
+      },
+    ];
+
+    const active = rankingRegattasInPeriod("Gold", period, regattas);
+    expect(active.map((r) => r.slug)).toEqual(["full-regatta", "pesta-sukan"]);
+    expect(active.some((r) => r.slug === "shortened-regatta")).toBe(false);
+  });
+});
+

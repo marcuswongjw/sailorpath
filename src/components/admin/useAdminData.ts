@@ -93,8 +93,9 @@ export function useAdminData({
     enabled: needRegattas,
   });
 
-  const selectedRegattaId =
-    selectedRegattaIdForResultEdit || regattasQuery.data?.[0]?.id || "";
+  // Do not fall back to the first regatta. An empty selection means the
+  // weekend is open and no class sheet is being edited.
+  const selectedRegattaId = selectedRegattaIdForResultEdit;
 
   const resultsAllQuery = useQuery({
     queryKey: adminQueryKeys.resultsAll(),
@@ -316,7 +317,7 @@ export function useAdminData({
     setRegattaList,
     resultsList,
     setResultsList,
-    selectedRegattaIdForResultEdit: selectedRegattaId,
+    selectedRegattaIdForResultEdit,
     setSelectedRegattaIdForResultEdit,
     loadedData: {
       sailors: sailorsQuery.isSuccess || sailorList.length > 0,

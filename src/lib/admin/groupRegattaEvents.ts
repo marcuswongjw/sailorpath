@@ -46,10 +46,14 @@ export type AdminEventGroup = {
   registrationUrl?: string;
   countsForRanking: boolean;
   isSelectionTrial: boolean;
+  /** Public card line. Schedule notes stay off the card. */
+  keyDeadlines?: string;
   expectedClasses: string[];
   missingClasses: string[];
   sheets: GroupableRegatta[];
-  /** Calendar row that was stored in `regattas` and is not a class scoreboard. */
+  /** Every calendar row stored for this weekend. All of them stay selectable. */
+  shells: GroupableRegatta[];
+  /** Earliest calendar row. Kept for callers that only need one. */
   shell: GroupableRegatta | null;
 };
 
@@ -62,21 +66,21 @@ function canonicalEventSlug(slug: string): string {
   return getRegattaEvent(slug)?.slug ?? slug.toLowerCase();
 }
 
-/** A regatta row whose slug is the weekend itself, not a class results sheet. */
+/**
+ * A regatta row whose slug names the weekend itself, not a class results sheet.
+ * Aliases such as `…-ilca4` are the same weekend and must stay selectable.
+ */
 export function eventShellSlug(rowSlug: string): string | null {
   const slug = String(rowSlug || "").trim().toLowerCase();
   if (!slug) return null;
-  const knownCalendar = SINGAPORE_REGATTAS_2026.some((item) => item.slug === slug);
-  const knownAlias = Object.prototype.hasOwnProperty.call(
-    CALENDAR_RESULT_ALIASES,
-    slug
-  );
   const event = getRegattaEvent(slug);
-  if (event && (event.slug === slug || knownCalendar || knownAlias)) {
-    return event.slug;
+  if (event) return event.slug;
+  if (SINGAPORE_REGATTAS_2026.some((item) => item.slug === slug)) {
+    return canonicalEventSlug(slug);
   }
-  if (knownCalendar || knownAlias) return canonicalEventSlug(slug);
-  if (event && event.slug === slug) return event.slug;
+  if (Object.prototype.hasOwnProperty.call(CALENDAR_RESULT_ALIASES, slug)) {
+    return canonicalEventSlug(slug);
+  }
   return null;
 }
 
@@ -145,14 +149,15 @@ export function groupRegattaEvents(rows: GroupableRegatta[]): {
   unassigned: GroupableRegatta[];
 } {
   const sheets = new Map<string, GroupableRegatta[]>();
-  const shells = new Map<string, GroupableRegatta>();
+  const shells = new Map<string, GroupableRegatta[]>();
   const unassigned: GroupableRegatta[] = [];
 
   for (const row of rows) {
     const shellSlug = eventShellSlug(row.slug);
     if (shellSlug) {
-      const current = shells.get(shellSlug);
-      if (!current || ymd(row.date) < ymd(current.date)) shells.set(shellSlug, row);
+      const list = shells.get(shellSlug) ?? [];
+      list.push(row);
+      shells.set(shellSlug, list);
       continue;
     }
     const eventSlug = sheetEventSlug(row);
@@ -173,7 +178,10 @@ export function groupRegattaEvents(rows: GroupableRegatta[]): {
     const eventSheets = (sheets.get(slug) ?? []).slice().sort((a, b) =>
       sheetClassLabel(a).localeCompare(sheetClassLabel(b))
     );
-    const shell = shells.get(slug) ?? null;
+    const eventShells = (shells.get(slug) ?? [])
+      .slice()
+      .sort((a, b) => ymd(a.date).localeCompare(ymd(b.date)) || a.name.localeCompare(b.name));
+    const shell = eventShells[0] ?? null;
     const primary = calendarItems[0];
     const expectedClasses = [
       ...new Set(
@@ -207,9 +215,13 @@ export function groupRegattaEvents(rows: GroupableRegatta[]): {
       isSelectionTrial: primary
         ? primary.isSelectionTrial
         : Boolean(shell?.isSelectionTrial),
+      keyDeadlines: primary?.keyDeadlines || undefined,
       expectedClasses,
-      missingClasses: expectedClasses.filter((label) => !classCovered(label, eventSheets)),
+      missingClasses: expectedClasses.filter(
+        (label) => !classCovered(label, [...eventSheets, ...eventShells])
+      ),
       sheets: eventSheets,
+      shells: eventShells,
       shell,
     });
   }

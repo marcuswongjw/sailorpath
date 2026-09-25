@@ -206,10 +206,6 @@ export function ilcaRegattaCountsForRanking(r: {
   boatClass?: string | null;
 }): boolean {
   if (r.countsForRanking === false) return false;
-  // Flag is true / null / undefined → potentially ranking
-  if (!isAnyIlcaClass(r.boatClass)) {
-    return true;
-  }
   const n = r.raceCount;
   if (n != null && Number.isFinite(Number(n)) && Number(n) < ILCA_MIN_RACES_FOR_RANKING) {
     return false;

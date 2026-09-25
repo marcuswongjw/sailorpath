@@ -2,6 +2,13 @@ import { Metadata } from "next";
 import { getCachedPublicRegattas } from "@/lib/queries";
 import { RegattaCalendarClient } from "@/components/calendar/RegattaCalendarClient";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
+import {
+  applyCalendarEventOverride,
+  canonicalCalendarEventSlug,
+  type CalendarEventOverride,
+} from "@/lib/calendar/applyEventOverrides";
+import { db } from "@/db";
+import { regattaEvents } from "@/db/schema";
 import type { RegattaRecord } from "@/lib/ranking";
 
 export const revalidate = 120;
@@ -23,10 +30,30 @@ export default async function CalendarPage(props: CalendarPageProps) {
   const initialClass = searchParams?.class || "all";
 
   let dbRegattas: RegattaRecord[] = [];
+  let savedEvents: CalendarEventOverride[] = [];
   try {
     dbRegattas = await getCachedPublicRegattas();
   } catch {
     dbRegattas = [];
+  }
+  try {
+    const rows = await db.select().from(regattaEvents);
+    savedEvents = rows.map((row) => ({
+      slug: row.slug,
+      name: row.name,
+      startDate: String(row.startDate).slice(0, 10),
+      endDate: row.endDate ? String(row.endDate).slice(0, 10) : null,
+      venue: row.venue,
+      organizer: row.organizer,
+      classes: row.classes,
+      norUrl: row.norUrl,
+      registrationUrl: row.registrationUrl,
+      countsForRanking: row.countsForRanking,
+      isSelectionTrial: row.isSelectionTrial,
+      keyDeadlines: row.keyDeadlines,
+    }));
+  } catch {
+    savedEvents = [];
   }
 
   // Load 2026 master schedule events
@@ -78,6 +105,22 @@ export default async function CalendarPage(props: CalendarPageProps) {
       clinicDates: r.clinicDates || existing.clinicDates,
       hasResults: true,
     });
+  }
+
+  const savedBySlug = new Map(savedEvents.map((event) => [event.slug, event]));
+  const cardsByEvent = new Map<string, string[]>();
+  for (const item of combinedMap.values()) {
+    const canonical = canonicalCalendarEventSlug(item.slug);
+    const list = cardsByEvent.get(canonical) ?? [];
+    list.push(item.slug);
+    cardsByEvent.set(canonical, list);
+  }
+  for (const [slug, entry] of combinedMap) {
+    const canonical = canonicalCalendarEventSlug(slug);
+    const saved = savedBySlug.get(canonical);
+    const cards = cardsByEvent.get(canonical) ?? [];
+    const primary = cards[0] === slug;
+    combinedMap.set(slug, applyCalendarEventOverride(entry, saved, primary));
   }
 
   const allRegattas = Array.from(combinedMap.values());

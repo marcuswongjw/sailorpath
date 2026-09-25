@@ -103,4 +103,26 @@ describe("groupRegattaEvents", () => {
     expect(snsc?.missingClasses).toContain("ILCA 4");
     expect(snsc?.missingClasses).not.toContain("Optimist");
   });
+
+  it("keeps every calendar row for a weekend selectable", () => {
+    const grouped = groupRegattaEvents([
+      row({
+        id: "card",
+        slug: "singapore-national-sailing-championships-2026",
+        name: "SNSC card",
+        date: "2026-09-05",
+      }),
+      row({
+        id: "ilca-card",
+        slug: "singapore-national-sailing-championships-2026-ilca4",
+        name: "SNSC ILCA 4 card",
+        date: "2026-09-11",
+        boatClass: "ILCA 4",
+        division: "Open",
+      }),
+    ]);
+    const snsc = grouped.events.find((event) => event.slug === "snsc-2026");
+    expect(snsc?.shells.map((item) => item.id).sort()).toEqual(["card", "ilca-card"]);
+    expect(grouped.unassigned).toHaveLength(0);
+  });
 });

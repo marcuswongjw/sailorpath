@@ -2,6 +2,8 @@
  * Derived stats for the public sailor profile (new gold vs established gold).
  */
 
+import { regattaCountsForRanking } from "@/lib/ranking";
+
 export type ProfileResult = {
   id?: string;
   resultId?: string;
@@ -209,7 +211,7 @@ export function buildResultTags(
   const rank = parseRank(r);
   const dns = Boolean(r.isDns || r.isDNS);
   const overseas = Boolean(r.isOverseasCommitment);
-  const nonRanking = r.countsForRanking === false;
+  const nonRanking = !regattaCountsForRanking(r);
   const fleet = fleetLabelForResult(r, goldEntryDate);
   const geo = String(r.geography || "").toUpperCase();
   const isOverseasGeo =

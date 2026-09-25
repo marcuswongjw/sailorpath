@@ -111,6 +111,33 @@ export interface RegattaRecord {
 export const DEFAULT_SERIES_BOAT_CLASS = "Optimist";
 
 /**
+ * Minimum completed races for a regatta to count toward national ranking series.
+ * Under SSF / national ranking policy, an event needs at least 3 completed races
+ * to be considered a ranking regatta (fewer races = abandoned/shortened = non-ranking).
+ * (Note: NoR Section 12.1 requires 1 race to constitute a series for regatta prizes,
+ * but ranking requires >= 3 completed races).
+ */
+export const MIN_RACES_FOR_RANKING = 3;
+
+/**
+ * Whether a regatta counts toward series ranking:
+ * - Explicit countsForRanking === false → no
+ * - raceCount set below MIN_RACES_FOR_RANKING (3) → no (non-ranking)
+ * - raceCount null/unknown or >= 3 → yes (unless countsForRanking is explicitly false)
+ */
+export function regattaCountsForRanking(r: {
+  countsForRanking?: boolean | null;
+  raceCount?: number | null;
+}): boolean {
+  if (r.countsForRanking === false) return false;
+  const n = r.raceCount;
+  if (n != null && Number.isFinite(Number(n)) && Number(n) < MIN_RACES_FOR_RANKING) {
+    return false;
+  }
+  return true;
+}
+
+/**
  * Normalize boat class for comparison.
  * Empty / null → Optimist (legacy rows).
  */
@@ -326,8 +353,8 @@ export function rankingRegattasInPeriod(
 
   return allRegattas
     .filter((r) => {
-      // Personal / overseas logbook events never count for series ranking
-      if (r.countsForRanking === false) return false;
+      // Personal / overseas logbook events or regattas with < 3 races never count for series ranking
+      if (!regattaCountsForRanking(r)) return false;
       // Separate series by boat class (Optimist vs ILCA 4, etc.)
       if (!regattaMatchesSeriesClass(r, seriesBoatClass)) return false;
       // YYYY-MM-DD string compare = calendar date in SG (no TZ shift)
@@ -524,7 +551,7 @@ export function optimistSailorsEligibleForSilverPeriod(
     if (Boolean(res.isOverseasCommitment)) continue;
     const r = regById.get(res.regattaId);
     if (!r) continue;
-    if (r.countsForRanking === false) continue;
+    if (!regattaCountsForRanking(r)) continue;
     if (!regattaMatchesSeriesClass(r, seriesBoatClass)) continue;
     const d = toYmd(r.date);
     if (!d || d < start || d > end) continue;

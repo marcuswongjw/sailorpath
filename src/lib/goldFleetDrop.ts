@@ -9,6 +9,7 @@
 
 import {
   periodBounds,
+  regattaCountsForRanking,
   regattaMatchesSeriesClass,
   type Period,
   type RegattaRecord,
@@ -43,8 +44,9 @@ export function rankingGoldRegattasInPeriod(
   allRegattas: RegattaRecord[]
 ): RegattaRecord[] {
   const { start, end } = periodBounds(period);
+
   return allRegattas.filter((r) => {
-    if (r.countsForRanking === false) return false;
+    if (!regattaCountsForRanking(r)) return false;
     if (!regattaMatchesSeriesClass(r, "Optimist")) return false;
     const t = String(r.date || "").slice(0, 10);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(t)) return false;

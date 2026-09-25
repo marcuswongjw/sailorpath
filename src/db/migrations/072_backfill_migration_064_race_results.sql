@@ -1,5 +1,6 @@
--- 064_add_temasek_sysc_pulau_ujong_results.sql
--- Import official race-by-race results for Pulau Ujong 2026 (ILCA 6), SYSC 2026 (ILCA 6), Temasek 2026 (ILCA 6), and Temasek 2026 (ILCA 7)
+-- 072_backfill_migration_064_race_results.sql
+-- Backfill official race-by-race results into regatta_race_results for Pulau Ujong 2026 (ILCA 6), SYSC 2026 (ILCA 6), Temasek 2026 (ILCA 6), and Temasek 2026 (ILCA 7)
+-- Fixes table name target to public.regatta_race_results
 -- Source: Official Sailwave scoring sheets, Singapore Sailing Federation
 
 -- ============================================================================
