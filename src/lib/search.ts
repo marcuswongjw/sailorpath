@@ -88,7 +88,7 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
   const schoolExpansions: string[] = [];
 
   // Check combined patterns like "SGP4652" or "SGP 4652" or "SIN-3133"
-  const combinedMatch = raw.match(/^(?:(SGP|SIN|HKG|MAS|THA|AUS|USA|GBR|CAN|NZL|JPN|IND|MYA))[-_\s]*([0-9]{1,7})$/i);
+  const combinedMatch = raw.match(/(SGP|SIN|HKG|MAS|THA|AUS|USA|GBR|CAN|NZL|JPN|IND|MYA)[-_\s]*([0-9]{1,7})/i);
   if (combinedMatch) {
     countryPrefix = combinedMatch[1].toUpperCase();
     extractedSailNumber = combinedMatch[2];
@@ -188,6 +188,8 @@ export async function searchSailorsEnhanced(
     typeof filters === "string" ? { query: filters } : filters || {};
   const q = (f.query || "").trim();
   const parsed = parseSearchQuery(q);
+  const period = currentPeriodFromSgToday();
+  const pEndStr = period.half === "Jan-Jun" ? `${period.year}-06-30` : `${period.year}-12-31`;
 
   const conditions: SQL[] = [];
 
@@ -207,10 +209,8 @@ export async function searchSailorsEnhanced(
         ilike(sailors.nationality, tokenPattern),
       ];
 
-      // Also search ILCA 4 sail number column
       tokenOrs.push(ilike(sailors.sailNumberIlca4, tokenPattern));
 
-      // Digit-only or clean pattern matching (strips spaces/hyphens in DB)
       if (cleanPattern && cleanPattern !== tokenPattern) {
         tokenOrs.push(
           sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${cleanPattern}`,
@@ -218,7 +218,6 @@ export async function searchSailorsEnhanced(
         );
       }
 
-      // If token is a country prefix like "SGP" or "SIN", don't reject Singapore sailors
       if (/^(SGP|SIN)$/i.test(token)) {
         tokenOrs.push(
           sql`${sailors.nationality} IS NULL`,
@@ -227,14 +226,12 @@ export async function searchSailorsEnhanced(
         );
       }
 
-      // Expand club abbreviations (e.g. "CSC" matches "Changi Sailing Club")
       if (CLUB_ABBREVIATIONS[lower]) {
         for (const clubName of CLUB_ABBREVIATIONS[lower]) {
           tokenOrs.push(ilike(sailors.club, `%${clubName}%`));
         }
       }
 
-      // Expand school abbreviations (e.g. "ACSI" matches "Anglo-Chinese School (Independent)")
       if (SCHOOL_ABBREVIATIONS[lower]) {
         for (const schoolName of SCHOOL_ABBREVIATIONS[lower]) {
           tokenOrs.push(ilike(sailors.school, `%${schoolName}%`));
@@ -244,8 +241,6 @@ export async function searchSailorsEnhanced(
       conditions.push(or(...tokenOrs)!);
     }
 
-    // If an explicit sail number was extracted (e.g. "4652" from "SGP 4652"),
-    // ensure candidates with that sail number are matched directly
     if (parsed.extractedSailNumber) {
       const numPattern = `%${parsed.extractedSailNumber}%`;
       conditions.push(
@@ -254,14 +249,13 @@ export async function searchSailorsEnhanced(
           ilike(sailors.sailNumberIlca4, numPattern),
           sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${numPattern}`,
           sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${numPattern}`,
-          // Also allow name match if someone has digits in handle or search
           ilike(sailors.name, numPattern)
         )!
       );
     }
   }
 
-  // Explicit filter options
+  // Explicit filter options - Pushed to SQL to avoid truncation bug
   if (f.squad && f.squad !== "all") {
     conditions.push(eq(sailors.nationalSquadStatus, f.squad));
   }
@@ -277,6 +271,58 @@ export async function searchSailorsEnhanced(
     const schoolLower = f.school.trim().toLowerCase();
     const schoolExp = SCHOOL_ABBREVIATIONS[schoolLower] || [f.school.trim()];
     conditions.push(or(...schoolExp.map((s) => ilike(sailors.school, `%${s}%`)))!);
+  }
+  if (f.birthYearFrom || f.birthYearTo) {
+    if (f.birthYearFrom) {
+      conditions.push(sql`extract(year from ${sailors.dob}) >= ${f.birthYearFrom}`);
+    }
+    if (f.birthYearTo) {
+      conditions.push(sql`extract(year from ${sailors.dob}) <= ${f.birthYearTo}`);
+    }
+  }
+
+  // Fleet filtering in SQL
+  const fleetFilter = (f.fleet || "all").toLowerCase();
+  if (fleetFilter !== "all") {
+    if (fleetFilter === "gold") {
+      conditions.push(
+        and(
+          ne(sailors.currentFleet, "Guest"),
+          sql`${sailors.goldEntryDate} <= ${pEndStr}`,
+          or(sql`${sailors.dropDate} IS NULL`, sql`${sailors.dropDate} > ${pEndStr}`)
+        )!
+      );
+    } else if (fleetFilter === "silver") {
+      conditions.push(
+        and(
+          ne(sailors.currentFleet, "Guest"),
+          or(sql`${sailors.goldEntryDate} IS NULL`, sql`${sailors.goldEntryDate} > ${pEndStr}`),
+          or(sql`${sailors.silverEntryDate} <= ${pEndStr}`, sql`${sailors.goldEntryDate} <= ${pEndStr}`),
+          or(sql`${sailors.dropDate} IS NULL`, sql`${sailors.dropDate} > ${pEndStr}`)
+        )!
+      );
+    } else if (fleetFilter === "ilca" || fleetFilter === "ilca4") {
+      conditions.push(
+        or(
+          eq(sailors.ilca4NationalList, true),
+          sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIl4} <> ''`
+        )!
+      );
+    } else if (fleetFilter === "guest") {
+      conditions.push(
+        or(
+          eq(sailors.currentFleet, "Guest"),
+          and(
+            ne(sailors.currentFleet, "Guest"),
+            // Not eligible for Gold or Silver
+            or(
+              sql`${sailors.goldEntryDate} IS NULL and ${sailors.silverEntryDate} IS NULL`,
+              sql`${sailors.dropDate} <= ${pEndStr}`
+            )
+          )!
+        )!
+      );
+    }
   }
 
   const queryBuilder = db.select().from(sailors);
@@ -320,16 +366,16 @@ export async function searchSailorsEnhanced(
       ? (resolved.fleet as "Gold" | "Silver")
       : null;
 
-    // Apply fleet filter
-    const fleetFilter = (f.fleet || "all").toLowerCase();
-    if (fleetFilter === "gold" && activeFleet !== "Gold") continue;
-    if (fleetFilter === "silver" && activeFleet !== "Silver") continue;
-    if ((fleetFilter === "ilca" || fleetFilter === "ilca4") && !row.ilca4NationalList && !row.sailNumberIlca4) {
+    // Re-verify fleet filter in JS for absolute correctness (now it's just a safety check)
+    const fleetFilterCheck = (f.fleet || "all").toLowerCase();
+    if (fleetFilterCheck === "gold" && activeFleet !== "Gold") continue;
+    if (fleetFilterCheck === "silver" && activeFleet !== "Silver") continue;
+    if ((fleetFilterCheck === "ilca" || fleetFilterCheck === "ilca4") && !row.ilca4NationalList && !row.sailNumberIlca4) {
       continue;
     }
-    if (fleetFilter === "guest" && (isInSgSeries(s) && activeFleet != null)) continue;
+    if (fleetFilterCheck === "guest" && (isInSgSeries(s) && activeFleet != null)) continue;
 
-    // Apply birth year filter
+    // Birth year filter already in SQL, but keeping for safety
     if (f.birthYearFrom || f.birthYearTo) {
       if (!row.dob) continue;
       const y = new Date(row.dob).getFullYear();
@@ -345,14 +391,12 @@ export async function searchSailorsEnhanced(
     const ilcaClean = (row.sailNumberIlca4 || "").replace(/[^0-9]/g, "");
 
     if (q) {
-      // 1. Exact sail number match (very high priority)
       if (rawNum && (sailClean === rawNum || ilcaClean === rawNum)) {
         score += 1000;
       } else if (rawNum && (sailClean.endsWith(rawNum) || ilcaClean.endsWith(rawNum))) {
         score += 400;
       }
 
-      // 2. Name matches
       if (nameLower === qLower) {
         score += 800;
       } else if (nameLower.startsWith(qLower)) {
@@ -360,7 +404,6 @@ export async function searchSailorsEnhanced(
       } else if (nameLower.includes(qLower)) {
         score += 300;
       } else {
-        // Individual tokens
         let allTokensInName = true;
         for (const t of parsed.tokens) {
           if (nameLower.includes(t.toLowerCase())) {
@@ -374,7 +417,6 @@ export async function searchSailorsEnhanced(
         }
       }
 
-      // 3. Club & School matches
       const clubLower = (row.club || "").toLowerCase();
       const schoolLower = (row.school || "").toLowerCase();
 
@@ -391,11 +433,9 @@ export async function searchSailorsEnhanced(
         if (schoolLower.includes(exp.toLowerCase())) score += 120;
       }
     } else {
-      // Default score when browsing without query
       score = 10;
     }
 
-    // Boost active sailors slightly so active competitors rank above inactive/guests
     if (activeFleet === "Gold") score += 50;
     else if (activeFleet === "Silver") score += 30;
     if (row.ilca4NationalList) score += 40;
@@ -420,7 +460,6 @@ export async function searchSailorsEnhanced(
     });
   }
 
-  // Sort by score descending, then name ascending
   scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 
   const maxResults = f.limit || 60;

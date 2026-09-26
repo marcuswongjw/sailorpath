@@ -217,183 +217,34 @@ export async function listSailors() {
   });
 }
 
-export type SailorSearchFilters = {
-  query?: string;
-  fleet?: string; // gold | silver | guest | all
-  squad?: string;
-  nationality?: string;
-  club?: string;
-  school?: string;
-  birthYearFrom?: number;
-  birthYearTo?: number;
-};
-
-export async function searchSailors(
-  queryOrFilters: string | SailorSearchFilters
-) {
+export async function getSailorByHandle(handle: string) {
   return withDb(async () => {
-    const f: SailorSearchFilters =
-      typeof queryOrFilters === "string"
-        ? { query: queryOrFilters }
-        : queryOrFilters || {};
+    const h = String(handle || "").trim().toLowerCase();
+    if (!h) return null;
 
-    const q = (f.query || "").trim();
-    const parsed = parseSearchQuery(q);
-    const conditions = [];
+    const [row] = await db
+      .select()
+      .from(sailors)
+      .where(eq(sailors.handle, h))
+      .limit(1);
+    if (row) return mapSailor(row);
 
-    if (parsed.tokens.length > 0) {
-      for (const token of parsed.tokens) {
-        const lower = token.toLowerCase();
-        const tokenPattern = `%${token}%`;
-        const alphanumericOnly = token.replace(/[^a-zA-Z0-9]/g, "");
-        const cleanPattern = alphanumericOnly ? `%${alphanumericOnly}%` : null;
+    // Previous handles kept as aliases after a rename
+    const [alias] = await db
+      .select({ sailorId: sailorAliases.sailorId })
+      .from(sailorAliases)
+      .where(eq(sailorAliases.aliasName, h))
+      .limit(1);
+    if (!alias) return null;
 
-        const tokenConditions = [
-          ilike(sailors.name, tokenPattern),
-          ilike(sailors.sailNumber, tokenPattern),
-          ilike(sailors.sailNumberIlca4, tokenPattern),
-          ilike(sailors.club, tokenPattern),
-          ilike(sailors.handle, tokenPattern),
-          ilike(sailors.school, tokenPattern),
-          ilike(sailors.nationality, tokenPattern),
-        ];
-
-        if (cleanPattern && cleanPattern !== tokenPattern) {
-          tokenConditions.push(
-            sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${cleanPattern}`,
-            sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${cleanPattern}`
-          );
-        }
-
-        // Allow Singapore sailors if token is "SGP" or "SIN"
-        if (/^(SGP|SIN)$/i.test(token)) {
-          tokenConditions.push(
-            sql`${sailors.nationality} IS NULL`,
-            ilike(sailors.nationality, "%Singapore%"),
-            ilike(sailors.nationality, "%SGP%")
-          );
-        }
-
-        // Expand club abbreviations
-        if (CLUB_ABBREVIATIONS[lower]) {
-          for (const clubName of CLUB_ABBREVIATIONS[lower]) {
-            tokenConditions.push(ilike(sailors.club, `%${clubName}%`));
-          }
-        }
-
-        // Expand school abbreviations
-        if (SCHOOL_ABBREVIATIONS[lower]) {
-          for (const schoolName of SCHOOL_ABBREVIATIONS[lower]) {
-            tokenConditions.push(ilike(sailors.school, `%${schoolName}%`));
-          }
-        }
-
-        conditions.push(or(...tokenConditions));
-      }
-
-      // If an explicit sail number was extracted (e.g. "4652" from "SGP 4652"),
-      // match candidates with that sail number directly
-      if (parsed.extractedSailNumber) {
-        const numPattern = `%${parsed.extractedSailNumber}%`;
-        conditions.push(
-          or(
-            ilike(sailors.sailNumber, numPattern),
-            ilike(sailors.sailNumberIlca4, numPattern),
-            sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${numPattern}`,
-            sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${numPattern}`,
-            ilike(sailors.name, numPattern)
-          )
-        );
-      }
-    }
-    if (f.squad && f.squad !== "all") {
-      conditions.push(eq(sailors.nationalSquadStatus, f.squad));
-    }
-    if (f.nationality?.trim()) {
-      conditions.push(ilike(sailors.nationality, `%${f.nationality.trim()}%`));
-    }
-    if (f.club?.trim()) {
-      const clubLower = f.club.trim().toLowerCase();
-      const clubExp = CLUB_ABBREVIATIONS[clubLower] || [f.club.trim()];
-      conditions.push(or(...clubExp.map((c) => ilike(sailors.club, `%${c}%`))));
-    }
-    if (f.school?.trim()) {
-      const schoolLower = f.school.trim().toLowerCase();
-      const schoolExp = SCHOOL_ABBREVIATIONS[schoolLower] || [f.school.trim()];
-      conditions.push(or(...schoolExp.map((s) => ilike(sailors.school, `%${s}%`))));
-    }
-
-    let rows = await (conditions.length > 0
-      ? db.select().from(sailors).where(and(...conditions)).limit(150)
-      : db.select().from(sailors).orderBy(asc(sailors.name)).limit(150));
-
-    // Fleet filter = active ranking tier for current SG half (not just entry history)
-    const fleet = (f.fleet || "all").toLowerCase();
-    if (fleet === "gold" || fleet === "silver" || fleet === "guest") {
-      const period = currentPeriodFromSgToday();
-      const mapped = rows.map(mapSailor);
-      rows = rows.filter((_, i) => {
-        const s = mapped[i];
-        if (fleet === "guest") {
-          return (
-            !isInSgSeries(s) ||
-            resolveSailorFleet(s, period) == null
-          );
-        }
-        const r = resolveSailorFleet(s, period);
-        if (!r?.active) return false;
-        return fleet === "gold" ? r.fleet === "Gold" : r.fleet === "Silver";
-      });
-    }
-
-    if (f.birthYearFrom || f.birthYearTo) {
-      rows = rows.filter((s) => {
-        if (!s.dob) return false;
-        const y = new Date(s.dob).getFullYear();
-        if (!Number.isFinite(y)) return false;
-        if (f.birthYearFrom && y < f.birthYearFrom) return false;
-        if (f.birthYearTo && y > f.birthYearTo) return false;
-        return true;
-      });
-    }
-
-    const mapped = rows.map(mapSailor);
-    const qLower = q.toLowerCase();
-    const rawNum = parsed.extractedSailNumber;
-
-    // Relevance scoring
-    mapped.sort((a, b) => {
-      let scoreA = 0;
-      let scoreB = 0;
-
-      if (rawNum) {
-        const aNum = a.sailNumber.replace(/[^0-9]/g, "");
-        const bNum = b.sailNumber.replace(/[^0-9]/g, "");
-        const aIlca = (a.sailNumberIlca4 || "").replace(/[^0-9]/g, "");
-        const bIlca = (b.sailNumberIlca4 || "").replace(/[^0-9]/g, "");
-        if (aNum === rawNum || aIlca === rawNum) scoreA += 1000;
-        if (bNum === rawNum || bIlca === rawNum) scoreB += 1000;
-      }
-
-      if (qLower) {
-        const aName = a.name.toLowerCase();
-        const bName = b.name.toLowerCase();
-        if (aName === qLower) scoreA += 800;
-        if (bName === qLower) scoreB += 800;
-        else if (aName.startsWith(qLower)) scoreA += 500;
-        else if (bName.startsWith(qLower)) scoreB += 500;
-        else if (aName.includes(qLower)) scoreA += 300;
-        else if (bName.includes(qLower)) scoreB += 300;
-      }
-
-      return scoreB - scoreA || a.name.localeCompare(b.name);
-    });
-
-    return mapped.slice(0, 80);
+    const [viaAlias] = await db
+      .select()
+      .from(sailors)
+      .where(eq(sailors.id, alias.sailorId))
+      .limit(1);
+    return viaAlias ? mapSailor(viaAlias) : null;
   });
 }
-
-export async function getSailorByHandle(handle: string) {
   return withDb(async () => {
     const h = String(handle || "").trim().toLowerCase();
     if (!h) return null;

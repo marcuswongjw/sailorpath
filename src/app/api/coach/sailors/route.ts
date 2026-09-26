@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { jsonError, requireCoach } from "@/lib/auth";
-import { searchSailors } from "@/lib/queries";
+import { searchSailorsEnhanced } from "@/lib/search";
 
 export async function GET(request: Request) {
   try {
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
         { headers: { "Cache-Control": "private, no-store" } }
       );
     }
-    const matches = await searchSailors(query);
+    const matches = await searchSailorsEnhanced(query);
     return NextResponse.json({
       sailors: matches.slice(0, 12).map((sailor) => ({
         id: sailor.id,
