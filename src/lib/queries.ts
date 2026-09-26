@@ -49,6 +49,11 @@ import {
   type IlcaRankedSailor,
 } from "@/lib/ilcaRanking";
 import {
+  parseSearchQuery,
+  CLUB_ABBREVIATIONS,
+  SCHOOL_ABBREVIATIONS,
+} from "@/lib/search";
+import {
   ILCA6_STATIC_REGATTAS,
   getStaticIlca6Results,
   getStaticIlca6RankingsData,
@@ -233,10 +238,12 @@ export async function searchSailors(
         : queryOrFilters || {};
 
     const q = (f.query || "").trim();
+    const parsed = parseSearchQuery(q);
     const conditions = [];
-    if (q) {
-      const tokens = q.split(/\s+/).filter(Boolean);
-      for (const token of tokens) {
+
+    if (parsed.tokens.length > 0) {
+      for (const token of parsed.tokens) {
+        const lower = token.toLowerCase();
         const tokenPattern = `%${token}%`;
         const alphanumericOnly = token.replace(/[^a-zA-Z0-9]/g, "");
         const cleanPattern = alphanumericOnly ? `%${alphanumericOnly}%` : null;
@@ -244,6 +251,7 @@ export async function searchSailors(
         const tokenConditions = [
           ilike(sailors.name, tokenPattern),
           ilike(sailors.sailNumber, tokenPattern),
+          ilike(sailors.sailNumberIlca4, tokenPattern),
           ilike(sailors.club, tokenPattern),
           ilike(sailors.handle, tokenPattern),
           ilike(sailors.school, tokenPattern),
@@ -252,11 +260,50 @@ export async function searchSailors(
 
         if (cleanPattern && cleanPattern !== tokenPattern) {
           tokenConditions.push(
-            sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${cleanPattern}`
+            sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${cleanPattern}`,
+            sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${cleanPattern}`
           );
         }
 
+        // Allow Singapore sailors if token is "SGP" or "SIN"
+        if (/^(SGP|SIN)$/i.test(token)) {
+          tokenConditions.push(
+            sql`${sailors.nationality} IS NULL`,
+            ilike(sailors.nationality, "%Singapore%"),
+            ilike(sailors.nationality, "%SGP%")
+          );
+        }
+
+        // Expand club abbreviations
+        if (CLUB_ABBREVIATIONS[lower]) {
+          for (const clubName of CLUB_ABBREVIATIONS[lower]) {
+            tokenConditions.push(ilike(sailors.club, `%${clubName}%`));
+          }
+        }
+
+        // Expand school abbreviations
+        if (SCHOOL_ABBREVIATIONS[lower]) {
+          for (const schoolName of SCHOOL_ABBREVIATIONS[lower]) {
+            tokenConditions.push(ilike(sailors.school, `%${schoolName}%`));
+          }
+        }
+
         conditions.push(or(...tokenConditions));
+      }
+
+      // If an explicit sail number was extracted (e.g. "4652" from "SGP 4652"),
+      // match candidates with that sail number directly
+      if (parsed.extractedSailNumber) {
+        const numPattern = `%${parsed.extractedSailNumber}%`;
+        conditions.push(
+          or(
+            ilike(sailors.sailNumber, numPattern),
+            ilike(sailors.sailNumberIlca4, numPattern),
+            sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${numPattern}`,
+            sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${numPattern}`,
+            ilike(sailors.name, numPattern)
+          )
+        );
       }
     }
     if (f.squad && f.squad !== "all") {
@@ -266,15 +313,19 @@ export async function searchSailors(
       conditions.push(ilike(sailors.nationality, `%${f.nationality.trim()}%`));
     }
     if (f.club?.trim()) {
-      conditions.push(ilike(sailors.club, `%${f.club.trim()}%`));
+      const clubLower = f.club.trim().toLowerCase();
+      const clubExp = CLUB_ABBREVIATIONS[clubLower] || [f.club.trim()];
+      conditions.push(or(...clubExp.map((c) => ilike(sailors.club, `%${c}%`))));
     }
     if (f.school?.trim()) {
-      conditions.push(ilike(sailors.school, `%${f.school.trim()}%`));
+      const schoolLower = f.school.trim().toLowerCase();
+      const schoolExp = SCHOOL_ABBREVIATIONS[schoolLower] || [f.school.trim()];
+      conditions.push(or(...schoolExp.map((s) => ilike(sailors.school, `%${s}%`))));
     }
 
     let rows = await (conditions.length > 0
-      ? db.select().from(sailors).where(and(...conditions)).orderBy(asc(sailors.name))
-      : db.select().from(sailors).orderBy(asc(sailors.name)));
+      ? db.select().from(sailors).where(and(...conditions)).limit(150)
+      : db.select().from(sailors).orderBy(asc(sailors.name)).limit(150));
 
     // Fleet filter = active ranking tier for current SG half (not just entry history)
     const fleet = (f.fleet || "all").toLowerCase();
@@ -306,7 +357,39 @@ export async function searchSailors(
       });
     }
 
-    return rows.slice(0, 80).map(mapSailor);
+    const mapped = rows.map(mapSailor);
+    const qLower = q.toLowerCase();
+    const rawNum = parsed.extractedSailNumber;
+
+    // Relevance scoring
+    mapped.sort((a, b) => {
+      let scoreA = 0;
+      let scoreB = 0;
+
+      if (rawNum) {
+        const aNum = a.sailNumber.replace(/[^0-9]/g, "");
+        const bNum = b.sailNumber.replace(/[^0-9]/g, "");
+        const aIlca = (a.sailNumberIlca4 || "").replace(/[^0-9]/g, "");
+        const bIlca = (b.sailNumberIlca4 || "").replace(/[^0-9]/g, "");
+        if (aNum === rawNum || aIlca === rawNum) scoreA += 1000;
+        if (bNum === rawNum || bIlca === rawNum) scoreB += 1000;
+      }
+
+      if (qLower) {
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
+        if (aName === qLower) scoreA += 800;
+        if (bName === qLower) scoreB += 800;
+        else if (aName.startsWith(qLower)) scoreA += 500;
+        else if (bName.startsWith(qLower)) scoreB += 500;
+        else if (aName.includes(qLower)) scoreA += 300;
+        else if (bName.includes(qLower)) scoreB += 300;
+      }
+
+      return scoreB - scoreA || a.name.localeCompare(b.name);
+    });
+
+    return mapped.slice(0, 80);
   });
 }
 

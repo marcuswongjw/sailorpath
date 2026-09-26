@@ -149,6 +149,16 @@ describe("serializeAdminNav", () => {
 });
 
 describe("canonical admin areas", () => {
+  it("keeps Overview as its own canonical destination", () => {
+    expect(parseAdminNav(new URLSearchParams("area=overview"))).toMatchObject({
+      tab: "overview",
+      regattaId: null,
+    });
+    expect(
+      serializeAdminNav({ tab: "overview", sub: "sailors" })
+    ).toBe("area=overview");
+  });
+
   it("maps both regatta addresses to Events and keeps the class", () => {
     expect(parseAdminArea(new URLSearchParams("tab=regattas&sheet=abc"))).toMatchObject({
       area: "events",

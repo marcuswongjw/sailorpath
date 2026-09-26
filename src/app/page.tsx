@@ -103,8 +103,8 @@ export default function HomePage() {
               type="search"
               name="query"
               enterKeyHint="search"
-              aria-label="Search sailors"
-              placeholder="Search by name, sail number, or club..."
+              aria-label="Search sailors and regattas"
+              placeholder="Search by name, sail number (e.g. SGP 4652), club, or regatta..."
               className="w-full rounded-full border border-cool-veil bg-warm-white py-3 sm:py-3.5 pl-4 sm:pl-6 pr-14 text-sm sm:text-base text-charcoal shadow-sm placeholder:text-slate-soft focus:border-harbour focus:outline-none"
             />
             <button
@@ -280,8 +280,8 @@ export default function HomePage() {
                 type="search"
                 name="query"
                 enterKeyHint="search"
-                aria-label="Search sailors"
-                placeholder="Name, sail number or club"
+                aria-label="Search sailors and regattas"
+                placeholder="Name, sail number (e.g. SGP 4652), club or regatta"
                 className="min-h-12 w-full rounded-lg border border-cool-mist bg-warm-white py-3 pl-12 pr-28 text-base text-charcoal placeholder:text-slate-soft focus:border-harbour focus:outline-none"
               />
               <button

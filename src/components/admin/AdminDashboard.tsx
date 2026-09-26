@@ -20,6 +20,7 @@ import {
   ChevronRight,
   Compass,
   Trophy,
+  Gauge,
 } from "lucide-react";
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
@@ -43,8 +44,10 @@ import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
 import { confirmAdminLeave } from "@/components/admin/adminLeaveGuard";
 import { resolveAdminUrlChange } from "@/components/admin/adminNavigationSync";
 import { AdminSidebar, adminPageTitle } from "@/components/admin/AdminSidebar";
+import { AdminOverviewPanel } from "@/components/admin/AdminOverviewPanel";
 
 const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string }>> = {
+  overview: Gauge,
   regattas: Trophy,
   edit: Database,
   ilca: Medal,
@@ -798,7 +801,9 @@ function AdminDashboardInner() {
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
           <span className="font-semibold text-slate-300">
-            {activeTab === "regattas"
+            {activeTab === "overview"
+              ? "Administration overview"
+              : activeTab === "regattas"
               ? "Regattas & Events Operations"
               : activeTab === "edit"
                 ? "Optimist Roster & Selection Workspace"
@@ -904,6 +909,17 @@ function AdminDashboardInner() {
             <RefreshCw className="h-4 w-4 animate-spin text-orange-500" />
             Loading this workspace…
           </div>
+        )}
+
+        {activeTab === "overview" && (
+          <AdminOverviewPanel
+            regattas={data.regattaList}
+            results={data.resultsList}
+            duplicateCount={sailors.panelProps.duplicatePairs.length}
+            inboxCount={inboxNotifCount}
+            suggestionsCount={suggestionsCount}
+            claimsCount={claimsPendingCount}
+          />
         )}
 
         {activeTab === "regattas" && (

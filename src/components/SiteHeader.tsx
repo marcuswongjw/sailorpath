@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Search } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
 import { isAdminHost, shouldShowDemoNavigation } from "@/lib/adminHost";
+import { QuickSearchModal } from "@/components/search/QuickSearchModal";
 
 type OpenMenu = "optimist" | "ilca" | "classes" | "account" | null;
 
@@ -17,6 +18,7 @@ export function SiteHeader() {
   const { email, role, isSuperadmin, owned, ready, signOut } = useAccount();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
+  const [quickSearchOpen, setQuickSearchOpen] = useState(false);
   const host = useSyncExternalStore(
     subscribeToHost,
     getBrowserHost,
@@ -26,6 +28,17 @@ export function SiteHeader() {
 
   const primaryProfile = owned[0] || null;
   const showClaimCta = ready && !email;
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setQuickSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, []);
 
   useEffect(() => {
     if (!openMenu) return;
@@ -296,13 +309,21 @@ export function SiteHeader() {
       </div>
 
       {showDirectoryLinks && (
-        <Link
-          href="/search"
-          onClick={() => setMobileOpen(false)}
-          className="text-sm font-semibold text-sailcloth hover:text-white py-2 md:py-0 transition-colors"
+        <button
+          type="button"
+          onClick={() => {
+            setMobileOpen(false);
+            setQuickSearchOpen(true);
+          }}
+          className="text-sm font-semibold text-sailcloth hover:text-white py-2 md:py-0 transition-colors inline-flex items-center gap-1.5 cursor-pointer"
+          title="Search sailors and regattas (⌘K)"
         >
-          Search
-        </Link>
+          <Search className="h-3.5 w-3.5" />
+          <span>Search</span>
+          <kbd className="hidden lg:inline-flex px-1.5 py-0.5 rounded bg-white/10 border border-white/15 text-[10px] font-mono text-sailcloth/80 leading-none">
+            ⌘K
+          </kbd>
+        </button>
       )}
       {host && shouldShowDemoNavigation(host, owned.length, Boolean(email)) && (
         <Link
@@ -641,6 +662,11 @@ export function SiteHeader() {
           </div>
         )}
       </div>
+
+      <QuickSearchModal
+        isOpen={quickSearchOpen}
+        onClose={() => setQuickSearchOpen(false)}
+      />
     </header>
   );
 }

@@ -4,6 +4,7 @@
  */
 
 export type AdminActiveTab =
+  | "overview"
   | "regattas"
   | "stats"
   | "import"
@@ -117,6 +118,7 @@ function pickView(raw: string | null, allowed: readonly string[], fallback: stri
 }
 
 const PRIMARY_TABS: readonly AdminActiveTab[] = [
+  "overview",
   "regattas",
   "stats",
   "import",
@@ -176,6 +178,8 @@ function blankArea(area: AdminArea, view: string): AdminAreaState {
 export function legacyToArea(state: AdminNavState): AdminAreaState {
   const sheet = state.regattaId;
   switch (state.tab) {
+    case "overview":
+      return blankArea("overview", "home");
     case "regattas":
       return {
         area: "events",
@@ -268,6 +272,7 @@ export function areaToLegacy(state: AdminAreaState): AdminNavState {
       }
       return { tab: "ops", sub: "audit", regattaId: null };
     case "overview":
+      return { tab: "overview", sub: "sailors", regattaId: null };
     default:
       return { tab: "edit", sub: "sailors", regattaId: null };
   }

@@ -5,6 +5,7 @@ import type { MouseEvent } from "react";
 import {
   BarChart3,
   Calendar,
+  Gauge,
   Inbox,
   LifeBuoy,
   Settings,
@@ -50,6 +51,15 @@ export function AdminSidebar({
 }) {
   const shell: Shell = "sidebar";
   const items: Item[] = [
+    {
+      area: "overview",
+      label: "Overview",
+      href: areaHref(
+        { area: "overview", view: "home", event: null, sheet: null },
+        shell
+      ),
+      active: activeArea === "overview",
+    },
     {
       area: "events",
       label: "Events",
@@ -120,6 +130,7 @@ export function AdminSidebar({
               }`}
             >
               <span className="inline-flex items-center gap-2">
+                {item.area === "overview" && <Gauge className="h-4 w-4" aria-hidden="true" />}
                 {item.area === "events" && <Calendar className="h-4 w-4" aria-hidden="true" />}
                 {item.area === "sailors" && <Users className="h-4 w-4" aria-hidden="true" />}
                 {item.area === "inbox" && <Inbox className="h-4 w-4" aria-hidden="true" />}

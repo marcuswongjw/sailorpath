@@ -55,6 +55,7 @@ export function useAdminData({
     useState<string>("");
 
   const needsFullResults =
+    activeTab === "overview" ||
     activeTab === "analysis" ||
     activeTab === "ilca" ||
     (activeTab === "edit" && editSubTab === "selection");
