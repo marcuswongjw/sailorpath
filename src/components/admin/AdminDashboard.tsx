@@ -760,11 +760,9 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
           <div
             key={grp.groupTitle}
             className={`rounded-2xl border border-white/5 bg-[#131520] p-1.5 flex flex-col justify-between ${
-              grp.groupTitle === "Boat Classes"
-                ? "md:col-span-6 lg:col-span-5"
-                : grp.groupTitle === "Ops"
-                  ? "md:col-span-6 lg:col-span-5"
-                  : "md:col-span-12 lg:col-span-2"
+              grp.groupTitle === "Boat Classes" || grp.groupTitle === "Ops"
+                  ? "col-span-1 md:col-span-6 lg:col-span-5"
+                  : "col-span-1 md:col-span-12 lg:col-span-2"
             }`}
           >
             <div className="px-2 py-0.5 mb-1 flex items-center justify-between">
@@ -1082,7 +1080,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
             </div>
             )}
 
-            <div className="w-full min-w-0 min-h-[50vh]">
+            <div className="w-full min-w-0 min-h-[40vh]">
               {editSubTab === "sailors" && (
                 <AdminSailorsPanel
                   isSuperadmin={isSuperadmin}

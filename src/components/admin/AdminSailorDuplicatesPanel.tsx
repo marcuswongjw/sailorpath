@@ -76,8 +76,8 @@ export function AdminSailorDuplicatesPanel({
                     : "border-white/10 bg-white/[0.03]"
                 }`}
               >
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <div className="min-w-0">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-start sm:gap-x-12">
+                  <div className="min-w-0 max-w-md">
                     <p className="text-xs font-bold text-amber-300">
                       {percent}% match{pair.how ? ` · ${pair.how}` : ""}
                     </p>
@@ -102,7 +102,7 @@ export function AdminSailorDuplicatesPanel({
                       </span>
                     </button>
                   </div>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 shrink-0">
                     <button
                       type="button"
                       onClick={() =>
