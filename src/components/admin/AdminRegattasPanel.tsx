@@ -14,12 +14,10 @@ import {
   Link2,
   ArrowLeft,
   FileText,
-  ChevronDown,
-  ChevronUp,
   Globe,
   Sliders,
 } from "lucide-react";
-import { slugifyWithDate, slugify } from "@/lib/slug";
+import { slugify } from "@/lib/slug";
 import { classResultsHref } from "@/lib/calendar/calendarResultLinks";
 import {
   ADMIN_BOAT_CLASS_GROUPS,
@@ -203,7 +201,6 @@ export function AdminRegattasPanel({
   const [readiness, setReadiness] = useState<PublicationReadiness | null>(null);
   const [sheetTab, setSheetTab] = useState<"details" | "results">("details");
   const [showCalendarForm, setShowCalendarForm] = useState(false);
-  const [showLogistics, setShowLogistics] = useState(false);
   const [publishingId, setPublishingId] = useState<string | null>(null);
 
   const handleTogglePublish = async (sheetId: string, currentStatus?: string | null) => {
@@ -908,17 +905,14 @@ export function AdminRegattasPanel({
                                     <button
                                       type="button"
                                       onClick={() => {
-                                        const auto = slugifyWithDate(
-                                          regattaForm.name,
-                                          regattaForm.date
-                                        );
+                                        const auto = slugify(regattaForm.name);
                                         setRegattaForm((prev) => ({
                                           ...prev,
                                           slug: auto,
                                         }));
                                       }}
                                       className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 text-orange-300 text-[11px] font-bold transition-colors shrink-0"
-                                      title="Auto-generate slug from current name and date"
+                                      title="Auto-generate slug from title"
                                     >
                                       <Wand2 className="h-3 w-3" />
                                       Auto-generate
@@ -1216,121 +1210,6 @@ export function AdminRegattasPanel({
                                   </label>
                                 </div>
                               </div>
-                            </div>
-
-                            {/* Logistics & External Documents Accordion */}
-                            <div className="rounded-2xl border border-white/5 bg-[#131520] p-4 sm:p-5 space-y-3">
-                              <button
-                                type="button"
-                                onClick={() => setShowLogistics((prev) => !prev)}
-                                className="w-full flex items-center justify-between text-left"
-                              >
-                                <h4 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                                  <Globe className="h-3.5 w-3.5 text-orange-400" />
-                                  Venue, Notice of Race &amp; Logistics
-                                </h4>
-                                <span className="text-slate-400 p-1 hover:text-white">
-                                  {showLogistics ? (
-                                    <ChevronUp className="h-4 w-4" />
-                                  ) : (
-                                    <ChevronDown className="h-4 w-4" />
-                                  )}
-                                </span>
-                              </button>
-
-                              {showLogistics && (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-white/5">
-                                  <div>
-                                    <label className="text-[11px] font-bold text-slate-400 uppercase">
-                                      Venue
-                                    </label>
-                                    <input
-                                      type="text"
-                                      value={regattaForm.venue || ""}
-                                      onChange={(e) =>
-                                        setRegattaForm({
-                                          ...regattaForm,
-                                          venue: e.target.value,
-                                        })
-                                      }
-                                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
-                                      placeholder="e.g. National Sailing Centre / Changi Sailing Club"
-                                    />
-                                  </div>
-
-                                  <div>
-                                    <label className="text-[11px] font-bold text-slate-400 uppercase">
-                                      Organizer / Host
-                                    </label>
-                                    <input
-                                      type="text"
-                                      value={regattaForm.organizer || ""}
-                                      onChange={(e) =>
-                                        setRegattaForm({
-                                          ...regattaForm,
-                                          organizer: e.target.value,
-                                        })
-                                      }
-                                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
-                                      placeholder="e.g. Singapore Sailing Federation"
-                                    />
-                                  </div>
-
-                                  <div>
-                                    <label className="text-[11px] font-bold text-slate-400 uppercase">
-                                      Notice of Race / Notice Board URL
-                                    </label>
-                                    <input
-                                      type="url"
-                                      value={regattaForm.norUrl || ""}
-                                      onChange={(e) =>
-                                        setRegattaForm({
-                                          ...regattaForm,
-                                          norUrl: e.target.value,
-                                        })
-                                      }
-                                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
-                                      placeholder="https://www.racingrulesofsailing.org/... or nor.pdf"
-                                    />
-                                  </div>
-
-                                  <div>
-                                    <label className="text-[11px] font-bold text-slate-400 uppercase">
-                                      Registration / Entry Portal URL
-                                    </label>
-                                    <input
-                                      type="url"
-                                      value={regattaForm.registrationUrl || ""}
-                                      onChange={(e) =>
-                                        setRegattaForm({
-                                          ...regattaForm,
-                                          registrationUrl: e.target.value,
-                                        })
-                                      }
-                                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
-                                      placeholder="https://singaporesailing.org/..."
-                                    />
-                                  </div>
-
-                                  <div className="sm:col-span-2">
-                                    <label className="text-[11px] font-bold text-slate-400 uppercase">
-                                      Schedule Notes / Description
-                                    </label>
-                                    <input
-                                      type="text"
-                                      value={regattaForm.scheduleNotes || ""}
-                                      onChange={(e) =>
-                                        setRegattaForm({
-                                          ...regattaForm,
-                                          scheduleNotes: e.target.value,
-                                        })
-                                      }
-                                      className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
-                                      placeholder="e.g. Official selection trial for 2026 Perth Camp and Asian Games"
-                                    />
-                                  </div>
-                                </div>
-                              )}
                             </div>
 
                             {readiness && editingRegattaId !== "new" && (
@@ -1852,14 +1731,13 @@ export function AdminRegattasPanel({
                                     const optimist = /optimist/i.test(label);
                                     setEditingRegattaId("new");
                                     setSheetTab("details");
-                                    const baseName = `${selectedEventView.name} ${label}`;
+                                    const baseName = label.startsWith("(")
+                                      ? `${selectedEventView.name} ${label}`
+                                      : `${selectedEventView.name} (${label})`;
                                     setRegattaForm({
                                       ...emptyRegattaForm(),
                                       name: baseName,
-                                      slug: slugifyWithDate(
-                                        baseName,
-                                        selectedEventView.startDate
-                                      ),
+                                      slug: slugify(baseName),
                                       date: selectedEventView.startDate,
                                       endDate: selectedEventView.endDate || "",
                                       venue: selectedEventView.venue || "",

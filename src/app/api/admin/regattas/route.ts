@@ -3,7 +3,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import { regattas } from "@/db/schema";
 import { eq, and, ne } from "drizzle-orm";
-import { slugify, slugifyWithDate } from "@/lib/slug";
+import { slugify } from "@/lib/slug";
 import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
 import { asOptionalRaceCount, asPositiveInteger } from "@/lib/validate";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
@@ -93,8 +93,7 @@ export async function POST(req: Request) {
       );
     }
     const slug = slugify(
-      (body.slug as string)?.trim() ||
-        slugifyWithDate(String(body.name), String(body.date))
+      (body.slug as string)?.trim() || String(body.name)
     );
     const fleetSizeResult = asPositiveInteger(
       body.totalFleetSize == null || body.totalFleetSize === ""
