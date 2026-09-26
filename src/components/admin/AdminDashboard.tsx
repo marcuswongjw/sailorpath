@@ -22,12 +22,8 @@ import {
   Trophy,
   Gauge,
 } from "lucide-react";
-import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
-import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
-import { AdminSailorsPanel } from "@/components/admin/AdminSailorsPanel";
-import { AdminSailorDuplicatesPanel } from "@/components/admin/AdminSailorDuplicatesPanel";
-import { AdminCompetitionsPanel } from "@/components/admin/AdminCompetitionsPanel";
 import { useAdminAuth } from "@/components/admin/useAdminAuth";
+import type { InitialAdminAuth } from "@/components/admin/useAdminAuth";
 import { useAdminData } from "@/components/admin/useAdminData";
 import {
   ADMIN_DB_SUB_TABS,
@@ -74,6 +70,27 @@ function PanelLoading() {
     </div>
   );
 }
+
+const AdminResultsPanel = dynamic(
+  () => import("@/components/admin/AdminResultsPanel").then((m) => m.AdminResultsPanel),
+  { loading: () => <PanelLoading /> }
+);
+const AdminRegattasPanel = dynamic(
+  () => import("@/components/admin/AdminRegattasPanel").then((m) => m.AdminRegattasPanel),
+  { loading: () => <PanelLoading /> }
+);
+const AdminSailorsPanel = dynamic(
+  () => import("@/components/admin/AdminSailorsPanel").then((m) => m.AdminSailorsPanel),
+  { loading: () => <PanelLoading /> }
+);
+const AdminSailorDuplicatesPanel = dynamic(
+  () => import("@/components/admin/AdminSailorDuplicatesPanel").then((m) => m.AdminSailorDuplicatesPanel),
+  { loading: () => <PanelLoading /> }
+);
+const AdminCompetitionsPanel = dynamic(
+  () => import("@/components/admin/AdminCompetitionsPanel").then((m) => m.AdminCompetitionsPanel),
+  { loading: () => <PanelLoading /> }
+);
 
 const AdminRegattaImport = dynamic(
   () =>
@@ -172,7 +189,11 @@ const AdminTechno293Panel = dynamic(
   { loading: () => <PanelLoading />, ssr: false }
 );
 
-export function AdminDashboard() {
+export function AdminDashboard({
+  initialAuth,
+}: {
+  initialAuth?: InitialAdminAuth;
+}) {
   return (
     <AdminQueryProvider>
       <Suspense
@@ -182,13 +203,13 @@ export function AdminDashboard() {
           </div>
         }
       >
-        <AdminDashboardInner />
+        <AdminDashboardInner initialAuth={initialAuth} />
       </Suspense>
     </AdminQueryProvider>
   );
 }
 
-function AdminDashboardInner() {
+function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -209,7 +230,7 @@ function AdminDashboardInner() {
     isSuperadmin,
     productChangelogUnread,
     markProductChangelogSeen,
-  } = useAdminAuth();
+  } = useAdminAuth(initialAuth);
 
   const data = useAdminData({
     isSuperadmin,
@@ -258,6 +279,11 @@ function AdminDashboardInner() {
     setCompetitionsSailorId: competitions.setCompetitionsSailorId,
     invalidateSailors: data.invalidateSailors,
     invalidateResults: data.invalidateResults,
+    loadRankingSummary:
+      activeTab === "analysis" ||
+      activeTab === "ilca" ||
+      (activeTab === "edit" &&
+        (editSubTab === "sailors" || editSubTab === "selection")),
   });
 
   const regattas = useAdminRegattas({
@@ -1264,7 +1290,7 @@ function AdminDashboardInner() {
         )}
       </div>
 
-      <AdminCompetitionsPanel
+      {competitions.competitionsSailorId && <AdminCompetitionsPanel
         competitionsSailorId={competitions.competitionsSailorId}
         competitionsLoading={competitions.competitionsLoading}
         sailorList={data.sailorList}
@@ -1277,7 +1303,7 @@ function AdminDashboardInner() {
         closeSailorResults={competitions.closeSailorResults}
         handleSaveResult={results.handleSaveResult}
         handleDeleteResult={results.handleDeleteResult}
-      />
+      />}
       </main>
     </div>
   );

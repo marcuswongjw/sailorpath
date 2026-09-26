@@ -92,10 +92,12 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
   if (combinedMatch) {
     countryPrefix = combinedMatch[1].toUpperCase();
     extractedSailNumber = combinedMatch[2];
-  } else {
-    // Check individual tokens
-    for (const token of tokens) {
-      const lower = token.toLowerCase();
+  }
+  // Check individual tokens as well so a combined sail number does not hide
+  // other terms such as a club or school abbreviation.
+  for (const token of tokens) {
+    const lower = token.toLowerCase();
+    if (!combinedMatch) {
       // Pure digit sail number (1 to 7 digits)
       if (/^[0-9]{1,7}$/.test(token)) {
         extractedSailNumber = token;
@@ -104,14 +106,14 @@ export function parseSearchQuery(query: string): ParsedSearchQuery {
       if (/^(SGP|SIN|HKG|MAS|THA|AUS|USA|GBR|CAN|NZL|JPN|IND|MYA)$/i.test(token)) {
         countryPrefix = token.toUpperCase();
       }
-      // Club abbreviation
-      if (CLUB_ABBREVIATIONS[lower]) {
-        clubExpansions.push(...CLUB_ABBREVIATIONS[lower]);
-      }
-      // School abbreviation
-      if (SCHOOL_ABBREVIATIONS[lower]) {
-        schoolExpansions.push(...SCHOOL_ABBREVIATIONS[lower]);
-      }
+    }
+    // Club abbreviation
+    if (CLUB_ABBREVIATIONS[lower]) {
+      clubExpansions.push(...CLUB_ABBREVIATIONS[lower]);
+    }
+    // School abbreviation
+    if (SCHOOL_ABBREVIATIONS[lower]) {
+      schoolExpansions.push(...SCHOOL_ABBREVIATIONS[lower]);
     }
   }
 
@@ -305,7 +307,7 @@ export async function searchSailorsEnhanced(
       conditions.push(
         or(
           eq(sailors.ilca4NationalList, true),
-          sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIl4} <> ''`
+          sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIlca4} <> ''`
         )!
       );
     } else if (fleetFilter === "guest") {
@@ -329,8 +331,6 @@ export async function searchSailorsEnhanced(
   const rows = conditions.length > 0
     ? await queryBuilder.where(and(...conditions)).limit(150)
     : await queryBuilder.orderBy(asc(sailors.name)).limit(150);
-
-  const period = currentPeriodFromSgToday();
 
   // Map and score
   const scored: SailorSearchResult[] = [];

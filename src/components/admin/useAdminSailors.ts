@@ -41,6 +41,7 @@ type UseAdminSailorsArgs = {
   /** Refetch sailors (and results when deletes cascade) from the server. */
   invalidateSailors?: () => void;
   invalidateResults?: () => void;
+  loadRankingSummary?: boolean;
 };
 
 /**
@@ -60,6 +61,7 @@ export function useAdminSailors({
   setCompetitionsSailorId,
   invalidateSailors,
   invalidateResults,
+  loadRankingSummary = true,
 }: UseAdminSailorsArgs) {
   const { toast, confirm } = useFeedback();
   const [ignoredDuplicateKeys, setIgnoredDuplicateKeys] = useState<Set<string>>(
@@ -137,7 +139,7 @@ export function useAdminSailors({
 
   // Best 3 of 5 for current SG half (Gold + Silver)
   useEffect(() => {
-    if (sailorList.length === 0) return;
+    if (!loadRankingSummary || sailorList.length === 0) return;
     let cancelled = false;
     (async () => {
       try {
@@ -166,7 +168,7 @@ export function useAdminSailors({
     return () => {
       cancelled = true;
     };
-  }, [sailorList, resultsList, regattaListLength]);
+  }, [loadRankingSummary, sailorList, resultsList, regattaListLength]);
 
   const filteredDbSailors = sailorList.filter((s) => {
     const q = dbSearch.trim().toLowerCase();

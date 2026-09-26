@@ -1,20 +1,29 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { User } from "@supabase/supabase-js";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { isProductChangelogUnread } from "@/lib/productChangelog";
 
 export type AdminRole = "superadmin" | "coach" | "sailor" | "parent";
+export type InitialAdminAuth = {
+  id: string;
+  email: string | null;
+  role: AdminRole;
+};
+type AdminUser = { id: string; email?: string | null };
 
 /**
  * Session + role for the admin shell. Role comes from `/api/admin/me`
  * (profiles), never from user_metadata.
  */
-export function useAdminAuth() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [adminRole, setAdminRole] = useState<AdminRole>("sailor");
+export function useAdminAuth(initialAuth?: InitialAdminAuth) {
+  const [user, setUser] = useState<AdminUser | null>(
+    initialAuth ? { id: initialAuth.id, email: initialAuth.email } : null
+  );
+  const [loading, setLoading] = useState(!initialAuth);
+  const [adminRole, setAdminRole] = useState<AdminRole>(
+    initialAuth?.role ?? "sailor"
+  );
   const [lastSeenProductChangelogAt, setLastSeenProductChangelogAt] = useState<
     string | null
   >(null);

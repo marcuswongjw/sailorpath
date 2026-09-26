@@ -48,7 +48,9 @@ export default async function AdminPage() {
 
   return (
     <ErrorBoundary>
-      <AdminDashboard />
+      <AdminDashboard
+        initialAuth={{ id: ctx.userId, email: ctx.email, role: ctx.role }}
+      />
     </ErrorBoundary>
   );
 }

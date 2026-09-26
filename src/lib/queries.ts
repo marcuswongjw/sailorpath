@@ -35,10 +35,7 @@ import { applyProjectedGoldParticipationDropped } from "@/lib/goldFleetDrop";
 import { applyProjectedSilverParticipationDropped } from "@/lib/silverSeriesDrop";
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
 import { normalizeGender } from "@/lib/gender";
-import {
-  isInSgSeries,
-  normalizeSgSeriesMembership,
-} from "@/lib/seriesMembership";
+import { normalizeSgSeriesMembership } from "@/lib/seriesMembership";
 import {
   computeIlcaRankings,
   ilcaRankingRegattas,
@@ -48,11 +45,6 @@ import {
   type IlcaIntakeKind,
   type IlcaRankedSailor,
 } from "@/lib/ilcaRanking";
-import {
-  parseSearchQuery,
-  CLUB_ABBREVIATIONS,
-  SCHOOL_ABBREVIATIONS,
-} from "@/lib/search";
 import {
   ILCA6_STATIC_REGATTAS,
   getStaticIlca6Results,
@@ -74,7 +66,6 @@ import {
   inArray,
   or,
   and,
-  ilike,
   sql,
 } from "drizzle-orm";
 
@@ -218,33 +209,6 @@ export async function listSailors() {
 }
 
 export async function getSailorByHandle(handle: string) {
-  return withDb(async () => {
-    const h = String(handle || "").trim().toLowerCase();
-    if (!h) return null;
-
-    const [row] = await db
-      .select()
-      .from(sailors)
-      .where(eq(sailors.handle, h))
-      .limit(1);
-    if (row) return mapSailor(row);
-
-    // Previous handles kept as aliases after a rename
-    const [alias] = await db
-      .select({ sailorId: sailorAliases.sailorId })
-      .from(sailorAliases)
-      .where(eq(sailorAliases.aliasName, h))
-      .limit(1);
-    if (!alias) return null;
-
-    const [viaAlias] = await db
-      .select()
-      .from(sailors)
-      .where(eq(sailors.id, alias.sailorId))
-      .limit(1);
-    return viaAlias ? mapSailor(viaAlias) : null;
-  });
-}
   return withDb(async () => {
     const h = String(handle || "").trim().toLowerCase();
     if (!h) return null;
