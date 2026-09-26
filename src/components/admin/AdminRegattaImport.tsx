@@ -46,6 +46,14 @@ type Props = {
   onImportComplete?: () => void;
   onOpenResults?: (regattaId: string) => void;
   onSwitchToWingfoil?: () => void;
+  /** When set, the server may write only this class. */
+  targetSheetId?: string | null;
+  targetEventSlug?: string | null;
+  targetEvents?: Array<{
+    slug: string;
+    name: string;
+    sheets: Array<{ id: string; label: string }>;
+  }>;
 };
 
 const MAX_IMPORT_FILE_BYTES = 15 * 1024 * 1024;
@@ -105,6 +113,9 @@ export function AdminRegattaImport({
   onImportComplete,
   onOpenResults,
   onSwitchToWingfoil,
+  targetSheetId,
+  targetEventSlug,
+  targetEvents = [],
 }: Props) {
   const { toast } = useFeedback();
   const fileBusy = useRef(false);
@@ -145,6 +156,16 @@ export function AdminRegattaImport({
   >([]);
   const [importMeta, setImportMeta] =
     useState<RegattaImportMeta>(emptyImportMeta);
+  const [selectedEventSlug, setSelectedEventSlug] = useState(
+    targetEventSlug || ""
+  );
+  const [selectedTarget, setSelectedTarget] = useState(
+    targetSheetId || ""
+  );
+
+  const selectedTargetEvent = targetEvents.find(
+    (event) => event.slug === selectedEventSlug
+  );
 
   const selectResultsSheet = (candidate: ReturnType<typeof readResultsWorkbook>[number], filename: string) => {
     const fromFile = parseRegattaTitle(filename);
@@ -491,6 +512,10 @@ export function AdminRegattaImport({
       toast.error("Error: 403 Forbidden. Only Superadmins can import.");
       return;
     }
+    if (!selectedEventSlug || !selectedTarget) {
+      toast.error("Choose the weekend and class this file will update.");
+      return;
+    }
     if (!rowsToImport.length || !meta.name || !meta.date) {
       toast.error("Parse a file and set regatta name + date first.");
       return;
@@ -534,7 +559,13 @@ export function AdminRegattaImport({
               : Number(meta.raceCount),
           rows: rowsToImport,
           createMissing: true,
-          confirmedRegattaId: confirmedRegattaId || null,
+          confirmedRegattaId:
+            confirmedRegattaId ||
+            (selectedTarget === NEW_IMPORT_TARGET ? null : selectedTarget),
+          sheetId:
+            selectedTarget === NEW_IMPORT_TARGET ? null : selectedTarget,
+          eventSlug: selectedEventSlug,
+          createInEvent: selectedTarget === NEW_IMPORT_TARGET,
           confirmedReviewToken:
             confirmedRegattaId && pendingReview?.review.regattaId === confirmedRegattaId
               ? pendingReview.review.reviewToken
@@ -618,6 +649,11 @@ export function AdminRegattaImport({
           ? (data.regatta as RegattaAdmin)
           : null;
       await refreshListsAfterImport(importedRegatta);
+      const openedSheet =
+        typeof data.sheetId === "string" && data.sheetId
+          ? data.sheetId
+          : importedRegatta?.id;
+      if (openedSheet) onOpenResults?.(openedSheet);
       setImportProgress(100);
 
       {
@@ -719,6 +755,48 @@ export function AdminRegattaImport({
   return (
     <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
       <div className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/5 w-full">
+        <div className="mb-5 grid grid-cols-1 gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:grid-cols-2">
+          <label className="text-xs font-bold text-slate-300">
+            Weekend
+            <select
+              value={selectedEventSlug}
+              disabled={importBusy}
+              onChange={(event) => {
+                setSelectedEventSlug(event.target.value);
+                setSelectedTarget("");
+              }}
+              className="mt-1 w-full rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white disabled:opacity-60"
+            >
+              <option value="">Choose a weekend…</option>
+              {targetEvents.map((event) => (
+                <option key={event.slug} value={event.slug}>
+                  {event.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <label className="text-xs font-bold text-slate-300">
+            Class sheet
+            <select
+              value={selectedTarget}
+              disabled={importBusy || !selectedEventSlug}
+              onChange={(event) => setSelectedTarget(event.target.value)}
+              className="mt-1 w-full rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white disabled:opacity-60"
+            >
+              <option value="">Choose a class…</option>
+              {selectedTargetEvent?.sheets.map((sheet) => (
+                <option key={sheet.id} value={sheet.id}>
+                  {sheet.label}
+                </option>
+              ))}
+              <option value={NEW_IMPORT_TARGET}>Create a new class sheet</option>
+            </select>
+          </label>
+          <p className="text-[13px] text-slate-500 sm:col-span-2">
+            The server writes only to this target. A new class is linked to the
+            selected weekend.
+          </p>
+        </div>
         <div
           onDragEnter={handleDrag}
           onDragOver={handleDrag}
@@ -1405,7 +1483,12 @@ export function AdminRegattaImport({
             <button
               type="button"
               onClick={() => void handleImportToDb()}
-              disabled={!isSuperadmin || importBusy}
+              disabled={
+                !isSuperadmin ||
+                importBusy ||
+                !selectedEventSlug ||
+                !selectedTarget
+              }
               className="sm:col-span-2 lg:col-span-4 rounded-full bg-orange-600 hover:bg-orange-500 disabled:opacity-40 px-4 py-2.5 text-[15px] font-semibold text-white"
             >
               {importBusy

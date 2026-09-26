@@ -35,6 +35,8 @@ import {
   type RegattaFormState,
 } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
+import { setAdminLeaveGuard } from "@/components/admin/adminLeaveGuard";
+import type { PublicationReadiness } from "@/lib/admin/publicationReadiness";
 import {
   eventStatusLabel,
   groupRegattaEvents,
@@ -154,9 +156,12 @@ export type AdminRegattasPanelProps = {
   invalidateRegattas?: () => void;
   onOpenResults?: (regattaId: string) => void;
   onClearSheet?: () => void;
+  onImportClass?: (sheetId: string) => void;
   /** Sheet opened from ?sheet= or the results editor. */
   activeSheetId?: string;
   resultsEditor?: ReactNode;
+  /** Changes whenever saved class details or result rows change. */
+  readinessRevision?: string;
 };
 
 export function AdminRegattasPanel({
@@ -180,8 +185,10 @@ export function AdminRegattasPanel({
   invalidateRegattas,
   onOpenResults,
   onClearSheet,
+  onImportClass,
   activeSheetId,
   resultsEditor,
+  readinessRevision,
 }: AdminRegattasPanelProps) {
   const { toast } = useFeedback();
   const [isSeeding, setIsSeeding] = useState(false);
@@ -190,6 +197,10 @@ export function AdminRegattasPanel({
   const [calendarForm, setCalendarForm] = useState<CalendarFormState | null>(null);
   const [calendarSaving, setCalendarSaving] = useState(false);
   const calendarSlug = useRef("");
+  const calendarSnap = useRef("");
+  const classSnap = useRef("");
+  const classLabel = useRef("Class settings");
+  const [readiness, setReadiness] = useState<PublicationReadiness | null>(null);
   const [sheetTab, setSheetTab] = useState<"details" | "results">("details");
   const [showCalendarForm, setShowCalendarForm] = useState(false);
   const [showLogistics, setShowLogistics] = useState(false);
@@ -201,6 +212,18 @@ export function AdminRegattasPanel({
       return;
     }
     const targetStatus = currentStatus === "published" ? "draft" : "published";
+    if (
+      targetStatus === "published" &&
+      readiness &&
+      (readiness.summary === "blocked" || readiness.summary === "incomplete")
+    ) {
+      toast.error(
+        readiness.summary === "blocked"
+          ? "Resolve the blocking publication checks first."
+          : "Complete the required publication checks first."
+      );
+      return;
+    }
     setPublishingId(sheetId);
     try {
       await setAdminRegattaStatus(sheetId, targetStatus);
@@ -292,7 +315,10 @@ export function AdminRegattasPanel({
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedEventSlug(event ? event.slug : UNASSIGNED_EVENT_SLUG);
     setEditingRegattaId(row.id);
-    setRegattaForm(formFrom(row));
+    const next = formFrom(row);
+    classSnap.current = JSON.stringify(next);
+    classLabel.current = `${sheetClassLabel(row)} class settings`;
+    setRegattaForm(next);
     setSheetTab("results");
   }, [activeSheetId, filteredRegattaList, grouped.events, setEditingRegattaId, setRegattaForm]);
 
@@ -319,7 +345,9 @@ export function AdminRegattasPanel({
     const token = `${selectedEventView.slug}:${savedEvents[selectedEventView.slug]?.name ?? ""}:${savedEvents[selectedEventView.slug]?.startDate ?? ""}`;
     if (calendarSlug.current === token) return;
     calendarSlug.current = token;
-    setCalendarForm(calendarFormFrom(selectedEventView));
+    const nextForm = calendarFormFrom(selectedEventView);
+    calendarSnap.current = JSON.stringify(nextForm);
+    setCalendarForm(nextForm);
   }, [selectedEventView, savedEvents]);
 
   const handleSaveCalendar = async () => {
@@ -343,6 +371,7 @@ export function AdminRegattasPanel({
       if (!res.ok) throw new Error(data.error || "Could not save the calendar card");
       const saved = data.event as SavedCalendarEvent;
       setSavedEvents((prev) => ({ ...prev, [saved.slug]: saved }));
+      calendarSnap.current = JSON.stringify(calendarForm);
       invalidateRegattas?.();
       const held = Number(data.sheetsKeptNonRanking || 0);
       const updated = Number(data.sheetsUpdated || 0);
@@ -358,6 +387,67 @@ export function AdminRegattasPanel({
     } finally {
       setCalendarSaving(false);
     }
+  };
+
+  const calendarDirty =
+    calendarForm != null &&
+    calendarSnap.current !== "" &&
+    JSON.stringify(calendarForm) !== calendarSnap.current;
+  const classDirty =
+    Boolean(editingRegattaId) &&
+    classSnap.current !== "" &&
+    JSON.stringify(regattaForm) !== classSnap.current;
+
+  const confirmLeave = () => {
+    const parts: string[] = [];
+    if (calendarDirty && selectedEventView) {
+      parts.push(`${selectedEventView.name} event details`);
+    }
+    if (classDirty) parts.push(classLabel.current);
+    if (parts.length === 0) return true;
+    return window.confirm(`Discard unsaved changes to ${parts.join(" and ")}?`);
+  };
+
+  useEffect(() => {
+    setAdminLeaveGuard(confirmLeave);
+    return () => setAdminLeaveGuard(null);
+  });
+
+  useEffect(() => {
+    if (!calendarDirty && !classDirty) return;
+    const onLeave = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    window.addEventListener("beforeunload", onLeave);
+    return () => window.removeEventListener("beforeunload", onLeave);
+  }, [calendarDirty, classDirty]);
+
+  useEffect(() => {
+    if (!editingRegattaId || editingRegattaId === "new") {
+      setReadiness(null);
+      return;
+    }
+    let cancelled = false;
+    void fetch(`/api/admin/regatta-readiness?sheet=${encodeURIComponent(editingRegattaId)}`, {
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((body: { readiness?: PublicationReadiness }) => {
+        if (!cancelled) setReadiness(body.readiness ?? null);
+      })
+      .catch(() => {
+        if (!cancelled) setReadiness(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [editingRegattaId, readinessRevision]);
+
+  const rememberClassForm = (sheet: GroupableRegatta, next = formFrom(sheet)) => {
+    classSnap.current = JSON.stringify(next);
+    classLabel.current = `${sheetClassLabel(sheet)} class settings`;
+    setRegattaForm(next);
   };
 
   const handleSeed2026 = async () => {
@@ -534,6 +624,10 @@ export function AdminRegattasPanel({
                         id="admin-regatta-selector"
                         value={effectiveEventSlug || ""}
                         onChange={(e) => {
+                          if (!confirmLeave()) {
+                            e.target.value = effectiveEventSlug || "";
+                            return;
+                          }
                           setSelectedEventSlug(e.target.value);
                           setEditingRegattaId(null);
                           onClearSheet?.();
@@ -659,6 +753,9 @@ export function AdminRegattasPanel({
                               <Link
                                 href={canonicalPublicHref}
                                 target="_blank"
+                                onClick={(event) => {
+                                  if (!confirmLeave()) event.preventDefault();
+                                }}
                                 className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 px-3 py-1 text-xs font-semibold text-slate-300 transition-all hover:text-white"
                                 title="Open public leaderboard in new tab"
                               >
@@ -1236,11 +1333,40 @@ export function AdminRegattasPanel({
                               )}
                             </div>
 
+                            {readiness && editingRegattaId !== "new" && (
+                              <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-2" aria-live="polite">
+                                <p className="text-[12px] font-bold uppercase text-slate-400">
+                                  {readiness.summary === "publishable_ranking"
+                                    ? "Publishable and ranking"
+                                    : readiness.summary === "publishable_non_ranking"
+                                      ? "Publishable, non-ranking"
+                                      : readiness.summary === "blocked"
+                                        ? "Blocked from publishing"
+                                        : "Incomplete"}
+                                </p>
+                                <ul className="space-y-1">
+                                  {readiness.checks.map((check) => (
+                                    <li key={check.code} className="text-[12px] text-slate-300">
+                                      <span aria-hidden="true">
+                                        {check.severity === "ok"
+                                          ? "✓ "
+                                          : check.severity === "warning"
+                                            ? "! "
+                                            : "– "}
+                                      </span>
+                                      {check.label}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+
                             {/* Form Action Buttons */}
                             <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/5 pt-4">
                               <button
                                 type="button"
                                 onClick={() => {
+                                  if (!confirmLeave()) return;
                                   setEditingRegattaId(null);
                                   onClearSheet?.();
                                 }}
@@ -1254,6 +1380,19 @@ export function AdminRegattasPanel({
                                   <button
                                     type="button"
                                     onClick={() => {
+                                      if (!confirmLeave()) return;
+                                      onImportClass?.(editingRegattaId);
+                                    }}
+                                    className="rounded-full border border-white/15 bg-white/5 hover:bg-white/10 px-4 py-2 text-xs font-bold text-slate-200 transition-colors"
+                                  >
+                                    Import into this class
+                                  </button>
+                                )}
+                                {editingRegattaId !== "new" && (
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      if (classDirty && !confirmLeave()) return;
                                       setSheetTab("results");
                                       onOpenResults?.(editingRegattaId);
                                     }}
@@ -1626,7 +1765,13 @@ export function AdminRegattasPanel({
                                         sheet.status === "draft" ? (
                                           <button
                                             type="button"
-                                            disabled={publishingId === sheet.id}
+                                            disabled={
+                                              publishingId === sheet.id ||
+                                              (editingRegattaId === sheet.id &&
+                                                readiness != null &&
+                                                (readiness.summary === "blocked" ||
+                                                  readiness.summary === "incomplete"))
+                                            }
                                             onClick={() => handleTogglePublish(sheet.id, sheet.status)}
                                             className="rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-xs disabled:opacity-50"
                                             title="Publish this sailing class to rankings and public results"
@@ -1656,9 +1801,10 @@ export function AdminRegattasPanel({
                                       <button
                                         type="button"
                                         onClick={() => {
+                                          if (editingRegattaId !== sheet.id && !confirmLeave()) return;
                                           seenSheetId.current = sheet.id;
                                           setEditingRegattaId(sheet.id);
-                                          setRegattaForm(formFrom(sheet));
+                                          rememberClassForm(sheet);
                                           setSheetTab("details");
                                         }}
                                         className="rounded-lg border border-slate-300 bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-800 shadow-xs transition-colors inline-flex items-center gap-1.5"
@@ -1669,9 +1815,10 @@ export function AdminRegattasPanel({
                                       <button
                                         type="button"
                                         onClick={() => {
+                                          if (editingRegattaId !== sheet.id && !confirmLeave()) return;
                                           seenSheetId.current = sheet.id;
                                           setEditingRegattaId(sheet.id);
-                                          setRegattaForm(formFrom(sheet));
+                                          rememberClassForm(sheet);
                                           setSheetTab("results");
                                           onOpenResults?.(sheet.id);
                                         }}

@@ -32,6 +32,7 @@ type Props = {
   regattas: RegattaAdmin[];
   results: ResultAdmin[];
   onSailorsChange?: (sailors: SailorAdmin[]) => void;
+  onOpenSailor: (sailorId: string) => void;
 };
 
 function toSailorRecords(rows: SailorAdmin[]): SailorRecord[] {
@@ -98,6 +99,7 @@ export function AdminSelectionPanel({
   regattas,
   results,
   onSailorsChange,
+  onOpenSailor,
 }: Props) {
   const { confirm } = useFeedback();
 
@@ -380,7 +382,13 @@ export function AdminSelectionPanel({
                             />
                           </td>
                           <td className="px-3 py-2 font-semibold text-[var(--sp-charcoal)]">
-                            {d.name}
+                            <button
+                              type="button"
+                              onClick={() => onOpenSailor(d.sailorId)}
+                              className="text-left hover:text-[var(--sp-racing-orange)] hover:underline"
+                            >
+                              {d.name}
+                            </button>
                           </td>
                           <td className="px-3 py-2 tabular-nums text-[var(--sp-slate)]">
                             {d.goldEntryDate}
@@ -512,7 +520,13 @@ export function AdminSelectionPanel({
                     <span className="text-[var(--sp-slate)] tabular-nums mr-2">
                       #{s.teamRank}
                     </span>
-                    <span className="font-semibold text-[var(--sp-charcoal)]">{s.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => onOpenSailor(s.sailorId)}
+                      className="font-semibold text-[var(--sp-charcoal)] hover:text-[var(--sp-racing-orange)] hover:underline"
+                    >
+                      {s.name}
+                    </button>
                     <span className="block text-[13px] text-[var(--sp-slate)] mt-0.5">
                       {s.gender || "?"} · BY {s.birthYear ?? "—"} · net{" "}
                       {s.combinedScore} (gross {s.grossScore}; {s.discardCount}{" "}
@@ -531,7 +545,19 @@ export function AdminSelectionPanel({
           )}
           {asianTeam.reserves.length > 0 && (
             <div className="border-t border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/30 px-4 py-2 text-[13px] text-[var(--sp-slate)]">
-              Additional-entry order: {asianTeam.reserves.slice(0, 5).map((s) => `${s.name} (${s.combinedScore})`).join(" · ")}
+              Additional-entry order:{" "}
+              {asianTeam.reserves.slice(0, 5).map((s, index) => (
+                <span key={s.sailorId}>
+                  {index > 0 ? " · " : ""}
+                  <button
+                    type="button"
+                    onClick={() => onOpenSailor(s.sailorId)}
+                    className="font-semibold hover:text-[var(--sp-racing-orange)] hover:underline"
+                  >
+                    {s.name} ({s.combinedScore})
+                  </button>
+                </span>
+              ))}
             </div>
           )}
         </div>
@@ -581,9 +607,13 @@ export function AdminSelectionPanel({
                           className="text-xs flex justify-between gap-2"
                         >
                           <span>
-                            <span className="font-semibold text-[var(--sp-charcoal)]">
+                            <button
+                              type="button"
+                              onClick={() => onOpenSailor(p.sailorId)}
+                              className="font-semibold text-[var(--sp-charcoal)] hover:text-[var(--sp-racing-orange)] hover:underline"
+                            >
                               {p.name}
-                            </span>
+                            </button>
                             <span className="text-[var(--sp-slate)] ml-1.5">
                               {p.slot} · net {p.combinedScore} (gross {p.grossScore})
                             </span>
@@ -630,7 +660,13 @@ export function AdminSelectionPanel({
                       {i + 1}
                     </td>
                     <td className="px-3 py-1.5 font-semibold text-[var(--sp-charcoal)]">
-                      {s.name}
+                      <button
+                        type="button"
+                        onClick={() => onOpenSailor(s.sailorId)}
+                        className="text-left hover:text-[var(--sp-racing-orange)] hover:underline"
+                      >
+                        {s.name}
+                      </button>
                     </td>
                     <td className="px-3 py-1.5 text-[var(--sp-slate)]">{s.gender || "—"}</td>
                     <td className="px-3 py-1.5 tabular-nums text-[var(--sp-slate)]">

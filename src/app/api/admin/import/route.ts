@@ -5,6 +5,7 @@ import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import {
   regattaRaceResults,
+  regattaEvents,
   regattaResults,
   regattas,
   sailorAliases,
@@ -410,10 +411,64 @@ export async function POST(req: Request) {
       createMissing?: boolean;
       confirmedRegattaId?: string | null;
       confirmedReviewToken?: string | null;
+      sheetId?: string | null;
+      eventSlug?: string | null;
+      createInEvent?: boolean;
     } = body;
 
     if (!regattaName || !eventDate || !Array.isArray(rows)) {
       return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+    }
+
+    const requestedSheetId = String(body.sheetId || "").trim();
+    const requestedEventSlug = String(body.eventSlug || "").trim();
+    const createInEvent = body.createInEvent === true;
+    let requestedEvent: { id: string; slug: string } | null = null;
+    if (requestedEventSlug) {
+      const [event] = await db
+        .select({ id: regattaEvents.id, slug: regattaEvents.slug })
+        .from(regattaEvents)
+        .where(eq(regattaEvents.slug, requestedEventSlug))
+        .limit(1);
+      requestedEvent = event ?? null;
+      if (!requestedEvent) {
+        return NextResponse.json(
+          { error: "That weekend was not found." },
+          { status: 404 }
+        );
+      }
+    }
+    if (createInEvent && !requestedEvent) {
+        return NextResponse.json(
+          { error: "Choose a weekend before creating a class sheet." },
+          { status: 400 }
+        );
+    }
+    const createEventId = createInEvent ? requestedEvent?.id ?? null : null;
+    let lockedSheet: typeof regattas.$inferSelect | null = null;
+    if (requestedSheetId) {
+      const [sheet] = await db
+        .select()
+        .from(regattas)
+        .where(eq(regattas.id, requestedSheetId))
+        .limit(1);
+      const { assertImportSheetTarget } = await import("@/lib/admin/importSheetTarget");
+      const verdict = assertImportSheetTarget({
+        sheet: sheet
+          ? {
+              id: sheet.id,
+              eventSlug:
+                requestedEvent && sheet.eventId === requestedEvent.id
+                  ? requestedEvent.slug
+                  : null,
+            }
+          : null,
+        eventSlug: requestedEventSlug || null,
+      });
+      if (!verdict.ok) {
+        return NextResponse.json({ error: verdict.error }, { status: verdict.status });
+      }
+      lockedSheet = sheet ?? null;
     }
 
     if (Array.isArray(rows) && rows.length > MAX_IMPORT_ROWS) {
@@ -544,9 +599,10 @@ export async function POST(req: Request) {
     const boat = String(boatClass || "Optimist").trim() || "Optimist";
     const raceCount =
       raceCountRaw == null ||
+      String(raceCountRaw).trim() === "" ||
       (typeof raceCountRaw === "number" && !Number.isFinite(raceCountRaw))
         ? null
-        : Math.max(0, Math.round(Number(raceCountRaw))) || null;
+        : Math.max(0, Math.round(Number(raceCountRaw)));
     let ranking =
       countsForRanking === false || countsForRanking === true
         ? countsForRanking
@@ -567,7 +623,7 @@ export async function POST(req: Request) {
         ? "Open"
         : "Gold");
 
-    const sameDay = await db
+    let sameDay = await db
       .select()
       .from(regattas)
       .where(
@@ -578,6 +634,7 @@ export async function POST(req: Request) {
         )
       )
       .limit(50);
+    if (lockedSheet) sameDay = [lockedSheet];
 
     const [slugMatch] = await db
       .select()
@@ -588,7 +645,8 @@ export async function POST(req: Request) {
       sameDay,
       incomingSlug: slug,
       slugMatch: slugMatch || null,
-      selectedId: confirmedRegattaId,
+      selectedId:
+        lockedSheet?.id || (createInEvent ? NEW_IMPORT_TARGET : confirmedRegattaId),
     });
     if (targetResolution.kind === "selection-required") {
       return NextResponse.json(
@@ -617,8 +675,11 @@ export async function POST(req: Request) {
         { status: 409 }
       );
     }
-    const existingTarget =
-      targetResolution.kind === "target" ? targetResolution.target : null;
+    const existingTarget = lockedSheet
+      ? lockedSheet
+      : targetResolution.kind === "target"
+        ? targetResolution.target
+        : null;
 
     if (
       confirmedRegattaId &&
@@ -1408,6 +1469,7 @@ export async function POST(req: Request) {
               .insert(regattas)
               .values({
                 id: regattaId,
+                eventId: createEventId,
                 name: regattaName,
                 slug: insertSlug,
                 date: eventDate,
@@ -1958,6 +2020,7 @@ export async function POST(req: Request) {
           const finalPayload = JSON.stringify({
             type: "result",
             ...result,
+            sheetId: result.regatta?.id ?? null,
           });
           await writer.write(encoder.encode(finalPayload + "\n"));
         } catch (e) {
@@ -1987,7 +2050,10 @@ export async function POST(req: Request) {
     }
 
     const outcome = await runImportProcess();
-    return NextResponse.json(outcome);
+    return NextResponse.json({
+      ...outcome,
+      sheetId: outcome.regatta?.id ?? null,
+    });
   } catch (e) {
     if (e instanceof ImportConflictError) {
       return NextResponse.json({ error: e.message }, { status: 409 });

@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { parseAdminNav, serializeAdminNav } from "./adminNav";
+import {
+  parseAdminArea,
+  parseAdminNav,
+  reconcileEventsAddress,
+  serializeAdminArea,
+  serializeAdminNav,
+} from "./adminNav";
 
 describe("parseAdminNav", () => {
   it("defaults to Database → Sailors", () => {
@@ -91,54 +97,156 @@ describe("parseAdminNav", () => {
 });
 
 describe("serializeAdminNav", () => {
-  it("writes tab + sub for edit/ops", () => {
-    expect(
-      serializeAdminNav({ tab: "regattas", sub: "sailors" })
-    ).toBe("tab=regattas");
-    expect(
-      serializeAdminNav({ tab: "ops", sub: "support" })
-    ).toBe("tab=ops&sub=support");
+  it("writes the canonical area for the current screens", () => {
+    expect(serializeAdminNav({ tab: "regattas", sub: "sailors" })).toBe(
+      "area=events&view=card"
+    );
+    expect(serializeAdminNav({ tab: "ops", sub: "support" })).toBe(
+      "area=inbox&view=support"
+    );
     expect(serializeAdminNav({ tab: "ops", sub: "audit" })).toBe(
-      "tab=ops&sub=audit"
+      "area=settings&view=audit"
     );
     expect(serializeAdminNav({ tab: "ops", sub: "coaches" })).toBe(
-      "tab=ops&sub=coaches"
+      "area=inbox&view=coaches"
     );
   });
 
-  it("includes the open class sheet on Regattas", () => {
+  it("includes the open class sheet on Events", () => {
     expect(
       serializeAdminNav({
         tab: "regattas",
         sub: "sailors",
         regattaId: "r1",
       })
-    ).toBe("tab=regattas&sheet=r1");
+    ).toBe("area=events&view=results&sheet=r1");
     expect(
-      serializeAdminNav({
-        tab: "edit",
-        sub: "regattas",
-        regattaId: "r1",
-      })
-    ).toBe("tab=regattas&sheet=r1");
+      serializeAdminNav(
+        { tab: "edit", sub: "regattas", regattaId: "r1" },
+        "singapore-nationals-2026"
+      )
+    ).toBe("area=events&view=results&event=singapore-nationals-2026&sheet=r1");
     expect(
       serializeAdminNav({
         tab: "edit",
         sub: "sailors",
         regattaId: "r1",
       })
-    ).toBe("tab=edit&sub=sailors");
+    ).toBe("area=sailors&view=directory");
   });
 
-  it("omits sub for top-level tabs", () => {
+  it("omits class context outside Events", () => {
     expect(serializeAdminNav({ tab: "stats", sub: "sailors" })).toBe(
-      "tab=stats"
+      "area=insights&view=metrics"
     );
     expect(serializeAdminNav({ tab: "wingfoil", sub: "sailors" })).toBe(
-      "tab=wingfoil"
+      "area=insights&view=wingfoil"
     );
     expect(serializeAdminNav({ tab: "changelog", sub: "sailors" })).toBe(
-      "tab=changelog"
+      "area=settings&view=changelog"
     );
+  });
+});
+
+describe("canonical admin areas", () => {
+  it("maps both regatta addresses to Events and keeps the class", () => {
+    expect(parseAdminArea(new URLSearchParams("tab=regattas&sheet=abc"))).toMatchObject({
+      area: "events",
+      view: "results",
+      sheet: "abc",
+    });
+    expect(
+      parseAdminArea(new URLSearchParams("tab=edit&sub=regattas&regattaId=abc"))
+    ).toMatchObject({ area: "events", sheet: "abc" });
+  });
+
+  it("ignores a class id on an unrelated destination", () => {
+    expect(
+      parseAdminArea(new URLSearchParams("tab=stats&sheet=abc"))
+    ).toEqual({
+      area: "insights",
+      view: "metrics",
+      event: null,
+      sheet: null,
+    });
+    expect(
+      parseAdminArea(
+        new URLSearchParams("area=insights&view=metrics&sheet=abc&regattaId=zzz")
+      ).sheet
+    ).toBeNull();
+  });
+
+  it("maps the remaining legacy screens", () => {
+    expect(parseAdminArea(new URLSearchParams("tab=edit")).view).toBe("directory");
+    expect(parseAdminArea(new URLSearchParams("tab=ops")).view).toBe("claims");
+    expect(parseAdminArea(new URLSearchParams("tab=gold")).view).toBe("selection");
+    expect(parseAdminArea(new URLSearchParams("tab=ops&sub=promote")).view).toBe(
+      "promotions"
+    );
+    expect(parseAdminArea(new URLSearchParams("tab=import")).view).toBe("import");
+    expect(parseAdminArea(new URLSearchParams("tab=analysis")).view).toBe("optimist");
+    expect(parseAdminArea(new URLSearchParams("tab=changelog")).area).toBe("settings");
+  });
+
+  it("keeps all four Sailors views inside the Sailors workspace", () => {
+    expect(
+      parseAdminNav(new URLSearchParams("area=sailors&view=directory"))
+    ).toMatchObject({ tab: "edit", sub: "sailors" });
+    expect(
+      parseAdminNav(new URLSearchParams("area=sailors&view=duplicates"))
+    ).toMatchObject({ tab: "edit", sub: "duplicates" });
+    expect(
+      parseAdminNav(new URLSearchParams("area=sailors&view=promotions"))
+    ).toMatchObject({ tab: "edit", sub: "promotions" });
+    expect(
+      parseAdminNav(new URLSearchParams("area=sailors&view=selection"))
+    ).toMatchObject({ tab: "edit", sub: "selection" });
+    expect(
+      parseAdminNav(new URLSearchParams("tab=ops&sub=promote"))
+    ).toMatchObject({ tab: "edit", sub: "promotions" });
+  });
+
+  it("normalizes every legacy Ops queue into Inbox", () => {
+    expect(parseAdminArea(new URLSearchParams("tab=ops&sub=suggestions"))).toMatchObject({
+      area: "inbox",
+      view: "suggestions",
+    });
+    expect(parseAdminArea(new URLSearchParams("tab=ops&sub=claims"))).toMatchObject({
+      area: "inbox",
+      view: "claims",
+    });
+    expect(parseAdminArea(new URLSearchParams("tab=ops&sub=coaches"))).toMatchObject({
+      area: "inbox",
+      view: "coaches",
+    });
+    expect(parseAdminArea(new URLSearchParams("tab=ops&sub=support"))).toMatchObject({
+      area: "inbox",
+      view: "support",
+    });
+  });
+
+  it("drops an unknown class and keeps the Events view", () => {
+    const parsed = parseAdminArea(
+      new URLSearchParams("area=events&sheet=missing&view=import")
+    );
+    const next = reconcileEventsAddress(parsed, () => ({
+      found: false,
+      event: null,
+    }));
+    expect(next.error).toMatch(/not found/);
+    expect(serializeAdminArea(next.state)).toBe("area=events&view=import");
+  });
+
+  it("replaces a disagreeing weekend with the class's real event", () => {
+    const parsed = parseAdminArea(
+      new URLSearchParams("area=events&event=other&sheet=abc&view=results")
+    );
+    const next = reconcileEventsAddress(parsed, () => ({
+      found: true,
+      event: "singapore-nationals-2026",
+    }));
+    expect(next.state.event).toBe("singapore-nationals-2026");
+    expect(next.state.sheet).toBe("abc");
+    expect(next.error).toBeNull();
   });
 });

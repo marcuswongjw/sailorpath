@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -24,6 +24,7 @@ import {
 import { AdminResultsPanel } from "@/components/admin/AdminResultsPanel";
 import { AdminRegattasPanel } from "@/components/admin/AdminRegattasPanel";
 import { AdminSailorsPanel } from "@/components/admin/AdminSailorsPanel";
+import { AdminSailorDuplicatesPanel } from "@/components/admin/AdminSailorDuplicatesPanel";
 import { AdminCompetitionsPanel } from "@/components/admin/AdminCompetitionsPanel";
 import { useAdminAuth } from "@/components/admin/useAdminAuth";
 import { useAdminData } from "@/components/admin/useAdminData";
@@ -31,12 +32,17 @@ import {
   ADMIN_DB_SUB_TABS,
   ADMIN_OPS_SUB_TABS,
   ADMIN_TAB_GROUPS,
+  legacyToArea,
   parseAdminNav,
   serializeAdminNav,
   type AdminActiveTab,
   type AdminEditSubTab,
 } from "@/components/admin/adminNav";
 import { adminLoginOrigin, adminReturnUrl } from "@/lib/adminHost";
+import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
+import { confirmAdminLeave } from "@/components/admin/adminLeaveGuard";
+import { resolveAdminUrlChange } from "@/components/admin/adminNavigationSync";
+import { AdminSidebar, adminPageTitle } from "@/components/admin/AdminSidebar";
 
 const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string }>> = {
   regattas: Trophy,
@@ -210,8 +216,13 @@ function AdminDashboardInner() {
   const setSelectedRegattaIdForResultEdit =
     data.setSelectedRegattaIdForResultEdit;
 
-  const { claimsPendingCount, supportNewCount, coachPendingCount, inboxNotifCount } =
-    useAdminNotifications(isSuperadmin);
+  const {
+    claimsPendingCount,
+    supportNewCount,
+    coachPendingCount,
+    suggestionsCount,
+    inboxNotifCount,
+  } = useAdminNotifications(isSuperadmin);
 
   const results = useAdminResults({
     isSuperadmin,
@@ -261,37 +272,135 @@ function AdminDashboardInner() {
   const { setEditingRegattaId } = regattas;
   const { setEditingResultId } = results;
 
+  const [unknownSheet, setUnknownSheet] = useState<string | null>(null);
+  const [importSheetId, setImportSheetId] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const currentSearch = searchParams.toString();
+  const acceptedSearch = useRef(currentSearch);
+  const approvedSearch = useRef<string | null>(null);
+  const initialSheetPending = useRef(initialNav.regattaId);
+  const shellParam = searchParams.get("shell");
+  const adminShell =
+    shellParam === "sidebar" || shellParam === "legacy"
+      ? shellParam
+      : process.env.NEXT_PUBLIC_ADMIN_SHELL === "sidebar"
+        ? "sidebar"
+        : "legacy";
+
   // Seed results regatta from ?regattaId= before list default kicks in
   useEffect(() => {
     if (!initialNav.regattaId) return;
     setSelectedRegattaIdForResultEdit(initialNav.regattaId);
   }, [initialNav.regattaId, setSelectedRegattaIdForResultEdit]);
 
-  // Keep URL in sync (deep links + refresh-safe context)
   useEffect(() => {
-    const qs = serializeAdminNav({
-      tab: activeTab,
-      sub: editSubTab,
-      regattaId: data.selectedRegattaIdForResultEdit || null,
+    const sheet = data.selectedRegattaIdForResultEdit;
+    if (!sheet) return;
+    if (activeTab !== "regattas" && activeTab !== "import") return;
+    if (data.dataLoading || data.regattaList.length === 0) return;
+    if (data.regattaList.some((row) => row.id === sheet)) {
+      setUnknownSheet(null);
+      return;
+    }
+    setUnknownSheet(sheet);
+    setSelectedRegattaIdForResultEdit("");
+  }, [
+    activeTab,
+    data.dataLoading,
+    data.regattaList,
+    data.selectedRegattaIdForResultEdit,
+    setSelectedRegattaIdForResultEdit,
+  ]);
+
+  // URL changes from Back, Forward, bookmarks, and sidebar links drive the
+  // dashboard. A rejected history move is restored to the last accepted URL.
+  useEffect(() => {
+    const decision = resolveAdminUrlChange({
+      currentSearch,
+      acceptedSearch: acceptedSearch.current,
+      approvedSearch: approvedSearch.current,
+      canLeave: confirmAdminLeave,
     });
-    if (searchParams.toString() === qs) return;
+    approvedSearch.current = null;
+    if (decision.action === "ignore") return;
     const base = pathname || "/admin";
+    if (decision.action === "restore") {
+      router.replace(
+        decision.search ? `${base}?${decision.search}` : base,
+        { scroll: false }
+      );
+      return;
+    }
+    acceptedSearch.current = decision.search;
+    const parsed = parseAdminNav(searchParams);
+    setActiveTab(parsed.tab);
+    setEditSubTab(parsed.sub);
+    setSelectedRegattaIdForResultEdit(
+      parsed.tab === "regattas" || parsed.tab === "import"
+        ? parsed.regattaId || ""
+        : ""
+    );
+  }, [currentSearch, pathname, router, searchParams, setSelectedRegattaIdForResultEdit]);
+
+  // Keep state-driven changes canonical and refresh-safe. Do not normalize a
+  // bookmarked class link until its initial class selection has been applied.
+  useEffect(() => {
+    if (
+      initialSheetPending.current &&
+      data.selectedRegattaIdForResultEdit !== initialSheetPending.current
+    ) {
+      return;
+    }
+    initialSheetPending.current = null;
+    const onEvents = activeTab === "regattas" || activeTab === "import";
+    const sheet = onEvents ? data.selectedRegattaIdForResultEdit || null : null;
+    const event = sheet
+      ? groupRegattaEvents(data.regattaList).events.find(
+          (item) =>
+            item.sheets.some((row) => row.id === sheet) ||
+            item.shells.some((row) => row.id === sheet)
+        )?.slug ?? null
+      : null;
+    const params = new URLSearchParams(
+      serializeAdminNav(
+        {
+          tab: activeTab,
+          sub: editSubTab,
+          regattaId: sheet,
+        },
+        event
+      )
+    );
+    if (adminShell === "sidebar" || shellParam === "legacy") {
+      params.set("shell", adminShell);
+    }
+    const qs = params.toString();
+    if (currentSearch !== acceptedSearch.current) return;
+    if (currentSearch === qs) return;
+    const base = pathname || "/admin";
+    acceptedSearch.current = qs;
     router.replace(qs ? `${base}?${qs}` : base, { scroll: false });
   }, [
     activeTab,
     editSubTab,
     data.selectedRegattaIdForResultEdit,
+    data.regattaList,
     pathname,
     router,
-    searchParams,
+    currentSearch,
+    adminShell,
+    shellParam,
   ]);
 
   const goTab = useCallback((tab: AdminActiveTab) => {
+    if (!confirmAdminLeave()) return;
     setActiveTab(tab);
     if (tab === "edit") {
       setEditSubTab((prev) =>
         prev === "sailors" ||
         prev === "regattas" ||
+        prev === "duplicates" ||
+        prev === "promotions" ||
         prev === "selection"
           ? prev
           : "sailors"
@@ -301,7 +410,6 @@ function AdminDashboardInner() {
         prev === "suggestions" ||
         prev === "claims" ||
         prev === "coaches" ||
-        prev === "promote" ||
         prev === "support" ||
         prev === "audit"
           ? prev
@@ -312,8 +420,16 @@ function AdminDashboardInner() {
 
   const goSub = useCallback(
     (sub: AdminEditSubTab) => {
+      if (!confirmAdminLeave()) return;
       setEditSubTab(sub);
-      setEditingSailorId(null);
+      if (
+        sub !== "sailors" &&
+        sub !== "duplicates" &&
+        sub !== "promotions" &&
+        sub !== "selection"
+      ) {
+        setEditingSailorId(null);
+      }
       setEditingRegattaId(null);
       setEditingResultId(null);
     },
@@ -328,12 +444,46 @@ function AdminDashboardInner() {
     [data.regattaList, data.selectedRegattaIdForResultEdit]
   );
 
+  const openSailorInDirectory = useCallback(
+    (sailorId: string) => {
+      if (!sailors.openSailor(sailorId)) return;
+      setActiveTab("edit");
+      setEditSubTab("sailors");
+    },
+    [sailors]
+  );
+
+  const areaState = legacyToArea({
+    tab: activeTab,
+    sub: editSubTab,
+    regattaId: null,
+  });
+  const pageTitle = adminPageTitle(areaState.area, areaState.view);
+
   const breadcrumbContext = useMemo(() => {
     const crumbs: { label: string; onClick?: () => void }[] = [
       { label: "Admin Console", onClick: () => goTab("edit") },
     ];
 
-    if (activeTab === "regattas") {
+    if (adminShell === "sidebar") {
+      const areaLabel =
+        areaState.area === "events"
+          ? "Events"
+          : areaState.area === "sailors"
+            ? "Sailors"
+            : areaState.area === "inbox"
+              ? "Inbox"
+              : areaState.area === "insights"
+                ? "Insights"
+                : areaState.area === "settings"
+                  ? "Settings"
+                  : "Overview";
+      crumbs.push({ label: areaLabel });
+      if (pageTitle !== areaLabel) crumbs.push({ label: pageTitle });
+      if (areaState.area === "events" && selectedRegatta) {
+        crumbs.push({ label: selectedRegatta.name });
+      }
+    } else if (activeTab === "regattas") {
       crumbs.push({
         label: "Ops",
         onClick: () => goTab("regattas"),
@@ -382,7 +532,16 @@ function AdminDashboardInner() {
     }
 
     return crumbs;
-  }, [activeTab, editSubTab, selectedRegatta, goTab, goSub]);
+  }, [
+    activeTab,
+    adminShell,
+    areaState.area,
+    editSubTab,
+    pageTitle,
+    selectedRegatta,
+    goTab,
+    goSub,
+  ]);
 
 
   if (loading) {
@@ -428,8 +587,26 @@ function AdminDashboardInner() {
     );
   }
 
+  const focusHeading = () => {
+    requestAnimationFrame(() => {
+      document.getElementById("admin-page-title")?.focus();
+    });
+  };
+
   return (
-    <div className="mx-auto max-w-7xl w-full min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 flex-1 flex flex-col gap-4 sm:gap-6 lg:gap-8 overflow-x-clip">
+    <div className={`mx-auto w-full min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 flex-1 gap-4 sm:gap-6 lg:gap-8 overflow-x-clip ${
+      adminShell === "sidebar"
+        ? "max-w-[90rem] md:grid md:grid-cols-[15rem_minmax(0,1fr)] md:items-start"
+        : "max-w-7xl flex flex-col"
+    }`}>
+      {adminShell === "sidebar" && (
+        <a
+          href="#admin-main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-bold focus:text-slate-900"
+        >
+          Skip to content
+        </a>
+      )}
       {/* Context Breadcrumb & Quick Info Bar */}
       <div className="glass-panel rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <nav aria-label="Admin breadcrumb" className="flex items-center gap-1.5 text-xs flex-wrap min-w-0">
@@ -478,6 +655,8 @@ function AdminDashboardInner() {
                 setEditSubTab(
                   claimsPendingCount > 0
                     ? "claims"
+                    : suggestionsCount > 0
+                      ? "suggestions"
                     : coachPendingCount > 0
                       ? "coaches"
                       : "support"
@@ -486,28 +665,10 @@ function AdminDashboardInner() {
               className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 px-3 py-1.5 text-[15px] font-bold text-[var(--sp-color-error)] hover:bg-rose-500/25"
             >
               <UserCheck className="h-3.5 w-3.5" />
-              {claimsPendingCount > 0 && (
-                <span>
-                  {claimsPendingCount} claim
-                  {claimsPendingCount === 1 ? "" : "s"}
-                </span>
-              )}
-              {claimsPendingCount > 0 &&
-                (coachPendingCount > 0 || supportNewCount > 0) && (
-                <span className="text-rose-400/60">·</span>
-              )}
-              {coachPendingCount > 0 && (
-                <span>
-                  {coachPendingCount} coach
-                  {coachPendingCount === 1 ? "" : "es"}
-                </span>
-              )}
-              {coachPendingCount > 0 && supportNewCount > 0 && (
-                <span className="text-rose-400/60">·</span>
-              )}
-              {supportNewCount > 0 && (
-                <span>{supportNewCount} support</span>
-              )}
+              <span>
+                {inboxNotifCount} pending inbox item
+                {inboxNotifCount === 1 ? "" : "s"}
+              </span>
             </button>
           )}
           <Link
@@ -525,7 +686,42 @@ function AdminDashboardInner() {
         </div>
       </div>
 
-      {/* Primary Workspaces Bar */}
+      {adminShell === "sidebar" && (
+        <>
+          <button
+            type="button"
+            className="inline-flex min-h-11 items-center rounded-xl border border-white/15 px-3 text-sm font-bold text-slate-200 md:hidden"
+            aria-expanded={menuOpen}
+            aria-controls="admin-nav"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            {menuOpen ? "Close menu" : "Open menu"}
+          </button>
+          <nav
+            id="admin-nav"
+            aria-label="Admin"
+            className={`${menuOpen ? "block" : "hidden"} md:sticky md:top-4 md:block md:row-span-6 rounded-2xl border border-white/10 bg-[#131520]`}
+          >
+            <AdminSidebar
+              activeArea={areaState.area}
+              sailorsView={areaState.view}
+              inboxView={areaState.view}
+              insightsView={areaState.view}
+              settingsView={areaState.view}
+              inboxCount={inboxNotifCount}
+              changelogUnread={productChangelogUnread}
+              onNavigate={(href) => {
+                if (!confirmAdminLeave()) return false;
+                approvedSearch.current = new URL(href, window.location.href).search.slice(1);
+                setMenuOpen(false);
+                focusHeading();
+                return true;
+              }}
+            />
+          </nav>
+        </>
+      )}
+      {adminShell === "legacy" && (
       <div
         className="grid grid-cols-1 md:grid-cols-12 gap-2 w-full"
         role="tablist"
@@ -584,6 +780,18 @@ function AdminDashboardInner() {
           </div>
         ))}
       </div>
+      )}
+
+      <main id="admin-main" className="min-w-0 flex flex-col gap-4 sm:gap-6">
+      {adminShell === "sidebar" && (
+        <h1
+          id="admin-page-title"
+          tabIndex={-1}
+          className="text-2xl font-black text-white outline-none"
+        >
+          {pageTitle}
+        </h1>
+      )}
 
       {/* Contextual live public view link for active workspace */}
       <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 bg-[#131520] border border-white/5 rounded-2xl px-3.5 py-2">
@@ -700,6 +908,11 @@ function AdminDashboardInner() {
 
         {activeTab === "regattas" && (
           <div className="w-full min-w-0">
+            {unknownSheet && (
+              <p className="mb-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-900" role="alert">
+                That class sheet was not found. Choose a weekend, then a class.
+              </p>
+            )}
             <AdminRegattasPanel
               isSuperadmin={isSuperadmin}
               activeSheetId={data.selectedRegattaIdForResultEdit}
@@ -708,6 +921,11 @@ function AdminDashboardInner() {
                 setActiveTab("regattas");
               }}
               onClearSheet={() => setSelectedRegattaIdForResultEdit("")}
+              onImportClass={(sheetId) => {
+                setImportSheetId(sheetId);
+                setSelectedRegattaIdForResultEdit(sheetId);
+                setActiveTab("import");
+              }}
               resultsEditor={
                 <AdminResultsPanel
                   embedded
@@ -718,6 +936,12 @@ function AdminDashboardInner() {
                   {...results.panelProps}
                 />
               }
+              readinessRevision={JSON.stringify({
+                sheet: selectedRegatta,
+                results: data.resultsList.filter(
+                  (row) => row.regattaId === data.selectedRegattaIdForResultEdit
+                ),
+              })}
               {...regattas.panelProps}
             />
           </div>
@@ -733,7 +957,32 @@ function AdminDashboardInner() {
             onSailorsUpdated={(sailorsList) => data.setSailorList(sailorsList)}
             onRegattaUpserted={data.patchRegattaUpsert}
             onResultsUpdated={data.patchResultsFromImport}
+            targetSheetId={importSheetId}
+            targetEventSlug={
+              importSheetId
+                ? groupRegattaEvents(data.regattaList).events.find(
+                    (item) =>
+                      item.sheets.some((row) => row.id === importSheetId) ||
+                      item.shells.some((row) => row.id === importSheetId)
+                  )?.slug ?? null
+                : activeTab === "import"
+                  ? searchParams.get("event")
+                  : null
+            }
+            targetEvents={groupRegattaEvents(data.regattaList).events.map(
+              (event) => ({
+                slug: event.slug,
+                name: event.name,
+                sheets: event.sheets.map((sheet) => ({
+                  id: sheet.id,
+                  label: `${sheet.boatClass || "Class"}${
+                    sheet.division ? ` · ${sheet.division}` : ""
+                  }`,
+                })),
+              })
+            )}
             onOpenResults={(regattaId) => {
+              setImportSheetId(null);
               setSelectedRegattaIdForResultEdit(regattaId);
               setActiveTab("regattas");
             }}
@@ -748,6 +997,7 @@ function AdminDashboardInner() {
 
         {activeTab === "edit" && (
           <div className="w-full min-w-0 space-y-4 sm:space-y-6">
+            {adminShell === "legacy" && (
             <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
               <div
                 className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full"
@@ -788,6 +1038,7 @@ function AdminDashboardInner() {
                 })}
               </div>
             </div>
+            )}
 
             <div className="w-full min-w-0 min-h-[50vh]">
               {editSubTab === "sailors" && (
@@ -796,6 +1047,27 @@ function AdminDashboardInner() {
                   sailorList={data.sailorList}
                   onSailorsChange={data.setSailorList}
                   {...sailors.panelProps}
+                />
+              )}
+
+              {editSubTab === "duplicates" && (
+                <AdminSailorDuplicatesPanel
+                  duplicatePairs={sailors.panelProps.duplicatePairs}
+                  selectedSailors={sailors.panelProps.selectedSailors}
+                  setSelectedSailors={sailors.panelProps.setSelectedSailors}
+                  ignoreDuplicatePair={sailors.panelProps.ignoreDuplicatePair}
+                  handleMergeSailors={sailors.panelProps.handleMergeSailors}
+                  saving={sailors.panelProps.saving}
+                  isSuperadmin={isSuperadmin}
+                  onOpenSailor={openSailorInDirectory}
+                />
+              )}
+
+              {editSubTab === "promotions" && (
+                <PromoteAdminPanel
+                  isSuperadmin={isSuperadmin}
+                  onPromoted={data.patchSailorPartial}
+                  onOpenSailor={openSailorInDirectory}
                 />
               )}
 
@@ -808,6 +1080,11 @@ function AdminDashboardInner() {
                     setActiveTab("regattas");
                   }}
                   onClearSheet={() => setSelectedRegattaIdForResultEdit("")}
+              onImportClass={(sheetId) => {
+                setImportSheetId(sheetId);
+                setSelectedRegattaIdForResultEdit(sheetId);
+                setActiveTab("import");
+              }}
                   resultsEditor={
                     <AdminResultsPanel
                       embedded
@@ -822,20 +1099,22 @@ function AdminDashboardInner() {
                 />
               )}
 
-              {editSubTab === "selection" && (
+              <div hidden={editSubTab !== "selection"}>
                 <AdminSelectionPanel
                   sailors={data.sailorList}
                   regattas={data.regattaList}
                   results={data.resultsList}
                   onSailorsChange={data.setSailorList}
+                  onOpenSailor={openSailorInDirectory}
                 />
-              )}
+              </div>
             </div>
           </div>
         )}
 
         {activeTab === "ops" && (
           <div className="w-full min-w-0 space-y-4 sm:space-y-6">
+            {adminShell === "legacy" && (
             <div className="-mx-1 px-1 overflow-x-auto overscroll-x-contain scrollbar-thin">
               <div
                 className="flex gap-1 bg-[#131520] border border-white/5 p-1 rounded-2xl w-max min-w-full"
@@ -856,9 +1135,9 @@ function AdminDashboardInner() {
                     }`}
                   >
                     {label}
-                    {id === "suggestions" && regattas.suggestionCount > 0 && (
+                    {id === "suggestions" && suggestionsCount > 0 && (
                       <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-sky-500 px-1 text-[11px] font-black text-white">
-                        {regattas.suggestionCount}
+                        {suggestionsCount}
                       </span>
                     )}
                     {id === "claims" && claimsPendingCount > 0 && (
@@ -880,10 +1159,12 @@ function AdminDashboardInner() {
                 ))}
               </div>
             </div>
+            )}
 
             <div className="w-full min-w-0 min-h-[50vh]">
-              {editSubTab === "suggestions" && (
-                <div className="w-full min-w-0">
+              {areaState.area === "inbox" && (
+                <div className="w-full min-w-0 space-y-4">
+                <div hidden={editSubTab !== "suggestions"}>
                   {isSuperadmin ? (
                     <AdminSuggestionsPanel
                       onRegattaUpdated={data.patchRegattaPartial}
@@ -894,51 +1175,28 @@ function AdminDashboardInner() {
                     </p>
                   )}
                 </div>
-              )}
 
-              {editSubTab === "claims" && (
-                <div className="w-full min-w-0">
+                <div hidden={editSubTab !== "claims"}>
                   <ClaimsAdminPanel isSuperadmin={isSuperadmin} />
                 </div>
-              )}
-              {editSubTab === "coaches" && (
-                <div className="w-full min-w-0">
+                <div hidden={editSubTab !== "coaches"}>
                   <CoachAccessAdminPanel isSuperadmin={isSuperadmin} />
                 </div>
-              )}
-              {editSubTab === "promote" && (
-                <div className="w-full min-w-0">
-                  <PromoteAdminPanel
-                    isSuperadmin={isSuperadmin}
-                    onPromoted={data.patchSailorPartial}
-                  />
-                </div>
-              )}
-              {editSubTab === "support" && (
-                <div className="w-full min-w-0">
+                <div hidden={editSubTab !== "support"}>
                   <SupportInboxPanel isSuperadmin={isSuperadmin} />
                 </div>
-              )}
-
-              {editSubTab === "audit" && (
-                <div className="w-full min-w-0">
-                  <AdminAuditLogPanel isSuperadmin={isSuperadmin} />
                 </div>
               )}
 
-              {/* If URL/state briefly has a DB sub while on Ops, nudge to claims */}
-              {(editSubTab === "sailors" || editSubTab === "regattas") && (
-                <p className="text-sm text-slate-500">
-                  Switch to a triage queue above, or open{" "}
-                  <button
-                    type="button"
-                    className="text-orange-400 font-semibold"
-                    onClick={() => goTab("edit")}
-                  >
-                    Database
-                  </button>
-                  .
-                </p>
+              {areaState.area === "settings" && editSubTab === "audit" && (
+                <div className="w-full min-w-0">
+                  <AdminAuditLogPanel
+                    isSuperadmin={isSuperadmin}
+                    changelogHref={`/admin?area=settings&view=changelog${
+                      adminShell === "sidebar" ? "&shell=sidebar" : ""
+                    }`}
+                  />
+                </div>
               )}
             </div>
           </div>
@@ -982,6 +1240,9 @@ function AdminDashboardInner() {
           <div className="w-full min-w-0">
             <AdminProductChangelogPanel
               onMarkedSeen={markProductChangelogSeen}
+              auditHref={`/admin?area=settings&view=audit${
+                adminShell === "sidebar" ? "&shell=sidebar" : ""
+              }`}
             />
           </div>
         )}
@@ -1001,6 +1262,7 @@ function AdminDashboardInner() {
         handleSaveResult={results.handleSaveResult}
         handleDeleteResult={results.handleDeleteResult}
       />
+      </main>
     </div>
   );
 }

@@ -8,7 +8,10 @@ import {
   defaultDbColVisible,
 } from "@/components/admin/adminConstants";
 import { parseApi, apiErr, apiStr, apiNum } from "@/components/admin/parseApi";
-import { emptySailorForm } from "@/components/admin/adminForms";
+import {
+  emptySailorForm,
+  sailorFormFromAdmin,
+} from "@/components/admin/adminForms";
 import { mergeSailorsClient } from "@/components/admin/mergeSailorsClient";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { birthYear } from "@/lib/age";
@@ -98,6 +101,15 @@ export function useAdminSailors({
   const openSailorResults = (sailorId: string) => {
     setEditingSailorId(null);
     return openSailorResultsBase(sailorId);
+  };
+
+  const openSailor = (sailorId: string) => {
+    const sailor = sailorList.find((row) => row.id === sailorId);
+    if (!sailor) return false;
+    setCompetitionsSailorId(null);
+    setSailorForm(sailorFormFromAdmin(sailor));
+    setEditingSailorId(sailor.id);
+    return true;
   };
 
   // Column prefs
@@ -944,6 +956,7 @@ export function useAdminSailors({
     ignoreDuplicatePair,
     bulkStatus,
     openSailorResults,
+    openSailor,
     competitionsSailorId,
     setCompetitionsSailorId,
     emptySeriesCount,
@@ -958,5 +971,6 @@ export function useAdminSailors({
     editingSailorId,
     setEditingSailorId,
     handleMergePair,
+    openSailor,
   };
 }

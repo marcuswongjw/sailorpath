@@ -40,8 +40,10 @@ function formatDay(iso: string) {
 
 export function AdminProductChangelogPanel({
   onMarkedSeen,
+  auditHref = "/admin?tab=ops&sub=audit",
 }: {
   onMarkedSeen?: () => void;
+  auditHref?: string;
 }) {
   const [areaFilter, setAreaFilter] = useState<ProductChangeArea | "all">(
     "all"
@@ -85,10 +87,10 @@ export function AdminProductChangelogPanel({
           Admin-only record of shipped product updates. Mutation history lives
           under{" "}
           <Link
-            href="/admin?tab=ops&sub=audit"
+            href={auditHref}
             className="text-orange-400 hover:text-orange-300 font-semibold"
           >
-            Ops → Audit
+            Settings → Audit log
           </Link>
           .
         </p>

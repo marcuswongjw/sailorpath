@@ -103,6 +103,7 @@ export type AdminSailorsPanelProps = {
   ignoreDuplicatePair: (aId: string, bId: string) => void;
   bulkStatus: string | null;
   openSailorResults: (id: string) => void | Promise<void>;
+  openSailor: (id: string) => boolean;
   competitionsSailorId: string | null;
   setCompetitionsSailorId: (id: string | null) => void;
   /** Fix Series members with no gold/silver entry */
@@ -362,6 +363,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     ignoreDuplicatePair,
     bulkStatus,
     openSailorResults,
+    openSailor,
     competitionsSailorId,
     setCompetitionsSailorId,
     onCleanupEmptySeries,
@@ -1667,92 +1669,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
-                                      setCompetitionsSailorId(null);
-                                      const d = (v: unknown) =>
-                                        v ? String(v).slice(0, 10) : "";
-                                      setSailorForm({
-                                        ...emptySailorForm(),
-                                        id: s.id,
-                                        name: s.name || "",
-                                        handle: s.handle || "",
-                                        sailNumber: s.sailNumber || "",
-                                        sailNumberIlca4:
-                                          s.sailNumberIlca4 || "",
-                                        club: s.club || "",
-                                        weight: s.weight
-                                          ? s.weight.toString()
-                                          : "",
-                                        nationalSquadStatus:
-                                          s.natSquadStatusJan27 ||
-                                          s.natSquadStatusJul26 ||
-                                          s.nationalSquadStatus ||
-                                          "",
-                                        natSquadStatusJan25:
-                                          s.natSquadStatusJan25 || "",
-                                        natSquadStatusJul25:
-                                          s.natSquadStatusJul25 || "",
-                                        natSquadStatusJan26:
-                                          s.natSquadStatusJan26 || "",
-                                        natSquadStatusJul26:
-                                          s.natSquadStatusJul26 ||
-                                          s.nationalSquadStatus ||
-                                          "",
-                                        natSquadStatusJan27:
-                                          s.natSquadStatusJan27 || "",
-                                        natSquadStatusJul27:
-                                          s.natSquadStatusJul27 || "",
-                                        nationality: s.nationality || "",
-                                        gender: s.gender || "",
-                                        currentFleet: s.currentFleet || "",
-                                        school: s.school || "",
-                                        histRankingJun24:
-                                          s.histRankingJun24 != null
-                                            ? String(s.histRankingJun24)
-                                            : "",
-                                        histRankingDec24:
-                                          s.histRankingDec24 != null
-                                            ? String(s.histRankingDec24)
-                                            : "",
-                                        histRankingJun25:
-                                          s.histRankingJun25 != null
-                                            ? String(s.histRankingJun25)
-                                            : "",
-                                        histRankingDec25:
-                                          s.histRankingDec25 != null
-                                            ? String(s.histRankingDec25)
-                                            : "",
-                                        histRankingJun26:
-                                          s.histRankingJun26 != null
-                                            ? String(s.histRankingJun26)
-                                            : "",
-                                        instagram: s.instagram || "",
-                                        avatarUrl: s.avatarUrl || "",
-                                        dob: d(s.dob),
-                                        bio: s.bio || "",
-                                        goldEntryDate: d(s.goldEntryDate),
-                                        silverEntryDate: d(s.silverEntryDate),
-                                        dropDate: d(s.dropDate),
-                                        worlds:
-                                          s.worlds != null
-                                            ? String(s.worlds)
-                                            : "",
-                                        european:
-                                          s.european != null
-                                            ? String(s.european)
-                                            : "",
-                                        asian:
-                                          s.asian != null
-                                            ? String(s.asian)
-                                            : "",
-                                        seaGames:
-                                          s.seaGames != null
-                                            ? String(s.seaGames)
-                                            : "",
-                                        sailingJourney: s.sailingJourney
-                                          ? String(s.sailingJourney)
-                                          : "",
-                                      });
-                                      setEditingSailorId(s.id);
+                                      openSailor(s.id);
                                     }}
                                     className="inline-flex items-center gap-1 rounded-full border border-[var(--sp-cool-veil)] bg-white px-2.5 py-1 text-[10px] font-bold text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)] shadow-2xs"
                                   >

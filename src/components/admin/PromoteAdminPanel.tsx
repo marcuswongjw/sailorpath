@@ -1,7 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import Link from "next/link";
 import { Trophy, ArrowUpCircle } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
@@ -21,9 +20,11 @@ type Candidate = {
 export function PromoteAdminPanel({
   isSuperadmin,
   onPromoted,
+  onOpenSailor,
 }: {
   isSuperadmin: boolean;
   onPromoted?: (sailor: SailorAdmin) => void;
+  onOpenSailor?: (sailorId: string) => void;
 }) {
   const { toast, confirm } = useFeedback();
   const candidatesQuery = useQuery({
@@ -96,12 +97,13 @@ export function PromoteAdminPanel({
             {candidates.map((c) => (
               <tr key={c.id} className="hover:bg-white/5">
                 <td className="px-4 py-3">
-                  <Link
-                    href={`/${c.handle}`}
+                  <button
+                    type="button"
+                    onClick={() => onOpenSailor?.(c.id)}
                     className="font-bold text-white hover:text-orange-400"
                   >
                     {c.name}
-                  </Link>
+                  </button>
                 </td>
                 <td className="px-4 py-3 font-mono text-slate-400">{c.sailNumber}</td>
                 <td className="px-4 py-3 font-mono">

@@ -43,8 +43,10 @@ function entityHref(row: AuditRow): string | null {
 
 export function AdminAuditLogPanel({
   isSuperadmin,
+  changelogHref = "/admin?tab=changelog",
 }: {
   isSuperadmin: boolean;
+  changelogHref?: string;
 }) {
   const [days, setDays] = useState(30);
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -77,7 +79,7 @@ export function AdminAuditLogPanel({
           Live record of imports, sailor edits, promote, claims, and other
           superadmin writes. Product ships are under{" "}
           <Link
-            href="/admin?tab=changelog"
+            href={changelogHref}
             className="text-orange-400 hover:text-orange-300 font-semibold"
           >
             Change log

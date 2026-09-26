@@ -3,7 +3,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import { regattas, regattaResults, wingfoilRegattas, techno293Regattas } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { auditAdminMutation } from "@/lib/adminChangeLog";
 import type { WingfoilRegatta } from "@/lib/wingfoil";
 import type { Techno293Regatta } from "@/lib/techno293";
@@ -11,6 +11,7 @@ import {
   isRegattaLifecycleStatus,
   REGATTA_LIFECYCLE_STATUSES,
 } from "@/lib/regattaStatus";
+import { publicationReadiness } from "@/lib/admin/publicationReadiness";
 
 export async function POST(
   req: Request,
@@ -48,23 +49,32 @@ export async function POST(
     if (existingDinghy) {
       // Validate schema when moving to published
       if (targetStatus === "published") {
-        if (!existingDinghy.name || !existingDinghy.date) {
+        const [countRow] = await db
+          .select({ n: sql<number>`count(*)::int` })
+          .from(regattaResults)
+          .where(eq(regattaResults.regattaId, id));
+        const readiness = publicationReadiness({
+          name: existingDinghy.name,
+          date: existingDinghy.date ? String(existingDinghy.date).slice(0, 10) : null,
+          boatClass: existingDinghy.boatClass,
+          division: existingDinghy.division,
+          totalFleetSize: existingDinghy.totalFleetSize,
+          raceCount: existingDinghy.raceCount,
+          countsForRanking: existingDinghy.countsForRanking,
+          resultCount: countRow?.n ?? 0,
+          status: existingDinghy.status,
+        });
+        if (readiness.summary === "blocked" || readiness.summary === "incomplete") {
           return NextResponse.json(
-            { error: "Validation failed: Regatta requires a name and date before publishing." },
+            {
+              error:
+                readiness.summary === "blocked"
+                  ? "This class is blocked from publishing."
+                  : "Complete the required class information before publishing.",
+              readiness,
+            },
             { status: 422 }
           );
-        }
-
-        // Verify competitor results exist
-        const resultsCount = await db
-          .select()
-          .from(regattaResults)
-          .where(eq(regattaResults.regattaId, id))
-          .limit(1);
-
-        // If no results entered and totalFleetSize > 0, check warning
-        if (resultsCount.length === 0 && existingDinghy.totalFleetSize > 0) {
-          // Warning: Publishing without scorecard
         }
       }
 
