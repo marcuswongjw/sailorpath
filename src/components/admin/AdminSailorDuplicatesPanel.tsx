@@ -1,6 +1,7 @@
 "use client";
 
-import { AlertTriangle, CheckCircle, UserCheck } from "lucide-react";
+import { useState } from "react";
+import { AlertTriangle, CheckCircle, UsersRound, UserCheck } from "lucide-react";
 import type { DuplicatePair } from "@/components/admin/AdminSailorsPanel";
 
 export function AdminSailorDuplicatesPanel({
@@ -22,6 +23,22 @@ export function AdminSailorDuplicatesPanel({
   isSuperadmin: boolean;
   onOpenSailor: (id: string) => void;
 }) {
+  const [bulkMerging, setBulkMerging] = useState(false);
+  const mergeHighConfidence = async () => {
+    if (!window.confirm("Merge every sailor match scored 99% or higher? This combines their results and removes the duplicate profiles.")) return;
+    setBulkMerging(true);
+    try {
+      const response = await fetch("/api/admin/sailors/bulk-merge-high-similarity", { method: "POST" });
+      const data = await response.json() as { error?: string; message?: string };
+      if (!response.ok) throw new Error(data.error || "Bulk merge failed");
+      window.alert(data.message || "High-confidence duplicates merged.");
+      window.location.reload();
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Bulk merge failed");
+      setBulkMerging(false);
+    }
+  };
+
   return (
     <section className="space-y-4" aria-labelledby="duplicate-sailors-title">
       <div className="glass-panel rounded-2xl border border-white/5 p-5">
@@ -38,6 +55,16 @@ export function AdminSailorDuplicatesPanel({
               Review likely matches, select a pair, then merge the records.
             </p>
           </div>
+          <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            disabled={!isSuperadmin || saving || bulkMerging}
+            onClick={() => void mergeHighConfidence()}
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-amber-400/40 px-4 text-sm font-bold text-amber-200 hover:bg-amber-500/10 disabled:opacity-40"
+          >
+            <UsersRound className="h-4 w-4" aria-hidden="true" />
+            {bulkMerging ? "Merging…" : "Merge all 99%+"}
+          </button>
           <button
             type="button"
             disabled={
@@ -49,6 +76,7 @@ export function AdminSailorDuplicatesPanel({
             <UserCheck className="h-4 w-4" aria-hidden="true" />
             Merge selected pair
           </button>
+          </div>
         </div>
       </div>
 
