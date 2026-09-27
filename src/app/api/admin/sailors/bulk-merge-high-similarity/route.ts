@@ -83,23 +83,29 @@ export async function POST() {
       groups.set(root, [...(groups.get(root) ?? []), sailor]);
     }
 
-    let mergedCount = 0;
-    const mergedPairs: string[] = [];
-
-    mergeGroups: for (const members of groups.values()) {
+    const batch: Array<{
+      survivor: (typeof allSailors)[number];
+      duplicate: (typeof allSailors)[number];
+    }> = [];
+    for (const members of groups.values()) {
       const [survivor, ...duplicates] = [...members].sort(
-        (a, b) => getScore(b) - getScore(a) || a.createdAt.getTime() - b.createdAt.getTime()
+        (a, b) =>
+          getScore(b) - getScore(a) ||
+          a.createdAt.getTime() - b.createdAt.getTime()
       );
-      for (const duplicate of duplicates) {
-      if (mergedCount >= MAX_MERGES_PER_REQUEST) break mergeGroups;
-      try {
+      if (duplicates[0]) batch.push({ survivor, duplicate: duplicates[0] });
+      if (batch.length >= MAX_MERGES_PER_REQUEST) break;
+    }
+
+    const mergedPairs: string[] = [];
+    const outcomes = await Promise.all(
+      batch.map(async ({ survivor, duplicate }) => {
+        try {
         await mergeSailors({
           keepId: survivor.id,
           mergeId: duplicate.id,
           forceOwnershipConflict: true,
         });
-        
-        mergedCount++;
         mergedPairs.push(`${survivor.name} + ${duplicate.name}`);
 
         void logAdminChange({
@@ -113,18 +119,21 @@ export async function POST() {
           source: "/api/admin/sailors/bulk-merge-high-similarity",
           requestId,
         });
-      } catch (e) {
-        console.error(`Failed to merge ${survivor.id} and ${duplicate.id}:`, e);
-      }
-      }
-    }
+          return true;
+        } catch (e) {
+          console.error(`Failed to merge ${survivor.id} and ${duplicate.id}:`, e);
+          return false;
+        }
+      })
+    );
+    const mergedCount = outcomes.filter(Boolean).length;
 
     await revalidatePublicRankings();
 
     return NextResponse.json({
       message: `Successfully merged ${mergedCount} high-similarity duplicate pairs.`,
       count: mergedCount,
-      hasMore: mergedCount >= MAX_MERGES_PER_REQUEST,
+      hasMore: batch.length >= MAX_MERGES_PER_REQUEST,
       merged: mergedPairs,
       durationMs: Date.now() - t0,
     });
