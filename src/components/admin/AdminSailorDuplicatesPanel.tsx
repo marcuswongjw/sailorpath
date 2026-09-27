@@ -28,10 +28,15 @@ export function AdminSailorDuplicatesPanel({
     if (!window.confirm("Merge every sailor match scored 99% or higher? This combines their results and removes the duplicate profiles.")) return;
     setBulkMerging(true);
     try {
-      const response = await fetch("/api/admin/sailors/bulk-merge-high-similarity", { method: "POST" });
-      const data = await response.json() as { error?: string; message?: string };
-      if (!response.ok) throw new Error(data.error || "Bulk merge failed");
-      window.alert(data.message || "High-confidence duplicates merged.");
+      let total = 0;
+      for (let batch = 0; batch < 50; batch += 1) {
+        const response = await fetch("/api/admin/sailors/bulk-merge-high-similarity", { method: "POST" });
+        const data = await response.json() as { error?: string; count?: number; hasMore?: boolean };
+        if (!response.ok) throw new Error(data.error || "Bulk merge failed");
+        total += data.count ?? 0;
+        if (!data.hasMore) break;
+      }
+      window.alert(`Merged ${total} high-confidence duplicate profile${total === 1 ? "" : "s"}.`);
       window.location.reload();
     } catch (error) {
       window.alert(error instanceof Error ? error.message : "Bulk merge failed");

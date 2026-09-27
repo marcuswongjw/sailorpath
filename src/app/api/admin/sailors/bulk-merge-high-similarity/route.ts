@@ -9,6 +9,7 @@ import { logAdminChange } from "@/lib/adminChangeLog";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 export const maxDuration = 300;
+const MAX_MERGES_PER_REQUEST = 15;
 
 export async function POST() {
   const requestId = createAdminRequestId();
@@ -85,11 +86,12 @@ export async function POST() {
     let mergedCount = 0;
     const mergedPairs: string[] = [];
 
-    for (const members of groups.values()) {
+    mergeGroups: for (const members of groups.values()) {
       const [survivor, ...duplicates] = [...members].sort(
         (a, b) => getScore(b) - getScore(a) || a.createdAt.getTime() - b.createdAt.getTime()
       );
       for (const duplicate of duplicates) {
+      if (mergedCount >= MAX_MERGES_PER_REQUEST) break mergeGroups;
       try {
         await mergeSailors({
           keepId: survivor.id,
@@ -122,6 +124,7 @@ export async function POST() {
     return NextResponse.json({
       message: `Successfully merged ${mergedCount} high-similarity duplicate pairs.`,
       count: mergedCount,
+      hasMore: mergedCount >= MAX_MERGES_PER_REQUEST,
       merged: mergedPairs,
       durationMs: Date.now() - t0,
     });
