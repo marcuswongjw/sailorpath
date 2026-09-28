@@ -300,7 +300,23 @@ export const CINCAPURA_2026_EVENT: RegattaEventDef = {
   noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/14587/event",
   officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14587/event",
   registrationUrl: "https://www.sailing.org.sg/events/356060",
-  slices: fleetSlices("cincapura", "2026", ["gold", "silver", "ilca4", "ilca6"]),
+  slices: [
+    ...fleetSlices("cincapura", "2026", ["gold", "silver", "ilca4", "ilca6"]),
+    {
+      key: "29er",
+      label: "29er",
+      series: "29er",
+      slugIncludes: ["cincapura", "2026", "29er"],
+      prizeFleetName: "29er",
+    },
+    {
+      key: "techno-293",
+      label: "Techno 293",
+      series: "techno293",
+      slugIncludes: ["cincapura", "2026", "techno-293"],
+      prizeFleetName: "Techno 293",
+    },
+  ],
 };
 
 export const PESTA_SUKAN_2025_EVENT: RegattaEventDef = {
@@ -389,7 +405,30 @@ export const SYSC_2026_EVENT: RegattaEventDef = {
   organizer: "Singapore Sailing Federation",
   noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/13601/event",
   officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/13601/event",
-  slices: fleetSlices("sysc", "2026", ["gold", "silver", "ilca4", "ilca6"]),
+  slices: [
+    ...fleetSlices("sysc", "2026", ["gold", "silver", "ilca4", "ilca6"]),
+    {
+      key: "29er",
+      label: "29er",
+      series: "29er",
+      slugIncludes: ["sysc", "2026", "29er"],
+      prizeFleetName: "29er",
+    },
+    {
+      key: "techno-293",
+      label: "Techno 293",
+      series: "techno293",
+      slugIncludes: ["sysc", "2026", "techno-293"],
+      prizeFleetName: "Techno 293",
+    },
+    {
+      key: "iqfoil",
+      label: "iQFOiL",
+      series: "iqfoil",
+      slugIncludes: ["sysc", "2026", "iqfoil"],
+      prizeFleetName: "iQFOiL",
+    },
+  ],
 };
 
 export const SELECTION_TRIALS_2026_EVENT: RegattaEventDef = {
