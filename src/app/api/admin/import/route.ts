@@ -835,6 +835,7 @@ export async function POST(req: Request) {
                 ilca4NationalList: sailors.ilca4NationalList,
                 silverEntryDate: sailors.silverEntryDate,
                 goldEntryDate: sailors.goldEntryDate,
+                parentId: sailors.parentId,
               })
               .from(sailors)
               .where(or(...candidateConditions))
@@ -1105,6 +1106,7 @@ export async function POST(req: Request) {
             ilca4NationalList: false,
             silverEntryDate: null,
             goldEntryDate: null,
+            parentId: null,
           };
           sailorList.push(fullGuest);
           aliasList.push({ sailorId: newGuestId, aliasName: row.name });
@@ -1245,7 +1247,10 @@ export async function POST(req: Request) {
         }
 
         const isNewGuest = createdGuests.some((g) => g.id === sailorId);
-        if (!isNewGuest && profileChanged) {
+        const isClaimed = Boolean(existing?.parentId);
+        // Once claimed, sailor/parent edits are recognised as correct and final.
+        // Never overwrite claimed profiles during regatta result imports.
+        if (!isNewGuest && !isClaimed && profileChanged) {
           const cleanPatch: Record<string, unknown> = {};
           for (const [k, v] of Object.entries(profilePatch)) {
             if (v !== undefined) cleanPatch[k] = v;

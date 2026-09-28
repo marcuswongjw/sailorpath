@@ -163,9 +163,15 @@ export function AdminAuditLogPanel({
                             ? new Date(row.createdAt).toLocaleString()
                             : "—"}
                         </span>
-                        <span className="rounded-full bg-white/5 border border-white/10 px-1.5 py-0.5 font-bold uppercase text-slate-400">
-                          {row.action}
-                        </span>
+                        {row.action === "claimed_profile.updated" ? (
+                          <span className="rounded-full bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 font-bold uppercase text-emerald-300">
+                            Claimed Profile Update
+                          </span>
+                        ) : (
+                          <span className="rounded-full bg-white/5 border border-white/10 px-1.5 py-0.5 font-bold uppercase text-slate-400">
+                            {row.action}
+                          </span>
+                        )}
                         <span className="text-slate-600">
                           {row.entityType}
                           {row.entityLabel ? ` · ${row.entityLabel}` : ""}

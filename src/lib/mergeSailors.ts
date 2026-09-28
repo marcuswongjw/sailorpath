@@ -518,6 +518,37 @@ export async function mergeSailors({
       fill.ownerRelation =
         mergeSailor.ownerRelation || keepSailor.ownerRelation || null;
       ownershipTransferred = true;
+      // When merging a claimed profile into an unclaimed one, the claimed
+      // sailor/parent edits are recognised as correct and final:
+      for (const field of [
+        "name",
+        "bio",
+        "instagram",
+        "avatarUrl",
+        "school",
+        "club",
+        "sailNumber",
+        "sailNumberIlca4",
+        "dob",
+        "weight",
+        "sailingJourney",
+        "gender",
+        "nationality",
+        "hullBrand",
+        "sailMake",
+        "foilBrand",
+        "mast",
+        "equipmentNotes",
+        "hullBrandIlca4",
+        "sailMakeIlca4",
+        "foilBrandIlca4",
+        "mastIlca4",
+        "equipmentNotesIlca4",
+      ] as const) {
+        if (mergeSailor[field] != null && mergeSailor[field] !== "") {
+          fill[field] = mergeSailor[field];
+        }
+      }
     }
     if (Object.keys(fill).length > 1) {
       await tx.update(sailors).set(fill).where(eq(sailors.id, keepId));

@@ -7,6 +7,7 @@ import { equipmentLogs, regattaResults, sailorAliases, sailors } from "@/db/sche
 import { birthYear } from "@/lib/age";
 import { validateHandle } from "@/lib/handles";
 import { normalizeDob, cleanOptimistSailNumber } from "@/lib/normalize";
+import { notifySuperadminClaimedProfileUpdate } from "@/lib/notifications";
 import {
   asHttpUrl,
   asOptionalNumber,
@@ -39,16 +40,27 @@ export async function PATCH(req: Request) {
     const [sailor] = await db
       .select({
         id: sailors.id,
+        name: sailors.name,
         parentId: sailors.parentId,
+        ownerRelation: sailors.ownerRelation,
         handle: sailors.handle,
+        bio: sailors.bio,
+        instagram: sailors.instagram,
+        avatarUrl: sailors.avatarUrl,
+        school: sailors.school,
+        club: sailors.club,
+        sailNumber: sailors.sailNumber,
+        sailNumberIlca4: sailors.sailNumberIlca4,
+        dob: sailors.dob,
+        weight: sailors.weight,
+        isPublicWeight: sailors.isPublicWeight,
+        isPublicDob: sailors.isPublicDob,
+        sailingJourney: sailors.sailingJourney,
         hullBrand: sailors.hullBrand,
         sailMake: sailors.sailMake,
         foilBrand: sailors.foilBrand,
         mast: sailors.mast,
         equipmentNotes: sailors.equipmentNotes,
-        // ILCA 4 equipment must be selected too — the change-detection loop
-        // below compares against these values to decide whether to write an
-        // equipment log row.
         hullBrandIlca4: sailors.hullBrandIlca4,
         sailMakeIlca4: sailors.sailMakeIlca4,
         foilBrandIlca4: sailors.foilBrandIlca4,
@@ -299,6 +311,56 @@ export async function PATCH(req: Request) {
         });
       } catch (e) {
         console.warn("equipment log insert skipped", e);
+      }
+    }
+
+    // Notify superadmin of changes made to claimed athlete profiles
+    if (updated && sailor.parentId) {
+      const changedFields: Record<string, { from: unknown; to: unknown }> = {};
+      const compareKeys = [
+        "handle",
+        "bio",
+        "instagram",
+        "avatarUrl",
+        "school",
+        "club",
+        "sailNumber",
+        "sailNumberIlca4",
+        "dob",
+        "weight",
+        "isPublicWeight",
+        "isPublicDob",
+        "sailingJourney",
+        "hullBrand",
+        "sailMake",
+        "foilBrand",
+        "mast",
+        "equipmentNotes",
+        "hullBrandIlca4",
+        "sailMakeIlca4",
+        "foilBrandIlca4",
+        "mastIlca4",
+        "equipmentNotesIlca4",
+      ] as const;
+
+      for (const k of compareKeys) {
+        const prev = sailor[k as keyof typeof sailor];
+        const next = updated[k as keyof typeof updated];
+        if (prev !== next && (prev != null || next != null)) {
+          changedFields[k] = { from: prev ?? null, to: next ?? null };
+        }
+      }
+
+      if (Object.keys(changedFields).length > 0) {
+        void notifySuperadminClaimedProfileUpdate({
+          sailorId,
+          sailorName: sailor.name,
+          sailorHandle: updated.handle,
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          actorRelation: sailor.ownerRelation,
+          changedFields,
+        });
       }
     }
 

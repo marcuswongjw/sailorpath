@@ -14,6 +14,7 @@ import {
   UserPlus,
   X,
   Search,
+  ExternalLink,
 } from "lucide-react";
 import {
   relationLabel,
@@ -47,13 +48,40 @@ const RELATIONS: ClaimRelation[] = ["parent", "sailor", "other"];
 export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
   const { toast, confirm } = useFeedback();
   const [filter, setFilter] = useState<
-    "all" | "pending" | "approved" | "rejected"
+    "all" | "pending" | "approved" | "rejected" | "updates"
   >("pending");
   /** Per-claim relation selection before approve / update */
   const [relationDraft, setRelationDraft] = useState<
     Record<string, ClaimRelation>
   >({});
   const [busyId, setBusyId] = useState<string | null>(null);
+
+  const updatesQuery = useQuery({
+    queryKey: ["admin", "claimed-profile-updates"],
+    enabled: isSuperadmin,
+    queryFn: async () => {
+      try {
+        const res = await fetch("/api/admin/change-log?days=30&limit=100");
+        const data = await res.json();
+        if (!res.ok) return [];
+        const allChanges = (data.changes || []) as Array<{
+          id: string;
+          createdAt: string;
+          actorEmail: string | null;
+          action: string;
+          entityType: string;
+          entityId: string | null;
+          entityLabel: string | null;
+          summary: string;
+          details: string | null;
+        }>;
+        return allChanges.filter((c) => c.action === "claimed_profile.updated");
+      } catch {
+        return [];
+      }
+    },
+  });
+  const claimedUpdates = updatesQuery.data || [];
 
   // Assign user to sailor state
   const [isAssignOpen, setIsAssignOpen] = useState(false);
@@ -263,7 +291,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
-          {(["pending", "approved", "rejected", "all"] as const).map((f) => (
+          {(["pending", "approved", "rejected", "updates", "all"] as const).map((f) => (
             <button
               key={f}
               type="button"
@@ -274,10 +302,25 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   : "bg-white/5 text-slate-400 border border-white/10"
               }`}
             >
-              {f}
-              {f !== "all" && (
+              {f === "updates" ? "Profile Updates" : f}
+              {f === "pending" && (
                 <span className="ml-1 opacity-70">
-                  ({claims.filter((c) => c.status === f).length})
+                  ({claims.filter((c) => c.status === "pending").length})
+                </span>
+              )}
+              {f === "approved" && (
+                <span className="ml-1 opacity-70">
+                  ({claims.filter((c) => c.status === "approved").length})
+                </span>
+              )}
+              {f === "rejected" && (
+                <span className="ml-1 opacity-70">
+                  ({claims.filter((c) => c.status === "rejected").length})
+                </span>
+              )}
+              {f === "updates" && (
+                <span className="ml-1 opacity-70">
+                  ({claimedUpdates.length})
                 </span>
               )}
             </button>
@@ -299,8 +342,94 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       {loading && <p className="text-xs text-slate-500">Loading…</p>}
       {error && <p className="text-xs text-rose-400">{error}</p>}
 
-      <div className="w-full space-y-3">
-        {visible.map((c) => {
+      {filter === "updates" ? (
+        <div className="w-full space-y-3">
+          {claimedUpdates.length === 0 ? (
+            <AdminEmptyState
+              icon={Inbox}
+              title="No claimed profile updates yet"
+              description="When parents or sailors edit their claimed profile details (age, sail number, equipment, etc.), changes are recorded here as recognised and final."
+            />
+          ) : (
+            claimedUpdates.map((item) => {
+              let parsedDetails: {
+                changedFields?: Record<string, { from: unknown; to: unknown }>;
+                fieldDescriptions?: string[];
+                actorRelation?: string;
+                sailorHandle?: string;
+              } | null = null;
+              if (item.details) {
+                try {
+                  parsedDetails = JSON.parse(item.details);
+                } catch {
+                  parsedDetails = null;
+                }
+              }
+              const sailorUrl = parsedDetails?.sailorHandle
+                ? `/${parsedDetails.sailorHandle}`
+                : item.entityId
+                ? `/sailors/${item.entityId}`
+                : null;
+
+              return (
+                <div
+                  key={item.id}
+                  className="glass-card rounded-xl border border-white/5 p-4 sm:p-5 space-y-3 text-left"
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className="font-bold text-white text-sm">
+                          {item.entityLabel || "Claimed Sailor"}
+                        </h4>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                          Recognised & Final
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        Updated by {item.actorEmail || "parent/sailor"}{" "}
+                        {parsedDetails?.actorRelation ? `(${parsedDetails.actorRelation})` : ""} ·{" "}
+                        {item.createdAt ? new Date(item.createdAt).toLocaleString() : "Recently"}
+                      </p>
+                    </div>
+                    {sailorUrl && (
+                      <Link
+                        href={sailorUrl}
+                        target="_blank"
+                        className="text-xs font-bold text-orange-400 hover:text-orange-300 flex items-center gap-1.5 transition-colors"
+                      >
+                        <span>View Profile</span>
+                        <ExternalLink className="h-3 w-3" />
+                      </Link>
+                    )}
+                  </div>
+
+                  {parsedDetails?.fieldDescriptions && parsedDetails.fieldDescriptions.length > 0 ? (
+                    <div className="bg-white/5 rounded-xl p-3 border border-white/10 space-y-1">
+                      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
+                        Modified Fields:
+                      </p>
+                      <ul className="list-disc list-inside space-y-1 text-xs text-slate-200">
+                        {parsedDetails.fieldDescriptions.map((desc, idx) => (
+                          <li key={idx} className="font-mono text-[11px]">
+                            {desc}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p className="text-xs text-slate-300 bg-white/5 rounded-xl p-3 border border-white/10">
+                      {item.summary}
+                    </p>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </div>
+      ) : (
+        <div className="w-full space-y-3">
+          {visible.map((c) => {
           const effectiveRelation = (c.effectiveRelation || "parent") as ClaimRelation;
           const draft = relationDraft[c.id] ||
             (RELATIONS.includes(effectiveRelation) ? effectiveRelation : "parent");
@@ -504,6 +633,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
           </div>
         )}
       </div>
+      )}
       {/* Assign User to Sailor Modal */}
       {isAssignOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">

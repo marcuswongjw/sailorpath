@@ -22,6 +22,8 @@ import {
   Trophy,
   ExternalLink,
   Medal,
+  Save,
+  X,
 } from "lucide-react";
 import {
   ILCA_FLEETS,
@@ -519,13 +521,11 @@ export function AdminResultsPanel({
         />
       )}
 
-      {/* Result Form Card */}
-      {editingResultId && (
+      {/* Result Form Card (for adding new scores) */}
+      {editingResultId === "new" && (
         <div className="glass-panel rounded-3xl p-6 border border-slate-200 space-y-4 shadow-sm">
           <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
-            {editingResultId === "new"
-              ? "Add Sailor Regatta Result"
-              : "Edit Sailor Regatta Result"}
+            Add Sailor Regatta Result
           </h3>
           {regattaList.find((r) => r.id === resultForm.regattaId)
             ?.countsForRanking === false && (
@@ -773,8 +773,145 @@ export function AdminResultsPanel({
                   })();
                   return (
                     <Fragment key={res.id}>
-                      <tr
-                        className={`hover:bg-white/[0.03] transition-colors ${
+                      {editingResultId === res.id ? (
+                        <tr className="bg-orange-50/90 border-y-2 border-orange-500 shadow-sm transition-all">
+                          <td colSpan={9 + raceNumbers.length} className="p-4 sm:p-5">
+                            <div className="space-y-4">
+                              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-orange-200 pb-3">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-600 text-white font-mono font-black text-sm shadow-xs">
+                                    {resultForm.rank || "—"}
+                                  </div>
+                                  <div>
+                                    <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                                      <span>Edit Result:</span>
+                                      <span className="text-orange-950 font-black">{sailor?.name || "Competitor"}</span>
+                                    </h4>
+                                    <p className="text-xs text-slate-600 font-medium">
+                                      {[sailor?.sailNumber ? `Sail #${sailor.sailNumber}` : null, sailor?.club, sailor?.gender, birthY !== "—" ? `Born ${birthY}` : null].filter(Boolean).join(" · ")}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    type="button"
+                                    onClick={() => setEditingResultId(null)}
+                                    className="rounded-full border border-slate-300 bg-white hover:bg-slate-50 px-3.5 py-1.5 text-xs font-bold text-slate-700 shadow-xs transition-colors"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    type="button"
+                                    disabled={!isSuperadmin || saving}
+                                    onClick={() => void handleSaveResult()}
+                                    className="rounded-full bg-orange-600 hover:bg-orange-500 px-4 py-1.5 text-xs font-bold text-white disabled:opacity-40 shadow-xs flex items-center gap-1.5 transition-colors"
+                                  >
+                                    <Save className="w-3.5 h-3.5" />
+                                    {saving ? "Saving…" : "Save Result"}
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+                                <div>
+                                  <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
+                                    Rank (Place)
+                                  </label>
+                                  <input
+                                    type="number"
+                                    value={resultForm.rank}
+                                    onChange={(e) => setResultForm({ ...resultForm, rank: e.target.value })}
+                                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-slate-900 text-xs font-mono font-bold focus:outline-none focus:border-orange-500 shadow-xs"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
+                                    Nett Score
+                                  </label>
+                                  <input
+                                    type="number"
+                                    step="any"
+                                    value={resultForm.nettScore}
+                                    onChange={(e) => setResultForm({ ...resultForm, nettScore: e.target.value })}
+                                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-slate-900 text-xs font-mono focus:outline-none focus:border-orange-500 shadow-xs"
+                                    placeholder="Optional"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
+                                    Total Score
+                                  </label>
+                                  <input
+                                    type="number"
+                                    step="any"
+                                    value={resultForm.totalScore}
+                                    onChange={(e) => setResultForm({ ...resultForm, totalScore: e.target.value })}
+                                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-slate-900 text-xs font-mono focus:outline-none focus:border-orange-500 shadow-xs"
+                                    placeholder="Optional"
+                                  />
+                                </div>
+                                <div>
+                                  <label className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
+                                    Competitor
+                                  </label>
+                                  <select
+                                    value={resultForm.sailorId}
+                                    onChange={(e) => setResultForm({ ...resultForm, sailorId: e.target.value })}
+                                    className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-2 py-1.5 text-slate-900 text-xs font-medium focus:outline-none focus:border-orange-500 shadow-xs"
+                                  >
+                                    <option value="" disabled>-- Select Sailor --</option>
+                                    {sailorList.map((s) => (
+                                      <option key={s.id} value={s.id}>
+                                        {s.name} ({s.sailNumber || "No #"}{s.club ? ` · ${s.club}` : ""})
+                                      </option>
+                                    ))}
+                                  </select>
+                                </div>
+                                <div className="flex flex-col justify-center sm:col-span-2 gap-1.5">
+                                  <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-slate-800">
+                                    <input
+                                      type="checkbox"
+                                      checked={Boolean(resultForm.isDNS || resultForm.isDns)}
+                                      onChange={(e) => {
+                                        const on = e.target.checked;
+                                        const reg = regattaList.find((r) => r.id === resultForm.regattaId);
+                                        const dnsPts = dnsPointsFromResults(reg?.id || resultForm.regattaId, resultsList);
+                                        setResultForm({
+                                          ...resultForm,
+                                          isDNS: on,
+                                          isDns: on,
+                                          ...(on ? { rank: dnsPts } : {}),
+                                        });
+                                      }}
+                                      className="rounded border-slate-300 text-orange-600 focus:ring-orange-500 h-4 w-4"
+                                    />
+                                    <span>Did Not Start (DNS)</span>
+                                  </label>
+                                  <label className="flex items-center gap-2 cursor-pointer text-xs font-bold text-teal-900">
+                                    <input
+                                      type="checkbox"
+                                      checked={Boolean(resultForm.isOverseasCommitment)}
+                                      onChange={(e) => {
+                                        const on = e.target.checked;
+                                        setResultForm({
+                                          ...resultForm,
+                                          isOverseasCommitment: on,
+                                          isDNS: on ? false : resultForm.isDNS,
+                                          isDns: on ? false : resultForm.isDns,
+                                        });
+                                      }}
+                                      className="rounded border-slate-300 text-teal-600 focus:ring-teal-500 h-4 w-4"
+                                    />
+                                    <span>Overseas commitment (SSF)</span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ) : (
+                        <tr
+                          className={`hover:bg-white/[0.03] transition-colors ${
                         overseas
                           ? "bg-sky-500/[0.04]"
                           : dns
@@ -1099,7 +1236,8 @@ export function AdminResultsPanel({
                         </div>
                       </td>
                     </tr>
-                    {expandedResultId === res.id && res.raceResults && res.raceResults.length > 0 && (
+                  )}
+                  {expandedResultId === res.id && res.raceResults && res.raceResults.length > 0 && (
                       <tr className="bg-slate-50 border-b border-slate-200">
                         <td colSpan={9 + raceNumbers.length} className="px-4 sm:px-6 py-3">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">

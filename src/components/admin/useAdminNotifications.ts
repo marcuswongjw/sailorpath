@@ -57,6 +57,23 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     },
   });
 
+  const claimedUpdatesQuery = useQuery({
+    queryKey: ["admin", "claimed-profile-updates-count"],
+    enabled: isSuperadmin,
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      try {
+        const res = await fetch("/api/admin/change-log?days=7&limit=50");
+        const data = await res.json();
+        if (!res.ok) return 0;
+        const changes = (data.changes || []) as Array<{ action: string }>;
+        return changes.filter((c) => c.action === "claimed_profile.updated").length;
+      } catch {
+        return 0;
+      }
+    },
+  });
+
   const claimsPendingCount = (claimsQuery.data ?? []).filter(
     (claim) => claim.status === "pending"
   ).length;
@@ -65,15 +82,21 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     (request) => request.status === "pending"
   ).length;
   const suggestionsCount = Number(suggestionsQuery.data?.count ?? 0);
+  const claimedUpdatesCount = claimedUpdatesQuery.data ?? 0;
 
   const inboxNotifCount =
-    claimsPendingCount + supportNewCount + coachPendingCount + suggestionsCount;
+    claimsPendingCount +
+    supportNewCount +
+    coachPendingCount +
+    suggestionsCount +
+    claimedUpdatesCount;
 
   return {
     claimsPendingCount,
     supportNewCount,
     coachPendingCount,
     suggestionsCount,
+    claimedUpdatesCount,
     inboxNotifCount,
   };
 }

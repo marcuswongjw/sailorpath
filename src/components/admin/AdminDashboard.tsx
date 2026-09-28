@@ -245,6 +245,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     supportNewCount,
     coachPendingCount,
     suggestionsCount,
+    claimedUpdatesCount,
     inboxNotifCount,
   } = useAdminNotifications(isSuperadmin);
 
@@ -1180,9 +1181,12 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                         {suggestionsCount}
                       </span>
                     )}
-                    {id === "claims" && claimsPendingCount > 0 && (
-                      <span className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[11px] font-black text-white">
-                        {claimsPendingCount}
+                    {id === "claims" && (claimsPendingCount > 0 || claimedUpdatesCount > 0) && (
+                      <span
+                        className="ml-1 inline-flex min-w-[1.1rem] items-center justify-center rounded-full bg-rose-500 px-1 text-[11px] font-black text-white"
+                        title={`${claimsPendingCount} pending claims, ${claimedUpdatesCount} claimed profile updates`}
+                      >
+                        {claimsPendingCount + claimedUpdatesCount}
                       </span>
                     )}
                     {id === "coaches" && coachPendingCount > 0 && (
