@@ -444,7 +444,34 @@ export const CSC_ILCA_29ER_2026_EVENT: RegattaEventDef = {
   ],
 };
 
+export const RSYC_OPTIMIST_2026_EVENT: RegattaEventDef = {
+  slug: "rsyc-optimist-silver-fleet-knockout-championship-2026",
+  name: "RSYC Optimist Silver Fleet Knockout Championship 2026",
+  shortName: "RSYC Knockout 2026",
+  datesText: "26–27 September 2026",
+  venue: "Republic of Singapore Yacht Club, Singapore",
+  organizer: "Republic of Singapore Yacht Club",
+  noticeOfRaceUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2026/",
+  officialNoticeBoardUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2026/",
+  websiteUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2026/",
+  registrationUrl: "https://tinyurl.com/RSYCSilverFleetOKC2026",
+  scheduleSummary:
+    "26–27 September 2026 at Republic of Singapore Yacht Club. Knockout Series format: Qualifying Rounds, Repechage Round, Final Rounds, and Petite Final Rounds.",
+  scoringRules:
+    "Knockout progression format per Sailing Instructions. Appendix MR applies. Top 10 overall, Top 3 Female, Top 3 Under 10, Top 3 Under 8.",
+  slices: [
+    {
+      key: "optimist-silver",
+      label: "Optimist Silver",
+      series: "optimist",
+      slugIncludes: ["rsyc", "knockout"],
+      prizeFleetName: "Optimist Silver Fleet",
+    },
+  ],
+};
+
 export const REGATTA_EVENTS: RegattaEventDef[] = [
+  RSYC_OPTIMIST_2026_EVENT,
   CSC_ILCA_29ER_2026_EVENT,
   SNSC_2026_EVENT,
   SNSC_2025_EVENT,
@@ -460,6 +487,8 @@ export const REGATTA_EVENTS: RegattaEventDef[] = [
 ];
 
 const EVENT_SLUG_ALIASES: Record<string, string> = {
+  "rsyc-optimist-knockout-2026": "rsyc-optimist-silver-fleet-knockout-championship-2026",
+  "rsyc-knockout-2026": "rsyc-optimist-silver-fleet-knockout-championship-2026",
   "csc-ilca-29er-championships-2026": "6th-csc-ilca-29er-open-2026",
   "csc-ilca-open-2026": "6th-csc-ilca-29er-open-2026",
   "csc-ilca-29er-2026": "6th-csc-ilca-29er-open-2026",

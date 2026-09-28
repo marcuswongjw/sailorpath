@@ -4606,7 +4606,81 @@ export const CSC_ILCA_29ER_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+export const RSYC_OPTIMIST_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "rsyc-optimist-silver-fleet-knockout-championship-2026",
+  regattaName: "RSYC Optimist Silver Fleet Knockout Championship 2026",
+  year: 2026,
+  datesText: "26 & 27 September 2026",
+  venue: "Republic of Singapore Yacht Club (52 West Coast Ferry Road Singapore 126887)",
+  organizer: "Republic of Singapore Yacht Club",
+  noticeOfRaceUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2026/",
+  officialNoticeBoardUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2026/",
+  websiteUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2026/",
+  registrationUrl: "https://tinyurl.com/RSYCSilverFleetOKC2026",
+  entryFees: {
+    singleHanded: 109,
+    doubleHanded: 0,
+    earlyBirdDeadline: "18 September 2026, 1700h",
+    finalDeadline: "18 September 2026, 1700h",
+    lateFee: 0,
+  },
+  scheduleSummary:
+    "26–27 September 2026 at Republic of Singapore Yacht Club. Knockout Series format: Qualifying Rounds, Repechage Round, Final Rounds, and Petite Final Rounds. Up to 8 short-course races per competitor.",
+  scoringRules:
+    "Knockout progression format per Sailing Instructions. Appendix MR applies. Prizes awarded to Top 10 Overall, Top 3 Female, Top 3 Under 10, Top 3 Under 8.",
+  fleets: [
+    {
+      fleetName: "Optimist Silver Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Overall",
+          prizesAwarded: "Top 10",
+          winners: [
+            { rank: 1, prizeTitle: "1st", sailorName: "Jade Tan", sailNumber: "SGP 3555", club: "SAF Yacht Club", gender: "F" },
+            { rank: 2, prizeTitle: "2nd", sailorName: "Wai Yong Le", sailNumber: "SGP 3488", club: "SAF Yacht Club", gender: "M" },
+            { rank: 3, prizeTitle: "3rd", sailorName: "Wu Jiaqian", sailNumber: "SGP 3424", club: "SAF Yacht Club", gender: "M" },
+            { rank: 4, prizeTitle: "4th", sailorName: "Axel Lin", sailNumber: "SGP 720", club: "Changi Sailing Club", gender: "M" },
+            { rank: 5, prizeTitle: "5th", sailorName: "Kiyansh Kanishk Singh", sailNumber: "SGP 2046", club: "Constant Wind", gender: "M" },
+            { rank: 6, prizeTitle: "6th", sailorName: "Hongren Wang", sailNumber: "SGP 2039", club: "Constant Wind", gender: "M" },
+            { rank: 7, prizeTitle: "7th", sailorName: "Han Moyan", sailNumber: "SGP 2042", club: "Constant Wind", gender: "M" },
+            { rank: 8, prizeTitle: "8th", sailorName: "Damien Seah", sailNumber: "SGP 3825", club: "SAF Yacht Club", gender: "M" },
+            { rank: 9, prizeTitle: "9th", sailorName: "Jerome Puah Yang Yi", sailNumber: "SGP 2037", club: "PAssion Wave", gender: "M" },
+            { rank: 10, prizeTitle: "10th", sailorName: "Zheng Ryan Feiran", sailNumber: "SGP 2045", club: "Constant Wind", gender: "M" },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "Top 3",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Jade Tan", sailNumber: "SGP 3555", club: "SAF Yacht Club", gender: "F" },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Chiang Ziyi Adele", sailNumber: "SGP 3120", club: "SAF Yacht Club", gender: "F" },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Andrea Kwan", sailNumber: "SGP 3745", club: "SAF Yacht Club", gender: "F" },
+          ],
+        },
+        {
+          categoryName: "Under 10",
+          prizesAwarded: "Top 3",
+          winners: [
+            { rank: 1, prizeTitle: "1st Under 10", sailorName: "Axel Lin", sailNumber: "SGP 720", club: "Changi Sailing Club", gender: "M" },
+            { rank: 2, prizeTitle: "2nd Under 10", sailorName: "Hongren Wang", sailNumber: "SGP 2039", club: "Constant Wind", gender: "M" },
+            { rank: 3, prizeTitle: "3rd Under 10", sailorName: "Jerome Puah Yang Yi", sailNumber: "SGP 2037", club: "PAssion Wave", gender: "M" },
+          ],
+        },
+        {
+          categoryName: "Under 8",
+          prizesAwarded: "Top 3",
+          winners: [
+            { rank: 1, prizeTitle: "1st Under 8", sailorName: "Allison Li Xin Teh", sailNumber: "SGP 787", club: "SAF Yacht Club", gender: "F" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
+  RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
   CSC_ILCA_29ER_2026_PRIZE_SCHEDULE,
   PULAU_UJONG_2026_PRIZE_SCHEDULE,
   SYSC_2026_PRIZE_SCHEDULE,
@@ -4622,6 +4696,13 @@ export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
 
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
+  if (
+    s.includes("rsyc-optimist-silver-fleet-knockout-championship-2026") ||
+    s.includes("rsyc-optimist-knockout") ||
+    (s.includes("rsyc") && s.includes("knockout"))
+  ) {
+    return RSYC_OPTIMIST_2026_PRIZE_SCHEDULE;
+  }
   if (
     s.includes("6th-csc-ilca-29er-open-2026") ||
     s.includes("csc-ilca-29er-championships-2026") ||

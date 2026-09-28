@@ -62,6 +62,10 @@ export const CALENDAR_RESULT_ALIASES: Record<string, CalendarResultAlias> = {
     slugIncludes: ["sysc", "2026"],
     classes: ["optimist", "ilca4", "ilca6"],
   },
+  "rsyc-optimist-silver-fleet-knockout-championship-2026": {
+    slugIncludes: ["rsyc", "knockout"],
+    classes: ["optimist"],
+  },
 };
 
 export function publicResultClass(
