@@ -4679,8 +4679,113 @@ export const RSYC_OPTIMIST_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+export const RSYC_OPTIMIST_2025_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "rsyc-optimist-knockout-championship-2025",
+  regattaName: "RSYC Optimist Knockout Championship 2025",
+  year: 2025,
+  datesText: "23–24 & 30–31 August 2025",
+  venue: "Republic of Singapore Yacht Club (52 West Coast Ferry Road Singapore 126887)",
+  organizer: "Republic of Singapore Yacht Club",
+  noticeOfRaceUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2025/",
+  officialNoticeBoardUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2025/",
+  websiteUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2025/",
+  registrationUrl: "https://tinyurl.com/RSYCSilverFleetOKC2025",
+  entryFees: {
+    singleHanded: 109,
+    doubleHanded: 0,
+    earlyBirdDeadline: "15 August 2025, 1700h",
+    finalDeadline: "15 August 2025, 1700h",
+    lateFee: 0,
+  },
+  scheduleSummary:
+    "Weekend 1 (23–24 Aug): Optimist Silver Fleet Knockout. Weekend 2 (30–31 Aug): Optimist Gold Fleet Knockout Race. Republic of Singapore Yacht Club.",
+  scoringRules:
+    "Knockout progression format per Sailing Instructions. Appendix MR applies. Prizes awarded to Top 10 Overall, Top 3 Female, Top 3 Under 10, Top 3 Under 8.",
+  fleets: [
+    {
+      fleetName: "Optimist Gold Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Overall",
+          prizesAwarded: "Top 10",
+          winners: [
+            { rank: 1, prizeTitle: "1st Place", sailorName: "Lucas Cao Zhihong", club: "SAF Yacht Club", gender: "M" },
+            { rank: 2, prizeTitle: "2nd Place", sailorName: "Ethan Low Zhi Ren", club: "SAF Yacht Club", gender: "M" },
+            { rank: 3, prizeTitle: "3rd Place", sailorName: "Ashlea Tham", club: "Raffles Marina", gender: "F" },
+            { rank: 4, prizeTitle: "4th Place", sailorName: "Ethan Lee", club: "PAssion Wave", gender: "M" },
+            { rank: 5, prizeTitle: "5th Place", sailorName: "Lyric Li Yuxuan", club: "Changi Sailing Club", gender: "F" },
+            { rank: 6, prizeTitle: "6th Place", sailorName: "Alyssa Wong Li Lin", club: "SAF Yacht Club", gender: "F" },
+            { rank: 7, prizeTitle: "7th Place", sailorName: "Ashlyn Tham", club: "Raffles Marina", gender: "F" },
+            { rank: 8, prizeTitle: "8th Place", sailorName: "Wai Zhi Tong", club: "SAF Yacht Club", gender: "F" },
+            { rank: 9, prizeTitle: "9th Place", sailorName: "Elijah Ong", club: "SAF Yacht Club", gender: "M" },
+            { rank: 10, prizeTitle: "10th Place", sailorName: "Darian Huang", club: "PAssion Wave", gender: "M" },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "Top 3",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Ashlea Tham", club: "Raffles Marina", gender: "F" },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Lyric Li Yuxuan", club: "Changi Sailing Club", gender: "F" },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Alyssa Wong Li Lin", club: "SAF Yacht Club", gender: "F" },
+          ],
+        },
+      ],
+    },
+    {
+      fleetName: "Optimist Silver Fleet",
+      boatClass: "Optimist",
+      categories: [
+        {
+          categoryName: "Overall",
+          prizesAwarded: "Top 10",
+          winners: [
+            { rank: 1, prizeTitle: "1st Place", sailorName: "Lee Kai En, Katelynn", club: "SAF Yacht Club", gender: "F" },
+            { rank: 2, prizeTitle: "2nd Place", sailorName: "Qi Tan", club: "SAF Yacht Club", gender: "F" },
+            { rank: 3, prizeTitle: "3rd Place", sailorName: "Joshua Tan Zhi Kai", club: "SAF Yacht Club", gender: "M" },
+            { rank: 4, prizeTitle: "4th Place", sailorName: "Wang Boren", club: "Constant Wind", gender: "M" },
+            { rank: 5, prizeTitle: "5th Place", sailorName: "Tyler Koo", club: "Republic of Singapore Yacht Club", gender: "M" },
+            { rank: 6, prizeTitle: "6th Place", sailorName: "Chen Yan Ying (Abby)", club: "PAssion Wave", gender: "F" },
+            { rank: 7, prizeTitle: "7th Place", sailorName: "William Poon", club: "SAF Yacht Club", gender: "M" },
+            { rank: 8, prizeTitle: "8th Place", sailorName: "Nigel Ng Jiang Long", club: "SAF Yacht Club", gender: "M" },
+            { rank: 9, prizeTitle: "9th Place", sailorName: "Mao Weihan", club: "SAF Yacht Club", gender: "F" },
+            { rank: 10, prizeTitle: "10th Place", sailorName: "Tan Kai En Hayley", club: "Changi Sailing Club", gender: "F" },
+          ],
+        },
+        {
+          categoryName: "Female",
+          prizesAwarded: "Top 3",
+          winners: [
+            { rank: 1, prizeTitle: "1st Female", sailorName: "Lee Kai En, Katelynn", club: "SAF Yacht Club", gender: "F" },
+            { rank: 2, prizeTitle: "2nd Female", sailorName: "Qi Tan", club: "SAF Yacht Club", gender: "F" },
+            { rank: 3, prizeTitle: "3rd Female", sailorName: "Chen Yan Ying (Abby)", club: "PAssion Wave", gender: "F" },
+          ],
+        },
+        {
+          categoryName: "Under 10",
+          prizesAwarded: "Top 3",
+          winners: [
+            { rank: 1, prizeTitle: "1st Under 10", sailorName: "Chen Yan Ying (Abby)", club: "PAssion Wave", gender: "F" },
+            { rank: 2, prizeTitle: "2nd Under 10", sailorName: "Tan Kai En Hayley", club: "Changi Sailing Club", gender: "F" },
+            { rank: 3, prizeTitle: "3rd Under 10", sailorName: "Kai Chen-Yi", club: "SAF Yacht Club", gender: "M" },
+          ],
+        },
+        {
+          categoryName: "Under 8",
+          prizesAwarded: "Top 3",
+          winners: [
+            { rank: 1, prizeTitle: "1st Under 8", sailorName: "Jae Toh Guan Yu", club: "SAF Yacht Club", gender: "M" },
+          ],
+        },
+      ],
+    },
+  ],
+};
+
 export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
   RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
+  RSYC_OPTIMIST_2025_PRIZE_SCHEDULE,
   CSC_ILCA_29ER_2026_PRIZE_SCHEDULE,
   PULAU_UJONG_2026_PRIZE_SCHEDULE,
   SYSC_2026_PRIZE_SCHEDULE,
@@ -4698,10 +4803,18 @@ export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | nu
   const s = String(slug || "").toLowerCase();
   if (
     s.includes("rsyc-optimist-silver-fleet-knockout-championship-2026") ||
-    s.includes("rsyc-optimist-knockout") ||
-    (s.includes("rsyc") && s.includes("knockout"))
+    (s.includes("rsyc") && s.includes("knockout") && s.includes("2026"))
   ) {
     return RSYC_OPTIMIST_2026_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("rsyc-optimist-knockout-championship-2025") ||
+    s.includes("rsyc-optimist-silver-fleet-knockout-championship-2025") ||
+    s.includes("rsyc-optimist-gold-fleet-knockout-championship-2025") ||
+    s.includes("rsyc-optimist-knockout-race-2025") ||
+    (s.includes("rsyc") && s.includes("knockout") && s.includes("2025"))
+  ) {
+    return RSYC_OPTIMIST_2025_PRIZE_SCHEDULE;
   }
   if (
     s.includes("6th-csc-ilca-29er-open-2026") ||

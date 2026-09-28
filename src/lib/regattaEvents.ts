@@ -464,7 +464,42 @@ export const RSYC_OPTIMIST_2026_EVENT: RegattaEventDef = {
       key: "optimist-silver",
       label: "Optimist Silver",
       series: "optimist",
-      slugIncludes: ["rsyc", "knockout"],
+      slugIncludes: ["rsyc", "knockout", "2026"],
+      prizeFleetName: "Optimist Silver Fleet",
+    },
+  ],
+};
+
+export const RSYC_OPTIMIST_2025_EVENT: RegattaEventDef = {
+  slug: "rsyc-optimist-knockout-championship-2025",
+  name: "RSYC Optimist Knockout Championship 2025",
+  shortName: "RSYC Knockout 2025",
+  datesText: "23–24 & 30–31 August 2025",
+  venue: "Republic of Singapore Yacht Club, Singapore",
+  organizer: "Republic of Singapore Yacht Club",
+  noticeOfRaceUrl:
+    "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2025/",
+  officialNoticeBoardUrl:
+    "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2025/",
+  websiteUrl:
+    "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-silver-fleet-knockout-championship-2025/",
+  scheduleSummary:
+    "Weekend 1 (23–24 Aug): Optimist Silver Fleet Knockout. Weekend 2 (30–31 Aug): Optimist Gold Fleet Knockout Race. Republic of Singapore Yacht Club.",
+  scoringRules:
+    "Knockout progression format per Sailing Instructions. Appendix MR applies. Top 10 overall, Top 3 Female, Top 3 Under 10, Top 3 Under 8.",
+  slices: [
+    {
+      key: "optimist-gold",
+      label: "Optimist Gold",
+      series: "optimist",
+      slugIncludes: ["rsyc", "gold", "2025"],
+      prizeFleetName: "Optimist Gold Fleet",
+    },
+    {
+      key: "optimist-silver",
+      label: "Optimist Silver",
+      series: "optimist",
+      slugIncludes: ["rsyc", "silver", "2025"],
       prizeFleetName: "Optimist Silver Fleet",
     },
   ],
@@ -472,6 +507,7 @@ export const RSYC_OPTIMIST_2026_EVENT: RegattaEventDef = {
 
 export const REGATTA_EVENTS: RegattaEventDef[] = [
   RSYC_OPTIMIST_2026_EVENT,
+  RSYC_OPTIMIST_2025_EVENT,
   CSC_ILCA_29ER_2026_EVENT,
   SNSC_2026_EVENT,
   SNSC_2025_EVENT,
@@ -489,6 +525,11 @@ export const REGATTA_EVENTS: RegattaEventDef[] = [
 const EVENT_SLUG_ALIASES: Record<string, string> = {
   "rsyc-optimist-knockout-2026": "rsyc-optimist-silver-fleet-knockout-championship-2026",
   "rsyc-knockout-2026": "rsyc-optimist-silver-fleet-knockout-championship-2026",
+  "rsyc-optimist-knockout-2025": "rsyc-optimist-knockout-championship-2025",
+  "rsyc-knockout-2025": "rsyc-optimist-knockout-championship-2025",
+  "rsyc-optimist-silver-fleet-knockout-championship-2025": "rsyc-optimist-knockout-championship-2025",
+  "rsyc-optimist-gold-fleet-knockout-championship-2025": "rsyc-optimist-knockout-championship-2025",
+  "rsyc-optimist-knockout-race-2025": "rsyc-optimist-knockout-championship-2025",
   "csc-ilca-29er-championships-2026": "6th-csc-ilca-29er-open-2026",
   "csc-ilca-open-2026": "6th-csc-ilca-29er-open-2026",
   "csc-ilca-29er-2026": "6th-csc-ilca-29er-open-2026",
