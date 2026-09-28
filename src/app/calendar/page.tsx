@@ -108,22 +108,70 @@ export default async function CalendarPage(props: CalendarPageProps) {
   }
 
   const savedBySlug = new Map(savedEvents.map((event) => [event.slug, event]));
-  const cardsByEvent = new Map<string, string[]>();
-  for (const item of combinedMap.values()) {
-    const canonical = canonicalCalendarEventSlug(item.slug);
-    const list = cardsByEvent.get(canonical) ?? [];
-    list.push(item.slug);
-    cardsByEvent.set(canonical, list);
-  }
-  for (const [slug, entry] of combinedMap) {
-    const canonical = canonicalCalendarEventSlug(slug);
-    const saved = savedBySlug.get(canonical);
-    const cards = cardsByEvent.get(canonical) ?? [];
-    const primary = cards[0] === slug;
-    combinedMap.set(slug, applyCalendarEventOverride(entry, saved, primary));
+  const publicEvents = new Map<string, RegattaRecord>();
+
+  // One public card per weekend. Static entries sometimes split a weekend by
+  // class (for example Pesta Sukan Optimist and ILCA); combine those classes
+  // under the canonical event before applying the saved admin record.
+  for (const entry of combinedMap.values()) {
+    const canonical = canonicalCalendarEventSlug(entry.slug);
+    const current = publicEvents.get(canonical);
+    const mergedClasses = [
+      ...new Set([
+        ...(current?.classes || (current?.boatClass ? [current.boatClass] : [])),
+        ...(entry.classes || (entry.boatClass ? [entry.boatClass] : [])),
+      ]),
+    ];
+    if (!current) {
+      publicEvents.set(canonical, {
+        ...entry,
+        id: canonical,
+        slug: canonical,
+        classes: mergedClasses,
+      });
+    } else {
+      publicEvents.set(canonical, {
+        ...current,
+        classes: mergedClasses,
+        hasResults: Boolean(current.hasResults || entry.hasResults),
+      });
+    }
   }
 
-  const allRegattas = Array.from(combinedMap.values());
+  for (const [slug, entry] of publicEvents) {
+    publicEvents.set(
+      slug,
+      applyCalendarEventOverride(entry, savedBySlug.get(slug), true)
+    );
+  }
+
+  // Saved calendar weekends are authoritative public records even when they
+  // have no matching static schedule row or attached class sheet yet.
+  for (const saved of savedEvents) {
+    if (publicEvents.has(saved.slug)) continue;
+    publicEvents.set(saved.slug, {
+      id: saved.slug,
+      name: saved.name,
+      slug: saved.slug,
+      date: saved.startDate,
+      endDate: saved.endDate || undefined,
+      totalFleetSize: 0,
+      division: "Open",
+      venue: saved.venue || undefined,
+      region: "Singapore",
+      organizer: saved.organizer || undefined,
+      countsForRanking: saved.countsForRanking !== false,
+      isSelectionTrial: Boolean(saved.isSelectionTrial),
+      keyDeadlines: saved.keyDeadlines || undefined,
+      norUrl: saved.norUrl || undefined,
+      registrationUrl: saved.registrationUrl || undefined,
+      boatClass: saved.classes?.[0] || "Optimist",
+      classes: saved.classes || [],
+      geography: "SG",
+    });
+  }
+
+  const allRegattas = Array.from(publicEvents.values());
 
   return (
     <RegattaCalendarClient
