@@ -47,7 +47,7 @@ export default async function SearchPage({
       school,
       nationality,
       type,
-      limit: 60,
+      limit: 500,
     });
     initialSailors = res.sailors;
     initialRegattas = res.regattas;

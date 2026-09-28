@@ -66,6 +66,8 @@ export function SearchClient({
 
   const [sailors, setSailors] = useState<SailorSearchResult[]>(initialSailors);
   const [regattas, setRegattas] = useState<RegattaSearchResult[]>(initialRegattas);
+  const PAGE_SIZE = 60;
+  const [visibleSailorsCount, setVisibleSailorsCount] = useState(PAGE_SIZE);
   const [isLoading, setIsLoading] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -131,6 +133,7 @@ export function SearchClient({
           const data = await res.json();
           setSailors(data.sailors || []);
           setRegattas(data.regattas || []);
+          setVisibleSailorsCount(PAGE_SIZE);
         }
       } catch (err: any) {
         if (err.name !== "AbortError") {
@@ -154,12 +157,14 @@ export function SearchClient({
     setClub("");
     setSchool("");
     setActiveTab("all");
+    setVisibleSailorsCount(PAGE_SIZE);
     inputRef.current?.focus();
   };
 
   const handlePopularSearchClick = (item: (typeof POPULAR_SEARCHES)[0]) => {
     setQuery(item.query);
     setFleet(item.fleet);
+    setVisibleSailorsCount(PAGE_SIZE);
     inputRef.current?.focus();
   };
 
@@ -226,6 +231,7 @@ export function SearchClient({
               onClick={() => {
                 setActiveTab("all");
                 setFleet("all");
+                setVisibleSailorsCount(PAGE_SIZE);
               }}
               className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 ${
                 activeTab === "all" && fleet === "all"
@@ -241,6 +247,7 @@ export function SearchClient({
               onClick={() => {
                 setActiveTab("sailors");
                 setFleet("all");
+                setVisibleSailorsCount(PAGE_SIZE);
               }}
               className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 inline-flex items-center gap-1.5 ${
                 activeTab === "sailors" && fleet === "all"
@@ -255,7 +262,10 @@ export function SearchClient({
             {regattas.length > 0 && (
               <button
                 type="button"
-                onClick={() => setActiveTab("regattas")}
+                onClick={() => {
+                  setActiveTab("regattas");
+                  setVisibleSailorsCount(PAGE_SIZE);
+                }}
                 className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 inline-flex items-center gap-1.5 ${
                   activeTab === "regattas"
                     ? "bg-slate-900 text-white shadow-xs"
@@ -272,6 +282,7 @@ export function SearchClient({
               onClick={() => {
                 setActiveTab("sailors");
                 setFleet(fleet === "gold" ? "all" : "gold");
+                setVisibleSailorsCount(PAGE_SIZE);
               }}
               className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 inline-flex items-center gap-1 ${
                 fleet === "gold"
@@ -288,6 +299,7 @@ export function SearchClient({
               onClick={() => {
                 setActiveTab("sailors");
                 setFleet(fleet === "silver" ? "all" : "silver");
+                setVisibleSailorsCount(PAGE_SIZE);
               }}
               className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 inline-flex items-center gap-1 ${
                 fleet === "silver"
@@ -304,6 +316,7 @@ export function SearchClient({
               onClick={() => {
                 setActiveTab("sailors");
                 setFleet(fleet === "ilca" ? "all" : "ilca");
+                setVisibleSailorsCount(PAGE_SIZE);
               }}
               className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 inline-flex items-center gap-1 ${
                 fleet === "ilca"
@@ -491,7 +504,7 @@ export function SearchClient({
           </div>
 
           <div className="grid grid-cols-1 gap-2.5">
-            {displaySailors.map((s) => {
+            {displaySailors.slice(0, visibleSailorsCount).map((s) => {
               const initials = s.name
                 .split(/\s+/)
                 .filter(Boolean)
@@ -603,6 +616,31 @@ export function SearchClient({
               );
             })}
           </div>
+
+          {displaySailors.length > visibleSailorsCount && (
+            <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-slate-100">
+              <p className="text-xs text-slate-500">
+                Showing <span className="font-bold text-slate-800">{Math.min(visibleSailorsCount, displaySailors.length)}</span> of{" "}
+                <span className="font-bold text-slate-800">{displaySailors.length}</span> sailors
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setVisibleSailorsCount((prev) => prev + PAGE_SIZE)}
+                  className="px-4 py-2 rounded-xl border border-slate-200 bg-white text-xs font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-2xs transition-all cursor-pointer"
+                >
+                  Show {Math.min(PAGE_SIZE, displaySailors.length - visibleSailorsCount)} more
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setVisibleSailorsCount(displaySailors.length)}
+                  className="px-4 py-2 rounded-xl bg-orange-500 text-xs font-bold text-white hover:bg-orange-600 shadow-xs transition-all cursor-pointer"
+                >
+                  Show all ({displaySailors.length})
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

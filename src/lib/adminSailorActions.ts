@@ -53,24 +53,24 @@ async function applyIlcaNameCorrections(
 ): Promise<NextResponse> {
   let updated = 0;
   const details: string[] = [];
+  const aliasInserts: { sailorId: string; aliasName: string }[] = [];
+
   for (const { from, to } of ILCA_NAME_CORRECTIONS) {
     const matches = await db
       .select({ id: sailors.id, name: sailors.name })
       .from(sailors)
       .where(eq(sailors.name, from));
+
+    if (matches.length === 0) continue;
+
+    const ids = matches.map((m) => m.id);
+    await db
+      .update(sailors)
+      .set({ name: to, updatedAt: new Date() })
+      .where(inArray(sailors.id, ids));
+
     for (const row of matches) {
-      await db
-        .update(sailors)
-        .set({ name: to, updatedAt: new Date() })
-        .where(eq(sailors.id, row.id));
-      try {
-        await db.insert(sailorAliases).values({
-          sailorId: row.id,
-          aliasName: from,
-        });
-      } catch {
-        /* alias may already exist */
-      }
+      aliasInserts.push({ sailorId: row.id, aliasName: from });
       updated++;
       details.push(`${from} → ${to}`);
       void logAdminChange({
@@ -86,6 +86,15 @@ async function applyIlcaNameCorrections(
       });
     }
   }
+
+  if (aliasInserts.length > 0) {
+    // Use onConflictDoNothing because aliases might already exist
+    await db
+      .insert(sailorAliases)
+      .values(aliasInserts)
+      .onConflictDoNothing({ target: sailorAliases.aliasName });
+  }
+
   return NextResponse.json({
     ok: true,
     updated,
@@ -104,6 +113,7 @@ async function applyIlcaSailorFixes(
   const details: string[] = [];
   let merges = 0;
   let sailUpdates = 0;
+  const sailNumberUpdates: { id: string; sail: string }[] = [];
 
   for (const fix of ILCA_NAMED_MERGES) {
     const keepRows = await db
@@ -167,14 +177,7 @@ async function applyIlcaSailorFixes(
         row &&
         String(row.sail || "").trim() !== fix.sailNumberIlca4
       ) {
-        await db
-          .update(sailors)
-          .set({
-            sailNumberIlca4: fix.sailNumberIlca4,
-            updatedAt: new Date(),
-          })
-          .where(eq(sailors.id, keepId));
-        sailUpdates++;
+        sailNumberUpdates.push({ id: keepId, sail: fix.sailNumberIlca4 });
         details.push(
           `Set ILCA 4 sail ${fix.sailNumberIlca4} on “${fix.keepName}”`
         );
@@ -188,19 +191,24 @@ async function applyIlcaSailorFixes(
       for (const row of byName) {
         if (String(row.sail || "").trim() === fix.sailNumberIlca4)
           continue;
-        await db
-          .update(sailors)
-          .set({
-            sailNumberIlca4: fix.sailNumberIlca4,
-            updatedAt: new Date(),
-          })
-          .where(eq(sailors.id, row.id));
-        sailUpdates++;
+        sailNumberUpdates.push({ id: row.id, sail: fix.sailNumberIlca4 });
         details.push(
           `Set ILCA 4 sail ${fix.sailNumberIlca4} on “${fix.keepName}”`
         );
       }
     }
+  }
+
+  // Batch apply sail number updates
+  for (const update of sailNumberUpdates) {
+    await db
+      .update(sailors)
+      .set({
+        sailNumberIlca4: update.sail,
+        updatedAt: new Date(),
+      })
+      .where(eq(sailors.id, update.id));
+    sailUpdates++;
   }
 
   // Always ensure Jonas sail even if already merged under keep name
@@ -424,22 +432,30 @@ async function applyGoldParticipationDrops(
   }
 
   let updated = 0;
-  for (const c of candidates) {
-    await db
-      .update(sailors)
-      .set({ dropDate: c.dropDate, updatedAt: new Date() })
-      .where(eq(sailors.id, c.sailorId));
-    updated++;
-    void logAdminChange({
-      actorUserId: auth.userId,
-      actorEmail: auth.email,
-      action: "sailor.gold_participation_drop",
-      entityType: "sailor",
-      entityId: c.sailorId,
-      entityLabel: c.name,
-      summary: `Gold drop ${c.dropDate} (<2 ranking gold regattas in ${c.failedPeriod.half} ${c.failedPeriod.year}; sailed ${c.participationCount})`,
-      details: c,
-      source: "/api/admin/sailors",
+  const targetIds = candidates.map((c) => c.sailorId);
+
+  if (targetIds.length > 0) {
+    // Since dropDate varies per candidate, we can't use a single update.
+    // But we can use a transaction for better performance.
+    await db.transaction(async (tx) => {
+      for (const c of candidates) {
+        await tx
+          .update(sailors)
+          .set({ dropDate: c.dropDate, updatedAt: new Date() })
+          .where(eq(sailors.id, c.sailorId));
+        updated++;
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "sailor.gold_participation_drop",
+          entityType: "sailor",
+          entityId: c.sailorId,
+          entityLabel: c.name,
+          summary: `Gold drop ${c.dropDate} (<2 ranking gold regattas in ${c.failedPeriod.half} ${c.failedPeriod.year}; sailed ${c.participationCount})`,
+          details: c,
+          source: "/api/admin/sailors",
+        });
+      }
     });
   }
 
@@ -531,6 +547,8 @@ async function normalizeSailorGenders(
   let updated = 0;
   let cleared = 0;
   const samples: string[] = [];
+  const updates: { id: string; gender: string | null }[] = [];
+
   for (const s of rows) {
     const prev = s.gender == null ? null : String(s.gender).trim();
     if (!prev) continue;
@@ -538,10 +556,7 @@ async function normalizeSailorGenders(
     // Already canonical single-letter code
     if (next && prev === next) continue;
 
-    await db
-      .update(sailors)
-      .set({ gender: next, updatedAt: new Date() })
-      .where(eq(sailors.id, s.id));
+    updates.push({ id: s.id, gender: next });
     updated++;
     if (!next) cleared++;
     if (samples.length < 30) {
@@ -558,6 +573,18 @@ async function normalizeSailorGenders(
       details: { from: prev, to: next },
       source: "/api/admin/sailors",
     });
+  }
+
+  if (updates.length > 0) {
+    // We must update individually if we want the audit log to stay as is,
+    // but we can at least use a transaction or a more efficient method.
+    // Since we already called logAdminChange per sailor, we'll just perform the updates.
+    for (const u of updates) {
+      await db
+        .update(sailors)
+        .set({ gender: u.gender, updatedAt: new Date() })
+        .where(eq(sailors.id, u.id));
+    }
   }
 
   return NextResponse.json({
@@ -661,22 +688,28 @@ async function applySilverInactivityDrops(
   }
 
   let updated = 0;
-  for (const c of candidates) {
-    await db
-      .update(sailors)
-      .set({ dropDate: c.dropDate, updatedAt: new Date() })
-      .where(eq(sailors.id, c.sailorId));
-    updated++;
-    void logAdminChange({
-      actorUserId: auth.userId,
-      actorEmail: auth.email,
-      action: "sailor.silver_inactivity_drop",
-      entityType: "sailor",
-      entityId: c.sailorId,
-      entityLabel: c.name,
-      summary: `Silver/series drop ${c.dropDate} (no ranking starts in ${c.failedPeriod.half} ${c.failedPeriod.year})`,
-      details: c,
-      source: "/api/admin/sailors",
+  const targetIds = candidates.map((c) => c.sailorId);
+
+  if (targetIds.length > 0) {
+    await db.transaction(async (tx) => {
+      for (const c of candidates) {
+        await tx
+          .update(sailors)
+          .set({ dropDate: c.dropDate, updatedAt: new Date() })
+          .where(eq(sailors.id, c.sailorId));
+        updated++;
+        void logAdminChange({
+          actorUserId: auth.userId,
+          actorEmail: auth.email,
+          action: "sailor.silver_inactivity_drop",
+          entityType: "sailor",
+          entityId: c.sailorId,
+          entityLabel: c.name,
+          summary: `Silver/series drop ${c.dropDate} (no ranking starts in ${c.failedPeriod.half} ${c.failedPeriod.year})`,
+          details: c,
+          source: "/api/admin/sailors",
+        });
+      }
     });
   }
 

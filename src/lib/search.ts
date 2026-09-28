@@ -327,10 +327,11 @@ export async function searchSailorsEnhanced(
     }
   }
 
+  const dbLimit = f.limit ? Math.max(f.limit * 2, 500) : 1500;
   const queryBuilder = db.select().from(sailors);
   const rows = conditions.length > 0
-    ? await queryBuilder.where(and(...conditions)).limit(150)
-    : await queryBuilder.orderBy(asc(sailors.name)).limit(150);
+    ? await queryBuilder.where(and(...conditions)).limit(dbLimit)
+    : await queryBuilder.orderBy(asc(sailors.name)).limit(dbLimit);
 
   // Map and score
   const scored: SailorSearchResult[] = [];
@@ -462,7 +463,7 @@ export async function searchSailorsEnhanced(
 
   scored.sort((a, b) => b.score - a.score || a.name.localeCompare(b.name));
 
-  const maxResults = f.limit || 60;
+  const maxResults = f.limit ?? 500;
   return scored.slice(0, maxResults);
 }
 

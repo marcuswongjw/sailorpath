@@ -46,3 +46,4 @@ next-env.d.ts
 # temporary scratch files
 /tmp/
 tmp/
+.claude/

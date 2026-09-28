@@ -18,6 +18,7 @@ import { runSailorAction } from "@/lib/adminSailorActions";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 import { cleanOptimistSailNumber } from "@/lib/normalize";
 import { extractNationalityFromSailNumber } from "@/lib/countries";
+import { SailorCreateSchema, SailorPatchSchema } from "@/lib/validations/sailor";
 
 const RANKING_SAILOR_FIELDS = new Set([
   "goldEntryDate",
@@ -111,22 +112,24 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const auth = await requireSuperadmin();
-    const body = await req.json();
+    const rawBody = await req.json();
 
     // Named bulk actions (ILCA fixes, participation drops, backfills, …)
     // live in src/lib/adminSailorActions.ts.
-    const actionRes = await runSailorAction(body, auth);
+    const actionRes = await runSailorAction(rawBody, auth);
     if (actionRes) {
       if (actionRes.ok) {
         revalidatePublicRankings(
-          `sailors:action:${String((body as { action?: string }).action || "")}`
+          `sailors:action:${String((rawBody as { action?: string }).action || "")}`
         );
       }
       return actionRes;
     }
 
+    const body = SailorCreateSchema.parse(rawBody);
+
     const handle =
-      (body.handle as string)?.trim() ||
+      body.handle?.trim() ||
       String(body.name || "")
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
@@ -139,8 +142,8 @@ export async function POST(req: Request) {
     const { normalizeSgSeriesMembership } = await import(
       "@/lib/seriesMembership"
     );
-    let currentFleet = normalizeSgSeriesMembership(body.currentFleet);
-    if (body.currentFleet === "" || body.currentFleet == null) {
+    let currentFleet = normalizeSgSeriesMembership(body.currentFleet || "");
+    if (!body.currentFleet) {
       currentFleet = "Guest";
     }
 
@@ -194,7 +197,7 @@ export async function POST(req: Request) {
       currentFleet: currentFleet || "Guest",
       nationalSquadStatus: body.nationalSquadStatus || null,
       dob: toDateOnly(body.dob),
-      weight: num(body.weight),
+      weight: body.weight,
       instagram: body.instagram || null,
       avatarUrl:
         body.avatarUrl === "" || body.avatarUrl == null
@@ -206,11 +209,11 @@ export async function POST(req: Request) {
       natSquadStatusJul26: body.natSquadStatusJul26 || null,
       natSquadStatusJan27: body.natSquadStatusJan27 || null,
       natSquadStatusJul27: body.natSquadStatusJul27 || null,
-      histRankingJun24: num(body.histRankingJun24),
-      histRankingDec24: num(body.histRankingDec24),
-      histRankingJun25: num(body.histRankingJun25),
-      histRankingDec25: num(body.histRankingDec25),
-      histRankingJun26: num(body.histRankingJun26),
+      histRankingJun24: body.histRankingJun24,
+      histRankingDec24: body.histRankingDec24,
+      histRankingJun25: body.histRankingJun25,
+      histRankingDec25: body.histRankingDec25,
+      histRankingJun26: body.histRankingJun26,
       worlds: normalizeYearsList(body.worlds),
       european: normalizeYearsList(body.european),
       asian: normalizeYearsList(body.asian),
@@ -301,7 +304,8 @@ export async function POST(req: Request) {
 export async function PATCH(req: Request) {
   try {
     const auth = await requireSuperadmin();
-    const body = await req.json();
+    const rawBody = await req.json();
+    const body = SailorPatchSchema.parse(rawBody);
     if (!body.id) {
       return NextResponse.json({ error: "id required" }, { status: 400 });
     }
@@ -447,7 +451,7 @@ export async function PATCH(req: Request) {
       "histRankingJun26",
     ] as const) {
       if (body[f] !== undefined) {
-        patch[f] = num(body[f]);
+        patch[f] = body[f];
       }
     }
 
