@@ -24,6 +24,7 @@ import {
   ILCA_FLEETS,
   OPTIMIST_FLEETS,
   REGATTA_CLASS_FAMILIES,
+  regattaClassFamily,
 } from "@/lib/admin/regattaClass";
 import type { RegattaAdmin } from "@/types/regatta";
 import { setAdminRegattaStatus } from "@/components/admin/adminRegattaLifecycle";
@@ -244,8 +245,64 @@ export function AdminRegattasPanel({
     const slugsById = new Map(
       Object.values(savedEvents).map((event) => [event.id, event.slug])
     );
-    return groupRegattaEvents(filteredRegattaList, slugsById);
-  }, [filteredRegattaList, savedEvents]);
+    const next = groupRegattaEvents(filteredRegattaList, slugsById);
+    const existingSlugs = new Set(next.events.map((event) => event.slug));
+    const query = regattaSearch.trim().toLowerCase();
+
+    for (const saved of Object.values(savedEvents)) {
+      if (existingSlugs.has(saved.slug)) continue;
+      const classes = (saved.classes || []).map((item) => item.trim()).filter(Boolean);
+      const families = classes.map((item) => regattaClassFamily(item));
+      if (
+        regattaClassFilter !== "all" &&
+        !families.some((family) => family === regattaClassFilter)
+      ) {
+        continue;
+      }
+      if (
+        regattaDivisionFilter !== "all" &&
+        !classes.some((item) =>
+          item.toLowerCase().includes(regattaDivisionFilter.toLowerCase())
+        )
+      ) {
+        continue;
+      }
+      if (regattaRankingFilter === "series" && saved.countsForRanking === false) continue;
+      if (regattaRankingFilter === "nonranking" && saved.countsForRanking !== false) continue;
+      const haystack = `${saved.name} ${saved.startDate} ${saved.endDate || ""} ${saved.venue || ""} ${saved.organizer || ""} ${classes.join(" ")} ${saved.slug}`.toLowerCase();
+      if (query && !haystack.includes(query)) continue;
+
+      next.events.push({
+        slug: saved.slug,
+        name: saved.name,
+        startDate: String(saved.startDate).slice(0, 10),
+        endDate: saved.endDate ? String(saved.endDate).slice(0, 10) : undefined,
+        venue: saved.venue || undefined,
+        organizer: saved.organizer || undefined,
+        norUrl: saved.norUrl || undefined,
+        registrationUrl: saved.registrationUrl || undefined,
+        countsForRanking: saved.countsForRanking !== false,
+        isSelectionTrial: Boolean(saved.isSelectionTrial),
+        keyDeadlines: saved.keyDeadlines || undefined,
+        expectedClasses: classes,
+        missingClasses: classes,
+        sheets: [],
+        shells: [],
+        shell: null,
+      });
+    }
+    next.events.sort(
+      (a, b) => b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name)
+    );
+    return next;
+  }, [
+    filteredRegattaList,
+    savedEvents,
+    regattaSearch,
+    regattaClassFilter,
+    regattaDivisionFilter,
+    regattaRankingFilter,
+  ]);
 
   const handleLinkSheet = async (sheetId: string) => {
     const eventId = linkTargets[sheetId];
