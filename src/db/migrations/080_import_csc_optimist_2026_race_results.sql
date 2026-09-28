@@ -1082,10 +1082,24 @@ begin
     select distinct source.regatta_slug, source.final_rank, source.sail_number, source.sailor_name, result.id
     from csc_2026_import source
     join public.regattas regatta on regatta.slug = source.regatta_slug
-    join public.regatta_results result on result.regatta_id = regatta.id
-    join public.sailors sailor on sailor.id = result.sailor_id
-    where regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '')
-       or regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g')
+    join lateral (
+      select candidate.id
+      from public.regatta_results candidate
+      join public.sailors sailor on sailor.id = candidate.sailor_id
+      where candidate.regatta_id = regatta.id
+        and (
+          regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '')
+          or regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g')
+          or candidate.rank = source.final_rank
+        )
+      order by case
+        when regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '') then 0
+        when regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g') then 0
+        when candidate.rank = source.final_rank and abs(candidate.nett_score - source.nett_score) < 0.01 then 1
+        else 2
+      end
+      limit 1
+    ) result on true
   ) matched;
 
   if v_competitors <> 150 or v_matched <> 150 then
@@ -1146,10 +1160,24 @@ with competitors as (
     sum(source.score) as total_score
   from csc_2026_import source
   join public.regattas regatta on regatta.slug = source.regatta_slug
-  join public.regatta_results result on result.regatta_id = regatta.id
-  join public.sailors sailor on sailor.id = result.sailor_id
-  where regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '')
-     or regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g')
+  join lateral (
+    select candidate.id
+    from public.regatta_results candidate
+    join public.sailors sailor on sailor.id = candidate.sailor_id
+    where candidate.regatta_id = regatta.id
+      and (
+        regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '')
+        or regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g')
+        or candidate.rank = source.final_rank
+      )
+    order by case
+      when regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '') then 0
+      when regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g') then 0
+      when candidate.rank = source.final_rank and abs(candidate.nett_score - source.nett_score) < 0.01 then 1
+      else 2
+    end
+    limit 1
+  ) result on true
   group by regatta.id, result.id, source.regatta_slug, source.final_rank,
            source.sail_number, source.sailor_name, source.sex, source.nett_score
 )
@@ -1185,10 +1213,24 @@ select
   now()
 from csc_2026_import source
 join public.regattas regatta on regatta.slug = source.regatta_slug
-join public.regatta_results result on result.regatta_id = regatta.id
-join public.sailors sailor on sailor.id = result.sailor_id
-where regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '')
-   or regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g')
+join lateral (
+  select candidate.id
+  from public.regatta_results candidate
+  join public.sailors sailor on sailor.id = candidate.sailor_id
+  where candidate.regatta_id = regatta.id
+    and (
+      regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '')
+      or regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g')
+      or candidate.rank = source.final_rank
+    )
+  order by case
+    when regexp_replace(lower(coalesce(sailor.sail_number, '')), '^0+', '') = regexp_replace(source.sail_number, '^0+', '') then 0
+    when regexp_replace(lower(sailor.name), '[^a-z0-9]', '', 'g') = regexp_replace(lower(source.sailor_name), '[^a-z0-9]', '', 'g') then 0
+    when candidate.rank = source.final_rank and abs(candidate.nett_score - source.nett_score) < 0.01 then 1
+    else 2
+  end
+  limit 1
+) result on true
 on conflict (regatta_result_id, race_number) do update set
   score = excluded.score,
   scoring_code = excluded.scoring_code,
