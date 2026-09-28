@@ -40,10 +40,30 @@ describe("missingClassesFor", () => {
     ];
     expect(missingClassesFor(["Optimist", "ILCA 4"], sheets)).toEqual(["ILCA 4"]);
     expect(missingClassesFor(["Optimist"], sheets)).toEqual([]);
+    expect(missingClassesFor(["Optimist Gold", "Optimist Silver"], sheets)).toEqual([
+      "Optimist Silver",
+    ]);
   });
 });
 
 describe("groupRegattaEvents", () => {
+  it("uses an explicit weekend link before trying to infer from the sheet name", () => {
+    const linked = row({
+      id: "linked-sheet",
+      slug: "historical-name-that-does-not-match",
+      name: "Imported results",
+    });
+    const grouped = groupRegattaEvents(
+      [{ ...linked, eventId: "event-1" }],
+      new Map([["event-1", "pesta-sukan-2026"]])
+    );
+
+    expect(grouped.unassigned).toHaveLength(0);
+    expect(
+      grouped.events.find((event) => event.slug === "pesta-sukan-2026")?.sheets[0]?.id
+    ).toBe("linked-sheet");
+  });
+
   it("treats a calendar slug as the event, not a class sheet", () => {
     expect(eventShellSlug("temasek-regatta-2026")).toBe("temasek-regatta-2026");
     expect(eventShellSlug("202606-temasek-gold-2026-06-20")).toBeNull();

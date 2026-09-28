@@ -46,6 +46,7 @@ import {
 } from "@/lib/admin/groupRegattaEvents";
 
 type SavedCalendarEvent = {
+  id: string;
   slug: string;
   name: string;
   startDate: string;
@@ -202,6 +203,8 @@ export function AdminRegattasPanel({
   const [sheetTab, setSheetTab] = useState<"details" | "results">("details");
   const [showCalendarForm, setShowCalendarForm] = useState(false);
   const [publishingId, setPublishingId] = useState<string | null>(null);
+  const [linkingSheetId, setLinkingSheetId] = useState<string | null>(null);
+  const [linkTargets, setLinkTargets] = useState<Record<string, string>>({});
 
   const handleTogglePublish = async (sheetId: string, currentStatus?: string | null) => {
     if (!isSuperadmin) {
@@ -237,10 +240,39 @@ export function AdminRegattasPanel({
     }
   };
 
-  const grouped = useMemo(
-    () => groupRegattaEvents(filteredRegattaList),
-    [filteredRegattaList]
-  );
+  const grouped = useMemo(() => {
+    const slugsById = new Map(
+      Object.values(savedEvents).map((event) => [event.id, event.slug])
+    );
+    return groupRegattaEvents(filteredRegattaList, slugsById);
+  }, [filteredRegattaList, savedEvents]);
+
+  const handleLinkSheet = async (sheetId: string) => {
+    const eventId = linkTargets[sheetId];
+    if (!eventId || linkingSheetId) return;
+    setLinkingSheetId(sheetId);
+    try {
+      const res = await fetch("/api/admin/regattas", {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: sheetId, action: "link-event", eventId }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not link the sailing class");
+      toast.success("Sailing class linked to the regatta event.");
+      setLinkTargets((current) => {
+        const next = { ...current };
+        delete next[sheetId];
+        return next;
+      });
+      invalidateRegattas?.();
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Could not link the sailing class");
+    } finally {
+      setLinkingSheetId(null);
+    }
+  };
 
   const effectiveEventSlug =
     selectedEventSlug ?? (grouped.events[0]?.slug || null);
@@ -274,6 +306,7 @@ export function AdminRegattasPanel({
 
   const formFrom = (r: GroupableRegatta) => ({
     id: r.id,
+    eventId: r.eventId || "",
     name: r.name || "",
     date: String(r.date || "").slice(0, 10),
     slug: r.slug,
@@ -1639,7 +1672,51 @@ export function AdminRegattasPanel({
                                       </div>
                                     </div>
 
-                                    <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                                    <div className="flex flex-wrap items-center gap-2 shrink-0 self-end sm:self-auto justify-end">
+                                      {selectedEventView.slug === UNASSIGNED_EVENT_SLUG &&
+                                        isSuperadmin && (
+                                          <div className="flex items-center gap-2">
+                                            <label className="sr-only" htmlFor={`link-event-${sheet.id}`}>
+                                              Regatta event for {sheet.name}
+                                            </label>
+                                            <select
+                                              id={`link-event-${sheet.id}`}
+                                              value={linkTargets[sheet.id] || ""}
+                                              onChange={(event) =>
+                                                setLinkTargets((current) => ({
+                                                  ...current,
+                                                  [sheet.id]: event.target.value,
+                                                }))
+                                              }
+                                              className="max-w-52 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-800"
+                                            >
+                                              <option value="">Choose event…</option>
+                                              {Object.values(savedEvents)
+                                                .sort((a, b) =>
+                                                  b.startDate.localeCompare(a.startDate) ||
+                                                  a.name.localeCompare(b.name)
+                                                )
+                                                .map((event) => (
+                                                  <option key={event.id} value={event.id}>
+                                                    {event.name} ({event.startDate})
+                                                  </option>
+                                                ))}
+                                            </select>
+                                            <button
+                                              type="button"
+                                              disabled={!linkTargets[sheet.id] || linkingSheetId === sheet.id}
+                                              onClick={() => handleLinkSheet(sheet.id)}
+                                              className="rounded-lg border border-orange-300 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 text-xs font-bold text-orange-900 disabled:opacity-40 inline-flex items-center gap-1.5"
+                                            >
+                                              {linkingSheetId === sheet.id ? (
+                                                <Loader2 className="h-3 w-3 animate-spin" />
+                                              ) : (
+                                                <Link2 className="h-3 w-3" />
+                                              )}
+                                              Link
+                                            </button>
+                                          </div>
+                                        )}
                                       {isSuperadmin && (
                                         sheet.status === "draft" ? (
                                           <button
@@ -1736,6 +1813,7 @@ export function AdminRegattasPanel({
                                       : `${selectedEventView.name} (${label})`;
                                     setRegattaForm({
                                       ...emptyRegattaForm(),
+                                      eventId: savedEvents[selectedEventView.slug]?.id || "",
                                       name: baseName,
                                       slug: slugify(baseName),
                                       date: selectedEventView.startDate,

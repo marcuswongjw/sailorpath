@@ -136,6 +136,8 @@ export function sailorFormFromAdmin(sailor: SailorAdmin): SailorFormState {
 
 export type RegattaFormState = {
   id: string;
+  /** Weekend selected for a new or explicitly linked class sheet. */
+  eventId?: string;
   name: string;
   date: string;
   endDate?: string;

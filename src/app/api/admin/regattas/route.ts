@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
-import { regattas } from "@/db/schema";
+import { regattaEvents, regattas } from "@/db/schema";
 import { eq, and, ne } from "drizzle-orm";
 import { slugify } from "@/lib/slug";
 import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
@@ -119,6 +119,18 @@ export async function POST(req: Request) {
       body.boatClass != null && String(body.boatClass).trim()
         ? String(body.boatClass).trim().slice(0, 40)
         : "Optimist";
+    let eventId: string | null = null;
+    if (body.eventId) {
+      const [event] = await db
+        .select({ id: regattaEvents.id })
+        .from(regattaEvents)
+        .where(eq(regattaEvents.id, String(body.eventId)))
+        .limit(1);
+      if (!event) {
+        return NextResponse.json({ error: "Regatta event not found" }, { status: 404 });
+      }
+      eventId = event.id;
+    }
     // Default: counts for series ranking. Off = non-ranking (trial / training / etc.)
     // Fewer than 3 completed races → non-ranking for every class.
     let countsForRanking = body.countsForRanking !== false;
@@ -158,6 +170,7 @@ export async function POST(req: Request) {
     const [row] = await db
       .insert(regattas)
       .values({
+        eventId,
         name: String(body.name).trim(),
         slug,
         date: String(body.date),
@@ -179,6 +192,7 @@ export async function POST(req: Request) {
       .onConflictDoUpdate({
         target: regattas.slug,
         set: {
+          eventId,
           name: String(body.name).trim(),
           date: String(body.date),
           totalFleetSize,
@@ -245,6 +259,21 @@ export async function PATCH(req: Request) {
     }
 
     const patch: Record<string, unknown> = { updatedAt: new Date() };
+    if (body.action === "link-event") {
+      const eventId = String(body.eventId || "").trim();
+      if (!eventId) {
+        return NextResponse.json({ error: "Choose a regatta event" }, { status: 400 });
+      }
+      const [event] = await db
+        .select({ id: regattaEvents.id, name: regattaEvents.name })
+        .from(regattaEvents)
+        .where(eq(regattaEvents.id, eventId))
+        .limit(1);
+      if (!event) {
+        return NextResponse.json({ error: "Regatta event not found" }, { status: 404 });
+      }
+      patch.eventId = event.id;
+    }
     if (body.name !== undefined) patch.name = String(body.name).trim();
     if (body.date !== undefined) patch.date = String(body.date);
     if (body.division !== undefined) patch.division = body.division || "Gold";

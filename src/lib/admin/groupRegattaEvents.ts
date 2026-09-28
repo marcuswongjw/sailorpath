@@ -119,6 +119,18 @@ export function missingClassesFor(
 function classCovered(expected: string, sheets: GroupableRegatta[]): boolean {
   const family = regattaClassFamily(expected);
   if (family === "optimist") {
+    const expectedFleet = /gold/i.test(expected)
+      ? "gold"
+      : /silver/i.test(expected)
+        ? "silver"
+        : null;
+    if (expectedFleet) {
+      return sheets.some(
+        (row) =>
+          regattaClassFamily(row.boatClass) === "optimist" &&
+          String(row.division || "").toLowerCase() === expectedFleet
+      );
+    }
     return sheets.some((row) => regattaClassFamily(row.boatClass) === "optimist");
   }
   if (family === "ilca") {
@@ -151,7 +163,10 @@ export function eventStatusLabel(event: AdminEventGroup): string {
   return `${published} of ${total} classes published`;
 }
 
-export function groupRegattaEvents(rows: GroupableRegatta[]): {
+export function groupRegattaEvents(
+  rows: GroupableRegatta[],
+  eventSlugsById: ReadonlyMap<string, string> = new Map()
+): {
   events: AdminEventGroup[];
   unassigned: GroupableRegatta[];
 } {
@@ -165,6 +180,14 @@ export function groupRegattaEvents(rows: GroupableRegatta[]): {
       const list = shells.get(shellSlug) ?? [];
       list.push(row);
       shells.set(shellSlug, list);
+      continue;
+    }
+    const linkedSlug = row.eventId ? eventSlugsById.get(row.eventId) : null;
+    if (linkedSlug) {
+      const slug = canonicalEventSlug(linkedSlug);
+      const list = sheets.get(slug) ?? [];
+      list.push(row);
+      sheets.set(slug, list);
       continue;
     }
     const eventSlug = sheetEventSlug(row);
