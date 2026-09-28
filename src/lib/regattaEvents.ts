@@ -505,9 +505,165 @@ export const RSYC_OPTIMIST_2025_EVENT: RegattaEventDef = {
   ],
 };
 
+export const SAFYC_OPTIMIST_2025_EVENT: RegattaEventDef = {
+  slug: "1st-safyc-optimist-championship-2025",
+  name: "1st SAFYC Optimist Championship 2025",
+  shortName: "SAFYC Optimist 2025",
+  datesText: "12–13 July 2025",
+  venue: "NSRCC Seasports Centre, Singapore",
+  organizer: "SAF Yacht Club",
+  noticeOfRaceUrl:
+    "https://www.racingrulesofsailing.org/documents/11991/event?name=1st%20SAFYC%20Optimist%20Championship",
+  officialNoticeBoardUrl:
+    "https://www.racingrulesofsailing.org/documents/11991/event?name=1st%20SAFYC%20Optimist%20Championship",
+  websiteUrl: "https://www.safyc.org.sg",
+  scheduleSummary:
+    "12–13 July 2025 at NSRCC Seasports Centre. 7 races scheduled (max 4/day). 1 discard after 4 races.",
+  scoringRules:
+    "Low Point System (RRS Appendix A). 1 race constitutes a series. 4 or more races completed = 1 discard.",
+  slices: [
+    {
+      key: "optimist-gold",
+      label: "Optimist Gold",
+      series: "optimist",
+      slugIncludes: ["safyc", "2025", "gold"],
+      prizeFleetName: "Optimist Gold Fleet",
+    },
+    {
+      key: "optimist-silver",
+      label: "Optimist Silver",
+      series: "optimist",
+      slugIncludes: ["safyc", "2025", "silver"],
+      prizeFleetName: "Optimist Silver Fleet",
+    },
+  ],
+};
+
+export const RAFFLES_MARINA_OPTIMIST_2025_EVENT: RegattaEventDef = {
+  slug: "raffles-marina-optimist-regatta-2025",
+  name: "Raffles Marina Optimist Regatta 2025",
+  shortName: "RMOR 2025",
+  datesText: "5–6 July 2025",
+  venue: "Raffles Marina, Singapore",
+  organizer: "Raffles Marina",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/11647/event",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/11647/event",
+  websiteUrl: "https://www.rafflesmarina.com.sg",
+  registrationUrl: "https://forms.gle/NcZ2DYN5zpe2p93A9",
+  scheduleSummary:
+    "5–6 July 2025 at Raffles Marina. Optimist Gold (8 races, max 4/day) and Optimist Silver (6 races, max 4/day). 1 discard after 4 races.",
+  scoringRules:
+    "Low Point System (RRS Appendix A). 1 race constitutes a series. 4 or more races completed = 1 discard. Graded penalty system per NoR Addendum C.",
+  slices: [
+    {
+      key: "optimist-gold",
+      label: "Optimist Gold",
+      series: "optimist",
+      slugIncludes: ["raffles", "2025", "gold"],
+      prizeFleetName: "Optimist Gold Fleet",
+    },
+    {
+      key: "optimist-silver",
+      label: "Optimist Silver",
+      series: "optimist",
+      slugIncludes: ["raffles", "2025", "silver"],
+      prizeFleetName: "Optimist Silver Fleet",
+    },
+  ],
+};
+
+export const NSC_CUP_2_2025_EVENT: RegattaEventDef = {
+  slug: "nsc-cup-2-2025",
+  name: "NSC Cup 2 2025",
+  shortName: "NSC Cup 2 2025",
+  datesText: "31 May – 1 June 2025",
+  venue: "National Sailing Centre, Singapore",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl:
+    "https://www.racingrulesofsailing.org/documents/10790/event?name=NSC%20Cup%20II%202025",
+  officialNoticeBoardUrl:
+    "https://www.racingrulesofsailing.org/documents/10790/event?name=NSC%20Cup%20II%202025",
+  websiteUrl: "https://www.sailing.org.sg/events/282728",
+  registrationUrl: "https://www.sailing.org.sg/events/282728",
+  scheduleSummary:
+    "31 May – 1 June 2025 at National Sailing Centre. Optimist Gold / ILCA 4 / ILCA 6 / ILCA 7 / 29er (6 races), Optimist Silver (5 races), Techno 293 (8 races), iQFOiL / WingFoil (10 races).",
+  scoringRules:
+    "Low Point System (RRS Appendix A). 1 race constitutes a series. 4 or more races completed = 1 discard.",
+  slices: [
+    {
+      key: "optimist-gold",
+      label: "Optimist Gold",
+      series: "optimist",
+      slugIncludes: ["nsc", "cup-2", "gold"],
+      prizeFleetName: "Optimist Gold Fleet",
+    },
+    {
+      key: "optimist-silver",
+      label: "Optimist Silver",
+      series: "optimist",
+      slugIncludes: ["nsc", "cup-2", "silver"],
+      prizeFleetName: "Optimist Silver Fleet",
+    },
+    {
+      key: "ilca-4",
+      label: "ILCA 4",
+      series: "ilca4",
+      slugIncludes: ["nsc", "cup-2", "ilca-4"],
+      prizeFleetName: "ILCA 4",
+    },
+    {
+      key: "ilca-6",
+      label: "ILCA 6",
+      series: "ilca6",
+      slugIncludes: ["nsc", "cup-2", "ilca-6"],
+      prizeFleetName: "ILCA 6",
+    },
+    {
+      key: "ilca-7",
+      label: "ILCA 7",
+      series: "ilca7",
+      slugIncludes: ["nsc", "cup-2", "ilca-7"],
+      prizeFleetName: "ILCA 7",
+    },
+    {
+      key: "29er",
+      label: "29er",
+      series: "29er",
+      slugIncludes: ["nsc", "cup-2", "29er"],
+      prizeFleetName: "29er",
+    },
+    {
+      key: "techno-293",
+      label: "Techno 293",
+      series: "techno293",
+      slugIncludes: ["nsc", "cup-2", "techno"],
+      staticId: "techno-nsc-cup-2-2025",
+      prizeFleetName: "Techno 293",
+    },
+    {
+      key: "iqfoil",
+      label: "iQFOiL",
+      series: "iqfoil",
+      slugIncludes: ["nsc", "cup-2", "iqfoil"],
+      prizeFleetName: "iQFOiL",
+    },
+    {
+      key: "wingfoil",
+      label: "WingFoil",
+      series: "wingfoil",
+      slugIncludes: ["nsc", "cup-2", "wingfoil"],
+      staticId: "wingfoil-nsc-cup-2-2025",
+      prizeFleetName: "WingFoil",
+    },
+  ],
+};
+
 export const REGATTA_EVENTS: RegattaEventDef[] = [
   RSYC_OPTIMIST_2026_EVENT,
   RSYC_OPTIMIST_2025_EVENT,
+  SAFYC_OPTIMIST_2025_EVENT,
+  RAFFLES_MARINA_OPTIMIST_2025_EVENT,
+  NSC_CUP_2_2025_EVENT,
   CSC_ILCA_29ER_2026_EVENT,
   SNSC_2026_EVENT,
   SNSC_2025_EVENT,
@@ -530,6 +686,13 @@ const EVENT_SLUG_ALIASES: Record<string, string> = {
   "rsyc-optimist-silver-fleet-knockout-championship-2025": "rsyc-optimist-knockout-championship-2025",
   "rsyc-optimist-gold-fleet-knockout-championship-2025": "rsyc-optimist-knockout-championship-2025",
   "rsyc-optimist-knockout-race-2025": "rsyc-optimist-knockout-championship-2025",
+  "safyc-optimist-championship-2025": "1st-safyc-optimist-championship-2025",
+  "1st-safyc-optimist-championships-2025": "1st-safyc-optimist-championship-2025",
+  "safyc-optimist-2025": "1st-safyc-optimist-championship-2025",
+  "rmor-2025": "raffles-marina-optimist-regatta-2025",
+  "raffles-marina-2025": "raffles-marina-optimist-regatta-2025",
+  "nsc-cup-ii-2025": "nsc-cup-2-2025",
+  "nsc-cup-2": "nsc-cup-2-2025",
   "csc-ilca-29er-championships-2026": "6th-csc-ilca-29er-open-2026",
   "csc-ilca-open-2026": "6th-csc-ilca-29er-open-2026",
   "csc-ilca-29er-2026": "6th-csc-ilca-29er-open-2026",

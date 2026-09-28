@@ -70,6 +70,18 @@ export const CALENDAR_RESULT_ALIASES: Record<string, CalendarResultAlias> = {
     slugIncludes: ["rsyc", "knockout", "2025"],
     classes: ["optimist"],
   },
+  "1st-safyc-optimist-championship-2025": {
+    slugIncludes: ["safyc", "2025"],
+    classes: ["optimist"],
+  },
+  "raffles-marina-optimist-regatta-2025": {
+    slugIncludes: ["raffles", "2025"],
+    classes: ["optimist"],
+  },
+  "nsc-cup-2-2025": {
+    slugIncludes: ["nsc", "cup-2"],
+    classes: ["optimist", "ilca4", "ilca6", "ilca7"],
+  },
 };
 
 export function publicResultClass(

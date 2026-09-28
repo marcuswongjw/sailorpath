@@ -4783,9 +4783,296 @@ export const RSYC_OPTIMIST_2025_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+export const SAFYC_OPTIMIST_2025_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "1st-safyc-optimist-championship-2025",
+  regattaName: "1st SAFYC Optimist Championship 2025",
+  year: 2025,
+  datesText: "12–13 July 2025",
+  venue: "NSRCC Seasports Centre (11 Changi Coast Walk, Singapore 499740)",
+  organizer: "SAF Yacht Club",
+  noticeOfRaceUrl:
+    "https://www.racingrulesofsailing.org/documents/11991/event?name=1st%20SAFYC%20Optimist%20Championship",
+  officialNoticeBoardUrl:
+    "https://www.racingrulesofsailing.org/documents/11991/event?name=1st%20SAFYC%20Optimist%20Championship",
+  websiteUrl: "https://www.safyc.org.sg",
+  registrationUrl:
+    "https://www.safyc.org.sg/wp-content/uploads/2024/06/Booking-Portal-Step-by-Step-Guide-Guests.pdf",
+  entryFees: {
+    singleHanded: 92.65,
+    doubleHanded: 0,
+    earlyBirdDeadline: "7 July 2025, 2359h",
+    finalDeadline: "7 July 2025, 2359h",
+    lateFee: 21.8,
+  },
+  scheduleSummary:
+    "12–13 July 2025 at NSRCC Seasports Centre. 7 races scheduled (max 4/day). 1 discard after 4 races.",
+  scoringRules:
+    "Low Point System (RRS Appendix A). 1 race constitutes a series. 4 or more races completed = 1 discard. Section 12 Prizes per NoR.",
+  fleets: [
+    {
+      fleetName: "Optimist Gold Fleet",
+      boatClass: "Optimist",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 10th", winners: [] },
+        { categoryName: "Female", prizesAwarded: "1st to 5th", winners: [] },
+        {
+          categoryName: "12 Years and Under",
+          prizesAwarded: "1st to 5th",
+          eligibilityNotes: "Born 2013 or after",
+          winners: [],
+        },
+      ],
+    },
+    {
+      fleetName: "Optimist Silver Fleet",
+      boatClass: "Optimist",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 10th", winners: [] },
+        { categoryName: "Female", prizesAwarded: "1st to 5th", winners: [] },
+        {
+          categoryName: "10 Years Old",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born in the year 2015",
+          winners: [],
+        },
+        {
+          categoryName: "9 Years Old",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born in the year 2016",
+          winners: [],
+        },
+        {
+          categoryName: "8 Years Old",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born in the year 2017",
+          winners: [],
+        },
+      ],
+    },
+  ],
+};
+
+export const RAFFLES_MARINA_OPTIMIST_2025_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "raffles-marina-optimist-regatta-2025",
+  regattaName: "Raffles Marina Optimist Regatta 2025",
+  year: 2025,
+  datesText: "5–6 July 2025",
+  venue: "Raffles Marina (10 Tuas West Drive, Singapore 638404)",
+  organizer: "Raffles Marina",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/11647/event",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/11647/event",
+  websiteUrl: "https://www.rafflesmarina.com.sg",
+  registrationUrl: "https://forms.gle/NcZ2DYN5zpe2p93A9",
+  entryFees: {
+    singleHanded: 110,
+    doubleHanded: 0,
+    earlyBirdDeadline: "18 June 2025, 2359h",
+    finalDeadline: "25 June 2025, 2359h",
+    lateFee: 10,
+  },
+  scheduleSummary:
+    "5–6 July 2025 at Raffles Marina. Optimist Gold (8 races, max 4/day) and Optimist Silver (6 races, max 4/day). 1 discard after 4 races.",
+  scoringRules:
+    "Low Point System (RRS Appendix A). 1 race constitutes a series. 4 or more races completed = 1 discard. Graded penalty system per NoR Addendum C. Section 13 Prizes per NoR.",
+  fleets: [
+    {
+      fleetName: "Optimist Gold Fleet",
+      boatClass: "Optimist",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 10th", winners: [] },
+        { categoryName: "Female", prizesAwarded: "1st to 3rd", winners: [] },
+        {
+          categoryName: "12 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born 2013 or after",
+          winners: [],
+        },
+      ],
+    },
+    {
+      fleetName: "Optimist Silver Fleet",
+      boatClass: "Optimist",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 10th", winners: [] },
+        { categoryName: "Female", prizesAwarded: "1st to 3rd", winners: [] },
+        {
+          categoryName: "10 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born 2015 or after",
+          winners: [],
+        },
+        {
+          categoryName: "8 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born 2017 or after",
+          winners: [],
+        },
+      ],
+    },
+  ],
+};
+
+export const NSC_CUP_2_2025_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  regattaSlug: "nsc-cup-2-2025",
+  regattaName: "NSC Cup 2 2025",
+  year: 2025,
+  datesText: "31 May – 1 June 2025",
+  venue: "National Sailing Centre (1500 East Coast Parkway, Singapore 468963)",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl:
+    "https://www.racingrulesofsailing.org/documents/10790/event?name=NSC%20Cup%20II%202025",
+  officialNoticeBoardUrl:
+    "https://www.racingrulesofsailing.org/documents/10790/event?name=NSC%20Cup%20II%202025",
+  websiteUrl: "https://www.sailing.org.sg/events/282728",
+  registrationUrl: "https://www.sailing.org.sg/events/282728",
+  entryFees: {
+    singleHanded: 101,
+    doubleHanded: 202,
+    earlyBirdDeadline: "11 May 2025, 2359h",
+    finalDeadline: "25 May 2025",
+    lateFee: 25.25,
+  },
+  scheduleSummary:
+    "31 May – 1 June 2025 at National Sailing Centre. Optimist Gold / ILCA 4 / ILCA 6 / ILCA 7 / 29er (6 races), Optimist Silver (5 races), Techno 293 (8 races), iQFOiL / WingFoil (10 races).",
+  scoringRules:
+    "Low Point System (RRS Appendix A). 1 race constitutes a series. 4 or more races completed = 1 discard. Section 19 Prizes per NoR.",
+  fleets: [
+    {
+      fleetName: "Optimist Gold Fleet",
+      boatClass: "Optimist",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [] },
+        { categoryName: "Female", prizesAwarded: "1st to 3rd", winners: [] },
+        {
+          categoryName: "12 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born after 2013",
+          winners: [],
+        },
+        {
+          categoryName: "Novice",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Open for latest promoted sailor in Dec 2024",
+          winners: [],
+        },
+        { categoryName: "Primary School", prizesAwarded: "1st", winners: [] },
+        { categoryName: "Secondary School", prizesAwarded: "1st", winners: [] },
+      ],
+    },
+    {
+      fleetName: "Optimist Silver Fleet",
+      boatClass: "Optimist",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 10th", winners: [] },
+        { categoryName: "Female", prizesAwarded: "1st to 3rd", winners: [] },
+        {
+          categoryName: "10 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born after 2015",
+          winners: [],
+        },
+        {
+          categoryName: "8 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born after 2017",
+          winners: [],
+        },
+        { categoryName: "Primary School", prizesAwarded: "1st", winners: [] },
+        {
+          categoryName: "Novice",
+          prizesAwarded: "1st to 10th",
+          eligibilityNotes: "Obtained Opti-Racer certification after 2 June 2024",
+          winners: [],
+        },
+      ],
+    },
+    {
+      fleetName: "ILCA 4",
+      boatClass: "ILCA 4",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [] },
+        { categoryName: "Female", prizesAwarded: "1st to 3rd", winners: [] },
+        {
+          categoryName: "Novice",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Obtained Level 1 certification after 2 June 2024",
+          winners: [],
+        },
+        { categoryName: "Secondary School", prizesAwarded: "1st", winners: [] },
+        {
+          categoryName: "13 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born after 2012",
+          winners: [],
+        },
+      ],
+    },
+    {
+      fleetName: "ILCA 6",
+      boatClass: "ILCA 6",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [] },
+        { categoryName: "Female", prizesAwarded: "1st to 3rd", winners: [] },
+        {
+          categoryName: "15 Years and Under",
+          prizesAwarded: "1st to 3rd",
+          eligibilityNotes: "Born after 2010",
+          winners: [],
+        },
+        { categoryName: "Secondary School", prizesAwarded: "1st", winners: [] },
+        { categoryName: "Junior College", prizesAwarded: "1st", winners: [] },
+      ],
+    },
+    {
+      fleetName: "ILCA 7",
+      boatClass: "ILCA 7",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [] },
+        {
+          categoryName: "20 Years and Under",
+          prizesAwarded: "1st",
+          eligibilityNotes: "Born after 2005",
+          winners: [],
+        },
+      ],
+    },
+    {
+      fleetName: "29er",
+      boatClass: "29er",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [] },
+      ],
+    },
+    {
+      fleetName: "Techno 293",
+      boatClass: "Techno 293",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [] },
+      ],
+    },
+    {
+      fleetName: "iQFOiL",
+      boatClass: "iQFOiL",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [] },
+      ],
+    },
+    {
+      fleetName: "WingFoil",
+      boatClass: "WingFoil",
+      categories: [
+        { categoryName: "Open", prizesAwarded: "1st to 3rd", winners: [] },
+      ],
+    },
+  ],
+};
+
 export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
   RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
   RSYC_OPTIMIST_2025_PRIZE_SCHEDULE,
+  SAFYC_OPTIMIST_2025_PRIZE_SCHEDULE,
+  RAFFLES_MARINA_OPTIMIST_2025_PRIZE_SCHEDULE,
+  NSC_CUP_2_2025_PRIZE_SCHEDULE,
   CSC_ILCA_29ER_2026_PRIZE_SCHEDULE,
   PULAU_UJONG_2026_PRIZE_SCHEDULE,
   SYSC_2026_PRIZE_SCHEDULE,
@@ -4815,6 +5102,27 @@ export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | nu
     (s.includes("rsyc") && s.includes("knockout") && s.includes("2025"))
   ) {
     return RSYC_OPTIMIST_2025_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("safyc-optimist-championship-2025") ||
+    s.includes("1st-safyc-optimist-championship-2025") ||
+    (s.includes("safyc") && s.includes("optimist") && s.includes("2025"))
+  ) {
+    return SAFYC_OPTIMIST_2025_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("raffles-marina-optimist-regatta-2025") ||
+    s.includes("rmor-2025") ||
+    (s.includes("raffles") && s.includes("optimist") && s.includes("2025"))
+  ) {
+    return RAFFLES_MARINA_OPTIMIST_2025_PRIZE_SCHEDULE;
+  }
+  if (
+    s.includes("nsc-cup-2-2025") ||
+    s.includes("nsc-cup-ii-2025") ||
+    (s.includes("nsc") && s.includes("cup") && (s.includes("2") || s.includes("ii")) && s.includes("2025"))
+  ) {
+    return NSC_CUP_2_2025_PRIZE_SCHEDULE;
   }
   if (
     s.includes("6th-csc-ilca-29er-open-2026") ||
