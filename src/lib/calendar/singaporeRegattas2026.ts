@@ -376,7 +376,7 @@ export const SINGAPORE_REGATTAS_2026: RegattaCalendarEntry[] = [
     scheduleNotes:
       "RSYC Optimist Silver Fleet Knockout Championship 2026 (26–27 September 2026) at RSYC. Knockout series format: Qualifying Rounds, Repechage Round, Final Rounds, and Petite Final Rounds. Up to 8 short-course races per competitor. Boat charter provided with fully rigged sails and equipment.",
     prizesSummary: "Overall Top 10, Female Top 3, Under 10 Top 3, Under 8 Top 3",
-    totalFleetSize: 13,
+    totalFleetSize: 53,
   },
   {
     name: "2026 Optimist European Team Racing Championship",
