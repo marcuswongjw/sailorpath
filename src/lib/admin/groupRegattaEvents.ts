@@ -89,7 +89,7 @@ function sheetEventSlug(row: GroupableRegatta): string | null {
   if (shell) return shell;
   const slice = findEventSliceForRegattaSlug(row.slug);
   if (slice) return slice.event.slug;
-  const slug = row.slug.toLowerCase();
+  const slug = String(row.slug || "").toLowerCase();
   for (const [calendarSlug, alias] of Object.entries(CALENDAR_RESULT_ALIASES)) {
     if (!alias.slugIncludes.every((token) => slug.includes(token))) continue;
     if (alias.slugExcludes?.some((token) => slug.includes(token))) continue;

@@ -788,7 +788,7 @@ function fullerResultSheet(current: RegattaRecord, next: RegattaRecord): Regatta
   if (races !== 0) return races > 0 ? next : current;
   const fleet = (next.totalFleetSize ?? 0) - (current.totalFleetSize ?? 0);
   if (fleet !== 0) return fleet > 0 ? next : current;
-  return current.slug.length <= next.slug.length ? current : next;
+  return (current.slug || "").length <= (next.slug || "").length ? current : next;
 }
 
 export type ResolvedEventSlice = {

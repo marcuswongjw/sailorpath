@@ -4,9 +4,14 @@ import type { ResultAdmin } from "@/types/result";
 
 async function adminJson<T>(url: string): Promise<T> {
   const response = await fetch(url, { credentials: "include" });
-  const body = (await response.json()) as T & { error?: string };
+  const body = (await response.json()) as T & { error?: string; detail?: string };
   if (!response.ok) {
-    throw new Error(body.error || `Request failed (${response.status})`);
+    const detail = body.detail;
+    const msg =
+      detail && detail !== body.error
+        ? `${body.error}: ${detail}`
+        : body.error || `Request failed (${response.status})`;
+    throw new Error(msg);
   }
   return body;
 }

@@ -86,7 +86,10 @@ export async function POST(req: Request) {
     }
 
     const existing = await db
-      .select()
+      .select({
+        id: sailorClaims.id,
+        status: sailorClaims.status,
+      })
       .from(sailorClaims)
       .where(
         and(
@@ -111,17 +114,38 @@ export async function POST(req: Request) {
         });
       }
       // Re-open previously rejected claim
-      const [reopened] = await db
-        .update(sailorClaims)
-        .set({
-          status: "pending",
-          relation,
-          heardAbout: heardAbout || existing[0].heardAbout,
-          note: note || null,
-          updatedAt: new Date(),
-        })
-        .where(eq(sailorClaims.id, existing[0].id))
-        .returning();
+      let reopened;
+      try {
+        const [row] = await db
+          .update(sailorClaims)
+          .set({
+            status: "pending",
+            relation,
+            heardAbout: heardAbout || null,
+            note: note || null,
+            updatedAt: new Date(),
+          })
+          .where(eq(sailorClaims.id, existing[0].id))
+          .returning();
+        reopened = row;
+      } catch (updateErr) {
+        const msg = updateErr instanceof Error ? updateErr.message : String(updateErr);
+        if (/heard_about|does not exist/i.test(msg)) {
+          const [fallbackRow] = await db
+            .update(sailorClaims)
+            .set({
+              status: "pending",
+              relation,
+              note: note || null,
+              updatedAt: new Date(),
+            })
+            .where(eq(sailorClaims.id, existing[0].id))
+            .returning();
+          reopened = fallbackRow;
+        } else {
+          throw updateErr;
+        }
+      }
 
       return NextResponse.json({
         ok: true,
@@ -130,17 +154,38 @@ export async function POST(req: Request) {
       });
     }
 
-    const [claim] = await db
-      .insert(sailorClaims)
-      .values({
-        sailorId,
-        requesterId: auth.userId,
-        status: "pending",
-        relation,
-        heardAbout,
-        note: note || null,
-      })
-      .returning();
+    let claim;
+    try {
+      const [row] = await db
+        .insert(sailorClaims)
+        .values({
+          sailorId,
+          requesterId: auth.userId,
+          status: "pending",
+          relation,
+          heardAbout,
+          note: note || null,
+        })
+        .returning();
+      claim = row;
+    } catch (insertErr) {
+      const msg = insertErr instanceof Error ? insertErr.message : String(insertErr);
+      if (/heard_about|does not exist/i.test(msg)) {
+        const [fallbackRow] = await db
+          .insert(sailorClaims)
+          .values({
+            sailorId,
+            requesterId: auth.userId,
+            status: "pending",
+            relation,
+            note: note || null,
+          })
+          .returning();
+        claim = fallbackRow;
+      } else {
+        throw insertErr;
+      }
+    }
 
     // Optional client session + acquisition (for claim rate by source/device)
     const sessionId =

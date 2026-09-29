@@ -1,5 +1,5 @@
 import { createServerSupabase } from "@/lib/supabase/server";
-import { db } from "@/db";
+import { db, formatDbError } from "@/db";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -96,39 +96,46 @@ async function requireRoles(roles: AppRole[]): Promise<AuthContext> {
 }
 
 export function jsonError(error: unknown) {
-  const msg = error instanceof Error ? error.message : "Error";
-  const status =
-    msg === "UNAUTHORIZED" ? 401 : msg === "FORBIDDEN" ? 403 : 500;
+  // Always log internal server errors so they appear in Vercel / server logs
+  console.error("[jsonError]", error);
 
-  // In production, only expose safe pre-approved messages.
-  // Schema drift, column names, and internal errors are already logged via
-  // console.error() in every route handler and visible in Vercel logs.
+  const rawMsg = error instanceof Error ? error.message : String(error || "Error");
+  const dbDetail = formatDbError(error);
+  const status =
+    rawMsg === "UNAUTHORIZED" ? 401 : rawMsg === "FORBIDDEN" ? 403 : 500;
+
   const isProduction = process.env.NODE_ENV === "production";
 
   let publicMsg: string;
   let detail: string | undefined;
 
-  if (msg === "UNAUTHORIZED") {
+  if (rawMsg === "UNAUTHORIZED") {
     publicMsg = "Not signed in";
-  } else if (msg === "FORBIDDEN") {
+  } else if (rawMsg === "FORBIDDEN") {
     publicMsg = "You do not have access to this area";
   } else if (isProduction) {
+    const fullText = `${rawMsg} ${dbDetail}`;
     if (
-      msg.includes("Database unavailable") ||
-      msg.includes("does not exist") ||
-      msg.includes("No valid DATABASE_URL") ||
-      msg.includes("Race-score storage") ||
-      msg.includes("Same-day") ||
-      msg.includes("Too many rows")
+      fullText.includes("Database unavailable") ||
+      fullText.includes("does not exist") ||
+      fullText.includes("No valid DATABASE_URL") ||
+      fullText.includes("Race-score storage") ||
+      fullText.includes("Same-day") ||
+      fullText.includes("Too many rows") ||
+      fullText.includes("violates") ||
+      fullText.includes("constraint") ||
+      fullText.includes("Failed query")
     ) {
-      publicMsg = msg.length < 280 ? msg : msg.slice(0, 240) + "…";
+      publicMsg = dbDetail && dbDetail.length < 280 ? dbDetail : rawMsg.length < 280 ? rawMsg : rawMsg.slice(0, 240) + "…";
+      detail = dbDetail ? dbDetail.slice(0, 500) : rawMsg.slice(0, 500);
     } else {
       publicMsg = "Internal error";
+      detail = dbDetail ? dbDetail.slice(0, 500) : rawMsg.slice(0, 240);
     }
   } else {
     // Development: surface full messages for debugging
-    publicMsg = msg.length < 280 ? msg : msg.slice(0, 240) + "\u2026";
-    if (msg.length < 500) detail = msg;
+    publicMsg = dbDetail && dbDetail.length < 280 ? dbDetail : rawMsg.length < 280 ? rawMsg : rawMsg.slice(0, 240) + "…";
+    detail = dbDetail ? dbDetail.slice(0, 500) : rawMsg.slice(0, 500);
   }
 
   const body: Record<string, string> = { error: publicMsg };

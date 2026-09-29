@@ -6,6 +6,13 @@ export type AdminApiJson = Record<string, unknown>;
 
 /** Prefer error → detail → message for user-facing failures. */
 export function apiErr(data: AdminApiJson, fallback: string): string {
+  if (
+    data.error === "Internal error" &&
+    typeof data.detail === "string" &&
+    data.detail.trim()
+  ) {
+    return `Internal error: ${data.detail.trim()}`;
+  }
   for (const key of ["error", "detail", "message"] as const) {
     const v = data[key];
     if (typeof v === "string" && v.trim()) return v;

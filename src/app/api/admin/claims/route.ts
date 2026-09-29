@@ -15,31 +15,68 @@ import { logAdminChange } from "@/lib/adminChangeLog";
 export async function GET() {
   try {
     await requireSuperadmin();
-    const rows = await db
-      .select({
-        id: sailorClaims.id,
-        sailorId: sailorClaims.sailorId,
-        requesterId: sailorClaims.requesterId,
-        status: sailorClaims.status,
-        relation: sailorClaims.relation,
-        heardAbout: sailorClaims.heardAbout,
-        note: sailorClaims.note,
-        createdAt: sailorClaims.createdAt,
-        updatedAt: sailorClaims.updatedAt,
-        sailorName: sailors.name,
-        sailorHandle: sailors.handle,
-        sailorSailNumber: sailors.sailNumber,
-        sailorClub: sailors.club,
-        sailorParentId: sailors.parentId,
-        sailorOwnerRelation: sailors.ownerRelation,
-        requesterEmail: profiles.email,
-        requesterName: profiles.fullName,
-        requesterRole: profiles.role,
-      })
-      .from(sailorClaims)
-      .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
-      .innerJoin(profiles, eq(sailorClaims.requesterId, profiles.id))
-      .orderBy(desc(sailorClaims.createdAt));
+    let rows;
+    try {
+      rows = await db
+        .select({
+          id: sailorClaims.id,
+          sailorId: sailorClaims.sailorId,
+          requesterId: sailorClaims.requesterId,
+          status: sailorClaims.status,
+          relation: sailorClaims.relation,
+          heardAbout: sailorClaims.heardAbout,
+          note: sailorClaims.note,
+          createdAt: sailorClaims.createdAt,
+          updatedAt: sailorClaims.updatedAt,
+          sailorName: sailors.name,
+          sailorHandle: sailors.handle,
+          sailorSailNumber: sailors.sailNumber,
+          sailorClub: sailors.club,
+          sailorParentId: sailors.parentId,
+          sailorOwnerRelation: sailors.ownerRelation,
+          requesterEmail: profiles.email,
+          requesterName: profiles.fullName,
+          requesterRole: profiles.role,
+        })
+        .from(sailorClaims)
+        .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
+        .innerJoin(profiles, eq(sailorClaims.requesterId, profiles.id))
+        .orderBy(desc(sailorClaims.createdAt));
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      if (/heard_about|does not exist/i.test(msg)) {
+        const fallbackRows = await db
+          .select({
+            id: sailorClaims.id,
+            sailorId: sailorClaims.sailorId,
+            requesterId: sailorClaims.requesterId,
+            status: sailorClaims.status,
+            relation: sailorClaims.relation,
+            note: sailorClaims.note,
+            createdAt: sailorClaims.createdAt,
+            updatedAt: sailorClaims.updatedAt,
+            sailorName: sailors.name,
+            sailorHandle: sailors.handle,
+            sailorSailNumber: sailors.sailNumber,
+            sailorClub: sailors.club,
+            sailorParentId: sailors.parentId,
+            sailorOwnerRelation: sailors.ownerRelation,
+            requesterEmail: profiles.email,
+            requesterName: profiles.fullName,
+            requesterRole: profiles.role,
+          })
+          .from(sailorClaims)
+          .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
+          .innerJoin(profiles, eq(sailorClaims.requesterId, profiles.id))
+          .orderBy(desc(sailorClaims.createdAt));
+        rows = fallbackRows.map((r) => ({
+          ...r,
+          heardAbout: null as string | null,
+        }));
+      } else {
+        throw err;
+      }
+    }
 
     const claims = rows.map((r) => ({
       ...r,
