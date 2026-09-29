@@ -29,4 +29,6 @@ export type { ProfileOwnerForm } from "./ProfileOwnerEditor";
 export { ProfileJourneyPanel } from "./ProfileJourneyPanel";
 export type { JourneyDraft } from "./ProfileJourneyPanel";
 export { ProfileAwardsCabinet } from "./ProfileAwardsCabinet";
+export { ProfileStandingCard } from "./ProfileStandingCard";
+export type { ProfileStandingCardProps } from "./ProfileStandingCard";
 
