@@ -51,6 +51,12 @@ describe("ClaimPanel UI", () => {
       screen.getByRole("combobox", { name: /relation/i }),
       "parent"
     );
+    expect(
+      screen.getByText("Verification note")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Verification note")
+    ).toBeInTheDocument();
     expect(button).toBeEnabled();
   });
 
