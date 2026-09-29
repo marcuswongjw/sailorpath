@@ -43,6 +43,90 @@ type ClaimRow = {
   createdAt: string;
 };
 
+type ChangedField = { from: unknown; to: unknown };
+
+type ClaimedProfileUpdateDetails = {
+  changedFields?: Record<string, ChangedField>;
+  fieldDescriptions?: string[];
+  actorRelation?: string;
+  sailorHandle?: string;
+};
+
+const PROFILE_FIELD_LABELS: Record<string, string> = {
+  avatarUrl: "Profile photo URL",
+  bio: "Biography",
+  club: "Club",
+  dob: "Date of birth",
+  equipmentNotes: "Optimist equipment notes",
+  equipmentNotesIlca4: "ILCA 4 equipment notes",
+  foilBrand: "Optimist foil brand",
+  foilBrandIlca4: "ILCA 4 foil brand",
+  handle: "Profile address",
+  hullBrand: "Optimist hull brand",
+  hullBrandIlca4: "ILCA 4 hull brand",
+  instagram: "Instagram",
+  isPublicDob: "Show date of birth",
+  isPublicWeight: "Show weight",
+  mast: "Optimist mast",
+  mastIlca4: "ILCA 4 mast",
+  sailMake: "Optimist sail make",
+  sailMakeIlca4: "ILCA 4 sail make",
+  sailNumber: "Optimist sail number",
+  sailNumberIlca4: "ILCA 4 sail number",
+  sailingJourney: "Sailing journey",
+  school: "School",
+  weight: "Weight",
+};
+
+function parseClaimedProfileUpdateDetails(
+  details: unknown
+): ClaimedProfileUpdateDetails | null {
+  if (!details) return null;
+  try {
+    const parsed = typeof details === "string" ? JSON.parse(details) : details;
+    return parsed && typeof parsed === "object"
+      ? (parsed as ClaimedProfileUpdateDetails)
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+function auditValue(value: unknown): string {
+  if (value === null || value === undefined || value === "") return "Not set";
+  if (typeof value === "boolean") return value ? "Yes" : "No";
+  if (typeof value === "object") {
+    try {
+      return JSON.stringify(value);
+    } catch {
+      return String(value);
+    }
+  }
+  return String(value);
+}
+
+function isHttpUrl(value: unknown): value is string {
+  return typeof value === "string" && /^https?:\/\//i.test(value);
+}
+
+function AuditValue({ value }: { value: unknown }) {
+  const formatted = auditValue(value);
+  if (isHttpUrl(value)) {
+    return (
+      <a
+        href={value}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex max-w-full items-center gap-1 break-all text-orange-300 underline decoration-orange-300/40 underline-offset-2 hover:text-orange-200"
+      >
+        <span>{formatted}</span>
+        <ExternalLink className="h-3 w-3 shrink-0" aria-hidden={true} />
+      </a>
+    );
+  }
+  return <span className={formatted === "Not set" ? "italic text-slate-500" : ""}>{formatted}</span>;
+}
+
 const RELATIONS: ClaimRelation[] = ["parent", "sailor", "other"];
 
 export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
@@ -73,7 +157,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
           entityId: string | null;
           entityLabel: string | null;
           summary: string;
-          details: string | null;
+          details: unknown;
         }>;
         return allChanges.filter((c) => c.action === "claimed_profile.updated");
       } catch {
@@ -352,19 +436,10 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
             />
           ) : (
             claimedUpdates.map((item) => {
-              let parsedDetails: {
-                changedFields?: Record<string, { from: unknown; to: unknown }>;
-                fieldDescriptions?: string[];
-                actorRelation?: string;
-                sailorHandle?: string;
-              } | null = null;
-              if (item.details) {
-                try {
-                  parsedDetails = JSON.parse(item.details);
-                } catch {
-                  parsedDetails = null;
-                }
-              }
+              const parsedDetails = parseClaimedProfileUpdateDetails(item.details);
+              const changedFields = Object.entries(
+                parsedDetails?.changedFields || {}
+              );
               const sailorUrl = parsedDetails?.sailorHandle
                 ? `/${parsedDetails.sailorHandle}`
                 : item.entityId
@@ -404,14 +479,47 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                     )}
                   </div>
 
-                  {parsedDetails?.fieldDescriptions && parsedDetails.fieldDescriptions.length > 0 ? (
-                    <div className="bg-white/5 rounded-xl p-3 border border-white/10 space-y-1">
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1">
-                        Modified Fields:
+                  {changedFields.length > 0 ? (
+                    <div className="overflow-hidden rounded-xl border border-white/10 bg-white/5">
+                      <div className="border-b border-white/10 px-3 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Changes
+                      </div>
+                      <dl className="divide-y divide-white/10">
+                        {changedFields.map(([field, change]) => (
+                          <div
+                            key={field}
+                            className="grid gap-2 px-3 py-3 text-xs sm:grid-cols-[minmax(9rem,0.7fr)_minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-start"
+                          >
+                            <dt className="font-bold text-slate-200">
+                              {PROFILE_FIELD_LABELS[field] || field}
+                            </dt>
+                            <dd className="min-w-0 rounded-lg bg-black/20 px-2.5 py-2 text-slate-300">
+                              <span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-slate-500">
+                                Previous
+                              </span>
+                              <AuditValue value={change.from} />
+                            </dd>
+                            <span className="hidden pt-2 text-slate-600 sm:block" aria-hidden={true}>
+                              →
+                            </span>
+                            <dd className="min-w-0 rounded-lg bg-emerald-500/[0.07] px-2.5 py-2 text-emerald-100">
+                              <span className="mb-1 block text-[10px] font-bold uppercase tracking-wide text-emerald-400/70">
+                                New
+                              </span>
+                              <AuditValue value={change.to} />
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  ) : parsedDetails?.fieldDescriptions && parsedDetails.fieldDescriptions.length > 0 ? (
+                    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+                      <p className="mb-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                        Changes
                       </p>
-                      <ul className="list-disc list-inside space-y-1 text-xs text-slate-200">
+                      <ul className="list-inside list-disc space-y-1 text-xs text-slate-200">
                         {parsedDetails.fieldDescriptions.map((desc, idx) => (
-                          <li key={idx} className="font-mono text-[11px]">
+                          <li key={idx} className="break-words text-[11px]">
                             {desc}
                           </li>
                         ))}
