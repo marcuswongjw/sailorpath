@@ -31,4 +31,6 @@ export type { JourneyDraft } from "./ProfileJourneyPanel";
 export { ProfileAwardsCabinet } from "./ProfileAwardsCabinet";
 export { ProfileStandingCard } from "./ProfileStandingCard";
 export type { ProfileStandingCardProps } from "./ProfileStandingCard";
+export { ProfileOverviewTab } from "./ProfileOverviewTab";
+export type { ProfileOverviewTabProps } from "./ProfileOverviewTab";
 
