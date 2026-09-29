@@ -40,6 +40,7 @@ type ClaimRow = {
   requesterEmail: string;
   requesterName: string;
   requesterRole?: string | null;
+  heardAbout?: string | null;
   createdAt: string;
 };
 
@@ -608,6 +609,12 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                       {c.requesterRole}
                     </span>
                   </p>
+                )}
+                {c.heardAbout && (
+                  <div className="mt-2 rounded-lg bg-orange-500/10 border border-orange-500/20 px-2.5 py-1.5 text-xs">
+                    <span className="text-slate-400 font-medium">Heard about via: </span>
+                    <strong className="text-orange-300 font-semibold">{c.heardAbout}</strong>
+                  </div>
                 )}
                 {c.note && (
                   <div className="mt-2 rounded-lg bg-white/5 border border-white/5 px-2.5 py-2">

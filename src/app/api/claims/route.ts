@@ -45,6 +45,13 @@ export async function POST(req: Request) {
       relationFromNote(body.note) ||
       "parent";
 
+    const heardAboutR = asBoundedText(body.heardAbout, {
+      max: 200,
+      field: "heardAbout",
+    });
+    const heardAbout =
+      heardAboutR.ok && heardAboutR.value ? heardAboutR.value.trim() : null;
+
     const noteR = asBoundedText(body.note, {
       max: 2000,
       field: "note",
@@ -109,6 +116,7 @@ export async function POST(req: Request) {
         .set({
           status: "pending",
           relation,
+          heardAbout: heardAbout || existing[0].heardAbout,
           note: note || null,
           updatedAt: new Date(),
         })
@@ -129,6 +137,7 @@ export async function POST(req: Request) {
         requesterId: auth.userId,
         status: "pending",
         relation,
+        heardAbout,
         note: note || null,
       })
       .returning();
@@ -157,6 +166,7 @@ export async function POST(req: Request) {
       meta: {
         status: "pending",
         relation,
+        heardAbout: heardAbout || null,
         source: source || null,
         device: device || null,
         vid: vid || null,

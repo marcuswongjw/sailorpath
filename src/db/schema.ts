@@ -508,6 +508,8 @@ export const sailorClaims = pgTable("sailor_claims", {
   relation: text("relation", {
     enum: ["parent", "sailor", "other"],
   }),
+  /** How the claimant heard about SailorPath */
+  heardAbout: text("heard_about"),
   note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),

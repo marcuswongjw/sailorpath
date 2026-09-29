@@ -15,7 +15,7 @@ async function fillClaimForm(
   noteText: string
 ) {
   await user.selectOptions(
-    screen.getByRole("combobox"),
+    screen.getByRole("combobox", { name: /relation/i }),
     "parent"
   );
   const note = screen.getByPlaceholderText(/parent of test sailor/i);
@@ -47,7 +47,10 @@ describe("ClaimPanel UI", () => {
     await user.type(note, "Parent of Test Sailor at CSC");
     expect(button).toBeDisabled();
 
-    await user.selectOptions(screen.getByRole("combobox"), "parent");
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /relation/i }),
+      "parent"
+    );
     expect(button).toBeEnabled();
   });
 
@@ -129,5 +132,56 @@ describe("ClaimPanel UI", () => {
       expect(onResult).toHaveBeenCalledWith("error", "Already claimed");
     });
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("submits claim with referral source selection and others write-in", async () => {
+    const user = userEvent.setup();
+    const onClose = vi.fn();
+    const onResult = vi.fn();
+    let submittedBody: Record<string, unknown> | null = null;
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+        if (init?.body) {
+          submittedBody = JSON.parse(String(init.body));
+        }
+        return new Response(
+          JSON.stringify({
+            ok: true,
+            message: "Claim submitted for Test Sailor.",
+          }),
+          { status: 200 }
+        );
+      })
+    );
+
+    render(
+      <ClaimPanel
+        sailorId="s1"
+        sailorName="Test Sailor"
+        onClose={onClose}
+        onResult={onResult}
+      />
+    );
+
+    await fillClaimForm(user, "Parent of Test Sailor at CSC");
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /how did you hear about sailorpath/i }),
+      "Others"
+    );
+    const otherInput = screen.getByPlaceholderText(/please specify/i);
+    await user.type(otherInput, "WhatsApp group");
+
+    await user.click(screen.getByRole("button", { name: /submit claim/i }));
+
+    await waitFor(() => {
+      expect(submittedBody).toMatchObject({
+        sailorId: "s1",
+        relation: "parent",
+        heardAbout: "Others: WhatsApp group",
+      });
+      expect(onClose).toHaveBeenCalled();
+    });
   });
 });

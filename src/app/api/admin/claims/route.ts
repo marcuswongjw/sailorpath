@@ -22,6 +22,7 @@ export async function GET() {
         requesterId: sailorClaims.requesterId,
         status: sailorClaims.status,
         relation: sailorClaims.relation,
+        heardAbout: sailorClaims.heardAbout,
         note: sailorClaims.note,
         createdAt: sailorClaims.createdAt,
         updatedAt: sailorClaims.updatedAt,

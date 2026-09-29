@@ -8,6 +8,7 @@ import {
 } from "@/lib/clientUsage";
 import {
   CLAIM_NOTE_MIN,
+  HEARD_ABOUT_OPTIONS,
   isClaimNoteReady,
   submitClaimRequest,
 } from "@/lib/claimClient";
@@ -40,6 +41,8 @@ export function ClaimPanel({
   const [relation, setRelation] = useState<
     "" | "sailor" | "parent" | "other"
   >("");
+  const [heardAbout, setHeardAbout] = useState("");
+  const [heardAboutOther, setHeardAboutOther] = useState("");
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -48,10 +51,18 @@ export function ClaimPanel({
     setBusy(true);
     try {
       const acq = getAcquisition();
+      const effectiveHeardAbout =
+        heardAbout === "Others"
+          ? heardAboutOther.trim()
+            ? `Others: ${heardAboutOther.trim()}`
+            : "Others"
+          : heardAbout;
+
       const result = await submitClaimRequest({
         sailorId,
         relation,
         note,
+        heardAbout: effectiveHeardAbout || undefined,
         sessionId: getUsageSessionId() || undefined,
         vid: getVisitorId() || undefined,
         source: acq.source,
@@ -73,6 +84,7 @@ export function ClaimPanel({
         Your signup email is shown to admins. Confirm sail number / club.
       </p>
       <select
+        aria-label="Relation to sailor"
         value={relation}
         onChange={(e) =>
           setRelation(
@@ -88,6 +100,42 @@ export function ClaimPanel({
         <option value="sailor">The sailor</option>
         <option value="other">Coach / other</option>
       </select>
+
+      <div>
+        <label
+          htmlFor="claim-heard-about"
+          className="block text-[11px] font-medium text-neutral-400 mb-1"
+        >
+          How did you hear about SailorPath?{" "}
+          <span className="text-neutral-500">(optional)</span>
+        </label>
+        <select
+          id="claim-heard-about"
+          aria-label="How did you hear about SailorPath?"
+          value={heardAbout}
+          onChange={(e) => setHeardAbout(e.target.value)}
+          className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
+        >
+          <option value="">Select option…</option>
+          {HEARD_ABOUT_OPTIONS.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+        {heardAbout === "Others" && (
+          <input
+            type="text"
+            value={heardAboutOther}
+            onChange={(e) => setHeardAboutOther(e.target.value)}
+            placeholder="Please specify (optional)…"
+            maxLength={120}
+            aria-label="Specify other referral source"
+            className="w-full mt-2 rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white placeholder:text-neutral-500"
+          />
+        )}
+      </div>
+
       <textarea
         value={note}
         onChange={(e) => setNote(e.target.value)}

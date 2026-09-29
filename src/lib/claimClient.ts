@@ -7,6 +7,16 @@ import { parseClaimRelation } from "@/lib/claimRelation";
 
 export const CLAIM_NOTE_MIN = 8;
 
+export const HEARD_ABOUT_OPTIONS = [
+  "Coach / Sailing Club / Team",
+  "Fellow Sailor / Parent (Word of mouth)",
+  "Social Media (Instagram / Facebook)",
+  "Google / Web search",
+  "Others",
+] as const;
+
+export type HeardAboutOption = (typeof HEARD_ABOUT_OPTIONS)[number];
+
 export function isClaimNoteReady(note: string): boolean {
   return note.trim().length >= CLAIM_NOTE_MIN;
 }
@@ -15,6 +25,7 @@ export type ClaimSubmitInput = {
   sailorId: string;
   relation: ClaimRelation | string;
   note: string;
+  heardAbout?: string;
   sessionId?: string;
   vid?: string;
   source?: string;
@@ -25,6 +36,7 @@ export type ClaimSubmitBody = {
   sailorId: string;
   relation: ClaimRelation;
   note: string;
+  heardAbout?: string;
   sessionId?: string;
   vid?: string;
   source?: string;
@@ -48,6 +60,9 @@ export function buildClaimSubmitBody(
     relation,
     note,
   };
+  if (input.heardAbout?.trim()) {
+    body.heardAbout = input.heardAbout.trim().slice(0, 200);
+  }
   if (input.sessionId?.trim()) body.sessionId = input.sessionId.trim().slice(0, 64);
   if (input.vid?.trim()) body.vid = input.vid.trim().slice(0, 64);
   if (input.source?.trim()) body.source = input.source.trim().toLowerCase().slice(0, 40);
