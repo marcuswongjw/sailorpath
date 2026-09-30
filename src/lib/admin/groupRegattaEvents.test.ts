@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
+import { planRegattaEventDelete } from "./planRegattaEventDelete";
 import {
   eventShellSlug,
   eventStatusLabel,
   groupRegattaEvents,
   missingClassesFor,
   sheetClassLabel,
+  sheetIdsForEvent,
 } from "./groupRegattaEvents";
 
 function row(
@@ -159,5 +161,57 @@ describe("groupRegattaEvents", () => {
     const snsc = grouped.events.find((event) => event.slug === "snsc-2026");
     expect(snsc?.shells.map((item) => item.id).sort()).toEqual(["card", "ilca-card"]);
     expect(grouped.unassigned).toHaveLength(0);
+  });
+
+  it("collects class sheets and calendar shells for a weekend delete", () => {
+    const grouped = groupRegattaEvents([
+      row({
+        slug: "temasek-regatta-2026",
+        name: "Temasek Regatta 2026",
+        date: "2026-06-20",
+      }),
+      row({
+        slug: "202606-temasek-gold-2026-06-20",
+        name: "Temasek Gold",
+        division: "Gold",
+      }),
+    ]);
+    expect(sheetIdsForEvent(grouped, "temasek-regatta-2026").sort()).toEqual([
+      "202606-temasek-gold-2026-06-20",
+      "temasek-regatta-2026",
+    ]);
+    const planned = planRegattaEventDelete({
+      slug: "temasek-regatta-2026",
+      grouped,
+      eventRows: [
+        { id: "evt-1", slug: "temasek-regatta-2026", name: "Temasek Regatta 2026" },
+      ],
+      sheets: [
+        { id: "orphan-link", eventId: "evt-1" },
+        { id: "other", eventId: "evt-2" },
+      ],
+    });
+    expect(planned.ok).toBe(true);
+    if (!planned.ok) return;
+    expect(planned.eventId).toBe("evt-1");
+    expect(planned.sheetIds.sort()).toEqual([
+      "202606-temasek-gold-2026-06-20",
+      "orphan-link",
+      "temasek-regatta-2026",
+    ]);
+  });
+
+  it("refuses to delete the unassigned bucket", () => {
+    const planned = planRegattaEventDelete({
+      slug: "__unassigned__",
+      grouped: { events: [], unassigned: [row({ slug: "club-training" })] },
+      eventRows: [],
+      sheets: [],
+    });
+    expect(planned).toEqual({
+      ok: false,
+      status: 400,
+      error: "Cannot delete the unassigned sailing-class bucket",
+    });
   });
 });

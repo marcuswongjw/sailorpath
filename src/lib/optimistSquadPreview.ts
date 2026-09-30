@@ -308,6 +308,36 @@ export function withProjectedNextSquadStatus(
   }));
 }
 
+/**
+ * Nat A / Nat B for the board the viewer is looking at, including the full
+ * ranking when no regatta is excluded. Sailors already marked Drop stay Drop
+ * and do not take a squad place.
+ */
+export function projectDisplayedNextSquad(
+  goldRanked: RankedSailor[],
+  rankingPeriod: Period
+): RankedSailor[] {
+  if (!goldRanked.length) return goldRanked;
+  const dropIds = new Set(
+    goldRanked
+      .filter((sailor) => sailor.nextPeriodSquadStatus === "Drop")
+      .map((sailor) => sailor.id)
+  );
+  const projected = withProjectedNextSquadStatus(
+    goldRanked.filter((sailor) => !dropIds.has(sailor.id)),
+    rankingPeriod
+  );
+  const statusById = new Map(
+    projected.map((sailor) => [sailor.id, sailor.nextPeriodSquadStatus])
+  );
+  return goldRanked.map((sailor) => ({
+    ...sailor,
+    nextPeriodSquadStatus: dropIds.has(sailor.id)
+      ? "Drop"
+      : (statusById.get(sailor.id) ?? null),
+  }));
+}
+
 /** Human label for the projected next-half squad column. */
 export function projectedNextSquadLabel(rankingPeriod: Period): string {
   const next = nextPeriod(rankingPeriod);

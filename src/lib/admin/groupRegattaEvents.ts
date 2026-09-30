@@ -153,14 +153,38 @@ function calendarItemsFor(slug: string) {
   );
 }
 
+export function eventClassProgress(event: AdminEventGroup): {
+  published: number;
+  total: number;
+} {
+  const published = event.sheets.filter((row) => row.status === "published").length;
+  const total = Math.max(event.expectedClasses.length, event.sheets.length);
+  return { published, total };
+}
+
 export function eventStatusLabel(event: AdminEventGroup): string {
   if (event.slug === UNASSIGNED_EVENT_SLUG) {
     return `${event.sheets.length} class sheet${event.sheets.length === 1 ? "" : "s"}`;
   }
-  const published = event.sheets.filter((row) => row.status === "published").length;
-  const total = Math.max(event.expectedClasses.length, event.sheets.length);
+  const { published, total } = eventClassProgress(event);
   if (total === 0) return "Awaiting results";
   return `${published} of ${total} classes published`;
+}
+
+/** Class sheets and calendar shells that belong to one weekend. */
+export function sheetIdsForEvent(
+  grouped: { events: AdminEventGroup[]; unassigned: GroupableRegatta[] },
+  slug: string
+): string[] {
+  if (slug === UNASSIGNED_EVENT_SLUG) {
+    return grouped.unassigned.map((row) => row.id);
+  }
+  const event = grouped.events.find((item) => item.slug === slug);
+  if (!event) return [];
+  const ids = new Set<string>();
+  for (const row of event.sheets) ids.add(row.id);
+  for (const row of event.shells) ids.add(row.id);
+  return [...ids];
 }
 
 export function groupRegattaEvents(

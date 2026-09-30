@@ -17,7 +17,8 @@
 | `useAdminCompetitions.ts` | Competitions modal open/close + refresh |
 | `AdminRegattaImport.tsx` | Regatta Excel import tab (self-contained) |
 | `AdminSailorsPanel.tsx` | Sailors sub-tab (filters, bulk, form, table) |
-| `AdminRegattasPanel.tsx` | Regattas sub-tab (list + detail) |
+| `AdminRegattasPanel.tsx` | Regattas sub-tab (weekend list + class detail) |
+| `AdminRegattaEventList.tsx` | Scannable weekend picker with series progress and event delete |
 | `AdminResultsPanel.tsx` | Results sub-tab: searchable regatta picker, sailor filter, DNS fill |
 | `AdminSelectionPanel.tsx` | Database → Selection (campaigns, participation drops) |
 | `AdminEmptyState.tsx` | Shared empty state for list panels |

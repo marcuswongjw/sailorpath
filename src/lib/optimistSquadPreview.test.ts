@@ -4,6 +4,7 @@ import {
   selectOptimistNatSquadPreview,
   ageInIntakeYear,
   withProjectedNextSquadStatus,
+  projectDisplayedNextSquad,
   projectedNextSquadLabel,
 } from "./optimistSquadPreview";
 import type { RankedSailor } from "./ranking";
@@ -162,5 +163,33 @@ describe("withProjectedNextSquadStatus", () => {
         out.find((s) => s.id === "m8")?.nextPeriodSquadStatus ?? null
       )
     ).toBe(true);
+  });
+});
+
+describe("projectDisplayedNextSquad", () => {
+  it("projects Nat A/B when the public board has no stored next-half status", () => {
+    const ranked = [
+      sailor("m0", "Male 0", "M", "2013-01-01", 1),
+      sailor("f0", "Female 0", "F", "2013-01-01", 2),
+    ].map((row) => ({ ...row, nextPeriodSquadStatus: null }));
+    const out = projectDisplayedNextSquad(ranked, {
+      year: 2026,
+      half: "Jul-Dec",
+    });
+    expect(out.find((row) => row.id === "m0")?.nextPeriodSquadStatus).toBe("Nat A");
+    expect(out.find((row) => row.id === "f0")?.nextPeriodSquadStatus).toBe("Nat A");
+  });
+
+  it("keeps a participation Drop out of the projected squad", () => {
+    const ranked = [
+      { ...sailor("drop", "Dropped", "M", "2013-01-01", 1), nextPeriodSquadStatus: "Drop" },
+      sailor("m0", "Male 0", "M", "2013-01-01", 2),
+    ];
+    const out = projectDisplayedNextSquad(ranked, {
+      year: 2026,
+      half: "Jul-Dec",
+    });
+    expect(out.find((row) => row.id === "drop")?.nextPeriodSquadStatus).toBe("Drop");
+    expect(out.find((row) => row.id === "m0")?.nextPeriodSquadStatus).toBe("Nat A");
   });
 });

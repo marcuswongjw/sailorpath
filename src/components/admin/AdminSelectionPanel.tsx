@@ -72,6 +72,7 @@ function toRegattaRecords(rows: RegattaAdmin[]): RegattaRecord[] {
     name: r.name,
     slug: r.slug,
     date: String(r.date).slice(0, 10),
+    endDate: r.endDate ? String(r.endDate).slice(0, 10) : null,
     totalFleetSize: r.totalFleetSize,
     division: r.division ?? undefined,
     raceCount: r.raceCount ?? undefined,
