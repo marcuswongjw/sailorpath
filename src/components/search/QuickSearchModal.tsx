@@ -11,7 +11,6 @@ import {
   ChevronRight,
   Loader2,
   ArrowRight,
-  GraduationCap,
 } from "lucide-react";
 import type { SailorSearchResult, RegattaSearchResult } from "@/lib/search";
 
@@ -32,13 +31,18 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  // Focus input when opened
+  // When the modal opens, reset all state during render to avoid calling
+  // setState inside an effect (React 19 lint rule). Only the DOM focus
+  // needs the effect.
+  if (isOpen && !query.trim()) {
+    if (sailors.length > 0) setSailors([]);
+    if (regattas.length > 0) setRegattas([]);
+    if (isLoading) setIsLoading(false);
+    if (selectedIndex !== 0) setSelectedIndex(0);
+  }
+
   useEffect(() => {
     if (isOpen) {
-      setQuery("");
-      setSailors([]);
-      setRegattas([]);
-      setSelectedIndex(0);
       setTimeout(() => {
         inputRef.current?.focus();
       }, 50);
@@ -60,16 +64,11 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
-  // Debounced search
+  // Debounced search — runs only when there's a non-empty query.
+  // Empty-query state is reset during render (see below) so this effect
+  // doesn't need to call setState when query is blank.
   useEffect(() => {
-    if (!isOpen) return;
-
-    if (!query.trim()) {
-      setSailors([]);
-      setRegattas([]);
-      setIsLoading(false);
-      return;
-    }
+    if (!isOpen || !query.trim()) return;
 
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -90,8 +89,8 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
           setRegattas(data.regattas || []);
           setSelectedIndex(0);
         }
-      } catch (err: any) {
-        if (err.name !== "AbortError") {
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name !== "AbortError") {
           console.error("Quick search fetch error:", err);
         }
       } finally {

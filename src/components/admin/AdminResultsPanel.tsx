@@ -23,7 +23,6 @@ import {
   ExternalLink,
   Medal,
   Save,
-  X,
 } from "lucide-react";
 import {
   ILCA_FLEETS,

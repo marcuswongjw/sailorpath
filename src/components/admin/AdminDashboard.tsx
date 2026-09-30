@@ -302,7 +302,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   const { setEditingRegattaId } = regattas;
   const { setEditingResultId } = results;
 
-  const [unknownSheet, setUnknownSheet] = useState<string | null>(null);
   const [importSheetId, setImportSheetId] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const currentSearch = searchParams.toString();
@@ -323,23 +322,19 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     setSelectedRegattaIdForResultEdit(initialNav.regattaId);
   }, [initialNav.regattaId, setSelectedRegattaIdForResultEdit]);
 
-  useEffect(() => {
+  // Derived — whether the selected regatta ID doesn't match any known regatta.
+  const unknownSheet = useMemo(() => {
     const sheet = data.selectedRegattaIdForResultEdit;
-    if (!sheet) return;
-    if (activeTab !== "regattas" && activeTab !== "import") return;
-    if (data.dataLoading || data.regattaList.length === 0) return;
-    if (data.regattaList.some((row) => row.id === sheet)) {
-      setUnknownSheet(null);
-      return;
-    }
-    setUnknownSheet(sheet);
-    setSelectedRegattaIdForResultEdit("");
+    if (!sheet) return null;
+    if (activeTab !== "regattas" && activeTab !== "import") return null;
+    if (data.dataLoading || data.regattaList.length === 0) return null;
+    if (data.regattaList.some((row) => row.id === sheet)) return null;
+    return sheet;
   }, [
     activeTab,
     data.dataLoading,
     data.regattaList,
     data.selectedRegattaIdForResultEdit,
-    setSelectedRegattaIdForResultEdit,
   ]);
 
   // URL changes from Back, Forward, bookmarks, and sidebar links drive the

@@ -43,11 +43,6 @@ const DATE_FIELDS = [
   "dob",
 ] as const;
 
-function num(v: unknown) {
-  if (v === "" || v == null) return null;
-  return Number.isFinite(Number(v)) ? Number(v) : null;
-}
-
 function failDb(e: unknown) {
   const hint = sailorDbErrorHint(e);
   if (hint) {

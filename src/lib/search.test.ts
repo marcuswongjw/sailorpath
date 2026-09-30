@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseSearchQuery, CLUB_ABBREVIATIONS, SCHOOL_ABBREVIATIONS } from "./search";
+import { parseSearchQuery } from "./search";
 
 describe("parseSearchQuery", () => {
   it("extracts sail number and country prefix from SGP 4652", () => {

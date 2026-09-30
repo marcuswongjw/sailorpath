@@ -7,26 +7,19 @@ import {
   Trophy,
   User,
   Search,
-  ChevronRight,
   Clock,
   Sailboat,
-  AlertTriangle,
-  StickyNote,
-  Plus,
-  Trash2,
-  Calendar,
-  CheckSquare,
-  Square,
-  RotateCcw,
   CheckCircle2,
-  Lock,
   ExternalLink,
   Award,
-  Users,
   Compass,
-  Star,
-  X,
 } from "lucide-react";
+import {
+  PrivateNotesPanel,
+  PreRaceChecklist,
+  EquipmentInPlacePanel,
+  AthleteSelector,
+} from "@/components/parent-dashboard";
 import { relationLabel, type ClaimRelation } from "@/lib/claimRelation";
 import { birthYear } from "@/lib/age";
 import { fleetPillClass } from "@/components/sailor-profile/helpers";
@@ -139,25 +132,7 @@ type PendingClaim = {
   createdAt: string;
 };
 
-const NOTE_CATEGORIES = [
-  "General",
-  "Training",
-  "Regatta Debrief",
-  "Logistics",
-  "Gear",
-] as const;
-type NoteCategory = (typeof NOTE_CATEGORIES)[number];
-
-const DEFAULT_RACE_CHECKLIST_ITEMS = [
-  {
-    id: "measurement_cert",
-    label: "Official class measurement certificate verified & onboard",
-  },
-  {
-    id: "spares_rigging",
-    label: "Spare battens, sail ties (2.5mm / 3.0mm) & wind indicator checked",
-  },
-] as const;
+type NoteCategory = "General" | "Training" | "Regatta Debrief" | "Logistics" | "Gear";
 
 const CARD =
   "rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
@@ -182,14 +157,6 @@ function formatAgeCategory(dob?: string | null) {
   const currentYear = new Date().getFullYear();
   const age = currentYear - by;
   return `${by} · U${age + 1} (${age} yrs)`;
-}
-
-function parseNoteCategory(body: string): { category: string | null; text: string } {
-  const match = body.match(/^\[(.*?)\]\s*(.*)$/);
-  if (match) {
-    return { category: match[1], text: match[2] };
-  }
-  return { category: null, text: body };
 }
 
 export function ParentDashboard() {
@@ -848,202 +815,11 @@ export function ParentDashboard() {
         </div>
       ) : (
         <>
-          {athletes.length > 1 && (
-            <div
-              className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-[var(--sp-cool-veil)]"
-              role="tablist"
-              aria-label="Linked athletes"
-            >
-              <button
-                type="button"
-                role="tab"
-                aria-selected={selectedAthleteId === "all"}
-                data-testid="tab-all-summary"
-                onClick={() => setSelectedAthleteId("all")}
-                className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap ${
-                  selectedAthleteId === "all"
-                    ? "bg-harbour text-sailcloth shadow-xs"
-                    : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`
-                }`}
-              >
-                <Users className="h-3.5 w-3.5" />
-                All Athletes Summary ({athletes.length})
-              </button>
-
-              {athletes.map((a) => {
-                const isSelected = selectedAthleteId === a.id;
-                return (
-                  <button
-                    key={a.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isSelected}
-                    onClick={() => setSelectedAthleteId(a.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors whitespace-nowrap ${
-                      isSelected
-                        ? "bg-harbour text-sailcloth shadow-xs"
-                        : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]`
-                    }`}
-                  >
-                    {a.avatarUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={a.avatarUrl}
-                        alt=""
-                        className="h-4 w-4 rounded-full object-cover"
-                      />
-                    ) : (
-                      <User className="h-3.5 w-3.5" />
-                    )}
-                    <span>{a.name}</span>
-                    {a.standing?.fleet && (
-                      <span
-                        className={`text-[10px] px-1.5 py-0.5 rounded-full font-black border ${
-                          isSelected
-                            ? "border-sailcloth/30 bg-white/15 text-sailcloth"
-                            : fleetPillClass(a.standing.fleet)
-                        }`}
-                      >
-                        {a.standing.fleet} #{a.standing.overallRank}
-                      </span>
-                    )}
-                    {(a.equipmentAlertCount ?? 0) > 0 && (
-                      <span className="h-2 w-2 rounded-full bg-rose-500" aria-label="Equipment alert" />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {selectedAthleteId === "all" && athletes.length > 1 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {athletes.map((a) => (
-                <article
-                  key={a.id}
-                  className={`${CARD} p-5 space-y-4 hover:border-[var(--sp-harbour-teal)] transition-colors`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0">
-                      {a.avatarUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={a.avatarUrl}
-                          alt=""
-                          className="h-12 w-12 rounded-2xl object-cover border border-[var(--sp-cool-veil)] shrink-0"
-                        />
-                      ) : (
-                        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[var(--sp-harbour-teal)] text-[var(--sp-sailcloth)] border border-[var(--sp-harbour-teal)]">
-                          <User className="h-6 w-6" />
-                        </span>
-                      )}
-                      <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <h3 className={`text-base font-black ${INK}`}>{a.name}</h3>
-                          {a.ownerRelation && (
-                            <span className="rounded-full border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)] px-2 py-0.5 text-[10px] font-bold text-[var(--sp-harbour-teal)]">
-                              {relationLabel(a.ownerRelation)}
-                            </span>
-                          )}
-                        </div>
-                        <p className={`text-xs ${MUTED} mt-0.5`}>
-                          {[a.club, a.sailNumber, formatAgeCategory(a.dob)]
-                            .filter(Boolean)
-                            .join(" · ")}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-1.5 shrink-0">
-                      <Link
-                        href={`/athlete?id=${a.id}`}
-                        className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
-                      >
-                        Athlete Hub ↗
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedAthleteId(a.id)}
-                        className={`${PRIMARY_BTN} px-3 py-1.5`}
-                      >
-                        Open Dashboard
-                        <ChevronRight className="h-3 w-3" />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                    <div className={`${NESTED} p-2.5`}>
-                      <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
-                        Series Rank
-                      </p>
-                      <p className={`text-sm font-black ${INK} mt-0.5`}>
-                        {a.standing ? (
-                          <>
-                            #{a.standing.overallRank}{" "}
-                            <span className={`text-[11px] font-normal ${MUTED}`}>
-                              ({a.standing.fleet})
-                            </span>
-                          </>
-                        ) : (
-                          <span className={`${MUTED} text-xs font-normal`}>—</span>
-                        )}
-                      </p>
-                    </div>
-
-                    <div className={`${NESTED} p-2.5`}>
-                      <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
-                        Selection Trials
-                      </p>
-                      <p className={`text-sm font-black ${INK} mt-0.5`}>
-                        {a.selectionTrials ? (
-                          <>
-                            #{a.selectionTrials.rank}{" "}
-                            <span className="text-[11px] font-normal text-[var(--sp-harbour-teal)]">
-                              ({a.selectionTrials.nettScore} pts)
-                            </span>
-                          </>
-                        ) : (
-                          <span className={`${MUTED} text-xs font-normal`}>N/A</span>
-                        )}
-                      </p>
-                    </div>
-
-                    <div className={`${NESTED} p-2.5 col-span-2 sm:col-span-1`}>
-                      <p className={`text-[11px] font-bold ${MUTED} uppercase`}>
-                        Locker Alerts
-                      </p>
-                      <p className="text-sm font-black mt-0.5">
-                        {(a.equipmentAlertCount ?? 0) > 0 ? (
-                          <span className="text-rose-700 font-bold">
-                            {a.equipmentAlertCount} alert
-                            {a.equipmentAlertCount === 1 ? "" : "s"}
-                          </span>
-                        ) : (
-                          <span className="text-[var(--sp-harbour-teal)] font-semibold text-xs flex items-center gap-1">
-                            <CheckCircle2 className="h-3 w-3" /> All good
-                          </span>
-                        )}
-                      </p>
-                    </div>
-                  </div>
-
-                  {a.coachFeedback && a.coachFeedback.length > 0 && (
-                    <div className="rounded-xl border border-[var(--sp-harbour-teal)]/20 bg-[var(--sp-aqua-mist)]/60 p-2.5 text-xs flex items-start gap-2">
-                      <Award className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
-                      <div className="min-w-0 flex-1">
-                        <p className="font-bold text-[11px] text-[var(--sp-harbour-teal)] truncate">
-                          Latest Coach Feedback: {a.coachFeedback[0].title}
-                        </p>
-                        <p className={`${BODY} text-[11px] line-clamp-1 mt-0.5`}>
-                          {a.coachFeedback[0].detail}
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                </article>
-              ))}
-            </div>
-          )}
+          <AthleteSelector
+            athletes={athletes}
+            selectedAthleteId={selectedAthleteId}
+            onSelectAthlete={(id) => setSelectedAthleteId(id)}
+          />
 
           {activeAthlete && (
             <div className="space-y-6 sm:space-y-8">
@@ -1364,399 +1140,42 @@ export function ParentDashboard() {
                     </div>
                   </section>
 
-                  <section className={`${CARD} p-5 sm:p-6 space-y-4`}>
-                    <div className="flex items-start justify-between gap-3 flex-wrap">
-                      <div>
-                        <p className={SECTION_KICKER}>Boat locker</p>
-                        <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
-                          <Sailboat className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
-                          Boat Locker & Equipment
-                        </h3>
-                        <p className={`text-xs ${MUTED} mt-0.5`}>
-                          Track hull condition, sails, spars, measurement certificates, and race-day gear.
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => setShowAddGearModal(true)}
-                          className={PRIMARY_BTN}
-                        >
-                          <Plus className="h-3.5 w-3.5" />
-                          Add Equipment
-                        </button>
-                        <Link
-                          href={`/${activeAthlete.handle}#profile-equipment`}
-                          className={`${SECONDARY_BTN} px-2.5 py-1.5 text-[11px]`}
-                        >
-                          Full Profile →
-                        </Link>
-                      </div>
-                    </div>
-
-                    {(activeAthlete.equipmentAlertCount ?? 0) > 0 && (
-                      <div className="rounded-xl border border-rose-200 bg-rose-50 p-3.5 space-y-2">
-                        <p className="text-xs font-bold text-[var(--sp-color-error)] flex items-center gap-1.5">
-                          <AlertTriangle className="h-4 w-4 shrink-0" />
-                          {activeAthlete.equipmentAlertCount} Equipment Alert
-                          {activeAthlete.equipmentAlertCount === 1 ? "" : "s"} Require Action
-                        </p>
-                        <div className="space-y-1 pl-5">
-                          {(activeAthlete.equipmentAlerts || []).map((al, idx) => (
-                            <p key={idx} className="text-xs text-[var(--sp-color-error)]">
-                              <span className="font-bold">{al.label}:</span> {al.reason}
-                            </p>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {activeAthlete.primaryGear && activeAthlete.primaryGear.length > 0 ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-                        {activeAthlete.primaryGear.map((g) => (
-                          <div
-                            key={g.id}
-                            className={`${NESTED} p-3 flex flex-col justify-between gap-2.5 hover:border-[var(--sp-harbour-teal)] transition group`}
-                          >
-                            <div className="flex items-start justify-between gap-1.5">
-                              <div className="min-w-0 flex-1">
-                                <div className="flex items-center gap-1.5">
-                                  <span className={`text-[11px] font-black uppercase tracking-wider ${MUTED}`}>
-                                    {g.category}
-                                  </span>
-                                  {g.isPrimary && (
-                                    <span className="text-[9px] font-bold text-[var(--sp-racing-orange)] bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/25 px-1.5 py-0.5 rounded-full">
-                                      Primary
-                                    </span>
-                                  )}
-                                </div>
-                                <p className={`text-xs font-bold ${INK} mt-0.5 truncate`}>
-                                  {g.label || [g.brand, g.model].filter(Boolean).join(" ") || "Equipment Item"}
-                                </p>
-                              </div>
-                              <div className="flex items-center gap-1 shrink-0">
-                                <button
-                                  type="button"
-                                  title={g.isPrimary ? "Primary race gear (click to unset)" : "Make primary race gear"}
-                                  onClick={() => void handleToggleGearPrimary(activeAthlete.id, g.id, g.isPrimary)}
-                                  className={`p-1 rounded-lg hover:bg-[var(--sp-warm-white)] transition ${
-                                    g.isPrimary ? "text-[var(--sp-racing-orange)]" : `${MUTED} hover:text-[var(--sp-racing-orange)]`
-                                  }`}
-                                >
-                                  <Star className={`h-3.5 w-3.5 ${g.isPrimary ? "fill-[var(--sp-racing-orange)]" : ""}`} />
-                                </button>
-                                <button
-                                  type="button"
-                                  title="Remove gear from locker"
-                                  onClick={() => void handleDeleteGear(activeAthlete.id, g.id)}
-                                  className={`p-1 rounded-lg ${MUTED} hover:text-rose-600 hover:bg-rose-50 transition`}
-                                >
-                                  <Trash2 className="h-3.5 w-3.5" />
-                                </button>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between pt-1.5 border-t border-[var(--sp-cool-veil)]">
-                              {(() => {
-                                const simplified = toSimplifiedCondition(g.condition);
-                                return (
-                                  <button
-                                    type="button"
-                                    onClick={() => void handleToggleGearCondition(activeAthlete.id, g.id, g.condition)}
-                                    title="Click to toggle condition (Race Ready / Practice Only / Needs Repair)"
-                                    className={`text-[10px] font-bold capitalize px-2 py-0.5 rounded-full border transition flex items-center gap-1 touch-manipulation ${
-                                      simplified === "race_ready"
-                                        ? "bg-[var(--sp-aqua-mist)] border-[var(--sp-harbour-teal)]/30 text-[var(--sp-harbour-teal)]"
-                                        : simplified === "practice_only"
-                                        ? "bg-[var(--sp-racing-mist)]/50 border-[var(--sp-racing-orange)]/30 text-[var(--sp-racing-deep)]"
-                                        : "bg-rose-50 border-rose-200 text-rose-700"
-                                    }`}
-                                  >
-                                    <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" />
-                                    {simplified === "race_ready"
-                                      ? "Race Ready"
-                                      : simplified === "practice_only"
-                                      ? "Practice Only"
-                                      : "Needs Repair"}
-                                  </button>
-                                );
-                              })()}
-                              <span className={`text-[13px] ${MUTED} font-medium`}>
-                                Tap to toggle
-                              </span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-6 text-center space-y-3">
-                        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-racing-mist)]/50 border border-[var(--sp-racing-orange)]/20">
-                          <Sailboat className="h-5 w-5 text-[var(--sp-racing-orange)]" />
-                        </div>
-                        <div className="space-y-1">
-                          <p className={`text-xs font-bold ${INK}`}>No equipment registered yet</p>
-                          <p className={`text-[13px] ${MUTED} max-w-sm mx-auto`}>
-                            Add your sailor&apos;s hull, spars, sails, and foils to track safety checks, condition, and race-day readiness.
-                          </p>
-                        </div>
-                        <div className="flex flex-wrap justify-center gap-2 pt-1">
-                          <button
-                            type="button"
-                            onClick={() => setShowAddGearModal(true)}
-                            className={PRIMARY_BTN}
-                          >
-                            <Plus className="h-3.5 w-3.5" />
-                            Add Equipment
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => void handleAddGearPreset(activeAthlete.id, YOUTH_EQUIPMENT_PRESETS[0])}
-                            className={SECONDARY_BTN}
-                          >
-                            + Optimax Rig Set
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => void handleAddGearPreset(activeAthlete.id, YOUTH_EQUIPMENT_PRESETS[6])}
-                            className={SECONDARY_BTN}
-                          >
-                            + OneSails Racing Sail
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </section>
-
-                  {showAddGearModal && (
-                    <div
-                      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 backdrop-blur-xs p-4 sm:pt-20"
-                      role="dialog"
-                      aria-modal="true"
-                      aria-labelledby="add-gear-title"
-                      onMouseDown={(event) => {
-                        if (event.target === event.currentTarget) setShowAddGearModal(false);
-                      }}
-                    >
-                      <div className="w-full max-w-lg rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-4 shadow-2xl relative my-8">
-                        <div className="flex items-center justify-between pb-2 border-b border-[var(--sp-cool-veil)]">
-                          <div>
-                            <h3 id="add-gear-title" className={`text-sm font-bold ${INK} flex items-center gap-1.5`}>
-                              <Plus className="h-4 w-4 text-[var(--sp-racing-orange)]" />
-                              Add Equipment to Locker
-                            </h3>
-                            <p className={`text-xs ${MUTED}`}>
-                              For {activeAthlete.name} ({activeAthlete.currentFleet || "Optimist"} Fleet)
-                            </p>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => setShowAddGearModal(false)}
-                            aria-label="Close add equipment"
-                            className={`rounded-lg p-1.5 ${MUTED} hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)] transition`}
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        </div>
-
-                        <div className={`flex rounded-xl ${NESTED} p-1`}>
-                          <button
-                            type="button"
-                            onClick={() => setAddGearTab("presets")}
-                            className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
-                              addGearTab === "presets"
-                                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
-                                : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
-                            }`}
-                          >
-                            1-Click Popular Presets
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setAddGearTab("custom")}
-                            className={`flex-1 py-1.5 text-xs font-bold rounded-lg transition ${
-                              addGearTab === "custom"
-                                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs"
-                                : `${MUTED} hover:text-[var(--sp-harbour-shadow)]`
-                            }`}
-                          >
-                            Custom Gear
-                          </button>
-                        </div>
-
-                        {addGearTab === "presets" ? (
-                          <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
-                            <p className={`text-[13px] ${MUTED}`}>
-                              Select standard youth equipment packages to add immediately:
-                            </p>
-                            <div className="grid grid-cols-1 gap-2">
-                              {YOUTH_EQUIPMENT_PRESETS.map((preset) => (
-                                <div
-                                  key={preset.id}
-                                  className={`${NESTED} p-3 flex items-center justify-between gap-3 hover:border-[var(--sp-racing-orange)]/40 transition`}
-                                >
-                                  <div className="min-w-0 flex-1">
-                                    <div className="flex items-center gap-2">
-                                      <span className={`text-xs font-bold ${INK}`}>
-                                        {preset.name}
-                                      </span>
-                                      <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] ${MUTED}`}>
-                                        {preset.category}
-                                      </span>
-                                    </div>
-                                    <p className={`text-[13px] ${MUTED} mt-0.5 leading-snug`}>
-                                      {preset.subtitle}
-                                    </p>
-                                  </div>
-                                  <button
-                                    type="button"
-                                    disabled={addGearBusy}
-                                    onClick={() => void handleAddGearPreset(activeAthlete.id, preset)}
-                                    className="shrink-0 sp-btn-primary px-3 py-1.5 disabled:opacity-50"
-                                  >
-                                    {addGearBusy ? "Adding…" : "+ Add"}
-                                  </button>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="space-y-3">
-                            <div>
-                              <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
-                                Equipment Category
-                              </label>
-                              <select
-                                value={customGearCategory}
-                                onChange={(e) => {
-                                  const cat = e.target.value as EquipmentCategory;
-                                  setCustomGearCategory(cat);
-                                  const presets = brandsForCategory(cat);
-                                  setCustomGearBrand(presets[0] || "");
-                                }}
-                                className="sp-select w-full text-xs"
-                              >
-                                {(
-                                  [
-                                    "hull",
-                                    "sail",
-                                    "mast",
-                                    "boom",
-                                    "sprit",
-                                    "daggerboard",
-                                    "rudder",
-                                    "other",
-                                  ] as EquipmentCategory[]
-                                ).map((cat) => (
-                                  <option key={cat} value={cat}>
-                                    {categoryLabel(cat)}
-                                  </option>
-                                ))}
-                              </select>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-2">
-                              <div>
-                                <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
-                                  Brand / Maker
-                                </label>
-                                <input
-                                  value={customGearBrand}
-                                  onChange={(e) => setCustomGearBrand(e.target.value)}
-                                  placeholder="e.g. Winner, OneSails, Optimax"
-                                  className="sp-input w-full text-xs"
-                                />
-                              </div>
-                              <div>
-                                <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
-                                  Model / Cut
-                                </label>
-                                <input
-                                  value={customGearModel}
-                                  onChange={(e) => setCustomGearModel(e.target.value)}
-                                  placeholder="e.g. CD Cut, Mk3 Flex"
-                                  className="sp-input w-full text-xs"
-                                />
-                              </div>
-                            </div>
-
-                            <div>
-                              <label className={`text-[11px] font-bold ${BODY} block mb-1`}>
-                                Sail # / Serial / Identifier
-                              </label>
-                              <input
-                                value={customGearLabel}
-                                onChange={(e) => setCustomGearLabel(e.target.value)}
-                                placeholder="e.g. SIN 4639 or Hull #184491"
-                                className="sp-input w-full text-xs"
-                              />
-                            </div>
-
-                            <div>
-                              <label className={`text-[11px] font-bold ${BODY} block mb-1.5`}>
-                                Condition
-                              </label>
-                              <div className="grid grid-cols-3 gap-1.5">
-                                {(["race_ready", "practice_only", "needs_attention"] as SimplifiedCondition[]).map(
-                                  (key) => {
-                                    const meta = SIMPLIFIED_CONDITION_META[key];
-                                    const active = customGearCondition === key;
-                                    const lightActive =
-                                      key === "race_ready"
-                                        ? "bg-[var(--sp-aqua-mist)] border-[var(--sp-harbour-teal)]/40 text-[var(--sp-harbour-teal)]"
-                                        : key === "practice_only"
-                                        ? "bg-[var(--sp-racing-mist)]/50 border-[var(--sp-racing-orange)]/40 text-[var(--sp-racing-deep)]"
-                                        : "bg-rose-50 border-rose-200 text-rose-700";
-                                    return (
-                                      <button
-                                        key={key}
-                                        type="button"
-                                        onClick={() => setCustomGearCondition(key)}
-                                        className={`rounded-xl px-2 py-2 text-center border transition flex flex-col items-center gap-1 ${
-                                          active
-                                            ? lightActive
-                                            : `${NESTED} ${MUTED} hover:border-[var(--sp-harbour-teal)]`
-                                        }`}
-                                      >
-                                        <span className={`h-2 w-2 rounded-full ${
-                                          key === "race_ready"
-                                            ? "bg-[var(--sp-harbour-teal)]"
-                                            : key === "practice_only"
-                                            ? "bg-[var(--sp-racing-orange)]"
-                                            : "bg-rose-600"
-                                        }`} />
-                                        <span className="text-[10px] font-bold leading-tight">
-                                          {meta.shortLabel}
-                                        </span>
-                                      </button>
-                                    );
-                                  }
-                                )}
-                              </div>
-                            </div>
-
-                            <label className={`flex items-center gap-2.5 text-xs ${BODY} ${NESTED} px-3 py-2 cursor-pointer`}>
-                              <input
-                                type="checkbox"
-                                checked={customGearPrimary}
-                                onChange={(e) => setCustomGearPrimary(e.target.checked)}
-                                className="rounded border-[var(--sp-cool-veil)] accent-[var(--sp-racing-orange)]"
-                              />
-                              <span className={`font-semibold ${INK}`}>Set as Primary Race-Day Gear</span>
-                            </label>
-
-                            <button
-                              type="button"
-                              disabled={addGearBusy}
-                              onClick={() => void handleCreateCustomGear(activeAthlete.id)}
-                              className="w-full sp-btn-primary py-2.5 disabled:opacity-50"
-                            >
-                              {addGearBusy ? "Saving…" : "Save to Equipment Locker"}
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  )}
+                  <EquipmentInPlacePanel
+                    activeAthlete={activeAthlete}
+                    showAddGearModal={showAddGearModal}
+                    addGearTab={addGearTab}
+                    addGearBusy={addGearBusy}
+                    customGearCategory={customGearCategory}
+                    customGearBrand={customGearBrand}
+                    customGearModel={customGearModel}
+                    customGearLabel={customGearLabel}
+                    customGearCondition={customGearCondition}
+                    customGearPrimary={customGearPrimary}
+                    onOpenAddGear={() => setShowAddGearModal(true)}
+                    onCloseAddGear={() => setShowAddGearModal(false)}
+                    onSetAddGearTab={(tab) => setAddGearTab(tab)}
+                    onSetCustomCategory={(cat) => setCustomGearCategory(cat)}
+                    onSetCustomBrand={(val) => setCustomGearBrand(val)}
+                    onSetCustomModel={(val) => setCustomGearModel(val)}
+                    onSetCustomLabel={(val) => setCustomGearLabel(val)}
+                    onSetCustomCondition={(val) => setCustomGearCondition(val)}
+                    onSetCustomPrimary={(val) => setCustomGearPrimary(val)}
+                    onToggleCondition={(gearId, currentCondition) =>
+                      void handleToggleGearCondition(activeAthlete.id, gearId, currentCondition)
+                    }
+                    onTogglePrimary={(gearId, currentPrimary) =>
+                      void handleToggleGearPrimary(activeAthlete.id, gearId, currentPrimary)
+                    }
+                    onDeleteGear={(gearId) =>
+                      void handleDeleteGear(activeAthlete.id, gearId)
+                    }
+                    onAddGearPreset={(preset) =>
+                      void handleAddGearPreset(activeAthlete.id, preset)
+                    }
+                    onCreateCustomGear={() =>
+                      void handleCreateCustomGear(activeAthlete.id)
+                    }
+                  />
 
                   <section className={`${CARD} p-5 sm:p-6 space-y-4`}>
                     <div className="flex items-start justify-between gap-3">
@@ -1814,267 +1233,33 @@ export function ParentDashboard() {
                 </div>
 
                 <div className="space-y-6">
-                  <section className={`${CARD} p-5 space-y-4`}>
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className={SECTION_KICKER}>Race day</p>
-                        <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
-                          <Calendar className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
-                          Regatta Prep & Checklist
-                        </h3>
-                        <p className={`text-[13px] ${MUTED} mt-0.5`}>
-                          Upcoming calendar & race-day verification items.
-                        </p>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => resetChecklist(activeAthlete.id)}
-                        className={`text-[11px] font-semibold ${MUTED} hover:text-[var(--sp-harbour-shadow)] inline-flex items-center gap-1 p-1`}
-                        title="Reset checklist"
-                      >
-                        <RotateCcw className="h-3 w-3" />
-                        Reset
-                      </button>
-                    </div>
+                  <PreRaceChecklist
+                    activeAthlete={activeAthlete}
+                    upcomingRegattas={upcomingRegattas}
+                    checklistState={checklistState}
+                    customChecklistItems={customChecklistItems}
+                    newChecklistText={newChecklistText}
+                    onToggleItem={(id, itemId) => toggleChecklistItem(id, itemId)}
+                    onAddCustomItem={(id) => addCustomChecklistItem(id)}
+                    onRemoveCustomItem={(id, itemId) => removeCustomChecklistItem(id, itemId)}
+                    onResetChecklist={(id) => resetChecklist(id)}
+                    onNewChecklistTextChange={(v) => setNewChecklistText(v)}
+                  />
 
-                    {upcomingRegattas.length > 0 ? (
-                      <div className="space-y-2">
-                        <div className="flex items-center justify-between">
-                          <p className={`text-[11px] font-black uppercase tracking-wider ${MUTED}`}>
-                            Upcoming Regattas
-                          </p>
-                          <Link href="/calendar" className={LINK_TEAL}>
-                            Full Calendar →
-                          </Link>
-                        </div>
-                        <div className="space-y-1.5">
-                          {upcomingRegattas.slice(0, 3).map((reg) => (
-                            <div
-                              key={reg.id}
-                              className={`${NESTED} p-2.5 text-xs flex justify-between items-center gap-2`}
-                            >
-                              <div className="min-w-0 flex-1">
-                                <p className={`font-bold ${INK} truncate`}>{reg.name}</p>
-                                <p className={`text-[13px] ${MUTED} font-mono mt-0.5`}>
-                                  {reg.date}{" "}
-                                  {reg.boatClass ? `· ${reg.boatClass}` : ""}
-                                </p>
-                              </div>
-                              <Link
-                                href="/calendar"
-                                className="text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline shrink-0"
-                              >
-                                Details
-                              </Link>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className={`rounded-xl border border-dashed border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-3 text-xs ${MUTED} text-center`}>
-                        No upcoming regattas scheduled.{" "}
-                        <Link href="/calendar" className="text-[var(--sp-harbour-teal)] font-bold hover:underline">
-                          View full calendar
-                        </Link>
-                      </div>
-                    )}
-
-                    <div className="space-y-2.5 pt-2 border-t border-[var(--sp-cool-veil)]">
-                      <div className="flex items-center justify-between">
-                        <p className={`text-[11px] font-black uppercase tracking-wider ${MUTED}`}>
-                          Race Day Morning Checklist
-                        </p>
-                        {(() => {
-                          const athleteCustom = customChecklistItems[activeAthlete.id] || [];
-                          const allItems = [...DEFAULT_RACE_CHECKLIST_ITEMS, ...athleteCustom];
-                          const state = checklistState[activeAthlete.id] || {};
-                          const doneCount = allItems.filter((item) => state[item.id]).length;
-                          return (
-                            <span className="text-[11px] font-bold text-[var(--sp-harbour-teal)]">
-                              {doneCount}/{allItems.length} ready
-                            </span>
-                          );
-                        })()}
-                      </div>
-
-                      <div className="space-y-1.5">
-                        {[
-                          ...DEFAULT_RACE_CHECKLIST_ITEMS.map((item) => ({ ...item, isCustom: false })),
-                          ...(customChecklistItems[activeAthlete.id] || []).map((item) => ({ ...item, isCustom: true })),
-                        ].map((item) => {
-                          const isDone = Boolean(checklistState[activeAthlete.id]?.[item.id]);
-                          return (
-                            <div
-                              key={item.id}
-                              className={`group w-full rounded-xl p-2.5 text-xs flex items-center justify-between gap-2.5 transition-colors ${
-                                isDone
-                                  ? "bg-[var(--sp-aqua-mist)]/70 border border-[var(--sp-harbour-teal)]/25 text-[var(--sp-harbour-shadow)]"
-                                  : `${NESTED} ${BODY} hover:border-[var(--sp-harbour-teal)]`
-                              }`}
-                            >
-                              <button
-                                type="button"
-                                onClick={() => toggleChecklistItem(activeAthlete.id, item.id)}
-                                className="flex items-start gap-2.5 flex-1 text-left min-w-0"
-                              >
-                                {isDone ? (
-                                  <CheckSquare className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
-                                ) : (
-                                  <Square className={`h-4 w-4 ${MUTED} shrink-0 mt-0.5`} />
-                                )}
-                                <span className={isDone ? "line-through opacity-75" : "font-normal"}>
-                                  {item.label}
-                                </span>
-                              </button>
-                              {item.isCustom && (
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    removeCustomChecklistItem(activeAthlete.id, item.id);
-                                  }}
-                                  className={`opacity-60 group-hover:opacity-100 p-1 ${MUTED} hover:text-rose-600 transition-opacity shrink-0`}
-                                  title="Remove item"
-                                >
-                                  <Trash2 className="h-3.5 w-3.5" />
-                                </button>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                      <div className="flex items-center gap-2 pt-1">
-                        <input
-                          type="text"
-                          value={newChecklistText}
-                          onChange={(e) => setNewChecklistText(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              addCustomChecklistItem(activeAthlete.id);
-                            }
-                          }}
-                          placeholder="Add race prep item…"
-                          className="sp-input flex-1 text-xs"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => addCustomChecklistItem(activeAthlete.id)}
-                          disabled={!newChecklistText.trim()}
-                          className={`${PRIMARY_BTN} px-3 py-1.5 disabled:opacity-40 shrink-0`}
-                        >
-                          <Plus className="h-3.5 w-3.5" />
-                          Add
-                        </button>
-                      </div>
-                    </div>
-                  </section>
-
-                  <section className={`${CARD} p-5 space-y-4`}>
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-harbour-teal)]">Private notes</p>
-                      <h3 className={`${SECTION_TITLE} flex items-center gap-2`}>
-                        <StickyNote className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
-                        Private Parent Journal
-                      </h3>
-                      <p className={`text-[13px] ${MUTED} mt-0.5 flex items-center gap-1`}>
-                        <Lock className="h-3 w-3" />
-                        100% private to your parent account.
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex flex-wrap gap-1.5">
-                        {NOTE_CATEGORIES.map((cat) => (
-                          <button
-                            key={cat}
-                            type="button"
-                            onClick={() => setSelectedCategory(cat)}
-                            className={`px-2 py-0.5 rounded-full text-[10px] font-bold transition-colors border ${
-                              selectedCategory === cat
-                                ? "bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border-[var(--sp-harbour-teal)]/30"
-                                : `${NESTED} ${MUTED} hover:text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)]`
-                            }`}
-                          >
-                            {cat}
-                          </button>
-                        ))}
-                      </div>
-
-                      <div className="flex gap-2">
-                        <input
-                          value={noteDraft[activeAthlete.id] || ""}
-                          onChange={(e) =>
-                            setNoteDraft((d) => ({
-                              ...d,
-                              [activeAthlete.id]: e.target.value,
-                            }))
-                          }
-                          placeholder={`Add a private ${selectedCategory.toLowerCase()} note…`}
-                          className="sp-input flex-1 min-w-0 text-xs"
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") void addNote(activeAthlete.id);
-                          }}
-                        />
-                        <button
-                          type="button"
-                          disabled={
-                            noteBusy === activeAthlete.id ||
-                            !(noteDraft[activeAthlete.id] || "").trim()
-                          }
-                          onClick={() => void addNote(activeAthlete.id)}
-                          className={`${PRIMARY_BTN} px-3 py-2 disabled:opacity-40 shrink-0`}
-                        >
-                          <Plus className="h-4 w-4" />
-                          Save
-                        </button>
-                      </div>
-                    </div>
-
-                    {(activeAthlete.notes?.length ?? 0) === 0 ? (
-                      <p className={`text-[13px] ${MUTED} text-center py-3`}>
-                        No private notes yet. Log training thoughts, regatta debriefs, logistics, or equipment orders.
-                      </p>
-                    ) : (
-                      <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
-                        {activeAthlete.notes!.map((n) => {
-                          const parsed = parseNoteCategory(n.body);
-                          return (
-                            <div
-                              key={n.id}
-                              className={`${NESTED} p-2.5 flex items-start justify-between gap-2`}
-                            >
-                              <div className="min-w-0 flex-1 space-y-1">
-                                <div className="flex items-center gap-2">
-                                  {parsed.category && (
-                                    <span className="rounded-full px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/25">
-                                      {parsed.category}
-                                    </span>
-                                  )}
-                                  <span className={`text-[13px] ${MUTED} font-mono`}>
-                                    {n.createdAt ? n.createdAt.slice(0, 10) : ""}
-                                  </span>
-                                </div>
-                                <p className={`text-xs ${BODY} leading-relaxed whitespace-pre-wrap`}>
-                                  {parsed.text}
-                                </p>
-                              </div>
-                              <button
-                                type="button"
-                                disabled={noteBusy === n.id}
-                                onClick={() => void deleteNote(n.id)}
-                                className={`${MUTED} hover:text-rose-600 p-1 shrink-0 transition-colors`}
-                                aria-label="Delete note"
-                              >
-                                <Trash2 className="h-3.5 w-3.5" />
-                              </button>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </section>
+                  <PrivateNotesPanel
+                    activeAthlete={activeAthlete}
+                    noteDraft={noteDraft}
+                    selectedCategory={selectedCategory}
+                    noteBusy={noteBusy}
+                    onDraftChange={(id, value) =>
+                      setNoteDraft((d) => ({ ...d, [id]: value }))
+                    }
+                    onCategoryChange={(cat) =>
+                      setSelectedCategory(cat as NoteCategory)
+                    }
+                    onAddNote={(id) => void addNote(id)}
+                    onDeleteNote={(id) => void deleteNote(id)}
+                  />
                 </div>
               </div>
             </div>

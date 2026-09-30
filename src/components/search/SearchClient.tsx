@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useTransition, useId } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
 import {
   Search,
   X,
@@ -10,9 +9,8 @@ import {
   User,
   Calendar,
   Building2,
-  GraduationCap,
   ChevronRight,
-  Filter,
+  GraduationCap,
   RotateCcw,
   Sparkles,
   Loader2,
@@ -51,9 +49,6 @@ export function SearchClient({
   initialSailors = [],
   initialRegattas = [],
 }: SearchClientProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
   const [query, setQuery] = useState(initialQuery);
   const [fleet, setFleet] = useState(initialFleet);
   const [squad, setSquad] = useState(initialSquad);
@@ -69,7 +64,6 @@ export function SearchClient({
   const PAGE_SIZE = 60;
   const [visibleSailorsCount, setVisibleSailorsCount] = useState(PAGE_SIZE);
   const [isLoading, setIsLoading] = useState(false);
-  const [isPending, startTransition] = useTransition();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -135,8 +129,8 @@ export function SearchClient({
           setRegattas(data.regattas || []);
           setVisibleSailorsCount(PAGE_SIZE);
         }
-      } catch (err: any) {
-        if (err.name !== "AbortError") {
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name !== "AbortError") {
           console.error("Search error:", err);
         }
       } finally {
