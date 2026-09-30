@@ -24,6 +24,7 @@ type Props = {
   event: RegattaEventDef;
   /** Requested ?fleet= value; falls back to the first slice with data. */
   activeFleet?: string | null;
+  calendarView?: "past" | null;
 };
 
 function seriesPageHref(series: RegattaEventSliceDef["series"]): string | null {
@@ -300,7 +301,7 @@ async function DbSlicePanel({
  * Public event hub: one page per physical regatta with a tab per
  * class/division slice (pilot: SNSC 2026).
  */
-export async function RegattaEventHub({ event, activeFleet }: Props) {
+export async function RegattaEventHub({ event, activeFleet, calendarView }: Props) {
   let slices: ResolvedEventSlice[];
   try {
     const allRegattas = await getCachedPublicRegattas();
@@ -326,7 +327,7 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
         className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs font-bold"
       >
         <Link
-          href="/calendar"
+          href={calendarView === "past" ? "/calendar?view=past" : "/calendar"}
           className="text-[var(--sp-harbour-teal)] hover:underline"
         >
           Calendar
@@ -387,7 +388,11 @@ export async function RegattaEventHub({ event, activeFleet }: Props) {
           return (
             <Link
               key={slice.def.key}
-              href={eventHubHref(event.slug, slice.def.key)}
+              href={eventHubHref(
+                event.slug,
+                slice.def.key,
+                calendarView === "past" ? "past" : undefined
+              )}
               role="tab"
               aria-current={isActive ? "page" : undefined}
               aria-selected={isActive}

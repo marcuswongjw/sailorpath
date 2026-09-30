@@ -238,5 +238,21 @@ describe("RegattaCalendarClient", () => {
 
     expect(screen.getByText("Past Regatta 2020")).toBeInTheDocument();
     expect(screen.queryByText("Singapore National Sailing Championships 2099")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Past Regatta 2020" })).toHaveAttribute(
+      "href",
+      "/regattas/past-regatta-2020?calendar=past"
+    );
+  });
+
+  it("restores the past tab from the calendar address", () => {
+    render(
+      <RegattaCalendarClient
+        regattas={mockEvents}
+        initialTimelineTab="past"
+      />
+    );
+
+    expect(screen.getByText("Past Regatta 2020")).toBeInTheDocument();
+    expect(screen.queryByText("Singapore National Sailing Championships 2099")).not.toBeInTheDocument();
   });
 });

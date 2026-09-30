@@ -762,8 +762,14 @@ export function findEventSliceForRegattaSlug(regattaSlug: string): {
   return null;
 }
 
-export function eventHubHref(eventSlug: string, fleetKey: string): string {
-  return `/regattas/${eventSlug}?fleet=${encodeURIComponent(fleetKey)}`;
+export function eventHubHref(
+  eventSlug: string,
+  fleetKey: string,
+  calendarView?: "past"
+): string {
+  const params = new URLSearchParams({ fleet: fleetKey });
+  if (calendarView === "past") params.set("calendar", "past");
+  return `/regattas/${eventSlug}?${params.toString()}`;
 }
 
 export function getRegattaEvent(slug: string): RegattaEventDef | null {

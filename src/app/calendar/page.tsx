@@ -22,12 +22,14 @@ export const metadata: Metadata = {
 type CalendarPageProps = {
   searchParams?: Promise<{
     class?: string;
+    view?: string;
   }>;
 };
 
 export default async function CalendarPage(props: CalendarPageProps) {
   const searchParams = props.searchParams ? await props.searchParams : undefined;
   const initialClass = searchParams?.class || "all";
+  const initialTimelineTab = searchParams?.view === "past" ? "past" : "upcoming";
 
   let dbRegattas: RegattaRecord[] = [];
   let savedEvents: CalendarEventOverride[] = [];
@@ -177,6 +179,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
     <RegattaCalendarClient
       regattas={allRegattas}
       initialClass={initialClass}
+      initialTimelineTab={initialTimelineTab}
     />
   );
 }

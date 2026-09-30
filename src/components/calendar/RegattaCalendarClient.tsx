@@ -25,6 +25,7 @@ import { useAccount } from "@/components/AccountProvider";
 export type RegattaCalendarClientProps = {
   regattas: RegattaRecord[];
   initialClass?: string;
+  initialTimelineTab?: "upcoming" | "past";
 };
 
 function formatMonth(dateStr: string): string {
@@ -102,15 +103,19 @@ function regattaClasses(regatta: RegattaRecord): string[] {
 }
 
 /** Calendar cards open the resolver, which sends each event to its real results page. */
-export function regattaPageHref(regatta: Pick<RegattaRecord, "slug">): string {
+export function regattaPageHref(
+  regatta: Pick<RegattaRecord, "slug">,
+  timelineTab: "upcoming" | "past" = "upcoming"
+): string {
   const slug = regatta.slug || "";
+  const suffix = timelineTab === "past" ? "?calendar=past" : "";
   if (
     slug === "snsc-2026" ||
     slug.startsWith("singapore-national-sailing-championships-2026")
   ) {
-    return "/regattas/snsc-2026";
+    return `/regattas/snsc-2026${suffix}`;
   }
-  return `/regattas/${encodeURIComponent(slug)}`;
+  return `/regattas/${encodeURIComponent(slug)}${suffix}`;
 }
 
 function downloadIcs(regatta: RegattaRecord) {
@@ -174,13 +179,16 @@ function downloadIcs(regatta: RegattaRecord) {
 export function RegattaCalendarClient({
   regattas = [],
   initialClass = "all",
+  initialTimelineTab = "upcoming",
 }: RegattaCalendarClientProps) {
   const { email, ready: accountReady } = useAccount();
   const isLoggedIn = Boolean(email);
 
   const [selectedClass, setSelectedClass] = useState<string>(initialClass);
   const [selectedRegion, setSelectedRegion] = useState<string>("all");
-  const [timelineTab, setTimelineTab] = useState<"upcoming" | "past">("upcoming");
+  const [timelineTab, setTimelineTab] = useState<"upcoming" | "past">(
+    initialTimelineTab
+  );
   const [filterTrialOnly, setFilterTrialOnly] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -509,7 +517,7 @@ export function RegattaCalendarClient({
             const countdown = getCountdownLabel(regatta.date, regatta.endDate);
             const dateRangeStr = formatDateRange(regatta.date, regatta.endDate);
             const cardKey = regatta.id || regatta.slug;
-            const pageHref = regattaPageHref(regatta);
+            const pageHref = regattaPageHref(regatta, timelineTab);
             const classes = regattaClasses(regatta);
 
             return (

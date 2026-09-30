@@ -49,22 +49,40 @@ export default async function RegattaRedirectPage({
   searchParams,
 }: {
   params: Promise<{ regatta_slug: string }>;
-  searchParams: Promise<{ fleet?: string }>;
+  searchParams: Promise<{ fleet?: string; calendar?: string }>;
 }) {
   const { regatta_slug } = await params;
+  const { fleet, calendar } = await searchParams;
+  const calendarView = calendar === "past" ? "past" : null;
 
   const event = getRegattaEvent(regatta_slug);
   if (event) {
     if (event.slug !== regatta_slug.toLowerCase()) {
-      permanentRedirect(`/regattas/${event.slug}`);
+      const query = new URLSearchParams();
+      if (fleet) query.set("fleet", fleet);
+      if (calendarView) query.set("calendar", calendarView);
+      permanentRedirect(
+        `/regattas/${event.slug}${query.size ? `?${query.toString()}` : ""}`
+      );
     }
-    const { fleet } = await searchParams;
-    return <RegattaEventHub event={event} activeFleet={fleet ?? null} />;
+    return (
+      <RegattaEventHub
+        event={event}
+        activeFleet={fleet ?? null}
+        calendarView={calendarView}
+      />
+    );
   }
 
   const eventSlice = findEventSliceForRegattaSlug(regatta_slug);
   if (eventSlice) {
-    permanentRedirect(eventHubHref(eventSlice.event.slug, eventSlice.slice.key));
+    permanentRedirect(
+      eventHubHref(
+        eventSlice.event.slug,
+        eventSlice.slice.key,
+        calendarView === "past" ? "past" : undefined
+      )
+    );
   }
 
   const published = await getCachedPublicRegattas().catch(() => []);
@@ -78,11 +96,11 @@ export default async function RegattaRedirectPage({
         )
       );
     }
-    const { fleet } = await searchParams;
     return (
       <RegattaEventHub
         event={grouped.event}
         activeFleet={fleet ?? grouped.fleetKey}
+        calendarView={calendarView}
       />
     );
   }
@@ -130,7 +148,10 @@ export default async function RegattaRedirectPage({
           Results for this event are not on SailorPath yet.
         </p>
       )}
-      <Link href="/calendar" className="inline-block font-semibold text-[var(--sp-harbour-teal)] hover:underline">
+      <Link
+        href={calendarView === "past" ? "/calendar?view=past" : "/calendar"}
+        className="inline-block font-semibold text-[var(--sp-harbour-teal)] hover:underline"
+      >
         Back to the calendar
       </Link>
     </div>
