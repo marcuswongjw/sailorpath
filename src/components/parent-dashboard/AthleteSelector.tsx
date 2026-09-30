@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { Users, User, ChevronRight, Award, CheckCircle2 } from "lucide-react";
-import { relationLabel, type ClaimRelation } from "@/lib/claimRelation";
+import { relationLabel } from "@/lib/claimRelation";
 import { fleetPillClass } from "@/components/sailor-profile/helpers";
-import { birthYear } from "@/lib/age";
+import { formatAgeCategory, type Athlete } from "./types";
 import {
   CARD,
   NESTED,
@@ -15,85 +15,11 @@ import {
   BODY,
 } from "./styles";
 
-type Athlete = {
-  id: string;
-  name: string;
-  handle: string;
-  sailNumber: string;
-  sailNumberIlca4?: string | null;
-  club: string;
-  school?: string | null;
-  gender?: string | null;
-  nationality?: string | null;
-  avatarUrl?: string | null;
-  currentFleet?: string | null;
-  ownerRelation?: ClaimRelation | null;
-  nationalSquadStatus?: string | null;
-  dob?: string | null;
-  standing: {
-    periodLabel: string;
-    fleet: string;
-    overallRank: number;
-    fleetSize: number;
-    best3of5: number;
-    trendNote: string;
-  } | null;
-  selectionTrials?: {
-    rank: number;
-    nettScore: number;
-    eventsSailed: number;
-    isQualifiedAsian: boolean;
-    isQualifiedPerth: boolean;
-    asianTeamRank?: number;
-    gapToCutoff?: number;
-  } | null;
-  recentResults?: {
-    regattaName: string;
-    regattaDate: string;
-    rank: number;
-    boatClass: string | null;
-  }[];
-  primaryGear?: {
-    id: string;
-    category: string;
-    brand: string | null;
-    model: string | null;
-    label: string | null;
-    condition: string;
-    status: string;
-    isPrimary: boolean;
-  }[];
-  equipmentAlertCount?: number;
-  equipmentAlerts?: { label: string; reason: string }[];
-  coachFeedback?: {
-    id: string;
-    type: string;
-    category: string | null;
-    title: string;
-    detail: string | null;
-    recordDate: string;
-    status: string;
-  }[];
-  notes?: {
-    id: string;
-    body: string;
-    createdAt: string;
-  }[];
-};
-
 export type AthleteSelectorProps = {
   athletes: Athlete[];
   selectedAthleteId: string | "all";
-  onSelectAthlete: (id: string) => void;
+  onSelectAthlete: (id: string | "all") => void;
 };
-
-function formatAgeCategory(dob?: string | null) {
-  const by = birthYear(dob);
-  if (!by) return null;
-  const currentYear = new Date().getFullYear();
-  const age = currentYear - by;
-  return `${by} · U${age + 1} (${age} yrs)`;
-}
 
 export function AthleteSelector({
   athletes,

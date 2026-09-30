@@ -963,9 +963,6 @@ export function useAdminSailors({
     setCompetitionsSailorId,
     emptySeriesCount,
     onCleanupEmptySeries: handleCleanupEmptySeries,
-    onBackfillNationalityFromSail: handleBackfillNationalityFromSail,
-    onUpdateOptimistSailNumbers: handleUpdateOptimistSailNumbers,
-    onCleanOptimistSailNumbers: handleCleanOptimistSailNumbers,
   };
 
   return {

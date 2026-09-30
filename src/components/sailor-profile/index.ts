@@ -39,4 +39,5 @@ export { RaceObservationForm } from "./RaceObservationForm";
 export type { RaceObservationForm as RaceObservationFormShape } from "./RaceObservationForm";
 export { ProfileResultsTab } from "./ProfileResultsTab";
 export type { ProfileResultsTabProps } from "./ProfileResultsTab";
+export { useSailorProfileState } from "./useSailorProfileState";
 

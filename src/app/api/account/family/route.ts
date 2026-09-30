@@ -18,6 +18,7 @@ import { mapEquipmentRow } from "@/lib/equipment";
 import { currentPeriodFromSgToday } from "@/lib/datesSg";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
 import {
+  overallRankOnBoard,
   periodLabel,
   resolveSailorFleet,
   type SailorRecord,
@@ -369,15 +370,17 @@ export async function GET() {
             fleetInfo.fleet === "Silver" ? silverBoard : goldBoard;
           const me = board.find((x) => x.id === s.id);
           if (me) {
-            const overallRank = board.findIndex((x) => x.id === s.id) + 1;
-            standing = {
-              periodLabel: periodLabel(period),
-              fleet: me.fleet,
-              overallRank,
-              fleetSize: board.length,
-              best3of5: me.overallScore,
-              trendNote: `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
-            };
+            const overallRank = overallRankOnBoard(board, s.id);
+            if (overallRank != null) {
+              standing = {
+                periodLabel: periodLabel(period),
+                fleet: me.fleet,
+                overallRank,
+                fleetSize: board.length,
+                best3of5: me.overallScore,
+                trendNote: `Best 3 of ${Math.min(5, me.regattaScores.length)} scoring events`,
+              };
+            }
           }
         }
       } catch {

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Period, RankedSailor } from "@/lib/ranking";
+import { overallRankOnBoard } from "@/lib/ranking";
 import {
   currentPeriodFromSgToday,
   rankingPeriodOptions,
@@ -178,10 +179,10 @@ export function CompareSailorsView({
               <tr className="border-t border-[var(--sp-cool-veil)]">
                 <td className="px-4 py-3 text-[var(--sp-slate-soft)] text-xs font-bold uppercase">Overall rank</td>
                 <td className="px-4 py-3 font-black text-[var(--sp-racing-orange)]">
-                  #{ranked.findIndex((s) => s.id === a.id) + 1}
+                  #{overallRankOnBoard(ranked, a.id) ?? "—"}
                 </td>
                 <td className="px-4 py-3 font-black text-[var(--sp-racing-orange)]">
-                  #{ranked.findIndex((s) => s.id === b.id) + 1}
+                  #{overallRankOnBoard(ranked, b.id) ?? "—"}
                 </td>
               </tr>
               <tr className="border-t border-[var(--sp-cool-veil)]">

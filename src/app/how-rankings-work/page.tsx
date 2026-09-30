@@ -41,6 +41,13 @@ export default function HowRankingsWorkPage() {
             ranking regattas in the half (lower is better).
           </li>
           <li>
+            <strong className="text-[var(--sp-harbour-shadow)]">Tied places</strong> — sailors
+            share a rank only when Best 3 of 5 and every individual event score
+            match (name does not split a tie). A better discarded event still
+            takes the next place, then the next distinct score skips ahead
+            (97, 98, 98, 98, 101).
+          </li>
+          <li>
             <strong className="text-[var(--sp-harbour-shadow)]">DNS padding</strong> — missing
             ranking events for active series sailors are scored as fleet size +
             1 so the board stays comparable.

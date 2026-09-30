@@ -13,7 +13,6 @@ import {
   YOUTH_EQUIPMENT_PRESETS,
   SIMPLIFIED_CONDITION_META,
   toSimplifiedCondition,
-  fromSimplifiedCondition,
   brandsForCategory,
   categoryLabel,
   type QuickEquipmentPreset,

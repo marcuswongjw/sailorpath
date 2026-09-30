@@ -45,7 +45,6 @@ import type { SailorAdmin } from "@/types/sailor";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { SailorFilterBar } from "@/components/admin/SailorFilterBar";
 import { SailorBulkEditToolbar } from "@/components/admin/SailorBulkEditToolbar";
-import { AdminGenderAuditPanel } from "@/components/admin/AdminGenderAuditPanel";
 import { formatGenderLabel } from "@/lib/gender";
 
 const HALF_BOUNDARY_OPTS = halfBoundaryOptions();
@@ -111,9 +110,6 @@ export type AdminSailorsPanelProps = {
   /** Fix Series members with no gold/silver entry */
   onCleanupEmptySeries?: () => void | Promise<void>;
   emptySeriesCount?: number;
-  onBackfillNationalityFromSail?: () => void | Promise<void>;
-  onUpdateOptimistSailNumbers?: () => void | Promise<void>;
-  onCleanOptimistSailNumbers?: () => void | Promise<void>;
   onSailorsChange?: (sailors: SailorAdmin[]) => void;
 };
 
@@ -370,19 +366,11 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     setCompetitionsSailorId,
     onCleanupEmptySeries,
     emptySeriesCount = 0,
-    onBackfillNationalityFromSail,
-    onUpdateOptimistSailNumbers,
-    onCleanOptimistSailNumbers,
     onSailorsChange,
   } = p;
 
   return (
               <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
-
-                <AdminGenderAuditPanel
-                  sailors={sailorList}
-                  onSailorsChange={onSailorsChange}
-                />
 
                 {emptySeriesCount > 0 && onCleanupEmptySeries && (
                   <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -404,68 +392,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     </button>
                   </div>
                 )}
-                {onBackfillNationalityFromSail && (
-                  <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
-                      <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
-                        Sailors with a country code on their sail # (e.g.{" "}
-                        <span className="font-mono font-semibold text-[var(--sp-harbour-teal)]">SGP 115</span>) but no
-                        nationality can be tagged automatically. Flagged rows show{" "}
-                        <span className="font-semibold text-[var(--sp-racing-deep)]">from sail</span>{" "}
-                        — verify and set nationality manually to clear the flag.
-                        Import nationality columns always win (latest regatta).
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin}
-                      onClick={() => void onBackfillNationalityFromSail()}
-                      className="shrink-0 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
-                    >
-                      Fill nationality from sail #
-                    </button>
-                  </div>
-                )}
-                {onUpdateOptimistSailNumbers && (
-                  <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
-                      <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
-                        Official Optimist Ranking Sync: Update missing or placeholder (0 / SGP 0)
-                        sail numbers for 134 Optimist sailors based on the official ranking list.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin}
-                      onClick={() => void onUpdateOptimistSailNumbers()}
-                      className="shrink-0 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
-                    >
-                      Update 134 Optimist Sail #s
-                    </button>
-                  </div>
-                )}
-                {onCleanOptimistSailNumbers && (
-                  <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0 mt-0.5" />
-                      <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
-                        Numeric Optimist Sail #s: Ensure all Optimist sail numbers contain only digits (e.g.{" "}
-                        <span className="font-mono font-semibold text-[var(--sp-harbour-teal)]">SGP3029 → 3029</span>) and extract
-                        missing nationality from country prefixes.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin}
-                      onClick={() => void onCleanOptimistSailNumbers()}
-                      className="shrink-0 rounded-full bg-[var(--sp-harbour-teal)] hover:bg-[var(--sp-harbour-shadow)] disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
-                    >
-                      Clean Sail Numbers (Digits Only)
-                    </button>
-                  </div>
-                )}
+
                 {/* Filters */}
                                 <SailorFilterBar
                   dbSearch={dbSearch}

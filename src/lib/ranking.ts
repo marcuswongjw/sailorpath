@@ -533,7 +533,8 @@ export function optimistHistoryByPeriodEnd(
  * Rule: miss every ranking start in half N → dropped from the board in half N+1.
  * Equivalently, to appear in period P a sailor needs ≥1 non-DNS Optimist ranking
  * start in P−1 or in P (so new sailors who start racing in P still appear).
- * DNS / overseas-commitment rows do not count as starts. Gold is not filtered.
+ * DNS / overseas-commitment rows do not count as starts. A sailor with an actual
+ * Gold-fleet start by period end is not eligible for the Silver board.
  */
 export function optimistSailorsEligibleForSilverPeriod(
   period: Period,
@@ -546,9 +547,26 @@ export function optimistSailorsEligibleForSilverPeriod(
   const end = periodBounds(period).end;
   const ids = new Set<string>();
   const regById = new Map(regattas.map((r) => [r.id, r]));
+
+  // Gold division starts indicate Gold-fleet participation even when a sailor's
+  // goldEntryDate is missing or stale. Do not let those results qualify them for
+  // the Silver board (DNS and overseas rows are not actual starts).
+  const goldFleetSailorIds = new Set<string>();
+  for (const res of results) {
+    if (Boolean(res.isDns) || Boolean(res.isOverseasCommitment)) continue;
+    const r = regById.get(res.regattaId);
+    if (!r || r.countsForRanking === false) continue;
+    if (!regattaMatchesSeriesClass(r, seriesBoatClass)) continue;
+    if (String(r.division || "Gold").trim().toLowerCase() !== "gold") continue;
+    const d = toYmd(r.date);
+    if (!d || d > end) continue;
+    goldFleetSailorIds.add(res.sailorId);
+  }
+
   for (const res of results) {
     if (Boolean(res.isDns)) continue;
     if (Boolean(res.isOverseasCommitment)) continue;
+    if (goldFleetSailorIds.has(res.sailorId)) continue;
     const r = regById.get(res.regattaId);
     if (!r) continue;
     if (!regattaCountsForRanking(r)) continue;
@@ -732,61 +750,94 @@ export function bestThreeOf(scores: number[]): {
   return { bestThreeScores, overallScore };
 }
 
+function sortedFiniteRegattaScores(
+  s: Pick<RankedSailor, "regattaScores">,
+  scoreFilter?: (rs: RegattaScoreSlot) => boolean
+): number[] {
+  return (s.regattaScores || [])
+    .filter((rs) => (scoreFilter ? scoreFilter(rs) : true))
+    .map((rs) => rs.score)
+    .filter((n) => Number.isFinite(n))
+    .sort((x, y) => x - y);
+}
+
 /**
- * Sort order for the ranking board:
- * 1) Lower Best 3 of 5 (overallScore) wins
- * 2) If tied, compare all regatta ranks ascending (best first):
- *    e.g. A: 1,3,5,7,18 vs B: 2,2,5,6,9 — both Best3 = 9, A ranks higher
- *    because 1 beats 2; if still tied continue 3 vs 2, etc.
- * 3) Alphabetical name
+ * Score-only compare (no name). 0 means Best 3 and every individual
+ * regatta score match, so display ranks should be shared.
  */
-export function compareRankedSailors(
-  a: Pick<RankedSailor, "overallScore" | "regattaScores" | "name">,
-  b: Pick<RankedSailor, "overallScore" | "regattaScores" | "name">,
+function compareRankingScores(
+  a: Pick<RankedSailor, "overallScore" | "regattaScores">,
+  b: Pick<RankedSailor, "overallScore" | "regattaScores">,
   scoreFilter?: (rs: RegattaScoreSlot) => boolean
 ): number {
   if (a.overallScore !== b.overallScore) {
     return a.overallScore - b.overallScore;
   }
 
-  const ranksOf = (s: typeof a) =>
-    (s.regattaScores || [])
-      .filter((rs) => (scoreFilter ? scoreFilter(rs) : true))
-      .map((rs) => rs.score)
-      .filter((n) => Number.isFinite(n))
-      .sort((x, y) => x - y);
-
-  const sortedA = ranksOf(a);
-  const sortedB = ranksOf(b);
-
+  const sortedA = sortedFiniteRegattaScores(a, scoreFilter);
+  const sortedB = sortedFiniteRegattaScores(b, scoreFilter);
   const n = Math.max(sortedA.length, sortedB.length);
   for (let i = 0; i < n; i++) {
     const scoreA = sortedA[i] ?? 9999;
     const scoreB = sortedB[i] ?? 9999;
     if (scoreA !== scoreB) return scoreA - scoreB;
   }
+  return 0;
+}
 
+/**
+ * Sort order for the ranking board:
+ * 1) Lower Best 3 of 5 (overallScore) wins
+ * 2) If tied, compare all regatta ranks ascending (best first):
+ *    e.g. A: 1,3,5,7,18 vs B: 2,2,5,6,9 — both Best3 = 9, A ranks higher
+ *    because 1 beats 2; if still tied continue 3 vs 2, etc.
+ * 3) Alphabetical name (display order only — does not split a shared rank)
+ */
+export function compareRankedSailors(
+  a: Pick<RankedSailor, "overallScore" | "regattaScores" | "name">,
+  b: Pick<RankedSailor, "overallScore" | "regattaScores" | "name">,
+  scoreFilter?: (rs: RegattaScoreSlot) => boolean
+): number {
+  const byScore = compareRankingScores(a, b, scoreFilter);
+  if (byScore !== 0) return byScore;
   return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
 }
 
 /**
- * Display rank for a list already sorted by Best 3 of 5.
- * Equal overall scores share the rank of the first sailor in the tie
- * (97, 97, 97, 97). The next different score takes the next place number.
- * Tie-break order inside the group is unchanged.
+ * Display rank for a list already sorted by compareRankedSailors.
+ *
+ * Two sailors share a rank when their scores are indistinguishable:
+ * same overallScore AND the same multiset of individual regatta scores.
+ * The name tiebreaker is used only for stable display ordering — it does
+ * NOT split a rank. So Charles, Lucas Lim, and Lucas Cao (identical scores,
+ * different names) are all rank 98, while Fong Luke Tin (same Best 3 but a
+ * better discarded event, e.g. 83 vs 84) is rank 97.
+ *
+ * Competition numbering: after a 3-way tie at 98 the next distinct score is 101.
  */
 export function sharedOverallRanks(
-  rows: { overallScore: number }[]
+  rows: Pick<RankedSailor, "overallScore" | "regattaScores">[],
+  scoreFilter?: (rs: RegattaScoreSlot) => boolean
 ): number[] {
   const ranks: number[] = [];
   for (let i = 0; i < rows.length; i++) {
-    if (i > 0 && rows[i].overallScore === rows[i - 1].overallScore) {
+    if (i > 0 && compareRankingScores(rows[i], rows[i - 1], scoreFilter) === 0) {
       ranks.push(ranks[i - 1]);
     } else {
       ranks.push(i + 1);
     }
   }
   return ranks;
+}
+
+/** Shared board rank for one sailor, matching the public Gold/Silver table. */
+export function overallRankOnBoard(
+  ranked: Pick<RankedSailor, "id" | "overallScore" | "regattaScores">[],
+  sailorId: string
+): number | null {
+  const idx = ranked.findIndex((x) => x.id === sailorId);
+  if (idx < 0) return null;
+  return sharedOverallRanks(ranked)[idx] ?? null;
 }
 
 /**

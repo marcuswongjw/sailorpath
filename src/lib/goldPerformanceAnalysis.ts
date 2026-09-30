@@ -13,6 +13,7 @@ import {
 } from "@/lib/datesSg";
 import {
   calculateRankings,
+  overallRankOnBoard,
   periodLabel,
   previousPeriod,
   type Period,
@@ -240,7 +241,7 @@ export function goldHalfForm(
   const me = ranked.find((x) => x.id === sailorId);
   if (!me) return empty;
 
-  const seriesRank = ranked.findIndex((x) => x.id === sailorId) + 1;
+  const seriesRank = overallRankOnBoard(ranked, sailorId);
   const events: HalfEvent[] = (me.regattaScores || []).map((rs) => ({
     regattaId: rs.regattaId,
     regattaName: rs.regattaName,
@@ -258,7 +259,7 @@ export function goldHalfForm(
     period,
     periodLabel: label,
     best3of5: me.overallScore,
-    seriesRank: seriesRank > 0 ? seriesRank : null,
+    seriesRank,
     fleetSize: ranked.length,
     eventsSailed,
     events,

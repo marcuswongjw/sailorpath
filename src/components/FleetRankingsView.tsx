@@ -294,8 +294,14 @@ export function FleetRankingsView({
   }, [rankingWithProjection, genderFilter, squadFilter, showSquad]);
 
   const displayRanks = useMemo(
-    () => sharedOverallRanks(displayRanked),
-    [displayRanked]
+    () =>
+      sharedOverallRanks(
+        displayRanked,
+        excluded.size > 0
+          ? (rs) => !excluded.has(rs.regattaId)
+          : undefined
+      ),
+    [displayRanked, excluded]
   );
 
   const carryCount = eventSlots.filter((s) => s.isCarryForward && s.regattaName).length;
@@ -1028,8 +1034,10 @@ export function FleetRankingsView({
           current half has fewer than 5 events, the most recent events from the
           previous half fill the window (sky “prev” / carry). Highlighted cells are
           the three selected scores. Best 3 of 5 = sum of the three best (lowest)
-          scores. Sailors with the same Best 3 of 5 share that rank. Within a tie,
-          order is best regatta rank first (a 1st beats a 2nd), then name. Uncheck events
+          scores. Sailors share a rank only when Best 3 of 5 and every individual
+          regatta score match. A better discarded event (e.g. 83 vs 84) takes the
+          next place; identical score lines stay tied. Name is display order only.
+          Uncheck events
           above for a what-if score. * = DNS (Group 1: starters+1; Group 2: max sheet place+1). † = SSF overseas
           commitment. {squadColumnLabel} = official national squad for the selected
           period.{showProjectedSquad

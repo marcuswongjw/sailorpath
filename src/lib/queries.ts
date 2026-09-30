@@ -20,6 +20,7 @@ import {
 } from "@/db/schema";
 import {
   calculateRankings,
+  overallRankOnBoard,
   periodBounds,
   periodLabel,
   resolveSailorFleet,
@@ -615,7 +616,8 @@ export async function getSailorSeriesStanding(
   );
   const me = all.find((x) => x.id === sailorId);
   if (!me) return null;
-  const overallRank = all.findIndex((x) => x.id === sailorId) + 1;
+  const overallRank = overallRankOnBoard(all, sailorId);
+  if (overallRank == null) return null;
   return {
     period,
     periodLabel: periodLabel(period),

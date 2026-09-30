@@ -9,6 +9,7 @@ import {
   optimistUnregisteredScore,
   compareRankedSailors,
   sharedOverallRanks,
+  overallRankOnBoard,
   getPercentileBadge,
   natSquadFieldForPeriod,
   periodBounds,
@@ -85,18 +86,60 @@ describe("compareRankedSailors", () => {
     expect(compareRankedSailors(a, b)).toBeLessThan(0);
   });
 
-  it("gives equal Best 3 scores the same rank", () => {
+  it("gives equal Best 3 scores the same rank when individual scores also match", () => {
+    // Helper: build a minimal row for sharedOverallRanks
+    const row = (overallScore: number, scores: number[], name = "X") => ({
+      overallScore,
+      name,
+      regattaScores: scores.map((s) => slot(s)),
+    });
     expect(
       sharedOverallRanks([
-        { overallScore: 220 },
-        { overallScore: 226 },
-        { overallScore: 226 },
-        { overallScore: 233 },
-        { overallScore: 233 },
-        { overallScore: 233 },
-        { overallScore: 233 },
+        row(220, [60, 70, 90]),
+        row(226, [72, 76, 78], "A"),
+        row(226, [72, 76, 78], "B"),
+        row(233, [74, 78, 81], "A"),
+        row(233, [74, 78, 81], "B"),
+        row(233, [74, 78, 81], "C"),
+        row(233, [74, 78, 81], "D"),
       ])
     ).toEqual([1, 2, 2, 4, 4, 4, 4]);
+  });
+
+  it("gives distinct ranks when net total ties but individual regatta scores differ (Fong Luke Tin scenario)", () => {
+    const row = (overallScore: number, scores: number[], name = "X") => ({
+      overallScore,
+      name,
+      regattaScores: scores.map((s) => slot(s)),
+    });
+    // Fong: 74+78+82=234, best scores [74,78,82] — third score 83 (not in best-3 but wins tie)
+    // Charles/Lucas: 74+78+82=234, third score 84
+    // compareRankedSailors sorts all scores best-to-worst: Fong [74,78,82,83,92] vs Charles [74,78,82,84,92]
+    const fong   = row(234, [74, 92, 83, 78, 82], "Fong Luke Tin");
+    const charles = row(234, [74, 92, 84, 78, 82], "Charles Kong Shing Chak");
+    const lucas1 = row(234, [74, 92, 84, 78, 82], "Lim Rui Kai, Lucas");
+    const lucas2 = row(234, [74, 92, 84, 78, 82], "Lucas Cao Zhihong");
+    // Already sorted by compareRankedSailors: Fong first, then the three tied
+    expect(sharedOverallRanks([fong, charles, lucas1, lucas2])).toEqual([
+      1, 2, 2, 2,
+    ]);
+    const next = row(240, [80, 80, 80], "Next Sailor");
+    expect(
+      sharedOverallRanks([fong, charles, lucas1, lucas2, next])
+    ).toEqual([1, 2, 2, 2, 5]);
+    const ahead = Array.from({ length: 96 }, (_, i) =>
+      row(i + 1, [i + 1, i + 1, i + 1], `Ahead ${i}`)
+    );
+    expect(
+      sharedOverallRanks([...ahead, fong, charles, lucas1, lucas2])
+    ).toEqual([...Array.from({ length: 96 }, (_, i) => i + 1), 97, 98, 98, 98]);
+    const board = [fong, charles, lucas1, lucas2].map((row, i) => ({
+      ...row,
+      id: ["fong", "charles", "lucas1", "lucas2"][i],
+    }));
+    expect(overallRankOnBoard(board, "fong")).toBe(1);
+    expect(overallRankOnBoard(board, "charles")).toBe(2);
+    expect(overallRankOnBoard(board, "lucas2")).toBe(2);
   });
 
   it("falls back to name when ranks fully tie", () => {
@@ -471,6 +514,30 @@ describe("calculateRankings Silver previous/current half activity", () => {
     expect(ranked.map((s) => s.id).sort()).toEqual(
       ["raced-cur", "raced-prev"].sort()
     );
+  });
+
+  it("excludes Gold-fleet participants and Guests from Silver", () => {
+    const regattas = [
+      regatta("gold-current", "2026-08-01", "Gold"),
+      regatta("silver-current", "2026-08-15", "Silver"),
+    ];
+    const goldParticipant = sailor("gold-participant");
+    const silverSailor = sailor("silver-sailor");
+    const guest = sailor("guest", { currentFleet: "Guest" });
+    const results = [
+      { sailorId: "gold-participant", regattaId: "gold-current", rank: 8 },
+      { sailorId: "silver-sailor", regattaId: "silver-current", rank: 12 },
+      { sailorId: "guest", regattaId: "silver-current", rank: 3 },
+    ];
+
+    const ranked = calculateRankings(
+      period,
+      [goldParticipant, silverSailor, guest],
+      regattas,
+      results
+    );
+
+    expect(ranked.map((s) => s.id)).toEqual(["silver-sailor"]);
   });
 
   it("keeps Gold sailors even with no starts in the window", () => {
