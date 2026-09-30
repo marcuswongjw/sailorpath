@@ -11,11 +11,13 @@ import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 export const maxDuration = 300;
 const MAX_MERGES_PER_REQUEST = 15;
 
-export async function POST() {
+export async function POST(req: Request) {
   const requestId = createAdminRequestId();
   const t0 = Date.now();
   try {
     const auth = await requireSuperadmin();
+    const body = await req.json().catch(() => ({}));
+    const exactOnly = body?.exactOnly === true;
     
     console.log("Starting bulk merge of high-similarity duplicates...");
     
@@ -27,11 +29,17 @@ export async function POST() {
         sailNumber: s.sailNumber,
         sailNumberIlca4: s.sailNumberIlca4,
       })),
-      0.99
-    );
+      exactOnly ? 1 : 0.99
+    ).filter((pair) => !exactOnly || pair.similarity === 1);
 
     if (pairs.length === 0) {
-      return NextResponse.json({ message: "No high-similarity duplicates found." });
+      return NextResponse.json({
+        message: exactOnly
+          ? "No exact duplicate matches found."
+          : "No high-similarity duplicates found.",
+        count: 0,
+        hasMore: false,
+      });
     }
 
     const results = await db.select().from(regattaResults);
@@ -131,7 +139,9 @@ export async function POST() {
     await revalidatePublicRankings();
 
     return NextResponse.json({
-      message: `Successfully merged ${mergedCount} high-similarity duplicate pairs.`,
+      message: exactOnly
+        ? `Successfully merged ${mergedCount} exact duplicate pairs.`
+        : `Successfully merged ${mergedCount} high-similarity duplicate pairs.`,
       count: mergedCount,
       hasMore: batch.length >= MAX_MERGES_PER_REQUEST,
       merged: mergedPairs,
