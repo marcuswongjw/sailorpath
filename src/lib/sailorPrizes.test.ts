@@ -39,6 +39,7 @@ describe("sailorPrizes", () => {
       expect(deriveMedalTier(4)).toBe("other");
       expect(deriveMedalTier(1, "1st Female")).toBe("gold");
       expect(deriveMedalTier(2, "2nd Female")).toBe("silver");
+      expect(deriveMedalTier(33, "33rd Place")).toBe("other");
     });
   });
 
@@ -219,6 +220,24 @@ describe("sailorPrizes", () => {
       const mikaelaPesta = mikaela.filter((p) => p.year === 2025 && p.regattaName.includes("Pesta Sukan"));
       expect(mikaelaPesta.length).toBeGreaterThanOrEqual(3); // 1st Open, 1st Female, 1st 10&U, 1st Primary
 
+      const mikaelaWithResult = getSailorPrizes(
+        {
+          name: "Mikaela Hui Ting Wong",
+          sailNumber: "3029",
+        },
+        [{
+          regattaSlug: "pesta-sukan-silver-aug-25-2025-08-02",
+          regattaName: "Pesta Sukan Regatta 2025 (Optimist Silver)",
+          regattaDate: "2025-08-02",
+          boatClass: "Optimist",
+          division: "Silver",
+          rank: 1,
+        }]
+      );
+      expect(
+        mikaelaWithResult.some((p) => p.regattaSlug === "pesta-sukan-silver-aug-25-2025-08-02")
+      ).toBe(false);
+
       // Anya Alessia Zahedi (Optimist Gold)
       const anya = getSailorPrizes({
         name: "Anya Alessia Zahedi",
@@ -227,6 +246,23 @@ describe("sailorPrizes", () => {
       const anyaPesta = anya.filter((p) => p.year === 2025 && p.regattaName.includes("Pesta Sukan"));
       expect(anyaPesta.some((p) => p.prizeTitle === "1st Female")).toBe(true);
       expect(anyaPesta.some((p) => p.prizeTitle === "1st (12&U)")).toBe(true);
+    });
+
+    it("formats a synthesized third-place award correctly", () => {
+      const prizes = getSailorPrizes(
+        { name: "Test Sailor", sailNumber: "99999" },
+        [{
+          regattaSlug: "test-regatta",
+          regattaName: "Test Regatta",
+          regattaDate: "2026-01-01",
+          rank: 3,
+          boatClass: "Optimist",
+        }]
+      );
+
+      expect(prizes).toHaveLength(1);
+      expect(prizes[0]?.prizeTitle).toBe("3rd Place");
+      expect(prizes[0]?.medal).toBe("bronze");
     });
   });
 });

@@ -91,16 +91,33 @@ export function deriveMedalTier(
   prizeTitle?: string
 ): "gold" | "silver" | "bronze" | "other" {
   const title = (prizeTitle || "").toLowerCase();
-  if (title.includes("1st") || title.includes("champion") || title.includes("gold") || rank === 1) {
+  if (/\b1st\b/.test(title) || title.includes("champion") || title.includes("gold") || rank === 1) {
     return "gold";
   }
-  if (title.includes("2nd") || title.includes("silver") || rank === 2) {
+  if (/\b2nd\b/.test(title) || title.includes("silver") || rank === 2) {
     return "silver";
   }
-  if (title.includes("3rd") || title.includes("bronze") || rank === 3) {
+  if (/\b3rd\b/.test(title) || title.includes("bronze") || rank === 3) {
     return "bronze";
   }
   return "other";
+}
+
+function ordinal(rank: number): string {
+  const mod100 = rank % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${rank}th`;
+  if (rank % 10 === 1) return `${rank}st`;
+  if (rank % 10 === 2) return `${rank}nd`;
+  if (rank % 10 === 3) return `${rank}rd`;
+  return `${rank}th`;
+}
+
+function regattaNameKey(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
 }
 
 /**
@@ -178,7 +195,7 @@ export function getSailorPrizes(
                 boatClass: fleet.boatClass,
                 fleetName: fleet.fleetName,
                 categoryName: cat.categoryName,
-                prizeTitle: w.prizeTitle || `${w.rank}${w.rank === 1 ? "st" : w.rank === 2 ? "nd" : w.rank === 3 ? "rd" : "th"} Place`,
+                prizeTitle: w.prizeTitle || `${ordinal(w.rank)} Place`,
                 rank: w.rank,
                 medal,
                 notes: w.notes,
@@ -212,7 +229,7 @@ export function getSailorPrizes(
       const alreadyHas = awards.some(
         (a) =>
           a.regattaSlug === regSlug ||
-          a.regattaName.toLowerCase() === (res.regattaName || "").toLowerCase()
+          regattaNameKey(a.regattaName) === regattaNameKey(res.regattaName || "")
       );
 
       if (!alreadyHas && !seenKeys.has(dedupeKey)) {
@@ -226,7 +243,7 @@ export function getSailorPrizes(
           boatClass,
           fleetName: res.division || "Open Fleet",
           categoryName: "Open",
-          prizeTitle: `${res.rank}${res.rank === 1 ? "st" : res.rank === 2 ? "nd" : "3rd"} Place`,
+          prizeTitle: `${ordinal(res.rank)} Place`,
           rank: res.rank,
           medal: res.rank === 1 ? "gold" : res.rank === 2 ? "silver" : "bronze",
           notes: res.fleetSize ? `Fleet size: ${res.fleetSize}` : undefined,
