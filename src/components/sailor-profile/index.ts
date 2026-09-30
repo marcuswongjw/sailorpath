@@ -33,4 +33,10 @@ export { ProfileStandingCard } from "./ProfileStandingCard";
 export type { ProfileStandingCardProps } from "./ProfileStandingCard";
 export { ProfileOverviewTab } from "./ProfileOverviewTab";
 export type { ProfileOverviewTabProps } from "./ProfileOverviewTab";
+export { ProfileRegattaRow } from "./ProfileRegattaRow";
+export type { ProfileRegattaRowProps } from "./ProfileRegattaRow";
+export { RaceObservationForm } from "./RaceObservationForm";
+export type { RaceObservationForm as RaceObservationFormShape } from "./RaceObservationForm";
+export { ProfileResultsTab } from "./ProfileResultsTab";
+export type { ProfileResultsTabProps } from "./ProfileResultsTab";
 
