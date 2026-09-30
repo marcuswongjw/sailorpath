@@ -10,7 +10,7 @@ import {
 } from "@/lib/datesSg";
 import {
   projectedNextSquadLabel,
-  withProjectedNextSquadStatus,
+  projectDisplayedNextSquad,
 } from "@/lib/optimistSquadPreview";
 import { Trophy, Calendar, RotateCcw, Lock } from "lucide-react";
 import { trackClientUsage } from "@/lib/clientUsage";
@@ -247,29 +247,8 @@ export function FleetRankingsView({
 
   const rankingWithProjection = useMemo(() => {
     if (!showProjectedSquad || rankingBase.length === 0) return rankingBase;
-    // The server already projected Nat A/B and Drop. Re-project only for a
-    // what-if, and keep Drop so a sailor who cannot reach 2 starts does not
-    // take a squad place.
-    if (excluded.size === 0) return rankingBase;
-    const dropIds = new Set(
-      rankingBase
-        .filter((sailor) => sailor.nextPeriodSquadStatus === "Drop")
-        .map((sailor) => sailor.id)
-    );
-    const projected = withProjectedNextSquadStatus(
-      rankingBase.filter((sailor) => !dropIds.has(sailor.id)),
-      period
-    );
-    const statusById = new Map(
-      projected.map((sailor) => [sailor.id, sailor.nextPeriodSquadStatus])
-    );
-    return rankingBase.map((sailor) => ({
-      ...sailor,
-      nextPeriodSquadStatus: dropIds.has(sailor.id)
-        ? "Drop"
-        : (statusById.get(sailor.id) ?? null),
-    }));
-  }, [showProjectedSquad, rankingBase, period, excluded.size]);
+    return projectDisplayedNextSquad(rankingBase, period);
+  }, [showProjectedSquad, rankingBase, period]);
 
   const displayRanked = useMemo(() => {
     return rankingWithProjection.filter((s) => {
