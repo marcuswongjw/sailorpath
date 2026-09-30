@@ -25,12 +25,16 @@ export function AdminSailorDuplicatesPanel({
 }) {
   const [bulkMerging, setBulkMerging] = useState(false);
   const mergeHighConfidence = async () => {
-    if (!window.confirm("Merge every sailor match scored 99% or higher? This combines their results and removes the duplicate profiles.")) return;
+    if (!window.confirm("Merge every sailor match scored 100%? This combines their results and removes the duplicate profiles.")) return;
     setBulkMerging(true);
     try {
       let total = 0;
       for (let batch = 0; batch < 50; batch += 1) {
-        const response = await fetch("/api/admin/sailors/bulk-merge-high-similarity", { method: "POST" });
+        const response = await fetch("/api/admin/sailors/bulk-merge-high-similarity", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ exactOnly: true }),
+        });
         const data = await response.json() as { error?: string; count?: number; hasMore?: boolean };
         if (!response.ok) throw new Error(data.error || "Bulk merge failed");
         total += data.count ?? 0;
@@ -68,7 +72,7 @@ export function AdminSailorDuplicatesPanel({
             className="inline-flex min-h-11 items-center gap-2 rounded-full border border-amber-400/40 px-4 text-sm font-bold text-amber-200 hover:bg-amber-500/10 disabled:opacity-40"
           >
             <UsersRound className="h-4 w-4" aria-hidden="true" />
-            {bulkMerging ? "Merging…" : "Merge all 99%+"}
+            {bulkMerging ? "Merging…" : "Merge all 100%"}
           </button>
           <button
             type="button"
