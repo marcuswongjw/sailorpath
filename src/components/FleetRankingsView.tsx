@@ -66,6 +66,44 @@ function SquadBadge({ label }: { label: string }) {
   );
 }
 
+function mobileSquadChipClass(label: string, projected: boolean): string {
+  const s = label.trim().toLowerCase();
+  if (s === "nat a" || s === "national a" || s === "a") {
+    return projected
+      ? "border-amber-500 bg-transparent text-amber-900"
+      : "border-amber-200 bg-amber-100 text-amber-950";
+  }
+  if (s === "nat b" || s === "national b" || s === "b") {
+    return projected
+      ? "border-sky-500 bg-transparent text-sky-900"
+      : "border-sky-200 bg-sky-100 text-sky-950";
+  }
+  if (s === "drop" || s === "dropped") {
+    return projected
+      ? "border-slate-400 bg-transparent text-slate-600"
+      : "border-slate-200 bg-slate-100 text-slate-700";
+  }
+  return projected
+    ? "border-orange-400 bg-transparent text-[var(--sp-racing-deep)]"
+    : "border-orange-200 bg-orange-50 text-[var(--sp-racing-deep)]";
+}
+
+function MobileSquadChip({
+  label,
+  projected = false,
+}: {
+  label: string;
+  projected?: boolean;
+}) {
+  return (
+    <span
+      className={`inline-flex items-center rounded-full border px-1.5 py-0.5 text-[10px] font-extrabold leading-none ${mobileSquadChipClass(label, projected)}`}
+    >
+      {projected ? `→ ${label}` : label}
+    </span>
+  );
+}
+
 /** Compact header label for a regatta (keep readable in sticky column) */
 function shortRegattaName(name: string | undefined | null, idx: number) {
   if (!name || !String(name).trim()) return `R${idx + 1}`;
@@ -334,7 +372,7 @@ export function FleetRankingsView({
     s.periodSquadStatus || s.nationalSquadStatus || null;
 
   return (
-    <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-4 sm:space-y-6 overflow-x-clip">
+    <div className="print-rankings mx-auto w-full max-w-7xl min-w-0 px-3 sm:px-6 lg:px-8 pt-4 pb-8 sm:pt-6 sm:pb-10 space-y-4 sm:space-y-6">
       {fleet === "Gold" && accountReady && !isLoggedIn && (
         <div className="rounded-xl border border-orange-500/25 bg-orange-500/[0.07] px-3.5 py-3 sm:px-4 sm:py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-3 no-print">
           <div className="flex items-start gap-2.5 min-w-0 flex-1">
@@ -516,8 +554,71 @@ export function FleetRankingsView({
 
       {/* Scoring events legend + exclude toggles */}
       {!loading && ranked.length > 0 && (
-        <div className="w-full max-w-full min-w-0 no-print">
-          <div className="rounded-xl border border-cool-veil bg-warm-white shadow-sm px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0">
+          <div className="sticky top-14 z-30 -mx-3 border-b border-cool-veil bg-[var(--sp-sailcloth)]/95 px-3 py-2 backdrop-blur-md no-print sm:-mx-6 sm:top-16 sm:px-6 md:hidden">
+            <div className="px-2.5">
+            <div className="mb-1.5 flex items-center justify-between gap-2">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                {excluded.size > 0
+                  ? `${excluded.size} event${excluded.size === 1 ? "" : "s"} off · Best 3 of the rest`
+                  : "R1 oldest · R5 newest"}
+              </p>
+              {excluded.size > 0 && (
+                <button
+                  type="button"
+                  onClick={() => setExcluded(new Set())}
+                  className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-800"
+                >
+                  <RotateCcw className="h-2.5 w-2.5" />
+                  Reset
+                </button>
+              )}
+            </div>
+            <div className="grid grid-cols-5 gap-1">
+              {eventSlots.map((ev, idx) => {
+                const off = excluded.has(ev.regattaId);
+                const canToggle =
+                  Boolean(ev.regattaName) &&
+                  !ev.regattaId.startsWith("slot-");
+                const badge = mobileRegattaBadge(ev.regattaName, idx);
+                return (
+                  <button
+                    key={ev.regattaId + idx}
+                    type="button"
+                    disabled={!canToggle}
+                    onClick={() => toggleExclude(ev.regattaId)}
+                    aria-pressed={canToggle ? !off : undefined}
+                    className={`min-w-0 rounded-lg border px-1 py-1.5 text-center ${
+                      off
+                        ? "border-dashed border-slate-300 bg-slate-50 text-slate-400"
+                        : ev.isCarryForward
+                          ? "border-sky-200 bg-sky-50 text-slate-800"
+                          : "border-slate-200 bg-white text-slate-800"
+                    } ${canToggle ? "active:scale-95" : ""}`}
+                    title={
+                      canToggle
+                        ? `${off ? "Include" : "Exclude"} ${ev.regattaName}`
+                        : undefined
+                    }
+                  >
+                    <span className="flex items-center justify-center gap-1 text-[9px] font-black text-orange-700">
+                      R{idx + 1}
+                      {ev.isCarryForward ? (
+                        <span className="font-bold uppercase text-sky-700">prev</span>
+                      ) : null}
+                    </span>
+                    <span className={`mt-0.5 block truncate text-[10px] font-bold leading-tight ${off ? "line-through" : ""}`}>
+                      {badge}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+            </div>
+          </div>
+      )}
+
+      {!loading && ranked.length > 0 && (
+          <div className="hidden rounded-xl border border-cool-veil bg-warm-white shadow-sm px-2.5 sm:px-4 py-2 sm:py-3 space-y-2 min-w-0 no-print md:block">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 sm:gap-2 min-w-0">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                 Scoring events — R1 oldest · R5 newest
@@ -541,72 +642,6 @@ export function FleetRankingsView({
                     Reset ({excluded.size})
                   </button>
                 )}
-              </div>
-            </div>
-            {/* Mobile: Always-visible 5-regatta event strip with clear badges and what-if toggle */}
-            <div className="md:hidden w-full min-w-0 space-y-1.5">
-              <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium">
-                <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">
-                  Tap event to include/exclude
-                </span>
-                {excluded.size > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setExcluded(new Set())}
-                    className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-300 hover:text-amber-200"
-                  >
-                    <RotateCcw className="h-2.5 w-2.5" />
-                    Reset ({excluded.size})
-                  </button>
-                )}
-              </div>
-              <div className="grid grid-cols-5 gap-1 w-full min-w-0">
-                {eventSlots.map((ev, idx) => {
-                  const off = excluded.has(ev.regattaId);
-                  const canToggle =
-                    Boolean(ev.regattaName) &&
-                    !ev.regattaId.startsWith("slot-");
-                  const badge = mobileRegattaBadge(ev.regattaName, idx);
-                  return (
-                    <button
-                      key={ev.regattaId + idx}
-                      type="button"
-                      disabled={!canToggle}
-                      onClick={() => toggleExclude(ev.regattaId)}
-                      className={`min-w-0 w-full rounded-lg border px-1 py-1.5 text-center transition-all ${
-                        off
-                          ? "bg-rose-950/30 border-rose-500/40 text-rose-300 opacity-60 line-through"
-                          : ev.isCarryForward
-                            ? "bg-sky-500/10 border-sky-500/30 text-sky-200"
-                            : "bg-white/[0.04] border-white/10 text-white"
-                      } ${canToggle ? "cursor-pointer active:scale-95" : "cursor-default"}`}
-                      title={
-                        canToggle
-                          ? `${off ? "Include" : "Exclude"} ${ev.regattaName}`
-                          : undefined
-                      }
-                    >
-                      <div className="flex items-center justify-center gap-1">
-                        <span className="text-[9px] font-black text-[var(--sp-racing-deep)]">
-                          R{idx + 1}
-                        </span>
-                        {ev.isCarryForward && (
-                          <span className="text-[8px] font-bold text-sky-400">
-                            CF
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-[10px] font-bold truncate leading-tight mt-0.5">
-                        {badge}
-                      </p>
-                      {off && (
-                        <p className="text-[8px] font-extrabold text-rose-400 uppercase tracking-tighter mt-0.5 no-underline">
-                          EXCL
-                        </p>
-                      )}
-                    </button>
-                  );
-                })}
               </div>
             </div>
             <div className="hidden md:grid grid-cols-5 gap-2">
@@ -652,14 +687,13 @@ export function FleetRankingsView({
               })}
             </div>
             {excluded.size > 0 && (
-              <p className="text-[11px] text-amber-200/90 font-semibold">
+              <p className="hidden text-[11px] font-semibold text-amber-200/90 md:block">
                 Viewing what-if ranking: {excluded.size} regatta
                 {excluded.size === 1 ? "" : "s"} excluded · Best 3 of remaining
                 scores. Current standings return when you reset.
               </p>
             )}
           </div>
-        </div>
       )}
 
       {loading && (
@@ -711,7 +745,7 @@ export function FleetRankingsView({
           return (
             <div
               key={s.id}
-              className="w-full max-w-full min-w-0 rounded-xl px-3 py-2.5 border border-cool-veil bg-warm-white"
+              className="w-full max-w-full min-w-0 rounded-xl border border-cool-veil bg-warm-white px-2.5 py-2.5"
             >
               <div className="flex items-center justify-between gap-2 min-w-0">
                 <div className="min-w-0 flex-1 flex items-center gap-2">
@@ -728,17 +762,17 @@ export function FleetRankingsView({
                     >
                       {s.name}
                     </Link>
-                    <p className="text-[10px] text-slate-500 mt-0.5 truncate">
-                      {formatGenderLabel(s.gender)}
-                      {birthYear(s.dob) != null
-                        ? ` · ${birthYear(s.dob)}`
-                        : ""}
-                      {showSquad && squadFor(s)
-                        ? ` · ${squadFor(s)}`
-                        : ""}
-                      {showProjectedSquad && nextSquadFor(s)
-                        ? ` · proj. ${nextSquadFor(s)}`
-                        : ""}
+                    <p className="mt-1 flex min-w-0 flex-wrap items-center gap-1">
+                      <span className="text-[10px] text-slate-500">
+                        {formatGenderLabel(s.gender)}
+                        {birthYear(s.dob) !== "—" ? ` · ${birthYear(s.dob)}` : ""}
+                      </span>
+                      {showSquad && squadFor(s) ? (
+                        <MobileSquadChip label={squadFor(s)!} />
+                      ) : null}
+                      {showProjectedSquad && nextSquadFor(s) ? (
+                        <MobileSquadChip label={nextSquadFor(s)!} projected />
+                      ) : null}
                     </p>
                   </div>
                 </div>
@@ -751,77 +785,39 @@ export function FleetRankingsView({
                   </p>
                 </div>
               </div>
-              <div className="mt-2.5 grid grid-cols-5 gap-1.5 w-full min-w-0">
+              <div className="mt-2 grid grid-cols-5 gap-1">
                 {scores.map((rs, idx) => {
                   const off = excluded.has(rs.regattaId);
                   const selected = selectedIndexes.has(idx);
                   const regName = rs.regattaName || eventSlots[idx]?.regattaName;
-                  const badge = mobileRegattaBadge(regName, idx);
                   const isCounted = selected && !off && Number.isFinite(rs.score);
-                  const isDropped = !selected && !off && Number.isFinite(rs.score);
+                  const value = Number.isFinite(rs.score)
+                    ? scoreCell(rs.score, rs.isDNS, rs.isOverseasCommitment)
+                    : "—";
                   return (
                     <div
                       key={rs.regattaId + idx}
                       data-best-three-selected={selected || undefined}
-                      className={`min-w-0 rounded-lg border px-1 py-1.5 flex flex-col justify-between text-center transition-all ${
-                        off
-                          ? "bg-rose-950/20 border-rose-500/30 opacity-50"
-                          : isCounted
-                            ? "bg-orange-500/20 border-orange-400/60 ring-1 ring-orange-500/40 shadow-sm"
-                            : isDropped
-                              ? "bg-white/[0.02] border-white/5 opacity-70"
-                              : rs.isCarryForward
-                                ? "bg-sky-500/10 border-sky-500/20"
-                                : "bg-white/[0.03] border-white/5"
-                      }`}
+                      className="min-w-0 text-center"
                       title={regName || undefined}
                     >
-                      <div className="flex items-center justify-center gap-0.5 text-[8px] leading-tight font-bold truncate">
-                        <span className="text-[var(--sp-racing-deep)] font-black">R{idx + 1}</span>
-                        <span className="text-slate-500">·</span>
-                        <span className="text-slate-300 truncate">{badge}</span>
-                        {rs.isCarryForward && (
-                          <span className="text-sky-400 font-black" title="Carry-forward">ᶜ</span>
-                        )}
+                      <div
+                        className={`font-mono tabular-nums leading-none ${
+                          off
+                            ? "text-[13px] font-semibold text-slate-300 line-through"
+                            : isCounted
+                              ? "text-[15px] font-black text-charcoal"
+                              : "text-[13px] font-medium text-slate-400"
+                        }`}
+                      >
+                        {isCounted ? <span className="sr-only">Counts toward Best 3: </span> : null}
+                        {off ? <span className="sr-only">Excluded: </span> : null}
+                        {value}
                       </div>
-
-                      <div className={`my-0.5 text-[13px] font-mono tabular-nums leading-tight ${
-                        off
-                          ? "text-rose-400 line-through font-semibold"
-                          : isCounted
-                            ? "text-white font-black text-[14px]"
-                            : isDropped
-                              ? "text-slate-400 font-semibold line-through decoration-slate-500/60"
-                              : "text-slate-500 font-medium"
-                      }`}>
-                        {selected && <span className="sr-only">Selected score: </span>}
-                        {Number.isFinite(rs.score)
-                          ? scoreCell(
-                              rs.score,
-                              rs.isDNS,
-                              rs.isOverseasCommitment
-                            )
-                          : "—"}
-                      </div>
-
-                      <div>
-                        {off ? (
-                          <span className="inline-block text-[7px] font-bold uppercase tracking-wider text-rose-400/80 leading-none">
-                            Excl
-                          </span>
-                        ) : isCounted ? (
-                          <span className="inline-flex items-center justify-center text-[7.5px] font-black uppercase tracking-wider text-orange-200 bg-orange-500/30 border border-orange-400/30 rounded px-1 py-0.5 leading-none w-full">
-                            ★ Count
-                          </span>
-                        ) : isDropped ? (
-                          <span className="inline-block text-[7.5px] font-medium uppercase tracking-wider text-slate-500 leading-none py-0.5">
-                            Drop
-                          </span>
-                        ) : (
-                          <span className="inline-block text-[7.5px] text-slate-600 leading-none py-0.5">
-                            —
-                          </span>
-                        )}
+                      <div className="mt-1 flex h-1.5 justify-center" aria-hidden="true">
+                        {isCounted ? (
+                          <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+                        ) : null}
                       </div>
                     </div>
                   );
