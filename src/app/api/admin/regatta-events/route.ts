@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
+import { eq, inArray } from "drizzle-orm";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { regattaEvents, regattas } from "@/db/schema";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
+import { planRegattaEventDelete } from "@/lib/admin/planRegattaEventDelete";
 import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
@@ -126,6 +127,78 @@ export async function PATCH(req: Request) {
       event: saved,
       sheetsUpdated,
       sheetsKeptNonRanking,
+    });
+  } catch (e: unknown) {
+    return jsonError(e);
+  }
+}
+
+export async function DELETE(req: Request) {
+  try {
+    const auth = await requireSuperadmin();
+    const slug = String(new URL(req.url).searchParams.get("slug") || "")
+      .trim()
+      .toLowerCase();
+    if (!slug) {
+      return NextResponse.json({ error: "slug required" }, { status: 400 });
+    }
+
+    const eventRows = await db.select().from(regattaEvents);
+    const slugsById = new Map(eventRows.map((row) => [row.id, row.slug]));
+    const sheetRows = await db
+      .select({
+        id: regattas.id,
+        name: regattas.name,
+        slug: regattas.slug,
+        date: regattas.date,
+        boatClass: regattas.boatClass,
+        division: regattas.division,
+        status: regattas.status,
+        raceCount: regattas.raceCount,
+        countsForRanking: regattas.countsForRanking,
+        eventId: regattas.eventId,
+      })
+      .from(regattas);
+
+    const grouped = groupRegattaEvents(sheetRows, slugsById);
+    const planned = planRegattaEventDelete({
+      slug,
+      grouped,
+      eventRows,
+      sheets: sheetRows,
+    });
+    if (!planned.ok) {
+      return NextResponse.json({ error: planned.error }, { status: planned.status });
+    }
+
+    if (planned.sheetIds.length > 0) {
+      await db.delete(regattas).where(inArray(regattas.id, planned.sheetIds));
+    }
+    if (planned.eventId) {
+      await db
+        .delete(regattaEvents)
+        .where(eq(regattaEvents.id, planned.eventId));
+    }
+
+    revalidatePath("/calendar");
+    revalidatePublicRankings(`regatta-event-delete:${slug}`);
+    void logAdminChange({
+      actorUserId: auth.userId,
+      actorEmail: auth.email,
+      action: "regatta_event_delete",
+      entityType: "regatta_event",
+      entityId: planned.eventId ?? undefined,
+      entityLabel: planned.name,
+      summary: `Deleted regatta event ${planned.name} (${planned.sheetIds.length} class sheets)`,
+      details: { slug, sheetIds: planned.sheetIds },
+      source: "/api/admin/regatta-events",
+    });
+
+    return NextResponse.json({
+      ok: true,
+      slug,
+      eventId: planned.eventId,
+      deletedSheetIds: planned.sheetIds,
     });
   } catch (e: unknown) {
     return jsonError(e);

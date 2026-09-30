@@ -33,7 +33,9 @@ import {
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { setAdminLeaveGuard } from "@/components/admin/adminLeaveGuard";
 import { RegattaFilterBar } from "@/components/admin/RegattaFilterBar";
+import { AdminRegattaEventList } from "@/components/admin/AdminRegattaEventList";
 import { CalendarEventForm, calendarFormFrom, type CalendarFormState, type SavedCalendarEvent } from "@/components/admin/CalendarEventForm";
+import { cascadeLine, summarizeNames } from "@/lib/confirmCopy";
 import type { PublicationReadiness } from "@/lib/admin/publicationReadiness";
 import {
   eventStatusLabel,
@@ -130,7 +132,7 @@ export function AdminRegattasPanel({
   resultsEditor,
   readinessRevision,
 }: AdminRegattasPanelProps) {
-  const { toast } = useFeedback();
+  const { toast, confirm } = useFeedback();
   const [isSeeding, setIsSeeding] = useState(false);
   const [selectedEventSlug, setSelectedEventSlug] = useState<string | null>(null);
   const [savedEvents, setSavedEvents] = useState<Record<string, SavedCalendarEvent>>({});
@@ -146,6 +148,7 @@ export function AdminRegattasPanel({
   const [publishingId, setPublishingId] = useState<string | null>(null);
   const [linkingSheetId, setLinkingSheetId] = useState<string | null>(null);
   const [linkTargets, setLinkTargets] = useState<Record<string, string>>({});
+  const [deletingEventSlug, setDeletingEventSlug] = useState<string | null>(null);
 
   const handleTogglePublish = async (sheetId: string, currentStatus?: string | null) => {
     if (!isSuperadmin) {
@@ -271,11 +274,8 @@ export function AdminRegattasPanel({
     }
   };
 
-  const effectiveEventSlug =
-    selectedEventSlug ?? (grouped.events[0]?.slug || null);
-
   const selectedEvent: AdminEventGroup | null =
-    effectiveEventSlug === UNASSIGNED_EVENT_SLUG
+    selectedEventSlug === UNASSIGNED_EVENT_SLUG
       ? {
           slug: UNASSIGNED_EVENT_SLUG,
           name: "Unassigned sheets",
@@ -288,7 +288,7 @@ export function AdminRegattasPanel({
           shells: [],
           shell: null,
         }
-      : grouped.events.find((event) => event.slug === effectiveEventSlug) ?? null;
+      : grouped.events.find((event) => event.slug === selectedEventSlug) ?? null;
   const selectedEventView = selectedEvent
     ? withSavedEvent(selectedEvent, savedEvents[selectedEvent.slug])
     : null;
@@ -476,6 +476,83 @@ export function AdminRegattasPanel({
     setRegattaForm(next);
   };
 
+  const selectEvent = (slug: string | null) => {
+    if (!confirmLeave()) return;
+    setSelectedEventSlug(slug);
+    setEditingRegattaId(null);
+    onClearSheet?.();
+  };
+
+  const handleDeleteEvent = async (slug: string) => {
+    if (!isSuperadmin) {
+      toast.error("Only superadmins can delete a regatta event.");
+      return;
+    }
+    if (slug === UNASSIGNED_EVENT_SLUG) return;
+    if (!confirmLeave()) return;
+    const event =
+      slug === selectedEventView?.slug
+        ? selectedEventView
+        : withSavedEvent(
+            grouped.events.find((item) => item.slug === slug) ?? {
+              slug,
+              name: slug,
+              startDate: "",
+              countsForRanking: false,
+              isSelectionTrial: false,
+              expectedClasses: [],
+              missingClasses: [],
+              sheets: [],
+              shells: [],
+              shell: null,
+            },
+            savedEvents[slug]
+          );
+    const classes = [...event.sheets, ...event.shells];
+    const names = summarizeNames(classes.map((row) => row.name || sheetClassLabel(row)));
+    const extraLine = names.extra > 0 ? `\n• +${names.extra} more` : "";
+    const ok = await confirm({
+      title: `Delete ${event.name}?`,
+      message:
+        `This removes the weekend from the admin calendar and deletes every sailing class under it.\n\n` +
+        `${event.startDate || "No date"}${event.venue ? ` · ${event.venue}` : ""}\n\n` +
+        `Classes:\n${names.listed}${extraLine}\n\n` +
+        `Cascade:\n${cascadeLine("Class sheets", classes.length)}\n` +
+        `• Result rows: all scores for those classes (server cascade)\n\n` +
+        `This cannot be undone.`,
+      confirmLabel: "Delete event",
+      tone: "danger",
+    });
+    if (!ok) return;
+    setDeletingEventSlug(slug);
+    try {
+      const res = await fetch(
+        `/api/admin/regatta-events?slug=${encodeURIComponent(slug)}`,
+        { method: "DELETE", credentials: "include" }
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Could not delete the event");
+      setSavedEvents((prev) => {
+        const next = { ...prev };
+        delete next[slug];
+        return next;
+      });
+      if (selectedEventSlug === slug) setSelectedEventSlug(null);
+      setEditingRegattaId(null);
+      onClearSheet?.();
+      invalidateRegattas?.();
+      toast.success(
+        classes.length > 0
+          ? `Deleted ${event.name} and ${classes.length} sailing class${classes.length === 1 ? "" : "es"}.`
+          : `Deleted ${event.name}.`
+      );
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Could not delete the event");
+    } finally {
+      setDeletingEventSlug(null);
+    }
+  };
+
   const handleSeed2026 = async () => {
     if (!isSuperadmin) return;
     setIsSeeding(true);
@@ -519,95 +596,43 @@ export function AdminRegattasPanel({
                   onSeed2026={handleSeed2026}
                 />
 
-                {/* Top Event / Regatta Dropdown Selector Bar */}
-                <div className="glass-panel rounded-2xl border border-slate-200 p-3.5 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3 w-full">
-                  <div className="flex items-center gap-3 flex-1 min-w-0">
-                    <div className="h-10 w-10 rounded-xl bg-orange-100 border border-orange-200 flex items-center justify-center shrink-0">
-                      <Calendar className="h-5 w-5 text-orange-600" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <label
-                          htmlFor="admin-regatta-selector"
-                          className="text-[11px] font-black uppercase tracking-wider text-slate-700"
-                        >
-                          Selected Regatta Event ({grouped.events.length + (grouped.unassigned.length ? 1 : 0)})
-                        </label>
-                        {selectedEventView && (
-                          <span className="text-[11px] font-medium text-slate-600 hidden sm:inline">
-                            {selectedEventView.sheets.length} sailing class{selectedEventView.sheets.length === 1 ? "" : "es"}
-                          </span>
-                        )}
-                      </div>
-                      <select
-                        id="admin-regatta-selector"
-                        value={effectiveEventSlug || ""}
-                        onChange={(e) => {
-                          if (!confirmLeave()) {
-                            e.target.value = effectiveEventSlug || "";
-                            return;
-                          }
-                          setSelectedEventSlug(e.target.value);
-                          setEditingRegattaId(null);
-                          onClearSheet?.();
-                        }}
-                        className="w-full rounded-xl border border-slate-300 bg-white hover:border-orange-500 focus:border-orange-500 px-3.5 py-2.5 text-xs sm:text-sm font-bold text-slate-900 shadow-xs focus:outline-none transition-colors"
-                      >
-                        {grouped.events.length === 0 && grouped.unassigned.length === 0 ? (
-                          <option value="">No regattas match filters</option>
-                        ) : null}
-                        {grouped.events.map((event) => {
-                          const shown = withSavedEvent(event, savedEvents[event.slug]);
-                          const status = eventStatusLabel(event);
-                          return (
-                            <option key={event.slug} value={event.slug}>
-                              {shown.name} ({shown.startDate || "No date"}) — {status}
-                            </option>
-                          );
-                        })}
-                        {grouped.unassigned.length > 0 && (
-                          <option value={UNASSIGNED_EVENT_SLUG}>
-                            Unassigned sailing classes ({grouped.unassigned.length} class{grouped.unassigned.length === 1 ? "" : "es"} without weekend)
-                          </option>
-                        )}
-                      </select>
-                    </div>
-                  </div>
-
-                  {selectedEventView && selectedEventView.slug !== UNASSIGNED_EVENT_SLUG && (
-                    <div className="flex flex-wrap items-center gap-2 pt-2 md:pt-0 border-t md:border-t-0 border-slate-200 shrink-0">
-                      <span className="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-100 border border-slate-200 text-slate-800">
-                        {selectedEventView.startDate || "Date TBD"}
-                        {selectedEventView.endDate ? ` to ${selectedEventView.endDate}` : ""}
-                      </span>
-                      {selectedEventView.venue && (
-                        <span className="text-xs px-2.5 py-1 rounded-full font-semibold bg-slate-100 border border-slate-200 text-slate-700 truncate max-w-[180px]">
-                          {selectedEventView.venue}
-                        </span>
-                      )}
-                      <span
-                        className={`text-xs px-2.5 py-1 rounded-full font-bold border ${
-                          selectedEventView.countsForRanking
-                            ? "bg-emerald-100 text-emerald-800 border-emerald-300"
-                            : "bg-sky-100 text-sky-800 border-sky-300"
-                        }`}
-                      >
-                        {selectedEventView.countsForRanking ? "Series Ranking" : "Non-Ranking"}
-                      </span>
-                    </div>
-                  )}
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(17rem,22rem)_minmax(0,1fr)] lg:items-start">
+                <div
+                  className={
+                    selectedEventSlug || editingRegattaId
+                      ? "hidden lg:block"
+                      : "block"
+                  }
+                >
+                  <AdminRegattaEventList
+                    events={grouped.events.map((event) =>
+                      withSavedEvent(event, savedEvents[event.slug])
+                    )}
+                    unassignedCount={grouped.unassigned.length}
+                    selectedSlug={selectedEventSlug}
+                    isSuperadmin={isSuperadmin}
+                    deletingSlug={deletingEventSlug}
+                    onSelect={(slug) => selectEvent(slug)}
+                    onDelete={(slug) => void handleDeleteEvent(slug)}
+                  />
                 </div>
 
                 {/* Detail / edit pane */}
-                <div className="w-full glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 min-h-[320px] transition-all">
+                <div
+                  className={`w-full glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 min-h-[320px] transition-all ${
+                    !selectedEventSlug && !editingRegattaId
+                      ? "hidden lg:block"
+                      : "block"
+                  }`}
+                >
                   {!selectedEvent && !editingRegattaId ? (
                     <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
                       <Calendar className="h-10 w-10 text-slate-600 mb-3" />
                       <p className="text-sm font-bold text-slate-300">
-                        Select a regatta event
+                        Select a weekend
                       </p>
                       <p className="text-xs text-slate-500 mt-1 max-w-sm">
-                        Choose a regatta from the dropdown above to view its class sheets, edit details, or update race scores.
+                        Choose an event from the list to review sailing classes, edit the calendar card, or delete the whole weekend.
                       </p>
                     </div>
                   ) : editingRegattaId ? (
