@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { requireSuperadmin } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors, regattaResults, regattas } from "@/db/schema";
-import { eq, and, gte, lt, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
@@ -19,6 +19,7 @@ export async function POST() {
     const correctedSailors: string[] = [];
 
     for (const sailor of sailorsWithDrop) {
+      if (!sailor.dropDate) continue;
       const dropDate = new Date(sailor.dropDate);
       if (isNaN(dropDate.getTime())) continue;
 
@@ -30,9 +31,9 @@ export async function POST() {
         .where(eq(regattaResults.sailorId, sailor.id));
 
       const maxDateStr = latestRegatta[0]?.maxDate;
-      if (!maxDateStr) continue;
+      if (maxDateStr == null) continue;
 
-      const maxDate = new Date(maxDateStr);
+      const maxDate = new Date(String(maxDateStr));
       if (isNaN(maxDate.getTime())) continue;
 
       // 3. If dropDate < maxDate, the drop date is inconsistent
@@ -64,8 +65,9 @@ export async function POST() {
       correctedCount,
       details: correctedSailors,
     });
-  } catch (e: any) {
+  } catch (e: unknown) {
     console.error(e);
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

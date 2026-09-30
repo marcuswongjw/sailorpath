@@ -533,7 +533,8 @@ export function optimistHistoryByPeriodEnd(
  * Rule: miss every ranking start in half N → dropped from the board in half N+1.
  * Equivalently, to appear in period P a sailor needs ≥1 non-DNS Optimist ranking
  * start in P−1 or in P (so new sailors who start racing in P still appear).
- * DNS / overseas-commitment rows do not count as starts. Gold is not filtered.
+ * DNS / overseas-commitment rows do not count as starts. A sailor with an actual
+ * Gold-fleet start by period end is not eligible for the Silver board.
  */
 export function optimistSailorsEligibleForSilverPeriod(
   period: Period,
@@ -546,9 +547,26 @@ export function optimistSailorsEligibleForSilverPeriod(
   const end = periodBounds(period).end;
   const ids = new Set<string>();
   const regById = new Map(regattas.map((r) => [r.id, r]));
+
+  // Gold division starts indicate Gold-fleet participation even when a sailor's
+  // goldEntryDate is missing or stale. Do not let those results qualify them for
+  // the Silver board (DNS and overseas rows are not actual starts).
+  const goldFleetSailorIds = new Set<string>();
+  for (const res of results) {
+    if (Boolean(res.isDns) || Boolean(res.isOverseasCommitment)) continue;
+    const r = regById.get(res.regattaId);
+    if (!r || r.countsForRanking === false) continue;
+    if (!regattaMatchesSeriesClass(r, seriesBoatClass)) continue;
+    if (String(r.division || "Gold").trim().toLowerCase() !== "gold") continue;
+    const d = toYmd(r.date);
+    if (!d || d > end) continue;
+    goldFleetSailorIds.add(res.sailorId);
+  }
+
   for (const res of results) {
     if (Boolean(res.isDns)) continue;
     if (Boolean(res.isOverseasCommitment)) continue;
+    if (goldFleetSailorIds.has(res.sailorId)) continue;
     const r = regById.get(res.regattaId);
     if (!r) continue;
     if (!regattaCountsForRanking(r)) continue;

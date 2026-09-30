@@ -473,6 +473,30 @@ describe("calculateRankings Silver previous/current half activity", () => {
     );
   });
 
+  it("excludes Gold-fleet participants and Guests from Silver", () => {
+    const regattas = [
+      regatta("gold-current", "2026-08-01", "Gold"),
+      regatta("silver-current", "2026-08-15", "Silver"),
+    ];
+    const goldParticipant = sailor("gold-participant");
+    const silverSailor = sailor("silver-sailor");
+    const guest = sailor("guest", { currentFleet: "Guest" });
+    const results = [
+      { sailorId: "gold-participant", regattaId: "gold-current", rank: 8 },
+      { sailorId: "silver-sailor", regattaId: "silver-current", rank: 12 },
+      { sailorId: "guest", regattaId: "silver-current", rank: 3 },
+    ];
+
+    const ranked = calculateRankings(
+      period,
+      [goldParticipant, silverSailor, guest],
+      regattas,
+      results
+    );
+
+    expect(ranked.map((s) => s.id)).toEqual(["silver-sailor"]);
+  });
+
   it("keeps Gold sailors even with no starts in the window", () => {
     const regattas = [
       regatta("g1", "2026-07-04", "Gold"),
@@ -748,4 +772,3 @@ describe("regattaCountsForRanking", () => {
     expect(active.some((r) => r.slug === "shortened-regatta")).toBe(false);
   });
 });
-
