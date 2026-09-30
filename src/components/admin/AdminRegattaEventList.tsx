@@ -132,7 +132,7 @@ export function AdminRegattaEventList({
                       role="option"
                       aria-selected={selected}
                       onClick={() => onSelect(slug)}
-                      className="w-full px-3 py-2.5 text-left"
+                      className="w-full px-3 py-2.5 pr-10 text-left"
                     >
                       <span className="block text-sm font-bold leading-snug text-slate-900">
                         {event.name}
@@ -169,7 +169,7 @@ export function AdminRegattaEventList({
                           e.stopPropagation();
                           onDelete(slug);
                         }}
-                        className="absolute right-2 top-2 rounded-lg border border-transparent p-1.5 text-slate-400 opacity-0 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 focus-visible:opacity-100 group-hover:opacity-100 disabled:opacity-40"
+                        className="absolute right-2 top-2 rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 disabled:opacity-40"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>

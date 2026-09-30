@@ -8,7 +8,6 @@ import {
   Calendar,
   Trophy,
   ExternalLink,
-  Sparkles,
   Loader2,
   Wand2,
   Link2,
@@ -38,7 +37,6 @@ import { CalendarEventForm, calendarFormFrom, type CalendarFormState, type Saved
 import { cascadeLine, summarizeNames } from "@/lib/confirmCopy";
 import type { PublicationReadiness } from "@/lib/admin/publicationReadiness";
 import {
-  eventStatusLabel,
   groupRegattaEvents,
   missingClassesFor,
   sheetClassLabel,
@@ -274,6 +272,9 @@ export function AdminRegattasPanel({
     }
   };
 
+  const effectiveEventSlug =
+    selectedEventSlug ?? grouped.events[0]?.slug ?? null;
+
   const selectedEvent: AdminEventGroup | null =
     selectedEventSlug === UNASSIGNED_EVENT_SLUG
       ? {
@@ -288,7 +289,7 @@ export function AdminRegattasPanel({
           shells: [],
           shell: null,
         }
-      : grouped.events.find((event) => event.slug === selectedEventSlug) ?? null;
+      : grouped.events.find((event) => event.slug === effectiveEventSlug) ?? null;
   const selectedEventView = selectedEvent
     ? withSavedEvent(selectedEvent, savedEvents[selectedEvent.slug])
     : null;
@@ -597,19 +598,13 @@ export function AdminRegattasPanel({
                 />
 
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(17rem,22rem)_minmax(0,1fr)] lg:items-start">
-                <div
-                  className={
-                    selectedEventSlug || editingRegattaId
-                      ? "hidden lg:block"
-                      : "block"
-                  }
-                >
+                <div className="block">
                   <AdminRegattaEventList
                     events={grouped.events.map((event) =>
                       withSavedEvent(event, savedEvents[event.slug])
                     )}
                     unassignedCount={grouped.unassigned.length}
-                    selectedSlug={selectedEventSlug}
+                    selectedSlug={effectiveEventSlug}
                     isSuperadmin={isSuperadmin}
                     deletingSlug={deletingEventSlug}
                     onSelect={(slug) => selectEvent(slug)}
@@ -618,13 +613,7 @@ export function AdminRegattasPanel({
                 </div>
 
                 {/* Detail / edit pane */}
-                <div
-                  className={`w-full glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 min-h-[320px] transition-all ${
-                    !selectedEventSlug && !editingRegattaId
-                      ? "hidden lg:block"
-                      : "block"
-                  }`}
-                >
+                <div className="w-full glass-panel rounded-2xl border border-white/5 p-5 sm:p-6 min-h-[320px] transition-all">
                   {!selectedEvent && !editingRegattaId ? (
                     <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
                       <Calendar className="h-10 w-10 text-slate-600 mb-3" />
@@ -642,7 +631,7 @@ export function AdminRegattasPanel({
                           <div className="flex items-center gap-2 flex-wrap min-w-0">
                             <button
                               type="button"
-                              aria-label="Back to regatta events"
+                              aria-label="Back to weekends"
                               onClick={() => {
                                 setEditingRegattaId(null);
                                 onClearSheet?.();
@@ -1264,7 +1253,17 @@ export function AdminRegattasPanel({
                       <div className="space-y-5">
                         {/* Weekend header */}
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200">
-                          <div>
+                          <div className="min-w-0">
+                            {selectedEventSlug ? (
+                              <button
+                                type="button"
+                                onClick={() => selectEvent(null)}
+                                className="mb-2 inline-flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-slate-900"
+                              >
+                                <ArrowLeft className="h-3.5 w-3.5" />
+                                All weekends
+                              </button>
+                            ) : null}
                             <h3 className="text-base font-black text-slate-900 mt-0.5">
                               {selectedEventView.name}
                             </h3>
@@ -1285,6 +1284,22 @@ export function AdminRegattasPanel({
                                 <span>{showCalendarForm ? "Hide Event Editor" : "Edit Event"}</span>
                               </button>
                             )}
+                            {isSuperadmin &&
+                              selectedEventView.slug !== UNASSIGNED_EVENT_SLUG && (
+                                <button
+                                  type="button"
+                                  disabled={deletingEventSlug === selectedEventView.slug}
+                                  onClick={() => void handleDeleteEvent(selectedEventView.slug)}
+                                  className="rounded-full border border-rose-200 bg-rose-50 hover:bg-rose-100 px-3.5 py-1.5 text-xs font-bold text-rose-800 shadow-xs transition-colors inline-flex items-center gap-1.5 disabled:opacity-50"
+                                >
+                                  {deletingEventSlug === selectedEventView.slug ? (
+                                    <Loader2 className="h-3 w-3 animate-spin" />
+                                  ) : (
+                                    <Trash2 className="h-3 w-3" />
+                                  )}
+                                  Delete event
+                                </button>
+                              )}
                           </div>
                         </div>
 
@@ -1547,6 +1562,7 @@ export function AdminRegattasPanel({
                       </div>
                     ) : null}
                   </div>
+                </div>
                 </div>
   );
 }

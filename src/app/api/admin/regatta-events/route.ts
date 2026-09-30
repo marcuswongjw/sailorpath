@@ -171,13 +171,17 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ error: planned.error }, { status: planned.status });
     }
 
-    if (planned.sheetIds.length > 0) {
-      await db.delete(regattas).where(inArray(regattas.id, planned.sheetIds));
-    }
-    if (planned.eventId) {
-      await db
-        .delete(regattaEvents)
-        .where(eq(regattaEvents.id, planned.eventId));
+    if (planned.sheetIds.length > 0 || planned.eventId) {
+      await db.transaction(async (tx) => {
+        if (planned.sheetIds.length > 0) {
+          await tx.delete(regattas).where(inArray(regattas.id, planned.sheetIds));
+        }
+        if (planned.eventId) {
+          await tx
+            .delete(regattaEvents)
+            .where(eq(regattaEvents.id, planned.eventId));
+        }
+      });
     }
 
     revalidatePath("/calendar");
