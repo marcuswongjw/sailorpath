@@ -130,6 +130,19 @@ function isOptimistGoldRegatta(r: RegattaRecord): boolean {
   return !String(r.division || "").toLowerCase().includes("silver");
 }
 
+/** True when the stored sheet span meets the selection weekend. */
+function sheetOverlapsWindow(
+  regatta: RegattaRecord,
+  dateFrom: string,
+  dateTo: string
+): boolean {
+  const start = ymd(regatta.date);
+  if (!start) return false;
+  const end = ymd(regatta.endDate);
+  const sheetEnd = end && end >= start ? end : start;
+  return start <= dateTo && sheetEnd >= dateFrom;
+}
+
 export function matchSelectionEvents(
   regattas: RegattaRecord[],
   defs: SelectionEventDef[]
@@ -137,12 +150,15 @@ export function matchSelectionEvents(
   const optimist = regattas.filter(isOptimistGoldRegatta);
   return defs.map((def) => {
     const candidates = optimist.filter((r) => {
-      const d = ymd(r.date);
-      if (d < def.dateFrom || d > def.dateTo) return false;
+      if (!sheetOverlapsWindow(r, def.dateFrom, def.dateTo)) return false;
       const name = String(r.name || "").toLowerCase();
       return def.nameIncludes.some((fragment) => name.includes(fragment.toLowerCase()));
     });
     candidates.sort((a, b) => {
+      const goldOrder =
+        Number(!/gold/i.test(String(a.division || ""))) -
+        Number(!/gold/i.test(String(b.division || "")));
+      if (goldOrder) return goldOrder;
       const rankingOrder = Number(a.countsForRanking === false) - Number(b.countsForRanking === false);
       if (rankingOrder) return rankingOrder;
       return (b.totalFleetSize || 0) - (a.totalFleetSize || 0);

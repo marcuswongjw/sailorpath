@@ -90,6 +90,43 @@ describe("matchSelectionEvents", () => {
     expect(m[0]?.regatta?.id).toBe("r1");
     expect(m[1]?.regatta?.id).toBe("r2");
   });
+
+  it("matches SNSC Optimist Gold when the sheet starts on the championship weekend", () => {
+    const gold: RegattaRecord = {
+      id: "snsc-gold",
+      name: "Singapore National Sailing Championships 2026 (Gold)",
+      slug: "singapore-national-sailing-championships-2026-gold",
+      date: "2026-09-05",
+      endDate: "2026-09-13",
+      totalFleetSize: 83,
+      division: "Gold",
+      boatClass: "Optimist",
+      countsForRanking: true,
+    };
+    const silver: RegattaRecord = {
+      ...gold,
+      id: "snsc-silver",
+      name: "Singapore National Sailing Championships 2026 (Silver)",
+      slug: "singapore-national-sailing-championships-2026-silver",
+      division: "Silver",
+      totalFleetSize: 50,
+    };
+    const previousGold: RegattaRecord = {
+      ...gold,
+      id: "snsc-gold-2025",
+      name: "Singapore National Sailing Championships 2025 (Optimist Gold)",
+      slug: "snsc-gold-sep-25-2025-09-06",
+      date: "2025-09-06",
+      endDate: "2025-09-09",
+    };
+    const matched = matchSelectionEvents(
+      [silver, previousGold, gold],
+      OPTIMIST_2026_SELECTION_EVENTS
+    );
+    expect(matched.find((event) => event.def.id === "snsc-2026")?.regatta?.id).toBe(
+      "snsc-gold"
+    );
+  });
 });
 
 describe("combined race-score policy", () => {
