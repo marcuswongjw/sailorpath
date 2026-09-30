@@ -337,6 +337,14 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     data.selectedRegattaIdForResultEdit,
   ]);
 
+  // If the selected regatta ID doesn't match any known sheet, clear it
+  // so downstream consumers don't receive a stale/invalid ID.
+  useEffect(() => {
+    if (unknownSheet && data.selectedRegattaIdForResultEdit) {
+      setSelectedRegattaIdForResultEdit("");
+    }
+  }, [unknownSheet, data.selectedRegattaIdForResultEdit, setSelectedRegattaIdForResultEdit]);
+
   // URL changes from Back, Forward, bookmarks, and sidebar links drive the
   // dashboard. A rejected history move is restored to the last accepted URL.
   useEffect(() => {

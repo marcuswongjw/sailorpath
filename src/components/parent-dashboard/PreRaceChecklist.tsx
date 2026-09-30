@@ -1,29 +1,19 @@
 "use client";
 
+import { useMemo } from "react";
 import Link from "next/link";
+import { Calendar, RotateCcw, CheckSquare, Square, Trash2, Plus } from "lucide-react";
 import {
-  Calendar,
-  RotateCcw,
-  CheckSquare,
-  Square,
-  Trash2,
-  Plus,
-} from "lucide-react";
-
-const NESTED =
-  "rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]";
-const CARD =
-  "rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
-const SECTION_KICKER =
-  "text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]";
-const SECTION_TITLE =
-  "mt-1 text-base font-black text-[var(--sp-harbour-shadow)]";
-const MUTED = "text-[var(--sp-slate-soft)]";
-const BODY = "text-[var(--sp-charcoal-slate)]";
-const INK = "text-[var(--sp-harbour-shadow)]";
-const LINK_TEAL =
-  "text-[11px] font-bold text-[var(--sp-harbour-teal)] hover:underline";
-const PRIMARY_BTN = "sp-btn-primary";
+  CARD,
+  NESTED,
+  SECTION_KICKER,
+  SECTION_TITLE,
+  MUTED,
+  BODY,
+  INK,
+  LINK_TEAL,
+  PRIMARY_BTN,
+} from "./styles";
 
 const DEFAULT_RACE_CHECKLIST_ITEMS = [
   {

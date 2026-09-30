@@ -35,6 +35,18 @@ import {
   type EquipmentCategory,
   type SimplifiedCondition,
 } from "@/lib/equipment";
+import {
+  CARD,
+  NESTED,
+  SECONDARY_BTN,
+  PRIMARY_BTN,
+  SECTION_KICKER,
+  SECTION_TITLE,
+  MUTED,
+  INK,
+  BODY,
+  LINK_TEAL,
+} from "@/components/parent-dashboard/styles";
 
 type Standing = {
   periodLabel: string;
@@ -134,22 +146,7 @@ type PendingClaim = {
 
 type NoteCategory = "General" | "Training" | "Regatta Debrief" | "Logistics" | "Gear";
 
-const CARD =
-  "rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
-const NESTED =
-  "rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]";
-const SECONDARY_BTN =
-  "inline-flex items-center justify-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors";
-const PRIMARY_BTN = "sp-btn-primary";
-const SECTION_KICKER =
-  "text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--sp-racing-orange)]";
-const SECTION_TITLE =
-  "mt-1 text-base font-black text-[var(--sp-harbour-shadow)]";
-const MUTED = "text-[var(--sp-slate-soft)]";
-const INK = "text-[var(--sp-harbour-shadow)]";
-const BODY = "text-[var(--sp-charcoal-slate)]";
-const LINK_TEAL =
-  "text-[11px] font-bold text-[var(--sp-harbour-teal)] hover:underline";
+
 
 function formatAgeCategory(dob?: string | null) {
   const by = birthYear(dob);

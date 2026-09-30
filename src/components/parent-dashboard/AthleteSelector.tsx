@@ -5,17 +5,15 @@ import { Users, User, ChevronRight, Award, CheckCircle2 } from "lucide-react";
 import { relationLabel, type ClaimRelation } from "@/lib/claimRelation";
 import { fleetPillClass } from "@/components/sailor-profile/helpers";
 import { birthYear } from "@/lib/age";
-
-const CARD =
-  "rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
-const NESTED =
-  "rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]";
-const SECONDARY_BTN =
-  "inline-flex items-center justify-center gap-1.5 rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-2 text-xs font-bold text-[var(--sp-harbour-shadow)] hover:border-[var(--sp-harbour-teal)] transition-colors";
-const PRIMARY_BTN = "sp-btn-primary";
-const MUTED = "text-[var(--sp-slate-soft)]";
-const INK = "text-[var(--sp-harbour-shadow)]";
-const BODY = "text-[var(--sp-charcoal-slate)]";
+import {
+  CARD,
+  NESTED,
+  SECONDARY_BTN,
+  PRIMARY_BTN,
+  MUTED,
+  INK,
+  BODY,
+} from "./styles";
 
 type Athlete = {
   id: string;

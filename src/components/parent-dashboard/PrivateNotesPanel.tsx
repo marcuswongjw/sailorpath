@@ -1,16 +1,14 @@
 "use client";
 
 import { Trash2, StickyNote, Lock, Plus } from "lucide-react";
-
-const CARD =
-  "rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs";
-const NESTED =
-  "rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]";
-const SECTION_TITLE =
-  "mt-1 text-base font-black text-[var(--sp-harbour-shadow)]";
-const MUTED = "text-[var(--sp-slate-soft)]";
-const BODY = "text-[var(--sp-charcoal-slate)]";
-const PRIMARY_BTN = "sp-btn-primary";
+import {
+  CARD,
+  NESTED,
+  SECTION_TITLE,
+  MUTED,
+  BODY,
+  PRIMARY_BTN,
+} from "./styles";
 
 const NOTE_CATEGORIES = [
   "General",
