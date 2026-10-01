@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseRegattaTitle } from "./parseRegattaTitle";
+import { parseRegattaTitle, resolvedImportDate } from "./parseRegattaTitle";
 
 describe("parseRegattaTitle", () => {
   it("parses YYYYMMDD + name + Gold", () => {
@@ -48,5 +48,13 @@ describe("parseRegattaTitle", () => {
     expect(p.boatClass).toBe("ILCA 4");
     expect(p.division).toBe("Open");
     expect(p.name).toBe("Laser 4.7 Open Championship (Jun 24)");
+  });
+
+  it("uses the selected class date when the filename has none", () => {
+    const title = parseRegattaTitle("1st SAFYC Optimist Silver.xlsx");
+    expect(title.date).toBeNull();
+    expect(title.division).toBe("Silver");
+    expect(resolvedImportDate(title.date, null, "2025-07-12")).toBe("2025-07-12");
+    expect(resolvedImportDate("2025-07-13", null, "2025-07-12")).toBe("2025-07-13");
   });
 });

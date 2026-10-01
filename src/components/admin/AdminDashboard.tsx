@@ -1003,6 +1003,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                   label: `${sheet.boatClass || "Class"}${
                     sheet.division ? ` · ${sheet.division}` : ""
                   }`,
+                  date: String(sheet.date || "").slice(0, 10),
                 })),
               })
             )}

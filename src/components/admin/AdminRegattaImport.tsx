@@ -12,7 +12,7 @@ import {
 import {
   type RegattaImportRow,
 } from "@/lib/excel/parseRegattaResultsSheet";
-import { parseRegattaTitle } from "@/lib/excel/parseRegattaTitle";
+import { parseRegattaTitle, resolvedImportDate } from "@/lib/excel/parseRegattaTitle";
 import { parseApi, apiErr, apiStr, type AdminApiJson } from "@/components/admin/parseApi";
 import type {
   ImportPossibleDuplicate,
@@ -52,7 +52,7 @@ type Props = {
   targetEvents?: Array<{
     slug: string;
     name: string;
-    sheets: Array<{ id: string; label: string }>;
+    sheets: Array<{ id: string; label: string; date?: string }>;
   }>;
 };
 
@@ -166,18 +166,23 @@ export function AdminRegattaImport({
   const selectedTargetEvent = targetEvents.find(
     (event) => event.slug === selectedEventSlug
   );
+  const selectedClassDate =
+    targetEvents
+      .flatMap((event) => event.sheets)
+      .find((sheet) => sheet.id === selectedTarget)?.date || "";
 
   const selectResultsSheet = (candidate: ReturnType<typeof readResultsWorkbook>[number], filename: string) => {
     const fromFile = parseRegattaTitle(filename);
     const fromSheet = parseRegattaTitle(candidate.sheetName);
     const boatClass = fromSheet.boatClass || fromFile.boatClass || DEFAULT_BOAT_CLASS;
+    const date = resolvedImportDate(fromFile.date, fromSheet.date, selectedClassDate);
     setSelectedSheet(candidate.sheetName);
     setFullImportRows(candidate.rows);
     setPendingReview(null);
     setPendingTargetSelection(null);
     setImportMeta({
       name: fromFile.name || fromSheet.name || candidate.sheetName,
-      date: fromFile.date || fromSheet.date || "",
+      date,
       boatClass,
       division: isSingleFleetClass(boatClass) ? "Open" : fromSheet.division || fromFile.division || "Gold",
       fleetSize: candidate.rows.length,
@@ -229,6 +234,10 @@ export function AdminRegattaImport({
       }
       setImportProgress(85);
       const title = parseRegattaTitle(file.name);
+      const datedTitle = {
+        ...title,
+        date: resolvedImportDate(title.date, null, selectedClassDate) || null,
+      };
       const unnamedNote = parsed.unnamedEntries
         ? ` ${parsed.unnamedEntries} published entr${parsed.unnamedEntries === 1 ? "y has" : "ies have"} no sailor name and will count toward fleet size but will not create a profile.`
         : "";
@@ -236,7 +245,7 @@ export function AdminRegattaImport({
       const nextMeta = {
         ...emptyImportMeta(),
         name: title.name || title.stem,
-        date: title.date || "",
+        date: datedTitle.date || "",
         division: isSingleFleetClass(boatClass)
           ? "Open"
           : title.division || "Gold",
@@ -247,7 +256,7 @@ export function AdminRegattaImport({
       setFullImportRows(parsed.rows);
       setPdfScreenshots(parsed.screenshots);
       setImportMeta(nextMeta);
-      if (!title.date) {
+      if (!datedTitle.date) {
         setImportProgress(100);
         setImportStatus(
           `${parsed.usedOcr ? "OCR extracted" : "Extracted"} ${parsed.rows.length} named competitors and ${parsed.raceCount} races.${unnamedNote} Add the event date below, then select Import.`
