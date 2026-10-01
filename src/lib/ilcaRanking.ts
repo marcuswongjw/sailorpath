@@ -55,6 +55,8 @@ export type IlcaSailor = {
   sailNumberIlca4?: string | null;
   /** Admin-managed national ranking membership */
   ilca4NationalList?: boolean | null;
+  /** null falls back to the ILCA 6 name seed */
+  ilca6NationalList?: boolean | null;
   club?: string | null;
   handle?: string | null;
 };

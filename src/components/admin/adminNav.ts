@@ -64,7 +64,7 @@ export type AdminInsightsView =
   | "wingfoil"
   | "techno293"
   | "metrics";
-export type AdminSettingsView = "audit" | "changelog";
+export type AdminSettingsView = "audit";
 
 export type AdminAreaState = {
   area: AdminArea;
@@ -107,7 +107,7 @@ const INSIGHTS_VIEWS: readonly AdminInsightsView[] = [
   "techno293",
   "metrics",
 ];
-const SETTINGS_VIEWS: readonly AdminSettingsView[] = ["audit", "changelog"];
+const SETTINGS_VIEWS: readonly AdminSettingsView[] = ["audit"];
 
 function isArea(v: string | null | undefined): v is AdminArea {
   return Boolean(v && (AREAS as readonly string[]).includes(v));
@@ -220,7 +220,7 @@ export function legacyToArea(state: AdminNavState): AdminAreaState {
     case "stats":
       return blankArea("insights", "metrics");
     case "changelog":
-      return blankArea("settings", "changelog");
+      return blankArea("settings", "audit");
     default:
       return blankArea("sailors", "directory");
   }
@@ -267,9 +267,6 @@ export function areaToLegacy(state: AdminAreaState): AdminNavState {
       }
       return { tab: "analysis", sub: "sailors", regattaId: null };
     case "settings":
-      if (state.view === "changelog") {
-        return { tab: "changelog", sub: "sailors", regattaId: null };
-      }
       return { tab: "ops", sub: "audit", regattaId: null };
     case "overview":
       return { tab: "overview", sub: "sailors", regattaId: null };
@@ -525,12 +522,6 @@ export const ADMIN_TAB_GROUPS: AdminTabGroup[] = [
         shortLabel: "Stats",
         label: "Platform Stats",
         sublabel: "Usage & health",
-      },
-      {
-        key: "changelog",
-        shortLabel: "Log",
-        label: "Change Log",
-        sublabel: "Updates & releases",
       },
     ],
   },

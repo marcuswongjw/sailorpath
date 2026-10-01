@@ -26,6 +26,7 @@ const RANKING_SAILOR_FIELDS = new Set([
   "dropDate",
   "currentFleet",
   "ilca4NationalList",
+  "ilca6NationalList",
   "sailNumberIlca4",
 ]);
 
@@ -215,6 +216,14 @@ export async function POST(req: Request) {
       seaGames: normalizeYearsList(body.seaGames),
     };
 
+    if (body.ilca4NationalList != null) {
+      values.ilca4NationalList = Boolean(body.ilca4NationalList);
+    }
+    if (body.ilca6NationalList !== undefined) {
+      values.ilca6NationalList =
+        body.ilca6NationalList == null ? null : Boolean(body.ilca6NationalList);
+    }
+
     if (body.sailingJourney) {
       const { parseSailingJourney, serializeSailingJourney } = await import(
         "@/lib/sailingJourney"
@@ -381,6 +390,10 @@ export async function PATCH(req: Request) {
     }
     if (body.ilca4NationalList !== undefined) {
       patch.ilca4NationalList = Boolean(body.ilca4NationalList);
+    }
+    if (body.ilca6NationalList !== undefined) {
+      patch.ilca6NationalList =
+        body.ilca6NationalList == null ? null : Boolean(body.ilca6NationalList);
     }
     if (body.currentFleet !== undefined) {
       patch.currentFleet =

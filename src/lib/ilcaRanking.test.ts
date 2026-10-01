@@ -416,6 +416,19 @@ describe("computeIlcaRankings + squad", () => {
     // Non-list sailor is excluded by default on national ranking board
     expect(ranked.some((r) => r.sailorId === "s1")).toBe(true);
     expect(ranked.some((r) => r.sailorId === "s2")).toBe(false);
+
+    const overridden = computeIlcaRankings(
+      "ILCA 6",
+      "2026-06-30",
+      [
+        { ...ilca6Sailors[0], ilca6NationalList: false },
+        { ...ilca6Sailors[1], ilca6NationalList: true },
+      ],
+      ilca6Regattas,
+      ilca6Results
+    );
+    expect(overridden.some((r) => r.sailorId === "s1")).toBe(false);
+    expect(overridden.some((r) => r.sailorId === "s2")).toBe(true);
   });
 
   it("computes ILCA 7 ranking directly from regatta performance without national list", () => {

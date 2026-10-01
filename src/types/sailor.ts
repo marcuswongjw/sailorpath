@@ -11,6 +11,11 @@ export type SailorAdmin = {
   sailNumberIlca4?: string | null;
   /** On ILCA 4 national ranking list (admin-managed) */
   ilca4NationalList?: boolean | null;
+  /**
+   * ILCA 6 national ranking membership.
+   * null/undefined = name seed; true/false is an admin override.
+   */
+  ilca6NationalList?: boolean | null;
   club: string;
   school?: string | null;
   nationality?: string | null;
