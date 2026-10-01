@@ -167,3 +167,12 @@ export function parseRegattaTitle(filenameOrTitle: string): ParsedRegattaTitle {
     stem,
   };
 }
+
+/** Filename dates win. A selected class sheet supplies the date when the file has none. */
+export function resolvedImportDate(
+  fileDate: string | null | undefined,
+  sheetTitleDate: string | null | undefined,
+  classSheetDate: string | null | undefined
+): string {
+  return fileDate || sheetTitleDate || classSheetDate || "";
+}
