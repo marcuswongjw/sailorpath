@@ -31,6 +31,8 @@ type MedalTally = {
 
 type Props = {
   showSummary: boolean;
+  /** Key-stat grid. Overview leaves this off so rank stays in the hero. */
+  showStats?: boolean;
   keyStatsTitle: string;
   statCells: StatCell[];
   showMedals: boolean;
@@ -45,6 +47,7 @@ type Props = {
 /** Read-only performance cards kept separate from profile editing state. */
 export function ProfilePerformanceSummary({
   showSummary,
+  showStats = true,
   keyStatsTitle,
   statCells,
   showMedals,
@@ -57,7 +60,7 @@ export function ProfilePerformanceSummary({
 }: Props) {
   return (
     <>
-      {showSummary && (
+      {showSummary && showStats && (
         <section className={`${cardClass} overflow-hidden`}>
           <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-1">
             <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">

@@ -39,26 +39,22 @@ describe("HeroAthleteCard", () => {
   it("renders athlete passport identity and hero metric modules", () => {
     render(<HeroAthleteCard {...defaultProps} />);
 
-    // Name and fleet badge
     expect(screen.getByRole("heading", { name: "Ethan Wong" })).toBeInTheDocument();
-    expect(screen.getAllByText("Gold fleet").length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText("Claimed")).toBeInTheDocument();
+    expect(screen.queryByText("Dual-class athlete")).toBeNull();
 
-    // Passport meta
     expect(screen.getByText("SGP 123", { exact: false })).toBeInTheDocument();
     expect(screen.getByText("SAFYC")).toBeInTheDocument();
     expect(screen.getByText("Singapore")).toBeInTheDocument();
 
-    // Metrics strip
-    expect(screen.getByText("#4")).toBeInTheDocument();
-    expect(screen.getByText("of 68")).toBeInTheDocument();
-    expect(screen.getByText("Best 3 of 5: 12 pts")).toBeInTheDocument();
-    expect(screen.getByText("Ranked #4 · Top 6%")).toBeInTheDocument();
-    expect(screen.getByText("🥇 2")).toBeInTheDocument();
-    expect(screen.getByText("🥈 1")).toBeInTheDocument();
-    expect(screen.getByText("🥉 3")).toBeInTheDocument();
+    expect(screen.getByLabelText("4 of 68")).toBeInTheDocument();
+    expect(screen.getByText("Gold fleet series")).toBeInTheDocument();
+    expect(screen.getByText("Active competitor")).toBeInTheDocument();
+    expect(screen.getByText("Gold fleet")).toBeInTheDocument();
+    expect(screen.getByText("6 awards")).toBeInTheDocument();
+    expect(screen.getByText("View awards")).toBeInTheDocument();
+    expect(screen.getByLabelText("Optimist, 15 regattas")).toBeInTheDocument();
 
-    // Bio
     expect(screen.getByText(/Dedicated youth Optimist sailor/)).toBeInTheDocument();
   });
 
@@ -102,7 +98,7 @@ describe("HeroAthleteCard", () => {
     expect(onTogglePreviewPublic).toHaveBeenCalledTimes(1);
   });
 
-  it("supports dual-class boat switcher", async () => {
+  it("supports one count-aware class selector", async () => {
     const onSelectBoatClass = vi.fn();
 
     render(
@@ -110,13 +106,60 @@ describe("HeroAthleteCard", () => {
         {...defaultProps}
         dualClass={true}
         selectedBoatClass="optimist"
+        optimistCount={14}
+        ilcaCount={2}
         onSelectBoatClass={onSelectBoatClass}
       />
     );
 
     expect(screen.queryByText("Dual-class athlete")).not.toBeInTheDocument();
-    const ilcaBtn = screen.getByRole("button", { name: /ILCA 4/i });
+    expect(screen.getByRole("tab", { name: "Optimist, 14 regattas" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    const ilcaBtn = screen.getByRole("tab", { name: "ILCA 4, 2 regattas" });
     await userEvent.click(ilcaBtn);
     expect(onSelectBoatClass).toHaveBeenCalledWith("ilca4");
+  });
+
+  it("shows a single class as a label, not an empty second option", () => {
+    render(
+      <HeroAthleteCard
+        {...defaultProps}
+        dualClass={false}
+        standingIsIlca
+        selectedBoatClass="ilca4"
+        ilcaCount={9}
+        activeStanding={{
+          ...defaultProps.activeStanding,
+          overallRank: 12,
+          fleetSize: 36,
+          fleet: "Open",
+          periodLabel: "ILCA 4 · ranking as of 2026-09-30",
+          rankBasis: "recorded-results",
+          unrestricted: true,
+        }}
+      />
+    );
+
+    expect(screen.getByLabelText("ILCA 4, 9 regattas")).toBeInTheDocument();
+    expect(screen.queryByRole("tab", { name: /Optimist/ })).toBeNull();
+    expect(screen.getByLabelText("12 of 36")).toBeInTheDocument();
+    expect(screen.getByText("Recorded results")).toBeInTheDocument();
+  });
+
+  it("explains a missing rank instead of showing a dash", () => {
+    render(
+      <HeroAthleteCard
+        {...defaultProps}
+        standingIsIlca
+        selectedBoatClass="ilca4"
+        activeStanding={null}
+      />
+    );
+
+    expect(
+      screen.getByText("No ranked ILCA 4 results for this series yet.")
+    ).toBeInTheDocument();
   });
 });

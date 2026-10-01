@@ -173,6 +173,8 @@ export function useSailorProfileState({
         setSectionTab("journey");
       } else if (hash === "#profile-equipment" || hash === "#equipment") {
         setSectionTab("equipment");
+      } else if (hash === "#profile-awards" || hash === "#awards") {
+        setSectionTab("awards");
       } else if (
         hash === "#profile-standing" ||
         hash === "#profile-hero" ||
@@ -1008,15 +1010,11 @@ export function useSailorProfileState({
     analytics.medals.show;
 
   /**
-   * Ranking strip: on ILCA context prefer ILCA national standing;
-   * fall back to Optimist series if ILCA standing is missing (live safety net).
+   * The selected class owns the rank. An ILCA view with no ILCA standing
+   * stays empty instead of borrowing the Optimist series place.
    */
-  const activeStanding = useIlcaStats
-    ? initialIlcaStanding ?? initialSeriesStanding ?? null
-    : initialSeriesStanding ?? null;
-  const standingIsIlca = Boolean(
-    useIlcaStats &&
-      initialIlcaStanding &&
+  const standingLooksIlca = Boolean(
+    initialIlcaStanding &&
       (String(initialIlcaStanding.boatClass || "")
         .toLowerCase()
         .includes("ilca") ||
@@ -1024,6 +1022,15 @@ export function useSailorProfileState({
           .toLowerCase()
           .includes("open"))
   );
+  const standingIsIlca = Boolean(useIlcaStats && standingLooksIlca);
+  const activeStanding = useIlcaStats
+    ? standingIsIlca
+      ? initialIlcaStanding ?? null
+      : null
+    : initialSeriesStanding ?? null;
+  const activeBoatClass: "optimist" | "ilca4" = useIlcaStats
+    ? "ilca4"
+    : "optimist";
 
   /** Equipment stays family/owner-private (never on public / preview-public). */
   const showEquipmentSection = ownerView || hasPrivateAccess;
@@ -1217,6 +1224,7 @@ export function useSailorProfileState({
     showMedals,
     activeStanding,
     standingIsIlca,
+    activeBoatClass,
     showEquipmentSection,
     ilcaTrendPoints,
     showIlcaTrend,

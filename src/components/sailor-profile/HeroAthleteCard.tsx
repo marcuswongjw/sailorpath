@@ -15,7 +15,7 @@ import {
   BadgeCheck,
   ShieldAlert,
   Medal,
-  Sailboat,
+  Info,
 } from "lucide-react";
 import {
   PROFILE_CARD_CLASS as cardClass,
@@ -23,6 +23,7 @@ import {
   nationalityLabel,
   initials,
 } from "./helpers";
+import { describeProfileRank } from "./rankBasis";
 import type { SailorRecordProps, SeriesStandingProps } from "./types";
 
 export interface HeroAthleteCardProps {
@@ -33,6 +34,11 @@ export interface HeroAthleteCardProps {
   dualClass?: boolean;
   selectedBoatClass?: "optimist" | "ilca4";
   onSelectBoatClass?: (cls: "optimist" | "ilca4") => void;
+  optimistCount?: number;
+  ilcaCount?: number;
+  /** Put ILCA 4 first when that is the sailor’s primary class. */
+  preferIlcaFirst?: boolean;
+  onViewAwards?: () => void;
   medals?: { gold: number; silver: number; bronze: number; show: boolean };
   profileClaimed?: boolean;
   profileVerified?: boolean;
@@ -88,6 +94,10 @@ export function HeroAthleteCard({
   dualClass = false,
   selectedBoatClass = "optimist",
   onSelectBoatClass,
+  optimistCount,
+  ilcaCount,
+  preferIlcaFirst = false,
+  onViewAwards,
   medals,
   profileClaimed = false,
   profileVerified = false,
@@ -122,6 +132,48 @@ export function HeroAthleteCard({
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState(false);
+  const [basisOpen, setBasisOpen] = useState(false);
+
+  const activeBoatClass: "optimist" | "ilca4" =
+    selectedBoatClass === "ilca4" || standingIsIlca ? "ilca4" : "optimist";
+  const resolvedOptimistCount =
+    optimistCount ??
+    (activeBoatClass === "optimist" ? totalRegattasCount : 0);
+  const resolvedIlcaCount =
+    ilcaCount ?? (activeBoatClass === "ilca4" ? totalRegattasCount : 0);
+  const rank = describeProfileRank({
+    standing: activeStanding,
+    boatClass: activeBoatClass,
+  });
+  const classOptions = (
+    preferIlcaFirst
+      ? [
+          ["ilca4", "ILCA 4", resolvedIlcaCount],
+          ["optimist", "Optimist", resolvedOptimistCount],
+        ]
+      : [
+          ["optimist", "Optimist", resolvedOptimistCount],
+          ["ilca4", "ILCA 4", resolvedIlcaCount],
+        ]
+  ) as Array<["optimist" | "ilca4", string, number]>;
+  const singleClass =
+    classOptions.find((option) => option[0] === activeBoatClass) ??
+    classOptions[0];
+
+  const awardTotal = medals
+    ? medals.gold + medals.silver + medals.bronze
+    : 0;
+  const awardParts = [
+    medals && medals.gold > 0 ? `${medals.gold} gold` : null,
+    medals && medals.silver > 0 ? `${medals.silver} silver` : null,
+    medals && medals.bronze > 0 ? `${medals.bronze} bronze` : null,
+  ].filter(Boolean);
+  const classRegattaCount =
+    activeBoatClass === "ilca4" ? resolvedIlcaCount : resolvedOptimistCount;
+  const dropped = fleetBadge.label === "Dropped";
+  const statusTitle = dropped ? "Dropped" : "Active competitor";
+  const statusDetail =
+    activeBoatClass === "ilca4" ? "ILCA 4" : fleetBadge.label;
 
   const resolvedNatSquad =
     currentNatSquad ||
@@ -225,12 +277,6 @@ export function HeroAthleteCard({
                 <h1 className="text-xl sm:text-2xl font-black text-harbour-shadow tracking-tight">
                   {displaySailor.name}
                 </h1>
-
-                <span
-                  className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[13px] font-bold ${fleetBadge.className}`}
-                >
-                  {fleetBadge.label}
-                </span>
 
                 {resolvedNatSquad && (
                   <span
@@ -402,41 +448,48 @@ export function HeroAthleteCard({
             </div>
           </div>
 
-          {/* Dual-Class Boat Selector (if dualClass) */}
-          {dualClass && onSelectBoatClass && (
-            <div className="w-full sm:w-auto shrink-0 flex sm:flex-col items-end gap-1.5 pt-1 sm:pt-0">
+          <div className="w-full sm:w-auto shrink-0 sm:pt-1">
+            {dualClass && onSelectBoatClass ? (
               <div
-                className="inline-flex rounded-xl bg-sailcloth border border-cool-veil p-1 w-full sm:w-auto"
+                className="flex rounded-xl bg-sailcloth border border-cool-veil p-1 w-full sm:w-auto"
                 role="tablist"
-                aria-label="Boat Class Switcher"
+                aria-label="Sailing class"
               >
-                <button
-                  type="button"
-                  onClick={() => onSelectBoatClass("optimist")}
-                  className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-bold transition ${
-                    selectedBoatClass === "optimist"
-                      ? "bg-harbour text-sailcloth shadow-xs"
-                      : "text-slate-soft hover:text-charcoal"
-                  }`}
-                >
-                  <Sailboat className="h-3 w-3" />
-                  Optimist
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onSelectBoatClass("ilca4")}
-                  className={`flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-1.5 text-[13px] font-bold transition ${
-                    selectedBoatClass === "ilca4"
-                      ? "bg-harbour text-sailcloth shadow-xs"
-                      : "text-slate-soft hover:text-charcoal"
-                  }`}
-                >
-                  <Sailboat className="h-3 w-3" />
-                  ILCA 4
-                </button>
+                {classOptions.map(([id, label, count]) => {
+                  const selected = activeBoatClass === id;
+                  return (
+                    <button
+                      key={id}
+                      type="button"
+                      role="tab"
+                      aria-selected={selected}
+                      onClick={() => onSelectBoatClass(id)}
+                      aria-label={`${label}, ${count} regattas`}
+                      className={`flex-1 sm:flex-none rounded-lg px-3 py-2 text-[13px] font-bold transition min-h-[40px] ${
+                        selected
+                          ? "bg-harbour text-sailcloth shadow-xs"
+                          : "text-slate-soft hover:text-charcoal"
+                      }`}
+                    >
+                      {label}
+                      <span className="mx-1.5">·</span>
+                      <span className="tabular-nums">{count}</span>
+                    </button>
+                  );
+                })}
               </div>
-            </div>
-          )}
+            ) : (
+              <p
+                aria-label={`${singleClass[1]}, ${singleClass[2]} regattas`}
+                className="inline-flex items-center rounded-xl bg-harbour px-3 py-2 text-[13px] font-bold text-sailcloth min-h-[40px]"
+              >
+                {singleClass[1]}
+                <span className="mx-1.5 text-sailcloth/80">·</span>
+                <span className="tabular-nums">{singleClass[2]}</span>
+                <span className="sr-only"> regattas</span>
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Bio */}
@@ -446,112 +499,122 @@ export function HeroAthleteCard({
           </p>
         )}
 
-        {/* Hero Athlete Metrics Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1">
-          {/* Metric 1: National Ranking */}
-          <div className="rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-slate-soft text-[12px] font-bold uppercase tracking-wider">
-              <span>{standingIsIlca ? "ILCA 4 Rank" : "National Rank"}</span>
+        <div className="space-y-2.5 pt-1">
+          <div className="rounded-2xl border border-cool-veil bg-sailcloth/70 p-4 sm:p-5">
+            <div className="flex items-center justify-between gap-3 text-slate-soft text-[12px] font-bold uppercase tracking-wider">
+              <span>
+                {activeBoatClass === "ilca4" ? "ILCA 4 rank" : "Optimist rank"}
+              </span>
               <Trophy
-                className={`h-3.5 w-3.5 ${
-                  standingIsIlca ? "text-harbour" : "text-racing-orange"
+                className={`h-4 w-4 ${
+                  activeBoatClass === "ilca4"
+                    ? "text-harbour"
+                    : "text-racing-orange"
                 }`}
               />
             </div>
-            <div className="mt-1.5 flex items-baseline gap-2">
-              <span
-                className={`text-2xl sm:text-3xl font-black tabular-nums tracking-tight ${
-                  activeStanding?.overallRank != null
-                    ? standingIsIlca
-                      ? "text-harbour"
-                      : "text-racing-orange"
-                    : "text-slate-soft"
-                }`}
+            {rank.hasRank ? (
+              <p
+                className="mt-2 text-harbour-shadow"
+                aria-label={rank.rankLabel}
               >
-                {activeStanding?.overallRank != null
-                  ? `#${activeStanding.overallRank}`
-                  : "—"}
-              </span>
-              {activeStanding?.fleetSize ? (
-                <span className="text-[13px] text-slate-soft tabular-nums font-medium">
-                  of {activeStanding.fleetSize}
+                <span className="text-4xl sm:text-5xl font-black tabular-nums tracking-tight">
+                  {rank.rank}
                 </span>
-              ) : null}
+                <span className="mx-1.5 text-2xl font-bold text-slate-soft">
+                  of
+                </span>
+                <span className="text-4xl sm:text-5xl font-black tabular-nums tracking-tight">
+                  {rank.fleetSize}
+                </span>
+              </p>
+            ) : (
+              <p className="mt-3 text-[15px] font-semibold text-charcoal leading-snug">
+                {rank.emptyMessage}
+              </p>
+            )}
+            <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1">
+              {rank.hasRank && (
+              <p className="text-[13px] text-slate-soft font-medium">
+                <span className="font-bold text-charcoal">
+                  {rank.basisLabel}
+                </span>
+                <span aria-hidden> · </span>
+                <span>{rank.cycleLabel}</span>
+              </p>
+              )}
+              {rank.hasRank && (
+                <button
+                  type="button"
+                  aria-expanded={basisOpen}
+                  aria-controls="profile-rank-basis"
+                  onClick={() => setBasisOpen((open) => !open)}
+                  className="inline-flex items-center gap-1 rounded-full border border-cool-veil bg-warm-white px-2 py-0.5 text-[12px] font-bold text-harbour hover:bg-aqua-mist"
+                >
+                  <Info className="h-3 w-3" aria-hidden />
+                  What this rank means
+                </button>
+              )}
             </div>
-            <p className="text-[13px] text-slate-soft mt-1 truncate">
-              {activeStanding?.best3of5 != null
-                ? `Best 3 of 5: ${activeStanding.best3of5} pts`
-                : activeStanding?.periodLabel || "2026 Series"}
-            </p>
+            {basisOpen && rank.hasRank && (
+              <p
+                id="profile-rank-basis"
+                className="mt-2 text-[13px] leading-relaxed text-charcoal"
+              >
+                {rank.basisDetail}
+              </p>
+            )}
           </div>
 
-          {/* Metric 2: Fleet Qualification / Standing */}
-          <div className="rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
-            <div className="flex items-center justify-between text-slate-soft text-[12px] font-bold uppercase tracking-wider">
-              <span>Status</span>
-              <BadgeCheck className="h-3.5 w-3.5 text-harbour" />
-            </div>
-            <div className="mt-1.5 flex items-baseline gap-1.5">
-              <span className="text-base sm:text-lg font-black text-harbour-shadow truncate">
-                {standingIsIlca
-                  ? activeStanding?.fleet || "Open Fleet"
-                  : fleetBadge.label}
-              </span>
-            </div>
-            <p className="text-[13px] text-harbour mt-1 truncate font-medium">
-              {activeStanding?.trendNote && !activeStanding.trendNote.toLowerCase().includes("carry-forward")
-                ? activeStanding.trendNote
-                : fleetBadge.label === "Gold fleet"
-                  ? "Selection Trial Eligible"
-                  : "Active National Competitor"}
-            </p>
-          </div>
-
-          {/* Metric 3: Medals or Regatta Experience */}
-          {hasMedals && medals ? (
-            <a
-              href="#profile-awards"
-              onClick={(e) => {
-                const el = document.getElementById("profile-awards");
-                if (el) {
-                  e.preventDefault();
-                  el.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
-              className="col-span-2 sm:col-span-1 rounded-xl border border-amber-300/80 bg-amber-50/40 p-3.5 flex flex-col justify-between hover:border-amber-400 hover:bg-amber-50/70 transition-colors cursor-pointer group"
-              title="Click to view awards and prizes"
-            >
-              <div className="flex items-center justify-between text-amber-900 text-[12px] font-bold uppercase tracking-wider">
-                <span className="group-hover:underline">Career Medals</span>
-                <Medal className="h-3.5 w-3.5 text-amber-600" />
+          <div className="grid grid-cols-2 gap-2.5">
+            <div className="rounded-xl border border-cool-veil bg-warm-white p-3.5">
+              <div className="flex items-center justify-between text-slate-soft text-[11px] font-bold uppercase tracking-wider">
+                <span>Status</span>
+                <BadgeCheck className="h-3.5 w-3.5 text-harbour" />
               </div>
-              <div className="mt-1.5 flex items-baseline gap-2">
-                <div className="flex items-center gap-2 text-base sm:text-lg font-black tabular-nums text-harbour-shadow">
-                  {medals.gold > 0 && <span>🥇 {medals.gold}</span>}
-                  {medals.silver > 0 && <span>🥈 {medals.silver}</span>}
-                  {medals.bronze > 0 && <span>🥉 {medals.bronze}</span>}
+              <p className="mt-1.5 text-base font-black text-harbour-shadow leading-tight">
+                {statusTitle}
+              </p>
+              <p className="mt-1 text-[13px] font-medium text-slate-soft truncate">
+                {statusDetail}
+              </p>
+            </div>
+
+            {hasMedals && medals && awardTotal > 0 ? (
+              <button
+                type="button"
+                onClick={() => onViewAwards?.()}
+                className="rounded-xl border border-cool-veil bg-warm-white p-3.5 text-left hover:border-harbour/30 hover:bg-aqua-mist/40 transition-colors"
+              >
+                <div className="flex items-center justify-between text-slate-soft text-[11px] font-bold uppercase tracking-wider">
+                  <span>Career</span>
+                  <Medal className="h-3.5 w-3.5 text-racing-orange" />
                 </div>
+                <p className="mt-1.5 text-base font-black text-harbour-shadow tabular-nums leading-tight">
+                  {awardTotal} {awardTotal === 1 ? "award" : "awards"}
+                </p>
+                <p className="mt-1 text-[13px] font-medium text-slate-soft truncate">
+                  {awardParts.join(" · ")}
+                </p>
+                <p className="mt-1 text-[12px] font-bold text-racing-orange">
+                  View awards
+                </p>
+              </button>
+            ) : (
+              <div className="rounded-xl border border-cool-veil bg-warm-white p-3.5">
+                <div className="flex items-center justify-between text-slate-soft text-[11px] font-bold uppercase tracking-wider">
+                  <span>Regattas</span>
+                  <Trophy className="h-3.5 w-3.5 text-slate-soft" />
+                </div>
+                <p className="mt-1.5 text-base font-black text-harbour-shadow tabular-nums leading-tight">
+                  {classRegattaCount || totalRegattasCount}
+                </p>
+                <p className="mt-1 text-[13px] font-medium text-slate-soft truncate">
+                  {activeBoatClass === "ilca4" ? "ILCA 4" : "Optimist"} logged
+                </p>
               </div>
-              <p className="text-[12px] text-amber-800 font-semibold mt-1 truncate">
-                View {medals.gold + medals.silver + medals.bronze} awards &amp; prizes →
-              </p>
-            </a>
-          ) : (
-            <div className="col-span-2 sm:col-span-1 rounded-xl border border-cool-veil bg-sailcloth/50 p-3.5 flex flex-col justify-between">
-              <div className="flex items-center justify-between text-slate-soft text-[12px] font-bold uppercase tracking-wider">
-                <span>Regatta Record</span>
-                <Sailboat className="h-3.5 w-3.5 text-slate-soft" />
-              </div>
-              <div className="mt-1.5 flex items-baseline gap-2">
-                <span className="text-2xl sm:text-3xl font-black tabular-nums text-harbour-shadow">
-                  {totalRegattasCount}
-                </span>
-              </div>
-              <p className="text-[13px] text-slate-soft mt-1 truncate">
-                {totalRegattasCount} logged regattas
-              </p>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Action Toolbar */}
