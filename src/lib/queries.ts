@@ -97,6 +97,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     sailNumber: row.sailNumber,
     sailNumberIlca4: row.sailNumberIlca4,
     ilca4NationalList: row.ilca4NationalList,
+    ilca6NationalList: row.ilca6NationalList,
     club: row.club,
     school: row.school,
     nationality: row.nationality,
@@ -703,6 +704,7 @@ async function computeIlcaRankingsBoard(
             sailNumber: sailors.sailNumber,
             sailNumberIlca4: sailors.sailNumberIlca4,
             ilca4NationalList: sailors.ilca4NationalList,
+            ilca6NationalList: sailors.ilca6NationalList,
             club: sailors.club,
             handle: sailors.handle,
           })
@@ -710,6 +712,7 @@ async function computeIlcaRankingsBoard(
           .where(
             or(
               eq(sailors.ilca4NationalList, true),
+              eq(sailors.ilca6NationalList, true),
               sql`${sailors.sailNumberIlca4} is not null and ${sailors.sailNumberIlca4} <> ''`,
               sql`exists (
                 select 1 from ${regattaResults} rr
@@ -763,6 +766,7 @@ async function computeIlcaRankingsBoard(
         sailNumber: s.sailNumber,
         sailNumberIlca4: s.sailNumberIlca4,
         ilca4NationalList: s.ilca4NationalList,
+        ilca6NationalList: s.ilca6NationalList,
         club: s.club,
         handle: s.handle,
       }));
@@ -807,6 +811,7 @@ async function computeIlcaRankingsBoard(
               sailNumber: s.sailNumber || "",
               sailNumberIlca4: null,
               ilca4NationalList: false,
+              ilca6NationalList: s.ilca6NationalList ?? null,
               club: s.club || "",
               handle: s.handle || "",
             });
@@ -839,6 +844,7 @@ async function computeIlcaRankingsBoard(
               sailNumber: s.sailNumber || "",
               sailNumberIlca4: null,
               ilca4NationalList: false,
+              ilca6NationalList: null,
               club: s.club || "",
               handle: s.handle || "",
             });

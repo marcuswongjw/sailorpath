@@ -48,11 +48,13 @@ export function SailorFilterBar({
           className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-xs text-[var(--sp-charcoal)] focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
         >
           <option value="all">All sailors</option>
-          <option value="series">Optimist · In SG Fleet</option>
+          <option value="series">SG Optimist</option>
           <option value="guest">Optimist · Guest</option>
-          <option value="gold">Optimist · Has Gold entry</option>
-          <option value="silver">Optimist · Series · no Gold</option>
+          <option value="gold">SG Optimist · Gold</option>
+          <option value="silver">SG Optimist · Silver</option>
           <option value="ilca4">ILCA 4 (sail # or national list)</option>
+          <option value="ilca4list">SG ILCA 4</option>
+          <option value="ilca6">SG ILCA 6</option>
           <option value="dual">Dual-class (Opti + ILCA 4)</option>
         </select>
       </div>

@@ -67,7 +67,7 @@ export function SailorBulkEditToolbar({
           >
             <option value="">-- Select property --</option>
             <optgroup label="SG Series & Dates">
-              <option value="currentFleet">SG Series (Guest / In SG Fleet)</option>
+              <option value="currentFleet">SG Optimist (Guest / tagged)</option>
               <option value="goldEntryDate">Gold Fleet Entry Date</option>
               <option value="silverEntryDate">Silver Fleet Entry Date</option>
               <option value="dropDate">Optimist Drop Date</option>
@@ -84,7 +84,10 @@ export function SailorBulkEditToolbar({
             <optgroup label="ILCA 4">
               <option value="sailNumberIlca4">ILCA 4 sail #</option>
               <option value="ilca4NationalList">
-                ILCA 4 national list (true/false)
+                SG ILCA 4 (true/false)
+              </option>
+              <option value="ilca6NationalList">
+                SG ILCA 6 (true/false)
               </option>
             </optgroup>
             <optgroup label="Squad history">
@@ -149,9 +152,10 @@ export function SailorBulkEditToolbar({
               className="rounded-lg bg-white border border-[var(--sp-cool-veil)] text-[var(--sp-charcoal)] px-3 py-2 text-xs"
             >
               <option value="Guest">Guest</option>
-              <option value="Series">In SG Fleet</option>
+              <option value="Series">SG Optimist</option>
             </select>
-          ) : bulkField === "ilca4NationalList" ? (
+          ) : bulkField === "ilca4NationalList" ||
+            bulkField === "ilca6NationalList" ? (
             <select
               value={bulkValue}
               onChange={(e) => onBulkValueChange(e.target.value)}

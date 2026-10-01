@@ -172,12 +172,12 @@ export function seriesMembershipLabel(s: {
     case "guest":
       return "Guest";
     case "gold":
-      return "Series · Gold entry";
+      return "SG Optimist · Gold";
     case "silver":
-      return "Series · Silver";
+      return "SG Optimist · Silver";
     case "series":
     default:
-      return s.goldEntryDate ? "Series · Gold entry" : "Series · Silver";
+      return s.goldEntryDate ? "SG Optimist · Gold" : "SG Optimist · Silver";
   }
 }
 

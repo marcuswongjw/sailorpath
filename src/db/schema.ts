@@ -83,6 +83,12 @@ export const sailors = pgTable("sailors", {
    * Public standings only include sailors with this flag.
    */
   ilca4NationalList: boolean("ilca4_national_list").default(false).notNull(),
+  /**
+   * ILCA 6 national ranking membership.
+   * null = unset (ranking falls back to the SSF name seed).
+   * true/false is an admin override. Do not default to false.
+   */
+  ilca6NationalList: boolean("ilca6_national_list"),
   club: text("club").notNull(),
   school: text("school"),
   /** Country / nationality (e.g. Singapore, SGP) — optional */

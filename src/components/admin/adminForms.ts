@@ -17,6 +17,13 @@ export type SailorFormState = {
   nationalSquadStatus: string;
   /** Guest | Series (form control; legacy Gold/Silver treated as Series) */
   currentFleet: string;
+  /** SG ILCA 4 national ranking list */
+  ilca4NationalList: boolean;
+  /**
+   * SG ILCA 6 national ranking list.
+   * null = not saved; the checkbox follows the official name seed.
+   */
+  ilca6NationalList: boolean | null;
   instagram: string;
   avatarUrl: string;
   dob: string;
@@ -55,6 +62,8 @@ export function emptySailorForm(): SailorFormState {
     gender: "",
     nationalSquadStatus: "",
     currentFleet: "",
+    ilca4NationalList: false,
+    ilca6NationalList: null,
     instagram: "",
     avatarUrl: "",
     dob: "",
@@ -96,6 +105,13 @@ export function sailorFormFromAdmin(sailor: SailorAdmin): SailorFormState {
     nationality: sailor.nationality || "",
     gender: sailor.gender || "",
     currentFleet: sailor.currentFleet || "",
+    ilca4NationalList: sailor.ilca4NationalList === true,
+    ilca6NationalList:
+      sailor.ilca6NationalList === true
+        ? true
+        : sailor.ilca6NationalList === false
+          ? false
+          : null,
     nationalSquadStatus:
       sailor.natSquadStatusJan27 ||
       sailor.natSquadStatusJul26 ||

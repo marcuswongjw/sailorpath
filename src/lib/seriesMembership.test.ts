@@ -60,9 +60,9 @@ describe("hasSilverHistory / isSeriesMember / seriesFleetStatus", () => {
         currentFleet: "Series",
         goldEntryDate: "2024-01-01",
       })
-    ).toBe("Series · Gold entry");
+    ).toBe("SG Optimist · Gold");
     expect(seriesMembershipLabel({ currentFleet: "Series" })).toBe(
-      "Series · Silver"
+      "SG Optimist · Silver"
     );
   });
 });

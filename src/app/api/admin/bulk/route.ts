@@ -18,6 +18,7 @@ const RANKING_BULK_FIELDS = new Set([
   "dropDate",
   "currentFleet",
   "ilca4NationalList",
+  "ilca6NationalList",
   "sailNumberIlca4",
 ]);
 
@@ -52,6 +53,7 @@ const ALLOWED = new Set([
   "sailNumberIlca4",
   "name",
   "ilca4NationalList",
+  "ilca6NationalList",
 ]);
 
 const NUMERIC = new Set([
@@ -65,7 +67,7 @@ const NUMERIC = new Set([
 
 const YEARS_LIST = new Set(["worlds", "european", "asian", "seaGames"]);
 
-const BOOLEAN = new Set<string>(["ilca4NationalList"]);
+const BOOLEAN = new Set<string>(["ilca4NationalList", "ilca6NationalList"]);
 
 export async function POST(req: Request) {
   const requestId = createAdminRequestId();

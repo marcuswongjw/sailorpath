@@ -27,7 +27,6 @@ import {
 import { birthYear } from "@/lib/age";
 import {
   halfBoundaryOptions,
-  todayYmdSg,
 } from "@/lib/datesSg";
 import {
   DB_SAILOR_COLUMNS,
@@ -38,6 +37,8 @@ import {
   emptySailorForm,
   type SailorFormState,
 } from "@/components/admin/adminForms";
+import { FleetMembershipFields } from "@/components/admin/FleetMembershipFields";
+import { isSailorOnIlca6NationalList } from "@/lib/ilca6NationalList";
 import type { SailorAdmin } from "@/types/sailor";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { SailorFilterBar } from "@/components/admin/SailorFilterBar";
@@ -372,7 +373,7 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                     <div className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-[var(--sp-racing-deep)] shrink-0 mt-0.5" />
                       <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
-                        <strong className="text-[var(--sp-racing-deep)]">{emptySeriesCount}</strong> In SG Fleet
+                        <strong className="text-[var(--sp-racing-deep)]">{emptySeriesCount}</strong> SG Optimist
                         sailor(s) have no silver/gold entry date — they are not ranked.
                         Stamp today&apos;s date as Silver entry (SG) to include them.
                       </p>
@@ -814,46 +815,10 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                           className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs h-10 focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
                         />
                       </div>
-                      <div>
-                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-                          SG Series Fleet
-                        </label>
-                        <select
-                          value={
-                            ["series", "gold", "silver"].includes(
-                              String(sailorForm.currentFleet || "").toLowerCase()
-                            )
-                              ? "Series"
-                              : "Guest"
-                          }
-                          onChange={(e) => {
-                            const v = e.target.value;
-                            const next: SailorFormState = {
-                              ...sailorForm,
-                              currentFleet: v === "Series" ? "Series" : "Guest",
-                            };
-                            // Admit to series: stamp silver entry if empty (SG calendar)
-                            if (
-                              v === "Series" &&
-                              !next.silverEntryDate &&
-                              !next.goldEntryDate
-                            ) {
-                              next.silverEntryDate = todayYmdSg();
-                            }
-                            setSailorForm(next);
-                          }}
-                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
-                        >
-                          <option value="Guest">Guest (not ranked)</option>
-                          <option value="Series">In SG Fleet</option>
-                        </select>
-                        <p className="mt-1 text-[10px] text-[var(--sp-slate-soft)] leading-snug">
-                          Guest = never ranked. In SG Fleet needs a Silver or
-                          Gold entry date to appear on boards (empty Series is
-                          not ranked). Silver until Gold entry, then Gold until
-                          Drop. Gold entry & drop: 1 Jan / 1 Jul from 2022 only.
-                        </p>
-                      </div>
+                      <FleetMembershipFields
+                        form={sailorForm}
+                        onChange={setSailorForm}
+                      />
                       <div>
                         <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Gold Fleet Entry Date</label>
                         <select
@@ -1208,20 +1173,27 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                               <span className="text-slate-600">—</span>
                             ),
                             ilca4List: (
-                              <span
-                                className={`text-[10px] font-bold ${
-                                  s.ilca4NationalList
-                                    ? "text-sky-300"
-                                    : "text-slate-600"
-                                }`}
-                              >
-                                {s.ilca4NationalList ? "On list" : "—"}
+                              <span className="flex flex-wrap gap-1">
+                                {s.ilca4NationalList ? (
+                                  <span className="text-[10px] font-bold text-sky-300">
+                                    ILCA 4
+                                  </span>
+                                ) : null}
+                                {isSailorOnIlca6NationalList(s) ? (
+                                  <span className="text-[10px] font-bold text-sky-300">
+                                    ILCA 6
+                                  </span>
+                                ) : null}
+                                {!s.ilca4NationalList &&
+                                !isSailorOnIlca6NationalList(s) ? (
+                                  <span className="text-slate-600">—</span>
+                                ) : null}
                               </span>
                             ),
                             series: (
                               <span
                                 className={`text-[10px] font-bold px-2 py-0.5 rounded border ${
-                                  seriesLabel.startsWith("Series")
+                                  seriesLabel.startsWith("SG Optimist")
                                     ? "bg-sky-500/10 text-sky-300 border-sky-500/25"
                                     : seriesLabel === "Dropped"
                                       ? "bg-amber-500/10 text-amber-300 border-amber-500/20"

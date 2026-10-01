@@ -22,6 +22,8 @@ import {
   isInSgSeries,
   seriesMembershipLabel,
 } from "@/lib/seriesMembership";
+import { fleetTagSaveValues } from "@/lib/fleetTags";
+import { isSailorOnIlca6NationalList } from "@/lib/ilca6NationalList";
 import type { SailorAdmin } from "@/types/sailor";
 import type { ResultAdmin } from "@/types/result";
 
@@ -191,6 +193,12 @@ export function useAdminSailors({
         if (!inSeries || s.goldEntryDate) return false;
       }
       if (dbFleetFilter === "ilca4" && !hasIlca) return false;
+      if (dbFleetFilter === "ilca4list" && s.ilca4NationalList !== true) {
+        return false;
+      }
+      if (dbFleetFilter === "ilca6" && !isSailorOnIlca6NationalList(s)) {
+        return false;
+      }
       if (dbFleetFilter === "dual") {
         const hasOpti =
           inSeries ||
@@ -700,6 +708,7 @@ export function useAdminSailors({
       const s = String(v);
       return /^\d{4}-\d{2}-\d{2}/.test(s) ? s.slice(0, 10) : s;
     };
+    const fleetTags = fleetTagSaveValues(sailorForm);
     const payload = {
       name: sailorForm.name,
       handle: sailorForm.handle,
@@ -718,11 +727,9 @@ export function useAdminSailors({
         sailorForm.natSquadStatusJul26 ||
         sailorForm.nationalSquadStatus ||
         null,
-      currentFleet: ["series", "gold", "silver"].includes(
-        String(sailorForm.currentFleet || "").toLowerCase()
-      )
-        ? "Series"
-        : "Guest",
+      currentFleet: fleetTags.currentFleet,
+      ilca4NationalList: fleetTags.ilca4NationalList,
+      ilca6NationalList: fleetTags.ilca6NationalList,
       goldEntryDate: dateOnly(sailorForm.goldEntryDate),
       silverEntryDate: dateOnly(sailorForm.silverEntryDate),
       dropDate: dateOnly(sailorForm.dropDate),
