@@ -287,3 +287,71 @@ export function groupRegattaEvents(
   unassigned.sort((a, b) => ymd(b.date).localeCompare(ymd(a.date)));
   return { events, unassigned };
 }
+
+export type ImportCalendarEvent = {
+  id: string;
+  slug: string;
+  name: string;
+  startDate: string | Date;
+};
+
+export type ImportTargetEvent = {
+  slug: string;
+  name: string;
+  sheets: Array<{ id: string; label: string; date: string }>;
+};
+
+/**
+ * Every saved main regatta, including ones that do not yet have a class sheet.
+ * Class sheets are attached by their stored event id, then by slug.
+ */
+export function importTargetEvents(
+  rows: GroupableRegatta[],
+  saved: ImportCalendarEvent[]
+): ImportTargetEvent[] {
+  const slugsById = new Map(
+    saved.map((event) => [event.id, String(event.slug || "").trim()])
+  );
+  const grouped = groupRegattaEvents(rows, slugsById);
+  const savedBySlug = new Map(
+    saved.map((event) => [String(event.slug || "").trim().toLowerCase(), event])
+  );
+  const options = new Map<
+    string,
+    ImportTargetEvent & { startDate: string }
+  >();
+
+  for (const event of grouped.events) {
+    if (event.slug === UNASSIGNED_EVENT_SLUG) continue;
+    const savedEvent = savedBySlug.get(event.slug);
+    options.set(event.slug, {
+      slug: event.slug,
+      name: savedEvent?.name || event.name,
+      startDate: ymd(savedEvent?.startDate) || event.startDate,
+      sheets: event.sheets.map((sheet) => ({
+        id: sheet.id,
+        label: `${sheet.boatClass || "Class"}${
+          sheet.division ? ` · ${sheet.division}` : ""
+        }`,
+        date: ymd(sheet.date),
+      })),
+    });
+  }
+
+  for (const event of saved) {
+    const slug = String(event.slug || "").trim().toLowerCase();
+    if (!slug || options.has(slug)) continue;
+    options.set(slug, {
+      slug,
+      name: event.name,
+      startDate: ymd(event.startDate),
+      sheets: [],
+    });
+  }
+
+  return [...options.values()]
+    .sort(
+      (a, b) => b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name)
+    )
+    .map(({ slug, name, sheets }) => ({ slug, name, sheets }));
+}

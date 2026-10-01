@@ -7,6 +7,7 @@ import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
 import {
+  fetchAdminRegattaEvents,
   fetchAdminRegattas,
   fetchAdminResultsAll,
   fetchAdminResultsForRegatta,
@@ -78,9 +79,12 @@ export function useAdminData({
     isSuperadmin &&
     (needsFullResults ||
       activeTab === "regattas" ||
+      activeTab === "import" ||
       (activeTab === "edit" &&
         (editSubTab === "regattas" || editSubTab === "selection")) ||
       (activeTab === "ops" && editSubTab === "suggestions"));
+
+  const needCalendarEvents = isSuperadmin && activeTab === "import";
 
   const needResultsEditor = sheetOpen;
 
@@ -94,6 +98,12 @@ export function useAdminData({
     queryKey: adminQueryKeys.regattas(),
     queryFn: fetchAdminRegattas,
     enabled: needRegattas,
+  });
+
+  const calendarEventsQuery = useQuery({
+    queryKey: adminQueryKeys.regattaEvents(),
+    queryFn: fetchAdminRegattaEvents,
+    enabled: needCalendarEvents,
   });
 
   // Do not fall back to the first regatta. An empty selection means the
@@ -122,6 +132,7 @@ export function useAdminData({
 
   const sailorList = sailorsQuery.data ?? [];
   const regattaList = regattasQuery.data ?? [];
+  const calendarEvents = calendarEventsQuery.data ?? [];
 
   const resultsList = useMemo(() => {
     // When a specific class sheet is open in the results editor, prioritize
@@ -145,6 +156,7 @@ export function useAdminData({
   const dataLoading =
     (needSailors && sailorsQuery.isFetching) ||
     (needRegattas && regattasQuery.isFetching) ||
+    (needCalendarEvents && calendarEventsQuery.isFetching) ||
     (needsFullResults && resultsAllQuery.isFetching) ||
     (needResultsEditor &&
       Boolean(selectedRegattaId) &&
@@ -153,6 +165,8 @@ export function useAdminData({
   const dataLoadError =
     (sailorsQuery.error instanceof Error && sailorsQuery.error.message) ||
     (regattasQuery.error instanceof Error && regattasQuery.error.message) ||
+    (calendarEventsQuery.error instanceof Error &&
+      calendarEventsQuery.error.message) ||
     (resultsAllQuery.error instanceof Error && resultsAllQuery.error.message) ||
     (resultsRegattaQuery.error instanceof Error &&
       resultsRegattaQuery.error.message) ||
@@ -321,6 +335,11 @@ export function useAdminData({
     sailorList,
     setSailorList,
     regattaList,
+    calendarEvents,
+    calendarEventsReady:
+      !needCalendarEvents ||
+      calendarEventsQuery.isSuccess ||
+      calendarEventsQuery.isError,
     setRegattaList,
     resultsList,
     setResultsList,

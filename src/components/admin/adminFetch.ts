@@ -23,6 +23,15 @@ export async function fetchAdminSailors(): Promise<SailorAdmin[]> {
   return Array.isArray(body.sailors) ? body.sailors : [];
 }
 
+export async function fetchAdminRegattaEvents(): Promise<
+  Array<{ id: string; slug: string; name: string; startDate: string }>
+> {
+  const body = await adminJson<{
+    events?: Array<{ id: string; slug: string; name: string; startDate: string }>;
+  }>("/api/admin/regatta-events");
+  return Array.isArray(body.events) ? body.events : [];
+}
+
 export async function fetchAdminRegattas(): Promise<RegattaAdmin[]> {
   const body = await adminJson<{ regattas?: RegattaAdmin[] }>(
     "/api/admin/regattas?all=1"
