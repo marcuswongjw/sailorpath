@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Globe, Link2, Loader2, Trophy } from "lucide-react";
+import { FileText, Globe, Link2, Loader2, Trash2, Trophy } from "lucide-react";
 import { sheetClassLabel, type GroupableRegatta } from "@/lib/admin/groupRegattaEvents";
 
 export type LinkableWeekend = {
@@ -51,6 +51,7 @@ export function AdminClassSheetCard({
   onLinkTargetChange,
   onLink,
   onTogglePublish,
+  onDelete,
   onEditDetails,
   onOpenResults,
 }: {
@@ -66,6 +67,7 @@ export function AdminClassSheetCard({
   onLinkTargetChange?: (eventId: string) => void;
   onLink?: () => void;
   onTogglePublish?: () => void;
+  onDelete?: () => void;
   onEditDetails: () => void;
   onOpenResults: () => void;
 }) {
@@ -149,6 +151,17 @@ export function AdminClassSheetCard({
       ) : null}
 
       <div className="mt-3 flex flex-wrap items-center justify-end gap-2 border-t border-slate-100 pt-3">
+        {isSuperadmin && onDelete ? (
+          <button
+            type="button"
+            aria-label={`Delete ${title}`}
+            onClick={onDelete}
+            className="inline-flex items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs font-bold text-rose-800 shadow-xs transition-colors hover:bg-rose-100"
+          >
+            <Trash2 className="h-3 w-3" />
+            <span>Delete</span>
+          </button>
+        ) : null}
         {isSuperadmin && onTogglePublish ? (
           status === "draft" ? (
             <button
