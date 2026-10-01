@@ -591,11 +591,11 @@ export async function POST(req: Request) {
     const slug = `${slugify(regattaName)}-${eventDate}`;
     const geo =
       normalizeGeography(geography) ||
-      String(geography || "SG")
+      String(geography || "SGP")
         .trim()
         .toUpperCase()
         .slice(0, 8) ||
-      "SG";
+      "SGP";
     const boat = String(boatClass || "Optimist").trim() || "Optimist";
     const raceCount =
       raceCountRaw == null ||

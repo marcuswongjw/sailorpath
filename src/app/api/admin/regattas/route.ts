@@ -143,7 +143,7 @@ export async function POST(req: Request) {
     const geography =
       body.geography != null && String(body.geography).trim()
         ? String(body.geography).trim().toUpperCase().slice(0, 12)
-        : "SG";
+        : "SGP";
     const boatClass =
       body.boatClass != null && String(body.boatClass).trim()
         ? String(body.boatClass).trim().slice(0, 40)
@@ -330,7 +330,7 @@ export async function PATCH(req: Request) {
     if (body.geography !== undefined) {
       patch.geography =
         body.geography === "" || body.geography == null
-          ? "SG"
+          ? "SGP"
           : String(body.geography).trim().toUpperCase().slice(0, 12);
     }
     if (body.boatClass !== undefined) {
@@ -407,7 +407,7 @@ export async function PATCH(req: Request) {
       patch.reviewedAt = new Date();
       if (body.division) patch.division = body.division;
       if (body.geography !== undefined) {
-        patch.geography = String(body.geography || "SG")
+        patch.geography = String(body.geography || "SGP")
           .trim()
           .toUpperCase()
           .slice(0, 12);
