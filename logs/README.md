@@ -4,7 +4,7 @@
 
 | File | Purpose |
 |------|---------|
-| `app.log` | Human-readable operational log (tests, builds, deploys, migrations). Append dated entries. |
+| `app.log` | Local operational notes. Git ignores `logs/*.log`, so this file stays on your machine. |
 | (DB) `usage_events` | Product traffic / usage events — see `docs/USAGE_STATS.md` |
 
 ## Conventions

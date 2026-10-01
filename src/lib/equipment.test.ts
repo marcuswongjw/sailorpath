@@ -1,4 +1,11 @@
 import { describe, expect, it } from "vitest";
+
+/** Calendar month offset, matching monthsSince (year/month only, UTC). */
+function ymdMonthsAgo(months: number): string {
+  const now = new Date();
+  const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - months, 15));
+  return d.toISOString().slice(0, 10);
+}
 import {
   evaluateEquipmentAttention,
   evaluateEquipmentBadge,
@@ -142,7 +149,7 @@ describe("equipment helpers", () => {
         status: "active",
         condition: "good",
         useCount: 0,
-        acquiredOn: "2026-07-01",
+        acquiredOn: ymdMonthsAgo(1),
       }).badge
     ).toBe("new");
 
@@ -152,7 +159,7 @@ describe("equipment helpers", () => {
         status: "active",
         condition: "good",
         useCount: 2,
-        acquiredOn: "2025-12-01",
+        acquiredOn: ymdMonthsAgo(6),
       }).badge
     ).toBe("good");
 
@@ -162,7 +169,7 @@ describe("equipment helpers", () => {
         status: "active",
         condition: "fair",
         useCount: 1,
-        acquiredOn: "2026-06-01",
+        acquiredOn: ymdMonthsAgo(2),
       })
     ).toMatchObject({
       badge: "check_condition",
@@ -175,7 +182,7 @@ describe("equipment helpers", () => {
         status: "active",
         condition: "good",
         useCount: 21,
-        acquiredOn: "2026-06-01",
+        acquiredOn: ymdMonthsAgo(2),
       })
     ).toMatchObject({
       badge: "consider_replacement",
@@ -220,7 +227,7 @@ describe("equipment helpers", () => {
         status: "active",
         condition: "good",
         useCount: 3,
-        acquiredOn: "2026-07-01",
+        acquiredOn: ymdMonthsAgo(1),
       }).needsAttention
     ).toBe(false);
   });

@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import Link from "next/link";
 import {
   ChevronDown,
@@ -35,7 +34,6 @@ export type ProfileRegattaRowProps = {
   awards: unknown[];
   showEquipment: boolean;
   gearByRegatta: Record<string, { category: string; brand: string | null; label: string | null }[]>;
-  cardClass: string;
   goldEntryDate: string | null;
   demoMode: boolean;
   personalBusy: boolean;
@@ -70,7 +68,6 @@ export function ProfileRegattaRow({
   awards,
   showEquipment,
   gearByRegatta,
-  cardClass,
   goldEntryDate,
   demoMode,
   personalBusy,

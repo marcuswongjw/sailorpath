@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
-import { requireSuperadmin } from "@/lib/auth";
+import { jsonError, requireSuperadmin } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors, regattaResults, regattas } from "@/db/schema";
-import { eq, or, and, inArray } from "drizzle-orm";
+import { eq, or, inArray } from "drizzle-orm";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 export async function POST() {
   try {
-    // const auth = await requireSuperadmin();
-    const auth = { userId: "system", email: "system@sailorpath.com" };
+    const auth = await requireSuperadmin();
     
     const sailorRows = await db.select().from(sailors).where(
       or(
@@ -89,8 +88,6 @@ export async function POST() {
       details,
     });
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : String(e);
-    console.error(e);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return jsonError(e);
   }
 }

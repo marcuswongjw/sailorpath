@@ -16,9 +16,6 @@ import {
   Copy,
   AlertTriangle,
   CheckCircle,
-  Save,
-  Grid,
-  UserCheck,
   Users,
 } from "lucide-react";
 import {
@@ -110,7 +107,6 @@ export type AdminSailorsPanelProps = {
   /** Fix Series members with no gold/silver entry */
   onCleanupEmptySeries?: () => void | Promise<void>;
   emptySeriesCount?: number;
-  onSailorsChange?: (sailors: SailorAdmin[]) => void;
 };
 
 function AdminMilestonesEditor({
@@ -366,7 +362,6 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     setCompetitionsSailorId,
     onCleanupEmptySeries,
     emptySeriesCount = 0,
-    onSailorsChange,
   } = p;
 
   return (

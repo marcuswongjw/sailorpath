@@ -125,10 +125,6 @@ export type DuplicatePair = {
   band: "high" | "medium";
 };
 
-function isPlaceholderSail(s: string): boolean {
-  return !s || /^SGP\s*0+$/i.test(s);
-}
-
 /**
  * Find pairs of sailors that look like the same person.
  * Default threshold 0.60 — UI should highlight 60%+ matches.
