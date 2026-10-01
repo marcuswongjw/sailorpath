@@ -59,6 +59,7 @@ import {
 import {
   TWENTY_NINER_STATIC_REGATTAS,
   getStatic29erResults,
+  matchesCsc29erStaticSlug,
 } from "@/lib/results29erData";
 import {
   asc,
@@ -336,7 +337,7 @@ export async function getRegattaBySlug(slug: string, options?: { allowUnpublishe
         TWENTY_NINER_STATIC_REGATTAS.find(
           (r) =>
             r.slug.toLowerCase() === s ||
-            (s.includes("csc") && s.includes("29er") && r.slug.includes("csc"))
+            (matchesCsc29erStaticSlug(s) && r.slug.includes("csc"))
         );
       if (staticMatch) return staticMatch;
       return null;

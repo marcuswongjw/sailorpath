@@ -3,7 +3,10 @@ import {
   buildSailorNameIndex,
   combinedNameSimilarity,
   findDuplicateSailorPairs,
+  chooseCanonicalSailor,
+  exactNameMatches,
   findSailorByName,
+  isExactNameMatch,
   nameTokenKey,
   normalizeName,
   suggestSailorByName,
@@ -120,6 +123,45 @@ describe("findDuplicateSailorPairs", () => {
       },
     ]);
     expect(pairs).toEqual([]);
+  });
+});
+
+describe("exactNameMatches", () => {
+  const sailors = [
+    { id: "real", name: "Reyes Jit Eng Tan" },
+    { id: "blank", name: "Tan Jit Eng Reyes" },
+    { id: "other", name: "Reyes Tan" },
+  ];
+
+  it("treats reordered words as the same person", () => {
+    expect(isExactNameMatch("Reyes Tan Jit Eng", "Reyes Jit Eng Tan")).toBe(
+      true
+    );
+    expect(isExactNameMatch("Reyes Tan Jit Eng", "Reyes Tan")).toBe(false);
+  });
+
+  it("returns every 100% match so the result can be attached instead of creating a sailor", () => {
+    const matches = exactNameMatches("Reyes Tan Jit Eng", sailors);
+    expect(matches.map((sailor) => sailor.id).sort()).toEqual([
+      "blank",
+      "real",
+    ]);
+  });
+
+  it("attaches a 100% match to the claimed sailor who already has results", () => {
+    const chosen = chooseCanonicalSailor(
+      [
+        { id: "blank", name: "Tan Jit Eng Reyes", parentId: null, club: "N/A" },
+        {
+          id: "real",
+          name: "Reyes Jit Eng Tan",
+          parentId: "parent-1",
+          club: "SAF Yacht Club",
+        },
+      ],
+      (id) => id === "real"
+    );
+    expect(chosen.id).toBe("real");
   });
 });
 
