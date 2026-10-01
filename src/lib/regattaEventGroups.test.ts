@@ -146,6 +146,69 @@ describe("groupedHubForSlug", () => {
     );
   });
 
+  it("opens the 21st SAFYC weekend on the sheets that have the race scores", () => {
+    const published = [
+      row({
+        slug: "safyc-gold-feb-25-2025-02-15",
+        name: "21st SAFYC Regatta 2025 (Optimist Gold Fleet)",
+        date: "2025-02-15",
+        endDate: "2025-02-16",
+        division: "Gold",
+        raceCount: 6,
+        totalFleetSize: 86,
+        eventSlug: "21st-safyc-regatta-2025",
+        eventName: "21st SAFYC Regatta 2025",
+      }),
+      row({
+        slug: "21st-safyc-regatta-2025-gold",
+        name: "21st SAFYC Regatta 2025 (Optimist Gold)",
+        date: "2025-02-15",
+        endDate: "2025-02-16",
+        division: "Gold",
+        raceCount: 6,
+        totalFleetSize: 86,
+        eventSlug: "21st-safyc-regatta-2025",
+        eventName: "21st SAFYC Regatta 2025",
+      }),
+      row({
+        slug: "safyc-silver-feb-25-2025-02-15",
+        name: "21st SAFYC Regatta 2025 (Optimist Silver Fleet)",
+        date: "2025-02-15",
+        endDate: "2025-02-16",
+        division: "Silver",
+        raceCount: 5,
+        totalFleetSize: 75,
+        eventSlug: "21st-safyc-regatta-2025",
+        eventName: "21st SAFYC Regatta 2025",
+      }),
+      row({
+        slug: "21st-safyc-regatta-2025-silver",
+        name: "21st SAFYC Regatta 2025 (Optimist Silver)",
+        date: "2025-02-15",
+        endDate: "2025-02-16",
+        division: "Silver",
+        raceCount: 5,
+        totalFleetSize: 75,
+        eventSlug: "21st-safyc-regatta-2025",
+        eventName: "21st SAFYC Regatta 2025",
+      }),
+    ];
+
+    const hub = savedEventHubForSlug("21st-safyc-regatta-2025", published);
+    expect(hub?.event.name).toBe("21st SAFYC Regatta 2025");
+    expect(hub?.event.datesText).toBe("15 Feb 2025 – 16 Feb 2025");
+    expect(hub?.event.slices.map((slice) => slice.slugIncludes?.[0])).toEqual([
+      "21st-safyc-regatta-2025-gold",
+      "21st-safyc-regatta-2025-silver",
+    ]);
+    expect(hubHrefForClassSlug("21st-safyc-regatta-2025-gold", published)).toBe(
+      "/regattas/21st-safyc-regatta-2025?fleet=optimist-gold"
+    );
+    expect(hubHrefForClassSlug("safyc-silver-feb-25-2025-02-15", published)).toBe(
+      "/regattas/21st-safyc-regatta-2025?fleet=optimist-silver"
+    );
+  });
+
   it("leaves a registered event on its own hub", () => {
     expect(groupedHubForSlug("cincapura-regatta-2026-gold", published)).toBeNull();
     expect(groupedHubForSlug("pesta-sukan-gold-aug-25-2025-08-02", published)).toBeNull();

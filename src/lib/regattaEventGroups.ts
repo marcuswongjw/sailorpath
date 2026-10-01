@@ -63,6 +63,21 @@ function fuller(current: RegattaRecord, next: RegattaRecord): RegattaRecord {
   return current.slug.length <= next.slug.length ? current : next;
 }
 
+/** Same fleet imported twice: keep the sheet named for this weekend. */
+function preferLinkedSheet(
+  current: RegattaRecord,
+  next: RegattaRecord,
+  eventSlug: string
+): RegattaRecord {
+  const fullerSheet = fuller(current, next);
+  const racesTied = (next.raceCount ?? 0) === (current.raceCount ?? 0);
+  const fleetTied = (next.totalFleetSize ?? 0) === (current.totalFleetSize ?? 0);
+  if (!racesTied || !fleetTied) return fullerSheet;
+  const named = (row: RegattaRecord) => row.slug.toLowerCase().startsWith(eventSlug);
+  if (named(current) !== named(next)) return named(next) ? next : current;
+  return fullerSheet;
+}
+
 function formatDay(ymd: string): string {
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const [year, month, day] = ymd.slice(0, 10).split("-");
@@ -236,7 +251,7 @@ export function savedEventHubForSlug(
     const fleet = publicFleet(row);
     if (!fleet) continue;
     const current = chosen.get(fleet);
-    chosen.set(fleet, current ? fuller(current, row) : row);
+    chosen.set(fleet, current ? preferLinkedSheet(current, row, eventSlug) : row);
   }
   const slices = FLEET_ORDER.filter((fleet) => chosen.has(fleet)).map((fleet) =>
     sliceFor(fleet, chosen.get(fleet)!)
@@ -258,7 +273,14 @@ export function savedEventHubForSlug(
     officialNoticeBoardUrl: sample.norUrl || undefined,
     slices,
   };
-  const focus = slices.find((slice) => slice.slugIncludes?.[0] === wanted);
+  const exact = slices.find((slice) => slice.slugIncludes?.[0] === wanted);
+  const requestedFleet =
+    self?.eventSlug?.toLowerCase() === eventSlug ? publicFleet(self) : null;
+  const focus =
+    exact ||
+    (requestedFleet
+      ? slices.find((slice) => slice.key === sliceFor(requestedFleet, self!).key)
+      : undefined);
   return { event, fleetKey: focus?.key ?? null };
 }
 

@@ -11,6 +11,7 @@ import {
   CINCAPURA_2026_EVENT,
   PESTA_SUKAN_2025_EVENT,
   PESTA_SUKAN_2026_EVENT,
+  SAFYC_OPTIMIST_2025_EVENT,
   SAFYC_OPTIMIST_2026_EVENT,
   SNSC_2025_EVENT,
   SNSC_2026_EVENT,
@@ -107,6 +108,19 @@ describe("sliceMatchesRegattaSlug", () => {
     expect(sliceMatchesRegattaSlug(pestaIlca, "pesta-sukan-ilca4-aug-26-2026-08-01")).toBe(true);
     expect(sliceMatchesRegattaSlug(julyGold, "safyc-gold-mar-26-2026-03-28")).toBe(false);
     expect(sliceMatchesRegattaSlug(julyGold, "safyc-gold-jul-26-2026-07-04")).toBe(true);
+
+    const [safyc25Gold, safyc25Silver] = SAFYC_OPTIMIST_2025_EVENT.slices;
+    expect(sliceMatchesRegattaSlug(safyc25Gold, "21st-safyc-regatta-2025-gold")).toBe(false);
+    expect(sliceMatchesRegattaSlug(safyc25Gold, "safyc-gold-feb-25-2025-02-15")).toBe(false);
+    expect(sliceMatchesRegattaSlug(safyc25Gold, "safyc-optimist-2025-gold")).toBe(true);
+    expect(sliceMatchesRegattaSlug(safyc25Silver, "21st-safyc-regatta-2025-silver")).toBe(false);
+    expect(sliceMatchesRegattaSlug(safyc25Silver, "safyc-silver-feb-25-2025-02-15")).toBe(false);
+    expect(sliceMatchesRegattaSlug(safyc25Silver, "safyc-silver-jul-25-2025-07-12")).toBe(true);
+    expect(findEventSliceForRegattaSlug("21st-safyc-regatta-2025-gold")).toBeNull();
+    expect(findEventSliceForRegattaSlug("safyc-silver-feb-25-2025-02-15")).toBeNull();
+    expect(findEventSliceForRegattaSlug("safyc-optimist-2025-gold")?.event.slug).toBe(
+      "1st-safyc-optimist-championship-2025"
+    );
 
     const [pesta25Gold, pesta25Silver, pesta25Ilca4, pesta25Ilca6] = PESTA_SUKAN_2025_EVENT.slices;
     expect(sliceMatchesRegattaSlug(pesta25Gold, "pesta-sukan-gold-aug-25-2025-08-02")).toBe(true);
