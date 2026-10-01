@@ -119,7 +119,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
         ? `This will update ${targetUser.email}'s account role to Coach, granting full access to private Coach Tools and Squad Analytics.`
         : `This will revert ${targetUser.email}'s account role to Sailor and remove coach dashboard access.`,
       confirmLabel: isAssign ? "Assign as Coach" : "Revoke Coach",
-      tone: isAssign ? "primary" : "danger",
+      tone: isAssign ? "default" : "danger",
     });
     if (!ok) return;
 
