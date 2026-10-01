@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import type { RegattaRecord } from "@/lib/ranking";
-import { groupedHubForSlug, regattaGroupKey } from "./regattaEventGroups";
+import {
+  groupedHubForSlug,
+  hubHrefForClassSlug,
+  regattaGroupKey,
+  savedEventHubForSlug,
+} from "./regattaEventGroups";
 
 function row(
   partial: Pick<RegattaRecord, "slug" | "name" | "date"> &
@@ -100,6 +105,45 @@ describe("groupedHubForSlug", () => {
       "Optimist Silver",
     ]);
     expect(groupedHubForSlug("nsc-cup-2-gold-may-25-2025-05-31", published)).toBeNull();
+  });
+
+  it("opens the main regatta slug onto the linked class sheets", () => {
+    const published = [
+      row({
+        slug: "csc-silver-jan-25-2025-01-18",
+        name: "CSC Optimist Championships 2025 (Optimist Silver)",
+        date: "2025-01-18",
+        endDate: "2025-01-19",
+        division: "Silver",
+        eventSlug: "csc-optimist-championships-2025",
+        eventName: "CSC Optimist Championships 2025",
+        venue: "Changi Sailing Club",
+      }),
+      row({
+        slug: "csc-gold-jan-25-2025-01-25",
+        name: "CSC Optimist Championships 2025 (Optimist Gold)",
+        date: "2025-01-25",
+        endDate: "2025-01-26",
+        division: "Gold",
+        eventSlug: "csc-optimist-championships-2025",
+        eventName: "CSC Optimist Championships 2025",
+        venue: "Changi Sailing Club",
+      }),
+    ];
+
+    const hub = savedEventHubForSlug("csc-optimist-championships-2025", published);
+    expect(hub?.event.name).toBe("CSC Optimist Championships 2025");
+    expect(hub?.event.datesText).toBe("18 Jan 2025 – 26 Jan 2025");
+    expect(hub?.event.slices.map((slice) => slice.key)).toEqual([
+      "optimist-gold",
+      "optimist-silver",
+    ]);
+    expect(savedEventHubForSlug("csc-silver-jan-25-2025-01-18", published)?.fleetKey).toBe(
+      "optimist-silver"
+    );
+    expect(hubHrefForClassSlug("csc-gold-jan-25-2025-01-25", published)).toBe(
+      "/regattas/csc-optimist-championships-2025?fleet=optimist-gold"
+    );
   });
 
   it("leaves a registered event on its own hub", () => {

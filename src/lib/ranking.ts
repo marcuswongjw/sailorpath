@@ -84,6 +84,10 @@ export interface RegattaRecord {
   selectionEventId?: string | null;
   /** Weekend this class sheet belongs to. */
   eventId?: string | null;
+  /** Public slug of that weekend, when the sheet is linked. */
+  eventSlug?: string | null;
+  /** Public name of that weekend. */
+  eventName?: string | null;
   /** Organizing authority */
   organizer?: string | null;
   /** Schedule / tide / logistics notes */

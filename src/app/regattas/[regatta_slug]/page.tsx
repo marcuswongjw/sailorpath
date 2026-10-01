@@ -6,7 +6,7 @@ import {
   matchCalendarResults,
 } from "@/lib/calendar/calendarResultLinks";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
-import { groupedHubForSlug } from "@/lib/regattaEventGroups";
+import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
 import { getCachedPublicRegattas, getRegattaBySlug } from "@/lib/queries";
 import {
   eventHubHref,
@@ -23,9 +23,11 @@ export async function generateMetadata({
   params: Promise<{ regatta_slug: string }>;
 }): Promise<Metadata> {
   const { regatta_slug } = await params;
+  const published = await getCachedPublicRegattas().catch(() => []);
   const event =
     getRegattaEvent(regatta_slug) ||
-    groupedHubForSlug(regatta_slug, await getCachedPublicRegattas().catch(() => []))?.event;
+    savedEventHubForSlug(regatta_slug, published)?.event ||
+    groupedHubForSlug(regatta_slug, published)?.event;
   if (event) {
     return {
       title: `${event.name} — results | SailorPath`,
@@ -86,6 +88,26 @@ export default async function RegattaRedirectPage({
   }
 
   const published = await getCachedPublicRegattas().catch(() => []);
+  const saved = savedEventHubForSlug(regatta_slug, published);
+  if (saved && saved.event.slices.length > 0) {
+    if (saved.event.slug !== regatta_slug.toLowerCase()) {
+      permanentRedirect(
+        eventHubHref(
+          saved.event.slug,
+          saved.fleetKey || saved.event.slices[0].key,
+          calendarView === "past" ? "past" : undefined
+        )
+      );
+    }
+    return (
+      <RegattaEventHub
+        event={saved.event}
+        activeFleet={fleet ?? saved.fleetKey}
+        calendarView={calendarView}
+      />
+    );
+  }
+
   const grouped = groupedHubForSlug(regatta_slug, published);
   if (grouped && grouped.event.slices.length > 1) {
     if (grouped.event.slug !== regatta_slug.toLowerCase()) {
