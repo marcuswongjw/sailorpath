@@ -13,7 +13,6 @@ import {
   Link2,
   ArrowLeft,
   FileText,
-  Globe,
   Sliders,
 } from "lucide-react";
 import { slugify } from "@/lib/slug";
@@ -33,6 +32,7 @@ import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { setAdminLeaveGuard } from "@/components/admin/adminLeaveGuard";
 import { RegattaFilterBar } from "@/components/admin/RegattaFilterBar";
 import { AdminRegattaEventList } from "@/components/admin/AdminRegattaEventList";
+import { AdminClassSheetCard } from "@/components/admin/AdminClassSheetCard";
 import { CalendarEventForm, calendarFormFrom, type CalendarFormState, type SavedCalendarEvent } from "@/components/admin/CalendarEventForm";
 import { cascadeLine, summarizeNames } from "@/lib/confirmCopy";
 import type { PublicationReadiness } from "@/lib/admin/publicationReadiness";
@@ -44,6 +44,28 @@ import {
   type AdminEventGroup,
   type GroupableRegatta,
 } from "@/lib/admin/groupRegattaEvents";
+
+function classSheetGroups(
+  unassigned: boolean,
+  shells: GroupableRegatta[],
+  sheets: GroupableRegatta[]
+): { label: string | null; sheets: GroupableRegatta[] }[] {
+  const rows = unassigned
+    ? [...sheets].sort(
+        (a, b) =>
+          sheetClassLabel(a).localeCompare(sheetClassLabel(b)) ||
+          a.name.localeCompare(b.name)
+      )
+    : [...shells, ...sheets];
+  const groups: { label: string | null; sheets: GroupableRegatta[] }[] = [];
+  for (const sheet of rows) {
+    const label = unassigned ? sheetClassLabel(sheet) : null;
+    const last = groups[groups.length - 1];
+    if (last && last.label === label) last.sheets.push(sheet);
+    else groups.push({ label, sheets: [sheet] });
+  }
+  return groups;
+}
 
 function withSavedEvent(
   event: AdminEventGroup,
@@ -573,6 +595,18 @@ export function AdminRegattasPanel({
       setIsSeeding(false);
     }
   };
+
+  const linkableWeekends = Object.values(savedEvents)
+    .sort(
+      (a, b) =>
+        b.startDate.localeCompare(a.startDate) || a.name.localeCompare(b.name)
+    )
+    .map((event) => ({
+      id: event.id,
+      name: event.name,
+      startDate: event.startDate,
+    }));
+
   return (
                             <div className="w-full min-w-0 space-y-4">
                 <RegattaFilterBar
@@ -1267,11 +1301,19 @@ export function AdminRegattasPanel({
                             <h3 className="text-base font-black text-slate-900 mt-0.5">
                               {selectedEventView.name}
                             </h3>
-                            <p className="text-xs text-slate-700 font-medium mt-0.5">
-                              {selectedEventView.startDate || "—"}
-                              {selectedEventView.endDate ? ` to ${selectedEventView.endDate}` : ""}
-                              {selectedEventView.venue ? ` · ${selectedEventView.venue}` : ""}
-                            </p>
+                            {selectedEventView.slug === UNASSIGNED_EVENT_SLUG ? (
+                              <p className="mt-1 max-w-xl text-xs font-medium text-slate-600">
+                                {selectedEventView.sheets.length} class sheet
+                                {selectedEventView.sheets.length === 1 ? "" : "s"} not attached to a
+                                weekend. Choose a weekend on each sheet, then link it.
+                              </p>
+                            ) : (
+                              <p className="text-xs text-slate-700 font-medium mt-0.5">
+                                {selectedEventView.startDate || "—"}
+                                {selectedEventView.endDate ? ` to ${selectedEventView.endDate}` : ""}
+                                {selectedEventView.venue ? ` · ${selectedEventView.venue}` : ""}
+                              </p>
+                            )}
                           </div>
                           <div className="flex items-center gap-2">
                             {selectedEventView.slug !== UNASSIGNED_EVENT_SLUG && (
@@ -1317,7 +1359,9 @@ export function AdminRegattasPanel({
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
                             <h4 className="text-xs font-black uppercase tracking-wider text-slate-800">
-                              Sailing Class ({selectedEventView.sheets.length + selectedEventView.shells.length})
+                              {selectedEventView.slug === UNASSIGNED_EVENT_SLUG
+                                ? `Class sheets (${selectedEventView.sheets.length})`
+                                : `Sailing class (${selectedEventView.sheets.length + selectedEventView.shells.length})`}
                             </h4>
                           </div>
 
@@ -1329,163 +1373,64 @@ export function AdminRegattasPanel({
                               </p>
                             )}
 
-                          <div className="grid grid-cols-1 gap-2.5">
-                            {[...selectedEventView.shells, ...selectedEventView.sheets].map(
-                              (sheet) => {
-                                const isShell = selectedEventView.shells.some(
-                                  (row) => row.id === sheet.id
-                                );
-                                return (
-                                  <div
-                                    key={sheet.id}
-                                    className="rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs hover:border-orange-500/40 transition-all"
-                                  >
-                                    <div className="space-y-1.5 min-w-0">
-                                      <div className="flex items-center gap-2 flex-wrap">
-                                        <span className="text-xs font-bold text-slate-900">
-                                          {isShell ? sheet.name : sheetClassLabel(sheet)}
-                                        </span>
-                                        <span
-                                          className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded border ${
-                                            (sheet.status || "published") === "published"
-                                              ? "bg-emerald-100 text-emerald-800 border-emerald-200"
-                                              : sheet.status === "draft"
-                                                ? "bg-amber-100 text-amber-800 border-amber-300"
-                                                : sheet.status === "in_review"
-                                                  ? "bg-sky-100 text-sky-800 border-sky-200"
-                                                  : "bg-slate-100 text-slate-700 border-slate-200"
-                                          }`}
-                                        >
-                                          {sheet.status || "published"}
-                                        </span>
-                                        {sheet.countsForRanking === false && (
-                                          <span className="text-[10px] uppercase font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 border border-sky-200">
-                                            Non-ranking
-                                          </span>
-                                        )}
-                                      </div>
-                                      <div className="flex items-center gap-2.5 text-xs text-slate-700 font-medium flex-wrap">
-                                        <span>
-                                          {sheet.raceCount != null
-                                            ? `${sheet.raceCount} completed races`
-                                            : "No race count"}
-                                        </span>
-                                        <span className="text-slate-400">·</span>
-                                        <span>
-                                          {sheet.totalFleetSize != null
-                                            ? `Fleet ${sheet.totalFleetSize}`
-                                            : "Fleet size not set"}
-                                        </span>
-                                        {sheet.slug && (
-                                          <>
-                                            <span className="text-slate-400">·</span>
-                                            <span className="font-mono text-slate-600 text-[11px] truncate max-w-[200px]">
-                                              {sheet.slug}
-                                            </span>
-                                          </>
-                                        )}
-                                      </div>
-                                    </div>
-
-                                    <div className="flex flex-wrap items-center gap-2 shrink-0 self-end sm:self-auto justify-end">
-                                      {selectedEventView.slug === UNASSIGNED_EVENT_SLUG &&
-                                        isSuperadmin && (
-                                          <div className="flex items-center gap-2">
-                                            <label className="sr-only" htmlFor={`link-event-${sheet.id}`}>
-                                              Regatta event for {sheet.name}
-                                            </label>
-                                            <select
-                                              id={`link-event-${sheet.id}`}
-                                              value={linkTargets[sheet.id] || ""}
-                                              onChange={(event) =>
-                                                setLinkTargets((current) => ({
-                                                  ...current,
-                                                  [sheet.id]: event.target.value,
-                                                }))
-                                              }
-                                              className="max-w-52 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-800"
-                                            >
-                                              <option value="">Choose event…</option>
-                                              {Object.values(savedEvents)
-                                                .sort((a, b) =>
-                                                  b.startDate.localeCompare(a.startDate) ||
-                                                  a.name.localeCompare(b.name)
-                                                )
-                                                .map((event) => (
-                                                  <option key={event.id} value={event.id}>
-                                                    {event.name} ({event.startDate})
-                                                  </option>
-                                                ))}
-                                            </select>
-                                            <button
-                                              type="button"
-                                              disabled={!linkTargets[sheet.id] || linkingSheetId === sheet.id}
-                                              onClick={() => handleLinkSheet(sheet.id)}
-                                              className="rounded-lg border border-orange-300 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 text-xs font-bold text-orange-900 disabled:opacity-40 inline-flex items-center gap-1.5"
-                                            >
-                                              {linkingSheetId === sheet.id ? (
-                                                <Loader2 className="h-3 w-3 animate-spin" />
-                                              ) : (
-                                                <Link2 className="h-3 w-3" />
-                                              )}
-                                              Link
-                                            </button>
-                                          </div>
-                                        )}
-                                      {isSuperadmin && (
-                                        sheet.status === "draft" ? (
-                                          <button
-                                            type="button"
-                                            disabled={
-                                              publishingId === sheet.id ||
-                                              (editingRegattaId === sheet.id &&
-                                                readiness != null &&
-                                                (readiness.summary === "blocked" ||
-                                                  readiness.summary === "incomplete"))
-                                            }
-                                            onClick={() => handleTogglePublish(sheet.id, sheet.status)}
-                                            className="rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 text-xs font-bold transition-colors inline-flex items-center gap-1.5 shadow-xs disabled:opacity-50"
-                                            title="Publish this sailing class to rankings and public results"
-                                          >
-                                            {publishingId === sheet.id ? (
-                                              <Loader2 className="h-3 w-3 animate-spin" />
-                                            ) : (
-                                              <Globe className="h-3 w-3" />
-                                            )}
-                                            <span>Publish</span>
-                                          </button>
-                                        ) : (
-                                          <button
-                                            type="button"
-                                            disabled={publishingId === sheet.id}
-                                            onClick={() => handleTogglePublish(sheet.id, sheet.status)}
-                                            className="rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 px-2.5 py-1.5 text-xs font-semibold transition-colors inline-flex items-center gap-1 shadow-xs disabled:opacity-50"
-                                            title="Revert to draft (hide from public views)"
-                                          >
-                                            {publishingId === sheet.id ? (
-                                              <Loader2 className="h-3 w-3 animate-spin" />
-                                            ) : null}
-                                            <span>Unpublish</span>
-                                          </button>
-                                        )
-                                      )}
-                                      <button
-                                        type="button"
-                                        onClick={() => {
+                          <div className="grid grid-cols-1 gap-4">
+                            {classSheetGroups(
+                              selectedEventView.slug === UNASSIGNED_EVENT_SLUG,
+                              selectedEventView.shells,
+                              selectedEventView.sheets
+                            ).map((group) => (
+                                <div key={group.label ?? "sheets"} className="space-y-2.5">
+                                  {group.label ? (
+                                    <h5 className="text-[11px] font-black uppercase tracking-wider text-slate-500">
+                                      {group.label}
+                                      <span className="ml-1.5 font-bold text-slate-400">
+                                        {group.sheets.length}
+                                      </span>
+                                    </h5>
+                                  ) : null}
+                                  {group.sheets.map((sheet) => {
+                                    const isShell = selectedEventView.shells.some(
+                                      (row) => row.id === sheet.id
+                                    );
+                                    return (
+                                      <AdminClassSheetCard
+                                        key={sheet.id}
+                                        sheet={sheet}
+                                        isShell={isShell}
+                                        unassigned={
+                                          selectedEventView.slug === UNASSIGNED_EVENT_SLUG
+                                        }
+                                        isSuperadmin={isSuperadmin}
+                                        weekends={linkableWeekends}
+                                        linkTarget={linkTargets[sheet.id] || ""}
+                                        linking={linkingSheetId === sheet.id}
+                                        publishing={publishingId === sheet.id}
+                                        publishBlocked={
+                                          editingRegattaId === sheet.id &&
+                                          readiness != null &&
+                                          (readiness.summary === "blocked" ||
+                                            readiness.summary === "incomplete")
+                                        }
+                                        onLinkTargetChange={(eventId) =>
+                                          setLinkTargets((current) => ({
+                                            ...current,
+                                            [sheet.id]: eventId,
+                                          }))
+                                        }
+                                        onLink={() => handleLinkSheet(sheet.id)}
+                                        onTogglePublish={
+                                          isSuperadmin
+                                            ? () => handleTogglePublish(sheet.id, sheet.status)
+                                            : undefined
+                                        }
+                                        onEditDetails={() => {
                                           if (editingRegattaId !== sheet.id && !confirmLeave()) return;
                                           seenSheetId.current = sheet.id;
                                           setEditingRegattaId(sheet.id);
                                           rememberClassForm(sheet);
                                           setSheetTab("details");
                                         }}
-                                        className="rounded-lg border border-slate-300 bg-white hover:bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-800 shadow-xs transition-colors inline-flex items-center gap-1.5"
-                                      >
-                                        <FileText className="h-3 w-3 text-slate-600" />
-                                        <span>Edit Details</span>
-                                      </button>
-                                      <button
-                                        type="button"
-                                        onClick={() => {
+                                        onOpenResults={() => {
                                           if (editingRegattaId !== sheet.id && !confirmLeave()) return;
                                           seenSheetId.current = sheet.id;
                                           setEditingRegattaId(sheet.id);
@@ -1493,16 +1438,11 @@ export function AdminRegattasPanel({
                                           setSheetTab("results");
                                           onOpenResults?.(sheet.id);
                                         }}
-                                        className="rounded-lg bg-orange-600 hover:bg-orange-500 px-3 py-1.5 text-xs font-bold text-white transition-colors inline-flex items-center gap-1.5 shadow-sm"
-                                      >
-                                        <Trophy className="h-3 w-3" />
-                                        <span>Results &amp; Scores</span>
-                                      </button>
-                                    </div>
-                                  </div>
-                                );
-                              }
-                            )}
+                                      />
+                                    );
+                                  })}
+                                </div>
+                            ))}
 
                             {selectedEventView.missingClasses.map((label) => (
                               <div
