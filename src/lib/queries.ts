@@ -655,13 +655,15 @@ export const getCachedIlcaRankings = unstable_cache(
   async (
     boatClass: IlcaBoatClass,
     intakeKind: IlcaIntakeKind,
-    intakeYear: number
+    intakeYear: number,
+    restrictToNationalList = true
   ): Promise<IlcaBoardPayload> => {
     const cutoff = ilcaSquadCutoff(intakeKind, intakeYear);
     const board = await computeIlcaRankingsBoard(
       boatClass,
       cutoff.asOf,
-      cutoff.intakeYear
+      cutoff.intakeYear,
+      restrictToNationalList
     );
     return {
       ...board,
@@ -670,7 +672,7 @@ export const getCachedIlcaRankings = unstable_cache(
       label: cutoff.label,
     };
   },
-  ["ilca-rankings-board-v8"],
+  ["ilca-rankings-board-v9"],
   { revalidate: 60, tags: [CACHE_TAG_ILCA_RANKINGS] }
 );
 
@@ -681,7 +683,8 @@ export { defaultIlcaIntake };
 async function computeIlcaRankingsBoard(
   boatClass: IlcaBoatClass = "ILCA 4",
   asOfYmd?: string,
-  intakeYear?: number
+  intakeYear?: number,
+  restrictToNationalList = true
 ) {
   const asOf = asOfYmd || todayYmdSg();
   try {
@@ -900,7 +903,8 @@ async function computeIlcaRankingsBoard(
         ilcaResults,
         {
           intakeYear: intakeYear ?? Number(asOf.slice(0, 4)),
-          restrictToNationalList: boatClass !== "ILCA 7",
+          restrictToNationalList:
+            boatClass !== "ILCA 7" && restrictToNationalList,
         }
       );
 
@@ -980,8 +984,27 @@ export async function getSailorIlcaStanding(
   boatClass: IlcaBoatClass = "ILCA 4"
 ): Promise<IlcaSeriesStanding | null> {
   const { kind, year } = defaultIlcaIntake();
-  const { ranked, asOf } = await getCachedIlcaRankings(boatClass, kind, year);
-  const me = ranked.find((x) => x.sailorId === sailorId);
+  const officialBoard = await getCachedIlcaRankings(boatClass, kind, year);
+  let ranked = officialBoard.ranked;
+  let asOf = officialBoard.asOf;
+  let me = ranked.find((x) => x.sailorId === sailorId);
+  let unrestricted = false;
+
+  // Keep the official ranking API national-list-only, but do not leave an
+  // ILCA 4 sailor's profile blank when they have ranked-event results and are
+  // not yet included on the admin-managed national list.
+  if (!me && boatClass === "ILCA 4") {
+    const openBoard = await getCachedIlcaRankings(
+      boatClass,
+      kind,
+      year,
+      false
+    );
+    ranked = openBoard.ranked;
+    asOf = openBoard.asOf;
+    me = ranked.find((x) => x.sailorId === sailorId);
+    unrestricted = Boolean(me);
+  }
   if (!me) return null;
 
   const rScores: RegattaScoreSlot[] = me.eventScores.map((e) => ({
@@ -1009,9 +1032,11 @@ export async function getSailorIlcaStanding(
     fleetSize: ranked.length,
     best3of5: me.totalPoints,
     rScores,
-    trendNote: `Best 3 of 5 high points · #${me.rank} of ${ranked.length} nationally`,
+    trendNote: unrestricted
+      ? `Recorded ILCA 4 competitors · #${me.rank} of ${ranked.length}`
+      : `Best 3 of 5 high points · #${me.rank} of ${ranked.length} nationally`,
     boatClass,
-    unrestricted: false,
+    unrestricted,
   };
 }
 

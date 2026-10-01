@@ -588,15 +588,29 @@ export function buildIlcaKeyStats(
 }
 
 /**
- * Prefer ILCA-first profile when sailor has left Optimist (drop or age-out)
- * and has ILCA results. Optimist max age is under 16 (calendar year).
+ * Prefer ILCA-first when ILCA is the sailor's most-sailed class, or they have
+ * left Optimist by drop date or age-out. Optimist max age is under 16.
  */
-export function prefersIlcaFirstProfile(sailor: {
-  dropDate?: string | null;
-  dob?: string | null;
-  goldEntryDate?: string | null;
-  silverEntryDate?: string | null;
-}): boolean {
+export function prefersIlcaFirstProfile(
+  sailor: {
+    dropDate?: string | null;
+    dob?: string | null;
+    goldEntryDate?: string | null;
+    silverEntryDate?: string | null;
+  },
+  results?: readonly Pick<ProfileResult, "boatClass">[]
+): boolean {
+  if (results?.length) {
+    let ilcaResults = 0;
+    let optimistResults = 0;
+    for (const result of results) {
+      const group = profileBoatClassGroup(result.boatClass);
+      if (group === "ilca4") ilcaResults += 1;
+      else if (group === "optimist") optimistResults += 1;
+    }
+    if (ilcaResults > optimistResults) return true;
+  }
+
   return optimistLeftYear(sailor) != null;
 }
 

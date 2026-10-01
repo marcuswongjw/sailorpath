@@ -114,7 +114,7 @@ describe("HeroAthleteCard", () => {
       />
     );
 
-    expect(screen.getByText("Dual-class athlete")).toBeInTheDocument();
+    expect(screen.queryByText("Dual-class athlete")).not.toBeInTheDocument();
     const ilcaBtn = screen.getByRole("button", { name: /ILCA 4/i });
     await userEvent.click(ilcaBtn);
     expect(onSelectBoatClass).toHaveBeenCalledWith("ilca4");

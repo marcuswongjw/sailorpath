@@ -338,6 +338,42 @@ describe("computeIlcaRankings + squad", () => {
     );
   });
 
+  it("ranks recorded ILCA 4 competitors outside the official list in unrestricted mode", () => {
+    const unlisted = {
+      id: "unlisted",
+      name: "Unlisted Sailor",
+      gender: "M",
+      dob: "2012-01-01",
+      nationality: "SGP",
+      ilca4NationalList: false,
+    };
+    const unlistedResults = [
+      { sailorId: "unlisted", regattaId: "r1", rank: 1 },
+    ];
+
+    expect(
+      computeIlcaRankings(
+        "ILCA 4",
+        "2026-06-30",
+        [unlisted],
+        regattas,
+        unlistedResults,
+        { intakeYear: 2026, restrictToNationalList: true }
+      )
+    ).toHaveLength(0);
+
+    const profileRanking = computeIlcaRankings(
+      "ILCA 4",
+      "2026-06-30",
+      [unlisted],
+      regattas,
+      unlistedResults,
+      { intakeYear: 2026, restrictToNationalList: false }
+    );
+    expect(profileRanking).toHaveLength(1);
+    expect(profileRanking[0]).toMatchObject({ sailorId: "unlisted", rank: 1 });
+  });
+
   it("re-ranks correctly when a regatta is excluded", () => {
     const ranked = computeIlcaRankings(
       "ILCA 4",
@@ -403,5 +439,4 @@ describe("computeIlcaRankings + squad", () => {
     expect(ranked[1].rank).toBe(2);
   });
 });
-
 

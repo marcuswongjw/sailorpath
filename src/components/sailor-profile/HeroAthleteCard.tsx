@@ -435,9 +435,6 @@ export function HeroAthleteCard({
                   ILCA 4
                 </button>
               </div>
-              <span className="text-[13px] text-slate-soft hidden sm:inline">
-                Dual-class athlete
-              </span>
             </div>
           )}
         </div>

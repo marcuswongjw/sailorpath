@@ -148,7 +148,7 @@ export function useSailorProfileState({
       const prefer = prefersIlcaFirstProfile({
         dropDate: initialSailor.dropDate as string | null | undefined,
         dob: initialSailor.dob as string | null | undefined,
-      });
+      }, initialResults as ProfileResult[]);
       return prefer ? "ilca4" : "optimist";
     }
   );
@@ -673,7 +673,7 @@ export function useSailorProfileState({
   const preferIlcaFirst = prefersIlcaFirstProfile({
     dropDate: displaySailor.dropDate as string | null | undefined,
     dob: displaySailor.dob as string | null | undefined,
-  });
+  }, results as ProfileResult[]);
   const hasIlca4Data =
     classBuckets.ilca4.length > 0 ||
     Boolean(String(displaySailor.sailNumberIlca4 || "").trim());

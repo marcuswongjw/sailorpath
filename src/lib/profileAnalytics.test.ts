@@ -261,6 +261,24 @@ describe("buildIlcaKeyStats / prefersIlcaFirstProfile", () => {
     ).toBe(false);
   });
 
+  it("prefers ILCA 4 when it is the sailor's most-sailed class", () => {
+    expect(
+      prefersIlcaFirstProfile(
+        { dropDate: null, dob: "2014-01-01" },
+        [
+          ...Array.from({ length: 14 }, () => ({ boatClass: "ILCA 4" })),
+          ...Array.from({ length: 2 }, () => ({ boatClass: "Optimist" })),
+        ]
+      )
+    ).toBe(true);
+    expect(
+      prefersIlcaFirstProfile(
+        { dropDate: null, dob: "2014-01-01" },
+        [{ boatClass: "ILCA 4" }, { boatClass: "Optimist" }]
+      )
+    ).toBe(false);
+  });
+
   it("reports optimist left year from drop or age-out", () => {
     expect(optimistLeftYear({ dropDate: "2024-07-01", dob: null })).toBe(2024);
     expect(optimistLeftYear({ dropDate: null, dob: "2008-05-01" })).toBe(2024);
