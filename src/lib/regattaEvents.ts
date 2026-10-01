@@ -566,6 +566,7 @@ export const SAFYC_OPTIMIST_2025_EVENT: RegattaEventDef = {
       label: "Optimist Gold",
       series: "optimist",
       slugIncludes: ["safyc", "2025", "gold"],
+      slugExcludes: ["feb", "21st"],
       prizeFleetName: "Optimist Gold Fleet",
     },
     {
@@ -573,6 +574,7 @@ export const SAFYC_OPTIMIST_2025_EVENT: RegattaEventDef = {
       label: "Optimist Silver",
       series: "optimist",
       slugIncludes: ["safyc", "2025", "silver"],
+      slugExcludes: ["feb", "21st"],
       prizeFleetName: "Optimist Silver Fleet",
     },
   ],
