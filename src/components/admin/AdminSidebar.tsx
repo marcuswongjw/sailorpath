@@ -7,7 +7,6 @@ import {
   Calendar,
   Gauge,
   Inbox,
-  LifeBuoy,
   Settings,
   Users,
 } from "lucide-react";
@@ -37,7 +36,6 @@ export function AdminSidebar({
   insightsView,
   settingsView,
   inboxCount,
-  changelogUnread,
   onNavigate,
 }: {
   activeArea: AdminArea;
@@ -46,7 +44,6 @@ export function AdminSidebar({
   insightsView: string;
   settingsView: string;
   inboxCount: number;
-  changelogUnread: boolean;
   onNavigate: (href: string) => boolean;
 }) {
   const shell: Shell = "sidebar";
@@ -270,29 +267,6 @@ export function AdminSidebar({
                     Audit log
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href={areaHref(
-                      {
-                        area: "settings",
-                        view: "changelog",
-                        event: null,
-                        sheet: null,
-                      },
-                      shell
-                    )}
-                    aria-current={settingsView === "changelog" ? "page" : undefined}
-                    onClick={(event) => guardLink(areaHref(
-                      { area: "settings", view: "changelog", event: null, sheet: null }, shell
-                    ), event)}
-                    className={childLink}
-                  >
-                    Changelog
-                    {changelogUnread && (
-                      <LifeBuoy className="ml-2 h-3.5 w-3.5" aria-hidden="true" />
-                    )}
-                  </Link>
-                </li>
               </ul>
             )}
           </li>
@@ -324,7 +298,7 @@ export function adminPageTitle(area: AdminArea, view: string): string {
     return "Optimist analysis";
   }
   if (area === "settings") {
-    return view === "changelog" ? "Changelog" : "Audit log";
+    return "Audit log";
   }
   return "Overview";
 }

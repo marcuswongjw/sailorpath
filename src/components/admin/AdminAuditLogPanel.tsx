@@ -43,10 +43,8 @@ function entityHref(row: AuditRow): string | null {
 
 export function AdminAuditLogPanel({
   isSuperadmin,
-  changelogHref = "/admin?tab=changelog",
 }: {
   isSuperadmin: boolean;
-  changelogHref?: string;
 }) {
   const [days, setDays] = useState(30);
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -76,15 +74,8 @@ export function AdminAuditLogPanel({
           Admin audit trail
         </h3>
         <p className="text-xs text-slate-500 mt-1 leading-relaxed max-w-2xl">
-          Live record of imports, sailor edits, promote, claims, and other
-          superadmin writes. Product ships are under{" "}
-          <Link
-            href={changelogHref}
-            className="text-orange-400 hover:text-orange-300 font-semibold"
-          >
-            Change log
-          </Link>
-          .
+          Live record of sailor edits, imports, regatta changes, claims, and
+          other writes. Those events are still stored when this page is closed.
         </p>
       </div>
 

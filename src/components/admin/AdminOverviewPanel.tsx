@@ -118,10 +118,9 @@ export function AdminOverviewPanel({
         <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
           <History className="h-5 w-5 text-slate-400" aria-hidden={true} />
           <h2 className="mt-3 font-bold text-white">Recent changes</h2>
-          <p className="mt-1 text-xs leading-relaxed text-slate-400">Review administrator writes in the audit log or product releases in the changelog.</p>
+          <p className="mt-1 text-xs leading-relaxed text-slate-400">Sailor edits, imports, regatta changes, and other writes are still recorded.</p>
           <div className="mt-4 flex flex-col gap-2">
             <Link href="/admin?area=settings&view=audit&shell=sidebar" className="inline-flex min-h-11 items-center justify-between rounded-xl border border-white/10 px-3 text-sm font-bold text-slate-200 hover:bg-white/5">Audit log <ArrowRight className="h-4 w-4" aria-hidden={true} /></Link>
-            <Link href="/admin?area=settings&view=changelog&shell=sidebar" className="inline-flex min-h-11 items-center justify-between rounded-xl border border-white/10 px-3 text-sm font-bold text-slate-200 hover:bg-white/5">Product changelog <ArrowRight className="h-4 w-4" aria-hidden={true} /></Link>
           </div>
         </div>
       </div>

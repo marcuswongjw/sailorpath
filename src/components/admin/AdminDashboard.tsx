@@ -15,7 +15,6 @@ import {
   Shield,
   GitCompareArrows,
   Medal,
-  ScrollText,
   Flame,
   ChevronRight,
   Compass,
@@ -53,7 +52,7 @@ const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string
   import: FileSpreadsheet,
   ops: ClipboardList,
   stats: Activity,
-  changelog: ScrollText,
+  changelog: Activity,
 };
 import { useAdminNotifications } from "@/components/admin/useAdminNotifications";
 import { useAdminSailors } from "@/components/admin/useAdminSailors";
@@ -160,13 +159,6 @@ const AdminStatsPanel = dynamic(
     import("@/components/admin/AdminStatsPanel").then((m) => m.AdminStatsPanel),
   { loading: () => <PanelLoading /> }
 );
-const AdminProductChangelogPanel = dynamic(
-  () =>
-    import("@/components/admin/AdminProductChangelogPanel").then(
-      (m) => m.AdminProductChangelogPanel
-    ),
-  { loading: () => <PanelLoading /> }
-);
 const AdminAuditLogPanel = dynamic(
   () =>
     import("@/components/admin/AdminAuditLogPanel").then(
@@ -228,8 +220,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     loading,
     adminRole,
     isSuperadmin,
-    productChangelogUnread,
-    markProductChangelogSeen,
   } = useAdminAuth(initialAuth);
 
   const data = useAdminData({
@@ -559,9 +549,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     } else if (activeTab === "stats") {
       crumbs.push({ label: "Platform" });
       crumbs.push({ label: "System & Usage Stats" });
-    } else if (activeTab === "changelog") {
-      crumbs.push({ label: "Platform" });
-      crumbs.push({ label: "Product Change Log" });
     }
 
     return crumbs;
@@ -742,7 +729,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
               insightsView={areaState.view}
               settingsView={areaState.view}
               inboxCount={inboxNotifCount}
-              changelogUnread={productChangelogUnread}
               onNavigate={(href) => {
                 if (!confirmAdminLeave()) return false;
                 approvedSearch.current = new URL(href, window.location.href).search.slice(1);
@@ -797,11 +783,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                     {tab.key === "ops" && inboxNotifCount > 0 && (
                       <span className="absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-rose-500 text-[11px] font-black text-white flex items-center justify-center">
                         {inboxNotifCount > 9 ? "9+" : inboxNotifCount}
-                      </span>
-                    )}
-                    {tab.key === "changelog" && productChangelogUnread && (
-                      <span className="absolute -top-1 -right-1 min-w-[1.1rem] h-[1.1rem] px-1 rounded-full bg-sky-500 text-[11px] font-black text-white flex items-center justify-center">
-                        •
                       </span>
                     )}
                   </button>
@@ -1236,12 +1217,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
 
               {areaState.area === "settings" && editSubTab === "audit" && (
                 <div className="w-full min-w-0">
-                  <AdminAuditLogPanel
-                    isSuperadmin={isSuperadmin}
-                    changelogHref={`/admin?area=settings&view=changelog${
-                      adminShell === "sidebar" ? "&shell=sidebar" : ""
-                    }`}
-                  />
+                  <AdminAuditLogPanel isSuperadmin={isSuperadmin} />
                 </div>
               )}
             </div>
@@ -1282,16 +1258,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
           </div>
         )}
 
-        {activeTab === "changelog" && (
-          <div className="w-full min-w-0">
-            <AdminProductChangelogPanel
-              onMarkedSeen={markProductChangelogSeen}
-              auditHref={`/admin?area=settings&view=audit${
-                adminShell === "sidebar" ? "&shell=sidebar" : ""
-              }`}
-            />
-          </div>
-        )}
       </div>
 
       {competitions.competitionsSailorId && <AdminCompetitionsPanel

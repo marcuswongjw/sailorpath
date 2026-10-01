@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  ADMIN_TAB_GROUPS,
   parseAdminArea,
   parseAdminNav,
   reconcileEventsAddress,
@@ -25,9 +26,11 @@ describe("parseAdminNav", () => {
     expect(parseAdminNav(new URLSearchParams("tab=techno293")).tab).toBe(
       "techno293"
     );
-    expect(parseAdminNav(new URLSearchParams("tab=changelog")).tab).toBe(
-      "changelog"
-    );
+    expect(parseAdminNav(new URLSearchParams("tab=changelog"))).toEqual({
+      tab: "ops",
+      sub: "audit",
+      regattaId: null,
+    });
   });
 
   it("migrates legacy gold tab to Database → Selection", () => {
@@ -143,8 +146,15 @@ describe("serializeAdminNav", () => {
       "area=insights&view=wingfoil"
     );
     expect(serializeAdminNav({ tab: "changelog", sub: "sailors" })).toBe(
-      "area=settings&view=changelog"
+      "area=settings&view=audit"
     );
+  });
+});
+
+describe("platform navigation", () => {
+  it("keeps Stats and does not offer a Log tab", () => {
+    const platform = ADMIN_TAB_GROUPS.find((group) => group.groupTitle === "Platform");
+    expect(platform?.tabs.map((tab) => tab.shortLabel)).toEqual(["Stats"]);
   });
 });
 
@@ -195,7 +205,15 @@ describe("canonical admin areas", () => {
     );
     expect(parseAdminArea(new URLSearchParams("tab=import")).view).toBe("import");
     expect(parseAdminArea(new URLSearchParams("tab=analysis")).view).toBe("optimist");
-    expect(parseAdminArea(new URLSearchParams("tab=changelog")).area).toBe("settings");
+    expect(parseAdminArea(new URLSearchParams("tab=changelog"))).toEqual({
+      area: "settings",
+      view: "audit",
+      event: null,
+      sheet: null,
+    });
+    expect(
+      parseAdminArea(new URLSearchParams("area=settings&view=changelog")).view
+    ).toBe("audit");
   });
 
   it("keeps all four Sailors views inside the Sailors workspace", () => {
