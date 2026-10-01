@@ -158,7 +158,7 @@ export function RegattaFilterBar({
           disabled={isSeeding}
           onClick={onSeed2026}
           className="rounded-full border border-sky-300 bg-sky-50 hover:bg-sky-100 px-3.5 py-2.5 text-xs font-bold text-sky-800 flex items-center justify-center gap-1.5 shrink-0 transition-colors disabled:opacity-50 shadow-xs"
-          title="Attach 2026 calendar weekends to their class sheets. Does not publish new results."
+          title="Attach 2026 main regatta events to their class sheets. Does not publish new results."
         >
           {isSeeding ? (
             <Loader2 className="h-3.5 w-3.5 animate-spin" />

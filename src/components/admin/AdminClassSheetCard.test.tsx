@@ -42,8 +42,8 @@ describe("AdminClassSheetCard", () => {
     expect(screen.getByText("Fleet 31")).toBeInTheDocument();
     expect(screen.getByText("2026-09-05")).toBeInTheDocument();
     expect(screen.getByText("ILCA 4").closest("span")).toHaveClass("whitespace-nowrap");
-    expect(screen.getByRole("combobox", { name: "Weekend for NSC 2026 ILCA 4" })).toBeInTheDocument();
-    expect(screen.getByText("Link to a weekend")).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Main regatta event for NSC 2026 ILCA 4" })).toBeInTheDocument();
+    expect(screen.getByText("Link to a main regatta event")).toBeInTheDocument();
 
     const link = screen.getByRole("button", { name: "Link" });
     expect(link).toBeDisabled();
@@ -61,7 +61,7 @@ describe("AdminClassSheetCard", () => {
     );
 
     expect(screen.getByRole("heading", { name: "ILCA 4" })).toBeInTheDocument();
-    expect(screen.queryByText("Link to a weekend")).not.toBeInTheDocument();
+    expect(screen.queryByText("Link to a main regatta event")).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Unpublish" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Delete ILCA 4" })).not.toBeInTheDocument();
   });

@@ -436,14 +436,14 @@ export async function POST(req: Request) {
       requestedEvent = event ?? null;
       if (!requestedEvent) {
         return NextResponse.json(
-          { error: "That weekend was not found." },
+          { error: "That main regatta event was not found." },
           { status: 404 }
         );
       }
     }
     if (createInEvent && !requestedEvent) {
         return NextResponse.json(
-          { error: "Choose a weekend before creating a class sheet." },
+          { error: "Choose a main regatta event before creating a class sheet." },
           { status: 400 }
         );
     }
