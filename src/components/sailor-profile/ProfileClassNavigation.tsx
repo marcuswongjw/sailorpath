@@ -1,7 +1,5 @@
 "use client";
 
-import { PROFILE_CARD_CLASS as cardClass } from "./helpers";
-
 export type ProfileClassTab = "optimist" | "ilca4" | "journey";
 export type ProfileSectionTab = "overview" | "results" | "awards" | "journey" | "equipment";
 
@@ -16,14 +14,14 @@ type Props = {
   awardsCount?: number;
   showStanding: boolean;
   showEquipment: boolean;
+  /** Keep Milestones reachable when an owner has none yet. */
+  showMilestones?: boolean;
   onTabChange: (tab: ProfileClassTab) => void;
   onSectionTabChange?: (tab: ProfileSectionTab) => void;
 };
 
-/** Boat-class tabs and segmented in-page navigation for profiles. */
+/** Section strip. Class selection lives once, beside the sailor’s name. */
 export function ProfileClassNavigation({
-  dualClass,
-  preferIlcaFirst,
   activeTab,
   sectionTab = "overview",
   optimistCount,
@@ -32,77 +30,22 @@ export function ProfileClassNavigation({
   awardsCount = 0,
   showStanding,
   showEquipment,
-  onTabChange,
+  showMilestones,
   onSectionTabChange,
 }: Props) {
-  const classTabs: ProfileClassTab[] = preferIlcaFirst
-    ? ["ilca4", "optimist", "journey"]
-    : ["optimist", "ilca4", "journey"];
-
   const resultsCount = activeTab === "ilca4" ? ilcaCount : optimistCount;
+  const milestonesVisible = showMilestones ?? journeyCount > 0;
 
   return (
     <>
-      {dualClass && (
-        <div
-          className={`${cardClass} p-2 sm:p-2.5`}
-          role="tablist"
-          aria-label="Boat class"
-        >
-          <div className="flex gap-1 rounded-xl bg-sailcloth border border-cool-veil p-1">
-            {classTabs.map((tab) => {
-              const isIlca = tab === "ilca4";
-              const isJourney = tab === "journey";
-              const count = isJourney
-                ? journeyCount
-                : isIlca
-                  ? ilcaCount
-                  : optimistCount;
-              const selected = activeTab === tab;
-              return (
-                <button
-                  key={tab}
-                  type="button"
-                  role="tab"
-                  aria-selected={selected}
-                  onClick={() => onTabChange(tab)}
-                  className={`flex-1 rounded-lg px-2.5 sm:px-3 py-2 text-[12px] sm:text-[13px] font-bold transition-colors min-h-[40px] cursor-pointer ${
-                    selected
-                      ? "bg-harbour text-sailcloth shadow-xs"
-                      : "text-slate-soft hover:text-charcoal hover:bg-white/40"
-                  }`}
-                >
-                  {isIlca ? "ILCA 4" : isJourney ? "Journey" : "Optimist"}
-                  <span
-                    className={`ml-1.5 tabular-nums text-[13px] sm:text-[13px] ${
-                      selected ? "text-sailcloth/90" : "text-slate-soft"
-                    }`}
-                  >
-                    ({count})
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-          <p className="text-[13px] text-slate-soft mt-1.5 px-1 font-medium">
-            {activeTab === "ilca4"
-              ? "ILCA 4 ranking, stats, and results"
-              : activeTab === "journey"
-                ? "Career milestones and highlights"
-                : "Optimist series ranking, stats, and results"}
-          </p>
-        </div>
-      )}
-
-      {/* Segmented Tab Navigation Bar */}
       <nav
         aria-label="Profile sections"
-        className="sticky top-14 sm:top-16 z-20 -mx-1 px-1 py-2 flex items-center gap-1.5 overflow-x-auto scrollbar-thin bg-sailcloth/95 backdrop-blur-md border-b border-cool-veil"
+        className="sticky top-14 sm:top-16 z-20 -mx-3 px-3 sm:-mx-6 sm:px-6 py-2 flex items-center gap-2 overflow-x-auto scrollbar-thin bg-sailcloth/95 backdrop-blur-md border-b border-cool-veil"
       >
         <button
           type="button"
           onClick={() => onSectionTabChange?.("overview")}
-          className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer ${
+          className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
             sectionTab === "overview"
               ? "bg-harbour text-sailcloth shadow-xs"
               : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
@@ -128,7 +71,7 @@ export function ProfileClassNavigation({
                 el?.scrollIntoView({ behavior: "smooth" });
               }
             }}
-            className="shrink-0 rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-[13px] font-bold text-charcoal hover:bg-aqua-mist hover:text-harbour touch-manipulation"
+            className="sr-only"
           >
             Standing
           </a>
@@ -138,7 +81,7 @@ export function ProfileClassNavigation({
         <button
           type="button"
           onClick={() => onSectionTabChange?.("results")}
-          className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer ${
+          className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
             sectionTab === "results"
               ? "bg-harbour text-sailcloth shadow-xs"
               : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
@@ -147,11 +90,11 @@ export function ProfileClassNavigation({
           Regattas
           {resultsCount > 0 && (
             <span
-              className={`ml-1.5 tabular-nums text-[13px] ${
+              className={`ml-1.5 tabular-nums ${
                 sectionTab === "results" ? "text-sailcloth/90" : "text-slate-soft"
               }`}
             >
-              ({resultsCount})
+              {resultsCount}
             </span>
           )}
         </button>
@@ -161,18 +104,16 @@ export function ProfileClassNavigation({
           <button
             type="button"
             onClick={() => onSectionTabChange?.("awards")}
-            className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer flex items-center gap-1.5 ${
+            className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
               sectionTab === "awards"
                 ? "bg-harbour text-sailcloth shadow-xs"
-                : "border border-amber-300/80 bg-amber-50/60 text-amber-950 hover:bg-amber-100"
+                : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
             }`}
           >
-            <span>🏆 Awards</span>
+            Awards
             <span
-              className={`tabular-nums text-[12px] font-black rounded-full px-1.5 py-0.2 ${
-                sectionTab === "awards"
-                  ? "bg-sailcloth/20 text-sailcloth"
-                  : "bg-amber-200/80 text-amber-900"
+              className={`ml-1.5 tabular-nums ${
+                sectionTab === "awards" ? "text-sailcloth/90" : "text-racing-orange"
               }`}
             >
               {awardsCount}
@@ -194,11 +135,11 @@ export function ProfileClassNavigation({
           {activeTab === "journey" ? "Journey" : "Results"}
         </a>
 
-        {/* Milestones / Journey tab */}
+        {milestonesVisible && (
         <button
           type="button"
           onClick={() => onSectionTabChange?.("journey")}
-          className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer ${
+          className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
             sectionTab === "journey"
               ? "bg-harbour text-sailcloth shadow-xs"
               : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"
@@ -207,14 +148,15 @@ export function ProfileClassNavigation({
           Milestones
           {journeyCount > 0 && (
             <span
-              className={`ml-1.5 tabular-nums text-[13px] ${
+              className={`ml-1.5 tabular-nums ${
                 sectionTab === "journey" ? "text-sailcloth/90" : "text-slate-soft"
               }`}
             >
-              ({journeyCount})
+              {journeyCount}
             </span>
           )}
         </button>
+        )}
 
         {/* Backward-compatibility link for Milestones */}
         {activeTab !== "journey" && journeyCount > 0 && (
@@ -238,7 +180,7 @@ export function ProfileClassNavigation({
             <button
               type="button"
               onClick={() => onSectionTabChange?.("equipment")}
-              className={`shrink-0 rounded-full px-4 py-1.5 text-[13px] font-bold touch-manipulation transition cursor-pointer ${
+              className={`shrink-0 rounded-full px-4 py-2 min-h-[40px] text-[13px] font-bold touch-manipulation transition cursor-pointer ${
                 sectionTab === "equipment"
                   ? "bg-harbour text-sailcloth shadow-xs"
                   : "border border-cool-veil bg-warm-white text-charcoal hover:bg-aqua-mist hover:text-harbour"

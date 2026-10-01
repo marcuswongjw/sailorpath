@@ -5,8 +5,7 @@ import userEvent from "@testing-library/user-event";
 import { ProfileClassNavigation } from "./ProfileClassNavigation";
 
 describe("ProfileClassNavigation", () => {
-  it("shows class counts and reports tab changes", async () => {
-    const onTabChange = vi.fn();
+  it("keeps sections separate from class choice and exposes the standing anchor", () => {
     render(
       <ProfileClassNavigation
         dualClass
@@ -15,18 +14,17 @@ describe("ProfileClassNavigation", () => {
         optimistCount={12}
         ilcaCount={4}
         journeyCount={3}
+        awardsCount={6}
         showStanding
         showEquipment
-        onTabChange={onTabChange}
+        onTabChange={() => {}}
       />
     );
 
-    expect(screen.getByRole("tab", { name: /Optimist.*12/ })).toHaveAttribute(
-      "aria-selected",
-      "true"
-    );
-    await userEvent.click(screen.getByRole("tab", { name: /ILCA 4.*4/ }));
-    expect(onTabChange).toHaveBeenCalledWith("ilca4");
+    expect(screen.queryByRole("tab", { name: /Optimist/ })).toBeNull();
+    expect(screen.queryByRole("tab", { name: /ILCA 4/ })).toBeNull();
+    expect(screen.getByRole("button", { name: /Regattas\s*12/ })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Awards\s*6/ })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Standing" })).toHaveAttribute(
       "href",
       "#profile-standing"

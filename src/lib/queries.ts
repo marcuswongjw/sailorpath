@@ -177,6 +177,8 @@ export type IlcaSeriesStanding = {
   boatClass: IlcaBoatClass;
   /** True when ranking used unrestricted board (not national list only) */
   unrestricted?: boolean;
+  /** official-list = managed national list; recorded-results = not on that list */
+  rankBasis?: "official-list" | "recorded-results";
 };
 
 async function withDb<T>(fn: () => Promise<T>): Promise<T> {
@@ -684,6 +686,7 @@ async function computeIlcaRankingsBoard(
   boatClass: IlcaBoatClass = "ILCA 4",
   asOfYmd?: string,
   intakeYear?: number,
+  /** When false, rank everyone with results. Default keeps the national-list board. */
   restrictToNationalList = true
 ) {
   const asOf = asOfYmd || todayYmdSg();
@@ -979,34 +982,13 @@ async function computeIlcaRankingsBoard(
   }
 }
 
-export async function getSailorIlcaStanding(
-  sailorId: string,
-  boatClass: IlcaBoatClass = "ILCA 4"
-): Promise<IlcaSeriesStanding | null> {
-  const { kind, year } = defaultIlcaIntake();
-  const officialBoard = await getCachedIlcaRankings(boatClass, kind, year);
-  let ranked = officialBoard.ranked;
-  let asOf = officialBoard.asOf;
-  let me = ranked.find((x) => x.sailorId === sailorId);
-  let unrestricted = false;
-
-  // Keep the official ranking API national-list-only, but do not leave an
-  // ILCA 4 sailor's profile blank when they have ranked-event results and are
-  // not yet included on the admin-managed national list.
-  if (!me && boatClass === "ILCA 4") {
-    const openBoard = await getCachedIlcaRankings(
-      boatClass,
-      kind,
-      year,
-      false
-    );
-    ranked = openBoard.ranked;
-    asOf = openBoard.asOf;
-    me = ranked.find((x) => x.sailorId === sailorId);
-    unrestricted = Boolean(me);
-  }
-  if (!me) return null;
-
+function toIlcaSeriesStanding(
+  me: IlcaRankedSailor,
+  fleetSize: number,
+  asOf: string,
+  boatClass: IlcaBoatClass,
+  rankBasis: "official-list" | "recorded-results"
+): IlcaSeriesStanding {
   const rScores: RegattaScoreSlot[] = me.eventScores.map((e) => ({
     regattaId: e.regattaId,
     regattaName: e.regattaName,
@@ -1025,19 +1007,53 @@ export async function getSailorIlcaStanding(
     });
   }
 
+  const recorded = rankBasis === "recorded-results";
   return {
     periodLabel: `${boatClass} · ranking as of ${asOf}`,
     fleet: "Open",
     overallRank: me.rank,
-    fleetSize: ranked.length,
+    fleetSize,
     best3of5: me.totalPoints,
     rScores,
-    trendNote: unrestricted
-      ? `Recorded ILCA 4 competitors · #${me.rank} of ${ranked.length}`
-      : `Best 3 of 5 high points · #${me.rank} of ${ranked.length} nationally`,
+    trendNote: recorded
+      ? `Recorded ILCA 4 competitors · #${me.rank} of ${fleetSize}`
+      : `Best 3 of 5 high points · #${me.rank} of ${fleetSize} nationally`,
     boatClass,
-    unrestricted,
+    unrestricted: recorded,
+    rankBasis,
   };
+}
+
+export async function getSailorIlcaStanding(
+  sailorId: string,
+  boatClass: IlcaBoatClass = "ILCA 4"
+): Promise<IlcaSeriesStanding | null> {
+  const { kind, year } = defaultIlcaIntake();
+  const national = await getCachedIlcaRankings(boatClass, kind, year);
+  const official = national.ranked.find((x) => x.sailorId === sailorId);
+  if (official) {
+    return toIlcaSeriesStanding(
+      official,
+      national.ranked.length,
+      national.asOf,
+      boatClass,
+      "official-list"
+    );
+  }
+
+  // Keep the public board national-list-only. An ILCA 4 profile still shows a
+  // rank from recorded results when the sailor is not on that list.
+  if (boatClass !== "ILCA 4") return null;
+  const recorded = await getCachedIlcaRankings(boatClass, kind, year, false);
+  const me = recorded.ranked.find((x) => x.sailorId === sailorId);
+  if (!me) return null;
+  return toIlcaSeriesStanding(
+    me,
+    recorded.ranked.length,
+    recorded.asOf,
+    boatClass,
+    "recorded-results"
+  );
 }
 
 export async function getRaceObservationsForSailor(

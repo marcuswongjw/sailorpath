@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Trophy } from "lucide-react";
+import { describeProfileRank } from "./rankBasis";
 import type { SeriesStandingProps } from "./types";
 
 export type ProfileStandingCardProps = {
@@ -21,6 +22,11 @@ export function ProfileStandingCard({
   seriesDnsCount,
   cardClass,
 }: ProfileStandingCardProps) {
+  const rank = describeProfileRank({
+    standing,
+    boatClass: standingIsIlca ? "ilca4" : "optimist",
+  });
+
   return (
     <section
       id="profile-standing"
@@ -39,39 +45,19 @@ export function ProfileStandingCard({
           </div>
           <div>
             <p className="text-[13px] font-bold text-harbour-shadow">
-              {standingIsIlca ? "ILCA 4 national ranking" : "Series standing"}
+              {standingIsIlca ? "ILCA 4 standing" : "Optimist standing"}
             </p>
-            <p className="text-[13px] text-slate-soft">
-              {standing.periodLabel}
-              <span className="text-cool-veil"> · </span>
-              <span
-                className={`font-semibold ${
-                  standingIsIlca ? "text-harbour" : "text-racing-orange"
-                }`}
-              >
-                {standingIsIlca
-                  ? standing.fleet || "Open fleet"
-                  : `${standing.fleet} fleet`}
-              </span>
+            <p className="text-[13px] text-slate-soft mt-0.5">
+              Rank basis: {rank.basisLabel.toLowerCase()}
             </p>
+            <p className="text-[12px] text-slate-soft mt-0.5">{rank.cycleLabel}</p>
           </div>
         </div>
         <div className="text-right">
-          <p className="text-[12px] font-bold uppercase tracking-[0.12em] text-slate-soft">
-            National rank
+          <p className="text-lg sm:text-xl font-black tabular-nums text-harbour-shadow">
+            {rank.hasRank ? rank.rankLabel : "—"}
           </p>
-          <p
-            className={`text-3xl sm:text-4xl font-black tabular-nums leading-none ${
-              standingIsIlca ? "text-harbour" : "text-racing-orange"
-            }`}
-          >
-            #{standing.overallRank}
-          </p>
-          <p className="text-[12px] text-slate-soft mt-1 tabular-nums font-medium">
-            of {standing.fleetSize}
-            {standingIsIlca ? "" : ` · ${standing.fleet}`}
-          </p>
-          <p className="text-[13px] text-slate-soft mt-1.5 tabular-nums">
+          <p className="text-[13px] text-slate-soft mt-1 tabular-nums">
             Best 3 of 5{" "}
             <span className="font-bold text-charcoal">
               {standing.best3of5}

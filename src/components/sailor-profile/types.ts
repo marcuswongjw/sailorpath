@@ -78,6 +78,13 @@ export interface SeriesStandingProps {
   trendNote: string;
   /** When set, standing card is styled for ILCA vs Optimist */
   boatClass?: string | null;
+  /**
+   * ILCA only. Official list = managed national ranking list.
+   * Recorded results = calculated from event results when the sailor is not on that list.
+   */
+  rankBasis?: "official-list" | "recorded-results" | null;
+  /** True when the ILCA rank used the results board rather than the national list. */
+  unrestricted?: boolean;
 }
 
 export type EquipmentProps = {

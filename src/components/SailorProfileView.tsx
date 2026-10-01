@@ -154,12 +154,9 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     sailDisplay,
     sailIlca4,
     noc,
-    statCells,
-    keyStatsTitle,
-    medalTallyTitle,
-    showMedals,
     activeStanding,
     standingIsIlca,
+    activeBoatClass,
     showEquipmentSection,
     trendPoints,
     trendMode,
@@ -172,7 +169,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
   return (
     <div
       id="profile-hero"
-      className="mx-auto max-w-3xl px-3 sm:px-6 py-6 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-sailcloth text-charcoal overflow-x-clip"
+      className="mx-auto max-w-5xl px-3 sm:px-6 py-6 sm:py-10 flex-1 w-full min-w-0 space-y-4 sm:space-y-5 bg-sailcloth text-charcoal overflow-x-clip"
     >
       {/* Claim banner — single primary CTA for unclaimed profiles (header repeats suppressed) */}
       {showUnclaimedBanner && (
@@ -235,11 +232,15 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         activeStanding={activeStanding}
         standingIsIlca={standingIsIlca}
         dualClass={dualClass}
-        selectedBoatClass={resultsTab === "ilca4" ? "ilca4" : "optimist"}
+        selectedBoatClass={activeBoatClass}
+        preferIlcaFirst={preferIlcaFirst}
+        optimistCount={optimistResults.length}
+        ilcaCount={ilca4Results.length}
         onSelectBoatClass={(cls) => {
           setResultsTab(cls);
           setShowAllResults(false);
         }}
+        onViewAwards={() => setSectionTab("awards")}
         medals={heroMedals}
         profileClaimed={profileClaimed}
         profileVerified={profileVerified}
@@ -321,6 +322,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         awardsCount={awards.length}
         showStanding={Boolean(activeStanding)}
         showEquipment={showEquipmentSection || !isOwner}
+        showMilestones={displayJourney.length > 0 || ownerView}
         onTabChange={(tab) => {
           setResultsTab(tab);
           if (tab === "journey") {
@@ -336,27 +338,17 @@ export function SailorProfileView(props: SailorProfileViewProps) {
       {/* ── OVERVIEW TAB ────────────────────────────────────────── */}
       {sectionTab === "overview" && (
         <ProfileOverviewTab
-          awards={awards}
-          sailorName={displaySailor.name}
-          ownerView={ownerView}
           activeStanding={activeStanding ?? null}
           standingIsIlca={standingIsIlca}
           seriesDnsCount={seriesDnsCount}
           cardClass={cardClass}
           resultsTab={resultsTab}
-          keyStatsTitle={keyStatsTitle}
-          statCells={statCells}
-          showMedals={showMedals}
-          medalTallyTitle={medalTallyTitle}
-          medals={analytics.medals}
           trendPoints={trendPoints}
           trendMode={trendMode}
           trendGoldEntry={trendGoldEntry}
           trendCaption={trendCaption}
           activeResultsList={activeResultsList}
           primaryIsIlca={primaryIsIlca}
-          displayJourney={displayJourney}
-          showEquipmentSection={showEquipmentSection}
           onNavigateTab={(tab) => setSectionTab(tab as ProfileSectionTab)}
         />
       )}
