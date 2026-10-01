@@ -4,6 +4,7 @@ import {
   eventShellSlug,
   eventStatusLabel,
   groupRegattaEvents,
+  importTargetEvents,
   missingClassesFor,
   sheetClassLabel,
   sheetIdsForEvent,
@@ -199,6 +200,47 @@ describe("groupRegattaEvents", () => {
       "orphan-link",
       "temasek-regatta-2026",
     ]);
+  });
+
+  it("lists every saved main regatta, including events with no class sheet", () => {
+    const targets = importTargetEvents(
+      [
+        {
+          ...row({
+            id: "gold",
+            slug: "historical-name-that-does-not-match",
+            name: "Imported results",
+            boatClass: "Optimist",
+            division: "Gold",
+            date: "2026-07-25",
+          }),
+          eventId: "pesta",
+        },
+      ],
+      [
+        {
+          id: "pesta",
+          slug: "pesta-sukan-2026",
+          name: "Pesta Sukan Regatta 2026",
+          startDate: "2026-07-25",
+        },
+        {
+          id: "csc",
+          slug: "csc-optimist-championships-2026",
+          name: "CSC Optimist Championships 2026",
+          startDate: "2026-01-17",
+        },
+      ]
+    );
+
+    expect(targets.map((event) => event.name)).toEqual([
+      "Pesta Sukan Regatta 2026",
+      "CSC Optimist Championships 2026",
+    ]);
+    expect(targets[0]?.sheets).toEqual([
+      { id: "gold", label: "Optimist · Gold", date: "2026-07-25" },
+    ]);
+    expect(targets[1]?.sheets).toEqual([]);
   });
 
   it("refuses to delete the unassigned bucket", () => {

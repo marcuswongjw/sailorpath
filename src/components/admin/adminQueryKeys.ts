@@ -4,6 +4,7 @@ export const adminQueryKeys = {
   all: ["admin"] as const,
   sailors: () => ["admin", "sailors"] as const,
   regattas: () => ["admin", "regattas"] as const,
+  regattaEvents: () => ["admin", "regatta-events"] as const,
   resultsAll: () => ["admin", "results", "all"] as const,
   resultsByRegatta: (regattaId: string) =>
     ["admin", "results", "regatta", regattaId] as const,

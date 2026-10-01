@@ -35,7 +35,7 @@ import {
   type AdminEditSubTab,
 } from "@/components/admin/adminNav";
 import { adminLoginOrigin, adminReturnUrl } from "@/lib/adminHost";
-import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
+import { groupRegattaEvents, importTargetEvents } from "@/lib/admin/groupRegattaEvents";
 import { confirmAdminLeave } from "@/components/admin/adminLeaveGuard";
 import { resolveAdminUrlChange } from "@/components/admin/adminNavigationSync";
 import { AdminSidebar, adminPageTitle } from "@/components/admin/AdminSidebar";
@@ -377,8 +377,11 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     initialSheetPending.current = null;
     const onEvents = activeTab === "regattas" || activeTab === "import";
     const sheet = onEvents ? data.selectedRegattaIdForResultEdit || null : null;
+    const eventSlugsById = new Map(
+      data.calendarEvents.map((event) => [event.id, event.slug])
+    );
     const event = sheet
-      ? groupRegattaEvents(data.regattaList).events.find(
+      ? groupRegattaEvents(data.regattaList, eventSlugsById).events.find(
           (item) =>
             item.sheets.some((row) => row.id === sheet) ||
             item.shells.some((row) => row.id === sheet)
@@ -408,6 +411,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     editSubTab,
     data.selectedRegattaIdForResultEdit,
     data.regattaList,
+    data.calendarEvents,
     pathname,
     router,
     currentSearch,
@@ -985,7 +989,10 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
             targetSheetId={importSheetId}
             targetEventSlug={
               importSheetId
-                ? groupRegattaEvents(data.regattaList).events.find(
+                ? groupRegattaEvents(
+                    data.regattaList,
+                    new Map(data.calendarEvents.map((event) => [event.id, event.slug]))
+                  ).events.find(
                     (item) =>
                       item.sheets.some((row) => row.id === importSheetId) ||
                       item.shells.some((row) => row.id === importSheetId)
@@ -994,19 +1001,11 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                   ? searchParams.get("event")
                   : null
             }
-            targetEvents={groupRegattaEvents(data.regattaList).events.map(
-              (event) => ({
-                slug: event.slug,
-                name: event.name,
-                sheets: event.sheets.map((sheet) => ({
-                  id: sheet.id,
-                  label: `${sheet.boatClass || "Class"}${
-                    sheet.division ? ` · ${sheet.division}` : ""
-                  }`,
-                  date: String(sheet.date || "").slice(0, 10),
-                })),
-              })
-            )}
+            targetEvents={
+              data.calendarEventsReady
+                ? importTargetEvents(data.regattaList, data.calendarEvents)
+                : []
+            }
             onOpenResults={(regattaId) => {
               setImportSheetId(null);
               setSelectedRegattaIdForResultEdit(regattaId);
