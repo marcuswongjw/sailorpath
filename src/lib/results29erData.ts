@@ -104,6 +104,12 @@ export const TWENTY_NINER_STATIC_REGATTAS: RegattaRecord[] = [
   },
 ];
 
+/** Weekend slugs that also name ILCA must not fall through to the 2026 29er sheet. */
+export function matchesCsc29erStaticSlug(slug: string): boolean {
+  const s = slug.toLowerCase();
+  return s.includes("csc") && s.includes("29er") && !s.includes("ilca");
+}
+
 function slugifyName(name: string): string {
   return name
     .toLowerCase()
@@ -125,7 +131,7 @@ export function getStatic29erResults(
   if (directMatch) {
     regatta = directMatch;
     entries = CSC_2026_29ER_RESULTS;
-  } else if (norm.includes("csc") && norm.includes("29er")) {
+  } else if (matchesCsc29erStaticSlug(norm)) {
     regatta = TWENTY_NINER_STATIC_REGATTAS[0];
     entries = CSC_2026_29ER_RESULTS;
   }

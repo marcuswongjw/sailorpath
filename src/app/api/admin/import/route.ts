@@ -14,8 +14,11 @@ import {
 import type { OfficialRaceResultInput } from "@/types/raceResult";
 import {
   buildSailorNameIndex,
+  chooseCanonicalSailor,
   combinedNameSimilarity,
+  exactNameMatches,
   findSailorByName,
+  isExactNameMatch,
   suggestSailorByName,
 } from "@/lib/nameMatch";
 import {
@@ -758,22 +761,44 @@ export async function POST(req: Request) {
             .flatMap((name) =>
               name
                 .toLowerCase()
-                .replace(/[^a-z0-9s'-]/g, " ")
-                .split(/[s'-]+/)
+                .replace(/[^a-z0-9\s'-]/g, " ")
+                .split(/[\s'-]+/)
             )
             .filter((token) => token.length >= 2)
         ),
       ];
 
+      const tokenAliasCondition =
+        cleanTokens.length > 0
+          ? sql`lower(${sailorAliases.aliasName}) LIKE ANY(ARRAY[${sql.join(
+              cleanTokens.map((token) => sql`${`%${token}%`}`),
+              sql`, `
+            )}])`
+          : undefined;
       const matchingAliases =
-        cleanLowerNames.length > 0
+        cleanLowerNames.length > 0 || tokenAliasCondition
           ? await db
               .select({
                 sailorId: sailorAliases.sailorId,
                 aliasName: sailorAliases.aliasName,
               })
               .from(sailorAliases)
-              .where(inArray(sql`lower(${sailorAliases.aliasName})`, cleanLowerNames))
+              .where(
+                tokenAliasCondition && cleanLowerNames.length > 0
+                  ? or(
+                      inArray(
+                        sql`lower(${sailorAliases.aliasName})`,
+                        cleanLowerNames
+                      ),
+                      tokenAliasCondition
+                    )
+                  : tokenAliasCondition
+                    ? tokenAliasCondition
+                    : inArray(
+                        sql`lower(${sailorAliases.aliasName})`,
+                        cleanLowerNames
+                      )
+              )
           : [];
 
       const candidateSailorIds = new Set<string>(
@@ -807,9 +832,7 @@ export async function POST(req: Request) {
         );
       }
       if (cleanTokens.length > 0) {
-        const tokenPatterns = cleanTokens
-          .slice(0, 50)
-          .map((t) => `%${t.toLowerCase()}%`);
+        const tokenPatterns = cleanTokens.map((t) => `%${t.toLowerCase()}%`);
         candidateConditions.push(
           sql`lower(${sailors.name}) LIKE ANY(ARRAY[${sql.join(
             tokenPatterns.map((p) => sql`${p}`),
@@ -944,6 +967,8 @@ export async function POST(req: Request) {
         verifiedAt?: Date | null;
       }[] = [];
       const pendingAliases: { sailorId: string; aliasName: string }[] = [];
+      const pendingSourceNames: string[] = [];
+      const pendingRaceLists: OfficialRaceResultInput[][] = [];
       const pendingOfficialRaces: {
         sailorId: string;
         races: OfficialRaceResultInput[];
@@ -986,19 +1011,28 @@ export async function POST(req: Request) {
 
       for (const row of cleanRows) {
         const hit = findSailorByName(row.name, nameIndex);
+        const exactHits = exactNameMatches(row.name, nameIndex);
+        const matchedByExactName = exactHits.length > 0;
         const sailMatches = row.sailNumber
           ? sailorsByClassSailNumber.get(row.sailNumber) || []
           : [];
-        const matchedBySailNumber = sailMatches.length === 1;
-        let sailorId: string | null = matchedBySailNumber
-          ? sailMatches[0].id
-          : hit?.sailor?.id ?? null;
+        const matchedBySailNumber =
+          !matchedByExactName && sailMatches.length === 1;
+        let sailorId: string | null = matchedByExactName
+          ? chooseCanonicalSailor(exactHits, (id) =>
+              latestDateBySailor.has(id)
+            ).id
+          : matchedBySailNumber
+            ? sailMatches[0].id
+            : hit?.sailor?.id ?? null;
 
-        if (matchedBySailNumber) {
+        if (matchedByExactName) {
+          matchHow["exact-name"] = (matchHow["exact-name"] || 0) + 1;
+        } else if (matchedBySailNumber) {
           matchHow["sail-number"] = (matchHow["sail-number"] || 0) + 1;
         }
 
-        if (hit?.sailor && !matchedBySailNumber) {
+        if (hit?.sailor && !matchedBySailNumber && !matchedByExactName) {
           matchHow[hit.how] = (matchHow[hit.how] || 0) + 1;
           if (hit.how.startsWith("fuzzy")) {
             const sim = combinedNameSimilarity(row.name, hit.sailor.name);
@@ -1351,12 +1385,15 @@ export async function POST(req: Request) {
           verificationStatus: "verified",
           verifiedAt: new Date(),
         });
-        if (row.races.length) {
-          pendingOfficialRaces.push({ sailorId, races: row.races });
-        }
+        pendingSourceNames.push(row.name);
+        pendingRaceLists.push(row.races);
         matched++;
 
-        if (!matchedBySailNumber && hit && hit.how !== "exact") {
+        const chosenName = sailorList.find((s) => s.id === sailorId)?.name;
+        if (
+          chosenName &&
+          chosenName.trim().toLowerCase() !== row.name.trim().toLowerCase()
+        ) {
           pendingAliases.push({ sailorId, aliasName: row.name });
         }
       }
@@ -1366,14 +1403,56 @@ export async function POST(req: Request) {
           "Some competitors could not be matched. No changes were saved. Check the sailor names and retry."
         );
       }
-      if (
-        new Set(pendingResults.map((result) => result.sailorId)).size !==
-        pendingResults.length
-      ) {
-        throw new ImportConflictError(
-          "Multiple rows matched the same sailor. No changes were saved. Resolve duplicate or ambiguous names before retrying."
+
+      const keptResultIndex = new Map<string, number>();
+      const droppedResultIndexes = new Set<number>();
+      pendingResults.forEach((result, index) => {
+        const previous = keptResultIndex.get(result.sailorId);
+        if (previous == null) {
+          keptResultIndex.set(result.sailorId, index);
+          return;
+        }
+        if (
+          !isExactNameMatch(
+            pendingSourceNames[previous],
+            pendingSourceNames[index]
+          )
+        ) {
+          throw new ImportConflictError(
+            "Multiple rows matched the same sailor. No changes were saved. Resolve duplicate or ambiguous names before retrying."
+          );
+        }
+        const previousRank = pendingResults[previous].rank ?? 999;
+        const rank = result.rank ?? 999;
+        if (rank < previousRank) {
+          droppedResultIndexes.add(previous);
+          keptResultIndex.set(result.sailorId, index);
+        } else {
+          droppedResultIndexes.add(index);
+        }
+      });
+      if (droppedResultIndexes.size) {
+        const keep = <T,>(rows: T[]) =>
+          rows.filter((_, index) => !droppedResultIndexes.has(index));
+        pendingResults.splice(0, pendingResults.length, ...keep(pendingResults));
+        pendingSourceNames.splice(
+          0,
+          pendingSourceNames.length,
+          ...keep(pendingSourceNames)
         );
+        pendingRaceLists.splice(
+          0,
+          pendingRaceLists.length,
+          ...keep(pendingRaceLists)
+        );
+        matched -= droppedResultIndexes.size;
       }
+      pendingResults.forEach((result, index) => {
+        const races = pendingRaceLists[index] || [];
+        if (races.length) {
+          pendingOfficialRaces.push({ sailorId: result.sailorId, races });
+        }
+      });
 
       recordStage("matching");
       await onProgress?.("saving", 70, "Writing regatta, competitors, and race results to database…");

@@ -22,6 +22,47 @@ export function nameTokenKey(n: string): string {
     .join(" ");
 }
 
+/** True when two names are the same person: same spelling, or the same words in any order. */
+export function isExactNameMatch(a: string, b: string): boolean {
+  if (!a?.trim() || !b?.trim()) return false;
+  return normalizeName(a) === normalizeName(b) || nameTokenKey(a) === nameTokenKey(b);
+}
+
+type CanonicalSailor = {
+  id: string;
+  parentId?: string | null;
+  dob?: string | null;
+  club?: string | null;
+  gender?: string | null;
+};
+
+/**
+ * One profile to receive a 100% name match.
+ * A claimed account wins, then a sailor who already has results, then a fuller profile.
+ */
+export function chooseCanonicalSailor<T extends CanonicalSailor>(
+  matches: T[],
+  hasHistory: (id: string) => boolean = () => false
+): T {
+  if (!matches.length) {
+    throw new Error("chooseCanonicalSailor requires at least one sailor");
+  }
+  return [...matches].sort((a, b) => {
+    const score = (sailor: T) => {
+      let n = 0;
+      if (sailor.parentId) n += 1000;
+      if (hasHistory(sailor.id)) n += 100;
+      if (sailor.dob) n += 5;
+      if (sailor.club && sailor.club !== "N/A") n += 1;
+      if (sailor.gender) n += 1;
+      return n;
+    };
+    const diff = score(b) - score(a);
+    if (diff !== 0) return diff;
+    return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+  })[0];
+}
+
 function nameTokens(n: string): string[] {
   return normalizeName(n)
     .split(/[\s'-]+/)
@@ -344,6 +385,42 @@ export function findSailorByName(
   }
 
   return null;
+}
+
+/**
+ * Every sailor whose name (or alias) is a 100% match.
+ * Callers should attach the result to one of these instead of creating another sailor.
+ */
+export function exactNameMatches(
+  rawName: string,
+  sailorsOrIndex: SailorMatchRow[] | SailorNameIndex,
+  aliases: { sailorId: string; aliasName: string }[] = []
+): SailorMatchRow[] {
+  const index: SailorNameIndex = Array.isArray(sailorsOrIndex)
+    ? buildSailorNameIndex(sailorsOrIndex, aliases)
+    : sailorsOrIndex;
+  const raw = rawName.trim();
+  if (!raw) return [];
+  const key = nameTokenKey(raw);
+  const norm = normalizeName(raw);
+  const seen = new Set<string>();
+  const out: SailorMatchRow[] = [];
+  const add = (sailor: SailorMatchRow | undefined) => {
+    if (!sailor || seen.has(sailor.id)) return;
+    seen.add(sailor.id);
+    out.push(sailor);
+  };
+
+  for (const sailor of index.sailors) {
+    if (isExactNameMatch(raw, sailor.name)) add(sailor);
+  }
+
+  const aliasId =
+    index.aliasExact.get(raw) ||
+    index.aliasNorm.get(norm) ||
+    index.aliasTokenKey.get(key);
+  if (aliasId) add(index.byId.get(aliasId));
+  return out;
 }
 
 export function suggestSailorByName(

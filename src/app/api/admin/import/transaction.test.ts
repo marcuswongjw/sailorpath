@@ -94,11 +94,31 @@ describe("import database transaction", () => {
     expect(await testDb.select().from(regattas)).toHaveLength(2);
   });
 
-  it("rejects duplicate matched competitors without committing profiles", async () => {
-    const response = await upload({ rows: [{ name: "Alice Example", rank: 1 }, { name: "Alice Example", rank: 2 }] });
+  it("keeps the better rank when the same person is listed twice", async () => {
+    const response = await upload({ rows: [{ name: "Alice Example", rank: 2 }, { name: "Alice Example", rank: 1 }] });
+    expect(response.status).toBe(200);
+    expect(await testDb.select().from(sailors)).toHaveLength(1);
+    const results = await testDb.select().from(regattaResults);
+    expect(results).toHaveLength(1);
+    expect(results[0].rank).toBe(1);
+  });
+
+  it("rejects two different names that resolve to the same sailor", async () => {
+    await testDb.insert(sailors).values({
+      name: "Carol Example",
+      handle: "carol-example",
+      sailNumber: "123",
+      club: "CSC",
+    });
+    const response = await upload({
+      rows: [
+        { name: "Carol Example", rank: 1, sailNumber: "123" },
+        { name: "Someone Else", rank: 2, sailNumber: "123" },
+      ],
+    });
     expect(response.status).toBe(409);
     expect(await testDb.select().from(regattas)).toHaveLength(0);
-    expect(await testDb.select().from(sailors)).toHaveLength(0);
+    expect(await testDb.select().from(sailors)).toHaveLength(1);
   });
 
   it("streams NDJSON progress events when requested", async () => {
