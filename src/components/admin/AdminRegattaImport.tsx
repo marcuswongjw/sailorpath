@@ -522,7 +522,7 @@ export function AdminRegattaImport({
       return;
     }
     if (!selectedEventSlug || !selectedTarget) {
-      toast.error("Choose the weekend and class this file will update.");
+      toast.error("Choose the main regatta event and class this file will update.");
       return;
     }
     if (!rowsToImport.length || !meta.name || !meta.date) {
@@ -766,7 +766,7 @@ export function AdminRegattaImport({
       <div className="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/5 w-full">
         <div className="mb-5 grid grid-cols-1 gap-3 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:grid-cols-2">
           <label className="text-xs font-bold text-slate-300">
-            Weekend
+            Main Regatta Event
             <select
               value={selectedEventSlug}
               disabled={importBusy}
@@ -776,7 +776,7 @@ export function AdminRegattaImport({
               }}
               className="mt-1 w-full rounded-lg border border-white/10 bg-slate-900 px-3 py-2 text-sm text-white disabled:opacity-60"
             >
-              <option value="">Choose a weekend…</option>
+              <option value="">Choose a main regatta event…</option>
               {targetEvents.map((event) => (
                 <option key={event.slug} value={event.slug}>
                   {event.name}
@@ -803,7 +803,7 @@ export function AdminRegattaImport({
           </label>
           <p className="text-[13px] text-slate-500 sm:col-span-2">
             The server writes only to this target. A new class is linked to the
-            selected weekend.
+            selected main regatta event.
           </p>
         </div>
         <div

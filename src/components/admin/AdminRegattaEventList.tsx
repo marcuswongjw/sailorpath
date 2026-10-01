@@ -93,7 +93,7 @@ export function AdminRegattaEventList({
     <div className="glass-panel flex max-h-[min(70vh,40rem)] min-h-[20rem] flex-col overflow-hidden rounded-2xl border border-slate-200 lg:max-h-[calc(100vh-14rem)] lg:sticky lg:top-4">
       <div className="border-b border-slate-200 px-4 py-3">
         <p className="text-[11px] font-black uppercase tracking-wider text-slate-700">
-          Weekends
+          Main Regatta Events
         </p>
         <p className="mt-0.5 text-xs font-medium text-slate-500">
           {total === 0
@@ -197,7 +197,7 @@ export function AdminRegattaEventList({
               Unassigned sailing classes
             </span>
             <span className="mt-0.5 block text-[11px] font-medium text-amber-800">
-              {unassignedCount} class{unassignedCount === 1 ? "" : "es"} without a weekend
+              {unassignedCount} class{unassignedCount === 1 ? "" : "es"} without a main regatta event
             </span>
           </button>
         ) : null}

@@ -12,14 +12,14 @@ export function assertImportSheetTarget(args: {
     return {
       ok: false,
       status: 409,
-      error: "That class does not belong to this weekend.",
+      error: "That class does not belong to this main regatta event.",
     };
   }
   if (args.eventSlug && !args.sheet.eventSlug) {
     return {
       ok: false,
       status: 409,
-      error: "That class is not linked to this weekend.",
+      error: "That class is not linked to this main regatta event.",
     };
   }
   return { ok: true, sheetId: args.sheet.id };

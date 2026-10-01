@@ -118,11 +118,11 @@ export function AdminClassSheetCard({
       {unassigned && isSuperadmin ? (
         <div className="mt-3 rounded-lg border border-dashed border-amber-200 bg-amber-50/70 p-2.5">
           <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-900">
-            Link to a weekend
+            Link to a main regatta event
           </p>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <label className="sr-only" htmlFor={`link-event-${sheet.id}`}>
-              Weekend for {title}
+              Main regatta event for {title}
             </label>
             <select
               id={`link-event-${sheet.id}`}
@@ -130,7 +130,7 @@ export function AdminClassSheetCard({
               onChange={(event) => onLinkTargetChange?.(event.target.value)}
               className="min-w-0 w-full flex-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-800"
             >
-              <option value="">Choose a weekend…</option>
+              <option value="">Choose a main regatta event…</option>
               {weekends.map((event) => (
                 <option key={event.id} value={event.id}>
                   {event.name} ({event.startDate})

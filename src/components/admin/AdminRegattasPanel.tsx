@@ -525,7 +525,7 @@ export function AdminRegattasPanel({
     const ok = await confirm({
       title: `Delete ${event.name}?`,
       message:
-        `This removes the weekend from the admin calendar and deletes every sailing class under it.\n\n` +
+        `This removes the main regatta event from the admin calendar and deletes every sailing class under it.\n\n` +
         `${event.startDate || "No date"}${event.venue ? ` · ${event.venue}` : ""}\n\n` +
         `Classes:\n${names.listed}${extraLine}\n\n` +
         `Cascade:\n${cascadeLine("Class sheets", classes.length)}\n` +
@@ -640,10 +640,10 @@ export function AdminRegattasPanel({
                     <div className="h-full flex flex-col items-center justify-center text-center py-16 px-4">
                       <Calendar className="h-10 w-10 text-slate-600 mb-3" />
                       <p className="text-sm font-bold text-slate-300">
-                        Select a weekend
+                        Select a main regatta event
                       </p>
                       <p className="text-xs text-slate-500 mt-1 max-w-sm">
-                        Choose an event from the list to review sailing classes, edit the calendar card, or delete the whole weekend.
+                        Choose an event from the list to review sailing classes, edit the calendar card, or delete the whole main regatta event.
                       </p>
                     </div>
                   ) : editingRegattaId ? (
@@ -653,13 +653,13 @@ export function AdminRegattasPanel({
                           <div className="flex items-center gap-2 flex-wrap min-w-0">
                             <button
                               type="button"
-                              aria-label="Back to weekends"
+                              aria-label="Back to main regatta events"
                               onClick={() => {
                                 setEditingRegattaId(null);
                                 onClearSheet?.();
                               }}
                               className="inline-flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-white transition-colors mr-1 p-1 rounded hover:bg-white/5"
-                              title="Back to weekend events"
+                              title="Back to main regatta events"
                             >
                               <ArrowLeft className="h-4 w-4" />
                               <span className="hidden sm:inline">Events</span>
@@ -1329,7 +1329,7 @@ export function AdminRegattasPanel({
                                 className="mb-2 inline-flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-slate-900"
                               >
                                 <ArrowLeft className="h-3.5 w-3.5" />
-                                All weekends
+                                All main regatta events
                               </button>
                             ) : null}
                             <h3 className="text-base font-black text-slate-900 mt-0.5">
@@ -1339,7 +1339,7 @@ export function AdminRegattasPanel({
                               <p className="mt-1 max-w-xl text-xs font-medium text-slate-600">
                                 {selectedEventView.sheets.length} class sheet
                                 {selectedEventView.sheets.length === 1 ? "" : "s"} not attached to a
-                                weekend. Choose a weekend on each sheet, then link it.
+                                main regatta event. Choose a main regatta event on each sheet, then link it.
                               </p>
                             ) : (
                               <p className="text-xs text-slate-700 font-medium mt-0.5">

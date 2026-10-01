@@ -935,7 +935,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
           <div className="w-full min-w-0">
             {unknownSheet && (
               <p className="mb-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-900" role="alert">
-                That class sheet was not found. Choose a weekend, then a class.
+                That class sheet was not found. Choose a main regatta event, then a class.
               </p>
             )}
             <AdminRegattasPanel
