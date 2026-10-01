@@ -2,7 +2,7 @@
 
 import { useState, useMemo, type Dispatch, type SetStateAction } from "react";
 import { parseApi, apiErr } from "@/components/admin/parseApi";
-import { emptyRegattaForm } from "@/components/admin/adminForms";
+import { emptyRegattaForm, regattaToClassForm } from "@/components/admin/adminForms";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { errorMessage } from "@/lib/errors";
 import { cascadeLine } from "@/lib/confirmCopy";
@@ -54,8 +54,16 @@ export function useAdminRegattas({
     useState<string>("all");
   const [editingRegattaId, setEditingRegattaId] = useState<string | null>(null);
   const [regattaForm, setRegattaForm] = useState(emptyRegattaForm);
+  /** JSON of the class form last opened or saved. Leave prompts compare against this. */
+  const [classSnap, setClassSnap] = useState("");
   /** Double-submit guard for regatta save. */
   const [saving, setSaving] = useState(false);
+
+  const rememberSavedClass = (regatta: RegattaAdmin) => {
+    const next = regattaToClassForm(regatta);
+    setRegattaForm(next);
+    setClassSnap(JSON.stringify(next));
+  };
 
   const filteredRegattaList = useMemo(() => {
     const q = regattaSearch.trim().toLowerCase();
@@ -121,27 +129,7 @@ export function useAdminRegattas({
         const regatta = data.regatta as RegattaAdmin;
         setRegattaList((prev) => [...prev, regatta]);
         setEditingRegattaId(regatta.id);
-        setRegattaForm({
-          id: regatta.id,
-          name: regatta.name || "",
-          date: String(regatta.date || "").slice(0, 10),
-          slug: regatta.slug,
-          division: regatta.division || "",
-          raceCount: regatta.raceCount != null ? String(regatta.raceCount) : "",
-          totalFleetSize:
-            regatta.totalFleetSize != null ? String(regatta.totalFleetSize) : "",
-          geography: regatta.geography || "SGP",
-          boatClass: regatta.boatClass || "Optimist",
-          countsForRanking: regatta.countsForRanking !== false,
-          endDate: regatta.endDate ? String(regatta.endDate).slice(0, 10) : "",
-          venue: regatta.venue || "",
-          organizer: regatta.organizer || "",
-          norUrl: regatta.norUrl || "",
-          registrationUrl: regatta.registrationUrl || "",
-          isSelectionTrial: Boolean(regatta.isSelectionTrial),
-          scheduleNotes: regatta.scheduleNotes || "",
-          status: regatta.status || "published",
-        });
+        rememberSavedClass(regatta);
         setSelectedRegattaIdForResultEdit(regatta.id);
         toast.success(
           data.rankingNote
@@ -176,27 +164,7 @@ export function useAdminRegattas({
         setRegattaList((prev) =>
           prev.map((r) => (r.id === regattaId ? regatta : r))
         );
-        setRegattaForm({
-          id: regatta.id,
-          name: regatta.name || "",
-          date: String(regatta.date || "").slice(0, 10),
-          slug: regatta.slug,
-          division: regatta.division || "",
-          raceCount: regatta.raceCount != null ? String(regatta.raceCount) : "",
-          totalFleetSize:
-            regatta.totalFleetSize != null ? String(regatta.totalFleetSize) : "",
-          geography: regatta.geography || "SGP",
-          boatClass: regatta.boatClass || "Optimist",
-          countsForRanking: regatta.countsForRanking !== false,
-          endDate: regatta.endDate ? String(regatta.endDate).slice(0, 10) : "",
-          venue: regatta.venue || "",
-          organizer: regatta.organizer || "",
-          norUrl: regatta.norUrl || "",
-          registrationUrl: regatta.registrationUrl || "",
-          isSelectionTrial: Boolean(regatta.isSelectionTrial),
-          scheduleNotes: regatta.scheduleNotes || "",
-          status: regatta.status || "published",
-        });
+        rememberSavedClass(regatta);
         toast.success(
           data.rankingNote
             ? `Saved. ${data.rankingNote}`
@@ -274,6 +242,8 @@ export function useAdminRegattas({
     setEditingRegattaId,
     regattaForm,
     setRegattaForm,
+    classSnap,
+    setClassSnap,
     saving,
     handleSaveRegatta,
     handleDeleteRegatta,

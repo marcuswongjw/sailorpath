@@ -45,7 +45,21 @@ export async function PATCH(req: Request) {
       );
     }
 
-    const values = {
+    const values: {
+      name: string;
+      slug: string;
+      startDate: string;
+      endDate: string | null;
+      venue: string | null;
+      organizer: string | null;
+      classes: string[];
+      norUrl: string | null;
+      registrationUrl: string | null;
+      countsForRanking: boolean;
+      isSelectionTrial?: boolean;
+      keyDeadlines: string | null;
+      updatedAt: Date;
+    } = {
       name,
       slug,
       startDate,
@@ -56,10 +70,12 @@ export async function PATCH(req: Request) {
       norUrl: clean(body.norUrl, 500),
       registrationUrl: clean(body.registrationUrl, 500),
       countsForRanking: body.countsForRanking !== false,
-      isSelectionTrial: Boolean(body.isSelectionTrial),
       keyDeadlines: clean(body.keyDeadlines, 500),
       updatedAt: new Date(),
     };
+    if (body.isSelectionTrial !== undefined) {
+      values.isSelectionTrial = Boolean(body.isSelectionTrial);
+    }
 
     const [saved] = await db
       .insert(regattaEvents)

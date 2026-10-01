@@ -30,6 +30,7 @@ export type GroupableRegatta = {
   registrationUrl?: string | null;
   countsForRanking?: boolean | null;
   isSelectionTrial?: boolean | null;
+  selectionEventId?: string | null;
   eventId?: string | null;
   totalFleetSize?: number | null;
   raceCount?: number | null;
@@ -266,9 +267,10 @@ export function groupRegattaEvents(
       countsForRanking: primary
         ? primary.countsForRanking
         : eventSheets.some((row) => row.countsForRanking !== false),
-      isSelectionTrial: primary
-        ? primary.isSelectionTrial
-        : Boolean(shell?.isSelectionTrial),
+      isSelectionTrial:
+        Boolean(primary?.isSelectionTrial) ||
+        eventSheets.some((row) => row.isSelectionTrial) ||
+        eventShells.some((row) => row.isSelectionTrial),
       keyDeadlines: primary?.keyDeadlines || undefined,
       expectedClasses,
       missingClasses: missingClassesFor(expectedClasses, [

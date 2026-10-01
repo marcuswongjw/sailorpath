@@ -362,6 +362,8 @@ export const regattas = pgTable("regattas", {
   registrationUrl: text("registration_url"),
   /** Highlights official Asian Games / Perth Camp / Worlds selection trials */
   isSelectionTrial: boolean("is_selection_trial").default(false).notNull(),
+  /** Catalog id from selection events, set on the class sheet. */
+  selectionEventId: text("selection_event_id"),
   /** Organizing authority (e.g. Singapore Sailing Federation) */
   organizer: text("organizer"),
   /** Schedule details, tide timings, or logistics notes */

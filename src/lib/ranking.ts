@@ -80,6 +80,10 @@ export interface RegattaRecord {
   registrationUrl?: string | null;
   /** Highlights official Asian Games / Perth Camp trials */
   isSelectionTrial?: boolean | null;
+  /** Explicit selection-event catalog id for this class sheet. */
+  selectionEventId?: string | null;
+  /** Weekend this class sheet belongs to. */
+  eventId?: string | null;
   /** Organizing authority */
   organizer?: string | null;
   /** Schedule / tide / logistics notes */

@@ -268,6 +268,8 @@ export async function listRegattas(options?: { includeAll?: boolean }) {
         norUrl: r.norUrl,
         registrationUrl: r.registrationUrl,
         isSelectionTrial: r.isSelectionTrial ?? false,
+        selectionEventId: r.selectionEventId,
+        eventId: r.eventId,
         organizer: r.organizer,
         scheduleNotes: r.scheduleNotes,
       })
@@ -335,6 +337,8 @@ export async function getRegattaBySlug(slug: string, options?: { allowUnpublishe
       norUrl: row.norUrl,
       registrationUrl: row.registrationUrl,
       isSelectionTrial: row.isSelectionTrial ?? false,
+      selectionEventId: row.selectionEventId,
+      eventId: row.eventId,
       organizer: row.organizer,
       scheduleNotes: row.scheduleNotes,
     } satisfies RegattaRecord;

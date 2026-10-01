@@ -26,8 +26,13 @@ import { setAdminRegattaStatus } from "@/components/admin/adminRegattaLifecycle"
 import { GeographySelect } from "@/components/CountrySelect";
 import {
   emptyRegattaForm,
+  regattaToClassForm,
   type RegattaFormState,
 } from "@/components/admin/adminForms";
+import {
+  SELECTION_EVENT_OPTIONS,
+  selectionEventsForBoatClass,
+} from "@/lib/selectionEventCatalog";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { setAdminLeaveGuard } from "@/components/admin/adminLeaveGuard";
 import { RegattaFilterBar } from "@/components/admin/RegattaFilterBar";
@@ -111,6 +116,8 @@ export type AdminRegattasPanelProps = {
   setEditingRegattaId: (id: string | null) => void;
   regattaForm: RegattaFormState;
   setRegattaForm: React.Dispatch<React.SetStateAction<RegattaFormState>>;
+  classSnap: string;
+  setClassSnap: (snap: string) => void;
   /** True while the save mutation is in flight. */
   saving: boolean;
   handleSaveRegatta: () => void | Promise<void>;
@@ -141,6 +148,8 @@ export function AdminRegattasPanel({
   setEditingRegattaId,
   regattaForm,
   setRegattaForm,
+  classSnap,
+  setClassSnap,
   saving,
   handleSaveRegatta,
   handleDeleteRegatta,
@@ -160,7 +169,6 @@ export function AdminRegattasPanel({
   const [calendarSaving, setCalendarSaving] = useState(false);
   const calendarSlug = useRef("");
   const [calendarSnap, setCalendarSnap] = useState("");
-  const [classSnap, setClassSnap] = useState("");
   const classLabel = useRef("Class settings");
   const [readiness, setReadiness] = useState<PublicationReadiness | null>(null);
   const [sheetTab, setSheetTab] = useState<"details" | "results">("details");
@@ -324,27 +332,7 @@ export function AdminRegattasPanel({
     });
   }, [regattaForm.boatClass, regattaForm.slug]);
 
-  const formFrom = (r: GroupableRegatta) => ({
-    id: r.id,
-    eventId: r.eventId || "",
-    name: r.name || "",
-    date: String(r.date || "").slice(0, 10),
-    slug: r.slug,
-    division: r.division || "",
-    raceCount: r.raceCount != null ? String(r.raceCount) : "",
-    totalFleetSize: r.totalFleetSize != null ? String(r.totalFleetSize) : "",
-    geography: r.geography || "SGP",
-    boatClass: r.boatClass || "Optimist",
-    countsForRanking: r.countsForRanking !== false,
-    endDate: r.endDate ? String(r.endDate).slice(0, 10) : "",
-    venue: r.venue || "",
-    organizer: r.organizer || "",
-    norUrl: r.norUrl || "",
-    registrationUrl: r.registrationUrl || "",
-    isSelectionTrial: Boolean(r.isSelectionTrial),
-    scheduleNotes: r.scheduleNotes || "",
-    status: r.status || "published",
-  });
+  const formFrom = (r: GroupableRegatta) => regattaToClassForm(r);
 
   const seenSheetId = useRef<string | null>(null);
 
@@ -370,7 +358,7 @@ export function AdminRegattasPanel({
     classLabel.current = `${sheetClassLabel(row)} class settings`;
     setRegattaForm(next);
     setSheetTab("results");
-  }, [activeSheetId, filteredRegattaList, grouped.events, setEditingRegattaId, setRegattaForm]);
+  }, [activeSheetId, filteredRegattaList, grouped.events, setClassSnap, setEditingRegattaId, setRegattaForm]);
 
   useEffect(() => {
     let cancelled = false;
@@ -1165,6 +1153,9 @@ export function AdminRegattasPanel({
                                         setRegattaForm({
                                           ...regattaForm,
                                           isSelectionTrial: e.target.checked,
+                                          selectionEventId: e.target.checked
+                                            ? regattaForm.selectionEventId || ""
+                                            : "",
                                         })
                                       }
                                       className="mt-0.5 rounded border-slate-600 text-amber-400 focus:ring-0"
@@ -1174,10 +1165,53 @@ export function AdminRegattasPanel({
                                         Official Selection Trial / Qualifier
                                       </span>
                                       <span className="text-[11px] text-slate-400 leading-relaxed block mt-0.5">
-                                        Highlights this regatta with a special Selection Trial badge on calendar cards and rankings.
+                                        Marks this class as a selection trial. Link it to the selection event these results count toward.
                                       </span>
                                     </div>
                                   </label>
+                                  {regattaForm.isSelectionTrial ? (
+                                    <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3">
+                                      <label className="text-[11px] font-bold uppercase text-amber-200">
+                                        Selection event
+                                      </label>
+                                      <select
+                                        aria-label="Selection event for this class"
+                                        value={regattaForm.selectionEventId || ""}
+                                        onChange={(e) =>
+                                          setRegattaForm({
+                                            ...regattaForm,
+                                            selectionEventId: e.target.value,
+                                          })
+                                        }
+                                        className="mt-1 w-full rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-white text-xs focus:outline-none focus:border-orange-500/50"
+                                      >
+                                        <option value="">Not linked</option>
+                                        {(() => {
+                                          const options = selectionEventsForBoatClass(
+                                            regattaForm.boatClass
+                                          );
+                                          const current = SELECTION_EVENT_OPTIONS.find(
+                                            (event) => event.id === regattaForm.selectionEventId
+                                          );
+                                          const shown =
+                                            current &&
+                                            !options.some((event) => event.id === current.id)
+                                              ? [current, ...options]
+                                              : options;
+                                          return shown.map((event) => (
+                                            <option key={event.id} value={event.id}>
+                                              {event.label} · {event.dates}
+                                            </option>
+                                          ));
+                                        })()}
+                                      </select>
+                                      <p className="mt-1.5 text-[11px] leading-relaxed text-amber-100/80">
+                                        {selectionEventsForBoatClass(regattaForm.boatClass).length === 0
+                                          ? "No selection events are defined for this class."
+                                          : "The linked event uses this class sheet in the selection campaign."}
+                                      </p>
+                                    </div>
+                                  ) : null}
                                 </div>
                               </div>
                             </div>
@@ -1466,7 +1500,7 @@ export function AdminRegattasPanel({
                                     const baseName = label.startsWith("(")
                                       ? `${selectedEventView.name} ${label}`
                                       : `${selectedEventView.name} (${label})`;
-                                    setRegattaForm({
+                                    const next = {
                                       ...emptyRegattaForm(),
                                       eventId: savedEvents[selectedEventView.slug]?.id || "",
                                       name: baseName,
@@ -1486,9 +1520,12 @@ export function AdminRegattasPanel({
                                           : "Open",
                                       countsForRanking:
                                         selectedEventView.countsForRanking,
-                                      isSelectionTrial:
-                                        selectedEventView.isSelectionTrial,
-                                    });
+                                      isSelectionTrial: false,
+                                      selectionEventId: "",
+                                    };
+                                    setClassSnap(JSON.stringify(next));
+                                    classLabel.current = `${label} class settings`;
+                                    setRegattaForm(next);
                                   }}
                                   className="shrink-0 rounded-lg border border-orange-300 bg-orange-50 hover:bg-orange-100 px-3 py-1.5 text-xs font-bold text-orange-900 transition-colors inline-flex items-center gap-1.5 shadow-xs"
                                 >
