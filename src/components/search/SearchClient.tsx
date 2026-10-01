@@ -515,6 +515,8 @@ export function SearchClient({
                   <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
                     {/* Sailor Avatar or Initial Monogram */}
                     {s.avatarUrl ? (
+                      // Avatars can be any host, so this stays a plain image.
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={s.avatarUrl}
                         alt=""

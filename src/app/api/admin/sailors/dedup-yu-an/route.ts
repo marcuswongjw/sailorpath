@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { jsonError, requireSuperadmin } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors, sailorAliases } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -8,7 +9,7 @@ import { mergeSailors } from "@/lib/mergeSailors";
 
 export async function POST() {
   try {
-    const auth = { userId: "system", email: "system@sailorpath.com" };
+    const auth = await requireSuperadmin();
 
     const allSailors = await db.select().from(sailors);
     const yuAnRows = allSailors.filter((s) => {
@@ -106,8 +107,6 @@ export async function POST() {
       mergedNames,
     });
   } catch (e: unknown) {
-    const message = e instanceof Error ? e.message : String(e);
-    console.error("[dedup-yu-an] Error:", message);
-    return NextResponse.json({ error: message }, { status: 500 });
+    return jsonError(e);
   }
 }

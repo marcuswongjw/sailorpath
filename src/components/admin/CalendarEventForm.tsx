@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { Calendar } from "lucide-react";
 
 export type CalendarFormState = {
@@ -84,7 +83,6 @@ export function CalendarEventForm({
   calendarSaving,
   handleSaveCalendar,
   showCalendarForm,
-  setShowCalendarForm,
 }: CalendarEventFormProps) {
   if (!showCalendarForm) return null;
   if (!calendarForm) return null;

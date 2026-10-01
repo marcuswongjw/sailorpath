@@ -298,7 +298,6 @@ export function ProfileResultsTab({
                   awards={awards}
                   showEquipment={showEquipment}
                   gearByRegatta={gearByRegatta}
-                  cardClass={cardClass}
                   goldEntryDate={goldEntryDate}
                   demoMode={demoMode}
                   personalBusy={personalBusy}

@@ -1089,7 +1089,6 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                 <AdminSailorsPanel
                   isSuperadmin={isSuperadmin}
                   sailorList={data.sailorList}
-                  onSailorsChange={data.setSailorList}
                   {...sailors.panelProps}
                 />
               )}
