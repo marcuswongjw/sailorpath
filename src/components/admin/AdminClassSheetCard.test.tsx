@@ -63,5 +63,24 @@ describe("AdminClassSheetCard", () => {
     expect(screen.getByRole("heading", { name: "ILCA 4" })).toBeInTheDocument();
     expect(screen.queryByText("Link to a weekend")).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Unpublish" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Delete ILCA 4" })).not.toBeInTheDocument();
+  });
+
+  it("deletes a class from the card without opening it", async () => {
+    const user = userEvent.setup();
+    const onDelete = vi.fn();
+
+    render(
+      <AdminClassSheetCard
+        sheet={sheet}
+        isSuperadmin
+        onDelete={onDelete}
+        onEditDetails={vi.fn()}
+        onOpenResults={vi.fn()}
+      />
+    );
+
+    await user.click(screen.getByRole("button", { name: "Delete ILCA 4" }));
+    expect(onDelete).toHaveBeenCalledOnce();
   });
 });

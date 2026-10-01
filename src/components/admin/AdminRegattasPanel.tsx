@@ -1457,6 +1457,13 @@ export function AdminRegattasPanel({
                                             ? () => handleTogglePublish(sheet.id, sheet.status)
                                             : undefined
                                         }
+                                        onDelete={
+                                          isSuperadmin
+                                            ? () => {
+                                                void handleDeleteRegatta(sheet.id);
+                                              }
+                                            : undefined
+                                        }
                                         onEditDetails={() => {
                                           if (editingRegattaId !== sheet.id && !confirmLeave()) return;
                                           seenSheetId.current = sheet.id;
