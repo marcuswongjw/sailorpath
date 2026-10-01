@@ -771,7 +771,7 @@ export async function POST(req: Request) {
       const tokenAliasCondition =
         cleanTokens.length > 0
           ? sql`lower(${sailorAliases.aliasName}) LIKE ANY(ARRAY[${sql.join(
-              cleanTokens.map((token) => sql`%${token}%`),
+              cleanTokens.map((token) => sql`${`%${token}%`}`),
               sql`, `
             )}])`
           : undefined;
