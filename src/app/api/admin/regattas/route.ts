@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db, ensureCoreSchema } from "@/db";
 import { regattaEvents, regattas } from "@/db/schema";
@@ -13,6 +14,34 @@ import {
   isRegattaLifecycleStatus,
   REGATTA_LIFECYCLE_STATUSES,
 } from "@/lib/regattaStatus";
+import { isKnownSelectionEventId } from "@/lib/selectionEventCatalog";
+
+function selectionEventIdFrom(body: {
+  isSelectionTrial?: unknown;
+  selectionEventId?: unknown;
+}): { id: string | null } | { error: string } {
+  if (!body.isSelectionTrial) return { id: null };
+  const id = String(body.selectionEventId || "").trim();
+  if (!id) return { id: null };
+  if (!isKnownSelectionEventId(id)) return { error: "Unknown selection event" };
+  return { id };
+}
+
+async function syncWeekendSelectionTrial(eventId: string | null | undefined) {
+  if (!eventId) return;
+  const sheets = await db
+    .select({ isSelectionTrial: regattas.isSelectionTrial })
+    .from(regattas)
+    .where(eq(regattas.eventId, eventId));
+  await db
+    .update(regattaEvents)
+    .set({
+      isSelectionTrial: sheets.some((sheet) => sheet.isSelectionTrial),
+      updatedAt: new Date(),
+    })
+    .where(eq(regattaEvents.id, eventId));
+  revalidatePath("/calendar");
+}
 
 export async function GET(req: Request) {
   try {
@@ -155,6 +184,10 @@ export async function POST(req: Request) {
     const norUrl = body.norUrl ? String(body.norUrl).trim() : null;
     const registrationUrl = body.registrationUrl ? String(body.registrationUrl).trim() : null;
     const isSelectionTrial = Boolean(body.isSelectionTrial);
+    const selectionLink = selectionEventIdFrom(body);
+    if ("error" in selectionLink) {
+      return NextResponse.json({ error: selectionLink.error }, { status: 400 });
+    }
     const organizer = body.organizer ? String(body.organizer).trim() : null;
     const scheduleNotes = body.scheduleNotes ? String(body.scheduleNotes).trim() : null;
     const status = body.status || "published";
@@ -185,6 +218,7 @@ export async function POST(req: Request) {
         norUrl,
         registrationUrl,
         isSelectionTrial,
+        selectionEventId: selectionLink.id,
         organizer,
         scheduleNotes,
         status,
@@ -206,6 +240,7 @@ export async function POST(req: Request) {
           norUrl,
           registrationUrl,
           isSelectionTrial,
+          selectionEventId: selectionLink.id,
           organizer,
           scheduleNotes,
           updatedAt: new Date(),
@@ -213,6 +248,7 @@ export async function POST(req: Request) {
       })
       .returning();
 
+    await syncWeekendSelectionTrial(row.eventId);
     revalidatePublicRankings(`regattas:upsert:${row.id}`);
     void logAdminChange({
       actorUserId: auth.userId,
@@ -341,8 +377,23 @@ export async function PATCH(req: Request) {
     if (body.registrationUrl !== undefined) {
       patch.registrationUrl = body.registrationUrl === "" || body.registrationUrl == null ? null : String(body.registrationUrl).trim();
     }
-    if (body.isSelectionTrial !== undefined) {
-      patch.isSelectionTrial = Boolean(body.isSelectionTrial);
+    if (body.isSelectionTrial !== undefined || body.selectionEventId !== undefined) {
+      const selectionLink = selectionEventIdFrom({
+        isSelectionTrial:
+          body.isSelectionTrial !== undefined
+            ? body.isSelectionTrial
+            : body.selectionEventId
+              ? true
+              : false,
+        selectionEventId: body.selectionEventId,
+      });
+      if ("error" in selectionLink) {
+        return NextResponse.json({ error: selectionLink.error }, { status: 400 });
+      }
+      if (body.isSelectionTrial !== undefined) {
+        patch.isSelectionTrial = Boolean(body.isSelectionTrial);
+      }
+      patch.selectionEventId = selectionLink.id;
     }
     if (body.organizer !== undefined) {
       patch.organizer = body.organizer === "" || body.organizer == null ? null : String(body.organizer).trim();
@@ -382,6 +433,7 @@ export async function PATCH(req: Request) {
         boatClass: regattas.boatClass,
         raceCount: regattas.raceCount,
         countsForRanking: regattas.countsForRanking,
+        eventId: regattas.eventId,
       })
       .from(regattas)
       .where(eq(regattas.id, body.id))
@@ -427,6 +479,10 @@ export async function PATCH(req: Request) {
 
     if (!row) {
       return NextResponse.json({ error: "Regatta not found" }, { status: 404 });
+    }
+    await syncWeekendSelectionTrial(row.eventId);
+    if (existing?.eventId && existing.eventId !== row.eventId) {
+      await syncWeekendSelectionTrial(existing.eventId);
     }
     revalidatePublicRankings(`regattas:patch:${row.id}`);
     void logAdminChange({

@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Fragment,
   useEffect,
   useMemo,
   useRef,
@@ -16,8 +15,6 @@ import {
   Edit3,
   Search,
   ChevronsUpDown,
-  ChevronDown,
-  ChevronUp,
   Calendar,
   Trophy,
   ExternalLink,
@@ -133,7 +130,6 @@ export function AdminResultsPanel({
     field: "rank" | "nettScore";
     value: string;
   } | null>(null);
-  const [expandedResultId, setExpandedResultId] = useState<string | null>(null);
   const pickerRef = useRef<HTMLDivElement>(null);
 
   const selectedRegatta = useMemo(
@@ -770,10 +766,8 @@ export function AdminResultsPanel({
                     if (!Number.isFinite(y)) return "—";
                     return String(y);
                   })();
-                  return (
-                    <Fragment key={res.id}>
-                      {editingResultId === res.id ? (
-                        <tr className="bg-orange-50/90 border-y-2 border-orange-500 shadow-sm transition-all">
+                  return editingResultId === res.id ? (
+                        <tr key={res.id} className="bg-orange-50/90 border-y-2 border-orange-500 shadow-sm transition-all">
                           <td colSpan={9 + raceNumbers.length} className="p-4 sm:p-5">
                             <div className="space-y-4">
                               <div className="flex flex-wrap items-center justify-between gap-3 border-b border-orange-200 pb-3">
@@ -910,6 +904,7 @@ export function AdminResultsPanel({
                         </tr>
                       ) : (
                         <tr
+                          key={res.id}
                           className={`hover:bg-white/[0.03] transition-colors ${
                         overseas
                           ? "bg-sky-500/[0.04]"
@@ -971,24 +966,8 @@ export function AdminResultsPanel({
                         )}
                       </td>
                       <td className="py-3 px-4 sm:px-6 min-w-[140px]">
-                        <div className="flex items-center gap-1.5">
-                          <span className="font-bold text-slate-900 leading-tight">
-                            {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
-                          </span>
-                          {res.raceResults && res.raceResults.length > 0 && (
-                            <button
-                              type="button"
-                              onClick={() => setExpandedResultId((prev) => (prev === res.id ? null : res.id))}
-                              className="text-slate-500 hover:text-orange-600 p-0.5 rounded transition-colors shrink-0"
-                              title={expandedResultId === res.id ? "Hide individual race finishes" : "Show individual race finishes breakdown"}
-                            >
-                              {expandedResultId === res.id ? (
-                                <ChevronUp className="h-3.5 w-3.5 text-orange-600" />
-                              ) : (
-                                <ChevronDown className="h-3.5 w-3.5" />
-                              )}
-                            </button>
-                          )}
+                        <div className="font-bold text-slate-900 leading-tight">
+                          {sailor ? sailor.name : "Deleted / Unmapped Sailor"}
                         </div>
                         <div className="text-[13px] text-slate-600 mt-0.5 truncate max-w-[220px]">
                           {[sailor?.club, sailor?.school, sailor?.nationality]
@@ -1235,55 +1214,7 @@ export function AdminResultsPanel({
                         </div>
                       </td>
                     </tr>
-                  )}
-                  {expandedResultId === res.id && res.raceResults && res.raceResults.length > 0 && (
-                      <tr className="bg-slate-50 border-b border-slate-200">
-                        <td colSpan={9 + raceNumbers.length} className="px-4 sm:px-6 py-3">
-                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                            <div className="flex items-center gap-2">
-                              <Trophy className="h-4 w-4 text-orange-600 shrink-0" />
-                              <span className="text-xs font-bold text-slate-900">
-                                Official Race Finishes for {sailor?.name || res.sailorName || "Sailor"}:
-                              </span>
-                            </div>
-                            <div className="flex flex-wrap items-center gap-1.5">
-                              {res.raceResults.map((race) => {
-                                const isDiscarded = Boolean(race.discarded);
-                                const hasPenalty = Boolean(race.scoringCode);
-                                return (
-                                  <div
-                                    key={race.raceNumber}
-                                    className={`flex items-center gap-1 px-2.5 py-1 rounded-lg border text-xs font-mono shadow-xs ${
-                                      isDiscarded
-                                        ? "bg-slate-100 border-slate-200 text-slate-500"
-                                        : hasPenalty
-                                          ? "bg-amber-50 border-amber-300 text-amber-900"
-                                          : "bg-white border-slate-300 text-slate-900"
-                                    }`}
-                                    title={isDiscarded ? "Worst finish discarded from nett score" : `Race ${race.raceNumber}`}
-                                  >
-                                    <span className="text-slate-500 font-semibold text-[11px]">R{race.raceNumber}:</span>
-                                    <span className={isDiscarded ? "line-through text-slate-500 font-bold" : "font-black text-slate-900"}>
-                                      {race.rawValue || race.score}
-                                    </span>
-                                    {hasPenalty && (
-                                      <span className="px-1 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-300 ml-0.5">
-                                        {race.scoringCode}
-                                      </span>
-                                    )}
-                                    {isDiscarded && (
-                                      <span className="text-[10px] text-slate-500 font-sans font-semibold ml-0.5">(disc)</span>
-                                    )}
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </Fragment>
-                );
+                  );
               })}
                 {eventResultCount === 0 && (
                   <tr>

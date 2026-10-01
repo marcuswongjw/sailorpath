@@ -91,6 +91,31 @@ describe("matchSelectionEvents", () => {
     expect(m[1]?.regatta?.id).toBe("r2");
   });
 
+  it("prefers a class sheet explicitly linked to the selection event", () => {
+    const linked: RegattaRecord = {
+      id: "linked-gold",
+      name: "NSC Optimist Gold",
+      slug: "nsc-optimist-gold",
+      date: "2026-09-05",
+      endDate: "2026-09-13",
+      totalFleetSize: 80,
+      division: "Gold",
+      boatClass: "Optimist",
+      countsForRanking: true,
+      selectionEventId: "snsc-2026",
+    };
+    const nameMatch: RegattaRecord = {
+      ...regattas[1],
+      id: "name-match",
+      totalFleetSize: 20,
+    };
+    const matched = matchSelectionEvents(
+      [nameMatch, linked],
+      OPTIMIST_2026_SELECTION_EVENTS
+    );
+    expect(matched[1]?.regatta?.id).toBe("linked-gold");
+  });
+
   it("matches SNSC Optimist Gold when the sheet starts on the championship weekend", () => {
     const gold: RegattaRecord = {
       id: "snsc-gold",

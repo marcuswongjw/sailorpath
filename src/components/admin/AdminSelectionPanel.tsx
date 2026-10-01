@@ -79,6 +79,7 @@ function toRegattaRecords(rows: RegattaAdmin[]): RegattaRecord[] {
     geography: r.geography ?? "SGP",
     boatClass: r.boatClass ?? "Optimist",
     countsForRanking: r.countsForRanking !== false,
+    selectionEventId: r.selectionEventId,
   }));
 }
 

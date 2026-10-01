@@ -149,11 +149,17 @@ export function matchSelectionEvents(
 ): MatchedSelectionEvent[] {
   const optimist = regattas.filter(isOptimistGoldRegatta);
   return defs.map((def) => {
-    const candidates = optimist.filter((r) => {
-      if (!sheetOverlapsWindow(r, def.dateFrom, def.dateTo)) return false;
-      const name = String(r.name || "").toLowerCase();
-      return def.nameIncludes.some((fragment) => name.includes(fragment.toLowerCase()));
-    });
+    const explicit = optimist.filter((r) => r.selectionEventId === def.id);
+    const candidates =
+      explicit.length > 0
+        ? explicit
+        : optimist.filter((r) => {
+            if (!sheetOverlapsWindow(r, def.dateFrom, def.dateTo)) return false;
+            const name = String(r.name || "").toLowerCase();
+            return def.nameIncludes.some((fragment) =>
+              name.includes(fragment.toLowerCase())
+            );
+          });
     candidates.sort((a, b) => {
       const goldOrder =
         Number(!/gold/i.test(String(a.division || ""))) -

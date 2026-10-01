@@ -146,6 +146,8 @@ export type RegattaFormState = {
   norUrl?: string;
   registrationUrl?: string;
   isSelectionTrial?: boolean;
+  /** Catalog id for the selection event this class counts toward. */
+  selectionEventId?: string;
   scheduleNotes?: string;
   /** Controlled number input may hold string while editing */
   totalFleetSize: number | string;
@@ -169,6 +171,7 @@ export function emptyRegattaForm(): RegattaFormState {
     norUrl: "",
     registrationUrl: "",
     isSelectionTrial: false,
+    selectionEventId: "",
     scheduleNotes: "",
     totalFleetSize: 50,
     division: "Gold",
@@ -177,6 +180,57 @@ export function emptyRegattaForm(): RegattaFormState {
     boatClass: "Optimist",
     countsForRanking: true,
     status: "published",
+  };
+}
+
+/** Same shape for the open snapshot and the form written back after a save. */
+export function regattaToClassForm(r: {
+  id: string;
+  eventId?: string | null;
+  name?: string | null;
+  date?: string | Date | null;
+  slug?: string | null;
+  division?: string | null;
+  raceCount?: number | string | null;
+  totalFleetSize?: number | string | null;
+  geography?: string | null;
+  boatClass?: string | null;
+  countsForRanking?: boolean | null;
+  endDate?: string | Date | null;
+  venue?: string | null;
+  organizer?: string | null;
+  norUrl?: string | null;
+  registrationUrl?: string | null;
+  isSelectionTrial?: boolean | null;
+  selectionEventId?: string | null;
+  scheduleNotes?: string | null;
+  status?: string | null;
+}): RegattaFormState {
+  const trial = Boolean(r.isSelectionTrial);
+  return {
+    id: r.id,
+    eventId: r.eventId || "",
+    name: r.name || "",
+    date: String(r.date || "").slice(0, 10),
+    slug: r.slug || undefined,
+    division: r.division || "",
+    raceCount: r.raceCount != null && r.raceCount !== "" ? String(r.raceCount) : "",
+    totalFleetSize:
+      r.totalFleetSize != null && r.totalFleetSize !== ""
+        ? String(r.totalFleetSize)
+        : "",
+    geography: r.geography || "SGP",
+    boatClass: r.boatClass || "Optimist",
+    countsForRanking: r.countsForRanking !== false,
+    endDate: r.endDate ? String(r.endDate).slice(0, 10) : "",
+    venue: r.venue || "",
+    organizer: r.organizer || "",
+    norUrl: r.norUrl || "",
+    registrationUrl: r.registrationUrl || "",
+    isSelectionTrial: trial,
+    selectionEventId: trial ? r.selectionEventId || "" : "",
+    scheduleNotes: r.scheduleNotes || "",
+    status: r.status || "published",
   };
 }
 

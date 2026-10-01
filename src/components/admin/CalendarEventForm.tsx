@@ -13,7 +13,6 @@ export type CalendarFormState = {
   registrationUrl: string;
   keyDeadlines: string;
   countsForRanking: boolean;
-  isSelectionTrial: boolean;
 };
 
 export type SavedCalendarEvent = {
@@ -46,7 +45,7 @@ const DEFAULT_CALENDAR_CLASSES = [
 ] as const;
 
 export function calendarFormFrom(
-  event: { name: string; startDate: string; endDate?: string; venue?: string; organizer?: string; norUrl?: string; registrationUrl?: string; countsForRanking: boolean; isSelectionTrial: boolean; keyDeadlines?: string; expectedClasses: string[] }
+  event: { name: string; startDate: string; endDate?: string; venue?: string; organizer?: string; norUrl?: string; registrationUrl?: string; countsForRanking: boolean; keyDeadlines?: string; expectedClasses: string[] }
 ): CalendarFormState {
   return {
     name: event.name || "",
@@ -59,7 +58,6 @@ export function calendarFormFrom(
     registrationUrl: event.registrationUrl || "",
     keyDeadlines: event.keyDeadlines || "",
     countsForRanking: event.countsForRanking,
-    isSelectionTrial: event.isSelectionTrial,
   };
 }
 
@@ -75,7 +73,7 @@ export type CalendarEventFormProps = {
 /**
  * Collapsible calendar event details form for the regatta admin panel.
  * Manages event name, dates, venue, organiser, classes, NOR/registration URLs,
- * ranking and selection trial settings.
+ * ranking settings. Selection trials are chosen on the class sheet.
  */
 export function CalendarEventForm({
   calendarForm,
@@ -281,20 +279,6 @@ export function CalendarEventForm({
               Applies to linked class sheets. Fewer than 3 races stays non-ranking.
             </span>
           </span>
-        </label>
-        <label className="flex items-center gap-2.5 text-xs font-semibold text-slate-800 cursor-pointer">
-          <input
-            type="checkbox"
-            className="rounded border-slate-300 text-amber-600 focus:ring-amber-500 h-4 w-4"
-            checked={calendarForm.isSelectionTrial}
-            onChange={(e) =>
-              setCalendarForm({
-                ...calendarForm,
-                isSelectionTrial: e.target.checked,
-              })
-            }
-          />
-          Official selection trial
         </label>
         <div className="sm:col-span-2 flex justify-end">
           <button
