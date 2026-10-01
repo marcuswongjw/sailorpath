@@ -10,6 +10,7 @@ import { restoreBestNettHiddenAsDns, restoreBestNettHiddenAsDnsByRegatta } from 
 import {
   sailors,
   regattas,
+  regattaEvents,
   regattaResults,
   regattaRaceResults,
   profiles,
@@ -241,9 +242,45 @@ export async function getSailorByHandle(handle: string) {
   });
 }
 
+function mapRegattaRow(
+  r: typeof regattas.$inferSelect,
+  event?: { slug: string | null; name: string | null }
+): RegattaRecord {
+  return {
+    id: r.id,
+    name: r.name,
+    slug: r.slug,
+    date: r.date,
+    totalFleetSize: r.totalFleetSize,
+    division: r.division,
+    raceCount: r.raceCount,
+    geography: r.geography ?? "SG",
+    boatClass: r.boatClass ?? "Optimist",
+    countsForRanking: r.countsForRanking !== false,
+    venue: r.venue,
+    endDate: r.endDate,
+    norUrl: r.norUrl,
+    registrationUrl: r.registrationUrl,
+    isSelectionTrial: r.isSelectionTrial ?? false,
+    selectionEventId: r.selectionEventId,
+    eventId: r.eventId,
+    eventSlug: event?.slug ?? null,
+    eventName: event?.name ?? null,
+    organizer: r.organizer,
+    scheduleNotes: r.scheduleNotes,
+  };
+}
+
 export async function listRegattas(options?: { includeAll?: boolean }) {
   return withDb(async () => {
-    const base = db.select().from(regattas);
+    const base = db
+      .select({
+        regatta: regattas,
+        eventSlug: regattaEvents.slug,
+        eventName: regattaEvents.name,
+      })
+      .from(regattas)
+      .leftJoin(regattaEvents, eq(regattas.eventId, regattaEvents.id));
     const rows = options?.includeAll
       ? await base.orderBy(desc(regattas.date))
       : await base
@@ -254,28 +291,8 @@ export async function listRegattas(options?: { includeAll?: boolean }) {
             )
           )
           .orderBy(desc(regattas.date));
-    const mapped: RegattaRecord[] = rows.map(
-      (r): RegattaRecord => ({
-        id: r.id,
-        name: r.name,
-        slug: r.slug,
-        date: r.date,
-        totalFleetSize: r.totalFleetSize,
-        division: r.division,
-        raceCount: r.raceCount,
-        geography: r.geography ?? "SG",
-        boatClass: r.boatClass ?? "Optimist",
-        countsForRanking: r.countsForRanking !== false,
-        venue: r.venue,
-        endDate: r.endDate,
-        norUrl: r.norUrl,
-        registrationUrl: r.registrationUrl,
-        isSelectionTrial: r.isSelectionTrial ?? false,
-        selectionEventId: r.selectionEventId,
-        eventId: r.eventId,
-        organizer: r.organizer,
-        scheduleNotes: r.scheduleNotes,
-      })
+    const mapped: RegattaRecord[] = rows.map((row) =>
+      mapRegattaRow(row.regatta, { slug: row.eventSlug, name: row.eventName })
     );
     for (const staticReg of ILCA6_STATIC_REGATTAS) {
       if (!mapped.some((m) => m.slug.toLowerCase() === staticReg.slug.toLowerCase())) {
@@ -324,27 +341,14 @@ export async function getRegattaBySlug(slug: string, options?: { allowUnpublishe
       if (staticMatch) return staticMatch;
       return null;
     }
-    return {
-      id: row.id,
-      name: row.name,
-      slug: row.slug,
-      date: row.date,
-      totalFleetSize: row.totalFleetSize,
-      division: row.division,
-      geography: row.geography ?? "SG",
-      boatClass: row.boatClass ?? "Optimist",
-      raceCount: row.raceCount,
-      countsForRanking: row.countsForRanking !== false,
-      venue: row.venue,
-      endDate: row.endDate,
-      norUrl: row.norUrl,
-      registrationUrl: row.registrationUrl,
-      isSelectionTrial: row.isSelectionTrial ?? false,
-      selectionEventId: row.selectionEventId,
-      eventId: row.eventId,
-      organizer: row.organizer,
-      scheduleNotes: row.scheduleNotes,
-    } satisfies RegattaRecord;
+    const [event] = row.eventId
+      ? await db
+          .select({ slug: regattaEvents.slug, name: regattaEvents.name })
+          .from(regattaEvents)
+          .where(eq(regattaEvents.id, row.eventId))
+          .limit(1)
+      : [];
+    return mapRegattaRow(row, event);
   });
 }
 
@@ -1330,7 +1334,7 @@ export const getCachedPublicRegattas = unstable_cache(
       return [];
     }
   },
-  ["public-regattas-list-v3"],
+  ["public-regattas-list-v4"],
   { revalidate: 120, tags: [CACHE_TAG_PUBLIC_REGATTAS] }
 );
 

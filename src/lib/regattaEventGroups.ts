@@ -191,6 +191,77 @@ export function groupedHubForSlug(
   return { event, fleetKey: focus?.key ?? null };
 }
 
+function eventDatesText(rows: RegattaRecord[]): string {
+  const starts = rows
+    .map((row) => String(row.date || "").slice(0, 10))
+    .filter(Boolean)
+    .sort();
+  const ends = rows
+    .map((row) => String(row.endDate || row.date || "").slice(0, 10))
+    .filter(Boolean)
+    .sort();
+  if (!starts.length) return "";
+  const start = formatDay(starts[0]);
+  const end = formatDay(ends.at(-1) || starts.at(-1)!);
+  return start === end ? start : `${start} – ${end}`;
+}
+
+/**
+ * A saved weekend and its class sheets share one public page.
+ * The page slug is the weekend slug, not a separate name-and-month slug.
+ */
+export function savedEventHubForSlug(
+  slug: string,
+  regattas: RegattaRecord[]
+): { event: RegattaEventDef; fleetKey: string | null } | null {
+  const wanted = slug.toLowerCase();
+  const self = regattas.find((row) => row.slug.toLowerCase() === wanted);
+  const eventSlug = (
+    regattas.find((row) => row.eventSlug?.toLowerCase() === wanted)?.eventSlug ||
+    self?.eventSlug ||
+    ""
+  ).toLowerCase();
+  if (!eventSlug || getRegattaEvent(eventSlug)) return null;
+
+  const linked = regattas.filter(
+    (row) =>
+      row.eventSlug?.toLowerCase() === eventSlug &&
+      publicFleet(row) &&
+      !findEventSliceForRegattaSlug(row.slug)
+  );
+  if (!linked.length) return null;
+
+  const chosen = new Map<Fleet, RegattaRecord>();
+  for (const row of linked) {
+    const fleet = publicFleet(row);
+    if (!fleet) continue;
+    const current = chosen.get(fleet);
+    chosen.set(fleet, current ? fuller(current, row) : row);
+  }
+  const slices = FLEET_ORDER.filter((fleet) => chosen.has(fleet)).map((fleet) =>
+    sliceFor(fleet, chosen.get(fleet)!)
+  );
+  if (!slices.length) return null;
+
+  const sample = [...chosen.values()][0];
+  const name =
+    sample.eventName?.trim() ||
+    sample.name.replace(/\(.*?\)/g, " ").replace(/\s+/g, " ").trim();
+  const event: RegattaEventDef = {
+    slug: eventSlug,
+    name,
+    shortName: name,
+    datesText: eventDatesText([...chosen.values()]),
+    venue: sample.venue || "Singapore",
+    organizer: sample.organizer || "",
+    noticeOfRaceUrl: sample.norUrl || undefined,
+    officialNoticeBoardUrl: sample.norUrl || undefined,
+    slices,
+  };
+  const focus = slices.find((slice) => slice.slugIncludes?.[0] === wanted);
+  return { event, fleetKey: focus?.key ?? null };
+}
+
 /** Class result URLs for a multi-class regatta open the shared tabbed page. */
 export function hubHrefForClassSlug(
   slug: string,
@@ -200,6 +271,13 @@ export function hubHrefForClassSlug(
   if (direct) return `/regattas/${direct.slug}`;
   const slice = findEventSliceForRegattaSlug(slug);
   if (slice) return eventHubHref(slice.event.slug, slice.slice.key);
+  const saved = savedEventHubForSlug(slug, regattas);
+  if (saved) {
+    return eventHubHref(
+      saved.event.slug,
+      saved.fleetKey || saved.event.slices[0]?.key || "optimist"
+    );
+  }
   const grouped = groupedHubForSlug(slug, regattas);
   if (!grouped) return null;
   return eventHubHref(
