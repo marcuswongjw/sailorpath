@@ -27,6 +27,13 @@ export const profiles = pgTable("profiles", {
   lastSeenProductChangelogAt: timestamp("last_seen_product_changelog_at", {
     withTimezone: true,
   }),
+  /**
+   * Email when a published regatta includes a sailor this profile follows.
+   * On by default; account settings can turn it off.
+   */
+  notifyFollowedResults: boolean("notify_followed_results")
+    .default(true)
+    .notNull(),
 });
 
 /** A coach may request access, but only a superadmin may grant the coach role. */
@@ -238,6 +245,31 @@ export const coachFollowedSailors = pgTable(
       table.sailorId
     ),
     sailorIdIdx: index("coach_followed_sailors_sailor_id_idx").on(table.sailorId),
+  })
+);
+
+/**
+ * Any signed-in profile can follow a sailor. Separate from the coach watchlist
+ * and from parent/sailor claims.
+ */
+export const followedSailors = pgTable(
+  "followed_sailors",
+  {
+    id: uuid("id").primaryKey().defaultRandom().notNull(),
+    followerProfileId: uuid("follower_profile_id")
+      .references(() => profiles.id, { onDelete: "cascade" })
+      .notNull(),
+    sailorId: uuid("sailor_id")
+      .references(() => sailors.id, { onDelete: "cascade" })
+      .notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    followerSailorUnq: unique("followed_sailors_follower_sailor_unq").on(
+      table.followerProfileId,
+      table.sailorId
+    ),
+    sailorIdIdx: index("followed_sailors_sailor_id_idx").on(table.sailorId),
   })
 );
 

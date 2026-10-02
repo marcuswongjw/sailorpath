@@ -29,6 +29,7 @@ type UserProfileData = {
   email: string;
   role: string;
   createdAt: string | null;
+  notifyFollowedResults?: boolean;
 };
 
 function AccountInner() {
@@ -52,6 +53,9 @@ function AccountInner() {
   const [claims, setClaims] = useState<Claim[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [notifyFollowed, setNotifyFollowed] = useState(true);
+  const [notifyBusy, setNotifyBusy] = useState(false);
+  const [notifyMsg, setNotifyMsg] = useState<string | null>(null);
   const [pw, setPw] = useState("");
   const [pw2, setPw2] = useState("");
   const [pwMsg, setPwMsg] = useState<string | null>(null);
@@ -101,6 +105,7 @@ function AccountInner() {
           createdAt: session.user.created_at || null,
         };
         setUserProfile(prof);
+        setNotifyFollowed(data.user?.notifyFollowedResults !== false);
         setEditName(prof.fullName || "");
         setEditEmail(prof.email || session.user.email || "");
       } catch (e) {
@@ -176,6 +181,29 @@ function AccountInner() {
       });
     } finally {
       setProfileSaving(false);
+    }
+  };
+
+  const saveNotifyPreference = async (next: boolean) => {
+    setNotifyFollowed(next);
+    setNotifyMsg(null);
+    setNotifyBusy(true);
+    try {
+      const res = await fetch("/api/account", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ notifyFollowedResults: next }),
+      });
+      const resData = await res.json();
+      if (!res.ok) throw new Error(resData.error || "Could not save preference");
+      setNotifyFollowed(resData.user?.notifyFollowedResults !== false);
+      setNotifyMsg(next ? "Emails are on." : "Emails are off.");
+    } catch (err) {
+      setNotifyFollowed(!next);
+      setNotifyMsg(err instanceof Error ? err.message : "Could not save preference");
+    } finally {
+      setNotifyBusy(false);
     }
   };
 
@@ -409,6 +437,41 @@ function AccountInner() {
             </div>
           </div>
         )}
+      </section>
+
+      <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
+        <div className="flex items-center gap-2">
+          <Mail className="h-4 w-4 text-[var(--sp-harbour-teal)]" />
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+            Follow emails
+          </h2>
+        </div>
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            className="mt-1 h-4 w-4 accent-[var(--sp-harbour-teal)]"
+            checked={notifyFollowed}
+            disabled={notifyBusy}
+            onChange={(event) => void saveNotifyPreference(event.target.checked)}
+          />
+          <span>
+            <span className="block text-sm font-semibold text-[var(--sp-charcoal)]">
+              Email me when results publish for a sailor I follow
+            </span>
+            <span className="block text-xs text-[var(--sp-slate-soft)] mt-1 leading-relaxed">
+              On by default. One email per regatta, even if several sailors you follow are on the same board.
+            </span>
+          </span>
+        </label>
+        {notifyMsg ? (
+          <p className="text-xs font-semibold text-[var(--sp-charcoal-slate)]">{notifyMsg}</p>
+        ) : null}
+        <Link
+          href="/following"
+          className="inline-flex text-xs font-bold text-[var(--sp-harbour-teal)] hover:underline"
+        >
+          Sailors you follow
+        </Link>
       </section>
 
       {/* Athlete Hub & Logbook Card */}

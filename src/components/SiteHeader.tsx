@@ -379,6 +379,9 @@ export function SiteHeader() {
             Parent Dashboard
           </Link>
         )}
+        <Link href="/following" onClick={closeMenus} className={itemClass}>
+          Following
+        </Link>
         {role === "coach" && (
           <Link href="/coach-tools" onClick={closeMenus} className={itemClass}>
             Coach Dashboard

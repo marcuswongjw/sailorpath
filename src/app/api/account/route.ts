@@ -46,6 +46,7 @@ export async function GET() {
           fullName: profiles.fullName,
           role: profiles.role,
           createdAt: profiles.createdAt,
+          notifyFollowedResults: profiles.notifyFollowedResults,
         })
         .from(profiles)
         .where(eq(profiles.id, auth.userId))
@@ -88,6 +89,7 @@ export async function GET() {
       fullName: profileRow?.fullName || "",
       role: profileRow?.role || auth.role,
       createdAt: profileRow?.createdAt ? profileRow.createdAt.toISOString() : null,
+      notifyFollowedResults: profileRow?.notifyFollowedResults !== false,
     };
 
     return NextResponse.json({
@@ -113,9 +115,14 @@ export async function PATCH(req: Request) {
     }
 
     const body = await req.json().catch(() => ({}));
-    const { fullName, email } = body;
+    const { fullName, email, notifyFollowedResults } = body;
 
-    const updates: { fullName?: string; email?: string; updatedAt: Date } = {
+    const updates: {
+      fullName?: string;
+      email?: string;
+      notifyFollowedResults?: boolean;
+      updatedAt: Date;
+    } = {
       updatedAt: new Date(),
     };
 
@@ -141,7 +148,15 @@ export async function PATCH(req: Request) {
       updates.email = trimmedEmail;
     }
 
-    if (updates.fullName || updates.email) {
+    if (typeof notifyFollowedResults === "boolean") {
+      updates.notifyFollowedResults = notifyFollowedResults;
+    }
+
+    if (
+      updates.fullName ||
+      updates.email ||
+      typeof updates.notifyFollowedResults === "boolean"
+    ) {
       const existing = await db
         .select({ id: profiles.id })
         .from(profiles)
@@ -170,6 +185,7 @@ export async function PATCH(req: Request) {
         fullName: profiles.fullName,
         role: profiles.role,
         createdAt: profiles.createdAt,
+        notifyFollowedResults: profiles.notifyFollowedResults,
       })
       .from(profiles)
       .where(eq(profiles.id, auth.userId))
@@ -181,6 +197,7 @@ export async function PATCH(req: Request) {
       fullName: updatedRow?.fullName || "",
       role: updatedRow?.role || auth.role,
       createdAt: updatedRow?.createdAt ? updatedRow.createdAt.toISOString() : null,
+      notifyFollowedResults: updatedRow?.notifyFollowedResults !== false,
     };
 
     return NextResponse.json({

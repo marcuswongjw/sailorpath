@@ -9,6 +9,7 @@ import {
   AthleteSelector,
 } from "@/components/parent-dashboard";
 import { PendingClaimsSection } from "@/components/parent-dashboard/PendingClaimsSection";
+import { PersonalSeasonCard } from "@/components/PersonalSeasonCard";
 import { AthleteHeroCard } from "@/components/parent-dashboard/AthleteHeroCard";
 import { AthleteInsightGrid } from "@/components/parent-dashboard/AthleteInsightGrid";
 import { CoachFeedbackPanel } from "@/components/parent-dashboard/CoachFeedbackPanel";
@@ -56,6 +57,9 @@ export function ParentDashboard() {
           <p className={`mt-2 text-sm ${BODY} max-w-2xl`}>{d.subtitle}</p>
         </div>
         <div className="flex items-center gap-2">
+          <Link href="/following" className={SECONDARY_BTN}>
+            Following
+          </Link>
           <Link href="/search" className={SECONDARY_BTN}>
             <Search className="h-3.5 w-3.5" />
             Find a sailor
@@ -103,6 +107,10 @@ export function ParentDashboard() {
           {activeAthlete && (
             <div className="space-y-6 sm:space-y-8">
               <AthleteHeroCard athlete={activeAthlete} />
+
+              {activeAthlete.season ? (
+                <PersonalSeasonCard season={activeAthlete.season} />
+              ) : null}
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div className="lg:col-span-2 space-y-6">

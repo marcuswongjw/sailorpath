@@ -33,15 +33,23 @@ vi.mock("@/db", () => {
   return {
     ensureCoreSchema: vi.fn().mockResolvedValue(undefined),
     db: {
-      select: (selection?: unknown) => ({
-        from: () => ({
-          where: () => ({
-            limit: () => [mocks.regatta],
-            then: (resolve: (rows: Array<{ n: number }>) => unknown) =>
-              resolve(selection ? [{ n: mocks.resultCount }] : []),
+      select: (selection?: unknown) => {
+        const where = () => ({
+          limit: () => [mocks.regatta],
+          then: (resolve: (rows: Array<{ n: number }>) => unknown) =>
+            resolve(selection ? [{ n: mocks.resultCount }] : []),
+        });
+        const joined = {
+          innerJoin: () => joined,
+          where,
+        };
+        return {
+          from: () => ({
+            ...joined,
+            where,
           }),
-        }),
-      }),
+        };
+      },
       update: () => ({
         set: () => ({
           where: vi.fn().mockResolvedValue(undefined),
