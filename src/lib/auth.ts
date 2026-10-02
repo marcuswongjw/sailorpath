@@ -2,8 +2,16 @@ import { createServerSupabase } from "@/lib/supabase/server";
 import { db, formatDbError } from "@/db";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import {
+  superadminRoleDecision,
+  type AppRole,
+} from "@/lib/superadminEmail";
 
-export type AppRole = "parent" | "sailor" | "coach" | "superadmin";
+export type { AppRole } from "@/lib/superadminEmail";
+export {
+  isConfiguredSuperadminEmail,
+  superadminRoleDecision,
+} from "@/lib/superadminEmail";
 
 export type AuthContext = {
   userId: string;
@@ -40,9 +48,10 @@ export async function getAuthContext(): Promise<AuthContext | null> {
       .from(profiles)
       .where(eq(profiles.id, user.id))
       .limit(1);
-    if (rows[0]?.role) {
-      role = rows[0].role as AppRole;
-    } else {
+    const stored = (rows[0]?.role as AppRole | undefined) ?? null;
+    const decision = superadminRoleDecision(stored, user.email);
+    if (stored) role = stored;
+    if (!rows[0]) {
       const fullName =
         (user.user_metadata?.full_name as string) ||
         (user.user_metadata?.handle as string) ||
@@ -54,19 +63,23 @@ export async function getAuthContext(): Promise<AuthContext | null> {
           id: user.id,
           email: user.email || "",
           fullName,
-          role: "sailor",
+          role: decision.role,
         })
         .onConflictDoNothing();
+      if (!decision.persistSuperadmin) role = decision.role;
+    }
+    if (decision.persistSuperadmin) {
+      const updated = await db
+        .update(profiles)
+        .set({ role: "superadmin", updatedAt: new Date() })
+        .where(eq(profiles.id, user.id))
+        .returning({ role: profiles.role });
+      if (updated[0]?.role === "superadmin") role = "superadmin";
     }
   } catch {
-    /* DB offline — still allow bootstrap */
+    // Keep a role already read from profiles. Do not elevate from the env var
+    // when that write or read did not succeed.
   }
-
-  const bootstrap =
-    process.env.SUPERADMIN_EMAIL &&
-    user.email &&
-    user.email.toLowerCase() === process.env.SUPERADMIN_EMAIL.toLowerCase();
-  if (bootstrap) role = "superadmin";
 
   return { userId: user.id, email: user.email ?? null, role };
 }

@@ -1,9 +1,68 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
+  preferredDuplicateResultUpdate,
   SAILOR_RELATIONSHIP_MERGE_PLAN,
   splitSourceRowsByTargetConflict,
 } from "@/lib/mergeSailors";
+
+describe("preferredDuplicateResultUpdate", () => {
+  const dns = {
+    rank: 81,
+    nettScore: 90,
+    totalScore: 90,
+    isDns: true,
+    isOverseasCommitment: false,
+  };
+  const finish = {
+    rank: 4,
+    nettScore: 12,
+    totalScore: 18,
+    isDns: false,
+    isOverseasCommitment: false,
+  };
+
+  it("clears isDns when the duplicate has the better finish", () => {
+    expect(preferredDuplicateResultUpdate(dns, finish)).toEqual({
+      rank: 4,
+      nettScore: 12,
+      totalScore: 18,
+      isDns: false,
+      isOverseasCommitment: false,
+    });
+  });
+
+  it("keeps the survivor when its place is already better", () => {
+    expect(preferredDuplicateResultUpdate(finish, dns)).toBeNull();
+  });
+
+  it("copies an overseas flag together with a better place", () => {
+    expect(
+      preferredDuplicateResultUpdate(finish, {
+        rank: 2,
+        nettScore: 8,
+        totalScore: null,
+        isDns: false,
+        isOverseasCommitment: true,
+      })
+    ).toEqual({
+      rank: 2,
+      nettScore: 8,
+      totalScore: 18,
+      isDns: false,
+      isOverseasCommitment: true,
+    });
+  });
+
+  it("fills a missing total without changing a DNS flag", () => {
+    expect(
+      preferredDuplicateResultUpdate(
+        { ...dns, rank: 10, totalScore: null },
+        { ...dns, rank: 20, totalScore: 40 }
+      )
+    ).toEqual({ totalScore: 40 });
+  });
+});
 
 describe("sailor relationship merge planning", () => {
   it("moves non-conflicting source rows and deterministically drops target conflicts", () => {

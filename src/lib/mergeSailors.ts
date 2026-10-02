@@ -79,6 +79,49 @@ export class SailorMergeError extends Error {
   }
 }
 
+type ResultScoreFields = {
+  rank: number | null;
+  nettScore: number | null;
+  totalScore: number | null;
+  isDns: boolean | null;
+  isOverseasCommitment: boolean | null;
+};
+
+/**
+ * When two profiles share a regatta, keep the better place and the flags that
+ * explain that place. Copying only rank/nett left a DNS (or overseas) flag on
+ * the survivor, so rankings still treated a real finish as a non-start.
+ * Returns null when the survivor row should stay as-is.
+ */
+export function preferredDuplicateResultUpdate(
+  target: ResultScoreFields,
+  source: ResultScoreFields
+): {
+  rank: number;
+  nettScore: number | null;
+  totalScore: number | null;
+  isDns: boolean;
+  isOverseasCommitment: boolean;
+} | {
+  totalScore: number;
+} | null {
+  const keepRank = target.rank ?? 9999;
+  const mergeRank = source.rank ?? 9999;
+  if (source.rank != null && mergeRank < keepRank) {
+    return {
+      rank: source.rank,
+      nettScore: source.nettScore,
+      totalScore: source.totalScore ?? target.totalScore,
+      isDns: Boolean(source.isDns),
+      isOverseasCommitment: Boolean(source.isOverseasCommitment),
+    };
+  }
+  if (target.totalScore == null && source.totalScore != null) {
+    return { totalScore: source.totalScore };
+  }
+  return null;
+}
+
 export type MergeSailorsOptions = {
   keepId: string;
   mergeId: string;
@@ -203,26 +246,14 @@ export async function mergeSailors({
       raceScoresMoved += scorePlan.moveIds.length;
       raceScoresDroppedConflict += scorePlan.conflictIds.length;
 
-      const keepRank = targetResult.rank ?? 9999;
-      const mergeRank = sourceResult.rank ?? 9999;
-      if (mergeRank < keepRank) {
+      const scorePatch = preferredDuplicateResultUpdate(
+        targetResult,
+        sourceResult
+      );
+      if (scorePatch) {
         await tx
           .update(regattaResults)
-          .set({
-            rank: sourceResult.rank,
-            nettScore: sourceResult.nettScore,
-            totalScore: sourceResult.totalScore ?? targetResult.totalScore,
-            updatedAt: now,
-          })
-          .where(eq(regattaResults.id, targetResult.id));
-        resultsMergedConflict++;
-      } else if (
-        targetResult.totalScore == null &&
-        sourceResult.totalScore != null
-      ) {
-        await tx
-          .update(regattaResults)
-          .set({ totalScore: sourceResult.totalScore, updatedAt: now })
+          .set({ ...scorePatch, updatedAt: now })
           .where(eq(regattaResults.id, targetResult.id));
         resultsMergedConflict++;
       } else {

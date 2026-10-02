@@ -349,6 +349,22 @@ export function periodBounds(period: Period): { start: string; end: string } {
   return { start: `${period.year}-07-01`, end: `${period.year}-12-31` };
 }
 
+/**
+ * Whether a regatta division belongs on a Gold or Silver series board.
+ * "Both" is a single sheet sailed by both fleets, so it counts on each board.
+ * Open / Fleet are single-class sheets and stay off the Optimist boards.
+ * Missing division stays Gold, matching historical imports.
+ */
+export function divisionCountsOnFleet(
+  division: string | null | undefined,
+  fleet: "Gold" | "Silver"
+): boolean {
+  const div = (division || "Gold").trim();
+  if (div === "Open" || div === "Fleet") return false;
+  if (fleet === "Gold") return div === "Gold" || div === "Both";
+  return div === "Silver" || div === "Both";
+}
+
 /** Up to 5 ranking events for a fleet in a half-year (oldest → newest = R1…R5). */
 export function rankingRegattasInPeriod(
   fleet: "Gold" | "Silver",
@@ -369,11 +385,7 @@ export function rankingRegattasInPeriod(
       const t = String(r.date || "").slice(0, 10);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(t)) return false;
       if (t < start || t > end) return false;
-      const div = r.division || "Gold";
-      // Single-fleet classes use Open — not part of Optimist Gold/Silver
-      if (div === "Open" || div === "Fleet") return false;
-      if (fleet === "Gold") return div === "Gold" || div === "Both";
-      return div === "Silver" || div === "Both";
+      return divisionCountsOnFleet(r.division, fleet);
     })
     .sort((a, b) =>
       String(b.date || "").slice(0, 10).localeCompare(String(a.date || "").slice(0, 10))
