@@ -16,6 +16,7 @@ import {
   SNSC_2025_EVENT,
   SNSC_2026_EVENT,
   PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT,
+  YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT,
 } from "@/lib/regattaEvents";
 
 function regatta(slug: string): RegattaRecord {
@@ -105,6 +106,49 @@ describe("PSA National Elimination Series 2026 hub", () => {
     expect(findEventSliceForRegattaSlug("psa-national-elimination-series-2026-ilca-7")).toEqual({
       event: PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT,
       slice: ilca7,
+    });
+  });
+});
+
+
+describe("Youth Thailand National Sailing Championship 2026 hub", () => {
+  it("resolves the hub slug and links Optimist Open + ILCA 4 draft slices", () => {
+    const event = getRegattaEvent("youth-thailand-national-sailing-championship-2026");
+    expect(event?.name).toBe("Youth Thailand National Sailing Championship 2026");
+    expect(event?.slices.map((s) => s.key)).toEqual(["optimist", "ilca-4"]);
+    expect(event?.scheduleSummary).toMatch(/Does not count toward Singapore ranking/);
+    expect(event?.officialNoticeBoardUrl).toBe(
+      "https://www.racingrulesofsailing.org/documents/15865/event"
+    );
+  });
+
+  it("maps each draft class slug without cross-matching", () => {
+    const [opt, ilca4] = YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT.slices;
+    expect(
+      sliceMatchesRegattaSlug(
+        opt,
+        "youth-thailand-national-sailing-championship-2026-optimist"
+      )
+    ).toBe(true);
+    expect(
+      sliceMatchesRegattaSlug(
+        ilca4,
+        "youth-thailand-national-sailing-championship-2026-ilca-4"
+      )
+    ).toBe(true);
+    expect(
+      sliceMatchesRegattaSlug(
+        opt,
+        "youth-thailand-national-sailing-championship-2026-ilca-4"
+      )
+    ).toBe(false);
+    expect(
+      findEventSliceForRegattaSlug(
+        "youth-thailand-national-sailing-championship-2026-ilca-4"
+      )
+    ).toEqual({
+      event: YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT,
+      slice: ilca4,
     });
   });
 });
