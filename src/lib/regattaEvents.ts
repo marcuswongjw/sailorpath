@@ -699,6 +699,50 @@ export const NSC_CUP_2_2025_EVENT: RegattaEventDef = {
   ],
 };
 
+export const PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT: RegattaEventDef = {
+  slug: "psa-national-elimination-series-2026",
+  name: "PSA National Elimination Series 2026",
+  shortName: "PSA Elimination 2026",
+  datesText: "2026 (year-long · Phase 1 Jul–Aug)",
+  venue: "NSC Manila Bay, Philippines",
+  organizer: "Philippine Sailing Association",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/15290/event",
+  officialNoticeBoardUrl:
+    "https://www.racingrulesofsailing.org/documents/15290/event",
+  scheduleSummary:
+    "PSA year-long national elimination series for 2027 National Training Pool (NTP) selection. Phase 1 at NSC Manila Bay. Open fleets. Does not count toward Singapore ranking.",
+  slices: [
+    {
+      key: "optimist",
+      label: "Optimist Open",
+      series: "optimist",
+      slugIncludes: ["psa-national-elimination-series-2026-optimist"],
+      prizeFleetName: "Optimist Open",
+    },
+    {
+      key: "ilca-4",
+      label: "ILCA 4",
+      series: "ilca4",
+      slugIncludes: ["psa-national-elimination-series-2026-ilca-4"],
+      prizeFleetName: "ILCA 4",
+    },
+    {
+      key: "ilca-6",
+      label: "ILCA 6",
+      series: "ilca6",
+      slugIncludes: ["psa-national-elimination-series-2026-ilca-6"],
+      prizeFleetName: "ILCA 6",
+    },
+    {
+      key: "ilca-7",
+      label: "ILCA 7",
+      series: "ilca7",
+      slugIncludes: ["psa-national-elimination-series-2026-ilca-7"],
+      prizeFleetName: "ILCA 7",
+    },
+  ],
+};
+
 export const REGATTA_EVENTS: RegattaEventDef[] = [
   RSYC_OPTIMIST_2026_EVENT,
   RSYC_OPTIMIST_2025_EVENT,
@@ -717,6 +761,7 @@ export const REGATTA_EVENTS: RegattaEventDef[] = [
   PULAU_UJONG_2026_EVENT,
   SYSC_2026_EVENT,
   SELECTION_TRIALS_2026_EVENT,
+  PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT,
 ];
 
 const EVENT_SLUG_ALIASES: Record<string, string> = {
