@@ -21,6 +21,7 @@ import {
 } from "@/db/schema";
 import {
   calculateRankings,
+  divisionCountsOnFleet,
   overallRankOnBoard,
   periodBounds,
   periodLabel,
@@ -36,6 +37,7 @@ import {
 import { applyProjectedGoldParticipationDropped } from "@/lib/goldFleetDrop";
 import { applyProjectedSilverParticipationDropped } from "@/lib/silverSeriesDrop";
 import { currentPeriodFromSgToday, todayYmdSg } from "@/lib/datesSg";
+import { superadminRoleDecision, type AppRole } from "@/lib/superadminEmail";
 import { normalizeGender } from "@/lib/gender";
 import { normalizeSgSeriesMembership } from "@/lib/seriesMembership";
 import {
@@ -1304,7 +1306,7 @@ export const getCachedFleetRankings = unstable_cache(
 export const getCachedPreviousFleetRankings = unstable_cache(
   async (fleet: "Gold" | "Silver", year: number, half: Period["half"]): Promise<RankedSailor[]> =>
     computeFleetRankings(fleet, { year, half }, true),
-  ["previous-fleet-rankings-v2"],
+  ["previous-fleet-rankings-v3"],
   { revalidate: 60, tags: [CACHE_TAG_FLEET_RANKINGS] }
 );
 
@@ -1314,8 +1316,12 @@ export function latestRankingRegattaIdForFleet(
   const { start, end } = periodBounds(period);
   const candidates = rows.filter((row) => {
     const date = String(row.date || "").slice(0, 10);
-    const division = String(row.division || "Gold").toLowerCase();
-    return row.countsForRanking !== false && date >= start && date <= end && division.includes(fleet.toLowerCase());
+    return (
+      row.countsForRanking !== false &&
+      date >= start &&
+      date <= end &&
+      divisionCountsOnFleet(row.division, fleet)
+    );
   });
   candidates.sort((a, b) => String(b.date).localeCompare(String(a.date)) || b.id.localeCompare(a.id));
   return candidates[0]?.id || null;
@@ -1365,17 +1371,30 @@ export async function ensureProfileForUser(user: {
       .where(eq(profiles.id, user.id))
       .limit(1);
     if (existing[0]) {
+      const decision = superadminRoleDecision(
+        existing[0].role as AppRole,
+        user.email
+      );
+      let role = existing[0].role;
+      if (decision.persistSuperadmin) {
+        const [updated] = await db
+          .update(profiles)
+          .set({ role: "superadmin", updatedAt: new Date() })
+          .where(eq(profiles.id, user.id))
+          .returning({ id: profiles.id, role: profiles.role });
+        if (updated) role = updated.role;
+      }
       if (
         user.user_metadata?.account_intent === "coach" &&
-        existing[0].role !== "coach" &&
-        existing[0].role !== "superadmin"
+        role !== "coach" &&
+        role !== "superadmin"
       ) {
         await db
           .insert(coachAccessRequests)
           .values({ requesterId: user.id })
           .onConflictDoNothing({ target: coachAccessRequests.requesterId });
       }
-      return { profile: existing[0], created: false };
+      return { profile: { ...existing[0], role }, created: false };
     }
 
     const fullName =
@@ -1384,14 +1403,8 @@ export async function ensureProfileForUser(user: {
       user.email?.split("@")[0] ||
       "Sailor";
 
-    let role: "sailor" | "superadmin" = "sailor";
-    if (
-      process.env.SUPERADMIN_EMAIL &&
-      user.email &&
-      user.email.toLowerCase() === process.env.SUPERADMIN_EMAIL.toLowerCase()
-    ) {
-      role = "superadmin";
-    }
+    const decision = superadminRoleDecision(null, user.email);
+    const role = decision.role;
 
     const [row] = await db
       .insert(profiles)
@@ -1403,7 +1416,9 @@ export async function ensureProfileForUser(user: {
       })
       .onConflictDoUpdate({
         target: profiles.id,
-        set: { email: user.email || "", updatedAt: new Date() },
+        set: decision.persistSuperadmin
+          ? { email: user.email || "", role: "superadmin", updatedAt: new Date() }
+          : { email: user.email || "", updatedAt: new Date() },
       })
       .returning({ id: profiles.id, role: profiles.role });
 

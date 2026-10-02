@@ -15,6 +15,7 @@ import {
   periodBounds,
   stripProjectedNextSquadStatus,
   previousPeriod,
+  divisionCountsOnFleet,
   rankingRegattasInPeriod,
   reRankWithExcluded,
   regattaMatchesSeriesClass,
@@ -209,6 +210,16 @@ describe("boat class isolation", () => {
     ];
     const gold = rankingRegattasInPeriod("Gold", period, regs, "Optimist");
     expect(gold.map((r) => r.id)).toEqual(["opt"]);
+  });
+});
+
+describe("divisionCountsOnFleet", () => {
+  it("counts Both on Gold and Silver and keeps Open off both", () => {
+    expect(divisionCountsOnFleet("Both", "Gold")).toBe(true);
+    expect(divisionCountsOnFleet("Both", "Silver")).toBe(true);
+    expect(divisionCountsOnFleet("Gold", "Silver")).toBe(false);
+    expect(divisionCountsOnFleet("Open", "Gold")).toBe(false);
+    expect(divisionCountsOnFleet(undefined, "Gold")).toBe(true);
   });
 });
 
