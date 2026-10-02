@@ -161,6 +161,35 @@ describe("sliceMatchesRegattaSlug", () => {
     expect(sliceMatchesRegattaSlug(ilca, "snsc-ilca-4-sep-26-2026-09-11")).toBe(true);
   });
 
+  it("matches the full-name SNSC 2026 slugs to the right slices", () => {
+    const [gold, silver, ilca4, ilca6, ilca7] = SNSC_2026_EVENT.slices;
+    expect(
+      sliceMatchesRegattaSlug(gold, "singapore-national-sailing-championships-2026-gold")
+    ).toBe(true);
+    expect(
+      sliceMatchesRegattaSlug(silver, "singapore-national-sailing-championships-2026-silver")
+    ).toBe(true);
+    expect(
+      sliceMatchesRegattaSlug(ilca4, "singapore-national-sailing-championships-2026-ilca4")
+    ).toBe(true);
+    expect(
+      sliceMatchesRegattaSlug(ilca6, "snsc-ilca-6-sep-26")
+    ).toBe(true);
+    expect(
+      sliceMatchesRegattaSlug(ilca7, "singapore-national-sailing-championships-2026-ilca7")
+    ).toBe(true);
+
+    expect(
+      sliceMatchesRegattaSlug(gold, "singapore-national-sailing-championships-2026-silver")
+    ).toBe(false);
+    expect(
+      sliceMatchesRegattaSlug(silver, "singapore-national-sailing-championships-2026-gold")
+    ).toBe(false);
+    expect(
+      sliceMatchesRegattaSlug(ilca4, "singapore-national-sailing-championships-2026-gold")
+    ).toBe(false);
+  });
+
   it("matches the live SNSC 2025 slice slugs to the right slices", () => {
     const [gold, silver, ilca4, ilca6] = SNSC_2025_EVENT.slices;
     expect(sliceMatchesRegattaSlug(gold, "snsc-gold-sep-25-2025-09-06")).toBe(true);
@@ -295,5 +324,83 @@ describe("defaultEventFleetKey", () => {
   it("falls back to board-class data when no DB slices matched", () => {
     const slices = resolveEventSlices(SNSC_2026_EVENT, []);
     expect(defaultEventFleetKey(SNSC_2026_EVENT, slices)).toBe("wingfoil");
+  });
+});
+
+describe("resolveEventSlices", () => {
+  it("resolves both full-name slugs and linked event rows for SNSC 2026", () => {
+    const mockRegattas: RegattaRecord[] = [
+      {
+        id: "r-gold",
+        name: "Optimist Gold",
+        slug: "singapore-national-sailing-championships-2026-gold",
+        date: "2026-09-11",
+        boatClass: "Optimist",
+        division: "Gold",
+        totalFleetSize: 83,
+        raceCount: 6,
+        countsForRanking: true,
+        isSelectionTrial: true,
+        eventId: "event-snsc-2026",
+        eventSlug: "snsc-2026",
+      },
+      {
+        id: "r-silver",
+        name: "Optimist Silver",
+        slug: "singapore-national-sailing-championships-2026-silver",
+        date: "2026-09-05",
+        boatClass: "Optimist",
+        division: "Silver",
+        totalFleetSize: 50,
+        raceCount: 7,
+        countsForRanking: true,
+        isSelectionTrial: false,
+        eventId: "event-snsc-2026",
+        eventSlug: "snsc-2026",
+      },
+      {
+        id: "r-ilca4",
+        name: "Singapore National Sailing Championships 2026 (ILCA 4)",
+        slug: "singapore-national-sailing-championships-2026-ilca4",
+        date: "2026-09-05",
+        boatClass: "ILCA 4",
+        division: "Open",
+        totalFleetSize: 46,
+        raceCount: 9,
+        countsForRanking: true,
+        isSelectionTrial: true,
+        eventId: "event-snsc-2026",
+        eventSlug: "snsc-2026",
+      },
+      {
+        id: "r-ilca6",
+        name: "ILCA 6",
+        slug: "snsc-ilca-6-sep-26",
+        date: "2026-09-11",
+        boatClass: "ILCA 6",
+        division: "Open",
+        totalFleetSize: 19,
+        raceCount: 9,
+        countsForRanking: true,
+        isSelectionTrial: false,
+        eventId: "event-snsc-2026",
+        eventSlug: "snsc-2026",
+      },
+    ];
+
+    const resolved = resolveEventSlices(SNSC_2026_EVENT, mockRegattas);
+    const goldSlice = resolved.find((s) => s.def.key === "optimist-gold");
+    const silverSlice = resolved.find((s) => s.def.key === "optimist-silver");
+    const ilca4Slice = resolved.find((s) => s.def.key === "ilca-4");
+    const ilca6Slice = resolved.find((s) => s.def.key === "ilca-6");
+
+    expect(goldSlice?.regatta?.id).toBe("r-gold");
+    expect(goldSlice?.regatta?.totalFleetSize).toBe(83);
+    expect(silverSlice?.regatta?.id).toBe("r-silver");
+    expect(silverSlice?.regatta?.totalFleetSize).toBe(50);
+    expect(ilca4Slice?.regatta?.id).toBe("r-ilca4");
+    expect(ilca4Slice?.regatta?.totalFleetSize).toBe(46);
+    expect(ilca6Slice?.regatta?.id).toBe("r-ilca6");
+    expect(ilca6Slice?.regatta?.totalFleetSize).toBe(19);
   });
 });
