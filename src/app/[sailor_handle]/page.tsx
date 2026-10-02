@@ -18,6 +18,7 @@ import {
 } from "@/lib/publicSailor";
 import { resolveProfileAccess } from "@/lib/viewAs";
 import { canManageSailor } from "@/lib/claimAccess";
+import { getProfileFollowState } from "@/lib/followedSailorsQuery";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +41,11 @@ export default async function SailorProfilePage({
     role: null,
     sailorParentId: null,
   });
+  let followControl: {
+    sailorId: string;
+    following: boolean;
+    disabled: boolean;
+  } | null = null;
 
   try {
     const [sailorResult, authResult] = await Promise.all([
@@ -90,6 +96,21 @@ export default async function SailorProfilePage({
       ilcaStanding = iStand;
       observations = obs;
       equipmentHistory = equipHist;
+
+      if (auth?.userId) {
+        const followState = await getProfileFollowState(
+          auth.userId,
+          sailor.id,
+          access.isOwner
+        );
+        if (followState.show) {
+          followControl = {
+            sailorId: sailor.id,
+            following: followState.following,
+            disabled: followState.disabled,
+          };
+        }
+      }
 
       if (!ilcaStanding && !mayHaveIlca) {
         const hasIlcaResults = (results || []).some((r) => {
@@ -169,6 +190,7 @@ export default async function SailorProfilePage({
       isLoggedIn={Boolean(auth?.userId)}
       profileClaimed={Boolean(sailor.parentId)}
       profileVerified={Boolean(sailor.parentId)}
+      followControl={followControl}
     />
     </ErrorBoundary>
   );

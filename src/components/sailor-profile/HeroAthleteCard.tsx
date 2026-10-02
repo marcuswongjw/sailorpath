@@ -24,6 +24,7 @@ import {
   initials,
 } from "./helpers";
 import { describeProfileRank } from "./rankBasis";
+import { FollowSailorButton } from "@/components/FollowSailorButton";
 import type { SailorRecordProps, SeriesStandingProps } from "./types";
 
 export interface HeroAthleteCardProps {
@@ -70,6 +71,11 @@ export interface HeroAthleteCardProps {
   noc?: string;
   totalRegattasCount?: number;
   currentNatSquad?: string | null;
+  followControl?: {
+    sailorId: string;
+    following: boolean;
+    disabled: boolean;
+  } | null;
 }
 
 function natSquadBadgeClass(label: string): string {
@@ -129,6 +135,7 @@ export function HeroAthleteCard({
   noc = "SGP",
   totalRegattasCount = 0,
   currentNatSquad,
+  followControl = null,
 }: HeroAthleteCardProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState(false);
@@ -621,6 +628,14 @@ export function HeroAthleteCard({
         <div className="flex flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-cool-veil">
           <div className="flex flex-wrap items-center gap-2">
             {/* Share Profile button */}
+            {isLoggedIn && followControl ? (
+              <FollowSailorButton
+                sailorId={followControl.sailorId}
+                initiallyFollowing={followControl.following}
+                disabled={followControl.disabled}
+                disabledReason="You already manage this sailor"
+              />
+            ) : null}
             <button
               type="button"
               onClick={handleShare}

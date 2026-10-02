@@ -24,6 +24,7 @@ import {
   type SailorRecord,
 } from "@/lib/ranking";
 import { normalizeSgSeriesMembership } from "@/lib/seriesMembership";
+import { loadPersonalSeasons } from "@/lib/followedSailorsQuery";
 
 type StandingSummary = {
   periodLabel: string;
@@ -104,6 +105,8 @@ export async function GET() {
         goldEntryDate: sailors.goldEntryDate,
         silverEntryDate: sailors.silverEntryDate,
         dropDate: sailors.dropDate,
+        ilca4NationalList: sailors.ilca4NationalList,
+        ilca6NationalList: sailors.ilca6NationalList,
         natSquadStatusJan25: sailors.natSquadStatusJan25,
         natSquadStatusJul25: sailors.natSquadStatusJul25,
         natSquadStatusJan26: sailors.natSquadStatusJan26,
@@ -123,6 +126,7 @@ export async function GET() {
     const period = currentPeriodFromSgToday();
 
     const [
+      seasons,
       goldBoard,
       silverBoard,
       allRecentResults,
@@ -132,6 +136,23 @@ export async function GET() {
       allCoachRecords,
       upcomingRegattas,
     ] = await Promise.all([
+      loadPersonalSeasons(
+        owned.map((s) => ({
+          id: s.id,
+          name: s.name,
+          handle: s.handle,
+          sailNumber: s.sailNumber,
+          club: s.club,
+          nationality: s.nationality,
+          currentFleet: s.currentFleet,
+          goldEntryDate: s.goldEntryDate,
+          silverEntryDate: s.silverEntryDate,
+          dropDate: s.dropDate,
+          sailNumberIlca4: s.sailNumberIlca4,
+          ilca4NationalList: s.ilca4NationalList,
+          ilca6NationalList: s.ilca6NationalList,
+        }))
+      ).catch(() => new Map()),
       ids.length
         ? getCachedFleetRankings("Gold", period.year, period.half).catch(
             () => []
@@ -445,6 +466,7 @@ export async function GET() {
         dob: s.dob,
         ownerRelation: relation,
         standing,
+        season: seasons.get(s.id) ?? null,
         selectionTrials,
         recentResults: recentBySailor.get(s.id) || [],
         primaryGear: gear?.primaryItems || [],

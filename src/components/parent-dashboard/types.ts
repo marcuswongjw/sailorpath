@@ -1,4 +1,5 @@
 import type { ClaimRelation } from "@/lib/claimRelation";
+import type { PersonalSeasonView } from "@/lib/personalSeason";
 import { birthYear } from "@/lib/age";
 
 export type Standing = {
@@ -70,6 +71,7 @@ export type Athlete = {
   nationalSquadStatus?: string | null;
   dob?: string | null;
   standing: Standing | null;
+  season?: PersonalSeasonView | null;
   selectionTrials?: SelectionTrials | null;
   recentResults?: RecentResult[];
   primaryGear?: PrimaryGearItem[];

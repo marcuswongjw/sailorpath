@@ -1,5 +1,50 @@
 import { logAdminChange } from "@/lib/adminChangeLog";
 
+export type ResendSendResult = "sent" | "skipped" | "failed";
+
+/**
+ * Shared Resend text email. Returns "skipped" when RESEND_API_KEY is missing
+ * so callers can no-op in local and preview environments.
+ */
+export async function sendResendTextEmail(input: {
+  to: string | string[];
+  subject: string;
+  text: string;
+}): Promise<ResendSendResult> {
+  const resendApiKey = process.env.RESEND_API_KEY?.trim();
+  const recipients = (Array.isArray(input.to) ? input.to : [input.to])
+    .map((email) => String(email || "").trim())
+    .filter(Boolean);
+  if (!resendApiKey || recipients.length === 0) return "skipped";
+
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "SailorPath <notifications@sailorpath.com>",
+        to: recipients,
+        subject: input.subject,
+        text: input.text,
+      }),
+    });
+    if (!response.ok) {
+      console.warn(
+        "[sendResendTextEmail] Resend rejected the message:",
+        response.status
+      );
+      return "failed";
+    }
+    return "sent";
+  } catch (error) {
+    console.warn("[sendResendTextEmail] Email send failed:", error);
+    return "failed";
+  }
+}
+
 export type ClaimedProfileUpdateNotice = {
   sailorId: string;
   sailorName: string;
@@ -65,38 +110,25 @@ export async function notifySuperadminClaimedProfileUpdate(
   }
 
   // 2. Email dispatch if RESEND_API_KEY is configured
-  const resendApiKey = process.env.RESEND_API_KEY?.trim();
   const superadminEmail = process.env.SUPERADMIN_EMAIL?.trim();
 
-  if (resendApiKey && superadminEmail) {
-    try {
-      const emailLines = [
-        `Sailor: ${notice.sailorName}`,
-        `Updated By: ${notice.actorEmail || "Owner"} (${notice.actorRelation || "parent/sailor"})`,
-        `Profile URL: https://sailorpath.com/sailors/${notice.sailorHandle || notice.sailorId}`,
-        "",
-        "Changed Fields:",
-        ...fieldDescriptions.map((d) => `• ${d}`),
-        "",
-        "Note: As this account is claimed, these edits are recognised as correct and final.",
-      ];
+  if (superadminEmail) {
+    const emailLines = [
+      `Sailor: ${notice.sailorName}`,
+      `Updated By: ${notice.actorEmail || "Owner"} (${notice.actorRelation || "parent/sailor"})`,
+      `Profile URL: https://sailorpath.com/sailors/${notice.sailorHandle || notice.sailorId}`,
+      "",
+      "Changed Fields:",
+      ...fieldDescriptions.map((d) => `• ${d}`),
+      "",
+      "Note: As this account is claimed, these edits are recognised as correct and final.",
+    ];
 
-      await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "SailorPath <notifications@sailorpath.com>",
-          to: [superadminEmail],
-          subject: `[SailorPath] Profile updated for claimed athlete: ${notice.sailorName}`,
-          text: emailLines.join("\n"),
-        }),
-      });
-    } catch (emailErr) {
-      console.warn("[notifySuperadminClaimedProfileUpdate] Email send failed:", emailErr);
-    }
+    await sendResendTextEmail({
+      to: superadminEmail,
+      subject: `[SailorPath] Profile updated for claimed athlete: ${notice.sailorName}`,
+      text: emailLines.join("\n"),
+    });
   }
 
   // 3. Optional Webhook dispatch (Slack/Discord/automation) if configured

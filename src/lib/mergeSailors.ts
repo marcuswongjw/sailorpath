@@ -4,6 +4,7 @@ import {
   coachActionReviews,
   coachDevelopmentRecords,
   coachFollowedSailors,
+  followedSailors,
   coachSailorNotes,
   coachSquadMembers,
   equipmentItems,
@@ -35,6 +36,7 @@ export const SAILOR_RELATIONSHIP_MERGE_PLAN = [
   { table: "parentNotes", strategy: "repoint" },
   { table: "coachSquadMembers", strategy: "target-wins-conflict" },
   { table: "coachFollowedSailors", strategy: "target-wins-conflict" },
+  { table: "followedSailors", strategy: "target-wins-conflict" },
   { table: "coachSailorNotes", strategy: "reconcile-target-note" },
   { table: "coachDevelopmentRecords", strategy: "repoint" },
   { table: "coachActionReviews", strategy: "target-wins-conflict" },
@@ -306,6 +308,40 @@ export async function mergeSailors({
         .update(coachFollowedSailors)
         .set({ sailorId: keepId })
         .where(inArray(coachFollowedSailors.id, followPlan.moveIds));
+    }
+
+    // Unique(follower_profile_id, sailor_id): keep the target follow on collision.
+    const [sourceProfileFollows, targetProfileFollows] = await Promise.all([
+      tx
+        .select({
+          id: followedSailors.id,
+          followerProfileId: followedSailors.followerProfileId,
+        })
+        .from(followedSailors)
+        .where(eq(followedSailors.sailorId, mergeId)),
+      tx
+        .select({
+          id: followedSailors.id,
+          followerProfileId: followedSailors.followerProfileId,
+        })
+        .from(followedSailors)
+        .where(eq(followedSailors.sailorId, keepId)),
+    ]);
+    const profileFollowPlan = splitSourceRowsByTargetConflict(
+      sourceProfileFollows,
+      targetProfileFollows,
+      (row) => row.followerProfileId
+    );
+    if (profileFollowPlan.conflictIds.length > 0) {
+      await tx
+        .delete(followedSailors)
+        .where(inArray(followedSailors.id, profileFollowPlan.conflictIds));
+    }
+    if (profileFollowPlan.moveIds.length > 0) {
+      await tx
+        .update(followedSailors)
+        .set({ sailorId: keepId })
+        .where(inArray(followedSailors.id, profileFollowPlan.moveIds));
     }
 
     // Unique(coach_id, sailor_id): preserve the canonical target note row. If

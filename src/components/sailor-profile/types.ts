@@ -121,4 +121,9 @@ export interface SailorProfileViewProps {
   hidePrivacySection?: boolean;
   /** Show "Claimed" vs "Unclaimed" badge in header */
   profileVerified?: boolean;
+  followControl?: {
+    sailorId: string;
+    following: boolean;
+    disabled: boolean;
+  } | null;
 }

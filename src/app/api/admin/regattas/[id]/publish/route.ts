@@ -12,6 +12,7 @@ import {
   REGATTA_LIFECYCLE_STATUSES,
 } from "@/lib/regattaStatus";
 import { publicationReadiness } from "@/lib/admin/publicationReadiness";
+import { notifyFollowersOfPublishedRegatta } from "@/lib/followPublishNotify";
 
 export async function POST(
   req: Request,
@@ -100,6 +101,19 @@ export async function POST(
         summary: `Changed regatta status from ${prevStatus} to ${targetStatus} for "${existingDinghy.name}"`,
         source: "/api/admin/regattas/[id]/publish",
       });
+
+      if (targetStatus === "published" && prevStatus !== "published") {
+        try {
+          await notifyFollowersOfPublishedRegatta({
+            regattaId: id,
+            eventName: existingDinghy.name,
+            slug: existingDinghy.slug,
+            boatClass: existingDinghy.boatClass,
+          });
+        } catch (error) {
+          console.warn("[publish] follower notify warning:", error);
+        }
+      }
 
       // Trigger cache revalidations for public paths
       try {

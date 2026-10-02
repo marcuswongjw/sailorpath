@@ -36,6 +36,27 @@ describe("HeroAthleteCard", () => {
     profileClaimed: true,
   };
 
+  it("shows Follow for a signed-in viewer and disables it for the linked owner", () => {
+    const { rerender } = render(
+      <HeroAthleteCard
+        {...defaultProps}
+        isLoggedIn
+        followControl={{ sailorId: "s1", following: false, disabled: false }}
+      />
+    );
+    expect(screen.getByRole("button", { name: "Follow" })).toBeEnabled();
+
+    rerender(
+      <HeroAthleteCard
+        {...defaultProps}
+        isLoggedIn
+        isOwner
+        followControl={{ sailorId: "s1", following: false, disabled: true }}
+      />
+    );
+    expect(screen.getByRole("button", { name: "Follow" })).toBeDisabled();
+  });
+
   it("renders athlete passport identity and hero metric modules", () => {
     render(<HeroAthleteCard {...defaultProps} />);
 

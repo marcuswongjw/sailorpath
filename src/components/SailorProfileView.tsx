@@ -280,6 +280,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         sailIlca4={sailIlca4}
         noc={noc}
         totalRegattasCount={results.length}
+        followControl={isLoggedIn ? props.followControl : null}
       />
 
       {/* Claim panel */}

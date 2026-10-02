@@ -6,6 +6,7 @@ export const RESERVED_HANDLES = new Set([
   "login",
   "register",
   "account",
+  "following",
   "sample",
   "search",
   "support",
