@@ -17,19 +17,39 @@ import type {
   NoteCategory,
 } from "./types";
 
-export function useFamilyDashboard() {
+export type FamilyDashboardInitialData = {
+  athletes: Athlete[];
+  upcomingRegattas?: UpcomingRegatta[];
+  pendingClaims?: PendingClaim[];
+  isParentStyle?: boolean;
+};
+
+export type UseFamilyDashboardOptions = {
+  initialData?: FamilyDashboardInitialData;
+  demoMode?: boolean;
+};
+
+export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
+  const demoMode = Boolean(options?.demoMode);
+  const initialData = options?.initialData;
+
   const router = useRouter();
   const { toast, confirm } = useFeedback();
-  const [athletes, setAthletes] = useState<Athlete[]>([]);
-  const [upcomingRegattas, setUpcomingRegattas] = useState<UpcomingRegatta[]>([]);
-  const [pendingClaims, setPendingClaims] = useState<PendingClaim[]>([]);
-  const [isParentStyle, setIsParentStyle] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [athletes, setAthletes] = useState<Athlete[]>(() => initialData?.athletes ?? []);
+  const [upcomingRegattas, setUpcomingRegattas] = useState<UpcomingRegatta[]>(() => initialData?.upcomingRegattas ?? []);
+  const [pendingClaims, setPendingClaims] = useState<PendingClaim[]>(() => initialData?.pendingClaims ?? []);
+  const [isParentStyle, setIsParentStyle] = useState(() => initialData?.isParentStyle ?? true);
+  const [loading, setLoading] = useState(() => !initialData);
   const [error, setError] = useState<string | null>(null);
 
   // Selected athlete: 'all' or athlete ID
-  const [selectedAthleteId, setSelectedAthleteId] = useState<string | "all">("all");
-  const initialSelectionDone = useRef(false);
+  const [selectedAthleteId, setSelectedAthleteId] = useState<string | "all">(() => {
+    if (initialData?.athletes && initialData.athletes.length > 0) {
+      return initialData.athletes[0].id;
+    }
+    return "all";
+  });
+  const initialSelectionDone = useRef(Boolean(initialData));
 
   // Private note draft state
   const [selectedCategory, setSelectedCategory] = useState<NoteCategory>("General");
@@ -72,6 +92,17 @@ export function useFamilyDashboard() {
   const [customGearPrimary, setCustomGearPrimary] = useState(true);
 
   const load = useCallback(async () => {
+    if (demoMode) {
+      if (initialData) {
+        setAthletes(initialData.athletes);
+        setUpcomingRegattas(initialData.upcomingRegattas || []);
+        setPendingClaims(initialData.pendingClaims || []);
+        setIsParentStyle(initialData.isParentStyle ?? true);
+      }
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
     try {
@@ -109,7 +140,7 @@ export function useFamilyDashboard() {
     } finally {
       setLoading(false);
     }
-  }, [router]);
+  }, [demoMode, initialData, router]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -245,6 +276,17 @@ export function useFamilyDashboard() {
       })
     );
 
+    if (demoMode) {
+      toast.success(
+        nextSimplified === "race_ready"
+          ? "Gear marked Race Ready"
+          : nextSimplified === "practice_only"
+          ? "Gear marked Practice Only"
+          : "Gear marked Needs Repair"
+      );
+      return;
+    }
+
     try {
       const res = await fetch("/api/account/equipment", {
         method: "PATCH",
@@ -295,6 +337,13 @@ export function useFamilyDashboard() {
         };
       })
     );
+
+    if (demoMode) {
+      toast.success(
+        nextPrimary ? "Set as primary race gear" : "Removed from primary gear."
+      );
+      return;
+    }
 
     try {
       const res = await fetch("/api/account/equipment", {
@@ -351,6 +400,11 @@ export function useFamilyDashboard() {
       })
     );
 
+    if (demoMode) {
+      toast.success("Equipment item removed.");
+      return;
+    }
+
     try {
       const res = await fetch(
         `/api/account/equipment?id=${encodeURIComponent(gearId)}`,
@@ -384,6 +438,47 @@ export function useFamilyDashboard() {
   ) => {
     setAddGearBusy(true);
     try {
+      if (demoMode) {
+        const newItems =
+          preset.bundleItems && preset.bundleItems.length > 0
+            ? preset.bundleItems.map((b, idx) => ({
+                id: `demo_gear_${Date.now()}_${idx}`,
+                category: b.category,
+                brand: b.brand,
+                model: b.model,
+                label: `${preset.name} (${b.category})`,
+                condition: "race_ready",
+                status: "active",
+                isPrimary: true,
+              }))
+            : [
+                {
+                  id: `demo_gear_${Date.now()}`,
+                  category: preset.category,
+                  brand: preset.brand,
+                  model: preset.model,
+                  label: preset.name,
+                  condition: "race_ready",
+                  status: "active",
+                  isPrimary: true,
+                },
+              ];
+
+        setAthletes((prev) =>
+          prev.map((ath) => {
+            if (ath.id !== athleteId) return ath;
+            const existing = ath.primaryGear || [];
+            return {
+              ...ath,
+              primaryGear: [...existing, ...newItems],
+            };
+          })
+        );
+        setShowAddGearModal(false);
+        toast.success(`Added ${preset.name} to locker!`);
+        return;
+      }
+
       const itemsToAdd =
         preset.bundleItems && preset.bundleItems.length > 0
           ? preset.bundleItems.map((b) => ({
@@ -458,6 +553,36 @@ export function useFamilyDashboard() {
   const handleCreateCustomGear = async (athleteId: string) => {
     setAddGearBusy(true);
     try {
+      if (demoMode) {
+        const newItem = {
+          id: `demo_gear_${Date.now()}`,
+          category: customGearCategory,
+          brand: customGearBrand.trim() || null,
+          model: customGearModel.trim() || null,
+          label: customGearLabel.trim() || null,
+          condition: fromSimplifiedCondition(customGearCondition),
+          status: "active",
+          isPrimary: customGearPrimary,
+        };
+
+        setAthletes((prev) =>
+          prev.map((ath) => {
+            if (ath.id !== athleteId) return ath;
+            const existing = ath.primaryGear || [];
+            return {
+              ...ath,
+              primaryGear: [...existing, newItem],
+            };
+          })
+        );
+        setShowAddGearModal(false);
+        setCustomGearBrand("");
+        setCustomGearModel("");
+        setCustomGearLabel("");
+        toast.success("Added item to equipment locker!");
+        return;
+      }
+
       const item = {
         sailorId: athleteId,
         boatClass: "optimist",
@@ -519,6 +644,24 @@ export function useFamilyDashboard() {
     if (rawBody.length < 2) return;
     const body = selectedCategory !== "General" ? `[${selectedCategory}] ${rawBody}` : rawBody;
 
+    if (demoMode) {
+      const newNote = {
+        id: `demo_note_${Date.now()}`,
+        body,
+        createdAt: new Date().toISOString(),
+      };
+      setAthletes((prev) =>
+        prev.map((ath) =>
+          ath.id === sailorId
+            ? { ...ath, notes: [newNote, ...(ath.notes || [])] }
+            : ath
+        )
+      );
+      setNoteDraft((d) => ({ ...d, [sailorId]: "" }));
+      toast.success("Private note added");
+      return;
+    }
+
     setNoteBusy(sailorId);
     try {
       const res = await fetch("/api/account/parent-notes", {
@@ -546,6 +689,18 @@ export function useFamilyDashboard() {
       confirmLabel: "Delete",
     });
     if (!ok) return;
+
+    if (demoMode) {
+      setAthletes((prev) =>
+        prev.map((ath) => ({
+          ...ath,
+          notes: (ath.notes || []).filter((n) => n.id !== id),
+        }))
+      );
+      toast.success("Note deleted");
+      return;
+    }
+
     setNoteBusy(id);
     try {
       const res = await fetch(

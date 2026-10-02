@@ -13,7 +13,10 @@ import { PersonalSeasonCard } from "@/components/PersonalSeasonCard";
 import { AthleteHeroCard } from "@/components/parent-dashboard/AthleteHeroCard";
 import { AthleteInsightGrid } from "@/components/parent-dashboard/AthleteInsightGrid";
 import { CoachFeedbackPanel } from "@/components/parent-dashboard/CoachFeedbackPanel";
-import { useFamilyDashboard } from "@/components/parent-dashboard/useFamilyDashboard";
+import {
+  useFamilyDashboard,
+  type FamilyDashboardInitialData,
+} from "@/components/parent-dashboard/useFamilyDashboard";
 import type { NoteCategory } from "@/components/parent-dashboard/types";
 import {
   CARD,
@@ -23,8 +26,14 @@ import {
   BODY,
 } from "@/components/parent-dashboard/styles";
 
-export function ParentDashboard() {
-  const d = useFamilyDashboard();
+export function ParentDashboard({
+  initialData,
+  demoMode = false,
+}: {
+  initialData?: FamilyDashboardInitialData;
+  demoMode?: boolean;
+} = {}) {
+  const d = useFamilyDashboard({ initialData, demoMode });
 
   if (d.loading) {
     return (
@@ -199,6 +208,28 @@ export function ParentDashboard() {
             </div>
           )}
         </>
+      )}
+
+      {demoMode && (
+        <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 sm:p-8 text-center space-y-3 shadow-xs">
+          <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--sp-racing-orange)]">
+            Ready to track your sailor?
+          </p>
+          <h2 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)]">
+            Claim your sailor&apos;s profile on SailorPath
+          </h2>
+          <p className={`text-sm ${BODY} max-w-lg mx-auto`}>
+            Follow race results, monitor selection trial standings, track equipment wear, and review coach debriefs all in one place.
+          </p>
+          <div className="pt-2 flex flex-col sm:flex-row gap-3 justify-center items-center">
+            <Link href="/claim-profile" className="sp-btn-primary">
+              Claim sailor profile
+            </Link>
+            <Link href="/sample" className={SECONDARY_BTN}>
+              View sailor profile demo
+            </Link>
+          </div>
+        </div>
       )}
 
       <p className={`text-center text-xs ${MUTED} pt-4`}>
