@@ -743,6 +743,39 @@ export const PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT: RegattaEventDef = {
   ],
 };
 
+
+export const YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT: RegattaEventDef = {
+  slug: "youth-thailand-national-sailing-championship-2026",
+  name: "Youth Thailand National Sailing Championship 2026",
+  shortName: "Youth Thailand 2026",
+  datesText: "18–20 September 2026",
+  venue: "YRAT Sattahip / Ao Dongtan",
+  organizer: "Yacht Racing Association of Thailand",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/15865/event",
+  officialNoticeBoardUrl:
+    "https://www.racingrulesofsailing.org/documents/15865/event",
+  websiteUrl:
+    "https://sailingtech.in.th/preview/results/youth-thailand-2026/optimist-overall.html",
+  scheduleSummary:
+    "Thai youth nationals; open fleets (Optimist Open, ILCA 4). Does not count toward Singapore ranking.",
+  slices: [
+    {
+      key: "optimist",
+      label: "Optimist Open",
+      series: "optimist",
+      slugIncludes: ["youth-thailand-national-sailing-championship-2026-optimist"],
+      prizeFleetName: "Optimist Open",
+    },
+    {
+      key: "ilca-4",
+      label: "ILCA 4",
+      series: "ilca4",
+      slugIncludes: ["youth-thailand-national-sailing-championship-2026-ilca-4"],
+      prizeFleetName: "ILCA 4",
+    },
+  ],
+};
+
 export const REGATTA_EVENTS: RegattaEventDef[] = [
   RSYC_OPTIMIST_2026_EVENT,
   RSYC_OPTIMIST_2025_EVENT,
@@ -762,6 +795,7 @@ export const REGATTA_EVENTS: RegattaEventDef[] = [
   SYSC_2026_EVENT,
   SELECTION_TRIALS_2026_EVENT,
   PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT,
+  YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT,
 ];
 
 const EVENT_SLUG_ALIASES: Record<string, string> = {
