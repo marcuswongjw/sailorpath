@@ -15,6 +15,7 @@ import {
   SAFYC_OPTIMIST_2026_EVENT,
   SNSC_2025_EVENT,
   SNSC_2026_EVENT,
+  PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT,
 } from "@/lib/regattaEvents";
 
 function regatta(slug: string): RegattaRecord {
@@ -71,6 +72,40 @@ describe("getRegattaEvent", () => {
     expect(getRegattaEvent("singapore-national-sailing-championships-2026")?.slug).toBe("snsc-2026");
     expect(getRegattaEvent("singapore-national-sailing-championships-2025")?.slug).toBe("snsc-2025");
     expect(getRegattaEvent("snsc-2025")?.slug).toBe("snsc-2025");
+  });
+});
+
+describe("PSA National Elimination Series 2026 hub", () => {
+  it("resolves the hub slug and links the four draft class slices", () => {
+    const event = getRegattaEvent("psa-national-elimination-series-2026");
+    expect(event?.name).toBe("PSA National Elimination Series 2026");
+    expect(event?.slices.map((s) => s.key)).toEqual([
+      "optimist",
+      "ilca-4",
+      "ilca-6",
+      "ilca-7",
+    ]);
+    expect(event?.scheduleSummary).toMatch(/NTP/);
+    expect(event?.officialNoticeBoardUrl).toBe(
+      "https://www.racingrulesofsailing.org/documents/15290/event"
+    );
+  });
+
+  it("maps each draft class slug to the correct fleet without cross-matching", () => {
+    const [opt, ilca4, ilca6, ilca7] = PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT.slices;
+    expect(sliceMatchesRegattaSlug(opt, "psa-national-elimination-series-2026-optimist")).toBe(true);
+    expect(sliceMatchesRegattaSlug(ilca4, "psa-national-elimination-series-2026-ilca-4")).toBe(true);
+    expect(sliceMatchesRegattaSlug(ilca6, "psa-national-elimination-series-2026-ilca-6")).toBe(true);
+    expect(sliceMatchesRegattaSlug(ilca7, "psa-national-elimination-series-2026-ilca-7")).toBe(true);
+
+    expect(sliceMatchesRegattaSlug(ilca4, "psa-national-elimination-series-2026-ilca-6")).toBe(false);
+    expect(sliceMatchesRegattaSlug(ilca6, "psa-national-elimination-series-2026-ilca-4")).toBe(false);
+    expect(sliceMatchesRegattaSlug(opt, "psa-national-elimination-series-2026-ilca-4")).toBe(false);
+
+    expect(findEventSliceForRegattaSlug("psa-national-elimination-series-2026-ilca-7")).toEqual({
+      event: PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT,
+      slice: ilca7,
+    });
   });
 });
 
