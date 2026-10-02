@@ -61,7 +61,9 @@ function sliceStatusText(slice: ResolvedEventSlice): string {
     }
     return parts.join(" · ");
   }
-  if (slice.def.slugIncludes?.length) return "Results not published yet";
+  if (slice.def.slugIncludes?.length || slice.def.alternateSlugIncludes?.length) {
+    return "Results not published yet";
+  }
   const board = getStaticBoardRegatta(slice.def);
   if (board?.results?.length) {
     return `${board.results.length} entries · ${board.format}`;

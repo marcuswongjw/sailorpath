@@ -7,6 +7,7 @@ import {
   SINGAPORE_TECHNO293_REGATTAS,
   type Techno293Regatta,
 } from "@/lib/techno293";
+import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 
 /**
  * Event hub registry — pilot.
@@ -36,6 +37,8 @@ export type RegattaEventSliceDef = {
    * Regattas-table slice: lowercased regatta slug must contain every token.
    */
   slugIncludes?: string[];
+  /** Alternate token sets: matches if any set has all its tokens in the slug. */
+  alternateSlugIncludes?: string[][];
   /** Reject a slug that contains any of these tokens. */
   slugExcludes?: string[];
   /** Static-data id for board classes served outside the regattas table. */
@@ -81,6 +84,10 @@ export const SNSC_2025_EVENT: RegattaEventDef = {
       label: "Optimist Gold",
       series: "optimist",
       slugIncludes: ["snsc", "gold", "sep-25"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2025", "gold"],
+        ["snsc-2025", "gold"],
+      ],
       prizeFleetName: "Optimist Gold Fleet",
     },
     {
@@ -88,6 +95,10 @@ export const SNSC_2025_EVENT: RegattaEventDef = {
       label: "Optimist Silver",
       series: "optimist",
       slugIncludes: ["snsc", "silver", "sep-25"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2025", "silver"],
+        ["snsc-2025", "silver"],
+      ],
       prizeFleetName: "Optimist Silver Fleet",
     },
     {
@@ -95,6 +106,12 @@ export const SNSC_2025_EVENT: RegattaEventDef = {
       label: "ILCA 4",
       series: "ilca4",
       slugIncludes: ["snsc", "ilca-4", "sep-25"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2025", "ilca4"],
+        ["singapore-national-sailing-championships-2025", "ilca-4"],
+        ["snsc-2025", "ilca4"],
+        ["snsc-2025", "ilca-4"],
+      ],
       prizeFleetName: "ILCA 4",
     },
     {
@@ -102,6 +119,12 @@ export const SNSC_2025_EVENT: RegattaEventDef = {
       label: "ILCA 6",
       series: "ilca6",
       slugIncludes: ["snsc", "ilca-6", "sep-25"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2025", "ilca6"],
+        ["singapore-national-sailing-championships-2025", "ilca-6"],
+        ["snsc-2025", "ilca6"],
+        ["snsc-2025", "ilca-6"],
+      ],
       prizeFleetName: "ILCA 6",
     },
     {
@@ -152,6 +175,10 @@ export const SNSC_2026_EVENT: RegattaEventDef = {
       label: "Optimist Gold",
       series: "optimist",
       slugIncludes: ["snsc", "gold", "sep-26"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2026", "gold"],
+        ["snsc-2026", "gold"],
+      ],
       prizeFleetName: "Optimist Gold Fleet",
     },
     {
@@ -159,6 +186,10 @@ export const SNSC_2026_EVENT: RegattaEventDef = {
       label: "Optimist Silver",
       series: "optimist",
       slugIncludes: ["snsc", "silver", "sep-26"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2026", "silver"],
+        ["snsc-2026", "silver"],
+      ],
       prizeFleetName: "Optimist Silver Fleet",
     },
     {
@@ -166,6 +197,12 @@ export const SNSC_2026_EVENT: RegattaEventDef = {
       label: "ILCA 4",
       series: "ilca4",
       slugIncludes: ["snsc", "ilca-4", "sep-26"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2026", "ilca4"],
+        ["singapore-national-sailing-championships-2026", "ilca-4"],
+        ["snsc-2026", "ilca4"],
+        ["snsc-2026", "ilca-4"],
+      ],
       prizeFleetName: "ILCA 4",
     },
     {
@@ -173,6 +210,12 @@ export const SNSC_2026_EVENT: RegattaEventDef = {
       label: "ILCA 6",
       series: "ilca6",
       slugIncludes: ["snsc", "ilca-6", "sep-26"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2026", "ilca6"],
+        ["singapore-national-sailing-championships-2026", "ilca-6"],
+        ["snsc-2026", "ilca6"],
+        ["snsc-2026", "ilca-6"],
+      ],
       prizeFleetName: "ILCA 6",
     },
     {
@@ -180,6 +223,12 @@ export const SNSC_2026_EVENT: RegattaEventDef = {
       label: "ILCA 7",
       series: "ilca7",
       slugIncludes: ["snsc", "ilca-7", "sep-26"],
+      alternateSlugIncludes: [
+        ["singapore-national-sailing-championships-2026", "ilca7"],
+        ["singapore-national-sailing-championships-2026", "ilca-7"],
+        ["snsc-2026", "ilca7"],
+        ["snsc-2026", "ilca-7"],
+      ],
       prizeFleetName: "ILCA 7",
     },
     {
@@ -818,8 +867,12 @@ const EVENT_SLUG_ALIASES: Record<string, string> = {
   "csc-ilca-29er-2026": "6th-csc-ilca-29er-open-2026",
   "singapore-national-sailing-championships-2026": "snsc-2026",
   "singapore-national-sailing-championships-2026-ilca4": "snsc-2026",
+  "singapore-national-sailing-championships-2026-gold": "snsc-2026",
+  "singapore-national-sailing-championships-2026-silver": "snsc-2026",
   "singapore-national-sailing-championships-2025": "snsc-2025",
   "singapore-national-sailing-championships-2025-ilca4": "snsc-2025",
+  "singapore-national-sailing-championships-2025-gold": "snsc-2025",
+  "singapore-national-sailing-championships-2025-silver": "snsc-2025",
   "pesta-sukan-regatta-2026-optimist": "pesta-sukan-2026",
   "pesta-sukan-regatta-2026-ilca-wingfoil": "pesta-sukan-2026",
   "pesta-sukan-regatta-2025-optimist": "pesta-sukan-2025",
@@ -827,6 +880,8 @@ const EVENT_SLUG_ALIASES: Record<string, string> = {
   "pesta-sukan-regatta-2025": "pesta-sukan-2025",
   "singapore-youth-sailing-championships-2026": "sysc-2026",
   "singapore-youth-sailing-championships-2026-ilca4": "sysc-2026",
+  "singapore-youth-sailing-championships-2026-gold": "sysc-2026",
+  "singapore-youth-sailing-championships-2026-silver": "sysc-2026",
 };
 
 /** Event hub entry for a class-slice slug such as snsc-ilca-4-sep-26-… */
@@ -864,10 +919,94 @@ export function sliceMatchesRegattaSlug(
   slice: RegattaEventSliceDef,
   regattaSlug: string
 ): boolean {
-  if (!slice.slugIncludes?.length) return false;
+  if (!slice.slugIncludes?.length && !slice.alternateSlugIncludes?.length) return false;
   const slug = String(regattaSlug || "").toLowerCase();
-  if (!slice.slugIncludes.every((token) => slug.includes(token))) return false;
-  return !slice.slugExcludes?.some((token) => slug.includes(token));
+  if (slice.slugExcludes?.some((token) => slug.includes(token))) return false;
+
+  const matchesAll = (tokens: string[]) =>
+    tokens.every((token) => slug.includes(token));
+
+  if (slice.slugIncludes?.length && matchesAll(slice.slugIncludes)) {
+    return true;
+  }
+  if (slice.alternateSlugIncludes?.some((tokens) => matchesAll(tokens))) {
+    return true;
+  }
+  return false;
+}
+
+export function isRegattaLinkedToEventSlice(
+  event: RegattaEventDef,
+  slice: RegattaEventSliceDef,
+  regatta: RegattaRecord
+): boolean {
+  const rEventSlug = String(regatta.eventSlug || "").trim().toLowerCase();
+  const canonicalREvent = rEventSlug ? (EVENT_SLUG_ALIASES[rEventSlug] || rEventSlug) : null;
+  const canonicalEvent = event.slug.toLowerCase();
+
+  const isEventLinked =
+    canonicalREvent === canonicalEvent ||
+    regatta.slug.toLowerCase().startsWith(canonicalEvent) ||
+    EVENT_SLUG_ALIASES[regatta.slug.toLowerCase()] === canonicalEvent;
+
+  if (!isEventLinked) return false;
+
+  const boat = String(regatta.boatClass || "").trim();
+  const division = String(regatta.division || "").trim().toLowerCase();
+  const name = String(regatta.name || "").toLowerCase();
+  const slug = String(regatta.slug || "").toLowerCase();
+
+  if (slice.series === "optimist") {
+    const isOpt =
+      boat.toLowerCase().includes("optimist") ||
+      name.includes("optimist") ||
+      slug.includes("optimist");
+    if (!isOpt && boat && !boat.toLowerCase().includes("opti")) return false;
+
+    if (slice.key === "optimist-gold" || slice.key === "gold") {
+      return division === "gold" || slug.includes("gold") || name.includes("gold");
+    }
+    if (slice.key === "optimist-silver" || slice.key === "silver") {
+      return division === "silver" || slug.includes("silver") || name.includes("silver");
+    }
+    return !division && !slug.includes("gold") && !slug.includes("silver");
+  }
+
+  if (slice.series === "ilca4") {
+    return (
+      isIlcaSeriesClass(boat, "ILCA 4") ||
+      slug.includes("ilca-4") ||
+      slug.includes("ilca4") ||
+      name.includes("ilca 4") ||
+      name.includes("ilca4")
+    );
+  }
+
+  if (slice.series === "ilca6") {
+    return (
+      isIlcaSeriesClass(boat, "ILCA 6") ||
+      slug.includes("ilca-6") ||
+      slug.includes("ilca6") ||
+      name.includes("ilca 6") ||
+      name.includes("ilca6")
+    );
+  }
+
+  if (slice.series === "ilca7") {
+    return (
+      isIlcaSeriesClass(boat, "ILCA 7") ||
+      slug.includes("ilca-7") ||
+      slug.includes("ilca7") ||
+      name.includes("ilca 7") ||
+      name.includes("ilca7")
+    );
+  }
+
+  if (slice.series === "29er") {
+    return slug.includes("29er") || name.includes("29er") || boat.includes("29");
+  }
+
+  return false;
 }
 
 function fullerResultSheet(current: RegattaRecord, next: RegattaRecord): RegattaRecord {
@@ -895,10 +1034,15 @@ export function resolveEventSlices(
 ): ResolvedEventSlice[] {
   const claimed = new Set<string>();
   return event.slices.map((def) => {
-    if (!def.slugIncludes?.length) return { def, regatta: null };
-    const matches = regattas.filter(
-      (r) => !claimed.has(r.id) && sliceMatchesRegattaSlug(def, r.slug)
-    );
+    if (!def.slugIncludes?.length && !def.alternateSlugIncludes?.length) {
+      return { def, regatta: null };
+    }
+    const matches = regattas.filter((r) => {
+      if (claimed.has(r.id)) return false;
+      if (sliceMatchesRegattaSlug(def, r.slug)) return true;
+      if (isRegattaLinkedToEventSlice(event, def, r)) return true;
+      return false;
+    });
     const regatta = matches.reduce<RegattaRecord | null>(
       (best, row) => (best ? fullerResultSheet(best, row) : row),
       null
