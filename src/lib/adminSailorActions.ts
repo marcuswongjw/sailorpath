@@ -19,6 +19,7 @@ import {
 } from "@/lib/ilcaSailorFixes";
 import { findGoldParticipationDrops } from "@/lib/goldFleetDrop";
 import { findSilverInactivityDrops } from "@/lib/silverSeriesDrop";
+import type { Period } from "@/lib/ranking";
 import { normalizeGender } from "@/lib/gender";
 import {
   isOnIlca4NationalListByName,
@@ -660,11 +661,20 @@ async function applySilverInactivityDrops(
   }));
 
   const dryRun = Boolean(body.dryRun);
+  const targetPeriod =
+    body.targetPeriod &&
+    typeof body.targetPeriod === "object" &&
+    "year" in (body.targetPeriod as object) &&
+    "half" in (body.targetPeriod as object)
+      ? (body.targetPeriod as Period)
+      : undefined;
+
   let candidates = findSilverInactivityDrops(
     sailorRecs,
     regattaRecs,
     resultRecs,
-    asOf
+    asOf,
+    targetPeriod ? { targetPeriod } : undefined
   );
   const onlyIds = Array.isArray(body.sailorIds)
     ? new Set(
@@ -711,6 +721,12 @@ async function applySilverInactivityDrops(
         });
       }
     });
+
+    try {
+      await revalidatePublicRankings();
+    } catch (e) {
+      console.warn("revalidatePublicRankings error:", e);
+    }
   }
 
   return NextResponse.json({
