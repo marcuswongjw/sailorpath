@@ -239,7 +239,7 @@ export async function PATCH(req: Request) {
       if (!request) return null;
 
       if (action === "approve" && request.source === "admin") {
-        return { ...request, blocked: true as const };
+        return { ...request, status: "pending" as const, blocked: true as const };
       }
 
       const status = action === "approve" ? "approved" : "rejected";
