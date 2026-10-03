@@ -566,6 +566,11 @@ export const RSYC_OPTIMIST_GOLD_2026_EVENT: RegattaEventDef = {
   datesText: "3–4 October 2026",
   venue: "Republic of Singapore Yacht Club, Singapore",
   organizer: "Republic of Singapore Yacht Club",
+  noticeOfRaceUrl: "https://rsyc.org.sg/wp-content/uploads/2026/08/NOR_RSYC_Gold_KO_2026.pdf",
+  officialNoticeBoardUrl:
+    "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-gold-fleet-knockout-championship-2026/",
+  websiteUrl:
+    "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-gold-fleet-knockout-championship-2026/",
   scheduleSummary:
     "3–4 October 2026 at Republic of Singapore Yacht Club.",
   slices: [
