@@ -32,6 +32,9 @@ import { toYmd } from "@/lib/datesSg";
 export type SilverDropCandidate = {
   sailorId: string;
   name: string;
+  sailNumber?: string | null;
+  club?: string | null;
+  silverEntryDate?: string | null;
   failedPeriod: Period;
   /** Suggested Optimist drop date (half boundary after failed period) */
   dropDate: string;
@@ -134,9 +137,12 @@ export function detectSilverInactivityDrops(
   sailors: SailorRecord[],
   regattas: RegattaRecord[],
   results: RegattaResultRecord[],
-  asOfYmd: string
+  asOfYmd: string,
+  options?: { targetPeriod?: Period }
 ): SilverDropCandidate[] {
-  const periods = completedPeriodsUpTo(asOfYmd);
+  const periods = options?.targetPeriod
+    ? [options.targetPeriod]
+    : completedPeriodsUpTo(asOfYmd);
   const out: SilverDropCandidate[] = [];
 
   for (const s of sailors) {
@@ -178,6 +184,9 @@ export function detectSilverInactivityDrops(
       out.push({
         sailorId: s.id,
         name: s.name,
+        sailNumber: s.sailNumber,
+        club: s.club,
+        silverEntryDate: s.silverEntryDate,
         failedPeriod: period,
         dropDate,
       });
@@ -200,13 +209,14 @@ export function findSilverInactivityDrops(
   sailors: SailorRecord[],
   regattas: RegattaRecord[],
   results: RegattaResultRecord[],
-  asOfYmd: string
+  asOfYmd: string,
+  options?: { targetPeriod?: Period }
 ): SilverDropCandidate[] {
   const stack = new Error().stack ?? "";
   if (stack.includes("computeFleetRankings")) {
     return [];
   }
-  return detectSilverInactivityDrops(sailors, regattas, results, asOfYmd);
+  return detectSilverInactivityDrops(sailors, regattas, results, asOfYmd, options);
 }
 
 /**

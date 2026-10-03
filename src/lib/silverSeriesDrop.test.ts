@@ -228,4 +228,47 @@ describe("detectSilverInactivityDrops", () => {
     expect(computeFleetRankings()).toEqual([]);
   });
 
+  it("supports targetPeriod (Option A: Jan-Jun 2026)", () => {
+    const activeIn2025Only = base({
+      id: "s2025",
+      name: "Sam",
+      sailNumber: "SGP 999",
+      club: "Changi",
+      silverEntryDate: "2024-01-01",
+    });
+    // With default (all completed halves), would evaluate earlier half if inactive then.
+    // With targetPeriod = Jan-Jun 2026, specifically tests Jan-Jun 2026
+    const drops = detectSilverInactivityDrops(
+      [activeIn2025Only],
+      regattas,
+      [],
+      "2026-08-01",
+      { targetPeriod: { year: 2026, half: "Jan-Jun" } }
+    );
+    expect(drops).toHaveLength(1);
+    expect(drops[0]?.sailorId).toBe("s2025");
+    expect(drops[0]?.name).toBe("Sam");
+    expect(drops[0]?.sailNumber).toBe("SGP 999");
+    expect(drops[0]?.club).toBe("Changi");
+    expect(drops[0]?.failedPeriod).toEqual({ year: 2026, half: "Jan-Jun" });
+    expect(drops[0]?.dropDate).toBe("2026-07-01");
+  });
+
+  it("does not drop in targetPeriod if sailor raced in that targetPeriod", () => {
+    const sailor = base({
+      id: "racer",
+      silverEntryDate: "2026-01-01",
+    });
+    const results: RegattaResultRecord[] = [
+      { sailorId: "racer", regattaId: "s1", rank: 5, isDns: false },
+    ];
+    const drops = detectSilverInactivityDrops(
+      [sailor],
+      regattas,
+      results,
+      "2026-08-01",
+      { targetPeriod: { year: 2026, half: "Jan-Jun" } }
+    );
+    expect(drops).toHaveLength(0);
+  });
 });
