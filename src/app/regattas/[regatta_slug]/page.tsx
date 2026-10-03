@@ -1,19 +1,40 @@
 import Link from "next/link";
 import { permanentRedirect, redirect } from "next/navigation";
+import { eq } from "drizzle-orm";
 import { RegattaEventHub } from "@/components/RegattaEventHub";
 import {
   classResultsHref,
   matchCalendarResults,
 } from "@/lib/calendar/calendarResultLinks";
 import { SINGAPORE_REGATTAS_2026 } from "@/lib/calendar/singaporeRegattas2026";
+import { db } from "@/db";
+import { regattaEvents } from "@/db/schema";
 import { groupedHubForSlug, savedEventHubForSlug } from "@/lib/regattaEventGroups";
+import { applyRegattaEventCopy } from "@/lib/regattaEventCopy";
 import { getCachedPublicRegattas, getRegattaBySlug } from "@/lib/queries";
 import {
   eventHubHref,
   findEventSliceForRegattaSlug,
   getRegattaEvent,
+  type RegattaEventDef,
 } from "@/lib/regattaEvents";
 import type { Metadata } from "next";
+
+async function withSavedEventCopy(event: RegattaEventDef): Promise<RegattaEventDef> {
+  try {
+    const [saved] = await db
+      .select({
+        scheduleSummary: regattaEvents.scheduleSummary,
+        scoringRules: regattaEvents.scoringRules,
+      })
+      .from(regattaEvents)
+      .where(eq(regattaEvents.slug, event.slug))
+      .limit(1);
+    return applyRegattaEventCopy(event, saved);
+  } catch {
+    return event;
+  }
+}
 
 export const dynamic = "force-dynamic";
 
@@ -69,7 +90,7 @@ export default async function RegattaRedirectPage({
     }
     return (
       <RegattaEventHub
-        event={event}
+        event={await withSavedEventCopy(event)}
         activeFleet={fleet ?? null}
         calendarView={calendarView}
       />
@@ -101,7 +122,7 @@ export default async function RegattaRedirectPage({
     }
     return (
       <RegattaEventHub
-        event={saved.event}
+        event={await withSavedEventCopy(saved.event)}
         activeFleet={fleet ?? saved.fleetKey}
         calendarView={calendarView}
       />
@@ -120,7 +141,7 @@ export default async function RegattaRedirectPage({
     }
     return (
       <RegattaEventHub
-        event={grouped.event}
+        event={await withSavedEventCopy(grouped.event)}
         activeFleet={fleet ?? grouped.fleetKey}
         calendarView={calendarView}
       />
