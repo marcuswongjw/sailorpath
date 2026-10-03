@@ -20,6 +20,8 @@ export async function POST() {
         target: coachAccessRequests.requesterId,
         set: {
           status: "pending",
+          source: "user",
+          inviteToken: null,
           requestedAt: new Date(),
           reviewedAt: null,
           reviewedBy: null,

@@ -29,6 +29,8 @@ export async function GET() {
         .select({
           id: sailorClaims.id,
           status: sailorClaims.status,
+          relation: sailorClaims.relation,
+          source: sailorClaims.source,
           note: sailorClaims.note,
           createdAt: sailorClaims.createdAt,
           sailorId: sailorClaims.sailorId,
