@@ -550,6 +550,10 @@ export const sailorClaims = pgTable("sailor_claims", {
   }),
   /** How the claimant heard about SailorPath */
   heardAbout: text("heard_about"),
+  /** user = claimant submitted it; admin = superadmin invited this account */
+  source: text("source", { enum: ["user", "admin"] })
+    .default("user")
+    .notNull(),
   note: text("note"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),

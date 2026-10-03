@@ -6,12 +6,13 @@ import { profiles, sailorClaims, sailors } from "@/db/schema";
 import { trackUsage } from "@/lib/usage";
 import {
   parseClaimRelation,
-  profileRoleFromRelation,
   relationFromNote,
   type ClaimRelation,
 } from "@/lib/claimRelation";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import { applyClaimAccountRole } from "@/lib/claimAccountRole";
 import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
+import { notifySailorAssignmentInvite } from "@/lib/sailorInviteNotify";
 
 export async function GET() {
   try {
@@ -38,6 +39,7 @@ export async function GET() {
           requesterEmail: profiles.email,
           requesterName: profiles.fullName,
           requesterRole: profiles.role,
+          source: sailorClaims.source,
         })
         .from(sailorClaims)
         .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
@@ -65,6 +67,7 @@ export async function GET() {
             requesterEmail: profiles.email,
             requesterName: profiles.fullName,
             requesterRole: profiles.role,
+            source: sailorClaims.source,
           })
           .from(sailorClaims)
           .innerJoin(sailors, eq(sailorClaims.sailorId, sailors.id))
@@ -387,7 +390,8 @@ export async function PATCH(req: Request) {
 /**
  * POST /api/admin/claims
  * Body: { userId: string, sailorId: string, relation?: "parent" | "sailor" | "other", note?: string }
- * Superadmin assigns a registered user account to a sailor profile directly.
+ * Superadmin invites a registered user to a sailor profile.
+ * The link stays pending until that user accepts it.
  */
 export async function POST(req: Request) {
   try {
@@ -432,14 +436,23 @@ export async function POST(req: Request) {
       )
       .limit(1);
 
+    if (existingClaim?.status === "approved") {
+      return NextResponse.json({
+        ok: true,
+        alreadyLinked: true,
+        claim: existingClaim,
+      });
+    }
+
     let claimRecord;
     if (existingClaim) {
       const [updated] = await db
         .update(sailorClaims)
         .set({
-          status: "approved",
+          status: "pending",
           relation,
           note,
+          source: "admin",
           updatedAt: new Date(),
         })
         .where(eq(sailorClaims.id, existingClaim.id))
@@ -451,44 +464,33 @@ export async function POST(req: Request) {
         .values({
           sailorId,
           requesterId: userId,
-          status: "approved",
+          status: "pending",
           relation,
           note,
+          source: "admin",
         })
         .returning();
       claimRecord = created;
     }
 
-    // Set primary parentId on sailor if empty or already this user
-    if (!sailor.parentId || sailor.parentId === userId) {
-      await db
-        .update(sailors)
-        .set({
-          parentId: userId,
-          ownerRelation: relation,
-          updatedAt: new Date(),
-        })
-        .where(eq(sailors.id, sailorId));
-    }
-
-    const roleNotice = await applyClaimAccountRole(userId, relation);
-    if (roleNotice) {
-      await notifyAccountRoleChange({
-        ...roleNotice,
-        sailorName: sailor.name,
-      });
-    }
+    await notifySailorAssignmentInvite({
+      to: user.email,
+      name: user.fullName,
+      sailorName: sailor.name,
+      relation,
+    });
 
     await logAdminChange({
       actorUserId: auth.userId,
       actorEmail: auth.email,
-      action: "claim_approved",
+      action: "claim.invite",
       entityType: "claim",
       entityId: claimRecord.id,
       entityLabel: `${sailor.name} ← ${user.email}`,
-      summary: `Admin assigned ${user.email} as ${relation} to sailor ${sailor.name}`,
+      summary: `Invited ${user.email} as ${relation} for ${sailor.name}. Waiting for them to accept.`,
       details: {
         assignedByAdmin: true,
+        awaitingAccept: true,
         sailorId,
         sailorName: sailor.name,
         userId,
@@ -499,63 +501,19 @@ export async function POST(req: Request) {
     });
 
     void trackUsage({
-      eventType: "claim_approved",
+      eventType: "claim_submit",
       path: "/admin",
       role: "superadmin",
       meta: {
-        assignedByAdmin: "true",
-        targetUserId: userId.slice(0, 36),
-        sailorId: sailorId.slice(0, 36),
+        status: "pending",
         relation,
+        source: "admin",
       },
     });
 
-    return NextResponse.json({ ok: true, claim: claimRecord });
+    return NextResponse.json({ ok: true, invited: true, claim: claimRecord });
   } catch (e) {
     console.error("claims admin POST assign", e);
     return jsonError(e);
   }
-}
-
-/**
- * Sets profiles.role for a parent or sailor claim.
- * Coach and superadmin accounts are left unchanged and are not emailed.
- * Returns the notice even when the role string was already correct, so an
- * approval still tells the user.
- */
-async function applyClaimAccountRole(
-  userId: string,
-  relation: ClaimRelation
-): Promise<{
-  to: string;
-  name: string | null;
-  previousRole: string;
-  nextRole: string;
-  relation: "parent" | "sailor";
-} | null> {
-  const targetRole = profileRoleFromRelation(relation);
-  if (!targetRole) return null;
-  const [prof] = await db
-    .select({
-      role: profiles.role,
-      email: profiles.email,
-      fullName: profiles.fullName,
-    })
-    .from(profiles)
-    .where(eq(profiles.id, userId))
-    .limit(1);
-  if (!prof || prof.role === "superadmin" || prof.role === "coach") return null;
-  if (prof.role !== targetRole) {
-    await db
-      .update(profiles)
-      .set({ role: targetRole, updatedAt: new Date() })
-      .where(eq(profiles.id, userId));
-  }
-  return {
-    to: prof.email,
-    name: prof.fullName,
-    previousRole: prof.role,
-    nextRole: targetRole,
-    relation: targetRole,
-  };
 }

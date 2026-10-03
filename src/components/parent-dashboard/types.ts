@@ -94,6 +94,7 @@ export type PendingClaim = {
   id: string;
   status: string;
   relation: ClaimRelation | null;
+  source?: string | null;
   sailorName: string;
   sailorHandle: string;
   createdAt: string;

@@ -4,6 +4,7 @@ const mocks = vi.hoisted(() => ({
   requireSuperadmin: vi.fn(),
   updateSet: vi.fn(),
   notifyAccountRoleChange: vi.fn(),
+  notifySailorAssignmentInvite: vi.fn(),
   profileRole: "coach",
 }));
 
@@ -69,11 +70,15 @@ vi.mock("@/lib/roleChangeNotify", () => ({
   notifyAccountRoleChange: mocks.notifyAccountRoleChange,
 }));
 
+vi.mock("@/lib/sailorInviteNotify", () => ({
+  notifySailorAssignmentInvite: mocks.notifySailorAssignmentInvite,
+}));
+
 vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
 }));
 
-import { PATCH } from "./route";
+import { PATCH, POST } from "./route";
 
 describe("PATCH /api/admin/claims", () => {
   beforeEach(() => {
@@ -81,6 +86,8 @@ describe("PATCH /api/admin/claims", () => {
     mocks.updateSet.mockReset();
     mocks.notifyAccountRoleChange.mockReset();
     mocks.notifyAccountRoleChange.mockResolvedValue("sent");
+    mocks.notifySailorAssignmentInvite.mockReset();
+    mocks.notifySailorAssignmentInvite.mockResolvedValue("sent");
     mocks.profileRole = "coach";
     mocks.requireSuperadmin.mockResolvedValue({
       userId: "admin-1",
@@ -173,5 +180,39 @@ describe("PATCH /api/admin/claims", () => {
         relation: "parent",
       })
     );
+  });
+
+  it("emails an invitation when an admin assigns a sailor", async () => {
+    const req = new Request("https://sailorpath.com/api/admin/claims", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        userId: "user-coach",
+        sailorId: "s-1",
+        relation: "parent",
+      }),
+    });
+
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.invited).toBe(true);
+
+    const roleUpdates = mocks.updateSet.mock.calls.filter(
+      (args) => (args[0] as Record<string, unknown>)?.role === "parent"
+    );
+    expect(roleUpdates).toHaveLength(0);
+    expect(mocks.updateSet).toHaveBeenCalledWith(
+      expect.objectContaining({ status: "pending", source: "admin" })
+    );
+    expect(mocks.notifySailorAssignmentInvite).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: "sailor@example.com",
+        name: "May Tan",
+        sailorName: "Ava Tan",
+        relation: "parent",
+      })
+    );
+    expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
   });
 });
