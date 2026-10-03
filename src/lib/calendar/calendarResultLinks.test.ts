@@ -46,6 +46,16 @@ const published: RegattaRecord[] = [
   row({ slug: "sysc-gold-mar-26-2026-03-14", name: "SYSC Gold (Mar 26)", division: "Gold" }),
   row({ slug: "csc-gold-jan-26-2026-01-24", name: "CSC Gold (Jan 26)", division: "Gold" }),
   row({ slug: "snsc-gold-sep-26-2026-09-11", name: "SNSC Gold (Sep 26)", division: "Gold" }),
+  row({
+    slug: "rsyc-optimist-silver-fleet-knockout-championship-2026",
+    name: "RSYC Optimist Silver Fleet Knockout Championship 2026",
+    division: "Silver",
+  }),
+  row({
+    slug: "rsyc-optimist-gold-fleet-knockout-championship-2026",
+    name: "RSYC Optimist Gold Fleet Knockout Championship 2026",
+    division: "Gold",
+  }),
 ];
 
 describe("matchCalendarResults", () => {
@@ -93,6 +103,19 @@ describe("matchCalendarResults", () => {
     ]);
     expect(matchCalendarResults("csc-youth-championship-2026", published)).toEqual([]);
     expect(matchCalendarResults("eastern-seaboard-regatta-2026", published)).toEqual([]);
+  });
+
+  it("keeps RSYC Knockout 2026 Gold and Silver on separate cards", () => {
+    expect(
+      matchCalendarResults("rsyc-optimist-silver-fleet-knockout-championship-2026", published).map(
+        (r) => r.slug
+      )
+    ).toEqual(["rsyc-optimist-silver-fleet-knockout-championship-2026"]);
+    expect(
+      matchCalendarResults("rsyc-optimist-gold-fleet-knockout-championship-2026", published).map(
+        (r) => r.slug
+      )
+    ).toEqual(["rsyc-optimist-gold-fleet-knockout-championship-2026"]);
   });
 
   it("links ILCA rows to the unified ILCA results page and Optimist rows to Optimist", () => {

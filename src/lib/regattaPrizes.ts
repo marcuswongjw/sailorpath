@@ -5089,8 +5089,9 @@ export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
   if (
-    s.includes("rsyc-optimist-silver-fleet-knockout-championship-2026") ||
-    (s.includes("rsyc") && s.includes("knockout") && s.includes("2026"))
+    !s.includes("gold") &&
+    (s.includes("rsyc-optimist-silver-fleet-knockout-championship-2026") ||
+      (s.includes("rsyc") && s.includes("knockout") && s.includes("2026")))
   ) {
     return RSYC_OPTIMIST_2026_PRIZE_SCHEDULE;
   }

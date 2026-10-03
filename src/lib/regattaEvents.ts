@@ -535,7 +535,7 @@ export const CSC_ILCA_29ER_2026_EVENT: RegattaEventDef = {
 export const RSYC_OPTIMIST_2026_EVENT: RegattaEventDef = {
   slug: "rsyc-optimist-silver-fleet-knockout-championship-2026",
   name: "RSYC Optimist Silver Fleet Knockout Championship 2026",
-  shortName: "RSYC Knockout 2026",
+  shortName: "RSYC Silver Knockout 2026",
   datesText: "26–27 September 2026",
   venue: "Republic of Singapore Yacht Club, Singapore",
   organizer: "Republic of Singapore Yacht Club",
@@ -553,7 +553,28 @@ export const RSYC_OPTIMIST_2026_EVENT: RegattaEventDef = {
       label: "Optimist Silver",
       series: "optimist",
       slugIncludes: ["rsyc", "knockout", "2026"],
+      slugExcludes: ["gold"],
       prizeFleetName: "Optimist Silver Fleet",
+    },
+  ],
+};
+
+export const RSYC_OPTIMIST_GOLD_2026_EVENT: RegattaEventDef = {
+  slug: "rsyc-optimist-gold-fleet-knockout-championship-2026",
+  name: "RSYC Optimist Gold Fleet Knockout Championship 2026",
+  shortName: "RSYC Gold Knockout 2026",
+  datesText: "3–4 October 2026",
+  venue: "Republic of Singapore Yacht Club, Singapore",
+  organizer: "Republic of Singapore Yacht Club",
+  scheduleSummary:
+    "3–4 October 2026 at Republic of Singapore Yacht Club.",
+  slices: [
+    {
+      key: "optimist-gold",
+      label: "Optimist Gold",
+      series: "optimist",
+      slugIncludes: ["rsyc", "knockout", "2026", "gold"],
+      prizeFleetName: "Optimist Gold Fleet",
     },
   ],
 };
@@ -827,6 +848,7 @@ export const YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT: RegattaEve
 
 export const REGATTA_EVENTS: RegattaEventDef[] = [
   RSYC_OPTIMIST_2026_EVENT,
+  RSYC_OPTIMIST_GOLD_2026_EVENT,
   RSYC_OPTIMIST_2025_EVENT,
   SAFYC_OPTIMIST_2025_EVENT,
   RAFFLES_MARINA_OPTIMIST_2025_EVENT,
