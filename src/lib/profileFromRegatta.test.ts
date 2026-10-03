@@ -92,4 +92,61 @@ describe("profileFromRegatta", () => {
     expect(patch.sailNumberIlca4).toBe("SGP 200");
     expect(patch.sailNumber).toBeUndefined();
   });
+
+  it("writes Techno 293, iQFOiL, and WingFoil plates into boardNumber", () => {
+    for (const boatClass of ["Techno 293", "Techno 293+", "iQFOiL", "Wing Foil"]) {
+      const { patch, changed } = buildProfilePatchFromRow(
+        { sailNumber: "S24", boatClass },
+        { sailNumber: "711", sailNumberIlca4: "219111", boardNumber: null },
+        false,
+        true
+      );
+      expect(changed).toEqual(["boardNumber"]);
+      expect(patch.boardNumber).toBe("S24");
+      expect(patch.sailNumber).toBeUndefined();
+      expect(patch.sailNumberIlca4).toBeUndefined();
+    }
+  });
+
+  it("keeps board dates independent of Optimist and ILCA 4", () => {
+    expect(
+      shouldApplySailNumberFromRegatta({
+        regattaDate: "2026-01-01",
+        boatClass: "WingFoil",
+        latestOptimistDate: "2026-06-01",
+        latestIlca4Date: "2026-06-01",
+        latestBoardDate: null,
+      })
+    ).toBe(true);
+    expect(
+      shouldApplySailNumberFromRegatta({
+        regattaDate: "2026-01-01",
+        boatClass: "Optimist",
+        latestOptimistDate: "2026-06-01",
+        latestIlca4Date: null,
+        latestBoardDate: null,
+      })
+    ).toBe(false);
+    expect(
+      shouldApplySailNumberFromRegatta({
+        regattaDate: "2025-01-01",
+        boatClass: "iQFOiL",
+        latestOptimistDate: null,
+        latestIlca4Date: null,
+        latestBoardDate: "2026-03-01",
+      })
+    ).toBe(false);
+  });
+
+  it("still stores 29er sail numbers on the Optimist field", () => {
+    const { patch, changed } = buildProfilePatchFromRow(
+      { sailNumber: "SGP 12", boatClass: "29er" },
+      { sailNumber: "1", boardNumber: "45" },
+      false,
+      true
+    );
+    expect(changed).toEqual(["sailNumber"]);
+    expect(patch.sailNumber).toBe("12");
+    expect(patch.boardNumber).toBeUndefined();
+  });
 });

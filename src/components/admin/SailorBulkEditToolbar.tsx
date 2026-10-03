@@ -77,6 +77,7 @@ export function SailorBulkEditToolbar({
               <option value="school">School</option>
               <option value="nationality">Nationality</option>
               <option value="sailNumber">Optimist sail #</option>
+              <option value="boardNumber">Board # (Techno / iQFOiL / Wing)</option>
               <option value="gender">Gender (M/F)</option>
               <option value="dob">Date of Birth</option>
               <option value="weight">Weight (kg)</option>

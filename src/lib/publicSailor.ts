@@ -40,6 +40,7 @@ export function toPublicSailorProps(
     handle: sailor.handle,
     sailNumber: sailor.sailNumber,
     sailNumberIlca4: sailor.sailNumberIlca4,
+    boardNumber: sailor.boardNumber,
     ilca4NationalList: sailor.ilca4NationalList,
     club: sailor.club,
     school: sailor.school,

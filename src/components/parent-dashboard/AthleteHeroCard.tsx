@@ -77,6 +77,12 @@ export function AthleteHeroCard({ athlete }: { athlete: Athlete }) {
                 </span>
               )}
 
+              {athlete.boardNumber && (
+                <span className="rounded-full border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] px-2.5 py-1 text-xs font-mono font-bold text-[var(--sp-harbour-shadow)] inline-flex items-center gap-1.5">
+                  Board {athlete.boardNumber}
+                </span>
+              )}
+
               {athlete.standing?.fleet && (
                 <span
                   className={`rounded-full border px-2.5 py-1 text-xs font-black uppercase tracking-wider ${fleetPillClass(athlete.standing.fleet)}`}

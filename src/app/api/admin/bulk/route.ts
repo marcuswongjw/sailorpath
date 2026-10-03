@@ -51,6 +51,7 @@ const ALLOWED = new Set([
   "seaGames",
   "sailNumber",
   "sailNumberIlca4",
+  "boardNumber",
   "name",
   "ilca4NationalList",
   "ilca6NationalList",

@@ -14,6 +14,8 @@ export interface SailorRecord {
   sailNumber: string;
   /** Class-specific ILCA 4 sail number (Optimist keeps sailNumber) */
   sailNumberIlca4?: string | null;
+  /** Techno 293 / iQFOiL / WingFoil board number (not an Optimist sail) */
+  boardNumber?: string | null;
   ilca4NationalList?: boolean | null;
   ilca6NationalList?: boolean | null;
   ilca7NationalList?: boolean | null;

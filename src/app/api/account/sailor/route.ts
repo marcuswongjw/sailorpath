@@ -51,6 +51,7 @@ export async function PATCH(req: Request) {
         club: sailors.club,
         sailNumber: sailors.sailNumber,
         sailNumberIlca4: sailors.sailNumberIlca4,
+        boardNumber: sailors.boardNumber,
         dob: sailors.dob,
         weight: sailors.weight,
         isPublicWeight: sailors.isPublicWeight,
@@ -174,6 +175,9 @@ export async function PATCH(req: Request) {
     if (body.sailNumberIlca4 !== undefined) {
       patch.sailNumberIlca4 = strOrNull(body.sailNumberIlca4, 40);
     }
+    if (body.boardNumber !== undefined) {
+      patch.boardNumber = strOrNull(body.boardNumber, 40);
+    }
     if (body.dob !== undefined) {
       if (body.dob === null || body.dob === "") {
         patch.dob = null;
@@ -254,6 +258,7 @@ export async function PATCH(req: Request) {
         club: sailors.club,
         sailNumber: sailors.sailNumber,
         sailNumberIlca4: sailors.sailNumberIlca4,
+        boardNumber: sailors.boardNumber,
         dob: sailors.dob,
         weight: sailors.weight,
         isPublicWeight: sailors.isPublicWeight,
@@ -326,6 +331,7 @@ export async function PATCH(req: Request) {
         "club",
         "sailNumber",
         "sailNumberIlca4",
+        "boardNumber",
         "dob",
         "weight",
         "isPublicWeight",

@@ -6,6 +6,7 @@ import type React from "react";
 export type ProfileIdentityForm = {
   sailNumber: string;
   sailNumberIlca4: string;
+  boardNumber: string;
   club: string;
   school: string;
   dob: string;
@@ -50,6 +51,15 @@ export function ProfileIdentityFields({ form, onFieldChange, dobHint }: Props) {
           value={form.sailNumberIlca4}
           onChange={(e) => onFieldChange("sailNumberIlca4", e.target.value)}
           placeholder="Optional, e.g. 219111"
+          className={`${INPUT_CLASS} font-mono`}
+        />
+      </label>
+      <label className="block">
+        <span className={LABEL_CLASS}>Board #</span>
+        <input
+          value={form.boardNumber}
+          onChange={(e) => onFieldChange("boardNumber", e.target.value)}
+          placeholder="Techno 293, iQFOiL, WingFoil"
           className={`${INPUT_CLASS} font-mono`}
         />
       </label>

@@ -266,6 +266,13 @@ export function QuickSearchModal({ isOpen, onClose }: QuickSearchModalProps) {
                               }`}>
                                 {s.sailNumber.startsWith("SGP") ? s.sailNumber : `SGP ${s.sailNumber}`}
                               </span>
+                              {s.boardNumber && s.boardNumber !== "0" && (
+                                <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
+                                  isSelected ? "bg-white/20 text-white" : "bg-sky-50 text-sky-900"
+                                }`}>
+                                  Board {s.boardNumber}
+                                </span>
+                              )}
                             </div>
                             <p className={`text-[11px] truncate ${isSelected ? "text-slate-300" : "text-slate-500"}`}>
                               {s.club} {s.school ? `· ${s.school}` : ""}

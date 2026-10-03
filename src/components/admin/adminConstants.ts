@@ -7,6 +7,7 @@ export const DB_SAILOR_COLUMNS: {
   { key: "name", label: "Name", defaultOn: true },
   { key: "sailNumber", label: "Opti sail #", defaultOn: false },
   { key: "sailNumberIlca4", label: "ILCA 4 sail #", defaultOn: true },
+  { key: "boardNumber", label: "Board #", defaultOn: true },
   { key: "ilca4List", label: "ILCA fleets", defaultOn: false },
   { key: "series", label: "SG Optimist", defaultOn: true },
   { key: "best3", label: "Best 3 of 5", defaultOn: true },

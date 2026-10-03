@@ -625,6 +625,23 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                         />
                       </div>
                       <div>
+                        <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+                          Board #
+                        </label>
+                        <input
+                          type="text"
+                          value={sailorForm.boardNumber || ""}
+                          onChange={(e) =>
+                            setSailorForm({
+                              ...sailorForm,
+                              boardNumber: e.target.value,
+                            })
+                          }
+                          className="mt-1 w-full rounded-xl border border-[var(--sp-cool-veil)] bg-white px-3 py-2 text-[var(--sp-charcoal)] text-xs font-mono focus:border-[var(--sp-harbour-teal)] focus:ring-1 focus:ring-[var(--sp-harbour-teal)] shadow-2xs"
+                          placeholder="Techno 293, iQFOiL, WingFoil"
+                        />
+                      </div>
+                      <div>
                         <label className="text-[10px] font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">Club</label>
                         <input
                           type="text"
@@ -1150,6 +1167,11 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                             sailNumberIlca4: (
                               <span className="font-mono text-sky-300/90">
                                 {s.sailNumberIlca4 || "—"}
+                              </span>
+                            ),
+                            boardNumber: (
+                              <span className="font-mono text-teal-300/90">
+                                {s.boardNumber || "—"}
                               </span>
                             ),
                             nationality: (

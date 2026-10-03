@@ -176,7 +176,7 @@ export function useAdminSailors({
     const q = dbSearch.trim().toLowerCase();
     if (q) {
       const hay =
-        `${s.name} ${s.sailNumber || ""} ${s.sailNumberIlca4 || ""} ${s.club || ""} ${s.school || ""} ${s.handle || ""}`.toLowerCase();
+        `${s.name} ${s.sailNumber || ""} ${s.sailNumberIlca4 || ""} ${s.boardNumber || ""} ${s.club || ""} ${s.school || ""} ${s.handle || ""}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     if (dbFleetFilter !== "all") {
@@ -715,6 +715,9 @@ export function useAdminSailors({
       sailNumber: sailorForm.sailNumber,
       sailNumberIlca4: sailorForm.sailNumberIlca4
         ? String(sailorForm.sailNumberIlca4).trim() || null
+        : null,
+      boardNumber: sailorForm.boardNumber
+        ? String(sailorForm.boardNumber).trim() || null
         : null,
       club: sailorForm.club,
       school: sailorForm.school ?? null,

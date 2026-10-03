@@ -736,6 +736,7 @@ export async function POST(req: Request) {
         shouldApplyProfileFromRegatta,
         shouldApplySailNumberFromRegatta,
         buildProfilePatchFromRow,
+        isBoardSailClass,
       } = await import("@/lib/profileFromRegatta");
       const { deriveAllSilverEntryDates } = await import(
         "@/lib/deriveFleetEntryDates"
@@ -825,6 +826,9 @@ export async function POST(req: Request) {
         candidateConditions.push(
           inArray(sailors.sailNumberIlca4, cleanSailNumbers)
         );
+        candidateConditions.push(
+          inArray(sailors.boardNumber, cleanSailNumbers)
+        );
       }
       if (candidateSailorIds.size > 0) {
         candidateConditions.push(
@@ -849,6 +853,7 @@ export async function POST(req: Request) {
                 name: sailors.name,
                 sailNumber: sailors.sailNumber,
                 sailNumberIlca4: sailors.sailNumberIlca4,
+                boardNumber: sailors.boardNumber,
                 dob: sailors.dob,
                 gender: sailors.gender,
                 club: sailors.club,
@@ -892,6 +897,7 @@ export async function POST(req: Request) {
       const latestDateBySailor = new Map<string, string>();
       const latestOptimistDateBySailor = new Map<string, string>();
       const latestIlca4DateBySailor = new Map<string, string>();
+      const latestBoardDateBySailor = new Map<string, string>();
 
       if (candidateAndTargetSailorIds.length > 0) {
         const latestRows = await db
@@ -910,17 +916,19 @@ export async function POST(req: Request) {
           if (!row.sailorId || !/^\d{4}-\d{2}-\d{2}$/.test(d)) continue;
           const prev = latestDateBySailor.get(row.sailorId);
           if (!prev || d > prev) latestDateBySailor.set(row.sailorId, d);
-          const bc = String(row.boatClass || "Optimist")
-            .trim()
-            .toLowerCase();
+          const bc = String(row.boatClass || "Optimist").trim();
+          const bcLower = bc.toLowerCase();
           const isIlca4 =
-            bc === "ilca 4" ||
-            bc === "ilca4" ||
-            bc === "laser 4.7" ||
-            bc === "laser4.7";
+            bcLower === "ilca 4" ||
+            bcLower === "ilca4" ||
+            bcLower === "laser 4.7" ||
+            bcLower === "laser4.7";
           if (isIlca4) {
             const p = latestIlca4DateBySailor.get(row.sailorId);
             if (!p || d > p) latestIlca4DateBySailor.set(row.sailorId, d);
+          } else if (isBoardSailClass(bc)) {
+            const p = latestBoardDateBySailor.get(row.sailorId);
+            if (!p || d > p) latestBoardDateBySailor.set(row.sailorId, d);
           } else {
             const p = latestOptimistDateBySailor.get(row.sailorId);
             if (!p || d > p) latestOptimistDateBySailor.set(row.sailorId, d);
@@ -992,11 +1000,16 @@ export async function POST(req: Request) {
         "laser 4.7",
         "laser4.7",
       ].includes(boat.trim().toLowerCase());
+      const isBoardImport = isBoardSailClass(boat);
 
       const sailorsByClassSailNumber = new Map<string, typeof sailorList>();
       for (const sailor of sailorList) {
         const sailNumber = normalizeSailNumber(
-          isIlcaImport ? sailor.sailNumberIlca4 : sailor.sailNumber
+          isIlcaImport
+            ? sailor.sailNumberIlca4
+            : isBoardImport
+              ? sailor.boardNumber
+              : sailor.sailNumber
         );
         if (!sailNumber) continue;
         sailorsByClassSailNumber.set(sailNumber, [
@@ -1083,16 +1096,21 @@ export async function POST(req: Request) {
             bcLower === "ilca4" ||
             bcLower === "laser 4.7" ||
             bcLower === "laser4.7";
+          const createIsBoard = isBoardSailClass(boat);
           const newGuestId = randomUUID();
           const guestRecord = {
             id: newGuestId,
             name: row.name,
             handle,
-            sailNumber: createIsIlca4
-              ? "0"
-              : cleanOptimistSailNumber(row.sailNumber),
+            sailNumber:
+              createIsIlca4 || createIsBoard
+                ? "0"
+                : cleanOptimistSailNumber(row.sailNumber),
             ...(createIsIlca4 && row.sailNumber
               ? { sailNumberIlca4: row.sailNumber }
+              : {}),
+            ...(createIsBoard && row.sailNumber
+              ? { boardNumber: row.sailNumber }
               : {}),
             ...(createIsIlca4 && isOnIlca4NationalListByName(row.name)
               ? { ilca4NationalList: true }
@@ -1132,6 +1150,7 @@ export async function POST(req: Request) {
           const fullGuest = {
             ...guestRecord,
             sailNumberIlca4: guestRecord.sailNumberIlca4 || null,
+            boardNumber: guestRecord.boardNumber || null,
             dob: guestRecord.dob || null,
             gender: guestRecord.gender || null,
             school: guestRecord.school || null,
@@ -1172,6 +1191,7 @@ export async function POST(req: Request) {
           boatClass: boat,
           latestOptimistDate: latestOptimistDateBySailor.get(sailorId) || null,
           latestIlca4Date: latestIlca4DateBySailor.get(sailorId) || null,
+          latestBoardDate: latestBoardDateBySailor.get(sailorId) || null,
         });
         const { patch: sourcePatch, changed: fieldChanged } =
           buildProfilePatchFromRow(
@@ -1300,6 +1320,7 @@ export async function POST(req: Request) {
             if (
               (f === "sailNumber" ||
                 f === "sailNumberIlca4" ||
+                f === "boardNumber" ||
                 f === "club" ||
                 f === "school" ||
                 f === "nationality") &&
@@ -1317,6 +1338,8 @@ export async function POST(req: Request) {
                   sailNumberIlca4:
                     (profilePatch.sailNumberIlca4 as string) ??
                     s.sailNumberIlca4,
+                  boardNumber:
+                    (profilePatch.boardNumber as string) ?? s.boardNumber,
                   dob: (profilePatch.dob as string) ?? s.dob,
                   club: (profilePatch.club as string) ?? s.club,
                   school: (profilePatch.school as string) ?? s.school,
@@ -1332,15 +1355,19 @@ export async function POST(req: Request) {
           const ed = String(eventDate).slice(0, 10);
           const prevL = latestDateBySailor.get(sailorId);
           if (!prevL || ed >= prevL) latestDateBySailor.set(sailorId, ed);
-          const bc = boat.trim().toLowerCase();
+          const bc = boat.trim();
+          const bcLower = bc.toLowerCase();
           const isIlca4 =
-            bc === "ilca 4" ||
-            bc === "ilca4" ||
-            bc === "laser 4.7" ||
-            bc === "laser4.7";
+            bcLower === "ilca 4" ||
+            bcLower === "ilca4" ||
+            bcLower === "laser 4.7" ||
+            bcLower === "laser4.7";
           if (isIlca4) {
             const p = latestIlca4DateBySailor.get(sailorId);
             if (!p || ed >= p) latestIlca4DateBySailor.set(sailorId, ed);
+          } else if (isBoardSailClass(bc)) {
+            const p = latestBoardDateBySailor.get(sailorId);
+            if (!p || ed >= p) latestBoardDateBySailor.set(sailorId, ed);
           } else {
             const p = latestOptimistDateBySailor.get(sailorId);
             if (!p || ed >= p) latestOptimistDateBySailor.set(sailorId, ed);

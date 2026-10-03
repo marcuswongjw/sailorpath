@@ -11,6 +11,7 @@ const base = {
   handle: "test-sailor",
   sailNumber: "SGP 1",
   sailNumberIlca4: null,
+  boardNumber: "S24",
   ilca4NationalList: false,
   club: "CSC",
   school: null,
@@ -71,6 +72,8 @@ describe("toPublicSailorProps", () => {
     expect(pub.equipmentNotes).toBeUndefined();
     expect(pub.ownerRelation).toBeUndefined();
     expect(pub.name).toBe("Test Sailor");
+    expect(pub.boardNumber).toBe("S24");
+    expect(pub.sailNumber).toBe("SGP 1");
   });
 
   it("includes private fields for owners", () => {

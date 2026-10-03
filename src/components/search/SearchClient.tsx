@@ -546,6 +546,12 @@ export function SearchClient({
                             ILCA: {s.sailNumberIlca4}
                           </span>
                         )}
+
+                        {s.boardNumber && s.boardNumber !== "0" && (
+                          <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-sky-50 text-sky-900 border border-sky-200 text-[10px] font-mono font-semibold shrink-0" title="Techno 293, iQFOiL, or WingFoil board number">
+                            Board: {s.boardNumber}
+                          </span>
+                        )}
                       </div>
 
                       {/* Club and School details */}

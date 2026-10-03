@@ -10,6 +10,7 @@ export type SailorFormState = {
   handle: string;
   sailNumber: string;
   sailNumberIlca4: string;
+  boardNumber: string;
   club: string;
   school?: string;
   nationality: string;
@@ -57,6 +58,7 @@ export function emptySailorForm(): SailorFormState {
     handle: "",
     sailNumber: "",
     sailNumberIlca4: "",
+    boardNumber: "",
     club: "",
     nationality: "",
     gender: "",
@@ -100,6 +102,7 @@ export function sailorFormFromAdmin(sailor: SailorAdmin): SailorFormState {
     handle: sailor.handle || "",
     sailNumber: sailor.sailNumber || "",
     sailNumberIlca4: sailor.sailNumberIlca4 || "",
+    boardNumber: sailor.boardNumber || "",
     club: sailor.club || "",
     school: sailor.school || "",
     nationality: sailor.nationality || "",

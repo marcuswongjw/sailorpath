@@ -61,6 +61,7 @@ export type Athlete = {
   handle: string;
   sailNumber: string;
   sailNumberIlca4?: string | null;
+  boardNumber?: string | null;
   club: string;
   school?: string | null;
   gender?: string | null;

@@ -35,6 +35,7 @@ export const SailorCreateSchema = z.object({
   sailingJourney: z.string().optional().nullable(),
   nationality: z.string().optional().nullable(),
   sailNumberIlca4: z.string().optional().nullable(),
+  boardNumber: z.string().optional().nullable(),
   ilca4NationalList: z.boolean().optional().nullable(),
   ilca6NationalList: z.boolean().optional().nullable(),
   nationalityFromSail: z.boolean().optional().nullable(),

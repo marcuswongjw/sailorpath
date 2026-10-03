@@ -153,6 +153,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     primaryIsIlca,
     sailDisplay,
     sailIlca4,
+    boardNumber,
     noc,
     activeStanding,
     standingIsIlca,
@@ -278,6 +279,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         leftOptimistYear={leftOptimistYear}
         sailDisplay={sailDisplay}
         sailIlca4={sailIlca4}
+        boardNumber={boardNumber}
         noc={noc}
         totalRegattasCount={results.length}
         followControl={isLoggedIn ? props.followControl : null}
