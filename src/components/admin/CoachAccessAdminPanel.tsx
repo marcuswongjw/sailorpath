@@ -13,6 +13,10 @@ import {
   XCircle,
 } from "lucide-react";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import {
+  coachListFromCache,
+  coachRequestsFromCache,
+} from "@/components/admin/coachAccessCache";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 
@@ -58,8 +62,8 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to load coach requests");
       return {
-        requests: (data.requests || []) as CoachAccessRow[],
-        coaches: (data.coaches || []) as ActiveCoachUser[],
+        requests: (Array.isArray(data.requests) ? data.requests : []) as CoachAccessRow[],
+        coaches: (Array.isArray(data.coaches) ? data.coaches : []) as ActiveCoachUser[],
       };
     },
   });
@@ -154,8 +158,8 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
     return <p className="text-sm text-slate-500">Coach access approvals require superadmin.</p>;
   }
 
-  const requests = query.data?.requests ?? [];
-  const coaches = query.data?.coaches ?? [];
+  const requests = coachRequestsFromCache(query.data) as CoachAccessRow[];
+  const coaches = coachListFromCache<ActiveCoachUser>(query.data);
   const visible = requests.filter((row) => filter === "all" || row.status === filter);
 
   return (
