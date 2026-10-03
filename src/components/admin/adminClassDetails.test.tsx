@@ -45,6 +45,8 @@ describe("CalendarEventForm", () => {
           norUrl: "",
           registrationUrl: "",
           keyDeadlines: "",
+          scheduleSummary: "Knockout series at the yacht club.",
+          scoringRules: "Appendix MR applies.",
           countsForRanking: true,
         }}
         setCalendarForm={vi.fn()}
@@ -53,6 +55,10 @@ describe("CalendarEventForm", () => {
 
     expect(screen.queryByText(/official selection trial/i)).not.toBeInTheDocument();
     expect(screen.getByText(/ranking regatta/i)).toBeInTheDocument();
+    expect(screen.getByLabelText("Description")).toHaveValue(
+      "Knockout series at the yacht club."
+    );
+    expect(screen.getByLabelText("Scoring")).toHaveValue("Appendix MR applies.");
   });
 });
 

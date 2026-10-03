@@ -365,6 +365,10 @@ export const regattaEvents = pgTable("regatta_events", {
   isSelectionTrial: boolean("is_selection_trial").default(false).notNull(),
   /** Public calendar line: "Status / Deadline: …". Not shown as schedule notes. */
   keyDeadlines: text("key_deadlines"),
+  /** Paragraph under the regatta name on the public event page. Blank uses the built-in text. */
+  scheduleSummary: text("schedule_summary"),
+  /** Text after "Scoring:" on the public event page. Blank uses the built-in text. */
+  scoringRules: text("scoring_rules"),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });

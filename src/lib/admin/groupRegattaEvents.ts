@@ -49,6 +49,10 @@ export type AdminEventGroup = {
   isSelectionTrial: boolean;
   /** Public card line. Schedule notes stay off the card. */
   keyDeadlines?: string;
+  /** Paragraph under the regatta name. Blank uses the built-in description. */
+  scheduleSummary?: string;
+  /** Text after "Scoring:" on the public event page. */
+  scoringRules?: string;
   expectedClasses: string[];
   missingClasses: string[];
   sheets: GroupableRegatta[];
@@ -272,6 +276,8 @@ export function groupRegattaEvents(
         eventSheets.some((row) => row.isSelectionTrial) ||
         eventShells.some((row) => row.isSelectionTrial),
       keyDeadlines: primary?.keyDeadlines || undefined,
+      scheduleSummary: registry?.scheduleSummary,
+      scoringRules: registry?.scoringRules,
       expectedClasses,
       missingClasses: missingClassesFor(expectedClasses, [
         ...eventSheets,

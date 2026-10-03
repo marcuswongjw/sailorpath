@@ -49,6 +49,7 @@ import {
   type AdminEventGroup,
   type GroupableRegatta,
 } from "@/lib/admin/groupRegattaEvents";
+import { getRegattaEvent } from "@/lib/regattaEvents";
 
 function classSheetGroups(
   unassigned: boolean,
@@ -91,6 +92,8 @@ function withSavedEvent(
     countsForRanking: saved.countsForRanking ?? event.countsForRanking,
     isSelectionTrial: Boolean(saved.isSelectionTrial),
     keyDeadlines: saved.keyDeadlines ?? "",
+    scheduleSummary: saved.scheduleSummary?.trim() || event.scheduleSummary || "",
+    scoringRules: saved.scoringRules?.trim() || event.scoringRules || "",
     expectedClasses,
     missingClasses: missingClassesFor(expectedClasses, [
       ...event.sheets,
@@ -223,6 +226,7 @@ export function AdminRegattasPanel({
     for (const saved of Object.values(savedEvents)) {
       if (existingSlugs.has(saved.slug)) continue;
       const classes = (saved.classes || []).map((item) => item.trim()).filter(Boolean);
+      const registry = getRegattaEvent(saved.slug);
       const families = classes.map((item) => regattaClassFamily(item));
       if (
         regattaClassFilter !== "all" &&
@@ -255,6 +259,9 @@ export function AdminRegattasPanel({
         countsForRanking: saved.countsForRanking !== false,
         isSelectionTrial: Boolean(saved.isSelectionTrial),
         keyDeadlines: saved.keyDeadlines || undefined,
+        scheduleSummary:
+          saved.scheduleSummary?.trim() || registry?.scheduleSummary || "",
+        scoringRules: saved.scoringRules?.trim() || registry?.scoringRules || "",
         expectedClasses: classes,
         missingClasses: classes,
         sheets: [],
