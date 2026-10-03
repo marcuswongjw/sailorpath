@@ -1,9 +1,12 @@
+import { randomBytes } from "crypto";
 import { NextResponse } from "next/server";
 import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { coachAccessRequests, profiles } from "@/db/schema";
 import { jsonError, requireSuperadmin } from "@/lib/auth";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import { notifyCoachInvite } from "@/lib/coachInviteNotify";
+import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
 
 export async function GET() {
   try {
@@ -19,6 +22,7 @@ export async function GET() {
           requesterName: profiles.fullName,
           requesterEmail: profiles.email,
           requesterRole: profiles.role,
+          source: coachAccessRequests.source,
         })
         .from(coachAccessRequests)
         .innerJoin(profiles, eq(coachAccessRequests.requesterId, profiles.id))
@@ -78,12 +82,76 @@ export async function POST(req: Request) {
       );
     }
 
-    const nextRole = action === "assign" ? "coach" : "sailor";
+    if (action === "assign") {
+      if (user.role === "coach") {
+        return NextResponse.json({ ok: true, alreadyCoach: true, user });
+      }
+
+      const inviteToken = randomBytes(32).toString("base64url");
+      await db.transaction(async (tx) => {
+        const [existingReq] = await tx
+          .select({ id: coachAccessRequests.id })
+          .from(coachAccessRequests)
+          .where(eq(coachAccessRequests.requesterId, userId))
+          .limit(1);
+
+        if (existingReq) {
+          await tx
+            .update(coachAccessRequests)
+            .set({
+              status: "pending",
+              source: "admin",
+              inviteToken,
+              requestedAt: new Date(),
+              reviewedAt: null,
+              reviewedBy: null,
+              updatedAt: new Date(),
+            })
+            .where(eq(coachAccessRequests.id, existingReq.id));
+        } else {
+          await tx.insert(coachAccessRequests).values({
+            requesterId: userId,
+            status: "pending",
+            source: "admin",
+            inviteToken,
+          });
+        }
+      });
+
+      await notifyCoachInvite({
+        to: user.email,
+        name: user.fullName,
+        token: inviteToken,
+      });
+
+      await logAdminChange({
+        actorUserId: auth.userId,
+        actorEmail: auth.email,
+        action: "coach_role_invited",
+        entityType: "profile",
+        entityId: user.id,
+        entityLabel: user.fullName,
+        summary: `Invited ${user.fullName} (${user.email}) to accept coach access`,
+        details: {
+          targetUserId: user.id,
+          targetEmail: user.email,
+          previousRole: user.role,
+          awaitingAccept: true,
+        },
+        source: "/api/admin/coach-access",
+      });
+
+      return NextResponse.json({
+        ok: true,
+        invited: true,
+        user,
+      });
+    }
 
     await db.transaction(async (tx) => {
       await tx
         .update(profiles)
-        .set({ role: nextRole, updatedAt: new Date() })
+        .set({ role: "sailor", updatedAt: new Date() })
         .where(eq(profiles.id, userId));
 
       const [existingReq] = await tx
@@ -96,42 +164,45 @@ export async function POST(req: Request) {
         await tx
           .update(coachAccessRequests)
           .set({
-            status: action === "assign" ? "approved" : "rejected",
+            status: "rejected",
+            inviteToken: null,
             reviewedAt: new Date(),
             reviewedBy: auth.userId,
             updatedAt: new Date(),
           })
           .where(eq(coachAccessRequests.id, existingReq.id));
-      } else if (action === "assign") {
-        await tx.insert(coachAccessRequests).values({
-          requesterId: userId,
-          status: "approved",
-          reviewedAt: new Date(),
-          reviewedBy: auth.userId,
-        });
       }
     });
 
     await logAdminChange({
       actorUserId: auth.userId,
       actorEmail: auth.email,
-      action: action === "assign" ? "coach_role_assigned" : "coach_role_revoked",
+      action: "coach_role_revoked",
       entityType: "profile",
       entityId: user.id,
       entityLabel: user.fullName,
-      summary: `${action === "assign" ? "Assigned" : "Revoked"} coach role for ${user.fullName} (${user.email})`,
+      summary: `Revoked coach role for ${user.fullName} (${user.email})`,
       details: {
         targetUserId: user.id,
         targetEmail: user.email,
         previousRole: user.role,
-        newRole: nextRole,
+        newRole: "sailor",
       },
       source: "/api/admin/coach-access",
     });
 
+    if (user.role !== "sailor") {
+      await notifyAccountRoleChange({
+        to: user.email,
+        name: user.fullName,
+        previousRole: user.role,
+        nextRole: "sailor",
+      });
+    }
+
     return NextResponse.json({
       ok: true,
-      user: { ...user, role: nextRole },
+      user: { ...user, role: "sailor" },
     });
   } catch (error) {
     console.error("admin direct coach assign", error);
@@ -159,12 +230,17 @@ export async function PATCH(req: Request) {
           requesterName: profiles.fullName,
           requesterEmail: profiles.email,
           requesterRole: profiles.role,
+          source: coachAccessRequests.source,
         })
         .from(coachAccessRequests)
         .innerJoin(profiles, eq(coachAccessRequests.requesterId, profiles.id))
         .where(eq(coachAccessRequests.id, id))
         .limit(1);
       if (!request) return null;
+
+      if (action === "approve" && request.source === "admin") {
+        return { ...request, status: "pending" as const, blocked: true as const };
+      }
 
       const status = action === "approve" ? "approved" : "rejected";
       if (action === "approve" && request.requesterRole !== "superadmin") {
@@ -177,6 +253,7 @@ export async function PATCH(req: Request) {
         .update(coachAccessRequests)
         .set({
           status,
+          inviteToken: null,
           reviewedAt: new Date(),
           reviewedBy: auth.userId,
           updatedAt: new Date(),
@@ -190,6 +267,13 @@ export async function PATCH(req: Request) {
       return NextResponse.json({ error: "Request not found" }, { status: 404 });
     }
 
+    if ("blocked" in result && result.blocked) {
+      return NextResponse.json(
+        { error: "Waiting for this user to accept or decline the email" },
+        { status: 400 }
+      );
+    }
+
     await logAdminChange({
       actorUserId: auth.userId,
       actorEmail: auth.email,
@@ -201,6 +285,20 @@ export async function PATCH(req: Request) {
       details: { requestId: id, requesterEmail: result.requesterEmail },
       source: "/api/admin/coach-access",
     });
+
+    if (
+      action === "approve" &&
+      result.requesterRole !== "superadmin" &&
+      result.requesterRole !== "coach"
+    ) {
+      await notifyAccountRoleChange({
+        to: result.requesterEmail,
+        name: result.requesterName,
+        previousRole: result.requesterRole,
+        nextRole: "coach",
+        relation: "coach",
+      });
+    }
 
     return NextResponse.json({ ok: true, status: result.status });
   } catch (error) {

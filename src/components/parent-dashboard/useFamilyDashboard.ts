@@ -737,6 +737,7 @@ export function useFamilyDashboard(options?: UseFamilyDashboardOptions) {
     athletes,
     upcomingRegattas,
     pendingClaims,
+    reload: load,
     isParentStyle,
     selectedAthleteId,
     setSelectedAthleteId,

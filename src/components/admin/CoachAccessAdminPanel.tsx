@@ -13,6 +13,10 @@ import {
   XCircle,
 } from "lucide-react";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import {
+  coachListFromCache,
+  coachRequestsFromCache,
+} from "@/components/admin/coachAccessCache";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 
@@ -25,6 +29,7 @@ export type CoachAccessRow = {
   requesterName: string;
   requesterEmail: string;
   requesterRole: string;
+  source?: "user" | "admin" | null;
 };
 
 export type ActiveCoachUser = {
@@ -57,8 +62,8 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to load coach requests");
       return {
-        requests: (data.requests || []) as CoachAccessRow[],
-        coaches: (data.coaches || []) as ActiveCoachUser[],
+        requests: (Array.isArray(data.requests) ? data.requests : []) as CoachAccessRow[],
+        coaches: (Array.isArray(data.coaches) ? data.coaches : []) as ActiveCoachUser[],
       };
     },
   });
@@ -116,7 +121,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
     const ok = await confirm({
       title: isAssign ? `Assign ${targetUser.fullName} as Coach?` : `Revoke Coach role from ${targetUser.fullName}?`,
       message: isAssign
-        ? `This will update ${targetUser.email}'s account role to Coach, granting full access to private Coach Tools and Squad Analytics.`
+        ? `This emails ${targetUser.email} links to accept or decline. Coach tools stay off until they accept.`
         : `This will revert ${targetUser.email}'s account role to Sailor and remove coach dashboard access.`,
       confirmLabel: isAssign ? "Assign as Coach" : "Revoke Coach",
       tone: isAssign ? "default" : "danger",
@@ -135,7 +140,13 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
 
       await queryClient.invalidateQueries({ queryKey: adminQueryKeys.coachAccess() });
       await queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
-      toast.success(isAssign ? `Assigned ${targetUser.fullName} as Coach` : `Revoked Coach role from ${targetUser.fullName}`);
+      toast.success(
+        isAssign
+          ? data.alreadyCoach
+            ? `${targetUser.fullName} is already a Coach.`
+            : `Invitation sent to ${targetUser.email}. They can accept or decline from the email.`
+          : `Revoked Coach role from ${targetUser.fullName}`
+      );
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Role update failed");
     } finally {
@@ -147,8 +158,8 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
     return <p className="text-sm text-slate-500">Coach access approvals require superadmin.</p>;
   }
 
-  const requests = query.data?.requests ?? [];
-  const coaches = query.data?.coaches ?? [];
+  const requests = coachRequestsFromCache(query.data) as CoachAccessRow[];
+  const coaches = coachListFromCache<ActiveCoachUser>(query.data);
   const visible = requests.filter((row) => filter === "all" || row.status === filter);
 
   return (
@@ -161,7 +172,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
         </h3>
         <p className="mt-1 text-xs leading-relaxed text-slate-400">
           Coaches receive access to private squad athlete monitoring, coach notes, and selection analytics.
-          You can approve pending signup requests below or search any registered user to assign them as a coach directly.
+          You can approve requests the user submitted, or email any registered user so they can accept or decline coach access.
         </p>
       </div>
 
@@ -174,7 +185,7 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
           </h4>
         </div>
         <p className="text-xs text-slate-400 leading-relaxed">
-          Search any user by name or email to upgrade them to Coach immediately without waiting for a request.
+          Search any user by name or email. They get an email with Accept and Decline links before the account becomes a Coach.
         </p>
 
         <div className="relative">
@@ -413,7 +424,21 @@ export function CoachAccessAdminPanel({ isSuperadmin }: { isSuperadmin: boolean 
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {row.status === "pending" ? (
+                  {row.status === "pending" && row.source === "admin" ? (
+                    <div className="space-y-2">
+                      <p className="text-[12px] font-semibold text-amber-200">
+                        Waiting for {row.requesterEmail} to accept or decline the email.
+                      </p>
+                      <button
+                        type="button"
+                        disabled={busyId === row.id}
+                        onClick={() => void update(row, "reject")}
+                        className="inline-flex items-center gap-1.5 rounded-full border border-rose-500/30 bg-rose-500/10 px-4 py-2 text-xs font-bold text-rose-300 hover:bg-rose-500/20 disabled:opacity-50"
+                      >
+                        <XCircle className="h-3.5 w-3.5" /> Cancel invitation
+                      </button>
+                    </div>
+                  ) : row.status === "pending" ? (
                     <>
                       <button
                         type="button"

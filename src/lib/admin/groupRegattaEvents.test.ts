@@ -138,6 +138,8 @@ describe("groupRegattaEvents", () => {
     expect(snsc?.name).toMatch(/National Sailing Championships/);
     expect(snsc?.shell?.slug).toBe("singapore-national-sailing-championships-2026");
     expect(snsc?.sheets).toHaveLength(1);
+    expect(snsc?.scheduleSummary).toMatch(/Weekend 1/);
+    expect(snsc?.scoringRules).toMatch(/discard/);
     expect(snsc?.missingClasses).toContain("ILCA 4");
     expect(snsc?.missingClasses).not.toContain("Optimist");
   });

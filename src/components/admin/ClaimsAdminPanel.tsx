@@ -40,6 +40,7 @@ type ClaimRow = {
   requesterEmail: string;
   requesterName: string;
   requesterRole?: string | null;
+  source?: string | null;
   heardAbout?: string | null;
   createdAt: string;
 };
@@ -276,7 +277,9 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to assign user to sailor");
       toast.success(
-        `Assigned ${selectedUser?.email || "user"} to ${selectedSailor?.name || "sailor"} as ${assignRelation}!`
+        data.alreadyLinked
+          ? `${selectedUser?.email || "This user"} is already linked to ${selectedSailor?.name || "this sailor"}.`
+          : `Invitation sent to ${selectedUser?.email || "the user"}. They need to accept the link to ${selectedSailor?.name || "the sailor"}.`
       );
       setIsAssignOpen(false);
       resetAssignForm();
@@ -653,7 +656,24 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   </select>
                 </label>
 
-                {c.status === "pending" && (
+                {c.status === "pending" && c.source === "admin" && (
+                  <div className="space-y-2">
+                    <p className="text-[13px] font-semibold text-amber-200">
+                      Waiting for {c.requesterEmail} to accept this request.
+                    </p>
+                    <button
+                      type="button"
+                      disabled={busy}
+                      onClick={() => void patch(c.id, { status: "rejected" })}
+                      className="inline-flex items-center justify-center gap-1 rounded-full bg-white px-3 py-2 text-[15px] font-bold text-[var(--sp-charcoal)] border border-[var(--sp-cool-veil)] disabled:opacity-50"
+                    >
+                      <XCircle className="h-3.5 w-3.5" />
+                      Cancel invitation
+                    </button>
+                  </div>
+                )}
+
+                {c.status === "pending" && c.source !== "admin" && (
                   <div className="flex flex-col sm:flex-row gap-2">
                     <button
                       type="button"
@@ -764,7 +784,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                     Assign User to Sailor
                   </h3>
                   <p className="text-[13px] text-[var(--sp-slate-soft)]">
-                    Link a registered account directly to an athlete profile.
+                    Email a registered account and ask them to accept the sailor link.
                   </p>
                 </div>
               </div>
@@ -948,7 +968,7 @@ export function ClaimsAdminPanel({ isSuperadmin }: { isSuperadmin: boolean }) {
                   className="sp-btn-primary px-4 py-2 text-xs font-bold flex items-center gap-1.5 shadow-xs disabled:opacity-50"
                 >
                   <UserPlus className="h-3.5 w-3.5" />
-                  <span>{isSubmittingAssign ? "Assigning…" : "Assign User"}</span>
+                  <span>{isSubmittingAssign ? "Sending…" : "Send invitation"}</span>
                 </button>
               </div>
             </form>

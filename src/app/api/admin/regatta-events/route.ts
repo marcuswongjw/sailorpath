@@ -58,6 +58,8 @@ export async function PATCH(req: Request) {
       countsForRanking: boolean;
       isSelectionTrial?: boolean;
       keyDeadlines: string | null;
+      scheduleSummary: string | null;
+      scoringRules: string | null;
       updatedAt: Date;
     } = {
       name,
@@ -71,6 +73,8 @@ export async function PATCH(req: Request) {
       registrationUrl: clean(body.registrationUrl, 500),
       countsForRanking: body.countsForRanking !== false,
       keyDeadlines: clean(body.keyDeadlines, 500),
+      scheduleSummary: clean(body.scheduleSummary, 2000),
+      scoringRules: clean(body.scoringRules, 2000),
       updatedAt: new Date(),
     };
     if (body.isSelectionTrial !== undefined) {
@@ -127,6 +131,7 @@ export async function PATCH(req: Request) {
     }
 
     revalidatePath("/calendar");
+    revalidatePath(`/regattas/${slug}`);
     revalidatePublicRankings(`regatta-event:${slug}`);
     void logAdminChange({
       actorUserId: auth.userId,

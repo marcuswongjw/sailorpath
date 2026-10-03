@@ -3,6 +3,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   requireSuperadmin: vi.fn(),
   updateSet: vi.fn(),
+  notifyAccountRoleChange: vi.fn(),
+  notifySailorAssignmentInvite: vi.fn(),
   profileRole: "coach",
 }));
 
@@ -28,6 +30,9 @@ vi.mock("@/db", () => ({
                 status: "pending",
                 relation: "parent",
                 role: mocks.profileRole,
+                email: "sailor@example.com",
+                fullName: "May Tan",
+                name: "Ava Tan",
               },
             ]);
           }),
@@ -61,16 +66,28 @@ vi.mock("@/lib/adminChangeLog", () => ({
   logAdminChange: vi.fn().mockResolvedValue(undefined),
 }));
 
+vi.mock("@/lib/roleChangeNotify", () => ({
+  notifyAccountRoleChange: mocks.notifyAccountRoleChange,
+}));
+
+vi.mock("@/lib/sailorInviteNotify", () => ({
+  notifySailorAssignmentInvite: mocks.notifySailorAssignmentInvite,
+}));
+
 vi.mock("next/cache", () => ({
   revalidatePath: vi.fn(),
 }));
 
-import { PATCH } from "./route";
+import { PATCH, POST } from "./route";
 
 describe("PATCH /api/admin/claims", () => {
   beforeEach(() => {
     mocks.requireSuperadmin.mockReset();
     mocks.updateSet.mockReset();
+    mocks.notifyAccountRoleChange.mockReset();
+    mocks.notifyAccountRoleChange.mockResolvedValue("sent");
+    mocks.notifySailorAssignmentInvite.mockReset();
+    mocks.notifySailorAssignmentInvite.mockResolvedValue("sent");
     mocks.profileRole = "coach";
     mocks.requireSuperadmin.mockResolvedValue({
       userId: "admin-1",
@@ -99,6 +116,7 @@ describe("PATCH /api/admin/claims", () => {
       (args) => (args[0] as Record<string, unknown>)?.role === "parent"
     );
     expect(roleUpdates).toHaveLength(0);
+    expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
   });
 
   it("updates role when requester is a standard sailor", async () => {
@@ -122,5 +140,79 @@ describe("PATCH /api/admin/claims", () => {
       (args) => (args[0] as Record<string, unknown>)?.role === "parent"
     );
     expect(roleUpdates).toHaveLength(1);
+    expect(mocks.notifyAccountRoleChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: "sailor@example.com",
+        name: "May Tan",
+        previousRole: "sailor",
+        nextRole: "parent",
+        relation: "parent",
+        sailorName: "Ava Tan",
+      })
+    );
+  });
+
+  it("emails a parent approval when the account is already a parent", async () => {
+    mocks.profileRole = "parent";
+
+    const req = new Request("https://sailorpath.com/api/admin/claims", {
+      method: "PATCH",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        id: "claim-1",
+        status: "approved",
+        relation: "parent",
+        setAccountRole: true,
+      }),
+    });
+
+    const res = await PATCH(req);
+    expect(res.status).toBe(200);
+
+    const roleUpdates = mocks.updateSet.mock.calls.filter(
+      (args) => (args[0] as Record<string, unknown>)?.role === "parent"
+    );
+    expect(roleUpdates).toHaveLength(0);
+    expect(mocks.notifyAccountRoleChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        previousRole: "parent",
+        nextRole: "parent",
+        relation: "parent",
+      })
+    );
+  });
+
+  it("emails an invitation when an admin assigns a sailor", async () => {
+    const req = new Request("https://sailorpath.com/api/admin/claims", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        userId: "user-coach",
+        sailorId: "s-1",
+        relation: "parent",
+      }),
+    });
+
+    const res = await POST(req);
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.invited).toBe(true);
+
+    const roleUpdates = mocks.updateSet.mock.calls.filter(
+      (args) => (args[0] as Record<string, unknown>)?.role === "parent"
+    );
+    expect(roleUpdates).toHaveLength(0);
+    expect(mocks.updateSet).toHaveBeenCalledWith(
+      expect.objectContaining({ status: "pending", source: "admin" })
+    );
+    expect(mocks.notifySailorAssignmentInvite).toHaveBeenCalledWith(
+      expect.objectContaining({
+        to: "sailor@example.com",
+        name: "May Tan",
+        sailorName: "Ava Tan",
+        relation: "parent",
+      })
+    );
+    expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
   });
 });

@@ -85,7 +85,11 @@ export function ParentDashboard({
         </p>
       )}
 
-      <PendingClaimsSection pendingClaims={d.pendingClaims} />
+      <PendingClaimsSection
+        pendingClaims={d.pendingClaims}
+        onChanged={() => void d.reload()}
+        demoMode={demoMode}
+      />
 
       {d.athletes.length === 0 ? (
         <div className={`${CARD} p-8 sm:p-12 text-center space-y-4`}>
