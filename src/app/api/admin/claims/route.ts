@@ -11,6 +11,7 @@ import {
   type ClaimRelation,
 } from "@/lib/claimRelation";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
 
 export async function GET() {
   try {
@@ -174,6 +175,7 @@ export async function PATCH(req: Request) {
       .returning();
 
     const setAccountRole = body.setAccountRole !== false;
+    let roleNotice: Awaited<ReturnType<typeof applyClaimAccountRole>> = null;
 
     if (nextStatus === "approved" && relation) {
       const [target] = await db
@@ -197,21 +199,7 @@ export async function PATCH(req: Request) {
       // The claim is marked approved, granting this user full management access as well.
 
       if (setAccountRole) {
-        const role = profileRoleFromRelation(relation);
-        if (role) {
-          const [prof] = await db
-            .select({ role: profiles.role })
-            .from(profiles)
-            .where(eq(profiles.id, claim.requesterId))
-            .limit(1);
-          // Never demote superadmin or coach
-          if (prof && prof.role !== "superadmin" && prof.role !== "coach") {
-            await db
-              .update(profiles)
-              .set({ role, updatedAt: new Date() })
-              .where(eq(profiles.id, claim.requesterId));
-          }
-        }
+        roleNotice = await applyClaimAccountRole(claim.requesterId, relation);
       }
     }
 
@@ -236,20 +224,7 @@ export async function PATCH(req: Request) {
       }
 
       if (setAccountRole) {
-        const role = profileRoleFromRelation(relation);
-        if (role) {
-          const [prof] = await db
-            .select({ role: profiles.role })
-            .from(profiles)
-            .where(eq(profiles.id, claim.requesterId))
-            .limit(1);
-          if (prof && prof.role !== "superadmin" && prof.role !== "coach") {
-            await db
-              .update(profiles)
-              .set({ role, updatedAt: new Date() })
-              .where(eq(profiles.id, claim.requesterId));
-          }
-        }
+        roleNotice = await applyClaimAccountRole(claim.requesterId, relation);
       }
     }
 
@@ -335,6 +310,24 @@ export async function PATCH(req: Request) {
           claimId: id.slice(0, 36),
           relation: relation || null,
         },
+      });
+    }
+
+    if (roleNotice) {
+      let sailorName: string | null = null;
+      try {
+        const [s] = await db
+          .select({ name: sailors.name })
+          .from(sailors)
+          .where(eq(sailors.id, claim.sailorId))
+          .limit(1);
+        sailorName = s?.name || null;
+      } catch {
+        sailorName = null;
+      }
+      await notifyAccountRoleChange({
+        ...roleNotice,
+        sailorName,
       });
     }
 
@@ -478,15 +471,12 @@ export async function POST(req: Request) {
         .where(eq(sailors.id, sailorId));
     }
 
-    // Promote profile role if currently 'sailor' and assigned as 'parent'
-    if (user.role !== "superadmin" && user.role !== "coach") {
-      const targetRole = profileRoleFromRelation(relation);
-      if (targetRole && user.role !== targetRole) {
-        await db
-          .update(profiles)
-          .set({ role: targetRole, updatedAt: new Date() })
-          .where(eq(profiles.id, userId));
-      }
+    const roleNotice = await applyClaimAccountRole(userId, relation);
+    if (roleNotice) {
+      await notifyAccountRoleChange({
+        ...roleNotice,
+        sailorName: sailor.name,
+      });
     }
 
     await logAdminChange({
@@ -525,4 +515,47 @@ export async function POST(req: Request) {
     console.error("claims admin POST assign", e);
     return jsonError(e);
   }
+}
+
+/**
+ * Sets profiles.role for a parent or sailor claim.
+ * Coach and superadmin accounts are left unchanged and are not emailed.
+ * Returns the notice even when the role string was already correct, so an
+ * approval still tells the user.
+ */
+async function applyClaimAccountRole(
+  userId: string,
+  relation: ClaimRelation
+): Promise<{
+  to: string;
+  name: string | null;
+  previousRole: string;
+  nextRole: string;
+  relation: "parent" | "sailor";
+} | null> {
+  const targetRole = profileRoleFromRelation(relation);
+  if (!targetRole) return null;
+  const [prof] = await db
+    .select({
+      role: profiles.role,
+      email: profiles.email,
+      fullName: profiles.fullName,
+    })
+    .from(profiles)
+    .where(eq(profiles.id, userId))
+    .limit(1);
+  if (!prof || prof.role === "superadmin" || prof.role === "coach") return null;
+  if (prof.role !== targetRole) {
+    await db
+      .update(profiles)
+      .set({ role: targetRole, updatedAt: new Date() })
+      .where(eq(profiles.id, userId));
+  }
+  return {
+    to: prof.email,
+    name: prof.fullName,
+    previousRole: prof.role,
+    nextRole: targetRole,
+    relation: targetRole,
+  };
 }

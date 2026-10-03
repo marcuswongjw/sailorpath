@@ -11,6 +11,13 @@ const mocks = vi.hoisted(() => ({
     role: "sailor",
   },
   existingReq: null as { id: string } | null,
+  requestRow: null as {
+    requesterId: string;
+    requesterName: string | null;
+    requesterEmail: string;
+    requesterRole: string;
+  } | null,
+  notifyAccountRoleChange: vi.fn(),
 }));
 
 vi.mock("@/lib/auth", () => ({
@@ -23,6 +30,10 @@ vi.mock("@/lib/auth", () => ({
 
 vi.mock("@/lib/adminChangeLog", () => ({
   logAdminChange: vi.fn().mockResolvedValue(undefined),
+}));
+
+vi.mock("@/lib/roleChangeNotify", () => ({
+  notifyAccountRoleChange: mocks.notifyAccountRoleChange,
 }));
 
 vi.mock("@/db", () => ({
@@ -57,6 +68,13 @@ vi.mock("@/db", () => ({
                 return Promise.resolve(mocks.existingReq ? [mocks.existingReq] : []);
               }),
             }),
+            innerJoin: () => ({
+              where: () => ({
+                limit: vi.fn().mockImplementation(() => {
+                  return Promise.resolve(mocks.requestRow ? [mocks.requestRow] : []);
+                }),
+              }),
+            }),
           }),
         }),
         insert: () => ({
@@ -71,7 +89,7 @@ vi.mock("@/db", () => ({
   },
 }));
 
-import { GET, POST } from "./route";
+import { GET, PATCH, POST } from "./route";
 
 describe("/api/admin/coach-access", () => {
   beforeEach(() => {
@@ -85,6 +103,9 @@ describe("/api/admin/coach-access", () => {
       role: "sailor",
     };
     mocks.existingReq = null;
+    mocks.requestRow = null;
+    mocks.notifyAccountRoleChange.mockReset();
+    mocks.notifyAccountRoleChange.mockResolvedValue("sent");
     mocks.requireSuperadmin.mockResolvedValue({
       userId: "admin-1",
       email: "admin@example.com",
@@ -130,6 +151,15 @@ describe("/api/admin/coach-access", () => {
           status: "approved",
         })
       );
+      expect(mocks.notifyAccountRoleChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          to: "alex@example.com",
+          name: "Alex Tan",
+          previousRole: "sailor",
+          nextRole: "coach",
+          relation: "coach",
+        })
+      );
     });
 
     it("revokes coach role when action is revoke", async () => {
@@ -157,6 +187,30 @@ describe("/api/admin/coach-access", () => {
       expect(mocks.updateSet).toHaveBeenCalledWith(
         expect.objectContaining({ status: "rejected" })
       );
+      expect(mocks.notifyAccountRoleChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          to: "alex@example.com",
+          previousRole: "coach",
+          nextRole: "sailor",
+        })
+      );
+    });
+
+    it("does not email when the account is already a coach", async () => {
+      mocks.mockUser.role = "coach";
+
+      const req = new Request("https://sailorpath.com/api/admin/coach-access", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          userId: "user-123",
+          action: "assign",
+        }),
+      });
+
+      const res = await POST(req);
+      expect(res.status).toBe(200);
+      expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
     });
 
     it("rejects modifying a superadmin", async () => {
@@ -175,6 +229,59 @@ describe("/api/admin/coach-access", () => {
       expect(res.status).toBe(400);
       const data = await res.json();
       expect(data.error).toContain("superadmin");
+      expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("PATCH review", () => {
+    it("emails when a sailor request is approved", async () => {
+      mocks.requestRow = {
+        requesterId: "user-123",
+        requesterName: "Alex Tan",
+        requesterEmail: "alex@example.com",
+        requesterRole: "sailor",
+      };
+
+      const req = new Request("https://sailorpath.com/api/admin/coach-access", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: "req-1", action: "approve" }),
+      });
+
+      const res = await PATCH(req);
+      expect(res.status).toBe(200);
+      expect(mocks.notifyAccountRoleChange).toHaveBeenCalledWith(
+        expect.objectContaining({
+          to: "alex@example.com",
+          previousRole: "sailor",
+          nextRole: "coach",
+          relation: "coach",
+        })
+      );
+    });
+
+    it("does not email a rejection or an account that is already a coach", async () => {
+      mocks.requestRow = {
+        requesterId: "user-123",
+        requesterName: "Alex Tan",
+        requesterEmail: "alex@example.com",
+        requesterRole: "coach",
+      };
+
+      const reject = new Request("https://sailorpath.com/api/admin/coach-access", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: "req-1", action: "reject" }),
+      });
+      expect((await PATCH(reject)).status).toBe(200);
+
+      const approve = new Request("https://sailorpath.com/api/admin/coach-access", {
+        method: "PATCH",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: "req-1", action: "approve" }),
+      });
+      expect((await PATCH(approve)).status).toBe(200);
+      expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
     });
   });
 });

@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { coachAccessRequests, profiles } from "@/db/schema";
 import { jsonError, requireSuperadmin } from "@/lib/auth";
 import { logAdminChange } from "@/lib/adminChangeLog";
+import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
 
 export async function GET() {
   try {
@@ -129,6 +130,16 @@ export async function POST(req: Request) {
       source: "/api/admin/coach-access",
     });
 
+    if (user.role !== nextRole) {
+      await notifyAccountRoleChange({
+        to: user.email,
+        name: user.fullName,
+        previousRole: user.role,
+        nextRole,
+        relation: action === "assign" ? "coach" : null,
+      });
+    }
+
     return NextResponse.json({
       ok: true,
       user: { ...user, role: nextRole },
@@ -201,6 +212,20 @@ export async function PATCH(req: Request) {
       details: { requestId: id, requesterEmail: result.requesterEmail },
       source: "/api/admin/coach-access",
     });
+
+    if (
+      action === "approve" &&
+      result.requesterRole !== "superadmin" &&
+      result.requesterRole !== "coach"
+    ) {
+      await notifyAccountRoleChange({
+        to: result.requesterEmail,
+        name: result.requesterName,
+        previousRole: result.requesterRole,
+        nextRole: "coach",
+        relation: "coach",
+      });
+    }
 
     return NextResponse.json({ ok: true, status: result.status });
   } catch (error) {
