@@ -5,6 +5,7 @@ import {
   type SailorRecord,
   type RegattaRecord,
   type RegattaResultRecord,
+  type Period,
 } from "@/lib/ranking";
 import {
   ASIAN_OCEANIA_2026,
@@ -20,10 +21,14 @@ import {
   GOLD_MIN_RANKING_REGATTAS_PER_HALF,
   type GoldDropCandidate,
 } from "@/lib/goldFleetDrop";
+import {
+  detectSilverInactivityDrops,
+  type SilverDropCandidate,
+} from "@/lib/silverSeriesDrop";
 import type { SailorAdmin } from "@/types/sailor";
 import type { RegattaAdmin } from "@/types/regatta";
 import type { ResultAdmin } from "@/types/result";
-import { Plane, Tent, Loader2, Trophy } from "lucide-react";
+import { Plane, Tent, Loader2, Trophy, UserMinus, CheckCircle2 } from "lucide-react";
 import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { fetchAdminResultsForRegatta } from "@/components/admin/adminFetch";
 
@@ -195,6 +200,108 @@ export function AdminSelectionPanel({
       setDropMsg(e instanceof Error ? e.message : "Drop failed");
     } finally {
       setDropBusy(false);
+    }
+  };
+
+  // ── Silver fleet inactivity drops ───────────────────────
+  const [silverEvaluationMode, setSilverEvaluationMode] = useState<"optionA" | "all">("optionA");
+  const [silverDropBusy, setSilverDropBusy] = useState(false);
+  const [silverDropMsg, setSilverDropMsg] = useState<string | null>(null);
+  const [silverDropReviewOpen, setSilverDropReviewOpen] = useState(false);
+  const [selectedSilverDropIds, setSelectedSilverDropIds] = useState<Set<string>>(
+    new Set()
+  );
+
+  const sailorMap = useMemo(
+    () => new Map(sailors.map((s) => [s.id, s])),
+    [sailors]
+  );
+
+  const selectedSilverPeriod: Period | undefined = useMemo(() => {
+    if (silverEvaluationMode === "optionA") {
+      return { year: 2026, half: "Jan-Jun" };
+    }
+    return undefined;
+  }, [silverEvaluationMode]);
+
+  const silverParticipationDrops = useMemo(
+    (): SilverDropCandidate[] =>
+      detectSilverInactivityDrops(
+        sailorRecs,
+        regattaRecs,
+        resultRecs,
+        asOfYmd,
+        selectedSilverPeriod ? { targetPeriod: selectedSilverPeriod } : undefined
+      ),
+    [sailorRecs, regattaRecs, resultRecs, asOfYmd, selectedSilverPeriod]
+  );
+
+  const openSilverDropReview = () => {
+    setSelectedSilverDropIds(
+      new Set(silverParticipationDrops.map((d) => d.sailorId))
+    );
+    setSilverDropReviewOpen(true);
+    setSilverDropMsg(null);
+  };
+
+  const applySilverDrops = async (ids?: string[]) => {
+    const targetIds =
+      ids && ids.length > 0
+        ? ids
+        : [...selectedSilverDropIds];
+    if (targetIds.length === 0) {
+      setSilverDropMsg("Select at least one sailor to drop.");
+      return;
+    }
+    const selected = silverParticipationDrops.filter((d) =>
+      targetIds.includes(d.sailorId)
+    );
+    if (selected.length === 0) {
+      setSilverDropMsg("No matching drop candidates selected.");
+      return;
+    }
+    const periodLabel =
+      silverEvaluationMode === "optionA"
+        ? "Jan 1 – Jun 30, 2026"
+        : "the evaluated half";
+    const ok = await confirm({
+      title: `Set silver drop date for ${selected.length} sailor(s)?`,
+      message: `These sailors had 0 ranking starts in ${periodLabel}.\nTheir Optimist drop date will be set to remove them from the national ranking.\nThis cannot be undone from this panel.`,
+      confirmLabel: "Set drop date",
+      tone: "danger",
+    });
+    if (!ok) return;
+    setSilverDropBusy(true);
+    setSilverDropMsg(null);
+    try {
+      const res = await fetch("/api/admin/sailors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "applySilverInactivityDrops",
+          asOf: asOfYmd,
+          targetPeriod: selectedSilverPeriod,
+          sailorIds: selected.map((d) => d.sailorId),
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Silver drop failed");
+      setSilverDropMsg(data.message || `Updated ${data.updated}`);
+      setSilverDropReviewOpen(false);
+      setSelectedSilverDropIds(new Set());
+      if (onSailorsChange) {
+        const listRes = await fetch("/api/admin/sailors?all=1", {
+          credentials: "include",
+        });
+        const listData = await listRes.json();
+        if (listRes.ok && listData.sailors) {
+          onSailorsChange(listData.sailors);
+        }
+      }
+    } catch (e) {
+      setSilverDropMsg(e instanceof Error ? e.message : "Silver drop failed");
+    } finally {
+      setSilverDropBusy(false);
     }
   };
 
@@ -416,6 +523,211 @@ export function AdminSelectionPanel({
         )}
         {dropMsg && (
           <p className="text-[13px] text-emerald-700 font-medium">{dropMsg}</p>
+        )}
+      </div>
+
+      {/* ── Silver Fleet Inactivity Drops ───────────────────────── */}
+      <div className="rounded-2xl sm:rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-sm p-4 sm:p-5 lg:p-6 space-y-4">
+        <div className="flex items-start justify-between gap-3 flex-wrap sm:flex-nowrap">
+          <div className="flex items-start gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/10">
+              <UserMinus className="h-5 w-5 text-amber-600" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-base font-bold text-[var(--sp-charcoal)]">
+                Silver Fleet Inactivity Drops
+              </h2>
+              <p className="text-[13px] text-[var(--sp-slate)] mt-1 max-w-3xl leading-relaxed">
+                Silver fleet sailors must take part in at least 1 ranking Optimist regatta in each completed half (Jan–Jun / Jul–Dec). Sailors with 0 ranking starts are dropped from the national ranking at the next half boundary.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 bg-[var(--sp-sailcloth)] p-1 rounded-xl text-xs font-semibold self-start shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                setSilverEvaluationMode("optionA");
+                setSilverDropReviewOpen(false);
+              }}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                silverEvaluationMode === "optionA"
+                  ? "bg-white text-[var(--sp-charcoal)] shadow-sm font-bold"
+                  : "text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
+              }`}
+            >
+              Option A: Jan 1 – Jun 30, 2026
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setSilverEvaluationMode("all");
+                setSilverDropReviewOpen(false);
+              }}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                silverEvaluationMode === "all"
+                  ? "bg-white text-[var(--sp-charcoal)] shadow-sm font-bold"
+                  : "text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
+              }`}
+            >
+              All completed halves
+            </button>
+          </div>
+        </div>
+
+        {silverParticipationDrops.length > 0 ? (
+          <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold text-rose-800">
+                  {silverParticipationDrops.length} silver sailor
+                  {silverParticipationDrops.length === 1 ? "" : "s"} flagged for
+                  inactivity drop
+                </p>
+                <p className="text-[13px] text-rose-700 mt-0.5">
+                  {silverEvaluationMode === "optionA"
+                    ? "0 ranking starts in Jan 1 – Jun 30, 2026 (proposed drop date: 2026-07-01). Review before applying."
+                    : "0 ranking starts in completed halves. Review before applying."}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => openSilverDropReview()}
+                className="inline-flex items-center gap-1.5 rounded-full border border-rose-300 bg-rose-100 px-3 py-1.5 text-[15px] font-bold text-rose-800 hover:bg-rose-200"
+              >
+                Review {silverParticipationDrops.length} sailor
+                {silverParticipationDrops.length === 1 ? "" : "s"}
+              </button>
+            </div>
+
+            {silverDropReviewOpen && (
+              <div className="rounded-lg border border-[var(--sp-cool-veil)] bg-white overflow-hidden shadow-sm">
+                <div className="px-3 py-2 border-b border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 flex flex-wrap items-center justify-between gap-2">
+                  <label className="text-[13px] text-[var(--sp-charcoal)] flex items-center gap-2 font-medium">
+                    <input
+                      type="checkbox"
+                      checked={
+                        silverParticipationDrops.length > 0 &&
+                        selectedSilverDropIds.size === silverParticipationDrops.length
+                      }
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedSilverDropIds(
+                            new Set(silverParticipationDrops.map((d) => d.sailorId))
+                          );
+                        } else {
+                          setSelectedSilverDropIds(new Set());
+                        }
+                      }}
+                    />
+                    Select all ({selectedSilverDropIds.size}/
+                    {silverParticipationDrops.length})
+                  </label>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSilverDropReviewOpen(false)}
+                      className="text-[10px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      disabled={silverDropBusy || selectedSilverDropIds.size === 0}
+                      onClick={() => void applySilverDrops()}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-rose-300 bg-rose-600 px-3 py-1.5 text-[15px] font-bold text-white hover:bg-rose-700 disabled:opacity-50"
+                    >
+                      {silverDropBusy ? (
+                        <Loader2 className="h-3 w-3 animate-spin" />
+                      ) : null}
+                      Drop selected ({selectedSilverDropIds.size})
+                    </button>
+                  </div>
+                </div>
+                <div className="max-h-72 overflow-y-auto overflow-x-auto">
+                  <table className="w-full text-left text-sm min-w-[560px]">
+                    <thead className="sticky top-0 bg-[var(--sp-sailcloth)] text-[var(--sp-slate)] uppercase tracking-wide text-[12px] border-b border-[var(--sp-cool-veil)]">
+                      <tr>
+                        <th className="px-3 py-2 w-8" />
+                        <th className="px-3 py-2">Sailor</th>
+                        <th className="px-3 py-2">Sail number</th>
+                        <th className="px-3 py-2">Club</th>
+                        <th className="px-3 py-2">Evaluated half</th>
+                        <th className="px-3 py-2">Starts</th>
+                        <th className="px-3 py-2">Drop date</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[var(--sp-cool-veil)]">
+                      {silverParticipationDrops.map((d) => {
+                        const s = sailorMap.get(d.sailorId);
+                        return (
+                          <tr
+                            key={d.sailorId}
+                            className="text-[var(--sp-charcoal)] hover:bg-[var(--sp-sailcloth)]/30"
+                          >
+                            <td className="px-3 py-2">
+                              <input
+                                type="checkbox"
+                                checked={selectedSilverDropIds.has(d.sailorId)}
+                                onChange={(e) => {
+                                  setSelectedSilverDropIds((prev) => {
+                                    const next = new Set(prev);
+                                    if (e.target.checked) next.add(d.sailorId);
+                                    else next.delete(d.sailorId);
+                                    return next;
+                                  });
+                                }}
+                              />
+                            </td>
+                            <td className="px-3 py-2 font-semibold text-[var(--sp-charcoal)]">
+                              <button
+                                type="button"
+                                onClick={() => onOpenSailor(d.sailorId)}
+                                className="text-left hover:text-[var(--sp-racing-orange)] hover:underline"
+                              >
+                                {d.name}
+                              </button>
+                            </td>
+                            <td className="px-3 py-2 tabular-nums text-[var(--sp-slate)] font-mono">
+                              {d.sailNumber || s?.sailNumber || "—"}
+                            </td>
+                            <td className="px-3 py-2 text-[var(--sp-slate)]">
+                              {d.club || s?.club || s?.school || "—"}
+                            </td>
+                            <td className="px-3 py-2 text-[var(--sp-slate)]">
+                              {d.failedPeriod.half} {d.failedPeriod.year}
+                            </td>
+                            <td className="px-3 py-2 tabular-nums text-[var(--sp-slate)]">
+                              0 starts
+                            </td>
+                            <td className="px-3 py-2 tabular-nums text-rose-700 font-semibold">
+                              {d.dropDate}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs text-emerald-800 flex items-center gap-2">
+            <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-600" />
+            <span>
+              No silver sailors need inactivity drop for{" "}
+              <strong>
+                {silverEvaluationMode === "optionA"
+                  ? "Jan 1 – Jun 30, 2026"
+                  : "completed halves"}
+              </strong>
+              . All active silver sailors took part in at least 1 ranking regatta.
+            </span>
+          </div>
+        )}
+        {silverDropMsg && (
+          <p className="text-[13px] text-emerald-700 font-medium">{silverDropMsg}</p>
         )}
       </div>
 
