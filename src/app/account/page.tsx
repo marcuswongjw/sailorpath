@@ -21,6 +21,8 @@ type Claim = {
   sailorName: string;
   sailorHandle: string;
   createdAt: string;
+  source?: string | null;
+  relation?: string | null;
 };
 
 type UserProfileData = {
@@ -60,6 +62,8 @@ function AccountInner() {
   const [pw2, setPw2] = useState("");
   const [pwMsg, setPwMsg] = useState<string | null>(null);
   const [pwBusy, setPwBusy] = useState(false);
+  const [claimBusy, setClaimBusy] = useState<string | null>(null);
+  const [claimMsg, setClaimMsg] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -115,6 +119,47 @@ function AccountInner() {
       }
     })();
   }, [router]);
+
+  const respondToInvite = async (
+    claim: Claim,
+    action: "accept" | "decline"
+  ) => {
+    setClaimBusy(claim.id);
+    setClaimMsg(null);
+    try {
+      const res = await fetch("/api/account/sailor-invites", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: claim.id, action }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Could not update the request");
+      const accountRes = await fetch("/api/account", { credentials: "include" });
+      const account = await accountRes.json();
+      if (accountRes.ok) {
+        setOwned(account.owned || []);
+        setClaims(account.claims || []);
+      } else {
+        setClaims((prev) =>
+          prev.map((row) =>
+            row.id === claim.id
+              ? { ...row, status: action === "accept" ? "approved" : "rejected" }
+              : row
+          )
+        );
+      }
+      setClaimMsg(
+        action === "accept"
+          ? `You accepted the link to ${claim.sailorName}.`
+          : `You declined the link to ${claim.sailorName}.`
+      );
+    } catch (e) {
+      setClaimMsg(e instanceof Error ? e.message : "Could not update the request");
+    } finally {
+      setClaimBusy(null);
+    }
+  };
 
   const saveProfileDetails = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -670,6 +715,58 @@ function AccountInner() {
           </div>
         </form>
       </section>
+
+      {claims.some((c) => c.status === "pending" && c.source === "admin") && (
+        <section className="rounded-3xl border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/40 p-5 sm:p-6 space-y-3 w-full shadow-xs">
+          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
+            Accept a sailor link
+          </h2>
+          <p className="text-xs text-[var(--sp-slate-soft)]">
+            An admin assigned a sailor to this account. Accept the request to finish the link.
+          </p>
+          {claimMsg && (
+            <p className="text-xs font-semibold text-[var(--sp-harbour-teal)]">{claimMsg}</p>
+          )}
+          <ul className="divide-y divide-[var(--sp-cool-veil)]">
+            {claims
+              .filter((c) => c.status === "pending" && c.source === "admin")
+              .map((c) => (
+                <li
+                  key={c.id}
+                  className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
+                >
+                  <div>
+                    <p className="font-bold text-[var(--sp-charcoal)]">{c.sailorName}</p>
+                    <Link
+                      href={`/${c.sailorHandle}`}
+                      className="text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-teal)]"
+                    >
+                      /{c.sailorHandle}
+                    </Link>
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      disabled={claimBusy === c.id}
+                      onClick={() => void respondToInvite(c, "accept")}
+                      className="rounded-full bg-[var(--sp-harbour-teal)] px-3 py-1.5 text-[11px] font-bold text-white disabled:opacity-50"
+                    >
+                      Accept
+                    </button>
+                    <button
+                      type="button"
+                      disabled={claimBusy === c.id}
+                      onClick={() => void respondToInvite(c, "decline")}
+                      className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[11px] font-bold text-[var(--sp-charcoal)] disabled:opacity-50"
+                    >
+                      Decline
+                    </button>
+                  </div>
+                </li>
+              ))}
+          </ul>
+        </section>
+      )}
 
       {/* Claims */}
       {!isCoach && (

@@ -64,6 +64,7 @@ export async function GET() {
           id: sailorClaims.id,
           status: sailorClaims.status,
           relation: sailorClaims.relation,
+          source: sailorClaims.source,
           note: sailorClaims.note,
           createdAt: sailorClaims.createdAt,
           sailorId: sailorClaims.sailorId,
@@ -483,6 +484,7 @@ export async function GET() {
         ...c,
         relation:
           parseClaimRelation(c.relation) || relationFromNote(c.note) || null,
+        source: c.source,
       }));
 
     const todayStr = new Date().toISOString().slice(0, 10);

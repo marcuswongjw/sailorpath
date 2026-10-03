@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { adminQueryKeys } from "@/components/admin/adminQueryKeys";
+import { coachRequestsFromCache } from "@/components/admin/coachAccessCache";
 
 type ClaimNotification = { status?: string };
 
@@ -41,7 +42,10 @@ export function useAdminNotifications(isSuperadmin: boolean) {
       const res = await fetch("/api/admin/coach-access");
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to load coach requests");
-      return (data.requests || []) as ClaimNotification[];
+      return {
+        requests: (Array.isArray(data.requests) ? data.requests : []) as ClaimNotification[],
+        coaches: Array.isArray(data.coaches) ? data.coaches : [],
+      };
     },
   });
 
@@ -78,7 +82,7 @@ export function useAdminNotifications(isSuperadmin: boolean) {
     (claim) => claim.status === "pending"
   ).length;
   const supportNewCount = supportQuery.data?.length ?? 0;
-  const coachPendingCount = (coachAccessQuery.data ?? []).filter(
+  const coachPendingCount = coachRequestsFromCache(coachAccessQuery.data).filter(
     (request) => request.status === "pending"
   ).length;
   const suggestionsCount = Number(suggestionsQuery.data?.count ?? 0);
