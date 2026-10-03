@@ -18,6 +18,7 @@ const mocks = vi.hoisted(() => ({
     requesterRole: string;
   } | null,
   notifyAccountRoleChange: vi.fn(),
+  notifyCoachInvite: vi.fn(),
 }));
 
 vi.mock("@/lib/auth", () => ({
@@ -34,6 +35,10 @@ vi.mock("@/lib/adminChangeLog", () => ({
 
 vi.mock("@/lib/roleChangeNotify", () => ({
   notifyAccountRoleChange: mocks.notifyAccountRoleChange,
+}));
+
+vi.mock("@/lib/coachInviteNotify", () => ({
+  notifyCoachInvite: mocks.notifyCoachInvite,
 }));
 
 vi.mock("@/db", () => ({
@@ -106,6 +111,8 @@ describe("/api/admin/coach-access", () => {
     mocks.requestRow = null;
     mocks.notifyAccountRoleChange.mockReset();
     mocks.notifyAccountRoleChange.mockResolvedValue("sent");
+    mocks.notifyCoachInvite.mockReset();
+    mocks.notifyCoachInvite.mockResolvedValue("sent");
     mocks.requireSuperadmin.mockResolvedValue({
       userId: "admin-1",
       email: "admin@example.com",
@@ -124,7 +131,7 @@ describe("/api/admin/coach-access", () => {
   });
 
   describe("POST direct assign", () => {
-    it("assigns user as coach when action is assign", async () => {
+    it("emails an invitation instead of granting coach immediately", async () => {
       const req = new Request("https://sailorpath.com/api/admin/coach-access", {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -138,28 +145,28 @@ describe("/api/admin/coach-access", () => {
       expect(res.status).toBe(200);
       const data = await res.json();
       expect(data.ok).toBe(true);
-      expect(data.user.role).toBe("coach");
+      expect(data.invited).toBe(true);
+      expect(data.user.role).toBe("sailor");
 
-      // Verify profile update to coach
-      expect(mocks.updateSet).toHaveBeenCalledWith(
-        expect.objectContaining({ role: "coach" })
+      const roleUpdates = mocks.updateSet.mock.calls.filter(
+        (args) => (args[0] as Record<string, unknown>)?.role === "coach"
       );
-      // Verify coach access request was inserted
+      expect(roleUpdates).toHaveLength(0);
       expect(mocks.insertValues).toHaveBeenCalledWith(
         expect.objectContaining({
           requesterId: "user-123",
-          status: "approved",
+          status: "pending",
+          source: "admin",
         })
       );
-      expect(mocks.notifyAccountRoleChange).toHaveBeenCalledWith(
+      expect(mocks.notifyCoachInvite).toHaveBeenCalledWith(
         expect.objectContaining({
           to: "alex@example.com",
           name: "Alex Tan",
-          previousRole: "sailor",
-          nextRole: "coach",
-          relation: "coach",
+          token: expect.any(String),
         })
       );
+      expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
     });
 
     it("revokes coach role when action is revoke", async () => {
@@ -210,7 +217,10 @@ describe("/api/admin/coach-access", () => {
 
       const res = await POST(req);
       expect(res.status).toBe(200);
+      const data = await res.json();
+      expect(data.alreadyCoach).toBe(true);
       expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
+      expect(mocks.notifyCoachInvite).not.toHaveBeenCalled();
     });
 
     it("rejects modifying a superadmin", async () => {

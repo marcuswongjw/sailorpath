@@ -59,10 +59,19 @@ export const coachAccessRequests = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
+    /** user = they asked; admin = a superadmin invited them by email */
+    source: text("source", { enum: ["user", "admin"] })
+      .default("user")
+      .notNull(),
+    /** Secret for the accept / decline links. Cleared once the invite is decided. */
+    inviteToken: text("invite_token"),
   },
   (table) => ({
     requesterUnq: unique("coach_access_requests_requester_unq").on(
       table.requesterId
+    ),
+    inviteTokenUnq: unique("coach_access_requests_invite_token_unq").on(
+      table.inviteToken
     ),
     reviewedByIdx: index("coach_access_requests_reviewed_by_idx").on(
       table.reviewedBy
