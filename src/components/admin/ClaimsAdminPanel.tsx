@@ -74,6 +74,7 @@ const PROFILE_FIELD_LABELS: Record<string, string> = {
   sailMakeIlca4: "ILCA 4 sail make",
   sailNumber: "Optimist sail number",
   sailNumberIlca4: "ILCA 4 sail number",
+  boardNumber: "Board number",
   sailingJourney: "Sailing journey",
   school: "School",
   weight: "Weight",

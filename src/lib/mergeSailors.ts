@@ -563,6 +563,12 @@ export async function mergeSailors({
     ) {
       fill.sailNumberIlca4 = mergeSailor.sailNumberIlca4;
     }
+    if (
+      !String(keepSailor.boardNumber || "").trim() &&
+      String(mergeSailor.boardNumber || "").trim()
+    ) {
+      fill.boardNumber = mergeSailor.boardNumber;
+    }
     for (const field of ["dob", "goldEntryDate", "silverEntryDate", "dropDate"] as const) {
       if (!keepSailor[field] && mergeSailor[field]) fill[field] = mergeSailor[field];
     }
@@ -596,6 +602,7 @@ export async function mergeSailors({
         "club",
         "sailNumber",
         "sailNumberIlca4",
+        "boardNumber",
         "dob",
         "weight",
         "sailingJourney",

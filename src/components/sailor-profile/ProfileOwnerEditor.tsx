@@ -14,6 +14,7 @@ export type ProfileOwnerForm = {
   club: string;
   sailNumber: string;
   sailNumberIlca4: string;
+  boardNumber: string;
   dob: string;
   weight: string;
   hullBrand: string;

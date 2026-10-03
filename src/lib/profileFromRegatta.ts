@@ -5,16 +5,32 @@
  * Sail numbers: class-specific —
  *   - Optimist → sail_number
  *   - ILCA 4 → sail_number_ilca4
- * Sailors under 15 may hold both numbers.
+ *   - Techno 293 / iQFOiL / WingFoil → board_number
+ * Sailors under 15 may hold both Optimist and ILCA 4 numbers.
+ * Board classes never write the Optimist sail.
  */
 
 import { toYmd } from "@/lib/datesSg";
 import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
 import { cleanOptimistSailNumber } from "@/lib/normalize";
 
+/** Techno 293, iQFOiL, and WingFoil share sailors.board_number. */
+export function isBoardSailClass(boatClass: string | null | undefined): boolean {
+  const compact = String(boatClass || "")
+    .toLowerCase()
+    .replace(/[\s._-]+/g, "");
+  if (!compact) return false;
+  return (
+    compact.includes("wingfoil") ||
+    compact.includes("iqfoil") ||
+    compact.includes("techno")
+  );
+}
+
 export type ProfileFieldSource = {
   sailNumber?: string | null;
   sailNumberIlca4?: string | null;
+  boardNumber?: string | null;
   club?: string | null;
   school?: string | null;
 };
@@ -33,20 +49,28 @@ export function shouldApplyProfileFromRegatta(args: {
 
 /**
  * Latest date among events that update a class-specific sail number.
- * Optimist uses all non-ILCA4 events; ILCA 4 uses ILCA 4 events only.
+ * Optimist uses non-ILCA4, non-board events. ILCA 4 and board classes
+ * each keep their own latest date so a plate cannot replace an Optimist sail.
  */
 export function shouldApplySailNumberFromRegatta(args: {
   regattaDate: string | null | undefined;
   boatClass: string | null | undefined;
-  /** Latest Optimist (or other non-ILCA4) result date */
+  /** Latest Optimist (or other non-ILCA4, non-board) result date */
   latestOptimistDate: string | null | undefined;
   /** Latest ILCA 4 result date */
   latestIlca4Date: string | null | undefined;
+  /** Latest Techno 293 / iQFOiL / WingFoil result date */
+  latestBoardDate?: string | null | undefined;
 }): boolean {
   const d = toYmd(args.regattaDate);
   if (!d) return false;
   if (isIlcaSeriesClass(args.boatClass, "ILCA 4")) {
     const latest = toYmd(args.latestIlca4Date);
+    if (!latest) return true;
+    return d >= latest;
+  }
+  if (isBoardSailClass(args.boatClass)) {
+    const latest = toYmd(args.latestBoardDate);
     if (!latest) return true;
     return d >= latest;
   }
@@ -77,7 +101,13 @@ export function buildProfilePatchFromRow(
   if (applySail) {
     const sail = cleanText(row.sailNumber);
     if (sail) {
-      if (isIlcaSeriesClass(row.boatClass, "ILCA 4")) {
+      if (isBoardSailClass(row.boatClass)) {
+        const cur = (existing.boardNumber || "").trim();
+        if (!cur || cur.toLowerCase() !== sail.toLowerCase()) {
+          patch.boardNumber = sail;
+          changed.push("boardNumber");
+        }
+      } else if (isIlcaSeriesClass(row.boatClass, "ILCA 4")) {
         const cur = (existing.sailNumberIlca4 || "").trim();
         if (!cur || cur.toLowerCase() !== sail.toLowerCase()) {
           patch.sailNumberIlca4 = sail;

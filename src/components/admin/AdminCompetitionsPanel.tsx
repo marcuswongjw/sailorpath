@@ -132,6 +132,7 @@ export function AdminCompetitionsPanel({
               {sailor?.sailNumberIlca4
                 ? ` · ILCA ${sailor.sailNumberIlca4}`
                 : ""}
+              {sailor?.boardNumber ? ` · Board ${sailor.boardNumber}` : ""}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

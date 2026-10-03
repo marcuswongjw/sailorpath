@@ -68,6 +68,7 @@ export interface HeroAthleteCardProps {
   leftOptimistYear?: number | null;
   sailDisplay?: string | null;
   sailIlca4?: string | null;
+  boardNumber?: string | null;
   noc?: string;
   totalRegattasCount?: number;
   currentNatSquad?: string | null;
@@ -132,6 +133,7 @@ export function HeroAthleteCard({
   leftOptimistYear,
   sailDisplay,
   sailIlca4,
+  boardNumber,
   noc = "SGP",
   totalRegattasCount = 0,
   currentNatSquad,
@@ -354,6 +356,15 @@ export function HeroAthleteCard({
                           : `${noc} ${sailIlca4}`}
                       </span>,
                       "ilca-sail"
+                    );
+                  }
+
+                  if (boardNumber && boardNumber !== "0") {
+                    push(
+                      <span className="tabular-nums font-bold text-harbour-shadow">
+                        Board {boardNumber}
+                      </span>,
+                      "board-number"
                     );
                   }
 

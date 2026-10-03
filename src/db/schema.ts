@@ -86,6 +86,11 @@ export const sailors = pgTable("sailors", {
    */
   sailNumberIlca4: text("sail_number_ilca4"),
   /**
+   * Shared board number for Techno 293, iQFOiL, and WingFoil.
+   * Kept off sail_number so an Optimist sail is never overwritten by a plate.
+   */
+  boardNumber: text("board_number"),
+  /**
    * On the official ILCA 4 national ranking list (admin-managed).
    * Public standings only include sailors with this flag.
    */

@@ -36,6 +36,7 @@ export type AthleteProfile = {
   handle: string;
   sailNumber?: string | null;
   sailNumberIlca4?: string | null;
+  boardNumber?: string | null;
   club?: string | null;
   school?: string | null;
   gender?: string | null;
@@ -59,6 +60,7 @@ function buildProfileForm(a: AthleteProfile) {
   return {
     sailNumber: a.sailNumber || "",
     sailNumberIlca4: a.sailNumberIlca4 || "",
+    boardNumber: a.boardNumber || "",
     club: a.club || "",
     school: a.school || "",
     gender: a.gender || "M",
@@ -196,6 +198,7 @@ function AthleteWorkspace({
         ...prev,
         sailNumber: profileForm.sailNumber,
         sailNumberIlca4: profileForm.sailNumberIlca4,
+        boardNumber: profileForm.boardNumber,
         club: profileForm.club,
         school: profileForm.school,
         gender: profileForm.gender,

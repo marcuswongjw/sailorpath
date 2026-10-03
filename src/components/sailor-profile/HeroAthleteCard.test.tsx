@@ -65,6 +65,7 @@ describe("HeroAthleteCard", () => {
     expect(screen.queryByText("Dual-class athlete")).toBeNull();
 
     expect(screen.getByText("SGP 123", { exact: false })).toBeInTheDocument();
+    expect(screen.queryByText(/Board /)).toBeNull();
     expect(screen.getByText("SAFYC")).toBeInTheDocument();
     expect(screen.getByText("Singapore")).toBeInTheDocument();
 
@@ -77,6 +78,19 @@ describe("HeroAthleteCard", () => {
     expect(screen.getByLabelText("Optimist, 15 regattas")).toBeInTheDocument();
 
     expect(screen.getByText(/Dedicated youth Optimist sailor/)).toBeInTheDocument();
+  });
+
+  it("shows a board number separately from the Optimist sail", () => {
+    render(
+      <HeroAthleteCard
+        {...defaultProps}
+        boardNumber="S24"
+        sailIlca4="219111"
+      />
+    );
+    expect(screen.getByText("Board S24")).toBeInTheDocument();
+    expect(screen.getByText("SGP 123", { exact: false })).toBeInTheDocument();
+    expect(screen.getByText(/ILCA/)).toBeInTheDocument();
   });
 
   it("handles share action with clipboard copy fallback", async () => {

@@ -9,6 +9,8 @@ export interface SailorRecordProps {
   sailNumber?: string | null;
   /** ILCA 4 sail number (optional dual number under 15) */
   sailNumberIlca4?: string | null;
+  /** Techno 293 / iQFOiL / WingFoil board number */
+  boardNumber?: string | null;
   club?: string | null;
   school?: string | null;
   nationality?: string | null;

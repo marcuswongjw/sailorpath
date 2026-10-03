@@ -100,6 +100,7 @@ function mapSailor(row: typeof sailors.$inferSelect): SailorMapped {
     handle: row.handle,
     sailNumber: row.sailNumber,
     sailNumberIlca4: row.sailNumberIlca4,
+    boardNumber: row.boardNumber,
     ilca4NationalList: row.ilca4NationalList,
     ilca6NationalList: row.ilca6NationalList,
     club: row.club,

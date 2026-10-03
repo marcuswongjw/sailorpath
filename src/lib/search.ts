@@ -147,6 +147,7 @@ export type SailorSearchResult = {
   handle: string;
   sailNumber: string;
   sailNumberIlca4: string | null;
+  boardNumber: string | null;
   club: string;
   school: string | null;
   nationality: string | null;
@@ -212,11 +213,13 @@ export async function searchSailorsEnhanced(
       ];
 
       tokenOrs.push(ilike(sailors.sailNumberIlca4, tokenPattern));
+      tokenOrs.push(ilike(sailors.boardNumber, tokenPattern));
 
       if (cleanPattern && cleanPattern !== tokenPattern) {
         tokenOrs.push(
           sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${cleanPattern}`,
-          sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${cleanPattern}`
+          sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${cleanPattern}`,
+          sql`replace(replace(coalesce(${sailors.boardNumber}, ''), ' ', ''), '-', '') ILIKE ${cleanPattern}`
         );
       }
 
@@ -249,8 +252,10 @@ export async function searchSailorsEnhanced(
         or(
           ilike(sailors.sailNumber, numPattern),
           ilike(sailors.sailNumberIlca4, numPattern),
+          ilike(sailors.boardNumber, numPattern),
           sql`replace(replace(${sailors.sailNumber}, ' ', ''), '-', '') ILIKE ${numPattern}`,
           sql`replace(replace(coalesce(${sailors.sailNumberIlca4}, ''), ' ', ''), '-', '') ILIKE ${numPattern}`,
+          sql`replace(replace(coalesce(${sailors.boardNumber}, ''), ' ', ''), '-', '') ILIKE ${numPattern}`,
           ilike(sailors.name, numPattern)
         )!
       );
@@ -345,6 +350,7 @@ export async function searchSailorsEnhanced(
       handle: row.handle,
       sailNumber: row.sailNumber,
       sailNumberIlca4: row.sailNumberIlca4,
+      boardNumber: row.boardNumber,
       ilca4NationalList: row.ilca4NationalList,
       club: row.club,
       school: row.school,
@@ -390,11 +396,17 @@ export async function searchSailorsEnhanced(
     const nameLower = row.name.toLowerCase();
     const sailClean = row.sailNumber.replace(/[^0-9]/g, "");
     const ilcaClean = (row.sailNumberIlca4 || "").replace(/[^0-9]/g, "");
+    const boardClean = (row.boardNumber || "").replace(/[^0-9]/g, "");
 
     if (q) {
-      if (rawNum && (sailClean === rawNum || ilcaClean === rawNum)) {
+      if (rawNum && (sailClean === rawNum || ilcaClean === rawNum || boardClean === rawNum)) {
         score += 1000;
-      } else if (rawNum && (sailClean.endsWith(rawNum) || ilcaClean.endsWith(rawNum))) {
+      } else if (
+        rawNum &&
+        (sailClean.endsWith(rawNum) ||
+          ilcaClean.endsWith(rawNum) ||
+          boardClean.endsWith(rawNum))
+      ) {
         score += 400;
       }
 
@@ -448,6 +460,7 @@ export async function searchSailorsEnhanced(
       handle: row.handle,
       sailNumber: row.sailNumber,
       sailNumberIlca4: row.sailNumberIlca4,
+      boardNumber: row.boardNumber,
       club: row.club,
       school: row.school,
       nationality: row.nationality,

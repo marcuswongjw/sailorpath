@@ -94,6 +94,7 @@ export function useSailorProfileState({
     club: String(initialSailor.club || ""),
     sailNumber: String(initialSailor.sailNumber || ""),
     sailNumberIlca4: String(initialSailor.sailNumberIlca4 || ""),
+    boardNumber: String(initialSailor.boardNumber || ""),
     dob: initialSailor.dob
       ? String(initialSailor.dob).slice(0, 10)
       : "",
@@ -258,6 +259,7 @@ export function useSailorProfileState({
           club: form.club,
           sailNumber: form.sailNumber,
           sailNumberIlca4: form.sailNumberIlca4 || null,
+          boardNumber: form.boardNumber || null,
           dob: form.dob === "" ? null : form.dob,
           weight: form.weight === "" ? null : Number(form.weight),
           isPublicWeight,
@@ -290,6 +292,7 @@ export function useSailorProfileState({
         club: data.sailor.club ?? f.club,
         sailNumber: data.sailor.sailNumber ?? f.sailNumber,
         sailNumberIlca4: data.sailor.sailNumberIlca4 ?? f.sailNumberIlca4,
+        boardNumber: data.sailor.boardNumber ?? f.boardNumber,
         hullBrandIlca4: data.sailor.hullBrandIlca4 ?? f.hullBrandIlca4,
         sailMakeIlca4: data.sailor.sailMakeIlca4 ?? f.sailMakeIlca4,
         foilBrandIlca4: data.sailor.foilBrandIlca4 ?? f.foilBrandIlca4,
@@ -848,6 +851,9 @@ export function useSailorProfileState({
   const sailIlca4 = displaySailor.sailNumberIlca4
     ? String(displaySailor.sailNumberIlca4)
     : null;
+  const boardNumber = displaySailor.boardNumber
+    ? String(displaySailor.boardNumber)
+    : null;
   const noc =
     normalizeNationality(displaySailor.nationality) ||
     (String(displaySailor.nationality || "").trim() ? "SGP" : "SGP");
@@ -1212,6 +1218,7 @@ export function useSailorProfileState({
     primaryIsIlca,
     sailDisplay,
     sailIlca4,
+    boardNumber,
     noc,
     goldTenureLabel,
     goldTenureHint,

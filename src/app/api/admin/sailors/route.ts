@@ -79,7 +79,8 @@ export async function GET(req: Request) {
           ilike(sailors.name, `%${q}%`),
           ilike(sailors.sailNumber, `%${q}%`),
           ilike(sailors.handle, `%${q}%`),
-          sql`coalesce(${sailors.sailNumberIlca4}, '') ilike ${"%" + q + "%"}`
+          sql`coalesce(${sailors.sailNumberIlca4}, '') ilike ${"%" + q + "%"}`,
+          sql`coalesce(${sailors.boardNumber}, '') ilike ${"%" + q + "%"}`
         )
       : undefined;
 
@@ -183,6 +184,10 @@ export async function POST(req: Request) {
       name: body.name,
       handle,
       sailNumber: cleanSail,
+      boardNumber:
+        body.boardNumber == null || String(body.boardNumber).trim() === ""
+          ? null
+          : String(body.boardNumber).trim(),
       club: body.club || "N/A",
       school: body.school || null,
       gender: body.gender || null,
@@ -359,6 +364,7 @@ export async function PATCH(req: Request) {
       "handle",
       "sailNumber",
       "sailNumberIlca4",
+      "boardNumber",
       "club",
       "school",
       "gender",

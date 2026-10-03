@@ -108,6 +108,7 @@ export default async function AthletePage({ searchParams }: AthletePageProps) {
     handle: s.handle || s.id,
     sailNumber: s.sailNumber,
     sailNumberIlca4: s.sailNumberIlca4,
+    boardNumber: s.boardNumber,
     club: s.club,
     school: s.school,
     gender: s.gender,

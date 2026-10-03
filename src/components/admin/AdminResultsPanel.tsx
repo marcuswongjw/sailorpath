@@ -195,7 +195,7 @@ export function AdminResultsPanel({
         if (!q) return true;
         const sailor = sailorById.get(res.sailorId);
         const hay =
-          `${sailor?.name || ""} ${sailor?.sailNumber || ""} ${sailor?.sailNumberIlca4 || ""}`.toLowerCase();
+          `${sailor?.name || ""} ${sailor?.sailNumber || ""} ${sailor?.sailNumberIlca4 || ""} ${sailor?.boardNumber || ""}`.toLowerCase();
         return hay.includes(q);
       })
       .slice()
@@ -976,7 +976,14 @@ export function AdminResultsPanel({
                         </div>
                       </td>
                       <td className="py-3 px-3 text-center font-mono font-bold text-slate-800">
-                        {sailor?.sailNumber || sailor?.sailNumberIlca4 || "—"}
+                        {[
+                          sailor?.sailNumber,
+                          sailor?.boardNumber ? `Board ${sailor.boardNumber}` : null,
+                        ]
+                          .filter(Boolean)
+                          .join(" · ") ||
+                          sailor?.sailNumberIlca4 ||
+                          "—"}
                       </td>
                       <td className="py-3 px-3 text-center text-slate-700">
                         {sailor?.gender || "—"}
