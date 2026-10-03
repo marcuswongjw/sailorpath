@@ -7,8 +7,15 @@ import {
 } from "./ilca4NationalList";
 
 describe("isOnIlca4NationalListByName", () => {
-  it("matches list size", () => {
-    expect(ILCA4_NATIONAL_RANKING_NAMES.length).toBeGreaterThan(50);
+  it("matches the published SSF ILCA 4 national list", () => {
+    expect(ILCA4_NATIONAL_RANKING_NAMES).toHaveLength(81);
+    expect(ILCA4_NATIONAL_RANKING_NAMES[0]).toBe("Goh, Ian");
+    expect(ILCA4_NATIONAL_RANKING_NAMES[80]).toBe("Li, Sheng Rui");
+    expect(isOnIlca4NationalListByName("Chan, Aaron")).toBe(true);
+    expect(isOnIlca4NationalListByName("Lin, Shin Chen Rui")).toBe(true);
+    expect(isOnIlca4NationalListByName("Tan, Kayden Yi Kai")).toBe(false);
+    expect(isOnIlca4NationalListByName("Chen, Jun Jie")).toBe(false);
+    expect(isOnIlca4NationalListByName("Shahrom, Mikail")).toBe(false);
   });
 
   it("matches Last, First and reordered names", () => {
