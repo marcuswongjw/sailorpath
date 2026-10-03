@@ -214,5 +214,14 @@ describe("regattaPrizes", () => {
     expect(silver?.categories[0].winners[0].sailorName).toBe("Mikaela Hui Ting Wong");
     expect(silver?.categories[0].winners[1].sailorName).toBe("Nigel Jiang Long Ng");
   });
+
+  it("keeps RSYC Knockout 2026 Gold off the Silver prize schedule", () => {
+    expect(
+      getRegattaPrizeSchedule("rsyc-optimist-silver-fleet-knockout-championship-2026")?.regattaSlug
+    ).toBe("rsyc-optimist-silver-fleet-knockout-championship-2026");
+    expect(
+      getRegattaPrizeSchedule("rsyc-optimist-gold-fleet-knockout-championship-2026")
+    ).toBeNull();
+  });
 });
 

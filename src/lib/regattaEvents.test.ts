@@ -16,6 +16,8 @@ import {
   SNSC_2025_EVENT,
   SNSC_2026_EVENT,
   PSA_NATIONAL_ELIMINATION_SERIES_2026_EVENT,
+  RSYC_OPTIMIST_2026_EVENT,
+  RSYC_OPTIMIST_GOLD_2026_EVENT,
   YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT,
 } from "@/lib/regattaEvents";
 
@@ -150,6 +152,54 @@ describe("Youth Thailand National Sailing Championship 2026 hub", () => {
       event: YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT,
       slice: ilca4,
     });
+  });
+});
+
+describe("RSYC Optimist Knockout 2026", () => {
+  const silverSlug = "rsyc-optimist-silver-fleet-knockout-championship-2026";
+  const goldSlug = "rsyc-optimist-gold-fleet-knockout-championship-2026";
+
+  it("opens Gold and Silver as separate event hubs", () => {
+    expect(getRegattaEvent(silverSlug)?.slug).toBe(silverSlug);
+    expect(getRegattaEvent(goldSlug)?.slug).toBe(goldSlug);
+    expect(getRegattaEvent(silverSlug)?.slices.map((slice) => slice.key)).toEqual([
+      "optimist-silver",
+    ]);
+    expect(getRegattaEvent(goldSlug)?.slices.map((slice) => slice.key)).toEqual([
+      "optimist-gold",
+    ]);
+    expect(getRegattaEvent("rsyc-knockout-2026")?.slug).toBe(silverSlug);
+  });
+
+  it("keeps Gold results off the Silver slice and Silver results off the Gold slice", () => {
+    const [silverSlice] = RSYC_OPTIMIST_2026_EVENT.slices;
+    const [goldSlice] = RSYC_OPTIMIST_GOLD_2026_EVENT.slices;
+
+    expect(sliceMatchesRegattaSlug(silverSlice, silverSlug)).toBe(true);
+    expect(sliceMatchesRegattaSlug(silverSlice, goldSlug)).toBe(false);
+    expect(sliceMatchesRegattaSlug(goldSlice, goldSlug)).toBe(true);
+    expect(sliceMatchesRegattaSlug(goldSlice, silverSlug)).toBe(false);
+    expect(sliceMatchesRegattaSlug(goldSlice, "rsyc-optimist-gold-fleet-knockout-championship-2025")).toBe(
+      false
+    );
+
+    expect(findEventSliceForRegattaSlug(goldSlug)).toEqual({
+      event: RSYC_OPTIMIST_GOLD_2026_EVENT,
+      slice: goldSlice,
+    });
+    expect(findEventSliceForRegattaSlug(silverSlug)?.event.slug).toBe(silverSlug);
+
+    const silverResolved = resolveEventSlices(RSYC_OPTIMIST_2026_EVENT, [
+      regatta(silverSlug),
+      regatta(goldSlug),
+    ]);
+    expect(silverResolved.map((slice) => slice.regatta?.slug ?? null)).toEqual([silverSlug]);
+
+    const goldResolved = resolveEventSlices(RSYC_OPTIMIST_GOLD_2026_EVENT, [
+      regatta(silverSlug),
+      regatta(goldSlug),
+    ]);
+    expect(goldResolved.map((slice) => slice.regatta?.slug ?? null)).toEqual([goldSlug]);
   });
 });
 
