@@ -47,7 +47,19 @@ export async function POST(req: Request) {
     if (!claim) {
       return NextResponse.json({ error: "Request not found" }, { status: 404 });
     }
-    if (claim.source !== "admin" || claim.status !== "pending") {
+    if (claim.source !== "admin") {
+      return NextResponse.json(
+        { error: "This request cannot be accepted" },
+        { status: 400 }
+      );
+    }
+    if (
+      (claim.status === "approved" && action === "accept") ||
+      (claim.status === "rejected" && action === "decline")
+    ) {
+      return NextResponse.json({ ok: true, status: claim.status });
+    }
+    if (claim.status !== "pending") {
       return NextResponse.json(
         { error: "This request cannot be accepted" },
         { status: 400 }

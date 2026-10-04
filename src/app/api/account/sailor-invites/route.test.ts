@@ -115,6 +115,21 @@ describe("POST /api/account/sailor-invites", () => {
     expect(mocks.applyClaimAccountRole).not.toHaveBeenCalled();
   });
 
+  it("treats a repeated accept as already done", async () => {
+    mocks.claim.status = "approved";
+    const res = await POST(
+      new Request("https://sailorpath.com/api/account/sailor-invites", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id: "claim-1", action: "accept" }),
+      })
+    );
+    expect(res.status).toBe(200);
+    expect(await res.json()).toEqual({ ok: true, status: "approved" });
+    expect(mocks.updateSet).not.toHaveBeenCalled();
+    expect(mocks.applyClaimAccountRole).not.toHaveBeenCalled();
+  });
+
   it("refuses a claim the user submitted themselves", async () => {
     mocks.claim.source = "user";
     const res = await POST(

@@ -6,6 +6,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { User, Mail, Calendar, Edit2, Check, Lock, Trophy, ArrowRight, ExternalLink } from "lucide-react";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { useAccount } from "@/components/AccountProvider";
+import {
+  InviteActions,
+  SailorInviteAccept,
+  type SailorInviteClaim,
+} from "@/components/account/SailorInviteAccept";
 
 type Owned = {
   id: string;
@@ -73,7 +78,9 @@ function AccountInner() {
           data: { session },
         } = await supabase.auth.getSession();
         if (!session) {
-          router.replace(`/login?next=${encodeURIComponent("/account")}`);
+          const params = searchParams.toString();
+          const next = params ? `/account?${params}` : "/account";
+          router.replace(`/login?next=${encodeURIComponent(next)}`);
           return;
         }
         setEmail(session.user.email ?? null);
@@ -118,10 +125,10 @@ function AccountInner() {
         setLoading(false);
       }
     })();
-  }, [router]);
+  }, [router, searchParams]);
 
   const respondToInvite = async (
-    claim: Claim,
+    claim: SailorInviteClaim,
     action: "accept" | "decline"
   ) => {
     setClaimBusy(claim.id);
@@ -323,6 +330,14 @@ function AccountInner() {
           {error}
         </div>
       )}
+
+      <SailorInviteAccept
+        claims={claims}
+        inviteId={searchParams.get("invite")}
+        claimMsg={claimMsg}
+        claimBusy={claimBusy}
+        onRespond={respondToInvite}
+      />
 
       {/* User Account Profile Card (distinct from athlete sailor profile) */}
       <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-7 shadow-xs space-y-5">
@@ -716,58 +731,6 @@ function AccountInner() {
         </form>
       </section>
 
-      {claims.some((c) => c.status === "pending" && c.source === "admin") && (
-        <section className="rounded-3xl border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/40 p-5 sm:p-6 space-y-3 w-full shadow-xs">
-          <h2 className="text-sm font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-            Accept a sailor link
-          </h2>
-          <p className="text-xs text-[var(--sp-slate-soft)]">
-            An admin assigned a sailor to this account. Accept the request to finish the link.
-          </p>
-          {claimMsg && (
-            <p className="text-xs font-semibold text-[var(--sp-harbour-teal)]">{claimMsg}</p>
-          )}
-          <ul className="divide-y divide-[var(--sp-cool-veil)]">
-            {claims
-              .filter((c) => c.status === "pending" && c.source === "admin")
-              .map((c) => (
-                <li
-                  key={c.id}
-                  className="py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
-                >
-                  <div>
-                    <p className="font-bold text-[var(--sp-charcoal)]">{c.sailorName}</p>
-                    <Link
-                      href={`/${c.sailorHandle}`}
-                      className="text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-teal)]"
-                    >
-                      /{c.sailorHandle}
-                    </Link>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      disabled={claimBusy === c.id}
-                      onClick={() => void respondToInvite(c, "accept")}
-                      className="rounded-full bg-[var(--sp-harbour-teal)] px-3 py-1.5 text-[11px] font-bold text-white disabled:opacity-50"
-                    >
-                      Accept
-                    </button>
-                    <button
-                      type="button"
-                      disabled={claimBusy === c.id}
-                      onClick={() => void respondToInvite(c, "decline")}
-                      className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[11px] font-bold text-[var(--sp-charcoal)] disabled:opacity-50"
-                    >
-                      Decline
-                    </button>
-                  </div>
-                </li>
-              ))}
-          </ul>
-        </section>
-      )}
-
       {/* Claims */}
       {!isCoach && (
         <section className="rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-5 sm:p-6 space-y-3 w-full shadow-xs">
@@ -798,17 +761,25 @@ function AccountInner() {
                       /{c.sailorHandle}
                     </Link>
                   </div>
-                  <span
-                    className={`self-start rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-                      c.status === "approved"
-                        ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                        : c.status === "rejected"
-                          ? "bg-rose-50 text-rose-800 border border-rose-200"
-                          : "bg-amber-50 text-amber-800 border border-amber-200"
-                    }`}
-                  >
-                    {c.status}
-                  </span>
+                  {c.status === "pending" && c.source === "admin" ? (
+                    <InviteActions
+                      busy={claimBusy === c.id}
+                      onAccept={() => void respondToInvite(c, "accept")}
+                      onDecline={() => void respondToInvite(c, "decline")}
+                    />
+                  ) : (
+                    <span
+                      className={`self-start rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                        c.status === "approved"
+                          ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                          : c.status === "rejected"
+                            ? "bg-rose-50 text-rose-800 border border-rose-200"
+                            : "bg-amber-50 text-amber-800 border border-amber-200"
+                      }`}
+                    >
+                      {c.status}
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>

@@ -7,13 +7,16 @@ describe("buildSailorAssignmentInviteEmail", () => {
       name: "May Tan",
       sailorName: "Ava Tan",
       relation: "parent",
+      claimId: "claim-1",
     });
     expect(email?.subject).toBe("Accept your SailorPath link to Ava Tan");
     expect(email?.text).toContain("Hi May Tan,");
     expect(email?.text).toContain(
       "assigned Ava Tan to your account as Parent / guardian"
     );
-    expect(email?.text).toContain("Accept the request: https://sailorpath.com/account");
+    expect(email?.text).toContain(
+      "Accept the request: https://sailorpath.com/account?invite=claim-1"
+    );
   });
 
   it("skips when the sailor name is missing", () => {

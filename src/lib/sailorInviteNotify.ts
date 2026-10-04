@@ -4,28 +4,32 @@ import {
   type ResendSendResult,
 } from "@/lib/notifications";
 
-const ACCEPT_URL = "https://sailorpath.com/account";
+export function sailorInviteAcceptUrl(claimId: string): string {
+  const id = String(claimId || "").trim();
+  if (!id) return "https://sailorpath.com/account";
+  return `https://sailorpath.com/account?invite=${encodeURIComponent(id)}`;
+}
 
 export function buildSailorAssignmentInviteEmail(input: {
   name?: string | null;
   sailorName: string;
   relation: ClaimRelation;
+  claimId?: string | null;
 }): { subject: string; text: string } | null {
   const sailorName = String(input.sailorName || "").trim();
   if (!sailorName) return null;
   const relation = relationLabel(input.relation);
   const greeting = input.name?.trim() ? `Hi ${input.name.trim()},` : "Hi,";
+  const acceptUrl = sailorInviteAcceptUrl(String(input.claimId || ""));
   return {
     subject: `Accept your SailorPath link to ${sailorName}`,
     text: [
       greeting,
       "",
       `A SailorPath admin assigned ${sailorName} to your account as ${relation}.`,
-      "Accept the request to finish the link.",
+      "Open the link below and press Accept. Sign in with this email address if you are asked to.",
       "",
-      `Accept the request: ${ACCEPT_URL}`,
-      "",
-      "Sign in with this email address, then choose Accept on the claim.",
+      `Accept the request: ${acceptUrl}`,
     ].join("\n"),
   };
 }
@@ -36,6 +40,7 @@ export async function notifySailorAssignmentInvite(input: {
   name?: string | null;
   sailorName: string;
   relation: ClaimRelation;
+  claimId?: string | null;
 }): Promise<ResendSendResult> {
   const to = String(input.to || "").trim();
   const built = buildSailorAssignmentInviteEmail(input);
