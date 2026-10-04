@@ -171,10 +171,10 @@ export function SearchClient({
   const totalResults = sailors.length + regattas.length;
 
   return (
-    <div className="w-full space-y-6">
+    <div className="w-full min-w-0 space-y-6">
       {/* ── Search Input Card ────────────────────────────────────────── */}
-      <div className="relative rounded-3xl border border-slate-200 bg-white p-2.5 sm:p-3 shadow-md shadow-slate-200/50 transition-all focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10">
-        <div className="flex items-center gap-3 px-2 sm:px-3">
+      <div className="relative min-w-0 rounded-3xl border border-slate-200 bg-white p-2.5 sm:p-3 shadow-md shadow-slate-200/50 transition-all focus-within:border-orange-500 focus-within:ring-4 focus-within:ring-orange-500/10">
+        <div className="flex min-w-0 items-center gap-3 px-2 sm:px-3">
           {isLoading ? (
             <Loader2 className="h-5 w-5 text-orange-500 animate-spin shrink-0" />
           ) : (
@@ -186,10 +186,10 @@ export function SearchClient({
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by sailor name, sail number (e.g. SGP 4652), club, or regatta…"
+            placeholder="Name, sail number, club, or regatta"
             enterKeyHint="search"
             aria-label="Search sailors and regattas"
-            className="w-full bg-transparent py-2.5 sm:py-3 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
+            className="w-full min-w-0 bg-transparent py-2.5 sm:py-3 text-sm sm:text-base text-slate-900 placeholder:text-slate-400 focus:outline-none"
             autoComplete="off"
             autoCorrect="off"
             spellCheck="false"
@@ -218,8 +218,12 @@ export function SearchClient({
         </div>
 
         {/* ── Filter Pills Bar ───────────────────────────────────────── */}
-        <div className="flex items-center justify-between gap-2 pt-2.5 mt-2 border-t border-slate-100 overflow-x-auto scrollbar-none px-1">
-          <div className="flex items-center gap-1.5 shrink-0">
+        <div
+          role="group"
+          aria-label="Search filters"
+          className="flex items-start gap-1.5 pt-2.5 mt-2 border-t border-slate-100 px-1"
+        >
+          <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1.5">
             <button
               type="button"
               onClick={() => {
@@ -405,7 +409,7 @@ export function SearchClient({
 
       {/* ── Popular Search Tags (Empty state or query helper) ────────── */}
       {!query && (
-        <div className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 space-y-2.5">
+        <div className="min-w-0 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 space-y-2.5">
           <p className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
             <Sparkles className="h-3.5 w-3.5 text-amber-500" />
             Quick Searches &amp; Fleets
@@ -428,7 +432,7 @@ export function SearchClient({
       {/* ── Matching Regattas Section ─────────────────────────────────── */}
       {displayRegattas.length > 0 && (
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
             <h2 className="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
               <Trophy className="h-3.5 w-3.5 text-amber-500" />
               Regattas &amp; Events ({displayRegattas.length})
@@ -444,12 +448,12 @@ export function SearchClient({
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid min-w-0 grid-cols-1 sm:grid-cols-2 gap-3">
             {displayRegattas.slice(0, activeTab === "regattas" ? 20 : 4).map((reg) => (
               <Link
                 key={reg.id}
                 href={reg.href}
-                className="group block rounded-2xl border border-slate-200 bg-white p-4 shadow-xs hover:border-orange-500/40 hover:shadow-md hover:shadow-orange-500/5 transition-all"
+                className="group block min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-xs hover:border-orange-500/40 hover:shadow-md hover:shadow-orange-500/5 transition-all"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
@@ -487,7 +491,7 @@ export function SearchClient({
       {/* ── Sailors Results Section ───────────────────────────────────── */}
       {displaySailors.length > 0 && (
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
             <h2 className="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
               <User className="h-3.5 w-3.5 text-slate-500" />
               Sailor Profiles ({displaySailors.length})
@@ -497,7 +501,7 @@ export function SearchClient({
             </span>
           </div>
 
-          <div className="grid grid-cols-1 gap-2.5">
+          <div className="grid min-w-0 grid-cols-1 gap-2.5">
             {displaySailors.slice(0, visibleSailorsCount).map((s) => {
               const initials = s.name
                 .split(/\s+/)
@@ -510,7 +514,7 @@ export function SearchClient({
                 <Link
                   key={s.id}
                   href={`/${s.handle}`}
-                  className="group relative flex items-center justify-between gap-3 sm:gap-4 rounded-2xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-xs hover:border-orange-500/50 hover:shadow-md hover:shadow-orange-500/5 transition-all"
+                  className="group relative flex min-w-0 items-center justify-between gap-3 sm:gap-4 rounded-2xl border border-slate-200 bg-white p-3.5 sm:p-4 shadow-xs hover:border-orange-500/50 hover:shadow-md hover:shadow-orange-500/5 transition-all"
                 >
                   <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
                     {/* Sailor Avatar or Initial Monogram */}
@@ -530,7 +534,7 @@ export function SearchClient({
 
                     <div className="min-w-0 space-y-0.5">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm sm:text-base font-bold text-slate-900 group-hover:text-orange-600 transition-colors truncate">
+                        <span className="min-w-0 text-sm sm:text-base font-bold text-slate-900 group-hover:text-orange-600 transition-colors break-words">
                           {s.name}
                         </span>
 
@@ -556,12 +560,12 @@ export function SearchClient({
 
                       {/* Club and School details */}
                       <div className="flex flex-wrap items-center gap-x-2 text-xs text-slate-500">
-                        {s.club && <span className="truncate">{s.club}</span>}
+                        {s.club && <span className="break-words">{s.club}</span>}
                         {s.club && s.school && <span className="text-slate-300">·</span>}
                         {s.school && (
-                          <span className="inline-flex items-center gap-1 truncate text-slate-600">
+                          <span className="inline-flex min-w-0 items-center gap-1 text-slate-600">
                             <GraduationCap className="h-3 w-3 text-slate-400 shrink-0" />
-                            <span className="truncate">{s.school}</span>
+                            <span className="break-words">{s.school}</span>
                           </span>
                         )}
                         {s.nationality && s.nationality !== "Singapore" && s.nationality !== "SGP" && (

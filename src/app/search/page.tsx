@@ -59,12 +59,12 @@ export default async function SearchPage({
   if (offline) return <DbOffline message={msg} />;
 
   return (
-    <div className="mx-auto max-w-4xl px-3 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
-      <div className="space-y-1">
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+    <div className="mx-auto w-full min-w-0 max-w-4xl px-3 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
+      <div className="min-w-0 space-y-1">
+        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight text-balance">
           Search Sailors &amp; Regattas
         </h1>
-        <p className="text-xs sm:text-sm text-slate-500">
+        <p className="text-xs sm:text-sm text-slate-500 text-pretty">
           Find sailors by name, sail number (e.g. SGP 4652), club, school, or discover 2026 regatta results.
         </p>
       </div>
