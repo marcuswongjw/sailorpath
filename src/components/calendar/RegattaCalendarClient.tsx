@@ -353,7 +353,7 @@ export function RegattaCalendarClient({
   }
 
   return (
-    <div className="mx-auto max-w-5xl w-full px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
+    <div className="mx-auto max-w-5xl w-full min-w-0 px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
       {/* Private Preview Banner */}
       <div className="rounded-2xl border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/20 p-3.5 sm:p-4 text-[var(--sp-harbour-shadow)] text-xs flex items-start gap-3">
         <AlertCircle className="h-4 w-4 text-[var(--sp-racing-orange)] shrink-0 mt-0.5" />
@@ -373,7 +373,7 @@ export function RegattaCalendarClient({
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 flex-wrap">
           {/* Timeline Tab Toggle */}
-          <div className="flex items-center gap-1 rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-1 w-fit">
+          <div className="flex w-full min-w-0 max-w-full flex-wrap items-center gap-1 rounded-xl bg-[var(--sp-sailcloth)] border border-[var(--sp-cool-veil)] p-1 sm:w-fit">
             <button
               type="button"
               onClick={() => setTimelineTab("upcoming")}
@@ -416,7 +416,7 @@ export function RegattaCalendarClient({
         </div>
 
         {/* Region Filter Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        <div className="flex min-w-0 max-w-full items-center gap-2 overflow-x-auto pb-1">
           <span className="text-[11px] font-black text-[var(--sp-slate-soft)] uppercase tracking-wider shrink-0 flex items-center gap-1">
             <Globe className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
             Region:
@@ -447,7 +447,7 @@ export function RegattaCalendarClient({
 
         {/* Class Filter Pills & Search */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+          <div className="flex min-w-0 max-w-full items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
             {[
               { id: "all", label: "All Classes" },
               { id: "optimist", label: "Optimist", icon: Sailboat },

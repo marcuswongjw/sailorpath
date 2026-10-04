@@ -26,7 +26,7 @@ export function SiteFooter() {
     (!ready || shouldShowDemoNavigation(host, owned.length));
 
   return (
-    <footer className="border-t border-harbour-shadow bg-harbour-shadow py-8 sm:py-10 text-[13px] text-sailcloth">
+    <footer className="min-w-0 w-full max-w-[100vw] border-t border-harbour-shadow bg-harbour-shadow py-8 sm:py-10 text-[13px] text-sailcloth">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <BrandWordmark reversed className="text-base sm:text-lg" />
