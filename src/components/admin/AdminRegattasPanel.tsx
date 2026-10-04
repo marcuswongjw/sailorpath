@@ -37,6 +37,7 @@ import { useFeedback } from "@/components/ui/FeedbackProvider";
 import { setAdminLeaveGuard } from "@/components/admin/adminLeaveGuard";
 import { RegattaFilterBar } from "@/components/admin/RegattaFilterBar";
 import { AdminRegattaEventList } from "@/components/admin/AdminRegattaEventList";
+import { EventFacts, joinDateRange } from "@/components/EventFacts";
 import { AdminClassSheetCard } from "@/components/admin/AdminClassSheetCard";
 import { CalendarEventForm, calendarFormFrom, type CalendarFormState, type SavedCalendarEvent } from "@/components/admin/CalendarEventForm";
 import { cascadeLine, summarizeNames } from "@/lib/confirmCopy";
@@ -1349,11 +1350,19 @@ export function AdminRegattasPanel({
                                 main regatta event. Choose a main regatta event on each sheet, then link it.
                               </p>
                             ) : (
-                              <p className="text-xs text-slate-700 font-medium mt-0.5">
-                                {selectedEventView.startDate || "—"}
-                                {selectedEventView.endDate ? ` to ${selectedEventView.endDate}` : ""}
-                                {selectedEventView.venue ? ` · ${selectedEventView.venue}` : ""}
-                              </p>
+                              <EventFacts
+                                dates={
+                                  joinDateRange(
+                                    selectedEventView.startDate,
+                                    selectedEventView.endDate
+                                  ) || "—"
+                                }
+                                venue={selectedEventView.venue}
+                                organiser={selectedEventView.organizer}
+                                className="mt-1.5 space-y-0.5 text-xs font-medium"
+                                labelClassName="font-bold text-slate-900"
+                                valueClassName="text-slate-700"
+                              />
                             )}
                           </div>
                           <div className="flex items-center gap-2">

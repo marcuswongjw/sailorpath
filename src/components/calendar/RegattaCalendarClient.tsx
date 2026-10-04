@@ -2,10 +2,10 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { EventFacts } from "@/components/EventFacts";
 import {
   Calendar,
   Search,
-  MapPin,
   Sailboat,
   Trophy,
   ExternalLink,
@@ -630,23 +630,14 @@ export function RegattaCalendarClient({
                       </div>
 
                       {/* Venue, Organizer & Schedule meta line */}
-                      <p className="text-xs text-[var(--sp-slate-soft)] flex flex-wrap items-center gap-x-3 gap-y-1 pt-1">
-                        <span className="inline-flex items-center gap-1 text-[var(--sp-charcoal-slate)] font-medium">
-                          <Calendar className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
-                          {dateRangeStr}
-                        </span>
-                        {regatta.venue && (
-                          <span className="inline-flex items-center gap-1 text-[var(--sp-slate-soft)]">
-                            <MapPin className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
-                            {regatta.venue}
-                          </span>
-                        )}
-                        {regatta.organizer && (
-                          <span className="text-[var(--sp-slate-soft)] text-[11px]">
-                            by {regatta.organizer}
-                          </span>
-                        )}
-                      </p>
+                      <EventFacts
+                        dates={dateRangeStr}
+                        venue={regatta.venue}
+                        organiser={regatta.organizer}
+                        className="space-y-0.5 pt-1 text-xs"
+                        labelClassName="font-bold text-[var(--sp-charcoal)]"
+                        valueClassName="text-[var(--sp-charcoal-slate)]"
+                      />
 
                       {/* Key Deadlines indicator */}
                       {regatta.keyDeadlines && (

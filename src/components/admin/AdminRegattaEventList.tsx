@@ -1,6 +1,7 @@
 "use client";
 
 import { Calendar, Trash2 } from "lucide-react";
+import { EventFacts, joinDateRange } from "@/components/EventFacts";
 import {
   eventClassProgress,
   eventStatusLabel,
@@ -137,11 +138,14 @@ export function AdminRegattaEventList({
                       <span className="block text-sm font-bold leading-snug text-slate-900">
                         {event.name}
                       </span>
-                      <span className="mt-0.5 block text-[11px] font-medium text-slate-600">
-                        {event.startDate || "Date TBD"}
-                        {event.endDate ? ` – ${event.endDate}` : ""}
-                        {event.venue ? ` · ${event.venue}` : ""}
-                      </span>
+                      <EventFacts
+                        dates={joinDateRange(event.startDate, event.endDate) || "Date TBD"}
+                        venue={event.venue}
+                        organiser={event.organizer}
+                        className="mt-1 space-y-0.5 text-[11px] font-medium"
+                        labelClassName="font-bold text-slate-800"
+                        valueClassName="text-slate-600"
+                      />
                       <div className="mt-1.5 flex flex-wrap gap-1">
                         <span
                           className={`rounded-full border px-1.5 py-0.5 text-[10px] font-bold ${

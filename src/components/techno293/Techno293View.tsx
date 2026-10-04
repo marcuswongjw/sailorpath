@@ -4,7 +4,6 @@ import { useState, useMemo, useEffect } from "react";
 import {
   Wind,
   Calendar,
-  MapPin,
   Trophy,
   ExternalLink,
   Sparkles,
@@ -20,6 +19,7 @@ import {
   TECHNO293_SPECIFICATIONS,
   type Techno293Regatta,
 } from "@/lib/techno293";
+import { EventFacts } from "@/components/EventFacts";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { Techno293SeriesView } from "./Techno293SeriesView";
 
@@ -240,15 +240,15 @@ export function Techno293View({
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--sp-charcoal-slate)] pt-1">
-              <div className="flex items-center gap-1.5">
-                <Calendar className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
-                <span>{activeRegatta.dates}</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <MapPin className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
-                <span>{activeRegatta.venue}</span>
-              </div>
+            <EventFacts
+              dates={activeRegatta.dates}
+              venue={activeRegatta.venue}
+              organiser={activeRegatta.organizer}
+              className="space-y-1 pt-1 text-xs"
+              labelClassName="font-bold text-[var(--sp-charcoal)]"
+              valueClassName="text-[var(--sp-charcoal-slate)]"
+            />
+            <div className="flex flex-wrap items-center gap-4 text-xs text-[var(--sp-charcoal-slate)]">
               <div className="flex items-center gap-1.5">
                 <Wind className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)]" />
                 <span>Format: {activeRegatta.format}</span>

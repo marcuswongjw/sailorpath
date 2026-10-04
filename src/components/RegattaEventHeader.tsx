@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { FileText, ExternalLink } from "lucide-react";
+import { EventFacts, joinDateRange } from "@/components/EventFacts";
 
 export type RegattaEventHeaderProps = {
   name: string;
@@ -11,6 +12,9 @@ export type RegattaEventHeaderProps = {
   series: "optimist" | "ilca4" | "ilca6" | "ilca7";
   countsForRanking?: boolean;
   norUrl?: string | null;
+  endDate?: string | null;
+  venue?: string | null;
+  organiser?: string | null;
 };
 
 /**
@@ -25,6 +29,9 @@ export function RegattaEventHeader({
   series,
   countsForRanking = true,
   norUrl,
+  endDate,
+  venue,
+  organiser,
 }: RegattaEventHeaderProps) {
   const isIlca = series === "ilca4" || series === "ilca6" || series === "ilca7";
   const listHref =
@@ -118,9 +125,15 @@ export function RegattaEventHeader({
         <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] leading-snug break-words tracking-tight">
           {name}
         </h1>
-        <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] mt-1.5 leading-relaxed">
-          {date}
-          {" · "}
+        <EventFacts
+          dates={joinDateRange(String(date).slice(0, 10), endDate)}
+          venue={venue}
+          organiser={organiser}
+          className="mt-1.5 space-y-1 text-[12px] sm:text-xs leading-relaxed"
+          labelClassName="font-bold text-[var(--sp-charcoal)]"
+          valueClassName="text-[var(--sp-charcoal-slate)]"
+        />
+        <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
           fleet {totalFleetSize}
           {raceCount != null
             ? ` · ${raceCount} race${raceCount === 1 ? "" : "s"}`

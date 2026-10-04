@@ -8,12 +8,12 @@ import {
   Users,
   Compass,
   Calendar,
-  MapPin,
   Search,
   CheckCircle2,
   FileText,
   Lock,
 } from "lucide-react";
+import { EventFacts } from "@/components/EventFacts";
 import { useAccountOptional } from "@/components/AccountProvider";
 import {
   ILCA4_INTERNATIONAL_CAMPAIGNS,
@@ -574,16 +574,13 @@ export function IlcaSelectionView({
                     Selection Concluded
                   </span>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-soft mt-1">
-                  <span className="inline-flex items-center gap-1">
-                    <MapPin className="h-3.5 w-3.5 text-sky-500" />
-                    {easternCampaign.venue}
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <Calendar className="h-3.5 w-3.5 text-sky-500" />
-                    {easternCampaign.regattaDates}
-                  </span>
-                </div>
+                <EventFacts
+                  dates={easternCampaign.regattaDates}
+                  venue={easternCampaign.venue}
+                  className="mt-1 space-y-0.5 text-xs"
+                  labelClassName="font-bold text-charcoal"
+                  valueClassName="text-slate-soft"
+                />
               </div>
               <div className="sm:text-right shrink-0">
                 <span className="inline-flex items-center rounded-full bg-sky-500/10 border border-sky-500/20 px-3 py-1 text-xs font-bold text-sky-600 dark:text-sky-300">
@@ -1040,16 +1037,13 @@ export function IlcaSelectionView({
                     Event 1 Scored · Event 2 Oct 2026
                   </span>
                 </div>
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-soft mt-1">
-                  <span className="inline-flex items-center gap-1">
-                    <MapPin className="h-3.5 w-3.5 text-sky-500" />
-                    {asianCampaign.venue}
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <Calendar className="h-3.5 w-3.5 text-sky-500" />
-                    {asianCampaign.regattaDates}
-                  </span>
-                </div>
+                <EventFacts
+                  dates={asianCampaign.regattaDates}
+                  venue={asianCampaign.venue}
+                  className="mt-1 space-y-0.5 text-xs"
+                  labelClassName="font-bold text-charcoal"
+                  valueClassName="text-slate-soft"
+                />
               </div>
               <div className="sm:text-right shrink-0">
                 <span className="inline-flex items-center rounded-full bg-sky-500/10 border border-sky-500/20 px-3 py-1 text-xs font-bold text-sky-600 dark:text-sky-300">
