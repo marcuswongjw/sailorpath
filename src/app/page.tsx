@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getLandingTotals } from "@/lib/landingStats";
 import {
   ArrowRight,
   CalendarDays,
@@ -15,46 +16,58 @@ import {
 export const metadata: Metadata = {
   title: "Singapore Sailing Standings & Athlete Records | SailorPath",
   description:
-    "Official Singapore Optimist, ILCA 4, WingFoil and Techno 293 standings, selection trials and athlete records — updated from SSF results after every scored race.",
+    "Singapore Optimist, ILCA 4, ILCA 6, ILCA 7, WingFoil and Techno 293 standings, selection trials and athlete records — updated from SSF results after every scored race.",
 };
 
 export const revalidate = 300;
 
 const classHubs = [
   {
-    name: "Optimist Class",
+    name: "Optimist",
     href: "/sg/optimist/gold",
-    tagline: "Gold & Silver fleet series rankings",
-    note: "National ranking updated after every scored regatta.",
+    tagline: "Gold and Silver fleet rankings",
+    note: "Updated after every scored regatta.",
   },
   {
-    name: "ILCA 4 Class",
+    name: "ILCA 4",
     href: "/sg/ilca4",
+    tagline: "Youth national ranking",
+    note: "High points from the best events, with both sail numbers.",
+  },
+  {
+    name: "ILCA 6",
+    href: "/sg/ilca6",
     tagline: "National high points ranking",
-    note: "Dual sail numbers and year-on-year progression in one record.",
+    note: "Best 3 of 5 events in the current series.",
   },
   {
-    name: "WingFoil Class",
+    name: "ILCA 7",
+    href: "/sg/ilca7",
+    tagline: "National high points ranking",
+    note: "Best 3 of 5 events in the current series.",
+  },
+  {
+    name: "WingFoil",
     href: "/sg/wingfoil",
-    tagline: "Sprint slalom event standings",
-    note: "Heat-by-heat finishes and discards across the Grand Prix series.",
+    tagline: "Sprint slalom standings",
+    note: "Heat finishes and discards across the series.",
   },
   {
-    name: "Techno 293 Class",
+    name: "Techno 293",
     href: "/sg/techno293",
-    tagline: "One Design windsurfing",
-    note: "Southwest Monsoon Grand Prix standings and race scorecards.",
+    tagline: "One Design series standings",
+    note: "Southwest Monsoon series and race scorecards.",
   },
 ] as const;
 
-const stats = [
-  { value: "3", label: "National classes live" },
-  { value: "150+", label: "Athletes tracked" },
-  { value: "40+", label: "Regattas on the calendar" },
-  { value: "Live", label: "Standings after each scored race" },
-] as const;
-
-export default function HomePage() {
+export default async function HomePage() {
+  const totals = await getLandingTotals();
+  const stats = [
+    { value: "6", label: "Class standings live" },
+    { value: totals.athletes, label: "Athletes tracked" },
+    { value: totals.regattas, label: "Regatta results on record" },
+    { value: "Live", label: "Standings after each scored race" },
+  ] as const;
   return (
     <div className="bg-sailcloth text-charcoal">
 
@@ -144,13 +157,13 @@ export default function HomePage() {
               Jump to your class
             </p>
             <h2 className="mt-3 text-2xl font-semibold leading-8 text-charcoal">
-              Official sailing class
+              Class standings
             </h2>
             <p className="mt-3 text-base leading-6 text-slate-soft">
-              Every class follows its rules and scoring system.
+              Optimist through ILCA 7, WingFoil, and Techno 293. Each class keeps its own scoring.
             </p>
           </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {classHubs.map((item) => (
               <Link
                 key={item.name}
@@ -162,6 +175,7 @@ export default function HomePage() {
                   {item.name}
                 </h3>
                 <p className="mt-1 text-sm font-medium text-harbour">{item.tagline}</p>
+                <p className="mt-2 text-sm leading-5 text-slate-soft">{item.note}</p>
                 <ArrowRight
                   className="mt-4 h-4 w-4 text-harbour transition-transform group-hover:translate-x-1"
                   aria-hidden

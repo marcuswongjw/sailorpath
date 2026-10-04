@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 import { useRouter } from "next/navigation";
-import { createBrowserSupabase } from "@/lib/supabase/browser";
+import { cookieHeaderHasAuthSession } from "@/lib/supabase/authCookie";
 
 export type OwnedSailor = {
   id: string;
@@ -72,8 +72,19 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     let unsub: (() => void) | undefined;
     let cancelled = false;
 
+    if (!cookieHeaderHasAuthSession(document.cookie)) {
+      const id = window.setTimeout(() => {
+        if (!cancelled) setReady(true);
+      }, 0);
+      return () => {
+        cancelled = true;
+        window.clearTimeout(id);
+      };
+    }
+
     (async () => {
       try {
+        const { createBrowserSupabase } = await import("@/lib/supabase/browser");
         const supabase = createBrowserSupabase();
         const {
           data: { session },
@@ -112,7 +123,10 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     try {
-      await createBrowserSupabase().auth.signOut();
+      if (cookieHeaderHasAuthSession(document.cookie)) {
+        const { createBrowserSupabase } = await import("@/lib/supabase/browser");
+        await createBrowserSupabase().auth.signOut();
+      }
     } catch {
       /* ignore */
     }

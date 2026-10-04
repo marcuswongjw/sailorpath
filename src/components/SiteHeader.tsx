@@ -1,12 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
 import { useAccount } from "@/components/AccountProvider";
 import { BrandLogoLink } from "@/components/BrandMark";
 import { isAdminHost, shouldShowDemoNavigation } from "@/lib/adminHost";
-import { QuickSearchModal } from "@/components/search/QuickSearchModal";
+
+const QuickSearchModal = dynamic(() =>
+  import("@/components/search/QuickSearchModal").then((mod) => mod.QuickSearchModal)
+);
 
 type OpenMenu = "optimist" | "ilca" | "classes" | "account" | null;
 
@@ -666,10 +670,12 @@ export function SiteHeader() {
         )}
       </div>
 
-      <QuickSearchModal
-        isOpen={quickSearchOpen}
-        onClose={() => setQuickSearchOpen(false)}
-      />
+      {quickSearchOpen ? (
+        <QuickSearchModal
+          isOpen
+          onClose={() => setQuickSearchOpen(false)}
+        />
+      ) : null}
     </header>
   );
 }
