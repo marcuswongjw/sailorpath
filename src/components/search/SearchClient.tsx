@@ -10,9 +10,7 @@ import {
   Calendar,
   Building2,
   ChevronRight,
-  GraduationCap,
   RotateCcw,
-  Sparkles,
   Loader2,
   SlidersHorizontal,
 } from "lucide-react";
@@ -27,18 +25,6 @@ export type SearchClientProps = {
   initialSailors: SailorSearchResult[];
   initialRegattas: RegattaSearchResult[];
 };
-
-const POPULAR_SEARCHES = [
-  { label: "Optimist Gold", query: "Optimist Gold", fleet: "gold" },
-  { label: "Optimist Silver", query: "Optimist Silver", fleet: "silver" },
-  { label: "ILCA 4", query: "ILCA 4", fleet: "ilca" },
-  { label: "Temasek Regatta", query: "Temasek", fleet: "all" },
-  { label: "Pulau Ujong", query: "Pulau Ujong", fleet: "all" },
-  { label: "SAFYC", query: "SAFYC", fleet: "all" },
-  { label: "Changi (CSC)", query: "CSC", fleet: "all" },
-  { label: "Raffles (RI)", query: "RI", fleet: "all" },
-  { label: "ACS (Independent)", query: "ACSI", fleet: "all" },
-];
 
 export function SearchClient({
   initialQuery = "",
@@ -151,13 +137,6 @@ export function SearchClient({
     setClub("");
     setSchool("");
     setActiveTab("all");
-    setVisibleSailorsCount(PAGE_SIZE);
-    inputRef.current?.focus();
-  };
-
-  const handlePopularSearchClick = (item: (typeof POPULAR_SEARCHES)[0]) => {
-    setQuery(item.query);
-    setFleet(item.fleet);
     setVisibleSailorsCount(PAGE_SIZE);
     inputRef.current?.focus();
   };
@@ -407,28 +386,6 @@ export function SearchClient({
         )}
       </div>
 
-      {/* ── Popular Search Tags (Empty state or query helper) ────────── */}
-      {!query && (
-        <div className="min-w-0 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 space-y-2.5">
-          <p className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-            <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-            Quick Searches &amp; Fleets
-          </p>
-          <div className="flex flex-wrap gap-1.5">
-            {POPULAR_SEARCHES.map((item) => (
-              <button
-                key={item.label}
-                type="button"
-                onClick={() => handlePopularSearchClick(item)}
-                className="rounded-full border border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-700 shadow-2xs transition-colors"
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* ── Matching Regattas Section ─────────────────────────────────── */}
       {displayRegattas.length > 0 && (
         <div className="space-y-3">
@@ -558,23 +515,9 @@ export function SearchClient({
                         )}
                       </div>
 
-                      {/* Club and School details */}
-                      <div className="flex flex-wrap items-center gap-x-2 text-xs text-slate-500">
-                        {s.club && <span className="break-words">{s.club}</span>}
-                        {s.club && s.school && <span className="text-slate-300">·</span>}
-                        {s.school && (
-                          <span className="inline-flex min-w-0 items-center gap-1 text-slate-600">
-                            <GraduationCap className="h-3 w-3 text-slate-400 shrink-0" />
-                            <span className="break-words">{s.school}</span>
-                          </span>
-                        )}
-                        {s.nationality && s.nationality !== "Singapore" && s.nationality !== "SGP" && (
-                          <>
-                            <span className="text-slate-300">·</span>
-                            <span className="text-slate-500">{s.nationality}</span>
-                          </>
-                        )}
-                      </div>
+                      {s.nationality && s.nationality !== "Singapore" && s.nationality !== "SGP" && (
+                        <p className="text-xs text-slate-500 break-words">{s.nationality}</p>
+                      )}
                     </div>
                   </div>
 
