@@ -5254,9 +5254,6 @@ export type RegattaPrizeWinnersView = {
  */
 export function inferPrizeFleetName(slug: string): string | undefined | null {
   const s = String(slug || "").toLowerCase();
-  if (s.includes("rsyc") && s.includes("knockout") && s.includes("2026") && s.includes("gold")) {
-    return RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE;
-  }
   if (/ilca-?4/.test(s)) return "ILCA 4";
   if (/ilca-?6/.test(s)) return "ILCA 6";
   if (/ilca-?7/.test(s)) return "ILCA 7";
@@ -5274,9 +5271,6 @@ function fleetsForSlug(
   fleetName?: string
 ): { schedule: RegattaPrizeSchedule; fleets: RegattaPrizeFleet[] } | null {
   const s = String(slug || "").toLowerCase();
-  if (s.includes("rsyc") && s.includes("knockout") && s.includes("2026") && s.includes("gold")) {
-    return RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE;
-  }
   const schedule = getRegattaPrizeSchedule(s);
   if (!schedule) return null;
   const resolved = fleetName !== undefined ? fleetName : inferPrizeFleetName(s);
