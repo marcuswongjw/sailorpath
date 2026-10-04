@@ -4,6 +4,7 @@ import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { coachAccessRequests, profiles } from "@/db/schema";
 import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
+import { notifySuperadminAssignedRoleAccepted } from "@/lib/notifications";
 
 /**
  * The invited account accepts or declines a coach invitation from the email link.
@@ -88,6 +89,14 @@ export async function POST(req: Request) {
         updatedAt: new Date(),
       })
       .where(eq(coachAccessRequests.id, request.id));
+
+    await notifySuperadminAssignedRoleAccepted({
+      userId: request.requesterId,
+      email: request.email,
+      name: request.fullName,
+      assignedRole: "coach",
+      source: "/api/account/coach-invites",
+    });
 
     if (request.role !== "superadmin" && request.role !== "coach") {
       await notifyAccountRoleChange({

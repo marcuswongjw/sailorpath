@@ -149,3 +149,89 @@ export async function notifySuperadminClaimedProfileUpdate(
     }
   }
 }
+
+export type AssignedRoleAcceptedNotice = {
+  userId: string;
+  email?: string | null;
+  name?: string | null;
+  assignedRole: string;
+  relation?: string | null;
+  sailorName?: string | null;
+  source: string;
+};
+
+/** Notify admins after a user accepts a role or relationship assigned by an admin. */
+export async function notifySuperadminAssignedRoleAccepted(
+  notice: AssignedRoleAcceptedNotice
+): Promise<void> {
+  const name = String(notice.name || "").trim();
+  const email = String(notice.email || "").trim();
+  const roleLabels: Record<string, string> = {
+    parent: "Parent",
+    sailor: "Sailor",
+    coach: "Coach",
+    superadmin: "Superadmin",
+  };
+  const role = roleLabels[notice.assignedRole] || notice.assignedRole;
+  const subjectName = name || email || "A user";
+  const relationship = String(notice.relation || "").trim();
+  const sailorName = String(notice.sailorName || "").trim();
+  const summary = `${subjectName} accepted the assigned ${role} role${
+    sailorName ? ` for ${sailorName}` : ""
+  }.`;
+
+  await logAdminChange({
+    actorUserId: notice.userId,
+    actorEmail: email || null,
+    action: "role_assignment.accepted",
+    entityType: "profile",
+    entityId: notice.userId,
+    entityLabel: name || null,
+    summary,
+    details: {
+      acceptedByUserId: notice.userId,
+      acceptedByEmail: email || null,
+      acceptedByName: name || null,
+      assignedRole: notice.assignedRole,
+      relation: relationship || null,
+      sailorName: sailorName || null,
+    },
+    source: notice.source,
+  });
+
+  const lines = [
+    `User: ${name || "Unknown"}${email ? ` (${email})` : ""}`,
+    `Accepted role: ${role}`,
+    ...(relationship ? [`Relationship: ${relationship}`] : []),
+    ...(sailorName ? [`Sailor: ${sailorName}`] : []),
+    `Profile ID: ${notice.userId}`,
+  ];
+
+  const superadminEmail = process.env.SUPERADMIN_EMAIL?.trim();
+  if (superadminEmail) {
+    await sendResendTextEmail({
+      to: superadminEmail,
+      subject: `[SailorPath] ${summary}`,
+      text: lines.join("\n"),
+    });
+  }
+
+  const webhookUrl = process.env.ADMIN_NOTIFICATION_WEBHOOK_URL?.trim();
+  if (webhookUrl) {
+    try {
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: `🔔 ${summary}\n${lines.join("\n")}`,
+          notice,
+        }),
+      });
+    } catch (error) {
+      console.warn(
+        "[notifySuperadminAssignedRoleAccepted] Webhook send failed:",
+        error
+      );
+    }
+  }
+}

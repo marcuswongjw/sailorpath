@@ -6,6 +6,7 @@ import { sailorClaims, sailors } from "@/db/schema";
 import { applyClaimAccountRole } from "@/lib/claimAccountRole";
 import { parseClaimRelation } from "@/lib/claimRelation";
 import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
+import { notifySuperadminAssignedRoleAccepted } from "@/lib/notifications";
 
 /**
  * The signed-in user accepts or declines an admin sailor assignment.
@@ -88,6 +89,18 @@ export async function POST(req: Request) {
     }
 
     const roleNotice = await applyClaimAccountRole(auth.userId, relation);
+
+    await notifySuperadminAssignedRoleAccepted({
+      userId: auth.userId,
+      email: auth.email,
+      name: roleNotice?.name,
+      assignedRole:
+        roleNotice?.nextRole || (relation === "other" ? auth.role : relation),
+      relation,
+      sailorName: sailor?.name || null,
+      source: "/api/account/sailor-invites",
+    });
+
     if (roleNotice) {
       await notifyAccountRoleChange({
         ...roleNotice,
