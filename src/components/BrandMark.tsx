@@ -31,8 +31,9 @@ export function BrandWordmark({
   return (
     <Image
       src={reversed ? BRAND.logoReversed : BRAND.logo}
-      width={1141}
-      height={261}
+      width={120}
+      height={27}
+      sizes="120px"
       alt={BRAND.name}
       className={`h-5 w-auto shrink-0 ${className}`}
     />
@@ -57,8 +58,9 @@ export function BrandLogoLink({
     >
       <Image
         src={isReversed ? BRAND.logoReversed : BRAND.logo}
-        width={1141}
-        height={261}
+        width={160}
+        height={37}
+        sizes="160px"
         priority
         alt="SailorPath"
         className="h-8 w-auto sm:h-9"

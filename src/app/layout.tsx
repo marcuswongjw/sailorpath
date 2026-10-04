@@ -25,7 +25,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: "SailorPath | Singapore Youth Sailing Rankings & Athlete Logbooks",
   description:
-    "Explore Singapore Optimist and ILCA 4 rankings, regatta results, race scores, and privacy-controlled sailor profiles.",
+    "Singapore Optimist, ILCA 4, ILCA 6, ILCA 7, WingFoil and Techno 293 standings, regatta results, and sailor records.",
   icons: {
     icon: [{ url: "/brand/sailorpath-icon.png", type: "image/png" }],
     apple: [{ url: "/brand/sailorpath-icon.png", type: "image/png" }],
