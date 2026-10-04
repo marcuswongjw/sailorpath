@@ -144,7 +144,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
             Platform stats
           </h1>
           <p className="text-[12px] text-slate-400 leading-relaxed max-w-xl">
-            Privacy-safe aggregates (counts only). Cached ~{stats?.cacheSeconds ?? 60}
+            Platform counts and superadmin account activity. Cached ~{stats?.cacheSeconds ?? 60}
             s. Definitions live in the{" "}
             <Link
               href="/admin/metrics"
@@ -222,7 +222,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
                   ? "—"
                   : `${stats.northStars.rosterClaimedPct}%`
               }
-              hint={`${fmt(stats.northStars.claimedSailors)} / ${fmt(stats.northStars.seriesSailors)} series`}
+              hint={`${fmt(stats.northStars.claimedSeriesSailors)} / ${fmt(stats.northStars.seriesSailors)} series`}
               tone={
                 (stats.northStars.rosterClaimedPct ?? 0) >= 40 ? "ok" : "default"
               }
@@ -252,7 +252,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
               hint={
                 stats.ops.lastImportAt
                   ? `Last: ${new Date(stats.ops.lastImportAt).toLocaleDateString()}`
-                  : "No import events yet"
+                  : stats.usageEventsOk ? "No import events yet" : "Import history unavailable"
               }
               tone={
                 stats.ops.daysSinceLastImport != null &&
@@ -274,27 +274,27 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
           </Section>
 
           <Section icon={TrendingUp} title="Traffic · 7 days">
-            <Card label="Ranking views" value={fmt(stats.traffic7d.rankingViews)} />
-            <Card label="Profile views" value={fmt(stats.traffic7d.profileViews)} />
-            <Card label="Searches" value={fmt(stats.traffic7d.searches)} />
+            <Card label="Ranking views" value={fmt(stats.usageEventsOk ? stats.traffic7d.rankingViews : null)} />
+            <Card label="Profile views" value={fmt(stats.usageEventsOk ? stats.traffic7d.profileViews : null)} />
+            <Card label="Searches" value={fmt(stats.usageEventsOk ? stats.traffic7d.searches : null)} />
             <Card
               label="Sample · Admin"
-              value={`${fmt(stats.traffic7d.sampleViews)} · ${fmt(stats.traffic7d.adminOpens)}`}
+              value={`${fmt(stats.usageEventsOk ? stats.traffic7d.sampleViews : null)} · ${fmt(stats.usageEventsOk ? stats.traffic7d.adminOpens : null)}`}
               hint="sample_view · admin_open"
             />
           </Section>
 
           <Section icon={Users} title="Signed-in accounts">
-            <Card label="Registered" value={fmt(stats.accounts.registered)} />
-            <Card label="Confirmed" value={fmt(stats.accounts.confirmed)} />
+            <Card label="Registered" value={fmt(stats.authAccountsOk ? stats.accounts.registered : null)} />
+            <Card label="Confirmed" value={fmt(stats.authAccountsOk ? stats.accounts.confirmed : null)} />
             <Card
               label="Signed in · 7 days"
-              value={fmt(stats.accounts.signedInLast7d)}
+              value={fmt(stats.authAccountsOk ? stats.accounts.signedInLast7d : null)}
               hint="Accounts with a recent sign-in"
             />
             <Card
               label="Auth sessions"
-              value={fmt(stats.accounts.authSessions)}
+              value={fmt(stats.authAccountsOk ? stats.accounts.authSessions : null)}
               hint="Valid session records, not live online presence"
             />
           </Section>
@@ -378,7 +378,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
             <Card
               label="Missing / placeholder sail #"
               value={fmt(stats.dataTrust.missingOrPlaceholderSail)}
-              hint="Empty or SGP 000"
+              hint="Empty or zero placeholder"
               tone={
                 stats.dataTrust.missingOrPlaceholderSail > 0 ? "warn" : "ok"
               }
@@ -386,7 +386,7 @@ export function AdminStatsPanel({ isSuperadmin }: Props) {
             <Card
               label="Cache"
               value={`${stats.cacheSeconds}s`}
-              hint="Server revalidate window"
+              hint="Client refresh window"
             />
           </Section>
         </>

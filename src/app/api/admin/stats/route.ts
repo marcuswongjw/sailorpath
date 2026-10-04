@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
-import { getAdminStats } from "@/lib/adminStats";
+import { getAdminStats, StatsTimeoutError, withStatsQueryTimeout } from "@/lib/adminStats";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+export const maxDuration = 30;
 
 /**
  * Lean live Stats for the admin console.
@@ -11,16 +12,19 @@ export const runtime = "nodejs";
  */
 export async function GET() {
   try {
-    await requireSuperadmin();
+    await withStatsQueryTimeout(requireSuperadmin());
     const stats = await getAdminStats();
     return NextResponse.json(stats, {
       headers: {
-        // Short private cache so rapid tab switches don't re-hit the DB.
-        "Cache-Control": "private, max-age=30, stale-while-revalidate=60",
+        // Account activity is private; the client query cache handles tab switches.
+        "Cache-Control": "private, no-store",
       },
     });
   } catch (e) {
     console.error("[admin/stats]", e);
+    if (e instanceof StatsTimeoutError) {
+      return NextResponse.json({ error: e.message }, { status: 503 });
+    }
     return jsonError(e);
   }
 }

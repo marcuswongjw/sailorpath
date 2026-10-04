@@ -13,6 +13,7 @@ export type AdminStatsPayload = {
   generatedAt: string;
   cacheSeconds: number;
   northStars: {
+    claimedSeriesSailors: number;
     weeklyActiveSessions: number | null;
     claimedSailors: number;
     seriesSailors: number;
@@ -61,6 +62,34 @@ export type AdminStatsPayload = {
 
 const CACHE_SECONDS = 60;
 
+/** Bound both database execution and pool waits; cancel queries after the deadline. */
+export class StatsTimeoutError extends Error {
+  constructor() {
+    super("Stats took too long to load. Please try Refresh.");
+    this.name = "StatsTimeoutError";
+  }
+}
+
+export async function withStatsQueryTimeout<T>(
+  query: PromiseLike<T> & { cancel?: () => void },
+  timeoutMs = 4_000
+): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      Promise.resolve(query),
+      new Promise<never>((_, reject) => {
+        timer = setTimeout(() => {
+          reject(new StatsTimeoutError());
+          query.cancel?.();
+        }, timeoutMs);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 function pct(n: number, d: number): number | null {
   if (d <= 0) return null;
   return Math.round((n / d) * 1000) / 10;
@@ -82,23 +111,24 @@ function daysBetween(from: Date, to: Date): number {
 export async function getAdminStats(): Promise<AdminStatsPayload> {
   const now = new Date();
 
-  const inventory = await pgSql`
-    select
-      (select count(*)::int from public.sailors) as sailors_total,
-      (select count(*)::int from public.sailors where parent_id is not null) as claimed,
-      (select count(*)::int from public.sailors
-        where (
+  const inventory = await withStatsQueryTimeout(pgSql`
+    with series_roster as (
+      select parent_id from public.sailors
+      where lower(trim(coalesce(current_fleet, ''))) <> 'guest'
+        and (
           lower(trim(coalesce(current_fleet, ''))) in (
             'series', 'gold', 'silver', 'in sg fleet', 'member'
           )
           or silver_entry_date is not null
           or gold_entry_date is not null
         )
-        and (
-          drop_date is null
-          or drop_date::text > to_char((now() at time zone 'Asia/Singapore'), 'YYYY-MM-DD')
-        )
-      ) as series_sailors,
+        and (drop_date is null or drop_date > (now() at time zone 'Asia/Singapore')::date)
+    )
+    select
+      (select count(*)::int from public.sailors) as sailors_total,
+      (select count(*)::int from public.sailors where parent_id is not null) as claimed,
+      (select count(*)::int from series_roster) as series_sailors,
+      (select count(*)::int from series_roster where parent_id is not null) as claimed_series,
       (select count(*)::int from public.sailor_claims where status = 'pending') as claims_pending,
       (select count(*)::int from public.support_messages where status = 'new') as support_new,
       (select count(*)::int from public.regattas where counts_for_ranking = true) as ranking_regattas,
@@ -106,13 +136,14 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
       (select count(*)::int from public.sailors
         where sail_number is null
            or trim(coalesce(sail_number, '')) = ''
-           or sail_number ~* '^SGP[[:space:]]*0+$'
+           or trim(sail_number) ~* '^(SGP[[:space:]]*)?0+$'
       ) as missing_sail
-  `;
+  `);
 
   const row = inventory[0] ?? {};
   const claimedSailors = num(row.claimed);
   const seriesSailors = num(row.series_sailors);
+  const claimedSeriesSailors = num(row.claimed_series);
 
   let usageEventsOk = true;
   let weeklyActiveSessions: number | null = null;
@@ -132,26 +163,26 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
 
   try {
     const [sessions, traffic, lastImport] = await Promise.all([
-      pgSql`
+      withStatsQueryTimeout(pgSql`
         select count(distinct session_id)::int as n
         from public.usage_events
         where created_at >= now() - interval '7 days'
           and session_id is not null
           and session_id <> ''
-      `,
-      pgSql`
+      `),
+      withStatsQueryTimeout(pgSql`
         select event_type, count(*)::int as n
         from public.usage_events
         where created_at >= now() - interval '7 days'
         group by event_type
-      `,
-      pgSql`
+      `),
+      withStatsQueryTimeout(pgSql`
         select created_at
         from public.usage_events
         where event_type = 'import'
         order by created_at desc
         limit 1
-      `,
+      `),
     ]);
 
     weeklyActiveSessions = num(sessions[0]?.n);
@@ -187,12 +218,13 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
         daysSinceLastImport = daysBetween(d, now);
       }
     }
-  } catch {
+  } catch (error) {
+    console.warn("[admin/stats] Usage metrics unavailable", error);
     usageEventsOk = false;
   }
 
   try {
-    const accountRows = await pgSql`
+    const accountRows = await withStatsQueryTimeout(pgSql`
       with session_totals as (
         select
           user_id,
@@ -251,7 +283,7 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
       from account_summary s
       left join recent_accounts r on true
       group by s.registered, s.confirmed, s.signed_in_last_7d, s.auth_sessions
-    `;
+    `);
     const accounts = accountRows[0] ?? {};
     registered = num(accounts.registered);
     confirmed = num(accounts.confirmed);
@@ -276,7 +308,8 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
         authSessionCount: num(row.authSessionCount),
       };
     });
-  } catch {
+  } catch (error) {
+    console.warn("[admin/stats] Account metrics unavailable", error);
     authAccountsOk = false;
   }
 
@@ -286,8 +319,9 @@ export async function getAdminStats(): Promise<AdminStatsPayload> {
     northStars: {
       weeklyActiveSessions,
       claimedSailors,
+      claimedSeriesSailors,
       seriesSailors,
-      rosterClaimedPct: pct(claimedSailors, seriesSailors),
+      rosterClaimedPct: pct(claimedSeriesSailors, seriesSailors),
       claimsPending: num(row.claims_pending),
     },
     ops: {

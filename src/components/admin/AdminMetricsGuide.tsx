@@ -96,7 +96,7 @@ const NORTH_STARS: MetricRow[] = [
   },
   {
     metric: "% roster claimed",
-    definition: "Claimed sailors ÷ series / ranked sailors on the platform.",
+    definition: "Claimed active series sailors ÷ all active series sailors. Explicit Guests and dropped sailors are excluded.",
     why: "Progress toward covering the addressable Singapore roster.",
   },
   {
@@ -188,7 +188,7 @@ const FEATURES: MetricRow[] = [
 const DATA_TRUST: MetricRow[] = [
   {
     metric: "Days since last series import",
-    definition: "Days since last import event or newest ranking regatta date.",
+    definition: "Days since the most recent successful import event. Regatta dates are race dates, so they do not measure when results were imported.",
     why: "Freshness SLA — stale boards lose credibility.",
   },
   {
