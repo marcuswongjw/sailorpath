@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ExternalLink, FileText, MapPin } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react";
+import { EventFacts } from "@/components/EventFacts";
 import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
@@ -358,16 +359,14 @@ export async function RegattaEventHub({ event, activeFleet, calendarView }: Prop
         <h1 className="text-xl sm:text-2xl font-black text-[var(--sp-harbour-shadow)] leading-snug break-words tracking-tight">
           {event.name}
         </h1>
-        <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
-          {event.datesText}
-          {" · "}
-          <span className="inline-flex items-center gap-1">
-            <MapPin className="h-3 w-3 text-[var(--sp-harbour-teal)]" aria-hidden />
-            {event.venue}
-          </span>
-          {" · "}
-          {event.organizer}
-        </p>
+        <EventFacts
+          dates={event.datesText}
+          venue={event.venue}
+          organiser={event.organizer}
+          className="space-y-1 text-[12px] sm:text-xs leading-relaxed"
+          labelClassName="font-bold text-[var(--sp-charcoal)]"
+          valueClassName="text-[var(--sp-charcoal-slate)]"
+        />
         {event.scheduleSummary && (
           <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed max-w-3xl">
             {event.scheduleSummary}
