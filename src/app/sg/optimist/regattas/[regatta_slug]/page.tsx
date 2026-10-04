@@ -57,6 +57,9 @@ export default async function RegattaDetailPage({
       <RegattaEventHeader
         name={regatta.name}
         date={String(regatta.date)}
+        endDate={regatta.endDate ? String(regatta.endDate) : null}
+        venue={regatta.venue}
+        organiser={regatta.organizer}
         division={regatta.division}
         totalFleetSize={regatta.totalFleetSize}
         raceCount={regatta.raceCount ?? null}

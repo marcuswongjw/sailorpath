@@ -64,6 +64,9 @@ export default async function IlcaRegattaDetailPage({
       <RegattaEventHeader
         name={regatta.name}
         date={String(regatta.date)}
+        endDate={regatta.endDate ? String(regatta.endDate) : null}
+        venue={regatta.venue}
+        organiser={regatta.organizer}
         division={regatta.division || "Open"}
         totalFleetSize={regatta.totalFleetSize}
         raceCount={regatta.raceCount ?? null}

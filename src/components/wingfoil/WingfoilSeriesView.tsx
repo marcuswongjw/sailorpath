@@ -11,9 +11,9 @@ import {
   CheckCircle2,
   AlertTriangle,
   ExternalLink,
-  MapPin,
   Flag,
 } from "lucide-react";
+import { EventFacts } from "@/components/EventFacts";
 import {
   normalizeWingfoilCategory,
   type WingfoilRegatta,
@@ -292,23 +292,22 @@ export function WingfoilSeriesView({
 
                 <div>
                   <h4 className="font-black text-[var(--sp-harbour-shadow)] text-base">{rnd.name}</h4>
-                  <p className="text-xs text-[var(--sp-charcoal-slate)] mt-1 flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 text-[var(--sp-harbour-teal)] shrink-0" />
-                    <span>{rnd.dates}</span>
-                  </p>
+                  <EventFacts
+                    dates={rnd.dates}
+                    venue={
+                      rnd.id.includes("gp1")
+                        ? "Constant Wind Sea Sport Centre (Kite Foil: Marina Parade / ECP D1)"
+                        : rnd.id.includes("gp2")
+                          ? "PAssion Wave @ East Coast (Kite Foil: Marina Parade / ECP D1)"
+                          : "National Sailing Centre (Championship Grand Finale)"
+                    }
+                    className="mt-1 space-y-0.5 text-xs"
+                    labelClassName="font-bold text-[var(--sp-charcoal)]"
+                    valueClassName="text-[var(--sp-charcoal-slate)]"
+                  />
                 </div>
 
                 <div className="pt-3 border-t border-[var(--sp-cool-veil)] space-y-1.5 text-xs text-[var(--sp-charcoal-slate)]">
-                  <p className="flex items-start gap-1.5">
-                    <MapPin className="h-3.5 w-3.5 text-[var(--sp-slate-soft)] shrink-0 mt-0.5" />
-                    <span>
-                      {rnd.id.includes("gp1")
-                        ? "Constant Wind Sea Sport Centre (Kite Foil: Marina Parade / ECP D1)"
-                        : rnd.id.includes("gp2")
-                        ? "PAssion Wave @ East Coast (Kite Foil: Marina Parade / ECP D1)"
-                        : "National Sailing Centre (Championship Grand Finale)"}
-                    </span>
-                  </p>
                   <p className="flex items-center gap-1.5 text-[13px] text-[var(--sp-slate-soft)]">
                     <Flag className="h-3 w-3 text-[var(--sp-slate-soft)] shrink-0" />
                     <span>Slalom / Course / Marathon · Up to 24 heats</span>

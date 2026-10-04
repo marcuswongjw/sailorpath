@@ -3,10 +3,9 @@
 import { useState, useMemo, useEffect } from "react";
 import {
   Wind,
-  Calendar,
-  MapPin,
   Trophy,
 } from "lucide-react";
+import { EventFacts } from "@/components/EventFacts";
 import {
   SINGAPORE_WINGFOIL_REGATTAS,
   loadWingfoilRegattas,
@@ -226,19 +225,16 @@ export function WingfoilView({
                   {activeRegatta.name}
                 </span>
               </div>
-              <div className="flex items-center gap-4 text-xs text-[var(--sp-charcoal-slate)] pt-1">
-                <span className="flex items-center gap-1">
-                  <Calendar className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
-                  {activeRegatta.dates}
-                </span>
-                <span className="flex items-center gap-1">
-                  <MapPin className="h-3.5 w-3.5 text-[var(--sp-slate-soft)]" />
-                  {activeRegatta.venue}
-                </span>
-              </div>
+              <EventFacts
+                dates={activeRegatta.dates}
+                venue={activeRegatta.venue}
+                organiser={activeRegatta.organizer}
+                className="space-y-1 pt-1 text-xs"
+                labelClassName="font-bold text-[var(--sp-charcoal)]"
+                valueClassName="text-[var(--sp-charcoal-slate)]"
+              />
             </div>
             <div className="text-xs text-[var(--sp-charcoal-slate)] md:text-right border-t md:border-t-0 pt-2 md:pt-0 border-[var(--sp-cool-veil)] shrink-0">
-              <p className="font-semibold text-[var(--sp-harbour-shadow)]">Organized by {activeRegatta.organizer}</p>
               <p className="text-[13px] text-[var(--sp-harbour-teal)] font-mono mt-0.5">{activeRegatta.scoringSystem}</p>
             </div>
           </div>

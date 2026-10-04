@@ -22,6 +22,8 @@ describe("RegattaEventHeader", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("Optimist")).toBeInTheDocument();
     expect(screen.getByText("National")).toBeInTheDocument();
+    expect(screen.getByText("Dates:")).toBeInTheDocument();
+    expect(screen.getByText("2026-09-11")).toBeInTheDocument();
     expect(screen.getByText(/fleet 130/)).toBeInTheDocument();
     expect(screen.getByText(/8 races/)).toBeInTheDocument();
     expect(screen.queryByText(/official notice board/i)).not.toBeInTheDocument();
