@@ -8,17 +8,15 @@ In Supabase **SQL Editor**, run:
 
 ## 2. Avatar storage bucket
 
-Run:
+Run, in order:
 
 `src/db/migrations/014_avatars_storage.sql`
 
-Or create bucket **avatars** in Dashboard → Storage:
+`src/db/migrations/102_storage_object_owner_policies.sql`
 
-- Public: **Yes**
-- File size limit: 5 MB
-- MIME: image/jpeg, image/png, image/webp, image/gif
+014 creates the public avatars bucket. 102 replaces its bucket-wide write policies. Do not add a policy that allows every authenticated user to insert, update, or delete objects in `avatars` or `regatta-evidence`.
 
-Then add policies so authenticated users can INSERT/UPDATE/DELETE on `avatars` and anyone can SELECT.
+Profile photos stay readable by URL. A write is allowed only for a superadmin, the sailor's parent, or an approved claim, and only under that sailor's folder. Evidence writes are allowed only under the uploader's own folder.
 
 ## 3. Where it appears
 

@@ -9,7 +9,11 @@ import {
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get("code");
-  const next = safeAuthNext(searchParams.get("next"), "/");
+  const next = safeAuthNext(
+    searchParams.get("next"),
+    "/",
+    new URL(request.url).hostname
+  );
 
   const supabaseUrl =
     process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || "";

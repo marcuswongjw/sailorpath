@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
@@ -9,7 +9,15 @@ import { trackClientUsage } from "@/lib/clientUsage";
 
 function LoginForm() {
   const searchParams = useSearchParams();
-  const nextTarget = safeAuthNext(searchParams.get("next"), "/account");
+  const [currentHost, setCurrentHost] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    setCurrentHost(window.location.hostname);
+  }, []);
+  const nextTarget = safeAuthNext(
+    searchParams.get("next"),
+    "/account",
+    currentHost
+  );
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(
@@ -61,7 +69,13 @@ function LoginForm() {
       } catch {
         /* profile optional until DB live */
       }
-      window.location.assign(nextTarget);
+      window.location.assign(
+        safeAuthNext(
+          searchParams.get("next"),
+          "/account",
+          window.location.hostname
+        )
+      );
     } catch {
       setError("Account services are temporarily unavailable. Please try again later.");
     } finally {

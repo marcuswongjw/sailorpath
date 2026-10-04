@@ -7,6 +7,8 @@ const mocks = vi.hoisted(() => ({
   insertResultSpy: vi.fn(),
   updateResultSpy: vi.fn(),
   resultRowLimit: vi.fn(),
+  deleteTables: [] as unknown[],
+  remainingResults: 0,
 }));
 
 const DEFAULT_RESULT_ROW = {
@@ -63,6 +65,11 @@ vi.mock("@/db", () => ({
     select: () => ({
       from: () => ({
         where: () => ({
+          then: (
+            resolve: (value: { n: number }[]) => void,
+            reject?: (reason: unknown) => void
+          ) =>
+            Promise.resolve([{ n: mocks.remainingResults }]).then(resolve, reject),
           limit: vi.fn().mockResolvedValue([
             {
               id: "sailor-1",
@@ -150,13 +157,15 @@ vi.mock("@/db", () => ({
         };
       },
     }),
-    delete: () => ({
-      where: () => Promise.resolve(undefined),
-    }),
+    delete: (table: unknown) => {
+      mocks.deleteTables.push(table);
+      return { where: () => Promise.resolve(undefined) };
+    },
   },
 }));
 
-import { GET, POST, PATCH } from "./route";
+import { regattaResults, regattas } from "@/db/schema";
+import { GET, POST, PATCH, DELETE } from "./route";
 
 describe("/api/account/results", () => {
   beforeEach(() => {
@@ -166,6 +175,8 @@ describe("/api/account/results", () => {
     mocks.insertResultSpy.mockReset();
     mocks.updateResultSpy.mockReset();
     mocks.resultRowLimit.mockReset();
+    mocks.deleteTables.length = 0;
+    mocks.remainingResults = 0;
     mocks.resultRowLimit.mockResolvedValue([{ ...DEFAULT_RESULT_ROW }]);
 
     mocks.getAuthContext.mockResolvedValue({
@@ -372,6 +383,56 @@ describe("/api/account/results", () => {
       expect(mocks.updateResultSpy).not.toHaveBeenCalledWith(
         expect.objectContaining({ verificationStatus: "pending_review" })
       );
+    });
+  });
+
+  describe("DELETE result", () => {
+    function deleteReq() {
+      return DELETE(
+        new Request("http://localhost/api/account/results", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ resultId: "res-1" }),
+        })
+      );
+    }
+
+    it("removes an empty personal log regatta with its last result", async () => {
+      const res = await deleteReq();
+      expect(res.status).toBe(200);
+      expect(mocks.deleteTables).toEqual([regattaResults, regattas]);
+    });
+
+    it("keeps a shared non-ranking regatta after its last result is removed", async () => {
+      mocks.resultRowLimit.mockResolvedValue([
+        { ...DEFAULT_RESULT_ROW, regattaSlug: "snsc-2026-optimist-gold" },
+      ]);
+      const res = await deleteReq();
+      expect(res.status).toBe(200);
+      expect(mocks.deleteTables).toEqual([regattaResults]);
+    });
+
+    it("keeps a personal log regatta while another result remains", async () => {
+      mocks.remainingResults = 1;
+      const res = await deleteReq();
+      expect(res.status).toBe(200);
+      expect(mocks.deleteTables).toEqual([regattaResults]);
+    });
+
+    it("returns 403 for a ranking result and deletes nothing", async () => {
+      mocks.resultRowLimit.mockResolvedValue([
+        { ...DEFAULT_RESULT_ROW, countsForRanking: true },
+      ]);
+      const res = await deleteReq();
+      expect(res.status).toBe(403);
+      expect(mocks.deleteTables).toEqual([]);
+    });
+
+    it("returns 403 when the caller cannot manage the sailor", async () => {
+      mocks.canManageSailor.mockResolvedValue(false);
+      const res = await deleteReq();
+      expect(res.status).toBe(403);
+      expect(mocks.deleteTables).toEqual([]);
     });
   });
 

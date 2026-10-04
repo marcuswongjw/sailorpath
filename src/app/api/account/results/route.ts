@@ -563,7 +563,11 @@ export async function PATCH(req: Request) {
   }
 }
 
-/** Delete owner-added non-ranking result (+ regatta if only this sailor). */
+/**
+ * Delete an owner-added non-ranking result. The regatta row is removed only
+ * when it is an empty personal log (slug log-…). Shared non-ranking events
+ * stay, including their race observations.
+ */
 export async function DELETE(req: Request) {
   try {
     const auth = await getAuthContext();
@@ -581,6 +585,7 @@ export async function DELETE(req: Request) {
         resultId: regattaResults.id,
         sailorId: regattaResults.sailorId,
         regattaId: regattaResults.regattaId,
+        regattaSlug: regattas.slug,
         countsForRanking: regattas.countsForRanking,
       })
       .from(regattaResults)
@@ -612,18 +617,21 @@ export async function DELETE(req: Request) {
 
     await db.delete(regattaResults).where(eq(regattaResults.id, resultId));
 
-    // Drop personal regatta if no other results remain
-    const [left] = await db
-      .select({ n: sql<number>`count(*)::int` })
-      .from(regattaResults)
-      .where(eq(regattaResults.regattaId, row.regattaId));
-    if (!left?.n) {
-      await db.delete(regattas).where(
-        and(
-          eq(regattas.id, row.regattaId),
-          eq(regattas.countsForRanking, false)
-        )
-      );
+    const personalLog = (row.regattaSlug ?? "").startsWith("log-");
+    if (personalLog) {
+      const [left] = await db
+        .select({ n: sql<number>`count(*)::int` })
+        .from(regattaResults)
+        .where(eq(regattaResults.regattaId, row.regattaId));
+      if (!left?.n) {
+        await db.delete(regattas).where(
+          and(
+            eq(regattas.id, row.regattaId),
+            eq(regattas.countsForRanking, false),
+            sql`${regattas.slug} like 'log-%'`
+          )
+        );
+      }
     }
 
     return NextResponse.json({ ok: true });

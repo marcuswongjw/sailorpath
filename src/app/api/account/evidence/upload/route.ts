@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAuthContext, jsonError } from "@/lib/auth";
+import { evidenceStoragePath } from "@/lib/evidenceStoragePath";
 import { createServerSupabase } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
@@ -46,12 +47,15 @@ export async function POST(req: Request) {
     }
 
     const originalName = file instanceof File ? file.name : "evidence_document";
-    const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, "_");
     const evidenceType = mimeType === "application/pdf" ? "pdf" : "image";
+    let path: string;
+    try {
+      path = evidenceStoragePath(auth.userId, originalName, Date.now());
+    } catch {
+      return NextResponse.json({ error: "Sign in required" }, { status: 401 });
+    }
 
     const supabase = await createServerSupabase();
-    const path = `${auth.userId}/${Date.now()}_${safeName}`;
-
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
@@ -59,34 +63,15 @@ export async function POST(req: Request) {
       .from("regatta-evidence")
       .upload(path, buffer, {
         contentType: mimeType,
-        upsert: true,
+        upsert: false,
       });
 
     if (uploadError) {
-      // Fall back to avatars bucket or return error
-      console.warn("regatta-evidence bucket upload error:", uploadError.message);
-      const { data: fallbackData, error: fallbackError } = await supabase.storage
-        .from("avatars")
-        .upload(`evidence/${path}`, buffer, {
-          contentType: mimeType,
-          upsert: true,
-        });
-
-      if (fallbackError) {
-        throw new Error(uploadError.message || "Failed to upload evidence file");
-      }
-
-      const { data: pubUrl } = supabase.storage
-        .from("avatars")
-        .getPublicUrl(fallbackData.path);
-
-      return NextResponse.json({
-        ok: true,
-        url: pubUrl.publicUrl,
-        name: originalName,
-        type: evidenceType,
-        size: file.size,
-      });
+      console.error("regatta-evidence upload failed", uploadError.message);
+      return NextResponse.json(
+        { error: "Could not upload evidence. Try again." },
+        { status: 502 }
+      );
     }
 
     const { data: pubUrl } = supabase.storage

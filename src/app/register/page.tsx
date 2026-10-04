@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
@@ -11,10 +11,22 @@ function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isCoachSignup = searchParams.get("role") === "coach";
+  const nextFallback = isCoachSignup ? "/coach-tools" : "/account?welcome=1";
+  const [currentHost, setCurrentHost] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    setCurrentHost(window.location.hostname);
+  }, []);
   const nextTarget = safeAuthNext(
     searchParams.get("next"),
-    isCoachSignup ? "/coach-tools" : "/account?welcome=1"
+    nextFallback,
+    currentHost
   );
+  const destinationForThisHost = () =>
+    safeAuthNext(
+      searchParams.get("next"),
+      nextFallback,
+      window.location.hostname
+    );
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +37,7 @@ function RegisterForm() {
   const [resendMessage, setResendMessage] = useState<string | null>(null);
 
   const confirmationRedirect = () =>
-    `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextTarget)}`;
+    `${window.location.origin}/auth/callback?next=${encodeURIComponent(destinationForThisHost())}`;
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,7 +96,8 @@ function RegisterForm() {
           /* ok */
         }
         setDone("session");
-        setTimeout(() => router.replace(nextTarget), 600);
+        const destination = destinationForThisHost();
+        setTimeout(() => router.replace(destination), 600);
       } else {
         trackClientUsage("register", "/register", { mode: "confirm" });
         setDone("confirm");

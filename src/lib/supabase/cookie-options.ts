@@ -47,26 +47,47 @@ export function getAuthCookieOptions(
   };
 }
 
+function isCanonicalAuthHost(host: string): boolean {
+  return host === "sailorpath.com" || host.endsWith(".sailorpath.com");
+}
+
+/**
+ * Post-login redirect target.
+ * Relative paths stay on this host. Absolute URLs are limited to SailorPath
+ * hosts, local dev, or the host that is already serving this request.
+ * Other *.vercel.app hosts are rejected so a login cannot be bounced to an
+ * unrelated deployment.
+ */
 export function safeAuthNext(
   raw: string | null | undefined,
-  fallback = "/"
+  fallback = "/",
+  currentHost?: string | null
 ): string {
   if (!raw?.trim()) return fallback;
   const value = raw.trim();
-  if (value.startsWith("/") && !value.startsWith("//")) return value;
+  if (
+    value.startsWith("/") &&
+    !value.startsWith("//") &&
+    !value.includes("\\") &&
+    !value.includes("\0")
+  ) {
+    return value;
+  }
   try {
     const u = new URL(value);
+    if (u.username || u.password) return fallback;
     const host = u.hostname.toLowerCase();
-    if (
-      host === "sailorpath.com" ||
-      host.endsWith(".sailorpath.com") ||
+    const servingHost = normalizeHost(currentHost);
+    const allowedHost =
+      isCanonicalAuthHost(host) ||
       host === "localhost" ||
       host === "127.0.0.1" ||
-      host.endsWith(".vercel.app") ||
-      host === "vercel.app"
-    ) {
-      return u.toString();
-    }
+      (servingHost.length > 0 && host === servingHost);
+    if (!allowedHost) return fallback;
+    const localHttp = host === "localhost" || host === "127.0.0.1";
+    if (u.protocol === "http:" && !localHttp) return fallback;
+    if (u.protocol !== "http:" && u.protocol !== "https:") return fallback;
+    return u.toString();
   } catch {
     /* ignore */
   }
