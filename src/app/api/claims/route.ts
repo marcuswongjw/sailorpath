@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
-import { and, eq } from "drizzle-orm";
+import { and, eq, getTableColumns } from "drizzle-orm";
 import { getAuthContext, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { sailorClaims, sailors } from "@/db/schema";
+import { sailorClaimsWithoutReferral, isMissingReferralColumn } from "@/lib/sailorClaimStorage";
+
 import { trackUsage } from "@/lib/usage";
 import {
   parseClaimRelation,
@@ -15,6 +17,8 @@ import {
   rateLimitResponse,
 } from "@/lib/rateLimit";
 import { asBoundedText, asUuid } from "@/lib/validate";
+
+const claimColumns = getTableColumns(sailorClaimsWithoutReferral);
 
 /** Logged-in user requests to claim a sailor profile */
 export async function POST(req: Request) {
@@ -120,27 +124,28 @@ export async function POST(req: Request) {
           .update(sailorClaims)
           .set({
             status: "pending",
+            source: "user",
             relation,
             heardAbout: heardAbout || null,
             note: note || null,
             updatedAt: new Date(),
           })
           .where(eq(sailorClaims.id, existing[0].id))
-          .returning();
+          .returning(claimColumns);
         reopened = row;
       } catch (updateErr) {
-        const msg = updateErr instanceof Error ? updateErr.message : String(updateErr);
-        if (/heard_about|does not exist/i.test(msg)) {
+        if (isMissingReferralColumn(updateErr)) {
           const [fallbackRow] = await db
             .update(sailorClaims)
             .set({
               status: "pending",
+              source: "user",
               relation,
               note: note || null,
               updatedAt: new Date(),
             })
             .where(eq(sailorClaims.id, existing[0].id))
-            .returning();
+            .returning(claimColumns);
           reopened = fallbackRow;
         } else {
           throw updateErr;
@@ -166,21 +171,21 @@ export async function POST(req: Request) {
           heardAbout,
           note: note || null,
         })
-        .returning();
+        .returning(claimColumns);
       claim = row;
     } catch (insertErr) {
-      const msg = insertErr instanceof Error ? insertErr.message : String(insertErr);
-      if (/heard_about|does not exist/i.test(msg)) {
+      if (isMissingReferralColumn(insertErr)) {
         const [fallbackRow] = await db
-          .insert(sailorClaims)
+          .insert(sailorClaimsWithoutReferral)
           .values({
             sailorId,
             requesterId: auth.userId,
             status: "pending",
+            source: "user",
             relation,
             note: note || null,
           })
-          .returning();
+          .returning(claimColumns);
         claim = fallbackRow;
       } else {
         throw insertErr;
@@ -236,7 +241,7 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const rows = await db
-      .select()
+      .select(claimColumns)
       .from(sailorClaims)
       .where(eq(sailorClaims.requesterId, auth.userId));
     return NextResponse.json({ claims: rows });

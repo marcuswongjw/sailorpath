@@ -52,7 +52,7 @@ describe("ClaimPanel UI", () => {
       "parent"
     );
     expect(
-      screen.getByText("Verification note")
+      screen.getByText("Verification note (required)")
     ).toBeInTheDocument();
     expect(
       screen.getByLabelText("Verification note")

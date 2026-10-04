@@ -106,7 +106,7 @@ export function ClaimPanel({
           htmlFor="claim-note"
           className="block text-[11px] font-medium text-neutral-400 mb-1"
         >
-          Verification note
+          Verification note (required)
         </label>
         <textarea
           id="claim-note"
@@ -114,10 +114,11 @@ export function ClaimPanel({
           value={note}
           onChange={(e) => setNote(e.target.value)}
           rows={3}
+          maxLength={2000}
           placeholder={`e.g. Parent of ${sailorName}. Sail ${sailNumber || "…"}`}
           className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2 text-xs text-white"
         />
-        {!isClaimNoteReady(note) && note.trim().length > 0 && (
+        {!isClaimNoteReady(note) && (
           <p className="text-[12px] text-slate-400 mt-1">
             Note needs at least {CLAIM_NOTE_MIN} characters.
           </p>

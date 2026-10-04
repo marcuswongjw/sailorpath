@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+import { ClaimPanel } from "@/components/sailor-profile/ClaimPanel";
 import { UserPlus } from "lucide-react";
 import dynamic from "next/dynamic";
 import {
@@ -25,12 +27,6 @@ const EquipmentInventory = dynamic(
       <div className="h-40 w-full animate-pulse rounded-2xl bg-white/5 border border-white/5" />
     ),
   }
-);
-
-const ClaimPanel = dynamic(
-  () =>
-    import("@/components/sailor-profile/ClaimPanel").then((m) => m.ClaimPanel),
-  { ssr: false }
 );
 
 const ProfileOwnerEditor = dynamic(
@@ -167,6 +163,15 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     showUnclaimedBanner,
   } = useSailorProfileState(props);
 
+  useEffect(() => {
+    if (claimPanelOpen && canClaim && claimStatus !== "pending") {
+      document.getElementById("profile-claim-form")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [claimPanelOpen, canClaim, claimStatus]);
+
   return (
     <div
       id="profile-hero"
@@ -207,6 +212,22 @@ export function SailorProfileView(props: SailorProfileViewProps) {
             Claim this profile
           </button>
         </div>
+      )}
+
+      {/* Claim panel */}
+      {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
+        <section id="profile-claim-form" aria-label="Claim sailor profile" className="scroll-mt-28">
+          <ClaimPanel
+            sailorId={initialSailor.id}
+            sailorName={displaySailor.name}
+            sailNumber={displaySailor.sailNumber}
+            onClose={() => setClaimPanelOpen(false)}
+            onResult={(status, msg) => {
+              setClaimStatus(status);
+              setClaimMsg(msg);
+            }}
+          />
+        </section>
       )}
 
       {/* Coach squad context strip (demo) */}
@@ -284,20 +305,6 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         totalRegattasCount={results.length}
         followControl={isLoggedIn ? props.followControl : null}
       />
-
-      {/* Claim panel */}
-      {claimPanelOpen && canClaim && !demoMode && claimStatus !== "pending" && (
-        <ClaimPanel
-          sailorId={initialSailor.id}
-          sailorName={displaySailor.name}
-          sailNumber={displaySailor.sailNumber}
-          onClose={() => setClaimPanelOpen(false)}
-          onResult={(status, msg) => {
-            setClaimStatus(status);
-            setClaimMsg(msg);
-          }}
-        />
-      )}
 
       {/* Owner editor */}
       {ownerView && editing && (

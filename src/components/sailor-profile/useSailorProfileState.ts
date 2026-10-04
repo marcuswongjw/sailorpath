@@ -1103,7 +1103,8 @@ export function useSailorProfileState({
     !profileClaimed && !profileVerified && !isOwner;
   const showUnclaimedBanner =
     isUnclaimedProfile &&
-    (demoMode ? canClaim || demoRole === "public" : true);
+    claimStatus !== "pending" &&
+    (demoMode ? canClaim || demoRole === "public" : !isLoggedIn || canClaim);
 
 
   return {
