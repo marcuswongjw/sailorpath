@@ -4679,6 +4679,34 @@ export const RSYC_OPTIMIST_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   ],
 };
 
+export const RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
+  ...RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
+  regattaSlug: "rsyc-optimist-gold-fleet-knockout-championship-2026",
+  regattaName: "RSYC Optimist Gold Fleet Knockout Championship 2026",
+  datesText: "3 & 4 October 2026",
+  noticeOfRaceUrl: "https://rsyc.org.sg/wp-content/uploads/2026/08/NOR_RSYC_Gold_KO_2026.pdf",
+  officialNoticeBoardUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-gold-fleet-knockout-championship-2026/",
+  websiteUrl: "https://rsyc.org.sg/rsyc-regatta/rsyc-optimist-gold-fleet-knockout-championship-2026/",
+  registrationUrl: "https://tinyurl.com/RSYCGoldFleetOKC2026",
+  entryFees: {
+    ...RSYC_OPTIMIST_2026_PRIZE_SCHEDULE.entryFees,
+    earlyBirdDeadline: "25 September 2026, 1700h",
+    finalDeadline: "25 September 2026, 1700h",
+  },
+  scheduleSummary: "3–4 October 2026 at Republic of Singapore Yacht Club. Knockout Series: Qualifying, Repechage, Final and Petite Final rounds. Up to 8 short-course races per competitor.",
+  scoringRules: "Knockout progression per Sailing Instructions. Appendix MR applies. NoR section 11 awards Top 10 Overall, Top 3 Female and Top 3 Under 13.",
+  // Populate winners from the published Gold results so corrections stay reflected.
+  fleets: [{
+    fleetName: "Optimist Gold Fleet",
+    boatClass: "Optimist",
+    categories: [
+      { categoryName: "Overall", prizesAwarded: "Top 10", winners: [] },
+      { categoryName: "Female", prizesAwarded: "Top 3", winners: [] },
+      { categoryName: "Under 13", prizesAwarded: "Top 3", winners: [] },
+    ],
+  }],
+};
+
 export const RSYC_OPTIMIST_2025_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
   regattaSlug: "rsyc-optimist-knockout-championship-2025",
   regattaName: "RSYC Optimist Knockout Championship 2025",
@@ -5069,6 +5097,7 @@ export const NSC_CUP_2_2025_PRIZE_SCHEDULE: RegattaPrizeSchedule = {
 
 export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
   RSYC_OPTIMIST_2026_PRIZE_SCHEDULE,
+  RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE,
   RSYC_OPTIMIST_2025_PRIZE_SCHEDULE,
   SAFYC_OPTIMIST_2025_PRIZE_SCHEDULE,
   RAFFLES_MARINA_OPTIMIST_2025_PRIZE_SCHEDULE,
@@ -5088,6 +5117,9 @@ export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
 
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
+  if (s.includes("rsyc") && s.includes("knockout") && s.includes("2026") && s.includes("gold")) {
+    return RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE;
+  }
   if (
     !s.includes("gold") &&
     (s.includes("rsyc-optimist-silver-fleet-knockout-championship-2026") ||
@@ -5222,6 +5254,9 @@ export type RegattaPrizeWinnersView = {
  */
 export function inferPrizeFleetName(slug: string): string | undefined | null {
   const s = String(slug || "").toLowerCase();
+  if (s.includes("rsyc") && s.includes("knockout") && s.includes("2026") && s.includes("gold")) {
+    return RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE;
+  }
   if (/ilca-?4/.test(s)) return "ILCA 4";
   if (/ilca-?6/.test(s)) return "ILCA 6";
   if (/ilca-?7/.test(s)) return "ILCA 7";
@@ -5239,6 +5274,9 @@ function fleetsForSlug(
   fleetName?: string
 ): { schedule: RegattaPrizeSchedule; fleets: RegattaPrizeFleet[] } | null {
   const s = String(slug || "").toLowerCase();
+  if (s.includes("rsyc") && s.includes("knockout") && s.includes("2026") && s.includes("gold")) {
+    return RSYC_OPTIMIST_GOLD_2026_PRIZE_SCHEDULE;
+  }
   const schedule = getRegattaPrizeSchedule(s);
   if (!schedule) return null;
   const resolved = fleetName !== undefined ? fleetName : inferPrizeFleetName(s);

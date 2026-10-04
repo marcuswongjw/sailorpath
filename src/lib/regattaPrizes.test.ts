@@ -220,8 +220,8 @@ describe("regattaPrizes", () => {
       getRegattaPrizeSchedule("rsyc-optimist-silver-fleet-knockout-championship-2026")?.regattaSlug
     ).toBe("rsyc-optimist-silver-fleet-knockout-championship-2026");
     expect(
-      getRegattaPrizeSchedule("rsyc-optimist-gold-fleet-knockout-championship-2026")
-    ).toBeNull();
+      getRegattaPrizeSchedule("rsyc-optimist-gold-fleet-knockout-championship-2026")?.regattaSlug
+    ).toBe("rsyc-optimist-gold-fleet-knockout-championship-2026");
   });
 });
 
