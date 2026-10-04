@@ -519,11 +519,19 @@ export async function POST(req: Request) {
       claimRecord = created;
     }
 
+    if (!claimRecord) {
+      return NextResponse.json(
+        { error: "Could not save the invitation" },
+        { status: 500 }
+      );
+    }
+
     await notifySailorAssignmentInvite({
       to: user.email,
       name: user.fullName,
       sailorName: sailor.name,
       relation,
+      claimId: claimRecord.id,
     });
 
     await logAdminChange({

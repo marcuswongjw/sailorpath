@@ -211,6 +211,7 @@ describe("PATCH /api/admin/claims", () => {
         name: "May Tan",
         sailorName: "Ava Tan",
         relation: "parent",
+        claimId: "claim-1",
       })
     );
     expect(mocks.notifyAccountRoleChange).not.toHaveBeenCalled();
