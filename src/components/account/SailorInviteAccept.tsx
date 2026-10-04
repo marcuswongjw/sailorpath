@@ -54,7 +54,10 @@ export function SailorInviteAccept({
   inviteId: string | null;
   claimMsg: string | null;
   claimBusy: string | null;
-  onRespond: (claim: SailorInviteClaim, action: "accept" | "decline") => void;
+  onRespond: (
+    claim: SailorInviteClaim,
+    action: "accept" | "decline"
+  ) => void | Promise<void>;
 }) {
   const focused = inviteId
     ? claims.find((claim) => claim.id === inviteId)

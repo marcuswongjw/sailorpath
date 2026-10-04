@@ -9,6 +9,7 @@ import { useAccount } from "@/components/AccountProvider";
 import {
   InviteActions,
   SailorInviteAccept,
+  type SailorInviteClaim,
 } from "@/components/account/SailorInviteAccept";
 
 type Owned = {
@@ -127,7 +128,7 @@ function AccountInner() {
   }, [router, searchParams]);
 
   const respondToInvite = async (
-    claim: Claim,
+    claim: SailorInviteClaim,
     action: "accept" | "decline"
   ) => {
     setClaimBusy(claim.id);
