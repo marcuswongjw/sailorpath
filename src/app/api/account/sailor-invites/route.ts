@@ -28,8 +28,16 @@ export async function POST(req: Request) {
       );
     }
 
+    // Omit heard_about. Accepting an invite must work when that column is not migrated.
     const [claim] = await db
-      .select()
+      .select({
+        id: sailorClaims.id,
+        sailorId: sailorClaims.sailorId,
+        requesterId: sailorClaims.requesterId,
+        status: sailorClaims.status,
+        source: sailorClaims.source,
+        relation: sailorClaims.relation,
+      })
       .from(sailorClaims)
       .where(
         and(eq(sailorClaims.id, id), eq(sailorClaims.requesterId, auth.userId))
