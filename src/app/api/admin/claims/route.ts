@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { and, desc, eq, ne } from "drizzle-orm";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { requireSuperadmin, jsonError } from "@/lib/auth";
 import { db } from "@/db";
 import { profiles, sailorClaims, sailors } from "@/db/schema";
@@ -13,6 +14,44 @@ import { logAdminChange } from "@/lib/adminChangeLog";
 import { applyClaimAccountRole } from "@/lib/claimAccountRole";
 import { notifyAccountRoleChange } from "@/lib/roleChangeNotify";
 import { notifySailorAssignmentInvite } from "@/lib/sailorInviteNotify";
+
+/**
+ * Same table as `sailorClaims`, without `heard_about`.
+ * Drizzle inserts every column on the table object (`DEFAULT` when omitted).
+ * Production was missing `heard_about` (migration 086), so an insert through
+ * the full schema failed with `column "heard_about" does not exist`.
+ */
+const sailorClaimsAssignable = pgTable("sailor_claims", {
+  id: uuid("id").primaryKey().defaultRandom().notNull(),
+  sailorId: uuid("sailor_id").notNull(),
+  requesterId: uuid("requester_id").notNull(),
+  status: text("status", {
+    enum: ["pending", "approved", "rejected"],
+  })
+    .default("pending")
+    .notNull(),
+  relation: text("relation", {
+    enum: ["parent", "sailor", "other"],
+  }),
+  source: text("source", { enum: ["user", "admin"] })
+    .default("user")
+    .notNull(),
+  note: text("note"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+const sailorClaimColumns = {
+  id: sailorClaimsAssignable.id,
+  sailorId: sailorClaimsAssignable.sailorId,
+  requesterId: sailorClaimsAssignable.requesterId,
+  status: sailorClaimsAssignable.status,
+  relation: sailorClaimsAssignable.relation,
+  source: sailorClaimsAssignable.source,
+  note: sailorClaimsAssignable.note,
+  createdAt: sailorClaimsAssignable.createdAt,
+  updatedAt: sailorClaimsAssignable.updatedAt,
+};
 
 export async function GET() {
   try {
@@ -116,9 +155,9 @@ export async function PATCH(req: Request) {
     }
 
     const [claim] = await db
-      .select()
-      .from(sailorClaims)
-      .where(eq(sailorClaims.id, id))
+      .select(sailorClaimColumns)
+      .from(sailorClaimsAssignable)
+      .where(eq(sailorClaimsAssignable.id, id))
       .limit(1);
     if (!claim) {
       return NextResponse.json({ error: "Claim not found" }, { status: 404 });
@@ -168,14 +207,14 @@ export async function PATCH(req: Request) {
       | "rejected";
 
     const [updated] = await db
-      .update(sailorClaims)
+      .update(sailorClaimsAssignable)
       .set({
         status: nextStatus,
         ...(relation ? { relation } : {}),
         updatedAt: new Date(),
       })
-      .where(eq(sailorClaims.id, id))
-      .returning();
+      .where(eq(sailorClaimsAssignable.id, id))
+      .returning(sailorClaimColumns);
 
     const setAccountRole = body.setAccountRole !== false;
     let roleNotice: Awaited<ReturnType<typeof applyClaimAccountRole>> = null;
@@ -410,7 +449,10 @@ export async function POST(req: Request) {
     }
 
     const [user] = await db
-      .select()
+      .select({
+        email: profiles.email,
+        fullName: profiles.fullName,
+      })
       .from(profiles)
       .where(eq(profiles.id, userId))
       .limit(1);
@@ -419,7 +461,9 @@ export async function POST(req: Request) {
     }
 
     const [sailor] = await db
-      .select()
+      .select({
+        name: sailors.name,
+      })
       .from(sailors)
       .where(eq(sailors.id, sailorId))
       .limit(1);
@@ -427,12 +471,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Sailor profile not found" }, { status: 404 });
     }
 
-    // Check if an existing claim exists for this user + sailor
     const [existingClaim] = await db
-      .select()
-      .from(sailorClaims)
+      .select(sailorClaimColumns)
+      .from(sailorClaimsAssignable)
       .where(
-        and(eq(sailorClaims.sailorId, sailorId), eq(sailorClaims.requesterId, userId))
+        and(
+          eq(sailorClaimsAssignable.sailorId, sailorId),
+          eq(sailorClaimsAssignable.requesterId, userId)
+        )
       )
       .limit(1);
 
@@ -447,7 +493,7 @@ export async function POST(req: Request) {
     let claimRecord;
     if (existingClaim) {
       const [updated] = await db
-        .update(sailorClaims)
+        .update(sailorClaimsAssignable)
         .set({
           status: "pending",
           relation,
@@ -455,12 +501,12 @@ export async function POST(req: Request) {
           source: "admin",
           updatedAt: new Date(),
         })
-        .where(eq(sailorClaims.id, existingClaim.id))
-        .returning();
+        .where(eq(sailorClaimsAssignable.id, existingClaim.id))
+        .returning(sailorClaimColumns);
       claimRecord = updated;
     } else {
       const [created] = await db
-        .insert(sailorClaims)
+        .insert(sailorClaimsAssignable)
         .values({
           sailorId,
           requesterId: userId,
@@ -469,7 +515,7 @@ export async function POST(req: Request) {
           note,
           source: "admin",
         })
-        .returning();
+        .returning(sailorClaimColumns);
       claimRecord = created;
     }
 
