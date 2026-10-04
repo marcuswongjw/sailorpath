@@ -58,12 +58,12 @@ export function BrandLogoLink({
     >
       <Image
         src={isReversed ? BRAND.logoReversed : BRAND.logo}
-        width={160}
-        height={37}
-        sizes="160px"
+        width={112}
+        height={26}
+        sizes="112px"
         priority
         alt="SailorPath"
-        className="h-8 w-auto sm:h-9"
+        className="h-6 w-auto sm:h-7"
       />
     </Link>
   );
