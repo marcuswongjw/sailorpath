@@ -24,7 +24,7 @@ const sailor: SailorSearchResult = {
 };
 
 describe("SearchClient mobile layout", () => {
-  it("wraps filters inside the screen and keeps quick searches readable", () => {
+  it("wraps filters and hides quick searches, club, and school", () => {
     render(<SearchClient initialSailors={[sailor]} initialRegattas={[]} />);
 
     const filters = screen.getByRole("group", { name: "Search filters" });
@@ -36,9 +36,10 @@ describe("SearchClient mobile layout", () => {
     expect(input.className).toContain("min-w-0");
 
     expect(screen.getByRole("button", { name: /Silver Fleet/ })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Changi (CSC)" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Changi (CSC)" })).not.toBeInTheDocument();
+    expect(screen.queryByText(/Quick Searches/i)).not.toBeInTheDocument();
     expect(screen.getByText("Charles Kong Shing Chak")).toBeInTheDocument();
-    expect(screen.getByText("Changi Sailing Club")).toBeInTheDocument();
-    expect(screen.getByText("ANGLO-CHINESE SCHOOL (INDEPENDENT)")).toBeInTheDocument();
+    expect(screen.queryByText("Changi Sailing Club")).not.toBeInTheDocument();
+    expect(screen.queryByText("ANGLO-CHINESE SCHOOL (INDEPENDENT)")).not.toBeInTheDocument();
   });
 });
