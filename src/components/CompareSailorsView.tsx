@@ -78,12 +78,12 @@ export function CompareSailorsView({
   const b = ranked.find((s) => s.id === bId);
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 space-y-6">
-      <div className="flex items-start gap-3">
-        <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--sp-racing-orange)]/10 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/20">
+    <div className="mx-auto w-full min-w-0 max-w-5xl px-4 py-10 space-y-6">
+      <div className="flex min-w-0 items-start gap-3">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--sp-racing-orange)]/10 text-[var(--sp-racing-orange)] border border-[var(--sp-racing-orange)]/20">
           <GitCompareArrows className="h-5 w-5" />
         </span>
-        <div>
+        <div className="min-w-0">
           <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
             Compare sailors
           </h1>
@@ -158,7 +158,7 @@ export function CompareSailorsView({
       {error && <p className="text-sm text-rose-600 font-medium">{error}</p>}
 
       {!loading && a && b && (
-        <div className="overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
+        <div className="min-w-0 max-w-full overflow-x-auto rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] shadow-xs">
           <table className="w-full text-sm text-left min-w-[560px]">
             <thead className="bg-[var(--sp-sailcloth)] text-[10px] uppercase text-[var(--sp-slate-soft)] font-semibold border-b border-[var(--sp-cool-veil)]">
               <tr>

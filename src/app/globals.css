@@ -416,6 +416,12 @@ body header [role="menu"] a.text-racing-orange:hover {
 .sp-reversed .text-slate-400, .sp-reversed .text-slate-500, .sp-reversed .text-slate-600 { color: var(--sp-soft-aqua) !important; }
 .sp-reversed .border-white\/5, .sp-reversed .border-white\/10 { border-color: rgb(143 204 200 / 0.28) !important; }
 
+/* Keep sideways scrollers inside the phone. A flex item otherwise grows to its chips or table and the page clips them. */
+main :where(.overflow-x-auto, .overflow-x-scroll) {
+  min-width: 0;
+  max-width: 100%;
+}
+
 @media (pointer: coarse) {
   button, a, [role="button"], input, select, textarea { min-height: 2.75rem; }
 }

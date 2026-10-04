@@ -61,7 +61,7 @@ export default function HomePage() {
       {/* ── Hero ────────────────────────────────────────────────────────── */}
       <section className="border-b border-cool-veil">
         <div className="mx-auto max-w-3xl px-4 py-14 text-center sm:px-6 sm:py-20 lg:py-24">
-          <div className="mb-6 inline-flex items-center rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-harbour-shadow shadow-xs">
+          <div className="mx-auto mb-6 inline-block max-w-full rounded-full border border-cool-veil bg-warm-white px-3.5 py-1.5 text-xs font-medium text-balance text-harbour-shadow shadow-xs">
             Official Singapore Sailing standings &amp; athlete records
           </div>
 
@@ -104,8 +104,8 @@ export default function HomePage() {
               name="query"
               enterKeyHint="search"
               aria-label="Search sailors and regattas"
-              placeholder="Search by name, sail number (e.g. SGP 4652), club, or regatta..."
-              className="w-full rounded-full border border-cool-veil bg-warm-white py-3 sm:py-3.5 pl-4 sm:pl-6 pr-14 text-sm sm:text-base text-charcoal shadow-sm placeholder:text-slate-soft focus:border-harbour focus:outline-none"
+              placeholder="Name, sail number, club, or regatta"
+              className="w-full min-w-0 rounded-full border border-cool-veil bg-warm-white py-3 sm:py-3.5 pl-4 sm:pl-6 pr-14 text-sm sm:text-base text-charcoal shadow-sm placeholder:text-slate-soft focus:border-harbour focus:outline-none"
             />
             <button
               type="submit"
@@ -281,8 +281,8 @@ export default function HomePage() {
                 name="query"
                 enterKeyHint="search"
                 aria-label="Search sailors and regattas"
-                placeholder="Name, sail number (e.g. SGP 4652), club or regatta"
-                className="min-h-12 w-full rounded-lg border border-cool-mist bg-warm-white py-3 pl-12 pr-28 text-base text-charcoal placeholder:text-slate-soft focus:border-harbour focus:outline-none"
+                placeholder="Name, sail number, or club"
+                className="min-h-12 w-full min-w-0 rounded-lg border border-cool-mist bg-warm-white py-3 pl-12 pr-28 text-base text-charcoal placeholder:text-slate-soft focus:border-harbour focus:outline-none"
               />
               <button
                 type="submit"

@@ -56,7 +56,7 @@ export default function RootLayout({
             </Suspense>
             <UsageBeacon />
             <SiteHeader />
-            <main className="flex-1 flex flex-col min-w-0 w-full max-w-[100vw] overflow-x-clip">
+            <main className="flex-1 flex flex-col min-w-0 w-full max-w-[100vw] overflow-x-clip *:min-w-0 *:max-w-full">
               {children}
             </main>
             <SiteFooter />
