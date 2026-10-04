@@ -74,6 +74,16 @@ export function eligibilityForCategory(categoryName: string): Eligible | null {
     };
   }
 
+  if (/^(overall|open)$/.test(name.trim())) return () => true;
+  const youngerThan = name.match(/^under (\d+)$/);
+  if (youngerThan) {
+    const age = Number(youngerThan[1]);
+    return (row, eventYear) => {
+      const year = sailorYear(row);
+      return year != null && Boolean(eventYear) && year > eventYear - age;
+    };
+  }
+
   if (/female/.test(name)) return (row) => isFemale(row.gender);
   if (/primary school/.test(name)) return (row) => schoolLevel(row.school) === "primary";
   if (/secondary school/.test(name)) return (row) => schoolLevel(row.school) === "secondary";
