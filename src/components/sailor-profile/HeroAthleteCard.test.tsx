@@ -183,6 +183,71 @@ describe("HeroAthleteCard", () => {
     expect(screen.getByText("Recorded results")).toBeInTheDocument();
   });
 
+  it("leads a Techno sailor with finishes and leaves Status off", () => {
+    render(
+      <HeroAthleteCard
+        {...defaultProps}
+        boardNumber="S24"
+        boardSummary={{
+          label: "Techno 293",
+          seasonYear: 2025,
+          seasonEventCount: 4,
+          bestFinishLabel: "2nd",
+          bestFinishEvent: "SNSC 2025",
+        }}
+        classChoices={[{ id: "techno293", label: "Techno 293", count: 4 }]}
+        selectedClassId="techno293"
+        medals={{ gold: 1, silver: 0, bronze: 0, show: true }}
+      />
+    );
+
+    expect(screen.getByLabelText("Techno 293, 4 regattas")).toBeInTheDocument();
+    expect(screen.getByText("Best finish")).toBeInTheDocument();
+    expect(screen.getByText("2nd")).toBeInTheDocument();
+    expect(screen.getByText("SNSC 2025")).toBeInTheDocument();
+    expect(screen.getByText("Season events")).toBeInTheDocument();
+    expect(screen.getByText("2025 Techno 293")).toBeInTheDocument();
+    expect(screen.getByText("Career awards")).toBeInTheDocument();
+    expect(screen.getByText("Board S24")).toBeInTheDocument();
+    expect(screen.queryByText("Status")).toBeNull();
+    expect(screen.queryByText("Active competitor")).toBeNull();
+    expect(screen.queryByText("Optimist rank")).toBeNull();
+    expect(screen.queryByRole("tab", { name: /Optimist/ })).toBeNull();
+    expect(screen.queryByRole("tab", { name: /ILCA/ })).toBeNull();
+    expect(screen.queryByText(/SGP 123/)).toBeNull();
+  });
+
+  it("switches board classes without offering WingFoil or a blank awards card", async () => {
+    const onSelectClass = vi.fn();
+    render(
+      <HeroAthleteCard
+        {...defaultProps}
+        boardSummary={{
+          label: "Windsurfing LT",
+          seasonYear: 2024,
+          seasonEventCount: 1,
+          bestFinishLabel: "1st",
+          bestFinishEvent: "NSC Cup 2024",
+        }}
+        classChoices={[
+          { id: "windsurfing", label: "Windsurfing LT", count: 1 },
+          { id: "techno293", label: "Techno 293", count: 3 },
+        ]}
+        selectedClassId="windsurfing"
+        onSelectClass={onSelectClass}
+        medals={{ gold: 0, silver: 0, bronze: 0, show: false }}
+      />
+    );
+
+    expect(screen.queryByText("Career awards")).toBeNull();
+    expect(screen.queryByText("Status")).toBeNull();
+    expect(screen.queryByRole("tab", { name: /WingFoil/ })).toBeNull();
+    await userEvent.click(
+      screen.getByRole("tab", { name: "Techno 293, 3 regattas" })
+    );
+    expect(onSelectClass).toHaveBeenCalledWith("techno293");
+  });
+
   it("explains a missing rank instead of showing a dash", () => {
     render(
       <HeroAthleteCard

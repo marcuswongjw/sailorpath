@@ -25,6 +25,10 @@ export type ProfileOverviewTabProps = {
   activeResultsList: ProfileResult[];
   primaryIsIlca: boolean;
   onNavigateTab: (tab: string) => void;
+  /** Selected class name. Board profiles pass Techno 293, WingFoil, and so on. */
+  classLabel?: string;
+  /** Board profiles lead with finishes, not a dinghy standing. */
+  hideStanding?: boolean;
 };
 
 /**
@@ -44,14 +48,18 @@ export function ProfileOverviewTab({
   activeResultsList,
   primaryIsIlca,
   onNavigateTab,
+  classLabel: classLabelProp,
+  hideStanding = false,
 }: ProfileOverviewTabProps) {
-  const classLabel = standingIsIlca || resultsTab === "ilca4" ? "ILCA 4" : "Optimist";
+  const classLabel =
+    classLabelProp ||
+    (standingIsIlca || resultsTab === "ilca4" ? "ILCA 4" : "Optimist");
   const recent = activeResultsList.slice(0, 3);
 
   return (
     <div className="grid gap-4 lg:grid-cols-2 lg:items-start">
-      <div className="space-y-4 min-w-0">
-        {activeStanding && resultsTab !== "journey" ? (
+      <div className={`space-y-4 min-w-0 ${hideStanding ? "order-2" : ""}`}>
+        {hideStanding ? null : activeStanding && resultsTab !== "journey" ? (
           <ProfileStandingCard
             standing={activeStanding}
             standingIsIlca={standingIsIlca}
@@ -84,7 +92,7 @@ export function ProfileOverviewTab({
         />
       </div>
 
-      <section className={`${cardClass} p-4 sm:p-5 space-y-1 min-w-0`}>
+      <section className={`${cardClass} p-4 sm:p-5 space-y-1 min-w-0 ${hideStanding ? "order-1" : ""}`}>
         <div className="flex items-center justify-between gap-2 pb-2">
           <h2 className="text-[15px] font-black text-harbour-shadow">
             Recent {classLabel} regattas
@@ -110,9 +118,10 @@ export function ProfileOverviewTab({
               const rank = res.rank != null ? Number(res.rank) : null;
               const dns = Boolean(res.isDns || res.isDNS);
               const isIlcaRow =
-                primaryIsIlca ||
-                profileBoatClassGroup(res.boatClass) === "ilca4" ||
-                classLabel === "ILCA 4";
+                !classLabelProp &&
+                (primaryIsIlca ||
+                  profileBoatClassGroup(res.boatClass) === "ilca4" ||
+                  classLabel === "ILCA 4");
               const dateStr = formatEventWhen(res.regattaDate as string);
               const place = dns
                 ? "DNS"
@@ -144,7 +153,7 @@ export function ProfileOverviewTab({
                         {place}
                       </span>
                       <span className="block text-[11px] font-semibold text-slate-soft">
-                        {isIlcaRow ? "ILCA 4" : "Optimist"}
+                        {classLabelProp || (isIlcaRow ? "ILCA 4" : "Optimist")}
                       </span>
                     </span>
                   </button>

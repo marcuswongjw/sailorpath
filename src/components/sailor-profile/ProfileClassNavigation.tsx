@@ -1,6 +1,8 @@
 "use client";
 
-export type ProfileClassTab = "optimist" | "ilca4" | "journey";
+import type { BoardDiscipline } from "@/lib/boardProfile";
+
+export type ProfileClassTab = "optimist" | "ilca4" | BoardDiscipline | "journey";
 export type ProfileSectionTab = "overview" | "results" | "awards" | "journey" | "equipment";
 
 type Props = {
@@ -12,6 +14,8 @@ type Props = {
   ilcaCount: number;
   journeyCount: number;
   awardsCount?: number;
+  /** Count for the class currently on screen. */
+  resultsCount?: number;
   showStanding: boolean;
   showEquipment: boolean;
   /** Keep Milestones reachable when an owner has none yet. */
@@ -28,12 +32,14 @@ export function ProfileClassNavigation({
   ilcaCount,
   journeyCount,
   awardsCount = 0,
+  resultsCount: resultsCountProp,
   showStanding,
   showEquipment,
   showMilestones,
   onSectionTabChange,
 }: Props) {
-  const resultsCount = activeTab === "ilca4" ? ilcaCount : optimistCount;
+  const resultsCount =
+    resultsCountProp ?? (activeTab === "ilca4" ? ilcaCount : optimistCount);
   const milestonesVisible = showMilestones ?? journeyCount > 0;
 
   return (
