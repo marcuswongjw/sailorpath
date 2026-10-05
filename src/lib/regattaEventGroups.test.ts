@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import type { RegattaRecord } from "@/lib/ranking";
+import { resolveEventSlices } from "@/lib/regattaEvents";
 import {
   groupedHubForSlug,
   hubHrefForClassSlug,
+  isWingfoilBoatClass,
   regattaGroupKey,
   savedEventHubForSlug,
 } from "./regattaEventGroups";
@@ -212,5 +214,185 @@ describe("groupedHubForSlug", () => {
   it("leaves a registered event on its own hub", () => {
     expect(groupedHubForSlug("cincapura-regatta-2026-gold", published)).toBeNull();
     expect(groupedHubForSlug("pesta-sukan-gold-aug-25-2025-08-02", published)).toBeNull();
+  });
+
+  it("does not treat Windsurfing as WingFoil", () => {
+    expect(isWingfoilBoatClass("Windsurfing LT")).toBe(false);
+    expect(isWingfoilBoatClass("Windsurfing")).toBe(false);
+    expect(isWingfoilBoatClass("WingFoil")).toBe(true);
+    expect(isWingfoilBoatClass("Wing Foil")).toBe(true);
+    expect(isWingfoilBoatClass("Wing")).toBe(true);
+  });
+
+  it("lists Techno 293 and Windsurfing LT on the NSC Cup 2024 hub", () => {
+    const published = [
+      row({
+        slug: "nsc-1-gold-dec-24-2024-11-30",
+        name: "NSC Cup 2024 (Optimist Gold)",
+        date: "2024-11-30",
+        endDate: "2024-12-01",
+        division: "Gold",
+        boatClass: "Optimist",
+        eventSlug: "nsc-cup-2024",
+        eventName: "NSC Cup 2024",
+      }),
+      row({
+        slug: "nsc-1-silver-dec-24-2024-11-30",
+        name: "NSC Cup 2024 (Optimist Silver)",
+        date: "2024-11-30",
+        division: "Silver",
+        boatClass: "Optimist",
+        eventSlug: "nsc-cup-2024",
+        eventName: "NSC Cup 2024",
+      }),
+      row({
+        slug: "nsc-1-techno-293-dec-24-2024-11-30",
+        name: "NSC Cup 2024 (Techno 293)",
+        date: "2024-11-30",
+        boatClass: "Techno 293",
+        raceCount: 8,
+        totalFleetSize: 12,
+        eventSlug: "nsc-cup-2024",
+        eventName: "NSC Cup 2024",
+      }),
+      row({
+        slug: "nsc-1-windsurfing-lt-dec-24-2024-11-30",
+        name: "NSC Cup 2024 (Windsurfing LT)",
+        date: "2024-11-30",
+        boatClass: "Windsurfing LT",
+        raceCount: 8,
+        totalFleetSize: 6,
+        eventSlug: "nsc-cup-2024",
+        eventName: "NSC Cup 2024",
+      }),
+      row({
+        slug: "nsc-1-wingfoil-dec-24-2024-11-30",
+        name: "NSC Cup 2024 (WingFoil)",
+        date: "2024-11-30",
+        boatClass: "WingFoil",
+        eventSlug: "nsc-cup-2024",
+        eventName: "NSC Cup 2024",
+      }),
+    ];
+
+    const hub = savedEventHubForSlug("nsc-cup-2024", published);
+    expect(hub?.event.slices.map((slice) => slice.key)).toEqual([
+      "optimist-gold",
+      "optimist-silver",
+      "techno-293",
+      "windsurfing-lt",
+    ]);
+    expect(hub?.event.slices.map((slice) => slice.series)).toEqual([
+      "optimist",
+      "optimist",
+      "techno293",
+      "windsurfing",
+    ]);
+    expect(hub?.event.slices.find((slice) => slice.key === "windsurfing-lt")?.label).toBe(
+      "Windsurfing LT"
+    );
+    expect(hub?.event.slices.some((slice) => slice.series === "wingfoil")).toBe(false);
+
+    const resolved = resolveEventSlices(hub!.event, published);
+    expect(resolved.find((slice) => slice.def.key === "techno-293")?.regatta?.slug).toBe(
+      "nsc-1-techno-293-dec-24-2024-11-30"
+    );
+    expect(resolved.find((slice) => slice.def.key === "windsurfing-lt")?.regatta?.slug).toBe(
+      "nsc-1-windsurfing-lt-dec-24-2024-11-30"
+    );
+
+    expect(hubHrefForClassSlug("nsc-1-techno-293-dec-24-2024-11-30", published)).toBe(
+      "/regattas/nsc-cup-2024?fleet=techno-293"
+    );
+    expect(hubHrefForClassSlug("nsc-1-windsurfing-lt-dec-24-2024-11-30", published)).toBe(
+      "/regattas/nsc-cup-2024?fleet=windsurfing-lt"
+    );
+  });
+
+  it("puts NSC Cup 2 2024 Techno on that hub and keeps ILCA 6 on its tab", () => {
+    const published = [
+      row({
+        slug: "nsc-2-gold-nov-24-2024-11-18",
+        name: "NSC Cup 2 2024 (Optimist Gold)",
+        date: "2024-11-16",
+        endDate: "2024-11-18",
+        division: "Gold",
+        boatClass: "Optimist",
+        eventSlug: "nsc-cup-2-2024",
+        eventName: "NSC Cup 2 2024",
+      }),
+      row({
+        slug: "nsc-2-silver-nov-24-2024-11-18",
+        name: "NSC Cup 2 2024 (Optimist Silver)",
+        date: "2024-11-16",
+        division: "Silver",
+        boatClass: "Optimist",
+        eventSlug: "nsc-cup-2-2024",
+        eventName: "NSC Cup 2 2024",
+      }),
+      row({
+        slug: "nsc-2-ilca4-nov-24-2024-11-16",
+        name: "NSC Cup 2 2024 (ILCA 4)",
+        date: "2024-11-16",
+        boatClass: "ILCA 4",
+        eventSlug: "nsc-cup-2-2024",
+        eventName: "NSC Cup 2 2024",
+      }),
+      row({
+        slug: "nsc-2-ilca6-nov-24-2024-11-16",
+        name: "NSC Cup 2 2024 (ILCA 6)",
+        date: "2024-11-16",
+        boatClass: "ILCA 6",
+        eventSlug: "nsc-cup-2-2024",
+        eventName: "NSC Cup 2 2024",
+      }),
+      row({
+        slug: "nsc-2-techno-293-nov-24-2024-11-16",
+        name: "NSC Cup 2 2024 (Techno 293)",
+        date: "2024-11-16",
+        boatClass: "Techno 293",
+        eventSlug: "nsc-cup-2-2024",
+        eventName: "NSC Cup 2 2024",
+      }),
+    ];
+
+    const hub = savedEventHubForSlug("nsc-cup-2-2024", published);
+    expect(hub?.event.slices.map((slice) => slice.label)).toEqual([
+      "Optimist Gold",
+      "Optimist Silver",
+      "ILCA 4",
+      "ILCA 6",
+      "Techno 293",
+    ]);
+    expect(hubHrefForClassSlug("nsc-2-techno-293-nov-24-2024-11-16", published)).toBe(
+      "/regattas/nsc-cup-2-2024?fleet=techno-293"
+    );
+    expect(hubHrefForClassSlug("nsc-2-ilca6-nov-24-2024-11-16", published)).toBe(
+      "/regattas/nsc-cup-2-2024?fleet=ilca-6"
+    );
+  });
+
+  it("leaves SNSC static WingFoil and Techno boards on the registered hub", () => {
+    const published = [
+      row({
+        slug: "snsc-2026-wingfoil",
+        name: "SNSC 2026 (WingFoil)",
+        date: "2026-09-05",
+        boatClass: "WingFoil",
+        eventSlug: "snsc-2026",
+        eventName: "Singapore National Sailing Championships 2026",
+      }),
+      row({
+        slug: "snsc-2026-techno-293",
+        name: "SNSC 2026 (Techno 293)",
+        date: "2026-09-05",
+        boatClass: "Techno 293",
+        eventSlug: "snsc-2026",
+        eventName: "Singapore National Sailing Championships 2026",
+      }),
+    ];
+    expect(savedEventHubForSlug("snsc-2026", published)).toBeNull();
+    expect(savedEventHubForSlug("snsc-2026-wingfoil", published)).toBeNull();
+    expect(hubHrefForClassSlug("snsc-2026", published)).toBe("/regattas/snsc-2026");
   });
 });

@@ -31,6 +31,7 @@ export type RegattaEventSliceDef = {
     | "ilca7"
     | "wingfoil"
     | "techno293"
+    | "windsurfing"
     | "29er"
     | "iqfoil";
   /**
