@@ -31,21 +31,65 @@ export function groupSlug(key: string): string {
   return key.replace("|", "-").replace(/\s+/g, "-");
 }
 
-type Fleet = "gold" | "silver" | "open" | "ilca4" | "ilca6" | "ilca7";
+type Fleet =
+  | "gold"
+  | "silver"
+  | "open"
+  | "ilca4"
+  | "ilca6"
+  | "ilca7"
+  | "techno293"
+  | "windsurfing";
+
+function compactClass(value: string): string {
+  return value.toLowerCase().replace(/[\s._-]+/g, "");
+}
+
+function classBlob(row: Pick<RegattaRecord, "boatClass" | "name" | "slug">): string {
+  return `${row.boatClass || ""} ${row.name || ""} ${row.slug || ""}`;
+}
+
+/**
+ * WingFoil / Wing Foil / Wing.
+ * Windsurfing is a different class. "wing" is not a substring of
+ * "windsurfing", and a WingFoil check must not claim it.
+ */
+export function isWingfoilBoatClass(boatClass: string | null | undefined): boolean {
+  const compact = compactClass(String(boatClass || ""));
+  if (!compact || compact.includes("windsurf")) return false;
+  return compact.includes("wingfoil") || compact.includes("wing");
+}
+
+function mentionsTechno(row: Pick<RegattaRecord, "boatClass" | "name" | "slug">): boolean {
+  return compactClass(classBlob(row)).includes("techno");
+}
+
+function mentionsWindsurfing(
+  row: Pick<RegattaRecord, "boatClass" | "name" | "slug">
+): boolean {
+  if (!compactClass(classBlob(row)).includes("windsurf")) return false;
+  // WingFoil stays on its own boards. A windsurfing mention in the
+  // event title must not reclassify that sheet.
+  if (isWingfoilBoatClass(row.boatClass)) return false;
+  return true;
+}
 
 function publicFleet(row: RegattaRecord): Fleet | null {
   const boat = String(row.boatClass || "");
   if (isIlcaSeriesClass(boat, "ILCA 4")) return "ilca4";
   if (isIlcaSeriesClass(boat, "ILCA 6")) return "ilca6";
   if (isIlcaSeriesClass(boat, "ILCA 7")) return "ilca7";
+  // Techno 293 contains "29". Classify it before the 29er exclusion.
+  if (mentionsTechno(row)) return "techno293";
+  if (mentionsWindsurfing(row)) return "windsurfing";
   const lower = boat.toLowerCase();
   if (
     lower.includes("ilca") ||
     lower.includes("laser") ||
-    lower.includes("wing") ||
-    lower.includes("techno") ||
+    isWingfoilBoatClass(boat) ||
     lower.includes("29") ||
-    lower.includes("iqfoil")
+    lower.includes("iqfoil") ||
+    lower.includes("iq foil")
   ) {
     return null;
   }
@@ -132,6 +176,30 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
       prizeFleetName: "Optimist Gold Fleet",
     };
   }
+  if (fleet === "techno293") {
+    return {
+      key: "techno-293",
+      label: "Techno 293",
+      series: "techno293",
+      slugIncludes: [row.slug.toLowerCase()],
+      prizeFleetName: "Techno 293",
+    };
+  }
+  if (fleet === "windsurfing") {
+    const blob = classBlob(row).toLowerCase();
+    const compact = compactClass(blob);
+    const isLt =
+      /\blt\b/.test(blob) ||
+      compact.includes("windsurfinglt") ||
+      compact.includes("windsurflt");
+    return {
+      key: isLt ? "windsurfing-lt" : "windsurfing",
+      label: isLt ? "Windsurfing LT" : "Windsurfing",
+      series: "windsurfing",
+      slugIncludes: [row.slug.toLowerCase()],
+      prizeFleetName: isLt ? "Windsurfing LT" : "Windsurfing",
+    };
+  }
   return {
     key: "optimist",
     label: "Optimist",
@@ -141,7 +209,16 @@ function sliceFor(fleet: Fleet, row: RegattaRecord): RegattaEventSliceDef {
   };
 }
 
-const FLEET_ORDER: Fleet[] = ["gold", "silver", "open", "ilca4", "ilca6", "ilca7"];
+const FLEET_ORDER: Fleet[] = [
+  "gold",
+  "silver",
+  "open",
+  "ilca4",
+  "ilca6",
+  "ilca7",
+  "techno293",
+  "windsurfing",
+];
 
 /**
  * Tabs for a results row that is not already part of a registered event.
