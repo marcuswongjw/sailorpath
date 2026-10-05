@@ -944,7 +944,7 @@ async function backfillNationalityFromSail(
   });
 }
 
-/** Recompute silver_entry_date = earliest Silver ranking regatta date */
+/** Recompute silver_entry_date = earliest Silver fleet regatta, including a short one. */
 async function recomputeSilverEntryDates(
   auth: AuthContext
 ): Promise<NextResponse> {

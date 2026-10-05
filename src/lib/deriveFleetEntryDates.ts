@@ -1,10 +1,10 @@
 /**
- * Derive silver_entry_date from first Silver ranking regatta (exact date).
- * Gold entry stays admin half-boundary only.
+ * Derive silver_entry_date from the first Silver fleet regatta (exact date).
+ * A short or non-ranking Silver regatta still counts. It does not count as a
+ * ranking start for staying in the fleet. Gold entry stays admin half-boundary only.
  */
 
 import { toYmd } from "@/lib/datesSg";
-import { regattaCountsForRanking } from "@/lib/ranking";
 
 export type ResultRegattaLink = {
   sailorId: string;
@@ -15,8 +15,7 @@ export type ResultRegattaLink = {
   boatClass?: string | null;
 };
 
-function isOptimistSeriesLink(l: ResultRegattaLink): boolean {
-  if (!regattaCountsForRanking(l)) return false;
+function isOptimistFleetLink(l: ResultRegattaLink): boolean {
   const bc = String(l.boatClass || "Optimist")
     .trim()
     .toLowerCase();
@@ -29,9 +28,9 @@ function isOptimistSeriesLink(l: ResultRegattaLink): boolean {
 }
 
 /**
- * Earliest Silver ranking regatta date for a sailor (YYYY-MM-DD), or null.
- * Division must be Silver (not Gold; Both excluded by default).
- * Optimist ranking only — ILCA 4 / other classes ignored.
+ * Earliest Silver fleet regatta date for a sailor (YYYY-MM-DD), or null.
+ * Division must be Silver (not Gold; Both excluded). A known race count under 3
+ * still counts. Optimist only — ILCA 4 / other classes ignored.
  */
 export function deriveSilverEntryYmd(
   links: ResultRegattaLink[],
@@ -40,7 +39,7 @@ export function deriveSilverEntryYmd(
   let earliest: string | null = null;
   for (const l of links) {
     if (l.sailorId !== sailorId) continue;
-    if (!isOptimistSeriesLink(l)) continue;
+    if (!isOptimistFleetLink(l)) continue;
     const div = String(l.division || "Gold").trim().toLowerCase();
     if (div !== "silver") continue;
     const d = toYmd(l.regattaDate);
@@ -58,7 +57,7 @@ export function deriveAllSilverEntryDates(
 ): Map<string, string> {
   const map = new Map<string, string>();
   for (const l of links) {
-    if (!isOptimistSeriesLink(l)) continue;
+    if (!isOptimistFleetLink(l)) continue;
     const div = String(l.division || "Gold").trim().toLowerCase();
     if (div !== "silver") continue;
     const d = toYmd(l.regattaDate);

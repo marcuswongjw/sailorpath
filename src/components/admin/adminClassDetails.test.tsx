@@ -111,6 +111,60 @@ describe("AdminResultsPanel", () => {
     expect(screen.queryByText(/official race finishes/i)).not.toBeInTheDocument();
     expect(screen.queryByTitle(/individual race finishes/i)).not.toBeInTheDocument();
   });
+
+  it("flags a blank nett DNS in last place for the admin", () => {
+    const results: ResultAdmin[] = [
+      {
+        id: "winner",
+        sailorId: "sailor-1",
+        regattaId: "class-1",
+        rank: 1,
+        nettScore: 8,
+        isDns: false,
+      },
+      {
+        id: "blank",
+        sailorId: "sailor-2",
+        regattaId: "class-1",
+        rank: 11,
+        nettScore: null,
+        isDns: true,
+      },
+    ];
+
+    render(
+      <AdminResultsPanel
+        embedded
+        isSuperadmin
+        sailorList={[
+          { id: "sailor-1", name: "Ian Goh", sailNumber: "222713", gender: "M" } as SailorAdmin,
+          { id: "sailor-2", name: "Ben Tan", sailNumber: "111", gender: "M" } as SailorAdmin,
+        ]}
+        regattaList={[saved]}
+        resultsList={results}
+        selectedRegattaIdForResultEdit="class-1"
+        setSelectedRegattaIdForResultEdit={vi.fn()}
+        editingResultId={null}
+        setEditingResultId={vi.fn()}
+        resultForm={{
+          id: "",
+          regattaId: "class-1",
+          sailorId: "",
+          rank: 1,
+          nettScore: "",
+          totalScore: "",
+          isDNS: false,
+          isOverseasCommitment: false,
+        }}
+        setResultForm={vi.fn()}
+        saving={false}
+        handleSaveResult={vi.fn()}
+        handleDeleteResult={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText(/Blank nett to review: Ben Tan/)).toBeInTheDocument();
+  });
 });
 
 describe("useAdminRegattas save snapshot", () => {

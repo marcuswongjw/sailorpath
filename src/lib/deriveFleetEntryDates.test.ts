@@ -25,12 +25,6 @@ describe("deriveSilverEntryYmd", () => {
       countsForRanking: true,
     },
     {
-      sailorId: "a",
-      regattaDate: "2025-06-01",
-      division: "Silver",
-      countsForRanking: false,
-    },
-    {
       sailorId: "b",
       regattaDate: "2026-07-10",
       division: "Silver",
@@ -65,8 +59,30 @@ describe("deriveSilverEntryYmd", () => {
     expect(deriveSilverEntryYmd(links, "a")).toBe("2026-01-20");
   });
 
-  it("ignores non-ranking silver", () => {
-    expect(deriveSilverEntryYmd(links, "a")).not.toBe("2025-06-01");
+  it("logs a short Silver regatta as the first Silver fleet date", () => {
+    expect(
+      deriveSilverEntryYmd(
+        [
+          {
+            sailorId: "a",
+            regattaDate: "2025-06-01",
+            division: "Silver",
+            countsForRanking: false,
+            raceCount: 2,
+            boatClass: "Optimist",
+          },
+          {
+            sailorId: "a",
+            regattaDate: "2026-01-20",
+            division: "Silver",
+            countsForRanking: true,
+            raceCount: 6,
+            boatClass: "Optimist",
+          },
+        ],
+        "a"
+      )
+    ).toBe("2025-06-01");
   });
 
   it("maps all sailors", () => {

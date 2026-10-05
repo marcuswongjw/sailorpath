@@ -36,6 +36,7 @@ import {
 } from "@/components/admin/adminForms";
 import { AdminEmptyState } from "@/components/admin/AdminEmptyState";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
+import { blankNettWouldShowAsWin } from "@/lib/restoreFinisherRank";
 
 
 export type { ResultFormState };
@@ -206,6 +207,22 @@ export function AdminResultsPanel({
     sailorFilter,
     sailorById,
   ]);
+
+  const blankNettReview = useMemo(() => {
+    const onSheet = resultsList.filter(
+      (res) => res.regattaId === selectedRegattaIdForResultEdit
+    );
+    return blankNettWouldShowAsWin(
+      onSheet.map((res) => ({
+        ...res,
+        isDns: Boolean(res.isDns || res.isDNS),
+      }))
+    );
+  }, [resultsList, selectedRegattaIdForResultEdit]);
+  const blankNettReviewIds = useMemo(
+    () => new Set(blankNettReview.map((row) => row.id)),
+    [blankNettReview]
+  );
 
   const eventResultCount = useMemo(
     () =>
@@ -730,6 +747,16 @@ export function AdminResultsPanel({
               </span>
             )}
           </p>
+          {blankNettReview.length > 0 && (
+            <p className="px-3 sm:px-6 py-2.5 text-[13px] font-semibold text-amber-950 bg-amber-50 border-b border-amber-200">
+              Blank nett to review:{" "}
+              {blankNettReview
+                .map((row) => sailorById.get(row.sailorId)?.name || "A sailor")
+                .join(", ")}
+              . The saved place stays DNS in last. Enter the nett score. The
+              results page does not show this as 1st.
+            </p>
+          )}
 
           <div className="overflow-x-auto max-w-full -mx-1 px-1">
             <table className="w-full text-left border-collapse text-xs min-w-[720px]">
@@ -906,7 +933,9 @@ export function AdminResultsPanel({
                         <tr
                           key={res.id}
                           className={`hover:bg-white/[0.03] transition-colors ${
-                        overseas
+                        blankNettReviewIds.has(res.id)
+                          ? "bg-amber-50"
+                          : overseas
                           ? "bg-sky-500/[0.04]"
                           : dns
                             ? "bg-rose-500/[0.03]"

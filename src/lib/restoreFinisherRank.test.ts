@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  blankNettWouldShowAsWin,
   restoreBestNettHiddenAsDns,
   restoreBestNettHiddenAsDnsByRegatta,
 } from "./restoreFinisherRank";
@@ -17,6 +18,15 @@ describe("restoreBestNettHiddenAsDns", () => {
       ["Lucas", 2, false],
       ["Yuk Jun", 3, false],
     ]);
+  });
+
+  it("leaves a last-place DNS with a blank nett in place and flags it", () => {
+    const rows = [
+      { name: "Winner", rank: 1, nettScore: 8, isDns: false },
+      { name: "Ben", rank: 11, nettScore: null, isDns: true },
+    ];
+    expect(restoreBestNettHiddenAsDns(rows)).toEqual(rows);
+    expect(blankNettWouldShowAsWin(rows).map((row) => row.name)).toEqual(["Ben"]);
   });
 
   it("leaves a real last-place DNS sailor in place", () => {
