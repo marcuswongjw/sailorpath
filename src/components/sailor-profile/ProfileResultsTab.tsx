@@ -17,6 +17,7 @@ import type { JourneyDraft } from "./ProfileJourneyPanel";
 export type ProfileResultsTabProps = {
   cardClass: string;
   resultsTab: string;
+  resultsTitle?: string;
   dualClass: boolean;
   activeResultsList: ProfileResult[];
   visibleResults: ProfileResult[];
@@ -81,6 +82,7 @@ export type ProfileResultsTabProps = {
 export function ProfileResultsTab({
   cardClass,
   resultsTab,
+  resultsTitle,
   dualClass,
   activeResultsList,
   visibleResults,
@@ -137,11 +139,13 @@ export function ProfileResultsTab({
             <h2 className="text-[12px] font-bold uppercase tracking-[0.14em] text-slate-soft">
               {resultsTab === "journey"
                 ? "Sailing journey"
-                : dualClass && resultsTab === "ilca4"
-                  ? "Regatta results · ILCA 4"
-                  : dualClass && resultsTab === "optimist"
-                    ? "Regatta results · Optimist"
-                    : "Regatta results"}
+                : resultsTitle
+                  ? resultsTitle
+                  : dualClass && resultsTab === "ilca4"
+                    ? "Regatta results · ILCA 4"
+                    : dualClass && resultsTab === "optimist"
+                      ? "Regatta results · Optimist"
+                      : "Regatta results"}
             </h2>
             {resultsTab !== "journey" && (
             <p className="text-[13px] text-slate-soft mt-1 font-medium">

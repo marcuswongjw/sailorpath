@@ -131,14 +131,13 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     preferIlcaFirst,
     fleetBadge,
     analytics,
-    awards,
-    heroMedals,
     bornYear,
     showFullDob,
     fullDobLabel,
     optimistResults,
     ilca4Results,
     hasIlcaResults,
+    hasOptimistResults,
     dualClass,
     showOptimistScopeFilter,
     ilca4Tenure,
@@ -154,6 +153,13 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     activeStanding,
     standingIsIlca,
     activeBoatClass,
+    onBoardClass,
+    boardSummary,
+    classChoices,
+    hasBoardResults,
+    selectedClassLabel,
+    visibleAwards,
+    displayMedals,
     showEquipmentSection,
     trendPoints,
     trendMode,
@@ -263,7 +269,14 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           setShowAllResults(false);
         }}
         onViewAwards={() => setSectionTab("awards")}
-        medals={heroMedals}
+        medals={displayMedals}
+        classChoices={hasBoardResults ? classChoices : undefined}
+        selectedClassId={resultsTab}
+        onSelectClass={(cls) => {
+          setResultsTab(cls as typeof resultsTab);
+          setShowAllResults(false);
+        }}
+        boardSummary={boardSummary}
         profileClaimed={profileClaimed}
         profileVerified={profileVerified}
         showUnclaimedBanner={showUnclaimedBanner}
@@ -329,9 +342,20 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         optimistCount={optimistResults.length}
         ilcaCount={ilca4Results.length}
         journeyCount={displayJourney.length}
-        awardsCount={awards.length}
+        awardsCount={visibleAwards.length}
+        resultsCount={
+          onBoardClass
+            ? activeResultsList.length
+            : resultsTab === "ilca4"
+              ? ilca4Results.length
+              : optimistResults.length
+        }
         showStanding={Boolean(activeStanding)}
-        showEquipment={showEquipmentSection || !isOwner}
+        showEquipment={
+          hasBoardResults && !hasOptimistResults && !hasIlcaResults
+            ? showEquipmentSection
+            : showEquipmentSection || !isOwner
+        }
         showMilestones={displayJourney.length > 0 || ownerView}
         onTabChange={(tab) => {
           setResultsTab(tab);
@@ -359,6 +383,8 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           trendCaption={trendCaption}
           activeResultsList={activeResultsList}
           primaryIsIlca={primaryIsIlca}
+          classLabel={onBoardClass ? selectedClassLabel : undefined}
+          hideStanding={onBoardClass}
           onNavigateTab={(tab) => setSectionTab(tab as ProfileSectionTab)}
         />
       )}
@@ -368,6 +394,9 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         <ProfileResultsTab
           cardClass={cardClass}
           resultsTab={resultsTab}
+          resultsTitle={
+            onBoardClass ? `Regatta results · ${selectedClassLabel}` : undefined
+          }
           dualClass={dualClass}
           activeResultsList={activeResultsList}
           visibleResults={visibleResults}
@@ -388,7 +417,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
           demoMode={demoMode}
           demoRole={demoRole}
           sailorId={initialSailor.id}
-          awards={awards}
+          awards={visibleAwards}
           showEquipment={showEquipment}
           gearByRegatta={gearByRegatta}
           goldEntryDate={analytics.goldEntryDate}
@@ -437,7 +466,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
       {sectionTab === "awards" && (
         <div id="profile-awards-tab" className="scroll-mt-28">
           <ProfileAwardsCabinet
-            awards={awards}
+            awards={visibleAwards}
             sailorName={displaySailor.name}
             isOwner={ownerView}
           />

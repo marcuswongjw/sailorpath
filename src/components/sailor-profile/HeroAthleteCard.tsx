@@ -35,6 +35,25 @@ export interface HeroAthleteCardProps {
   dualClass?: boolean;
   selectedBoatClass?: "optimist" | "ilca4";
   onSelectBoatClass?: (cls: "optimist" | "ilca4") => void;
+  /**
+   * Classes that actually have results. When set, this replaces the
+   * Optimist / ILCA selector, including board disciplines.
+   */
+  classChoices?: Array<{ id: string; label: string; count: number }>;
+  selectedClassId?: string;
+  onSelectClass?: (id: string) => void;
+  /**
+   * Board-class summary. Replaces rank and the Status card.
+   * Absent national rank is left off rather than invented.
+   */
+  boardSummary?: {
+    label: string;
+    seasonYear: number;
+    seasonEventCount: number;
+    bestFinishLabel: string | null;
+    bestFinishEvent: string | null;
+    sharedDivision?: string | null;
+  } | null;
   optimistCount?: number;
   ilcaCount?: number;
   /** Put ILCA 4 first when that is the sailor’s primary class. */
@@ -101,6 +120,10 @@ export function HeroAthleteCard({
   dualClass = false,
   selectedBoatClass = "optimist",
   onSelectBoatClass,
+  classChoices,
+  selectedClassId,
+  onSelectClass,
+  boardSummary = null,
   optimistCount,
   ilcaCount,
   preferIlcaFirst = false,
@@ -165,9 +188,23 @@ export function HeroAthleteCard({
           ["ilca4", "ILCA 4", resolvedIlcaCount],
         ]
   ) as Array<["optimist" | "ilca4", string, number]>;
-  const singleClass =
-    classOptions.find((option) => option[0] === activeBoatClass) ??
-    classOptions[0];
+  const displayChoices = classChoices?.length
+    ? classChoices
+    : classOptions.map(([id, label, count]) => ({ id, label, count }));
+  const selectedChoice =
+    displayChoices.find((choice) =>
+      choice.id === (classChoices?.length ? selectedClassId : activeBoatClass)
+    ) ?? displayChoices[0];
+  const showClassSelector = classChoices?.length
+    ? classChoices.length > 1 && Boolean(onSelectClass)
+    : Boolean(dualClass && onSelectBoatClass);
+  const fallbackCount =
+    activeBoatClass === "ilca4" ? resolvedIlcaCount : resolvedOptimistCount;
+  const singleClass: [string, string, number] = [
+    selectedChoice?.id ?? activeBoatClass,
+    selectedChoice?.label ?? (activeBoatClass === "ilca4" ? "ILCA 4" : "Optimist"),
+    selectedChoice?.count ?? fallbackCount,
+  ];
 
   const awardTotal = medals
     ? medals.gold + medals.silver + medals.bronze
@@ -176,9 +213,8 @@ export function HeroAthleteCard({
     medals && medals.gold > 0 ? `${medals.gold} gold` : null,
     medals && medals.silver > 0 ? `${medals.silver} silver` : null,
     medals && medals.bronze > 0 ? `${medals.bronze} bronze` : null,
-  ].filter(Boolean);
-  const classRegattaCount =
-    activeBoatClass === "ilca4" ? resolvedIlcaCount : resolvedOptimistCount;
+  ].filter((part): part is string => Boolean(part));
+  const classRegattaCount = fallbackCount;
   const dropped = fleetBadge.label === "Dropped";
   const statusTitle = dropped ? "Dropped" : "Active competitor";
   const statusDetail =
@@ -287,7 +323,7 @@ export function HeroAthleteCard({
                   {displaySailor.name}
                 </h1>
 
-                {resolvedNatSquad && (
+                {!boardSummary && resolvedNatSquad && (
                   <span
                     className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[13px] font-bold ${natSquadBadgeClass(
                       resolvedNatSquad
@@ -329,8 +365,9 @@ export function HeroAthleteCard({
                     parts.push(<span key={key}>{node}</span>);
                   };
 
-                  // Optimist Sail Number
+                  // Optimist sail stays off a board-class view.
                   if (
+                    !boardSummary &&
                     !leftOptimistYear &&
                     sailDisplay &&
                     sailDisplay !== "—" &&
@@ -346,8 +383,8 @@ export function HeroAthleteCard({
                     );
                   }
 
-                  // ILCA Sail Number
-                  if (sailIlca4) {
+                  // ILCA sail stays off a board-class view.
+                  if (!boardSummary && sailIlca4) {
                     push(
                       <span className="tabular-nums font-bold text-harbour">
                         ILCA{" "}
@@ -434,7 +471,9 @@ export function HeroAthleteCard({
                   }
 
                   // Drop label
-                  const dropYmd = displaySailor.dropDate
+                  const dropYmd = boardSummary
+                    ? ""
+                    : displaySailor.dropDate
                     ? String(displaySailor.dropDate).slice(0, 10)
                     : "";
                   if (/^\d{4}-\d{2}-\d{2}$/.test(dropYmd)) {
@@ -467,31 +506,36 @@ export function HeroAthleteCard({
           </div>
 
           <div className="w-full sm:w-auto shrink-0 sm:pt-1">
-            {dualClass && onSelectBoatClass ? (
+            {showClassSelector ? (
               <div
                 className="flex rounded-xl bg-sailcloth border border-cool-veil p-1 w-full sm:w-auto"
                 role="tablist"
                 aria-label="Sailing class"
               >
-                {classOptions.map(([id, label, count]) => {
-                  const selected = activeBoatClass === id;
+                {displayChoices.map((choice) => {
+                  const selected = choice.id === singleClass[0];
                   return (
                     <button
-                      key={id}
+                      key={choice.id}
                       type="button"
                       role="tab"
                       aria-selected={selected}
-                      onClick={() => onSelectBoatClass(id)}
-                      aria-label={`${label}, ${count} regattas`}
+                      onClick={() => {
+                        if (classChoices?.length) onSelectClass?.(choice.id);
+                        else if (choice.id === "optimist" || choice.id === "ilca4") {
+                          onSelectBoatClass?.(choice.id);
+                        }
+                      }}
+                      aria-label={`${choice.label}, ${choice.count} regattas`}
                       className={`flex-1 sm:flex-none rounded-lg px-3 py-2 text-[13px] font-bold transition min-h-[40px] ${
                         selected
                           ? "bg-harbour text-sailcloth shadow-xs"
                           : "text-slate-soft hover:text-charcoal"
                       }`}
                     >
-                      {label}
+                      {choice.label}
                       <span className="mx-1.5">·</span>
-                      <span className="tabular-nums">{count}</span>
+                      <span className="tabular-nums">{choice.count}</span>
                     </button>
                   );
                 })}
@@ -507,6 +551,11 @@ export function HeroAthleteCard({
                 <span className="sr-only"> regattas</span>
               </p>
             )}
+            {boardSummary?.sharedDivision && (
+              <p className="mt-1 text-[12px] font-semibold text-slate-soft sm:text-right">
+                {boardSummary.sharedDivision}
+              </p>
+            )}
           </div>
         </div>
 
@@ -518,6 +567,15 @@ export function HeroAthleteCard({
         )}
 
         <div className="space-y-2.5 pt-1">
+          {boardSummary ? (
+            <BoardSummaryCards
+              summary={boardSummary}
+              awardTotal={awardTotal}
+              awardParts={awardParts}
+              onViewAwards={onViewAwards}
+            />
+          ) : (
+          <>
           <div className="rounded-2xl border border-cool-veil bg-sailcloth/70 p-4 sm:p-5">
             <div className="flex items-center justify-between gap-3 text-slate-soft text-[12px] font-bold uppercase tracking-wider">
               <span>
@@ -633,6 +691,8 @@ export function HeroAthleteCard({
               </div>
             )}
           </div>
+          </>
+          )}
         </div>
 
         {/* Action Toolbar */}
@@ -773,5 +833,81 @@ export function HeroAthleteCard({
         )}
       </div>
     </header>
+  );
+}
+
+function BoardSummaryCards({
+  summary,
+  awardTotal,
+  awardParts,
+  onViewAwards,
+}: {
+  summary: NonNullable<HeroAthleteCardProps["boardSummary"]>;
+  awardTotal: number;
+  awardParts: string[];
+  onViewAwards?: () => void;
+}) {
+  return (
+    <div className="flex flex-col gap-2.5">
+      <div className="rounded-2xl border border-cool-veil bg-sailcloth/70 p-4 sm:p-5">
+        <div className="flex items-center justify-between gap-3 text-slate-soft text-[12px] font-bold uppercase tracking-wider">
+          <span>Best finish</span>
+          <Trophy className="h-4 w-4 text-harbour" />
+        </div>
+        {summary.bestFinishLabel ? (
+          <>
+            <p className="mt-2 text-4xl sm:text-5xl font-black tabular-nums tracking-tight text-harbour-shadow">
+              {summary.bestFinishLabel}
+            </p>
+            {summary.bestFinishEvent && (
+              <p className="mt-2 text-[13px] font-medium text-slate-soft">
+                {summary.bestFinishEvent}
+              </p>
+            )}
+          </>
+        ) : (
+          <p className="mt-3 text-[15px] font-semibold text-charcoal leading-snug">
+            No recorded finish yet.
+          </p>
+        )}
+      </div>
+
+      <div
+        className={`grid grid-cols-1 gap-2.5 ${
+          awardTotal > 0 ? "sm:grid-cols-2" : ""
+        }`}
+      >
+        <div className="rounded-xl border border-cool-veil bg-warm-white p-3.5">
+          <p className="text-slate-soft text-[11px] font-bold uppercase tracking-wider">
+            Season events
+          </p>
+          <p className="mt-1.5 text-2xl font-black text-harbour-shadow tabular-nums leading-tight">
+            {summary.seasonEventCount}
+          </p>
+          <p className="mt-1 text-[13px] font-medium text-slate-soft">
+            {summary.seasonYear} {summary.label}
+          </p>
+        </div>
+
+        {awardTotal > 0 && (
+          <button
+            type="button"
+            onClick={() => onViewAwards?.()}
+            className="rounded-xl border border-cool-veil bg-warm-white p-3.5 text-left hover:border-harbour/30 hover:bg-aqua-mist/40 transition-colors"
+          >
+            <div className="flex items-center justify-between text-slate-soft text-[11px] font-bold uppercase tracking-wider">
+              <span>Career awards</span>
+              <Medal className="h-3.5 w-3.5 text-racing-orange" />
+            </div>
+            <p className="mt-1.5 text-2xl font-black text-harbour-shadow tabular-nums leading-tight">
+              {awardTotal}
+            </p>
+            <p className="mt-1 text-[13px] font-medium text-slate-soft truncate">
+              {awardParts.join(" · ")}
+            </p>
+          </button>
+        )}
+      </div>
+    </div>
   );
 }

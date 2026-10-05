@@ -24,6 +24,15 @@ import {
   type ProfileResult,
 } from "@/lib/profileAnalytics";
 import {
+  boardDisciplineOf,
+  disciplineLabel,
+  isBoardDiscipline,
+  pickInitialProfileClass,
+  summarizeBoardClass,
+  type BoardDiscipline,
+  type ProfileDiscipline,
+} from "@/lib/boardProfile";
+import {
   PROFILE_CARD_CLASS as cardClass,
   resolveDisplayFleet,
   formatFullDob,
@@ -143,9 +152,13 @@ export function useSailorProfileState({
   const [showAllResults, setShowAllResults] = useState(false);
   /** Established Gold: default Gold-only results; allow All Optimist */
   const [optimistScope, setOptimistScope] = useState<"gold" | "all">("gold");
-  /** Dual-class profiles: Optimist · ILCA 4 · Journey */
-  const [resultsTab, setResultsTab] = useState<"optimist" | "ilca4" | "journey">(
+  /** Class the profile is showing. Board classes stay out of the Optimist default. */
+  const [resultsTab, setResultsTab] = useState<ProfileDiscipline | "journey">(
     () => {
+      const fromResults = pickInitialProfileClass(
+        initialResults as ProfileResult[]
+      );
+      if (fromResults) return fromResults;
       const prefer = prefersIlcaFirstProfile({
         dropDate: initialSailor.dropDate as string | null | undefined,
         dob: initialSailor.dob as string | null | undefined,
@@ -658,17 +671,28 @@ export function useSailorProfileState({
     const all = results as ProfileResult[];
     const optimist: ProfileResult[] = [];
     const ilca4: ProfileResult[] = [];
+    const boards: Record<BoardDiscipline, ProfileResult[]> = {
+      techno293: [],
+      wingfoil: [],
+      iqfoil: [],
+      windsurfing: [],
+    };
     for (const r of all) {
+      const board = boardDisciplineOf(r.boatClass);
+      if (board) {
+        boards[board].push(r);
+        continue;
+      }
       const g = profileBoatClassGroup(r.boatClass);
       if (g === "ilca4") ilca4.push(r);
       else if (g === "optimist") optimist.push(r);
-      // "other" ignored for class tabs
     }
     const byDate = (a: ProfileResult, b: ProfileResult) =>
       String(b.regattaDate || "").localeCompare(String(a.regattaDate || ""));
     optimist.sort(byDate);
     ilca4.sort(byDate);
-    return { optimist, ilca4 };
+    for (const list of Object.values(boards)) list.sort(byDate);
+    return { optimist, ilca4, boards };
   }, [results]);
 
   const leftOptimistYear = optimistLeftYear({
@@ -757,8 +781,47 @@ export function useSailorProfileState({
   const hasIlcaResults = ilca4Results.length > 0;
   const hasOptimistResults =
     optimistResultsAll.length > 0 || optimistResultsGold.length > 0;
+  const onBoardClass = isBoardDiscipline(resultsTab);
+  const activeBoardResults = useMemo(
+    () => (onBoardClass ? classBuckets.boards[resultsTab] : []),
+    [onBoardClass, classBuckets.boards, resultsTab]
+  );
+  const boardSummary = onBoardClass
+    ? summarizeBoardClass(resultsTab, activeBoardResults)
+    : null;
+  const classChoices = useMemo(() => {
+    const choices: { id: ProfileDiscipline; label: string; count: number }[] = [];
+    for (const discipline of ["techno293", "wingfoil", "iqfoil", "windsurfing"] as const) {
+      const list = classBuckets.boards[discipline];
+      if (!list.length) continue;
+      choices.push({
+        id: discipline,
+        label: summarizeBoardClass(discipline, list).label,
+        count: list.length,
+      });
+    }
+    if (optimistResultsAll.length > 0) {
+      choices.push({
+        id: "optimist",
+        label: "Optimist",
+        count: optimistResultsAll.length,
+      });
+    }
+    if (ilca4Results.length > 0) {
+      choices.push({
+        id: "ilca4",
+        label: "ILCA 4",
+        count: ilca4Results.length,
+      });
+    }
+    return choices;
+  }, [classBuckets.boards, optimistResultsAll.length, ilca4Results]);
+  const hasBoardResults = classChoices.some((choice) =>
+    isBoardDiscipline(choice.id)
+  );
   const dualClass = hasIlcaResults && optimistResultsAll.length > 0;
   const showOptimistScopeFilter =
+    !onBoardClass &&
     analytics.mode === "established_gold" &&
     resultsTab !== "ilca4" &&
     resultsTab !== "journey" &&
@@ -822,9 +885,10 @@ export function useSailorProfileState({
     );
   }, [optimistResults, initialSeriesStanding]);
 
-  /** Active class list for the results panel (tabs when dual-class) */
-  const activeResultsList =
-    dualClass && resultsTab === "ilca4"
+  /** Active class list for the results panel (tabs when more than one class) */
+  const activeResultsList = onBoardClass
+    ? activeBoardResults
+    : dualClass && resultsTab === "ilca4"
       ? ilca4Results
       : dualClass && resultsTab === "journey"
         ? []
@@ -843,9 +907,10 @@ export function useSailorProfileState({
     ).length ?? 0;
   /** Showing ILCA columns (points + rank) vs Optimist (place + nett) */
   const primaryIsIlca =
-    (dualClass && resultsTab === "ilca4") ||
-    (!dualClass && hasIlcaResults && classBuckets.optimist.length === 0) ||
-    (dualClass && preferIlcaFirst && resultsTab === "ilca4");
+    !onBoardClass &&
+    ((dualClass && resultsTab === "ilca4") ||
+      (!dualClass && hasIlcaResults && classBuckets.optimist.length === 0) ||
+      (dualClass && preferIlcaFirst && resultsTab === "ilca4"));
 
   const sailDisplay = String(displaySailor.sailNumber || "—");
   const sailIlca4 = displaySailor.sailNumberIlca4
@@ -876,9 +941,10 @@ export function useSailorProfileState({
    * - ILCA-first after leaving Optimist
    */
   const useIlcaStats =
-    (hasIlcaResults && classBuckets.optimist.length === 0) ||
-    (hasIlcaResults && dualClass && resultsTab === "ilca4") ||
-    (preferIlcaFirst && hasIlcaResults && !hasOptimistResults);
+    !onBoardClass &&
+    ((hasIlcaResults && classBuckets.optimist.length === 0) ||
+      (hasIlcaResults && dualClass && resultsTab === "ilca4") ||
+      (preferIlcaFirst && hasIlcaResults && !hasOptimistResults));
 
   const ilcaStatCells =
     leftOptimistYear != null
@@ -1029,14 +1095,39 @@ export function useSailorProfileState({
           .includes("open"))
   );
   const standingIsIlca = Boolean(useIlcaStats && standingLooksIlca);
-  const activeStanding = useIlcaStats
-    ? standingIsIlca
-      ? initialIlcaStanding ?? null
-      : null
-    : initialSeriesStanding ?? null;
+  const activeStanding = onBoardClass
+    ? null
+    : useIlcaStats
+      ? standingIsIlca
+        ? initialIlcaStanding ?? null
+        : null
+      : initialSeriesStanding ?? null;
   const activeBoatClass: "optimist" | "ilca4" = useIlcaStats
     ? "ilca4"
     : "optimist";
+  const selectedClassLabel = onBoardClass
+    ? boardSummary?.label || disciplineLabel(resultsTab)
+    : activeBoatClass === "ilca4"
+      ? "ILCA 4"
+      : "Optimist";
+  const visibleAwards = useMemo(() => {
+    if (!onBoardClass) return awards;
+    return awards.filter(
+      (award) => boardDisciplineOf(award.boatClass) === resultsTab
+    );
+  }, [awards, onBoardClass, resultsTab]);
+  const displayMedals = useMemo(() => {
+    if (!onBoardClass) return heroMedals;
+    const gold = visibleAwards.filter((award) => award.medal === "gold").length;
+    const silver = visibleAwards.filter((award) => award.medal === "silver").length;
+    const bronze = visibleAwards.filter((award) => award.medal === "bronze").length;
+    return {
+      gold,
+      silver,
+      bronze,
+      show: gold + silver + bronze > 0,
+    };
+  }, [onBoardClass, heroMedals, visibleAwards]);
 
   /** Equipment stays family/owner-private (never on public / preview-public). */
   const showEquipmentSection = ownerView || hasPrivateAccess;
@@ -1047,7 +1138,11 @@ export function useSailorProfileState({
     [ilca4Results]
   );
   const showIlcaTrend =
-    primaryIsIlca || (dualClass && resultsTab === "ilca4");
+    !onBoardClass && (primaryIsIlca || (dualClass && resultsTab === "ilca4"));
+  const boardTrendPoints = useMemo(
+    () => (onBoardClass ? buildIlcaPositionTrend(activeBoardResults) : []),
+    [onBoardClass, activeBoardResults]
+  );
   /** Merge series-standing DNS (missed ranking events) into Optimist trend. */
   const optimistTrendPoints = useMemo(() => {
     const standing = initialSeriesStanding;
@@ -1062,14 +1157,20 @@ export function useSailorProfileState({
       fleet
     );
   }, [analytics.trend, initialSeriesStanding]);
-  const trendPoints = showIlcaTrend ? ilcaTrendPoints : optimistTrendPoints;
-  const trendMode = showIlcaTrend ? ("other" as const) : analytics.mode;
-  const trendGoldEntry = showIlcaTrend ? null : analytics.goldEntryDate;
-  const trendCaption = showIlcaTrend
-    ? " · last 10 ILCA 4 regattas"
-    : analytics.mode === "established_gold"
-      ? " · last 10 gold events"
-      : " · last 10 regattas (incl. DNS)";
+  const trendPoints = onBoardClass
+    ? boardTrendPoints
+    : showIlcaTrend
+      ? ilcaTrendPoints
+      : optimistTrendPoints;
+  const trendMode = onBoardClass || showIlcaTrend ? ("other" as const) : analytics.mode;
+  const trendGoldEntry = onBoardClass || showIlcaTrend ? null : analytics.goldEntryDate;
+  const trendCaption = onBoardClass
+    ? ` · last 10 ${selectedClassLabel} events`
+    : showIlcaTrend
+      ? " · last 10 ILCA 4 regattas"
+      : analytics.mode === "established_gold"
+        ? " · last 10 gold events"
+        : " · last 10 regattas (incl. DNS)";
 
   // System + owner journey milestones (Optimist + ILCA results for first ILCA 4)
   const displayJourney = useMemo(() => {
@@ -1233,6 +1334,13 @@ export function useSailorProfileState({
     activeStanding,
     standingIsIlca,
     activeBoatClass,
+    onBoardClass,
+    boardSummary,
+    classChoices,
+    hasBoardResults,
+    selectedClassLabel,
+    visibleAwards,
+    displayMedals,
     showEquipmentSection,
     ilcaTrendPoints,
     showIlcaTrend,
