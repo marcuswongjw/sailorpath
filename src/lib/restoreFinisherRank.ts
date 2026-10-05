@@ -1,6 +1,6 @@
 type FinishRow = {
   rank: number;
-  nettScore: number | null;
+  nettScore?: number | null;
   isDns: boolean;
   isOverseasCommitment?: boolean | null;
 };
