@@ -298,9 +298,8 @@ function fuzzyCandidates(
 }
 
 /**
- * Result of a sailor lookup. A fuzzy tie between two or more DISTINCT
- * candidates at the same top score is reported as `ambiguous` instead of
- * silently picking the first candidate.
+ * Result of a sailor lookup. Fuzzy names are not returned here.
+ * suggestSailorByName is the confirmation path for a near match.
  */
 export type SailorMatchHit =
   | { sailor: SailorMatchRow; how: string; candidates?: undefined }
@@ -311,14 +310,15 @@ export type SailorMatchHit =
       similarity: number;
     };
 
-/** Similarity at or above which a fuzzy match may auto-link. */
+/** Similarity at or above which a fuzzy name is a suggestion, not an automatic link. */
 export const FUZZY_AUTO_MATCH_THRESHOLD = 0.75;
 
 /**
- * Find best sailor for a raw import name.
+ * Find a sailor for a raw import name.
  * Pass a `SailorNameIndex` from `buildSailorNameIndex` for batch imports.
- * 1) exact  2) case-insensitive  3) token-order key  4) high token overlap
- * Pure containment (subset names) never auto-matches — suggestion only.
+ * 1) exact  2) case-insensitive  3) token-order key
+ * Fuzzy overlap, including scores at or above FUZZY_AUTO_MATCH_THRESHOLD,
+ * is a suggestion only. Call suggestSailorByName for that.
  */
 export function findSailorByName(
   rawName: string,
@@ -356,33 +356,6 @@ export function findSailorByName(
   if (byCase) return { sailor: byCase, how: "case" };
   const byTok = index.byTokenKey.get(key);
   if (byTok) return { sailor: byTok, how: "tokens" };
-
-  let best: SailorMatchRow | null = null;
-  let bestSim = 0;
-  const tied: SailorMatchRow[] = [];
-  for (const s of fuzzyCandidates(index, raw)) {
-    const sim = combinedNameSimilarity(raw, s.name);
-    if (sim > bestSim) {
-      bestSim = sim;
-      best = s;
-      tied.length = 0;
-    } else if (best && sim === bestSim && s.id !== best.id) {
-      tied.push(s);
-    }
-  }
-  if (best && bestSim >= FUZZY_AUTO_MATCH_THRESHOLD) {
-    // Two or more DISTINCT candidates clear the threshold with equal top
-    // scores — never silently pick the first; surface the ambiguity.
-    if (tied.length > 0) {
-      return {
-        sailor: null,
-        how: "ambiguous",
-        candidates: [best, ...tied],
-        similarity: bestSim,
-      };
-    }
-    return { sailor: best, how: `fuzzy:${bestSim.toFixed(2)}` };
-  }
 
   return null;
 }

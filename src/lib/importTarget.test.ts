@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   NEW_IMPORT_TARGET,
   resolveImportTarget,
+  sailorsKeptOnAuthoritativeReplace,
 } from "@/lib/importTarget";
 
 const first = { id: "event-a", slug: "first-event-2026-01-01" };
@@ -61,5 +62,45 @@ describe("resolveImportTarget", () => {
         selectedId: null,
       })
     ).toEqual({ kind: "target", target: second });
+  });
+
+  it("creates a new class instead of taking another weekend's slug", () => {
+    const otherWeekend = {
+      id: "sheet-a",
+      slug: "pesta-sukan-2026-07-01",
+      eventId: "weekend-a",
+    };
+    expect(
+      resolveImportTarget({
+        sameDay: [otherWeekend],
+        incomingSlug: otherWeekend.slug,
+        slugMatch: otherWeekend,
+        selectedId: NEW_IMPORT_TARGET,
+        requestedEventId: "weekend-b",
+      })
+    ).toEqual({ kind: "new-regatta" });
+  });
+
+  it("updates the class that already belongs to the requested weekend", () => {
+    const thisWeekend = {
+      id: "sheet-b",
+      slug: "pesta-sukan-2026-07-01",
+      eventId: "weekend-b",
+    };
+    expect(
+      resolveImportTarget({
+        sameDay: [thisWeekend],
+        incomingSlug: thisWeekend.slug,
+        slugMatch: thisWeekend,
+        selectedId: NEW_IMPORT_TARGET,
+        requestedEventId: "weekend-b",
+      })
+    ).toEqual({ kind: "target", target: thisWeekend });
+  });
+
+  it("keeps every exact-name profile when replacing a class", () => {
+    expect(
+      sailorsKeptOnAuthoritativeReplace(["chosen"], ["chosen", "sibling"])
+    ).toEqual(["chosen", "sibling"]);
   });
 });

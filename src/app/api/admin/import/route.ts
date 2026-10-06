@@ -18,6 +18,7 @@ import {
   combinedNameSimilarity,
   exactNameMatches,
   findSailorByName,
+  FUZZY_AUTO_MATCH_THRESHOLD,
   isExactNameMatch,
   suggestSailorByName,
 } from "@/lib/nameMatch";
@@ -50,7 +51,11 @@ import { normalizeImportGender } from "@/lib/gender";
 import { birthYear as birthYearFromDob } from "@/lib/age";
 import { MAX_IMPORT_ROWS } from "@/lib/importLimits";
 import { findWithinFileDuplicates, MAX_DUPLICATE_FLAGS } from "@/lib/importDuplicates";
-import { NEW_IMPORT_TARGET, resolveImportTarget } from "@/lib/importTarget";
+import {
+  NEW_IMPORT_TARGET,
+  resolveImportTarget,
+  sailorsKeptOnAuthoritativeReplace,
+} from "@/lib/importTarget";
 import { asPositiveInteger, asRank } from "@/lib/validate";
 
 export type { ImportPossibleDuplicate };
@@ -637,6 +642,11 @@ export async function POST(req: Request) {
         )
       )
       .limit(50);
+    if (requestedEvent) {
+      sameDay = sameDay.filter(
+        (sheet) => sheet.eventId == null || sheet.eventId === requestedEvent.id
+      );
+    }
     if (lockedSheet) sameDay = [lockedSheet];
 
     const [slugMatch] = await db
@@ -650,6 +660,7 @@ export async function POST(req: Request) {
       slugMatch: slugMatch || null,
       selectedId:
         lockedSheet?.id || (createInEvent ? NEW_IMPORT_TARGET : confirmedRegattaId),
+      requestedEventId: requestedEvent?.id ?? null,
     });
     if (targetResolution.kind === "selection-required") {
       return NextResponse.json(
@@ -1029,42 +1040,43 @@ export async function POST(req: Request) {
         const sailMatches = row.sailNumber
           ? sailorsByClassSailNumber.get(row.sailNumber) || []
           : [];
-        const matchedBySailNumber =
-          !matchedByExactName && sailMatches.length === 1;
+        // A unique sail number is not an identity when the name differs.
+        // Linking it used to store the other person's name as an alias.
+        if (
+          !matchedByExactName &&
+          sailMatches.length === 1 &&
+          !isExactNameMatch(row.name, sailMatches[0].name)
+        ) {
+          const other = sailMatches[0];
+          const key = `${row.name.toLowerCase()}|${other.id}|sail`;
+          if (!vsDbSeen.has(key)) {
+            vsDbSeen.add(key);
+            const sim = combinedNameSimilarity(row.name, other.name);
+            possibleDuplicates.push({
+              kind: "vs-db",
+              importName: row.name,
+              otherName: other.name,
+              otherId: other.id,
+              similarity: Math.round(sim * 100) / 100,
+              band: sim >= 0.8 ? "high" : "medium",
+              note: "Same sail number as an existing sailor with a different name — not linked",
+            });
+          }
+        }
+        const confidentHit =
+          hit?.sailor && !hit.how.startsWith("fuzzy") ? hit.sailor : null;
         let sailorId: string | null = matchedByExactName
           ? chooseCanonicalSailor(exactHits, (id) =>
               latestDateBySailor.has(id)
             ).id
-          : matchedBySailNumber
-            ? sailMatches[0].id
-            : hit?.sailor?.id ?? null;
+          : confidentHit?.id ?? null;
 
         if (matchedByExactName) {
           matchHow["exact-name"] = (matchHow["exact-name"] || 0) + 1;
-        } else if (matchedBySailNumber) {
-          matchHow["sail-number"] = (matchHow["sail-number"] || 0) + 1;
         }
 
-        if (hit?.sailor && !matchedBySailNumber && !matchedByExactName) {
+        if (confidentHit && !matchedByExactName && hit) {
           matchHow[hit.how] = (matchHow[hit.how] || 0) + 1;
-          if (hit.how.startsWith("fuzzy")) {
-            const sim = combinedNameSimilarity(row.name, hit.sailor.name);
-            if (sim >= 0.6 && sim < 1) {
-              const key = `${row.name.toLowerCase()}|${hit.sailor.id}`;
-              if (!vsDbSeen.has(key)) {
-                vsDbSeen.add(key);
-                possibleDuplicates.push({
-                  kind: "vs-db",
-                  importName: row.name,
-                  otherName: hit.sailor.name,
-                  otherId: hit.sailor.id,
-                  similarity: Math.round(sim * 100) / 100,
-                  band: sim >= 0.8 ? "high" : "medium",
-                  note: "Matched to existing sailor via fuzzy name — confirm correct",
-                });
-              }
-            }
-          }
         }
 
         if (!sailorId) {
@@ -1549,6 +1561,7 @@ export async function POST(req: Request) {
                 reviewedAt: ranking === false ? new Date() : target.reviewedAt,
                 raceCount,
                 status: target.status === "draft" ? "published" : (target.status || "published"),
+                eventId: target.eventId ?? createEventId,
                 updatedAt: new Date(),
               })
               .where(eq(regattas.id, target.id))
@@ -1748,8 +1761,19 @@ export async function POST(req: Request) {
           }
 
           if (authoritativeReplace && pendingResults.length) {
-            const keptSailorIds = pendingResults.map(
-              (result) => result.sailorId
+            const exactProfileIds = pendingSourceNames.flatMap((name) =>
+              exactNameMatches(name, nameIndex).map((sailor) => sailor.id)
+            );
+            const suggestedIds = pendingSourceNames.flatMap((name) => {
+              const suggestion = suggestSailorByName(name, beforeImportIndex);
+              return suggestion &&
+                suggestion.similarity >= FUZZY_AUTO_MATCH_THRESHOLD
+                ? [suggestion.id]
+                : [];
+            });
+            const keptSailorIds = sailorsKeptOnAuthoritativeReplace(
+              pendingResults.map((result) => result.sailorId),
+              [...exactProfileIds, ...suggestedIds]
             );
             const removed = await tx
               .delete(regattaResults)

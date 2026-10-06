@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
+  planPreferredResultRaceScores,
   preferredDuplicateResultUpdate,
   SAILOR_RELATIONSHIP_MERGE_PLAN,
   splitSourceRowsByTargetConflict,
@@ -51,6 +52,38 @@ describe("preferredDuplicateResultUpdate", () => {
       totalScore: 18,
       isDns: false,
       isOverseasCommitment: true,
+    });
+  });
+
+  it("keeps the duplicate races when that finish is the one copied across", () => {
+    expect(
+      planPreferredResultRaceScores({
+        sourceWinsPlace: true,
+        sourceScores: [
+          { id: "source-r1", raceNumber: 1 },
+          { id: "source-r2", raceNumber: 2 },
+        ],
+        targetScores: [{ id: "target-r1", raceNumber: 1 }],
+      })
+    ).toEqual({
+      deleteIds: ["target-r1"],
+      moveIds: ["source-r1", "source-r2"],
+    });
+  });
+
+  it("drops only conflicting source races when the survivor place stays", () => {
+    expect(
+      planPreferredResultRaceScores({
+        sourceWinsPlace: false,
+        sourceScores: [
+          { id: "source-r1", raceNumber: 1 },
+          { id: "source-r3", raceNumber: 3 },
+        ],
+        targetScores: [{ id: "target-r1", raceNumber: 1 }],
+      })
+    ).toEqual({
+      deleteIds: ["source-r1"],
+      moveIds: ["source-r3"],
     });
   });
 

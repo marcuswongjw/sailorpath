@@ -6,6 +6,7 @@ import {
   chooseCanonicalSailor,
   exactNameMatches,
   findSailorByName,
+  FUZZY_AUTO_MATCH_THRESHOLD,
   isExactNameMatch,
   nameTokenKey,
   normalizeName,
@@ -66,6 +67,14 @@ describe("findSailorByName", () => {
 
   it("returns null when nothing close enough", () => {
     expect(findSailorByName("Completely Different Person", sailors)).toBeNull();
+  });
+
+  it("does not auto-link a fuzzy name at the suggestion threshold", () => {
+    expect(
+      combinedNameSimilarity("Mikaela Tann", "Mikaela Tan")
+    ).toBeGreaterThanOrEqual(FUZZY_AUTO_MATCH_THRESHOLD);
+    expect(findSailorByName("Mikaela Tann", sailors)).toBeNull();
+    expect(suggestSailorByName("Mikaela Tann", sailors)?.id).toBe("2");
   });
 
   it("matches via prebuilt index (same results as array)", () => {

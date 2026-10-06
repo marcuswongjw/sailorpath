@@ -122,6 +122,31 @@ export function preferredDuplicateResultUpdate(
   return null;
 }
 
+/**
+ * Race scores that should survive a duplicate merge.
+ * When the duplicate has the better place, keep that result's races and drop
+ * the survivor's races, so the copied nett still matches the score sheet.
+ * Otherwise the survivor's races stay and only non-conflicting source races move.
+ */
+export function planPreferredResultRaceScores(args: {
+  sourceWinsPlace: boolean;
+  sourceScores: readonly { id: string; raceNumber: number | string }[];
+  targetScores: readonly { id: string; raceNumber: number | string }[];
+}): { deleteIds: string[]; moveIds: string[] } {
+  if (args.sourceWinsPlace) {
+    return {
+      deleteIds: args.targetScores.map((row) => row.id),
+      moveIds: args.sourceScores.map((row) => row.id),
+    };
+  }
+  const split = splitSourceRowsByTargetConflict(
+    args.sourceScores,
+    args.targetScores,
+    (row) => String(row.raceNumber)
+  );
+  return { deleteIds: split.conflictIds, moveIds: split.moveIds };
+}
+
 export type MergeSailorsOptions = {
   keepId: string;
   mergeId: string;
@@ -215,8 +240,9 @@ export async function mergeSailors({
         continue;
       }
 
-      // Preserve all non-conflicting official race scores before deleting the
-      // duplicate aggregate result (whose FK would otherwise cascade them).
+      // Move the race scores that belong with the place we keep before
+      // deleting the duplicate result. Its foreign key would otherwise
+      // cascade those scores.
       const [sourceScores, targetScores] = await Promise.all([
         tx
           .select({ id: regattaRaceResults.id, raceNumber: regattaRaceResults.raceNumber })
@@ -227,15 +253,19 @@ export async function mergeSailors({
           .from(regattaRaceResults)
           .where(eq(regattaRaceResults.regattaResultId, targetResult.id)),
       ]);
-      const scorePlan = splitSourceRowsByTargetConflict(
+      const scorePatch = preferredDuplicateResultUpdate(
+        targetResult,
+        sourceResult
+      );
+      const scorePlan = planPreferredResultRaceScores({
+        sourceWinsPlace: Boolean(scorePatch && "rank" in scorePatch),
         sourceScores,
         targetScores,
-        (row) => String(row.raceNumber)
-      );
-      if (scorePlan.conflictIds.length > 0) {
+      });
+      if (scorePlan.deleteIds.length > 0) {
         await tx
           .delete(regattaRaceResults)
-          .where(inArray(regattaRaceResults.id, scorePlan.conflictIds));
+          .where(inArray(regattaRaceResults.id, scorePlan.deleteIds));
       }
       if (scorePlan.moveIds.length > 0) {
         await tx
@@ -244,12 +274,7 @@ export async function mergeSailors({
           .where(inArray(regattaRaceResults.id, scorePlan.moveIds));
       }
       raceScoresMoved += scorePlan.moveIds.length;
-      raceScoresDroppedConflict += scorePlan.conflictIds.length;
-
-      const scorePatch = preferredDuplicateResultUpdate(
-        targetResult,
-        sourceResult
-      );
+      raceScoresDroppedConflict += scorePlan.deleteIds.length;
       if (scorePatch) {
         await tx
           .update(regattaResults)

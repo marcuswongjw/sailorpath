@@ -3,6 +3,7 @@ import { requireSuperadmin } from "@/lib/auth";
 import { db } from "@/db";
 import { sailors, regattaResults } from "@/db/schema";
 import { findDuplicateSailorPairs } from "@/lib/nameMatch";
+import { planBulkMergeBatch } from "@/lib/bulkMergeBatch";
 import { mergeSailors } from "@/lib/mergeSailors";
 import { createAdminRequestId } from "@/lib/adminLog";
 import { logAdminChange } from "@/lib/adminChangeLog";
@@ -91,19 +92,13 @@ export async function POST(req: Request) {
       groups.set(root, [...(groups.get(root) ?? []), sailor]);
     }
 
-    const batch: Array<{
-      survivor: (typeof allSailors)[number];
-      duplicate: (typeof allSailors)[number];
-    }> = [];
-    for (const members of groups.values()) {
-      const [survivor, ...duplicates] = [...members].sort(
-        (a, b) =>
-          getScore(b) - getScore(a) ||
-          a.createdAt.getTime() - b.createdAt.getTime()
-      );
-      if (duplicates[0]) batch.push({ survivor, duplicate: duplicates[0] });
-      if (batch.length >= MAX_MERGES_PER_REQUEST) break;
-    }
+    const { batch, hasMore } = planBulkMergeBatch(
+      [...groups.values()],
+      (a, b) =>
+        getScore(b) - getScore(a) ||
+        a.createdAt.getTime() - b.createdAt.getTime(),
+      MAX_MERGES_PER_REQUEST
+    );
 
     const mergedPairs: string[] = [];
     const outcomes = await Promise.all(
@@ -143,7 +138,7 @@ export async function POST(req: Request) {
         ? `Successfully merged ${mergedCount} exact duplicate pairs.`
         : `Successfully merged ${mergedCount} high-similarity duplicate pairs.`,
       count: mergedCount,
-      hasMore: batch.length >= MAX_MERGES_PER_REQUEST,
+      hasMore,
       merged: mergedPairs,
       durationMs: Date.now() - t0,
     });
