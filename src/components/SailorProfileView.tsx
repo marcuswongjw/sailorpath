@@ -129,7 +129,6 @@ export function SailorProfileView(props: SailorProfileViewProps) {
     deleteObservation,
     leftOptimistYear,
     preferIlcaFirst,
-    fleetBadge,
     analytics,
     bornYear,
     showFullDob,
@@ -256,7 +255,6 @@ export function SailorProfileView(props: SailorProfileViewProps) {
       {/* ── Hero Athlete Card ─────────────────────────────────── */}
       <HeroAthleteCard
         displaySailor={displaySailor}
-        fleetBadge={fleetBadge}
         activeStanding={activeStanding}
         standingIsIlca={standingIsIlca}
         dualClass={dualClass}

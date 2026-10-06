@@ -34,7 +34,6 @@ import {
 } from "@/lib/boardProfile";
 import {
   PROFILE_CARD_CLASS as cardClass,
-  resolveDisplayFleet,
   formatFullDob,
 } from "./helpers";
 import type {
@@ -703,19 +702,6 @@ export function useSailorProfileState({
     dropDate: displaySailor.dropDate as string | null | undefined,
     dob: displaySailor.dob as string | null | undefined,
   }, results as ProfileResult[]);
-  const hasIlca4Data =
-    classBuckets.ilca4.length > 0 ||
-    Boolean(String(displaySailor.sailNumberIlca4 || "").trim());
-  const optimistOnlyAbsent = classBuckets.optimist.length === 0;
-
-  const fleetBadge = resolveDisplayFleet(
-    displaySailor as Record<string, unknown>,
-    {
-      hasIlca4: hasIlca4Data,
-      preferIlca: preferIlcaFirst && hasIlca4Data,
-      optimistOnlyAbsent: optimistOnlyAbsent && hasIlca4Data,
-    }
-  );
 
   // Optimist-only analytics (gold tenure, medals, trend) — ILCA never mixes in
   const analytics = useMemo(
@@ -1294,8 +1280,6 @@ export function useSailorProfileState({
     classBuckets,
     leftOptimistYear,
     preferIlcaFirst,
-    hasIlca4Data,
-    fleetBadge,
     analytics,
     awards,
     awardCounts,

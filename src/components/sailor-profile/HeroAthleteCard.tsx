@@ -29,7 +29,6 @@ import type { SailorRecordProps, SeriesStandingProps } from "./types";
 
 export interface HeroAthleteCardProps {
   displaySailor: SailorRecordProps;
-  fleetBadge: { label: string; className: string };
   activeStanding: SeriesStandingProps | null;
   standingIsIlca: boolean;
   dualClass?: boolean;
@@ -43,7 +42,7 @@ export interface HeroAthleteCardProps {
   selectedClassId?: string;
   onSelectClass?: (id: string) => void;
   /**
-   * Board-class summary. Replaces rank and the Status card.
+   * Board-class summary replaces dinghy ranking with event-based highlights.
    * Absent national rank is left off rather than invented.
    */
   boardSummary?: {
@@ -114,7 +113,6 @@ function natSquadBadgeClass(label: string): string {
 
 export function HeroAthleteCard({
   displaySailor,
-  fleetBadge,
   activeStanding,
   standingIsIlca,
   dualClass = false,
@@ -215,10 +213,6 @@ export function HeroAthleteCard({
     medals && medals.bronze > 0 ? `${medals.bronze} bronze` : null,
   ].filter((part): part is string => Boolean(part));
   const classRegattaCount = fallbackCount;
-  const dropped = fleetBadge.label === "Dropped";
-  const statusTitle = dropped ? "Dropped" : "Active competitor";
-  const statusDetail =
-    activeBoatClass === "ilca4" ? "ILCA 4" : fleetBadge.label;
 
   const resolvedNatSquad =
     currentNatSquad ||
@@ -642,28 +636,38 @@ export function HeroAthleteCard({
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-2.5">
-            <div className="rounded-xl border border-cool-veil bg-warm-white p-3.5">
+          <div
+            className={`grid grid-cols-1 gap-2.5 ${
+              hasMedals && medals && awardTotal > 0 ? "sm:grid-cols-2" : ""
+            }`}
+          >
+            <div
+              role="group"
+              aria-label={`${classRegattaCount} ${
+                activeBoatClass === "ilca4" ? "ILCA 4" : "Optimist"
+              } regattas`}
+              className="rounded-xl border border-cool-veil bg-warm-white p-3.5"
+            >
               <div className="flex items-center justify-between text-slate-soft text-[11px] font-bold uppercase tracking-wider">
-                <span>Status</span>
-                <BadgeCheck className="h-3.5 w-3.5 text-harbour" />
+                <span>Regattas</span>
+                <Trophy className="h-3.5 w-3.5 text-slate-soft" />
               </div>
-              <p className="mt-1.5 text-base font-black text-harbour-shadow leading-tight">
-                {statusTitle}
+              <p className="mt-1.5 text-base font-black text-harbour-shadow tabular-nums leading-tight">
+                {classRegattaCount}
               </p>
               <p className="mt-1 text-[13px] font-medium text-slate-soft truncate">
-                {statusDetail}
+                {activeBoatClass === "ilca4" ? "ILCA 4" : "Optimist"} logged
               </p>
             </div>
 
-            {hasMedals && medals && awardTotal > 0 ? (
+            {hasMedals && medals && awardTotal > 0 && (
               <button
                 type="button"
                 onClick={() => onViewAwards?.()}
                 className="rounded-xl border border-cool-veil bg-warm-white p-3.5 text-left hover:border-harbour/30 hover:bg-aqua-mist/40 transition-colors"
               >
                 <div className="flex items-center justify-between text-slate-soft text-[11px] font-bold uppercase tracking-wider">
-                  <span>Career</span>
+                  <span>Career awards</span>
                   <Medal className="h-3.5 w-3.5 text-racing-orange" />
                 </div>
                 <p className="mt-1.5 text-base font-black text-harbour-shadow tabular-nums leading-tight">
@@ -676,19 +680,6 @@ export function HeroAthleteCard({
                   View awards
                 </p>
               </button>
-            ) : (
-              <div className="rounded-xl border border-cool-veil bg-warm-white p-3.5">
-                <div className="flex items-center justify-between text-slate-soft text-[11px] font-bold uppercase tracking-wider">
-                  <span>Regattas</span>
-                  <Trophy className="h-3.5 w-3.5 text-slate-soft" />
-                </div>
-                <p className="mt-1.5 text-base font-black text-harbour-shadow tabular-nums leading-tight">
-                  {classRegattaCount || totalRegattasCount}
-                </p>
-                <p className="mt-1 text-[13px] font-medium text-slate-soft truncate">
-                  {activeBoatClass === "ilca4" ? "ILCA 4" : "Optimist"} logged
-                </p>
-              </div>
             )}
           </div>
           </>

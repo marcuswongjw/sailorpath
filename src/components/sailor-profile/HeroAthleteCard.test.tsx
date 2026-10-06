@@ -1,6 +1,6 @@
 /** @vitest-environment jsdom */
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { HeroAthleteCard } from "./HeroAthleteCard";
 
@@ -17,10 +17,6 @@ describe("HeroAthleteCard", () => {
       bio: "Dedicated youth Optimist sailor aiming for National Squad selection.",
     },
     sailDisplay: "123",
-    fleetBadge: {
-      label: "Gold fleet",
-      className: "bg-yellow-400 text-yellow-950",
-    },
     activeStanding: {
       periodLabel: "2026 Season",
       fleet: "Gold",
@@ -71,8 +67,15 @@ describe("HeroAthleteCard", () => {
 
     expect(screen.getByLabelText("4 of 68")).toBeInTheDocument();
     expect(screen.getByText("Gold fleet series")).toBeInTheDocument();
-    expect(screen.getByText("Active competitor")).toBeInTheDocument();
-    expect(screen.getByText("Gold fleet")).toBeInTheDocument();
+    expect(screen.queryByText("Status")).not.toBeInTheDocument();
+    expect(screen.queryByText("Active competitor")).not.toBeInTheDocument();
+    expect(screen.getByText("Regattas")).toBeInTheDocument();
+    expect(
+      within(
+        screen.getByRole("group", { name: "15 Optimist regattas" })
+      ).getByText("15")
+    ).toBeInTheDocument();
+    expect(screen.getByText("Optimist logged")).toBeInTheDocument();
     expect(screen.getByText("6 awards")).toBeInTheDocument();
     expect(screen.getByText("View awards")).toBeInTheDocument();
     expect(screen.getByLabelText("Optimist, 15 regattas")).toBeInTheDocument();
@@ -181,6 +184,14 @@ describe("HeroAthleteCard", () => {
     expect(screen.queryByRole("tab", { name: /Optimist/ })).toBeNull();
     expect(screen.getByLabelText("12 of 36")).toBeInTheDocument();
     expect(screen.getByText("Recorded results")).toBeInTheDocument();
+    expect(screen.queryByText("Status")).not.toBeInTheDocument();
+    expect(screen.queryByText("Active competitor")).not.toBeInTheDocument();
+    expect(
+      within(
+        screen.getByRole("group", { name: "9 ILCA 4 regattas" })
+      ).getByText("9")
+    ).toBeInTheDocument();
+    expect(screen.getByText("ILCA 4 logged")).toBeInTheDocument();
   });
 
   it("leads a Techno sailor with finishes and leaves Status off", () => {
