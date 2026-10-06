@@ -1,7 +1,9 @@
+import monsoon2025Boards from "../../data/imports/ne-monsoon-gp-2025-boards.json";
+
 export type Techno293RaceScore = {
   score: number;
   isDiscarded?: boolean;
-  code?: "DNF" | "DNS" | "DSQ" | "DNC" | "RET" | "RDG";
+  code?: "DNF" | "DNS" | "DSQ" | "DNC" | "RET" | "RDG" | "OCS";
 };
 
 export type Techno293SailorResult = {
@@ -28,6 +30,7 @@ export type Techno293Regatta = {
   format:
     | "Course Race"
     | "Slalom / Course / Marathon"
+    | "GPS Speed Challenge"
     | "One Design";
   status: "Completed" | "Upcoming";
   lifecycleStatus?: "draft" | "in_review" | "published" | "archived";
@@ -137,6 +140,7 @@ export function normalizeTechno293SailorName(name: string): string {
 }
 
 export const SINGAPORE_TECHNO293_REGATTAS: Techno293Regatta[] = [
+  ...(monsoon2025Boards.filter((board) => board.table === "techno293") as unknown as Techno293Regatta[]),
   {
     id: "techno-snsc-2026",
     name: "Singapore National Sailing Championships 2026",

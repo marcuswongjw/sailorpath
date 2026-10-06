@@ -1,7 +1,9 @@
+import monsoon2025Boards from "../../data/imports/ne-monsoon-gp-2025-boards.json";
+
 export type WingfoilRaceScore = {
   score: number;
   isDiscarded?: boolean;
-  code?: "DNF" | "DNS" | "DSQ" | "DNC" | "RDG";
+  code?: "DNF" | "DNS" | "DSQ" | "DNC" | "RDG" | "OCS" | "RET";
 };
 
 export type WingfoilSailorResult = {
@@ -28,7 +30,8 @@ export type WingfoilRegatta = {
     | "Sprint Slalom"
     | "Course Race"
     | "Marathon"
-    | "Slalom / Course / Marathon";
+    | "Slalom / Course / Marathon"
+    | "GPS Speed Challenge";
   status: "Completed" | "Upcoming";
   lifecycleStatus?: "draft" | "in_review" | "published" | "archived";
   scoringSystem: string;
@@ -132,6 +135,7 @@ export function sortWingfoilRegattas(regattas: WingfoilRegatta[]): WingfoilRegat
 }
 
 export const SINGAPORE_WINGFOIL_REGATTAS: WingfoilRegatta[] = [
+  ...(monsoon2025Boards.filter((board) => board.table === "wingfoil") as unknown as WingfoilRegatta[]),
   {
     id: "sw-monsoon-series-gp3-2026",
     name: "2026 SW Monsoon Grand Prix 3 (Round 3 of 3)",

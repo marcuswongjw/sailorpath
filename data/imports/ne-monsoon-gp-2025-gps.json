@@ -1,0 +1,1451 @@
+[
+  {
+    "fleet": "Windfoil",
+    "rank": 1,
+    "name": "Angel Chew",
+    "sailNumber": "SGP 42",
+    "gender": "F",
+    "club": "Changi Sailing Club",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 9,
+    "nettScore": 7,
+    "races": [
+      {
+        "score": 1.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 1.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      }
+    ],
+    "sourceName": "Angel Chew"
+  },
+  {
+    "fleet": "Windfoil",
+    "rank": 2,
+    "name": "Angyal Chew",
+    "sailNumber": "SGP",
+    "gender": "F",
+    "club": "Changi Sailing Club",
+    "ageCategory": "U19",
+    "division": "U19",
+    "schoolName": "",
+    "grossScore": 18,
+    "nettScore": 14,
+    "races": [
+      {
+        "score": 2.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 2.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 2.0
+      },
+      {
+        "score": 2.0
+      },
+      {
+        "score": 2.0
+      },
+      {
+        "score": 2.0
+      },
+      {
+        "score": 2.0
+      },
+      {
+        "score": 2.0
+      },
+      {
+        "score": 2.0
+      }
+    ],
+    "sourceName": "Angyal Chew"
+  },
+  {
+    "fleet": "Windfoil",
+    "rank": 3,
+    "name": "Jonas Haris Knick",
+    "sailNumber": "SGP 39",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "U19",
+    "division": "U19",
+    "schoolName": "",
+    "grossScore": 63,
+    "nettScore": 49,
+    "races": [
+      {
+        "score": 7.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Jonas Knick"
+  },
+  {
+    "fleet": "Windfoil",
+    "rank": 3,
+    "name": "Lukas Knick",
+    "sailNumber": "SGP 31",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "U19",
+    "division": "U19",
+    "schoolName": "",
+    "grossScore": 63,
+    "nettScore": 49,
+    "races": [
+      {
+        "score": 7.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Lukas Knick"
+  },
+  {
+    "fleet": "Windfoil",
+    "rank": 3,
+    "name": "Trevor Ng",
+    "sailNumber": "SGP 21",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "U19",
+    "division": "U19",
+    "schoolName": "",
+    "grossScore": 63,
+    "nettScore": 49,
+    "races": [
+      {
+        "score": 7.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Trevor Ng"
+  },
+  {
+    "fleet": "Windfoil",
+    "rank": 3,
+    "name": "John Tze Xiang Wong",
+    "sailNumber": "SGP 2",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "U19",
+    "division": "U19",
+    "schoolName": "",
+    "grossScore": 63,
+    "nettScore": 49,
+    "races": [
+      {
+        "score": 7.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      },
+      {
+        "score": 7.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "John Tze Xiang Wong"
+  },
+  {
+    "fleet": "Techno 293",
+    "rank": 2,
+    "name": "Jun Ler Chuah",
+    "sailNumber": "16",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 54,
+    "nettScore": 42,
+    "races": [
+      {
+        "score": 6.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Jun Ler Chuah"
+  },
+  {
+    "fleet": "Techno 293",
+    "rank": 2,
+    "name": "Axl Tan",
+    "sailNumber": "SGP 82",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 54,
+    "nettScore": 42,
+    "races": [
+      {
+        "score": 6.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Axl Tan"
+  },
+  {
+    "fleet": "Techno 293",
+    "rank": 1,
+    "name": "Muhammad Razin",
+    "sailNumber": "3",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 9,
+    "nettScore": 7,
+    "races": [
+      {
+        "score": 1.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 1.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      }
+    ],
+    "sourceName": "Muhammad Razin"
+  },
+  {
+    "fleet": "Techno 293",
+    "rank": 2,
+    "name": "Reynold Chan",
+    "sailNumber": "52",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 54,
+    "nettScore": 42,
+    "races": [
+      {
+        "score": 6.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Reynold Chan"
+  },
+  {
+    "fleet": "Techno 293",
+    "rank": 2,
+    "name": "Jonathan Chan",
+    "sailNumber": "1",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 54,
+    "nettScore": 42,
+    "races": [
+      {
+        "score": 6.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      },
+      {
+        "score": 6.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Jonathan Chan"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 1,
+    "name": "Jackson Ho",
+    "sailNumber": "11",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 9,
+    "nettScore": 7,
+    "races": [
+      {
+        "score": 1.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 1.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      }
+    ],
+    "sourceName": "Jackson Ho"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Ryusai Hatano",
+    "sailNumber": "42",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Ryusai Hatano"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 1,
+    "name": "Guillaume Pichoir",
+    "sailNumber": "16",
+    "gender": "M",
+    "club": "ONE\u00b015 Marina Club",
+    "ageCategory": "Grand Master, Fun Open, Fun Master",
+    "division": "Grand Master, Fun Open, Fun Master",
+    "schoolName": "",
+    "grossScore": 9,
+    "nettScore": 7,
+    "races": [
+      {
+        "score": 1.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 1.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      },
+      {
+        "score": 1.0
+      }
+    ],
+    "sourceName": "Guillaume Pichoir"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 3,
+    "name": "Ker Wan Chew",
+    "sailNumber": "15",
+    "gender": "M",
+    "club": "PAssion Wave (East Coast)",
+    "ageCategory": "Grand Master",
+    "division": "Grand Master",
+    "schoolName": "",
+    "grossScore": 27,
+    "nettScore": 21,
+    "races": [
+      {
+        "score": 3.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 3.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 3.0
+      },
+      {
+        "score": 3.0
+      },
+      {
+        "score": 3.0
+      },
+      {
+        "score": 3.0
+      },
+      {
+        "score": 3.0
+      },
+      {
+        "score": 3.0
+      },
+      {
+        "score": 3.0
+      }
+    ],
+    "sourceName": "Chew Ker Wan"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Felix Knick",
+    "sailNumber": "50",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "Master",
+    "division": "Master",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Felix Knick"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 4,
+    "name": "Sven Welak",
+    "sailNumber": "25",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 36,
+    "nettScore": 28,
+    "races": [
+      {
+        "score": 4.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 4.0,
+        "isDiscarded": true
+      },
+      {
+        "score": 4.0
+      },
+      {
+        "score": 4.0
+      },
+      {
+        "score": 4.0
+      },
+      {
+        "score": 4.0
+      },
+      {
+        "score": 4.0
+      },
+      {
+        "score": 4.0
+      },
+      {
+        "score": 4.0
+      }
+    ],
+    "sourceName": "Sven Welack"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Arthur Phan",
+    "sailNumber": "29",
+    "gender": "M",
+    "club": "Kitesurfing Association of Singapore",
+    "ageCategory": "Grand Master",
+    "division": "Grand Master",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Arther Phan"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Malo Pichoir",
+    "sailNumber": "6",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "U16, U19, Fun Open",
+    "division": "U16, U19, Fun Open",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Malo Pichoir"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Xavier Lau",
+    "sailNumber": "38",
+    "gender": "M",
+    "club": "",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Xavier Lau"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Mikhail McEntyre",
+    "sailNumber": "22",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "U16, U19",
+    "division": "U16, U19",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Mikhail McEntyre"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Greg McEntyre",
+    "sailNumber": "43",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Greg McEntyre"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Bill Hickling",
+    "sailNumber": "45",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "Grand Master",
+    "division": "Grand Master",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Bill Hickling"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Ryan Lo",
+    "sailNumber": "17",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Ryan Lo"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Andrew Lees",
+    "sailNumber": "24",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "Master",
+    "division": "Master",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Andrew Lees"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Mason Qifeng Lau",
+    "sailNumber": "8",
+    "gender": "M",
+    "club": "",
+    "ageCategory": "U16, U19",
+    "division": "U16, U19",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Mason Lau"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "James Feathers",
+    "sailNumber": "19",
+    "gender": "M",
+    "club": "Constant Wind SeaSports",
+    "ageCategory": "Master",
+    "division": "Master",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "James Feathers"
+  },
+  {
+    "fleet": "Wingfoil",
+    "rank": 5,
+    "name": "Jun Hao Lo",
+    "sailNumber": "21",
+    "gender": "M",
+    "club": "Aloha Sea Sports Centre",
+    "ageCategory": "Open",
+    "division": "",
+    "schoolName": "",
+    "grossScore": 162,
+    "nettScore": 126,
+    "races": [
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "isDiscarded": true,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      },
+      {
+        "score": 18.0,
+        "code": "DNC"
+      }
+    ],
+    "sourceName": "Lo Jun Hao"
+  }
+]

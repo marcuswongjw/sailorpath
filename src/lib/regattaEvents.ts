@@ -855,7 +855,29 @@ export const YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT: RegattaEve
   ],
 };
 
+const NE_MONSOON_2025_EVENTS: RegattaEventDef[] = [
+  { key: "series2", slug: "ne-monsoon-grand-prix-2025-series-2", name: "2025 Northeast Monsoon Grand Prix Series 2", dates: "8–9 February 2025" },
+  { key: "combined", slug: "ne-monsoon-grand-prix-2025-combined", name: "2025 Northeast Monsoon Grand Prix Combined Series", dates: "25 January – 9 February 2025" },
+  { key: "gps", slug: "ne-monsoon-grand-prix-2025-gps-speed-challenge", name: "2025 Northeast Monsoon Grand Prix Series 3 GPS Speed Challenge", dates: "25 January – 8 February 2025" },
+].map((entry) => ({
+  slug: entry.slug,
+  name: entry.name,
+  shortName: entry.name,
+  datesText: entry.dates,
+  venue: entry.key === "gps" ? "Singapore waters" : "Changi Beach Park CP 1 / Tanah Merah, Singapore",
+  organizer: "Singapore Sailing Federation",
+  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/128729",
+  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/10645/event",
+  websiteUrl: "https://www.sailing.org.sg/events/263406",
+  slices: [
+    { key: "windfoil", label: "Windfoil", series: "windsurfing", slugIncludes: [entry.slug + "-windfoil"] },
+    { key: "wingfoil", label: "Wingfoil", series: "wingfoil", staticId: entry.slug + "-wingfoil" },
+    { key: "techno293", label: "Techno 293", series: "techno293", staticId: entry.slug + "-techno293" },
+  ],
+}));
+
 export const REGATTA_EVENTS: RegattaEventDef[] = [
+  ...NE_MONSOON_2025_EVENTS,
   RSYC_OPTIMIST_2026_EVENT,
   RSYC_OPTIMIST_GOLD_2026_EVENT,
   RSYC_OPTIMIST_2025_EVENT,
