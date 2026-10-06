@@ -43,7 +43,7 @@ BEGIN
  FOR race IN SELECT value FROM jsonb_array_elements(entry->'races') LOOP
  race_no=race_no+1;
  INSERT INTO public.regatta_race_results(regatta_result_id,race_number,score,scoring_code,discarded,raw_value)
- VALUES(result_uuid,race_no,(race->>'score')::real,race->>'code',coalesce((race->>'isDiscarded')::boolean,false),race::text)
+ VALUES(result_uuid,race_no,(race->>'score')::real,race->>'code',coalesce((race->>'isDiscarded')::boolean,false),CASE WHEN coalesce((race->>'isDiscarded')::boolean,false) THEN '(' ELSE '' END || (race->>'score') || CASE WHEN race->>'code' IS NOT NULL THEN ' '||(race->>'code') ELSE '' END || CASE WHEN coalesce((race->>'isDiscarded')::boolean,false) THEN ')' ELSE '' END)
  ON CONFLICT(regatta_result_id,race_number) DO UPDATE SET score=excluded.score,scoring_code=excluded.scoring_code,discarded=excluded.discarded,raw_value=excluded.raw_value,updated_at=now();
  END LOOP;
  END LOOP;
