@@ -11,19 +11,20 @@ import {
 } from "@/lib/productChangelog";
 
 const AREA_COLORS: Record<ProductChangeArea, string> = {
-  Homepage: "bg-orange-500/15 text-orange-300 border-orange-500/25",
-  Profile: "bg-sky-500/15 text-sky-300 border-sky-500/25",
-  Rankings: "bg-violet-500/15 text-violet-300 border-violet-500/25",
-  Admin: "bg-emerald-500/15 text-emerald-300 border-emerald-500/25",
-  Search: "bg-amber-500/15 text-amber-300 border-amber-500/25",
-  UX: "bg-pink-500/15 text-pink-800 border-pink-500/25",
-  Privacy: "bg-slate-500/15 text-slate-300 border-slate-500/25",
-  Platform: "bg-cyan-500/15 text-cyan-300 border-cyan-500/25",};
+  Homepage: "bg-orange-50 text-orange-900 border-orange-200",
+  Profile: "bg-sky-50 text-sky-950 border-sky-200",
+  Rankings: "bg-violet-50 text-violet-950 border-violet-200",
+  Admin: "bg-emerald-50 text-emerald-950 border-emerald-200",
+  Search: "bg-amber-50 text-amber-950 border-amber-200",
+  UX: "bg-pink-50 text-pink-900 border-pink-200",
+  Privacy: "bg-slate-100 text-slate-800 border-slate-200",
+  Platform: "bg-cyan-50 text-cyan-950 border-cyan-200",
+};
 
 const SEVERITY_COLORS: Record<ProductSeverity, string> = {
-  info: "bg-white/5 text-slate-400 border-white/10",
-  improvement: "bg-sky-500/10 text-sky-300 border-sky-500/20",
-  breaking: "bg-rose-500/15 text-rose-300 border-rose-500/25",
+  info: "bg-slate-100 text-slate-800 border-slate-200",
+  improvement: "bg-sky-50 text-sky-950 border-sky-200",
+  breaking: "bg-rose-50 text-rose-900 border-rose-200",
 };
 
 function formatDay(iso: string) {
@@ -40,7 +41,7 @@ function formatDay(iso: string) {
 
 export function AdminProductChangelogPanel({
   onMarkedSeen,
-  auditHref = "/admin?tab=ops&sub=audit",
+  auditHref = "/admin?area=settings&view=audit",
 }: {
   onMarkedSeen?: () => void;
   auditHref?: string;
@@ -88,7 +89,7 @@ export function AdminProductChangelogPanel({
           under{" "}
           <Link
             href={auditHref}
-            className="text-orange-400 hover:text-orange-300 font-semibold"
+            className="font-semibold text-orange-800 hover:text-orange-950"
           >
             Settings → Audit log
           </Link>
@@ -103,7 +104,7 @@ export function AdminProductChangelogPanel({
           className={`rounded-full px-3 py-1.5 text-[13px] font-bold ${
             areaFilter === "all"
               ? "bg-[var(--sp-harbour-teal)] text-white"
-              : "bg-white/5 text-slate-400 border border-white/10"
+              : "border border-slate-200 bg-white text-slate-800"
           }`}
         >
           All areas
@@ -116,7 +117,7 @@ export function AdminProductChangelogPanel({
             className={`rounded-full px-3 py-1.5 text-[13px] font-bold border ${
               areaFilter === area
                 ? AREA_COLORS[area]
-                : "bg-white/5 text-slate-400 border-white/10"
+                : "border-slate-200 bg-white text-slate-800"
             }`}
           >
             {area}
@@ -172,7 +173,7 @@ export function AdminProductChangelogPanel({
                 {entry.href && (
                   <Link
                     href={entry.href}
-                    className="inline-flex items-center gap-1.5 text-[12px] font-bold text-orange-400 hover:text-orange-300"
+                    className="inline-flex items-center gap-1.5 text-[12px] font-bold text-orange-800 hover:text-orange-950"
                   >
                     {entry.ctaLabel || "Open"}
                     <ExternalLink className="h-3 w-3" />

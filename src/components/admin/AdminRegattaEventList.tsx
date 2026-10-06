@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, Trash2 } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { EventFacts, joinDateRange } from "@/components/EventFacts";
 import {
   eventClassProgress,
@@ -70,18 +70,12 @@ export function AdminRegattaEventList({
   events,
   unassignedCount,
   selectedSlug,
-  isSuperadmin,
-  deletingSlug,
   onSelect,
-  onDelete,
 }: {
   events: AdminEventGroup[];
   unassignedCount: number;
   selectedSlug: string | null;
-  isSuperadmin?: boolean;
-  deletingSlug: string | null;
   onSelect: (slug: string) => void;
-  onDelete: (slug: string) => void;
 }) {
   const items: AdminRegattaEventListItem[] = events.map((event) => ({
     slug: event.slug,
@@ -94,7 +88,7 @@ export function AdminRegattaEventList({
     <div className="glass-panel flex max-h-[min(70vh,40rem)] min-h-[20rem] flex-col overflow-hidden rounded-2xl border border-slate-200 lg:max-h-[calc(100vh-14rem)] lg:sticky lg:top-4">
       <div className="border-b border-slate-200 px-4 py-3">
         <p className="text-[11px] font-black uppercase tracking-wider text-slate-700">
-          Main Regatta Events
+          Events
         </p>
         <p className="mt-0.5 text-xs font-medium text-slate-500">
           {total === 0
@@ -133,7 +127,7 @@ export function AdminRegattaEventList({
                       role="option"
                       aria-selected={selected}
                       onClick={() => onSelect(slug)}
-                      className="w-full px-3 py-2.5 pr-10 text-left"
+                      className="w-full px-3 py-2.5 text-left"
                     >
                       <span className="block text-sm font-bold leading-snug text-slate-900">
                         {event.name}
@@ -164,20 +158,6 @@ export function AdminRegattaEventList({
                       </div>
                       <ProgressMeter event={event} />
                     </button>
-                    {isSuperadmin ? (
-                      <button
-                        type="button"
-                        aria-label={`Delete ${event.name}`}
-                        disabled={deletingSlug === slug}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onDelete(slug);
-                        }}
-                        className="absolute right-2 top-2 rounded-lg border border-slate-200 bg-white p-1.5 text-slate-500 hover:border-rose-200 hover:bg-rose-50 hover:text-rose-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 disabled:opacity-40"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
-                    ) : null}
                   </div>
                 );
               })}
@@ -198,10 +178,10 @@ export function AdminRegattaEventList({
             }`}
           >
             <span className="block text-sm font-bold text-amber-950">
-              Unassigned sailing classes
+              Classes not on an event
             </span>
             <span className="mt-0.5 block text-[11px] font-medium text-amber-800">
-              {unassignedCount} class{unassignedCount === 1 ? "" : "es"} without a main regatta event
+              {unassignedCount} class{unassignedCount === 1 ? "" : "es"} without an event
             </span>
           </button>
         ) : null}

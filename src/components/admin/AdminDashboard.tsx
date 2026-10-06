@@ -646,7 +646,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   };
 
   return (
-    <div className={`mx-auto w-full min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 flex-1 gap-4 sm:gap-6 lg:gap-8 overflow-x-clip ${
+    <div className={`admin-canvas mx-auto w-full min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 flex-1 gap-4 sm:gap-6 lg:gap-8 overflow-x-clip ${
       adminShell === "sidebar"
         ? "max-w-[90rem] md:grid md:grid-cols-[15rem_minmax(0,1fr)] md:items-start"
         : "max-w-7xl flex flex-col"
@@ -666,8 +666,8 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
             <Shield className="h-4 w-4 text-orange-500" />
             <button
               type="button"
-              onClick={() => goTab("edit")}
-              className="font-bold text-slate-400 hover:text-white transition-colors"
+              onClick={() => goTab("overview")}
+              className="font-bold text-slate-700 hover:text-slate-900 transition-colors"
             >
               Admin Console
             </button>
@@ -679,7 +679,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                 <button
                   type="button"
                   onClick={crumb.onClick}
-                  className="font-semibold text-slate-400 hover:text-white transition-colors"
+                  className="font-semibold text-slate-700 hover:text-slate-900 transition-colors"
                 >
                   {crumb.label}
                 </button>
@@ -687,8 +687,8 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                 <span
                   className={`font-bold truncate max-w-[200px] sm:max-w-[320px] ${
                     idx === breadcrumbContext.length - 2
-                      ? "text-orange-400"
-                      : "text-slate-300"
+                      ? "text-orange-800"
+                      : "text-slate-800"
                   }`}
                 >
                   {crumb.label}
@@ -704,15 +704,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
               type="button"
               onClick={() => {
                 setActiveTab("ops");
-                setEditSubTab(
-                  claimsPendingCount > 0
-                    ? "claims"
-                    : suggestionsCount > 0
-                      ? "suggestions"
-                    : coachPendingCount > 0
-                      ? "coaches"
-                      : "support"
-                );
+                setEditSubTab(inboxLandingView);
               }}
               className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 px-3 py-1.5 text-[15px] font-bold text-[var(--sp-color-error)] hover:bg-rose-500/25"
             >
@@ -725,14 +717,14 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
           )}
           <Link
             href="/admin/metrics"
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[15px] font-bold text-slate-300 hover:border-orange-500/40 hover:text-white"
+            className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-[15px] font-bold text-slate-800 hover:border-orange-500 hover:text-slate-900"
           >
             Metrics guide
           </Link>
-          <span className="rounded-full bg-orange-500/10 border border-orange-500/20 px-3 py-0.5 text-[11px] font-black text-orange-400 capitalize">
+          <span className="rounded-full bg-orange-50 border border-orange-200 px-3 py-0.5 text-[11px] font-black text-orange-900 capitalize">
             {adminRole}
           </span>
-          <span className="text-[13px] text-slate-500 hidden sm:inline truncate max-w-[180px]">
+          <span className="text-[13px] text-slate-700 hidden sm:inline truncate max-w-[180px]">
             {user?.email}
           </span>
         </div>
@@ -752,7 +744,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
           <nav
             id="admin-nav"
             aria-label="Admin"
-            className={`${menuOpen ? "block" : "hidden"} md:sticky md:top-4 md:block md:row-span-6 rounded-2xl border border-white/10 bg-[#131520]`}
+            className={`${menuOpen ? "block" : "hidden"} md:sticky md:top-4 md:block md:row-span-6 rounded-2xl border border-slate-200 bg-white`}
           >
             <AdminSidebar
               activeArea={areaState.area}
@@ -760,7 +752,15 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
               inboxView={areaState.view}
               insightsView={areaState.view}
               settingsView={areaState.view}
+              eventsView={areaState.view}
               inboxCount={inboxNotifCount}
+              queueCounts={{
+                suggestions: suggestionsCount,
+                claims: claimsPendingCount + claimedUpdatesCount,
+                coaches: coachPendingCount,
+                support: supportNewCount,
+              }}
+              landingView={inboxLandingView}
               onNavigate={(href) => {
                 if (!confirmAdminLeave()) return false;
                 approvedSearch.current = new URL(href, window.location.href).search.slice(1);
@@ -831,98 +831,49 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
         <h1
           id="admin-page-title"
           tabIndex={-1}
-          className="text-2xl font-black text-white outline-none"
+          className="text-2xl font-black text-slate-900 outline-none"
         >
           {pageTitle}
         </h1>
       )}
 
-      {/* Contextual live public view link for active workspace */}
-      <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 bg-[#131520] border border-white/5 rounded-2xl px-3.5 py-2">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="font-semibold text-slate-300">
-            {activeTab === "overview"
-              ? "Administration overview"
-              : activeTab === "regattas"
-              ? "Regattas & Events Operations"
-              : activeTab === "edit"
-                ? "Optimist Roster & Selection Workspace"
-                : activeTab === "ilca"
-                  ? "ILCA 4 National Ranking & Squad Workspace"
-                  : activeTab === "wingfoil"
-                    ? "WingFoil Slalom Scoring Workspace"
-                    : activeTab === "techno293"
-                      ? "Techno 293 Windsurfing Workspace"
-                      : activeTab === "import"
-                        ? "Excel & PDF Regatta Ingestion"
-                        : activeTab === "ops"
-                          ? "Claims & Support Operations"
-                          : activeTab === "analysis"
-                            ? "Gold Fleet Progression Analysis"
-                            : activeTab === "stats"
-                              ? "Platform Health & Metrics"
-                              : "Platform Release Notes"}
-          </span>
+      {activeTab === "regattas" ||
+      activeTab === "edit" ||
+      activeTab === "ilca" ||
+      activeTab === "wingfoil" ||
+      activeTab === "techno293" ? (
+        <div className="flex justify-end">
+          <Link
+            href={
+              activeTab === "regattas"
+                ? "/sg/calendar"
+                : activeTab === "edit"
+                  ? "/sg/optimist/gold"
+                  : activeTab === "ilca"
+                    ? "/sg/ilca4"
+                    : activeTab === "wingfoil"
+                      ? "/sg/wingfoil"
+                      : "/sg/techno293"
+            }
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)]"
+          >
+            <span>
+              {activeTab === "regattas"
+                ? "Public calendar"
+                : activeTab === "edit"
+                  ? "Public Gold rankings"
+                  : activeTab === "ilca"
+                    ? "Public ILCA 4 standings"
+                    : activeTab === "wingfoil"
+                      ? "Public WingFoil results"
+                      : "Public Techno 293 results"}
+            </span>
+            <ChevronRight className="h-3.5 w-3.5" aria-hidden="true" />
+          </Link>
         </div>
-        <div className="flex items-center gap-3">
-          {activeTab === "regattas" && (
-            <Link
-              href="/sg/calendar"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
-            >
-              <span>Public 2026 Calendar</span>
-              <ChevronRight className="h-3 w-3" />
-            </Link>
-          )}
-          {activeTab === "edit" && (
-            <Link
-              href="/sg/optimist/gold"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
-            >
-              <span>Public Gold Rankings</span>
-              <ChevronRight className="h-3 w-3" />
-            </Link>
-          )}
-          {activeTab === "ilca" && (
-            <Link
-              href="/sg/ilca4"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
-            >
-              <span>Public ILCA 4 Standings</span>
-              <ChevronRight className="h-3 w-3" />
-            </Link>
-          )}
-          {activeTab === "wingfoil" && (
-            <Link
-              href="/sg/wingfoil"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
-            >
-              <span>Public WingFoil Results</span>
-              <ChevronRight className="h-3 w-3" />
-            </Link>
-          )}
-          {activeTab === "techno293" && (
-            <Link
-              href="/sg/techno293"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 text-[13px] font-semibold text-[var(--sp-harbour-teal)] hover:text-[var(--sp-harbour-shadow)] transition-colors"
-            >
-              <span>Public Techno 293 Results</span>
-              <ChevronRight className="h-3 w-3" />
-            </Link>
-          )}
-        </div>
-      </div>
+      ) : null}
 
       {!isSuperadmin && (
         <div className="bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl p-4 flex items-start gap-3">
@@ -958,6 +909,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
             results={data.resultsList}
             duplicateCount={sailors.panelProps.duplicatePairs.length}
             inboxCount={inboxNotifCount}
+            inboxHref={`/admin?area=inbox&view=${inboxLandingView}`}
             suggestionsCount={suggestionsCount}
             claimsCount={claimsPendingCount}
           />
@@ -967,17 +919,27 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
           <div className="w-full min-w-0">
             {unknownSheet && (
               <p className="mb-3 rounded-xl border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm text-amber-900" role="alert">
-                That class sheet was not found. Choose a main regatta event, then a class.
+                That class was not found. Choose an event, then a class.
               </p>
             )}
             <AdminRegattasPanel
               isSuperadmin={isSuperadmin}
               activeSheetId={data.selectedRegattaIdForResultEdit}
+              eventsView={eventsView}
               onOpenResults={(regattaId) => {
+                setEventsView("results");
                 setSelectedRegattaIdForResultEdit(regattaId);
                 setActiveTab("regattas");
               }}
-              onClearSheet={() => setSelectedRegattaIdForResultEdit("")}
+              onOpenCheck={(regattaId) => {
+                setEventsView("readiness");
+                setSelectedRegattaIdForResultEdit(regattaId);
+                setActiveTab("regattas");
+              }}
+              onClearSheet={() => {
+                setEventsView("card");
+                setSelectedRegattaIdForResultEdit("");
+              }}
               onImportClass={(sheetId) => {
                 setImportSheetId(sheetId);
                 setSelectedRegattaIdForResultEdit(sheetId);
@@ -1036,6 +998,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
             }
             onOpenResults={(regattaId) => {
               setImportSheetId(null);
+              setEventsView("results");
               setSelectedRegattaIdForResultEdit(regattaId);
               setActiveTab("regattas");
             }}
@@ -1112,6 +1075,8 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                   saving={sailors.panelProps.saving}
                   isSuperadmin={isSuperadmin}
                   onOpenSailor={openSailorInDirectory}
+                  emptySeriesCount={sailors.panelProps.emptySeriesCount}
+                  onCleanupEmptySeries={sailors.panelProps.onCleanupEmptySeries}
                 />
               )}
 
@@ -1127,11 +1092,21 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                 <AdminRegattasPanel
                   isSuperadmin={isSuperadmin}
                   activeSheetId={data.selectedRegattaIdForResultEdit}
+                  eventsView={eventsView}
                   onOpenResults={(regattaId) => {
+                    setEventsView("results");
                     setSelectedRegattaIdForResultEdit(regattaId);
                     setActiveTab("regattas");
                   }}
-                  onClearSheet={() => setSelectedRegattaIdForResultEdit("")}
+                  onOpenCheck={(regattaId) => {
+                    setEventsView("readiness");
+                    setSelectedRegattaIdForResultEdit(regattaId);
+                    setActiveTab("regattas");
+                  }}
+                  onClearSheet={() => {
+                    setEventsView("card");
+                    setSelectedRegattaIdForResultEdit("");
+                  }}
               onImportClass={(sheetId) => {
                 setImportSheetId(sheetId);
                 setSelectedRegattaIdForResultEdit(sheetId);
@@ -1248,6 +1223,11 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
                   <AdminAuditLogPanel isSuperadmin={isSuperadmin} />
                 </div>
               )}
+              {areaState.area === "settings" && editSubTab === "tools" && (
+                <div className="w-full min-w-0">
+                  <AdminMaintenancePanel isSuperadmin={isSuperadmin} />
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -1283,6 +1263,12 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
         {activeTab === "techno293" && (
           <div className="w-full min-w-0">
             <AdminTechno293Panel isSuperadmin={isSuperadmin} />
+          </div>
+        )}
+
+        {activeTab === "changelog" && (
+          <div className="w-full min-w-0">
+            <AdminProductChangelogPanel auditHref="/admin?area=settings&view=audit" />
           </div>
         )}
 

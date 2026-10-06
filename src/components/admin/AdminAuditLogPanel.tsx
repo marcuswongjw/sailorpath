@@ -25,18 +25,35 @@ type AuditRow = {
   source: string | null;
 };
 
+function regattaIdFromDetails(details: string | null): string | null {
+  if (!details) return null;
+  try {
+    const parsed = JSON.parse(details) as { regattaId?: unknown };
+    return typeof parsed.regattaId === "string" && parsed.regattaId
+      ? parsed.regattaId
+      : null;
+  } catch {
+    return null;
+  }
+}
+
 function entityHref(row: AuditRow): string | null {
   if (row.entityType === "sailor") {
-    return "/admin?tab=edit&sub=sailors";
+    return "/admin?area=sailors&view=directory";
   }
   if (row.entityType === "regatta") {
-    return "/admin?tab=edit&sub=regattas";
+    return row.entityId
+      ? `/admin?area=events&sheet=${encodeURIComponent(row.entityId)}&view=results`
+      : "/admin?area=events";
   }
   if (row.entityType === "result") {
-    return "/admin?tab=edit&sub=results";
+    const sheetId = regattaIdFromDetails(row.details);
+    return sheetId
+      ? `/admin?area=events&sheet=${encodeURIComponent(sheetId)}&view=results`
+      : "/admin?area=events";
   }
   if (row.entityType === "claim") {
-    return "/admin?tab=ops&sub=claims";
+    return "/admin?area=inbox&view=claims";
   }
   return null;
 }
@@ -182,7 +199,7 @@ export function AdminAuditLogPanel({
                           href={link}
                           className="font-bold text-orange-400 hover:text-orange-300"
                         >
-                          Open in Database / Ops →
+                          Open
                         </Link>
                       )}
                       {row.entityId && (

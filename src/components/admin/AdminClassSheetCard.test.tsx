@@ -42,8 +42,8 @@ describe("AdminClassSheetCard", () => {
     expect(screen.getByText("Fleet 31")).toBeInTheDocument();
     expect(screen.getByText("2026-09-05")).toBeInTheDocument();
     expect(screen.getByText("ILCA 4").closest("span")).toHaveClass("whitespace-nowrap");
-    expect(screen.getByRole("combobox", { name: "Main regatta event for NSC 2026 ILCA 4" })).toBeInTheDocument();
-    expect(screen.getByText("Link to a main regatta event")).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Event for NSC 2026 ILCA 4" })).toBeInTheDocument();
+    expect(screen.getByText("Choose an event")).toBeInTheDocument();
 
     const link = screen.getByRole("button", { name: "Link" });
     expect(link).toBeDisabled();
@@ -61,7 +61,8 @@ describe("AdminClassSheetCard", () => {
     );
 
     expect(screen.getByRole("heading", { name: "ILCA 4" })).toBeInTheDocument();
-    expect(screen.queryByText("Link to a main regatta event")).not.toBeInTheDocument();
+    expect(screen.queryByText("Choose an event")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "View results" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Unpublish" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Delete ILCA 4" })).not.toBeInTheDocument();
   });
@@ -80,7 +81,36 @@ describe("AdminClassSheetCard", () => {
       />
     );
 
-    await user.click(screen.getByRole("button", { name: "Delete ILCA 4" }));
+    await user.click(screen.getByRole("button", { name: "Class actions" }));
+    await user.click(screen.getByRole("menuitem", { name: "Delete ILCA 4" }));
     expect(onDelete).toHaveBeenCalledOnce();
+  });
+
+  it("asks for results on an unpublished class and review when the class is ready", async () => {
+    const user = userEvent.setup();
+    const onOpenResults = vi.fn();
+    const onOpenCheck = vi.fn();
+    const { rerender } = render(
+      <AdminClassSheetCard
+        sheet={{ ...sheet, status: "draft" }}
+        onEditDetails={vi.fn()}
+        onOpenResults={onOpenResults}
+        onOpenCheck={onOpenCheck}
+      />
+    );
+    await user.click(screen.getByRole("button", { name: "Enter results" }));
+    expect(onOpenResults).toHaveBeenCalledOnce();
+
+    rerender(
+      <AdminClassSheetCard
+        sheet={{ ...sheet, status: "draft" }}
+        readiness={{ summary: "publishable_ranking", checks: [] }}
+        onEditDetails={vi.fn()}
+        onOpenResults={onOpenResults}
+        onOpenCheck={onOpenCheck}
+      />
+    );
+    await user.click(screen.getByRole("button", { name: "Review and publish" }));
+    expect(onOpenCheck).toHaveBeenCalledOnce();
   });
 });

@@ -13,6 +13,8 @@ export function AdminSailorDuplicatesPanel({
   saving,
   isSuperadmin,
   onOpenSailor,
+  emptySeriesCount = 0,
+  onCleanupEmptySeries,
 }: {
   duplicatePairs: DuplicatePair[];
   selectedSailors: string[];
@@ -22,6 +24,8 @@ export function AdminSailorDuplicatesPanel({
   saving: boolean;
   isSuperadmin: boolean;
   onOpenSailor: (id: string) => void;
+  emptySeriesCount?: number;
+  onCleanupEmptySeries?: () => void | Promise<void>;
 }) {
   const [bulkMerging, setBulkMerging] = useState(false);
   const mergeHighConfidence = async () => {
@@ -50,17 +54,32 @@ export function AdminSailorDuplicatesPanel({
 
   return (
     <section className="space-y-4" aria-labelledby="duplicate-sailors-title">
-      <div className="glass-panel rounded-2xl border border-white/5 p-5">
+      {emptySeriesCount > 0 && onCleanupEmptySeries ? (
+        <div className="flex flex-col gap-3 rounded-2xl border border-amber-300 bg-amber-50 px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-amber-950">
+            <strong>{emptySeriesCount}</strong> SG Optimist sailors have no Silver or Gold entry date, so they are not ranked.
+          </p>
+          <button
+            type="button"
+            disabled={!isSuperadmin}
+            onClick={() => void onCleanupEmptySeries()}
+            className="inline-flex min-h-11 shrink-0 items-center rounded-full bg-amber-700 px-4 text-sm font-bold text-white disabled:opacity-40"
+          >
+            Stamp Silver entry for today
+          </button>
+        </div>
+      ) : null}
+      <div className="glass-panel rounded-2xl border border-slate-200 bg-white p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2
               id="duplicate-sailors-title"
-              className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white"
+              className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-slate-900"
             >
-              <AlertTriangle className="h-4 w-4 text-amber-400" aria-hidden="true" />
+              <AlertTriangle className="h-4 w-4 text-amber-700" aria-hidden="true" />
               Possible duplicate sailors
             </h2>
-            <p className="mt-1 text-xs text-slate-400">
+            <p className="mt-1 text-xs text-slate-700">
               Review likely matches, select a pair, then merge the records.
             </p>
           </div>
@@ -69,7 +88,7 @@ export function AdminSailorDuplicatesPanel({
             type="button"
             disabled={!isSuperadmin || saving || bulkMerging}
             onClick={() => void mergeHighConfidence()}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-amber-400/40 px-4 text-sm font-bold text-amber-200 hover:bg-amber-500/10 disabled:opacity-40"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-amber-400 bg-amber-50 px-4 text-sm font-bold text-amber-950 hover:bg-amber-100 disabled:opacity-40"
           >
             <UsersRound className="h-4 w-4" aria-hidden="true" />
             {bulkMerging ? "Merging…" : "Merge all 100%"}
@@ -91,8 +110,8 @@ export function AdminSailorDuplicatesPanel({
 
       {duplicatePairs.length === 0 ? (
         <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-8 text-center">
-          <CheckCircle className="mx-auto h-6 w-6 text-emerald-400" aria-hidden="true" />
-          <p className="mt-2 text-sm font-bold text-white">
+          <CheckCircle className="mx-auto h-6 w-6 text-emerald-700" aria-hidden="true" />
+          <p className="mt-2 text-sm font-bold text-slate-900">
             No likely duplicates found
           </p>
         </div>
@@ -115,13 +134,13 @@ export function AdminSailorDuplicatesPanel({
               >
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-start sm:gap-x-12">
                   <div className="min-w-0 max-w-md">
-                    <p className="text-xs font-bold text-amber-300">
+                    <p className="text-xs font-bold text-amber-900">
                       {percent}% match{pair.how ? ` · ${pair.how}` : ""}
                     </p>
                     <button
                       type="button"
                       onClick={() => onOpenSailor(pair.a.id)}
-                      className="mt-2 block text-left font-semibold text-white hover:text-orange-300"
+                      className="mt-2 block text-left font-semibold text-slate-900 hover:text-orange-800"
                     >
                       {pair.a.name}
                       <span className="ml-2 font-mono text-xs text-slate-400">
@@ -131,7 +150,7 @@ export function AdminSailorDuplicatesPanel({
                     <button
                       type="button"
                       onClick={() => onOpenSailor(pair.b.id)}
-                      className="block text-left font-semibold text-white hover:text-orange-300"
+                      className="block text-left font-semibold text-slate-900 hover:text-orange-800"
                     >
                       {pair.b.name}
                       <span className="ml-2 font-mono text-xs text-slate-400">
@@ -154,7 +173,7 @@ export function AdminSailorDuplicatesPanel({
                       onClick={() =>
                         ignoreDuplicatePair(pair.a.id, pair.b.id)
                       }
-                      className="min-h-11 rounded-full border border-white/15 px-4 text-sm font-bold text-slate-200 hover:bg-white/10"
+                      className="min-h-11 rounded-full border border-slate-300 px-4 text-sm font-bold text-slate-800 hover:bg-slate-50"
                     >
                       Ignore
                     </button>

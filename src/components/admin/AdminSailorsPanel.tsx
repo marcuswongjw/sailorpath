@@ -13,8 +13,6 @@ import {
   Check,
   X,
   Medal,
-  Copy,
-  AlertTriangle,
   CheckCircle,
   Users,
 } from "lucide-react";
@@ -353,44 +351,17 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
     setSailorForm,
     handleSaveSailor,
     handleDeleteSailor,
-    showDuplicateFinder,
-    setShowDuplicateFinder,
-    ignoreDuplicatePair,
     bulkStatus,
     openSailorResults,
     openSailor,
     competitionsSailorId,
     setCompetitionsSailorId,
-    onCleanupEmptySeries,
-    emptySeriesCount = 0,
   } = p;
 
   return (
               <div className="w-full min-w-0 space-y-4 sm:space-y-6 overflow-x-clip">
 
-                {emptySeriesCount > 0 && onCleanupEmptySeries && (
-                  <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div className="flex items-start gap-2">
-                      <AlertTriangle className="h-4 w-4 text-[var(--sp-racing-deep)] shrink-0 mt-0.5" />
-                      <p className="text-xs text-[var(--sp-charcoal)] leading-relaxed">
-                        <strong className="text-[var(--sp-racing-deep)]">{emptySeriesCount}</strong> SG Optimist
-                        sailor(s) have no silver/gold entry date — they are not ranked.
-                        Stamp today&apos;s date as Silver entry (SG) to include them.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      disabled={!isSuperadmin}
-                      onClick={() => void onCleanupEmptySeries()}
-                      className="shrink-0 rounded-full bg-amber-600 hover:bg-amber-700 disabled:opacity-40 px-4 py-2 text-xs font-bold text-white"
-                    >
-                      Stamp silver entry for empty Series
-                    </button>
-                  </div>
-                )}
-
-                {/* Filters */}
-                                <SailorFilterBar
+                <SailorFilterBar
                   dbSearch={dbSearch}
                   onDbSearchChange={setDbSearch}
                   dbFleetFilter={dbFleetFilter}
@@ -402,30 +373,20 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                   selectedCount={selectedSailors.length}
                 />
 
-                {/* Duplicate finder — always available; bulk tip only when nothing selected */}
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  {selectedSailors.length === 0 ? (
-                    <p className="text-[11px] text-slate-500">
-                      Tick rows to open bulk edit, merge, or delete.
-                    </p>
-                  ) : (
-                    <p className="text-[11px] text-slate-500">
-                      Bulk toolbar is open above the table.
-                    </p>
-                  )}
-                  <button
-                    type="button"
-                    onClick={() => setShowDuplicateFinder((v) => !v)}
-                    className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[11px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)] flex items-center gap-1.5"
-                  >
-                    <Copy className="h-3.5 w-3.5 text-orange-500" />
-                    Find similar names
-                    {duplicatePairs.length > 0 && (
-                      <span className="rounded-full bg-orange-100 border border-orange-200 text-orange-800 px-1.5 py-0.5 text-[10px]">
-                        {duplicatePairs.length}
-                      </span>
-                    )}
-                  </button>
+                  <p className="text-[11px] text-slate-700">
+                    {selectedSailors.length === 0
+                      ? "Tick rows to open bulk edit, merge, or delete."
+                      : "Bulk toolbar is open above the table."}
+                  </p>
+                  {duplicatePairs.length > 0 ? (
+                    <a
+                      href="/admin?area=sailors&view=duplicates"
+                      className="text-[11px] font-bold text-orange-800 hover:text-orange-900"
+                    >
+                      {duplicatePairs.length} possible duplicate{duplicatePairs.length === 1 ? "" : "s"}
+                    </a>
+                  ) : null}
                 </div>
 
                 {/* Bulk edit toolbar — only when at least one row is selected */}
@@ -443,105 +404,6 @@ export function AdminSailorsPanel(p: AdminSailorsPanelProps) {
                   onMergeSailors={handleMergeSailors}
                 />
                 )}
-
-                  {showDuplicateFinder && (
-                    <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)]/50 p-4 space-y-3">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <h4 className="text-xs font-bold text-[var(--sp-charcoal)] uppercase tracking-wider">
-                            Possible duplicate sailors
-                          </h4>
-                          <p className="text-[11px] text-[var(--sp-slate)] mt-1">
-                            Shows pairs with ≥60% match (jumbled names, partial names, same sail #).
-                            <span className="text-rose-700 font-semibold"> High ≥80%</span>
-                            {" · "}
-                            <span className="text-amber-700 font-semibold">Medium 60–79%</span>
-                            . Select both → Merge 2 selected.
-                          </p>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setShowDuplicateFinder(false)}
-                          className="text-[11px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
-                        >
-                          Hide
-                        </button>
-                      </div>
-                      {duplicatePairs.length === 0 ? (
-                        <p className="text-xs text-[var(--sp-muted)] py-4 text-center">
-                          No pairs at 60%+ similarity.
-                        </p>
-                      ) : (
-                        <ul className="space-y-2 max-h-72 overflow-y-auto">
-                          {duplicatePairs.slice(0, 60).map((p) => {
-                            const pct = Math.round(p.similarity * 100);
-                            const high = p.band === "high" || pct >= 80;
-                            return (
-                              <li
-                                key={`${p.a.id}-${p.b.id}`}
-                                className={`flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-lg border px-3 py-2 text-xs ${
-                                  high
-                                    ? "border-rose-200 bg-rose-50/60"
-                                    : "border-amber-200 bg-amber-50/60"
-                                }`}
-                              >
-                                <div className="min-w-0">
-                                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                                    <span
-                                      className={`rounded-full px-2 py-0.5 text-[10px] font-bold border ${
-                                        high
-                                          ? "bg-rose-100 text-rose-800 border-rose-300"
-                                          : "bg-amber-100 text-amber-800 border-amber-300"
-                                      }`}
-                                    >
-                                      {pct}% · {high ? "High" : "Medium"}
-                                    </span>
-                                    <span className="text-[10px] text-[var(--sp-muted)]">
-                                      {p.how}
-                                    </span>
-                                  </div>
-                                  <p className="text-[var(--sp-charcoal)] font-semibold truncate">
-                                    {p.a.name}
-                                    <span className="text-[var(--sp-slate)] font-mono text-[10px] ml-2">
-                                      {p.a.sailNumber || "—"}
-                                    </span>
-                                  </p>
-                                  <p className="text-[var(--sp-charcoal)] font-semibold truncate">
-                                    {p.b.name}
-                                    <span className="text-[var(--sp-slate)] font-mono text-[10px] ml-2">
-                                      {p.b.sailNumber || "—"}
-                                    </span>
-                                  </p>
-                                </div>
-                                <div className="flex flex-wrap gap-2 shrink-0">
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      setSelectedSailors([p.a.id, p.b.id]);
-                                      setDbSearch("");
-                                      setShowDuplicateFinder(true);
-                                    }}
-                                    className="rounded-full bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 text-[10px] font-bold text-white shadow-sm"
-                                  >
-                                    Select pair
-                                  </button>
-                                  <button
-                                    type="button"
-                                    onClick={() =>
-                                      ignoreDuplicatePair(p.a.id, p.b.id)
-                                    }
-                                    className="rounded-full border border-[var(--sp-cool-veil)] bg-white px-3 py-1.5 text-[10px] font-bold text-[var(--sp-slate)] hover:text-[var(--sp-charcoal)]"
-                                  >
-                                    Ignore
-                                  </button>
-                                </div>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      )}
-                    </div>
-                  )}
 
                   {bulkStatus && (
                     <div className="flex items-center gap-2 text-xs font-bold text-emerald-700">

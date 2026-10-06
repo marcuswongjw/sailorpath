@@ -1,7 +1,9 @@
 "use client";
 
-import { FileText, Globe, Link2, Loader2, Trash2, Trophy } from "lucide-react";
+import { useState } from "react";
+import { FileText, Link2, Loader2, Trash2 } from "lucide-react";
 import { sheetClassLabel, type GroupableRegatta } from "@/lib/admin/groupRegattaEvents";
+import type { PublicationReadiness } from "@/lib/admin/publicationReadiness";
 
 export type LinkableWeekend = {
   id: string;
@@ -47,13 +49,14 @@ export function AdminClassSheetCard({
   linkTarget = "",
   linking = false,
   publishing = false,
-  publishBlocked = false,
   onLinkTargetChange,
   onLink,
   onTogglePublish,
   onDelete,
   onEditDetails,
   onOpenResults,
+  onOpenCheck,
+  readiness,
 }: {
   sheet: GroupableRegatta;
   isShell?: boolean;
@@ -70,10 +73,37 @@ export function AdminClassSheetCard({
   onDelete?: () => void;
   onEditDetails: () => void;
   onOpenResults: () => void;
+  onOpenCheck?: () => void;
+  readiness?: PublicationReadiness | null;
 }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   const classLabel = isShell ? sheet.name : sheetClassLabel(sheet);
   const title = unassigned ? sheet.name || classLabel : classLabel;
   const status = sheet.status || "published";
+  const published = status === "published";
+  const primary = published
+    ? { label: "View results", run: onOpenResults }
+    : readiness &&
+        (readiness.summary === "publishable_ranking" ||
+          readiness.summary === "publishable_non_ranking")
+      ? { label: "Review and publish", run: onOpenCheck || onOpenResults }
+      : readiness?.checks.some((check) => check.code === "results-missing")
+        ? { label: "Enter results", run: onOpenResults }
+        : readiness
+          ? { label: "Review class", run: onEditDetails }
+          : { label: "Enter results", run: onOpenResults };
+  const readinessText = !readiness
+    ? null
+    : published
+      ? "Published"
+      : readiness.summary === "blocked"
+        ? "Blocked"
+        : readiness.summary === "incomplete"
+          ? "Needs work"
+          : readiness.summary === "publishable_non_ranking"
+            ? "Ready, non-ranking"
+            : "Ready to publish";
+  const showMenu = Boolean(onDelete) || (Boolean(onTogglePublish) && published);
   const meta = [
     unassigned ? classLabel : "",
     raceLabel(sheet.raceCount),
@@ -87,6 +117,9 @@ export function AdminClassSheetCard({
         <div className="min-w-0 flex-1">
           <h5 className="text-sm font-bold leading-snug text-slate-900">{title}</h5>
           <MetaLine items={meta} />
+          {readinessText ? (
+            <p className="mt-1 text-xs font-bold text-slate-800">{readinessText}</p>
+          ) : null}
           {sheet.slug ? (
             <p className="mt-0.5 truncate font-mono text-[11px] text-slate-500" title={sheet.slug}>
               {sheet.slug}
@@ -118,11 +151,11 @@ export function AdminClassSheetCard({
       {unassigned && isSuperadmin ? (
         <div className="mt-3 rounded-lg border border-dashed border-amber-200 bg-amber-50/70 p-2.5">
           <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-900">
-            Link to a main regatta event
+            Choose an event
           </p>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
             <label className="sr-only" htmlFor={`link-event-${sheet.id}`}>
-              Main regatta event for {title}
+              Event for {title}
             </label>
             <select
               id={`link-event-${sheet.id}`}
@@ -130,7 +163,7 @@ export function AdminClassSheetCard({
               onChange={(event) => onLinkTargetChange?.(event.target.value)}
               className="min-w-0 w-full flex-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-800"
             >
-              <option value="">Choose a main regatta event…</option>
+              <option value="">Choose an event…</option>
               {weekends.map((event) => (
                 <option key={event.id} value={event.id}>
                   {event.name} ({event.startDate})
@@ -151,57 +184,70 @@ export function AdminClassSheetCard({
       ) : null}
 
       <div className="mt-3 flex flex-wrap items-center justify-end gap-2 border-t border-slate-100 pt-3">
-        {isSuperadmin && onDelete ? (
-          <button
-            type="button"
-            aria-label={`Delete ${title}`}
-            onClick={onDelete}
-            className="inline-flex items-center gap-1 rounded-lg border border-rose-200 bg-rose-50 px-2.5 py-1.5 text-xs font-bold text-rose-800 shadow-xs transition-colors hover:bg-rose-100"
-          >
-            <Trash2 className="h-3 w-3" />
-            <span>Delete</span>
-          </button>
-        ) : null}
-        {isSuperadmin && onTogglePublish ? (
-          status === "draft" ? (
+        {showMenu ? (
+          <div className="relative">
             <button
               type="button"
-              disabled={publishing || publishBlocked}
-              onClick={onTogglePublish}
-              className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white shadow-xs transition-colors hover:bg-emerald-500 disabled:opacity-50"
-              title="Publish this sailing class to rankings and public results"
+              aria-expanded={menuOpen}
+              aria-haspopup="menu"
+              onClick={() => setMenuOpen((open) => !open)}
+              className="inline-flex min-h-11 items-center rounded-lg border border-slate-300 bg-white px-3 text-xs font-bold text-slate-800 hover:bg-slate-50"
             >
-              {publishing ? <Loader2 className="h-3 w-3 animate-spin" /> : <Globe className="h-3 w-3" />}
-              <span>Publish</span>
+              Class actions
             </button>
-          ) : (
-            <button
-              type="button"
-              disabled={publishing}
-              onClick={onTogglePublish}
-              className="inline-flex items-center gap-1 rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-xs transition-colors hover:bg-slate-50 disabled:opacity-50"
-              title="Revert to draft (hide from public views)"
-            >
-              {publishing ? <Loader2 className="h-3 w-3 animate-spin" /> : null}
-              <span>Unpublish</span>
-            </button>
-          )
+            {menuOpen ? (
+              <div
+                role="menu"
+                className="absolute right-0 z-20 mt-1 min-w-36 rounded-xl border border-slate-200 bg-white p-1 shadow-lg"
+              >
+                {published && onTogglePublish ? (
+                  <button
+                    type="button"
+                    role="menuitem"
+                    disabled={publishing}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onTogglePublish();
+                    }}
+                    className="flex min-h-11 w-full items-center rounded-lg px-3 text-left text-xs font-bold text-slate-800 hover:bg-slate-50 disabled:opacity-50"
+                  >
+                    {publishing ? <Loader2 className="mr-1 h-3 w-3 animate-spin" /> : null}
+                    Unpublish
+                  </button>
+                ) : null}
+                {onDelete ? (
+                  <button
+                    type="button"
+                    role="menuitem"
+                    aria-label={`Delete ${title}`}
+                    onClick={() => {
+                      setMenuOpen(false);
+                      onDelete();
+                    }}
+                    className="flex min-h-11 w-full items-center gap-1 rounded-lg px-3 text-left text-xs font-bold text-rose-800 hover:bg-rose-50"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                    Delete
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
         ) : null}
         <button
           type="button"
           onClick={onEditDetails}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-bold text-slate-800 shadow-xs transition-colors hover:bg-slate-50"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 text-xs font-bold text-slate-800 hover:bg-slate-50"
         >
           <FileText className="h-3 w-3 text-slate-600" />
-          <span>Edit Details</span>
+          <span>Edit details</span>
         </button>
         <button
           type="button"
-          onClick={onOpenResults}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-orange-600 px-3 py-1.5 text-xs font-bold text-white shadow-sm transition-colors hover:bg-orange-500"
+          onClick={primary.run}
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-lg bg-orange-600 px-3 text-xs font-bold text-white shadow-sm hover:bg-orange-500"
         >
-          <Trophy className="h-3 w-3" />
-          <span>Results &amp; Scores</span>
+          {primary.label}
         </button>
       </div>
     </article>

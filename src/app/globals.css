@@ -348,7 +348,7 @@ body .border-white\/5, body .border-white\/10, body .border-white\/20, body .bor
 .bg-orange-600, .bg-orange-500, .bg-amber-500, .bg-amber-600,
 .bg-yellow-500, .bg-yellow-600, .bg-teal-500, .bg-teal-600,
 .bg-sky-500, .bg-sky-600, .bg-cyan-500, .bg-blue-500, .bg-blue-600,
-.bg-emerald-500, .bg-emerald-600, .bg-rose-500, .bg-rose-600, .bg-rose-600\/90,
+.bg-emerald-500, .bg-emerald-600, .bg-emerald-700, .bg-rose-500, .bg-rose-600, .bg-rose-600\/90,
 .sp-primary, .sp-btn-primary,
 .bg-harbour, .bg-harbour-shadow, .bg-harbour-mid,
 .bg-\[var\(--sp-harbour-teal\)\], .bg-\[var\(--sp-harbour-shadow\)\], .bg-\[var\(--sp-color-teal\)\],
@@ -359,6 +359,32 @@ body [class*="bg-\[var\(--sp-harbour-shadow\)\]"],
 body [class*="bg-\[var\(--sp-harbour-shadow\)\]"] *,
 body .bg-harbour *,
 body .bg-harbour-shadow * { color: #fff !important; }
+
+/* Pale Tailwind text is unreadable on the warm-white admin canvas.
+   Specificity beats the slate bridge and stays below the harbour-teal white rule. */
+.admin-canvas .text-sky-100,
+.admin-canvas .text-sky-200,
+.admin-canvas .text-sky-300,
+.admin-canvas .text-sky-400 { color: #0c4a6e; }
+.admin-canvas .text-emerald-100,
+.admin-canvas .text-emerald-200,
+.admin-canvas .text-emerald-300,
+.admin-canvas .text-emerald-400 { color: #065f46; }
+.admin-canvas .text-amber-100,
+.admin-canvas .text-amber-200,
+.admin-canvas .text-amber-300,
+.admin-canvas .text-amber-400 { color: #92400e; }
+.admin-canvas .text-orange-100,
+.admin-canvas .text-orange-200,
+.admin-canvas .text-orange-300,
+.admin-canvas .text-orange-400 { color: #9a3412; }
+.admin-canvas .text-rose-200,
+.admin-canvas .text-rose-300,
+.admin-canvas .text-rose-400 { color: #9f1239; }
+.admin-canvas .text-violet-200,
+.admin-canvas .text-violet-300 { color: #5b21b6; }
+.admin-canvas .text-pink-300 { color: #9d174d; }
+.admin-canvas .text-cyan-300 { color: #155e75; }
 
 /* Restore proper contrast for dropdown menus, popovers, and light cards nested inside dark header/teal containers */
 body .bg-harbour [role="menu"],
