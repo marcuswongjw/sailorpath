@@ -20,16 +20,27 @@ vi.mock("next/link", () => ({
 }));
 
 describe("Techno293View", () => {
-  it("renders Techno 293 hub header and championship leaderboard", () => {
+  it("renders Techno 293 hub header and Regattas list by default", () => {
     render(<Techno293View />);
 
     expect(screen.getByText("Singapore Techno 293")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Regattas/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Regatta Standings/i })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Singapore Series/i })).toBeNull();
     expect(screen.getByRole("button", { name: /Class Specs/i })).toBeInTheDocument();
 
-    // Trevor Ng is the series leader
+    // Default tab is Regattas table
+    expect(screen.getByText("2025 Northeast Monsoon Grand Prix Series 2")).toBeInTheDocument();
+  });
+
+  it("switches to Overall Championship and displays series leader", () => {
+    render(<Techno293View />);
+
+    const champTab = screen.getByRole("button", { name: /Overall Championship/i });
+    fireEvent.click(champTab);
+
+    // Trevor Ng is the series leader in SW series
     expect(screen.getAllByText(/Trevor Ng/i).length).toBeGreaterThanOrEqual(1);
   });
 

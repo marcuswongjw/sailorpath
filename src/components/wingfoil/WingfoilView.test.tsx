@@ -20,27 +20,36 @@ vi.mock("next/link", () => ({
 }));
 
 describe("WingfoilView", () => {
-  it("renders WingFoil hub header and results", () => {
+  it("renders WingFoil hub header and Regattas list by default", () => {
     render(<WingfoilView />);
 
     expect(screen.getByText("WingFoil Racing")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Regattas/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Regatta Standings/i })).toBeInTheDocument();
-    expect(screen.getAllByText(/Kate En Rui Bateman/i).length).toBeGreaterThanOrEqual(1);
+
+    // Default tab is Regattas table
+    expect(screen.getByText("2025 Northeast Monsoon Grand Prix Series 2")).toBeInTheDocument();
   });
 
   it("verifies Singapore Series and Rules & Format tabs are dropped", () => {
     render(<WingfoilView />);
 
+    expect(screen.getByRole("button", { name: /Regattas/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Overall Championship/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Regatta Standings/i })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Singapore Series/i })).toBeNull();
     expect(screen.queryByRole("button", { name: /Rules & Format/i })).toBeNull();
   });
 
-  it("switches between NE Monsoon and SW Monsoon series championships", () => {
+  it("switches to Overall Championship and toggles between NE Monsoon and SW Monsoon series championships", () => {
     render(<WingfoilView />);
 
-    // By default, NE Monsoon is selected
+    // Switch to Overall Championship
+    const champTab = screen.getByRole("button", { name: /Overall Championship/i });
+    fireEvent.click(champTab);
+
+    // By default, NE Monsoon is selected in series view
     expect(screen.getByText("2026 Northeast Monsoon Grand Prix Series")).toBeInTheDocument();
 
     // Click the SW Monsoon GP switcher button

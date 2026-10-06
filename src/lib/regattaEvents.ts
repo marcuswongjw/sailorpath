@@ -19,6 +19,14 @@ import { isIlcaSeriesClass } from "@/lib/ilcaRanking";
  * regattas table.
  */
 
+import type {
+  PublicationStatus,
+  EventTimingStatus,
+  ResultAvailabilityStatus,
+  EventScheduleOccurrence,
+  EventDocument,
+} from "@/lib/types/regattaEventModel";
+
 export type RegattaEventSliceDef = {
   /** Value used in ?fleet= on the event hub page. */
   key: string;
@@ -46,6 +54,10 @@ export type RegattaEventSliceDef = {
   staticId?: string;
   /** Exact prize-schedule fleet name, when this slice has verified winners. */
   prizeFleetName?: string;
+  /** Result availability status override if known, otherwise derived from results count */
+  resultStatus?: ResultAvailabilityStatus;
+  /** Result type: fleet race, GPS challenge, marathon, etc. */
+  resultType?: string;
 };
 
 export type RegattaEventDef = {
@@ -61,6 +73,15 @@ export type RegattaEventDef = {
   registrationUrl?: string;
   scheduleSummary?: string;
   scoringRules?: string;
+  publicationStatus?: PublicationStatus;
+  schedules?: EventScheduleOccurrence[];
+  documents?: EventDocument[];
+  seriesLinks?: {
+    seriesId: string;
+    seriesName: string;
+    seriesSlug: string;
+    roundLabel: string;
+  }[];
   slices: RegattaEventSliceDef[];
 };
 
@@ -856,25 +877,173 @@ export const YOUTH_THAILAND_NATIONAL_SAILING_CHAMPIONSHIP_2026_EVENT: RegattaEve
 };
 
 const NE_MONSOON_2025_EVENTS: RegattaEventDef[] = [
-  { key: "series2", slug: "ne-monsoon-grand-prix-2025-series-2", name: "2025 Northeast Monsoon Grand Prix Series 2", dates: "8–9 February 2025" },
-  { key: "combined", slug: "ne-monsoon-grand-prix-2025-combined", name: "2025 Northeast Monsoon Grand Prix Combined Series", dates: "25 January – 9 February 2025" },
-  { key: "gps", slug: "ne-monsoon-grand-prix-2025-gps-speed-challenge", name: "2025 Northeast Monsoon Grand Prix Series 3 GPS Speed Challenge", dates: "25 January – 8 February 2025" },
-].map((entry) => ({
-  slug: entry.slug,
-  name: entry.name,
-  shortName: entry.name,
-  datesText: entry.dates,
-  venue: entry.key === "gps" ? "Singapore waters" : "Changi Beach Park CP 1 / Tanah Merah, Singapore",
-  organizer: "Singapore Sailing Federation",
-  noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/128729",
-  officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/10645/event",
-  websiteUrl: "https://www.sailing.org.sg/events/263406",
-  slices: [
-    { key: "windfoil", label: "Windfoil", series: "windsurfing", slugIncludes: [entry.slug + "-windfoil"] },
-    { key: "wingfoil", label: "Wingfoil", series: "wingfoil", staticId: entry.slug + "-wingfoil" },
-    { key: "techno293", label: "Techno 293", series: "techno293", staticId: entry.slug + "-techno293" },
-  ],
-}));
+  {
+    slug: "ne-monsoon-grand-prix-2025-series-2",
+    name: "2025 Northeast Monsoon Grand Prix Series 2",
+    shortName: "2025 NE Monsoon Series 2",
+    datesText: "8–9 February 2025",
+    venue: "Changi Beach Park CP 1 / Tanah Merah, Singapore",
+    organizer: "Singapore Sailing Federation",
+    noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/128729",
+    officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/10645/event",
+    websiteUrl: "https://www.sailing.org.sg/events/263406",
+    publicationStatus: "published",
+    schedules: [
+      {
+        sessionId: "weekend-1",
+        label: "Series 2 Racing",
+        startDate: "2025-02-08",
+        endDate: "2025-02-09",
+        venue: "Changi Beach Park CP 1 / Tanah Merah, Singapore",
+      },
+    ],
+    seriesLinks: [
+      {
+        seriesId: "ne-monsoon-2025",
+        seriesName: "2025 Northeast Monsoon Grand Prix",
+        seriesSlug: "ne-monsoon-2025",
+        roundLabel: "Series 2",
+      },
+    ],
+    slices: [
+      {
+        key: "windfoil",
+        label: "Windfoil",
+        series: "windsurfing",
+        slugIncludes: ["ne-monsoon-grand-prix-2025-series-2-windfoil"],
+        resultStatus: "provisional",
+        resultType: "Course Race",
+      },
+      {
+        key: "wingfoil",
+        label: "Wingfoil",
+        series: "wingfoil",
+        staticId: "ne-monsoon-grand-prix-2025-series-2-wingfoil",
+        resultStatus: "provisional",
+        resultType: "Sprint Slalom",
+      },
+      {
+        key: "techno293",
+        label: "Techno 293",
+        series: "techno293",
+        staticId: "ne-monsoon-grand-prix-2025-series-2-techno293",
+        resultStatus: "provisional",
+        resultType: "One Design",
+      },
+    ],
+  },
+  {
+    slug: "ne-monsoon-grand-prix-2025-gps-speed-challenge",
+    name: "2025 Northeast Monsoon Grand Prix Series 3 GPS Speed Challenge",
+    shortName: "2025 NE Monsoon GPS Speed Challenge",
+    datesText: "25 January – 8 February 2025",
+    venue: "Singapore waters",
+    organizer: "Singapore Sailing Federation",
+    noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/128729",
+    officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/10645/event",
+    websiteUrl: "https://www.sailing.org.sg/events/263406",
+    publicationStatus: "published",
+    schedules: [
+      {
+        sessionId: "gps-window",
+        label: "GPS Window",
+        startDate: "2025-01-25",
+        endDate: "2025-02-08",
+        venue: "Singapore waters",
+        isDateRange: true,
+      },
+    ],
+    seriesLinks: [
+      {
+        seriesId: "ne-monsoon-2025",
+        seriesName: "2025 Northeast Monsoon Grand Prix",
+        seriesSlug: "ne-monsoon-2025",
+        roundLabel: "Series 3 (GPS Challenge)",
+      },
+    ],
+    slices: [
+      {
+        key: "windfoil",
+        label: "Windfoil",
+        series: "windsurfing",
+        slugIncludes: ["ne-monsoon-grand-prix-2025-gps-speed-challenge-windfoil"],
+        resultStatus: "final",
+        resultType: "GPS Speed Challenge",
+      },
+      {
+        key: "wingfoil",
+        label: "Wingfoil",
+        series: "wingfoil",
+        staticId: "ne-monsoon-grand-prix-2025-gps-speed-challenge-wingfoil",
+        resultStatus: "final",
+        resultType: "GPS Speed Challenge",
+      },
+      {
+        key: "techno293",
+        label: "Techno 293",
+        series: "techno293",
+        staticId: "ne-monsoon-grand-prix-2025-gps-speed-challenge-techno293",
+        resultStatus: "final",
+        resultType: "GPS Speed Challenge",
+      },
+    ],
+  },
+  {
+    slug: "ne-monsoon-grand-prix-2025-combined",
+    name: "2025 Northeast Monsoon Grand Prix Combined Series",
+    shortName: "2025 NE Monsoon Combined Standings",
+    datesText: "25 January – 9 February 2025",
+    venue: "Changi Beach Park CP 1 / Tanah Merah, Singapore",
+    organizer: "Singapore Sailing Federation",
+    noticeOfRaceUrl: "https://www.racingrulesofsailing.org/documents/128729",
+    officialNoticeBoardUrl: "https://www.racingrulesofsailing.org/documents/10645/event",
+    websiteUrl: "https://www.sailing.org.sg/events/263406",
+    publicationStatus: "published",
+    schedules: [
+      {
+        sessionId: "combined-period",
+        label: "Championship Period",
+        startDate: "2025-01-25",
+        endDate: "2025-02-09",
+        venue: "Changi Beach Park CP 1 / Tanah Merah, Singapore",
+      },
+    ],
+    seriesLinks: [
+      {
+        seriesId: "ne-monsoon-2025",
+        seriesName: "2025 Northeast Monsoon Grand Prix",
+        seriesSlug: "ne-monsoon-2025",
+        roundLabel: "Combined Standings",
+      },
+    ],
+    slices: [
+      {
+        key: "windfoil",
+        label: "Windfoil",
+        series: "windsurfing",
+        slugIncludes: ["ne-monsoon-grand-prix-2025-combined-windfoil"],
+        resultStatus: "final",
+        resultType: "Combined Standings",
+      },
+      {
+        key: "wingfoil",
+        label: "Wingfoil",
+        series: "wingfoil",
+        staticId: "ne-monsoon-grand-prix-2025-combined-wingfoil",
+        resultStatus: "final",
+        resultType: "Combined Standings",
+      },
+      {
+        key: "techno293",
+        label: "Techno 293",
+        series: "techno293",
+        staticId: "ne-monsoon-grand-prix-2025-combined-techno293",
+        resultStatus: "final",
+        resultType: "Combined Standings",
+      },
+    ],
+  },
+];
 
 export const REGATTA_EVENTS: RegattaEventDef[] = [
   ...NE_MONSOON_2025_EVENTS,
@@ -1136,4 +1305,56 @@ export function defaultEventFleetKey(
     return (getStaticBoardRegatta(slice.def)?.results?.length ?? 0) > 0;
   });
   return withData?.def.key ?? slices[0]?.def.key ?? event.slices[0]?.key ?? "";
+}
+
+/**
+ * Returns exact result availability status for an event slice:
+ * - 'final' | 'provisional' | 'unavailable'
+ */
+export function getSliceResultAvailability(
+  slice: ResolvedEventSlice
+): {
+  status: ResultAvailabilityStatus;
+  competitorCount: number;
+  label: string;
+} {
+  if (slice.def.resultStatus) {
+    let count = 0;
+    if (slice.regatta?.totalFleetSize) {
+      count = slice.regatta.totalFleetSize;
+    } else {
+      const board = getStaticBoardRegatta(slice.def);
+      count = board?.results?.length ?? 0;
+    }
+    const label =
+      slice.def.resultStatus === "provisional"
+        ? `Provisional · ${count} competitors`
+        : slice.def.resultStatus === "final"
+        ? `Final · ${count} competitors`
+        : "Results unavailable";
+    return { status: slice.def.resultStatus, competitorCount: count, label };
+  }
+
+  if (slice.regatta) {
+    const count = slice.regatta.totalFleetSize || 0;
+    const isProv = slice.regatta.name.toLowerCase().includes("provisional");
+    const status: ResultAvailabilityStatus = isProv ? "provisional" : "final";
+    const label = `${isProv ? "Provisional" : "Final"} · ${count} competitors`;
+    return { status, competitorCount: count, label };
+  }
+
+  const board = getStaticBoardRegatta(slice.def);
+  if (board?.results?.length) {
+    const count = board.results.length;
+    const isProv = board.name.toLowerCase().includes("provisional");
+    const status: ResultAvailabilityStatus = isProv ? "provisional" : "final";
+    const label = `${isProv ? "Provisional" : "Final"} · ${count} competitors`;
+    return { status, competitorCount: count, label };
+  }
+
+  return {
+    status: "unavailable",
+    competitorCount: 0,
+    label: "Results unavailable",
+  };
 }

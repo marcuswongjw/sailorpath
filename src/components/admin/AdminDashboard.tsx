@@ -29,10 +29,12 @@ import {
   ADMIN_OPS_SUB_TABS,
   ADMIN_TAB_GROUPS,
   legacyToArea,
+  parseAdminArea,
   parseAdminNav,
   serializeAdminNav,
   type AdminActiveTab,
   type AdminEditSubTab,
+  type AdminEventsView,
 } from "@/components/admin/adminNav";
 import { adminLoginOrigin, adminReturnUrl } from "@/lib/adminHost";
 import { groupRegattaEvents, importTargetEvents } from "@/lib/admin/groupRegattaEvents";
@@ -40,6 +42,24 @@ import { confirmAdminLeave } from "@/components/admin/adminLeaveGuard";
 import { resolveAdminUrlChange } from "@/components/admin/adminNavigationSync";
 import { AdminSidebar, adminPageTitle } from "@/components/admin/AdminSidebar";
 import { AdminOverviewPanel } from "@/components/admin/AdminOverviewPanel";
+import { AdminMaintenancePanel } from "@/components/admin/AdminMaintenancePanel";
+import { AdminProductChangelogPanel } from "@/components/admin/AdminProductChangelogPanel";
+
+function eventsViewFrom(params: { get: (key: string) => string | null }): AdminEventsView {
+  const area = parseAdminArea(params);
+  if (area.area !== "events") return "card";
+  if (
+    area.view === "card" ||
+    area.view === "results" ||
+    area.view === "import" ||
+    area.view === "readiness" ||
+    area.view === "wingfoil" ||
+    area.view === "techno293"
+  ) {
+    return area.view;
+  }
+  return "card";
+}
 
 const TAB_ICONS: Record<AdminActiveTab, React.ComponentType<{ className?: string }>> = {
   overview: Gauge,
@@ -237,6 +257,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     suggestionsCount,
     claimedUpdatesCount,
     inboxNotifCount,
+    inboxLandingView,
   } = useAdminNotifications(isSuperadmin);
 
   const results = useAdminResults({
@@ -293,6 +314,9 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   const { setEditingResultId } = results;
 
   const [importSheetId, setImportSheetId] = useState<string | null>(null);
+  const [eventsView, setEventsView] = useState<AdminEventsView>(() =>
+    eventsViewFrom(searchParams)
+  );
   const [menuOpen, setMenuOpen] = useState(false);
   const currentSearch = searchParams.toString();
   const acceptedSearch = useRef(currentSearch);
@@ -302,9 +326,9 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   const adminShell =
     shellParam === "sidebar" || shellParam === "legacy"
       ? shellParam
-      : process.env.NEXT_PUBLIC_ADMIN_SHELL === "sidebar"
-        ? "sidebar"
-        : "legacy";
+      : process.env.NEXT_PUBLIC_ADMIN_SHELL === "legacy"
+        ? "legacy"
+        : "sidebar";
 
   // Seed results regatta from ?regattaId= before list default kicks in
   useEffect(() => {
@@ -358,6 +382,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     const parsed = parseAdminNav(searchParams);
     setActiveTab(parsed.tab);
     setEditSubTab(parsed.sub);
+    setEventsView(eventsViewFrom(searchParams));
     setSelectedRegattaIdForResultEdit(
       parsed.tab === "regattas" || parsed.tab === "import"
         ? parsed.regattaId || ""
@@ -397,8 +422,11 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
         event
       )
     );
-    if (adminShell === "sidebar" || shellParam === "legacy") {
-      params.set("shell", adminShell);
+    if (activeTab === "regattas" && eventsView === "readiness" && sheet) {
+      params.set("view", "readiness");
+    }
+    if (adminShell === "legacy") {
+      params.set("shell", "legacy");
     }
     const qs = params.toString();
     if (currentSearch !== acceptedSearch.current) return;
@@ -416,7 +444,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
     router,
     currentSearch,
     adminShell,
-    shellParam,
+    eventsView,
   ]);
 
   const goTab = useCallback((tab: AdminActiveTab) => {

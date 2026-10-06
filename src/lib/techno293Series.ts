@@ -176,40 +176,110 @@ function breakSeriesTie(
 
 export type Techno293SeriesKey = "sw-monsoon" | "ne-monsoon";
 
-export const TECHNO293_SERIES_OPTIONS: {
+export type Techno293SeriesMembership = {
   key: Techno293SeriesKey;
+  year: number;
   name: string;
   shortName: string;
   season: string;
   websiteUrl: string;
   noticeBoardUrl?: string;
-}[] = [
-  {
+  rounds: {
+    roundId: string;
+    roundNumber: number;
+    roundLabel: string;
+    contributesToScoring: boolean;
+  }[];
+};
+
+export const TECHNO293_SERIES_DEFINITIONS: Record<Techno293SeriesKey, Techno293SeriesMembership> = {
+  "sw-monsoon": {
     key: "sw-monsoon",
+    year: 2026,
     name: "2026 Southwest Monsoon Grand Prix Series",
     shortName: "SW Monsoon GP (GP1 - GP3)",
     season: "Jul – Oct 2026",
     websiteUrl: "https://www.sailing.org.sg/events/357398",
+    rounds: [
+      {
+        roundId: "techno-sw-gp1-2026",
+        roundNumber: 1,
+        roundLabel: "GP1",
+        contributesToScoring: true,
+      },
+      {
+        roundId: "techno-sw-gp2-2026",
+        roundNumber: 2,
+        roundLabel: "GP2",
+        contributesToScoring: true,
+      },
+      {
+        roundId: "techno-sw-gp3-2026",
+        roundNumber: 3,
+        roundLabel: "GP3",
+        contributesToScoring: true,
+      },
+    ],
   },
-  {
+  "ne-monsoon": {
     key: "ne-monsoon",
+    year: 2026,
     name: "2026 Northeast Monsoon Grand Prix Series",
     shortName: "NE Monsoon GP (GP1 - GP3)",
     season: "Jan – Mar 2026",
     websiteUrl: "https://www.sailing.org.sg/events/329256",
+    rounds: [
+      {
+        roundId: "techno-ne-gp1-2026",
+        roundNumber: 1,
+        roundLabel: "GP1",
+        contributesToScoring: true,
+      },
+      {
+        roundId: "techno-ne-gp2-2026",
+        roundNumber: 2,
+        roundLabel: "GP2",
+        contributesToScoring: true,
+      },
+      {
+        roundId: "techno-ne-gp3-2026",
+        roundNumber: 3,
+        roundLabel: "GP3",
+        contributesToScoring: true,
+      },
+    ],
   },
-];
+};
+
+export const TECHNO293_SERIES_OPTIONS = Object.values(TECHNO293_SERIES_DEFINITIONS).map((def) => ({
+  key: def.key,
+  name: def.name,
+  shortName: def.shortName,
+  season: def.season,
+  websiteUrl: def.websiteUrl,
+  noticeBoardUrl: def.noticeBoardUrl,
+}));
 
 export function isTechnoNEMonsoonRegatta(regatta: Techno293Regatta): boolean {
   if (!regatta) return false;
+  const neDef = TECHNO293_SERIES_DEFINITIONS["ne-monsoon"];
+  if (neDef.rounds.some((r) => r.roundId === regatta.id)) return true;
+
   const s = `${regatta.id} ${regatta.name} ${regatta.shortName} ${regatta.seriesName || ""}`.toLowerCase();
+  // Explicitly reject 2025 and SW events
+  if (s.includes("2025") || regatta.dates?.includes("2025")) return false;
   if (s.includes("sw-") || s.includes("southwest") || s.includes("sw monsoon")) return false;
   return s.includes("northeast") || s.includes("ne monsoon") || s.includes("ne-monsoon");
 }
 
 export function isTechnoSWMonsoonRegatta(regatta: Techno293Regatta): boolean {
   if (!regatta) return false;
+  const swDef = TECHNO293_SERIES_DEFINITIONS["sw-monsoon"];
+  if (swDef.rounds.some((r) => r.roundId === regatta.id)) return true;
+
   const s = `${regatta.id} ${regatta.name} ${regatta.shortName} ${regatta.seriesName || ""}`.toLowerCase();
+  // Explicitly reject 2025 and NE events
+  if (s.includes("2025") || regatta.dates?.includes("2025")) return false;
   if (s.includes("ne-") || s.includes("northeast") || s.includes("ne monsoon")) return false;
   return s.includes("southwest") || s.includes("sw monsoon") || s.includes("sw-monsoon");
 }
@@ -226,22 +296,48 @@ export function calculateTechno293SeriesResults(
     seriesKeyOrName.toLowerCase().includes("northeast") ||
     seriesKeyOrName.toLowerCase().includes("ne monsoon");
 
-  const seriesName = isNE
+  const seriesKey: Techno293SeriesKey = isNE ? "ne-monsoon" : "sw-monsoon";
+  const seriesDef = TECHNO293_SERIES_DEFINITIONS[seriesKey];
+
+  const seriesName = seriesDef
+    ? seriesDef.name
+    : isNE
     ? "2026 Northeast Monsoon Grand Prix Series"
     : "2026 Southwest Monsoon Grand Prix Series";
 
-  const filterFn = isNE ? isTechnoNEMonsoonRegatta : isTechnoSWMonsoonRegatta;
+  // Filter regattas belonging to this series via explicit membership if defined
+  let seriesRegattas: Techno293Regatta[] = [];
+  if (seriesDef) {
+    const regattasById = new Map<string, Techno293Regatta>();
+    for (const r of regattas) {
+      if (r && r.id) regattasById.set(r.id, r);
+    }
+    const explicitRounds: Techno293Regatta[] = [];
+    for (const roundConfig of seriesDef.rounds) {
+      if (!roundConfig.contributesToScoring) continue;
+      const matched = regattasById.get(roundConfig.roundId);
+      if (matched) {
+        explicitRounds.push(matched);
+      }
+    }
+    if (explicitRounds.length > 0) {
+      seriesRegattas = explicitRounds;
+    }
+  }
 
-  // Filter regattas belonging to this series and sort in chronological order (GP1 -> GP2 -> GP3)
-  const seriesRegattas = regattas
-    .filter(filterFn)
-    .sort((a, b) => {
-      const getNum = (r: Techno293Regatta) => {
-        const m = (r.seriesPart || r.shortName || r.name).match(/([123])/);
-        return m ? parseInt(m[1], 10) : 0;
-      };
-      return getNum(a) - getNum(b);
-    });
+  // Fallback for custom or fixture arrays passed in tests
+  if (seriesRegattas.length === 0) {
+    const filterFn = isNE ? isTechnoNEMonsoonRegatta : isTechnoSWMonsoonRegatta;
+    seriesRegattas = regattas
+      .filter(filterFn)
+      .sort((a, b) => {
+        const getNum = (r: Techno293Regatta) => {
+          const m = (r.seriesPart || r.shortName || r.name).match(/([123])/);
+          return m ? parseInt(m[1], 10) : 0;
+        };
+        return getNum(a) - getNum(b);
+      });
+  }
 
   const rounds: Techno293RoundSummary[] = [];
   const rawCompetitorsMap = new Map<

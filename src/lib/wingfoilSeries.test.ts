@@ -290,6 +290,34 @@ describe("isNEMonsoonSeriesRegatta", () => {
         shortName: "SNSC 2026",
       }))
     ).toBe(false);
+
+    // Strictly excludes 2025 NE events
+    expect(
+      isNEMonsoonSeriesRegatta(testRegatta({
+        id: "ne-monsoon-grand-prix-2025-series-2-wingfoil",
+        name: "2025 Northeast Monsoon Grand Prix Series 2",
+        shortName: "NE GP2 2025",
+        dates: "8–9 February 2025",
+      }))
+    ).toBe(false);
+
+    expect(
+      isNEMonsoonSeriesRegatta(testRegatta({
+        id: "ne-monsoon-grand-prix-2025-combined-wingfoil",
+        name: "2025 Northeast Monsoon Grand Prix Combined Series",
+        shortName: "NE Combined 2025",
+        dates: "25 January – 9 February 2025",
+      }))
+    ).toBe(false);
+
+    expect(
+      isNEMonsoonSeriesRegatta(testRegatta({
+        id: "ne-monsoon-grand-prix-2025-gps-speed-challenge-wingfoil",
+        name: "2025 Northeast Monsoon Grand Prix Series 3 GPS Speed Challenge",
+        shortName: "NE GPS 2025",
+        dates: "25 January – 8 February 2025",
+      }))
+    ).toBe(false);
   });
 });
 
@@ -489,5 +517,18 @@ describe("calculateWingfoilSeries with sw-monsoon", () => {
     const third = snsc?.results?.[2];
     expect(third?.name).toBe("Mason Qifeng Lau");
     expect(third?.nettScore).toBe(26);
+  });
+
+  it("strictly excludes imported 2025 rounds when calculating 2026 NE Monsoon championship", () => {
+    const res = calculateWingfoilSeries(SINGAPORE_WINGFOIL_REGATTAS, "ne-monsoon");
+    // Explicit rounds should be GP1, GP2, GP3 of 2026 only
+    expect(res.rounds.map((r) => r.id)).toEqual([
+      "ne-monsoon-series-gp1-2026",
+      "ne-monsoon-series-gp2-2026",
+      "ne-monsoon-series-gp3-2026",
+    ]);
+    // GP1 has 20 races; 2025 GP2 (20 races) must not leak in
+    expect(res.totalRacesCompleted).toBe(20);
+    expect(res.rounds.find((r) => r.id.includes("2025"))).toBeUndefined();
   });
 });

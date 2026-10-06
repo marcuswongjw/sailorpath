@@ -21,6 +21,8 @@ import {
 } from "@/lib/techno293";
 import { EventFacts } from "@/components/EventFacts";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
+import { getClassRegattas } from "@/lib/publicDataLoader";
+import { ClassRegattaListTable } from "@/components/common/ClassRegattaListTable";
 import { Techno293SeriesView } from "./Techno293SeriesView";
 
 export function Techno293View({
@@ -46,8 +48,8 @@ export function Techno293View({
 
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
   const [activeTab, setActiveTab] = useState<
-    "series" | "results" | "specs"
-  >("series");
+    "regattas" | "series" | "results" | "specs"
+  >("regattas");
 
   useEffect(() => {
     let cancelled = false;
@@ -129,6 +131,18 @@ export function Techno293View({
         <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] shrink-0 shadow-xs">
           <button
             type="button"
+            onClick={() => setActiveTab("regattas")}
+            className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              activeTab === "regattas"
+                ? "bg-[var(--sp-harbour-teal)] text-white font-black shadow-xs"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)] hover:bg-[var(--sp-sailcloth)]"
+            }`}
+          >
+            <Calendar className="h-3.5 w-3.5" />
+            <span>Regattas</span>
+          </button>
+          <button
+            type="button"
             onClick={() => setActiveTab("series")}
             className={`px-3 sm:px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
               activeTab === "series"
@@ -165,6 +179,14 @@ export function Techno293View({
           </button>
         </div>
       </div>
+
+      {/* Tab 0: Regattas List (Default Class View) */}
+      {activeTab === "regattas" && (
+        <ClassRegattaListTable
+          classNameTitle="Techno 293"
+          regattas={getClassRegattas("techno293")}
+        />
+      )}
 
       {/* Tab 1: Overall Championship */}
       {activeTab === "series" && (

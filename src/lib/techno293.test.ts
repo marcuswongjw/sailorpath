@@ -26,7 +26,7 @@ describe("Techno 293 data and utilities", () => {
 
   it("sorts regattas in reverse chronological order (latest first)", () => {
     const sorted = sortTechno293Regattas(SINGAPORE_TECHNO293_REGATTAS);
-    expect(sorted).toHaveLength(8);
+    expect(sorted).toHaveLength(11);
     expect(sorted[0].shortName).toBe("SW Monsoon GP3");
     expect(sorted[1].shortName).toBe("SNSC 2026");
     expect(sorted[2].shortName).toBe("SW Monsoon GP2");
@@ -35,6 +35,9 @@ describe("Techno 293 data and utilities", () => {
     expect(sorted[5].shortName).toBe("NE Monsoon GP2");
     expect(sorted[6].shortName).toBe("NE Monsoon GP1");
     expect(sorted[7].shortName).toBe("SNSC 2025");
+    expect(sorted[8].shortName).toBe("NE GP2 2025");
+    expect(sorted[9].shortName).toBe("NE Combined 2025");
+    expect(sorted[10].shortName).toBe("NE GPS 2025");
   });
 
   it("normalizes sailor names accurately", () => {

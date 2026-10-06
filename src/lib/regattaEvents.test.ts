@@ -5,6 +5,7 @@ import {
   eventHubHref,
   findEventSliceForRegattaSlug,
   getRegattaEvent,
+  getSliceResultAvailability,
   getStaticBoardRegatta,
   resolveEventSlices,
   sliceMatchesRegattaSlug,
@@ -452,5 +453,40 @@ describe("resolveEventSlices", () => {
     expect(ilca4Slice?.regatta?.totalFleetSize).toBe(46);
     expect(ilca6Slice?.regatta?.id).toBe("r-ilca6");
     expect(ilca6Slice?.regatta?.totalFleetSize).toBe(19);
+  });
+});
+
+describe("2025 NE Monsoon events and getSliceResultAvailability", () => {
+  it("resolves the 2025 NE Monsoon Series 2 event with schedules and provisional status", () => {
+    const event = getRegattaEvent("ne-monsoon-grand-prix-2025-series-2");
+    expect(event).toBeDefined();
+    expect(event?.name).toBe("2025 Northeast Monsoon Grand Prix Series 2");
+    expect(event?.schedules).toHaveLength(1);
+    expect(event?.schedules?.[0].startDate).toBe("2025-02-08");
+    expect(event?.schedules?.[0].endDate).toBe("2025-02-09");
+    expect(event?.seriesLinks?.[0].seriesId).toBe("ne-monsoon-2025");
+
+    const slices = resolveEventSlices(event!, []);
+    const wingfoilSlice = slices.find((s) => s.def.key === "wingfoil");
+    expect(wingfoilSlice).toBeDefined();
+    const avail = getSliceResultAvailability(wingfoilSlice!);
+    expect(avail.status).toBe("provisional");
+    expect(avail.competitorCount).toBe(17);
+    expect(avail.label).toContain("Provisional · 17 competitors");
+  });
+
+  it("resolves the 2025 NE Monsoon GPS Speed Challenge event as final", () => {
+    const event = getRegattaEvent("ne-monsoon-grand-prix-2025-gps-speed-challenge");
+    expect(event).toBeDefined();
+    expect(event?.schedules?.[0].isDateRange).toBe(true);
+    expect(event?.venue).toBe("Singapore waters");
+
+    const slices = resolveEventSlices(event!, []);
+    const technoSlice = slices.find((s) => s.def.key === "techno293");
+    expect(technoSlice).toBeDefined();
+    const avail = getSliceResultAvailability(technoSlice!);
+    expect(avail.status).toBe("final");
+    expect(avail.competitorCount).toBe(5);
+    expect(avail.label).toContain("Final · 5 competitors");
   });
 });

@@ -113,5 +113,13 @@ describe("Techno 293 Series Scoring Engine", () => {
     const u17Div = series.divisions.find((d) => d.division.id === "u17");
     expect(u17Div?.isConstituted).toBe(true);
     expect(u17Div?.champion?.name).toBe("Trevor Ng");
+
+    // Strictly excludes 2025 rounds
+    expect(series.rounds.map((r) => r.id)).toEqual([
+      "techno-ne-gp1-2026",
+      "techno-ne-gp2-2026",
+      "techno-ne-gp3-2026",
+    ]);
+    expect(series.rounds.find((r) => r.id.includes("2025"))).toBeUndefined();
   });
 });

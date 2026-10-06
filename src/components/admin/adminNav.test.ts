@@ -9,9 +9,9 @@ import {
 } from "./adminNav";
 
 describe("parseAdminNav", () => {
-  it("defaults to Database → Sailors", () => {
+  it("defaults to Overview", () => {
     expect(parseAdminNav(new URLSearchParams())).toEqual({
-      tab: "edit",
+      tab: "overview",
       sub: "sailors",
       regattaId: null,
     });
@@ -27,8 +27,8 @@ describe("parseAdminNav", () => {
       "techno293"
     );
     expect(parseAdminNav(new URLSearchParams("tab=changelog"))).toEqual({
-      tab: "ops",
-      sub: "audit",
+      tab: "changelog",
+      sub: "sailors",
       regattaId: null,
     });
   });
@@ -143,10 +143,13 @@ describe("serializeAdminNav", () => {
       "area=insights&view=metrics"
     );
     expect(serializeAdminNav({ tab: "wingfoil", sub: "sailors" })).toBe(
-      "area=insights&view=wingfoil"
+      "area=events&view=wingfoil"
+    );
+    expect(serializeAdminNav({ tab: "ilca", sub: "sailors" })).toBe(
+      "area=sailors&view=ilca"
     );
     expect(serializeAdminNav({ tab: "changelog", sub: "sailors" })).toBe(
-      "area=settings&view=audit"
+      "area=settings&view=changelog"
     );
   });
 });
@@ -207,13 +210,25 @@ describe("canonical admin areas", () => {
     expect(parseAdminArea(new URLSearchParams("tab=analysis")).view).toBe("optimist");
     expect(parseAdminArea(new URLSearchParams("tab=changelog"))).toEqual({
       area: "settings",
-      view: "audit",
+      view: "changelog",
       event: null,
       sheet: null,
     });
     expect(
       parseAdminArea(new URLSearchParams("area=settings&view=changelog")).view
-    ).toBe("audit");
+    ).toBe("changelog");
+    expect(parseAdminArea(new URLSearchParams("tab=ilca"))).toMatchObject({
+      area: "sailors",
+      view: "ilca",
+    });
+    expect(parseAdminArea(new URLSearchParams("tab=wingfoil"))).toMatchObject({
+      area: "events",
+      view: "wingfoil",
+    });
+    expect(parseAdminArea(new URLSearchParams("tab=techno293"))).toMatchObject({
+      area: "events",
+      view: "techno293",
+    });
   });
 
   it("keeps all four Sailors views inside the Sailors workspace", () => {
@@ -229,6 +244,9 @@ describe("canonical admin areas", () => {
     expect(
       parseAdminNav(new URLSearchParams("area=sailors&view=selection"))
     ).toMatchObject({ tab: "edit", sub: "selection" });
+    expect(
+      parseAdminNav(new URLSearchParams("area=sailors&view=ilca"))
+    ).toMatchObject({ tab: "ilca" });
     expect(
       parseAdminNav(new URLSearchParams("tab=ops&sub=promote"))
     ).toMatchObject({ tab: "edit", sub: "promotions" });

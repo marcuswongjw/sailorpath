@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import {
   Wind,
   Trophy,
+  Calendar,
 } from "lucide-react";
 import { EventFacts } from "@/components/EventFacts";
 import {
@@ -14,6 +15,8 @@ import {
   normalizeWingfoilCategory,
   type WingfoilRegatta,
 } from "@/lib/wingfoil";
+import { getClassRegattas } from "@/lib/publicDataLoader";
+import { ClassRegattaListTable } from "@/components/common/ClassRegattaListTable";
 import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { WingfoilSeriesView } from "./WingfoilSeriesView";
 
@@ -37,7 +40,7 @@ export function WingfoilView({
     return withResults ? withResults.id : list[0]?.id || SINGAPORE_WINGFOIL_REGATTAS[0].id;
   });
   const [genderFilter, setGenderFilter] = useState<"all" | "M" | "F">("all");
-  const [activeTab, setActiveTab] = useState<"series" | "results">("series");
+  const [activeTab, setActiveTab] = useState<"regattas" | "series" | "results">("regattas");
 
   // Re-hydrate from persistent storage and sync with server on mount
   useEffect(() => {
@@ -108,6 +111,18 @@ export function WingfoilView({
         <div className="flex items-center gap-1.5 rounded-xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] p-1 self-start lg:self-auto overflow-x-auto max-w-full shadow-xs">
           <button
             type="button"
+            onClick={() => setActiveTab("regattas")}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 ${
+              activeTab === "regattas"
+                ? "bg-[var(--sp-harbour-teal)] text-white shadow-xs font-black"
+                : "text-[var(--sp-slate-soft)] hover:text-[var(--sp-harbour-shadow)]"
+            }`}
+          >
+            <Calendar className="h-3.5 w-3.5" />
+            Regattas
+          </button>
+          <button
+            type="button"
             onClick={() => setActiveTab("series")}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 shrink-0 ${
               activeTab === "series"
@@ -132,7 +147,15 @@ export function WingfoilView({
         </div>
       </div>
 
-      {/* TAB 0: Overall Series Championship */}
+      {/* TAB 0: Regattas List (Default Class Page View) */}
+      {activeTab === "regattas" && (
+        <ClassRegattaListTable
+          classNameTitle="WingFoil"
+          regattas={getClassRegattas("wingfoil")}
+        />
+      )}
+
+      {/* TAB 1: Overall Series Championship */}
       {activeTab === "series" && (
         <WingfoilSeriesView
           regattas={publishedRegattas}

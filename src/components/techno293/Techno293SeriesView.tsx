@@ -107,13 +107,23 @@ export function Techno293SeriesView({
       <div className="relative overflow-hidden rounded-3xl bg-[var(--sp-warm-white)] border border-[var(--sp-cool-veil)] p-5 sm:p-7 shadow-xs">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 tracking-wide uppercase">
-              <Sparkles className="h-3.5 w-3.5 text-amber-600" />
-              Singapore Sailing Grand Prix Series
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 tracking-wide uppercase">
+                <Sparkles className="h-3.5 w-3.5 text-amber-600" />
+                Singapore Sailing Grand Prix Series
+              </span>
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[var(--sp-aqua-mist)] text-[var(--sp-harbour-teal)] border border-[var(--sp-harbour-teal)]/30">
+                Calculated standings
+              </span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight flex items-center gap-3">
               <span>{series.seriesName}</span>
             </h2>
+            {series.rounds.some((r) => r.status === "Upcoming" || r.raceCount === 0) && (
+              <p className="text-xs text-[var(--sp-charcoal-slate)]">
+                Includes completed rounds to date; upcoming rounds will update standings as results conclude.
+              </p>
+            )}
           </div>
 
           <div className="grid grid-cols-3 gap-2.5 sm:gap-3 shrink-0">

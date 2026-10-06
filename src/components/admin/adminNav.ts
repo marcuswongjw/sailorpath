@@ -31,7 +31,8 @@ export type AdminOpsSubTab =
   | "coaches"
   | "promote"
   | "support"
-  | "audit";
+  | "audit"
+  | "tools";
 
 /** Any Database or Ops sub-tab */
 export type AdminEditSubTab = AdminDbSubTab | AdminOpsSubTab;
@@ -51,20 +52,22 @@ export type AdminArea =
   | "insights"
   | "settings";
 
-export type AdminEventsView = "card" | "results" | "import" | "readiness";
+export type AdminEventsView =
+  | "card"
+  | "results"
+  | "import"
+  | "readiness"
+  | "wingfoil"
+  | "techno293";
 export type AdminSailorsView =
   | "directory"
   | "duplicates"
   | "promotions"
-  | "selection";
+  | "selection"
+  | "ilca";
 export type AdminInboxView = "suggestions" | "claims" | "coaches" | "support";
-export type AdminInsightsView =
-  | "optimist"
-  | "ilca"
-  | "wingfoil"
-  | "techno293"
-  | "metrics";
-export type AdminSettingsView = "audit";
+export type AdminInsightsView = "optimist" | "ilca" | "wingfoil" | "techno293" | "metrics";
+export type AdminSettingsView = "audit" | "changelog" | "tools";
 
 export type AdminAreaState = {
   area: AdminArea;
@@ -87,12 +90,15 @@ const EVENTS_VIEWS: readonly AdminEventsView[] = [
   "results",
   "import",
   "readiness",
+  "wingfoil",
+  "techno293",
 ];
 const SAILORS_VIEWS: readonly AdminSailorsView[] = [
   "directory",
   "duplicates",
   "promotions",
   "selection",
+  "ilca",
 ];
 const INBOX_VIEWS: readonly AdminInboxView[] = [
   "suggestions",
@@ -107,7 +113,11 @@ const INSIGHTS_VIEWS: readonly AdminInsightsView[] = [
   "techno293",
   "metrics",
 ];
-const SETTINGS_VIEWS: readonly AdminSettingsView[] = ["audit"];
+const SETTINGS_VIEWS: readonly AdminSettingsView[] = [
+  "audit",
+  "changelog",
+  "tools",
+];
 
 function isArea(v: string | null | undefined): v is AdminArea {
   return Boolean(v && (AREAS as readonly string[]).includes(v));
@@ -146,6 +156,7 @@ const OPS_SUBS: readonly AdminOpsSubTab[] = [
   "promote",
   "support",
   "audit",
+  "tools",
 ] as const;
 
 function isPrimaryTab(v: string | null | undefined): v is AdminActiveTab {
@@ -204,6 +215,7 @@ export function legacyToArea(state: AdminNavState): AdminAreaState {
       return blankArea("sailors", "directory");
     case "ops":
       if (state.sub === "promote") return blankArea("sailors", "promotions");
+      if (state.sub === "tools") return blankArea("settings", "tools");
       if (state.sub === "audit") return blankArea("settings", "audit");
       if (state.sub === "suggestions") return blankArea("inbox", "suggestions");
       if (state.sub === "coaches") return blankArea("inbox", "coaches");
@@ -212,17 +224,17 @@ export function legacyToArea(state: AdminNavState): AdminAreaState {
     case "analysis":
       return blankArea("insights", "optimist");
     case "ilca":
-      return blankArea("insights", "ilca");
+      return blankArea("sailors", "ilca");
     case "wingfoil":
-      return blankArea("insights", "wingfoil");
+      return { area: "events", view: "wingfoil", event: null, sheet: null };
     case "techno293":
-      return blankArea("insights", "techno293");
+      return { area: "events", view: "techno293", event: null, sheet: null };
     case "stats":
       return blankArea("insights", "metrics");
     case "changelog":
-      return blankArea("settings", "audit");
+      return blankArea("settings", "changelog");
     default:
-      return blankArea("sailors", "directory");
+      return blankArea("overview", "home");
   }
 }
 
@@ -234,6 +246,12 @@ export function areaToLegacy(state: AdminAreaState): AdminNavState {
       if (state.view === "import") {
         return { tab: "import", sub: "sailors", regattaId: sheet };
       }
+      if (state.view === "wingfoil") {
+        return { tab: "wingfoil", sub: "sailors", regattaId: null };
+      }
+      if (state.view === "techno293") {
+        return { tab: "techno293", sub: "sailors", regattaId: null };
+      }
       return { tab: "regattas", sub: "sailors", regattaId: sheet };
     case "sailors":
       if (state.view === "selection") {
@@ -244,6 +262,9 @@ export function areaToLegacy(state: AdminAreaState): AdminNavState {
       }
       if (state.view === "promotions") {
         return { tab: "edit", sub: "promotions", regattaId: null };
+      }
+      if (state.view === "ilca") {
+        return { tab: "ilca", sub: "sailors", regattaId: null };
       }
       return { tab: "edit", sub: "sailors", regattaId: null };
     case "inbox": {
@@ -267,11 +288,17 @@ export function areaToLegacy(state: AdminAreaState): AdminNavState {
       }
       return { tab: "analysis", sub: "sailors", regattaId: null };
     case "settings":
+      if (state.view === "changelog") {
+        return { tab: "changelog", sub: "sailors", regattaId: null };
+      }
+      if (state.view === "tools") {
+        return { tab: "ops", sub: "tools", regattaId: null };
+      }
       return { tab: "ops", sub: "audit", regattaId: null };
     case "overview":
       return { tab: "overview", sub: "sailors", regattaId: null };
     default:
-      return { tab: "edit", sub: "sailors", regattaId: null };
+      return { tab: "overview", sub: "sailors", regattaId: null };
   }
 }
 
@@ -298,6 +325,9 @@ function parseCanonical(params: ParamBag, area: AdminArea): AdminAreaState {
     EVENTS_VIEWS,
     sheet ? "results" : "card"
   );
+  if (view === "wingfoil" || view === "techno293") {
+    return { area, view, event: null, sheet: null };
+  }
   return { area, view, event, sheet };
 }
 
@@ -368,6 +398,10 @@ function parseLegacyNav(params: ParamBag): AdminNavState {
   let subRaw = params.get("sub");
   const regattaIdRaw =
     params.get("sheet")?.trim() || params.get("regattaId")?.trim() || null;
+
+  if (!tabRaw && !subRaw && !regattaIdRaw) {
+    return { tab: "overview", sub: "sailors", regattaId: null };
+  }
 
   // Results used to be a sibling tab. A sheet now opens inside Regattas.
   if (subRaw === "results") subRaw = "regattas";

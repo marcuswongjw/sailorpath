@@ -202,17 +202,114 @@ export function isSailorInDivision(
 }
 
 /**
+ * Explicit series membership definitions.
+ * Each series defines its year, name, and explicitly linked round regatta IDs in order.
+ */
+export type WingfoilSeriesMembership = {
+  key: WingfoilSeriesKey;
+  year: number;
+  name: string;
+  shortName: string;
+  description: string;
+  season: string;
+  websiteUrl: string;
+  noticeBoardUrl: string;
+  rounds: {
+    roundId: string;
+    roundNumber: number;
+    roundLabel: string;
+    contributesToScoring: boolean;
+  }[];
+};
+
+export const WINGFOIL_SERIES_DEFINITIONS: Record<WingfoilSeriesKey, WingfoilSeriesMembership> = {
+  "ne-monsoon": {
+    key: "ne-monsoon",
+    year: 2026,
+    name: "2026 Northeast Monsoon Grand Prix Series",
+    shortName: "NE Monsoon GP (GP1 - GP3)",
+    description: "",
+    season: "Jan – Mar 2026",
+    websiteUrl: "https://www.sailing.org.sg",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org",
+    rounds: [
+      {
+        roundId: "ne-monsoon-series-gp1-2026",
+        roundNumber: 1,
+        roundLabel: "GP1",
+        contributesToScoring: true,
+      },
+      {
+        roundId: "ne-monsoon-series-gp2-2026",
+        roundNumber: 2,
+        roundLabel: "GP2",
+        contributesToScoring: true,
+      },
+      {
+        roundId: "ne-monsoon-series-gp3-2026",
+        roundNumber: 3,
+        roundLabel: "GP3",
+        contributesToScoring: true,
+      },
+    ],
+  },
+  "sw-monsoon": {
+    key: "sw-monsoon",
+    year: 2026,
+    name: "2026 SW Monsoon Grand Prix Series",
+    shortName: "SW Monsoon GP (GP1 - GP3)",
+    description: "",
+    season: "Jul – Oct 2026",
+    websiteUrl: "https://www.sailing.org.sg/events/357398",
+    noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14698/event",
+    rounds: [
+      {
+        roundId: "sw-monsoon-series-gp1-2026",
+        roundNumber: 1,
+        roundLabel: "GP1",
+        contributesToScoring: true,
+      },
+      {
+        roundId: "sw-monsoon-series-gp2-2026",
+        roundNumber: 2,
+        roundLabel: "GP2",
+        contributesToScoring: true,
+      },
+      {
+        roundId: "sw-monsoon-series-gp3-2026",
+        roundNumber: 3,
+        roundLabel: "GP3",
+        contributesToScoring: true,
+      },
+    ],
+  },
+};
+
+/**
  * Filter strictly for 2026 Northeast Monsoon Grand Prix Series events (GP1, GP2, GP3).
- * Explicitly rejects Southwest Monsoon and non-series regattas.
+ * Explicitly rejects 2025 rounds, Southwest Monsoon, and non-series regattas.
  */
 export function isNEMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
   if (!regatta) return false;
+  const neDef = WINGFOIL_SERIES_DEFINITIONS["ne-monsoon"];
+  if (neDef.rounds.some((r) => r.roundId === regatta.id)) return true;
+
+  // Fallback for dynamically passed test fixtures or legacy IDs
   const id = (regatta.id || "").toLowerCase();
   const name = (regatta.name || "").toLowerCase();
   const shortName = (regatta.shortName || "").toLowerCase();
   const seriesName = (regatta.seriesName || "").toLowerCase();
 
-  // 1. Explicitly reject Southwest Monsoon or other non-NE events
+  // Explicitly reject 2025 events and SW events
+  if (
+    id.includes("2025") ||
+    name.includes("2025") ||
+    shortName.includes("2025") ||
+    regatta.dates?.includes("2025")
+  ) {
+    return false;
+  }
+
   if (
     id.includes("sw-") ||
     shortName.includes("sw ") ||
@@ -222,7 +319,6 @@ export function isNEMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
     return false;
   }
 
-  // 2. Must specifically match Northeast Monsoon or NE Monsoon
   const isNE =
     seriesName.includes("northeast") ||
     seriesName.includes("ne monsoon") ||
@@ -233,7 +329,6 @@ export function isNEMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
 
   if (!isNE) return false;
 
-  // 3. Strictly limited to GP1, GP2, and GP3
   const isGP123 =
     /\b(gp\s*[123]|round\s*[123]|gp[123]|prix\s*[123])\b/i.test(name) ||
     /\b(gp\s*[123]|gp[123])\b/i.test(shortName) ||
@@ -248,12 +343,25 @@ export function isNEMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
  */
 export function isSWMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
   if (!regatta) return false;
+  const swDef = WINGFOIL_SERIES_DEFINITIONS["sw-monsoon"];
+  if (swDef.rounds.some((r) => r.roundId === regatta.id)) return true;
+
+  // Fallback for dynamically passed test fixtures or legacy IDs
   const id = (regatta.id || "").toLowerCase();
   const name = (regatta.name || "").toLowerCase();
   const shortName = (regatta.shortName || "").toLowerCase();
   const seriesName = (regatta.seriesName || "").toLowerCase();
 
-  // 1. Explicitly reject Northeast Monsoon or other non-SW events
+  // Explicitly reject 2025 events and NE events
+  if (
+    id.includes("2025") ||
+    name.includes("2025") ||
+    shortName.includes("2025") ||
+    regatta.dates?.includes("2025")
+  ) {
+    return false;
+  }
+
   if (
     id.includes("ne-") ||
     shortName.includes("ne ") ||
@@ -263,7 +371,6 @@ export function isSWMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
     return false;
   }
 
-  // 2. Must specifically match Southwest Monsoon or SW Monsoon
   const isSW =
     seriesName.includes("southwest") ||
     seriesName.includes("sw monsoon") ||
@@ -274,7 +381,6 @@ export function isSWMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
 
   if (!isSW) return false;
 
-  // 3. Strictly limited to GP1, GP2, and GP3 (or Series 1, 2, 3)
   const isGP123 =
     /\b(gp\s*[123]|round\s*[123]|gp[123]|series\s*[123]|prix\s*[123])\b/i.test(name) ||
     /\b(gp\s*[123]|gp[123])\b/i.test(shortName) ||
@@ -285,34 +391,15 @@ export function isSWMonsoonSeriesRegatta(regatta: WingfoilRegatta): boolean {
 
 export type WingfoilSeriesKey = "ne-monsoon" | "sw-monsoon";
 
-export const WINGFOIL_SERIES_OPTIONS: {
-  key: WingfoilSeriesKey;
-  name: string;
-  shortName: string;
-  description: string;
-  season: string;
-  websiteUrl: string;
-  noticeBoardUrl: string;
-}[] = [
-  {
-    key: "ne-monsoon",
-    name: "2026 Northeast Monsoon Grand Prix Series",
-    shortName: "NE Monsoon GP (GP1 - GP3)",
-    description: "",
-    season: "Jan – Mar 2026",
-    websiteUrl: "https://www.sailing.org.sg",
-    noticeBoardUrl: "https://www.racingrulesofsailing.org",
-  },
-  {
-    key: "sw-monsoon",
-    name: "2026 SW Monsoon Grand Prix Series",
-    shortName: "SW Monsoon GP (GP1 - GP3)",
-    description: "",
-    season: "Jul – Oct 2026",
-    websiteUrl: "https://www.sailing.org.sg/events/357398",
-    noticeBoardUrl: "https://www.racingrulesofsailing.org/documents/14698/event",
-  },
-];
+export const WINGFOIL_SERIES_OPTIONS = Object.values(WINGFOIL_SERIES_DEFINITIONS).map((def) => ({
+  key: def.key,
+  name: def.name,
+  shortName: def.shortName,
+  description: def.description,
+  season: def.season,
+  websiteUrl: def.websiteUrl,
+  noticeBoardUrl: def.noticeBoardUrl,
+}));
 
 /**
  * Calculate overall series results across all Grand Prix rounds per official NoR 12.
@@ -321,26 +408,52 @@ export function calculateWingfoilSeries(
   allRegattas: WingfoilRegatta[],
   seriesKey: WingfoilSeriesKey = "ne-monsoon"
 ): WingfoilSeriesResult {
-  const isSW = seriesKey === "sw-monsoon";
-  const seriesName = isSW
+  const seriesDef = WINGFOIL_SERIES_DEFINITIONS[seriesKey];
+  const seriesName = seriesDef
+    ? seriesDef.name
+    : seriesKey === "sw-monsoon"
     ? "2026 SW Monsoon Grand Prix Series"
     : "2026 Northeast Monsoon Grand Prix Series";
 
-  const filterFn = isSW ? isSWMonsoonSeriesRegatta : isNEMonsoonSeriesRegatta;
+  // 1. Identify and order the Grand Prix rounds via explicit membership if defined
+  let seriesRounds: WingfoilRegatta[] = [];
 
-  // 1. Identify and order the Grand Prix rounds (GP1 -> GP2 -> GP3)
-  const seriesRounds = allRegattas
-    .filter(filterFn)
-    .sort((a, b) => {
-      const getNum = (str: string) => {
-        const m =
-          str.match(/gp\s*(\d)/i) ||
-          str.match(/round\s*(\d)/i) ||
-          str.match(/series\s*(\d)/i);
-        return m ? parseInt(m[1], 10) : 99;
-      };
-      return getNum(a.id || a.shortName) - getNum(b.id || b.shortName);
-    });
+  if (seriesDef) {
+    const regattasById = new Map<string, WingfoilRegatta>();
+    for (const r of allRegattas) {
+      if (r && r.id) regattasById.set(r.id, r);
+    }
+
+    const explicitRounds: WingfoilRegatta[] = [];
+    for (const roundConfig of seriesDef.rounds) {
+      if (!roundConfig.contributesToScoring) continue;
+      const matched = regattasById.get(roundConfig.roundId);
+      if (matched) {
+        explicitRounds.push(matched);
+      }
+    }
+
+    if (explicitRounds.length > 0) {
+      seriesRounds = explicitRounds;
+    }
+  }
+
+  // Fallback for custom or fixture arrays passed in tests
+  if (seriesRounds.length === 0) {
+    const filterFn = seriesKey === "sw-monsoon" ? isSWMonsoonSeriesRegatta : isNEMonsoonSeriesRegatta;
+    seriesRounds = allRegattas
+      .filter(filterFn)
+      .sort((a, b) => {
+        const getNum = (str: string) => {
+          const m =
+            str.match(/gp\s*(\d)/i) ||
+            str.match(/round\s*(\d)/i) ||
+            str.match(/series\s*(\d)/i);
+          return m ? parseInt(m[1], 10) : 99;
+        };
+        return getNum(a.id || a.shortName) - getNum(b.id || b.shortName);
+      });
+  }
 
   const roundsSummary: RoundSummary[] = [];
   let totalRacesCompleted = 0;

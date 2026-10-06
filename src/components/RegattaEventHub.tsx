@@ -4,10 +4,12 @@ import { EventFacts } from "@/components/EventFacts";
 import { DbOffline } from "@/components/DbOffline";
 import { PublicRegattaResults } from "@/components/PublicRegattaResults";
 import { RegattaPrizeWinners } from "@/components/RegattaPrizeWinners";
+import { RankMedalBadge } from "@/components/ui/RankMedalBadge";
 import { DbUnavailableError } from "@/db";
 import {
   defaultEventFleetKey,
   eventHubHref,
+  getSliceResultAvailability,
   getStaticBoardRegatta,
   resolveEventSlices,
   type RegattaEventDef,
@@ -53,23 +55,11 @@ function prizeViewForSlice(event: RegattaEventDef, slice: ResolvedEventSlice) {
 }
 
 function sliceStatusText(slice: ResolvedEventSlice): string {
-  if (slice.regatta) {
-    const parts = [`Fleet ${slice.regatta.totalFleetSize}`];
-    if (slice.regatta.raceCount != null) {
-      parts.push(
-        `${slice.regatta.raceCount} race${slice.regatta.raceCount === 1 ? "" : "s"}`
-      );
-    }
-    return parts.join(" · ");
-  }
-  if (slice.def.slugIncludes?.length || slice.def.alternateSlugIncludes?.length) {
+  const avail = getSliceResultAvailability(slice);
+  if (avail.status === "unavailable") {
     return "Results not published yet";
   }
-  const board = getStaticBoardRegatta(slice.def);
-  if (board?.results?.length) {
-    return `${board.results.length} entries · ${board.format}`;
-  }
-  return "Results not published yet";
+  return avail.label;
 }
 
 function EventLinkChip({
@@ -134,8 +124,42 @@ function BoardClassPanel({
     );
   }
 
+  const top3 = board.results.slice(0, 3);
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
+      {top3.length > 0 && (
+        <div className="space-y-2">
+          <h3 className="text-xs font-black uppercase tracking-wider text-[var(--sp-slate-soft)]">
+            Podium Finishers
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {top3.map((r) => (
+              <div
+                key={`${r.rank}-${r.name}`}
+                className="flex items-center gap-3 rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-3.5 shadow-2xs"
+              >
+                <RankMedalBadge rank={r.rank} className="h-7 w-7 text-xs" />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-bold text-[var(--sp-harbour-shadow)]">
+                    {r.name}
+                  </p>
+                  <p className="truncate text-xs text-[var(--sp-charcoal-slate)]">
+                    {[r.sailNumber, r.club || r.schoolName].filter(Boolean).join(" · ")}
+                  </p>
+                </div>
+                <div className="text-right">
+                  <span className="font-mono text-sm font-black text-[var(--sp-harbour-teal)]">
+                    {r.nettScore}
+                  </span>
+                  <span className="block text-[10px] text-[var(--sp-slate-soft)]">nett</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal-slate)] leading-relaxed">
         {board.dates} · {board.format} · {board.scoringSystem}
       </p>
@@ -190,8 +214,11 @@ function BoardResultsTable({ results }: { results: BoardResult[] }) {
               key={`${result.rank}-${result.sailNumber}-${result.name}`}
               className="border-t border-[var(--sp-cool-veil)] hover:bg-[var(--sp-sailcloth)]/50 transition-colors"
             >
-              <td className="px-3 py-3 text-center font-black tabular-nums text-[var(--sp-harbour-teal)]">
-                {result.rank}
+              <td className="px-3 py-3 text-center font-black tabular-nums">
+                <RankMedalBadge
+                  rank={result.rank}
+                  nonPodiumClassName="font-mono text-[var(--sp-harbour-teal)]"
+                />
               </td>
               <td className="px-3 py-3 font-bold text-[var(--sp-harbour-shadow)]">
                 {result.name}
@@ -376,6 +403,20 @@ export async function RegattaEventHub({ event, activeFleet, calendarView }: Prop
           <p className="text-[12px] sm:text-xs text-[var(--sp-charcoal)] leading-relaxed max-w-3xl">
             Scoring: {event.scoringRules}
           </p>
+        )}
+        {event.seriesLinks && event.seriesLinks.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+            <span className="font-bold text-[var(--sp-slate-soft)]">Series Championship:</span>
+            {event.seriesLinks.map((sl) => (
+              <span
+                key={sl.seriesId}
+                className="inline-flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50/70 px-2.5 py-1 text-amber-900 font-semibold"
+              >
+                <span>{sl.seriesName}</span>
+                <span className="text-amber-700 font-mono text-[11px] font-bold">({sl.roundLabel})</span>
+              </span>
+            ))}
+          </div>
         )}
       </header>
 
