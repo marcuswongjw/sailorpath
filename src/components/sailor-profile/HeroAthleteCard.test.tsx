@@ -78,7 +78,7 @@ describe("HeroAthleteCard", () => {
     expect(screen.getByText("Optimist logged")).toBeInTheDocument();
     expect(screen.getByText("6 awards")).toBeInTheDocument();
     expect(screen.getByText("View awards")).toBeInTheDocument();
-    expect(screen.getByLabelText("Optimist, 15 regattas")).toBeInTheDocument();
+    expect(screen.getByLabelText("Optimist")).toBeInTheDocument();
 
     expect(screen.getByText(/Dedicated youth Optimist sailor/)).toBeInTheDocument();
   });
@@ -151,11 +151,11 @@ describe("HeroAthleteCard", () => {
     );
 
     expect(screen.queryByText("Dual-class athlete")).not.toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: "Optimist, 14 regattas" })).toHaveAttribute(
+    expect(screen.getByRole("tab", { name: "Optimist" })).toHaveAttribute(
       "aria-selected",
       "true"
     );
-    const ilcaBtn = screen.getByRole("tab", { name: "ILCA 4, 2 regattas" });
+    const ilcaBtn = screen.getByRole("tab", { name: "ILCA 4" });
     await userEvent.click(ilcaBtn);
     expect(onSelectBoatClass).toHaveBeenCalledWith("ilca4");
   });
@@ -180,7 +180,7 @@ describe("HeroAthleteCard", () => {
       />
     );
 
-    expect(screen.getByLabelText("ILCA 4, 9 regattas")).toBeInTheDocument();
+    expect(screen.getByLabelText("ILCA 4")).toBeInTheDocument();
     expect(screen.queryByRole("tab", { name: /Optimist/ })).toBeNull();
     expect(screen.getByLabelText("12 of 36")).toBeInTheDocument();
     expect(screen.getByText("Recorded results")).toBeInTheDocument();
@@ -212,7 +212,7 @@ describe("HeroAthleteCard", () => {
       />
     );
 
-    expect(screen.getByLabelText("Techno 293, 4 regattas")).toBeInTheDocument();
+    expect(screen.getByLabelText("Techno 293")).toBeInTheDocument();
     expect(screen.getByText("Best finish")).toBeInTheDocument();
     expect(screen.getByText("2nd")).toBeInTheDocument();
     expect(screen.getByText("SNSC 2025")).toBeInTheDocument();
@@ -254,7 +254,7 @@ describe("HeroAthleteCard", () => {
     expect(screen.queryByText("Status")).toBeNull();
     expect(screen.queryByRole("tab", { name: /WingFoil/ })).toBeNull();
     await userEvent.click(
-      screen.getByRole("tab", { name: "Techno 293, 3 regattas" })
+      screen.getByRole("tab", { name: "Techno 293" })
     );
     expect(onSelectClass).toHaveBeenCalledWith("techno293");
   });

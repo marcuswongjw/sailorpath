@@ -268,7 +268,7 @@ export function SailorProfileView(props: SailorProfileViewProps) {
         }}
         onViewAwards={() => setSectionTab("awards")}
         medals={displayMedals}
-        classChoices={hasBoardResults ? classChoices : undefined}
+        classChoices={classChoices.length > 1 || hasBoardResults ? classChoices : undefined}
         selectedClassId={resultsTab}
         onSelectClass={(cls) => {
           setResultsTab(cls as typeof resultsTab);

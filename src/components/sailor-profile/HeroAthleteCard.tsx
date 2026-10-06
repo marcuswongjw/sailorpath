@@ -520,7 +520,7 @@ export function HeroAthleteCard({
                           onSelectBoatClass?.(choice.id);
                         }
                       }}
-                      aria-label={`${choice.label}, ${choice.count} regattas`}
+                      aria-label={choice.label}
                       className={`flex-1 sm:flex-none rounded-lg px-3 py-2 text-[13px] font-bold transition min-h-[40px] ${
                         selected
                           ? "bg-harbour text-sailcloth shadow-xs"
@@ -528,21 +528,16 @@ export function HeroAthleteCard({
                       }`}
                     >
                       {choice.label}
-                      <span className="mx-1.5">·</span>
-                      <span className="tabular-nums">{choice.count}</span>
                     </button>
                   );
                 })}
               </div>
             ) : (
               <p
-                aria-label={`${singleClass[1]}, ${singleClass[2]} regattas`}
+                aria-label={singleClass[1]}
                 className="inline-flex items-center rounded-xl bg-harbour px-3 py-2 text-[13px] font-bold text-sailcloth min-h-[40px]"
               >
                 {singleClass[1]}
-                <span className="mx-1.5 text-sailcloth/80">·</span>
-                <span className="tabular-nums">{singleClass[2]}</span>
-                <span className="sr-only"> regattas</span>
               </p>
             )}
             {boardSummary?.sharedDivision && (
