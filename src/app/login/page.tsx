@@ -1,18 +1,23 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { Suspense, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { safeAuthNext } from "@/lib/supabase/cookie-options";
 import { trackClientUsage } from "@/lib/clientUsage";
 
+const subscribeToHost = () => () => {};
+const getBrowserHost = () => window.location.hostname;
+const getServerHost = () => "";
+
 function LoginForm() {
   const searchParams = useSearchParams();
-  const [currentHost, setCurrentHost] = useState<string | undefined>(undefined);
-  useEffect(() => {
-    setCurrentHost(window.location.hostname);
-  }, []);
+  const currentHost = useSyncExternalStore(
+    subscribeToHost,
+    getBrowserHost,
+    getServerHost
+  );
   const nextTarget = safeAuthNext(
     searchParams.get("next"),
     "/account",

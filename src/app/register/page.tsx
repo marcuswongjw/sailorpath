@@ -1,21 +1,26 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { safeAuthNext } from "@/lib/supabase/cookie-options";
 import { trackClientUsage } from "@/lib/clientUsage";
 
+const subscribeToHost = () => () => {};
+const getBrowserHost = () => window.location.hostname;
+const getServerHost = () => "";
+
 function RegisterForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isCoachSignup = searchParams.get("role") === "coach";
   const nextFallback = isCoachSignup ? "/coach-tools" : "/account?welcome=1";
-  const [currentHost, setCurrentHost] = useState<string | undefined>(undefined);
-  useEffect(() => {
-    setCurrentHost(window.location.hostname);
-  }, []);
+  const currentHost = useSyncExternalStore(
+    subscribeToHost,
+    getBrowserHost,
+    getServerHost
+  );
   const nextTarget = safeAuthNext(
     searchParams.get("next"),
     nextFallback,
