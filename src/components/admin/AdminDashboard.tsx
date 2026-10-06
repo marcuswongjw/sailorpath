@@ -646,10 +646,10 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
   };
 
   return (
-    <div className={`admin-canvas mx-auto w-full min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12 flex-1 gap-4 sm:gap-6 lg:gap-8 overflow-x-clip ${
+    <div className={`admin-canvas mx-auto flex w-full min-w-0 flex-1 flex-col gap-4 overflow-x-clip px-3 py-4 sm:gap-6 sm:px-6 sm:py-8 lg:gap-8 lg:px-8 lg:py-12 ${
       adminShell === "sidebar"
         ? "max-w-[90rem] md:grid md:grid-cols-[15rem_minmax(0,1fr)] md:items-start"
-        : "max-w-7xl flex flex-col"
+        : "max-w-7xl"
     }`}>
       {adminShell === "sidebar" && (
         <a
@@ -660,7 +660,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
         </a>
       )}
       {/* Context Breadcrumb & Quick Info Bar */}
-      <div className="glass-panel rounded-2xl p-3 sm:p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <div className="glass-panel flex flex-col justify-between gap-3 rounded-2xl p-3 sm:p-4 md:col-span-2 md:flex-row md:items-center">
         <nav aria-label="Admin breadcrumb" className="flex items-center gap-1.5 text-xs flex-wrap min-w-0">
           <div className="flex items-center gap-1.5 shrink-0">
             <Shield className="h-4 w-4 text-orange-500" />
@@ -744,7 +744,7 @@ function AdminDashboardInner({ initialAuth }: { initialAuth?: InitialAdminAuth }
           <nav
             id="admin-nav"
             aria-label="Admin"
-            className={`${menuOpen ? "block" : "hidden"} md:sticky md:top-4 md:block md:row-span-6 rounded-2xl border border-slate-200 bg-white`}
+            className={`${menuOpen ? "block" : "hidden"} rounded-2xl border border-slate-200 bg-white md:sticky md:top-4 md:block md:self-start`}
           >
             <AdminSidebar
               activeArea={areaState.area}
