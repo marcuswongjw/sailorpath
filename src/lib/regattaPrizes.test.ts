@@ -215,6 +215,17 @@ describe("regattaPrizes", () => {
     expect(silver?.categories[0].winners[1].sailorName).toBe("Nigel Jiang Long Ng");
   });
 
+  it("matches NSC Cup 2 2025 without treating every 2025 slug as cup 2", () => {
+    expect(getRegattaPrizeSchedule("nsc-cup-2-2025")?.regattaSlug).toBe("nsc-cup-2-2025");
+    expect(getRegattaPrizeSchedule("nsc-cup-ii-2025")?.regattaSlug).toBe("nsc-cup-2-2025");
+    expect(getRegattaPrizeSchedule("nsc-cup-2-gold-may-25-2025-05-31")?.regattaSlug).toBe(
+      "nsc-cup-2-2025"
+    );
+    expect(getRegattaPrizeSchedule("nsc-cup-1-gold-mar-25-2025-03-22")).toBeNull();
+    expect(getRegattaPrizeSchedule("nsc-cup-2-2024")).toBeNull();
+    expect(getRegattaPrizeSchedule("nsc-2-ilca6-nov-24-2024-11-16")).toBeNull();
+  });
+
   it("keeps RSYC Knockout 2026 Gold off the Silver prize schedule", () => {
     expect(
       getRegattaPrizeSchedule("rsyc-optimist-silver-fleet-knockout-championship-2026")?.regattaSlug

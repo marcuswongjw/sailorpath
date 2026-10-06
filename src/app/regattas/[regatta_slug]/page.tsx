@@ -135,7 +135,8 @@ export default async function RegattaRedirectPage({
       permanentRedirect(
         eventHubHref(
           grouped.event.slug,
-          grouped.fleetKey || grouped.event.slices[0].key
+          grouped.fleetKey || grouped.event.slices[0].key,
+          calendarView === "past" ? "past" : undefined
         )
       );
     }

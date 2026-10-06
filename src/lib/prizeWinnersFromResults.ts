@@ -50,6 +50,10 @@ function isFemale(gender: string | null | undefined): boolean {
  * Rules we can apply from published results. Novice is omitted: the results
  * do not say who is sailing a ranking regatta for the first time.
  */
+const AND_UNDER =
+  /(\d+)\s*(?:&u\b|years?\s+old\s+and\s+under|years?\s+and\s+under|years?\s*&\s*under|and\s+under)\b/;
+const BORN_YEAR = /born(?:\s+in(?:\s+the\s+year)?)?\s+(\d{4})\b/;
+
 export function eligibilityForCategory(categoryName: string): Eligible | null {
   const name = categoryName.toLowerCase();
   if (/novice/.test(name)) return null;
@@ -65,13 +69,28 @@ export function eligibilityForCategory(categoryName: string): Eligible | null {
     };
   }
 
-  const later = name.match(/born(?: in)? (\d{4}) or later/);
+  const later = name.match(/born(?:\s+in(?:\s+the\s+year)?)?\s+(\d{4})\s+or\s+(?:later|after)/);
   if (later) {
     const from = Number(later[1]);
     return (row) => {
       const year = sailorYear(row);
       return year != null && year >= from;
     };
+  }
+
+  const namedBirth = name.match(BORN_YEAR);
+  if (AND_UNDER.test(name) && namedBirth) {
+    const from = Number(namedBirth[1]);
+    return (row) => {
+      const year = sailorYear(row);
+      return year != null && year >= from;
+    };
+  }
+
+  const exactBorn = name.match(/born in the year (\d{4})\b/);
+  if (exactBorn && !AND_UNDER.test(name)) {
+    const born = Number(exactBorn[1]);
+    return (row) => sailorYear(row) === born;
   }
 
   if (/^(overall|open)$/.test(name.trim())) return () => true;
@@ -99,12 +118,21 @@ export function eligibilityForCategory(categoryName: string): Eligible | null {
     };
   }
 
-  const under = name.match(/(\d+)\s*(?:&u|years?\s+and\s+under|years?\s*&\s*under)\b/);
+  const under = name.match(AND_UNDER);
   if (under) {
     const age = Number(under[1]);
     return (row, eventYear) => {
       const year = sailorYear(row);
       return year != null && Boolean(eventYear) && year >= eventYear - age;
+    };
+  }
+
+  const exactAge = name.match(/(\d+)\s+years?\s+old\b/);
+  if (exactAge && !AND_UNDER.test(name)) {
+    const age = Number(exactAge[1]);
+    return (row, eventYear) => {
+      const year = sailorYear(row);
+      return year != null && Boolean(eventYear) && year === eventYear - age;
     };
   }
 

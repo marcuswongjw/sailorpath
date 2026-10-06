@@ -5115,6 +5115,11 @@ export const ALL_REGATTA_PRIZE_SCHEDULES: RegattaPrizeSchedule[] = [
   SNSC_2025_PRIZE_SCHEDULE,
 ];
 
+function slugHasAdjacentTokens(slug: string, left: string, right: string): boolean {
+  const parts = slug.split("-");
+  return parts.some((part, index) => part === left && parts[index + 1] === right);
+}
+
 export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | null {
   const s = String(slug || "").toLowerCase();
   if (s.includes("rsyc") && s.includes("knockout") && s.includes("2026") && s.includes("gold")) {
@@ -5151,9 +5156,13 @@ export function getRegattaPrizeSchedule(slug: string): RegattaPrizeSchedule | nu
     return RAFFLES_MARINA_OPTIMIST_2025_PRIZE_SCHEDULE;
   }
   if (
-    s.includes("nsc-cup-2-2025") ||
-    s.includes("nsc-cup-ii-2025") ||
-    (s.includes("nsc") && s.includes("cup") && (s.includes("2") || s.includes("ii")) && s.includes("2025"))
+    s.includes("2025") &&
+    s.includes("nsc") &&
+    s.includes("cup") &&
+    (slugHasAdjacentTokens(s, "cup", "2") ||
+      slugHasAdjacentTokens(s, "cup", "ii") ||
+      slugHasAdjacentTokens(s, "nsc", "2") ||
+      slugHasAdjacentTokens(s, "nsc", "ii"))
   ) {
     return NSC_CUP_2_2025_PRIZE_SCHEDULE;
   }

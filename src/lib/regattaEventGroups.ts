@@ -361,13 +361,80 @@ export function savedEventHubForSlug(
   return { event, fleetKey: focus?.key ?? null };
 }
 
+function classFamiliesInSlug(slug: string): string[] {
+  const families: string[] = [];
+  if (/ilca-?4/.test(slug)) families.push("ilca-4");
+  else if (/ilca-?6/.test(slug)) families.push("ilca-6");
+  else if (/ilca-?7/.test(slug)) families.push("ilca-7");
+  else if (slug.includes("ilca")) families.push("ilca");
+  if (slug.includes("29er")) families.push("29er");
+  if (slug.includes("wingfoil") || slug.includes("wing-foil")) families.push("wingfoil");
+  if (slug.includes("techno")) families.push("techno");
+  if (slug.includes("iqfoil")) families.push("iqfoil");
+  if (slug.includes("gold")) families.push("gold");
+  if (slug.includes("silver")) families.push("silver");
+  if (slug.includes("optimist") && !families.includes("gold") && !families.includes("silver")) {
+    families.push("optimist");
+  }
+  return families;
+}
+
+function preferredSliceKeys(family: string): string[] {
+  switch (family) {
+    case "ilca-4":
+      return ["ilca-4"];
+    case "ilca-6":
+      return ["ilca-6"];
+    case "ilca-7":
+      return ["ilca-7"];
+    case "gold":
+      return ["optimist-gold", "gold"];
+    case "silver":
+      return ["optimist-silver", "silver"];
+    case "29er":
+      return ["29er"];
+    case "wingfoil":
+      return ["wingfoil"];
+    case "techno":
+      return ["techno-293"];
+    case "iqfoil":
+      return ["iqfoil"];
+    default:
+      return [];
+  }
+}
+
+/**
+ * A class alias such as `…-ilca4` keeps its fleet tab.
+ * The event slug itself, and aliases that name more than one class, stay on the bare hub.
+ */
+function fleetKeyForAliasedClassSlug(slug: string, event: RegattaEventDef): string | null {
+  const families = classFamiliesInSlug(slug);
+  if (families.length !== 1) return null;
+  const preferred = preferredSliceKeys(families[0]);
+  if (!preferred.length) return null;
+
+  const slice = findEventSliceForRegattaSlug(slug);
+  if (slice && slice.event.slug === event.slug && preferred.includes(slice.slice.key)) {
+    return slice.slice.key;
+  }
+  return event.slices.find((candidate) => preferred.includes(candidate.key))?.key ?? null;
+}
+
 /** Class result URLs for a multi-class regatta open the shared tabbed page. */
 export function hubHrefForClassSlug(
   slug: string,
   regattas: RegattaRecord[]
 ): string | null {
+  const requested = slug.toLowerCase();
   const direct = getRegattaEvent(slug);
-  if (direct) return `/regattas/${direct.slug}`;
+  if (direct) {
+    if (direct.slug !== requested) {
+      const fleetKey = fleetKeyForAliasedClassSlug(requested, direct);
+      if (fleetKey) return eventHubHref(direct.slug, fleetKey);
+    }
+    return `/regattas/${direct.slug}`;
+  }
   const slice = findEventSliceForRegattaSlug(slug);
   if (slice) return eventHubHref(slice.event.slug, slice.slice.key);
   const saved = savedEventHubForSlug(slug, regattas);

@@ -396,3 +396,45 @@ describe("groupedHubForSlug", () => {
     expect(hubHrefForClassSlug("snsc-2026", published)).toBe("/regattas/snsc-2026");
   });
 });
+
+describe("hubHrefForClassSlug aliases", () => {
+  it("keeps the fleet on a class alias and the bare hub on the event slug", () => {
+    expect(hubHrefForClassSlug("singapore-national-sailing-championships-2026-ilca4", [])).toBe(
+      "/regattas/snsc-2026?fleet=ilca-4"
+    );
+    expect(hubHrefForClassSlug("singapore-national-sailing-championships-2026-gold", [])).toBe(
+      "/regattas/snsc-2026?fleet=optimist-gold"
+    );
+    expect(hubHrefForClassSlug("singapore-national-sailing-championships-2026-silver", [])).toBe(
+      "/regattas/snsc-2026?fleet=optimist-silver"
+    );
+    expect(hubHrefForClassSlug("singapore-national-sailing-championships-2025-ilca4", [])).toBe(
+      "/regattas/snsc-2025?fleet=ilca-4"
+    );
+    expect(hubHrefForClassSlug("singapore-youth-sailing-championships-2026-ilca4", [])).toBe(
+      "/regattas/sysc-2026?fleet=ilca-4"
+    );
+    expect(hubHrefForClassSlug("singapore-youth-sailing-championships-2026-gold", [])).toBe(
+      "/regattas/sysc-2026?fleet=optimist-gold"
+    );
+    expect(hubHrefForClassSlug("singapore-youth-sailing-championships-2026-silver", [])).toBe(
+      "/regattas/sysc-2026?fleet=optimist-silver"
+    );
+    expect(hubHrefForClassSlug("snsc-2026", [])).toBe("/regattas/snsc-2026");
+    expect(hubHrefForClassSlug("singapore-national-sailing-championships-2026", [])).toBe(
+      "/regattas/snsc-2026"
+    );
+    expect(hubHrefForClassSlug("pesta-sukan-regatta-2026-optimist", [])).toBe(
+      "/regattas/pesta-sukan-2026"
+    );
+    expect(hubHrefForClassSlug("pesta-sukan-regatta-2026-ilca-wingfoil", [])).toBe(
+      "/regattas/pesta-sukan-2026"
+    );
+    expect(hubHrefForClassSlug("csc-ilca-29er-championships-2026", [])).toBe(
+      "/regattas/6th-csc-ilca-29er-open-2026"
+    );
+    expect(hubHrefForClassSlug("csc-ilca-29er-2026", [])).toBe(
+      "/regattas/6th-csc-ilca-29er-open-2026"
+    );
+  });
+});

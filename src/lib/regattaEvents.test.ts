@@ -286,6 +286,21 @@ describe("sliceMatchesRegattaSlug", () => {
     expect(sliceMatchesRegattaSlug(pesta25Silver, "pesta-sukan-silver-aug-25-2025-08-02")).toBe(true);
     expect(sliceMatchesRegattaSlug(pesta25Ilca4, "pesta-sukan-ilca-4-aug-25-2025-08-02")).toBe(true);
     expect(sliceMatchesRegattaSlug(pesta25Ilca6, "pesta-sukan-ilca-6-aug-25-2025-08-02")).toBe(true);
+    expect(sliceMatchesRegattaSlug(pesta25Ilca6, "pesta-sukan-ilca6-aug-25-2025-08-02")).toBe(true);
+    expect(sliceMatchesRegattaSlug(pesta25Ilca4, "pesta-sukan-ilca6-aug-25-2025-08-02")).toBe(false);
+  });
+
+  it("matches slugified ILCA 6 and ILCA 7 sheets without taking ILCA 4", () => {
+    const temasek = findEventSliceForRegattaSlug("temasek-ilca6-jun-26-2026-06-20");
+    expect(temasek?.event.slug).toBe("temasek-regatta-2026");
+    expect(temasek?.slice.key).toBe("ilca-6");
+    expect(findEventSliceForRegattaSlug("temasek-ilca-6-jun-26-2026-06-20")?.slice.key).toBe("ilca-6");
+    expect(findEventSliceForRegattaSlug("temasek-ilca7-jun-26-2026-06-20")?.slice.key).toBe("ilca-7");
+    expect(findEventSliceForRegattaSlug("temasek-ilca4-jun-26-2026-06-20")?.slice.key).toBe("ilca-4");
+    expect(findEventSliceForRegattaSlug("cincapura-2026-ilca6")?.slice.key).toBe("ilca-6");
+    expect(findEventSliceForRegattaSlug("cincapura-2026-ilca4")?.slice.key).toBe("ilca-4");
+    expect(findEventSliceForRegattaSlug("snsc-ilca6-sep-26-2026-09-11")?.slice.key).toBe("ilca-6");
+    expect(findEventSliceForRegattaSlug("snsc-ilca6-sep-26-2026-09-11")?.slice.key).not.toBe("ilca-4");
   });
 
   it("keeps the fuller Cincapura sheet when the fleet was imported twice", () => {

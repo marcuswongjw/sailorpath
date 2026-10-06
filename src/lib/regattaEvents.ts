@@ -1137,16 +1137,24 @@ export function getRegattaEvent(slug: string): RegattaEventDef | null {
   return REGATTA_EVENTS.find((event) => event.slug === canonical) ?? null;
 }
 
+/** `ilca-6` also matches the slugified form `ilca6`. Other tokens stay exact. */
+function slugHasToken(slug: string, token: string): boolean {
+  const wanted = token.toLowerCase();
+  if (slug.includes(wanted)) return true;
+  const ilca = wanted.match(/^ilca-(\d+)$/);
+  return ilca ? slug.includes(`ilca${ilca[1]}`) : false;
+}
+
 export function sliceMatchesRegattaSlug(
   slice: RegattaEventSliceDef,
   regattaSlug: string
 ): boolean {
   if (!slice.slugIncludes?.length && !slice.alternateSlugIncludes?.length) return false;
   const slug = String(regattaSlug || "").toLowerCase();
-  if (slice.slugExcludes?.some((token) => slug.includes(token))) return false;
+  if (slice.slugExcludes?.some((token) => slugHasToken(slug, token))) return false;
 
   const matchesAll = (tokens: string[]) =>
-    tokens.every((token) => slug.includes(token));
+    tokens.every((token) => slugHasToken(slug, token));
 
   if (slice.slugIncludes?.length && matchesAll(slice.slugIncludes)) {
     return true;
