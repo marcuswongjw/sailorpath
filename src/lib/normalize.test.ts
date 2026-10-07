@@ -5,6 +5,7 @@ import {
   normalizeDob,
   normalizeOptionalText,
   normalizeSailNumber,
+  optimistSailNumberForProfile,
   toNumber,
 } from "./normalize";
 
@@ -34,6 +35,13 @@ describe("normalize helpers", () => {
     expect(cleanOptimistSailNumber("")).toBe("0");
     expect(cleanOptimistSailNumber(null)).toBe("0");
     expect(cleanOptimistSailNumber("N/A")).toBe("0");
+  });
+
+  it("keeps a blank Optimist sail blank on a profile save", () => {
+    expect(optimistSailNumberForProfile("")).toBe("");
+    expect(optimistSailNumberForProfile("   ")).toBe("");
+    expect(optimistSailNumberForProfile(null)).toBe("");
+    expect(optimistSailNumberForProfile("SGP 3029")).toBe("3029");
   });
 
   it("normalizeOptionalText", () => {

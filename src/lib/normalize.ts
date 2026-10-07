@@ -21,6 +21,12 @@ export function normalizeSailNumber(v: unknown): string | null {
  * Drops non-numeric characters and strips leading zeros unless the number is purely 0.
  * Returns "0" if empty or no digits found.
  */
+/** A blank Optimist sail stays blank. A typed value is still digits only. */
+export function optimistSailNumberForProfile(v: unknown): string {
+  if (v == null || String(v).trim() === "") return "";
+  return cleanOptimistSailNumber(v);
+}
+
 export function cleanOptimistSailNumber(v: unknown): string {
   if (v == null || v === "") return "0";
   const str = String(v).trim();

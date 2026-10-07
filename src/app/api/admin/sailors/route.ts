@@ -16,7 +16,7 @@ import {
 } from "@/lib/datesSg";
 import { runSailorAction } from "@/lib/adminSailorActions";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
-import { cleanOptimistSailNumber } from "@/lib/normalize";
+import { optimistSailNumberForProfile } from "@/lib/normalize";
 import { extractNationalityFromSailNumber } from "@/lib/countries";
 import { SailorCreateSchema, SailorPatchSchema } from "@/lib/validations/sailor";
 
@@ -177,7 +177,7 @@ export async function POST(req: Request) {
       silverEntryDate = todayYmdSg();
     }
 
-    const cleanSail = cleanOptimistSailNumber(body.sailNumber);
+    const cleanSail = optimistSailNumberForProfile(body.sailNumber);
     const fromSailNat = extractNationalityFromSailNumber(body.sailNumber as string);
 
     const values: Record<string, unknown> = {
@@ -382,7 +382,7 @@ export async function PATCH(req: Request) {
       if (body[f] !== undefined) patch[f] = body[f] === "" ? null : body[f];
     }
     if (body.sailNumber !== undefined) {
-      const clean = cleanOptimistSailNumber(body.sailNumber);
+      const clean = optimistSailNumberForProfile(body.sailNumber);
       patch.sailNumber = clean;
       if (body.nationality === undefined && !existing.nationality) {
         const fromSailNat = extractNationalityFromSailNumber(

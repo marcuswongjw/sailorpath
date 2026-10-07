@@ -669,8 +669,8 @@ export function useAdminSailors({
       );
       return;
     }
-    if (!sailorForm.name || !sailorForm.sailNumber) {
-      toast.error("Name and Sail Number are required.");
+    if (!String(sailorForm.name || "").trim()) {
+      toast.error("Name is required.");
       return;
     }
     const existing = sailorList.find((s) => s.id === editingSailorId);
