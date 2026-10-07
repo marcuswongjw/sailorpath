@@ -243,6 +243,8 @@ export function AdminRegattasPanel({
 
     for (const saved of Object.values(savedEvents)) {
       if (existingSlugs.has(saved.slug)) continue;
+      // A calendar-only event has no class result to match a ranking filter.
+      if (regattaRankingFilter !== "all") continue;
       const classes = (saved.classes || []).map((item) => item.trim()).filter(Boolean);
       const registry = getRegattaEvent(saved.slug);
       const families = classes.map((item) => regattaClassFamily(item));
@@ -260,8 +262,6 @@ export function AdminRegattasPanel({
       ) {
         continue;
       }
-      if (regattaRankingFilter === "series" && saved.countsForRanking === false) continue;
-      if (regattaRankingFilter === "nonranking" && saved.countsForRanking !== false) continue;
       const haystack = `${saved.name} ${saved.startDate} ${saved.endDate || ""} ${saved.venue || ""} ${saved.organizer || ""} ${classes.join(" ")} ${saved.slug}`.toLowerCase();
       if (query && !haystack.includes(query)) continue;
 
@@ -456,15 +456,7 @@ export function AdminRegattasPanel({
       setSavedEvents((prev) => ({ ...prev, [saved.slug]: saved }));
       setCalendarSnap(JSON.stringify(calendarForm));
       invalidateRegattas?.();
-      const held = Number(data.sheetsKeptNonRanking || 0);
-      const updated = Number(data.sheetsUpdated || 0);
-      toast.success(
-        held > 0
-          ? `Calendar card saved. ${held} class${held === 1 ? "" : "es"} stayed non-ranking because fewer than 3 races were completed.`
-          : updated > 0
-            ? "Calendar card saved. Classes now use this ranking setting."
-            : "Calendar card saved. No classes are linked yet, so series scores are unchanged."
-      );
+      toast.success("Calendar card saved.");
     } catch (err: unknown) {
       toast.error(err instanceof Error ? err.message : "Could not save the calendar card");
     } finally {
@@ -721,7 +713,7 @@ export function AdminRegattasPanel({
       organizer: selectedEventView.organizer || "",
       boatClass,
       division,
-      countsForRanking: selectedEventView.countsForRanking,
+      countsForRanking: true,
       status: "draft",
     });
   };
@@ -1841,8 +1833,7 @@ export function AdminRegattasPanel({
                                         : /silver/i.test(label)
                                           ? "Silver"
                                           : "Open",
-                                      countsForRanking:
-                                        selectedEventView.countsForRanking,
+                                      countsForRanking: true,
                                       isSelectionTrial: false,
                                       selectionEventId: "",
                                     };

@@ -64,6 +64,7 @@ export default async function RegattaDetailPage({
         totalFleetSize={regatta.totalFleetSize}
         raceCount={regatta.raceCount ?? null}
         series="optimist"
+        geography={regatta.geography}
         countsForRanking={regatta.countsForRanking !== false}
         norUrl={regatta.norUrl}
       />

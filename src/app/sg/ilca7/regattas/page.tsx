@@ -1,5 +1,5 @@
-import { permanentRedirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
-export default function Ilca7RegattasPage() {
-  permanentRedirect("/sg/ilca/regattas");
+export default function RegattasPage() {
+  redirect("/calendar?class=ilca7&view=past");
 }

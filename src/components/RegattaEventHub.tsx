@@ -1,3 +1,5 @@
+import { RegattasBackLink } from "@/components/RegattasBackLink";
+import { nationalRankingLabel } from "@/lib/calendar/publicRegattas";
 import Link from "next/link";
 import { ExternalLink, FileText } from "lucide-react";
 import { EventFacts } from "@/components/EventFacts";
@@ -301,9 +303,7 @@ async function DbSlicePanel({
         {String(regatta.date)}
         {regatta.endDate ? ` – ${String(regatta.endDate)}` : ""}
         {" · "}
-        {regatta.countsForRanking === false || (regatta.raceCount != null && regatta.raceCount < 3)
-          ? ` · non-ranking${regatta.raceCount != null && regatta.raceCount < 3 ? ` (${regatta.raceCount} race${regatta.raceCount === 1 ? "" : "s"} < 3 min)` : ""}`
-          : ""}
+        {nationalRankingLabel(regatta)}
       </p>
       {results.length === 0 ? (
         <div className="rounded-2xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 text-center shadow-xs">
@@ -356,12 +356,12 @@ export async function RegattaEventHub({ event, activeFleet, calendarView }: Prop
         aria-label="Breadcrumb"
         className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px] sm:text-xs font-bold"
       >
-        <Link
+        <RegattasBackLink
           href={calendarView === "past" ? "/calendar?view=past" : "/calendar"}
           className="text-[var(--sp-harbour-teal)] hover:underline"
         >
-          Calendar
-        </Link>
+          Regattas
+        </RegattasBackLink>
         <span className="text-[var(--sp-slate-soft)]" aria-hidden>
           /
         </span>

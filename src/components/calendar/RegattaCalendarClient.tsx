@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { EventFacts } from "@/components/EventFacts";
 import {
@@ -13,18 +13,22 @@ import {
   Download,
   Clock,
   Compass,
-  Award,
   ShieldCheck,
-  Lock,
   Globe,
   AlertCircle,
 } from "lucide-react";
 import type { RegattaRecord } from "@/lib/ranking";
-import { useAccount } from "@/components/AccountProvider";
+import { matchesRegattaClass, nationalRankingLabel } from "@/lib/calendar/publicRegattas";
 
 export type RegattaCalendarClientProps = {
   regattas: RegattaRecord[];
+  resultSheetsByEvent?: Record<string, RegattaRecord[]>;
   initialClass?: string;
+  initialRanking?: string;
+  initialYear?: string;
+  initialRegion?: string;
+  initialSearch?: string;
+  initialTrialOnly?: boolean;
   initialTimelineTab?: "upcoming" | "past";
 };
 
@@ -135,7 +139,6 @@ function downloadIcs(regatta: RegattaRecord) {
   const title = regatta.name.replace(/[,;]/g, " ");
   const description = [
     regatta.scheduleNotes,
-    regatta.countsForRanking ? "Ranking Regatta" : null,
     regatta.isSelectionTrial ? "Official Selection Trial for National Squad" : null,
     regatta.norUrl ? `Notice of Race: ${regatta.norUrl}` : null,
     regatta.registrationUrl ? `Registration: ${regatta.registrationUrl}` : null,
@@ -178,19 +181,27 @@ function downloadIcs(regatta: RegattaRecord) {
 
 export function RegattaCalendarClient({
   regattas = [],
+  resultSheetsByEvent = {},
   initialClass = "all",
+  initialRanking = "all",
+  initialYear = "all",
+  initialRegion = "all",
+  initialSearch = "",
+  initialTrialOnly = false,
   initialTimelineTab = "upcoming",
 }: RegattaCalendarClientProps) {
-  const { email, ready: accountReady } = useAccount();
-  const isLoggedIn = Boolean(email);
 
   const [selectedClass, setSelectedClass] = useState<string>(initialClass);
-  const [selectedRegion, setSelectedRegion] = useState<string>("all");
+  const [selectedRegion, setSelectedRegion] = useState<string>(initialRegion);
   const [timelineTab, setTimelineTab] = useState<"upcoming" | "past">(
     initialTimelineTab
   );
-  const [filterTrialOnly, setFilterTrialOnly] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filterTrialOnly, setFilterTrialOnly] = useState<boolean>(initialTrialOnly);
+  const [searchQuery, setSearchQuery] = useState<string>(initialSearch);
+
+  const [rankingFilter, setRankingFilter] = useState(initialRanking);
+  const [selectedYear, setSelectedYear] = useState(initialYear);
+  const canFilterRanking = selectedRegion === "Singapore" && ["optimist", "ilca4", "ilca6"].includes(selectedClass);
 
   const todayStr = useMemo(() => new Date().toISOString().slice(0, 10), []);
 
@@ -227,28 +238,13 @@ export function RegattaCalendarClient({
         }
       }
 
-      // Class filter
-      if (selectedClass !== "all") {
-        const labels = regattaClasses(r).map((label) => label.toLowerCase());
-        const matches = (needles: string[]) =>
-          labels.some((label) => needles.some((needle) => label.includes(needle)));
-        if (selectedClass === "optimist" && !matches(["optimist", "opti"])) {
-          return false;
-        }
-        if (selectedClass === "ilca4" && !matches(["ilca 4", "ilca4"])) {
-          return false;
-        }
-        if (selectedClass === "ilca6" && !matches(["ilca 6", "ilca6", "radial"])) {
-          return false;
-        }
-        if (selectedClass === "ilca7" && !matches(["ilca 7", "ilca7", "standard"])) {
-          return false;
-        }
-        if (selectedClass === "wingfoil" && !matches(["wingfoil", "wing"])) {
-          return false;
-        }
-      }
+      if (!regattaClasses(r).some((label) => matchesRegattaClass(label, selectedClass))) return false;
 
+      if (selectedYear !== "all" && String(r.date).slice(0, 4) !== selectedYear) return false;
+      if (canFilterRanking && rankingFilter !== "all") {
+        const expected = rankingFilter === "ranking" ? "Counts for Singapore national ranking" : "Does not count for Singapore national ranking";
+        if (!(resultSheetsByEvent[r.slug] || []).some((sheet) => matchesRegattaClass(sheet.boatClass, selectedClass) && nationalRankingLabel(sheet) === expected)) return false;
+      }
       // Selection trials toggle
       if (filterTrialOnly && !r.isSelectionTrial) {
         return false;
@@ -267,105 +263,46 @@ export function RegattaCalendarClient({
 
       return true;
     });
-  }, [activeSource, selectedRegion, selectedClass, filterTrialOnly, searchQuery]);
+  }, [activeSource, selectedRegion, selectedClass, filterTrialOnly, searchQuery, selectedYear, canFilterRanking, rankingFilter, resultSheetsByEvent]);
 
-  // Loading state while verifying account auth
-  if (!accountReady) {
-    return (
-      <div className="mx-auto max-w-5xl w-full px-4 py-20 text-center text-slate-400 space-y-3">
-        <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-orange-500 border-r-transparent" />
-        <p className="text-xs font-semibold uppercase tracking-wider">Verifying member access…</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const params = new URLSearchParams();
+    params.set("view", timelineTab);
+    if (selectedClass !== "all") params.set("class", selectedClass);
+    if (selectedRegion !== "all") params.set("region", selectedRegion);
+    if (searchQuery) params.set("q", searchQuery);
+    if (selectedYear !== "all") params.set("year", selectedYear);
+    if (canFilterRanking && rankingFilter !== "all") params.set("ranking", rankingFilter);
+    if (filterTrialOnly) params.set("trials", "1");
+    const url = `/calendar?${params}`;
+    window.history.replaceState(window.history.state, "", url);
+  }, [selectedClass, selectedRegion, timelineTab, searchQuery, filterTrialOnly, selectedYear, canFilterRanking, rankingFilter]);
 
-  // Member Access Gate: Calendar is private during active development
-  if (!isLoggedIn) {
-    return (
-      <div className="mx-auto w-full max-w-4xl px-4 py-10 sm:py-16 space-y-8">
-        <div className="relative overflow-hidden rounded-3xl border border-[var(--sp-cool-veil)] bg-[var(--sp-warm-white)] p-6 sm:p-10 text-center space-y-6 shadow-xs">
-          <div className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--sp-racing-mist)]/30 border border-[var(--sp-racing-orange)]/30 text-[var(--sp-racing-orange)] shadow-sm">
-            <Lock className="h-8 w-8" />
-          </div>
+  useEffect(() => {
+    const restore = () => {
+      const params = new URLSearchParams(location.search);
+      setSelectedClass(params.get("class") || "all");
+      setSelectedRegion(params.get("region") || "all");
+      setTimelineTab(params.get("view") === "past" ? "past" : "upcoming");
+      setSearchQuery(params.get("q") || "");
+      setFilterTrialOnly(params.get("trials") === "1");
+      setSelectedYear(params.get("year") || "all");
+      setRankingFilter(params.get("ranking") || "all");
+    };
+    window.addEventListener("popstate", restore);
+    return () => window.removeEventListener("popstate", restore);
+  }, []);
 
-          <div className="relative space-y-2 max-w-xl mx-auto">
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/30 px-3 py-0.5 text-[11px] font-bold text-[var(--sp-racing-orange)]">
-              <Calendar className="h-3 w-3" />
-              <span>Private Preview · In Development</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
-              2026–2027 Regatta &amp; Campaign Calendar
-            </h1>
-            <p className="text-xs sm:text-sm text-[var(--sp-charcoal-slate)] leading-relaxed">
-              The comprehensive regatta schedule, international campaigns (Asia &amp; Europe), and training clinics are currently in private preview while we finalize features. Sign in or create a free account to preview the calendar.
-            </p>
-          </div>
-
-          {/* Action buttons */}
-          <div className="relative flex flex-col sm:flex-row items-center justify-center gap-3 max-w-md mx-auto pt-2">
-            <Link
-              href="/login?next=%2Fcalendar"
-              className="w-full sm:w-auto sp-btn-primary text-xs font-black uppercase tracking-wider px-6 py-3.5 inline-flex items-center justify-center gap-2 min-h-[44px]"
-            >
-              Sign In to View Calendar
-            </Link>
-            <Link
-              href="/register?next=%2Fcalendar"
-              className="w-full sm:w-auto rounded-full bg-[var(--sp-sailcloth)] hover:bg-[var(--sp-aqua-mist)] active:scale-[0.98] transition-all text-xs font-bold text-[var(--sp-harbour-shadow)] px-6 py-3.5 border border-[var(--sp-cool-veil)] inline-flex items-center justify-center min-h-[44px]"
-            >
-              Create Free Account
-            </Link>
-          </div>
-
-          {/* Feature Highlights Grid */}
-          <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-[var(--sp-cool-veil)] text-left">
-            <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 space-y-1">
-              <div className="flex items-center gap-2">
-                <Trophy className="h-4 w-4 text-[var(--sp-racing-orange)] shrink-0" />
-                <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Singapore National Series &amp; Trials</h2>
-              </div>
-              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
-                Ranking events, Asian &amp; Oceania selection trials, and Perth camp qualifiers.
-              </p>
-            </div>
-            <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 space-y-1">
-              <div className="flex items-center gap-2">
-                <Globe className="h-4 w-4 text-[var(--sp-harbour-teal)] shrink-0" />
-                <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Asian &amp; European Regattas</h2>
-              </div>
-              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
-                Eastern Seaboard, Torrevieja, Palamós, Hong Kong Race Week, and Trofeo Torboli.
-              </p>
-            </div>
-            <div className="rounded-xl border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] p-4 space-y-1">
-              <div className="flex items-center gap-2">
-                <Sailboat className="h-4 w-4 text-emerald-600 shrink-0" />
-                <h2 className="text-xs font-bold text-[var(--sp-harbour-shadow)]">Pre-Event Clinics &amp; Camps</h2>
-              </div>
-              <p className="text-[11px] text-[var(--sp-slate-soft)] leading-relaxed">
-                Official clinic schedules, coaching blocks, and local boat charter arrangements.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  function rememberFilters() {
+    sessionStorage.setItem("regatta-return-url", location.pathname + location.search);
   }
 
   return (
-    <div className="mx-auto max-w-5xl w-full min-w-0 px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
-      {/* Private Preview Banner */}
-      <div className="rounded-2xl border border-[var(--sp-racing-orange)]/30 bg-[var(--sp-racing-mist)]/20 p-3.5 sm:p-4 text-[var(--sp-harbour-shadow)] text-xs flex items-start gap-3">
-        <AlertCircle className="h-4 w-4 text-[var(--sp-racing-orange)] shrink-0 mt-0.5" />
-        <div>
-          <span className="font-bold">Private Preview:</span> This calendar is currently in active development for members. Featuring verified Singapore national regattas, Asian championships, and European winter campaigns.
-        </div>
-      </div>
-
+    <div onClickCapture={(event) => { if ((event.target as HTMLElement).closest("a")) rememberFilters(); }} className="mx-auto max-w-5xl w-full min-w-0 px-4 py-8 sm:py-12 space-y-6 sm:space-y-8">
       {/* Hero Header */}
       <div className="border-b border-[var(--sp-cool-veil)] pb-6">
         <h1 className="text-2xl sm:text-4xl font-black text-[var(--sp-harbour-shadow)] tracking-tight">
-          Singapore &amp; International Regatta Calendar
+          Regattas
         </h1>
       </div>
 
@@ -426,6 +363,7 @@ export function RegattaCalendarClient({
             { id: "Singapore", label: "🇸🇬 Singapore" },
             { id: "Asia", label: "🌏 Asia" },
             { id: "Europe", label: "🇪🇺 Europe" },
+            { id: "International", label: "International" },
           ].map((reg) => {
             const isSelected = selectedRegion === reg.id;
             return (
@@ -445,16 +383,30 @@ export function RegattaCalendarClient({
           })}
         </div>
 
+        <div className="flex flex-wrap gap-3 text-sm">
+          <label>Year <select value={selectedYear} onChange={(event) => setSelectedYear(event.target.value)} className="rounded-lg border p-2">
+            <option value="all">All years</option>
+            {[...new Set(regattas.map((event) => String(event.date).slice(0, 4)))].sort().reverse().map((year) => <option key={year} value={year}>{year}</option>)}
+          </select></label>
+          {canFilterRanking && <label>Singapore national ranking <select value={rankingFilter} onChange={(event) => setRankingFilter(event.target.value)} className="rounded-lg border p-2">
+            <option value="all">All class results</option><option value="ranking">Counts for ranking</option><option value="excluded">Does not count</option>
+          </select></label>}
+        </div>
+
         {/* Class Filter Pills & Search */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
           <div className="flex min-w-0 max-w-full items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
             {[
               { id: "all", label: "All Classes" },
               { id: "optimist", label: "Optimist", icon: Sailboat },
+              { id: "ilca", label: "All ILCA", icon: Compass },
               { id: "ilca4", label: "ILCA 4", icon: Compass },
               { id: "ilca6", label: "ILCA 6", icon: Compass },
               { id: "ilca7", label: "ILCA 7", icon: Compass },
               { id: "wingfoil", label: "WingFoil", icon: Trophy },
+              { id: "techno293", label: "Techno 293", icon: Sailboat },
+              { id: "29er", label: "29er", icon: Sailboat },
+              { id: "iqfoil", label: "iQFOiL", icon: Sailboat },
             ].map((cat) => {
               const Icon = cat.icon;
               const isSelected = selectedClass === cat.id;
@@ -621,12 +573,6 @@ export function RegattaCalendarClient({
                           </span>
                         )}
 
-                        {regatta.countsForRanking && (
-                          <span className="rounded-md border border-emerald-500/30 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700 inline-flex items-center gap-1">
-                            <Award className="h-3 w-3" />
-                            Ranking Regatta
-                          </span>
-                        )}
                       </div>
 
                       {/* Venue, Organizer & Schedule meta line */}
@@ -638,6 +584,17 @@ export function RegattaCalendarClient({
                         labelClassName="font-bold text-[var(--sp-charcoal)]"
                         valueClassName="text-[var(--sp-charcoal-slate)]"
                       />
+
+                      {(resultSheetsByEvent[regatta.slug] || []).filter((sheet) => matchesRegattaClass(sheet.boatClass, selectedClass)).length > 0 && (
+                        <div className="relative z-10 space-y-2 pt-3" aria-label="Class results">
+                          {(resultSheetsByEvent[regatta.slug] || []).filter((sheet) => matchesRegattaClass(sheet.boatClass, selectedClass)).map((sheet) => (
+                            <Link key={sheet.id} href={regattaPageHref(sheet, timelineTab)} className="block rounded-lg border border-[var(--sp-cool-veil)] p-2 text-sm font-semibold text-[var(--sp-harbour-teal)] hover:underline focus-visible:outline-2">
+                              {sheet.boatClass || "Optimist"} {sheet.division || ""} results
+                              {nationalRankingLabel(sheet) && <span className="block text-xs font-normal">{nationalRankingLabel(sheet)}</span>}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
 
                       {/* Key Deadlines indicator */}
                       {regatta.keyDeadlines && (

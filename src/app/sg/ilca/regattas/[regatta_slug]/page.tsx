@@ -71,6 +71,7 @@ export default async function IlcaRegattaDetailPage({
         totalFleetSize={regatta.totalFleetSize}
         raceCount={regatta.raceCount ?? null}
         series={series}
+        geography={regatta.geography}
         countsForRanking={regatta.countsForRanking !== false}
         norUrl={regatta.norUrl}
       />

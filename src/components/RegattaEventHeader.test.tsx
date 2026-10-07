@@ -1,7 +1,9 @@
 /** @vitest-environment jsdom */
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { RegattaEventHeader } from "./RegattaEventHeader";
+
+vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
 
 describe("RegattaEventHeader", () => {
   it("renders regatta title, division, class and metadata", () => {

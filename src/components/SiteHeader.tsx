@@ -85,7 +85,7 @@ export function SiteHeader() {
         Silver standings
       </Link>
       <Link
-        href="/sg/optimist/regattas"
+        href="/calendar?class=optimist&view=past"
         onClick={() => {
           setMobileOpen(false);
           setOpenMenu(null);
@@ -156,7 +156,7 @@ export function SiteHeader() {
         ILCA 7 standings
       </Link>
       <Link
-        href="/sg/ilca/regattas"
+        href="/calendar?class=ilca&view=past"
         onClick={() => {
           setMobileOpen(false);
           setOpenMenu(null);
@@ -232,7 +232,7 @@ export function SiteHeader() {
           prefetch
           className="text-sm font-semibold text-sailcloth hover:text-white py-2 md:py-0 transition-colors"
         >
-          Calendar
+          Regattas
         </Link>
       )}
       <div className="relative">
@@ -502,7 +502,7 @@ export function SiteHeader() {
                 onClick={() => setMobileOpen(false)}
                 className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
               >
-                Calendar
+                Regattas
               </Link>
             )}
             {showClaimCta && (
@@ -532,7 +532,7 @@ export function SiteHeader() {
               Silver standings
             </Link>
             <Link
-              href="/sg/optimist/regattas"
+              href="/calendar?class=optimist&view=past"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >
@@ -579,7 +579,7 @@ export function SiteHeader() {
               ILCA 7 standings
             </Link>
             <Link
-              href="/sg/ilca/regattas"
+              href="/calendar?class=ilca&view=past"
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-3 py-2.5 text-sm font-semibold text-sailcloth hover:text-white hover:bg-harbour-mid touch-manipulation min-h-[2.75rem] flex items-center"
             >

@@ -141,15 +141,6 @@ export function AdminRegattaEventList({
                         valueClassName="text-slate-600"
                       />
                       <div className="mt-1.5 flex flex-wrap gap-1">
-                        <span
-                          className={`rounded-full border px-1.5 py-0.5 text-[10px] font-bold ${
-                            event.countsForRanking
-                              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-                              : "border-sky-200 bg-sky-50 text-sky-800"
-                          }`}
-                        >
-                          {event.countsForRanking ? "Series" : "Non-ranking"}
-                        </span>
                         {event.isSelectionTrial ? (
                           <span className="rounded-full border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-bold text-amber-800">
                             Trial

@@ -7,7 +7,6 @@ import { regattaEvents, regattas } from "@/db/schema";
 import { logAdminChange } from "@/lib/adminChangeLog";
 import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
 import { planRegattaEventDelete } from "@/lib/admin/planRegattaEventDelete";
-import { MIN_RACES_FOR_RANKING } from "@/lib/ranking";
 import { revalidatePublicRankings } from "@/lib/revalidatePublic";
 
 function clean(value: unknown, max = 300): string | null {
@@ -192,20 +191,15 @@ export async function PATCH(req: Request) {
       (event) => event.slug === slug
     );
     let sheetsUpdated = 0;
-    let sheetsKeptNonRanking = 0;
+    const sheetsKeptNonRanking = 0;
     if (match && saved) {
       for (const sheet of match.sheets) {
-        const tooFew =
-          sheet.raceCount != null && sheet.raceCount < MIN_RACES_FOR_RANKING;
-        const nextFlag = stored.countsForRanking && !tooFew;
-        if (stored.countsForRanking && tooFew) sheetsKeptNonRanking += 1;
-        if (sheet.countsForRanking === nextFlag && sheet.eventId === saved.id) {
-          continue;
-        }
+        // Saving calendar metadata may attach an existing class, but its
+        // ranking decision belongs exclusively to that class sheet.
+        if (sheet.eventId === saved.id) continue;
         await db
           .update(regattas)
           .set({
-            countsForRanking: nextFlag,
             eventId: saved.id,
             updatedAt: new Date(),
           })

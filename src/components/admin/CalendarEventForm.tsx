@@ -330,25 +330,7 @@ export function CalendarEventForm({
             className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 text-xs focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
           />
         </div>
-        <label className="sm:col-span-2 flex items-start gap-2.5 text-xs font-semibold text-slate-800 cursor-pointer">
-          <input
-            type="checkbox"
-            className="mt-0.5 rounded border-slate-300 text-orange-600 focus:ring-orange-500 h-4 w-4"
-            checked={calendarForm.countsForRanking}
-            onChange={(e) =>
-              setCalendarForm({
-                ...calendarForm,
-                countsForRanking: e.target.checked,
-              })
-            }
-          />
-          <span>
-            Ranking regatta
-            <span className="block text-[11px] font-normal text-slate-600">
-              Applies to linked class sheets. Fewer than 3 races stays non-ranking.
-            </span>
-          </span>
-        </label>
+        <p className="sm:col-span-2 text-xs text-slate-600">Singapore national ranking eligibility is managed on each class results sheet.</p>
         <div className="sm:col-span-2 flex justify-end">
           <button
             type="button"

@@ -1,3 +1,5 @@
+import { RegattasBackLink } from "@/components/RegattasBackLink";
+import { nationalRankingLabel } from "@/lib/calendar/publicRegattas";
 import Link from "next/link";
 import { FileText, ExternalLink } from "lucide-react";
 import { EventFacts, joinDateRange } from "@/components/EventFacts";
@@ -11,6 +13,7 @@ export type RegattaEventHeaderProps = {
   /** "optimist" | "ilca4" | "ilca6" | "ilca7" */
   series: "optimist" | "ilca4" | "ilca6" | "ilca7";
   countsForRanking?: boolean;
+  geography?: string | null;
   norUrl?: string | null;
   endDate?: string | null;
   venue?: string | null;
@@ -28,20 +31,14 @@ export function RegattaEventHeader({
   raceCount,
   series,
   countsForRanking = true,
+  geography,
   norUrl,
   endDate,
   venue,
   organiser,
 }: RegattaEventHeaderProps) {
   const isIlca = series === "ilca4" || series === "ilca6" || series === "ilca7";
-  const listHref =
-    series === "ilca4"
-      ? "/sg/ilca4/regattas"
-      : series === "ilca6"
-      ? "/sg/ilca6/regattas"
-      : series === "ilca7"
-      ? "/sg/ilca7/regattas"
-      : "/sg/optimist/regattas";
+  const listHref = "/calendar";
   const rankingsHref =
     series === "ilca4"
       ? "/sg/ilca4"
@@ -61,6 +58,8 @@ export function RegattaEventHeader({
   const divLabel = String(division || (isIlca ? "Open" : "—")).trim() || "—";
   const divisionIsNonRanking = /^(non[\s-]?ranking|practice)$/i.test(divLabel);
 
+  const rankingLabel = nationalRankingLabel({ id: "", slug: "", name, date, totalFleetSize, boatClass: classLabel, geography, raceCount, countsForRanking });
+
   return (
     <div className="space-y-3 min-w-0">
       <nav
@@ -71,17 +70,17 @@ export function RegattaEventHeader({
           href={rankingsHref}
           className="text-[var(--sp-harbour-teal)] hover:underline"
         >
-          {isIlca ? "ILCA 4 rankings" : "Optimist rankings"}
+          {`${classLabel} rankings`}
         </Link>
         <span className="text-[var(--sp-slate-soft)]" aria-hidden>
           /
         </span>
-        <Link
+        <RegattasBackLink
           href={listHref}
           className="text-[var(--sp-charcoal-slate)] hover:text-[var(--sp-harbour-teal)]"
         >
           Regattas
-        </Link>
+        </RegattasBackLink>
         <span className="text-[var(--sp-slate-soft)]" aria-hidden>
           /
         </span>
@@ -102,13 +101,7 @@ export function RegattaEventHeader({
               {divLabel}
             </span>
           )}
-          {(!countsForRanking || (raceCount != null && raceCount < 3)) && (
-            <span className="inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-cool-veil)] bg-[var(--sp-sailcloth)] text-[var(--sp-slate-soft)]">
-              {raceCount != null && raceCount < 3
-                ? `Non-ranking (${raceCount} race${raceCount === 1 ? "" : "s"} < 3 min)`
-                : "Non-ranking"}
-            </span>
-          )}
+          {rankingLabel && <span className="inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold border border-[var(--sp-cool-veil)]">{rankingLabel}</span>}
           {norUrl && (
             <a
               href={norUrl}

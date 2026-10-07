@@ -99,6 +99,7 @@ const mockEvents: RegattaRecord[] = [
 describe("RegattaCalendarClient", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    sessionStorage.clear();
     mockUseAccount.mockReturnValue({
       email: "sailor@example.com",
       ready: true,
@@ -109,7 +110,7 @@ describe("RegattaCalendarClient", () => {
     });
   });
 
-  it("renders member access gate when user is not logged in", () => {
+  it("allows visitors to browse without signing in", () => {
     mockUseAccount.mockReturnValue({
       email: null,
       ready: true,
@@ -121,13 +122,11 @@ describe("RegattaCalendarClient", () => {
 
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
-    expect(screen.getByText("2026–2027 Regatta & Campaign Calendar")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /sign in to view calendar/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /create free account/i })).toBeInTheDocument();
-    expect(screen.queryByPlaceholderText(/search regattas or venues/i)).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Regattas" })).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/search regattas or venues/i)).toBeInTheDocument();
   });
 
-  it("renders loading indicator while account auth is initializing", () => {
+  it("does not delay browsing while account auth initializes", () => {
     mockUseAccount.mockReturnValue({
       email: null,
       ready: false,
@@ -139,19 +138,19 @@ describe("RegattaCalendarClient", () => {
 
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
-    expect(screen.getByText(/verifying member access/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Regattas" })).toBeInTheDocument();
   });
 
   it("renders calendar events and initial view when logged in", () => {
     render(<RegattaCalendarClient regattas={mockEvents} />);
 
-    expect(screen.getByText("Singapore & International Regatta Calendar")).toBeInTheDocument();
+    expect(screen.getByText("Regattas")).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/search regattas or venues/i)).toBeInTheDocument();
     expect(screen.getByText("Singapore National Sailing Championships 2099")).toBeInTheDocument();
     expect(screen.getByText("ILCA Singapore Open 2099")).toBeInTheDocument();
     expect(screen.getByText("Eastern Seaboard Regatta 2099")).toBeInTheDocument();
     expect(screen.queryByText(/official selection trial for world championship team/i)).not.toBeInTheDocument();
-    expect(screen.getAllByText("Ranking Regatta").length).toBeGreaterThan(0);
+    expect(screen.queryByText("Ranking Regatta")).not.toBeInTheDocument();
     expect(screen.queryByText("National Series Ranking")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "ILCA Singapore Open 2099" })).toHaveAttribute(
       "href",
@@ -160,6 +159,22 @@ describe("RegattaCalendarClient", () => {
     expect(
       screen.getByRole("link", { name: "Singapore National Sailing Championships 2099" })
     ).toHaveAttribute("href", "/regattas/singapore-national-sailing-championships-2099");
+  });
+
+  it("shows ranking status on matching class results, never on the event", () => {
+    const result = { ...mockEvents[0], geography: "SG", raceCount: 3 };
+    render(<RegattaCalendarClient regattas={mockEvents} resultSheetsByEvent={{ [result.slug]: [result, { ...result, id: "wing", boatClass: "WingFoil" }] }} initialClass="optimist" />);
+    expect(screen.getByText("Counts for Singapore national ranking")).toBeInTheDocument();
+    expect(screen.queryByText(/WingFoil.*results/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Ranking Regatta")).not.toBeInTheDocument();
+  });
+
+  it("preserves filters in the return address", () => {
+    render(<RegattaCalendarClient regattas={mockEvents} />);
+    fireEvent.click(screen.getByRole("button", { name: /^ILCA 4$/i }));
+    fireEvent.change(screen.getByPlaceholderText(/search regattas or venues/i), { target: { value: "Changi" } });
+    expect(location.search).toContain("class=ilca4");
+    expect(location.search).toContain("q=Changi");
   });
 
   it("filters events when typing in search", () => {

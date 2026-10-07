@@ -7,6 +7,7 @@ import {
   canonicalCalendarEventSlug,
   type CalendarEventOverride,
 } from "@/lib/calendar/applyEventOverrides";
+import { groupRegattaEvents } from "@/lib/admin/groupRegattaEvents";
 import { db } from "@/db";
 import { regattaEvents } from "@/db/schema";
 import type { RegattaRecord } from "@/lib/ranking";
@@ -14,7 +15,7 @@ import type { RegattaRecord } from "@/lib/ranking";
 export const revalidate = 120;
 
 export const metadata: Metadata = {
-  title: "Singapore Regatta Calendar 2026 | SailorPath",
+  title: "Regattas and results | SailorPath",
   description:
     "Official schedule of Singapore youth sailing regattas, Asian Games & Perth selection trials, National Ranking Series dates, Notice of Race (NOR) downloads, and entry registration.",
 };
@@ -23,6 +24,11 @@ type CalendarPageProps = {
   searchParams?: Promise<{
     class?: string;
     view?: string;
+    region?: string;
+    q?: string;
+    trials?: string;
+    ranking?: string;
+    year?: string;
   }>;
 };
 
@@ -32,6 +38,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
   const initialTimelineTab = searchParams?.view === "past" ? "past" : "upcoming";
 
   let dbRegattas: RegattaRecord[] = [];
+  let eventSlugsById = new Map<string, string>();
   let savedEvents: CalendarEventOverride[] = [];
   try {
     dbRegattas = await getCachedPublicRegattas();
@@ -40,6 +47,7 @@ export default async function CalendarPage(props: CalendarPageProps) {
   }
   try {
     const rows = await db.select().from(regattaEvents);
+    eventSlugsById = new Map(rows.map((row) => [row.id, row.slug]));
     savedEvents = rows.map((row) => ({
       slug: row.slug,
       name: row.name,
@@ -173,11 +181,42 @@ export default async function CalendarPage(props: CalendarPageProps) {
     });
   }
 
+  for (const sheet of dbRegattas) {
+    if (sheet.eventId && sheet.eventSlug) eventSlugsById.set(sheet.eventId, sheet.eventSlug);
+  }
+  const grouped = groupRegattaEvents(dbRegattas, eventSlugsById);
+  const resultSheetsByEvent: Record<string, RegattaRecord[]> = {};
+  for (const event of grouped.events) {
+    const sheets = dbRegattas.filter((sheet) => [...event.sheets, ...event.shells.filter((row) => (row.totalFleetSize || 0) > 0)].some((row) => row.id === sheet.id));
+    resultSheetsByEvent[event.slug] = sheets;
+    const existing = publicEvents.get(event.slug);
+    if (existing) {
+      publicEvents.set(event.slug, { ...existing, classes: [...new Set([...(existing.classes || []), ...sheets.map((sheet) => sheet.boatClass || "Optimist")])] });
+    } else if (sheets.length) {
+      publicEvents.set(event.slug, { ...sheets[0], id: event.slug, slug: event.slug, name: event.name,
+        date: event.startDate, endDate: event.endDate, classes: sheets.map((sheet) => sheet.boatClass || "Optimist"),
+        region: sheets[0].region || (["SG", "SGP"].includes(sheets[0].geography || "") ? "Singapore" : "International") });
+    }
+  }
+  // Preserve published sheets that have not yet been assigned to a weekend.
+  for (const row of grouped.unassigned) {
+    const sheet = dbRegattas.find((item) => item.id === row.id);
+    if (!sheet) continue;
+    if (!publicEvents.has(sheet.slug)) publicEvents.set(sheet.slug, { ...sheet, region: sheet.region || (["SG", "SGP"].includes(sheet.geography || "") ? "Singapore" : "International") });
+    resultSheetsByEvent[sheet.slug] = [sheet];
+  }
+
   const allRegattas = Array.from(publicEvents.values());
 
   return (
     <RegattaCalendarClient
       regattas={allRegattas}
+      resultSheetsByEvent={resultSheetsByEvent}
+      initialRanking={searchParams?.ranking}
+      initialYear={searchParams?.year}
+      initialRegion={searchParams?.region}
+      initialSearch={searchParams?.q}
+      initialTrialOnly={searchParams?.trials === "1"}
       initialClass={initialClass}
       initialTimelineTab={initialTimelineTab}
     />
